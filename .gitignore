@@ -1,23 +1,22 @@
-# Windows thumbnail cache files
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-# Folder config file
-Desktop.ini
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# gradle
+build
+.gradle
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
+# other
+eclipse
+run

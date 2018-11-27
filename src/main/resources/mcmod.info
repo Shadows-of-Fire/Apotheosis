@@ -1,0 +1,16 @@
+[
+{
+  "modid": "spawnermanagement",
+  "name": "Spawner Management",
+  "description": "A system for moving, upgrading, and managing spawners.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Shadows_of_Fire"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
