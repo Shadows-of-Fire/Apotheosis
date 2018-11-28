@@ -37,7 +37,7 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IWailaDataProvider {
 	public List<String> getWailaBody(ItemStack itemStack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		if (Keyboard.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode())) {
 			int[] stats = accessor.getNBTData().getIntArray(STATS);
-			if (stats.length != 8) return tooltip;
+			if (stats.length != 10) return tooltip;
 			tooltip.add(I18n.format("spw.waila.mindelay", stats[0]));
 			tooltip.add(I18n.format("spw.waila.maxdelay", stats[1]));
 			tooltip.add(I18n.format("spw.waila.spawncount", stats[2]));
@@ -46,6 +46,8 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IWailaDataProvider {
 			tooltip.add(I18n.format("spw.waila.spawnrange", stats[5]));
 			tooltip.add(I18n.format("spw.waila.ignoreplayers", stats[6] == 1));
 			tooltip.add(I18n.format("spw.waila.ignoreconditions", stats[7] == 1));
+			tooltip.add(I18n.format("spw.waila.ignorecap", stats[8] == 1));
+			tooltip.add(I18n.format("spw.waila.redstone", stats[9] == 1));
 		} else tooltip.add(I18n.format("spw.waila.sneak"));
 		return tooltip;
 	}
@@ -55,7 +57,17 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IWailaDataProvider {
 		if (te instanceof TileSpawnerExt) {
 			TileSpawnerExt spw = (TileSpawnerExt) te;
 			MobSpawnerBaseLogic logic = spw.getSpawnerBaseLogic();
-			tag.setIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.activatingRangeFromPlayer, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0 });
+			tag.setIntArray(STATS, new int[] { 
+					logic.minSpawnDelay, 
+					logic.maxSpawnDelay, 
+					logic.spawnCount, 
+					logic.maxNearbyEntities, 
+					logic.activatingRangeFromPlayer, 
+					logic.spawnRange, 
+					spw.ignoresPlayers ? 1 : 0, 
+					spw.ignoresConditions ? 1 : 0, 
+					spw.ignoresCap ? 1 : 0, 
+					spw.redstoneEnabled ? 1 : 0 });
 		}
 		return tag;
 	}

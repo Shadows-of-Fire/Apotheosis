@@ -21,6 +21,8 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 
 	public boolean ignoresPlayers = false;
 	public boolean ignoresConditions = false;
+	public boolean ignoresCap = false;
+	public boolean redstoneEnabled = false;
 
 	public TileSpawnerExt() {
 		this.spawnerLogic = new SpawnerLogicExt();
@@ -30,6 +32,8 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setBoolean("ignore_players", ignoresPlayers);
 		tag.setBoolean("ignore_conditions", ignoresConditions);
+		tag.setBoolean("ignore_cap", ignoresPlayers);
+		tag.setBoolean("redstone_control", redstoneEnabled);
 		return super.writeToNBT(tag);
 	}
 
@@ -37,6 +41,8 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 	public void readFromNBT(NBTTagCompound tag) {
 		ignoresPlayers = tag.getBoolean("ignore_players");
 		ignoresConditions = tag.getBoolean("ignore_conditions");
+		ignoresCap = tag.getBoolean("ignore_cap");
+		redstoneEnabled = tag.getBoolean("redstone_control");
 		super.readFromNBT(tag);
 	}
 
@@ -77,7 +83,8 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 
 		private boolean isActivated() {
 			BlockPos blockpos = this.getSpawnerPosition();
-			return ignoresPlayers || this.getSpawnerWorld().isAnyPlayerWithinRangeAt(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, this.activatingRangeFromPlayer);
+			boolean flag = ignoresPlayers || this.getSpawnerWorld().isAnyPlayerWithinRangeAt(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, this.activatingRangeFromPlayer);
+			return flag && (!redstoneEnabled || !world.isBlockPowered(blockpos));
 		}
 
 		private void resetTimer() {
@@ -139,11 +146,13 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 
 						if (entity == null) { return; }
 
-						int k = world.getEntitiesWithinAABB(entity.getClass(), (new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1)).grow(this.spawnRange)).size();
+						if (!ignoresCap) {
+							int k = world.getEntitiesWithinAABB(entity.getClass(), (new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1)).grow(this.spawnRange)).size();
 
-						if (k >= this.maxNearbyEntities) {
-							this.resetTimer();
-							return;
+							if (k >= this.maxNearbyEntities) {
+								this.resetTimer();
+								return;
+							}
 						}
 
 						EntityLiving entityliving = entity instanceof EntityLiving ? (EntityLiving) entity : null;

@@ -17,6 +17,8 @@ public class SpawnerModifiers {
 	public static ItemStack spawnConditions;
 	public static ItemStack checkPlayers;
 	public static ItemStack inverseItem;
+	public static ItemStack ignoreCap;
+	public static ItemStack redstone;
 
 	public static void init(Configuration config) {
 		minDelay = readStackCfg(config.getString("Min Delay Modifier", "general", "minecraft:sugar", "The item that decreases the min delay of spawners.  5 ticks per item."));
@@ -28,6 +30,8 @@ public class SpawnerModifiers {
 		spawnConditions = readStackCfg(config.getString("Spawn Condition Modifier", "general", "minecraft:dragon_egg", "The item that disables spawn conditon checking (like light)."));
 		checkPlayers = readStackCfg(config.getString("Player Check Modifier", "general", "minecraft:nether_star", "The item that disables the requirement of a nearby player."));
 		inverseItem = readStackCfg(config.getString("Inverse Item", "general", "minecraft:fish:3", "When held in the off-hand, this item makes the others change stats in the opposite direction."));
+		ignoreCap = readStackCfg(config.getString("Entity Cap Modifier", "general", "minecraft:skull:1", "The item that disables the nearby entity cap."));
+		redstone = readStackCfg(config.getString("Redstone Modifier", "general", "minecraft:comparator", "The item that enables redstone control.  Signal = off"));
 		if (config.hasChanged()) config.save();
 	}
 

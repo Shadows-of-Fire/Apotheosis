@@ -34,6 +34,8 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerWrapper(SpawnerModifiers.spawnRange, "SpawnRange", 1, "spw.editspawn", "spw.invert"),
 				new SpawnerWrapper(SpawnerModifiers.spawnConditions, "ignore_conditions", true, "spw.ignoreconditions", "spw.invert"),
 				new SpawnerWrapper(SpawnerModifiers.checkPlayers, "ignore_players", true, "spw.ignoreplayers", "spw.invert"),
+				new SpawnerWrapper(SpawnerModifiers.ignoreCap, "ignore_cap", true, "spw.ignorecap", "spw.invert"),
+				new SpawnerWrapper(SpawnerModifiers.redstone, "redstone_control", true, "spw.redstone", "spw.invert"),
 				new SpawnerWrapper(egg, new ResourceLocation("witch"), "spw.changeentity")
 				), SPAWNER);
 

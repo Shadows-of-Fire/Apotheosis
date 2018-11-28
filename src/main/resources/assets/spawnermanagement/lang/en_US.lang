@@ -8,6 +8,8 @@ spw.waila.playerrange=Player Range: %s
 spw.waila.spawnrange=Spawn Range: %s
 spw.waila.ignoreplayers=Ignores Players: %s
 spw.waila.ignoreconditions=Ignores Conditions: %s
+spw.waila.ignorecap=Ignores Spawn Cap: %s
+spw.waila.redstone=Respects Redstone: %s
 spw.waila.sneak=Sneak for Info
 spw.info.entity=Entity: %s
 spw.jei.title=Spawner Modification
@@ -22,6 +24,8 @@ spw.editspawn=Increases spawn range
 spw.ignoreconditions=Ignores spawn conditions
 spw.ignoreplayers=Ingores nearby players
 spw.changeentity=Changes entity spawned
+spw.ignorecap=Ignores spawn cap
+spw.redstone=Enables redstone control
 
 spw.instructions=Spawners can be modified with various items via right clicking on them.\nSpawners will also be dropped by silk-touch.
 spw.capturing=The capturing enchantment gives monsters a chance to drop their spawn egg.\n+0.4% chance per level.

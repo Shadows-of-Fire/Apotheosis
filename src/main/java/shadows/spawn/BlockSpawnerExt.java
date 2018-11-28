@@ -124,6 +124,14 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 				tile.ignoresPlayers = !inverse;
 				stack.shrink(1);
 				return true;
+			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.ignoreCap)) {
+				tile.ignoresCap = !inverse;
+				stack.shrink(1);
+				return true;
+			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.redstone)) {
+				tile.redstoneEnabled = !inverse;
+				stack.shrink(1);
+				return true;
 			}
 		}
 		return false;
@@ -143,6 +151,8 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 			tooltip.add(I18n.format("spw.waila.spawnrange", tag.getShort("SpawnRange")));
 			tooltip.add(I18n.format("spw.waila.ignoreplayers", tag.getBoolean("ignore_players")));
 			tooltip.add(I18n.format("spw.waila.ignoreconditions", tag.getBoolean("ignore_conditions")));
+			tooltip.add(I18n.format("spw.waila.ignorecap", tag.getBoolean("ignore_cap")));
+			tooltip.add(I18n.format("spw.waila.redstone", tag.getBoolean("redstone_control")));
 		}
 	}
 
