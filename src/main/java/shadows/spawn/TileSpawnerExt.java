@@ -7,6 +7,8 @@ import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumParticleTypes;
@@ -52,6 +54,11 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 
 	public void setIgnoresConditions(boolean val) {
 		ignoresConditions = val;
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		this.readFromNBT(pkt.getNbtCompound());
 	}
 
 	public class SpawnerLogicExt extends MobSpawnerBaseLogic {
