@@ -1,5 +1,7 @@
 package shadows.spawn;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -26,9 +29,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import shadows.Apotheosis;
 
-@Mod(modid = SpawnerManagement.MODID, name = SpawnerManagement.MODNAME, version = SpawnerManagement.VERSION)
+@Mod(modid = SpawnerManagement.MODID, name = SpawnerManagement.MODNAME, version = SpawnerManagement.VERSION, dependencies = "required-after:apotheosis")
 public class SpawnerManagement {
 
 	public static final String MODID = "spawnermanagement";
@@ -44,19 +49,27 @@ public class SpawnerManagement {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		config = new Configuration(e.getSuggestedConfigurationFile());
-		TileEntity.register("mob_spawner", TileSpawnerExt.class);
-		MinecraftForge.EVENT_BUS.register(this);
+		config = new Configuration(new File(Apotheosis.configDir, MODID + ".cfg"));
+		if (Apotheosis.enableSpawner) {
+			TileEntity.register("mob_spawner", TileSpawnerExt.class);
+			MinecraftForge.EVENT_BUS.register(this);
+		}
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
-		SpawnerModifiers.init(config);
+		if (Apotheosis.enableSpawner) SpawnerModifiers.init(config);
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		e.getRegistry().register(new BlockSpawnerExt());
+		Block b;
+		e.getRegistry().register(b = new BlockSpawnerExt());
+		ForgeRegistries.ITEMS.register(new ItemBlock(b) {
+			public String getCreatorModId(ItemStack stack) {
+				return MODID;
+			}
+		}.setRegistryName(b.getRegistryName()));
 	}
 
 	@SubscribeEvent

@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
@@ -132,6 +133,9 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 				tile.redstoneEnabled = !inverse;
 				stack.shrink(1);
 				return true;
+			} else if (stack.getItem() == Items.SPAWN_EGG) {
+				tile.getSpawnerBaseLogic().potentialSpawns.clear();
+				return false; //False so the interaction still goes through to the spawn egg.
 			}
 		}
 		return false;

@@ -11,8 +11,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 version = "1.12.2-1.0.0"
-group= "shadows.spawn"
-archivesBaseName = "SpawnerManagement"
+group= "shadows"
+archivesBaseName = "Apotheosis"
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {
@@ -56,6 +56,8 @@ processResources
 
 jar {
     manifest {
-        attributes 'FMLAT': 'spawn_at.cfg'
+        attributes 'FMLAT': 'apotheosis_at.cfg'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+        attributes 'FMLCorePlugin': 'shadows.ApotheosisCore'
     }
 }
