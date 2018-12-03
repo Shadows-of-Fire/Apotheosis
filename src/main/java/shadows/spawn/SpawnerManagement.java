@@ -36,6 +36,7 @@ import shadows.Apotheosis;
 @Mod(modid = SpawnerManagement.MODID, name = SpawnerManagement.MODNAME, version = SpawnerManagement.VERSION, dependencies = "required-after:apotheosis")
 public class SpawnerManagement {
 
+	//TODO: Roll into Apotheosis
 	public static final String MODID = "spawnermanagement";
 	public static final String MODNAME = "Spawner Management";
 	public static final String VERSION = "1.0.0";
