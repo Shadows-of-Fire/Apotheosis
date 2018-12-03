@@ -95,16 +95,11 @@ public class SpawnerManagement {
 	public void handleUseItem(RightClickBlock e) {
 		if (e.getWorld().getBlockState(e.getPos()).getBlock() == Blocks.MOB_SPAWNER) {
 			ItemStack s = e.getItemStack();
-			if (matchesAny(s, SpawnerModifiers.checkPlayers, SpawnerModifiers.maxDelay, SpawnerModifiers.minDelay, SpawnerModifiers.nearbyEntities, SpawnerModifiers.playerDist, SpawnerModifiers.spawnConditions, SpawnerModifiers.spawnCount, SpawnerModifiers.spawnRange, SpawnerModifiers.ignoreCap, SpawnerModifiers.redstone)) {
-				e.setUseBlock(Result.ALLOW);
-			}
+			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
+				if (sm.matches(s)) {
+					e.setUseBlock(Result.ALLOW);
+				}
 		}
-	}
-
-	static boolean matchesAny(ItemStack in, ItemStack... matches) {
-		for (ItemStack i : matches)
-			if (ItemStack.areItemsEqual(in, i)) return true;
-		return false;
 	}
 
 }

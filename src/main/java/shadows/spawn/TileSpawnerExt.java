@@ -91,7 +91,7 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 		private boolean isActivated() {
 			BlockPos blockpos = this.getSpawnerPosition();
 			boolean flag = ignoresPlayers || this.getSpawnerWorld().isAnyPlayerWithinRangeAt(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, this.activatingRangeFromPlayer);
-			return flag && (!redstoneEnabled || !world.isBlockPowered(blockpos));
+			return flag && (!redstoneEnabled || world.isBlockPowered(blockpos));
 		}
 
 		private void resetTimer() {

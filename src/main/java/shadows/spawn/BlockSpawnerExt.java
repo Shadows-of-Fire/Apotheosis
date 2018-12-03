@@ -13,18 +13,16 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -85,57 +83,13 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileSpawnerExt) {
 			TileSpawnerExt tile = (TileSpawnerExt) te;
-			MobSpawnerBaseLogic log = tile.spawnerLogic;
-			boolean inverse = hand == EnumHand.MAIN_HAND && ItemStack.areItemsEqual(SpawnerModifiers.inverseItem, player.getHeldItemOffhand());
-			if (ItemStack.areItemsEqual(stack, SpawnerModifiers.minDelay)) {
-				log.minSpawnDelay += inverse ? 5 : -5;
-				log.minSpawnDelay = MathHelper.clamp(log.minSpawnDelay, 0, Short.MAX_VALUE);
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.maxDelay)) {
-				log.maxSpawnDelay += inverse ? 5 : -5;
-				log.maxSpawnDelay = MathHelper.clamp(log.maxSpawnDelay, 10, Short.MAX_VALUE);
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.spawnCount)) {
-				log.spawnCount += inverse ? -1 : 1;
-				log.spawnCount = MathHelper.clamp(log.spawnCount, 1, Short.MAX_VALUE);
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.nearbyEntities)) {
-				log.maxNearbyEntities += inverse ? -1 : 1;
-				log.maxNearbyEntities = MathHelper.clamp(log.maxNearbyEntities, 0, Short.MAX_VALUE);
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.playerDist)) {
-				log.activatingRangeFromPlayer += inverse ? -2 : 2;
-				log.activatingRangeFromPlayer = MathHelper.clamp(log.activatingRangeFromPlayer, 0, Short.MAX_VALUE);
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.spawnRange)) {
-				log.spawnRange += inverse ? -1 : 1;
-				log.spawnRange = MathHelper.clamp(log.spawnRange, 0, Short.MAX_VALUE);
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.spawnConditions)) {
-				tile.ignoresConditions = !inverse;
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.checkPlayers)) {
-				tile.ignoresPlayers = !inverse;
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.ignoreCap)) {
-				tile.ignoresCap = !inverse;
-				stack.shrink(1);
-				return true;
-			} else if (ItemStack.areItemsEqual(stack, SpawnerModifiers.redstone)) {
-				tile.redstoneEnabled = !inverse;
-				stack.shrink(1);
-				return true;
-			} else if (stack.getItem() == Items.SPAWN_EGG) {
-				tile.getSpawnerBaseLogic().potentialSpawns.clear();
-				return false; //False so the interaction still goes through to the spawn egg.
+			boolean inverse = SpawnerModifiers.inverseItem.apply(player.getHeldItem(hand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND));
+			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
+				if (sm.matches(stack)) {
+					sm.modify(tile, inverse);
+					stack.shrink(1);
+					return sm.returnVal();
+				}
 			}
 		}
 		return false;
@@ -144,7 +98,7 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("spawner")) {
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("spawner", Constants.NBT.TAG_COMPOUND)) {
 			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("spawner");
 			tooltip.add(I18n.format("spw.info.entity", EntityList.getTranslationName(new ResourceLocation(tag.getCompoundTag("SpawnData").getString("id")))));
 			tooltip.add(I18n.format("spw.waila.mindelay", tag.getShort("MinSpawnDelay")));
