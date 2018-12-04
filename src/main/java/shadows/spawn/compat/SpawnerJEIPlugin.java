@@ -31,7 +31,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerWrapper(SpawnerModifiers.minDelay, "MinSpawnDelay", -5, "spw.editmindelay"),
 				new SpawnerWrapper(SpawnerModifiers.maxDelay, "MaxSpawnDelay", -5, "spw.editmaxdelay"),
 				new SpawnerWrapper(SpawnerModifiers.spawnCount, "SpawnCount", 1, "spw.editspawncount"),
-				new SpawnerWrapper(SpawnerModifiers.nearbyEntities, "MaxNearbyEntities", 3, "spw.editnearby"),
+				new SpawnerWrapper(SpawnerModifiers.nearbyEntities, "MaxNearbyEntities", 2, "spw.editnearby"),
 				new SpawnerWrapper(SpawnerModifiers.playerDist, "RequiredPlayerRange", 2, "spw.editplayer"),
 				new SpawnerWrapper(SpawnerModifiers.spawnRange, "SpawnRange", 1, "spw.editspawn"),
 				new SpawnerWrapper(SpawnerModifiers.spawnConditions, "ignore_conditions", true, "spw.ignoreconditions"),

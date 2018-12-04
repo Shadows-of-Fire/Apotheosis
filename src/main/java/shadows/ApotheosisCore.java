@@ -24,7 +24,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String pCapClass = "net/minecraft/entity/player/PlayerCapabilities";
 	static String pStackClass = "net/minecraft/item/ItemStack";
 
-	public static final Logger LOG = LogManager.getLogger("Apotheosis Core");
+	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
 	@Override
 	public String[] getASMTransformerClass() {

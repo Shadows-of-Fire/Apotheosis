@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import shadows.Apotheosis;
-import shadows.Apotheosis.ApotheosisInit;
+import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.placebo.util.PlaceboUtil;
 
 public class EnchantabilityTweaker {
@@ -21,7 +21,7 @@ public class EnchantabilityTweaker {
 	public static final BlockStuddedBookshelf BOOKSHELF = null;
 
 	@SubscribeEvent
-	public void init(ApotheosisInit e) {
+	public void init(ApotheosisPreInit e) {
 		setEnch(ToolMaterial.GOLD, 40);
 		setEnch(ArmorMaterial.GOLD, 40);
 	}

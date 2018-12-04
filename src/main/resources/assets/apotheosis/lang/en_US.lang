@@ -1,3 +1,4 @@
+//Spawner Module
 enchantment.spw.capturing=Capturing
 
 spw.waila.mindelay=Min Delay: %s
@@ -30,3 +31,6 @@ spw.redstone=Enables redstone control
 
 spw.instructions=Spawners can be modified with various items via right clicking on them.\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\nSpawners will also be dropped by silk-touch.
 spw.capturing=The capturing enchantment gives monsters a chance to drop their spawn egg.\n+0.4% chance per level.
+
+//Enchantment Module
+tile.apotheosis.bookshelf.name=Gold Studded Bookshelf

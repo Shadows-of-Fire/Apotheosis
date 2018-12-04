@@ -8,7 +8,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.config.Constants;
 import net.minecraft.client.resources.I18n;
-import shadows.spawn.SpawnerManagement;
+import shadows.Apotheosis;
 
 public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 
@@ -30,7 +30,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 
 	@Override
 	public String getModName() {
-		return SpawnerManagement.MODID;
+		return Apotheosis.MODID;
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	public void setRecipe(IRecipeLayout layout, SpawnerWrapper wrap, IIngredients ing) {
 		IGuiItemStackGroup stacks = layout.getItemStacks();
 		stacks.init(0, true, 24, 0);
-		stacks.init(1, true, 49+24, 0);
-		stacks.init(2, false, 107+24, 0);
+		stacks.init(1, true, 49 + 24, 0);
+		stacks.init(2, false, 107 + 24, 0);
 		stacks.set(ing);
 	}
 

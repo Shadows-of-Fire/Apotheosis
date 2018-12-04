@@ -45,8 +45,8 @@ public class SpawnerModifiers {
 				readStackCfg(config.getString("Spawn Count Modifier", "general", "minecraft:fermented_spider_eye", "The item that increases the spawn count of spawners.  1 per item.")),
 				(a, inv) -> a.spawnCount = Math.max(0, a.spawnCount + (!inv ? 1 : -1)));
 		nearbyEntities = new SpawnerModifier(
-				readStackCfg(config.getString("Nearby Entity Modifier", "general", "minecraft:ghast_tear", "The item that increases the max nearby entities of spawners.  3 per item.")),
-				(a, inv) -> a.maxNearbyEntities = Math.max(0, a.maxNearbyEntities + (!inv ? 3 : -3)));
+				readStackCfg(config.getString("Nearby Entity Modifier", "general", "minecraft:ghast_tear", "The item that increases the max nearby entities of spawners.  2 per item.")),
+				(a, inv) -> a.maxNearbyEntities = Math.max(0, a.maxNearbyEntities + (!inv ? 2 : -2)));
 		playerDist = new SpawnerModifier(
 				readStackCfg(config.getString("Player Distance Modifier", "general", "minecraft:prismarine_crystals", "The item that increases the player activation range of spawners.  2 block radius per item.")),
 				(a, inv) -> a.activatingRangeFromPlayer = Math.max(0, a.activatingRangeFromPlayer + (!inv ? 2 : -2)));

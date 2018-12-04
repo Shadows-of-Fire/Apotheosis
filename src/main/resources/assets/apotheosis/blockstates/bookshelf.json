@@ -3,8 +3,8 @@
 	"defaults": {
 		"model": "cube_column",
 		"textures": {
-			"end": "apotheosis:blocks/studded_bookshelf_top",
-			"side": "apotheosis:blocks/studded_bookshelf"
+			"end": "blocks/nether_brick",
+			"side": "apotheosis:blocks/nether_bookshelf"
 		}
 	},
 	"variants": {
