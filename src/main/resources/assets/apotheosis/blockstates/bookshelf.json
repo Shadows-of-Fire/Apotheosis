@@ -1,0 +1,13 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "cube_column",
+		"textures": {
+			"end": "apotheosis:blocks/studded_bookshelf_top",
+			"side": "apotheosis:blocks/studded_bookshelf"
+		}
+	},
+	"variants": {
+		"normal": [{}]
+	}
+}

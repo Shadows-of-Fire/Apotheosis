@@ -13,12 +13,14 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean enableAnvil = true;
+	public static boolean enableEnch = true;
 
 	public static String updateRepair;
 	public static String capsIsCreative;
 	public static String empty;
 	public static String drawForeground;
 	public static String format;
+	public static String calcStackEnch;
 	static String pCapClass = "net/minecraft/entity/player/PlayerCapabilities";
 	static String pStackClass = "net/minecraft/item/ItemStack";
 
@@ -26,7 +28,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { "shadows.anvil.AnvilCapRemover" };
+		return new String[] { "shadows.anvil.AnvilCapRemover", "shadows.ench.EnchCapRemover" };
 	}
 
 	@Override
@@ -46,6 +48,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		capsIsCreative = dev ? "isCreativeMode" : "d";
 		empty = dev ? "EMPTY" : "a";
 		drawForeground = dev ? "drawGuiContainerForegroundLayer" : "c";
+		calcStackEnch = dev ? "calcItemStackEnchantability" : "a";
 		if (!dev) {
 			pCapClass = FMLDeobfuscatingRemapper.INSTANCE.unmap(pCapClass);
 			pStackClass = FMLDeobfuscatingRemapper.INSTANCE.unmap(pStackClass);
@@ -58,7 +61,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isRepairOutput(MethodNode m) {
-		return m.name.equals(ApotheosisCore.updateRepair) && m.desc.equals("()V");
+		return m.name.equals(updateRepair) && m.desc.equals("()V");
 	}
 
 	public static boolean isCapIsCreative(FieldInsnNode fn) {
@@ -70,7 +73,11 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isDrawForeground(MethodNode m) {
-		return m.name.equals(ApotheosisCore.drawForeground) && m.desc.equals("(II)V");
+		return m.name.equals(drawForeground) && m.desc.equals("(II)V");
+	}
+
+	public static boolean isCalcStackEnch(MethodNode m) {
+		return m.name.equals(calcStackEnch) && m.desc.equals("(Ljava/util/Random;IILnet/minecraft/item/ItemStack;)I");
 	}
 
 }
