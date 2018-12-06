@@ -34,7 +34,9 @@ public class Apotheosis {
 	public void preInit(FMLPreInitializationEvent e) {
 		configDir = new File(e.getModConfigurationDirectory(), MODID);
 		config = new Configuration(new File(configDir, MODID + ".cfg"));
+
 		ApotheosisCore.enableAnvil = config.getBoolean("Enable Anvil Cap Removal", "asm", true, "If the anvil cap remover tweak is enabled.");
+		ApotheosisCore.enableInvis = config.getBoolean("Enable Invisibility Tweak", "asm", true, "If potion effects are removed for invisibility.");
 
 		ApotheosisCore.enableEnch = config.getBoolean("Enable Enchantment Cap Removal", "asm", true, "If the enchantment cap remover tweak is enabled.");
 		if (ApotheosisCore.enableEnch) MinecraftForge.EVENT_BUS.register(new EnchantabilityTweaker());
