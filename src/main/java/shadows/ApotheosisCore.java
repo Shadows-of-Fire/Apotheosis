@@ -82,7 +82,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isCalcStackEnch(MethodNode m) {
-		return m.name.equals(calcStackEnch) && m.desc.equals("(Ljava/util/Random;IILnet/minecraft/item/ItemStack;)I");
+		return m.name.equals(calcStackEnch) && m.desc.equals(String.format("(Ljava/util/Random;IIL%s;)I", pStackClass));
 	}
 
 	public static boolean isShowParticles(MethodNode m) {

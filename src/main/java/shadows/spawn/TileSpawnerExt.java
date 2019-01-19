@@ -142,14 +142,23 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 					boolean flag = false;
 
 					for (int i = 0; i < this.spawnCount; ++i) {
-						NBTTagCompound nbttagcompound = this.spawnData.getNbt();
-						NBTTagList nbttaglist = nbttagcompound.getTagList("Pos", 6);
+						NBTTagCompound tag = this.spawnData.getNbt();
+						NBTTagList posList = tag.getTagList("Pos", 6);
 						World world = this.getSpawnerWorld();
-						int j = nbttaglist.tagCount();
-						double d0 = j >= 1 ? nbttaglist.getDoubleAt(0) : blockpos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
-						double d1 = j >= 2 ? nbttaglist.getDoubleAt(1) : (double) (blockpos.getY() + world.rand.nextInt(3) - 1);
-						double d2 = j >= 3 ? nbttaglist.getDoubleAt(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
-						Entity entity = AnvilChunkLoader.readWorldEntityPos(nbttagcompound, world, d0, d1, d2, false);
+						int j = posList.tagCount();
+						double x = j >= 1 ? posList.getDoubleAt(0) : blockpos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
+						double y = j >= 2 ? posList.getDoubleAt(1) : (double) (blockpos.getY() + world.rand.nextInt(3) - 1);
+						double z = j >= 3 ? posList.getDoubleAt(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
+
+						if (tag.hasKey("Offset")) {
+							NBTTagList offsets = tag.getTagList("Offset", 6);
+							j = posList.tagCount();
+							x = j >= 1 ? this.getSpawnerPosition().getX() + offsets.getDoubleAt(0) : x;
+							y = j >= 2 ? this.getSpawnerPosition().getY() + offsets.getDoubleAt(1) : y;
+							z = j >= 3 ? this.getSpawnerPosition().getZ() + offsets.getDoubleAt(2) : z;
+						}
+
+						Entity entity = AnvilChunkLoader.readWorldEntityPos(tag, world, x, y, z, false);
 
 						if (entity == null) { return; }
 
