@@ -32,7 +32,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { "shadows.anvil.AnvilCapRemover", "shadows.ench.EnchCapRemover", "shadows.potion.InvisParticleRemover" };
+		return new String[] { "shadows.anvil.AnvilCapRemover", "shadows.ench.EnchCapRemover", "shadows.potion.InvisParticleRemover", "shadows.spawn.SpawnerFixerTransformer" };
 	}
 
 	@Override
