@@ -59,6 +59,7 @@ public class SpawnerManagement {
 		Block b;
 		e.getRegistry().register(b = new BlockSpawnerExt());
 		ForgeRegistries.ITEMS.register(new ItemBlock(b) {
+			@Override
 			public String getCreatorModId(ItemStack stack) {
 				return Apotheosis.MODID;
 			}

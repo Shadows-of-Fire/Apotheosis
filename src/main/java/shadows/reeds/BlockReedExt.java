@@ -20,6 +20,7 @@ public class BlockReedExt extends BlockReed {
 		setRegistryName(new ResourceLocation("reeds"));
 	}
 
+	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (worldIn.getBlockState(pos.down()).getBlock() == this || this.checkForDrop(worldIn, pos, state)) {
 			if (worldIn.isAirBlock(pos.up())) {

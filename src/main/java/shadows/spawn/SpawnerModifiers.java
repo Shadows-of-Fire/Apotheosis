@@ -16,6 +16,7 @@ public class SpawnerModifiers {
 
 	public static final List<SpawnerModifier> MODIFIERS = new ArrayList<>();
 	public static final SpawnerModifier ENTITY = new SpawnerModifier(new ItemStack(Items.SPAWN_EGG), (a, b) -> a.potentialSpawns.clear()) {
+		@Override
 		public boolean returnVal() {
 			return false;
 		}
