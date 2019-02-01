@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import shadows.deadly.DeadlyWorld;
+import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchantabilityTweaker;
 import shadows.reeds.InfiniteReeds;
 import shadows.spawn.SpawnerManagement;
@@ -50,7 +50,7 @@ public class Apotheosis {
 		if (enableReed) MinecraftForge.EVENT_BUS.register(new InfiniteReeds());
 
 		deadlyWorld = config.getBoolean("Enable Deadly World", "general", true, "If the deadly world module is loaded.");
-		if (deadlyWorld) MinecraftForge.EVENT_BUS.register(new DeadlyWorld());
+		if (deadlyWorld) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
 
 		if (config.hasChanged()) config.save();
 		MinecraftForge.EVENT_BUS.post(new ApotheosisPreInit(e));

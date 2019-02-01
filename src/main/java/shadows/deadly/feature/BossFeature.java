@@ -2,6 +2,7 @@ package shadows.deadly.feature;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -32,7 +33,9 @@ public class BossFeature extends WorldFeature {
 		int z = pos.getZ() + world.rand.nextInt(16);
 		int y = world.rand.nextInt(30) + 12;
 		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
-		BossItem item = WeightedRandom.getRandomItem(world.rand, BOSS_ITEMS);
+		Random rand = new Random();
+		rand.setSeed(mPos.toLong());
+		BossItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
 		for (byte state = 0; y > 5; y--) {
 			if (world.getBlockState(mPos.setPos(x, y, z)).getBlockFaceShape(world, mPos, EnumFacing.UP) == BlockFaceShape.SOLID) {
 				if (state == 0) {
@@ -50,13 +53,11 @@ public class BossFeature extends WorldFeature {
 
 	@Override
 	public boolean canBePlaced(World world, BlockPos pos) {
-		//NO-OP
 		return false;
 	}
 
 	@Override
 	public void place(World world, BlockPos pos) {
-		//NO-OP
 	}
 
 	public static void init() {

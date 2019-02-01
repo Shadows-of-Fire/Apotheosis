@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import shadows.deadly.DeadlyWorld;
+import shadows.deadly.DeadlyModule;
 import shadows.deadly.util.DeadlyConstants;
 
 /**
@@ -144,9 +144,9 @@ public class DeadlyConfig {
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) brutalWeightedMobs.add(Pair.of(weight, name));
-				else DeadlyWorld.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
+				else DeadlyModule.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyWorld.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
+				DeadlyModule.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
 			}
 		}
 
@@ -159,9 +159,9 @@ public class DeadlyConfig {
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) dungeonWeightedMobs.add(Pair.of(weight, name));
-				else DeadlyWorld.LOGGER.error("Invalid dungeon spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
+				else DeadlyModule.LOGGER.error("Invalid dungeon spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyWorld.LOGGER.error("Invalid dungeon spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
+				DeadlyModule.LOGGER.error("Invalid dungeon spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
 			}
 		}
 
@@ -174,9 +174,9 @@ public class DeadlyConfig {
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && e != null) bossWeightedMobs.add(Pair.of(weight, name));
-				else DeadlyWorld.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
+				else DeadlyModule.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyWorld.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored!  (Invalid format)");
+				DeadlyModule.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored!  (Invalid format)");
 			}
 		}
 
@@ -189,9 +189,9 @@ public class DeadlyConfig {
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) swarmWeightedMobs.add(Pair.of(weight, name));
-				else DeadlyWorld.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
+				else DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyWorld.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
+				DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
 			}
 		}
 
@@ -218,9 +218,9 @@ public class DeadlyConfig {
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) rogueSpawnerWeightedMobs.add(Pair.of(weight, name));
-				else DeadlyWorld.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
+				else DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyWorld.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
+				DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
 			}
 		}
 

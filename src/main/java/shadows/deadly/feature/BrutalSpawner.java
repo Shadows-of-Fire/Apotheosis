@@ -1,4 +1,4 @@
-package shadows.deadly.feature.spawners;
+package shadows.deadly.feature;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +20,6 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConfig;
-import shadows.deadly.feature.SpawnerItem;
-import shadows.deadly.feature.WorldFeature;
-import shadows.deadly.feature.WorldGenerator;
 import shadows.deadly.util.ChestBuilder;
 import shadows.deadly.util.DeadlyConstants;
 import shadows.deadly.util.TagBuilder;
@@ -31,7 +28,6 @@ import shadows.placebo.util.SpawnerBuilder;
 
 /**
  * Rogue spawners that have stronger-than-usual mobs.
- * TODO: Spawners are too common
  * @author Shadows
  *
  */
@@ -90,7 +86,6 @@ public class BrutalSpawner extends WorldFeature {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x, y + y1, z + 1), Blocks.VINE, 4, 2);
 			}
 		}
-		WorldGenerator.debugPillar(world, pos.up(3));
 	}
 
 	@Override

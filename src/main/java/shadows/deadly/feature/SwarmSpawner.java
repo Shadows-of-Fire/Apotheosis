@@ -1,4 +1,4 @@
-package shadows.deadly.feature.spawners;
+package shadows.deadly.feature;
 
 import java.util.ArrayList;
 
@@ -7,8 +7,6 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConfig;
-import shadows.deadly.feature.SpawnerItem;
-import shadows.deadly.feature.WorldFeature;
 import shadows.deadly.util.ChestBuilder;
 import shadows.deadly.util.DeadlyConstants;
 import shadows.placebo.util.PlaceboUtil;
