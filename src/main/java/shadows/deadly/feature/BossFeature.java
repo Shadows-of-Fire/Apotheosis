@@ -29,18 +29,19 @@ public class BossFeature extends WorldFeature {
 	@Override
 	public void generate(World world, BlockPos pos) {
 		if (DeadlyConfig.bossChance <= world.rand.nextDouble()) return;
-		int x = pos.getX() + world.rand.nextInt(16);
-		int z = pos.getZ() + world.rand.nextInt(16);
-		int y = world.rand.nextInt(30) + 12;
-		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
 		Random rand = new Random();
-		rand.setSeed(mPos.toLong());
+		rand.setSeed(pos.toLong());
+		int x = pos.getX() + rand.nextInt(16);
+		int z = pos.getZ() + rand.nextInt(16);
+		int y = rand.nextInt(30) + 12;
+		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
 		BossItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
 		for (byte state = 0; y > 5; y--) {
 			if (world.getBlockState(mPos.setPos(x, y, z)).getBlockFaceShape(world, mPos, EnumFacing.UP) == BlockFaceShape.SOLID) {
 				if (state == 0) {
 					if (!world.checkBlockCollision(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
-						item.place(world, mPos);
+						item.place(world, mPos, rand);
+						WorldGenerator.debugPillar(world, mPos);
 						return;
 					}
 					state = -1;

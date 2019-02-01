@@ -91,9 +91,13 @@ public class BossItem extends WorldFeatureItem {
 
 	@Override
 	public void place(World world, BlockPos pos) {
+		place(world, pos, world.rand);
+	}
+	
+	public void place(World world, BlockPos pos, Random rand) {
 		EntityLiving entity = (EntityLiving) entityEntry.newInstance(world);
-		initBoss(world.rand, entity);
-		entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, world.rand.nextFloat() * 360.0F, 0.0F);
+		initBoss(rand, entity);
+		entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		entity.enablePersistence();
 		world.spawnEntity(entity);
 	}
@@ -121,11 +125,14 @@ public class BossItem extends WorldFeatureItem {
 
 		int guaranteed = ThreadLocalRandom.current().nextInt(6);
 
+		ItemStack stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed]);
+		while(guaranteed == 1 || stack.isEmpty()) stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed = ThreadLocalRandom.current().nextInt(6)]);
+		
 		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat());
 
-			ItemStack stack = entity.getItemStackFromSlot(s);
+			stack = entity.getItemStackFromSlot(s);
 
 			if (s.ordinal() == guaranteed) {
 				List<Enchantment> enchants = EquipmentType.getTypeForStack(stack).getEnchants();
