@@ -1,4 +1,4 @@
-package shadows.deadly.items;
+package shadows.deadly.gen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.deadly.config.DeadlyConfig;
-import shadows.deadly.feature.WorldFeatureItem;
+import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
 import shadows.placebo.util.AttributeHelper;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.util.ArmorSet;

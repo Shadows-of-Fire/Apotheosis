@@ -1,4 +1,4 @@
-package shadows.deadly.feature;
+package shadows.deadly.gen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConfig;
-import shadows.deadly.items.BossItem;
 
 /**
  * Generates boss monsters with powerful stats, named gear, and incredible loot.

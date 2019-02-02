@@ -12,9 +12,7 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -29,7 +27,6 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedSpawnerEntity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.deadly.config.DeadlyConfig;
@@ -312,91 +309,8 @@ public class TagBuilder {
 	}
 
 	/**
-	 * Similar to the arrow spawner, but with fire blocks.  Very safe.
-	 * @return Pure death.
+	 * Forcibly gives skeletons bows.
 	 */
-	public static SpawnerBuilder createFireSpawner() {
-		SpawnerBuilder sb = new SpawnerBuilder();
-		WeightedSpawnerEntity[] potentials = new WeightedSpawnerEntity[48];
-		NBTTagCompound baseTag = TagBuilder.fallingBlock(Blocks.FIRE.getDefaultState(), 1, 1);
-		baseTag.setShort("Fire", (short) 2000);
-		double step = 2.0 * Math.PI / 16;
-		double rotation = step / 2.0;
-		double elevation = 0.1;
-		double xMotion, zMotion;
-		for (int i = 48; i-- > 0;) {
-			potentials[i] = new WeightedSpawnerEntity(1, baseTag.copy());
-			rotation += step;
-			xMotion = MathHelper.sin((float) rotation) * 0.2;
-			zMotion = MathHelper.cos((float) rotation) * 0.2;
-			TagBuilder.setOffset(potentials[i].getNbt(), 0.5, 1.5, 0.5);
-			TagBuilder.setMotion(potentials[i].getNbt(), xMotion, elevation, zMotion);
-			if (i % 16 == 0) {
-				rotation += step / 2.0;
-				elevation += 0.25;
-			}
-		}
-		sb.setType(EntityFallingBlock.class);
-		sb.setMinAndMaxDelay(2, 4);
-		sb.setSpawnCount(1);
-		sb.setSpawnRange(-1);
-		sb.setPlayerRange(5);
-		sb.setSpawnData(baseTag);
-		sb.setPotentials(potentials);
-		return sb;
-	}
-
-	/**
-	 * Makes a potion trap.  Queries config for level/duration.
-	 */
-	public static SpawnerBuilder createPotionSpawner(Potion... potions) {
-		SpawnerBuilder sb = new SpawnerBuilder();
-
-		ItemStack stack = new ItemStack(Items.SPLASH_POTION);
-		List<PotionEffect> fx = new ArrayList<>();
-		for (Potion p : potions) {
-			int level = DeadlyConfig.getPotencyForType(p) - 1;
-			int duration = DeadlyConfig.getDurationForType(p);
-			if (level >= 0) fx.add(new PotionEffect(p, duration, level));
-		}
-
-		PotionUtils.appendEffects(stack, fx);
-
-		NBTTagCompound entity = getDefaultTag(EntityPotion.class);
-		entity.setTag("Potion", stack.writeToNBT(new NBTTagCompound()));
-
-		TagBuilder.setOffset(entity, 0.5, 1.1, 0.5);
-		TagBuilder.setMotion(entity, 0.0, 0.35, 0.0);
-		sb.setType(EntityPotion.class);
-		sb.setMinAndMaxDelay(30, 50);
-		sb.setSpawnRange(-1);
-		sb.setPlayerRange(3);
-		sb.setSpawnCount(1);
-		sb.setSpawnData(entity);
-		return sb;
-	}
-
-	/**
-	 * Makes your standard proximity bomb.
-	 */
-	public static SpawnerBuilder createTNTSpawner() {
-		SpawnerBuilder sb = new SpawnerBuilder();
-		NBTTagCompound tag = TNT.copy();
-		tag.setShort(FUSE, (short) 5);
-		TagBuilder.setMotion(tag, 0.0, 0.4, 0.0);
-		TagBuilder.setOffset(tag, 0.5, 0.5, 0.5);
-		sb.setType(EntityTNTPrimed.class);
-		sb.setDelay(0);
-		sb.setMinAndMaxDelay(50, 100);
-		sb.setSpawnRange(2);
-		sb.setPlayerRange(5);
-		sb.setSpawnCount(4);
-		sb.setMaxNearbyEntities(3);
-		sb.setSpawnData(tag);
-		sb.setPotentials(new WeightedSpawnerEntity(1, tag));
-		return sb;
-	}
-
 	public static NBTTagCompound checkForSkeleton(NBTTagCompound entity) {
 		if (EntitySkeleton.class.isAssignableFrom(EntityList.getClass(new ResourceLocation(entity.getString(SpawnerBuilder.ID))))) {
 			TagBuilder.setEquipment(entity, new ItemStack(Items.BOW));

@@ -1,4 +1,4 @@
-package shadows.deadly.feature;
+package shadows.deadly.gen;
 
 import java.util.ArrayList;
 import java.util.List;

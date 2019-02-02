@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -58,9 +57,7 @@ public class DeadlyConfig {
 		c.load();
 
 		DeadlyConstants.BRUTAL_SPAWNER_STATS.load(c);
-		DeadlyConstants.DUNGEON_SPAWNER_STATS.load(c);
 		DeadlyConstants.SWARM_SPAWNER_STATS.load(c);
-		DeadlyConstants.NEST_SPAWNER_STATS.load(c);
 
 		brutalFireRes = c.getBoolean("Fire Resist", DeadlyConstants.BRUTAL_MOBS, true, "If brutal mobs will be immune to fire damage.");
 		brutalRegenLevel = c.getInt("Regeneration", DeadlyConstants.BRUTAL_MOBS, 1, 0, 5, "If brutal mobs regen hp (0 heals 1 health every 2.5 sec, each rank halves the time between heals.)");
@@ -135,14 +132,6 @@ public class DeadlyConfig {
 
 	public static int getWeightForEntry(EntityEntry e) {
 		return config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
-	}
-
-	public static int getPotencyForType(Potion p) {
-		return config.getInt("Potency: " + p.getRegistryName().toString(), DeadlyConstants.POTION_TRAPS, 1, 0, 5, "The level of this potion.  If 0, this potion will not be used.");
-	}
-
-	public static int getDurationForType(Potion p) {
-		return config.getInt("Duration: " + p.getRegistryName().toString(), DeadlyConstants.POTION_TRAPS, 200, 200, Integer.MAX_VALUE, "The duration (in ticks) of this potion.");
 	}
 
 }

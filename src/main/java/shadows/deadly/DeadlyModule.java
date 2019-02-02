@@ -12,10 +12,10 @@ import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.deadly.config.DeadlyConfig;
-import shadows.deadly.feature.BossFeature;
-import shadows.deadly.feature.BrutalSpawner;
-import shadows.deadly.feature.SwarmSpawner;
-import shadows.deadly.feature.WorldGenerator;
+import shadows.deadly.gen.BossFeature;
+import shadows.deadly.gen.BrutalSpawner;
+import shadows.deadly.gen.SwarmSpawner;
+import shadows.deadly.gen.WorldGenerator;
 
 public class DeadlyModule {
 

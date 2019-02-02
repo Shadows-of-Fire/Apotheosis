@@ -1,4 +1,4 @@
-package shadows.deadly.feature;
+package shadows.deadly.gen;
 
 import java.util.List;
 
@@ -9,8 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConstants;
-import shadows.deadly.config.SpawnerStats;
+import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
 import shadows.placebo.util.SpawnerBuilder;
+import shadows.util.SpawnerStats;
 import shadows.util.TagBuilder;
 
 public class SpawnerItem extends WorldFeatureItem {

@@ -1,4 +1,4 @@
-package shadows.deadly.config;
+package shadows.util;
 
 import net.minecraftforge.common.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
