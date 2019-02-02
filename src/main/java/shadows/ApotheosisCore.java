@@ -7,8 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
@@ -17,6 +15,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	public static boolean enableAnvil = true;
 	public static boolean enableEnch = true;
 	public static boolean enableInvis = true;
+	public static boolean enablePInf = true;
 
 	static String updateRepair;
 	static String capsIsCreative;
@@ -32,7 +31,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { "shadows.anvil.AnvilCapRemover", "shadows.ench.EnchCapRemover", "shadows.potion.InvisParticleRemover", "shadows.spawn.SpawnerFixerTransformer" };
+		return new String[] { "shadows.anvil.AnvilCapRemover", "shadows.ench.EnchCapRemover", "shadows.potion.InvisParticleRemover", "shadows.potion.InfinityTweaker", "shadows.spawn.SpawnerFixerTransformer" };
 	}
 
 	@Override
@@ -87,12 +86,6 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isShowParticles(MethodNode m) {
 		return m.name.equals(doesShowParticles) && m.desc.equals("()Z");
-	}
-
-	public static boolean doesShowParticles(Object e) {
-		PotionEffect ef = (PotionEffect) e;
-		if (ef.getPotion() == MobEffects.INVISIBILITY) return false;
-		return ef.showParticles;
 	}
 
 }

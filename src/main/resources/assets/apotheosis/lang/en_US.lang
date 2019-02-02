@@ -37,6 +37,14 @@ jei.spw.capturing=The capturing enchantment gives monsters a chance to drop thei
 tile.apotheosis.hellshelf.name=Hell-Infused Bookshelf
 info.apotheosis.hellshelf=Provides double enchanting power.
 info.apotheosis.cobweb=Can be used to remove enchantments.
+info.apotheosis.masterwork=Masterwork Enchantment
+info.apotheosis.enchanting=Enchanting tables can now exceed 30 levels.  Some enchantments may only show up past level 30.
+enchantment.apotheosis.hell_infusion=Hell Infusion
+info.apotheosis.hell_infusion=Deals extra damage in the Nether.
 
 //Vanilla
 tile.reeds.name=Sugar Cane
+
+//Potion Module
+enchantment.apotheosis.potion_infinity=True Infinity
+info.apotheosis.potion_infinity=Makes all arrows infinite.

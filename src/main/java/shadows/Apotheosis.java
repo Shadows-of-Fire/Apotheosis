@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
+import shadows.potion.PotionModule;
 import shadows.reeds.InfiniteReeds;
 import shadows.spawn.SpawnerModule;
 
@@ -32,6 +33,7 @@ public class Apotheosis {
 	public static boolean enableReed = true;
 	public static boolean enableDeadly = true;
 	public static boolean enableEnch = true;
+	public static boolean enablePotion = true;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -41,11 +43,12 @@ public class Apotheosis {
 		ApotheosisCore.enableAnvil = config.getBoolean("Enable Anvil Cap Removal", "asm", true, "If the anvil cap remover tweak is enabled.");
 		ApotheosisCore.enableInvis = config.getBoolean("Enable Invisibility Tweak", "asm", true, "If potion effects are removed for invisibility.");
 		ApotheosisCore.enableEnch = config.getBoolean("Enable Enchantment Cap Removal", "asm", true, "If the enchantment cap remover tweak is enabled.");
+		ApotheosisCore.enablePInf = config.getBoolean("Enable Potion Infinity", "asm", true, "If the potion infinity enchantment actually works.");
 		
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		if (enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
 
-		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If spawner management is enabled.");
+		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		if (enableSpawner) MinecraftForge.EVENT_BUS.register(new SpawnerModule());
 
 		enableReed = config.getBoolean("Enable Infinite Sugarcane", "general", true, "If sugarcane will grow infinitely.");
@@ -53,6 +56,9 @@ public class Apotheosis {
 
 		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		if (enableDeadly) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
+
+		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
+		if (enablePotion) MinecraftForge.EVENT_BUS.register(new PotionModule());
 
 		if (config.hasChanged()) config.save();
 		MinecraftForge.EVENT_BUS.post(new ApotheosisPreInit(e));

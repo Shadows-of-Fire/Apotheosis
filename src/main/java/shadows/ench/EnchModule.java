@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -23,6 +24,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.crafting.IngredientNBT;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -39,6 +41,11 @@ public class EnchModule {
 
 	@ObjectHolder("minecraft:web")
 	public static final Item COBWEB = null;
+
+	@ObjectHolder("apotheosis:hell_infusion")
+	public static final EnchantmentHellInfused HELL_INFUSION = null;
+
+	public static float localAtkStrength = 1;
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
@@ -65,6 +72,11 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
+	public void enchants(Register<Enchantment> e) {
+		e.getRegistry().register(new EnchantmentHellInfused().setRegistryName(Apotheosis.MODID, "hell_infusion"));
+	}
+
+	@SubscribeEvent
 	public void models(ModelRegistryEvent e) {
 		PlaceboUtil.sMRL(HELLSHELF, 0, "normal");
 	}
@@ -72,7 +84,8 @@ public class EnchModule {
 	@SubscribeEvent
 	public void recipes(Register<IRecipe> e) {
 		RecipeHelper helper = new RecipeHelper(Apotheosis.MODID, Apotheosis.MODNAME, new ArrayList<>());
-		Ingredient pot = new IngredientNBT(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION)) {};
+		Ingredient pot = new IngredientNBT(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION)) {
+		};
 		helper.addShaped(HELLSHELF, 3, 3, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK);
 		helper.register(e.getRegistry());
 	}
@@ -86,6 +99,11 @@ public class EnchModule {
 			e.setMaterialCost(1);
 			e.setOutput(stack);
 		}
+	}
+
+	@SubscribeEvent
+	public void trackCooldown(AttackEntityEvent e) {
+		localAtkStrength = e.getEntityPlayer().getCooledAttackStrength(0.5F);
 	}
 
 	public static void setEnch(ToolMaterial mat, int ench) {

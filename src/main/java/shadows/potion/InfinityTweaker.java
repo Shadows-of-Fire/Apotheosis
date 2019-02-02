@@ -16,40 +16,42 @@ import shadows.ApotheosisCore;
 import shadows.CustomClassWriter;
 
 @SortingIndex(1001)
-public class InvisParticleRemover implements IClassTransformer {
+public class InfinityTweaker implements IClassTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		if (!ApotheosisCore.enableInvis) return basicClass;
-		if ("net.minecraft.potion.PotionEffect".equals(transformedName)) return transformPotionEffect(basicClass);
+		if (!ApotheosisCore.enablePInf) return basicClass;
+		if ("net.minecraft.item.ItemArrow".equals(transformedName)) return transformPotionEffect(basicClass);
 		return basicClass;
 	}
 
 	static byte[] transformPotionEffect(byte[] basicClass) {
-		ApotheosisCore.LOG.info("Transforming PotionEffect...");
+		ApotheosisCore.LOG.info("Transforming ItemArrow...");
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);
 		classReader.accept(classNode, 0);
-		MethodNode doesShowParticles = null;
+		MethodNode isInfinite = null;
 		for (MethodNode m : classNode.methods) {
-			if (ApotheosisCore.isShowParticles(m)) {
-				doesShowParticles = m;
+			if (m.name.equals("isInfinite")) {
+				isInfinite = m;
 				break;
 			}
 		}
 
-		if (doesShowParticles != null) {
+		if (isInfinite != null) {
 			InsnList insn = new InsnList();
-			insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/PotionModule", "doesShowParticles", "(Ljava/lang/Object;)Z", false));
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 2));
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 3));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/PotionModule", "isInfinite", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z", false));
 			insn.add(new InsnNode(Opcodes.IRETURN));
-			doesShowParticles.instructions.insert(insn);
+			isInfinite.instructions.insert(insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 			classNode.accept(writer);
-			ApotheosisCore.LOG.info("Successfully transformed PotionEffect");
+			ApotheosisCore.LOG.info("Successfully transformed ItemArrow");
 			return writer.toByteArray();
 		}
-		ApotheosisCore.LOG.info("Failed transforming PotionEffect");
+		ApotheosisCore.LOG.info("Failed transforming ItemArrow");
 		return basicClass;
 	}
 

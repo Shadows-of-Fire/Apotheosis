@@ -18,7 +18,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -45,7 +44,6 @@ public class SpawnerModule {
 		config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
 		if (Apotheosis.enableSpawner) {
 			TileEntity.register("mob_spawner", TileSpawnerExt.class);
-			MinecraftForge.EVENT_BUS.register(this);
 		}
 	}
 
