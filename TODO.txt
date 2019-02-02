@@ -5,4 +5,3 @@ More stuff involving obscure vanilla materials (prismarine, chorus, shulker, rab
 Probably document this stuff.
 Unbreaking on Anvils.  Efficiency to decrease enchantment cost?
 Maybe more vanilla-esque enchantments.
-Make potion arrows better to use.  Never really had a reason to so far.
