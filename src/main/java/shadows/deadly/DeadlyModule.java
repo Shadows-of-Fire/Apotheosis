@@ -16,7 +16,6 @@ import shadows.deadly.feature.BossFeature;
 import shadows.deadly.feature.BrutalSpawner;
 import shadows.deadly.feature.SwarmSpawner;
 import shadows.deadly.feature.WorldGenerator;
-import shadows.deadly.util.ChestBuilder;
 
 public class DeadlyModule {
 
@@ -32,7 +31,7 @@ public class DeadlyModule {
 		DeadlyConfig.init();
 		BrutalSpawner.init();
 		BossFeature.init();
-		ChestBuilder.init();
+		DeadlyLoot.init();
 		SwarmSpawner.init();
 		WorldGenerator.init();
 		GameRegistry.registerWorldGenerator(new WorldGenerator(), 255);

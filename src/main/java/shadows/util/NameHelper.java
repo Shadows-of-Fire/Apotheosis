@@ -1,4 +1,4 @@
-package shadows.deadly.util;
+package shadows.util;
 
 import java.util.HashMap;
 import java.util.Map;

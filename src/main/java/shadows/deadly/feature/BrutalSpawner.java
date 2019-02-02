@@ -2,6 +2,7 @@ package shadows.deadly.feature;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.entity.EntityList;
@@ -19,12 +20,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import shadows.deadly.DeadlyLoot;
 import shadows.deadly.config.DeadlyConfig;
-import shadows.deadly.util.ChestBuilder;
-import shadows.deadly.util.DeadlyConstants;
-import shadows.deadly.util.TagBuilder;
+import shadows.deadly.config.DeadlyConstants;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.SpawnerBuilder;
+import shadows.util.ChestBuilder;
+import shadows.util.TagBuilder;
 
 /**
  * Rogue spawners that have stronger-than-usual mobs.
@@ -37,17 +39,18 @@ public class BrutalSpawner extends WorldFeature {
 	public static final List<SpawnerItem> BRUTAL_SPAWNERS = new ArrayList<>();
 
 	@Override
-	public void generate(World world, BlockPos pos) {
-		if (DeadlyConfig.brutalSpawnerChance <= world.rand.nextDouble()) return;
-		int x = pos.getX() + MathHelper.getInt(world.rand, 4, 12);
-		int z = pos.getY() + MathHelper.getInt(world.rand, 4, 12);
-		int y = world.rand.nextInt(40) + 11;
+	public void generate(World world, BlockPos pos, Random rand) {
+		if (DeadlyConfig.brutalSpawnerChance <= rand.nextDouble()) return;
+		int x = pos.getX() + MathHelper.getInt(rand, 4, 12);
+		int z = pos.getY() + MathHelper.getInt(rand, 4, 12);
+		int y = rand.nextInt(40) + 11;
 		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
 		for (byte state = 0; y > 4; y--) {
 			if (world.getBlockState(mPos.setPos(x, y, z)).isNormalCube()) {
 				if (state == 0) {
-					if (this.canBePlaced(world, mPos.up())) {
-						this.place(world, mPos.up());
+					if (this.canBePlaced(world, mPos.up(), rand)) {
+						this.place(world, mPos.up(), rand);
+						WorldGenerator.SUCCESSES.add(pos.toLong());
 						return;
 					}
 					state = -1;
@@ -59,30 +62,30 @@ public class BrutalSpawner extends WorldFeature {
 	}
 
 	@Override
-	public boolean canBePlaced(World world, BlockPos pos) {
-		return world.isAirBlock(pos) && world.isAirBlock(pos.up());
+	public boolean canBePlaced(World world, BlockPos pos, Random rand) {
+		return world.isAirBlock(pos) || world.isAirBlock(pos.up());
 	}
 
 	@Override
-	public void place(World world, BlockPos pos) {
+	public void place(World world, BlockPos pos, Random rand) {
 		MutableBlockPos mPos = new MutableBlockPos(pos);
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
-		ChestBuilder.place(world, world.rand, pos.down(), ChestBuilder.SPAWNER_BRUTAL);
-		WeightedRandom.getRandomItem(world.rand, BRUTAL_SPAWNERS).place(world, pos);
+		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
+		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
 		world.setBlockState(pos.up(), Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CRACKED), 2);
 		for (int y1 = 0; y1 < 2; y1++) {
-			if (world.rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x - 1, y + y1, z))) {
+			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x - 1, y + y1, z))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x - 1, y + y1, z), Blocks.VINE, 8, 2);
 			}
-			if (world.rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x + 1, y + y1, z))) {
+			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x + 1, y + y1, z))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x + 1, y + y1, z), Blocks.VINE, 2, 2);
 			}
-			if (world.rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x, y + y1, z - 1))) {
+			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x, y + y1, z - 1))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x, y + y1, z - 1), Blocks.VINE, 1, 2);
 			}
-			if (world.rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x, y + y1, z + 1))) {
+			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x, y + y1, z + 1))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x, y + y1, z + 1), Blocks.VINE, 4, 2);
 			}
 		}

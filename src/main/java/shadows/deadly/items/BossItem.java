@@ -35,13 +35,14 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.feature.WorldFeatureItem;
-import shadows.deadly.util.ArmorSet;
-import shadows.deadly.util.NameHelper;
 import shadows.placebo.util.AttributeHelper;
 import shadows.placebo.util.PlaceboUtil;
+import shadows.util.ArmorSet;
+import shadows.util.NameHelper;
 
 /**
- * This class is functional.
+ * Setup information for bosses.
+ * TODO: Make configurable.
  * @author Shadows
  *
  */

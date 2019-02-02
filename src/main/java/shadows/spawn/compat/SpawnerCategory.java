@@ -25,7 +25,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 
 	@Override
 	public String getTitle() {
-		return I18n.format("spw.jei.title");
+		return I18n.format("jei.spw.title");
 	}
 
 	@Override

@@ -1,18 +1,15 @@
-package shadows.deadly.util;
+package shadows.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityTNTPrimed;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.projectile.EntityPotion;
@@ -22,7 +19,6 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagFloat;
@@ -37,7 +33,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.deadly.config.DeadlyConfig;
-import shadows.deadly.util.DeadlyConstants.TrapType;
 import shadows.placebo.util.SpawnerBuilder;
 
 /**
@@ -263,24 +258,6 @@ public class TagBuilder {
 		return tag;
 	}
 
-	/**
-	 * Makes a creeper spawner, with charged chance respecting the config.
-	 * @return A SpawnerBuilder typed to Creeper, with potentials for Creeper and Charged Creeper.
-	 */
-	public static SpawnerBuilder createMobSpawnerCreeper() {
-		SpawnerBuilder sb = new SpawnerBuilder();
-		NBTTagCompound creeper = getDefaultTag(EntityCreeper.class);
-		sb.setSpawnData(creeper);
-		if (DeadlyConfig.chargedCreeperChance > 0) {
-			int normal = 100 - DeadlyConfig.chargedCreeperChance;
-			int charged = DeadlyConfig.chargedCreeperChance;
-			NBTTagCompound chargedNbt = creeper.copy();
-			chargedNbt.setBoolean("powered", true);
-			sb.setPotentials(new WeightedSpawnerEntity(normal, creeper.copy()), new WeightedSpawnerEntity(charged, chargedNbt));
-		}
-		return sb;
-	}
-
 	private static List<WeightedSpawnerEntity> randomPotentials = new ArrayList<>();
 
 	/**
@@ -311,43 +288,6 @@ public class TagBuilder {
 	}
 
 	/**
-	 * Makes a spawner for traps (tnt hat spawner).
-	 * @param type The trap type, which decides the base spawner type to setup.
-	 * @param entity The entity, if using TrapType.NORMAL, otherwise null.
-	 * @return
-	 */
-	public static SpawnerBuilder createMobSpawnerTrap(TrapType type, @Nullable ResourceLocation entity) {
-		SpawnerBuilder sb;
-
-		if (type == DeadlyConstants.TrapType.RANDOM) sb = TagBuilder.createMobSpawnerRandom();
-		else if (type == DeadlyConstants.TrapType.CREEPER) sb = TagBuilder.createMobSpawnerCreeper();
-		else sb = new SpawnerBuilder().setType(entity);
-
-		NBTTagCompound data = sb.getSpawnData();
-		if (type == DeadlyConstants.TrapType.NORMAL && EntitySkeleton.class.isAssignableFrom(EntityList.getClass(entity))) {
-			setEquipment(data, new ItemStack(Items.BOW));
-		}
-
-		applyTNTHat(data);
-
-		NBTTagList potentials = sb.getPotentials();
-		for (NBTBase tag : potentials) {
-			NBTTagCompound entityTag = ((NBTTagCompound) tag).getCompoundTag(SpawnerBuilder.ENTITY);
-			TagBuilder.applyTNTHat(entityTag);
-			TagBuilder.setOffset(entityTag, 0.5, 1.0, 0.5);
-		}
-
-		TagBuilder.setOffset(data, 0.5, 1.0, 0.5);
-		sb.setType(EntityTNTPrimed.class);
-		sb.setDelay(0);
-		sb.setSpawnRange(0);
-		sb.setPlayerRange(4);
-		sb.setSpawnCount(1);
-		sb.setSpawnData(data);
-		return sb;
-	}
-
-	/**
 	 * Converts a standard entity tag into one of tnt riding the entity.
 	 * @param tag An entity written to NBT.
 	 * @return The provided entity, now with TNT on it's head.
@@ -369,57 +309,6 @@ public class TagBuilder {
 		for (NBTTagCompound nbt : passengers)
 			list.appendTag(nbt);
 		return entity;
-	}
-
-	/**
-	 * Makes your standard arrow shooter.
-	 * @param onFire If the arrows are flaming.
-	 * @return A SpawnerBuilder, setup to make arrow towers.
-	 */
-	public static SpawnerBuilder createArrowSpawner(boolean onFire) {
-		SpawnerBuilder sb = new SpawnerBuilder();
-		WeightedSpawnerEntity[] potentials = new WeightedSpawnerEntity[48];
-		NBTTagCompound baseTag = ARROW.copy();
-		baseTag.setByte(ARROW_PICKUP, (byte) 2);
-		baseTag.setDouble(ARROW_DAMAGE, DeadlyConfig.towerArrowDamage);
-		if (onFire) {
-			baseTag.setShort(ENTITY_FIRE, (short) 2000);
-		}
-		double step = 2.0 * Math.PI / 16;
-		double rotation = step / 2.0;
-		double elevation = -0.15;
-		double xMotion, zMotion, xOffset, zOffset;
-		for (int i = 48; i-- > 0;) {
-			potentials[i] = new WeightedSpawnerEntity(1, baseTag.copy());
-			rotation += step;
-			xMotion = MathHelper.sin((float) rotation);
-			zMotion = MathHelper.cos((float) rotation);
-			if (Math.abs(xMotion) < Math.abs(zMotion)) {
-				xOffset = xMotion * 0.6 + 0.5;
-				zOffset = zMotion < 0.0 ? -0.1 : 1.1;
-			} else if (Math.abs(xMotion) > Math.abs(zMotion)) {
-				xOffset = xMotion < 0.0 ? -0.1 : 1.1;
-				zOffset = zMotion * 0.6 + 0.5;
-			} else {
-				xOffset = xMotion < 0.0 ? -0.1 : 1.1;
-				zOffset = zMotion < 0.0 ? -0.1 : 1.1;
-			}
-			TagBuilder.setOffset(potentials[i].getNbt(), xOffset, elevation + 0.35, zOffset);
-			TagBuilder.setMotion(potentials[i].getNbt(), xMotion, elevation, zMotion);
-			if (i % 16 == 0) {
-				rotation += step / 2.0;
-				elevation += 0.15;
-			}
-		}
-		sb.setType(EntityTippedArrow.class);
-		sb.setDelay(-1);
-		sb.setMinAndMaxDelay(4, 8);
-		sb.setSpawnCount(1);
-		sb.setSpawnRange(-1);
-		sb.setPlayerRange(8);
-		sb.setSpawnData(baseTag);
-		sb.setPotentials(potentials);
-		return sb;
 	}
 
 	/**
@@ -515,85 +404,4 @@ public class TagBuilder {
 		return entity;
 	}
 
-	/// Makes your standard proximity bomb.
-	/// NYI, this won't work as-is.
-	/*
-	public static NBTTagCompound createCaveInSpawner(String type) {
-		SpawnerBuilder sb = new SpawnerBuilder();
-		String[] types = { "FallingSand", "Fireball" };
-		int[] weights = { 24, 1 };
-		NBTTagCompound[] properties = new NBTTagCompound[2];
-		if (type.equals("normal")) {
-			properties[0] = TagBuilder.fallingBlock(Blocks.COBBLESTONE.getDefaultState(), 1, 1.5F);
-		} else if (type.equals("silverfish")) {
-			properties[0] = TagBuilder.fallingBlock(Blocks.MONSTER_EGG.getDefaultState().withProperty(BlockSilverfish.VARIANT, BlockSilverfish.EnumType.COBBLESTONE), 1, 1.5F);
-		} else if (type.equals("gravel")) {
-			properties[0] = TagBuilder.fallingBlock(Blocks.GRAVEL.getDefaultState(), 1, 1);
-		} else return null;
-		properties[1] = new NBTTagCompound();
-		properties[1].setInteger("ExplosionPower", 2);
-		properties[1].setTag("direction", TagBuilder.doubleNBTTagList(0.0, -1.0, 0.0));
-		TagBuilder.setPosition(properties[1], 0.5, 0.5, 0.5);
-		tag.setType("FallingSand");
-		tag.setDelay(50);
-		tag.setMinAndMaxDelay(3, 6);
-		tag.setSpawnRange(9);
-		tag.setPlayerRange(7);
-		tag.setSpawnCount(16);
-		tag.setMaxNearbyEntities(Short.MAX_VALUE);
-		tag.setSpawnData(properties[0]);
-		tag.setPotentials(types, weights, properties);
-		return tag.spawnerTag;
-	}
-	*/
-
-	/// Makes your standard fireball shooter.
-	/* NYI - Fireballs cannot be spawned yet.
-	 * public static NBTTagCompound createFireballSpawner() {
-	 * TagBuilder tag = new TagBuilder(new NBTTagCompound());
-	 * String[] types = new String[48];
-	 * int[] weights = new int[48];
-	 * NBTTagCompound[] properties = new NBTTagCompound[48];
-	 * NBTTagCompound baseTag = new NBTTagCompound();
-	 * double step = 2.0 * Math.PI / (double)16;
-	 * double rotation = step / 2.0;
-	 * double elevation = -0.02;
-	 * double xMotion, zMotion, xOffset, zOffset;
-	 * for (int i = 48; i-- > 0;) {
-	 * types[i] = "SmallFireball";
-	 * weights[i] = 1;
-	 * properties[i] = (NBTTagCompound)baseTag.copy();
-	 * rotation += step;
-	 * xMotion = (double)MathHelper.sin((float)rotation) * 0.02;
-	 * zMotion = (double)MathHelper.cos((float)rotation) * 0.02;
-	 * if (Math.abs(xMotion) < Math.abs(zMotion)) {
-	 * xOffset = xMotion * 0.6 + 0.5;
-	 * zOffset = zMotion < 0.0 ? -0.1 : 1.1;
-	 * }
-	 * else if (Math.abs(xMotion) > Math.abs(zMotion)) {
-	 * xOffset = xMotion < 0.0 ? -0.1 : 1.1;
-	 * zOffset = zMotion * 0.6 + 0.5;
-	 * }
-	 * else {
-	 * xOffset = xMotion < 0.0 ? -0.1 : 1.1;
-	 * zOffset = zMotion < 0.0 ? -0.1 : 1.1;
-	 * }
-	 * setPosition(properties[i], xOffset, 0.5, zOffset);
-	 * setFireballHeading(properties[i], xMotion, elevation, zMotion);
-	 * if (i % 16 == 0) {
-	 * rotation += step / 2.0;
-	 * elevation += 0.02;
-	 * }
-	 * }
-	 * tag.setType("SmallFireball");
-	 * tag.setDelay(-1);
-	 * tag.setMinAndMaxDelay(6, 10);
-	 * tag.setSpawnCount(1);
-	 * tag.setSpawnRange(-1);
-	 * tag.setPlayerRange(10);
-	 * tag.setSpawnData(baseTag);
-	 * tag.setPotentials(types, weights, properties);
-	 * return tag.spawnerTag;
-	 * }
-	 */
 }

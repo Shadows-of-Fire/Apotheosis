@@ -30,7 +30,8 @@ public class Apotheosis {
 	public static Configuration config;
 	public static boolean enableSpawner = true;
 	public static boolean enableReed = true;
-	public static boolean deadlyWorld = true;
+	public static boolean enableDeadly = true;
+	public static boolean enableEnch = true;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -39,18 +40,19 @@ public class Apotheosis {
 
 		ApotheosisCore.enableAnvil = config.getBoolean("Enable Anvil Cap Removal", "asm", true, "If the anvil cap remover tweak is enabled.");
 		ApotheosisCore.enableInvis = config.getBoolean("Enable Invisibility Tweak", "asm", true, "If potion effects are removed for invisibility.");
-
 		ApotheosisCore.enableEnch = config.getBoolean("Enable Enchantment Cap Removal", "asm", true, "If the enchantment cap remover tweak is enabled.");
-		if (ApotheosisCore.enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
+		
+		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
+		if (enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
 
-		enableSpawner = config.getBoolean("Enable Spawner Management", "general", true, "If spawner management is enabled.");
+		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If spawner management is enabled.");
 		if (enableSpawner) MinecraftForge.EVENT_BUS.register(new SpawnerModule());
 
 		enableReed = config.getBoolean("Enable Infinite Sugarcane", "general", true, "If sugarcane will grow infinitely.");
 		if (enableReed) MinecraftForge.EVENT_BUS.register(new InfiniteReeds());
 
-		deadlyWorld = config.getBoolean("Enable Deadly World", "general", true, "If the deadly world module is loaded.");
-		if (deadlyWorld) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
+		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		if (enableDeadly) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
 
 		if (config.hasChanged()) config.save();
 		MinecraftForge.EVENT_BUS.post(new ApotheosisPreInit(e));

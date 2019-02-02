@@ -1,36 +1,37 @@
 //Spawner Module
 enchantment.spw.capturing=Capturing
 
-spw.waila.mindelay=Min Delay: %s
-spw.waila.maxdelay=Max Delay: %s
-spw.waila.spawncount=Spawn Count: %s
-spw.waila.maxnearby=Max Nearby Entities: %s
-spw.waila.playerrange=Player Range: %s
-spw.waila.spawnrange=Spawn Range: %s
-spw.waila.ignoreplayers=Ignores Players: %s
-spw.waila.ignoreconditions=Ignores Conditions: %s
-spw.waila.ignorecap=Ignores Spawn Cap: %s
-spw.waila.redstone=Needs Redstone: %s
-spw.waila.sneak=Sneak for Info
-spw.info.entity=Entity: %s
-spw.jei.title=Spawner Modification
+info.spw.capturing=Makes mobs have a chance to drop their spawn egg.
+info.spw.entity=Entity: %s
 
-spw.invert=Inverts the behavior of modifiers
-spw.invert2=Must be held in opposite hand
-spw.editmindelay=Decreases minimum spawn delay
-spw.editmaxdelay=Decreases maximum spawn delay
-spw.editspawncount=Increases spawn count
-spw.editnearby=Increases max nearby entities
-spw.editplayer=Increases required player range
-spw.editspawn=Increases spawn range
-spw.ignoreconditions=Ignores spawn conditions
-spw.ignoreplayers=Ingores nearby players
-spw.changeentity=Changes entity spawned
-spw.ignorecap=Ignores spawn cap
-spw.redstone=Enables redstone control
+waila.spw.mindelay=Min Delay: %s
+waila.spw.maxdelay=Max Delay: %s
+waila.spw.spawncount=Spawn Count: %s
+waila.spw.maxnearby=Max Nearby Entities: %s
+waila.spw.playerrange=Player Range: %s
+waila.spw.spawnrange=Spawn Range: %s
+waila.spw.ignoreplayers=Ignores Players: %s
+waila.spw.ignoreconditions=Ignores Conditions: %s
+waila.spw.ignorecap=Ignores Spawn Cap: %s
+waila.spw.redstone=Needs Redstone: %s
+waila.spw.sneak=Sneak for Info
 
-spw.instructions=Spawners can be modified with various items via right clicking on them.\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\nSpawners will also be dropped by silk-touch.
-spw.capturing=The capturing enchantment gives monsters a chance to drop their spawn egg.\n+0.4% chance per level.
+jei.spw.title=Spawner Modification
+jei.spw.invert=Inverts the behavior of modifiers
+jei.spw.invert2=Must be held in opposite hand
+jei.spw.editmindelay=Decreases minimum spawn delay
+jei.spw.editmaxdelay=Decreases maximum spawn delay
+jei.spw.editspawncount=Increases spawn count
+jei.spw.editnearby=Increases max nearby entities
+jei.spw.editplayer=Increases required player range
+jei.spw.editspawn=Increases spawn range
+jei.spw.ignoreconditions=Ignores spawn conditions
+jei.spw.ignoreplayers=Ingores nearby players
+jei.spw.changeentity=Changes entity spawned
+jei.spw.ignorecap=Ignores spawn cap
+jei.spw.redstone=Enables redstone control
+jei.spw.instructions=Spawners can be modified with various items via right clicking on them.\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\nSpawners will also be dropped by silk-touch.
+jei.spw.capturing=The capturing enchantment gives monsters a chance to drop their spawn egg.\n+0.4% chance per level.
 
 //Enchantment Module
 tile.apotheosis.hellshelf.name=Hell-Infused Bookshelf

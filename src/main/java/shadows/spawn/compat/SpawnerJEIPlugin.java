@@ -28,23 +28,23 @@ public class SpawnerJEIPlugin implements IModPlugin {
 		ItemMonsterPlacer.applyEntityIdToItemStack(egg, new ResourceLocation("witch"));
 		//Formatter::off
 		reg.addRecipes(ImmutableSet.of(
-				new SpawnerWrapper(SpawnerModifiers.minDelay, "MinSpawnDelay", -5, "spw.editmindelay"),
-				new SpawnerWrapper(SpawnerModifiers.maxDelay, "MaxSpawnDelay", -5, "spw.editmaxdelay"),
-				new SpawnerWrapper(SpawnerModifiers.spawnCount, "SpawnCount", 1, "spw.editspawncount"),
-				new SpawnerWrapper(SpawnerModifiers.nearbyEntities, "MaxNearbyEntities", 2, "spw.editnearby"),
-				new SpawnerWrapper(SpawnerModifiers.playerDist, "RequiredPlayerRange", 2, "spw.editplayer"),
-				new SpawnerWrapper(SpawnerModifiers.spawnRange, "SpawnRange", 1, "spw.editspawn"),
-				new SpawnerWrapper(SpawnerModifiers.spawnConditions, "ignore_conditions", true, "spw.ignoreconditions"),
-				new SpawnerWrapper(SpawnerModifiers.checkPlayers, "ignore_players", true, "spw.ignoreplayers"),
-				new SpawnerWrapper(SpawnerModifiers.ignoreCap, "ignore_cap", true, "spw.ignorecap"),
-				new SpawnerWrapper(SpawnerModifiers.redstone, "redstone_control", true, "spw.redstone"),
-				new SpawnerWrapper(egg, new ResourceLocation("witch"), "spw.changeentity"),
+				new SpawnerWrapper(SpawnerModifiers.minDelay, "MinSpawnDelay", -5, "jei.spw.editmindelay"),
+				new SpawnerWrapper(SpawnerModifiers.maxDelay, "MaxSpawnDelay", -5, "jei.spw.editmaxdelay"),
+				new SpawnerWrapper(SpawnerModifiers.spawnCount, "SpawnCount", 1, "jei.spw.editspawncount"),
+				new SpawnerWrapper(SpawnerModifiers.nearbyEntities, "MaxNearbyEntities", 2, "jei.spw.editnearby"),
+				new SpawnerWrapper(SpawnerModifiers.playerDist, "RequiredPlayerRange", 2, "jei.spw.editplayer"),
+				new SpawnerWrapper(SpawnerModifiers.spawnRange, "SpawnRange", 1, "jei.spw.editspawn"),
+				new SpawnerWrapper(SpawnerModifiers.spawnConditions, "ignore_conditions", true, "jei.spw.ignoreconditions"),
+				new SpawnerWrapper(SpawnerModifiers.checkPlayers, "ignore_players", true, "jei.spw.ignoreplayers"),
+				new SpawnerWrapper(SpawnerModifiers.ignoreCap, "ignore_cap", true, "jei.spw.ignorecap"),
+				new SpawnerWrapper(SpawnerModifiers.redstone, "redstone_control", true, "jei.spw.redstone"),
+				new SpawnerWrapper(egg, new ResourceLocation("witch"), "jei.spw.changeentity"),
 				new SpawnerInverseWrapper()
 				), SPAWNER);
 		//Formatter:on
 
-		reg.addIngredientInfo(new ItemStack(Blocks.MOB_SPAWNER), VanillaTypes.ITEM, "spw.instructions");
-		reg.addIngredientInfo(new ItemStack(Items.SPAWN_EGG), VanillaTypes.ITEM, "spw.capturing");
+		reg.addIngredientInfo(new ItemStack(Blocks.MOB_SPAWNER), VanillaTypes.ITEM, "jei.spw.instructions");
+		reg.addIngredientInfo(new ItemStack(Items.SPAWN_EGG), VanillaTypes.ITEM, "jei.spw.capturing");
 	}
 
 	@Override

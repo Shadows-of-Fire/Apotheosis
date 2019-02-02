@@ -38,17 +38,17 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IWailaDataProvider {
 		if (Keyboard.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode())) {
 			int[] stats = accessor.getNBTData().getIntArray(STATS);
 			if (stats.length != 10) return tooltip;
-			tooltip.add(I18n.format("spw.waila.mindelay", stats[0]));
-			tooltip.add(I18n.format("spw.waila.maxdelay", stats[1]));
-			tooltip.add(I18n.format("spw.waila.spawncount", stats[2]));
-			tooltip.add(I18n.format("spw.waila.maxnearby", stats[3]));
-			tooltip.add(I18n.format("spw.waila.playerrange", stats[4]));
-			tooltip.add(I18n.format("spw.waila.spawnrange", stats[5]));
-			tooltip.add(I18n.format("spw.waila.ignoreplayers", stats[6] == 1));
-			tooltip.add(I18n.format("spw.waila.ignoreconditions", stats[7] == 1));
-			tooltip.add(I18n.format("spw.waila.ignorecap", stats[8] == 1));
-			tooltip.add(I18n.format("spw.waila.redstone", stats[9] == 1));
-		} else tooltip.add(I18n.format("spw.waila.sneak"));
+			tooltip.add(I18n.format("waila.spw.mindelay", stats[0]));
+			tooltip.add(I18n.format("waila.spw.maxdelay", stats[1]));
+			tooltip.add(I18n.format("waila.spw.spawncount", stats[2]));
+			tooltip.add(I18n.format("waila.spw.maxnearby", stats[3]));
+			tooltip.add(I18n.format("waila.spw.playerrange", stats[4]));
+			tooltip.add(I18n.format("waila.spw.spawnrange", stats[5]));
+			tooltip.add(I18n.format("waila.spw.ignoreplayers", stats[6] == 1));
+			tooltip.add(I18n.format("waila.spw.ignoreconditions", stats[7] == 1));
+			tooltip.add(I18n.format("waila.spw.ignorecap", stats[8] == 1));
+			tooltip.add(I18n.format("waila.spw.redstone", stats[9] == 1));
+		} else tooltip.add(I18n.format("waila.spw.sneak"));
 		return tooltip;
 	}
 

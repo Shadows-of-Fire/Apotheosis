@@ -101,17 +101,17 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("spawner", Constants.NBT.TAG_COMPOUND)) {
 			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("spawner");
-			tooltip.add(I18n.format("spw.info.entity", EntityList.getTranslationName(new ResourceLocation(tag.getCompoundTag("SpawnData").getString("id")))));
-			tooltip.add(I18n.format("spw.waila.mindelay", tag.getShort("MinSpawnDelay")));
-			tooltip.add(I18n.format("spw.waila.maxdelay", tag.getShort("MaxSpawnDelay")));
-			tooltip.add(I18n.format("spw.waila.spawncount", tag.getShort("SpawnCount")));
-			tooltip.add(I18n.format("spw.waila.maxnearby", tag.getShort("MaxNearbyEntities")));
-			tooltip.add(I18n.format("spw.waila.playerrange", tag.getShort("RequiredPlayerRange")));
-			tooltip.add(I18n.format("spw.waila.spawnrange", tag.getShort("SpawnRange")));
-			tooltip.add(I18n.format("spw.waila.ignoreplayers", tag.getBoolean("ignore_players")));
-			tooltip.add(I18n.format("spw.waila.ignoreconditions", tag.getBoolean("ignore_conditions")));
-			tooltip.add(I18n.format("spw.waila.ignorecap", tag.getBoolean("ignore_cap")));
-			tooltip.add(I18n.format("spw.waila.redstone", tag.getBoolean("redstone_control")));
+			tooltip.add(I18n.format("info.spw.entity", EntityList.getTranslationName(new ResourceLocation(tag.getCompoundTag("SpawnData").getString("id")))));
+			tooltip.add(I18n.format("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
+			tooltip.add(I18n.format("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
+			tooltip.add(I18n.format("waila.spw.spawncount", tag.getShort("SpawnCount")));
+			tooltip.add(I18n.format("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
+			tooltip.add(I18n.format("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
+			tooltip.add(I18n.format("waila.spw.spawnrange", tag.getShort("SpawnRange")));
+			tooltip.add(I18n.format("waila.spw.ignoreplayers", tag.getBoolean("ignore_players")));
+			tooltip.add(I18n.format("waila.spw.ignoreconditions", tag.getBoolean("ignore_conditions")));
+			tooltip.add(I18n.format("waila.spw.ignorecap", tag.getBoolean("ignore_cap")));
+			tooltip.add(I18n.format("waila.spw.redstone", tag.getBoolean("redstone_control")));
 		}
 	}
 

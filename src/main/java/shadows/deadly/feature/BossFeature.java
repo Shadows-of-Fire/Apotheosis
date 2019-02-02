@@ -18,7 +18,6 @@ import shadows.deadly.items.BossItem;
 
 /**
  * Generates boss monsters with powerful stats, named gear, and incredible loot.
- * TODO: There may be a few issues relating to names being recycled very often.
  * @author Shadows
  *
  */
@@ -27,10 +26,8 @@ public class BossFeature extends WorldFeature {
 	public static final List<BossItem> BOSS_ITEMS = new ArrayList<>();
 
 	@Override
-	public void generate(World world, BlockPos pos) {
-		if (DeadlyConfig.bossChance <= world.rand.nextDouble()) return;
-		Random rand = new Random();
-		rand.setSeed(pos.toLong());
+	public void generate(World world, BlockPos pos, Random rand) {
+		if (DeadlyConfig.bossChance <= rand.nextDouble()) return;
 		int x = pos.getX() + rand.nextInt(16);
 		int z = pos.getZ() + rand.nextInt(16);
 		int y = rand.nextInt(30) + 12;
@@ -41,6 +38,7 @@ public class BossFeature extends WorldFeature {
 				if (state == 0) {
 					if (!world.checkBlockCollision(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 						item.place(world, mPos, rand);
+						WorldGenerator.SUCCESSES.add(pos.toLong());
 						return;
 					}
 					state = -1;
@@ -52,12 +50,12 @@ public class BossFeature extends WorldFeature {
 	}
 
 	@Override
-	public boolean canBePlaced(World world, BlockPos pos) {
+	public boolean canBePlaced(World world, BlockPos pos, Random rand) {
 		return false;
 	}
 
 	@Override
-	public void place(World world, BlockPos pos) {
+	public void place(World world, BlockPos pos, Random rand) {
 	}
 
 	public static void init() {
