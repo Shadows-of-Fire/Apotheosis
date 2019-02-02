@@ -69,7 +69,7 @@ public class SpawnerWrapper implements IRecipeWrapper {
 	public static class SpawnerInverseWrapper extends SpawnerWrapper {
 
 		public SpawnerInverseWrapper() {
-			super(null, "", false, "spw.invert", "spw.invert2");
+			super(null, "", false, "jei.spw.invert", "jei.spw.invert2");
 		}
 
 		@Override
