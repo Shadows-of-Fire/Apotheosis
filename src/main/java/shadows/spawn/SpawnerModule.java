@@ -31,7 +31,7 @@ import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
 
-public class SpawnerManagement {
+public class SpawnerModule {
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
 

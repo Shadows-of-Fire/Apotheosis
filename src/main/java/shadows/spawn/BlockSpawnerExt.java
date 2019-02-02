@@ -59,6 +59,7 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 			ItemStack s = new ItemStack(this);
 			if (te != null) te.writeToNBT(s.getOrCreateSubCompound("spawner"));
 			spawnAsEntity(world, pos, s);
+			player.getHeldItemMainhand().damageItem(35, player);
 		}
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
 		super.harvestBlock(world, player, pos, state, te, stack);

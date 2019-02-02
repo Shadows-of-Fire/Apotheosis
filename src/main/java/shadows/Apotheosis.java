@@ -15,9 +15,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
-import shadows.ench.EnchantabilityTweaker;
+import shadows.ench.EnchModule;
 import shadows.reeds.InfiniteReeds;
-import shadows.spawn.SpawnerManagement;
+import shadows.spawn.SpawnerModule;
 
 @Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,)", acceptableRemoteVersions = "*")
 public class Apotheosis {
@@ -41,10 +41,10 @@ public class Apotheosis {
 		ApotheosisCore.enableInvis = config.getBoolean("Enable Invisibility Tweak", "asm", true, "If potion effects are removed for invisibility.");
 
 		ApotheosisCore.enableEnch = config.getBoolean("Enable Enchantment Cap Removal", "asm", true, "If the enchantment cap remover tweak is enabled.");
-		if (ApotheosisCore.enableEnch) MinecraftForge.EVENT_BUS.register(new EnchantabilityTweaker());
+		if (ApotheosisCore.enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
 
 		enableSpawner = config.getBoolean("Enable Spawner Management", "general", true, "If spawner management is enabled.");
-		if (enableSpawner) MinecraftForge.EVENT_BUS.register(new SpawnerManagement());
+		if (enableSpawner) MinecraftForge.EVENT_BUS.register(new SpawnerModule());
 
 		enableReed = config.getBoolean("Enable Infinite Sugarcane", "general", true, "If sugarcane will grow infinitely.");
 		if (enableReed) MinecraftForge.EVENT_BUS.register(new InfiniteReeds());

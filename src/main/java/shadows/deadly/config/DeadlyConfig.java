@@ -135,7 +135,7 @@ public class DeadlyConfig {
 		spwanerTrapChance = c.getFloat("Spawner Trap Chance", DeadlyConstants.FREQUENCY, spwanerTrapChance, 0, 1, "The chance (per chunk) for a spawner trap to try spawning.");
 		towerChance = c.getFloat("Tower Chance", DeadlyConstants.FREQUENCY, towerChance, 0, 1, "The chance (per chunk) for an arrow tower to try spawning.");
 
-		String[] fromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  deadlyworld:random is a special name, used to generate a spawner that spawns any mob.");
+		String[] fromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 
 		for (String s : fromCfg) {
 			String[] split = s.split("@");
@@ -150,7 +150,7 @@ public class DeadlyConfig {
 			}
 		}
 
-		String[] dungeonFromCfg = c.getStringList("Dungeon Spawner Mobs", DeadlyConstants.DUNGEONS, DeadlyConstants.DUNGEON_DEFAULT_MOBS, "The possible spawn entries for dungeon spawners.  Format is weight@entity, entity is a registry name.  deadlyworld:random is a special name, used to generate a spawner that spawns any mob.");
+		String[] dungeonFromCfg = c.getStringList("Dungeon Spawner Mobs", DeadlyConstants.DUNGEONS, DeadlyConstants.DUNGEON_DEFAULT_MOBS, "The possible spawn entries for dungeon spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 
 		for (String s : dungeonFromCfg) {
 			String[] split = s.split("@");
@@ -209,7 +209,7 @@ public class DeadlyConfig {
 		spawnerChestChance = c.getFloat("Spawner Chest Chance", DeadlyConstants.SPAWNERS, spawnerChestChance, 0, 1, "Chance for a mob spawner to have a chest below it. If the spawner is armored, its chest will also be armored and have better loot.");
 		spawnerTrickChance = c.getFloat("Spawner Trick Chance", DeadlyConstants.SPAWNERS, spawnerTrickChance, 0, 1, "Chance for an armored mob spawner to be a chest instead, if it doesn't already have a chest below it.");
 
-		String[] rogueFromCfg = c.getStringList("Rogue Spawner Mobs", DeadlyConstants.SPAWNERS, DeadlyConstants.ROGUE_DEFAULT_MOBS, "The possible spawn entries for rogue spawners.  Format is weight@entity, entity is a registry name. deadlyworld:random is a special name, used to generate a spawner that spawns any mob.");
+		String[] rogueFromCfg = c.getStringList("Rogue Spawner Mobs", DeadlyConstants.SPAWNERS, DeadlyConstants.ROGUE_DEFAULT_MOBS, "The possible spawn entries for rogue spawners.  Format is weight@entity, entity is a registry name. apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 
 		for (String s : rogueFromCfg) {
 			String[] split = s.split("@");

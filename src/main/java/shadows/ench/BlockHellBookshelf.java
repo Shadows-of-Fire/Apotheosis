@@ -24,7 +24,7 @@ public class BlockHellBookshelf extends Block {
 		setHardness(2.0F);
 		setResistance(10.0F);
 		setSoundType(SoundType.STONE);
-		setTranslationKey(Apotheosis.MODID + ".bookshelf");
+		setTranslationKey(Apotheosis.MODID + ".hellshelf");
 		setRegistryName(name);
 		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 	}
@@ -37,7 +37,7 @@ public class BlockHellBookshelf extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> info, ITooltipFlag flag) {
-		info.add(I18n.format("ench.bookshelf.info"));
+		info.add(I18n.format("info.apotheosis.hellshelf"));
 	}
 
 }

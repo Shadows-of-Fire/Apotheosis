@@ -33,5 +33,9 @@ spw.instructions=Spawners can be modified with various items via right clicking 
 spw.capturing=The capturing enchantment gives monsters a chance to drop their spawn egg.\n+0.4% chance per level.
 
 //Enchantment Module
-tile.apotheosis.bookshelf.name=Hell-Infused Bookshelf
-ench.bookshelf.info=Provides double enchanting power
+tile.apotheosis.hellshelf.name=Hell-Infused Bookshelf
+info.apotheosis.hellshelf=Provides double enchanting power.
+info.apotheosis.cobweb=Can be used to remove enchantments.
+
+//Vanilla
+tile.reeds.name=Sugar Cane

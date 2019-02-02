@@ -41,7 +41,6 @@ public class BossFeature extends WorldFeature {
 				if (state == 0) {
 					if (!world.checkBlockCollision(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 						item.place(world, mPos, rand);
-						WorldGenerator.debugPillar(world, mPos);
 						return;
 					}
 					state = -1;
