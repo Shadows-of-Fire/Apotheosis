@@ -1,7 +1,6 @@
 package shadows.ench;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 
 import net.minecraft.block.Block;
@@ -15,13 +14,11 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.crafting.IngredientNBT;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -31,8 +28,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
+import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.placebo.util.PlaceboUtil;
-import shadows.placebo.util.RecipeHelper;
+import shadows.util.NBTIngredient;
 
 public class EnchModule {
 
@@ -82,12 +80,9 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
-	public void recipes(Register<IRecipe> e) {
-		RecipeHelper helper = new RecipeHelper(Apotheosis.MODID, Apotheosis.MODNAME, new ArrayList<>());
-		Ingredient pot = new IngredientNBT(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION)) {
-		};
-		helper.addShaped(HELLSHELF, 3, 3, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK);
-		helper.register(e.getRegistry());
+	public void recipes(ApotheosisRecipeEvent e) {
+		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION));
+		e.helper.addShaped(HELLSHELF, 3, 3, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK);
 	}
 
 	@SubscribeEvent

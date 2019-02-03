@@ -1,25 +1,35 @@
 package shadows;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.anvil.AnvilModule;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
+import shadows.placebo.util.RecipeHelper;
 import shadows.potion.PotionModule;
 import shadows.reeds.InfiniteReeds;
 import shadows.spawn.SpawnerModule;
+import shadows.util.NBTIngredient;
 
 @Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,)", acceptableRemoteVersions = "*")
 public class Apotheosis {
@@ -67,11 +77,19 @@ public class Apotheosis {
 
 		if (config.hasChanged()) config.save();
 		MinecraftForge.EVENT_BUS.post(new ApotheosisPreInit(e));
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
 		MinecraftForge.EVENT_BUS.post(new ApotheosisInit(e));
+	}
+
+	@SubscribeEvent
+	public void recipes(Register<IRecipe> e) {
+		RecipeHelper helper = new RecipeHelper(Apotheosis.MODID, Apotheosis.MODNAME, new ArrayList<>());
+		MinecraftForge.EVENT_BUS.post(new ApotheosisRecipeEvent(helper));
+		helper.register(e.getRegistry());
 	}
 
 	public static void registerOverrideBlock(IForgeRegistry<Block> reg, Block b, String modid) {
@@ -82,6 +100,10 @@ public class Apotheosis {
 				return modid;
 			}
 		}.setRegistryName(b.getRegistryName()));
+	}
+
+	public static Ingredient potionIngredient(PotionType type) {
+		return new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), type));
 	}
 
 	public static class ApotheosisPreInit extends Event {
@@ -97,6 +119,14 @@ public class Apotheosis {
 
 		private ApotheosisInit(FMLInitializationEvent ev) {
 			this.ev = ev;
+		}
+	}
+
+	public static class ApotheosisRecipeEvent extends Event {
+		public RecipeHelper helper;
+
+		private ApotheosisRecipeEvent(RecipeHelper helper) {
+			this.helper = helper;
 		}
 	}
 

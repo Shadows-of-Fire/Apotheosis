@@ -44,10 +44,17 @@ info.apotheosis.hell_infusion=Deals extra damage in the Nether.
 
 //Vanilla
 tile.reeds.name=Sugar Cane
+potion.potency.3=IV
 
 //Potion Module
 enchantment.apotheosis.potion_infinity=True Infinity
 info.apotheosis.potion_infinity=Makes all arrows infinite.
+potion.effect.resistance=Potion of Resistance
+splash_potion.effect.resistance=Splash Potion of Resistance
+lingering_potion.effect.resistance=Lingering Potion of Resistance
+potion.effect.absorption=Potion of Absorption
+splash_potion.effect.absorption=Splash Potion of Absorption
+lingering_potion.effect.absorption=Lingering Potion of Absorption
 
 //Anvil Module
 info.apotheosis.anvil=Can be enchanted.
