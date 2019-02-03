@@ -14,7 +14,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -24,7 +23,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
@@ -54,14 +52,7 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		Block b;
-		e.getRegistry().register(b = new BlockSpawnerExt());
-		ForgeRegistries.ITEMS.register(new ItemBlock(b) {
-			@Override
-			public String getCreatorModId(ItemStack stack) {
-				return Apotheosis.MODID;
-			}
-		}.setRegistryName(b.getRegistryName()));
+		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockSpawnerExt(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent

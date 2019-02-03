@@ -48,3 +48,6 @@ tile.reeds.name=Sugar Cane
 //Potion Module
 enchantment.apotheosis.potion_infinity=True Infinity
 info.apotheosis.potion_infinity=Makes all arrows infinite.
+
+//Anvil Module
+info.apotheosis.anvil=Can be enchanted.

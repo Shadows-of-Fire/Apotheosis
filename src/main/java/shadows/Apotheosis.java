@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
+import shadows.anvil.AnvilModule;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
 import shadows.potion.PotionModule;
@@ -34,6 +35,7 @@ public class Apotheosis {
 	public static boolean enableDeadly = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
+	public static boolean enableAnvil = true;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -44,7 +46,7 @@ public class Apotheosis {
 		ApotheosisCore.enableInvis = config.getBoolean("Enable Invisibility Tweak", "asm", true, "If potion effects are removed for invisibility.");
 		ApotheosisCore.enableEnch = config.getBoolean("Enable Enchantment Cap Removal", "asm", true, "If the enchantment cap remover tweak is enabled.");
 		ApotheosisCore.enablePInf = config.getBoolean("Enable Potion Infinity", "asm", true, "If the potion infinity enchantment actually works.");
-		
+
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		if (enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
 
@@ -59,6 +61,9 @@ public class Apotheosis {
 
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		if (enablePotion) MinecraftForge.EVENT_BUS.register(new PotionModule());
+
+		enableAnvil = config.getBoolean("Enable Anvil Module", "general", true, "If the anvil module is loaded.");
+		if (enableAnvil) MinecraftForge.EVENT_BUS.register(new AnvilModule());
 
 		if (config.hasChanged()) config.save();
 		MinecraftForge.EVENT_BUS.post(new ApotheosisPreInit(e));
