@@ -11,8 +11,11 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -42,14 +45,13 @@ public class BlockAnvilExt extends BlockAnvil {
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		TileEntity te = world.getTileEntity(pos);
-		ItemStack stack = new ItemStack(this);
+	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
+		ItemStack anvil = new ItemStack(this);
 		if (te instanceof TileAnvil && ((TileAnvil) te).getUnbreaking() > 0) {
-			EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.UNBREAKING, ((TileAnvil) te).getUnbreaking()), stack);
+			EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.UNBREAKING, ((TileAnvil) te).getUnbreaking()), anvil);
 		}
-		spawnAsEntity(world, pos, stack);
-		super.breakBlock(world, pos, state);
+		spawnAsEntity(world, pos, anvil);
+		super.harvestBlock(world, player, pos, state, te, stack);
 	}
 
 	@Override
@@ -69,5 +71,15 @@ public class BlockAnvilExt extends BlockAnvil {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		if (!stack.hasEffect()) tooltip.add(I18n.format("info.apotheosis.anvil"));
+	}
+
+	@Override
+	protected void onStartFalling(EntityFallingBlock e) {
+		TileEntity te = e.getWorldObj().getTileEntity(e.getOrigin());
+		if (te instanceof TileAnvil) {
+			e.tileEntityData = new NBTTagCompound();
+			e.tileEntityData.setInteger("ub", ((TileAnvil) te).getUnbreaking());
+			e.getWorldObj().removeTileEntity(e.getOrigin());
+		}
 	}
 }
