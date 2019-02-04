@@ -7,9 +7,9 @@ Unbreaking on Anvils.  Efficiency to decrease enchantment cost?
 Maybe more vanilla-esque enchantments.
 
 Potions/recipes/types for:
-Haste + Fatigue (+- Pair)
+Haste + Fatigue (+- Pair) (done)
 Resistance (done)
-Wither
+Wither (done)
 Health Boost
 Absorption (done)
 Saturation (maybe, might not do this one)

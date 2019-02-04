@@ -49,12 +49,31 @@ potion.potency.3=IV
 //Potion Module
 enchantment.apotheosis.potion_infinity=True Infinity
 info.apotheosis.potion_infinity=Makes all arrows infinite.
+
 potion.effect.resistance=Potion of Resistance
 splash_potion.effect.resistance=Splash Potion of Resistance
 lingering_potion.effect.resistance=Lingering Potion of Resistance
+tipped_arrow.effect.resistance=Arrow of Resistance
+
 potion.effect.absorption=Potion of Absorption
 splash_potion.effect.absorption=Splash Potion of Absorption
 lingering_potion.effect.absorption=Lingering Potion of Absorption
+tipped_arrow.effect.absorption=Arrow of Absorption
+
+potion.effect.haste=Potion of Haste
+splash_potion.effect.haste=Splash Potion of Haste
+lingering_potion.effect.haste=Lingering Potion of Haste
+tipped_arrow.effect.haste=Arrow of Haste
+
+potion.effect.fatigue=Potion of Mining Fatigue
+splash_potion.effect.fatigue=Splash Potion of Mining Fatigue
+lingering_potion.effect.fatigue=Lingering Potion of Mining Fatigue
+tipped_arrow.effect.fatigue=Arrow of Mining Fatigue
+
+potion.effect.wither=Potion of Wither
+splash_potion.effect.wither=Splash Potion of Wither
+lingering_potion.effect.wither=Lingering Potion of Wither
+tipped_arrow.effect.wither=Arrow of Wither
 
 //Anvil Module
 info.apotheosis.anvil=Can be enchanted.
