@@ -43,6 +43,9 @@ public class EnchModule {
 	@ObjectHolder("apotheosis:hell_infusion")
 	public static final EnchantmentHellInfused HELL_INFUSION = null;
 
+	@ObjectHolder("apotheosis:mounted_strike")
+	public static final EnchantmentMounted MOUNTED_STRIKE = null;
+
 	public static float localAtkStrength = 1;
 
 	@SubscribeEvent
@@ -71,7 +74,11 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
-		e.getRegistry().register(new EnchantmentHellInfused().setRegistryName(Apotheosis.MODID, "hell_infusion"));
+		//Formatter::off
+		e.getRegistry().registerAll(
+				new EnchantmentHellInfused().setRegistryName(Apotheosis.MODID, "hell_infusion"),
+				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"));
+		//Formatter::on
 	}
 
 	@SubscribeEvent

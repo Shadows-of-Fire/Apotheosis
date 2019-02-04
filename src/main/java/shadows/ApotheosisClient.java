@@ -61,7 +61,10 @@ public class ApotheosisClient {
 		String masterwork = TextFormatting.RED + I18n.format("info.apotheosis.masterwork");
 		if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "info.spw.capturing");
 		if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "info.apotheosis.true_infinity");
-		if (Apotheosis.enableEnch) registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "info.apotheosis.hell_infusion");
+		if (Apotheosis.enableEnch) {
+			registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "info.apotheosis.hell_infusion");
+			registerTooltip(EnchModule.MOUNTED_STRIKE, "info.apotheosis.mounted_strike");
+		}
 	}
 
 	public static void registerTooltip(Enchantment e, String... keys) {

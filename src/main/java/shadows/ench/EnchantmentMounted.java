@@ -5,31 +5,31 @@ import net.minecraft.enchantment.EnchantmentDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.WorldProviderHell;
 
-public class EnchantmentHellInfused extends EnchantmentDamage {
+public class EnchantmentMounted extends EnchantmentDamage {
 
-	public EnchantmentHellInfused() {
-		super(Rarity.VERY_RARE, 0, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
-		setName("apotheosis.hell_infusion");
+	public EnchantmentMounted() {
+		super(Rarity.RARE, 0, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
+		setName("apotheosis.mounted_strike");
 	}
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 1 + level * 12;
+		return 1 + level * 8;
 	}
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 15;
+		return this.getMinEnchantability(level) + 8;
 	}
 
 	@Override
 	public int getMaxLevel() {
-		return 10;
+		return 6;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class EnchantmentHellInfused extends EnchantmentDamage {
 
 	@Override
 	public String getName() {
-		return "enchantment.apotheosis.hell_infusion";
+		return "enchantment.apotheosis.mounted_strike";
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class EnchantmentHellInfused extends EnchantmentDamage {
 
 	@Override
 	public void onEntityDamaged(EntityLivingBase user, Entity target, int level) {
-		if (user instanceof EntityPlayer && user.world.provider instanceof WorldProviderHell) {
-			target.attackEntityFrom(DamageSource.MAGIC, level * level * 0.5F * EnchModule.localAtkStrength);
+		if (user instanceof EntityPlayer && user.getRidingEntity() instanceof EntityHorse) {
+			target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) user), (float) Math.pow(1.75F, level) * EnchModule.localAtkStrength);
 		}
 	}
 

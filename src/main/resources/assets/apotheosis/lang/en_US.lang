@@ -40,7 +40,9 @@ info.apotheosis.cobweb=Can be used to remove enchantments.
 info.apotheosis.masterwork=Masterwork Enchantment
 info.apotheosis.enchanting=Enchanting tables can now exceed 30 levels.  Some enchantments may only show up past level 30.
 enchantment.apotheosis.hell_infusion=Hell Infusion
-info.apotheosis.hell_infusion=Deals extra damage in the Nether.
+info.apotheosis.hell_infusion=Deals extra magic damage in the Nether.
+enchantment.apotheosis.mounted_strike=Mounted Strike
+info.apotheosis.mounted_strike=Deals extra damage when on a horse.
 
 //Vanilla
 tile.reeds.name=Sugar Cane
