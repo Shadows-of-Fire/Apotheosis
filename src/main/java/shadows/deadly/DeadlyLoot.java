@@ -2,8 +2,12 @@ package shadows.deadly;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
@@ -12,11 +16,11 @@ import shadows.Apotheosis;
 import shadows.placebo.loot.PlaceboLootPool.PoolBuilder;
 import shadows.placebo.loot.PlaceboLootSystem;
 import shadows.util.ChestBuilder;
-import shadows.util.ChestBuilder.EnchBookEntry;
+import shadows.util.ChestBuilder.EnchantedEntry;
 
 /**
  * Loot entries for deadly module
- * TODO: Make configurable and make defaults not garbage.
+ * TODO: Make configurable.
  * @author Shadows
  *
  */
@@ -29,11 +33,8 @@ public class DeadlyLoot {
 
 	public static final ResourceLocation CHEST_VALUABLE = new ResourceLocation(Apotheosis.MODID, "chest_valuable");
 
-	@SuppressWarnings("deprecation")
 	public static void init() {
-		PoolBuilder build = new PoolBuilder(5, 5, 0, 3);
-		build.addEntries(ChestBuilder.loot(Blocks.TORCH, 0, 4, 12, 10, 0));
-		build.addEntries(ChestBuilder.loot(Items.EXPERIENCE_BOTTLE, 0, 2, 4, 10, 1));
+		PoolBuilder build = new PoolBuilder(5, 8, 1, 3);
 		build.addEntries(ChestBuilder.loot(Items.SKULL, 0, 1, 1, 1, 2));
 		build.addEntries(ChestBuilder.loot(Items.SKULL, 1, 1, 1, 1, 2));
 		build.addEntries(ChestBuilder.loot(Items.SKULL, 2, 1, 1, 1, 2));
@@ -44,23 +45,20 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Items.EMERALD, 0, 1, 3, 3, 6));
 		build.addEntries(ChestBuilder.loot(Items.IRON_INGOT, 0, 1, 5, 10, 3));
 		build.addEntries(ChestBuilder.loot(Items.GOLD_INGOT, 0, 1, 5, 10, 4));
-		build.addEntries(ChestBuilder.loot(Items.APPLE, 0, 1, 3, 10, 0));
 		build.addEntries(ChestBuilder.loot(Items.GOLDEN_APPLE, 0, 1, 1, 1, 3));
 		build.addEntries(ChestBuilder.loot(Items.NAME_TAG, 0, 1, 1, 5, 0));
 		build.addEntries(ChestBuilder.loot(Items.LEAD, 0, 1, 1, 5, 0));
 		build.addEntries(ChestBuilder.loot(Items.SADDLE, 0, 1, 1, 3, 0));
-		build.addEntries(ChestBuilder.loot(Items.FLINT_AND_STEEL, 0, 1, 1, 1, 0));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1, 0));
-		build.addEntries(ChestBuilder.loot(Items.GOLDEN_HORSE_ARMOR, 0, 1, 1, 1, 0));
 		build.addEntries(ChestBuilder.loot(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1, 5));
 		build.addEntries(ChestBuilder.loot(Items.SLIME_BALL, 0, 1, 3, 3, 1));
 		build.addEntries(ChestBuilder.loot(Items.BUCKET, 0, 1, 1, 3, 0));
-		build.addEntries(new EnchBookEntry(3));
+		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 0, 1, 1, 3, 0));
+		build.addEntries(ChestBuilder.loot(Blocks.ENCHANTING_TABLE, 0, 1, 1, 3, 0));
+		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 0, 1, 1, 3, 0));
+		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 3));
 		PlaceboLootSystem.registerLootTable(SPAWNER_BRUTAL, new LootTable(new LootPool[] { build.build() }));
 
-		build = new PoolBuilder(5, 5, 0, 3);
-		build.addEntries(ChestBuilder.loot(Blocks.TORCH, 0, 4, 12, 10, 0));
-		build.addEntries(ChestBuilder.loot(Items.EXPERIENCE_BOTTLE, 0, 2, 4, 10, 1));
+		build = new PoolBuilder(5, 6, 1, 4);
 		build.addEntries(ChestBuilder.loot(egg("creeper"), 1, 3, 1, 1));
 		build.addEntries(ChestBuilder.loot(egg("skeleton"), 1, 3, 1, 1));
 		build.addEntries(ChestBuilder.loot(egg("spider"), 1, 3, 1, 1));
@@ -73,55 +71,62 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Items.EMERALD, 0, 1, 3, 3, 4));
 		build.addEntries(ChestBuilder.loot(Items.IRON_INGOT, 0, 1, 5, 10, 1));
 		build.addEntries(ChestBuilder.loot(Items.GOLD_INGOT, 0, 1, 5, 10, 3));
-		build.addEntries(ChestBuilder.loot(Items.APPLE, 0, 1, 3, 10, 0));
 		build.addEntries(ChestBuilder.loot(Items.GOLDEN_APPLE, 0, 1, 1, 1, 2));
 		build.addEntries(ChestBuilder.loot(Items.NAME_TAG, 0, 1, 1, 5, 1));
 		build.addEntries(ChestBuilder.loot(Items.LEAD, 0, 1, 1, 5, 1));
 		build.addEntries(ChestBuilder.loot(Items.SADDLE, 0, 1, 1, 3, 1));
-		build.addEntries(ChestBuilder.loot(Items.FLINT_AND_STEEL, 0, 1, 1, 1, 0));
-		build.addEntries(ChestBuilder.loot(Items.GOLDEN_HORSE_ARMOR, 0, 1, 1, 1, 2));
 		build.addEntries(ChestBuilder.loot(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1, 3));
 		build.addEntries(ChestBuilder.loot(Items.SLIME_BALL, 0, 1, 3, 3, 0));
 		build.addEntries(ChestBuilder.loot(Items.BUCKET, 0, 1, 1, 3, 0));
-		build.addEntries(new EnchBookEntry(3));
+		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 0, 1, 1, 3, 0));
+		build.addEntries(ChestBuilder.loot(Blocks.OBSIDIAN, 0, 3, 8, 3, 0));
+		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 3));
 		PlaceboLootSystem.registerLootTable(SPAWNER_SWARM, new LootTable(new LootPool[] { build.build() }));
 
 		build = new PoolBuilder(6, 12, 2, 5);
-		build.addEntries(ChestBuilder.loot(Blocks.TORCH, 0, 4, 12, 7));
-		build.addEntries(ChestBuilder.loot(Items.EXPERIENCE_BOTTLE, 0, 1, 3, 7));
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8225, 1, 1, 2)); // regeneration II
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8226, 1, 1, 2)); // swiftness II
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8259, 1, 1, 2)); // fire resistance (ext)
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8229, 1, 1, 2)); // healing II
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8262, 1, 1, 2)); // night vision (ext)
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8265, 1, 1, 2)); // strength (ext)
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8270, 1, 1, 2)); // invisibility (ext)
-		build.addEntries(ChestBuilder.loot(Items.POTIONITEM, 8269, 1, 1, 2)); // water breathing (ext)
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND, 0, 2, 5, 6));
-		build.addEntries(ChestBuilder.loot(Items.IRON_INGOT, 0, 5, 12, 10));
-		build.addEntries(ChestBuilder.loot(Items.GOLD_INGOT, 0, 4, 15, 10));
-		build.addEntries(ChestBuilder.loot(Items.COAL, 0, 26, 54, 10));
-		build.addEntries(ChestBuilder.loot(Items.COOKED_BEEF, 0, 3, 6, 15));
-		build.addEntries(ChestBuilder.loot(Items.GOLDEN_APPLE, 0, 1, 2, 3));
-		build.addEntries(ChestBuilder.loot(Items.NAME_TAG, 0, 1, 3, 2));
-		build.addEntries(ChestBuilder.loot(Items.LEAD, 0, 1, 3, 5));
-		build.addEntries(ChestBuilder.loot(Items.SADDLE, 0, 1, 3, 3));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 1));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_PICKAXE, 0, 1, 1, 5));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_SWORD, 0, 1, 1, 5));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_CHESTPLATE, 0, 1, 1, 5));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_HELMET, 0, 1, 1, 5));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_LEGGINGS, 0, 1, 1, 5));
-		build.addEntries(ChestBuilder.loot(Items.DIAMOND_BOOTS, 0, 1, 1, 5));
-		build.addEntries(ChestBuilder.loot(Items.SLIME_BALL, 0, 1, 3, 3));
-		build.addEntries(ChestBuilder.loot(Items.BUCKET, 0, 1, 1, 3));
-		build.addEntries(new EnchBookEntry(4));
+		build.addEntries(ChestBuilder.loot(potion(PotionTypes.STRONG_REGENERATION), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(potion(PotionTypes.STRONG_SWIFTNESS), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(potion(PotionTypes.LONG_FIRE_RESISTANCE), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(potion(Items.SPLASH_POTION, PotionTypes.STRONG_HEALING), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(potion(PotionTypes.LONG_NIGHT_VISION), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(potion(PotionTypes.LONG_STRENGTH), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(potion(PotionTypes.LONG_INVISIBILITY), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(potion(PotionTypes.LONG_WATER_BREATHING), 1, 1, 20, 10));
+		build.addEntries(ChestBuilder.loot(Items.DIAMOND, 0, 1, 3, 30, 4));
+		build.addEntries(ChestBuilder.loot(Items.EMERALD, 0, 1, 3, 30, 4));
+		build.addEntries(ChestBuilder.loot(Items.IRON_INGOT, 0, 1, 5, 100, 1));
+		build.addEntries(ChestBuilder.loot(Items.GOLD_INGOT, 0, 1, 5, 100, 3));
+		build.addEntries(ChestBuilder.loot(Items.GOLDEN_APPLE, 1, 1, 1, 1, 15));
+		build.addEntries(ChestBuilder.loot(Items.NAME_TAG, 0, 1, 2, 50, 1));
+		build.addEntries(ChestBuilder.loot(Items.LEAD, 0, 1, 2, 50, 1));
+		build.addEntries(ChestBuilder.loot(Items.SADDLE, 0, 1, 2, 40, 1));
+		build.addEntries(ChestBuilder.loot(Items.DIAMOND_HORSE_ARMOR, 0, 1, 1, 40, 3));
+		build.addEntries(ChestBuilder.loot(Items.SLIME_BALL, 0, 3, 6, 50, 0));
+		build.addEntries(ChestBuilder.loot(Items.BUCKET, 0, 1, 1, 50, 0));
+		build.addEntries(new EnchantedEntry(Items.DIAMOND_SWORD, 30));
+		build.addEntries(new EnchantedEntry(Items.DIAMOND_AXE, 30));
+		build.addEntries(new EnchantedEntry(Items.DIAMOND_PICKAXE, 30));
+		build.addEntries(new EnchantedEntry(Items.DIAMOND_BOOTS, 20));
+		build.addEntries(new EnchantedEntry(Items.DIAMOND_LEGGINGS, 20));
+		build.addEntries(new EnchantedEntry(Items.DIAMOND_HELMET, 20));
+		build.addEntries(new EnchantedEntry(Items.DIAMOND_CHESTPLATE, 20));
+		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 40));
 		PlaceboLootSystem.registerLootTable(CHEST_VALUABLE, new LootTable(new LootPool[] { build.build() }));
 	}
-	
+
 	private static ItemStack egg(String mob) {
 		ItemStack s = new ItemStack(Items.SPAWN_EGG);
 		ItemMonsterPlacer.applyEntityIdToItemStack(s, new ResourceLocation(mob));
+		return s;
+	}
+
+	private static ItemStack potion(PotionType type) {
+		return potion(Items.POTIONITEM, type);
+	}
+
+	private static ItemStack potion(Item pot, PotionType type) {
+		ItemStack s = new ItemStack(pot);
+		PotionUtils.addPotionToItemStack(s, type);
 		return s;
 	}
 

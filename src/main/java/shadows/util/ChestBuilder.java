@@ -5,7 +5,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -63,21 +62,6 @@ public class ChestBuilder {
 		return new PlaceboLootEntry(item, min, max, weight, quality);
 	}
 
-	@Deprecated
-	public static LootEntry loot(Item item, int damage, int min, int max, int weight) {
-		return loot(new ItemStack(item, 1, damage), min, max, weight, 0);
-	}
-
-	@Deprecated
-	public static LootEntry loot(Block block, int damage, int min, int max, int weight) {
-		return loot(new ItemStack(block, 1, damage), min, max, weight, 0);
-	}
-
-	@Deprecated
-	public static LootEntry loot(ItemStack item, int min, int max, int weight) {
-		return loot(item, min, max, weight, 0);
-	}
-
 	public static void place(World world, Random random, BlockPos pos, ResourceLocation loot) {
 		world.setBlockState(pos, Blocks.CHEST.getDefaultState(), 2);
 		ChestBuilder chest = new ChestBuilder(world, random, pos);
@@ -94,17 +78,19 @@ public class ChestBuilder {
 		}
 	}
 
-	public static class EnchBookEntry extends PlaceboLootEntry {
+	public static class EnchantedEntry extends PlaceboLootEntry {
 
 		final EnchantRandomly func = new EnchantRandomly(new LootCondition[0], null);
+		private Item i;
 
-		public EnchBookEntry(int weight) {
-			super(Items.BOOK, 1, 1, weight, 5);
+		public EnchantedEntry(Item i, int weight) {
+			super(i, 1, 1, weight, 5);
+			this.i = i;
 		}
 
 		@Override
 		public void addLoot(Collection<ItemStack> stacks, Random rand, LootContext context) {
-			ItemStack s = new ItemStack(Items.BOOK);
+			ItemStack s = new ItemStack(i);
 			func.apply(s, rand, context);
 			stacks.add(s);
 		}
