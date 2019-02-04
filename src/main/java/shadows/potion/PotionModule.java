@@ -27,8 +27,8 @@ public class PotionModule {
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Potion");
 
-	@ObjectHolder("apotheosis:potion_infinity")
-	public static final EnchantmentPotionInfinity POTION_INFINITY = null;
+	@ObjectHolder("apotheosis:true_infinity")
+	public static final EnchantmentTrueInfinity TRUE_INFINITY = null;
 
 	@ObjectHolder("apotheosis:resistance")
 	public static final PotionType RESISTANCE = null;
@@ -108,7 +108,7 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
-		e.getRegistry().register(new EnchantmentPotionInfinity().setRegistryName(Apotheosis.MODID, "potion_infinity"));
+		e.getRegistry().register(new EnchantmentTrueInfinity().setRegistryName(Apotheosis.MODID, "true_infinity"));
 	}
 
 	@SubscribeEvent
@@ -154,7 +154,7 @@ public class PotionModule {
 		ItemStack bow = (ItemStack) b;
 		int enchant = net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.INFINITY, bow);
 		if (enchant <= 0 ? false : stack.getItem().getClass() == ItemArrow.class) return true;
-		return (POTION_INFINITY != null && EnchantmentHelper.getEnchantmentLevel(POTION_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow);
+		return (TRUE_INFINITY != null && EnchantmentHelper.getEnchantmentLevel(TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow);
 	}
 
 	public static boolean doesShowParticles(Object e) {

@@ -5,11 +5,11 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 
-public class EnchantmentPotionInfinity extends Enchantment {
+public class EnchantmentTrueInfinity extends Enchantment {
 
-	protected EnchantmentPotionInfinity() {
+	protected EnchantmentTrueInfinity() {
 		super(Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
-		setName("apotheosis.potion_infinity");
+		setName("apotheosis.true_infinity");
 	}
 
 	@Override

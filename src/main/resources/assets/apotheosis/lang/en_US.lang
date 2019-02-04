@@ -47,8 +47,8 @@ tile.reeds.name=Sugar Cane
 potion.potency.3=IV
 
 //Potion Module
-enchantment.apotheosis.potion_infinity=True Infinity
-info.apotheosis.potion_infinity=Makes all arrows infinite.
+enchantment.apotheosis.true_infinity=True Infinity
+info.apotheosis.true_infinity=Makes all arrows infinite.
 
 potion.effect.resistance=Potion of Resistance
 splash_potion.effect.resistance=Splash Potion of Resistance

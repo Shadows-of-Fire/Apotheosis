@@ -60,7 +60,7 @@ public class ApotheosisClient {
 	public static void init(ApotheosisInit e) {
 		String masterwork = TextFormatting.RED + I18n.format("info.apotheosis.masterwork");
 		if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "info.spw.capturing");
-		if (Apotheosis.enablePotion) registerTooltip(PotionModule.POTION_INFINITY, masterwork, "", "info.apotheosis.potion_infinity");
+		if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "info.apotheosis.true_infinity");
 		if (Apotheosis.enableEnch) registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "info.apotheosis.hell_infusion");
 	}
 
