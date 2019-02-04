@@ -16,3 +16,5 @@ Saturation (maybe, might not do this one)
 Glowing
 Levitation
 Luck + Unluck (+- Pair)
+
+Refactor enchantability numbers.  Not entirely sure how this system works, but want to make Masterworks need > 30. 

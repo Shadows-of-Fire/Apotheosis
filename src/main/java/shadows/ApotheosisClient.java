@@ -59,11 +59,14 @@ public class ApotheosisClient {
 	@SubscribeEvent
 	public static void init(ApotheosisInit e) {
 		String masterwork = TextFormatting.RED + I18n.format("info.apotheosis.masterwork");
+		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
 		if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "info.spw.capturing");
 		if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "info.apotheosis.true_infinity");
 		if (Apotheosis.enableEnch) {
 			registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "info.apotheosis.hell_infusion");
 			registerTooltip(EnchModule.MOUNTED_STRIKE, "info.apotheosis.mounted_strike");
+			registerTooltip(EnchModule.DEPTH_MINER, twisted, "", "info.apotheosis.depth_miner");
+			registerTooltip(EnchModule.STABLE_FOOTING, "info.apotheosis.stable_footing");
 		}
 	}
 

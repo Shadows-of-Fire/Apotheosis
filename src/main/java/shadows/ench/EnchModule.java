@@ -6,6 +6,7 @@ import java.util.Collections;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
@@ -22,6 +23,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
@@ -45,6 +47,12 @@ public class EnchModule {
 
 	@ObjectHolder("apotheosis:mounted_strike")
 	public static final EnchantmentMounted MOUNTED_STRIKE = null;
+
+	@ObjectHolder("apotheosis:depth_miner")
+	public static final EnchantmentDepths DEPTH_MINER = null;
+
+	@ObjectHolder("apotheosis:stable_footing")
+	public static final EnchantmentStableFooting STABLE_FOOTING = null;
 
 	public static float localAtkStrength = 1;
 
@@ -77,7 +85,9 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new EnchantmentHellInfused().setRegistryName(Apotheosis.MODID, "hell_infusion"),
-				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"));
+				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"),
+				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
+				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"));
 		//Formatter::on
 	}
 
@@ -106,6 +116,26 @@ public class EnchModule {
 	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
 		localAtkStrength = e.getEntityPlayer().getCooledAttackStrength(0.5F);
+	}
+
+	@SubscribeEvent
+	public void breakSpeed(PlayerEvent.BreakSpeed e) {
+		EntityPlayer p = e.getEntityPlayer();
+		ItemStack stack = p.getHeldItemMainhand();
+		if (stack.isEmpty()) return;
+		int depth = EnchantmentHelper.getEnchantmentLevel(DEPTH_MINER, stack);
+		//Increase or decrease speed based on distance above sea level and ench level.
+		if (depth > 0) {
+			float effectiveness = (p.world.getSeaLevel() - (float) p.posY) / p.world.getSeaLevel();
+			if (effectiveness < 0) effectiveness /= 3;
+			float speedChange = 1 + depth * depth * effectiveness;
+			e.setNewSpeed(e.getNewSpeed() + speedChange);
+		}
+		//Counteract the division by 5 for players not on the ground.
+		if (!p.onGround && EnchantmentHelper.getEnchantmentLevel(STABLE_FOOTING, stack) > 0) {
+			e.setNewSpeed(e.getNewSpeed() * 5F);
+		}
+		System.out.println(e.getNewSpeed());
 	}
 
 	public static void setEnch(ToolMaterial mat, int ench) {
