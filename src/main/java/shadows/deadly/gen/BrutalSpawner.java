@@ -89,7 +89,6 @@ public class BrutalSpawner extends WorldFeature {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x, y + y1, z + 1), Blocks.VINE, 4, 2);
 			}
 		}
-		WorldGenerator.debugPillar(world, pos.up(2));
 	}
 
 	@Override
