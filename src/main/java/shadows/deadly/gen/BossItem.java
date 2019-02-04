@@ -56,10 +56,10 @@ public class BossItem extends WorldFeatureItem {
 	public static final List<Enchantment> ARMOR_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.FEATHER_FALLING, Enchantments.BLAST_PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.RESPIRATION, Enchantments.AQUA_AFFINITY, Enchantments.THORNS, Enchantments.UNBREAKING);
 
 	//Default gear sets.
-	public static final ArmorSet CHAIN_GEAR = new ArmorSet(0, Items.STONE_SWORD, Items.SHIELD, Items.CHAINMAIL_BOOTS, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_HELMET).addTools(Items.STONE_AXE, Items.STONE_SHOVEL, Items.STONE_PICKAXE);
-	public static final ArmorSet GOLD_GEAR = new ArmorSet(1, Items.GOLDEN_SWORD, Items.SHIELD, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET).addTools(Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE);
-	public static final ArmorSet IRON_GEAR = new ArmorSet(2, Items.IRON_SWORD, Items.SHIELD, Items.IRON_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE, Items.IRON_HELMET).addTools(Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_PICKAXE);
-	public static final ArmorSet DIAMOND_GEAR = new ArmorSet(3, Items.DIAMOND_SWORD, Items.SHIELD, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET).addTools(Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE);
+	public static final ArmorSet CHAIN_GEAR = new ArmorSet(0, Items.STONE_SWORD, Items.SHIELD, Items.CHAINMAIL_BOOTS, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_HELMET).addExtraMains(Items.STONE_AXE, Items.STONE_SHOVEL, Items.STONE_PICKAXE);
+	public static final ArmorSet GOLD_GEAR = new ArmorSet(1, Items.GOLDEN_SWORD, Items.SHIELD, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET).addExtraMains(Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE);
+	public static final ArmorSet IRON_GEAR = new ArmorSet(2, Items.IRON_SWORD, Items.SHIELD, Items.IRON_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE, Items.IRON_HELMET).addExtraMains(Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_PICKAXE);
+	public static final ArmorSet DIAMOND_GEAR = new ArmorSet(3, Items.DIAMOND_SWORD, Items.SHIELD, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET).addExtraMains(Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE);
 
 	//Mob stats.
 	protected static final int REGEN = DeadlyConfig.bossRegenLevel;

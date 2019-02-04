@@ -75,7 +75,7 @@ public class ArmorSet {
 		return TagBuilder.setEquipment(entity, main, offhand, feet, legs, chest, head);
 	}
 
-	public ArmorSet addTools(ItemStack... tools) {
+	public ArmorSet addExtraMains(ItemStack... tools) {
 		if (possibleMainhands.isEmpty()) {
 			possibleMainhands.add(new WeightedRandomStack(mainhand, 3));
 			for (ItemStack s : tools)
@@ -84,8 +84,8 @@ public class ArmorSet {
 		return this;
 	}
 
-	public ArmorSet addTools(Object... tools) {
-		return addTools(PlaceboUtil.toStackArray(tools));
+	public ArmorSet addExtraMains(Object... tools) {
+		return addExtraMains(PlaceboUtil.toStackArray(tools));
 	}
 
 	public static class WeightedRandomStack extends WeightedRandom.Item {
