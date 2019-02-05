@@ -1,20 +1,18 @@
 Move flowerpot stuff from Plants to Apotheosis.
-Fix loot tables for deadly module.  They're trash right now.
 Target brewing?  Not sure what to do there.
 More stuff involving obscure vanilla materials (prismarine, chorus, shulker, rabbit).
 Probably document this stuff.
-Unbreaking on Anvils.  Efficiency to decrease enchantment cost?
-Maybe more vanilla-esque enchantments.
+Maybe more vanilla-esque enchantments. (Current Task)
 
 Potions/recipes/types for:
-Haste + Fatigue (+- Pair) (done)
-Resistance (done)
-Wither (done)
 Health Boost
-Absorption (done)
 Saturation (maybe, might not do this one)
 Glowing
 Levitation
 Luck + Unluck (+- Pair)
 
 Refactor enchantability numbers.  Not entirely sure how this system works, but want to make Masterworks need > 30. 
+
+Prismatic Web (Prismarine + Cobweb) to remove curses?
+
+Configurable numbers for enchantments.  Talking about values, not enchantability.

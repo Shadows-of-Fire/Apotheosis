@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.ench.EnchModule;
+import shadows.placebo.Placebo;
 import shadows.potion.PotionModule;
 import shadows.spawn.SpawnerModule;
 
@@ -58,8 +60,9 @@ public class ApotheosisClient {
 
 	@SubscribeEvent
 	public static void init(ApotheosisInit e) {
-		String masterwork = TextFormatting.RED + I18n.format("info.apotheosis.masterwork");
+		String masterwork = TextFormatting.AQUA + I18n.format("info.apotheosis.masterwork");
 		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
+		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");
 		if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "info.spw.capturing");
 		if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "info.apotheosis.true_infinity");
 		if (Apotheosis.enableEnch) {
@@ -68,6 +71,14 @@ public class ApotheosisClient {
 			registerTooltip(EnchModule.DEPTH_MINER, twisted, "", "info.apotheosis.depth_miner");
 			registerTooltip(EnchModule.STABLE_FOOTING, "info.apotheosis.stable_footing");
 			registerTooltip(EnchModule.SCAVENGER, masterwork, "", "info.apotheosis.scavenger");
+			registerTooltip(EnchModule.LIFE_MENDING, corrupted, "", "info.apotheosis.life_mending");
+		}
+	}
+
+	@SubscribeEvent
+	public static void models(ModelRegistryEvent e) {
+		if (Apotheosis.enableEnch) {
+			Placebo.PROXY.useRenamedMapper(EnchModule.HELLSHELF, "hellshelf", "", "normal");
 		}
 	}
 

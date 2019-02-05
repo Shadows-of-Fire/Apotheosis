@@ -35,10 +35,11 @@ jei.spw.capturing=The capturing enchantment gives monsters a chance to drop thei
 
 //Enchantment Module
 tile.apotheosis.hellshelf.name=Hell-Infused Bookshelf
-info.apotheosis.hellshelf=Provides double enchanting power.
+info.apotheosis.hellshelf=Provides %s enchanting power.
 info.apotheosis.cobweb=Can be used to remove enchantments.
-info.apotheosis.masterwork=Masterwork Enchantment
-info.apotheosis.twisted=Twisted Enchantment
+info.apotheosis.masterwork=Masterwork
+info.apotheosis.twisted=Twisted
+info.apotheosis.corrupted=Corrupted
 info.apotheosis.enchanting=Enchanting tables can now exceed 30 levels.  Some enchantments may only show up past level 30.
 enchantment.apotheosis.hell_infusion=Hell Infusion
 info.apotheosis.hell_infusion=Deals extra magic damage in the Nether.
@@ -50,6 +51,9 @@ enchantment.apotheosis.stable_footing=Stable Footing
 info.apotheosis.stable_footing=Negates the mining speed penalty for flying.
 enchantment.apotheosis.scavenger=Scavenger
 info.apotheosis.scavenger=Mobs killed may roll their loot tables twice.
+enchantment.apotheosis.life_mending=Life-Mending
+info.apotheosis.life_mending=Converts health into durability.
+death.apotheosis.corrupted=%1$s was drained by a corrupted enchantment.
 
 //Vanilla
 tile.reeds.name=Sugar Cane

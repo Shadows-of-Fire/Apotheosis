@@ -2,7 +2,7 @@ package shadows.ench;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -13,20 +13,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -62,7 +65,16 @@ public class EnchModule {
 	@ObjectHolder("apotheosis:scavenger")
 	public static final EnchantmentScavenger SCAVENGER = null;
 
+	@ObjectHolder("apotheosis:life_mending")
+	public static final EnchantmentLifeMend LIFE_MENDING = null;
+
 	public static float localAtkStrength = 1;
+
+	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
+		public ITextComponent getDeathMessage(EntityLivingBase entity) {
+			return new TextComponentTranslation("death.apotheosis.corrupted", entity.getDisplayName());
+		};
+	}.setDamageBypassesArmor().setMagicDamage();
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
@@ -80,12 +92,12 @@ public class EnchModule {
 	public void blocks(Register<Block> e) {
 		Block b;
 		e.getRegistry().register(b = new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")));
-		ForgeRegistries.ITEMS.register(new ItemBlock(b).setRegistryName(b.getRegistryName()));
+		ForgeRegistries.ITEMS.register(new ItemHellBookshelf(b).setRegistryName(b.getRegistryName()));
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		ForgeRegistries.ITEMS.register(new ItemShearsExt().setRegistryName(Items.SHEARS.getRegistryName()).setTranslationKey("shears"));
+		e.getRegistry().register(new ItemShearsExt().setRegistryName(Items.SHEARS.getRegistryName()).setTranslationKey("shears"));
 	}
 
 	@SubscribeEvent
@@ -96,7 +108,8 @@ public class EnchModule {
 				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"),
 				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
 				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
-				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"));
+				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"),
+				new EnchantmentLifeMend().setRegistryName(Apotheosis.MODID, "life_mending"));
 		//Formatter::on
 	}
 
@@ -115,7 +128,7 @@ public class EnchModule {
 	public void removeEnch(AnvilUpdateEvent e) {
 		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty() && e.getRight().getItem() == COBWEB) {
 			ItemStack stack = e.getLeft().copy();
-			EnchantmentHelper.setEnchantments(Collections.emptyMap(), stack);
+			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
 			e.setCost(1);
 			e.setMaterialCost(1);
 			e.setOutput(stack);
@@ -135,12 +148,31 @@ public class EnchModule {
 		if (attacker instanceof EntityPlayer) {
 			EntityPlayer p = (EntityPlayer) attacker;
 			int scavenger = EnchantmentHelper.getEnchantmentLevel(SCAVENGER, p.getHeldItemMainhand());
-			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 1.5F) {
+			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 2.5F) {
 				if (dropLoot == null) {
 					dropLoot = EntityLivingBase.class.getDeclaredMethod("dropLoot", boolean.class, int.class, DamageSource.class);
 					dropLoot.setAccessible(true);
 				}
 				dropLoot.invoke(e.getEntityLiving(), true, e.getLootingLevel(), e.getSource());
+			}
+		}
+	}
+
+	final EntityEquipmentSlot[] slots = EntityEquipmentSlot.values();
+
+	@SubscribeEvent
+	public void lifeMend(LivingUpdateEvent e) {
+		if (e.getEntity().world.isRemote) return;
+		for (EntityEquipmentSlot slot : slots) {
+			ItemStack stack = e.getEntityLiving().getItemStackFromSlot(slot);
+			if (!stack.isEmpty() && stack.isItemDamaged()) {
+				int level = EnchantmentHelper.getEnchantmentLevel(LIFE_MENDING, stack);
+				if (level > 0 && e.getEntityLiving().world.rand.nextInt(10) == 0) {
+					int i = Math.min(level, stack.getItemDamage());
+					e.getEntityLiving().attackEntityFrom(CORRUPTED, i * 0.2F);
+					stack.setItemDamage(stack.getItemDamage() - i);
+					return;
+				}
 			}
 		}
 	}
@@ -151,18 +183,15 @@ public class EnchModule {
 		ItemStack stack = p.getHeldItemMainhand();
 		if (stack.isEmpty()) return;
 		int depth = EnchantmentHelper.getEnchantmentLevel(DEPTH_MINER, stack);
-		//Increase or decrease speed based on distance above sea level and ench level.
 		if (depth > 0) {
 			float effectiveness = (p.world.getSeaLevel() - (float) p.posY) / p.world.getSeaLevel();
 			if (effectiveness < 0) effectiveness /= 3;
 			float speedChange = 1 + depth * depth * effectiveness;
 			e.setNewSpeed(e.getNewSpeed() + speedChange);
 		}
-		//Counteract the division by 5 for players not on the ground.
 		if (!p.onGround && EnchantmentHelper.getEnchantmentLevel(STABLE_FOOTING, stack) > 0) {
 			e.setNewSpeed(e.getNewSpeed() * 5F);
 		}
-		System.out.println(e.getNewSpeed());
 	}
 
 	public static void setEnch(ToolMaterial mat, int ench) {
