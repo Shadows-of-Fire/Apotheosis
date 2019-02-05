@@ -67,6 +67,7 @@ public class ApotheosisClient {
 			registerTooltip(EnchModule.MOUNTED_STRIKE, "info.apotheosis.mounted_strike");
 			registerTooltip(EnchModule.DEPTH_MINER, twisted, "", "info.apotheosis.depth_miner");
 			registerTooltip(EnchModule.STABLE_FOOTING, "info.apotheosis.stable_footing");
+			registerTooltip(EnchModule.SCAVENGER, masterwork, "", "info.apotheosis.scavenger");
 		}
 	}
 

@@ -48,6 +48,8 @@ enchantment.apotheosis.depth_miner=Miner's Fervor
 info.apotheosis.depth_miner=Adjusts mining speed based on Y-level.
 enchantment.apotheosis.stable_footing=Stable Footing
 info.apotheosis.stable_footing=Negates the mining speed penalty for flying.
+enchantment.apotheosis.scavenger=Scavenger
+info.apotheosis.scavenger=Mobs killed may roll their loot tables twice.
 
 //Vanilla
 tile.reeds.name=Sugar Cane

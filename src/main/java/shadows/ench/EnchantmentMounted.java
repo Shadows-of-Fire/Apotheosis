@@ -1,19 +1,20 @@
 package shadows.ench;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentDamage;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
-public class EnchantmentMounted extends EnchantmentDamage {
+public class EnchantmentMounted extends Enchantment {
 
 	public EnchantmentMounted() {
-		super(Rarity.RARE, 0, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
+		super(Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 		setName("apotheosis.mounted_strike");
 	}
 
@@ -33,18 +34,8 @@ public class EnchantmentMounted extends EnchantmentDamage {
 	}
 
 	@Override
-	public float calcDamageByCreature(int level, EnumCreatureAttribute creatureType) {
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-		return "enchantment.apotheosis.mounted_strike";
-	}
-
-	@Override
-	public boolean canApplyTogether(Enchantment ench) {
-		return ench != this;
+	public boolean canApply(ItemStack stack) {
+		return stack.getItem() instanceof ItemAxe ? true : super.canApply(stack);
 	}
 
 	@Override

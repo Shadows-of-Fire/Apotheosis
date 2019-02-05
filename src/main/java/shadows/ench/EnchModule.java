@@ -1,11 +1,14 @@
 package shadows.ench;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.Collections;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -17,11 +20,13 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -53,6 +58,9 @@ public class EnchModule {
 
 	@ObjectHolder("apotheosis:stable_footing")
 	public static final EnchantmentStableFooting STABLE_FOOTING = null;
+
+	@ObjectHolder("apotheosis:scavenger")
+	public static final EnchantmentScavenger SCAVENGER = null;
 
 	public static float localAtkStrength = 1;
 
@@ -87,7 +95,8 @@ public class EnchModule {
 				new EnchantmentHellInfused().setRegistryName(Apotheosis.MODID, "hell_infusion"),
 				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"),
 				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
-				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"));
+				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
+				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"));
 		//Formatter::on
 	}
 
@@ -116,6 +125,24 @@ public class EnchModule {
 	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
 		localAtkStrength = e.getEntityPlayer().getCooledAttackStrength(0.5F);
+	}
+
+	Method dropLoot;
+
+	@SubscribeEvent
+	public void scavenger(LivingDropsEvent e) throws Exception {
+		Entity attacker = e.getSource().getTrueSource();
+		if (attacker instanceof EntityPlayer) {
+			EntityPlayer p = (EntityPlayer) attacker;
+			int scavenger = EnchantmentHelper.getEnchantmentLevel(SCAVENGER, p.getHeldItemMainhand());
+			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 1.5F) {
+				if (dropLoot == null) {
+					dropLoot = EntityLivingBase.class.getDeclaredMethod("dropLoot", boolean.class, int.class, DamageSource.class);
+					dropLoot.setAccessible(true);
+				}
+				dropLoot.invoke(e.getEntityLiving(), true, e.getLootingLevel(), e.getSource());
+			}
+		}
 	}
 
 	@SubscribeEvent
