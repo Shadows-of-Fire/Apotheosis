@@ -54,6 +54,8 @@ info.apotheosis.scavenger=Mobs killed may roll their loot tables twice.
 enchantment.apotheosis.life_mending=Life-Mending
 info.apotheosis.life_mending=Converts health into durability.
 death.apotheosis.corrupted=%1$s was drained by a corrupted enchantment.
+item.apotheosis.prismatic_web.name=Prismatic Cobweb
+info.apotheosis.prismatic_cobweb=Can be used to remove curses.
 
 //Vanilla
 tile.reeds.name=Sugar Cane
@@ -87,6 +89,12 @@ potion.effect.wither=Potion of Wither
 splash_potion.effect.wither=Splash Potion of Wither
 lingering_potion.effect.wither=Lingering Potion of Wither
 tipped_arrow.effect.wither=Arrow of Wither
+
+effect.apotheosis.sundering=Sundering
+potion.effect.sundering=Potion of Sundering
+splash_potion.effect.sundering=Splash Potion of Sundering
+lingering_potion.effect.sundering=Lingering Potion of Sundering
+tipped_arrow.effect.sundering=Arrow of Sundering
 
 //Anvil Module
 info.apotheosis.anvil=Can be enchanted.

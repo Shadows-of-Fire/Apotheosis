@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
@@ -12,20 +13,27 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.potion.PotionType;
+import net.minecraft.util.CombatRules;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
+import shadows.potion.potions.PotionSundering;
 
 public class PotionModule {
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Potion");
+	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
 	@ObjectHolder("apotheosis:true_infinity")
 	public static final EnchantmentTrueInfinity TRUE_INFINITY = null;
@@ -78,6 +86,18 @@ public class PotionModule {
 	@ObjectHolder("apotheosis:strong_wither")
 	public static final PotionType STRONG_WITHER = null;
 
+	@ObjectHolder("apotheosis:sundering")
+	public static final PotionSundering SUNDERING = null;
+
+	@ObjectHolder("apotheosis:sundering")
+	public static final PotionType T_SUNDERING = null;
+
+	@ObjectHolder("apotheosis:long_sundering")
+	public static final PotionType LONG_SUNDERING = null;
+
+	@ObjectHolder("apotheosis:strong_sundering")
+	public static final PotionType STRONG_SUNDERING = null;
+
 	static Configuration config;
 
 	@SubscribeEvent
@@ -85,6 +105,12 @@ public class PotionModule {
 		PotionHelper.addMix(PotionTypes.AWKWARD, Items.SHULKER_SHELL, RESISTANCE);
 		PotionHelper.addMix(RESISTANCE, Items.REDSTONE, LONG_RESISTANCE);
 		PotionHelper.addMix(RESISTANCE, Items.GLOWSTONE_DUST, STRONG_RESISTANCE);
+
+		PotionHelper.addMix(RESISTANCE, Items.FERMENTED_SPIDER_EYE, T_SUNDERING);
+		PotionHelper.addMix(LONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, LONG_SUNDERING);
+		PotionHelper.addMix(STRONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, STRONG_SUNDERING);
+		PotionHelper.addMix(T_SUNDERING, Items.REDSTONE, LONG_SUNDERING);
+		PotionHelper.addMix(T_SUNDERING, Items.GLOWSTONE_DUST, STRONG_SUNDERING);
 
 		PotionHelper.addMix(PotionTypes.AWKWARD, Items.GOLDEN_APPLE, ABSORPTION);
 		PotionHelper.addMix(ABSORPTION, Items.REDSTONE, LONG_ABSORPTION);
@@ -122,6 +148,7 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void types(Register<PotionType> e) {
+		Potion sundering = ForgeRegistries.POTIONS.getValue(new ResourceLocation(Apotheosis.MODID, "sundering"));
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new PotionType("resistance", new PotionEffect(MobEffects.RESISTANCE, 3600)).setRegistryName(Apotheosis.MODID, "resistance"),
@@ -138,8 +165,16 @@ public class PotionModule {
 				new PotionType("fatigue", new PotionEffect(MobEffects.MINING_FATIGUE, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_fatigue"),
 				new PotionType("wither", new PotionEffect(MobEffects.WITHER, 3600)).setRegistryName(Apotheosis.MODID, "wither"),
 				new PotionType("wither", new PotionEffect(MobEffects.WITHER, 9600)).setRegistryName(Apotheosis.MODID, "long_wither"),
-				new PotionType("wither", new PotionEffect(MobEffects.WITHER, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_wither"));
+				new PotionType("wither", new PotionEffect(MobEffects.WITHER, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_wither"),
+				new PotionType("sundering", new PotionEffect(sundering, 3600)).setRegistryName(Apotheosis.MODID, "sundering"),
+				new PotionType("sundering", new PotionEffect(sundering, 9600)).setRegistryName(Apotheosis.MODID, "long_sundering"),
+				new PotionType("sundering", new PotionEffect(sundering, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_sundering"));
 		//Formatter::on
+	}
+
+	@SubscribeEvent
+	public void potions(Register<Potion> e) {
+		e.getRegistry().register(new PotionSundering().setRegistryName(Apotheosis.MODID, "sundering"));
 	}
 
 	/**
@@ -161,6 +196,38 @@ public class PotionModule {
 		PotionEffect ef = (PotionEffect) e;
 		if (ef.getPotion() == MobEffects.INVISIBILITY) return false;
 		return ef.showParticles;
+	}
+
+	public static float applyPotionDamageCalculations(Object ent, Object src, float damage) {
+		EntityLivingBase entity = (EntityLivingBase) ent;
+		DamageSource source = (DamageSource) src;
+		if (source.isDamageAbsolute()) {
+			return damage;
+		} else {
+			float mult = 1;
+			if (entity.isPotionActive(MobEffects.RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
+				int level = (entity.getActivePotionEffect(MobEffects.RESISTANCE).getAmplifier() + 1);
+				mult -= (0.2 * level);
+			}
+			if (SUNDERING != null && entity.isPotionActive(SUNDERING) && source != DamageSource.OUT_OF_WORLD) {
+				int level = (entity.getActivePotionEffect(SUNDERING).getAmplifier() + 1);
+				mult += (0.2 * level);
+			}
+
+			damage *= mult;
+
+			if (damage <= 0.0F) {
+				return 0.0F;
+			} else {
+				int k = EnchantmentHelper.getEnchantmentModifierDamage(entity.getArmorInventoryList(), source);
+
+				if (k > 0) {
+					damage = CombatRules.getDamageAfterMagicAbsorb(damage, (float) k);
+				}
+
+				return damage;
+			}
+		}
 	}
 
 }

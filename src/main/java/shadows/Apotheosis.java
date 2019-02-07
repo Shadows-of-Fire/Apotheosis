@@ -1,6 +1,7 @@
 package shadows;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
@@ -55,7 +56,6 @@ public class Apotheosis {
 		ApotheosisCore.enableAnvil = config.getBoolean("Enable Anvil Cap Removal", "asm", true, "If the anvil cap remover tweak is enabled.");
 		ApotheosisCore.enableInvis = config.getBoolean("Enable Invisibility Tweak", "asm", true, "If potion effects are removed for invisibility.");
 		ApotheosisCore.enableEnch = config.getBoolean("Enable Enchantment Cap Removal", "asm", true, "If the enchantment cap remover tweak is enabled.");
-		ApotheosisCore.enablePInf = config.getBoolean("Enable Potion Infinity", "asm", true, "If the potion infinity enchantment actually works.");
 
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		if (enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
@@ -81,7 +81,7 @@ public class Apotheosis {
 	}
 
 	@EventHandler
-	public void init(FMLInitializationEvent e) {
+	public void init(FMLInitializationEvent e) throws IOException {
 		MinecraftForge.EVENT_BUS.post(new ApotheosisInit(e));
 	}
 

@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -10,6 +10,7 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.WorldProviderHell;
+import shadows.ench.EnchModule;
 
 public class EnchantmentHellInfused extends Enchantment {
 
@@ -20,12 +21,12 @@ public class EnchantmentHellInfused extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 1 + level * 12;
+		return 50 + level * 7;
 	}
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 15;
+		return this.getMinEnchantability(level) + level * 4;
 	}
 
 	@Override

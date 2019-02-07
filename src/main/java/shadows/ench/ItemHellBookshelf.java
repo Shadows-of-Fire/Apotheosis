@@ -14,7 +14,7 @@ public class ItemHellBookshelf extends ItemBlock {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return !stack.hasEffect() && enchantment == EnchModule.HELL_INFUSION;
+		return !stack.hasEffect() && stack.getCount() == 1 && enchantment == EnchModule.HELL_INFUSION;
 	}
 
 	@Override

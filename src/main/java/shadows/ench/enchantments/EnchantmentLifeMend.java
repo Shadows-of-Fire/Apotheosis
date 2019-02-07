@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -7,13 +7,13 @@ import shadows.Apotheosis;
 
 public class EnchantmentLifeMend extends Enchantment {
 
-	protected EnchantmentLifeMend() {
+	public EnchantmentLifeMend() {
 		super(Rarity.VERY_RARE, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlot.values());
 		setName(Apotheosis.MODID + ".life_mending");
 	}
 
 	public int getMinEnchantability(int level) {
-		return level * 80;
+		return 80 + level * 15;
 	}
 
 	public int getMaxEnchantability(int level) {

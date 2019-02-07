@@ -15,7 +15,6 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	public static boolean enableAnvil = true;
 	public static boolean enableEnch = true;
 	public static boolean enableInvis = true;
-	public static boolean enablePInf = true;
 
 	static String updateRepair;
 	static String capsIsCreative;
@@ -24,14 +23,25 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String format;
 	static String calcStackEnch;
 	static String doesShowParticles;
-	static String pCapClass = "net/minecraft/entity/player/PlayerCapabilities";
-	static String pStackClass = "net/minecraft/item/ItemStack";
+	static String applyPotionDamageCalculations;
+	static String playerCapabilities = "net/minecraft/entity/player/PlayerCapabilities";
+	static String itemStack = "net/minecraft/item/ItemStack";
+	static String damageSource = "net/minecraft/util/DamageSource";
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] { "shadows.anvil.AnvilCapRemover", "shadows.ench.EnchCapRemover", "shadows.potion.InvisParticleRemover", "shadows.potion.InfinityTweaker", "shadows.spawn.SpawnerFixerTransformer" };
+		//Formatter::off
+		return new String[] {
+				"shadows.anvil.AnvilCapRemover", 
+				"shadows.ench.EnchCapRemover", 
+				"shadows.potion.InvisParticleRemover", 
+				"shadows.potion.InfinityTweaker", 
+				"shadows.potion.SunderingTweaker", 
+				"shadows.spawn.SpawnerFixerTransformer" 
+				};
+		//Formatter::on
 	}
 
 	@Override
@@ -53,9 +63,11 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		drawForeground = dev ? "drawGuiContainerForegroundLayer" : "c";
 		calcStackEnch = dev ? "calcItemStackEnchantability" : "a";
 		doesShowParticles = dev ? "doesShowParticles" : "e";
+		applyPotionDamageCalculations = dev ? "applyPotionDamageCalculations" : "c";
 		if (!dev) {
-			pCapClass = FMLDeobfuscatingRemapper.INSTANCE.unmap(pCapClass);
-			pStackClass = FMLDeobfuscatingRemapper.INSTANCE.unmap(pStackClass);
+			playerCapabilities = FMLDeobfuscatingRemapper.INSTANCE.unmap(playerCapabilities);
+			itemStack = FMLDeobfuscatingRemapper.INSTANCE.unmap(itemStack);
+			damageSource = FMLDeobfuscatingRemapper.INSTANCE.unmap(damageSource);
 		}
 	}
 
@@ -69,11 +81,11 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isCapIsCreative(FieldInsnNode fn) {
-		return fn.owner.equals(pCapClass) && fn.name.equals(capsIsCreative);
+		return fn.owner.equals(playerCapabilities) && fn.name.equals(capsIsCreative);
 	}
 
 	public static boolean isEmptyStack(FieldInsnNode fn) {
-		return fn.owner.equals(pStackClass) && fn.name.equals(empty);
+		return fn.owner.equals(itemStack) && fn.name.equals(empty);
 	}
 
 	public static boolean isDrawForeground(MethodNode m) {
@@ -81,11 +93,15 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isCalcStackEnch(MethodNode m) {
-		return m.name.equals(calcStackEnch) && m.desc.equals(String.format("(Ljava/util/Random;IIL%s;)I", pStackClass));
+		return m.name.equals(calcStackEnch) && m.desc.equals(String.format("(Ljava/util/Random;IIL%s;)I", itemStack));
 	}
 
 	public static boolean isShowParticles(MethodNode m) {
 		return m.name.equals(doesShowParticles) && m.desc.equals("()Z");
+	}
+
+	public static boolean isCalcDamage(MethodNode m) {
+		return m.name.equals(applyPotionDamageCalculations) && m.desc.equals(String.format("(L%s;F)F", damageSource));
 	}
 
 }

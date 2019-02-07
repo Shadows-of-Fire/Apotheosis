@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.EnchantmentDigging;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -6,7 +6,7 @@ import shadows.Apotheosis;
 
 public class EnchantmentDepths extends EnchantmentDigging {
 
-	protected EnchantmentDepths() {
+	public EnchantmentDepths() {
 		super(Rarity.UNCOMMON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 		setName(Apotheosis.MODID + ".depth_miner");
 	}

@@ -24,6 +24,7 @@ import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.ench.EnchModule;
 import shadows.placebo.Placebo;
+import shadows.placebo.util.PlaceboUtil;
 import shadows.potion.PotionModule;
 import shadows.spawn.SpawnerModule;
 
@@ -36,8 +37,10 @@ public class ApotheosisClient {
 
 	@SubscribeEvent
 	public static void tooltips(ItemTooltipEvent e) {
-		if (e.getItemStack().getItem() == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
-		else if (e.getItemStack().getItem() == Items.ENCHANTED_BOOK) {
+		Item i = e.getItemStack().getItem();
+		if (i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
+		else if (i == EnchModule.PRISMATIC_COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
+		else if (i == Items.ENCHANTED_BOOK) {
 			for (Map.Entry<IRegistryDelegate<Enchantment>, List<String>> ent : ENCH_TOOLTIPS.entrySet()) {
 				if (hasEnchant(e.getItemStack(), ent.getKey().get())) {
 					ent.getValue().forEach(s -> e.getToolTip().add(I18n.format(s)));
@@ -60,7 +63,7 @@ public class ApotheosisClient {
 
 	@SubscribeEvent
 	public static void init(ApotheosisInit e) {
-		String masterwork = TextFormatting.AQUA + I18n.format("info.apotheosis.masterwork");
+		String masterwork = TextFormatting.DARK_GREEN + I18n.format("info.apotheosis.masterwork");
 		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
 		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");
 		if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "info.spw.capturing");
@@ -71,7 +74,7 @@ public class ApotheosisClient {
 			registerTooltip(EnchModule.DEPTH_MINER, twisted, "", "info.apotheosis.depth_miner");
 			registerTooltip(EnchModule.STABLE_FOOTING, "info.apotheosis.stable_footing");
 			registerTooltip(EnchModule.SCAVENGER, masterwork, "", "info.apotheosis.scavenger");
-			registerTooltip(EnchModule.LIFE_MENDING, corrupted, "", "info.apotheosis.life_mending");
+			registerTooltip(EnchModule.LIFE_MENDING, corrupted + " " + I18n.format("info.apotheosis.masterwork"), "", "info.apotheosis.life_mending");
 		}
 	}
 
@@ -79,6 +82,7 @@ public class ApotheosisClient {
 	public static void models(ModelRegistryEvent e) {
 		if (Apotheosis.enableEnch) {
 			Placebo.PROXY.useRenamedMapper(EnchModule.HELLSHELF, "hellshelf", "", "normal");
+			PlaceboUtil.sMRL(EnchModule.PRISMATIC_COBWEB, 0, "inventory");
 		}
 	}
 

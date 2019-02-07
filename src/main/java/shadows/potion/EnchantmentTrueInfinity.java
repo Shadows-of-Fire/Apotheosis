@@ -2,7 +2,6 @@ package shadows.potion;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 
 public class EnchantmentTrueInfinity extends Enchantment {
@@ -19,12 +18,12 @@ public class EnchantmentTrueInfinity extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return Enchantments.FORTUNE.getMinEnchantability(enchantmentLevel) + 20;
+		return 65;
 	}
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return Enchantments.FORTUNE.getMaxEnchantability(enchantmentLevel) + 20;
+		return 135;
 	}
 
 }

@@ -1,6 +1,9 @@
 package shadows.ench;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 
@@ -39,9 +42,26 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
+import shadows.ench.enchantments.EnchantmentDepths;
+import shadows.ench.enchantments.EnchantmentHellInfused;
+import shadows.ench.enchantments.EnchantmentLifeMend;
+import shadows.ench.enchantments.EnchantmentMounted;
+import shadows.ench.enchantments.EnchantmentScavenger;
+import shadows.ench.enchantments.EnchantmentStableFooting;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.util.NBTIngredient;
 
+/**
+ * Short document on enchanting methods:
+ * Item Enchantibility is tied directly to the number of enchantments the item will recieve, and the "level" passed to getRandomEnchantments.
+ * The possible enchantabilities for an item are equal to:
+ * [table level + 1, table level + 1 + (E/4 + 1) + (E/4 + 1)].  E == item enchantability.  (E/4 + 1) is rolled as a random int.
+ * 
+ * Enchantment min/max enchantability should really be called something else, they aren't fully based on enchantability.
+ * Enchantment rarity affects weight in WeightedRandom list picking.
+ * Max table level in Apotheosis is 128. Last Updated: (2/7/2019)
+ *
+ */
 public class EnchModule {
 
 	@ObjectHolder("apotheosis:hellshelf")
@@ -49,6 +69,9 @@ public class EnchModule {
 
 	@ObjectHolder("minecraft:web")
 	public static final Item COBWEB = null;
+
+	@ObjectHolder("apotheosis:prismatic_web")
+	public static final Item PRISMATIC_COBWEB = null;
 
 	@ObjectHolder("apotheosis:hell_infusion")
 	public static final EnchantmentHellInfused HELL_INFUSION = null;
@@ -90,14 +113,17 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		Block b;
-		e.getRegistry().register(b = new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")));
-		ForgeRegistries.ITEMS.register(new ItemHellBookshelf(b).setRegistryName(b.getRegistryName()));
+		e.getRegistry().register(new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")));
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new ItemShearsExt().setRegistryName(Items.SHEARS.getRegistryName()).setTranslationKey("shears"));
+		//Formatter::off
+		e.getRegistry().registerAll(
+				new ItemShearsExt().setRegistryName(Items.SHEARS.getRegistryName()).setTranslationKey("shears"),
+				new ItemHellBookshelf(HELLSHELF).setRegistryName(HELLSHELF.getRegistryName()),
+				new Item().setRegistryName(Apotheosis.MODID, "prismatic_web").setTranslationKey(Apotheosis.MODID + ".prismatic_web"));
+		//Formatter::on
 	}
 
 	@SubscribeEvent
@@ -122,16 +148,25 @@ public class EnchModule {
 	public void recipes(ApotheosisRecipeEvent e) {
 		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION));
 		e.helper.addShaped(HELLSHELF, 3, 3, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK);
+		e.helper.addShaped(PRISMATIC_COBWEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.WEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
 	}
 
 	@SubscribeEvent
 	public void removeEnch(AnvilUpdateEvent e) {
-		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty() && e.getRight().getItem() == COBWEB) {
-			ItemStack stack = e.getLeft().copy();
-			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
-			e.setCost(1);
-			e.setMaterialCost(1);
-			e.setOutput(stack);
+		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty()) {
+			if (e.getRight().getItem() == COBWEB) {
+				ItemStack stack = e.getLeft().copy();
+				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
+				e.setCost(1);
+				e.setMaterialCost(1);
+				e.setOutput(stack);
+			} else if (e.getRight().getItem() == PRISMATIC_COBWEB) {
+				ItemStack stack = e.getLeft().copy();
+				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
+				e.setCost(30);
+				e.setMaterialCost(1);
+				e.setOutput(stack);
+			}
 		}
 	}
 
@@ -200,6 +235,27 @@ public class EnchModule {
 
 	public static void setEnch(ArmorMaterial mat, int ench) {
 		ReflectionHelper.setPrivateValue(ArmorMaterial.class, mat, ench, "enchantability", "field_78055_h");
+	}
+
+	@SuppressWarnings("unused")
+	private static void writeDebugEnchInfo() throws IOException {
+		File out = new File(Apotheosis.configDir, "enchdata.csv");
+		FileWriter wr = new FileWriter(out);
+		BufferedWriter writer = new BufferedWriter(wr);
+		writer.write("Name,Level,Min Power,Max Power\n");
+		for (Enchantment en : ForgeRegistries.ENCHANTMENTS) {
+			for (int i = 1; i <= en.getMaxLevel(); i++) {
+				StringBuilder s = new StringBuilder();
+				s.append(en.getRegistryName());
+				s.append(",");
+				s.append(i + ",");
+				s.append(en.getMinEnchantability(i) + ",");
+				s.append(en.getMaxEnchantability(i));
+				s.append("\n");
+				writer.write(s.toString());
+			}
+		}
+		writer.close();
 	}
 
 }

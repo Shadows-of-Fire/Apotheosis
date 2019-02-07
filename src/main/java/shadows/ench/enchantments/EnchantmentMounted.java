@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -10,6 +10,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import shadows.ench.EnchModule;
 
 public class EnchantmentMounted extends Enchantment {
 
@@ -25,7 +26,7 @@ public class EnchantmentMounted extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 8;
+		return this.getMinEnchantability(level) + level * 4;
 	}
 
 	@Override

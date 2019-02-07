@@ -16,41 +16,40 @@ import shadows.ApotheosisCore;
 import shadows.CustomClassWriter;
 
 @SortingIndex(1001)
-public class InfinityTweaker implements IClassTransformer {
+public class SunderingTweaker implements IClassTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		if ("net.minecraft.item.ItemArrow".equals(transformedName)) return transformPotionEffect(basicClass);
+		if ("net.minecraft.entity.EntityLivingBase".equals(transformedName)) return transformEntityLiving(basicClass);
 		return basicClass;
 	}
 
-	static byte[] transformPotionEffect(byte[] basicClass) {
-		ApotheosisCore.LOG.info("Transforming ItemArrow...");
+	static byte[] transformEntityLiving(byte[] basicClass) {
+		ApotheosisCore.LOG.info("Transforming EntityLivingBase...");
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);
 		classReader.accept(classNode, 0);
-		MethodNode isInfinite = null;
+		MethodNode applyPotionDamageCalculations = null;
 		for (MethodNode m : classNode.methods) {
-			if (m.name.equals("isInfinite")) {
-				isInfinite = m;
+			if (ApotheosisCore.isCalcDamage(m)) {
+				applyPotionDamageCalculations = m;
 				break;
 			}
 		}
-
-		if (isInfinite != null) {
+		if (applyPotionDamageCalculations != null) {
 			InsnList insn = new InsnList();
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
-			insn.add(new VarInsnNode(Opcodes.ALOAD, 2));
-			insn.add(new VarInsnNode(Opcodes.ALOAD, 3));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/PotionModule", "isInfinite", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z", false));
-			insn.add(new InsnNode(Opcodes.IRETURN));
-			isInfinite.instructions.insert(insn);
+			insn.add(new VarInsnNode(Opcodes.FLOAD, 2));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/PotionModule", "applyPotionDamageCalculations", "(Ljava/lang/Object;Ljava/lang/Object;F)F", false));
+			insn.add(new InsnNode(Opcodes.FRETURN));
+			applyPotionDamageCalculations.instructions.insert(insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 			classNode.accept(writer);
-			ApotheosisCore.LOG.info("Successfully transformed ItemArrow");
+			ApotheosisCore.LOG.info("Successfully transformed EntityLivingBase");
 			return writer.toByteArray();
 		}
-		ApotheosisCore.LOG.info("Failed transforming ItemArrow");
+		ApotheosisCore.LOG.info("Failed transforming EntityLivingBase");
 		return basicClass;
 	}
 

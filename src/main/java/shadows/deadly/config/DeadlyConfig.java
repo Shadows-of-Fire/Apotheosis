@@ -36,7 +36,7 @@ public class DeadlyConfig {
 	public static boolean bossWaterBreathing = true;
 	public static float bossHealthMultiplier = 4;
 	public static float bossKnockbackResist = .85F;
-	public static float bossSpeedMultiplier = .45F;
+	public static float bossSpeedMultiplier = 1.15F;
 	public static float bossDamageBonus = 4;
 	public static float bossLevelUpChance = .25F;
 	public static float bossEnchantChance = .25F;

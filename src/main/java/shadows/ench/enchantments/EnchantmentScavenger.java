@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -7,14 +7,14 @@ import shadows.Apotheosis;
 
 public class EnchantmentScavenger extends Enchantment {
 
-	protected EnchantmentScavenger() {
+	public EnchantmentScavenger() {
 		super(Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 		setName(Apotheosis.MODID + ".scavenger");
 	}
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 1 + level * 25;
+		return 45 + level * level * 12;
 	}
 
 	@Override

@@ -18,13 +18,13 @@ public class EnchantmentCapturing extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
-		return Enchantments.FORTUNE.getMinEnchantability(enchantmentLevel);
+	public int getMinEnchantability(int level) {
+		return Enchantments.FORTUNE.getMinEnchantability(level);
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return Enchantments.FORTUNE.getMaxEnchantability(enchantmentLevel);
+	public int getMaxEnchantability(int level) {
+		return Enchantments.FORTUNE.getMaxEnchantability(level) + level == getMaxLevel() ? 50 : 0;
 	}
 
 }
