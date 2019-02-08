@@ -88,7 +88,7 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
 				if (sm.matches(stack)) {
 					sm.modify(tile, inverse);
-					stack.shrink(1);
+					if (sm.returnVal()) stack.shrink(1);
 					return sm.returnVal();
 				}
 			}
