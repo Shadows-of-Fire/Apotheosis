@@ -44,6 +44,7 @@ import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
+import shadows.ench.enchantments.EnchantmentIcyThorns;
 import shadows.ench.enchantments.EnchantmentLifeMend;
 import shadows.ench.enchantments.EnchantmentMounted;
 import shadows.ench.enchantments.EnchantmentScavenger;
@@ -91,13 +92,16 @@ public class EnchModule {
 	@ObjectHolder("apotheosis:life_mending")
 	public static final EnchantmentLifeMend LIFE_MENDING = null;
 
+	@ObjectHolder("apotheosis:icy_thorns")
+	public static final EnchantmentIcyThorns ICY_THORNS = null;
+
 	public static float localAtkStrength = 1;
 
 	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
 		public ITextComponent getDeathMessage(EntityLivingBase entity) {
 			return new TextComponentTranslation("death.apotheosis.corrupted", entity.getDisplayName());
 		};
-	}.setDamageBypassesArmor().setMagicDamage();
+	}.setDamageBypassesArmor().setDamageIsAbsolute();
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
@@ -135,7 +139,8 @@ public class EnchModule {
 				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
 				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
 				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"),
-				new EnchantmentLifeMend().setRegistryName(Apotheosis.MODID, "life_mending"));
+				new EnchantmentLifeMend().setRegistryName(Apotheosis.MODID, "life_mending"),
+				new EnchantmentIcyThorns().setRegistryName(Apotheosis.MODID, "icy_thorns"));
 		//Formatter::on
 	}
 

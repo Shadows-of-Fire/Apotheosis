@@ -34,11 +34,15 @@ repositories {
 	maven {
 		url "http://tehnut.info/maven"
 	}
+	maven {
+		url "https://maven.mcmoddev.com/"
+	}
 }
 
 dependencies {
 	deobfCompile "mezz.jei:jei_1.12.2:+"
 	deobfCompile "mcp.mobius.waila:Hwyla:1.8.+"
+	deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-1.12.2:+"
 }
 
 processResources

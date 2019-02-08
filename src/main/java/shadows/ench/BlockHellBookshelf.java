@@ -54,7 +54,7 @@ public class BlockHellBookshelf extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> info, ITooltipFlag flag) {
-		info.add(I18n.format("info.apotheosis.hellshelf", 2 + EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack) * 0.2F));
+		info.add(I18n.format("info.apotheosis.hellshelf", String.valueOf(2 + EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack) * 0.2F).substring(0, 3)));
 	}
 
 	@Override

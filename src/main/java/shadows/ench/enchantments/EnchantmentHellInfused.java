@@ -9,7 +9,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.WorldProviderHell;
 import shadows.ench.EnchModule;
 
 public class EnchantmentHellInfused extends Enchantment {
@@ -41,7 +40,7 @@ public class EnchantmentHellInfused extends Enchantment {
 
 	@Override
 	public void onEntityDamaged(EntityLivingBase user, Entity target, int level) {
-		if (user instanceof EntityPlayer && user.world.provider instanceof WorldProviderHell) {
+		if (user instanceof EntityPlayer && user.world.provider.getDimension() == -1) {
 			target.attackEntityFrom(DamageSource.MAGIC, level * level * 0.5F * EnchModule.localAtkStrength);
 		}
 	}

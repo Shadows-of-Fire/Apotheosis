@@ -47,6 +47,7 @@ public class Apotheosis {
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableAnvil = true;
+	public static boolean enchTooltips = true;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -74,6 +75,8 @@ public class Apotheosis {
 
 		enableAnvil = config.getBoolean("Enable Anvil Module", "general", true, "If the anvil module is loaded.");
 		if (enableAnvil) MinecraftForge.EVENT_BUS.register(new AnvilModule());
+
+		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
 
 		if (config.hasChanged()) config.save();
 		MinecraftForge.EVENT_BUS.post(new ApotheosisPreInit(e));

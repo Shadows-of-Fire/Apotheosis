@@ -1,7 +1,7 @@
 //Spawner Module
 enchantment.spw.capturing=Capturing
 
-info.spw.capturing=Makes mobs have a chance to drop their spawn egg.
+enchantment.spw.capturing.desc=Makes mobs have a chance to drop their spawn egg.
 info.spw.entity=Entity: %s
 
 waila.spw.mindelay=Min Delay: %s
@@ -41,19 +41,30 @@ info.apotheosis.masterwork=Masterwork
 info.apotheosis.twisted=Twisted
 info.apotheosis.corrupted=Corrupted
 info.apotheosis.enchanting=Enchanting tables can now exceed 30 levels.  Some enchantments may only show up past level 30.
+
 enchantment.apotheosis.hell_infusion=Hell Infusion
-info.apotheosis.hell_infusion=Deals extra magic damage in the Nether.
+enchantment.apotheosis.hell_infusion.desc=Deals extra magic damage in the Nether.
+
 enchantment.apotheosis.mounted_strike=Mounted Strike
-info.apotheosis.mounted_strike=Deals extra damage when on a horse.
+enchantment.apotheosis.mounted_strike.desc=Deals extra damage when on a horse.
+
 enchantment.apotheosis.depth_miner=Miner's Fervor
-info.apotheosis.depth_miner=Adjusts mining speed based on Y-level.
+enchantment.apotheosis.depth_miner.desc=Adjusts mining speed based on Y-level.
+
 enchantment.apotheosis.stable_footing=Stable Footing
-info.apotheosis.stable_footing=Negates the mining speed penalty for flying.
+enchantment.apotheosis.stable_footing.desc=Negates the mining speed penalty for flying.
+
 enchantment.apotheosis.scavenger=Scavenger
-info.apotheosis.scavenger=Mobs killed may roll their loot tables twice.
+enchantment.apotheosis.scavenger.desc=Mobs killed may roll their loot tables twice.
+
 enchantment.apotheosis.life_mending=Life-Mending
-info.apotheosis.life_mending=Converts health into durability.
+enchantment.apotheosis.life_mending.desc=Converts health into durability.
+
+enchantment.apotheosis.icy_thorns=Icy Thorns
+enchantment.apotheosis.icy_thorns.desc=Slows attackers.
+
 death.apotheosis.corrupted=%1$s was drained by a corrupted enchantment.
+
 item.apotheosis.prismatic_web.name=Prismatic Cobweb
 info.apotheosis.prismatic_cobweb=Can be used to remove curses.
 
@@ -63,7 +74,7 @@ potion.potency.3=IV
 
 //Potion Module
 enchantment.apotheosis.true_infinity=True Infinity
-info.apotheosis.true_infinity=Makes all arrows infinite.
+enchantment.apotheosis.true_infinity.desc=Makes all arrows infinite.
 
 potion.effect.resistance=Potion of Resistance
 splash_potion.effect.resistance=Splash Potion of Resistance

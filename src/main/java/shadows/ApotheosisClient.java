@@ -42,7 +42,7 @@ public class ApotheosisClient {
 		else if (i == EnchModule.PRISMATIC_COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
 		else if (i == Items.ENCHANTED_BOOK) {
 			for (Map.Entry<IRegistryDelegate<Enchantment>, List<String>> ent : ENCH_TOOLTIPS.entrySet()) {
-				if (hasEnchant(e.getItemStack(), ent.getKey().get())) {
+				if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
 					ent.getValue().forEach(s -> e.getToolTip().add(I18n.format(s)));
 					return;
 				}
@@ -50,10 +50,10 @@ public class ApotheosisClient {
 		}
 	}
 
-	private static boolean hasEnchant(ItemStack book, Enchantment ench) {
+	private static boolean onlyHasEnchant(ItemStack book, Enchantment ench) {
 		NBTTagList list = ItemEnchantedBook.getEnchantments(book);
-		for (int i = 0; i < list.tagCount(); ++i) {
-			NBTTagCompound tag = list.getCompoundTagAt(i);
+		if (list.tagCount() == 1) {
+			NBTTagCompound tag = list.getCompoundTagAt(0);
 			int id = tag.getShort("id");
 			Enchantment enchantment = Enchantment.getEnchantmentByID(id);
 			if (enchantment == ench) return true;
@@ -66,15 +66,26 @@ public class ApotheosisClient {
 		String masterwork = TextFormatting.DARK_GREEN + I18n.format("info.apotheosis.masterwork");
 		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
 		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");
-		if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "info.spw.capturing");
-		if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "info.apotheosis.true_infinity");
-		if (Apotheosis.enableEnch) {
-			registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "info.apotheosis.hell_infusion");
-			registerTooltip(EnchModule.MOUNTED_STRIKE, "info.apotheosis.mounted_strike");
-			registerTooltip(EnchModule.DEPTH_MINER, twisted, "", "info.apotheosis.depth_miner");
-			registerTooltip(EnchModule.STABLE_FOOTING, "info.apotheosis.stable_footing");
-			registerTooltip(EnchModule.SCAVENGER, masterwork, "", "info.apotheosis.scavenger");
-			registerTooltip(EnchModule.LIFE_MENDING, corrupted + " " + I18n.format("info.apotheosis.masterwork"), "", "info.apotheosis.life_mending");
+		if (Apotheosis.enchTooltips) {
+			if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "enchantment.spw.capturing.desc");
+			if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "enchantment.apotheosis.true_infinity.desc");
+			if (Apotheosis.enableEnch) {
+				registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "enchantment.apotheosis.hell_infusion.desc");
+				registerTooltip(EnchModule.MOUNTED_STRIKE, "enchantment.apotheosis.mounted_strike.desc");
+				registerTooltip(EnchModule.DEPTH_MINER, twisted, "", "enchantment.apotheosis.depth_miner.desc");
+				registerTooltip(EnchModule.STABLE_FOOTING, "enchantment.apotheosis.stable_footing.desc");
+				registerTooltip(EnchModule.SCAVENGER, masterwork, "", "enchantment.apotheosis.scavenger.desc");
+				registerTooltip(EnchModule.LIFE_MENDING, corrupted, "", "enchantment.apotheosis.life_mending.desc");
+				registerTooltip(EnchModule.ICY_THORNS, "enchantment.apotheosis.icy_thorns.desc");
+			}
+		} else {
+			if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork);
+			if (Apotheosis.enableEnch) {
+				registerTooltip(EnchModule.HELL_INFUSION, masterwork);
+				registerTooltip(EnchModule.DEPTH_MINER, twisted);
+				registerTooltip(EnchModule.SCAVENGER, masterwork);
+				registerTooltip(EnchModule.LIFE_MENDING, corrupted);
+			}
 		}
 	}
 
