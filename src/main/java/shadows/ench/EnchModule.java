@@ -5,10 +5,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -54,7 +59,7 @@ import shadows.util.NBTIngredient;
 
 /**
  * Short document on enchanting methods:
- * Item Enchantibility is tied directly to the number of enchantments the item will recieve, and the "level" passed to getRandomEnchantments.
+ * Item Enchantibility is tied to the number of enchantments the item will recieve, and the "level" passed to getRandomEnchantments.
  * The possible enchantabilities for an item are equal to:
  * [table level + 1, table level + 1 + (E/4 + 1) + (E/4 + 1)].  E == item enchantability.  (E/4 + 1) is rolled as a random int.
  * 
@@ -64,6 +69,8 @@ import shadows.util.NBTIngredient;
  *
  */
 public class EnchModule {
+
+	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
 
 	@ObjectHolder("apotheosis:hellshelf")
 	public static final BlockHellBookshelf HELLSHELF = null;
@@ -261,6 +268,24 @@ public class EnchModule {
 			}
 		}
 		writer.close();
+	}
+
+	public static List<EnchantmentData> getEnchantmentDatas(int power, ItemStack stack, boolean allowTreasure) {
+		List<EnchantmentData> list = new ArrayList<>();
+		boolean isBook = stack.getItem() == Items.BOOK;
+		for (Enchantment enchantment : Enchantment.REGISTRY) {
+			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
+			if ((enchantment.canApplyAtEnchantingTable(stack) || (isBook && enchantment.isAllowedOnBooks()))) {
+				EnchantmentInfo info = ENCHANTMENT_INFO.get(enchantment);
+				for (int i = info.getMaxLevel(); i > enchantment.getMinLevel() - 1; --i) {
+					if (power >= enchantment.getMinEnchantability(i) && power <= enchantment.getMaxEnchantability(i)) {
+						list.add(new EnchantmentData(enchantment, i));
+						break;
+					}
+				}
+			}
+		}
+		return list;
 	}
 
 }

@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.asm;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -9,19 +9,20 @@ import org.objectweb.asm.tree.IntInsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 import shadows.ApotheosisCore;
+import shadows.ApotheosisTransformer.IApotheosisTransformer;
 import shadows.CustomClassWriter;
 
-@SortingIndex(1001)
-public class EnchCapRemover implements IClassTransformer {
+public class EnchTransformer implements IApotheosisTransformer {
+
+	@Override
+	public boolean accepts(String name, String transformedName) {
+		return "net.minecraft.enchantment.EnchantmentHelper".equals(transformedName);
+	}
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		if (!ApotheosisCore.enableEnch) return basicClass;
-		if ("net.minecraft.enchantment.EnchantmentHelper".equals(transformedName)) return transformEnchHelper(basicClass);
-		return basicClass;
+		return transformEnchHelper(basicClass);
 	}
 
 	static byte[] transformEnchHelper(byte[] basicClass) {
@@ -40,8 +41,7 @@ public class EnchCapRemover implements IClassTransformer {
 			JumpInsnNode jumpNode = null;
 			for (int i = 0; i < calcStackEnch.instructions.size(); i++) {
 				AbstractInsnNode n = calcStackEnch.instructions.get(i);
-				if (n.getOpcode() == Opcodes.BIPUSH && 
-						((IntInsnNode) n).operand == 15) {
+				if (n.getOpcode() == Opcodes.BIPUSH && ((IntInsnNode) n).operand == 15) {
 					jumpNode = (JumpInsnNode) n.getNext();
 					break;
 				}

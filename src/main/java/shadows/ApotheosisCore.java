@@ -1,9 +1,11 @@
 package shadows;
 
 import java.util.Map;
+import java.util.function.Predicate;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -32,16 +34,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		//Formatter::off
-		return new String[] {
-				"shadows.anvil.AnvilCapRemover", 
-				"shadows.ench.EnchCapRemover", 
-				"shadows.potion.InvisParticleRemover", 
-				"shadows.potion.InfinityTweaker", 
-				"shadows.potion.SunderingTweaker", 
-				"shadows.spawn.SpawnerFixerTransformer" 
-				};
-		//Formatter::on
+		return new String[] { "shadows.ApotheosisTransformer" };
 	}
 
 	@Override
@@ -73,6 +66,13 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	@Override
 	public String getAccessTransformerClass() {
+		return null;
+	}
+
+	public static MethodNode findMethod(ClassNode node, Predicate<MethodNode> finder) {
+		for (MethodNode m : node.methods) {
+			if (finder.test(m)) return m;
+		}
 		return null;
 	}
 

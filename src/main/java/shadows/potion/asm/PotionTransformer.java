@@ -1,4 +1,4 @@
-package shadows.potion;
+package shadows.potion.asm;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -10,18 +10,44 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 import shadows.ApotheosisCore;
+import shadows.ApotheosisTransformer.IApotheosisTransformer;
 import shadows.CustomClassWriter;
 
-@SortingIndex(1001)
-public class InvisParticleRemover implements IClassTransformer {
+public class PotionTransformer implements IApotheosisTransformer {
+
+	@Override
+	public boolean accepts(String name, String transformedName) {
+		return "net.minecraft.item.ItemArrow".equals(transformedName) || "net.minecraft.potion.PotionEffect".equals(transformedName);
+	}
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		if (!ApotheosisCore.enableInvis) return basicClass;
-		if ("net.minecraft.potion.PotionEffect".equals(transformedName)) return transformPotionEffect(basicClass);
+		if ("net.minecraft.item.ItemArrow".equals(transformedName)) return transformArrow(basicClass);
+		return transformPotionEffect(basicClass);
+	}
+
+	static byte[] transformArrow(byte[] basicClass) {
+		ApotheosisCore.LOG.info("Transforming ItemArrow...");
+		ClassNode classNode = new ClassNode();
+		ClassReader classReader = new ClassReader(basicClass);
+		classReader.accept(classNode, 0);
+		MethodNode isInfinite = ApotheosisCore.findMethod(classNode, m -> ApotheosisCore.isShowParticles(m));
+
+		if (isInfinite != null) {
+			InsnList insn = new InsnList();
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 2));
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 3));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/PotionModule", "isInfinite", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z", false));
+			insn.add(new InsnNode(Opcodes.IRETURN));
+			isInfinite.instructions.insert(insn);
+			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+			classNode.accept(writer);
+			ApotheosisCore.LOG.info("Successfully transformed ItemArrow");
+			return writer.toByteArray();
+		}
+		ApotheosisCore.LOG.info("Failed transforming ItemArrow");
 		return basicClass;
 	}
 
