@@ -47,6 +47,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
+import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
 import shadows.ench.enchantments.EnchantmentIcyThorns;
@@ -65,7 +66,7 @@ import shadows.util.NBTIngredient;
  * 
  * Enchantment min/max enchantability should really be called something else, they aren't fully based on enchantability.
  * Enchantment rarity affects weight in WeightedRandom list picking.
- * Max table level in Apotheosis is 128. Last Updated: (2/7/2019)
+ * Max table level in Apotheosis is 256. Last Updated: (2/11/2019)
  *
  */
 public class EnchModule {
@@ -112,13 +113,29 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
-		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
+		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
 		setEnch(ToolMaterial.GOLD, 40);
 		setEnch(ArmorMaterial.GOLD, 40);
 		for (ArmorMaterial a : ArmorMaterial.values())
 			setEnch(a, config.getInt(a.name(), "Enchantability - Armor", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this armor material."));
 		for (ToolMaterial a : ToolMaterial.values())
 			setEnch(a, config.getInt(a.name(), "Enchantability - Tools", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this tool material."));
+
+		if (config.hasChanged()) config.save();
+		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
+
+		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
+			int max = config.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, 127, "The max level of this enchantment.");
+			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
+			if (min > max) min = max;
+			EnchantmentInfo info = new EnchantmentInfo(ench, max, min);
+			String maxF = config.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
+			if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
+			String minF = config.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
+			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
+			ENCHANTMENT_INFO.put(ench, info);
+		}
+
 		if (config.hasChanged()) config.save();
 	}
 
@@ -270,15 +287,16 @@ public class EnchModule {
 		writer.close();
 	}
 
-	public static List<EnchantmentData> getEnchantmentDatas(int power, ItemStack stack, boolean allowTreasure) {
+	public static List<EnchantmentData> getEnchantmentDatas(int power, Object s, boolean allowTreasure) {
+		ItemStack stack = (ItemStack) s;
 		List<EnchantmentData> list = new ArrayList<>();
 		boolean isBook = stack.getItem() == Items.BOOK;
-		for (Enchantment enchantment : Enchantment.REGISTRY) {
+		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
 			if ((enchantment.canApplyAtEnchantingTable(stack) || (isBook && enchantment.isAllowedOnBooks()))) {
 				EnchantmentInfo info = ENCHANTMENT_INFO.get(enchantment);
-				for (int i = info.getMaxLevel(); i > enchantment.getMinLevel() - 1; --i) {
-					if (power >= enchantment.getMinEnchantability(i) && power <= enchantment.getMaxEnchantability(i)) {
+				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {
+					if (power >= info.getMinPower(i) && power <= info.getMaxPower(i)) {
 						list.add(new EnchantmentData(enchantment, i));
 						break;
 					}

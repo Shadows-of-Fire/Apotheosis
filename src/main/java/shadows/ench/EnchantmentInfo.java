@@ -1,12 +1,16 @@
 package shadows.ench;
 
+import java.math.BigDecimal;
+
+import com.udojava.evalex.Expression;
+
 import net.minecraft.enchantment.Enchantment;
 
 public class EnchantmentInfo {
 
 	final Enchantment ench;
-	int maxLevel;
-	int minLevel;
+	final int maxLevel;
+	final int minLevel;
 	PowerFunc maxPower;
 	PowerFunc minPower;
 
@@ -26,8 +30,39 @@ public class EnchantmentInfo {
 		return minLevel;
 	}
 
+	public int getMinPower(int level) {
+		return minPower.getPower(level);
+	}
+
+	public int getMaxPower(int level) {
+		return maxPower.getPower(level);
+	}
+
+	public void setMaxPower(PowerFunc maxPower) {
+		this.maxPower = maxPower;
+	}
+
+	public void setMinPower(PowerFunc minPower) {
+		this.minPower = minPower;
+	}
+
 	public static interface PowerFunc {
 		int getPower(int level);
+	}
+
+	public static class ExpressionPowerFunc implements PowerFunc {
+
+		Expression ex;
+
+		public ExpressionPowerFunc(String func) {
+			this.ex = new Expression(func);
+		}
+
+		@Override
+		public int getPower(int level) {
+			return ex.setVariable("x", new BigDecimal(level)).eval().intValue();
+		}
+
 	}
 
 }

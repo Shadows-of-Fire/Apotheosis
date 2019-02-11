@@ -29,6 +29,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String playerCapabilities = "net/minecraft/entity/player/PlayerCapabilities";
 	static String itemStack = "net/minecraft/item/ItemStack";
 	static String damageSource = "net/minecraft/util/DamageSource";
+	static String getEnchantmentDatas;
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -57,6 +58,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		calcStackEnch = dev ? "calcItemStackEnchantability" : "a";
 		doesShowParticles = dev ? "doesShowParticles" : "e";
 		applyPotionDamageCalculations = dev ? "applyPotionDamageCalculations" : "c";
+		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
 		if (!dev) {
 			playerCapabilities = FMLDeobfuscatingRemapper.INSTANCE.unmap(playerCapabilities);
 			itemStack = FMLDeobfuscatingRemapper.INSTANCE.unmap(itemStack);
@@ -102,6 +104,10 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isCalcDamage(MethodNode m) {
 		return m.name.equals(applyPotionDamageCalculations) && m.desc.equals(String.format("(L%s;F)F", damageSource));
+	}
+
+	public static boolean isEnchDatas(MethodNode m) {
+		return m.name.equals(getEnchantmentDatas) && m.desc.equals(String.format("(IL%s;Z)Ljava/util/List;", itemStack));
 	}
 
 }
