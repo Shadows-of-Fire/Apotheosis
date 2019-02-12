@@ -34,7 +34,7 @@ public class EnchantmentShieldBash extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return stack.getItem().isShield(stack, null) || stack.getItem().canApplyAtEnchantingTable(stack, this);
+		return stack.getItem().isShield(stack, null);
 	}
 
 	@Override
