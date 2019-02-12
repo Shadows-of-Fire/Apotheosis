@@ -50,6 +50,7 @@ import shadows.ench.enchantments.EnchantmentHellInfused;
 import shadows.ench.enchantments.EnchantmentIcyThorns;
 import shadows.ench.enchantments.EnchantmentLifeMend;
 import shadows.ench.enchantments.EnchantmentMounted;
+import shadows.ench.enchantments.EnchantmentReflective;
 import shadows.ench.enchantments.EnchantmentScavenger;
 import shadows.ench.enchantments.EnchantmentShieldBash;
 import shadows.ench.enchantments.EnchantmentStableFooting;
@@ -107,6 +108,9 @@ public class EnchModule {
 
 	@ObjectHolder("apotheosis:shield_bash")
 	public static final EnchantmentShieldBash SHIELD_BASH = null;
+	
+	@ObjectHolder("apotheosis:reflective")
+	public static final EnchantmentReflective REFLECTIVE = null;
 
 	public static float localAtkStrength = 1;
 
@@ -172,7 +176,8 @@ public class EnchModule {
 				new EnchantmentLifeMend().setRegistryName(Apotheosis.MODID, "life_mending"),
 				new EnchantmentIcyThorns().setRegistryName(Apotheosis.MODID, "icy_thorns"),
 				new EnchantmentTempting().setRegistryName(Apotheosis.MODID, "tempting"),
-				new EnchantmentShieldBash().setRegistryName(Apotheosis.MODID, "shield_bash"));
+				new EnchantmentShieldBash().setRegistryName(Apotheosis.MODID, "shield_bash"),
+				new EnchantmentReflective().setRegistryName(Apotheosis.MODID, "reflective"));
 		//Formatter::on
 	}
 

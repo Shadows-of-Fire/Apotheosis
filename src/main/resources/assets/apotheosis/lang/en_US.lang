@@ -71,6 +71,9 @@ info.apotheosis.prismatic_cobweb=Can be used to remove curses.
 enchantment.apotheosis.tempting=Temptation
 enchantment.apotheosis.tempting.desc=Entices nearby farm animals.
 
+enchantment.apotheosis.shield_bash=Shield Bash
+enchantment.apotheosis.shield_bash.desc=Empowers damage done by shields.
+
 //Vanilla
 tile.reeds.name=Sugar Cane
 potion.potency.3=IV

@@ -77,6 +77,9 @@ public class ApotheosisClient {
 				registerTooltip(EnchModule.SCAVENGER, masterwork, "", "enchantment.apotheosis.scavenger.desc");
 				registerTooltip(EnchModule.LIFE_MENDING, corrupted, "", "enchantment.apotheosis.life_mending.desc");
 				registerTooltip(EnchModule.ICY_THORNS, "enchantment.apotheosis.icy_thorns.desc");
+				registerTooltip(EnchModule.TEMPTING, "enchantment.apotheosis.tempting.desc");
+				registerTooltip(EnchModule.SHIELD_BASH, "enchantment.apotheosis.shield_bash.desc");
+				registerTooltip(EnchModule.REFLECTIVE, "enchantment.apotheosis.reflective.desc");
 			}
 		} else {
 			if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork);
