@@ -247,7 +247,7 @@ public class EnchModule {
 				int level = EnchantmentHelper.getEnchantmentLevel(LIFE_MENDING, stack);
 				if (level > 0 && e.getEntityLiving().world.rand.nextInt(10) == 0) {
 					int i = Math.min(level, stack.getItemDamage());
-					e.getEntityLiving().attackEntityFrom(CORRUPTED, i * 0.2F);
+					e.getEntityLiving().attackEntityFrom(CORRUPTED, i * 0.7F);
 					stack.setItemDamage(stack.getItemDamage() - i);
 					return;
 				}
