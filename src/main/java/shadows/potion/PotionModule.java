@@ -222,7 +222,7 @@ public class PotionModule {
 				int k = EnchantmentHelper.getEnchantmentModifierDamage(entity.getArmorInventoryList(), source);
 
 				if (k > 0) {
-					damage = CombatRules.getDamageAfterMagicAbsorb(damage, (float) k);
+					damage = CombatRules.getDamageAfterMagicAbsorb(damage, k);
 				}
 
 				return damage;

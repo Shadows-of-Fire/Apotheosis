@@ -11,8 +11,4 @@ Glowing
 Levitation
 Luck + Unluck (+- Pair)
 
-Refactor enchantability numbers.  Not entirely sure how this system works, but want to make Masterworks need > 30. 
-
-Prismatic Web (Prismarine + Cobweb) to remove curses?
-
-Configurable numbers for enchantments.  Talking about values, not enchantability.
+https://i.imgur.com/oajkjiP.png

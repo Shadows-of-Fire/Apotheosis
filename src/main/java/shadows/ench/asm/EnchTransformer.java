@@ -9,6 +9,7 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.IntInsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
@@ -21,11 +22,17 @@ public class EnchTransformer implements IApotheosisTransformer {
 
 	@Override
 	public boolean accepts(String name, String transformedName) {
-		return "net.minecraft.enchantment.EnchantmentHelper".equals(transformedName);
+		return "net.minecraft.enchantment.EnchantmentHelper".equals(transformedName) || "net.minecraft.entity.ai.EntityAITempt".equals(transformedName) || "net.minecraft.item.Item".equals(transformedName);
 	}
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if ("net.minecraft.enchantment.EnchantmentHelper".equals(transformedName)) return transformEnchHelper(basicClass);
+		else if ("net.minecraft.item.Item".equals(transformedName)) return transformItem(basicClass);
+		return transformAI(basicClass);
+	}
+
+	public byte[] transformEnchHelper(byte[] basicClass) {
 		ApotheosisCore.LOG.info("Transforming EnchantmentHelper...");
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);
@@ -70,6 +77,60 @@ public class EnchTransformer implements IApotheosisTransformer {
 			return writer.toByteArray();
 		}
 		ApotheosisCore.LOG.info("Failed transforming EnchantmentHelper");
+		return basicClass;
+	}
+
+	public byte[] transformAI(byte[] basicClass) {
+		ApotheosisCore.LOG.info("Transforming EntityAITempt...");
+		ClassNode classNode = new ClassNode();
+		ClassReader classReader = new ClassReader(basicClass);
+		classReader.accept(classNode, 0);
+		MethodNode isTempting = null;
+		for (MethodNode m : classNode.methods) {
+			if (ApotheosisCore.isTempting(m)) {
+				isTempting = m;
+				break;
+			}
+
+		}
+		if (isTempting != null) {
+			InsnList insn = new InsnList();
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "isTempting", "(ZLjava/lang/Object;)Z", false));
+			AbstractInsnNode node = isTempting.instructions.getLast().getPrevious();
+			isTempting.instructions.insertBefore(node, insn);
+			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+			classNode.accept(writer);
+			ApotheosisCore.LOG.info("Successfully transformed EntityAITempt");
+			return writer.toByteArray();
+		}
+		ApotheosisCore.LOG.info("Failed transforming EntityAITempt");
+		return basicClass;
+	}
+
+	public byte[] transformItem(byte[] basicClass) {
+		ApotheosisCore.LOG.info("Transforming Item...");
+		ClassNode classNode = new ClassNode();
+		ClassReader classReader = new ClassReader(basicClass);
+		classReader.accept(classNode, 0);
+		MethodNode getItemEnchantability = null;
+		for (MethodNode m : classNode.methods) {
+			if (ApotheosisCore.isItemEnch(m)) {
+				getItemEnchantability = m;
+				break;
+			}
+		}
+		if (getItemEnchantability != null) {
+			InsnList insn = new InsnList();
+			insn.add(new LdcInsnNode(1));
+			insn.add(new InsnNode(Opcodes.IRETURN));
+			getItemEnchantability.instructions.insert(insn);
+			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+			classNode.accept(writer);
+			ApotheosisCore.LOG.info("Successfully transformed Item");
+			return writer.toByteArray();
+		}
+		ApotheosisCore.LOG.info("Failed transforming Item");
 		return basicClass;
 	}
 

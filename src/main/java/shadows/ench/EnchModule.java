@@ -1,9 +1,6 @@
 package shadows.ench;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +51,9 @@ import shadows.ench.enchantments.EnchantmentIcyThorns;
 import shadows.ench.enchantments.EnchantmentLifeMend;
 import shadows.ench.enchantments.EnchantmentMounted;
 import shadows.ench.enchantments.EnchantmentScavenger;
+import shadows.ench.enchantments.EnchantmentShieldBash;
 import shadows.ench.enchantments.EnchantmentStableFooting;
+import shadows.ench.enchantments.EnchantmentTempting;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.util.NBTIngredient;
 
@@ -103,9 +102,16 @@ public class EnchModule {
 	@ObjectHolder("apotheosis:icy_thorns")
 	public static final EnchantmentIcyThorns ICY_THORNS = null;
 
+	@ObjectHolder("apotheosis:tempting")
+	public static final EnchantmentTempting TEMPTING = null;
+
+	@ObjectHolder("apotheosis:shield_bash")
+	public static final EnchantmentShieldBash SHIELD_BASH = null;
+
 	public static float localAtkStrength = 1;
 
 	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
+		@Override
 		public ITextComponent getDeathMessage(EntityLivingBase entity) {
 			return new TextComponentTranslation("death.apotheosis.corrupted", entity.getDisplayName());
 		};
@@ -164,7 +170,9 @@ public class EnchModule {
 				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
 				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"),
 				new EnchantmentLifeMend().setRegistryName(Apotheosis.MODID, "life_mending"),
-				new EnchantmentIcyThorns().setRegistryName(Apotheosis.MODID, "icy_thorns"));
+				new EnchantmentIcyThorns().setRegistryName(Apotheosis.MODID, "icy_thorns"),
+				new EnchantmentTempting().setRegistryName(Apotheosis.MODID, "tempting"),
+				new EnchantmentShieldBash().setRegistryName(Apotheosis.MODID, "shield_bash"));
 		//Formatter::on
 	}
 
@@ -201,7 +209,8 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
-		localAtkStrength = e.getEntityPlayer().getCooledAttackStrength(0.5F);
+		EntityPlayer p = e.getEntityPlayer();
+		localAtkStrength = p.getCooledAttackStrength(0.5F);
 	}
 
 	Method dropLoot;
@@ -266,27 +275,6 @@ public class EnchModule {
 		ReflectionHelper.setPrivateValue(ArmorMaterial.class, mat, ench, "enchantability", "field_78055_h");
 	}
 
-	@SuppressWarnings("unused")
-	private static void writeDebugEnchInfo() throws IOException {
-		File out = new File(Apotheosis.configDir, "enchdata.csv");
-		FileWriter wr = new FileWriter(out);
-		BufferedWriter writer = new BufferedWriter(wr);
-		writer.write("Name,Level,Min Power,Max Power\n");
-		for (Enchantment en : ForgeRegistries.ENCHANTMENTS) {
-			for (int i = 1; i <= en.getMaxLevel(); i++) {
-				StringBuilder s = new StringBuilder();
-				s.append(en.getRegistryName());
-				s.append(",");
-				s.append(i + ",");
-				s.append(en.getMinEnchantability(i) + ",");
-				s.append(en.getMaxEnchantability(i));
-				s.append("\n");
-				writer.write(s.toString());
-			}
-		}
-		writer.close();
-	}
-
 	public static List<EnchantmentData> getEnchantmentDatas(int power, Object s, boolean allowTreasure) {
 		ItemStack stack = (ItemStack) s;
 		List<EnchantmentData> list = new ArrayList<>();
@@ -304,6 +292,12 @@ public class EnchModule {
 			}
 		}
 		return list;
+	}
+
+	public static boolean isTempting(boolean was, Object s) {
+		ItemStack stack = (ItemStack) s;
+		if (EnchantmentHelper.getEnchantmentLevel(TEMPTING, stack) > 0) return true;
+		return was;
 	}
 
 }

@@ -1,7 +1,7 @@
 //Spawner Module
 enchantment.spw.capturing=Capturing
 
-enchantment.spw.capturing.desc=Makes mobs have a chance to drop their spawn egg.
+enchantment.apotheosis.capturing.desc=Makes mobs have a chance to drop their spawn egg.
 info.spw.entity=Entity: %s
 
 waila.spw.mindelay=Min Delay: %s
@@ -67,6 +67,9 @@ death.apotheosis.corrupted=%1$s was drained by a corrupted enchantment.
 
 item.apotheosis.prismatic_web.name=Prismatic Cobweb
 info.apotheosis.prismatic_cobweb=Can be used to remove curses.
+
+enchantment.apotheosis.tempting=Temptation
+enchantment.apotheosis.tempting.desc=Entices nearby farm animals.
 
 //Vanilla
 tile.reeds.name=Sugar Cane

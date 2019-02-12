@@ -30,6 +30,8 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String itemStack = "net/minecraft/item/ItemStack";
 	static String damageSource = "net/minecraft/util/DamageSource";
 	static String getEnchantmentDatas;
+	static String isTempting;
+	static String getItemEnchantability;
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -58,12 +60,14 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		calcStackEnch = dev ? "calcItemStackEnchantability" : "a";
 		doesShowParticles = dev ? "doesShowParticles" : "e";
 		applyPotionDamageCalculations = dev ? "applyPotionDamageCalculations" : "c";
-		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
 		if (!dev) {
 			playerCapabilities = FMLDeobfuscatingRemapper.INSTANCE.unmap(playerCapabilities);
 			itemStack = FMLDeobfuscatingRemapper.INSTANCE.unmap(itemStack);
 			damageSource = FMLDeobfuscatingRemapper.INSTANCE.unmap(damageSource);
 		}
+		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
+		isTempting = dev ? "isTempting" : "a";
+		getItemEnchantability = dev ? "getItemEnchantability" : "c";
 	}
 
 	@Override
@@ -108,6 +112,14 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isEnchDatas(MethodNode m) {
 		return m.name.equals(getEnchantmentDatas) && m.desc.equals(String.format("(IL%s;Z)Ljava/util/List;", itemStack));
+	}
+
+	public static boolean isTempting(MethodNode m) {
+		return m.name.equals(isTempting) && m.desc.equals(String.format("(L%s;)Z", itemStack));
+	}
+
+	public static boolean isItemEnch(MethodNode m) {
+		return m.name.equals(getItemEnchantability) && m.desc.equals("()I");
 	}
 
 }

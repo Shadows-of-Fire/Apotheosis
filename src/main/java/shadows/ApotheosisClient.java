@@ -67,7 +67,7 @@ public class ApotheosisClient {
 		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
 		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");
 		if (Apotheosis.enchTooltips) {
-			if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "enchantment.spw.capturing.desc");
+			if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "enchantment.apotheosis.capturing.desc");
 			if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "enchantment.apotheosis.true_infinity.desc");
 			if (Apotheosis.enableEnch) {
 				registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "enchantment.apotheosis.hell_infusion.desc");

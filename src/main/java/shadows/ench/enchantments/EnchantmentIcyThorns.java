@@ -20,22 +20,27 @@ public class EnchantmentIcyThorns extends Enchantment {
 		this.setName(Apotheosis.MODID + ".icy_thorns");
 	}
 
+	@Override
 	public int getMinEnchantability(int level) {
 		return 40 + level * 15;
 	}
 
+	@Override
 	public int getMaxEnchantability(int level) {
 		return 90 + level * 15;
 	}
 
+	@Override
 	public int getMaxLevel() {
 		return 3;
 	}
 
+	@Override
 	public boolean canApply(ItemStack stack) {
 		return stack.getItem() instanceof ItemArmor ? true : super.canApply(stack);
 	}
 
+	@Override
 	public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
 		Random rand = user.getRNG();
 		if (attacker instanceof EntityLivingBase) {
