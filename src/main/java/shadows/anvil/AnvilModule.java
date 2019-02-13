@@ -13,6 +13,11 @@ import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
 
+/**
+ * TODO: Roll into Enchantment module.
+ * @author Shadows
+ *
+ */
 public class AnvilModule {
 
 	@SubscribeEvent
