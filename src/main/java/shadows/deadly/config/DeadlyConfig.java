@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -20,6 +22,8 @@ public class DeadlyConfig {
 
 	public static Configuration config;
 
+	public static IntList dimWhitelist = new IntArrayList();
+
 	//Brutal Mobs
 	public static boolean brutalFireRes = true;
 	public static int brutalRegenLevel = 1;
@@ -29,7 +33,6 @@ public class DeadlyConfig {
 	public static boolean brutalWaterBreathing = true;
 
 	//Boss Stats
-	public static int bossMaxLevel = 3;
 	public static int bossRegenLevel = 2;
 	public static int bossResistLevel = 1;
 	public static boolean bossFireRes = true;
@@ -59,6 +62,15 @@ public class DeadlyConfig {
 		DeadlyConstants.BRUTAL_SPAWNER_STATS.load(c);
 		DeadlyConstants.SWARM_SPAWNER_STATS.load(c);
 
+		String[] dims = c.getStringList("Generation Dimension Whitelist", DeadlyConstants.GENERAL, new String[] { "0" }, "The dimensions that the deadly module will generate in.");
+		for (String s : dims) {
+			try {
+				dimWhitelist.add(Integer.parseInt(s.trim()));
+			} catch (NumberFormatException e) {
+				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + ".  It will be ignored!  (Not a number)");
+			}
+		}
+
 		brutalFireRes = c.getBoolean("Fire Resist", DeadlyConstants.BRUTAL_MOBS, true, "If brutal mobs will be immune to fire damage.");
 		brutalRegenLevel = c.getInt("Regeneration", DeadlyConstants.BRUTAL_MOBS, 1, 0, 5, "If brutal mobs regen hp (0 heals 1 health every 2.5 sec, each rank halves the time between heals.)");
 		brutalResistLevel = c.getInt("Resistance", DeadlyConstants.BRUTAL_MOBS, 3, 0, 5, "Increases damage resistance. (0 is -20% damage, each rank grants -20% damage.)");
@@ -66,7 +78,6 @@ public class DeadlyConfig {
 		brutalSpeedLevel = c.getInt("Swiftness", DeadlyConstants.BRUTAL_MOBS, 1, 0, 5, "Increases speed. (0 is +30% speed, each rank grants +30% speed.)");
 		brutalWaterBreathing = c.getBoolean("Water Breathing", DeadlyConstants.BRUTAL_MOBS, true, "If true, brutal mobs will not drown.");
 
-		bossMaxLevel = c.getInt("Max Level", DeadlyConstants.BOSSES, bossMaxLevel, 0, Integer.MAX_VALUE, "The max level of bosses.  Should not be higher than the max level Armor Set");
 		bossRegenLevel = c.getInt("Regen Level", DeadlyConstants.BOSSES, bossRegenLevel, 0, Integer.MAX_VALUE, "The regeneration level of bosses.  Set to 0 to disable.");
 		bossResistLevel = c.getInt("Resistance Level", DeadlyConstants.BOSSES, bossResistLevel, 0, Integer.MAX_VALUE, "The resistance level of bosses.  Set to 0 to disable.");
 		bossFireRes = c.getBoolean("Fire Resistance", DeadlyConstants.BOSSES, true, "If bosses have fire resistance.");

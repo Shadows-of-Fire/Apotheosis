@@ -14,6 +14,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import shadows.deadly.DeadlyModule;
+import shadows.deadly.config.DeadlyConfig;
 
 public class WorldGenerator implements IWorldGenerator {
 
@@ -25,7 +26,7 @@ public class WorldGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		if (!world.isRemote && world.provider.getDimension() == 0) WorldGenerator.run(world, new BlockPos(chunkX << 4, 0, chunkZ << 4));
+		if (!world.isRemote && DeadlyConfig.dimWhitelist.contains(world.provider.getDimension())) WorldGenerator.run(world, new BlockPos(chunkX << 4, 0, chunkZ << 4));
 	}
 
 	static Random rand = new Random();

@@ -61,18 +61,12 @@ public class BossItem extends WorldFeatureItem {
 	public static final ArmorSet IRON_GEAR = new ArmorSet(2, Items.IRON_SWORD, Items.SHIELD, Items.IRON_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE, Items.IRON_HELMET).addExtraMains(Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_PICKAXE);
 	public static final ArmorSet DIAMOND_GEAR = new ArmorSet(3, Items.DIAMOND_SWORD, Items.SHIELD, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET).addExtraMains(Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE);
 
-	//Mob stats.
-	protected static final int REGEN = DeadlyConfig.bossRegenLevel;
-	protected static final int RESISTANCE = DeadlyConfig.bossResistLevel;
-	protected static final boolean FIRE_RESIST = DeadlyConfig.bossFireRes;
-	protected static final boolean WATER_BREATHING = DeadlyConfig.bossWaterBreathing;
-	protected static final double HEALTH_MULT = DeadlyConfig.bossHealthMultiplier;
-	protected static final double KB_RES = DeadlyConfig.bossKnockbackResist;
-	protected static final double SPEED_MULT = DeadlyConfig.bossSpeedMultiplier;
-	protected static final double BONUS_DMG = DeadlyConfig.bossDamageBonus;
-	protected static final double LEVEL_CHANCE = DeadlyConfig.bossLevelUpChance;
-	protected static final double ENCHANT_CHANCE = DeadlyConfig.bossEnchantChance;
-	protected static final double POTION_CHANCE = DeadlyConfig.bossPotionChance;
+	static {
+		ArmorSet.LEVEL_TO_SETS.put(0, CHAIN_GEAR);
+		ArmorSet.LEVEL_TO_SETS.put(1, GOLD_GEAR);
+		ArmorSet.LEVEL_TO_SETS.put(2, IRON_GEAR);
+		ArmorSet.LEVEL_TO_SETS.put(3, DIAMOND_GEAR);
+	}
 
 	protected final EntityEntry entityEntry;
 	protected AxisAlignedBB entityAABB;
@@ -94,7 +88,7 @@ public class BossItem extends WorldFeatureItem {
 	public void place(World world, BlockPos pos) {
 		place(world, pos, world.rand);
 	}
-	
+
 	public void place(World world, BlockPos pos, Random rand) {
 		EntityLiving entity = (EntityLiving) entityEntry.newInstance(world);
 		initBoss(rand, entity);
@@ -104,31 +98,32 @@ public class BossItem extends WorldFeatureItem {
 	}
 
 	public static void initBoss(Random random, EntityLiving entity) {
-		if (REGEN > 0) entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, Integer.MAX_VALUE, REGEN));
-		if (RESISTANCE > 0) entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, Integer.MAX_VALUE, RESISTANCE));
-		if (FIRE_RESIST) entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE));
-		if (WATER_BREATHING) entity.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, Integer.MAX_VALUE));
-		AttributeHelper.addToBase(entity, SharedMonsterAttributes.ATTACK_DAMAGE, "boss_damage_bonus", BONUS_DMG);
-		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MAX_HEALTH, "boss_health_mult", HEALTH_MULT - 1);
-		AttributeHelper.max(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", KB_RES);
-		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MOVEMENT_SPEED, "boss_speed_mult", SPEED_MULT - 1);
+		if (DeadlyConfig.bossRegenLevel > 0) entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, Integer.MAX_VALUE, DeadlyConfig.bossRegenLevel));
+		if (DeadlyConfig.bossResistLevel > 0) entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, Integer.MAX_VALUE, DeadlyConfig.bossResistLevel));
+		if (DeadlyConfig.bossFireRes) entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE));
+		if (DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, Integer.MAX_VALUE));
+		AttributeHelper.addToBase(entity, SharedMonsterAttributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossDamageBonus);
+		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier - 1);
+		AttributeHelper.max(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist);
+		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier - 1);
 		entity.setHealth(entity.getMaxHealth());
 		String name = NameHelper.setEntityName(random, entity);
 		entity.enablePersistence();
 
 		int level = 0;
-		for (int i = 0; i < DeadlyConfig.bossMaxLevel; i++)
-			if (random.nextDouble() < LEVEL_CHANCE) level++;
+		for (int i = 0; i < ArmorSet.SORTED_SETS.size(); i++)
+			if (random.nextDouble() < DeadlyConfig.bossLevelUpChance) level++;
 
-		ArmorSet.LEVEL_TO_SETS.get(level).apply(entity);
+		ArmorSet.SORTED_SETS.get(level).apply(entity);
 
 		if (entity instanceof EntitySkeleton) entity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BOW));
 
 		int guaranteed = ThreadLocalRandom.current().nextInt(6);
 
 		ItemStack stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed]);
-		while(guaranteed == 1 || stack.isEmpty()) stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed = ThreadLocalRandom.current().nextInt(6)]);
-		
+		while (guaranteed == 1 || stack.isEmpty())
+			stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed = ThreadLocalRandom.current().nextInt(6)]);
+
 		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat());
@@ -147,13 +142,13 @@ public class BossItem extends WorldFeatureItem {
 				for (Enchantment e : enchantMap.keySet())
 					enchantMap.put(e, e.getMaxLevel());
 				EnchantmentHelper.setEnchantments(enchantMap, stack);
-			} else if (random.nextDouble() < ENCHANT_CHANCE) EnchantmentHelper.addRandomEnchantment(random, stack, 15 + random.nextInt(25), true);
+			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) EnchantmentHelper.addRandomEnchantment(random, stack, 30 + random.nextInt(30), true);
 		}
 
 		if (POTIONS.isEmpty()) for (Potion p : ForgeRegistries.POTIONS)
 			if (p.beneficial) POTIONS.add(p);
 
-		if (random.nextDouble() < POTION_CHANCE) entity.addPotionEffect(new PotionEffect(POTIONS.get(random.nextInt(POTIONS.size())), Integer.MAX_VALUE, ThreadLocalRandom.current().nextInt(3) + 1));
+		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new PotionEffect(POTIONS.get(random.nextInt(POTIONS.size())), Integer.MAX_VALUE, random.nextInt(3) + 1));
 	}
 
 	public static enum EquipmentType {

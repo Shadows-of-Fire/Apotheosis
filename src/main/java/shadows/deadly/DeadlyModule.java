@@ -16,6 +16,7 @@ import shadows.deadly.gen.BossFeature;
 import shadows.deadly.gen.BrutalSpawner;
 import shadows.deadly.gen.SwarmSpawner;
 import shadows.deadly.gen.WorldGenerator;
+import shadows.util.ArmorSet;
 
 public class DeadlyModule {
 
@@ -35,5 +36,6 @@ public class DeadlyModule {
 		SwarmSpawner.init();
 		WorldGenerator.init();
 		GameRegistry.registerWorldGenerator(new WorldGenerator(), 255);
+		ArmorSet.sortSets();
 	}
 }
