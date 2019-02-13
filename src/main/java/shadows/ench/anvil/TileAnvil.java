@@ -1,4 +1,4 @@
-package shadows.anvil;
+package shadows.ench.anvil;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

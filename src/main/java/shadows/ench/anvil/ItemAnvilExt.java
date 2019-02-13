@@ -1,4 +1,4 @@
-package shadows.anvil;
+package shadows.ench.anvil;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;

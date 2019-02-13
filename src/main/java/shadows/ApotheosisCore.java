@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
@@ -34,6 +35,8 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String getItemEnchantability;
 	static String blockUsingShield;
 	static String entityLivingBase = "net/minecraft/entity/EntityLivingBase";
+	static String enchantment = "net/minecraft/enchantment/Enchantment";
+	static String getMaxLevel;
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -67,11 +70,13 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 			itemStack = FMLDeobfuscatingRemapper.INSTANCE.unmap(itemStack);
 			damageSource = FMLDeobfuscatingRemapper.INSTANCE.unmap(damageSource);
 			entityLivingBase = FMLDeobfuscatingRemapper.INSTANCE.unmap(entityLivingBase);
+			enchantment = FMLDeobfuscatingRemapper.INSTANCE.unmap(enchantment);
 		}
 		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
 		isTempting = dev ? "isTempting" : "a";
 		getItemEnchantability = dev ? "getItemEnchantability" : "c";
 		blockUsingShield = dev ? "blockUsingShield" : "c";
+		getMaxLevel = dev ? "getMaxLevel" : "b";
 	}
 
 	@Override
@@ -128,6 +133,10 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isBlockWithShield(MethodNode m) {
 		return m.name.equals(blockUsingShield) && m.desc.equals(String.format("(L%s;)V", entityLivingBase));
+	}
+
+	public static boolean isGetMaxLevel(MethodInsnNode m) {
+		return m.owner.equals(enchantment) && m.name.equals(getMaxLevel) && m.desc.equals("()I");
 	}
 
 }

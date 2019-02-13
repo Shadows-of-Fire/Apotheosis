@@ -23,7 +23,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import shadows.anvil.AnvilModule;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
 import shadows.placebo.util.RecipeHelper;
@@ -68,9 +67,6 @@ public class Apotheosis {
 
 		ApotheosisCore.enablePotion = enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		if (enablePotion) MinecraftForge.EVENT_BUS.register(new PotionModule());
-
-		enableAnvil = config.getBoolean("Enable Anvil Module", "general", true, "If the anvil module is loaded.");
-		if (enableAnvil) MinecraftForge.EVENT_BUS.register(new AnvilModule());
 
 		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
 

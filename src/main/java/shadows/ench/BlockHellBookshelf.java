@@ -54,7 +54,7 @@ public class BlockHellBookshelf extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> info, ITooltipFlag flag) {
-		info.add(I18n.format("info.apotheosis.hellshelf", String.valueOf(2 + EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack) * 0.2F).substring(0, 3)));
+		info.add(I18n.format("info.apotheosis.hellshelf", String.valueOf(2 + Math.min(15, EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack)) * 0.2F).substring(0, 3)));
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class BlockHellBookshelf extends Block {
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		ItemStack stack = placer.getHeldItem(hand);
-		return getDefaultState().withProperty(INFUSION, EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack));
+		return getDefaultState().withProperty(INFUSION, Math.min(15, EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack)));
 	}
 
 	@Override

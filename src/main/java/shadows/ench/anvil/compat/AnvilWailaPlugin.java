@@ -1,4 +1,4 @@
-package shadows.anvil.compat;
+package shadows.ench.anvil.compat;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import shadows.anvil.BlockAnvilExt;
-import shadows.anvil.TileAnvil;
+import shadows.ench.anvil.BlockAnvilExt;
+import shadows.ench.anvil.TileAnvil;
 
 @WailaPlugin
 public class AnvilWailaPlugin implements IWailaPlugin, IWailaDataProvider {

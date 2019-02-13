@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
-import shadows.anvil.asm.AnvilTransformer;
+import shadows.ench.anvil.asm.AnvilTransformer;
 import shadows.ench.asm.EnchTransformer;
 import shadows.potion.asm.PotionTransformer;
 import shadows.spawn.asm.SpawnerTransformer;

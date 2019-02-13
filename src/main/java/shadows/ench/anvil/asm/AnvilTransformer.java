@@ -1,4 +1,4 @@
-package shadows.anvil.asm;
+package shadows.ench.anvil.asm;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -7,6 +7,7 @@ import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
@@ -42,7 +43,9 @@ public class AnvilTransformer implements IApotheosisTransformer {
 		}
 		if (updateRepairOutput != null) {
 			int ix = 0;
-			AbstractInsnNode toRemove = null;
+			AbstractInsnNode levelRestriction = null;
+			MethodInsnNode getMaxLevel1 = null;
+			MethodInsnNode getMaxLevel2 = null;
 			for (int i = 0; i < updateRepairOutput.instructions.size(); i++) {
 				AbstractInsnNode n = updateRepairOutput.instructions.get(i);
 				if (n.getOpcode() == Opcodes.GETFIELD) {
@@ -50,18 +53,37 @@ public class AnvilTransformer implements IApotheosisTransformer {
 				}
 				if (ix == 2 && n.getOpcode() == Opcodes.GETSTATIC) {
 					if (ApotheosisCore.isEmptyStack((FieldInsnNode) n)) {
-						toRemove = n;
-						break;
+						levelRestriction = n;
 					}
 				}
+				if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+					MethodInsnNode mNode = (MethodInsnNode) n;
+					boolean is = ApotheosisCore.isGetMaxLevel(mNode);
+					if (is && getMaxLevel1 == null) {
+						getMaxLevel1 = mNode;
+					} else if (is) getMaxLevel2 = mNode;
+				}
 			}
-			if (toRemove != null) {
-				updateRepairOutput.instructions.set(toRemove, new VarInsnNode(Opcodes.ALOAD, 5));
-				CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
-				classNode.accept(writer);
-				ApotheosisCore.LOG.info("Successfully transformed ContainerRepair");
-				return writer.toByteArray();
+
+			if (levelRestriction != null) {
+				updateRepairOutput.instructions.set(levelRestriction, new VarInsnNode(Opcodes.ALOAD, 5));
+				ApotheosisCore.LOG.info("Successfully removed the anvil level cap.");
 			}
+
+			if (getMaxLevel1 != null) {
+				updateRepairOutput.instructions.set(getMaxLevel1, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "getMaxLevel", "(Ljava/lang/Object;)I", false));
+				ApotheosisCore.LOG.info("Replaced ContainerRepair Enchantment#getMaxLevel #1.");
+			}
+
+			if (getMaxLevel2 != null) {
+				updateRepairOutput.instructions.set(getMaxLevel2, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "getMaxLevel", "(Ljava/lang/Object;)I", false));
+				ApotheosisCore.LOG.info("Replaced ContainerRepair Enchantment#getMaxLevel #2.");
+			}
+
+			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+			classNode.accept(writer);
+			if (levelRestriction != null && getMaxLevel1 != null && getMaxLevel2 != null) ApotheosisCore.LOG.info("Successfully transformed ContainerRepair");
+			return writer.toByteArray();
 		}
 		ApotheosisCore.LOG.info("Failed transforming ContainerRepair");
 		return basicClass;

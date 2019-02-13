@@ -18,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.inventory.ContainerRepair;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
@@ -25,6 +26,7 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -35,16 +37,22 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
+import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
+import shadows.ench.anvil.BlockAnvilExt;
+import shadows.ench.anvil.ItemAnvilExt;
+import shadows.ench.anvil.TileAnvil;
 import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
@@ -154,8 +162,14 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
+	public void preInit(ApotheosisPreInit e) {
+		GameRegistry.registerTileEntity(TileAnvil.class, new ResourceLocation(Apotheosis.MODID, "anvil"));
+	}
+
+	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		e.getRegistry().register(new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")));
+		e.getRegistry().register(new BlockAnvilExt());
 	}
 
 	@SubscribeEvent
@@ -164,7 +178,8 @@ public class EnchModule {
 		e.getRegistry().registerAll(
 				new ItemShearsExt().setRegistryName(Items.SHEARS.getRegistryName()).setTranslationKey("shears"),
 				new ItemHellBookshelf(HELLSHELF).setRegistryName(HELLSHELF.getRegistryName()),
-				new Item().setRegistryName(Apotheosis.MODID, "prismatic_web").setTranslationKey(Apotheosis.MODID + ".prismatic_web"));
+				new Item().setRegistryName(Apotheosis.MODID, "prismatic_web").setTranslationKey(Apotheosis.MODID + ".prismatic_web"),
+				new ItemAnvilExt(Blocks.ANVIL));
 		//Formatter::on
 	}
 
@@ -277,6 +292,15 @@ public class EnchModule {
 		}
 	}
 
+	@SubscribeEvent
+	public void applyUnbreaking(AnvilRepairEvent e) {
+		if (e.getEntityPlayer().openContainer instanceof ContainerRepair) {
+			ContainerRepair r = (ContainerRepair) e.getEntityPlayer().openContainer;
+			TileEntity te = r.world.getTileEntity(r.pos);
+			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getUnbreaking() + 1));
+		}
+	}
+
 	public static void setEnch(ToolMaterial mat, int ench) {
 		ReflectionHelper.setPrivateValue(ToolMaterial.class, mat, ench, "enchantability", "field_78008_j");
 	}
@@ -339,6 +363,15 @@ public class EnchModule {
 				user.getActiveItemStack().damageItem(10, user);
 			}
 		}
+	}
+
+	/**
+	 * Hook that replaces calls to {@link Enchantment#getMaxLevel()} inside ContainerRepair.
+	 * @param a An enchantment.
+	 * @return The configured max level of that enchantment.
+	 */
+	public static int getMaxLevel(Object a) {
+		return ENCHANTMENT_INFO.get((Enchantment) a).getMaxLevel();
 	}
 
 }
