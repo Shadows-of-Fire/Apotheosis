@@ -25,9 +25,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
+import shadows.garden.GardenModule;
 import shadows.placebo.util.RecipeHelper;
 import shadows.potion.PotionModule;
-import shadows.reeds.InfiniteReeds;
 import shadows.spawn.SpawnerModule;
 import shadows.util.NBTIngredient;
 
@@ -41,7 +41,7 @@ public class Apotheosis {
 	public static File configDir;
 	public static Configuration config;
 	public static boolean enableSpawner = true;
-	public static boolean enableReed = true;
+	public static boolean enableGarden = true;
 	public static boolean enableDeadly = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
@@ -59,8 +59,8 @@ public class Apotheosis {
 		ApotheosisCore.enableSpawner = enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		if (enableSpawner) MinecraftForge.EVENT_BUS.register(new SpawnerModule());
 
-		enableReed = config.getBoolean("Enable Infinite Sugarcane", "general", true, "If sugarcane will grow infinitely.");
-		if (enableReed) MinecraftForge.EVENT_BUS.register(new InfiniteReeds());
+		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
+		if (enableGarden) MinecraftForge.EVENT_BUS.register(new GardenModule());
 
 		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		if (enableDeadly) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
