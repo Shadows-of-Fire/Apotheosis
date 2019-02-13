@@ -79,9 +79,7 @@ public class SpawnerModule {
 		if (e.getWorld().getBlockState(e.getPos()).getBlock() == Blocks.MOB_SPAWNER) {
 			ItemStack s = e.getItemStack();
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
-				if (sm.matches(s)) {
-					e.setUseBlock(Result.ALLOW);
-				}
+				if (sm.matches(s)) e.setUseBlock(Result.ALLOW);
 		}
 	}
 
