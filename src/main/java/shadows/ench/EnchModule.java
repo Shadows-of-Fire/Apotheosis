@@ -263,6 +263,9 @@ public class EnchModule {
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		EntityPlayer p = e.getEntityPlayer();
+		if (!p.onGround && EnchantmentHelper.getMaxEnchantmentLevel(STABLE_FOOTING, p) > 0) {
+			e.setNewSpeed(e.getNewSpeed() * 5F);
+		}
 		ItemStack stack = p.getHeldItemMainhand();
 		if (stack.isEmpty()) return;
 		int depth = EnchantmentHelper.getEnchantmentLevel(DEPTH_MINER, stack);
@@ -271,9 +274,6 @@ public class EnchModule {
 			if (effectiveness < 0) effectiveness /= 3;
 			float speedChange = 1 + depth * depth * effectiveness;
 			e.setNewSpeed(e.getNewSpeed() + speedChange);
-		}
-		if (!p.onGround && EnchantmentHelper.getEnchantmentLevel(STABLE_FOOTING, stack) > 0) {
-			e.setNewSpeed(e.getNewSpeed() * 5F);
 		}
 	}
 

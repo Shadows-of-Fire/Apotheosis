@@ -8,7 +8,7 @@ import shadows.Apotheosis;
 public class EnchantmentReflective extends Enchantment {
 
 	public EnchantmentReflective() {
-		super(Rarity.RARE, null, new EntityEquipmentSlot[] { EntityEquipmentSlot.OFFHAND });
+		super(Rarity.RARE, null, new EntityEquipmentSlot[] { EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.MAINHAND });
 		setName(Apotheosis.MODID + ".reflective");
 	}
 

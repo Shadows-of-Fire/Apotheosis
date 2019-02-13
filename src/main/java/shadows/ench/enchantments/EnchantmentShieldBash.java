@@ -13,7 +13,7 @@ import shadows.ench.EnchModule;
 public class EnchantmentShieldBash extends Enchantment {
 
 	public EnchantmentShieldBash() {
-		super(Rarity.RARE, null, new EntityEquipmentSlot[] { EntityEquipmentSlot.OFFHAND });
+		super(Rarity.RARE, null, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 		setName(Apotheosis.MODID + ".shield_bash");
 	}
 
