@@ -23,6 +23,7 @@ public class AnvilTransformer implements IApotheosisTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if (!ApotheosisCore.enableEnch) return basicClass;
 		if ("net.minecraft.inventory.ContainerRepair".equals(transformedName)) return transformContainerRepair(basicClass);
 		return transformGuiRepair(basicClass);
 	}

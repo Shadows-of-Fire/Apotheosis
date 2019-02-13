@@ -22,13 +22,15 @@ public class EnchTransformer implements IApotheosisTransformer {
 
 	@Override
 	public boolean accepts(String name, String transformedName) {
-		return "net.minecraft.enchantment.EnchantmentHelper".equals(transformedName) || "net.minecraft.entity.ai.EntityAITempt".equals(transformedName) || "net.minecraft.item.Item".equals(transformedName);
+		return "net.minecraft.enchantment.EnchantmentHelper".equals(transformedName) || "net.minecraft.entity.ai.EntityAITempt".equals(transformedName) || "net.minecraft.item.Item".equals(transformedName) || "net.minecraft.entity.EntityLivingBase".equals(transformedName);
 	}
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if (!ApotheosisCore.enableEnch) return basicClass;
 		if ("net.minecraft.enchantment.EnchantmentHelper".equals(transformedName)) return transformEnchHelper(basicClass);
 		else if ("net.minecraft.item.Item".equals(transformedName)) return transformItem(basicClass);
+		else if ("net.minecraft.entity.EntityLivingBase".equals(transformedName)) return transformELB(basicClass);
 		return transformAI(basicClass);
 	}
 
@@ -122,7 +124,7 @@ public class EnchTransformer implements IApotheosisTransformer {
 		}
 		if (getItemEnchantability != null) {
 			InsnList insn = new InsnList();
-			insn.add(new LdcInsnNode(1));
+			insn.add(new LdcInsnNode(10));
 			insn.add(new InsnNode(Opcodes.IRETURN));
 			getItemEnchantability.instructions.insert(insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
@@ -131,6 +133,33 @@ public class EnchTransformer implements IApotheosisTransformer {
 			return writer.toByteArray();
 		}
 		ApotheosisCore.LOG.info("Failed transforming Item");
+		return basicClass;
+	}
+
+	public byte[] transformELB(byte[] basicClass) {
+		ApotheosisCore.LOG.info("Transforming EntityLivingBase...");
+		ClassNode classNode = new ClassNode();
+		ClassReader classReader = new ClassReader(basicClass);
+		classReader.accept(classNode, 0);
+		MethodNode blockUsingShield = null;
+		for (MethodNode m : classNode.methods) {
+			if (ApotheosisCore.isBlockWithShield(m)) {
+				blockUsingShield = m;
+				break;
+			}
+		}
+		if (blockUsingShield != null) {
+			InsnList insn = new InsnList();
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "reflectiveHook", "(Ljava/lang/Object;Ljava/lang/Object;)V", false));
+			blockUsingShield.instructions.insert(insn);
+			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+			classNode.accept(writer);
+			ApotheosisCore.LOG.info("Successfully transformed EntityLivingBase");
+			return writer.toByteArray();
+		}
+		ApotheosisCore.LOG.info("Failed transforming EntityLivingBase");
 		return basicClass;
 	}
 

@@ -24,7 +24,7 @@ public class EnchantmentShieldBash extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel) + 20;
+		return this.getMinEnchantability(enchantmentLevel) + 40;
 	}
 
 	@Override

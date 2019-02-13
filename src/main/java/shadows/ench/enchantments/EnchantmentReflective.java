@@ -1,8 +1,6 @@
 package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;
@@ -16,7 +14,7 @@ public class EnchantmentReflective extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return 1 + enchantmentLevel * 25;
+		return 1 + enchantmentLevel * 15;
 	}
 
 	@Override
@@ -32,11 +30,6 @@ public class EnchantmentReflective extends Enchantment {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
 		return stack.getItem().isShield(stack, null);
-	}
-
-	@Override
-	public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
-		System.out.println(user.getActiveItemStack());
 	}
 
 }

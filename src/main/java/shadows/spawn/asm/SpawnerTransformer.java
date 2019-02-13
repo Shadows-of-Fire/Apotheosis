@@ -13,6 +13,13 @@ import shadows.ApotheosisCore;
 import shadows.ApotheosisTransformer.IApotheosisTransformer;
 import shadows.CustomClassWriter;
 
+/**
+ * This is the stupidest transformer i've ever written.
+ * Vanilla makes a call to TileEntity.getKey(TileEntityMobSpawner.class), which is null due to replacements.
+ * This fixes that.
+ * @author Shadows
+ *
+ */
 public class SpawnerTransformer implements IApotheosisTransformer {
 
 	@Override
@@ -22,6 +29,7 @@ public class SpawnerTransformer implements IApotheosisTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if (!ApotheosisCore.enableSpawner) return basicClass;
 		ApotheosisCore.LOG.info("Transforming TileEntityMobSpawner$2...");
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);

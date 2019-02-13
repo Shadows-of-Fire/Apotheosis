@@ -23,6 +23,7 @@ public class PotionTransformer implements IApotheosisTransformer {
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
+		if (!ApotheosisCore.enablePotion) return basicClass;
 		if ("net.minecraft.item.ItemArrow".equals(transformedName)) return transformArrow(basicClass);
 		return transformPotionEffect(basicClass);
 	}

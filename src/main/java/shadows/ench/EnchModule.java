@@ -45,6 +45,7 @@ import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
+import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
 import shadows.ench.enchantments.EnchantmentIcyThorns;
@@ -108,9 +109,12 @@ public class EnchModule {
 
 	@ObjectHolder("apotheosis:shield_bash")
 	public static final EnchantmentShieldBash SHIELD_BASH = null;
-	
+
 	@ObjectHolder("apotheosis:reflective")
 	public static final EnchantmentReflective REFLECTIVE = null;
+
+	@ObjectHolder("apotheosis:berserk")
+	public static final EnchantmentBerserk BERSERK = null;
 
 	public static float localAtkStrength = 1;
 
@@ -177,7 +181,8 @@ public class EnchModule {
 				new EnchantmentIcyThorns().setRegistryName(Apotheosis.MODID, "icy_thorns"),
 				new EnchantmentTempting().setRegistryName(Apotheosis.MODID, "tempting"),
 				new EnchantmentShieldBash().setRegistryName(Apotheosis.MODID, "shield_bash"),
-				new EnchantmentReflective().setRegistryName(Apotheosis.MODID, "reflective"));
+				new EnchantmentReflective().setRegistryName(Apotheosis.MODID, "reflective"),
+				new EnchantmentBerserk().setRegistryName(Apotheosis.MODID, "berserk"));
 		//Formatter::on
 	}
 
@@ -280,6 +285,13 @@ public class EnchModule {
 		ReflectionHelper.setPrivateValue(ArmorMaterial.class, mat, ench, "enchantability", "field_78055_h");
 	}
 
+	/**
+	 * Full redirect for EnchantmentHelper#getEnchantmentDatas
+	 * @param power Enchanting power, pre-calculated, not table level.
+	 * @param s ItemStack to be enchanted.
+	 * @param allowTreasure If treasure enchants are allowed.
+	 * @return The possible enchantment datas for this item.
+	 */
 	public static List<EnchantmentData> getEnchantmentDatas(int power, Object s, boolean allowTreasure) {
 		ItemStack stack = (ItemStack) s;
 		List<EnchantmentData> list = new ArrayList<>();
@@ -299,10 +311,34 @@ public class EnchModule {
 		return list;
 	}
 
+	/**
+	 * Hook for EntityAITempt#isTempting.  Applied by EnchTransformer.
+	 * @param was The previous return of the method.
+	 * @param s The itemstack being held by a player.
+	 * @return If this stack is tempting, basically if it has the Tempting enchantment.
+	 */
 	public static boolean isTempting(boolean was, Object s) {
 		ItemStack stack = (ItemStack) s;
 		if (EnchantmentHelper.getEnchantmentLevel(TEMPTING, stack) > 0) return true;
 		return was;
+	}
+
+	/**
+	 * Hook needed for the Reflective enchantment to work properly.  Injected into EntityLivingBase#blockUsingShield.  Applied by EnchTransformer.
+	 * @param a The entity holding the shield.
+	 * @param b The attacking entity.
+	 */
+	public static void reflectiveHook(Object a, Object b) {
+		EntityLivingBase user = (EntityLivingBase) a;
+		EntityLivingBase attacker = (EntityLivingBase) b;
+		int level;
+		if ((level = EnchantmentHelper.getEnchantmentLevel(REFLECTIVE, user.getActiveItemStack())) > 0) {
+			if (user.world.rand.nextInt(Math.max(0, 7 - level)) == 0) {
+				DamageSource src = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
+				attacker.attackEntityFrom(src, level * 1.6F);
+				user.getActiveItemStack().damageItem(10, user);
+			}
+		}
 	}
 
 }

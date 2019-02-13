@@ -54,14 +54,10 @@ public class Apotheosis {
 		configDir = new File(e.getModConfigurationDirectory(), MODID);
 		config = new Configuration(new File(configDir, MODID + ".cfg"));
 
-		ApotheosisCore.enableAnvil = config.getBoolean("Enable Anvil Cap Removal", "asm", true, "If the anvil cap remover tweak is enabled.");
-		ApotheosisCore.enableInvis = config.getBoolean("Enable Invisibility Tweak", "asm", true, "If potion effects are removed for invisibility.");
-		ApotheosisCore.enableEnch = config.getBoolean("Enable Enchantment Cap Removal", "asm", true, "If the enchantment cap remover tweak is enabled.");
-
-		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
+		ApotheosisCore.enableEnch = enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		if (enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
 
-		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
+		ApotheosisCore.enableSpawner = enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		if (enableSpawner) MinecraftForge.EVENT_BUS.register(new SpawnerModule());
 
 		enableReed = config.getBoolean("Enable Infinite Sugarcane", "general", true, "If sugarcane will grow infinitely.");
@@ -70,7 +66,7 @@ public class Apotheosis {
 		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		if (enableDeadly) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
 
-		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
+		ApotheosisCore.enablePotion = enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		if (enablePotion) MinecraftForge.EVENT_BUS.register(new PotionModule());
 
 		enableAnvil = config.getBoolean("Enable Anvil Module", "general", true, "If the anvil module is loaded.");

@@ -80,6 +80,7 @@ public class ApotheosisClient {
 				registerTooltip(EnchModule.TEMPTING, "enchantment.apotheosis.tempting.desc");
 				registerTooltip(EnchModule.SHIELD_BASH, "enchantment.apotheosis.shield_bash.desc");
 				registerTooltip(EnchModule.REFLECTIVE, "enchantment.apotheosis.reflective.desc");
+				registerTooltip(EnchModule.BERSERK, corrupted, "", "enchantment.apotheosis.berserk.desc");
 			}
 		} else {
 			if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork);
@@ -88,6 +89,7 @@ public class ApotheosisClient {
 				registerTooltip(EnchModule.DEPTH_MINER, twisted);
 				registerTooltip(EnchModule.SCAVENGER, masterwork);
 				registerTooltip(EnchModule.LIFE_MENDING, corrupted);
+				registerTooltip(EnchModule.BERSERK, corrupted);
 			}
 		}
 	}

@@ -74,6 +74,12 @@ enchantment.apotheosis.tempting.desc=Entices nearby farm animals.
 enchantment.apotheosis.shield_bash=Shield Bash
 enchantment.apotheosis.shield_bash.desc=Empowers damage done by shields.
 
+enchantment.apotheosis.reflective=Reflective Defenses
+enchantment.apotheosis.reflective.desc=Blocked attacks may harm the attacker.
+
+enchantment.apotheosis.berserk=Berserker's Fury
+enchantment.apotheosis.berserk.desc=Become enraged when taking damage.
+
 //Vanilla
 tile.reeds.name=Sugar Cane
 potion.potency.3=IV

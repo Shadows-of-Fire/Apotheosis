@@ -14,9 +14,9 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 public class ApotheosisCore implements IFMLLoadingPlugin {
 
-	public static boolean enableAnvil = true;
 	public static boolean enableEnch = true;
-	public static boolean enableInvis = true;
+	public static boolean enableSpawner = true;
+	public static boolean enablePotion = true;
 
 	static String updateRepair;
 	static String capsIsCreative;
@@ -32,6 +32,8 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String getEnchantmentDatas;
 	static String isTempting;
 	static String getItemEnchantability;
+	static String blockUsingShield;
+	static String entityLivingBase = "net/minecraft/entity/EntityLivingBase";
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -64,10 +66,12 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 			playerCapabilities = FMLDeobfuscatingRemapper.INSTANCE.unmap(playerCapabilities);
 			itemStack = FMLDeobfuscatingRemapper.INSTANCE.unmap(itemStack);
 			damageSource = FMLDeobfuscatingRemapper.INSTANCE.unmap(damageSource);
+			entityLivingBase = FMLDeobfuscatingRemapper.INSTANCE.unmap(entityLivingBase);
 		}
 		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
 		isTempting = dev ? "isTempting" : "a";
 		getItemEnchantability = dev ? "getItemEnchantability" : "c";
+		blockUsingShield = dev ? "blockUsingShield" : "c";
 	}
 
 	@Override
@@ -120,6 +124,10 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isItemEnch(MethodNode m) {
 		return m.name.equals(getItemEnchantability) && m.desc.equals("()I");
+	}
+
+	public static boolean isBlockWithShield(MethodNode m) {
+		return m.name.equals(blockUsingShield) && m.desc.equals(String.format("(L%s;)V", entityLivingBase));
 	}
 
 }
