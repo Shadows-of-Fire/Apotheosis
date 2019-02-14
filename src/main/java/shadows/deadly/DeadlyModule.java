@@ -1,10 +1,13 @@
 package shadows.deadly;
 
 import java.io.File;
+import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -37,5 +40,10 @@ public class DeadlyModule {
 		WorldGenerator.init();
 		GameRegistry.registerWorldGenerator(new WorldGenerator(), 255);
 		ArmorSet.sortSets();
+	}
+	
+	public static void getDungeonMobSpawner(Object w, Random rand, Object p) {
+		World world = (World) w;
+		BlockPos pos = (BlockPos) p;
 	}
 }

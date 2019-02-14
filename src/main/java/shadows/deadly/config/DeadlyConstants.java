@@ -19,6 +19,7 @@ public class DeadlyConstants {
 	public static final String BRUTAL_SPAWNERS = "Brutal Spawners";
 	public static final String RANDOM_SPAWNERS = "Random Spawners";
 	public static final String SWARM_SPAWNERS = "Swarm Spawners";
+	public static final String DUNGEONS = "Dungeons";
 	public static final SpawnerStats BRUTAL_SPAWNER_STATS = new SpawnerStats(BRUTAL_SPAWNERS, 20, 200, 400, 6, 6, 4, 16);
 	public static final String[] BRUTAL_DEFAULT_MOBS = { "4@minecraft:zombie", "1@minecraft:skeleton", "1@minecraft:spider", "1@minecraft:cave_spider", "1@minecraft:creeper", "1@deadlyworld:random" };
 	public static final ResourceLocation RANDOM = new ResourceLocation(Apotheosis.MODID, "random");

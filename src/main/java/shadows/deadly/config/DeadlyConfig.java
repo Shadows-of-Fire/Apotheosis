@@ -54,6 +54,10 @@ public class DeadlyConfig {
 	public static List<Pair<Integer, ResourceLocation>> brutalWeightedMobs = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> bossWeightedMobs = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> swarmWeightedMobs = new ArrayList<>();
+	
+	//Dungeons
+	public static float dungeonBrutalChance = .05F;
+	public static float dungeonSwarmChance = .10F;
 
 	public static void init() {
 		Configuration c = config;
@@ -94,6 +98,10 @@ public class DeadlyConfig {
 		swarmSpawnerChance = c.getFloat("Swarm Spawner Chance", DeadlyConstants.FREQUENCY, swarmSpawnerChance, 0, 1, "The chance (per chunk) for a swarm spawner to try spawning.");
 		bossChance = c.getFloat("Boss Chance", DeadlyConstants.FREQUENCY, bossChance, 0, 1, "The chance (per chunk) for a boss to try spawning.");
 
+		dungeonBrutalChance = c.getFloat("Dungeon Brutal Chance", DeadlyConstants.DUNGEONS, dungeonBrutalChance, 0, 1, "The chance for a dungeon to have a brutal spawner.");
+		dungeonSwarmChance = c.getFloat("Dungeon Swarm Chance", DeadlyConstants.DUNGEONS, dungeonSwarmChance, 0, 1, "The chance for a dungeon to have a swarm spawner.");
+
+		
 		String[] brutalFromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 
 		for (String s : brutalFromCfg) {
