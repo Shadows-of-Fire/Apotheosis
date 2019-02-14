@@ -14,7 +14,7 @@ public class EnchantmentStableFooting extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 50;
+		return 40;
 	}
 
 	@Override
