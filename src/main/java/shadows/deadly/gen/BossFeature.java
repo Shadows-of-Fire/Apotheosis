@@ -58,7 +58,7 @@ public class BossFeature extends WorldFeature {
 	}
 
 	public static void init() {
-		for (Pair<Integer, ResourceLocation> pair : DeadlyConfig.bossWeightedMobs) {
+		for (Pair<Integer, ResourceLocation> pair : DeadlyConfig.BOSS_MOBS) {
 			BossItem i = new BossItem(pair.getLeft(), pair.getRight());
 			BOSS_ITEMS.add(i);
 		}

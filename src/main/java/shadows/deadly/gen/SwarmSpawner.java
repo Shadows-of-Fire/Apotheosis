@@ -57,6 +57,6 @@ public class SwarmSpawner extends WorldFeature {
 	}
 
 	public static void init() {
-		SpawnerItem.addItems(SWARM_SPAWNERS, DeadlyConstants.SWARM_SPAWNER_STATS, DeadlyConfig.swarmWeightedMobs);
+		SpawnerItem.addItems(SWARM_SPAWNERS, DeadlyConstants.SWARM_SPAWNER_STATS, DeadlyConfig.SWARM_MOBS);
 	}
 }

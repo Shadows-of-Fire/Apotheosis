@@ -18,6 +18,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	public static boolean enableEnch = true;
 	public static boolean enableSpawner = true;
 	public static boolean enablePotion = true;
+	public static boolean enableDeadly = true;
 
 	static String updateRepair;
 	static String capsIsCreative;
@@ -37,6 +38,8 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String entityLivingBase = "net/minecraft/entity/EntityLivingBase";
 	static String enchantment = "net/minecraft/enchantment/Enchantment";
 	static String getMaxLevel;
+	static String world = "net/minecraft/world/World";
+	static String blockPos = "net/minecraft/util/math/BlockPos";
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -71,6 +74,8 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 			damageSource = FMLDeobfuscatingRemapper.INSTANCE.unmap(damageSource);
 			entityLivingBase = FMLDeobfuscatingRemapper.INSTANCE.unmap(entityLivingBase);
 			enchantment = FMLDeobfuscatingRemapper.INSTANCE.unmap(enchantment);
+			world = FMLDeobfuscatingRemapper.INSTANCE.unmap(world);
+			blockPos = FMLDeobfuscatingRemapper.INSTANCE.unmap(blockPos);
 		}
 		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
 		isTempting = dev ? "isTempting" : "a";
@@ -137,6 +142,10 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isGetMaxLevel(MethodInsnNode m) {
 		return m.owner.equals(enchantment) && m.name.equals(getMaxLevel) && m.desc.equals("()I");
+	}
+
+	public static boolean isGenerate(MethodNode m) {
+		return m.name.equals("generate") && m.desc.equals(String.format("(L%s;Ljava/util/Random;L%s;)Z", world, blockPos));
 	}
 
 }

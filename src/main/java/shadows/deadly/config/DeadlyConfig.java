@@ -7,6 +7,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -20,17 +23,13 @@ import shadows.deadly.DeadlyModule;
  */
 public class DeadlyConfig {
 
+	public static final IntList DIM_WHITELIST = new IntArrayList();
+	public static final List<PotionEffect> BRUTAL_POTIONS = new ArrayList<>();
+	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
+	public static List<Pair<Integer, ResourceLocation>> BOSS_MOBS = new ArrayList<>();
+	public static List<Pair<Integer, ResourceLocation>> SWARM_MOBS = new ArrayList<>();
+
 	public static Configuration config;
-
-	public static IntList dimWhitelist = new IntArrayList();
-
-	//Brutal Mobs
-	public static boolean brutalFireRes = true;
-	public static int brutalRegenLevel = 1;
-	public static int brutalResistLevel = 3;
-	public static int brutalStrengthLevel = 0;
-	public static int brutalSpeedLevel = 1;
-	public static boolean brutalWaterBreathing = true;
 
 	//Boss Stats
 	public static int bossRegenLevel = 2;
@@ -50,11 +49,6 @@ public class DeadlyConfig {
 	public static float swarmSpawnerChance = .15F;
 	public static float bossChance = .08F;
 
-	//Weighted entries
-	public static List<Pair<Integer, ResourceLocation>> brutalWeightedMobs = new ArrayList<>();
-	public static List<Pair<Integer, ResourceLocation>> bossWeightedMobs = new ArrayList<>();
-	public static List<Pair<Integer, ResourceLocation>> swarmWeightedMobs = new ArrayList<>();
-	
 	//Dungeons
 	public static float dungeonBrutalChance = .05F;
 	public static float dungeonSwarmChance = .10F;
@@ -69,18 +63,11 @@ public class DeadlyConfig {
 		String[] dims = c.getStringList("Generation Dimension Whitelist", DeadlyConstants.GENERAL, new String[] { "0" }, "The dimensions that the deadly module will generate in.");
 		for (String s : dims) {
 			try {
-				dimWhitelist.add(Integer.parseInt(s.trim()));
+				DIM_WHITELIST.add(Integer.parseInt(s.trim()));
 			} catch (NumberFormatException e) {
 				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + ".  It will be ignored!  (Not a number)");
 			}
 		}
-
-		brutalFireRes = c.getBoolean("Fire Resist", DeadlyConstants.BRUTAL_MOBS, true, "If brutal mobs will be immune to fire damage.");
-		brutalRegenLevel = c.getInt("Regeneration", DeadlyConstants.BRUTAL_MOBS, 1, 0, 5, "If brutal mobs regen hp (0 heals 1 health every 2.5 sec, each rank halves the time between heals.)");
-		brutalResistLevel = c.getInt("Resistance", DeadlyConstants.BRUTAL_MOBS, 3, 0, 5, "Increases damage resistance. (0 is -20% damage, each rank grants -20% damage.)");
-		brutalStrengthLevel = c.getInt("Strength", DeadlyConstants.BRUTAL_MOBS, 0, 0, 5, "Increases melee damage. (0 is +130% damage, each rank grants +130% damage.)");
-		brutalSpeedLevel = c.getInt("Swiftness", DeadlyConstants.BRUTAL_MOBS, 1, 0, 5, "Increases speed. (0 is +30% speed, each rank grants +30% speed.)");
-		brutalWaterBreathing = c.getBoolean("Water Breathing", DeadlyConstants.BRUTAL_MOBS, true, "If true, brutal mobs will not drown.");
 
 		bossRegenLevel = c.getInt("Regen Level", DeadlyConstants.BOSSES, bossRegenLevel, 0, Integer.MAX_VALUE, "The regeneration level of bosses.  Set to 0 to disable.");
 		bossResistLevel = c.getInt("Resistance Level", DeadlyConstants.BOSSES, bossResistLevel, 0, Integer.MAX_VALUE, "The resistance level of bosses.  Set to 0 to disable.");
@@ -101,7 +88,6 @@ public class DeadlyConfig {
 		dungeonBrutalChance = c.getFloat("Dungeon Brutal Chance", DeadlyConstants.DUNGEONS, dungeonBrutalChance, 0, 1, "The chance for a dungeon to have a brutal spawner.");
 		dungeonSwarmChance = c.getFloat("Dungeon Swarm Chance", DeadlyConstants.DUNGEONS, dungeonSwarmChance, 0, 1, "The chance for a dungeon to have a swarm spawner.");
 
-		
 		String[] brutalFromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 
 		for (String s : brutalFromCfg) {
@@ -110,7 +96,7 @@ public class DeadlyConfig {
 				int weight = Integer.parseInt(split[0]);
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
-				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) brutalWeightedMobs.add(Pair.of(weight, name));
+				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) BRUTAL_MOBS.add(Pair.of(weight, name));
 				else DeadlyModule.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 				DeadlyModule.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
@@ -125,7 +111,7 @@ public class DeadlyConfig {
 				int weight = Integer.parseInt(split[0]);
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
-				if (weight > 0 && e != null) bossWeightedMobs.add(Pair.of(weight, name));
+				if (weight > 0 && e != null) BOSS_MOBS.add(Pair.of(weight, name));
 				else DeadlyModule.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 				DeadlyModule.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored!  (Invalid format)");
@@ -140,12 +126,31 @@ public class DeadlyConfig {
 				int weight = Integer.parseInt(split[0]);
 				ResourceLocation name = new ResourceLocation(split[1]);
 				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
-				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) swarmWeightedMobs.add(Pair.of(weight, name));
+				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) SWARM_MOBS.add(Pair.of(weight, name));
 				else DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 				DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
 			}
 		}
+
+		String[] brutalPotions = c.getStringList("Brutal Potion Effects", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_POTIONS, "The potion effects applied to all brutal mobs.  Format is potion@level, potion is a registry name.");
+
+		for (String s : brutalPotions) {
+			String[] split = s.split("@");
+			try {
+				int level = Math.max(1, Integer.parseInt(split[1]));
+				ResourceLocation name = new ResourceLocation(split[0]);
+				Potion p = ForgeRegistries.POTIONS.getValue(name);
+				if (p != null) BRUTAL_POTIONS.add(new PotionEffect(p, Integer.MAX_VALUE, level - 1));
+				else DeadlyModule.LOGGER.error("Invalid brutal potion entry: " + s + ".  It will be ignored! (Potion does not exist)");
+			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+				DeadlyModule.LOGGER.error("Invalid brutal potion entry: " + s + ".  It will be ignored! (Invalid format)");
+			}
+		}
+
+		for (EntityEntry e : ForgeRegistries.ENTITIES)
+			if (IMob.class.isAssignableFrom(e.getEntityClass())) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
+
 		if (c.hasChanged()) c.save();
 	}
 

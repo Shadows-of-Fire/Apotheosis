@@ -26,16 +26,15 @@ public class WorldGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		if (!world.isRemote && DeadlyConfig.dimWhitelist.contains(world.provider.getDimension())) WorldGenerator.run(world, new BlockPos(chunkX << 4, 0, chunkZ << 4));
+		if (!world.isRemote && DeadlyConfig.DIM_WHITELIST.contains(world.provider.getDimension())) WorldGenerator.run(world, new BlockPos(chunkX << 4, 0, chunkZ << 4));
 	}
 
 	static Random rand = new Random();
 
 	public static void run(World world, BlockPos pos) {
-		rand.setSeed(pos.toLong());
 		for (WorldFeature feature : FEATURES) {
 			if (SUCCESSES.contains(pos.toLong())) return;
-			feature.generate(world, pos, rand);
+			feature.generate(world, pos, world.rand);
 		}
 	}
 

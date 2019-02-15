@@ -5,21 +5,16 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.monster.AbstractSkeleton;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants.NBT;
 import shadows.deadly.DeadlyLoot;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.config.DeadlyConstants;
@@ -63,7 +58,7 @@ public class BrutalSpawner extends WorldFeature {
 
 	@Override
 	public boolean canBePlaced(World world, BlockPos pos, Random rand) {
-		return world.isAirBlock(pos) || world.isAirBlock(pos.up());
+		return canPlace(world, pos) || canPlace(world, pos.up());
 	}
 
 	@Override
@@ -76,16 +71,16 @@ public class BrutalSpawner extends WorldFeature {
 		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
 		world.setBlockState(pos.up(), Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CRACKED), 2);
 		for (int y1 = 0; y1 < 2; y1++) {
-			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x - 1, y + y1, z))) {
+			if (rand.nextInt(4) == 0 && canPlace(world, mPos.setPos(x - 1, y + y1, z))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x - 1, y + y1, z), Blocks.VINE, 8, 2);
 			}
-			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x + 1, y + y1, z))) {
+			if (rand.nextInt(4) == 0 && canPlace(world, mPos.setPos(x + 1, y + y1, z))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x + 1, y + y1, z), Blocks.VINE, 2, 2);
 			}
-			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x, y + y1, z - 1))) {
+			if (rand.nextInt(4) == 0 && canPlace(world, mPos.setPos(x, y + y1, z - 1))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x, y + y1, z - 1), Blocks.VINE, 1, 2);
 			}
-			if (rand.nextInt(4) == 0 && world.isAirBlock(mPos.setPos(x, y + y1, z + 1))) {
+			if (rand.nextInt(4) == 0 && canPlace(world, mPos.setPos(x, y + y1, z + 1))) {
 				PlaceboUtil.setBlockWithMeta(world, mPos.setPos(x, y + y1, z + 1), Blocks.VINE, 4, 2);
 			}
 		}
@@ -97,13 +92,10 @@ public class BrutalSpawner extends WorldFeature {
 	}
 
 	public static void init() {
-		Potion[] potions = { MobEffects.FIRE_RESISTANCE, MobEffects.REGENERATION, MobEffects.RESISTANCE, MobEffects.STRENGTH, MobEffects.SPEED, MobEffects.WATER_BREATHING };
-		for (Potion p : potions) {
-			int level = DeadlyConfig.config.getInt("Level: " + p.getRegistryName(), DeadlyConstants.BRUTAL_MOBS, 1, 0, Integer.MAX_VALUE, "The level of this potion for brutal mobs.  Set to 0 to disable.");
-			if (level > 0) TagBuilder.addPotionEffect(BrutalSpawner.BASE_TAG, p, level - 1);
+		for (PotionEffect p : DeadlyConfig.BRUTAL_POTIONS) {
+			TagBuilder.addPotionEffect(BrutalSpawner.BASE_TAG, p.getPotion(), p.getAmplifier());
 		}
-
-		SpawnerItem.addItems(BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_SPAWNER_STATS, DeadlyConfig.brutalWeightedMobs);
+		SpawnerItem.addItems(BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_SPAWNER_STATS, DeadlyConfig.BRUTAL_MOBS);
 		for (SpawnerItem i : BRUTAL_SPAWNERS)
 			initBrutal(i);
 
@@ -115,10 +107,7 @@ public class BrutalSpawner extends WorldFeature {
 	public static void initBrutal(SpawnerItem item) {
 		applyBrutalStats(item.getSpawner().getSpawnData());
 		for (NBTBase tag : item.getSpawner().getPotentials()) {
-			if (AbstractSkeleton.class.isAssignableFrom(EntityList.getClass(new ResourceLocation(((NBTTagCompound) tag).getCompoundTag(SpawnerBuilder.ENTITY).getString(SpawnerBuilder.ID))))) {
-				TagBuilder.setEquipment(((NBTTagCompound) tag).getCompoundTag(SpawnerBuilder.ENTITY), new ItemStack(Items.BOW));
-			}
-			applyBrutalStats(((NBTTagCompound) tag).getCompoundTag(SpawnerBuilder.ENTITY));
+			applyBrutalStats(getOrCreate((NBTTagCompound) tag, SpawnerBuilder.ENTITY));
 		}
 	}
 
@@ -126,8 +115,18 @@ public class BrutalSpawner extends WorldFeature {
 	 * Copies brutal base stats from the base tag to the given entity tag.
 	 */
 	public static NBTTagCompound applyBrutalStats(NBTTagCompound tag) {
+		TagBuilder.checkForSkeleton(tag);
 		for (String name : BASE_TAG.getKeySet())
 			tag.setTag(name, BASE_TAG.getTag(name).copy());
 		return tag;
+	}
+
+	private static boolean canPlace(World world, BlockPos pos) {
+		return world.isBlockLoaded(pos) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+	}
+
+	private static NBTTagCompound getOrCreate(NBTTagCompound parent, String key) {
+		if (!parent.hasKey(key, NBT.TAG_COMPOUND)) parent.setTag(key, new NBTTagCompound());
+		return parent.getCompoundTag(key);
 	}
 }

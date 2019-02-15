@@ -111,7 +111,7 @@ public class BossItem extends WorldFeatureItem {
 		entity.enablePersistence();
 
 		int level = 0;
-		for (int i = 0; i < ArmorSet.SORTED_SETS.size(); i++)
+		for (int i = 0; i < ArmorSet.SORTED_SETS.size() - 1; i++)
 			if (random.nextDouble() < DeadlyConfig.bossLevelUpChance) level++;
 
 		ArmorSet.SORTED_SETS.get(level).apply(entity);

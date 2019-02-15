@@ -269,7 +269,7 @@ public class TagBuilder {
 
 			for (EntityEntry e : valid) {
 				NBTTagCompound tag = getDefaultTag(e.getEntityClass());
-				if (EntitySkeleton.class.isAssignableFrom(e.getEntityClass())) setEquipment(tag, new ItemStack(Items.BOW));
+				checkForSkeleton(tag);
 				int weight = DeadlyConfig.getWeightForEntry(e);
 				if (weight > 0) randomPotentials.add(new WeightedSpawnerEntity(weight, tag));
 			}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
+import shadows.deadly.asm.DeadlyTransformer;
 import shadows.ench.anvil.asm.AnvilTransformer;
 import shadows.ench.asm.EnchTransformer;
 import shadows.potion.asm.PotionTransformer;
@@ -20,6 +21,7 @@ public class ApotheosisTransformer implements IClassTransformer {
 		transformers.add(new EnchTransformer());
 		transformers.add(new PotionTransformer());
 		transformers.add(new SpawnerTransformer());
+		transformers.add(new DeadlyTransformer());
 	}
 
 	@Override

@@ -62,7 +62,7 @@ public class Apotheosis {
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
 		if (enableGarden) MinecraftForge.EVENT_BUS.register(new GardenModule());
 
-		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		ApotheosisCore.enableDeadly = enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		if (enableDeadly) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
 
 		ApotheosisCore.enablePotion = enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");

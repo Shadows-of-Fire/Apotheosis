@@ -41,9 +41,22 @@ public class DeadlyModule {
 		GameRegistry.registerWorldGenerator(new WorldGenerator(), 255);
 		ArmorSet.sortSets();
 	}
-	
-	public static void getDungeonMobSpawner(Object w, Random rand, Object p) {
+
+	/**
+	 * Injects a custom spawner into a dungeon.
+	 * @param w The world
+	 * @param rand The random
+	 * @param p The blockpos
+	 */
+	public static void setDungeonMobSpawner(Object w, Random rand, Object p) {
 		World world = (World) w;
 		BlockPos pos = (BlockPos) p;
+		if (rand.nextFloat() <= DeadlyConfig.dungeonBrutalChance) {
+			WorldGenerator.BRUTAL_SPAWNER.place(world, pos, rand);
+			LOGGER.info("Brutal Dungeon: " + pos);
+		} else if (rand.nextFloat() <= DeadlyConfig.dungeonSwarmChance) {
+			WorldGenerator.SWARM_SPAWNER.place(world, pos, rand);
+			LOGGER.info("Swarm Dungeon: " + pos);
+		}
 	}
 }
