@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -81,6 +84,7 @@ import shadows.util.NBTIngredient;
 public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
+	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
 
 	@ObjectHolder("apotheosis:hellshelf")
 	public static final BlockHellBookshelf HELLSHELF = null;
@@ -125,6 +129,7 @@ public class EnchModule {
 	public static final EnchantmentBerserk BERSERK = null;
 
 	public static float localAtkStrength = 1;
+	static Configuration config;
 
 	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
 		@Override
@@ -135,7 +140,7 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
-		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
+		config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
 		setEnch(ToolMaterial.GOLD, 40);
 		setEnch(ArmorMaterial.GOLD, 40);
 		for (ArmorMaterial a : ArmorMaterial.values())
@@ -323,7 +328,7 @@ public class EnchModule {
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
 			if ((enchantment.canApplyAtEnchantingTable(stack) || (isBook && enchantment.isAllowedOnBooks()))) {
-				EnchantmentInfo info = ENCHANTMENT_INFO.get(enchantment);
+				EnchantmentInfo info = getEnchInfo(enchantment);
 				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {
 					if (power >= info.getMinPower(i) && power <= info.getMaxPower(i)) {
 						list.add(new EnchantmentData(enchantment, i));
@@ -371,7 +376,25 @@ public class EnchModule {
 	 * @return The configured max level of that enchantment.
 	 */
 	public static int getMaxLevel(Object a) {
-		return ENCHANTMENT_INFO.get((Enchantment) a).getMaxLevel();
+		return getEnchInfo((Enchantment) a).getMaxLevel();
+	}
+
+	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
+		EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
+		if (info == null) {
+			int max = config.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, 127, "The max level of this enchantment.");
+			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
+			if (min > max) min = max;
+			info = new EnchantmentInfo(ench, max, min);
+			String maxF = config.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
+			if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
+			String minF = config.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
+			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
+			ENCHANTMENT_INFO.put(ench, info);
+			if (config.hasChanged()) config.save();
+			LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", ench.getRegistryName(), ench.getRegistryName().getNamespace());
+		}
+		return info;
 	}
 
 }
