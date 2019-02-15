@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import shadows.Apotheosis;
+import shadows.ApotheosisObjects;
 
 public class BlockHellBookshelf extends Block {
 
@@ -54,7 +55,7 @@ public class BlockHellBookshelf extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> info, ITooltipFlag flag) {
-		info.add(I18n.format("info.apotheosis.hellshelf", String.valueOf(2 + Math.min(15, EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack)) * 0.2F).substring(0, 3)));
+		info.add(I18n.format("info.apotheosis.hellshelf", String.valueOf(2 + Math.min(15, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)) * 0.2F).substring(0, 3)));
 	}
 
 	@Override
@@ -75,20 +76,20 @@ public class BlockHellBookshelf extends Block {
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		ItemStack stack = placer.getHeldItem(hand);
-		return getDefaultState().withProperty(INFUSION, Math.min(15, EnchantmentHelper.getEnchantmentLevel(EnchModule.HELL_INFUSION, stack)));
+		return getDefaultState().withProperty(INFUSION, Math.min(15, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)));
 	}
 
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		ItemStack stack = new ItemStack(this);
-		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(EnchModule.HELL_INFUSION, state.getValue(INFUSION)), stack);
+		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.getValue(INFUSION)), stack);
 		drops.add(stack);
 	}
 
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		ItemStack stack = new ItemStack(this);
-		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(EnchModule.HELL_INFUSION, state.getValue(INFUSION)), stack);
+		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.getValue(INFUSION)), stack);
 		return stack;
 	}
 

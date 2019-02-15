@@ -14,7 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import shadows.ench.EnchModule;
+import shadows.ApotheosisObjects;
 
 @JEIPlugin
 public class EnchJEIPlugin implements IModPlugin {
@@ -28,7 +28,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		IVanillaRecipeFactory factory = reg.getJeiHelpers().getVanillaRecipeFactory();
 		reg.addRecipes(ImmutableList.of(
 				factory.createAnvilRecipe(s, ImmutableList.of(new ItemStack(Blocks.WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
-				factory.createAnvilRecipe(s2, ImmutableList.of(new ItemStack(EnchModule.PRISMATIC_COBWEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD)))
+				factory.createAnvilRecipe(s2, ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_COBWEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD)))
 				), VanillaRecipeCategoryUid.ANVIL);
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");
 	}

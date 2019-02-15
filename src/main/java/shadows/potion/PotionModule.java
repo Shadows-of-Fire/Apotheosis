@@ -6,10 +6,10 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -24,10 +24,10 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
+import shadows.ApotheosisObjects;
 import shadows.potion.potions.PotionSundering;
 
 public class PotionModule {
@@ -35,101 +35,38 @@ public class PotionModule {
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Potion");
 	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
-	@ObjectHolder("apotheosis:true_infinity")
-	public static final EnchantmentTrueInfinity TRUE_INFINITY = null;
-
-	@ObjectHolder("apotheosis:resistance")
-	public static final PotionType RESISTANCE = null;
-
-	@ObjectHolder("apotheosis:long_resistance")
-	public static final PotionType LONG_RESISTANCE = null;
-
-	@ObjectHolder("apotheosis:strong_resistance")
-	public static final PotionType STRONG_RESISTANCE = null;
-
-	@ObjectHolder("apotheosis:absorption")
-	public static final PotionType ABSORPTION = null;
-
-	@ObjectHolder("apotheosis:long_absorption")
-	public static final PotionType LONG_ABSORPTION = null;
-
-	@ObjectHolder("apotheosis:strong_absorption")
-	public static final PotionType STRONG_ABSORPTION = null;
-
-	@ObjectHolder("apotheosis:haste")
-	public static final PotionType HASTE = null;
-
-	@ObjectHolder("apotheosis:long_haste")
-	public static final PotionType LONG_HASTE = null;
-
-	@ObjectHolder("apotheosis:strong_haste")
-	public static final PotionType STRONG_HASTE = null;
-
-	@ObjectHolder("apotheosis:fatigue")
-	public static final PotionType FATIGUE = null;
-
-	@ObjectHolder("apotheosis:long_fatigue")
-	public static final PotionType LONG_FATIGUE = null;
-
-	@ObjectHolder("apotheosis:strong_fatigue")
-	public static final PotionType STRONG_FATIGUE = null;
-
-	@ObjectHolder("witherskelefix:fragment")
-	public static final Item SKULL_FRAGMENT = null;
-
-	@ObjectHolder("apotheosis:wither")
-	public static final PotionType WITHER = null;
-
-	@ObjectHolder("apotheosis:long_wither")
-	public static final PotionType LONG_WITHER = null;
-
-	@ObjectHolder("apotheosis:strong_wither")
-	public static final PotionType STRONG_WITHER = null;
-
-	@ObjectHolder("apotheosis:sundering")
-	public static final PotionSundering SUNDERING = null;
-
-	@ObjectHolder("apotheosis:sundering")
-	public static final PotionType T_SUNDERING = null;
-
-	@ObjectHolder("apotheosis:long_sundering")
-	public static final PotionType LONG_SUNDERING = null;
-
-	@ObjectHolder("apotheosis:strong_sundering")
-	public static final PotionType STRONG_SUNDERING = null;
-
 	static Configuration config;
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
-		PotionHelper.addMix(PotionTypes.AWKWARD, Items.SHULKER_SHELL, RESISTANCE);
-		PotionHelper.addMix(RESISTANCE, Items.REDSTONE, LONG_RESISTANCE);
-		PotionHelper.addMix(RESISTANCE, Items.GLOWSTONE_DUST, STRONG_RESISTANCE);
+		PotionHelper.addMix(PotionTypes.AWKWARD, Items.SHULKER_SHELL, ApotheosisObjects.RESISTANCE);
+		PotionHelper.addMix(ApotheosisObjects.RESISTANCE, Items.REDSTONE, ApotheosisObjects.LONG_RESISTANCE);
+		PotionHelper.addMix(ApotheosisObjects.RESISTANCE, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_RESISTANCE);
 
-		PotionHelper.addMix(RESISTANCE, Items.FERMENTED_SPIDER_EYE, T_SUNDERING);
-		PotionHelper.addMix(LONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, LONG_SUNDERING);
-		PotionHelper.addMix(STRONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, STRONG_SUNDERING);
-		PotionHelper.addMix(T_SUNDERING, Items.REDSTONE, LONG_SUNDERING);
-		PotionHelper.addMix(T_SUNDERING, Items.GLOWSTONE_DUST, STRONG_SUNDERING);
+		PotionHelper.addMix(ApotheosisObjects.RESISTANCE, Items.FERMENTED_SPIDER_EYE, ApotheosisObjects.T_SUNDERING);
+		PotionHelper.addMix(ApotheosisObjects.LONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, ApotheosisObjects.LONG_SUNDERING);
+		PotionHelper.addMix(ApotheosisObjects.STRONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, ApotheosisObjects.STRONG_SUNDERING);
+		PotionHelper.addMix(ApotheosisObjects.T_SUNDERING, Items.REDSTONE, ApotheosisObjects.LONG_SUNDERING);
+		PotionHelper.addMix(ApotheosisObjects.T_SUNDERING, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_SUNDERING);
 
-		PotionHelper.addMix(PotionTypes.AWKWARD, Items.GOLDEN_APPLE, ABSORPTION);
-		PotionHelper.addMix(ABSORPTION, Items.REDSTONE, LONG_ABSORPTION);
-		PotionHelper.addMix(ABSORPTION, Items.GLOWSTONE_DUST, STRONG_ABSORPTION);
+		PotionHelper.addMix(PotionTypes.AWKWARD, Items.GOLDEN_APPLE, ApotheosisObjects.ABSORPTION);
+		PotionHelper.addMix(ApotheosisObjects.ABSORPTION, Items.REDSTONE, ApotheosisObjects.LONG_ABSORPTION);
+		PotionHelper.addMix(ApotheosisObjects.ABSORPTION, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_ABSORPTION);
 
-		PotionHelper.addMix(PotionTypes.AWKWARD, Items.MUSHROOM_STEW, HASTE);
-		PotionHelper.addMix(HASTE, Items.REDSTONE, LONG_HASTE);
-		PotionHelper.addMix(HASTE, Items.GLOWSTONE_DUST, STRONG_HASTE);
+		PotionHelper.addMix(PotionTypes.AWKWARD, Items.MUSHROOM_STEW, ApotheosisObjects.HASTE);
+		PotionHelper.addMix(ApotheosisObjects.HASTE, Items.REDSTONE, ApotheosisObjects.LONG_HASTE);
+		PotionHelper.addMix(ApotheosisObjects.HASTE, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_HASTE);
 
-		PotionHelper.addMix(HASTE, Items.FERMENTED_SPIDER_EYE, FATIGUE);
-		PotionHelper.addMix(LONG_HASTE, Items.FERMENTED_SPIDER_EYE, LONG_FATIGUE);
-		PotionHelper.addMix(STRONG_HASTE, Items.FERMENTED_SPIDER_EYE, STRONG_FATIGUE);
-		PotionHelper.addMix(FATIGUE, Items.REDSTONE, LONG_FATIGUE);
-		PotionHelper.addMix(FATIGUE, Items.GLOWSTONE_DUST, STRONG_FATIGUE);
+		PotionHelper.addMix(ApotheosisObjects.HASTE, Items.FERMENTED_SPIDER_EYE, ApotheosisObjects.FATIGUE);
+		PotionHelper.addMix(ApotheosisObjects.LONG_HASTE, Items.FERMENTED_SPIDER_EYE, ApotheosisObjects.LONG_FATIGUE);
+		PotionHelper.addMix(ApotheosisObjects.STRONG_HASTE, Items.FERMENTED_SPIDER_EYE, ApotheosisObjects.STRONG_FATIGUE);
+		PotionHelper.addMix(ApotheosisObjects.FATIGUE, Items.REDSTONE, ApotheosisObjects.LONG_FATIGUE);
+		PotionHelper.addMix(ApotheosisObjects.FATIGUE, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_FATIGUE);
 
-		if (SKULL_FRAGMENT != null) PotionHelper.addMix(PotionTypes.AWKWARD, SKULL_FRAGMENT, WITHER);
-		else PotionHelper.addMix(PotionTypes.AWKWARD, Ingredient.fromStacks(new ItemStack(Items.SKULL, 1, 1)), WITHER);
-		PotionHelper.addMix(WITHER, Items.REDSTONE, LONG_WITHER);
-		PotionHelper.addMix(WITHER, Items.GLOWSTONE_DUST, STRONG_WITHER);
+		if (ApotheosisObjects.SKULL_FRAGMENT != null) PotionHelper.addMix(PotionTypes.AWKWARD, ApotheosisObjects.SKULL_FRAGMENT, ApotheosisObjects.WITHER);
+		else PotionHelper.addMix(PotionTypes.AWKWARD, Ingredient.fromStacks(new ItemStack(Items.SKULL, 1, 1)), ApotheosisObjects.WITHER);
+		PotionHelper.addMix(ApotheosisObjects.WITHER, Items.REDSTONE, ApotheosisObjects.LONG_WITHER);
+		PotionHelper.addMix(ApotheosisObjects.WITHER, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_WITHER);
 	}
 
 	@SubscribeEvent
@@ -140,8 +77,8 @@ public class PotionModule {
 	@SubscribeEvent
 	public void recipes(ApotheosisRecipeEvent e) {
 		Ingredient fireRes = Apotheosis.potionIngredient(PotionTypes.FIRE_RESISTANCE);
-		Ingredient abs = Apotheosis.potionIngredient(STRONG_ABSORPTION);
-		Ingredient res = Apotheosis.potionIngredient(RESISTANCE);
+		Ingredient abs = Apotheosis.potionIngredient(ApotheosisObjects.STRONG_ABSORPTION);
+		Ingredient res = Apotheosis.potionIngredient(ApotheosisObjects.RESISTANCE);
 		Ingredient regen = Apotheosis.potionIngredient(PotionTypes.STRONG_REGENERATION);
 		e.helper.addShaped(new ItemStack(Items.GOLDEN_APPLE, 1, 1), 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
 	}
@@ -187,9 +124,9 @@ public class PotionModule {
 	public static boolean isInfinite(Object a, Object b, Object c) {
 		ItemStack stack = (ItemStack) a;
 		ItemStack bow = (ItemStack) b;
-		int enchant = net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.INFINITY, bow);
+		int enchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bow);
 		if (enchant <= 0 ? false : stack.getItem().getClass() == ItemArrow.class) return true;
-		return (TRUE_INFINITY != null && EnchantmentHelper.getEnchantmentLevel(TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow);
+		return (EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow);
 	}
 
 	public static boolean doesShowParticles(Object e) {
@@ -209,8 +146,8 @@ public class PotionModule {
 				int level = (entity.getActivePotionEffect(MobEffects.RESISTANCE).getAmplifier() + 1);
 				mult -= (0.2 * level);
 			}
-			if (SUNDERING != null && entity.isPotionActive(SUNDERING) && source != DamageSource.OUT_OF_WORLD) {
-				int level = (entity.getActivePotionEffect(SUNDERING).getAmplifier() + 1);
+			if (ApotheosisObjects.SUNDERING != null && entity.isPotionActive(ApotheosisObjects.SUNDERING) && source != DamageSource.OUT_OF_WORLD) {
+				int level = (entity.getActivePotionEffect(ApotheosisObjects.SUNDERING).getAmplifier() + 1);
 				mult += (0.2 * level);
 			}
 

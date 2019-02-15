@@ -5,6 +5,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;
+import shadows.ApotheosisObjects;
 
 public class ItemHellBookshelf extends ItemBlock {
 
@@ -14,7 +15,7 @@ public class ItemHellBookshelf extends ItemBlock {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return !stack.hasEffect() && stack.getCount() == 1 && enchantment == EnchModule.HELL_INFUSION;
+		return !stack.hasEffect() && stack.getCount() == 1 && enchantment == ApotheosisObjects.HELL_INFUSION;
 	}
 
 	@Override

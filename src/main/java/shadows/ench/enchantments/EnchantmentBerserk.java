@@ -9,6 +9,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.potion.PotionEffect;
 import shadows.Apotheosis;
+import shadows.ApotheosisObjects;
 import shadows.ench.EnchModule;
 
 public class EnchantmentBerserk extends Enchantment {
@@ -41,7 +42,7 @@ public class EnchantmentBerserk extends Enchantment {
 	@Override
 	public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
 		if (user.getActivePotionEffect(MobEffects.RESISTANCE) == null) {
-			level = EnchantmentHelper.getMaxEnchantmentLevel(EnchModule.BERSERK, user);
+			level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user);
 			user.attackEntityFrom(EnchModule.CORRUPTED, level * level);
 			user.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200 * level, level - 1));
 			user.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200 * level, level - 1));

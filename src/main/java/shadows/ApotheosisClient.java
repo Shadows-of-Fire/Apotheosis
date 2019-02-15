@@ -22,11 +22,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.Apotheosis.ApotheosisInit;
-import shadows.ench.EnchModule;
 import shadows.placebo.Placebo;
 import shadows.placebo.util.PlaceboUtil;
-import shadows.potion.PotionModule;
-import shadows.spawn.SpawnerModule;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Side.CLIENT)
 public class ApotheosisClient {
@@ -39,7 +36,7 @@ public class ApotheosisClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
 		if (i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
-		else if (i == EnchModule.PRISMATIC_COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
+		else if (i == ApotheosisObjects.PRISMATIC_COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
 		else if (i == Items.ENCHANTED_BOOK) {
 			for (Map.Entry<IRegistryDelegate<Enchantment>, List<String>> ent : ENCH_TOOLTIPS.entrySet()) {
 				if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
@@ -67,29 +64,29 @@ public class ApotheosisClient {
 		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
 		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");
 		if (Apotheosis.enchTooltips) {
-			if (Apotheosis.enableSpawner) registerTooltip(SpawnerModule.CAPTURING, "enchantment.apotheosis.capturing.desc");
-			if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork, "", "enchantment.apotheosis.true_infinity.desc");
+			if (Apotheosis.enableSpawner) registerTooltip(ApotheosisObjects.CAPTURING, "enchantment.apotheosis.capturing.desc");
+			if (Apotheosis.enablePotion) registerTooltip(ApotheosisObjects.TRUE_INFINITY, masterwork, "", "enchantment.apotheosis.true_infinity.desc");
 			if (Apotheosis.enableEnch) {
-				registerTooltip(EnchModule.HELL_INFUSION, masterwork, "", "enchantment.apotheosis.hell_infusion.desc");
-				registerTooltip(EnchModule.MOUNTED_STRIKE, "enchantment.apotheosis.mounted_strike.desc");
-				registerTooltip(EnchModule.DEPTH_MINER, twisted, "", "enchantment.apotheosis.depth_miner.desc");
-				registerTooltip(EnchModule.STABLE_FOOTING, "enchantment.apotheosis.stable_footing.desc");
-				registerTooltip(EnchModule.SCAVENGER, masterwork, "", "enchantment.apotheosis.scavenger.desc");
-				registerTooltip(EnchModule.LIFE_MENDING, corrupted, "", "enchantment.apotheosis.life_mending.desc");
-				registerTooltip(EnchModule.ICY_THORNS, "enchantment.apotheosis.icy_thorns.desc");
-				registerTooltip(EnchModule.TEMPTING, "enchantment.apotheosis.tempting.desc");
-				registerTooltip(EnchModule.SHIELD_BASH, "enchantment.apotheosis.shield_bash.desc");
-				registerTooltip(EnchModule.REFLECTIVE, "enchantment.apotheosis.reflective.desc");
-				registerTooltip(EnchModule.BERSERK, corrupted, "", "enchantment.apotheosis.berserk.desc");
+				registerTooltip(ApotheosisObjects.HELL_INFUSION, masterwork, "", "enchantment.apotheosis.hell_infusion.desc");
+				registerTooltip(ApotheosisObjects.MOUNTED_STRIKE, "enchantment.apotheosis.mounted_strike.desc");
+				registerTooltip(ApotheosisObjects.DEPTH_MINER, twisted, "", "enchantment.apotheosis.depth_miner.desc");
+				registerTooltip(ApotheosisObjects.STABLE_FOOTING, "enchantment.apotheosis.stable_footing.desc");
+				registerTooltip(ApotheosisObjects.SCAVENGER, masterwork, "", "enchantment.apotheosis.scavenger.desc");
+				registerTooltip(ApotheosisObjects.LIFE_MENDING, corrupted, "", "enchantment.apotheosis.life_mending.desc");
+				registerTooltip(ApotheosisObjects.ICY_THORNS, "enchantment.apotheosis.icy_thorns.desc");
+				registerTooltip(ApotheosisObjects.TEMPTING, "enchantment.apotheosis.tempting.desc");
+				registerTooltip(ApotheosisObjects.SHIELD_BASH, "enchantment.apotheosis.shield_bash.desc");
+				registerTooltip(ApotheosisObjects.REFLECTIVE, "enchantment.apotheosis.reflective.desc");
+				registerTooltip(ApotheosisObjects.BERSERK, corrupted, "", "enchantment.apotheosis.berserk.desc");
 			}
 		} else {
-			if (Apotheosis.enablePotion) registerTooltip(PotionModule.TRUE_INFINITY, masterwork);
+			if (Apotheosis.enablePotion) registerTooltip(ApotheosisObjects.TRUE_INFINITY, masterwork);
 			if (Apotheosis.enableEnch) {
-				registerTooltip(EnchModule.HELL_INFUSION, masterwork);
-				registerTooltip(EnchModule.DEPTH_MINER, twisted);
-				registerTooltip(EnchModule.SCAVENGER, masterwork);
-				registerTooltip(EnchModule.LIFE_MENDING, corrupted);
-				registerTooltip(EnchModule.BERSERK, corrupted);
+				registerTooltip(ApotheosisObjects.HELL_INFUSION, masterwork);
+				registerTooltip(ApotheosisObjects.DEPTH_MINER, twisted);
+				registerTooltip(ApotheosisObjects.SCAVENGER, masterwork);
+				registerTooltip(ApotheosisObjects.LIFE_MENDING, corrupted);
+				registerTooltip(ApotheosisObjects.BERSERK, corrupted);
 			}
 		}
 	}
@@ -97,8 +94,8 @@ public class ApotheosisClient {
 	@SubscribeEvent
 	public static void models(ModelRegistryEvent e) {
 		if (Apotheosis.enableEnch) {
-			Placebo.PROXY.useRenamedMapper(EnchModule.HELLSHELF, "hellshelf", "", "normal");
-			PlaceboUtil.sMRL(EnchModule.PRISMATIC_COBWEB, 0, "inventory");
+			Placebo.PROXY.useRenamedMapper(ApotheosisObjects.HELLSHELF, "hellshelf", "", "normal");
+			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_COBWEB, 0, "inventory");
 		}
 	}
 

@@ -23,17 +23,14 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
+import shadows.ApotheosisObjects;
 
 public class SpawnerModule {
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
-
-	@ObjectHolder("apotheosis:capturing")
-	public static final EnchantmentCapturing CAPTURING = null;
 
 	public static Configuration config;
 	public static int spawnerSilkLevel = 1;
@@ -66,7 +63,7 @@ public class SpawnerModule {
 	public void handleCapturing(LivingDropsEvent e) {
 		Entity killer = e.getSource().getTrueSource();
 		if (killer instanceof EntityLivingBase) {
-			int level = EnchantmentHelper.getEnchantmentLevel(CAPTURING, ((EntityLivingBase) killer).getHeldItemMainhand());
+			int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.CAPTURING, ((EntityLivingBase) killer).getHeldItemMainhand());
 			if (e.getEntityLiving().world.rand.nextFloat() < level / 250F) {
 				ItemStack egg = new ItemStack(Items.SPAWN_EGG);
 				EntityLivingBase killed = e.getEntityLiving();
