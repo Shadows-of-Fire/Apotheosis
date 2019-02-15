@@ -284,7 +284,7 @@ public class EnchModule {
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		EntityPlayer p = e.getEntityPlayer();
 		if (!p.onGround && EnchantmentHelper.getMaxEnchantmentLevel(STABLE_FOOTING, p) > 0) {
-			e.setNewSpeed(e.getNewSpeed() * 5F);
+			if (e.getOriginalSpeed() < e.getNewSpeed() * 5) e.setNewSpeed(e.getNewSpeed() * 5F);
 		}
 		ItemStack stack = p.getHeldItemMainhand();
 		if (stack.isEmpty()) return;
