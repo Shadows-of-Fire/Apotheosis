@@ -36,7 +36,7 @@ public class Apotheosis {
 
 	public static final String MODID = "apotheosis";
 	public static final String MODNAME = "Apotheosis";
-	public static final String Version = "1.2.0";
+	public static final String Version = "1.3.0";
 
 	public static File configDir;
 	public static Configuration config;
