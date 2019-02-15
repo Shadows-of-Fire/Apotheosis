@@ -15,6 +15,4 @@ https://i.imgur.com/oajkjiP.png
 
 Add a way to get treasure enchantments.
 
-Spawner harvesting takes level n silk touch.
-
 Enchanted book splitting.

@@ -55,7 +55,7 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 
 	@Override
 	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0) {
+		if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
 			ItemStack s = new ItemStack(this);
 			if (te != null) te.writeToNBT(s.getOrCreateSubCompound("spawner"));
 			spawnAsEntity(world, pos, s);

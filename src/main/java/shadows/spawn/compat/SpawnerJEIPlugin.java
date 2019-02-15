@@ -8,11 +8,14 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import shadows.placebo.Placebo;
 import shadows.spawn.SpawnerModifiers;
+import shadows.spawn.SpawnerModule;
 import shadows.spawn.compat.SpawnerWrapper.SpawnerInverseWrapper;
 
 @JEIPlugin
@@ -43,7 +46,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				), SPAWNER);
 		//Formatter:on
 
-		reg.addIngredientInfo(new ItemStack(Blocks.MOB_SPAWNER), VanillaTypes.ITEM, "jei.spw.instructions");
+		reg.addIngredientInfo(new ItemStack(Blocks.MOB_SPAWNER), VanillaTypes.ITEM, Placebo.PROXY.translate("jei.spw.instructions", Enchantments.SILK_TOUCH.getTranslatedName(SpawnerModule.spawnerSilkLevel)));
 		reg.addIngredientInfo(new ItemStack(Items.SPAWN_EGG), VanillaTypes.ITEM, "jei.spw.capturing");
 	}
 

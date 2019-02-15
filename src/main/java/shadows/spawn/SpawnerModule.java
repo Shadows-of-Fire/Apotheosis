@@ -35,7 +35,8 @@ public class SpawnerModule {
 	@ObjectHolder("apotheosis:capturing")
 	public static final EnchantmentCapturing CAPTURING = null;
 
-	static Configuration config;
+	public static Configuration config;
+	public static int spawnerSilkLevel = 1;
 
 	@SubscribeEvent
 	public void preInit(ApotheosisPreInit e) {
@@ -47,6 +48,7 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
+		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
 		SpawnerModifiers.init(config);
 	}
 
