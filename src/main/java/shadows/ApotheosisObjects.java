@@ -5,6 +5,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.ench.BlockHellBookshelf;
 import shadows.ench.anvil.EnchantmentSplitting;
+import shadows.ench.anvil.ItemAnvilExt;
 import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
@@ -64,4 +65,6 @@ public class ApotheosisObjects {
 	public static final PotionType STRONG_SUNDERING = null;
 	public static final EnchantmentKnowledge KNOWLEDGE = null;
 	public static final EnchantmentSplitting SPLITTING = null;
+	@ObjectHolder("minecraft:anvil")
+	public static final ItemAnvilExt ANVIL = null;
 }

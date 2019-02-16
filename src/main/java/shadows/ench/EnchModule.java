@@ -21,6 +21,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.inventory.ContainerRepair;
@@ -50,6 +51,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.oredict.OreIngredient;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
@@ -93,6 +95,7 @@ public class EnchModule {
 
 	public static float localAtkStrength = 1;
 	static Configuration config;
+	public static OreIngredient blockIron;
 
 	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
 		@Override
@@ -127,6 +130,8 @@ public class EnchModule {
 		}
 
 		if (config.hasChanged()) config.save();
+
+		blockIron = new OreIngredient("blockIron");
 	}
 
 	@SubscribeEvent
@@ -184,7 +189,7 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
-	public void removeEnch(AnvilUpdateEvent e) {
+	public void anvilEvent(AnvilUpdateEvent e) {
 		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty()) {
 			if (e.getRight().getItem() == ApotheosisObjects.WEB) {
 				ItemStack stack = e.getLeft().copy();
@@ -199,6 +204,16 @@ public class EnchModule {
 				e.setMaterialCost(1);
 				e.setOutput(stack);
 			}
+		}
+		if (e.getLeft().getItem() == ApotheosisObjects.ANVIL && blockIron.apply(e.getRight())) {
+			int dmg = e.getLeft().getMetadata();
+			if (dmg == 0 || e.getLeft().getCount() != 1) return;
+			ItemStack out = e.getLeft().copy();
+			out.setItemDamage(dmg - 1);
+			out.setCount(1);
+			e.setOutput(out);
+			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) * 2 + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 3);
+			e.setMaterialCost(1);
 		}
 	}
 

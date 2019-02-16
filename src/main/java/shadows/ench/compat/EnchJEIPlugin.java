@@ -15,6 +15,8 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import shadows.ApotheosisObjects;
+import shadows.ench.EnchModule;
+import shadows.placebo.util.PlaceboUtil;
 
 @JEIPlugin
 public class EnchJEIPlugin implements IModPlugin {
@@ -28,7 +30,8 @@ public class EnchJEIPlugin implements IModPlugin {
 		IVanillaRecipeFactory factory = reg.getJeiHelpers().getVanillaRecipeFactory();
 		reg.addRecipes(ImmutableList.of(
 				factory.createAnvilRecipe(s, ImmutableList.of(new ItemStack(Blocks.WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
-				factory.createAnvilRecipe(s2, ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD)))
+				factory.createAnvilRecipe(s2, ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
+				factory.createAnvilRecipe(new ItemStack(Blocks.ANVIL, 1, 1), PlaceboUtil.asList(EnchModule.blockIron.getMatchingStacks()), ImmutableList.of(new ItemStack(Blocks.ANVIL)))
 				), VanillaRecipeCategoryUid.ANVIL);
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");
 	}
