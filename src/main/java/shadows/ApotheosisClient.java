@@ -36,7 +36,7 @@ public class ApotheosisClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
 		if (i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
-		else if (i == ApotheosisObjects.PRISMATIC_COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
+		else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
 		else if (i == Items.ENCHANTED_BOOK) {
 			for (Map.Entry<IRegistryDelegate<Enchantment>, List<String>> ent : ENCH_TOOLTIPS.entrySet()) {
 				if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
@@ -78,6 +78,7 @@ public class ApotheosisClient {
 				registerTooltip(ApotheosisObjects.SHIELD_BASH, "enchantment.apotheosis.shield_bash.desc");
 				registerTooltip(ApotheosisObjects.REFLECTIVE, "enchantment.apotheosis.reflective.desc");
 				registerTooltip(ApotheosisObjects.BERSERK, corrupted, "", "enchantment.apotheosis.berserk.desc");
+				registerTooltip(ApotheosisObjects.KNOWLEDGE, masterwork, "", "enchantment.apotheosis.knowledge.desc");
 			}
 		} else {
 			if (Apotheosis.enablePotion) registerTooltip(ApotheosisObjects.TRUE_INFINITY, masterwork);
@@ -87,6 +88,7 @@ public class ApotheosisClient {
 				registerTooltip(ApotheosisObjects.SCAVENGER, masterwork);
 				registerTooltip(ApotheosisObjects.LIFE_MENDING, corrupted);
 				registerTooltip(ApotheosisObjects.BERSERK, corrupted);
+				registerTooltip(ApotheosisObjects.KNOWLEDGE, masterwork);
 			}
 		}
 	}
@@ -95,7 +97,7 @@ public class ApotheosisClient {
 	public static void models(ModelRegistryEvent e) {
 		if (Apotheosis.enableEnch) {
 			Placebo.PROXY.useRenamedMapper(ApotheosisObjects.HELLSHELF, "hellshelf", "", "normal");
-			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_COBWEB, 0, "inventory");
+			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_WEB, 0, "inventory");
 		}
 	}
 

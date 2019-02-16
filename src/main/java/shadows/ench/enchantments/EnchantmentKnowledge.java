@@ -7,13 +7,13 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 public class EnchantmentKnowledge extends Enchantment {
 
 	public EnchantmentKnowledge() {
-		super(Rarity.VERY_RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
+		super(Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 		setName("apotheosis.knowledge");
 	}
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 45 + level * 9;
+		return 50 + level * 12;
 	}
 
 	@Override

@@ -80,6 +80,9 @@ enchantment.apotheosis.reflective.desc=Blocked attacks may harm the attacker.
 enchantment.apotheosis.berserk=Berserker's Fury
 enchantment.apotheosis.berserk.desc=Become enraged when taking damage.
 
+enchantment.apotheosis.knowledge=Knowledge of the Ages
+enchantment.apotheosis.knowledge.desc=Enemy drops are directly converted to experience.
+
 //Vanilla
 tile.reeds.name=Sugar Cane
 potion.potency.3=IV

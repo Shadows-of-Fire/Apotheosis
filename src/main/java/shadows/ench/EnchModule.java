@@ -17,6 +17,8 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -60,6 +62,7 @@ import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
 import shadows.ench.enchantments.EnchantmentIcyThorns;
+import shadows.ench.enchantments.EnchantmentKnowledge;
 import shadows.ench.enchantments.EnchantmentLifeMend;
 import shadows.ench.enchantments.EnchantmentMounted;
 import shadows.ench.enchantments.EnchantmentReflective;
@@ -160,7 +163,8 @@ public class EnchModule {
 				new EnchantmentTempting().setRegistryName(Apotheosis.MODID, "tempting"),
 				new EnchantmentShieldBash().setRegistryName(Apotheosis.MODID, "shield_bash"),
 				new EnchantmentReflective().setRegistryName(Apotheosis.MODID, "reflective"),
-				new EnchantmentBerserk().setRegistryName(Apotheosis.MODID, "berserk"));
+				new EnchantmentBerserk().setRegistryName(Apotheosis.MODID, "berserk"),
+				new EnchantmentKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"));
 		//Formatter::on
 	}
 
@@ -173,19 +177,19 @@ public class EnchModule {
 	public void recipes(ApotheosisRecipeEvent e) {
 		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION));
 		e.helper.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK);
-		e.helper.addShaped(ApotheosisObjects.PRISMATIC_COBWEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.WEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
+		e.helper.addShaped(ApotheosisObjects.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.WEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
 	}
 
 	@SubscribeEvent
 	public void removeEnch(AnvilUpdateEvent e) {
 		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty()) {
-			if (e.getRight().getItem() == ApotheosisObjects.COBWEB) {
+			if (e.getRight().getItem() == ApotheosisObjects.WEB) {
 				ItemStack stack = e.getLeft().copy();
 				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
 				e.setCost(1);
 				e.setMaterialCost(1);
 				e.setOutput(stack);
-			} else if (e.getRight().getItem() == ApotheosisObjects.PRISMATIC_COBWEB) {
+			} else if (e.getRight().getItem() == ApotheosisObjects.PRISMATIC_WEB) {
 				ItemStack stack = e.getLeft().copy();
 				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
 				e.setCost(30);
@@ -208,6 +212,7 @@ public class EnchModule {
 		Entity attacker = e.getSource().getTrueSource();
 		if (attacker instanceof EntityPlayer) {
 			EntityPlayer p = (EntityPlayer) attacker;
+			if (p.world.isRemote) return;
 			int scavenger = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SCAVENGER, p.getHeldItemMainhand());
 			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 2.5F) {
 				if (dropLoot == null) {
@@ -215,6 +220,20 @@ public class EnchModule {
 					dropLoot.setAccessible(true);
 				}
 				dropLoot.invoke(e.getEntityLiving(), true, e.getLootingLevel(), e.getSource());
+			}
+			int knowledge = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.KNOWLEDGE, p.getHeldItemMainhand());
+			if (knowledge > 0) {
+				int items = 0;
+				for (EntityItem i : e.getDrops())
+					items += i.getItem().getCount();
+				if (items > 0) e.getDrops().forEach(en -> en.setDead());
+				items *= knowledge * 25;
+				Entity ded = e.getEntityLiving();
+				while (items > 0) {
+					int i = EntityXPOrb.getXPSplit(items);
+					items -= i;
+					p.world.spawnEntity(new EntityXPOrb(p.world, ded.posX, ded.posY, ded.posZ, i));
+				}
 			}
 		}
 	}
