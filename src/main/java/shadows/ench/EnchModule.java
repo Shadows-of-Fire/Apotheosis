@@ -234,8 +234,7 @@ public class EnchModule {
 			int scavenger = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SCAVENGER, p.getHeldItemMainhand());
 			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 2.5F) {
 				if (dropLoot == null) {
-					dropLoot = EntityLivingBase.class.getDeclaredMethod("dropLoot", boolean.class, int.class, DamageSource.class);
-					dropLoot.setAccessible(true);
+					dropLoot = ReflectionHelper.findMethod(EntityLivingBase.class, "dropLoot", "func_184610_a", boolean.class, int.class, DamageSource.class);
 				}
 				dropLoot.invoke(e.getEntityLiving(), true, e.getLootingLevel(), e.getSource());
 			}
