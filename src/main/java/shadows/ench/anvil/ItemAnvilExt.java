@@ -3,11 +3,12 @@ package shadows.ench.anvil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemAnvilBlock;
 import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;
+import shadows.ApotheosisObjects;
 
-public class ItemAnvilExt extends ItemBlock {
+public class ItemAnvilExt extends ItemAnvilBlock {
 
 	public ItemAnvilExt(Block block) {
 		super(block);
@@ -16,7 +17,7 @@ public class ItemAnvilExt extends ItemBlock {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return !stack.hasEffect() && stack.getCount() == 1 && enchantment == Enchantments.UNBREAKING;
+		return !stack.hasEffect() && stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment == ApotheosisObjects.SPLITTING);
 	}
 
 	@Override

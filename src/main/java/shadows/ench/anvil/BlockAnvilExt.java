@@ -1,28 +1,38 @@
 package shadows.ench.anvil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.google.common.collect.ImmutableMap;
-
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import shadows.ApotheosisObjects;
 
 public class BlockAnvilExt extends BlockAnvil {
 
@@ -46,9 +56,13 @@ public class BlockAnvilExt extends BlockAnvil {
 
 	@Override
 	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
-		ItemStack anvil = new ItemStack(this);
-		if (te instanceof TileAnvil && ((TileAnvil) te).getUnbreaking() > 0) {
-			EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.UNBREAKING, ((TileAnvil) te).getUnbreaking()), anvil);
+		ItemStack anvil = new ItemStack(this, 1, damageDropped(state));
+		if (te instanceof TileAnvil) {
+			TileAnvil anv = ((TileAnvil) te);
+			Map<Enchantment, Integer> ench = new HashMap<>();
+			if (anv.getUnbreaking() > 0) ench.put(Enchantments.UNBREAKING, anv.getUnbreaking());
+			if (anv.getSplitting() > 0) ench.put(ApotheosisObjects.SPLITTING, anv.getSplitting());
+			EnchantmentHelper.setEnchantments(ench, anvil);
 		}
 		spawnAsEntity(world, pos, anvil);
 		super.harvestBlock(world, player, pos, state, te, stack);
@@ -59,6 +73,7 @@ public class BlockAnvilExt extends BlockAnvil {
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileAnvil) {
 			((TileAnvil) te).setUnbreaking(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
+			((TileAnvil) te).setSplitting(EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, stack));
 		}
 	}
 
@@ -78,8 +93,38 @@ public class BlockAnvilExt extends BlockAnvil {
 		TileEntity te = e.getWorldObj().getTileEntity(e.getOrigin());
 		if (te instanceof TileAnvil) {
 			e.tileEntityData = new NBTTagCompound();
-			e.tileEntityData.setInteger("ub", ((TileAnvil) te).getUnbreaking());
-			e.getWorldObj().removeTileEntity(e.getOrigin());
+			te.writeToNBT(e.tileEntityData);
+		}
+	}
+
+	@Override
+	public void onEndFalling(World world, BlockPos pos, IBlockState fallState, IBlockState hitState) {
+		super.onEndFalling(world, pos, fallState, hitState);
+		List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
+		EntityFallingBlock anvil = world.getEntitiesWithinAABB(EntityFallingBlock.class, new AxisAlignedBB(pos, pos.add(1, 1, 1))).get(0);
+		int split = anvil.tileEntityData.getInteger("splitting");
+		int ub = anvil.tileEntityData.getInteger("ub");
+		if (split > 0) for (EntityItem entity : items) {
+			ItemStack stack = ((EntityItem) entity).getItem();
+			if (stack.getItem() == Items.ENCHANTED_BOOK) {
+				if (world.rand.nextInt(Math.max(1, 6 - split)) == 0) {
+					NBTTagList enchants = ItemEnchantedBook.getEnchantments(stack);
+					entity.setDead();
+					for (NBTBase nbt : enchants) {
+						NBTTagCompound tag = (NBTTagCompound) nbt;
+						ItemStack book = ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(Enchantment.getEnchantmentByID(tag.getInteger("id")), tag.getInteger("lvl")));
+						Block.spawnAsEntity(world, pos, book);
+					}
+				}
+				if (world.rand.nextInt(1 + ub) == 0) {
+					int dmg = fallState.getValue(BlockAnvil.DAMAGE) + 1;
+					if (dmg > 2) {
+						world.setBlockToAir(pos);
+						world.playEvent(1029, pos, 0);
+					} else world.setBlockState(pos, fallState.withProperty(BlockAnvil.DAMAGE, dmg));
+				}
+				break;
+			}
 		}
 	}
 }

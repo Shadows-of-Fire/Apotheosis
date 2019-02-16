@@ -6,10 +6,12 @@ import net.minecraft.tileentity.TileEntity;
 public class TileAnvil extends TileEntity {
 
 	int unbreaking = 0;
+	int splitting = 0;
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setInteger("ub", unbreaking);
+		tag.setInteger("splitting", splitting);
 		return super.writeToNBT(tag);
 	}
 
@@ -17,6 +19,7 @@ public class TileAnvil extends TileEntity {
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		unbreaking = tag.getInteger("ub");
+		splitting = tag.getInteger("splitting");
 	}
 
 	public void setUnbreaking(int level) {
@@ -25,6 +28,14 @@ public class TileAnvil extends TileEntity {
 
 	public int getUnbreaking() {
 		return unbreaking;
+	}
+
+	public void setSplitting(int level) {
+		splitting = level;
+	}
+
+	public int getSplitting() {
+		return splitting;
 	}
 
 }

@@ -13,7 +13,7 @@ public class EnchantmentKnowledge extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 50 + level * 12;
+		return 50 + (level - 1) * 12;
 	}
 
 	@Override

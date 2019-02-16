@@ -14,7 +14,3 @@ Luck + Unluck (+- Pair)
 https://i.imgur.com/oajkjiP.png
 
 Add a way to get treasure enchantments.
-
-Enchanted book splitting.
-
-(Enchant) Mobs drop more xp but no actual drops.

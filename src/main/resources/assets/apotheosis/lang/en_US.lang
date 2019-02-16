@@ -83,6 +83,9 @@ enchantment.apotheosis.berserk.desc=Become enraged when taking damage.
 enchantment.apotheosis.knowledge=Knowledge of the Ages
 enchantment.apotheosis.knowledge.desc=Enemy drops are directly converted to experience.
 
+enchantment.apotheosis.splitting=Splitting
+enchantment.apotheosis.splitting.desc=Allows anvils to split enchanted books they fall upon.
+
 //Vanilla
 tile.reeds.name=Sugar Cane
 potion.potency.3=IV

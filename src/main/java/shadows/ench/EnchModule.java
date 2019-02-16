@@ -45,6 +45,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -56,6 +57,7 @@ import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ApotheosisObjects;
 import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.ench.anvil.BlockAnvilExt;
+import shadows.ench.anvil.EnchantmentSplitting;
 import shadows.ench.anvil.ItemAnvilExt;
 import shadows.ench.anvil.TileAnvil;
 import shadows.ench.enchantments.EnchantmentBerserk;
@@ -164,7 +166,8 @@ public class EnchModule {
 				new EnchantmentShieldBash().setRegistryName(Apotheosis.MODID, "shield_bash"),
 				new EnchantmentReflective().setRegistryName(Apotheosis.MODID, "reflective"),
 				new EnchantmentBerserk().setRegistryName(Apotheosis.MODID, "berserk"),
-				new EnchantmentKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"));
+				new EnchantmentKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"),
+				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"));
 		//Formatter::on
 	}
 
@@ -207,8 +210,8 @@ public class EnchModule {
 
 	Method dropLoot;
 
-	@SubscribeEvent
-	public void scavenger(LivingDropsEvent e) throws Exception {
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void drops(LivingDropsEvent e) throws Exception {
 		Entity attacker = e.getSource().getTrueSource();
 		if (attacker instanceof EntityPlayer) {
 			EntityPlayer p = (EntityPlayer) attacker;
