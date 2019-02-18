@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 import shadows.ench.EnchModule;
 import shadows.placebo.util.PlaceboUtil;
@@ -23,6 +24,7 @@ public class EnchJEIPlugin implements IModPlugin {
 
 	@Override
 	public void register(IModRegistry reg) {
+		if (!Apotheosis.enableEnch) return;
 		ItemStack s = new ItemStack(Items.DIAMOND_SWORD);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), s);
 		ItemStack s2 = new ItemStack(Items.DIAMOND_SWORD);

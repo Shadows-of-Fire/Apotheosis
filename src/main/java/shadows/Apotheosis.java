@@ -45,7 +45,6 @@ public class Apotheosis {
 	public static boolean enableDeadly = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
-	public static boolean enableAnvil = true;
 	public static boolean enchTooltips = true;
 
 	@EventHandler
