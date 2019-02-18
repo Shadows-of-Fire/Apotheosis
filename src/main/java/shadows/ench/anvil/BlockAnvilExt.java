@@ -90,6 +90,7 @@ public class BlockAnvilExt extends BlockAnvil {
 
 	@Override
 	protected void onStartFalling(EntityFallingBlock e) {
+		super.onStartFalling(e);
 		TileEntity te = e.getWorldObj().getTileEntity(e.getOrigin());
 		if (te instanceof TileAnvil) {
 			e.tileEntityData = new NBTTagCompound();
