@@ -375,6 +375,11 @@ public class EnchModule {
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
 		EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
+		if (config == null) {
+			LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
+			Thread.dumpStack();
+			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
+		}
 		if (info == null) {
 			int max = config.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, 127, "The max level of this enchantment.");
 			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");

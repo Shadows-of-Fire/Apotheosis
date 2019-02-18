@@ -35,9 +35,11 @@ public class ApotheosisClient {
 	@SubscribeEvent
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
-		if (i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
-		else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
-		else if (i == Items.ENCHANTED_BOOK) {
+		if (Apotheosis.enableEnch) {
+			if (i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
+			else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
+		}
+		if (i == Items.ENCHANTED_BOOK) {
 			for (Map.Entry<IRegistryDelegate<Enchantment>, List<String>> ent : ENCH_TOOLTIPS.entrySet()) {
 				if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
 					ent.getValue().forEach(s -> e.getToolTip().add(I18n.format(s)));
