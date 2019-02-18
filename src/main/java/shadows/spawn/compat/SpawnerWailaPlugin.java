@@ -19,6 +19,7 @@ import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import shadows.Apotheosis;
 import shadows.spawn.BlockSpawnerExt;
 import shadows.spawn.TileSpawnerExt;
 
@@ -29,6 +30,7 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IWailaDataProvider {
 
 	@Override
 	public void register(IWailaRegistrar reg) {
+		if (!Apotheosis.enableSpawner) return;
 		reg.registerBodyProvider(this, BlockSpawnerExt.class);
 		reg.registerNBTProvider(this, BlockSpawnerExt.class);
 	}

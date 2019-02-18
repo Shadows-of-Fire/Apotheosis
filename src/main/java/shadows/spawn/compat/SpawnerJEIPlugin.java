@@ -13,6 +13,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import shadows.Apotheosis;
 import shadows.placebo.Placebo;
 import shadows.spawn.SpawnerModifiers;
 import shadows.spawn.SpawnerModule;
@@ -25,6 +26,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 
 	@Override
 	public void register(IModRegistry reg) {
+		if (!Apotheosis.enableSpawner) return;
 		reg.addRecipeCatalyst(new ItemStack(Blocks.MOB_SPAWNER), SPAWNER);
 
 		ItemStack egg = new ItemStack(Items.SPAWN_EGG);
@@ -52,6 +54,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration reg) {
+		if (!Apotheosis.enableSpawner) return;
 		reg.addRecipeCategories(new SpawnerCategory(reg.getJeiHelpers().getGuiHelper()));
 	}
 
