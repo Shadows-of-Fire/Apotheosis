@@ -5,7 +5,6 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -45,9 +44,7 @@ public class SpawnerTransformer implements IApotheosisTransformer {
 				}
 			}
 			if (toRemove != null) {
-				LdcInsnNode loaded = new LdcInsnNode("shadows.spawn.TileSpawnerExt");
-				method.instructions.set(toRemove, loaded);
-				method.instructions.insert(loaded, new MethodInsnNode(Opcodes.INVOKESTATIC, "java/lang/Class", "forName", "(Ljava/lang/String;)Ljava/lang/Class;", false));
+				method.instructions.set(toRemove, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/spawn/SpawnerModule", "getSpawnerClass", "()Ljava/lang/Class;", false));
 				CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 				classNode.accept(writer);
 				ApotheosisCore.LOG.info("Successfully transformed TileEntityMobSpawner$2");

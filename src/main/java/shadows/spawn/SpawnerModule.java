@@ -17,6 +17,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -80,6 +81,10 @@ public class SpawnerModule {
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
 				if (sm.matches(s)) e.setUseBlock(Result.ALLOW);
 		}
+	}
+
+	public static Class<? extends TileEntityMobSpawner> getSpawnerClass() {
+		return Apotheosis.enableSpawner ? TileSpawnerExt.class : TileEntityMobSpawner.class;
 	}
 
 }
