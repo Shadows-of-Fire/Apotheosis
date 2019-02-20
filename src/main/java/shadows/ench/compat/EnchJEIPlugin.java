@@ -25,12 +25,27 @@ public class EnchJEIPlugin implements IModPlugin {
 	@Override
 	public void register(IModRegistry reg) {
 		if (!Apotheosis.enableEnch) return;
-		ItemStack s = new ItemStack(Items.DIAMOND_SWORD);
-		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), s);
-		ItemStack s2 = new ItemStack(Items.DIAMOND_SWORD);
-		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), s2);
+		ItemStack enchDiaSword = new ItemStack(Items.DIAMOND_SWORD);
+		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchDiaSword);
+		ItemStack cursedDiaSword = new ItemStack(Items.DIAMOND_SWORD);
+		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedDiaSword);
 		IVanillaRecipeFactory factory = reg.getJeiHelpers().getVanillaRecipeFactory();
-		reg.addRecipes(ImmutableList.of(factory.createAnvilRecipe(s, ImmutableList.of(new ItemStack(Blocks.WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), factory.createAnvilRecipe(s2, ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), factory.createAnvilRecipe(new ItemStack(Blocks.ANVIL, 1, 1), PlaceboUtil.asList(EnchModule.blockIron.getMatchingStacks()), ImmutableList.of(new ItemStack(Blocks.ANVIL)))), VanillaRecipeCategoryUid.ANVIL);
+		//Formatter::off
+		reg.addRecipes(ImmutableList.of(
+			factory.createAnvilRecipe(
+					enchDiaSword, 
+					ImmutableList.of(new ItemStack(Blocks.WEB)), 
+					ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), 
+			factory.createAnvilRecipe(
+					cursedDiaSword, 
+					ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), 
+					ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), 
+			factory.createAnvilRecipe(
+					new ItemStack(Blocks.ANVIL, 1, 1), 
+					PlaceboUtil.asList(EnchModule.blockIron.getMatchingStacks()), 
+					ImmutableList.of(new ItemStack(Blocks.ANVIL)))), 
+		VanillaRecipeCategoryUid.ANVIL);
+		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");
 	}
 
