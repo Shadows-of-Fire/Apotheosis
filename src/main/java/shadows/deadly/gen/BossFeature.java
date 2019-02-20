@@ -66,6 +66,6 @@ public class BossFeature extends WorldFeature {
 
 	@Override
 	public boolean isEnabled() {
-		return DeadlyConfig.bossChance > 0;
+		return !DeadlyConfig.BOSS_MOBS.isEmpty() && DeadlyConfig.bossChance > 0;
 	}
 }

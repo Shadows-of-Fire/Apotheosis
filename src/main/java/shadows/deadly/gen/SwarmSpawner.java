@@ -53,7 +53,7 @@ public class SwarmSpawner extends WorldFeature {
 
 	@Override
 	public boolean isEnabled() {
-		return DeadlyConfig.swarmSpawnerChance > 0;
+		return !DeadlyConfig.SWARM_MOBS.isEmpty() && DeadlyConfig.swarmSpawnerChance > 0;
 	}
 
 	public static void init() {

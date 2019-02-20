@@ -88,7 +88,7 @@ public class BrutalSpawner extends WorldFeature {
 
 	@Override
 	public boolean isEnabled() {
-		return DeadlyConfig.brutalSpawnerChance > 0;
+		return !DeadlyConfig.BRUTAL_MOBS.isEmpty() && DeadlyConfig.brutalSpawnerChance > 0;
 	}
 
 	public static void init() {
