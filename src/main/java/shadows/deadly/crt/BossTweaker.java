@@ -39,11 +39,45 @@ public class BossTweaker {
 		if (e != null) CraftTweakerAPI.apply(new AddEnchAction("Armor Enchantments", BossItem.ARMOR_ENCHANTMENTS, e));
 	}
 
+	@ZenMethod
+	public static void removeBowEnchantment(IEnchantmentDefinition enchant) {
+		Enchantment e = checkErrorR(BossItem.BOW_ENCHANTMENTS, enchant);
+		if (e != null) CraftTweakerAPI.apply(new RemoveEnchAction("Bow Enchantments", BossItem.BOW_ENCHANTMENTS, e));
+	}
+
+	@ZenMethod
+	public static void removeSwordEnchantment(IEnchantmentDefinition enchant) {
+		Enchantment e = checkErrorR(BossItem.SWORD_ENCHANTMENTS, enchant);
+		if (e != null) CraftTweakerAPI.apply(new RemoveEnchAction("Sword Enchantments", BossItem.SWORD_ENCHANTMENTS, e));
+	}
+
+	@ZenMethod
+	public static void removeToolEnchantment(IEnchantmentDefinition enchant) {
+		Enchantment e = checkErrorR(BossItem.TOOL_ENCHANTMENTS, enchant);
+		if (e != null) CraftTweakerAPI.apply(new RemoveEnchAction("Tool Enchantments", BossItem.TOOL_ENCHANTMENTS, e));
+	}
+
+	@ZenMethod
+	public static void removeArmorEnchantment(IEnchantmentDefinition enchant) {
+		Enchantment e = checkErrorR(BossItem.ARMOR_ENCHANTMENTS, enchant);
+		if (e != null) CraftTweakerAPI.apply(new RemoveEnchAction("Armor Enchantments", BossItem.ARMOR_ENCHANTMENTS, e));
+	}
+
 	private static Enchantment checkError(List<Enchantment> target, IEnchantmentDefinition ench) {
 		Enchantment e = ench == null ? null : (Enchantment) ench.getInternal();
 		if (e == null) CraftTweakerAPI.logError("Attempted to add a null enchantment to a Boss Enchantment List!");
 		if (e != null && target.contains(e)) {
 			CraftTweakerAPI.logError("Attempted to add a duplicate enchantment to a Boss Enchantment List!");
+			return null;
+		}
+		return e;
+	}
+
+	private static Enchantment checkErrorR(List<Enchantment> target, IEnchantmentDefinition ench) {
+		Enchantment e = ench == null ? null : (Enchantment) ench.getInternal();
+		if (e == null) CraftTweakerAPI.logError("Attempted to remove a null enchantment from a Boss Enchantment List!");
+		if (e != null && !target.contains(e)) {
+			CraftTweakerAPI.logError("Attempted to remove an enchantment that was not found in a Boss Enchantment List!");
 			return null;
 		}
 		return e;
@@ -69,6 +103,30 @@ public class BossTweaker {
 		@Override
 		public String describe() {
 			return String.format("Added enchantment %s to Boss Enchantment List %s", toAdd.getRegistryName(), listName);
+		}
+
+	}
+
+	private static class RemoveEnchAction implements IAction {
+
+		String listName;
+		List<Enchantment> target;
+		Enchantment toRemove;
+
+		RemoveEnchAction(String listName, List<Enchantment> target, Enchantment toRemove) {
+			this.listName = listName;
+			this.target = target;
+			this.toRemove = toRemove;
+		}
+
+		@Override
+		public void apply() {
+			target.remove(toRemove);
+		}
+
+		@Override
+		public String describe() {
+			return String.format("Removed enchantment %s from Boss Enchantment List %s", toRemove.getRegistryName(), listName);
 		}
 
 	}
