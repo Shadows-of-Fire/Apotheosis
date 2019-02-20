@@ -17,7 +17,7 @@ public class EnchantmentIcyThorns extends Enchantment {
 
 	public EnchantmentIcyThorns() {
 		super(Rarity.RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
-		this.setName(Apotheosis.MODID + ".icy_thorns");
+		setName(Apotheosis.MODID + ".icy_thorns");
 	}
 
 	@Override

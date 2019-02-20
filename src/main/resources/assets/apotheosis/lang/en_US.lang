@@ -86,6 +86,12 @@ enchantment.apotheosis.knowledge.desc=Enemy drops are directly converted to expe
 enchantment.apotheosis.splitting=Splitting
 enchantment.apotheosis.splitting.desc=Allows anvils to split enchanted books they fall upon.
 
+enchantment.apotheosis.natures_blessing=Nature's Blessing
+enchantment.apotheosis.natures_blessing.desc=Hoes may be used to bonemeal crops.
+
+enchantment.apotheosis.rebounding=Rebounding
+enchantment.apotheosis.rebounding.desc=Melee attackers may find themselves much further away.
+
 //Vanilla
 tile.reeds.name=Sugar Cane
 potion.potency.3=IV

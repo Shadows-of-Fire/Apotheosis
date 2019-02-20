@@ -27,7 +27,7 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 	public boolean redstoneEnabled = false;
 
 	public TileSpawnerExt() {
-		this.spawnerLogic = new SpawnerLogicExt();
+		spawnerLogic = new SpawnerLogicExt();
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		this.readFromNBT(pkt.getNbtCompound());
+		readFromNBT(pkt.getNbtCompound());
 	}
 
 	public class SpawnerLogicExt extends MobSpawnerBaseLogic {
@@ -82,80 +82,80 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 		public void setNextSpawnData(WeightedSpawnerEntity p_184993_1_) {
 			super.setNextSpawnData(p_184993_1_);
 
-			if (this.getSpawnerWorld() != null) {
-				IBlockState iblockstate = this.getSpawnerWorld().getBlockState(this.getSpawnerPosition());
-				this.getSpawnerWorld().notifyBlockUpdate(TileSpawnerExt.this.pos, iblockstate, iblockstate, 4);
+			if (getSpawnerWorld() != null) {
+				IBlockState iblockstate = getSpawnerWorld().getBlockState(getSpawnerPosition());
+				getSpawnerWorld().notifyBlockUpdate(TileSpawnerExt.this.pos, iblockstate, iblockstate, 4);
 			}
 		}
 
 		private boolean isActivated() {
-			BlockPos blockpos = this.getSpawnerPosition();
-			boolean flag = ignoresPlayers || this.getSpawnerWorld().isAnyPlayerWithinRangeAt(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, this.activatingRangeFromPlayer);
+			BlockPos blockpos = getSpawnerPosition();
+			boolean flag = ignoresPlayers || getSpawnerWorld().isAnyPlayerWithinRangeAt(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, activatingRangeFromPlayer);
 			return flag && (!redstoneEnabled || world.isBlockPowered(blockpos));
 		}
 
 		private void resetTimer() {
-			if (this.maxSpawnDelay <= this.minSpawnDelay) {
-				this.spawnDelay = this.minSpawnDelay;
+			if (maxSpawnDelay <= minSpawnDelay) {
+				spawnDelay = minSpawnDelay;
 			} else {
-				int i = this.maxSpawnDelay - this.minSpawnDelay;
-				this.spawnDelay = this.minSpawnDelay + this.getSpawnerWorld().rand.nextInt(i);
+				int i = maxSpawnDelay - minSpawnDelay;
+				spawnDelay = minSpawnDelay + getSpawnerWorld().rand.nextInt(i);
 			}
 
-			if (!this.potentialSpawns.isEmpty()) {
-				this.setNextSpawnData(WeightedRandom.getRandomItem(this.getSpawnerWorld().rand, this.potentialSpawns));
+			if (!potentialSpawns.isEmpty()) {
+				setNextSpawnData(WeightedRandom.getRandomItem(getSpawnerWorld().rand, potentialSpawns));
 			}
 
-			this.broadcastEvent(1);
+			broadcastEvent(1);
 		}
 
 		@Override
 		public void updateSpawner() {
-			if (!this.isActivated()) {
-				this.prevMobRotation = this.mobRotation;
+			if (!isActivated()) {
+				prevMobRotation = mobRotation;
 			} else {
-				BlockPos blockpos = this.getSpawnerPosition();
+				BlockPos blockpos = getSpawnerPosition();
 
-				if (this.getSpawnerWorld().isRemote) {
-					double d3 = blockpos.getX() + this.getSpawnerWorld().rand.nextFloat();
-					double d4 = blockpos.getY() + this.getSpawnerWorld().rand.nextFloat();
-					double d5 = blockpos.getZ() + this.getSpawnerWorld().rand.nextFloat();
-					this.getSpawnerWorld().spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d3, d4, d5, 0.0D, 0.0D, 0.0D);
-					this.getSpawnerWorld().spawnParticle(EnumParticleTypes.FLAME, d3, d4, d5, 0.0D, 0.0D, 0.0D);
+				if (getSpawnerWorld().isRemote) {
+					double d3 = blockpos.getX() + getSpawnerWorld().rand.nextFloat();
+					double d4 = blockpos.getY() + getSpawnerWorld().rand.nextFloat();
+					double d5 = blockpos.getZ() + getSpawnerWorld().rand.nextFloat();
+					getSpawnerWorld().spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d3, d4, d5, 0.0D, 0.0D, 0.0D);
+					getSpawnerWorld().spawnParticle(EnumParticleTypes.FLAME, d3, d4, d5, 0.0D, 0.0D, 0.0D);
 
-					if (this.spawnDelay > 0) {
-						--this.spawnDelay;
+					if (spawnDelay > 0) {
+						--spawnDelay;
 					}
 
-					this.prevMobRotation = this.mobRotation;
-					this.mobRotation = (this.mobRotation + 1000.0F / (this.spawnDelay + 200.0F)) % 360.0D;
+					prevMobRotation = mobRotation;
+					mobRotation = (mobRotation + 1000.0F / (spawnDelay + 200.0F)) % 360.0D;
 				} else {
-					if (this.spawnDelay == -1) {
-						this.resetTimer();
+					if (spawnDelay == -1) {
+						resetTimer();
 					}
 
-					if (this.spawnDelay > 0) {
-						--this.spawnDelay;
+					if (spawnDelay > 0) {
+						--spawnDelay;
 						return;
 					}
 
 					boolean flag = false;
 
-					for (int i = 0; i < this.spawnCount; ++i) {
-						NBTTagCompound tag = this.spawnData.getNbt();
+					for (int i = 0; i < spawnCount; ++i) {
+						NBTTagCompound tag = spawnData.getNbt();
 						NBTTagList posList = tag.getTagList("Pos", 6);
-						World world = this.getSpawnerWorld();
+						World world = getSpawnerWorld();
 						int j = posList.tagCount();
-						double x = j >= 1 ? posList.getDoubleAt(0) : blockpos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
+						double x = j >= 1 ? posList.getDoubleAt(0) : blockpos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * spawnRange + 0.5D;
 						double y = j >= 2 ? posList.getDoubleAt(1) : (double) (blockpos.getY() + world.rand.nextInt(3) - 1);
-						double z = j >= 3 ? posList.getDoubleAt(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
+						double z = j >= 3 ? posList.getDoubleAt(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * spawnRange + 0.5D;
 
 						if (tag.hasKey("Offset")) {
 							NBTTagList offsets = tag.getTagList("Offset", 6);
 							j = posList.tagCount();
-							x = j >= 1 ? this.getSpawnerPosition().getX() + offsets.getDoubleAt(0) : x;
-							y = j >= 2 ? this.getSpawnerPosition().getY() + offsets.getDoubleAt(1) : y;
-							z = j >= 3 ? this.getSpawnerPosition().getZ() + offsets.getDoubleAt(2) : z;
+							x = j >= 1 ? getSpawnerPosition().getX() + offsets.getDoubleAt(0) : x;
+							y = j >= 2 ? getSpawnerPosition().getY() + offsets.getDoubleAt(1) : y;
+							z = j >= 3 ? getSpawnerPosition().getZ() + offsets.getDoubleAt(2) : z;
 						}
 
 						Entity entity = AnvilChunkLoader.readWorldEntityPos(tag, world, x, y, z, false);
@@ -163,10 +163,10 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 						if (entity == null) { return; }
 
 						if (!ignoresCap) {
-							int k = world.getEntitiesWithinAABB(entity.getClass(), (new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1)).grow(this.spawnRange)).size();
+							int k = world.getEntitiesWithinAABB(entity.getClass(), new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1).grow(spawnRange)).size();
 
-							if (k >= this.maxNearbyEntities) {
-								this.resetTimer();
+							if (k >= maxNearbyEntities) {
+								resetTimer();
 								return;
 							}
 						}
@@ -175,8 +175,8 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 						entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360.0F, 0.0F);
 
 						if (entityliving == null || ignoresConditions || net.minecraftforge.event.ForgeEventFactory.canEntitySpawnSpawner(entityliving, getSpawnerWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this)) {
-							if (this.spawnData.getNbt().getSize() == 1 && this.spawnData.getNbt().hasKey("id", 8) && entity instanceof EntityLiving) {
-								if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(entityliving, this.getSpawnerWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this)) ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), (IEntityLivingData) null);
+							if (spawnData.getNbt().getSize() == 1 && spawnData.getNbt().hasKey("id", 8) && entity instanceof EntityLiving) {
+								if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(entityliving, getSpawnerWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this)) ((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), (IEntityLivingData) null);
 							}
 
 							AnvilChunkLoader.spawnEntity(entity, world);
@@ -191,7 +191,7 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 					}
 
 					if (flag) {
-						this.resetTimer();
+						resetTimer();
 					}
 				}
 			}

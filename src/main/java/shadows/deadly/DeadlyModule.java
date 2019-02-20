@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
@@ -38,7 +38,7 @@ public class DeadlyModule {
 		DeadlyLoot.init();
 		SwarmSpawner.init();
 		WorldGenerator.init();
-		GameRegistry.registerWorldGenerator(new WorldGenerator(), 255);
+		MinecraftForge.EVENT_BUS.register(new WorldGenerator());
 		ArmorSet.sortSets();
 	}
 

@@ -12,6 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConfig;
 
@@ -25,25 +27,20 @@ public class BossFeature extends WorldFeature {
 	public static final List<BossItem> BOSS_ITEMS = new ArrayList<>();
 
 	@Override
-	public void generate(World world, BlockPos pos, Random rand) {
+	public void generate(World world, int chunkX, int chunkZ, Random rand) {
 		if (DeadlyConfig.bossChance <= rand.nextDouble()) return;
-		int x = pos.getX() + rand.nextInt(16);
-		int z = pos.getZ() + rand.nextInt(16);
-		int y = rand.nextInt(30) + 12;
+		int x = (chunkX << 4) + MathHelper.getInt(rand, 4, 12);
+		int z = (chunkZ << 4) + MathHelper.getInt(rand, 4, 12);
+		int y = 15 + rand.nextInt(35);
 		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
 		BossItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
-		for (byte state = 0; y > 5; y--) {
+		for (; y > 10; y--) {
 			if (world.getBlockState(mPos.setPos(x, y, z)).getBlockFaceShape(world, mPos, EnumFacing.UP) == BlockFaceShape.SOLID) {
-				if (state == 0) {
-					if (!world.checkBlockCollision(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
-						item.place(world, mPos, rand);
-						WorldGenerator.SUCCESSES.add(pos.toLong());
-						return;
-					}
-					state = -1;
+				if (!world.checkBlockCollision(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
+					item.place(world, mPos, rand);
+					WorldGenerator.SUCCESSES.add(ChunkPos.asLong(chunkX, chunkZ));
+					return;
 				}
-			} else {
-				state = 0;
 			}
 		}
 	}

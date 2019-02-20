@@ -18,7 +18,7 @@ public class EnchantmentKnowledge extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 50;
+		return getMinEnchantability(level) + 50;
 	}
 
 	@Override

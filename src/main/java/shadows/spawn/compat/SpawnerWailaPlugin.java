@@ -59,17 +59,7 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IWailaDataProvider {
 		if (te instanceof TileSpawnerExt) {
 			TileSpawnerExt spw = (TileSpawnerExt) te;
 			MobSpawnerBaseLogic logic = spw.getSpawnerBaseLogic();
-			tag.setIntArray(STATS, new int[] { 
-					logic.minSpawnDelay, 
-					logic.maxSpawnDelay, 
-					logic.spawnCount, 
-					logic.maxNearbyEntities, 
-					logic.activatingRangeFromPlayer, 
-					logic.spawnRange, 
-					spw.ignoresPlayers ? 1 : 0, 
-					spw.ignoresConditions ? 1 : 0, 
-					spw.ignoresCap ? 1 : 0, 
-					spw.redstoneEnabled ? 1 : 0 });
+			tag.setIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.activatingRangeFromPlayer, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0, spw.ignoresCap ? 1 : 0, spw.redstoneEnabled ? 1 : 0 });
 		}
 		return tag;
 	}

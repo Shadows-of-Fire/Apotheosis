@@ -22,7 +22,7 @@ public class BlockReedExt extends BlockReed {
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.REEDS || this.checkForDrop(worldIn, pos, state)) {
+		if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.REEDS || checkForDrop(worldIn, pos, state)) {
 			if (worldIn.isAirBlock(pos.up())) {
 				int i;
 
@@ -31,11 +31,11 @@ public class BlockReedExt extends BlockReed {
 				}
 
 				if (i < GardenModule.maxReedHeight) {
-					int j = ((Integer) state.getValue(AGE)).intValue();
+					int j = state.getValue(AGE).intValue();
 
 					if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
 						if (j == 15) {
-							worldIn.setBlockState(pos.up(), this.getDefaultState());
+							worldIn.setBlockState(pos.up(), getDefaultState());
 							worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(0)), 4);
 						} else {
 							worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(j + 1)), 4);

@@ -55,7 +55,7 @@ public class EnchantmentInfo {
 		Expression ex;
 
 		public ExpressionPowerFunc(String func) {
-			this.ex = new Expression(func);
+			ex = new Expression(func);
 		}
 
 		@Override

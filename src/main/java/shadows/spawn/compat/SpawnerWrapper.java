@@ -31,7 +31,7 @@ public class SpawnerWrapper implements IRecipeWrapper {
 
 	public SpawnerWrapper(SpawnerModifier modifier, String nbt, int change, String... tooltips) {
 		this.modifier = modifier;
-		this.output = SPAWNER.get(0).copy();
+		output = SPAWNER.get(0).copy();
 		NBTTagCompound tag = output.getOrCreateSubCompound("spawner");
 		tag.setInteger(nbt, tag.getInteger(nbt) + change);
 		this.tooltips = tooltips;
@@ -39,16 +39,16 @@ public class SpawnerWrapper implements IRecipeWrapper {
 
 	public SpawnerWrapper(SpawnerModifier modifier, String nbt, boolean change, String... tooltips) {
 		this.modifier = modifier;
-		this.output = SPAWNER.get(0).copy();
+		output = SPAWNER.get(0).copy();
 		NBTTagCompound tag = output.getOrCreateSubCompound("spawner");
 		tag.setBoolean(nbt, change);
 		this.tooltips = tooltips;
 	}
 
 	public SpawnerWrapper(ItemStack catalyst, ResourceLocation entityOut, String... tooltips) {
-		this.modifier = new SpawnerModifier(catalyst, (a, b) -> {
+		modifier = new SpawnerModifier(catalyst, (a, b) -> {
 		});
-		this.output = SPAWNER.get(0).copy();
+		output = SPAWNER.get(0).copy();
 		NBTTagCompound tag = output.getOrCreateSubCompound("spawner");
 		tag.getCompoundTag("SpawnData").setString("id", entityOut.toString());
 		this.tooltips = tooltips;

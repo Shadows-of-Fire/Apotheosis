@@ -67,7 +67,7 @@ public class SpawnerModifiers {
 				readStackCfg(config.getString("Redstone Modifier", "general", "minecraft:comparator", "The item that enables redstone control.  Signal = off")),
 				(a, b, inv) -> {a.redstoneEnabled = !inv; VanillaPacketDispatcher.dispatchTEToNearbyPlayers(a);});
 
-		inverseItem = Ingredient.fromStacks(readStackCfg(config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes the others change stats in the opposite direction.")));		
+		inverseItem = Ingredient.fromStacks(readStackCfg(config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes the others change stats in the opposite direction.")));
 		if (config.hasChanged()) config.save();
 	}
 	//Formatter::on

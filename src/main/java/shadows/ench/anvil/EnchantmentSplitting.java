@@ -21,7 +21,7 @@ public class EnchantmentSplitting extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel) + 40;
+		return getMinEnchantability(enchantmentLevel) + 40;
 	}
 
 	@Override

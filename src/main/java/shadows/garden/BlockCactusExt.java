@@ -30,11 +30,11 @@ public class BlockCactusExt extends BlockCactus {
 				;
 
 			if (i < GardenModule.maxCactusHeight) {
-				int j = ((Integer) state.getValue(AGE)).intValue();
+				int j = state.getValue(AGE).intValue();
 
 				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, blockpos, state, true)) {
 					if (j == 15) {
-						world.setBlockState(blockpos, this.getDefaultState());
+						world.setBlockState(blockpos, getDefaultState());
 						IBlockState iblockstate = state.withProperty(AGE, Integer.valueOf(0));
 						world.setBlockState(pos, iblockstate, 4);
 						iblockstate.neighborChanged(world, blockpos, this, pos);

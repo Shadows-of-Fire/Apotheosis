@@ -82,6 +82,8 @@ public class ApotheosisClient {
 				registerTooltip(ApotheosisObjects.BERSERK, corrupted, "", "enchantment.apotheosis.berserk.desc");
 				registerTooltip(ApotheosisObjects.KNOWLEDGE, masterwork, "", "enchantment.apotheosis.knowledge.desc");
 				registerTooltip(ApotheosisObjects.SPLITTING, "enchantment.apotheosis.splitting.desc");
+				registerTooltip(ApotheosisObjects.NATURES_BLESSING, "enchantment.apotheosis.natures_blessing.desc");
+				registerTooltip(ApotheosisObjects.REBOUNDING, "enchantment.apotheosis.rebounding.desc");
 			}
 		} else {
 			if (Apotheosis.enablePotion) registerTooltip(ApotheosisObjects.TRUE_INFINITY, masterwork);

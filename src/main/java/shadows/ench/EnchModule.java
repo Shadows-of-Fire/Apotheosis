@@ -29,11 +29,13 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -46,6 +48,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -69,6 +72,8 @@ import shadows.ench.enchantments.EnchantmentIcyThorns;
 import shadows.ench.enchantments.EnchantmentKnowledge;
 import shadows.ench.enchantments.EnchantmentLifeMend;
 import shadows.ench.enchantments.EnchantmentMounted;
+import shadows.ench.enchantments.EnchantmentNatureBless;
+import shadows.ench.enchantments.EnchantmentRebounding;
 import shadows.ench.enchantments.EnchantmentReflective;
 import shadows.ench.enchantments.EnchantmentScavenger;
 import shadows.ench.enchantments.EnchantmentShieldBash;
@@ -82,7 +87,7 @@ import shadows.util.NBTIngredient;
  * Item Enchantibility is tied to the number of enchantments the item will recieve, and the "level" passed to getRandomEnchantments.
  * The possible enchantabilities for an item are equal to:
  * [table level + 1, table level + 1 + (E/4 + 1) + (E/4 + 1)].  E == item enchantability.  (E/4 + 1) is rolled as a random int.
- * 
+ *
  * Enchantment min/max enchantability should really be called something else, they aren't fully based on enchantability.
  * Enchantment rarity affects weight in WeightedRandom list picking.
  * Max table level in Apotheosis is 256. Last Updated: (2/11/2019)
@@ -172,7 +177,9 @@ public class EnchModule {
 				new EnchantmentReflective().setRegistryName(Apotheosis.MODID, "reflective"),
 				new EnchantmentBerserk().setRegistryName(Apotheosis.MODID, "berserk"),
 				new EnchantmentKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"),
-				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"));
+				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"),
+				new EnchantmentNatureBless().setRegistryName(Apotheosis.MODID, "natures_blessing"),
+				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding"));
 		//Formatter::on
 	}
 
@@ -292,6 +299,17 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
+	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
+		ItemStack s = e.getItemStack();
+		int nbLevel = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.NATURES_BLESSING, s);
+		if (!e.getEntityPlayer().isSneaking() && nbLevel > 0 && ItemDye.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getEntityPlayer(), e.getHand())) {
+			s.damageItem(6 - nbLevel, e.getEntityPlayer());
+			e.setCanceled(true);
+			e.setCancellationResult(EnumActionResult.SUCCESS);
+		}
+	}
+
+	@SubscribeEvent
 	public void applyUnbreaking(AnvilRepairEvent e) {
 		if (e.getEntityPlayer().openContainer instanceof ContainerRepair) {
 			ContainerRepair r = (ContainerRepair) e.getEntityPlayer().openContainer;
@@ -321,7 +339,7 @@ public class EnchModule {
 		boolean isBook = stack.getItem() == Items.BOOK;
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
-			if ((enchantment.canApplyAtEnchantingTable(stack) || (isBook && enchantment.isAllowedOnBooks()))) {
+			if (enchantment.canApplyAtEnchantingTable(stack) || isBook && enchantment.isAllowedOnBooks()) {
 				EnchantmentInfo info = getEnchInfo(enchantment);
 				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {
 					if (power >= info.getMinPower(i) && power <= info.getMaxPower(i)) {

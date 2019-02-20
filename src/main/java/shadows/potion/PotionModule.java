@@ -126,7 +126,7 @@ public class PotionModule {
 		ItemStack bow = (ItemStack) b;
 		int enchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bow);
 		if (enchant <= 0 ? false : stack.getItem().getClass() == ItemArrow.class) return true;
-		return (EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow);
+		return EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow;
 	}
 
 	public static boolean doesShowParticles(Object e) {
@@ -143,12 +143,12 @@ public class PotionModule {
 		} else {
 			float mult = 1;
 			if (entity.isPotionActive(MobEffects.RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
-				int level = (entity.getActivePotionEffect(MobEffects.RESISTANCE).getAmplifier() + 1);
-				mult -= (0.2 * level);
+				int level = entity.getActivePotionEffect(MobEffects.RESISTANCE).getAmplifier() + 1;
+				mult -= 0.2 * level;
 			}
 			if (ApotheosisObjects.SUNDERING != null && entity.isPotionActive(ApotheosisObjects.SUNDERING) && source != DamageSource.OUT_OF_WORLD) {
-				int level = (entity.getActivePotionEffect(ApotheosisObjects.SUNDERING).getAmplifier() + 1);
-				mult += (0.2 * level);
+				int level = entity.getActivePotionEffect(ApotheosisObjects.SUNDERING).getAmplifier() + 1;
+				mult += 0.2 * level;
 			}
 
 			damage *= mult;

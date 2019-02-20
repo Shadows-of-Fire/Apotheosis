@@ -32,22 +32,22 @@ public class ChestBuilder {
 	public ChestBuilder(World world, Random rand, BlockPos pos) {
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof TileEntityChest) {
-			this.random = rand;
-			this.chest = (TileEntityChest) tileEntity;
-			this.isValid = true;
+			random = rand;
+			chest = (TileEntityChest) tileEntity;
+			isValid = true;
 		}
 	}
 
 	public ChestBuilder(TileEntityChest tileEntity, Random rand) {
-		this.chest = tileEntity;
-		if (this.chest != null) {
-			this.random = rand;
-			this.isValid = true;
+		chest = tileEntity;
+		if (chest != null) {
+			random = rand;
+			isValid = true;
 		}
 	}
 
 	public void fill(ResourceLocation loot) {
-		this.chest.setLootTable(loot, random.nextLong());
+		chest.setLootTable(loot, random.nextLong());
 	}
 
 	public static LootEntry loot(Item item, int damage, int min, int max, int weight, int quality) {

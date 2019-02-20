@@ -30,11 +30,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		ItemStack s2 = new ItemStack(Items.DIAMOND_SWORD);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), s2);
 		IVanillaRecipeFactory factory = reg.getJeiHelpers().getVanillaRecipeFactory();
-		reg.addRecipes(ImmutableList.of(
-				factory.createAnvilRecipe(s, ImmutableList.of(new ItemStack(Blocks.WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
-				factory.createAnvilRecipe(s2, ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
-				factory.createAnvilRecipe(new ItemStack(Blocks.ANVIL, 1, 1), PlaceboUtil.asList(EnchModule.blockIron.getMatchingStacks()), ImmutableList.of(new ItemStack(Blocks.ANVIL)))
-				), VanillaRecipeCategoryUid.ANVIL);
+		reg.addRecipes(ImmutableList.of(factory.createAnvilRecipe(s, ImmutableList.of(new ItemStack(Blocks.WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), factory.createAnvilRecipe(s2, ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), factory.createAnvilRecipe(new ItemStack(Blocks.ANVIL, 1, 1), PlaceboUtil.asList(EnchModule.blockIron.getMatchingStacks()), ImmutableList.of(new ItemStack(Blocks.ANVIL)))), VanillaRecipeCategoryUid.ANVIL);
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");
 	}
 

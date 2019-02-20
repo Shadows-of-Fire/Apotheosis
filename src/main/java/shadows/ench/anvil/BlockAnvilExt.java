@@ -58,7 +58,7 @@ public class BlockAnvilExt extends BlockAnvil {
 	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
 		ItemStack anvil = new ItemStack(this, 1, damageDropped(state));
 		if (te instanceof TileAnvil) {
-			TileAnvil anv = ((TileAnvil) te);
+			TileAnvil anv = (TileAnvil) te;
 			Map<Enchantment, Integer> ench = new HashMap<>();
 			if (anv.getUnbreaking() > 0) ench.put(Enchantments.UNBREAKING, anv.getUnbreaking());
 			if (anv.getSplitting() > 0) ench.put(ApotheosisObjects.SPLITTING, anv.getSplitting());
@@ -106,7 +106,7 @@ public class BlockAnvilExt extends BlockAnvil {
 		int split = anvil.tileEntityData.getInteger("splitting");
 		int ub = anvil.tileEntityData.getInteger("ub");
 		if (split > 0) for (EntityItem entity : items) {
-			ItemStack stack = ((EntityItem) entity).getItem();
+			ItemStack stack = entity.getItem();
 			if (stack.getItem() == Items.ENCHANTED_BOOK) {
 				if (world.rand.nextInt(Math.max(1, 6 - split)) == 0) {
 					NBTTagList enchants = ItemEnchantedBook.getEnchantments(stack);

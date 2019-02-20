@@ -2,45 +2,46 @@ package shadows.deadly.gen;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import com.google.common.base.Predicate;
 
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import net.minecraft.block.BlockStone;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraftforge.fml.common.IWorldGenerator;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import shadows.deadly.DeadlyModule;
 import shadows.deadly.config.DeadlyConfig;
 
-public class WorldGenerator implements IWorldGenerator {
+public class WorldGenerator {
 
 	public static final List<WorldFeature> FEATURES = new ArrayList<>();
 	public static final BrutalSpawner BRUTAL_SPAWNER = new BrutalSpawner();
 	public static final BossFeature BOSS_GENERATOR = new BossFeature();
 	public static final SwarmSpawner SWARM_SPAWNER = new SwarmSpawner();
 	public static final LongList SUCCESSES = new LongArrayList();
+	public static final Predicate<IBlockState> STONE_TEST = s -> s.getBlock() == Blocks.STONE && s.getValue(BlockStone.VARIANT).isNatural();
 
-	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		if (!world.isRemote && DeadlyConfig.DIM_WHITELIST.contains(world.provider.getDimension())) WorldGenerator.run(world, new BlockPos(chunkX << 4, 0, chunkZ << 4));
-	}
-
-	static Random rand = new Random();
-
-	public static void run(World world, BlockPos pos) {
-		for (WorldFeature feature : FEATURES) {
-			if (SUCCESSES.contains(pos.toLong())) return;
-			feature.generate(world, pos, world.rand);
+	@SubscribeEvent
+	public void terrainGen(PopulateChunkEvent.Pre e) {
+		if (DeadlyConfig.DIM_WHITELIST.contains(e.getWorld().provider.getDimension())) for (WorldFeature feature : FEATURES) {
+			if (SUCCESSES.contains(ChunkPos.asLong(e.getChunkX(), e.getChunkZ()))) return;
+			feature.generate(e.getWorld(), e.getChunkX(), e.getChunkZ(), e.getRand());
 		}
 	}
 
-	/**
-	 * Builds a glass pillar from the given location up to layer 127.
-	 */
+	public static void init() {
+		if (BRUTAL_SPAWNER.isEnabled()) FEATURES.add(BRUTAL_SPAWNER);
+		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
+		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
+	}
+
 	public static void debugPillar(World world, BlockPos pos) {
 		MutableBlockPos mPos = new MutableBlockPos(pos);
 		DeadlyModule.LOGGER.info("Marking! " + pos.toString());
@@ -48,9 +49,9 @@ public class WorldGenerator implements IWorldGenerator {
 			world.setBlockState(mPos.setPos(mPos.getX(), mPos.getY() + 1, mPos.getZ()), Blocks.GLASS.getDefaultState());
 	}
 
-	public static void init() {
-		if (BRUTAL_SPAWNER.isEnabled()) FEATURES.add(BRUTAL_SPAWNER);
-		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
-		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
+	public static final boolean DEBUG = true;
+
+	public static void debugLog(BlockPos pos, String name) {
+		if (DEBUG) DeadlyModule.LOGGER.info("Generated {} at {}", name, pos);
 	}
 }

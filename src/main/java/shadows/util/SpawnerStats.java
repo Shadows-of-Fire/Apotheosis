@@ -30,7 +30,7 @@ public class SpawnerStats {
 		this.playerRange = playerRange;
 		category = "Spawner Stats: " + name;
 	}
-	
+
 	public void load(Configuration cfg) {
 		spawnDelay = cfg.getInt("Spawn Delay", category, spawnDelay, 1, Short.MAX_VALUE, "The delay before first spawn on this spawner.");
 		minDelay = cfg.getInt("Min Delay", category, minDelay, 1, Short.MAX_VALUE, "The minimum delay between spawns");
@@ -38,7 +38,7 @@ public class SpawnerStats {
 		spawnCount = cfg.getInt("Spawn Count", category, spawnCount, 1, Short.MAX_VALUE, "The number of mobs that will spawn.");
 		maxNearbyEntities = cfg.getInt("Max Nearby Entities", category, maxNearbyEntities, 1, Short.MAX_VALUE, "The maximum number of nearby entities (when hit, the spawner turns off).");
 		spawnRange = cfg.getInt("Spawn Range", category, spawnRange, 1, Short.MAX_VALUE, "The spawn range.");
-		this.playerRange = cfg.getInt("Player Range", category, playerRange, 1, Short.MAX_VALUE, "The required distance a player must be within for this spawner to work.");
+		playerRange = cfg.getInt("Player Range", category, playerRange, 1, Short.MAX_VALUE, "The required distance a player must be within for this spawner to work.");
 	}
 
 	public SpawnerBuilder apply(SpawnerBuilder builder) {

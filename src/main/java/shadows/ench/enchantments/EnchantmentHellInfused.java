@@ -25,7 +25,7 @@ public class EnchantmentHellInfused extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + level * 4;
+		return getMinEnchantability(level) + level * 4;
 	}
 
 	@Override

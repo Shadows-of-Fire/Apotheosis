@@ -99,6 +99,10 @@ public class BossItem extends WorldFeatureItem {
 		for (BlockPos p : BlockPos.getAllInBox(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
+		for (BlockPos p : BlockPos.getAllInBox(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
+			world.setBlockState(p, Blocks.RED_SANDSTONE.getDefaultState(), 2);
+		}
+		WorldGenerator.debugLog(pos, "Boss " + entity.getName());
 	}
 
 	public static void initBoss(Random random, EntityLiving entity) {

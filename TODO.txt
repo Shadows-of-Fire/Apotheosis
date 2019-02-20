@@ -12,3 +12,4 @@ Levitation
 Luck + Unluck (+- Pair)
 
 Add a way to get treasure enchantments.
+Prismatic Altar: Created out of prismarine crystals / shards, can be used to transmute three+ enchanted books into a treasure enchantment.

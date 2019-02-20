@@ -5,17 +5,18 @@ import java.util.Random;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 
 /**
  * Base class for all worldgen features.
- * @author Shadows	
+ * @author Shadows
  */
 public abstract class WorldFeature {
 
 	/**
-	 * Generates this feature.  Run every chunk.  Pos always has y == 0.
+	 * Generates this feature.  Run from {@link PopulateChunkEvent.Pre}
 	 */
-	public abstract void generate(World world, BlockPos pos, Random rand);
+	public abstract void generate(World world, int x, int z, Random rand);
 
 	/**
 	 * Checks if this features can generate.

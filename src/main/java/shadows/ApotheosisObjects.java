@@ -13,6 +13,8 @@ import shadows.ench.enchantments.EnchantmentIcyThorns;
 import shadows.ench.enchantments.EnchantmentKnowledge;
 import shadows.ench.enchantments.EnchantmentLifeMend;
 import shadows.ench.enchantments.EnchantmentMounted;
+import shadows.ench.enchantments.EnchantmentNatureBless;
+import shadows.ench.enchantments.EnchantmentRebounding;
 import shadows.ench.enchantments.EnchantmentReflective;
 import shadows.ench.enchantments.EnchantmentScavenger;
 import shadows.ench.enchantments.EnchantmentShieldBash;
@@ -67,4 +69,6 @@ public class ApotheosisObjects {
 	public static final EnchantmentSplitting SPLITTING = null;
 	@ObjectHolder("minecraft:anvil")
 	public static final ItemAnvilBlock ANVIL = null;
+	public static final EnchantmentNatureBless NATURES_BLESSING = null;
+	public static final EnchantmentRebounding REBOUNDING = null;
 }

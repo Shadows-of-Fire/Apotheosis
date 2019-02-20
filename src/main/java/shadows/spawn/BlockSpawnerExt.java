@@ -67,7 +67,7 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-		this.onBlockHarvested(world, pos, state, player);
+		onBlockHarvested(world, pos, state, player);
 		if (player.capabilities.isCreativeMode) return world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
 		return willHarvest;
 	}
