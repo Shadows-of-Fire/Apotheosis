@@ -43,7 +43,6 @@ import shadows.util.NameHelper;
 
 /**
  * Setup information for bosses.
- * TODO: Make configurable.
  * @author Shadows
  *
  */

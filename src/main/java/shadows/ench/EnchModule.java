@@ -60,6 +60,7 @@ import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ApotheosisObjects;
+import shadows.deadly.gen.BossItem;
 import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.ench.anvil.BlockAnvilExt;
 import shadows.ench.anvil.EnchantmentSplitting;
@@ -137,6 +138,19 @@ public class EnchModule {
 		if (config.hasChanged()) config.save();
 
 		blockIron = new OreIngredient("blockIron");
+
+		if (Apotheosis.enableDeadly) {
+			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.BERSERK);
+			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.LIFE_MENDING);
+			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.ICY_THORNS);
+			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.REBOUNDING);
+			BossItem.BOW_ENCHANTMENTS.add(ApotheosisObjects.TRUE_INFINITY);
+			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.SCAVENGER);
+			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.KNOWLEDGE);
+			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.CAPTURING);
+			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.HELL_INFUSION);
+			BossItem.TOOL_ENCHANTMENTS.add(ApotheosisObjects.DEPTH_MINER);
+		}
 	}
 
 	@SubscribeEvent
