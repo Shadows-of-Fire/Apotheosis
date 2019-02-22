@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -28,6 +29,7 @@ public class ItemTypedBook extends ItemBook {
 		this.rep = new ItemStack(rep);
 		this.setRegistryName(Apotheosis.MODID, (type == null ? "null" : type.name().toLowerCase(Locale.ROOT)) + "_book");
 		this.setTranslationKey(Apotheosis.MODID + "." + getRegistryName().getPath());
+		this.setCreativeTab(CreativeTabs.MISC);
 		EnchModule.TYPED_BOOKS.add(this);
 	}
 
