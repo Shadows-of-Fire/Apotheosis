@@ -37,7 +37,7 @@ public class EnchantmentRebounding extends Enchantment {
 		if (user.getDistanceSq(attacker) <= 4D) {
 			level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.REBOUNDING, user);
 			Vec3d vec = new Vec3d(attacker.posX - user.posX, attacker.posY - user.posY, attacker.posZ - user.posZ);
-			attacker.addVelocity(vec.x * level, vec.y * level, vec.z * level);
+			attacker.addVelocity(vec.x * 2 * level, vec.y * 3 * level, vec.z * 2 * level);
 		}
 	}
 

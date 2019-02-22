@@ -5,6 +5,7 @@ import net.minecraft.item.ItemAnvilBlock;
 import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.ench.BlockHellBookshelf;
+import shadows.ench.ItemTypedBook;
 import shadows.ench.anvil.EnchantmentSplitting;
 import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
@@ -71,4 +72,13 @@ public class ApotheosisObjects {
 	public static final ItemAnvilBlock ANVIL = null;
 	public static final EnchantmentNatureBless NATURES_BLESSING = null;
 	public static final EnchantmentRebounding REBOUNDING = null;
+	public static final ItemTypedBook NULL_BOOK = null;
+	public static final ItemTypedBook ARMOR_HEAD_BOOK = null;
+	public static final ItemTypedBook ARMOR_CHEST_BOOK = null;
+	public static final ItemTypedBook ARMOR_LEGS_BOOK = null;
+	public static final ItemTypedBook ARMOR_FEET_BOOK = null;
+	public static final ItemTypedBook WEAPON_BOOK = null;
+	public static final ItemTypedBook DIGGER_BOOK = null;
+	public static final ItemTypedBook FISHING_ROD_BOOK = null;
+	public static final ItemTypedBook BOW_BOOK = null;
 }

@@ -22,6 +22,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.Apotheosis.ApotheosisInit;
+import shadows.ench.EnchModule;
+import shadows.ench.ItemTypedBook;
 import shadows.placebo.Placebo;
 import shadows.placebo.util.PlaceboUtil;
 
@@ -103,6 +105,8 @@ public class ApotheosisClient {
 		if (Apotheosis.enableEnch) {
 			Placebo.PROXY.useRenamedMapper(ApotheosisObjects.HELLSHELF, "hellshelf", "", "normal");
 			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_WEB, 0, "inventory");
+			for (ItemTypedBook b : EnchModule.TYPED_BOOKS)
+				PlaceboUtil.sMRL("minecraft", "enchanted_book", b, 0, "inventory");
 		}
 	}
 

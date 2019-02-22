@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -98,6 +100,8 @@ public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
+	public static final List<ItemTypedBook> TYPED_BOOKS = new LinkedList<>();
+	public static final List<Enchantment> BLACKLISTED_ENCHANTS = new ArrayList<>();
 
 	public static float localAtkStrength = 1;
 	static Configuration config;
@@ -133,6 +137,18 @@ public class EnchModule {
 			String minF = config.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
 			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
 			ENCHANTMENT_INFO.put(ench, info);
+		}
+		if (config.hasChanged()) config.save();
+		config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
+		String[] blacklist = config.getStringList("Enchantment Blacklist", "general", new String[0], "A list of enchantments that are banned from the enchanting table and other natural sources.");
+
+		for (String s : blacklist) {
+			Enchantment ex = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
+			if (ex == null) {
+				LOGGER.error("Invalid enchantment blacklist entry {} will be ignored!", ex);
+				continue;
+			}
+			BLACKLISTED_ENCHANTS.add(ex);
 		}
 
 		if (config.hasChanged()) config.save();
@@ -171,7 +187,17 @@ public class EnchModule {
 				new ItemShearsExt().setRegistryName(Items.SHEARS.getRegistryName()).setTranslationKey("shears"),
 				new ItemHellBookshelf(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new Item().setRegistryName(Apotheosis.MODID, "prismatic_web").setTranslationKey(Apotheosis.MODID + ".prismatic_web"),
-				new ItemAnvilExt(Blocks.ANVIL));
+				new ItemAnvilExt(Blocks.ANVIL),
+				new ItemTypedBook(Items.AIR, null),
+				new ItemTypedBook(Items.DIAMOND_HELMET, EnumEnchantmentType.ARMOR_HEAD),
+				new ItemTypedBook(Items.DIAMOND_CHESTPLATE, EnumEnchantmentType.ARMOR_CHEST),
+				new ItemTypedBook(Items.DIAMOND_LEGGINGS, EnumEnchantmentType.ARMOR_LEGS),
+				new ItemTypedBook(Items.DIAMOND_BOOTS, EnumEnchantmentType.ARMOR_FEET),
+				new ItemTypedBook(Items.DIAMOND_SWORD, EnumEnchantmentType.WEAPON),
+				new ItemTypedBook(Items.DIAMOND_PICKAXE, EnumEnchantmentType.DIGGER),
+				new ItemTypedBook(Items.FISHING_ROD, EnumEnchantmentType.FISHING_ROD),
+				new ItemTypedBook(Items.BOW, EnumEnchantmentType.BOW)
+				);
 		//Formatter::on
 	}
 
@@ -207,6 +233,17 @@ public class EnchModule {
 		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION));
 		e.helper.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK);
 		e.helper.addShaped(ApotheosisObjects.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.WEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
+		ItemStack book = new ItemStack(Items.BOOK);
+		ItemStack stick = new ItemStack(Items.STICK);
+		e.helper.addSimpleShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 4), book, 4);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.ARMOR_HEAD_BOOK, 5), 3, 2, book, book, book, book, null, book);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.ARMOR_CHEST_BOOK, 8), 3, 3, book, null, book, book, book, book, book, book, book);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.ARMOR_LEGS_BOOK, 7), 3, 3, book, null, book, book, null, book, book, book, book);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.ARMOR_FEET_BOOK, 4), 3, 2, book, null, book, book, null, book);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.WEAPON_BOOK, 2), 1, 3, book, book, stick);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.DIGGER_BOOK, 3), 3, 3, book, book, book, null, stick, null, null, stick, null);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.FISHING_ROD_BOOK, 2), 3, 3, null, null, stick, null, stick, book, stick, null, book);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, stick, null, book, null, stick, book);
 	}
 
 	@SubscribeEvent
@@ -224,6 +261,7 @@ public class EnchModule {
 				e.setCost(30);
 				e.setMaterialCost(1);
 				e.setOutput(stack);
+				return;
 			}
 		}
 		if (e.getLeft().getItem() == ApotheosisObjects.ANVIL && blockIron.apply(e.getRight())) {
@@ -235,7 +273,9 @@ public class EnchModule {
 			e.setOutput(out);
 			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) * 2 + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 3);
 			e.setMaterialCost(1);
+			return;
 		}
+		ItemTypedBook.updateAnvil(e);
 	}
 
 	@SubscribeEvent
@@ -351,9 +391,10 @@ public class EnchModule {
 		ItemStack stack = (ItemStack) s;
 		List<EnchantmentData> list = new ArrayList<>();
 		boolean isBook = stack.getItem() == Items.BOOK;
+		boolean typedBook = stack.getItem() instanceof ItemTypedBook;
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
-			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
-			if (enchantment.canApplyAtEnchantingTable(stack) || isBook && enchantment.isAllowedOnBooks()) {
+			if (enchantment.isTreasureEnchantment() && !allowTreasure || BLACKLISTED_ENCHANTS.contains(enchantment)) continue;
+			if (enchantment.canApplyAtEnchantingTable(stack) || isBook && enchantment.isAllowedOnBooks() || typedBook && stack.getItem().canApplyAtEnchantingTable(stack, enchantment)) {
 				EnchantmentInfo info = getEnchInfo(enchantment);
 				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {
 					if (power >= info.getMinPower(i) && power <= info.getMaxPower(i)) {

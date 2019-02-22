@@ -1,9 +1,14 @@
 package shadows.ench;
 
+import com.google.common.collect.ImmutableMap;
+
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 
@@ -31,6 +36,16 @@ public class ItemHellBookshelf extends ItemBlock {
 	@Override
 	public int getItemEnchantability(ItemStack stack) {
 		return 50;
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		super.getSubItems(tab, items);
+		if (isInCreativeTab(tab)) {
+			ItemStack s = new ItemStack(this);
+			EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, 10), s);
+			items.add(s);
+		}
 	}
 
 }
