@@ -3,6 +3,11 @@ package shadows.garden;
 import java.io.File;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlockSpecial;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,8 +29,18 @@ public class GardenModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockReedExt(), Apotheosis.MODID);
+		e.getRegistry().register(new BlockReedExt());
 		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockCactusExt(), Apotheosis.MODID);
+	}
+
+	@SubscribeEvent
+	public void items(Register<Item> e) {
+		e.getRegistry().register(new ItemBlockSpecial(Blocks.REEDS) {
+			@Override
+			public String getCreatorModId(ItemStack itemStack) {
+				return Apotheosis.MODID;
+			}
+		}.setRegistryName(Items.REEDS.getRegistryName()));
 	}
 
 }
