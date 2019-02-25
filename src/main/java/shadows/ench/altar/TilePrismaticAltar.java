@@ -6,6 +6,7 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,6 +31,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 	protected float xpDrained = 0;
 	protected ItemStack target = ItemStack.EMPTY;
 	protected float targetXP = 0;
+	int soundTick = 0;
 
 	@Override
 	public void update() {
@@ -51,6 +53,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 				for (int i = 0; i < 4; i++)
 					inv.setStackInSlot(i, ItemStack.EMPTY);
 				markAndNotify();
+				world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1, 1);
 			}
 		} else {
 			findTarget(calcProvidedEnchValue());
@@ -70,12 +73,12 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 	public void drainXP() {
 		List<EntityPlayer> nearby = world.getEntities(EntityPlayer.class, p -> p.getDistanceSq(pos) <= 25D);
 		for (EntityPlayer p : nearby) {
-			int removable = Math.min(4, p.experienceTotal);
+			int removable = Math.min(3, p.experienceTotal);
 			EnchantmentUtils.addPlayerXP(p, -removable);
 			xpDrained += removable;
 			if (removable > 0) trySpawnParticles(p, removable);
 		}
-		world.playSound(null, pos, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 1F, 1F);
+		if (soundTick++ % 50 == 0) world.playSound(null, pos, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 0.9F);
 	}
 
 	public void findTarget(int value) {
