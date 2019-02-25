@@ -12,6 +12,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -78,7 +79,7 @@ public class BlockPrismaticAltar extends Block {
 		ItemStack inAltar = inv.getStackInSlot(slot);
 		ItemStack inHand = player.getHeldItem(hand);
 		if (slot == 4 && !inHand.isEmpty()) return true;
-		if (inAltar.isEmpty() && inHand.isItemEnchanted()) {
+		if (inAltar.isEmpty() && (inHand.isItemEnchanted() || inHand.getItem() == Items.ENCHANTED_BOOK)) {
 			ItemStack toAltar = inHand.copy();
 			inHand.shrink(1);
 			toAltar.setCount(1);

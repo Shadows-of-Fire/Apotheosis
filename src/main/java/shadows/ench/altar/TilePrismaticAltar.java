@@ -31,6 +31,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 	protected float xpDrained = 0;
 	protected ItemStack target = ItemStack.EMPTY;
 	protected float targetXP = 0;
+	int unusableValue = Integer.MAX_VALUE;
 	int soundTick = 0;
 
 	@Override
@@ -82,13 +83,17 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 	}
 
 	public void findTarget(int value) {
+		if (value >= unusableValue) return;
 		ItemStack book = new ItemStack(Items.BOOK);
 		target = new ItemStack(Items.ENCHANTED_BOOK);
 		targetXP = value * 4;
-		while (value > 0) {
-			List<EnchantmentData> datas = EnchantmentHelper.getEnchantmentDatas(value, book, true);
-			if (!datas.isEmpty()) ItemEnchantedBook.addEnchantment(target, datas.get(world.rand.nextInt(datas.size())));
-			value = (int) Math.floor(value / 3);
+		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(world.rand, book, value, true);
+		if (!datas.isEmpty()) for (EnchantmentData d : datas)
+			ItemEnchantedBook.addEnchantment(target, d);
+		else {
+			target = ItemStack.EMPTY;
+			targetXP = 0;
+			unusableValue = value;
 		}
 	}
 

@@ -41,6 +41,7 @@ info.apotheosis.masterwork=Masterwork
 info.apotheosis.twisted=Twisted
 info.apotheosis.corrupted=Corrupted
 info.apotheosis.enchanting=Enchanting tables can now exceed 30 levels.  Some enchantments may only show up past level 30.
+info.apotheosis.altar=The Altar of the Sea is a focus for the conversion of enchanted objects into a new enchanted book.  Place one enchanted item on each pillar of the altar, and the conversion process will begin.  Conversion consumes experience as fuel, and when complete, all items will be consumed.  The strength of the new enchanted book will be determined by provided items.
 
 enchantment.apotheosis.hell_infusion=Hell Infusion
 enchantment.apotheosis.hell_infusion.desc=Deals extra magic damage in the Nether.
@@ -110,6 +111,8 @@ enchantment.apotheosis.natures_blessing.desc=Hoes may be used to bonemeal crops.
 
 enchantment.apotheosis.rebounding=Rebounding
 enchantment.apotheosis.rebounding.desc=Melee attackers may find themselves much further away.
+
+tile.apotheosis.prismatic_altar.name=Altar of the Sea
 
 //Vanilla
 tile.reeds.name=Sugar Cane

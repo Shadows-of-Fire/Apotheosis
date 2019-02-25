@@ -47,6 +47,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		VanillaRecipeCategoryUid.ANVIL);
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");
+		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.PRISMATIC_ALTAR), VanillaTypes.ITEM, "info.apotheosis.altar");
 	}
 
 }

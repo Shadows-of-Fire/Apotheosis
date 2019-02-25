@@ -262,6 +262,8 @@ public class EnchModule {
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.DIGGER_BOOK, 3), 3, 3, book, book, book, null, blaze, null, null, stick, null);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.FISHING_ROD_BOOK, 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
+		ItemStack pBrick = new ItemStack(Blocks.PRISMARINE, 1, 1);
+		e.helper.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, pBrick, null, pBrick, pBrick, Blocks.SEA_LANTERN, pBrick, pBrick, Blocks.ENCHANTING_TABLE, pBrick);
 	}
 
 	@SubscribeEvent
