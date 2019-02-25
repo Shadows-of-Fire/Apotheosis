@@ -40,7 +40,7 @@ public class EnchTransformer implements IApotheosisTransformer {
 		ClassReader classReader = new ClassReader(basicClass);
 		classReader.accept(classNode, 0);
 		MethodNode calcStackEnch = ApotheosisCore.findMethod(classNode, ApotheosisCore::isCalcStackEnch);
-		MethodNode getEnchantmentDatas = ApotheosisCore.findMethod(classNode, ApotheosisCore::isCalcStackEnch);
+		MethodNode getEnchantmentDatas = ApotheosisCore.findMethod(classNode, ApotheosisCore::isEnchDatas);
 		if (calcStackEnch != null) {
 			JumpInsnNode jumpNode = null;
 			for (int i = 0; i < calcStackEnch.instructions.size(); i++) {
