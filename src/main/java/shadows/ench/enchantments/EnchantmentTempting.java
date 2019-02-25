@@ -30,7 +30,7 @@ public class EnchantmentTempting extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return 500;
+		return 80;
 	}
 
 }
