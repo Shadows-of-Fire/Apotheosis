@@ -33,7 +33,7 @@ public class PotionTransformer implements IApotheosisTransformer {
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);
 		classReader.accept(classNode, 0);
-		MethodNode isInfinite = ApotheosisCore.findMethod(classNode, m -> ApotheosisCore.isShowParticles(m));
+		MethodNode isInfinite = ApotheosisCore.findMethod(classNode, m -> m.name.equals("isInfinite"));
 
 		if (isInfinite != null) {
 			InsnList insn = new InsnList();
@@ -57,13 +57,7 @@ public class PotionTransformer implements IApotheosisTransformer {
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);
 		classReader.accept(classNode, 0);
-		MethodNode doesShowParticles = null;
-		for (MethodNode m : classNode.methods) {
-			if (ApotheosisCore.isShowParticles(m)) {
-				doesShowParticles = m;
-				break;
-			}
-		}
+		MethodNode doesShowParticles = ApotheosisCore.findMethod(classNode, ApotheosisCore::isShowParticles);
 
 		if (doesShowParticles != null) {
 			InsnList insn = new InsnList();

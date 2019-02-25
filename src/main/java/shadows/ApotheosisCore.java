@@ -40,6 +40,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String getMaxLevel;
 	static String world = "net/minecraft/world/World";
 	static String blockPos = "net/minecraft/util/math/BlockPos";
+	static String generate;
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -82,6 +83,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		getItemEnchantability = dev ? "getItemEnchantability" : "c";
 		blockUsingShield = dev ? "blockUsingShield" : "c";
 		getMaxLevel = dev ? "getMaxLevel" : "b";
+		generate = dev ? "generate" : "a";
 	}
 
 	@Override
@@ -145,7 +147,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isGenerate(MethodNode m) {
-		return m.name.equals("generate") && m.desc.equals(String.format("(L%s;Ljava/util/Random;L%s;)Z", world, blockPos));
+		return m.name.equals(generate) && m.desc.equals(String.format("(L%s;Ljava/util/Random;L%s;)Z", world, blockPos));
 	}
 
 }

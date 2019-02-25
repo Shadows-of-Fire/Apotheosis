@@ -32,7 +32,7 @@ public class DeadlyTransformer implements IApotheosisTransformer {
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);
 		classReader.accept(classNode, 0);
-		MethodNode generate = ApotheosisCore.findMethod(classNode, m -> ApotheosisCore.isGenerate(m));
+		MethodNode generate = ApotheosisCore.findMethod(classNode, ApotheosisCore::isGenerate);
 
 		if (generate != null) {
 			InsnList insn = new InsnList();
