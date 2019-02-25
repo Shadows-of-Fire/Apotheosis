@@ -21,7 +21,10 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
@@ -30,6 +33,7 @@ import shadows.placebo.util.RecipeHelper;
 import shadows.potion.PotionModule;
 import shadows.spawn.SpawnerModule;
 import shadows.util.NBTIngredient;
+import shadows.util.ParticleMessage;
 
 @Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,)", acceptableRemoteVersions = "*")
 public class Apotheosis {
@@ -37,6 +41,7 @@ public class Apotheosis {
 	public static final String MODID = "apotheosis";
 	public static final String MODNAME = "Apotheosis";
 	public static final String Version = "1.6.0";
+	public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 
 	public static File configDir;
 	public static Configuration config;
@@ -77,6 +82,7 @@ public class Apotheosis {
 	@EventHandler
 	public void init(FMLInitializationEvent e) throws IOException {
 		MinecraftForge.EVENT_BUS.post(new ApotheosisInit(e));
+		NETWORK.registerMessage(ParticleMessage.Handler.class, ParticleMessage.class, 0, Side.CLIENT);
 	}
 
 	@SubscribeEvent
