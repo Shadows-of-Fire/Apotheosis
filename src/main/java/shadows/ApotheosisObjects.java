@@ -3,9 +3,11 @@ package shadows;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAnvilBlock;
 import net.minecraft.potion.PotionType;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.ench.BlockHellBookshelf;
 import shadows.ench.ItemTypedBook;
+import shadows.ench.altar.BlockPrismaticAltar;
 import shadows.ench.anvil.EnchantmentSplitting;
 import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
@@ -81,4 +83,6 @@ public class ApotheosisObjects {
 	public static final ItemTypedBook DIGGER_BOOK = null;
 	public static final ItemTypedBook FISHING_ROD_BOOK = null;
 	public static final ItemTypedBook BOW_BOOK = null;
+	public static final BlockPrismaticAltar PRISMATIC_ALTAR = null;
+	public static final SoundEvent ALTAR_SOUND = null;
 }

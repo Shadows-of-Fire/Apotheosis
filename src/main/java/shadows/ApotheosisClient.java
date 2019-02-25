@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,6 +25,8 @@ import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.ench.EnchModule;
 import shadows.ench.ItemTypedBook;
+import shadows.ench.altar.RenderPrismaticAltar;
+import shadows.ench.altar.TilePrismaticAltar;
 import shadows.placebo.Placebo;
 import shadows.placebo.util.PlaceboUtil;
 
@@ -98,6 +101,7 @@ public class ApotheosisClient {
 				registerTooltip(ApotheosisObjects.KNOWLEDGE, masterwork);
 			}
 		}
+		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
 	}
 
 	@SubscribeEvent
@@ -107,6 +111,7 @@ public class ApotheosisClient {
 			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_WEB, 0, "inventory");
 			for (ItemTypedBook b : EnchModule.TYPED_BOOKS)
 				PlaceboUtil.sMRL("minecraft", "enchanted_book", b, 0, "inventory");
+			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_ALTAR, 0, "normal");
 		}
 	}
 

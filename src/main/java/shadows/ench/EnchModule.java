@@ -39,6 +39,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -64,6 +65,8 @@ import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ApotheosisObjects;
 import shadows.deadly.gen.BossItem;
 import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
+import shadows.ench.altar.BlockPrismaticAltar;
+import shadows.ench.altar.TilePrismaticAltar;
 import shadows.ench.anvil.BlockAnvilExt;
 import shadows.ench.anvil.EnchantmentSplitting;
 import shadows.ench.anvil.ItemAnvilExt;
@@ -82,6 +85,7 @@ import shadows.ench.enchantments.EnchantmentScavenger;
 import shadows.ench.enchantments.EnchantmentShieldBash;
 import shadows.ench.enchantments.EnchantmentStableFooting;
 import shadows.ench.enchantments.EnchantmentTempting;
+import shadows.placebo.itemblock.ItemBlockBase;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.util.NBTIngredient;
 
@@ -172,12 +176,18 @@ public class EnchModule {
 	@SubscribeEvent
 	public void preInit(ApotheosisPreInit e) {
 		GameRegistry.registerTileEntity(TileAnvil.class, new ResourceLocation(Apotheosis.MODID, "anvil"));
+		GameRegistry.registerTileEntity(TilePrismaticAltar.class, new ResourceLocation(Apotheosis.MODID, "prismatic_altar"));
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		e.getRegistry().register(new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")));
-		e.getRegistry().register(new BlockAnvilExt());
+		//Formatter::off
+		e.getRegistry().registerAll(
+				new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")),
+				new BlockAnvilExt(),
+				new BlockPrismaticAltar()
+				);
+		//Formatter::on
 	}
 
 	@SubscribeEvent
@@ -196,7 +206,8 @@ public class EnchModule {
 				new ItemTypedBook(Items.DIAMOND_SWORD, EnumEnchantmentType.WEAPON),
 				new ItemTypedBook(Items.DIAMOND_PICKAXE, EnumEnchantmentType.DIGGER),
 				new ItemTypedBook(Items.FISHING_ROD, EnumEnchantmentType.FISHING_ROD),
-				new ItemTypedBook(Items.BOW, EnumEnchantmentType.BOW)
+				new ItemTypedBook(Items.BOW, EnumEnchantmentType.BOW),
+				new ItemBlockBase(ApotheosisObjects.PRISMATIC_ALTAR)
 				);
 		//Formatter::on
 	}
@@ -219,8 +230,14 @@ public class EnchModule {
 				new EnchantmentKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"),
 				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"),
 				new EnchantmentNatureBless().setRegistryName(Apotheosis.MODID, "natures_blessing"),
-				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding"));
+				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding")
+				);
 		//Formatter::on
+	}
+
+	@SubscribeEvent
+	public void sounds(Register<SoundEvent> e) {
+		e.getRegistry().register(new SoundEvent(new ResourceLocation(Apotheosis.MODID, "altar")).setRegistryName(Apotheosis.MODID, "altar_sound"));
 	}
 
 	@SubscribeEvent
