@@ -94,7 +94,12 @@ public class TagBuilder {
 	public static NBTTagCompound setEquipment(NBTTagCompound entity, ItemStack... equipment) {
 		ItemStack[] stacks = fixStacks(equipment);
 		NBTTagList tagListHands = new NBTTagList();
+		for (int i = 0; i < 2; i++)
+			tagListHands.appendTag(new NBTTagCompound());
+
 		NBTTagList tagListArmor = new NBTTagList();
+		for (int i = 0; i < 4; i++)
+			tagListArmor.appendTag(new NBTTagCompound());
 
 		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
 			ItemStack stack = stacks[s.ordinal()];
