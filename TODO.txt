@@ -16,3 +16,5 @@ Prismatic Altar: Created out of prismarine crystals / shards, can be used to tra
 This altar takes four enchanted objects, and then drains a certain amount of XP from nearby players.
 Once XP has been provided (XP count will be determined by level of provided objects.  Stronger objects == less XP), the books will be transmuted into a Treasure Book.
 Treasure Books will randomly grant one Treasure enchant when grabbed from the altar.
+
+Bosses with AI to attack villagers should have that AI stripped.
