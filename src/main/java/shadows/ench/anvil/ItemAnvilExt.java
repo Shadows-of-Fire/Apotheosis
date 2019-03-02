@@ -17,7 +17,7 @@ public class ItemAnvilExt extends ItemAnvilBlock {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return !stack.hasEffect() && stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment == ApotheosisObjects.SPLITTING);
+		return stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment == ApotheosisObjects.SPLITTING);
 	}
 
 	@Override
