@@ -40,7 +40,7 @@ public class SwarmSpawner extends WorldFeature {
 
 	@Override
 	public boolean canBePlaced(World world, BlockPos pos, Random rand) {
-		return world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP) && WorldGenerator.STONE_TEST.apply(world.getBlockState(pos)) && world.getBlockState(pos.up()).getBlock().isReplaceable(world, pos);
+		return world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP) && WorldGenerator.STONE_TEST.apply(world.getBlockState(pos)) && world.getBlockState(pos.up()).getBlock().isReplaceable(world, pos.up());
 	}
 
 	@Override
