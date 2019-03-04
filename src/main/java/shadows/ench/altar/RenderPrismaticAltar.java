@@ -12,7 +12,7 @@ public class RenderPrismaticAltar extends TileEntitySpecialRenderer<TilePrismati
 	@Override
 	public void render(TilePrismaticAltar te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GlStateManager.pushMatrix();
-		int light = te.getWorld().getCombinedLight(te.getPos().up(), 0);
+		int light = te.getWorld().getCombinedLight(te.getPos(), 0);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, light % 65536, light / 65536);
 
 		boolean thirdPerson = Minecraft.getMinecraft().getRenderManager().options.thirdPersonView == 2;

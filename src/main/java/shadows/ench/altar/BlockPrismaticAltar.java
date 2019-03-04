@@ -58,8 +58,8 @@ public class BlockPrismaticAltar extends Block {
 		TileEntity te = world.getTileEntity(pos);
 		if (!(te instanceof TilePrismaticAltar)) return false;
 		TilePrismaticAltar altar = (TilePrismaticAltar) te;
-		Vec3d eyes = player.getPositionEyes(0);
-		Vec3d look = player.getLook(0);
+		Vec3d eyes = player.getPositionEyes(1);
+		Vec3d look = player.getLook(1);
 		double reach = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue();
 		Vec3d block = eyes.add(look.x * reach, look.y * reach, look.z * reach);
 

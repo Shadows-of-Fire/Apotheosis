@@ -1,7 +1,9 @@
 package shadows.ench.altar;
 
 import java.util.List;
+import java.util.Map.Entry;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +23,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.items.ItemStackHandler;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
+import shadows.ench.EnchModule;
+import shadows.ench.EnchantmentInfo;
 import shadows.placebo.util.VanillaPacketDispatcher;
 import shadows.util.EnchantmentUtils;
 import shadows.util.ParticleMessage;
@@ -61,36 +65,56 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 		}
 	}
 
-	int[] rarityVals = { 1, 2, 4, 8 };
+	double[][] offsets = { { 3 / 16D, 3 / 16D }, { 3 / 16D, 13 / 16D }, { 13 / 16D, 3 / 16D }, { 13 / 16D, 13 / 16D } };
 
 	public int calcProvidedEnchValue() {
 		int value = 0;
 		for (int i = 0; i < 4; i++) {
-			value += EnchantmentHelper.getEnchantments(inv.getStackInSlot(i)).entrySet().stream().map(e -> rarityVals[e.getKey().getRarity().ordinal()] * e.getValue()).collect(IntCollector.INSTANCE);
+			value += EnchantmentHelper.getEnchantments(inv.getStackInSlot(i)).entrySet().stream().map(this::getValueForEnch).collect(IntCollector.INSTANCE);
 		}
 		return value;
 	}
 
+	public int getValueForEnch(Entry<Enchantment, Integer> ench) {
+		EnchantmentInfo info = EnchModule.getEnchInfo(ench.getKey());
+		double avg = (info.getMaxPower(ench.getValue()) + info.getMinPower(ench.getValue())) / 2.5D;
+		return (int) Math.floor(avg / 4);
+	}
+
 	public void drainXP() {
 		List<EntityPlayer> nearby = world.getEntities(EntityPlayer.class, p -> p.getDistanceSq(pos) <= 25D);
+		boolean removed = false;
 		for (EntityPlayer p : nearby) {
 			int removable = Math.min(3, p.experienceTotal);
 			EnchantmentUtils.addPlayerXP(p, -removable);
 			xpDrained += removable;
-			if (removable > 0) trySpawnParticles(p, removable);
+			if (removable > 0) {
+				trySpawnParticles(p, removable);
+				removed = true;
+			}
 		}
-		if (soundTick++ % 50 == 0) world.playSound(null, pos, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 0.9F);
+		if (soundTick++ % 50 == 0) world.playSound(null, pos, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 1);
+		if (!removed && soundTick % 10 == 0) {
+			TargetPoint point = new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 0);
+			for (int i = 0; i < 4; i++) {
+				ParticleMessage msg = new ParticleMessage(EnumParticleTypes.SPELL, pos.getX() + offsets[i][0], pos.getY() + 0.8, pos.getZ() + offsets[i][1], 0, 0.1, 0, 1);
+				Apotheosis.NETWORK.sendToAllTracking(msg, point);
+			}
+		}
 	}
 
 	public void findTarget(int value) {
 		if (value >= unusableValue) return;
 		ItemStack book = new ItemStack(Items.BOOK);
 		target = new ItemStack(Items.ENCHANTED_BOOK);
-		targetXP = value * 4;
+		targetXP = EnchantmentUtils.getExperienceForLevel(value / 2);
 		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(world.rand, book, value, true);
-		if (!datas.isEmpty()) for (EnchantmentData d : datas)
-			ItemEnchantedBook.addEnchantment(target, d);
-		else {
+		if (!datas.isEmpty()) {
+			for (EnchantmentData d : datas)
+				ItemEnchantedBook.addEnchantment(target, d);
+			world.playSound(null, pos, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 1);
+			soundTick = 0;
+		} else {
 			target = ItemStack.EMPTY;
 			targetXP = 0;
 			unusableValue = value;

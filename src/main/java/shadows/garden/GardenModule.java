@@ -3,6 +3,7 @@ package shadows.garden;
 import java.io.File;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -40,7 +41,7 @@ public class GardenModule {
 			public String getCreatorModId(ItemStack itemStack) {
 				return Apotheosis.MODID;
 			}
-		}.setRegistryName(Items.REEDS.getRegistryName()));
+		}.setRegistryName(Items.REEDS.getRegistryName()).setTranslationKey("reeds").setCreativeTab(CreativeTabs.MATERIALS));
 	}
 
 }
