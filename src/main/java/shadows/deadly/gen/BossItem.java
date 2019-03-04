@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Predicate;
 
 import com.google.common.base.Preconditions;
 
@@ -13,7 +14,10 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
 import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -32,6 +36,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.deadly.config.DeadlyConfig;
@@ -68,6 +73,8 @@ public class BossItem extends WorldFeatureItem {
 		ArmorSet.LEVEL_TO_SETS.put(3, DIAMOND_GEAR);
 	}
 
+	public static final Predicate<EntityAITaskEntry> IS_VILLAGER_ATTACK = a -> a.action instanceof EntityAINearestAttackableTarget && ObfuscationReflectionHelper.getPrivateValue(EntityAINearestAttackableTarget.class, (EntityAINearestAttackableTarget<?>) a.action, "targetClass", "field_75307_b") == EntityVillager.class;
+
 	protected final EntityEntry entityEntry;
 	protected AxisAlignedBB entityAABB;
 
@@ -95,6 +102,7 @@ public class BossItem extends WorldFeatureItem {
 		entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		entity.enablePersistence();
 		world.spawnEntity(entity);
+		entity.tasks.taskEntries.removeIf(IS_VILLAGER_ATTACK);
 		for (BlockPos p : BlockPos.getAllInBox(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
