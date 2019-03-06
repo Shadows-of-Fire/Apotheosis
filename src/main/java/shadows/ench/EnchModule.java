@@ -106,17 +106,17 @@ public class EnchModule {
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
 	public static final List<ItemTypedBook> TYPED_BOOKS = new LinkedList<>();
 	public static final List<Enchantment> BLACKLISTED_ENCHANTS = new ArrayList<>();
-
-	public static float localAtkStrength = 1;
-	static Configuration config;
-	public static OreIngredient blockIron;
-
 	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
 		@Override
 		public ITextComponent getDeathMessage(EntityLivingBase entity) {
 			return new TextComponentTranslation("death.apotheosis.corrupted", entity.getDisplayName());
 		};
 	}.setDamageBypassesArmor().setDamageIsAbsolute();
+
+	public static float localAtkStrength = 1;
+	static Configuration config;
+	public static OreIngredient blockIron;
+	public static boolean allowWeb = true;
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
@@ -155,6 +155,7 @@ public class EnchModule {
 			BLACKLISTED_ENCHANTS.add(ex);
 		}
 
+		allowWeb = config.getBoolean("Enable Cobwebs", "general", true, "If cobwebs can be used in anvils to remove enchantments.");
 		if (config.hasChanged()) config.save();
 
 		blockIron = new OreIngredient("blockIron");
@@ -269,7 +270,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void anvilEvent(AnvilUpdateEvent e) {
 		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty()) {
-			if (e.getRight().getItem() == ApotheosisObjects.WEB) {
+			if (allowWeb && e.getRight().getItem() == ApotheosisObjects.WEB) {
 				ItemStack stack = e.getLeft().copy();
 				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
 				e.setCost(1);
