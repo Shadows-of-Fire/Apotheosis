@@ -22,10 +22,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.inventory.ContainerRepair;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -46,10 +48,12 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -97,7 +101,7 @@ import shadows.util.NBTIngredient;
  *
  * Enchantment min/max enchantability should really be called something else, they aren't fully based on enchantability.
  * Enchantment rarity affects weight in WeightedRandom list picking.
- * Max table level in Apotheosis is 256. Last Updated: (2/11/2019)
+ * Max table level in Apotheosis is 256, or 320 by config. Last Updated: (3/7/2019)
  *
  */
 public class EnchModule {
@@ -116,7 +120,10 @@ public class EnchModule {
 	public static float localAtkStrength = 1;
 	static Configuration config;
 	public static OreIngredient blockIron;
+
 	public static boolean allowWeb = true;
+	public static float maxNormalPower = 25;
+	public static float maxHellPower = 160;
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
@@ -155,7 +162,10 @@ public class EnchModule {
 			BLACKLISTED_ENCHANTS.add(ex);
 		}
 
-		allowWeb = config.getBoolean("Enable Cobwebs", "general", true, "If cobwebs can be used in anvils to remove enchantments.");
+		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
+		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
+		maxHellPower = config.getFloat("Max Hell Power", "general", maxHellPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from hell-infused bookshelves.");
+
 		if (config.hasChanged()) config.save();
 
 		blockIron = new OreIngredient("blockIron");
@@ -390,6 +400,27 @@ public class EnchModule {
 			ContainerRepair r = (ContainerRepair) e.getEntityPlayer().openContainer;
 			TileEntity te = r.world.getTileEntity(r.pos);
 			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getUnbreaking() + 1));
+		}
+	}
+
+	@SubscribeEvent
+	public void enchLevel(EnchantmentLevelSetEvent e) {
+		int power = e.getPower();
+		if (e.getEnchantRow() == 0) {
+			e.setLevel(power / 2);
+		} else if (e.getEnchantRow() == 1) {
+			e.setLevel(power);
+		}
+	}
+
+	@SubscribeEvent
+	public void enchContainer(PlayerContainerEvent.Open e) {
+		if (!e.getEntityPlayer().world.isRemote && e.getContainer().getClass() == ContainerEnchantment.class) {
+			ContainerEnchantment old = (ContainerEnchantment) e.getContainer();
+			ContainerEnchantmentExt newC = new ContainerEnchantmentExt(e.getEntityPlayer().inventory, old.world, old.position);
+			newC.windowId = old.windowId;
+			newC.addListener((EntityPlayerMP) e.getEntityPlayer());
+			e.getEntityPlayer().openContainer = newC;
 		}
 	}
 
