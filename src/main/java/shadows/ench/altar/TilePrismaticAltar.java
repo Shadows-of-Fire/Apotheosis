@@ -85,7 +85,8 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 		List<EntityPlayer> nearby = world.getEntities(EntityPlayer.class, p -> p.getDistanceSq(pos) <= 25D);
 		boolean removed = false;
 		for (EntityPlayer p : nearby) {
-			int removable = Math.min(3, p.experienceTotal);
+			int maxDrain = (int) Math.ceil(targetXP / 200);
+			int removable = Math.min(1 + maxDrain, p.experienceTotal);
 			EnchantmentUtils.addPlayerXP(p, -removable);
 			xpDrained += removable;
 			if (removable > 0) {
@@ -124,7 +125,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 	public void trySpawnParticles(EntityPlayer player, int xpDrain) {
 		TargetPoint point = new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 0);
 		Vec3d to = new Vec3d(player.posX - (pos.getX() + 0.5), player.posY - pos.getY(), player.posZ - (pos.getZ() + 0.5));
-		ParticleMessage msg = new ParticleMessage(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX() + world.rand.nextDouble(), pos.getY() + 1 + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), to.x, to.y, to.z, xpDrain);
+		ParticleMessage msg = new ParticleMessage(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX() + world.rand.nextDouble(), pos.getY() + 1 + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
 		Apotheosis.NETWORK.sendToAllTracking(msg, point);
 	}
 

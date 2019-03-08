@@ -3,7 +3,7 @@
 	"parent": "block/block",
 	"textures": {
 		"particle": "blocks/prismarine_bricks",
-		"altar_map": "altar_map"
+		"altar_map": "apotheosis:blocks/altar_map"
 	},
 	"elements": [ 	 
 		{
