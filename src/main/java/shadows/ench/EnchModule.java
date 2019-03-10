@@ -264,7 +264,6 @@ public class EnchModule {
 		ItemStack book = new ItemStack(Items.BOOK);
 		ItemStack stick = new ItemStack(Items.STICK);
 		ItemStack blaze = new ItemStack(Items.BLAZE_ROD);
-		e.helper.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 4), book, book, book, book, blaze);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.ARMOR_HEAD_BOOK, 5), 3, 2, book, book, book, book, blaze, book);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.ARMOR_CHEST_BOOK, 8), 3, 3, book, blaze, book, book, book, book, book, book, book);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.ARMOR_LEGS_BOOK, 7), 3, 3, book, null, book, book, blaze, book, book, book, book);
@@ -273,6 +272,7 @@ public class EnchModule {
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.DIGGER_BOOK, 3), 3, 3, book, book, book, null, blaze, null, null, stick, null);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.FISHING_ROD_BOOK, 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
+		e.helper.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 4), book, book, book, book, blaze);
 		ItemStack pBrick = new ItemStack(Blocks.PRISMARINE, 1, 1);
 		e.helper.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, pBrick, null, pBrick, pBrick, Blocks.SEA_LANTERN, pBrick, pBrick, Blocks.ENCHANTING_TABLE, pBrick);
 	}
