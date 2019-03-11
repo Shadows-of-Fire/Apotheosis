@@ -158,4 +158,16 @@ public class BlockPrismaticAltar extends Block {
 		return true;
 	}
 
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TilePrismaticAltar) {
+			ItemStackHandler inv = ((TilePrismaticAltar) te).inv;
+			for (int i = 0; i < inv.getSlots(); i++) {
+				Block.spawnAsEntity(world, pos, inv.getStackInSlot(i));
+			}
+		}
+		super.breakBlock(world, pos, state);
+	}
+
 }
