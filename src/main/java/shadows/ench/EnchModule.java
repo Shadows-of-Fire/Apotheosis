@@ -273,8 +273,8 @@ public class EnchModule {
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.FISHING_ROD_BOOK, 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
 		e.helper.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 4), book, book, book, book, blaze);
-		ItemStack pBrick = new ItemStack(Blocks.PRISMARINE, 1, 1);
-		e.helper.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, pBrick, null, pBrick, pBrick, Blocks.SEA_LANTERN, pBrick, pBrick, Blocks.ENCHANTING_TABLE, pBrick);
+		ItemStack msBrick = new ItemStack(Blocks.STONEBRICK, 1, 1);
+		e.helper.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Blocks.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 	}
 
 	@SubscribeEvent
