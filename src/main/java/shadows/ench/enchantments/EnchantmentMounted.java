@@ -4,7 +4,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
@@ -41,7 +40,7 @@ public class EnchantmentMounted extends Enchantment {
 
 	@Override
 	public void onEntityDamaged(EntityLivingBase user, Entity target, int level) {
-		if (user instanceof EntityPlayer && user.getRidingEntity() instanceof EntityHorse) {
+		if (user instanceof EntityPlayer && user.getRidingEntity() != null) {
 			target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) user), (float) Math.pow(1.75F, level) * EnchModule.localAtkStrength);
 		}
 	}
