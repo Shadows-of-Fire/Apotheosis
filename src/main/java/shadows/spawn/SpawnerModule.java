@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
@@ -70,6 +73,15 @@ public class SpawnerModule {
 				EntityLivingBase killed = e.getEntityLiving();
 				ItemMonsterPlacer.applyEntityIdToItemStack(egg, EntityList.getKey(killed));
 				e.getDrops().add(new EntityItem(killed.world, killed.posX, killed.posY, killed.posZ, egg));
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void drops(BlockEvent.HarvestDropsEvent e) {
+		if (e.getState().getBlock() == Blocks.MOB_SPAWNER) {
+			if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, e.getHarvester().getHeldItemMainhand()) >= SpawnerModule.spawnerSilkLevel) {
+				e.getDrops().clear();
 			}
 		}
 	}
