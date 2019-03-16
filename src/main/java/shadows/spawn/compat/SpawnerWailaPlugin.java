@@ -46,10 +46,10 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IWailaDataProvider {
 			tooltip.add(I18n.format("waila.spw.maxnearby", stats[3]));
 			tooltip.add(I18n.format("waila.spw.playerrange", stats[4]));
 			tooltip.add(I18n.format("waila.spw.spawnrange", stats[5]));
-			tooltip.add(I18n.format("waila.spw.ignoreplayers", stats[6] == 1));
-			tooltip.add(I18n.format("waila.spw.ignoreconditions", stats[7] == 1));
-			tooltip.add(I18n.format("waila.spw.ignorecap", stats[8] == 1));
-			tooltip.add(I18n.format("waila.spw.redstone", stats[9] == 1));
+			if (stats[6] == 1) tooltip.add(I18n.format("waila.spw.ignoreplayers"));
+			if (stats[7] == 1) tooltip.add(I18n.format("waila.spw.ignoreconditions"));
+			if (stats[8] == 1) tooltip.add(I18n.format("waila.spw.ignorecap"));
+			if (stats[9] == 1) tooltip.add(I18n.format("waila.spw.redstone"));
 		} else tooltip.add(I18n.format("waila.spw.sneak"));
 		return tooltip;
 	}

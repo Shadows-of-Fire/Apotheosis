@@ -10,10 +10,10 @@ waila.spw.spawncount=Spawn Count: %s
 waila.spw.maxnearby=Max Nearby Entities: %s
 waila.spw.playerrange=Player Range: %s
 waila.spw.spawnrange=Spawn Range: %s
-waila.spw.ignoreplayers=Ignores Players: %s
-waila.spw.ignoreconditions=Ignores Conditions: %s
-waila.spw.ignorecap=Ignores Spawn Cap: %s
-waila.spw.redstone=Needs Redstone: %s
+waila.spw.ignoreplayers=Ignores Players
+waila.spw.ignoreconditions=Ignores Spawn Conditions
+waila.spw.ignorecap=Ignores Spawn Cap
+waila.spw.redstone=Requires Redstone
 waila.spw.sneak=Sneak for Info
 
 jei.spw.title=Spawner Modification

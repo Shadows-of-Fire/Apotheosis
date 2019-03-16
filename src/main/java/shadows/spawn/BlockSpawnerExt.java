@@ -108,10 +108,10 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 			tooltip.add(I18n.format("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
 			tooltip.add(I18n.format("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
 			tooltip.add(I18n.format("waila.spw.spawnrange", tag.getShort("SpawnRange")));
-			tooltip.add(I18n.format("waila.spw.ignoreplayers", tag.getBoolean("ignore_players")));
-			tooltip.add(I18n.format("waila.spw.ignoreconditions", tag.getBoolean("ignore_conditions")));
-			tooltip.add(I18n.format("waila.spw.ignorecap", tag.getBoolean("ignore_cap")));
-			tooltip.add(I18n.format("waila.spw.redstone", tag.getBoolean("redstone_control")));
+			if (tag.getBoolean("ignore_players")) tooltip.add(I18n.format("waila.spw.ignoreplayers"));
+			if (tag.getBoolean("ignore_conditions")) tooltip.add(I18n.format("waila.spw.ignoreconditions"));
+			if (tag.getBoolean("ignore_cap")) tooltip.add(I18n.format("waila.spw.ignorecap"));
+			if (tag.getBoolean("redstone_control")) tooltip.add(I18n.format("waila.spw.redstone"));
 		}
 	}
 
