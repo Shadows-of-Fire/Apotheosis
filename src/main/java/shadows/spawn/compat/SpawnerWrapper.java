@@ -14,9 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import shadows.placebo.util.PlaceboUtil;
-import shadows.spawn.SpawnerModifier;
 import shadows.spawn.SpawnerModifiers;
 import shadows.spawn.TileSpawnerExt;
+import shadows.spawn.modifiers.EggModifier;
+import shadows.spawn.modifiers.SpawnerModifier;
 
 public class SpawnerWrapper implements IRecipeWrapper {
 
@@ -29,11 +30,11 @@ public class SpawnerWrapper implements IRecipeWrapper {
 	ItemStack output;
 	String[] tooltips;
 
-	public SpawnerWrapper(SpawnerModifier modifier, String nbt, int change, String... tooltips) {
+	public SpawnerWrapper(SpawnerModifier modifier, String nbt, String... tooltips) {
 		this.modifier = modifier;
 		output = SPAWNER.get(0).copy();
 		NBTTagCompound tag = output.getOrCreateSubCompound("spawner");
-		tag.setInteger(nbt, tag.getInteger(nbt) + change);
+		tag.setInteger(nbt, tag.getInteger(nbt) + modifier.getValue());
 		this.tooltips = tooltips;
 	}
 
@@ -46,8 +47,7 @@ public class SpawnerWrapper implements IRecipeWrapper {
 	}
 
 	public SpawnerWrapper(ItemStack catalyst, ResourceLocation entityOut, String... tooltips) {
-		modifier = new SpawnerModifier(catalyst, (a, b) -> {
-		});
+		modifier = new EggModifier(catalyst);
 		output = SPAWNER.get(0).copy();
 		NBTTagCompound tag = output.getOrCreateSubCompound("spawner");
 		tag.getCompoundTag("SpawnData").setString("id", entityOut.toString());

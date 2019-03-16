@@ -1,0 +1,36 @@
+package shadows.spawn.modifiers;
+
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
+import shadows.spawn.TileSpawnerExt;
+
+public class PlayerDistModifier extends SpawnerModifier {
+
+	public PlayerDistModifier() {
+		super(new ItemStack(Items.PRISMARINE_CRYSTALS), 2);
+	}
+
+	@Override
+	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.activatingRangeFromPlayer > 0 : spawner.spawnerLogic.activatingRangeFromPlayer < Integer.MAX_VALUE);
+	}
+
+	@Override
+	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+		int modify = inverting ? -value : value;
+		spawner.spawnerLogic.activatingRangeFromPlayer = MathHelper.clamp(spawner.spawnerLogic.activatingRangeFromPlayer + modify, 0, Integer.MAX_VALUE);
+		return true;
+	}
+
+	@Override
+	public String getCategory() {
+		return "player_activation_range";
+	}
+
+	@Override
+	public String getDefaultItem() {
+		return Items.PRISMARINE_CRYSTALS.getRegistryName().toString();
+	}
+
+}

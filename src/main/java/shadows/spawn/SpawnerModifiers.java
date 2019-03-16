@@ -3,79 +3,65 @@ package shadows.spawn;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import shadows.placebo.util.VanillaPacketDispatcher;
+import shadows.spawn.modifiers.CapModifier;
+import shadows.spawn.modifiers.ConditionModifier;
+import shadows.spawn.modifiers.MaxDelayModifier;
+import shadows.spawn.modifiers.MinDelayModifier;
+import shadows.spawn.modifiers.NearbyEntityModifier;
+import shadows.spawn.modifiers.PlayerDistModifier;
+import shadows.spawn.modifiers.PlayerModifier;
+import shadows.spawn.modifiers.RedstoneModifier;
+import shadows.spawn.modifiers.SpawnCountModifier;
+import shadows.spawn.modifiers.SpawnRangeModifier;
+import shadows.spawn.modifiers.SpawnerModifier;
 
 public class SpawnerModifiers {
 
 	public static final List<SpawnerModifier> MODIFIERS = new ArrayList<>();
-	public static final SpawnerModifier ENTITY = new SpawnerModifier(new ItemStack(Items.SPAWN_EGG), (a, b) -> a.potentialSpawns.clear()) {
-		@Override
-		public boolean returnVal() {
-			return false;
-		}
-	};
+	public static final SpawnerModifier MIN_DELAY = new MinDelayModifier();
+	public static final SpawnerModifier MAX_DELAY = new MaxDelayModifier();
+	public static final SpawnerModifier SPAWN_COUNT = new SpawnCountModifier();
+	public static final SpawnerModifier NEARBY_ENTITIES = new NearbyEntityModifier();
+	public static final SpawnerModifier PLAYER_DISTANCE = new PlayerDistModifier();
+	public static final SpawnerModifier SPAWN_RANGE = new SpawnRangeModifier();
+	public static final SpawnerModifier CONDITIONS = new ConditionModifier();
+	public static final SpawnerModifier PLAYERS = new PlayerModifier();
+	public static final SpawnerModifier CAP = new CapModifier();
+	public static final SpawnerModifier REDSTONE = new RedstoneModifier();
 
-	public static SpawnerModifier minDelay;
-	public static SpawnerModifier maxDelay;
-	public static SpawnerModifier spawnCount;
-	public static SpawnerModifier nearbyEntities;
-	public static SpawnerModifier playerDist;
-	public static SpawnerModifier spawnRange;
-	public static SpawnerModifier spawnConditions;
-	public static SpawnerModifier checkPlayers;
 	public static Ingredient inverseItem;
-	public static SpawnerModifier ignoreCap;
-	public static SpawnerModifier redstone;
 
-	//Formatter::off
-	public static void init(Configuration config) {
-		minDelay = new SpawnerModifier(
-				readStackCfg(config.getString("Min Delay Modifier", "general", "minecraft:sugar", "The item that decreases the min delay of spawners.  5 ticks per item.")),
-				(a, inv) -> a.minSpawnDelay = Math.max(0, a.minSpawnDelay + (!inv ? -5 : 5)));
-		maxDelay = new SpawnerModifier(
-				readStackCfg(config.getString("Max Delay Modifier", "general", "minecraft:clock", "The item that decreases the max delay of spawners.  5 ticks per item.")),
-				(a, inv) -> a.maxSpawnDelay = Math.max(Math.max(10, a.minSpawnDelay), a.maxSpawnDelay + (!inv ? -5 : 5)));
-		spawnCount = new SpawnerModifier(
-				readStackCfg(config.getString("Spawn Count Modifier", "general", "minecraft:fermented_spider_eye", "The item that increases the spawn count of spawners.  1 per item.")),
-				(a, inv) -> a.spawnCount = Math.max(0, a.spawnCount + (!inv ? 1 : -1)));
-		nearbyEntities = new SpawnerModifier(
-				readStackCfg(config.getString("Nearby Entity Modifier", "general", "minecraft:ghast_tear", "The item that increases the max nearby entities of spawners.  2 per item.")),
-				(a, inv) -> a.maxNearbyEntities = Math.max(0, a.maxNearbyEntities + (!inv ? 2 : -2)));
-		playerDist = new SpawnerModifier(
-				readStackCfg(config.getString("Player Distance Modifier", "general", "minecraft:prismarine_crystals", "The item that increases the player activation range of spawners.  2 block radius per item.")),
-				(a, inv) -> a.activatingRangeFromPlayer = Math.max(0, a.activatingRangeFromPlayer + (!inv ? 2 : -2)));
-		spawnRange = new SpawnerModifier(
-				readStackCfg(config.getString("Spawn Range Modifier", "general", "minecraft:blaze_rod", "The item that increases the spawn range of spawners.  1 block radius per item.")),
-				(a, inv) -> a.spawnRange = Math.max(0, a.spawnRange + (!inv ? 1 : -1)));
-		spawnConditions = new SpawnerModifier(
-				readStackCfg(config.getString("Spawn Condition Modifier", "general", "minecraft:dragon_egg", "The item that disables spawn conditon checking (like light).")),
-				(a, b, inv) -> a.ignoresConditions = !inv);
-		checkPlayers = new SpawnerModifier(
-				readStackCfg(config.getString("Player Check Modifier", "general", "minecraft:nether_star", "The item that disables the requirement of a nearby player.")),
-				(a, b, inv) -> a.ignoresPlayers = !inv);
-		ignoreCap = new SpawnerModifier(
-				readStackCfg(config.getString("Entity Cap Modifier", "general", "minecraft:chorus_fruit", "The item that disables the nearby entity cap.")),
-				(a, b, inv) -> a.ignoresCap = !inv);
-		redstone = new SpawnerModifier(
-				readStackCfg(config.getString("Redstone Modifier", "general", "minecraft:comparator", "The item that enables redstone control.  Signal = off")),
-				(a, b, inv) -> {a.redstoneEnabled = !inv; VanillaPacketDispatcher.dispatchTEToNearbyPlayers(a);});
+	public static void init() {
+		register(MIN_DELAY);
+		register(MAX_DELAY);
+		register(SPAWN_COUNT);
+		register(NEARBY_ENTITIES);
+		register(PLAYER_DISTANCE);
+		register(SPAWN_RANGE);
+		register(CONDITIONS);
+		register(PLAYERS);
+		register(CAP);
+		register(REDSTONE);
 
-		inverseItem = Ingredient.fromStacks(readStackCfg(config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes the others change stats in the opposite direction.")));
-		if (config.hasChanged()) config.save();
+		inverseItem = readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
 	}
-	//Formatter::on
 
-	static ItemStack readStackCfg(String s) {
+	public static Ingredient readStackCfg(String s) {
 		String[] split = s.split(":");
 		Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
-		return new ItemStack(i, 1, split.length == 3 ? Integer.parseInt(split[2]) : 0);
+		return Ingredient.fromStacks(new ItemStack(i, 1, split.length == 3 ? Integer.parseInt(split[2]) : 0));
+	}
+
+	public static void register(SpawnerModifier modif) {
+		if (!MODIFIERS.contains(modif)) {
+			MODIFIERS.add(modif);
+			modif.load(SpawnerModule.config);
+		} else throw new RuntimeException("Tried to register a spawner modifier, but it is already registered!");
 	}
 
 }

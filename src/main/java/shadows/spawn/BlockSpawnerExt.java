@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import shadows.spawn.modifiers.SpawnerModifier;
 
 public class BlockSpawnerExt extends BlockMobSpawner {
 
@@ -86,10 +87,9 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 			TileSpawnerExt tile = (TileSpawnerExt) te;
 			boolean inverse = SpawnerModifiers.inverseItem.apply(player.getHeldItem(hand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
-				if (sm.matches(stack)) {
-					sm.modify(tile, inverse);
-					if (sm.returnVal()) stack.shrink(1);
-					return sm.returnVal();
+				if (sm.canModify(tile, stack, inverse) && sm.modify(tile, stack, inverse)) {
+					if (!player.capabilities.isCreativeMode) stack.shrink(1);
+					return true;
 				}
 			}
 		}

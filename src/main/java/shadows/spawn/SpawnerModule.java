@@ -19,6 +19,7 @@ import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -31,6 +32,7 @@ import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.ApotheosisObjects;
+import shadows.spawn.modifiers.SpawnerModifier;
 
 public class SpawnerModule {
 
@@ -50,7 +52,8 @@ public class SpawnerModule {
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
 		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
-		SpawnerModifiers.init(config);
+		SpawnerModifiers.init();
+		if (config.hasChanged()) config.save();
 	}
 
 	@SubscribeEvent
@@ -88,13 +91,19 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void handleUseItem(RightClickBlock e) {
-		if (e.getWorld().getBlockState(e.getPos()).getBlock() == Blocks.MOB_SPAWNER) {
+		TileEntity te;
+		if ((te = e.getWorld().getTileEntity(e.getPos())) instanceof TileSpawnerExt) {
 			ItemStack s = e.getItemStack();
+			boolean inverse = SpawnerModifiers.inverseItem.apply(e.getEntityPlayer().getHeldItem(e.getHand() == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
-				if (sm.matches(s)) e.setUseBlock(Result.ALLOW);
+				if (sm.canModify((TileSpawnerExt) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}
 	}
 
+	/**
+	 * ASM Hook: Returns the currently active class for the "minecraft:mob_spawner" tile entity.
+	 * @return
+	 */
 	public static Class<? extends TileEntityMobSpawner> getSpawnerClass() {
 		return Apotheosis.enableSpawner ? TileSpawnerExt.class : TileEntityMobSpawner.class;
 	}
