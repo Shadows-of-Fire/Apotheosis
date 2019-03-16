@@ -270,5 +270,14 @@ splash_potion.effect.sundering=Splash Potion of Sundering
 lingering_potion.effect.sundering=Lingering Potion of Sundering
 tipped_arrow.effect.sundering=Arrow of Sundering
 
+effect.apotheosis.knowledge=Ancient Knowledge
+potion.effect.knowledge=Potion of Ancient Knowledge
+splash_potion.effect.knowledge=Splash Potion of Ancient Knowledge
+lingering_potion.effect.knowledge=Lingering Potion of Ancient Knowledge
+tipped_arrow.effect.knowledge=Arrow of Ancient Knowledge
+
+item.apotheosis.lucky_foot.name=Lucky Rabbit's Foot
+info.apotheosis.lucky=A rare find
+
 //Anvil Module
 info.apotheosis.anvil=Can be enchanted.

@@ -113,6 +113,7 @@ public class ApotheosisClient {
 				PlaceboUtil.sMRL("minecraft", "enchanted_book", b, 0, "inventory");
 			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_ALTAR, 0, "normal");
 		}
+		if (Apotheosis.enablePotion) PlaceboUtil.sMRL(ApotheosisObjects.LUCKY_FOOT, 0, "inventory");
 	}
 
 	public static void registerTooltip(Enchantment e, String... keys) {

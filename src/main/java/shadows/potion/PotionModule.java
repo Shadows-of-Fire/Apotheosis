@@ -6,10 +6,13 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -22,12 +25,16 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ApotheosisObjects;
+import shadows.potion.potions.PotionKnowledge;
 import shadows.potion.potions.PotionSundering;
 
 public class PotionModule {
@@ -67,11 +74,22 @@ public class PotionModule {
 		else PotionHelper.addMix(PotionTypes.AWKWARD, Ingredient.fromStacks(new ItemStack(Items.SKULL, 1, 1)), ApotheosisObjects.WITHER);
 		PotionHelper.addMix(ApotheosisObjects.WITHER, Items.REDSTONE, ApotheosisObjects.LONG_WITHER);
 		PotionHelper.addMix(ApotheosisObjects.WITHER, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_WITHER);
+
+		PotionHelper.addMix(PotionTypes.AWKWARD, Items.EXPERIENCE_BOTTLE, ApotheosisObjects.T_KNOWLEDGE);
+		PotionHelper.addMix(ApotheosisObjects.T_KNOWLEDGE, Items.REDSTONE, ApotheosisObjects.LONG_KNOWLEDGE);
+		PotionHelper.addMix(ApotheosisObjects.T_KNOWLEDGE, Items.EXPERIENCE_BOTTLE, ApotheosisObjects.STRONG_KNOWLEDGE);
+
+		PotionHelper.addMix(PotionTypes.AWKWARD, ApotheosisObjects.LUCKY_FOOT, ForgeRegistries.POTION_TYPES.getValue(new ResourceLocation("luck")));
 	}
 
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
 		e.getRegistry().register(new EnchantmentTrueInfinity().setRegistryName(Apotheosis.MODID, "true_infinity"));
+	}
+
+	@SubscribeEvent
+	public void items(Register<Item> e) {
+		e.getRegistry().register(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"));
 	}
 
 	@SubscribeEvent
@@ -85,7 +103,6 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void types(Register<PotionType> e) {
-		Potion sundering = ForgeRegistries.POTIONS.getValue(new ResourceLocation(Apotheosis.MODID, "sundering"));
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new PotionType("resistance", new PotionEffect(MobEffects.RESISTANCE, 3600)).setRegistryName(Apotheosis.MODID, "resistance"),
@@ -103,15 +120,41 @@ public class PotionModule {
 				new PotionType("wither", new PotionEffect(MobEffects.WITHER, 3600)).setRegistryName(Apotheosis.MODID, "wither"),
 				new PotionType("wither", new PotionEffect(MobEffects.WITHER, 9600)).setRegistryName(Apotheosis.MODID, "long_wither"),
 				new PotionType("wither", new PotionEffect(MobEffects.WITHER, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_wither"),
-				new PotionType("sundering", new PotionEffect(sundering, 3600)).setRegistryName(Apotheosis.MODID, "sundering"),
-				new PotionType("sundering", new PotionEffect(sundering, 9600)).setRegistryName(Apotheosis.MODID, "long_sundering"),
-				new PotionType("sundering", new PotionEffect(sundering, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_sundering"));
+				new PotionType("sundering", new PotionEffect(ApotheosisObjects.SUNDERING, 3600)).setRegistryName(Apotheosis.MODID, "sundering"),
+				new PotionType("sundering", new PotionEffect(ApotheosisObjects.SUNDERING, 9600)).setRegistryName(Apotheosis.MODID, "long_sundering"),
+				new PotionType("sundering", new PotionEffect(ApotheosisObjects.SUNDERING, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_sundering"),
+				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 1600)).setRegistryName(Apotheosis.MODID, "knowledge"),
+				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 3200)).setRegistryName(Apotheosis.MODID, "long_knowledge"),
+				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 800, 1)).setRegistryName(Apotheosis.MODID, "strong_knowledge"));
 		//Formatter::on
 	}
 
 	@SubscribeEvent
 	public void potions(Register<Potion> e) {
 		e.getRegistry().register(new PotionSundering().setRegistryName(Apotheosis.MODID, "sundering"));
+		e.getRegistry().register(new PotionKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"));
+		ObjectHolderRegistry.INSTANCE.applyObjectHolders();
+	}
+
+	@SubscribeEvent
+	public void drops(LivingDropsEvent e) {
+		if (e.getEntityLiving() instanceof EntityRabbit) {
+			EntityRabbit rabbit = (EntityRabbit) e.getEntityLiving();
+			if (rabbit.world.rand.nextFloat() < 0.02F) {
+				e.getDrops().clear();
+				e.getDrops().add(new EntityItem(rabbit.world, rabbit.posX, rabbit.posY, rabbit.posZ, new ItemStack(ApotheosisObjects.LUCKY_FOOT)));
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void xp(LivingExperienceDropEvent e) {
+		if (e.getAttackingPlayer() != null && e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE) != null) {
+			int level = e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE).getAmplifier() + 1;
+			int curXp = e.getDroppedExperience();
+			int newXp = curXp + e.getOriginalExperience() * level * 15;
+			e.setDroppedExperience(newXp);
+		}
 	}
 
 	/**
@@ -129,12 +172,18 @@ public class PotionModule {
 		return EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow;
 	}
 
+	/**
+	 * ASM Hook: Disables invisibility particle effects.
+	 */
 	public static boolean doesShowParticles(Object e) {
 		PotionEffect ef = (PotionEffect) e;
 		if (ef.getPotion() == MobEffects.INVISIBILITY) return false;
 		return ef.showParticles;
 	}
 
+	/**
+	 * ASM Hook: Returns the damage taken based on resistance and sundering.
+	 */
 	public static float applyPotionDamageCalculations(Object ent, Object src, float damage) {
 		EntityLivingBase entity = (EntityLivingBase) ent;
 		DamageSource source = (DamageSource) src;

@@ -24,6 +24,8 @@ import shadows.ench.enchantments.EnchantmentShieldBash;
 import shadows.ench.enchantments.EnchantmentStableFooting;
 import shadows.ench.enchantments.EnchantmentTempting;
 import shadows.potion.EnchantmentTrueInfinity;
+import shadows.potion.ItemLuckyFoot;
+import shadows.potion.potions.PotionKnowledge;
 import shadows.potion.potions.PotionSundering;
 import shadows.spawn.EnchantmentCapturing;
 
@@ -85,4 +87,11 @@ public class ApotheosisObjects {
 	public static final ItemTypedBook BOW_BOOK = null;
 	public static final BlockPrismaticAltar PRISMATIC_ALTAR = null;
 	public static final SoundEvent ALTAR_SOUND = null;
+	@ObjectHolder("apotheosis:knowledge")
+	public static final PotionKnowledge P_KNOWLEDGE = null;
+	@ObjectHolder("apotheosis:knowledge")
+	public static final PotionType T_KNOWLEDGE = null;
+	public static final PotionType LONG_KNOWLEDGE = null;
+	public static final PotionType STRONG_KNOWLEDGE = null;
+	public static final ItemLuckyFoot LUCKY_FOOT = null;
 }

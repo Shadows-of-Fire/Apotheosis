@@ -102,7 +102,6 @@ public class SpawnerModule {
 
 	/**
 	 * ASM Hook: Returns the currently active class for the "minecraft:mob_spawner" tile entity.
-	 * @return
 	 */
 	public static Class<? extends TileEntityMobSpawner> getSpawnerClass() {
 		return Apotheosis.enableSpawner ? TileSpawnerExt.class : TileEntityMobSpawner.class;
