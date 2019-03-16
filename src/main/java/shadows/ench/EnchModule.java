@@ -337,7 +337,7 @@ public class EnchModule {
 				int items = 0;
 				for (EntityItem i : e.getDrops())
 					items += i.getItem().getCount();
-				if (items > 0) e.getDrops().forEach(en -> en.setDead());
+				if (items > 0) e.getDrops().clear();
 				items *= knowledge * 25;
 				Entity ded = e.getEntityLiving();
 				while (items > 0) {

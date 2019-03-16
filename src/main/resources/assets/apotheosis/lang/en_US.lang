@@ -270,7 +270,7 @@ splash_potion.effect.sundering=Splash Potion of Sundering
 lingering_potion.effect.sundering=Lingering Potion of Sundering
 tipped_arrow.effect.sundering=Arrow of Sundering
 
-effect.apotheosis.knowledge=Ancient Knowledge
+effect.apotheosis.knowledge=Knowledge
 potion.effect.knowledge=Potion of Ancient Knowledge
 splash_potion.effect.knowledge=Splash Potion of Ancient Knowledge
 lingering_potion.effect.knowledge=Lingering Potion of Ancient Knowledge

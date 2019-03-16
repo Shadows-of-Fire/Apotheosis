@@ -32,6 +32,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisInit;
+import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ApotheosisObjects;
 import shadows.potion.potions.PotionKnowledge;
@@ -43,6 +44,14 @@ public class PotionModule {
 	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
 	static Configuration config;
+	static int knowledgeMult = 15;
+
+	@SubscribeEvent
+	public void preInit(ApotheosisPreInit e) {
+		config = new Configuration(Apotheosis.configDir, "potion.cfg");
+		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
+		if (config.hasChanged()) config.save();
+	}
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
@@ -152,7 +161,7 @@ public class PotionModule {
 		if (e.getAttackingPlayer() != null && e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE) != null) {
 			int level = e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE).getAmplifier() + 1;
 			int curXp = e.getDroppedExperience();
-			int newXp = curXp + e.getOriginalExperience() * level * 15;
+			int newXp = curXp + e.getOriginalExperience() * level * knowledgeMult;
 			e.setDroppedExperience(newXp);
 		}
 	}
