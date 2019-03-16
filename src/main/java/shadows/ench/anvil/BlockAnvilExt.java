@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import shadows.ApotheosisObjects;
+import shadows.ench.ItemTypedBook;
 
 public class BlockAnvilExt extends BlockAnvil {
 
@@ -107,9 +108,10 @@ public class BlockAnvilExt extends BlockAnvil {
 		int ub = anvil.tileEntityData.getInteger("ub");
 		if (split > 0) for (EntityItem entity : items) {
 			ItemStack stack = entity.getItem();
-			if (stack.getItem() == Items.ENCHANTED_BOOK) {
+			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof ItemTypedBook) {
 				if (world.rand.nextInt(Math.max(1, 6 - split)) == 0) {
 					NBTTagList enchants = ItemEnchantedBook.getEnchantments(stack);
+					if (stack.getItem() instanceof ItemTypedBook) enchants = stack.getEnchantmentTagList();
 					entity.setDead();
 					for (NBTBase nbt : enchants) {
 						NBTTagCompound tag = (NBTTagCompound) nbt;
