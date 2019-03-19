@@ -82,7 +82,7 @@ public class SpawnerModule {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void drops(BlockEvent.HarvestDropsEvent e) {
-		if (e.getState().getBlock() == Blocks.MOB_SPAWNER) {
+		if (e.getState().getBlock() == Blocks.MOB_SPAWNER && e.getHarvester() != null) {
 			if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, e.getHarvester().getHeldItemMainhand()) >= SpawnerModule.spawnerSilkLevel) {
 				e.getDrops().clear();
 			}
