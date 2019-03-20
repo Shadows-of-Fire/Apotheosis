@@ -11,6 +11,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.common.util.FakePlayer;
 import shadows.Apotheosis;
 
 public class EnchantmentIcyThorns extends Enchantment {
@@ -43,7 +44,7 @@ public class EnchantmentIcyThorns extends Enchantment {
 	@Override
 	public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
 		Random rand = user.getRNG();
-		if (attacker instanceof EntityLivingBase) {
+		if (attacker instanceof EntityLivingBase && !(attacker instanceof FakePlayer)) {
 			EntityLivingBase ent = (EntityLivingBase) attacker;
 			ent.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, (100 + rand.nextInt(100)) * level, level));
 		}
