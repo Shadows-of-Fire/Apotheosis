@@ -30,6 +30,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		ItemStack cursedDiaSword = new ItemStack(Items.DIAMOND_SWORD);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedDiaSword);
 		IVanillaRecipeFactory factory = reg.getJeiHelpers().getVanillaRecipeFactory();
+		for(ItemStack s : EnchModule.blockIron.getMatchingStacks()) s.setCount(1);
 		//Formatter::off
 		reg.addRecipes(ImmutableList.of(
 			factory.createAnvilRecipe(
