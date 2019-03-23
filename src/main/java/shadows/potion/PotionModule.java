@@ -1,5 +1,7 @@
 package shadows.potion;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,7 +50,7 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void preInit(ApotheosisPreInit e) {
-		config = new Configuration(Apotheosis.configDir, "potion.cfg");
+		config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
 		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
 		if (config.hasChanged()) config.save();
 	}
