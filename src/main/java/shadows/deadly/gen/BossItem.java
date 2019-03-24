@@ -39,6 +39,7 @@ import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import shadows.Apotheosis;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
 import shadows.ench.EnchModule;
@@ -152,7 +153,7 @@ public class BossItem extends WorldFeatureItem {
 				NameHelper.setItemName(random, stack, name, enchantment);
 
 				for (int i = 0; i < 5; i++)
-					EnchantmentHelper.addRandomEnchantment(random, stack, 28 + 3 * i, true);
+					EnchantmentHelper.addRandomEnchantment(random, stack, 28 + (Apotheosis.enableEnch ? 10 : 3) * i, true);
 
 				Map<Enchantment, Integer> enchantMap = EnchantmentHelper.getEnchantments(stack);
 				for (Enchantment e : enchantMap.keySet())
