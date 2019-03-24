@@ -497,6 +497,7 @@ public class EnchModule {
 	 * @return The configured max level of that enchantment.
 	 */
 	public static int getMaxLevel(Object a) {
+		if (!Apotheosis.enableEnch) return ((Enchantment) a).getMaxLevel();
 		return getEnchInfo((Enchantment) a).getMaxLevel();
 	}
 

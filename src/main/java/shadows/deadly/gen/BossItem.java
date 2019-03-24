@@ -41,6 +41,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
+import shadows.ench.EnchModule;
 import shadows.placebo.util.AttributeHelper;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.util.ArmorSet;
@@ -155,7 +156,8 @@ public class BossItem extends WorldFeatureItem {
 
 				Map<Enchantment, Integer> enchantMap = EnchantmentHelper.getEnchantments(stack);
 				for (Enchantment e : enchantMap.keySet())
-					enchantMap.put(e, e.getMaxLevel());
+					enchantMap.put(e, EnchModule.getMaxLevel(e));
+				enchantMap.put(enchantment, EnchModule.getMaxLevel(enchantment));
 				EnchantmentHelper.setEnchantments(enchantMap, stack);
 			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) EnchantmentHelper.addRandomEnchantment(random, stack, 30 + random.nextInt(30), true);
 		}
