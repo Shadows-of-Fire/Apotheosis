@@ -23,7 +23,7 @@ public class BlockCactusExt extends BlockCactus {
 		if (!world.isAreaLoaded(pos, 1)) return; // Forge: prevent growing cactus from loading unloaded chunks with block update
 		BlockPos blockpos = pos.up();
 
-		if (world.isAirBlock(blockpos)) {
+		if (pos.getY() != 255 && world.isAirBlock(blockpos)) {
 			int i = 1;
 
 			if (GardenModule.maxCactusHeight != 255) for (; world.getBlockState(pos.down(i)).getBlock() == this; ++i)

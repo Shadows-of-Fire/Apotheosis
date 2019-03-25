@@ -23,7 +23,7 @@ public class BlockReedExt extends BlockReed {
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.REEDS || checkForDrop(worldIn, pos, state)) {
-			if (worldIn.isAirBlock(pos.up())) {
+			if (pos.getY() != 255 && worldIn.isAirBlock(pos.up())) {
 				int i = 1;
 
 				if (GardenModule.maxReedHeight != 255) for (; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i)
