@@ -41,6 +41,11 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	static String world = "net/minecraft/world/World";
 	static String blockPos = "net/minecraft/util/math/BlockPos";
 	static String generate;
+	static String onBlockActivated;
+	static String iBlockState = "net/minecraft/block/state/IBlockState";
+	static String entityPlayer = "net/minecraft/entity/player/EntityPlayer";
+	static String enumHand = "net/minecraft/util/EnumHand";
+	static String enumFacing = "net/minecraft/util/EnumFacing";
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -77,6 +82,10 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 			enchantment = FMLDeobfuscatingRemapper.INSTANCE.unmap(enchantment);
 			world = FMLDeobfuscatingRemapper.INSTANCE.unmap(world);
 			blockPos = FMLDeobfuscatingRemapper.INSTANCE.unmap(blockPos);
+			iBlockState = FMLDeobfuscatingRemapper.INSTANCE.unmap(iBlockState);
+			entityPlayer = FMLDeobfuscatingRemapper.INSTANCE.unmap(entityPlayer);
+			enumHand = FMLDeobfuscatingRemapper.INSTANCE.unmap(enumHand);
+			enumFacing = FMLDeobfuscatingRemapper.INSTANCE.unmap(enumFacing);
 		}
 		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
 		isTempting = dev ? "isTempting" : "a";
@@ -84,6 +93,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		blockUsingShield = dev ? "blockUsingShield" : "c";
 		getMaxLevel = dev ? "getMaxLevel" : "b";
 		generate = dev ? "generate" : "a";
+		onBlockActivated = dev ? "onBlockActivated" : "a";
 	}
 
 	@Override
@@ -148,6 +158,10 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isGenerate(MethodNode m) {
 		return m.name.equals(generate) && m.desc.equals(String.format("(L%s;Ljava/util/Random;L%s;)Z", world, blockPos));
+	}
+
+	public static boolean isOnBlockActivated(MethodNode m) {
+		return m.name.equals(onBlockActivated) && m.desc.equals(String.format("(L%s;L%s;L%s;L%s;L%s;L%s;FFF)Z", world, blockPos, iBlockState, entityPlayer, enumHand, enumFacing));
 	}
 
 }

@@ -24,11 +24,10 @@ public class BlockReedExt extends BlockReed {
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.REEDS || checkForDrop(worldIn, pos, state)) {
 			if (worldIn.isAirBlock(pos.up())) {
-				int i;
+				int i = 1;
 
-				for (i = 1; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i) {
+				if (GardenModule.maxReedHeight != 255) for (; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i)
 					;
-				}
 
 				if (i < GardenModule.maxReedHeight) {
 					int j = state.getValue(AGE).intValue();

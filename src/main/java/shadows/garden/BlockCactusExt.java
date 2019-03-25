@@ -24,9 +24,9 @@ public class BlockCactusExt extends BlockCactus {
 		BlockPos blockpos = pos.up();
 
 		if (world.isAirBlock(blockpos)) {
-			int i;
+			int i = 1;
 
-			for (i = 1; world.getBlockState(pos.down(i)).getBlock() == this; ++i)
+			if (GardenModule.maxCactusHeight != 255) for (; world.getBlockState(pos.down(i)).getBlock() == this; ++i)
 				;
 
 			if (i < GardenModule.maxCactusHeight) {

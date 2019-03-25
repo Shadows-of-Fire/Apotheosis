@@ -10,6 +10,7 @@ import shadows.ench.anvil.asm.AnvilTransformer;
 import shadows.ench.asm.EnchTransformer;
 import shadows.potion.asm.PotionTransformer;
 import shadows.spawn.asm.SpawnerTransformer;
+import shadows.util.BedTransformer;
 
 @SortingIndex(1001)
 public class ApotheosisTransformer implements IClassTransformer {
@@ -22,6 +23,7 @@ public class ApotheosisTransformer implements IClassTransformer {
 		transformers.add(new PotionTransformer());
 		transformers.add(new SpawnerTransformer());
 		transformers.add(new DeadlyTransformer());
+		transformers.add(new BedTransformer());
 	}
 
 	@Override
