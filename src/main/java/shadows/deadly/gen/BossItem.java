@@ -11,6 +11,7 @@ import com.google.common.base.Preconditions;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -135,38 +136,49 @@ public class BossItem extends WorldFeatureItem {
 
 		if (entity instanceof EntitySkeleton) entity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BOW));
 
-		int guaranteed = ThreadLocalRandom.current().nextInt(6);
+		int guaranteed = random.nextInt(6);
 
 		ItemStack stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed]);
 		while (guaranteed == 1 || stack.isEmpty())
-			stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed = ThreadLocalRandom.current().nextInt(6)]);
+			stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed = random.nextInt(6)]);
 
 		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat());
-
-			stack = entity.getItemStackFromSlot(s);
+			ItemStack enchantedItem = stack;
 
 			if (s.ordinal() == guaranteed) {
 				List<Enchantment> enchants = EquipmentType.getTypeForStack(stack).getEnchants();
 				Enchantment enchantment = enchants.get(random.nextInt(enchants.size()));
+				if (enchants.stream().anyMatch(e -> e.canApply(enchantedItem))) while (!enchantment.canApply(stack))
+					enchantment = enchants.get(random.nextInt(enchants.size()));
 				NameHelper.setItemName(random, stack, name, enchantment);
 
 				for (int i = 0; i < 5; i++)
-					EnchantmentHelper.addRandomEnchantment(random, stack, 28 + (Apotheosis.enableEnch ? 10 : 3) * i, true);
+					addSingleEnchantment(stack, random, 28 + (Apotheosis.enableEnch ? 10 : 3) * i, true);
 
-				Map<Enchantment, Integer> enchantMap = EnchantmentHelper.getEnchantments(stack);
-				for (Enchantment e : enchantMap.keySet())
-					enchantMap.put(e, EnchModule.getMaxLevel(e));
-				enchantMap.put(enchantment, EnchModule.getMaxLevel(enchantment));
-				EnchantmentHelper.setEnchantments(enchantMap, stack);
-			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) EnchantmentHelper.addRandomEnchantment(random, stack, 30 + random.nextInt(30), true);
+				Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(stack);
+				for (Enchantment e : enchMap.keySet()) {
+					enchMap.put(e, Math.min(EnchModule.getMaxLevel(e), enchMap.get(e) + random.nextInt(2)));
+				}
+				EnchantmentHelper.setEnchantments(enchMap, stack);
+				addSingleEnchantment(stack, random, Apotheosis.enableEnch ? 150 : 60, true);
+			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {
+				EnchantmentHelper.addRandomEnchantment(random, stack, 30 + random.nextInt(Apotheosis.enableEnch ? 50 : 25), true);
+			}
 		}
 
 		if (POTIONS.isEmpty()) for (Potion p : ForgeRegistries.POTIONS)
 			if (p.beneficial) POTIONS.add(p);
 
 		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new PotionEffect(POTIONS.get(random.nextInt(POTIONS.size())), Integer.MAX_VALUE, random.nextInt(3) + 1));
+	}
+
+	public static void addSingleEnchantment(ItemStack stack, Random rand, int level, boolean treasure) {
+		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(rand, stack, level, treasure);
+		if (datas.isEmpty()) return;
+		EnchantmentData d = datas.get(rand.nextInt(datas.size()));
+		stack.addEnchantment(d.enchantment, d.enchantmentLevel);
 	}
 
 	public static enum EquipmentType {
