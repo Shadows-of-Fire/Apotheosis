@@ -26,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.inventory.ContainerRepair;
@@ -36,6 +37,7 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -51,6 +53,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
@@ -423,6 +426,18 @@ public class EnchModule {
 			newC.windowId = old.windowId;
 			newC.addListener((EntityPlayerMP) e.getEntityPlayer());
 			e.getEntityPlayer().openContainer = newC;
+		}
+	}
+
+	@SubscribeEvent
+	public void handleBerserk(LivingHurtEvent e) {
+		EntityLivingBase user = e.getEntityLiving();
+		if (e.getSource().getTrueSource() instanceof Entity && user.getActivePotionEffect(MobEffects.RESISTANCE) == null) {
+			int level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user);
+			user.attackEntityFrom(EnchModule.CORRUPTED, level * level);
+			user.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200 * level, level - 1));
+			user.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200 * level, level - 1));
+			user.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200 * level, level - 1));
 		}
 	}
 

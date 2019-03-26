@@ -40,8 +40,9 @@ public class EnchantmentMounted extends Enchantment {
 
 	@Override
 	public void onEntityDamaged(EntityLivingBase user, Entity target, int level) {
-		if (user instanceof EntityPlayer && user.getRidingEntity() != null) {
-			target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) user), (float) Math.pow(1.75F, level) * EnchModule.localAtkStrength);
+		if (user.getRidingEntity() != null) {
+			DamageSource source = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
+			target.attackEntityFrom(source, (float) Math.pow(1.75F, level) * EnchModule.localAtkStrength);
 		}
 	}
 
