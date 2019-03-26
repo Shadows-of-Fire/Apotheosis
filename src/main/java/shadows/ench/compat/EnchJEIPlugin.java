@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 import shadows.ench.EnchModule;
-import shadows.placebo.util.PlaceboUtil;
 
 @JEIPlugin
 public class EnchJEIPlugin implements IModPlugin {
@@ -30,22 +29,24 @@ public class EnchJEIPlugin implements IModPlugin {
 		ItemStack cursedDiaSword = new ItemStack(Items.DIAMOND_SWORD);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedDiaSword);
 		IVanillaRecipeFactory factory = reg.getJeiHelpers().getVanillaRecipeFactory();
-		for(ItemStack s : EnchModule.blockIron.getMatchingStacks()) s.setCount(1);
 		//Formatter::off
+		if(EnchModule.allowWeb)
 		reg.addRecipes(ImmutableList.of(
 			factory.createAnvilRecipe(
-					enchDiaSword, 
-					ImmutableList.of(new ItemStack(Blocks.WEB)), 
-					ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), 
+				enchDiaSword, 
+				ImmutableList.of(new ItemStack(Blocks.WEB)), 
+				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD)))),
+				VanillaRecipeCategoryUid.ANVIL);
+		reg.addRecipes(ImmutableList.of(
 			factory.createAnvilRecipe(
-					cursedDiaSword, 
-					ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), 
-					ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), 
+				cursedDiaSword, 
+				ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), 
+				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), 
 			factory.createAnvilRecipe(
-					new ItemStack(Blocks.ANVIL, 1, 1), 
-					PlaceboUtil.asList(EnchModule.blockIron.getMatchingStacks()), 
-					ImmutableList.of(new ItemStack(Blocks.ANVIL)))), 
-		VanillaRecipeCategoryUid.ANVIL);
+				new ItemStack(Blocks.ANVIL, 1, 1), 
+				ImmutableList.of(new ItemStack(Blocks.IRON_BLOCK)), 
+				ImmutableList.of(new ItemStack(Blocks.ANVIL)))), 
+			VanillaRecipeCategoryUid.ANVIL);
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");
 		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.PRISMATIC_ALTAR), VanillaTypes.ITEM, "info.apotheosis.altar");

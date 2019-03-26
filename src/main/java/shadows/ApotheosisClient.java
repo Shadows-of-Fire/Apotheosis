@@ -41,7 +41,7 @@ public class ApotheosisClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
 		if (Apotheosis.enableEnch) {
-			if (i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
+			if (EnchModule.allowWeb && i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
 			else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
 		}
 		if (i == Items.ENCHANTED_BOOK) {
