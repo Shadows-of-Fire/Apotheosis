@@ -178,10 +178,10 @@ public class EnchModule {
 			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.LIFE_MENDING);
 			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.ICY_THORNS);
 			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.REBOUNDING);
-			BossItem.BOW_ENCHANTMENTS.add(ApotheosisObjects.TRUE_INFINITY);
+			if (Apotheosis.enablePotion) BossItem.BOW_ENCHANTMENTS.add(ApotheosisObjects.TRUE_INFINITY);
 			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.SCAVENGER);
 			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.KNOWLEDGE);
-			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.CAPTURING);
+			if (Apotheosis.enableSpawner) BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.CAPTURING);
 			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.HELL_INFUSION);
 			BossItem.TOOL_ENCHANTMENTS.add(ApotheosisObjects.DEPTH_MINER);
 		}
