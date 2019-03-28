@@ -28,6 +28,7 @@ public class DeadlyConfig {
 	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BOSS_MOBS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> SWARM_MOBS = new ArrayList<>();
+	public static List<ResourceLocation> BLACKLISTED_POTIONS = new ArrayList<>();
 
 	public static Configuration config;
 
@@ -80,6 +81,9 @@ public class DeadlyConfig {
 		bossLevelUpChance = c.getFloat("Level Up Chance", DeadlyConstants.BOSSES, bossLevelUpChance, 0, Integer.MAX_VALUE, "The level up chance, this is rolled once per number of levels.  Levels determine gear.");
 		bossEnchantChance = c.getFloat("Random Enchantment Chance", DeadlyConstants.BOSSES, bossEnchantChance, 0, Integer.MAX_VALUE, "The chance a gear piece will be randomly enchanted.");
 		bossPotionChance = c.getFloat("Random Potion Chance", DeadlyConstants.BOSSES, bossPotionChance, 0, Integer.MAX_VALUE, "The chance a boss will have extra random potion effects.");
+		String[] blacklistPotions = c.getStringList("Blacklisted Potions", DeadlyConstants.BOSSES, new String[0], "A list of potions (registry names) that bosses cannot generate with.");
+		for (String s : blacklistPotions)
+			BLACKLISTED_POTIONS.add(new ResourceLocation(s));
 
 		brutalSpawnerChance = c.getFloat("Brutal Spawner Chance", DeadlyConstants.FREQUENCY, brutalSpawnerChance, 0, 1, "The chance (per chunk) for a brutal spawner to try spawning.");
 		swarmSpawnerChance = c.getFloat("Swarm Spawner Chance", DeadlyConstants.FREQUENCY, swarmSpawnerChance, 0, 1, "The chance (per chunk) for a swarm spawner to try spawning.");

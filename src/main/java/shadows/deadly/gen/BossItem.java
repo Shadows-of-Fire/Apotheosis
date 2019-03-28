@@ -167,8 +167,7 @@ public class BossItem extends WorldFeatureItem {
 			}
 		}
 
-		if (POTIONS.isEmpty()) for (Potion p : ForgeRegistries.POTIONS)
-			if (p.beneficial) POTIONS.add(p);
+		if (POTIONS.isEmpty()) initPotions();
 
 		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new PotionEffect(POTIONS.get(random.nextInt(POTIONS.size())), Integer.MAX_VALUE, random.nextInt(3) + 1));
 	}
@@ -178,6 +177,12 @@ public class BossItem extends WorldFeatureItem {
 		if (datas.isEmpty()) return;
 		EnchantmentData d = datas.get(rand.nextInt(datas.size()));
 		stack.addEnchantment(d.enchantment, d.enchantmentLevel);
+	}
+
+	public static void initPotions() {
+		for (Potion p : ForgeRegistries.POTIONS)
+			if (p.beneficial) POTIONS.add(p);
+		POTIONS.removeIf(p -> DeadlyConfig.BLACKLISTED_POTIONS.contains(p.getRegistryName()));
 	}
 
 	public static enum EquipmentType {
