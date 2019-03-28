@@ -37,7 +37,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.Apotheosis;
@@ -76,7 +75,7 @@ public class BossItem extends WorldFeatureItem {
 		ArmorSet.LEVEL_TO_SETS.put(3, DIAMOND_GEAR);
 	}
 
-	public static final Predicate<EntityAITaskEntry> IS_VILLAGER_ATTACK = a -> a.action instanceof EntityAINearestAttackableTarget && ObfuscationReflectionHelper.getPrivateValue(EntityAINearestAttackableTarget.class, (EntityAINearestAttackableTarget<?>) a.action, "targetClass", "field_75307_b") == EntityVillager.class;
+	public static final Predicate<EntityAITaskEntry> IS_VILLAGER_ATTACK = a -> a.action instanceof EntityAINearestAttackableTarget && ((EntityAINearestAttackableTarget<?>) a.action).targetClass == EntityVillager.class;
 
 	protected final EntityEntry entityEntry;
 	protected AxisAlignedBB entityAABB;
