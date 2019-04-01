@@ -11,11 +11,9 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 import shadows.ApotheosisCore;
 import shadows.CustomClassWriter;
 
-@SortingIndex(1001)
 public class SunderingTweaker implements IClassTransformer {
 
 	@Override

@@ -84,6 +84,7 @@ import shadows.ench.enchantments.EnchantmentHellInfused;
 import shadows.ench.enchantments.EnchantmentIcyThorns;
 import shadows.ench.enchantments.EnchantmentKnowledge;
 import shadows.ench.enchantments.EnchantmentLifeMend;
+import shadows.ench.enchantments.EnchantmentMagicProt;
 import shadows.ench.enchantments.EnchantmentMounted;
 import shadows.ench.enchantments.EnchantmentNatureBless;
 import shadows.ench.enchantments.EnchantmentRebounding;
@@ -119,6 +120,7 @@ public class EnchModule {
 			return new TextComponentTranslation("death.apotheosis.corrupted", entity.getDisplayName());
 		};
 	}.setDamageBypassesArmor().setDamageIsAbsolute();
+	public static final EntityEquipmentSlot[] ARMOR = { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
 
 	public static float localAtkStrength = 1;
 	static Configuration config;
@@ -244,7 +246,8 @@ public class EnchModule {
 				new EnchantmentKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"),
 				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"),
 				new EnchantmentNatureBless().setRegistryName(Apotheosis.MODID, "natures_blessing"),
-				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding")
+				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding"),
+				new EnchantmentMagicProt().setRegistryName(Apotheosis.MODID, "magic_protection")
 				);
 		//Formatter::on
 	}

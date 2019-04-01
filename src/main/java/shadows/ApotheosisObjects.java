@@ -15,6 +15,7 @@ import shadows.ench.enchantments.EnchantmentHellInfused;
 import shadows.ench.enchantments.EnchantmentIcyThorns;
 import shadows.ench.enchantments.EnchantmentKnowledge;
 import shadows.ench.enchantments.EnchantmentLifeMend;
+import shadows.ench.enchantments.EnchantmentMagicProt;
 import shadows.ench.enchantments.EnchantmentMounted;
 import shadows.ench.enchantments.EnchantmentNatureBless;
 import shadows.ench.enchantments.EnchantmentRebounding;
@@ -94,4 +95,5 @@ public class ApotheosisObjects {
 	public static final PotionType LONG_KNOWLEDGE = null;
 	public static final PotionType STRONG_KNOWLEDGE = null;
 	public static final ItemLuckyFoot LUCKY_FOOT = null;
+	public static final EnchantmentMagicProt MAGIC_PROTECTION = null;
 }

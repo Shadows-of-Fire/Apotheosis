@@ -12,7 +12,7 @@ import shadows.potion.asm.PotionTransformer;
 import shadows.spawn.asm.SpawnerTransformer;
 import shadows.util.BedTransformer;
 
-@SortingIndex(1001)
+@SortingIndex(0)
 public class ApotheosisTransformer implements IClassTransformer {
 
 	public List<IApotheosisTransformer> transformers = new LinkedList<>();
