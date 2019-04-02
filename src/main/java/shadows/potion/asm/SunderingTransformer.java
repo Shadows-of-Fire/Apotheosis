@@ -1,4 +1,4 @@
-package shadows.potion;
+package shadows.potion.asm;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -10,19 +10,19 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-import net.minecraft.launchwrapper.IClassTransformer;
 import shadows.ApotheosisCore;
+import shadows.ApotheosisTransformer.IApotheosisTransformer;
 import shadows.CustomClassWriter;
 
-public class SunderingTweaker implements IClassTransformer {
+public class SunderingTransformer implements IApotheosisTransformer {
+
+	@Override
+	public boolean accepts(String name, String transformedName) {
+		return "net.minecraft.entity.EntityLivingBase".equals(transformedName);
+	}
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
-		if ("net.minecraft.entity.EntityLivingBase".equals(transformedName)) return transformEntityLiving(basicClass);
-		return basicClass;
-	}
-
-	static byte[] transformEntityLiving(byte[] basicClass) {
 		ApotheosisCore.LOG.info("Transforming EntityLivingBase...");
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(basicClass);

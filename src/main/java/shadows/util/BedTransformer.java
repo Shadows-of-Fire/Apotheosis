@@ -11,11 +11,6 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
 import shadows.ApotheosisCore;
 import shadows.ApotheosisTransformer.IApotheosisTransformer;
 import shadows.CustomClassWriter;
@@ -46,7 +41,7 @@ public class BedTransformer implements IApotheosisTransformer {
 				if (n.getOpcode() == Opcodes.ACONST_NULL) {
 					InsnList list = new InsnList();
 					list.add(new VarInsnNode(Opcodes.ALOAD, 2));
-					list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/util/BedTransformer", "fakesplode", "(Ljava/lang/Object;Ljava/lang/Object;)V", false));
+					list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/Apotheosis", "fakesplode", "(Ljava/lang/Object;Ljava/lang/Object;)V", false));
 					list.add(new InsnNode(Opcodes.ICONST_1));
 					list.add(new InsnNode(Opcodes.IRETURN));
 					onBlockActivated.instructions.insertBefore(n, list);
@@ -59,13 +54,6 @@ public class BedTransformer implements IApotheosisTransformer {
 		}
 		ApotheosisCore.LOG.info("Failed transforming BlockBed");
 		return basicClass;
-	}
-
-	public static void fakesplode(Object w, Object p) {
-		WorldServer world = (WorldServer) w;
-		BlockPos pos = (BlockPos) p;
-		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
-		world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1, 0, 0, 0, 1D);
 	}
 
 }

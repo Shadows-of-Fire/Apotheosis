@@ -12,7 +12,11 @@ import org.objectweb.asm.tree.MethodNode;
 
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 
+@MCVersion("1.12.2")
+@SortingIndex(1001)
 public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean enableEnch = true;
@@ -20,32 +24,51 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	public static boolean enablePotion = true;
 	public static boolean enableDeadly = true;
 
-	static String updateRepair;
-	static String capsIsCreative;
-	static String empty;
-	static String drawForeground;
-	static String format;
-	static String calcStackEnch;
-	static String doesShowParticles;
-	static String applyPotionDamageCalculations;
-	static String playerCapabilities = "net/minecraft/entity/player/PlayerCapabilities";
-	static String itemStack = "net/minecraft/item/ItemStack";
-	static String damageSource = "net/minecraft/util/DamageSource";
-	static String getEnchantmentDatas;
-	static String isTempting;
-	static String getItemEnchantability;
-	static String blockUsingShield;
-	static String entityLivingBase = "net/minecraft/entity/EntityLivingBase";
-	static String enchantment = "net/minecraft/enchantment/Enchantment";
-	static String getMaxLevel;
-	static String world = "net/minecraft/world/World";
-	static String blockPos = "net/minecraft/util/math/BlockPos";
-	static String generate;
-	static String onBlockActivated;
-	static String iBlockState = "net/minecraft/block/state/IBlockState";
-	static String entityPlayer = "net/minecraft/entity/player/EntityPlayer";
-	static String enumHand = "net/minecraft/util/EnumHand";
-	static String enumFacing = "net/minecraft/util/EnumFacing";
+	//ContainerRepair#updateRepairOutput
+	private static String updateRepair;
+
+	//PlayerCapabilities#isCreativeMode
+	private static String capsIsCreative;
+
+	//ItemStack.EMPTY
+	private static String empty;
+
+	//GuiRepair#drawContainerForegroundLayer
+	private static String drawForeground;
+
+	//EnchantmentHelper#calcItemStackEnchantability
+	private static String calcStackEnch;
+
+	//PotionEffect#doesShowParticles
+	private static String doesShowParticles;
+
+	//EntityLivingBase#applyPotionDamageCalculations
+	private static String applyPotionDamageCalculations;
+
+	//EnchantmentHelper#getEnchantmentDatas
+	private static String getEnchantmentDatas;
+
+	//EntityAITempt#isTempting
+	private static String isTempting;
+
+	//Item#getItemEnchantability
+	private static String getItemEnchantability;
+
+	//EntityLivingBase#blockUsingShield
+	private static String blockUsingShield;
+
+	//Enchantment#getMaxLevel
+	private static String getMaxLevel;
+
+	//WorldGenerator#generate
+	private static String generate;
+
+	//Block#onBlockActivated
+	private static String onBlockActivated;
+
+	private static String enchantment = "net/minecraft/enchantment/Enchantment";
+	private static String playerCapabilities = "net/minecraft/entity/player/PlayerCapabilities";
+	private static String itemStack = "net/minecraft/item/ItemStack";
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Core");
 
@@ -67,33 +90,26 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	@Override
 	public void injectData(Map<String, Object> data) {
 		boolean dev = !(Boolean) data.get("runtimeDeobfuscationEnabled");
-		updateRepair = dev ? "updateRepairOutput" : "e";
-		capsIsCreative = dev ? "isCreativeMode" : "d";
-		empty = dev ? "EMPTY" : "a";
-		drawForeground = dev ? "drawGuiContainerForegroundLayer" : "c";
-		calcStackEnch = dev ? "calcItemStackEnchantability" : "a";
-		doesShowParticles = dev ? "doesShowParticles" : "e";
-		applyPotionDamageCalculations = dev ? "applyPotionDamageCalculations" : "c";
+		updateRepair = dev ? "updateRepairOutput" : "func_82848_d";
+		capsIsCreative = dev ? "isCreativeMode" : "field_75098_d";
+		empty = dev ? "EMPTY" : "field_190927_a";
+		drawForeground = dev ? "drawGuiContainerForegroundLayer" : "func_146979_b";
+		calcStackEnch = dev ? "calcItemStackEnchantability" : "func_77514_a";
+		doesShowParticles = dev ? "doesShowParticles" : "func_188418_e";
+		applyPotionDamageCalculations = dev ? "applyPotionDamageCalculations" : "func_70672_c";
+		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "func_185291_a";
+		isTempting = dev ? "isTempting" : "func_188508_a";
+		getItemEnchantability = dev ? "getItemEnchantability" : "func_77619_b";
+		blockUsingShield = dev ? "blockUsingShield" : "func_190629_c";
+		getMaxLevel = dev ? "getMaxLevel" : "func_77325_b";
+		generate = dev ? "generate" : "func_180709_b";
+		onBlockActivated = dev ? "onBlockActivated" : "func_180639_a";
+
 		if (!dev) {
 			playerCapabilities = FMLDeobfuscatingRemapper.INSTANCE.unmap(playerCapabilities);
 			itemStack = FMLDeobfuscatingRemapper.INSTANCE.unmap(itemStack);
-			damageSource = FMLDeobfuscatingRemapper.INSTANCE.unmap(damageSource);
-			entityLivingBase = FMLDeobfuscatingRemapper.INSTANCE.unmap(entityLivingBase);
 			enchantment = FMLDeobfuscatingRemapper.INSTANCE.unmap(enchantment);
-			world = FMLDeobfuscatingRemapper.INSTANCE.unmap(world);
-			blockPos = FMLDeobfuscatingRemapper.INSTANCE.unmap(blockPos);
-			iBlockState = FMLDeobfuscatingRemapper.INSTANCE.unmap(iBlockState);
-			entityPlayer = FMLDeobfuscatingRemapper.INSTANCE.unmap(entityPlayer);
-			enumHand = FMLDeobfuscatingRemapper.INSTANCE.unmap(enumHand);
-			enumFacing = FMLDeobfuscatingRemapper.INSTANCE.unmap(enumFacing);
 		}
-		getEnchantmentDatas = dev ? "getEnchantmentDatas" : "a";
-		isTempting = dev ? "isTempting" : "a";
-		getItemEnchantability = dev ? "getItemEnchantability" : "c";
-		blockUsingShield = dev ? "blockUsingShield" : "c";
-		getMaxLevel = dev ? "getMaxLevel" : "b";
-		generate = dev ? "generate" : "a";
-		onBlockActivated = dev ? "onBlockActivated" : "a";
 	}
 
 	@Override
@@ -109,7 +125,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isRepairOutput(MethodNode m) {
-		return m.name.equals(updateRepair) && m.desc.equals("()V");
+		return m.name.equals(updateRepair);
 	}
 
 	public static boolean isCapIsCreative(FieldInsnNode fn) {
@@ -125,7 +141,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isCalcStackEnch(MethodNode m) {
-		return m.name.equals(calcStackEnch) && m.desc.equals(String.format("(Ljava/util/Random;IIL%s;)I", itemStack));
+		return m.name.equals(calcStackEnch);
 	}
 
 	public static boolean isShowParticles(MethodNode m) {
@@ -133,15 +149,15 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isCalcDamage(MethodNode m) {
-		return m.name.equals(applyPotionDamageCalculations) && m.desc.equals(String.format("(L%s;F)F", damageSource));
+		return m.name.equals(applyPotionDamageCalculations);
 	}
 
 	public static boolean isEnchDatas(MethodNode m) {
-		return m.name.equals(getEnchantmentDatas) && m.desc.equals(String.format("(IL%s;Z)Ljava/util/List;", itemStack));
+		return m.name.equals(getEnchantmentDatas);
 	}
 
 	public static boolean isTempting(MethodNode m) {
-		return m.name.equals(isTempting) && m.desc.equals(String.format("(L%s;)Z", itemStack));
+		return m.name.equals(isTempting);
 	}
 
 	public static boolean isItemEnch(MethodNode m) {
@@ -149,7 +165,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isBlockWithShield(MethodNode m) {
-		return m.name.equals(blockUsingShield) && m.desc.equals(String.format("(L%s;)V", entityLivingBase));
+		return m.name.equals(blockUsingShield);
 	}
 
 	public static boolean isGetMaxLevel(MethodInsnNode m) {
@@ -157,11 +173,11 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isGenerate(MethodNode m) {
-		return m.name.equals(generate) && m.desc.equals(String.format("(L%s;Ljava/util/Random;L%s;)Z", world, blockPos));
+		return m.name.equals(generate);
 	}
 
 	public static boolean isOnBlockActivated(MethodNode m) {
-		return m.name.equals(onBlockActivated) && m.desc.equals(String.format("(L%s;L%s;L%s;L%s;L%s;L%s;FFF)Z", world, blockPos, iBlockState, entityPlayer, enumHand, enumFacing));
+		return m.name.equals(onBlockActivated);
 	}
 
 }
