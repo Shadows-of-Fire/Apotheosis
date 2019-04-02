@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
@@ -450,73 +449,6 @@ public class EnchModule {
 
 	public static void setEnch(ArmorMaterial mat, int ench) {
 		ReflectionHelper.setPrivateValue(ArmorMaterial.class, mat, ench, "enchantability", "field_78055_h");
-	}
-
-	/**
-	 * Full redirect for EnchantmentHelper#getEnchantmentDatas
-	 * @param power Enchanting power, pre-calculated, not table level.
-	 * @param s ItemStack to be enchanted.
-	 * @param allowTreasure If treasure enchants are allowed.
-	 * @return The possible enchantment datas for this item.
-	 */
-	public static List<EnchantmentData> getEnchantmentDatas(int power, Object s, boolean allowTreasure) {
-		ItemStack stack = (ItemStack) s;
-		List<EnchantmentData> list = new ArrayList<>();
-		boolean isBook = stack.getItem() == Items.BOOK;
-		boolean typedBook = stack.getItem() instanceof ItemTypedBook;
-		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
-			if (enchantment.isTreasureEnchantment() && !allowTreasure || BLACKLISTED_ENCHANTS.contains(enchantment)) continue;
-			if (enchantment.canApplyAtEnchantingTable(stack) || isBook && enchantment.isAllowedOnBooks() || typedBook && stack.getItem().canApplyAtEnchantingTable(stack, enchantment)) {
-				EnchantmentInfo info = getEnchInfo(enchantment);
-				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {
-					if (power >= info.getMinPower(i) && power <= info.getMaxPower(i)) {
-						list.add(new EnchantmentData(enchantment, i));
-						break;
-					}
-				}
-			}
-		}
-		return list;
-	}
-
-	/**
-	 * Hook for EntityAITempt#isTempting.  Applied by EnchTransformer.
-	 * @param was The previous return of the method.
-	 * @param s The itemstack being held by a player.
-	 * @return If this stack is tempting, basically if it has the Tempting enchantment.
-	 */
-	public static boolean isTempting(boolean was, Object s) {
-		ItemStack stack = (ItemStack) s;
-		if (EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.TEMPTING, stack) > 0) return true;
-		return was;
-	}
-
-	/**
-	 * Hook needed for the Reflective enchantment to work properly.  Injected into EntityLivingBase#blockUsingShield.  Applied by EnchTransformer.
-	 * @param a The entity holding the shield.
-	 * @param b The attacking entity.
-	 */
-	public static void reflectiveHook(Object a, Object b) {
-		EntityLivingBase user = (EntityLivingBase) a;
-		EntityLivingBase attacker = (EntityLivingBase) b;
-		int level;
-		if ((level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.REFLECTIVE, user.getActiveItemStack())) > 0) {
-			if (user.world.rand.nextInt(Math.max(0, 7 - level)) == 0) {
-				DamageSource src = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
-				attacker.attackEntityFrom(src, level * 1.6F);
-				user.getActiveItemStack().damageItem(10, user);
-			}
-		}
-	}
-
-	/**
-	 * Hook that replaces calls to {@link Enchantment#getMaxLevel()} inside ContainerRepair.
-	 * @param a An enchantment.
-	 * @return The configured max level of that enchantment.
-	 */
-	public static int getMaxLevel(Object a) {
-		if (!Apotheosis.enableEnch) return ((Enchantment) a).getMaxLevel();
-		return getEnchInfo((Enchantment) a).getMaxLevel();
 	}
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {

@@ -16,11 +16,6 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.deadly.DeadlyModule;
 
-/**
- * This class is functional.
- * @author Shadows
- *
- */
 public class DeadlyConfig {
 
 	public static final IntList DIM_WHITELIST = new IntArrayList();

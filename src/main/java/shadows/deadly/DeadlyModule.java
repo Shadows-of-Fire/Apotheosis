@@ -1,13 +1,10 @@
 package shadows.deadly;
 
 import java.io.File;
-import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -42,19 +39,4 @@ public class DeadlyModule {
 		ArmorSet.sortSets();
 	}
 
-	/**
-	 * Injects a custom spawner into a dungeon.
-	 * @param w The world
-	 * @param rand The random
-	 * @param p The blockpos
-	 */
-	public static void setDungeonMobSpawner(Object w, Random rand, Object p) {
-		World world = (World) w;
-		BlockPos pos = (BlockPos) p;
-		if (rand.nextFloat() <= DeadlyConfig.dungeonBrutalChance) {
-			WorldGenerator.BRUTAL_SPAWNER.place(world, pos, rand);
-		} else if (rand.nextFloat() <= DeadlyConfig.dungeonSwarmChance) {
-			WorldGenerator.SWARM_SPAWNER.place(world, pos, rand);
-		}
-	}
 }

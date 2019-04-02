@@ -42,7 +42,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.Apotheosis;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
-import shadows.ench.EnchModule;
+import shadows.ench.asm.EnchHooks;
 import shadows.placebo.util.AttributeHelper;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.util.ArmorSet;
@@ -158,7 +158,7 @@ public class BossItem extends WorldFeatureItem {
 
 				Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(stack);
 				for (Enchantment e : enchMap.keySet()) {
-					enchMap.put(e, Math.min(EnchModule.getMaxLevel(e), enchMap.get(e) + random.nextInt(2)));
+					enchMap.put(e, Math.min(EnchHooks.getMaxLevel(e), enchMap.get(e) + random.nextInt(2)));
 				}
 				EnchantmentHelper.setEnchantments(enchMap, stack);
 				addSingleEnchantment(stack, random, Apotheosis.enableEnch ? 150 : 60, true);

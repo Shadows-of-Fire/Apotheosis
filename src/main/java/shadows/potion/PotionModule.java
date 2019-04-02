@@ -6,24 +6,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityRabbit;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.potion.PotionType;
-import net.minecraft.util.CombatRules;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -165,65 +159,6 @@ public class PotionModule {
 			int curXp = e.getDroppedExperience();
 			int newXp = curXp + e.getOriginalExperience() * level * knowledgeMult;
 			e.setDroppedExperience(newXp);
-		}
-	}
-
-	/**
-	 * Redirect for {@link ItemArrow#isInfinite(ItemStack, ItemStack, net.minecraft.entity.player.EntityPlayer)}
-	 * @param a Arrow ItemStack
-	 * @param b Bow ItemStack
-	 * @param c EntityPlayer using the bow
-	 * @return If this arrow should not be consumed.
-	 */
-	public static boolean isInfinite(Object a, Object b, Object c) {
-		ItemStack stack = (ItemStack) a;
-		ItemStack bow = (ItemStack) b;
-		int enchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, bow);
-		if (enchant <= 0 ? false : stack.getItem().getClass() == ItemArrow.class) return true;
-		return EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ItemArrow;
-	}
-
-	/**
-	 * ASM Hook: Disables invisibility particle effects.
-	 */
-	public static boolean doesShowParticles(Object e) {
-		PotionEffect ef = (PotionEffect) e;
-		if (ef.getPotion() == MobEffects.INVISIBILITY) return false;
-		return ef.showParticles;
-	}
-
-	/**
-	 * ASM Hook: Returns the damage taken based on resistance and sundering.
-	 */
-	public static float applyPotionDamageCalculations(Object ent, Object src, float damage) {
-		EntityLivingBase entity = (EntityLivingBase) ent;
-		DamageSource source = (DamageSource) src;
-		if (source.isDamageAbsolute()) {
-			return damage;
-		} else {
-			float mult = 1;
-			if (entity.isPotionActive(MobEffects.RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
-				int level = entity.getActivePotionEffect(MobEffects.RESISTANCE).getAmplifier() + 1;
-				mult -= 0.2 * level;
-			}
-			if (ApotheosisObjects.SUNDERING != null && entity.isPotionActive(ApotheosisObjects.SUNDERING) && source != DamageSource.OUT_OF_WORLD) {
-				int level = entity.getActivePotionEffect(ApotheosisObjects.SUNDERING).getAmplifier() + 1;
-				mult += 0.2 * level;
-			}
-
-			damage *= mult;
-
-			if (damage <= 0.0F) {
-				return 0.0F;
-			} else {
-				int k = EnchantmentHelper.getEnchantmentModifierDamage(entity.getArmorInventoryList(), source);
-
-				if (k > 0) {
-					damage = CombatRules.getDamageAfterMagicAbsorb(damage, k);
-				}
-
-				return damage;
-			}
 		}
 	}
 

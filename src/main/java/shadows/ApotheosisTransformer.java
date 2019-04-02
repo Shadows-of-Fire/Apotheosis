@@ -9,7 +9,6 @@ import shadows.deadly.asm.DeadlyTransformer;
 import shadows.ench.anvil.asm.AnvilTransformer;
 import shadows.ench.asm.EnchTransformer;
 import shadows.potion.asm.PotionTransformer;
-import shadows.potion.asm.SunderingTransformer;
 import shadows.spawn.asm.SpawnerTransformer;
 import shadows.util.BedTransformer;
 
@@ -25,7 +24,6 @@ public class ApotheosisTransformer implements IClassTransformer {
 		transformers.add(new SpawnerTransformer());
 		transformers.add(new DeadlyTransformer());
 		transformers.add(new BedTransformer());
-		transformers.add(new SunderingTransformer());
 	}
 
 	@Override

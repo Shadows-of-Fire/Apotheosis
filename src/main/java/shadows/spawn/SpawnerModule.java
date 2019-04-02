@@ -18,7 +18,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -98,13 +97,6 @@ public class SpawnerModule {
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
 				if (sm.canModify((TileSpawnerExt) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}
-	}
-
-	/**
-	 * ASM Hook: Returns the currently active class for the "minecraft:mob_spawner" tile entity.
-	 */
-	public static Class<? extends TileEntityMobSpawner> getSpawnerClass() {
-		return Apotheosis.enableSpawner ? TileSpawnerExt.class : TileEntityMobSpawner.class;
 	}
 
 }

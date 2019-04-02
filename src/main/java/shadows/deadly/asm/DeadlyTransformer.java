@@ -39,7 +39,7 @@ public class DeadlyTransformer implements IApotheosisTransformer {
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 2));
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 3));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/deadly/DeadlyModule", "setDungeonMobSpawner", "(Ljava/lang/Object;Ljava/util/Random;Ljava/lang/Object;)V", false));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/deadly/asm/DeadlyHooks", "setDungeonMobSpawner", "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Ljava/util/Random;)V", false));
 
 			int size = generate.instructions.size();
 			AbstractInsnNode trueReturn = null;

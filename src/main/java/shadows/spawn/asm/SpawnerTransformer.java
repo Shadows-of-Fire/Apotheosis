@@ -44,7 +44,7 @@ public class SpawnerTransformer implements IApotheosisTransformer {
 				}
 			}
 			if (toRemove != null) {
-				method.instructions.set(toRemove, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/spawn/SpawnerModule", "getSpawnerClass", "()Ljava/lang/Class;", false));
+				method.instructions.set(toRemove, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/spawn/asm/SpawnerHooks", "getSpawnerClass", "()Ljava/lang/Class;", false));
 				CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 				classNode.accept(writer);
 				ApotheosisCore.LOG.info("Successfully transformed TileEntityMobSpawner$2");

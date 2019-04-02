@@ -71,12 +71,12 @@ public class AnvilTransformer implements IApotheosisTransformer {
 			}
 
 			if (getMaxLevel1 != null) {
-				updateRepairOutput.instructions.set(getMaxLevel1, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "getMaxLevel", "(Ljava/lang/Object;)I", false));
+				updateRepairOutput.instructions.set(getMaxLevel1, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
 				ApotheosisCore.LOG.info("Replaced ContainerRepair Enchantment#getMaxLevel #1.");
 			}
 
 			if (getMaxLevel2 != null) {
-				updateRepairOutput.instructions.set(getMaxLevel2, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "getMaxLevel", "(Ljava/lang/Object;)I", false));
+				updateRepairOutput.instructions.set(getMaxLevel2, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
 				ApotheosisCore.LOG.info("Replaced ContainerRepair Enchantment#getMaxLevel #2.");
 			}
 

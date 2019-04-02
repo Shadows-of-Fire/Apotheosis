@@ -18,13 +18,14 @@ public class PotionTransformer implements IApotheosisTransformer {
 
 	@Override
 	public boolean accepts(String name, String transformedName) {
-		return "net.minecraft.item.ItemArrow".equals(transformedName) || "net.minecraft.potion.PotionEffect".equals(transformedName);
+		return "net.minecraft.entity.EntityLivingBase".equals(transformedName) || "net.minecraft.item.ItemArrow".equals(transformedName) || "net.minecraft.potion.PotionEffect".equals(transformedName);
 	}
 
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass) {
 		if (!ApotheosisCore.enablePotion) return basicClass;
 		if ("net.minecraft.item.ItemArrow".equals(transformedName)) return transformArrow(basicClass);
+		if ("net.minecraft.entity.EntityLivingBase".equals(transformedName)) return transformEntityLiving(basicClass);
 		return transformPotionEffect(basicClass);
 	}
 
@@ -40,7 +41,7 @@ public class PotionTransformer implements IApotheosisTransformer {
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 2));
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 3));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/PotionModule", "isInfinite", "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z", false));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/asm/PotionHooks", "isInfinite", "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;)Z", false));
 			insn.add(new InsnNode(Opcodes.IRETURN));
 			isInfinite.instructions.insert(insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
@@ -62,7 +63,7 @@ public class PotionTransformer implements IApotheosisTransformer {
 		if (doesShowParticles != null) {
 			InsnList insn = new InsnList();
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/PotionModule", "doesShowParticles", "(Ljava/lang/Object;)Z", false));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/asm/PotionHooks", "doesShowParticles", "(Lnet/minecraf/potion/PotionEffect;)Z", false));
 			insn.add(new InsnNode(Opcodes.IRETURN));
 			doesShowParticles.instructions.insert(insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
@@ -71,6 +72,35 @@ public class PotionTransformer implements IApotheosisTransformer {
 			return writer.toByteArray();
 		}
 		ApotheosisCore.LOG.info("Failed transforming PotionEffect");
+		return basicClass;
+	}
+
+	static byte[] transformEntityLiving(byte[] basicClass) {
+		ApotheosisCore.LOG.info("Transforming EntityLivingBase...");
+		ClassNode classNode = new ClassNode();
+		ClassReader classReader = new ClassReader(basicClass);
+		classReader.accept(classNode, 0);
+		MethodNode applyPotionDamageCalculations = null;
+		for (MethodNode m : classNode.methods) {
+			if (ApotheosisCore.isCalcDamage(m)) {
+				applyPotionDamageCalculations = m;
+				break;
+			}
+		}
+		if (applyPotionDamageCalculations != null) {
+			InsnList insn = new InsnList();
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
+			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
+			insn.add(new VarInsnNode(Opcodes.FLOAD, 2));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/asm/PotionHooks", "applyPotionDamageCalculations", "(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/util/DamageSource;F)F", false));
+			insn.add(new InsnNode(Opcodes.FRETURN));
+			applyPotionDamageCalculations.instructions.insert(insn);
+			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+			classNode.accept(writer);
+			ApotheosisCore.LOG.info("Successfully transformed EntityLivingBase");
+			return writer.toByteArray();
+		}
+		ApotheosisCore.LOG.info("Failed transforming EntityLivingBase");
 		return basicClass;
 	}
 

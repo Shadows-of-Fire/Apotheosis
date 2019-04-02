@@ -1,4 +1,4 @@
-package shadows.ench.anvil.compat;
+package shadows.ench.compat;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import shadows.ench.anvil.BlockAnvilExt;
 import shadows.ench.anvil.TileAnvil;
 
 @WailaPlugin
-public class AnvilWailaPlugin implements IWailaPlugin, IWailaDataProvider {
+public class EnchHwylaPlugin implements IWailaPlugin, IWailaDataProvider {
 
 	@Override
 	public void register(IWailaRegistrar reg) {

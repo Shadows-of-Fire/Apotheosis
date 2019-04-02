@@ -60,7 +60,7 @@ public class EnchTransformer implements IApotheosisTransformer {
 			insn.add(new VarInsnNode(Opcodes.ILOAD, 0));
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
 			insn.add(new VarInsnNode(Opcodes.ILOAD, 2));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "getEnchantmentDatas", "(ILjava/lang/Object;Z)Ljava/util/List;", false));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getEnchantmentDatas", "(ILnet/minecraft/item/ItemStack;Z)Ljava/util/List;", false));
 			insn.add(new InsnNode(Opcodes.ARETURN));
 			getEnchantmentDatas.instructions.insert(insn);
 			ApotheosisCore.LOG.info("Successfully transformed EnchantmentHelper.getEnchantmentDatas");
@@ -91,7 +91,7 @@ public class EnchTransformer implements IApotheosisTransformer {
 		if (isTempting != null) {
 			InsnList insn = new InsnList();
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "isTempting", "(ZLjava/lang/Object;)Z", false));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "isTempting", "(ZLnet/minecraft/item/ItemStack;)Z", false));
 			AbstractInsnNode node = isTempting.instructions.getLast().getPrevious();
 			isTempting.instructions.insertBefore(node, insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
@@ -145,7 +145,7 @@ public class EnchTransformer implements IApotheosisTransformer {
 			InsnList insn = new InsnList();
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/EnchModule", "reflectiveHook", "(Ljava/lang/Object;Ljava/lang/Object;)V", false));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "reflectiveHook", "(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)V", false));
 			blockUsingShield.instructions.insert(insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 			classNode.accept(writer);
