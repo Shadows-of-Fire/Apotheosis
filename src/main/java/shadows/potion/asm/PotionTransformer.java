@@ -63,7 +63,7 @@ public class PotionTransformer implements IApotheosisTransformer {
 		if (doesShowParticles != null) {
 			InsnList insn = new InsnList();
 			insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
-			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/asm/PotionHooks", "doesShowParticles", "(Lnet/minecraf/potion/PotionEffect;)Z", false));
+			insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/potion/asm/PotionHooks", "doesShowParticles", "(Lnet/minecraft/potion/PotionEffect;)Z", false));
 			insn.add(new InsnNode(Opcodes.IRETURN));
 			doesShowParticles.instructions.insert(insn);
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
