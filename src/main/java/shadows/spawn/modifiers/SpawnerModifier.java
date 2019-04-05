@@ -16,6 +16,8 @@ public abstract class SpawnerModifier {
 
 	public static final String ITEM = "item";
 	public static final String VALUE = "value";
+	public static final String MIN = "min_value";
+	public static final String MAX = "max_value";
 
 	/**
 	 * The matching item for this modifier.
@@ -26,6 +28,16 @@ public abstract class SpawnerModifier {
 	 * The amount this modifier changes it's respective stat.
 	 */
 	protected int value;
+
+	/**
+	 * The in int value of this modifier value.
+	 */
+	protected int min;
+
+	/**
+	 * The max int value of this modifier value.
+	 */
+	protected int max;
 
 	public SpawnerModifier(Ingredient item, int value) {
 		this.item = item;
@@ -63,6 +75,8 @@ public abstract class SpawnerModifier {
 		String s = cfg.getString(ITEM, getCategory(), getDefaultItem(), "The item that applies this modifier.");
 		item = SpawnerModifiers.readStackCfg(s);
 		value = cfg.getInt(VALUE, getCategory(), value, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
+		min = cfg.getInt(MIN, getCategory(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
+		max = cfg.getInt(MAX, getCategory(), Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
 	}
 
 	public Ingredient getIngredient() {

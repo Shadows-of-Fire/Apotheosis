@@ -13,13 +13,13 @@ public class MaxDelayModifier extends SpawnerModifier {
 
 	@Override
 	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
-		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.maxSpawnDelay < Integer.MAX_VALUE : spawner.spawnerLogic.maxSpawnDelay > 0);
+		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.maxSpawnDelay < max : spawner.spawnerLogic.maxSpawnDelay > min);
 	}
 
 	@Override
 	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
 		int modify = inverting ? -value : value;
-		spawner.spawnerLogic.maxSpawnDelay = MathHelper.clamp(spawner.spawnerLogic.maxSpawnDelay + modify, 0, Integer.MAX_VALUE);
+		spawner.spawnerLogic.maxSpawnDelay = MathHelper.clamp(spawner.spawnerLogic.maxSpawnDelay + modify, min, max);
 		return true;
 	}
 

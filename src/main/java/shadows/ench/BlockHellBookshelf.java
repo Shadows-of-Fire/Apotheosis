@@ -93,4 +93,9 @@ public class BlockHellBookshelf extends Block {
 		return stack;
 	}
 
+	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return false;
+	}
+
 }

@@ -13,13 +13,13 @@ public class NearbyEntityModifier extends SpawnerModifier {
 
 	@Override
 	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
-		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.maxNearbyEntities > 0 : spawner.spawnerLogic.maxNearbyEntities < Integer.MAX_VALUE);
+		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.maxNearbyEntities > min : spawner.spawnerLogic.maxNearbyEntities < max);
 	}
 
 	@Override
 	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
 		int modify = inverting ? -value : value;
-		spawner.spawnerLogic.maxNearbyEntities = MathHelper.clamp(spawner.spawnerLogic.maxNearbyEntities + modify, 0, Integer.MAX_VALUE);
+		spawner.spawnerLogic.maxNearbyEntities = MathHelper.clamp(spawner.spawnerLogic.maxNearbyEntities + modify, min, max);
 		return true;
 	}
 

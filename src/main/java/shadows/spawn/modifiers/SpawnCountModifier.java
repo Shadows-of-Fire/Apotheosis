@@ -13,13 +13,13 @@ public class SpawnCountModifier extends SpawnerModifier {
 
 	@Override
 	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
-		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.spawnCount > 0 : spawner.spawnerLogic.spawnCount < Integer.MAX_VALUE);
+		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.spawnCount > min : spawner.spawnerLogic.spawnCount < max);
 	}
 
 	@Override
 	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
 		int modify = inverting ? -value : value;
-		spawner.spawnerLogic.spawnCount = MathHelper.clamp(spawner.spawnerLogic.spawnCount + modify, 0, Integer.MAX_VALUE);
+		spawner.spawnerLogic.spawnCount = MathHelper.clamp(spawner.spawnerLogic.spawnCount + modify, min, max);
 		return true;
 	}
 

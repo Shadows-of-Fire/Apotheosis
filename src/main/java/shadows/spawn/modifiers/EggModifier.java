@@ -34,12 +34,12 @@ public class EggModifier extends SpawnerModifier {
 
 	@Override
 	public String getCategory() {
-		return null;
+		return "";
 	}
 
 	@Override
 	public String getDefaultItem() {
-		return null;
+		return "";
 	}
 
 }

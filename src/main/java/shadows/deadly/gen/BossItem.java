@@ -156,12 +156,12 @@ public class BossItem extends WorldFeatureItem {
 				for (int i = 0; i < 5; i++)
 					addSingleEnchantment(stack, random, 28 + (Apotheosis.enableEnch ? 10 : 3) * i, true);
 
+				addSingleEnchantment(stack, random, Apotheosis.enableEnch ? 150 : 60, true);
 				Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(stack);
 				for (Enchantment e : enchMap.keySet()) {
 					enchMap.put(e, Math.min(EnchHooks.getMaxLevel(e), enchMap.get(e) + random.nextInt(2)));
 				}
 				EnchantmentHelper.setEnchantments(enchMap, stack);
-				addSingleEnchantment(stack, random, Apotheosis.enableEnch ? 150 : 60, true);
 			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {
 				EnchantmentHelper.addRandomEnchantment(random, stack, 30 + random.nextInt(Apotheosis.enableEnch ? 50 : 25), true);
 			}
