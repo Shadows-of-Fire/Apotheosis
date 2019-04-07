@@ -52,6 +52,6 @@ public class WorldGenerator {
 	public static final boolean DEBUG = false;
 
 	public static void debugLog(BlockPos pos, String name) {
-		if (DEBUG) DeadlyModule.LOGGER.info("Generated {} at {}", name, pos);
+		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {}", name, pos);
 	}
 }
