@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 import shadows.deadly.asm.DeadlyTransformer;
 import shadows.ench.anvil.asm.AnvilTransformer;
 import shadows.ench.asm.EnchTransformer;
@@ -12,7 +11,6 @@ import shadows.potion.asm.PotionTransformer;
 import shadows.spawn.asm.SpawnerTransformer;
 import shadows.util.BedTransformer;
 
-@SortingIndex(0)
 public class ApotheosisTransformer implements IClassTransformer {
 
 	public List<IApotheosisTransformer> transformers = new LinkedList<>();

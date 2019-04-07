@@ -10,7 +10,6 @@ import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
@@ -104,12 +103,6 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		getMaxLevel = dev ? "getMaxLevel" : "func_77325_b";
 		generate = dev ? "generate" : "func_180709_b";
 		onBlockActivated = dev ? "onBlockActivated" : "func_180639_a";
-
-		if (!dev) {
-			playerCapabilities = FMLDeobfuscatingRemapper.INSTANCE.unmap(playerCapabilities);
-			itemStack = FMLDeobfuscatingRemapper.INSTANCE.unmap(itemStack);
-			enchantment = FMLDeobfuscatingRemapper.INSTANCE.unmap(enchantment);
-		}
 	}
 
 	@Override
@@ -137,7 +130,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isDrawForeground(MethodNode m) {
-		return m.name.equals(drawForeground) && m.desc.equals("(II)V");
+		return m.name.equals(drawForeground);
 	}
 
 	public static boolean isCalcStackEnch(MethodNode m) {
@@ -145,7 +138,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isShowParticles(MethodNode m) {
-		return m.name.equals(doesShowParticles) && m.desc.equals("()Z");
+		return m.name.equals(doesShowParticles);
 	}
 
 	public static boolean isCalcDamage(MethodNode m) {
@@ -161,7 +154,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isItemEnch(MethodNode m) {
-		return m.name.equals(getItemEnchantability) && m.desc.equals("()I");
+		return m.name.equals(getItemEnchantability);
 	}
 
 	public static boolean isBlockWithShield(MethodNode m) {
@@ -169,7 +162,7 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	}
 
 	public static boolean isGetMaxLevel(MethodInsnNode m) {
-		return m.owner.equals(enchantment) && m.name.equals(getMaxLevel) && m.desc.equals("()I");
+		return m.owner.equals(enchantment) && m.name.equals(getMaxLevel);
 	}
 
 	public static boolean isGenerate(MethodNode m) {
