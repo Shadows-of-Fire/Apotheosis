@@ -181,7 +181,7 @@ public class BossItem extends WorldFeatureItem {
 
 	public static void initPotions() {
 		for (Potion p : ForgeRegistries.POTIONS)
-			if (p.beneficial) POTIONS.add(p);
+			if (p.beneficial && !p.isInstant()) POTIONS.add(p);
 		POTIONS.removeIf(p -> DeadlyConfig.BLACKLISTED_POTIONS.contains(p.getRegistryName()));
 	}
 
