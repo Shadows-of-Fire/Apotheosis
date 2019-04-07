@@ -55,7 +55,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 0, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.ENCHANTING_TABLE, 0, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 0, 1, 1, 3, 0));
-		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 3));
+		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
 		PlaceboLootSystem.registerLootTable(SPAWNER_BRUTAL, new LootTable(new LootPool[] { build.build() }));
 
 		build = new PoolBuilder(5, 6, 1, 4);
@@ -80,7 +80,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Items.BUCKET, 0, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 0, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.OBSIDIAN, 0, 3, 8, 3, 0));
-		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 3));
+		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
 		PlaceboLootSystem.registerLootTable(SPAWNER_SWARM, new LootTable(new LootPool[] { build.build() }));
 
 		build = new PoolBuilder(6, 12, 2, 5);
@@ -110,7 +110,7 @@ public class DeadlyLoot {
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_LEGGINGS, 20));
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_HELMET, 20));
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_CHESTPLATE, 20));
-		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 40));
+		build.addEntries(new EnchantedEntry(Items.BOOK, 40));
 		PlaceboLootSystem.registerLootTable(CHEST_VALUABLE, new LootTable(new LootPool[] { build.build() }));
 	}
 
