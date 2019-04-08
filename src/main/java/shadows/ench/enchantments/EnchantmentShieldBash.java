@@ -40,9 +40,12 @@ public class EnchantmentShieldBash extends Enchantment {
 	@Override
 	public void onEntityDamaged(EntityLivingBase user, Entity target, int level) {
 		if (target instanceof EntityLivingBase) {
-			user.getHeldItemMainhand().damageItem(35, user);
-			DamageSource src = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
-			((EntityLivingBase) target).attackEntityFrom(src, EnchModule.localAtkStrength * 2.35F * level);
+			ItemStack stack = user.getHeldItemMainhand();
+			if (stack.getItem().isShield(stack, user)) {
+				stack.damageItem(35, user);
+				DamageSource src = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
+				((EntityLivingBase) target).attackEntityFrom(src, EnchModule.localAtkStrength * 2.35F * level);
+			}
 		}
 	}
 
