@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.spawn.modifiers.CapModifier;
 import shadows.spawn.modifiers.ConditionModifier;
+import shadows.spawn.modifiers.EggModifier;
 import shadows.spawn.modifiers.MaxDelayModifier;
 import shadows.spawn.modifiers.MinDelayModifier;
 import shadows.spawn.modifiers.NearbyEntityModifier;
@@ -33,6 +34,7 @@ public class SpawnerModifiers {
 	public static final SpawnerModifier PLAYERS = new PlayerModifier();
 	public static final SpawnerModifier CAP = new CapModifier();
 	public static final SpawnerModifier REDSTONE = new RedstoneModifier();
+	public static final SpawnerModifier EGG = new EggModifier();
 
 	public static Ingredient inverseItem;
 
@@ -47,6 +49,7 @@ public class SpawnerModifiers {
 		register(PLAYERS);
 		register(CAP);
 		register(REDSTONE);
+		register(EGG);
 
 		inverseItem = readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
 	}
