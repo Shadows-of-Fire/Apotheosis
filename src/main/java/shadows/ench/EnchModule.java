@@ -39,6 +39,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.ResourceLocation;
@@ -432,7 +433,7 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
-	public void handleBerserk(LivingHurtEvent e) {
+	public void livingHurt(LivingHurtEvent e) {
 		EntityLivingBase user = e.getEntityLiving();
 		if (e.getSource().getTrueSource() instanceof Entity && user.getActivePotionEffect(MobEffects.RESISTANCE) == null) {
 			int level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user);
@@ -440,6 +441,13 @@ public class EnchModule {
 			user.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200 * level, level - 1));
 			user.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200 * level, level - 1));
 			user.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200 * level, level - 1));
+		}
+		if (e.getSource().isMagicDamage() && e.getSource().getTrueSource() instanceof EntityLivingBase) {
+			EntityLivingBase src = (EntityLivingBase) e.getSource().getTrueSource();
+			int lvl = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.MAGIC_PROTECTION, src);
+			if (lvl > 0) {
+				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getEnchantmentModifierDamage(src.getArmorInventoryList(), e.getSource())));
+			}
 		}
 	}
 

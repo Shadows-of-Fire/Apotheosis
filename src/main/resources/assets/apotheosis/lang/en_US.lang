@@ -112,6 +112,9 @@ enchantment.apotheosis.natures_blessing.desc=Hoes may be used to bonemeal crops.
 enchantment.apotheosis.rebounding=Rebounding
 enchantment.apotheosis.rebounding.desc=Melee attackers may find themselves much further away.
 
+enchantment.apotheosis.magic_protection=Occult Aversion
+enchantment.apotheosis.magic_protection.desc=Magic damage dealt by and to the user is reduced.
+
 tile.apotheosis.prismatic_altar.name=Altar of the Sea
 
 //Vanilla

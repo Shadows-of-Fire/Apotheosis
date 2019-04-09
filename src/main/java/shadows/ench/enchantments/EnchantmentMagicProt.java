@@ -29,8 +29,8 @@ public class EnchantmentMagicProt extends Enchantment {
 	}
 
 	@Override
-	public int calcModifierDamage(int lvl, DamageSource source) {
-		return source.isMagicDamage() && !source.isDamageAbsolute() ? lvl * 2 : 0;
+	public int calcModifierDamage(int level, DamageSource source) {
+		return source.isMagicDamage() && !source.isDamageAbsolute() ? level * 2 : 0;
 	}
 
 }

@@ -89,6 +89,7 @@ public class ApotheosisClient {
 				registerTooltip(ApotheosisObjects.SPLITTING, "enchantment.apotheosis.splitting.desc");
 				registerTooltip(ApotheosisObjects.NATURES_BLESSING, "enchantment.apotheosis.natures_blessing.desc");
 				registerTooltip(ApotheosisObjects.REBOUNDING, "enchantment.apotheosis.rebounding.desc");
+				registerTooltip(ApotheosisObjects.MAGIC_PROTECTION, twisted, "", "enchantment.apotheosis.magic_protection.desc");
 			}
 		} else {
 			if (Apotheosis.enablePotion) registerTooltip(ApotheosisObjects.TRUE_INFINITY, masterwork);
@@ -99,6 +100,7 @@ public class ApotheosisClient {
 				registerTooltip(ApotheosisObjects.LIFE_MENDING, corrupted);
 				registerTooltip(ApotheosisObjects.BERSERK, corrupted);
 				registerTooltip(ApotheosisObjects.KNOWLEDGE, masterwork);
+				registerTooltip(ApotheosisObjects.MAGIC_PROTECTION, twisted);
 			}
 		}
 		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
