@@ -437,10 +437,12 @@ public class EnchModule {
 		EntityLivingBase user = e.getEntityLiving();
 		if (e.getSource().getTrueSource() instanceof Entity && user.getActivePotionEffect(MobEffects.RESISTANCE) == null) {
 			int level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user);
-			user.attackEntityFrom(EnchModule.CORRUPTED, level * level);
-			user.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200 * level, level - 1));
-			user.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200 * level, level - 1));
-			user.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200 * level, level - 1));
+			if (level > 0) {
+				user.attackEntityFrom(EnchModule.CORRUPTED, level * level);
+				user.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200 * level, level - 1));
+				user.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200 * level, level - 1));
+				user.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200 * level, level - 1));
+			}
 		}
 		if (e.getSource().isMagicDamage() && e.getSource().getTrueSource() instanceof EntityLivingBase) {
 			EntityLivingBase src = (EntityLivingBase) e.getSource().getTrueSource();
