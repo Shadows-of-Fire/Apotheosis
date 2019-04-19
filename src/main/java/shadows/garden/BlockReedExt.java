@@ -2,6 +2,7 @@ package shadows.garden;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -43,6 +44,13 @@ public class BlockReedExt extends BlockReed {
 					}
 				}
 			}
+		}
+	}
+
+	@Override
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos origin) {
+		if (pos.getY() != origin.getY()) {
+			super.neighborChanged(state, world, pos, block, origin);
 		}
 	}
 
