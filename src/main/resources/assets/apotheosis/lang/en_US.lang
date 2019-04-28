@@ -104,7 +104,7 @@ enchantment.apotheosis.knowledge=Knowledge of the Ages
 enchantment.apotheosis.knowledge.desc=Enemy drops are directly converted to experience.
 
 enchantment.apotheosis.splitting=Splitting
-enchantment.apotheosis.splitting.desc=Allows anvils to split enchanted books they fall upon.
+enchantment.apotheosis.splitting.desc=Allows anvils to split multiple enchantments from books they fall upon.
 
 enchantment.apotheosis.natures_blessing=Nature's Blessing
 enchantment.apotheosis.natures_blessing.desc=Hoes may be used to bonemeal crops.

@@ -108,6 +108,7 @@ import shadows.util.NBTIngredient;
  * Max table level in Apotheosis is 256, or 320 by config. Last Updated: (3/7/2019)
  *
  */
+@SuppressWarnings("deprecation")
 public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();

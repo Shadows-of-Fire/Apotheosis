@@ -20,7 +20,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.5.2768"
+    version = "1.12.2-14.23.5.2836"
     runDir = "run"
     mappings = "stable_39"
 	makeObfSourceJar = false
@@ -40,6 +40,9 @@ repositories {
 	maven {
 		url 'http://maven.blamejared.com'
 	}
+	maven {
+		url 'https://minecraft.curseforge.com/api/maven/'
+	}
 }
 
 dependencies {
@@ -47,6 +50,8 @@ dependencies {
 	deobfCompile "mcp.mobius.waila:Hwyla:1.8.+"
 	deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-1.12.2:+"
 	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+"
+	deobfCompile "slimeknights.mantle:Mantle:1.12-+"
+	deobfCompile "inspirations:Inspirations:1.12.2:0.2.4"
 }
 
 processResources

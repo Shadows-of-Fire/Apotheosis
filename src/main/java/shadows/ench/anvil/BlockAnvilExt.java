@@ -30,10 +30,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import shadows.ApotheosisObjects;
 import shadows.ench.ItemTypedBook;
+import shadows.ench.anvil.compat.InspirationsCompat;
 
 public class BlockAnvilExt extends BlockAnvil {
 
@@ -99,9 +101,13 @@ public class BlockAnvilExt extends BlockAnvil {
 		}
 	}
 
+	boolean inspirations = Loader.isModLoaded("inspirations");
+
 	@Override
 	public void onEndFalling(World world, BlockPos pos, IBlockState fallState, IBlockState hitState) {
-		super.onEndFalling(world, pos, fallState, hitState);
+		if (inspirations) InspirationsCompat.onEndFalling(world, pos, fallState, hitState);
+		else super.onEndFalling(world, pos, fallState, hitState);
+
 		List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
 		EntityFallingBlock anvil = world.getEntitiesWithinAABB(EntityFallingBlock.class, new AxisAlignedBB(pos, pos.add(1, 1, 1))).get(0);
 		int split = anvil.tileEntityData.getInteger("splitting");
