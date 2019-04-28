@@ -40,7 +40,7 @@ import shadows.spawn.SpawnerModule;
 import shadows.util.NBTIngredient;
 import shadows.util.ParticleMessage;
 
-@Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,)", acceptableRemoteVersions = "*")
+@Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,);after:inspirations", acceptableRemoteVersions = "*")
 public class Apotheosis {
 
 	public static final String MODID = "apotheosis";

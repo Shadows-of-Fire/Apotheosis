@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.projectile.EntityTippedArrow;
@@ -17,6 +18,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagFloat;
@@ -319,6 +321,17 @@ public class TagBuilder {
 	public static NBTTagCompound checkForSkeleton(NBTTagCompound entity) {
 		if (EntitySkeleton.class.isAssignableFrom(EntityList.getClass(new ResourceLocation(entity.getString(SpawnerBuilder.ID))))) {
 			TagBuilder.setEquipment(entity, new ItemStack(Items.BOW));
+		}
+		return entity;
+	}
+
+	public static NBTTagCompound checkForCreeper(NBTTagCompound entity) {
+		if (EntityCreeper.class.isAssignableFrom(EntityList.getClass(new ResourceLocation(entity.getString(SpawnerBuilder.ID))))) {
+			NBTTagList effects = entity.getTagList(EFFECTS, 10);
+			for (NBTBase nbt : effects) {
+				((NBTTagCompound) nbt).setInteger("Duration", 300);
+			}
+			return entity;
 		}
 		return entity;
 	}

@@ -102,7 +102,7 @@ public class BrutalSpawner extends WorldFeature {
 		TagBuilder.checkForSkeleton(tag);
 		for (String name : BASE_TAG.getKeySet())
 			tag.setTag(name, BASE_TAG.getTag(name).copy());
-		return tag;
+		return TagBuilder.checkForCreeper(tag);
 	}
 
 	private static NBTTagCompound getOrCreate(NBTTagCompound parent, String key) {
