@@ -36,6 +36,11 @@ public class ItemFarmersLeash extends Item {
 	}
 
 	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
+
+	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
 		if (stack.getOrCreateSubCompound("entity_data").isEmpty() && entity instanceof EntityAnimal) {
 			NBTTagCompound tag = new NBTTagCompound();

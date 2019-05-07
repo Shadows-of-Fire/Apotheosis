@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.objects;
 
 import java.util.List;
 

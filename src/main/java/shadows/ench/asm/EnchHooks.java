@@ -18,8 +18,8 @@ import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 import shadows.ench.EnchModule;
 import shadows.ench.EnchantmentInfo;
-import shadows.ench.ItemTypedBook;
 import shadows.ench.anvil.asm.AnvilTransformer;
+import shadows.ench.objects.ItemTypedBook;
 
 /**
  * ASM methods for the enchantment module.

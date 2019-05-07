@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.objects;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;

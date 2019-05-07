@@ -1,4 +1,4 @@
-package shadows.ench;
+package shadows.ench.objects;
 
 import java.util.List;
 import java.util.Locale;
@@ -20,6 +20,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import shadows.Apotheosis;
+import shadows.ench.EnchModule;
 
 public class ItemTypedBook extends ItemBook {
 

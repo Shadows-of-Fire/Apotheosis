@@ -24,9 +24,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.ench.EnchModule;
-import shadows.ench.ItemTypedBook;
 import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
+import shadows.ench.objects.ItemTypedBook;
 import shadows.placebo.Placebo;
 import shadows.placebo.util.PlaceboUtil;
 

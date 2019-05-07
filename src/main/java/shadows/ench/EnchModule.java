@@ -44,6 +44,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -93,6 +94,11 @@ import shadows.ench.enchantments.EnchantmentScavenger;
 import shadows.ench.enchantments.EnchantmentShieldBash;
 import shadows.ench.enchantments.EnchantmentStableFooting;
 import shadows.ench.enchantments.EnchantmentTempting;
+import shadows.ench.objects.BlockHellBookshelf;
+import shadows.ench.objects.ItemHellBookshelf;
+import shadows.ench.objects.ItemScrapTome;
+import shadows.ench.objects.ItemShearsExt;
+import shadows.ench.objects.ItemTypedBook;
 import shadows.placebo.itemblock.ItemBlockBase;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.util.NBTIngredient;
@@ -105,7 +111,7 @@ import shadows.util.NBTIngredient;
  *
  * Enchantment min/max enchantability should really be called something else, they aren't fully based on enchantability.
  * Enchantment rarity affects weight in WeightedRandom list picking.
- * Max table level in Apotheosis is 256, or 320 by config. Last Updated: (3/7/2019)
+ * Max expected table level is 150, 40 before empowered shelves.
  *
  */
 @SuppressWarnings("deprecation")
@@ -124,26 +130,40 @@ public class EnchModule {
 	public static final EntityEquipmentSlot[] ARMOR = { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
 
 	public static float localAtkStrength = 1;
-	static Configuration config;
+	static Configuration enchInfoConfig;
 	public static OreIngredient blockIron;
 
 	public static boolean allowWeb = true;
-	public static float maxNormalPower = 25;
-	public static float maxHellPower = 160;
+	public static float maxNormalPower = 20;
+	public static float maxPower = 75;
 
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
-		config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
+		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
 		setEnch(ToolMaterial.GOLD, 40);
 		setEnch(ArmorMaterial.GOLD, 40);
 		for (ArmorMaterial a : ArmorMaterial.values())
 			setEnch(a, config.getInt(a.name(), "Enchantability - Armor", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this armor material."));
 		for (ToolMaterial a : ToolMaterial.values())
 			setEnch(a, config.getInt(a.name(), "Enchantability - Tools", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this tool material."));
-
 		if (config.hasChanged()) config.save();
-		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 
+		config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
+		String[] blacklist = config.getStringList("Enchantment Blacklist", "general", new String[0], "A list of enchantments that are banned from the enchanting table and other natural sources.");
+		for (String s : blacklist) {
+			Enchantment ex = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
+			if (ex == null) {
+				LOGGER.error("Invalid enchantment blacklist entry {} will be ignored!", ex);
+				continue;
+			}
+			BLACKLISTED_ENCHANTS.add(ex);
+		}
+		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
+		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
+		maxPower = config.getFloat("Max Power", "general", maxPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive.");
+		if (config.hasChanged()) config.save();
+
+		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
 			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
@@ -156,23 +176,7 @@ public class EnchModule {
 			ENCHANTMENT_INFO.put(ench, info);
 		}
 		if (config.hasChanged()) config.save();
-		config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
-		String[] blacklist = config.getStringList("Enchantment Blacklist", "general", new String[0], "A list of enchantments that are banned from the enchanting table and other natural sources.");
-
-		for (String s : blacklist) {
-			Enchantment ex = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
-			if (ex == null) {
-				LOGGER.error("Invalid enchantment blacklist entry {} will be ignored!", ex);
-				continue;
-			}
-			BLACKLISTED_ENCHANTS.add(ex);
-		}
-
-		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
-		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
-		maxHellPower = config.getFloat("Max Hell Power", "general", maxHellPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from hell-infused bookshelves.");
-
-		if (config.hasChanged()) config.save();
+		enchInfoConfig = config;
 
 		blockIron = new OreIngredient("blockIron");
 
@@ -418,11 +422,8 @@ public class EnchModule {
 	@SubscribeEvent
 	public void enchLevel(EnchantmentLevelSetEvent e) {
 		int power = e.getPower();
-		if (e.getEnchantRow() == 0) {
-			e.setLevel(power / 2);
-		} else if (e.getEnchantRow() == 1) {
-			e.setLevel(power);
-		}
+		//Power * 2, Power * 1.5, Power * 1
+		e.setLevel(MathHelper.floor(power * (1 + e.getEnchantRow() * 0.5F)));
 	}
 
 	@SubscribeEvent
@@ -467,32 +468,32 @@ public class EnchModule {
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
 		EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
-		if (config == null) {
+		if (enchInfoConfig == null) {
 			LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
 			Thread.dumpStack();
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
 		}
 		if (info == null) {
-			int max = config.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, 127, "The max level of this enchantment.");
-			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
+			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, 127, "The max level of this enchantment.");
+			int min = enchInfoConfig.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			info = new EnchantmentInfo(ench, max, min);
-			String maxF = config.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
+			String maxF = enchInfoConfig.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
 			if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
-			String minF = config.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
+			String minF = enchInfoConfig.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
 			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
 			ENCHANTMENT_INFO.put(ench, info);
-			if (config.hasChanged()) config.save();
+			if (enchInfoConfig.hasChanged()) enchInfoConfig.save();
 			LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", ench.getRegistryName(), ench.getRegistryName().getNamespace());
 		}
 		return info;
 	}
 
 	/**
-	 * Tries to find a max level for this enchantment, if it was obtainable at level 320.
+	 * Tries to find a max level for this enchantment.  This is used to scale up default levels to the Apoth cap.
 	 */
 	public static int getDefaultMax(Enchantment ench) {
-		int absMax = 320;
+		int absMax = MathHelper.ceil(maxNormalPower * 2 + maxPower * 2);
 		int level = ench.getMaxLevel();
 		int maxPower = ench.getMaxEnchantability(level);
 		if (maxPower >= absMax) return level;

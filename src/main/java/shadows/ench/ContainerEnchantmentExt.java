@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+import shadows.ench.objects.BlockHellBookshelf;
 
 public class ContainerEnchantmentExt extends ContainerEnchantment {
 
@@ -98,7 +99,7 @@ public class ContainerEnchantmentExt extends ContainerEnchantment {
 				}
 			}
 		}
-		return Math.min(powers[0], EnchModule.maxNormalPower) + Math.min(powers[1], EnchModule.maxHellPower);
+		return Math.min(EnchModule.maxPower, Math.min(powers[0], EnchModule.maxNormalPower) + powers[1]);
 	}
 
 	public void getSinglePower(float[] powers, BlockPos pos) {
