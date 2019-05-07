@@ -40,7 +40,7 @@ public class PotionModule {
 	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
 	static Configuration config;
-	static int knowledgeMult = 15;
+	static int knowledgeMult = 10;
 
 	@SubscribeEvent
 	public void preInit(ApotheosisPreInit e) {
@@ -128,9 +128,9 @@ public class PotionModule {
 				new PotionType("sundering", new PotionEffect(ApotheosisObjects.SUNDERING, 3600)).setRegistryName(Apotheosis.MODID, "sundering"),
 				new PotionType("sundering", new PotionEffect(ApotheosisObjects.SUNDERING, 9600)).setRegistryName(Apotheosis.MODID, "long_sundering"),
 				new PotionType("sundering", new PotionEffect(ApotheosisObjects.SUNDERING, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_sundering"),
-				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 1600)).setRegistryName(Apotheosis.MODID, "knowledge"),
-				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 3200)).setRegistryName(Apotheosis.MODID, "long_knowledge"),
-				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 800, 1)).setRegistryName(Apotheosis.MODID, "strong_knowledge"));
+				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 2400)).setRegistryName(Apotheosis.MODID, "knowledge"),
+				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 4800)).setRegistryName(Apotheosis.MODID, "long_knowledge"),
+				new PotionType("knowledge", new PotionEffect(ApotheosisObjects.P_KNOWLEDGE, 1200, 1)).setRegistryName(Apotheosis.MODID, "strong_knowledge"));
 		//Formatter::on
 	}
 
