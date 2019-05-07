@@ -493,7 +493,7 @@ public class EnchModule {
 	 * Tries to find a max level for this enchantment.  This is used to scale up default levels to the Apoth cap.
 	 */
 	public static int getDefaultMax(Enchantment ench) {
-		int absMax = MathHelper.ceil(maxNormalPower * 2 + maxPower * 2);
+		int absMax = MathHelper.ceil(maxPower * 2);
 		int level = ench.getMaxLevel();
 		int maxPower = ench.getMaxEnchantability(level);
 		if (maxPower >= absMax) return level;
