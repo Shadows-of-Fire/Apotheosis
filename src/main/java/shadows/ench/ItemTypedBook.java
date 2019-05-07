@@ -10,10 +10,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -44,10 +46,15 @@ public class ItemTypedBook extends ItemBook {
 		tooltip.add(I18n.format("info.apotheosis." + getRegistryName().getPath()));
 	}
 
+	@Override
+	public IRarity getForgeRarity(ItemStack stack) {
+		return !stack.isItemEnchanted() ? super.getForgeRarity(stack) : EnumRarity.UNCOMMON;
+	}
+
 	public static void updateAnvil(AnvilUpdateEvent ev) {
 		ItemStack book = ev.getRight();
 		ItemStack weapon = ev.getLeft();
-		if (!book.isItemEnchanted() || !weapon.getItem().isEnchantable(weapon)) return;
+		if (!(book.getItem() instanceof ItemBook) || !book.isItemEnchanted() || !weapon.getItem().isEnchantable(weapon)) return;
 		Map<Enchantment, Integer> bookEnch = EnchantmentHelper.getEnchantments(book);
 		Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
 		int cost = 0;

@@ -114,8 +114,10 @@ public class ApotheosisClient {
 			for (ItemTypedBook b : EnchModule.TYPED_BOOKS)
 				PlaceboUtil.sMRL("minecraft", "enchanted_book", b, 0, "inventory");
 			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_ALTAR, 0, "normal");
+			PlaceboUtil.sMRL("minecraft", "enchanted_book", ApotheosisObjects.SCRAP_TOME, 0, "inventory");
 		}
 		if (Apotheosis.enablePotion) PlaceboUtil.sMRL(ApotheosisObjects.LUCKY_FOOT, 0, "inventory");
+		if (Apotheosis.enableGarden) PlaceboUtil.sMRL(ApotheosisObjects.FARMERS_LEASH, 0, "inventory");
 	}
 
 	public static void registerTooltip(Enchantment e, String... keys) {

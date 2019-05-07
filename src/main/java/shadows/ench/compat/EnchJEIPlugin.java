@@ -28,24 +28,28 @@ public class EnchJEIPlugin implements IModPlugin {
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchDiaSword);
 		ItemStack cursedDiaSword = new ItemStack(Items.DIAMOND_SWORD);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedDiaSword);
+		ItemStack scrapTome = new ItemStack(ApotheosisObjects.SCRAP_TOME);
+		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), scrapTome);
 		IVanillaRecipeFactory factory = reg.getJeiHelpers().getVanillaRecipeFactory();
 		//Formatter::off
 		if(EnchModule.allowWeb)
 		reg.addRecipes(ImmutableList.of(
 			factory.createAnvilRecipe(
-				enchDiaSword, 
-				ImmutableList.of(new ItemStack(Blocks.WEB)), 
-				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD)))),
-				VanillaRecipeCategoryUid.ANVIL);
-		reg.addRecipes(ImmutableList.of(
+				enchDiaSword,
+				ImmutableList.of(new ItemStack(Blocks.WEB)),
+				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
 			factory.createAnvilRecipe(
-				cursedDiaSword, 
-				ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)), 
-				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))), 
+				cursedDiaSword,
+				ImmutableList.of(new ItemStack(ApotheosisObjects.PRISMATIC_WEB)),
+				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
 			factory.createAnvilRecipe(
-				new ItemStack(Blocks.ANVIL, 1, 1), 
-				ImmutableList.of(new ItemStack(Blocks.IRON_BLOCK)), 
-				ImmutableList.of(new ItemStack(Blocks.ANVIL)))), 
+				enchDiaSword,
+				ImmutableList.of(new ItemStack(ApotheosisObjects.SCRAP_TOME)),
+				ImmutableList.of(scrapTome)),
+			factory.createAnvilRecipe(
+				new ItemStack(Blocks.ANVIL, 1, 1),
+				ImmutableList.of(new ItemStack(Blocks.IRON_BLOCK)),
+				ImmutableList.of(new ItemStack(Blocks.ANVIL)))),
 			VanillaRecipeCategoryUid.ANVIL);
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");

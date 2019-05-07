@@ -145,7 +145,7 @@ public class EnchModule {
 		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
-			int max = config.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, 127, "The max level of this enchantment.");
+			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
 			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			EnchantmentInfo info = new EnchantmentInfo(ench, max, min);
@@ -224,7 +224,8 @@ public class EnchModule {
 				new ItemTypedBook(Items.DIAMOND_PICKAXE, EnumEnchantmentType.DIGGER),
 				new ItemTypedBook(Items.FISHING_ROD, EnumEnchantmentType.FISHING_ROD),
 				new ItemTypedBook(Items.BOW, EnumEnchantmentType.BOW),
-				new ItemBlockBase(ApotheosisObjects.PRISMATIC_ALTAR)
+				new ItemBlockBase(ApotheosisObjects.PRISMATIC_ALTAR),
+				new ItemScrapTome()
 				);
 		//Formatter::on
 	}
@@ -284,6 +285,7 @@ public class EnchModule {
 		e.helper.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Blocks.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 		e.helper.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 16), 3, 3, Items.ENDER_EYE, Items.GOLD_NUGGET, Items.ENDER_EYE, Items.BLAZE_POWDER, Items.DRAGON_BREATH, Items.BLAZE_POWDER, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST);
 		e.helper.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
+		e.helper.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
 	}
 
 	@SubscribeEvent
@@ -316,6 +318,7 @@ public class EnchModule {
 			return;
 		}
 		ItemTypedBook.updateAnvil(e);
+		ItemScrapTome.updateAnvil(e);
 	}
 
 	@SubscribeEvent
@@ -483,6 +486,27 @@ public class EnchModule {
 			LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", ench.getRegistryName(), ench.getRegistryName().getNamespace());
 		}
 		return info;
+	}
+
+	/**
+	 * Tries to find a max level for this enchantment, if it was obtainable at level 320.
+	 */
+	public static int getDefaultMax(Enchantment ench) {
+		int absMax = 320;
+		int level = ench.getMaxLevel();
+		int maxPower = ench.getMaxEnchantability(level);
+		if (maxPower >= absMax) return level;
+		int lastMaxPower = maxPower; //Need this to check that we don't get locked up on single-level enchantments.
+		while (maxPower < absMax) {
+			maxPower = ench.getMaxEnchantability(++level);
+			if (lastMaxPower == maxPower) {
+				level--;
+				break;
+			}
+			lastMaxPower = maxPower;
+		}
+		if (ench == Enchantments.SILK_TOUCH) return 1;
+		return level;
 	}
 
 }

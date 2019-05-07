@@ -6,6 +6,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.ench.BlockHellBookshelf;
+import shadows.ench.ItemScrapTome;
 import shadows.ench.ItemTypedBook;
 import shadows.ench.altar.BlockPrismaticAltar;
 import shadows.ench.anvil.EnchantmentSplitting;
@@ -24,6 +25,7 @@ import shadows.ench.enchantments.EnchantmentScavenger;
 import shadows.ench.enchantments.EnchantmentShieldBash;
 import shadows.ench.enchantments.EnchantmentStableFooting;
 import shadows.ench.enchantments.EnchantmentTempting;
+import shadows.garden.ItemFarmersLeash;
 import shadows.potion.EnchantmentTrueInfinity;
 import shadows.potion.ItemLuckyFoot;
 import shadows.potion.potions.PotionKnowledge;
@@ -96,4 +98,6 @@ public class ApotheosisObjects {
 	public static final PotionType STRONG_KNOWLEDGE = null;
 	public static final ItemLuckyFoot LUCKY_FOOT = null;
 	public static final EnchantmentMagicProt MAGIC_PROTECTION = null;
+	public static final ItemScrapTome SCRAP_TOME = null;
+	public static final ItemFarmersLeash FARMERS_LEASH = null;
 }

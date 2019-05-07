@@ -14,6 +14,8 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisPreInit;
+import shadows.Apotheosis.ApotheosisRecipeEvent;
+import shadows.ApotheosisObjects;
 
 public class GardenModule {
 
@@ -42,6 +44,13 @@ public class GardenModule {
 				return Apotheosis.MODID;
 			}
 		}.setRegistryName(Items.REEDS.getRegistryName()).setTranslationKey("reeds").setCreativeTab(CreativeTabs.MATERIALS));
+
+		e.getRegistry().register(new ItemFarmersLeash());
+	}
+
+	@SubscribeEvent
+	public void recipes(ApotheosisRecipeEvent e) {
+		e.helper.addShapeless(ApotheosisObjects.FARMERS_LEASH, Items.ENDER_PEARL, Items.LEAD, "ingotGold");
 	}
 
 }

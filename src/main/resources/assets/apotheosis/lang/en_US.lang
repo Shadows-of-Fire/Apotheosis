@@ -78,6 +78,7 @@ item.apotheosis.weapon_book.name=Tome of Weaponry
 item.apotheosis.digger_book.name=Tome of the Miners
 item.apotheosis.fishing_rod_book.name=Tome of the Fishers
 item.apotheosis.bow_book.name=Tome of the Archers
+item.apotheosis.scrap_tome.name=Tome of Scrapping
 info.apotheosis.null_book=Accepts miscellaneous enchantments.
 info.apotheosis.armor_head_book=Accepts helmet enchantments.
 info.apotheosis.armor_chest_book=Accepts chestplate enchantments.
@@ -87,6 +88,8 @@ info.apotheosis.weapon_book=Accepts weapon enchantments.
 info.apotheosis.digger_book=Accepts mining enchantments.
 info.apotheosis.fishing_rod_book=Accepts fishing pole enchantments.
 info.apotheosis.bow_book=Accepts bow enchantments.
+info.apotheosis.scrap_tome=Can remove enchantments, taking some of them as it's own.
+info.apotheosis.scrap_tome2=Will consume the item in the process.
 
 enchantment.apotheosis.tempting=Temptation
 enchantment.apotheosis.tempting.desc=Entices nearby farm animals.
@@ -284,3 +287,9 @@ info.apotheosis.lucky=A rare find
 
 //Anvil Module
 info.apotheosis.anvil=Can be enchanted.
+
+//Garden Module
+item.apotheosis.farmers_leash.name=Farmer's Leash
+info.apotheosis.noentity=Held Entity: Nothing
+info.apotheosis.containedentity=Held Entity: %s
+info.apotheosis.farmleash=The Farmer's Leash is an item that can be used to move animals around.  Capture an animal with left click, and release it with right click.  The leash will not work on other types of entities.

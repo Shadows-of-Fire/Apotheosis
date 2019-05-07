@@ -40,12 +40,12 @@ import shadows.spawn.SpawnerModule;
 import shadows.util.NBTIngredient;
 import shadows.util.ParticleMessage;
 
-@Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,);after:inspirations", acceptableRemoteVersions = "*")
+@Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,);after:inspirations;after:forge@[14.23.5.2836,)", acceptableRemoteVersions = "*")
 public class Apotheosis {
 
 	public static final String MODID = "apotheosis";
 	public static final String MODNAME = "Apotheosis";
-	public static final String Version = "1.9.4";
+	public static final String Version = "1.10.0";
 	public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 
 	public static File configDir;

@@ -7,7 +7,7 @@ import shadows.Apotheosis;
 public class EnchantmentDepths extends EnchantmentDigging {
 
 	public EnchantmentDepths() {
-		super(Rarity.UNCOMMON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
+		super(Rarity.RARE, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
 		setName(Apotheosis.MODID + ".depth_miner");
 	}
 

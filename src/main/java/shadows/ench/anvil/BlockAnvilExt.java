@@ -19,6 +19,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBook;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -34,7 +35,6 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import shadows.ApotheosisObjects;
-import shadows.ench.ItemTypedBook;
 import shadows.ench.anvil.compat.InspirationsCompat;
 
 public class BlockAnvilExt extends BlockAnvil {
@@ -114,10 +114,10 @@ public class BlockAnvilExt extends BlockAnvil {
 		int ub = anvil.tileEntityData.getInteger("ub");
 		if (split > 0) for (EntityItem entity : items) {
 			ItemStack stack = entity.getItem();
-			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof ItemTypedBook) {
+			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof ItemBook) {
 				if (world.rand.nextInt(Math.max(1, 6 - split)) == 0) {
 					NBTTagList enchants = ItemEnchantedBook.getEnchantments(stack);
-					if (stack.getItem() instanceof ItemTypedBook) enchants = stack.getEnchantmentTagList();
+					if (stack.getItem() instanceof ItemBook) enchants = stack.getEnchantmentTagList();
 					entity.setDead();
 					for (NBTBase nbt : enchants) {
 						NBTTagCompound tag = (NBTTagCompound) nbt;
