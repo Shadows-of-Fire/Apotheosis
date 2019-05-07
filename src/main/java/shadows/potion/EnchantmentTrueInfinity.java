@@ -3,6 +3,7 @@ package shadows.potion;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import shadows.Apotheosis;
 
 public class EnchantmentTrueInfinity extends Enchantment {
 
@@ -18,7 +19,7 @@ public class EnchantmentTrueInfinity extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return 65;
+		return Apotheosis.enableEnch ? 65 : 31;
 	}
 
 	@Override
