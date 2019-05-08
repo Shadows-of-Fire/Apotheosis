@@ -80,7 +80,7 @@ public class ItemFarmersLeash extends Item {
 		if (tag == null) return null;
 		tag = tag.copy();
 		NBTTagCompound entity = new NBTTagCompound();
-		entity.setString("id", tag.getCompoundTag("entity_data").getString("id"));
+		if (tag.getCompoundTag("entity_data").hasKey("id")) entity.setString("id", tag.getCompoundTag("entity_data").getString("id"));
 		tag.setTag("entity_data", entity);
 		return tag;
 	}
