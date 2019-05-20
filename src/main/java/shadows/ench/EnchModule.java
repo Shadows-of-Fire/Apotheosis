@@ -205,7 +205,7 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")),
-				new BlockAnvilExt(),
+				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
 				new BlockPrismaticAltar()
 				);
 		//Formatter::on

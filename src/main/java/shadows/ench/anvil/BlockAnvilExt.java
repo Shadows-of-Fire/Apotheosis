@@ -40,7 +40,6 @@ import shadows.ench.anvil.compat.InspirationsCompat;
 public class BlockAnvilExt extends BlockAnvil {
 
 	public BlockAnvilExt() {
-		setRegistryName("minecraft", "anvil");
 		setHardness(5);
 		setSoundType(SoundType.ANVIL);
 		setResistance(2000);
