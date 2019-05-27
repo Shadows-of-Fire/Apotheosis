@@ -132,6 +132,7 @@ public class EnchModule {
 	public static float localAtkStrength = 1;
 	static Configuration enchInfoConfig;
 	public static OreIngredient blockIron;
+	public static int absMax = 170;
 
 	public static boolean allowWeb = true;
 	public static float maxNormalPower = 20;
@@ -163,6 +164,7 @@ public class EnchModule {
 		maxPower = config.getFloat("Max Power", "general", maxPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive.");
 		if (config.hasChanged()) config.save();
 
+		recalcAbsMax();
 		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
@@ -493,7 +495,6 @@ public class EnchModule {
 	 * Tries to find a max level for this enchantment.  This is used to scale up default levels to the Apoth cap.
 	 */
 	public static int getDefaultMax(Enchantment ench) {
-		int absMax = MathHelper.ceil(maxPower * 2);
 		int level = ench.getMaxLevel();
 		int maxPower = ench.getMaxEnchantability(level);
 		if (maxPower >= absMax) return level;
@@ -508,6 +509,18 @@ public class EnchModule {
 		}
 		if (ench == Enchantments.SILK_TOUCH) return 1;
 		return level;
+	}
+
+	static void recalcAbsMax() {
+		int max = MathHelper.ceil(maxPower * 2);
+		int maxEnch = 0;
+		for (ToolMaterial m : ToolMaterial.values()) {
+			maxEnch = Math.max(maxEnch, m.getEnchantability());
+		}
+		for (ArmorMaterial m : ArmorMaterial.values()) {
+			maxEnch = Math.max(maxEnch, m.getEnchantability());
+		}
+		absMax = max + maxEnch / 2 + 3;
 	}
 
 }
