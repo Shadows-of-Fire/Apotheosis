@@ -138,6 +138,8 @@ public class EnchModule {
 	public static float maxNormalPower = 20;
 	public static float maxPower = 75;
 
+	public static boolean itemMerging = false;
+
 	@SubscribeEvent
 	public void init(ApotheosisInit e) {
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
@@ -162,6 +164,7 @@ public class EnchModule {
 		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
 		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
 		maxPower = config.getFloat("Max Power", "general", maxPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive.");
+		itemMerging = config.getBoolean("Item Merging", "general", false, "If any two enchanted items can be combined in an Anvil.");
 		if (config.hasChanged()) config.save();
 
 		recalcAbsMax();
@@ -323,8 +326,62 @@ public class EnchModule {
 			e.setMaterialCost(1);
 			return;
 		}
-		ItemTypedBook.updateAnvil(e);
-		ItemScrapTome.updateAnvil(e);
+		if (ItemTypedBook.updateAnvil(e)) return;
+		if (ItemScrapTome.updateAnvil(e)) return;
+		if (itemMerging && mergeAll(e)) return;
+	}
+
+	private boolean mergeAll(AnvilUpdateEvent ev) {
+		ItemStack right = ev.getRight();
+		ItemStack left = ev.getLeft();
+		if (!right.isItemEnchanted() || !left.getItem().isEnchantable(left)) return false;
+		Map<Enchantment, Integer> rightEnch = EnchantmentHelper.getEnchantments(right);
+		Map<Enchantment, Integer> leftEnch = EnchantmentHelper.getEnchantments(left);
+		int cost = 0;
+
+		for (Enchantment ench : rightEnch.keySet()) {
+			if (ench == null) continue;
+
+			int level = rightEnch.get(ench);
+			int curLevel = leftEnch.containsKey(ench) ? leftEnch.get(ench) : 0;
+			if (level > 0 && level == curLevel) level = Math.min(EnchModule.getEnchInfo(ench).getMaxLevel(), level + 1);
+			if (curLevel > level) level = curLevel;
+
+			if (ench.canApply(left)) {
+				boolean isCompat = true;
+				for (Enchantment ench2 : leftEnch.keySet()) {
+					if (ench != ench2 && !ench.isCompatibleWith(ench2)) isCompat = false;
+				}
+				if (!isCompat) return false;
+				leftEnch.put(ench, level);
+				int addition = 0;
+				switch (ench.getRarity()) {
+				case COMMON:
+					addition += 2 * level;
+					break;
+				case UNCOMMON:
+					addition += 4 * level;
+					break;
+				case RARE:
+					addition += 6 * level;
+					break;
+				case VERY_RARE:
+					addition += 12 * level;
+				}
+				cost += Math.max(1, addition / 2);
+			}
+		}
+		if (cost > 0) {
+			cost += left.getRepairCost();
+			ItemStack out = left.copy();
+			out.setRepairCost(left.getRepairCost() * 2 + 1);
+			EnchantmentHelper.setEnchantments(leftEnch, out);
+			ev.setMaterialCost(1);
+			ev.setCost(cost);
+			ev.setOutput(out);
+			return true;
+		}
+		return false;
 	}
 
 	@SubscribeEvent

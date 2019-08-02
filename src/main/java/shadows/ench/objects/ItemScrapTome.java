@@ -50,10 +50,10 @@ public class ItemScrapTome extends ItemBook {
 		return !stack.isItemEnchanted() ? super.getForgeRarity(stack) : EnumRarity.UNCOMMON;
 	}
 
-	public static void updateAnvil(AnvilUpdateEvent ev) {
+	public static boolean updateAnvil(AnvilUpdateEvent ev) {
 		ItemStack weapon = ev.getLeft();
 		ItemStack book = ev.getRight();
-		if (!(book.getItem() instanceof ItemScrapTome) || book.isItemEnchanted() || !weapon.isItemEnchanted()) return;
+		if (!(book.getItem() instanceof ItemScrapTome) || book.isItemEnchanted() || !weapon.isItemEnchanted()) return false;
 
 		Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
 		int size = MathHelper.ceil(wepEnch.size() / 2D);
@@ -74,5 +74,6 @@ public class ItemScrapTome extends ItemBook {
 		ev.setMaterialCost(1);
 		ev.setCost(wepEnch.size() * 10);
 		ev.setOutput(out);
+		return true;
 	}
 }

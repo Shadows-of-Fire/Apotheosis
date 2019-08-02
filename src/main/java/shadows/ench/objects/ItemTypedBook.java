@@ -52,10 +52,10 @@ public class ItemTypedBook extends ItemBook {
 		return !stack.isItemEnchanted() ? super.getForgeRarity(stack) : EnumRarity.UNCOMMON;
 	}
 
-	public static void updateAnvil(AnvilUpdateEvent ev) {
+	public static boolean updateAnvil(AnvilUpdateEvent ev) {
 		ItemStack book = ev.getRight();
 		ItemStack weapon = ev.getLeft();
-		if (!(book.getItem() instanceof ItemBook) || !book.isItemEnchanted() || !weapon.getItem().isEnchantable(weapon)) return;
+		if (!(book.getItem() instanceof ItemBook) || !book.isItemEnchanted() || !weapon.getItem().isEnchantable(weapon)) return false;
 		Map<Enchantment, Integer> bookEnch = EnchantmentHelper.getEnchantments(book);
 		Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
 		int cost = 0;
@@ -73,7 +73,7 @@ public class ItemTypedBook extends ItemBook {
 				for (Enchantment ench2 : wepEnch.keySet()) {
 					if (ench != ench2 && !ench.isCompatibleWith(ench2)) isCompat = false;
 				}
-				if (!isCompat) return;
+				if (!isCompat) return false;
 				wepEnch.put(ench, level);
 				int addition = 0;
 				switch (ench.getRarity()) {
@@ -100,7 +100,9 @@ public class ItemTypedBook extends ItemBook {
 			ev.setMaterialCost(1);
 			ev.setCost(cost);
 			ev.setOutput(out);
+			return true;
 		}
+		return false;
 	}
 
 }
