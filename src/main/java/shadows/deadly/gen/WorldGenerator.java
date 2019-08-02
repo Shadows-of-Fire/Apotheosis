@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.google.common.base.Predicate;
 
-import it.unimi.dsi.fastutil.longs.LongArrayList;
-import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -25,13 +27,13 @@ public class WorldGenerator {
 	public static final BrutalSpawner BRUTAL_SPAWNER = new BrutalSpawner();
 	public static final BossFeature BOSS_GENERATOR = new BossFeature();
 	public static final SwarmSpawner SWARM_SPAWNER = new SwarmSpawner();
-	public static final LongList SUCCESSES = new LongArrayList();
+	private static final Int2ObjectMap<LongSet> SUCCESSES = new Int2ObjectOpenHashMap<>();
 	public static final Predicate<IBlockState> STONE_TEST = s -> s.getBlock() == Blocks.STONE && s.getValue(BlockStone.VARIANT).isNatural();
 
 	@SubscribeEvent
 	public void terrainGen(PopulateChunkEvent.Pre e) {
 		if (DeadlyConfig.DIM_WHITELIST.contains(e.getWorld().provider.getDimension())) for (WorldFeature feature : FEATURES) {
-			if (SUCCESSES.contains(ChunkPos.asLong(e.getChunkX(), e.getChunkZ()))) return;
+			if (wasSuccess(e.getWorld().provider.getDimension(), e.getChunkX(), e.getChunkZ())) return;
 			feature.generate(e.getWorld(), e.getChunkX(), e.getChunkZ(), e.getRand());
 		}
 	}
@@ -53,5 +55,13 @@ public class WorldGenerator {
 
 	public static void debugLog(BlockPos pos, String name) {
 		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {}", name, pos);
+	}
+
+	public static void setSuccess(int dim, int x, int z) {
+		SUCCESSES.computeIfAbsent(dim, i -> new LongOpenHashSet()).add(ChunkPos.asLong(x, z));
+	}
+
+	public static boolean wasSuccess(int dim, int x, int z) {
+		return SUCCESSES.computeIfAbsent(dim, i -> new LongOpenHashSet()).contains(ChunkPos.asLong(x, z));
 	}
 }

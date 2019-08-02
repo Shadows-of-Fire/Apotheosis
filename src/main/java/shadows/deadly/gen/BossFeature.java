@@ -12,7 +12,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConfig;
@@ -38,7 +37,7 @@ public class BossFeature extends WorldFeature {
 			if (world.getBlockState(mPos.setPos(x, y, z)).getBlockFaceShape(world, mPos, EnumFacing.UP) == BlockFaceShape.SOLID) {
 				if (!world.checkBlockCollision(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 					item.place(world, mPos, rand);
-					WorldGenerator.SUCCESSES.add(ChunkPos.asLong(chunkX, chunkZ));
+					WorldGenerator.setSuccess(world.provider.getDimension(), chunkX, chunkZ);
 					return;
 				}
 			}

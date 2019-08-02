@@ -10,7 +10,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import shadows.deadly.DeadlyLoot;
@@ -32,7 +31,7 @@ public class SwarmSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.SUCCESSES.add(ChunkPos.asLong(chunkX, chunkZ));
+				WorldGenerator.setSuccess(world.provider.getDimension(), chunkX, chunkZ);
 				return;
 			}
 		}
