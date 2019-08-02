@@ -97,17 +97,22 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 	}
 
 	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return true;
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("spawner", Constants.NBT.TAG_COMPOUND)) {
 			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("spawner");
-			tooltip.add(I18n.format("info.spw.entity", EntityList.getTranslationName(new ResourceLocation(tag.getCompoundTag("SpawnData").getString("id")))));
-			tooltip.add(I18n.format("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
-			tooltip.add(I18n.format("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
-			tooltip.add(I18n.format("waila.spw.spawncount", tag.getShort("SpawnCount")));
-			tooltip.add(I18n.format("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
-			tooltip.add(I18n.format("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
-			tooltip.add(I18n.format("waila.spw.spawnrange", tag.getShort("SpawnRange")));
+			if (tag.hasKey("SpawnData")) tooltip.add(I18n.format("info.spw.entity", EntityList.getTranslationName(new ResourceLocation(tag.getCompoundTag("SpawnData").getString("id")))));
+			if (tag.hasKey("MinSpawnDelay")) tooltip.add(I18n.format("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
+			if (tag.hasKey("MaxSpawnDelay")) tooltip.add(I18n.format("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
+			if (tag.hasKey("SpawnCount")) tooltip.add(I18n.format("waila.spw.spawncount", tag.getShort("SpawnCount")));
+			if (tag.hasKey("MaxNearbyEntities")) tooltip.add(I18n.format("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
+			if (tag.hasKey("RequiredPlayerRange")) tooltip.add(I18n.format("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
+			if (tag.hasKey("SpawnRange")) tooltip.add(I18n.format("waila.spw.spawnrange", tag.getShort("SpawnRange")));
 			if (tag.getBoolean("ignore_players")) tooltip.add(I18n.format("waila.spw.ignoreplayers"));
 			if (tag.getBoolean("ignore_conditions")) tooltip.add(I18n.format("waila.spw.ignoreconditions"));
 			if (tag.getBoolean("ignore_cap")) tooltip.add(I18n.format("waila.spw.ignorecap"));
