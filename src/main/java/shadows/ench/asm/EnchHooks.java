@@ -70,7 +70,7 @@ public class EnchHooks {
 	public static void reflectiveHook(EntityLivingBase user, EntityLivingBase attacker) {
 		int level;
 		if ((level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.REFLECTIVE, user.getActiveItemStack())) > 0) {
-			if (user.world.rand.nextInt(Math.max(0, 7 - level)) == 0) {
+			if (user.world.rand.nextInt(Math.max(1, 7 - level)) == 0) {
 				DamageSource src = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
 				attacker.attackEntityFrom(src, level * 1.6F);
 				user.getActiveItemStack().damageItem(10, user);
