@@ -1,7 +1,6 @@
 package shadows.deadly.config;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.config.Configuration;
 import shadows.Apotheosis;
 import shadows.util.SpawnerStats;
 

@@ -6,7 +6,6 @@ import java.util.Random;
 
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;

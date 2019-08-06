@@ -3,7 +3,7 @@ package shadows.garden.compat;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
-import mezz.jei.api.ingredients.VanillaTypes;
+import mezz.jei.api.constants.VanillaTypes;
 import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;

@@ -1,7 +1,5 @@
 package shadows.deadly;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMonsterPlacer;

@@ -2,7 +2,7 @@ package shadows.ench.anvil;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Enchantments;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemAnvilBlock;
 import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;

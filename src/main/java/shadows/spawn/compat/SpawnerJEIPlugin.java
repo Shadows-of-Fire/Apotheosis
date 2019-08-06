@@ -3,34 +3,30 @@ package shadows.spawn.compat;
 import com.google.common.collect.ImmutableSet;
 
 import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.JEIPlugin;
-import mezz.jei.api.ingredients.VanillaTypes;
-import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemMonsterPlacer;
+import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.Apotheosis;
-import shadows.placebo.Placebo;
 import shadows.spawn.SpawnerModifiers;
-import shadows.spawn.SpawnerModule;
 import shadows.spawn.compat.SpawnerWrapper.SpawnerInverseWrapper;
 
-@JEIPlugin
+@JeiPlugin
 public class SpawnerJEIPlugin implements IModPlugin {
 
 	public static final String SPAWNER = "spawner_modification";
 
 	@Override
-	public void register(IModRegistry reg) {
-		if (!Apotheosis.enableSpawner) return;
-		reg.addRecipeCatalyst(new ItemStack(Blocks.MOB_SPAWNER), SPAWNER);
-
-		ItemStack egg = new ItemStack(Items.SPAWN_EGG);
-		ItemMonsterPlacer.applyEntityIdToItemStack(egg, new ResourceLocation("witch"));
+	public void registerRecipes(IRecipeRegistration reg) {
+		ItemStack egg = new ItemStack(SpawnEggItem.getEgg(EntityType.WITCH));
 		//Formatter::off
 		reg.addRecipes(ImmutableSet.of(
 				new SpawnerWrapper(SpawnerModifiers.MIN_DELAY, "MinSpawnDelay", "jei.spw.editmindelay"),
@@ -45,17 +41,27 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerWrapper(SpawnerModifiers.REDSTONE, "redstone_control", true, "jei.spw.redstone"),
 				new SpawnerWrapper(egg, new ResourceLocation("witch"), "jei.spw.changeentity"),
 				new SpawnerInverseWrapper()
-				), SPAWNER);
-		//Formatter:on
+				), getPluginUid());
+		//Formatter::on
+		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, "jei.spw.instructions");
+		for (Item i : ForgeRegistries.ITEMS) {
+			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM, "jei.spw.capturing");
+		}
+	}
 
-		reg.addIngredientInfo(new ItemStack(Blocks.MOB_SPAWNER), VanillaTypes.ITEM, Placebo.PROXY.translate("jei.spw.instructions", Enchantments.SILK_TOUCH.getTranslatedName(SpawnerModule.spawnerSilkLevel)));
-		reg.addIngredientInfo(new ItemStack(Items.SPAWN_EGG), VanillaTypes.ITEM, "jei.spw.capturing");
+	@Override
+	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
+		reg.addRecipeCatalyst(new ItemStack(Blocks.SPAWNER), getPluginUid());
 	}
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration reg) {
-		if (!Apotheosis.enableSpawner) return;
 		reg.addRecipeCategories(new SpawnerCategory(reg.getJeiHelpers().getGuiHelper()));
+	}
+
+	@Override
+	public ResourceLocation getPluginUid() {
+		return new ResourceLocation(Apotheosis.MODID, SPAWNER);
 	}
 
 }

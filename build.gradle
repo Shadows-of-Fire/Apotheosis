@@ -1,76 +1,65 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
 
+version = '2.0.0'
+group = 'shadows.apotheosis'
+archivesBaseName = 'Apotheosis-1.14.4'
 
-version = "1.12.2-1.10.3"
-group= "shadows"
-archivesBaseName = "Apotheosis"
-
-sourceCompatibility = targetCompatibility = "1.8"
-compileJava {
-    sourceCompatibility = targetCompatibility = "1.8"
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    version = "1.12.2-14.23.5.2836"
-    runDir = "run"
-    mappings = "stable_39"
-	makeObfSourceJar = false
-	useDepAts = true
+    mappings channel: 'snapshot', version: '20190804-1.14.3'
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    runs {
+        client = {
+            properties 'forge.logging.markers': ''
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+        server = {
+            properties 'forge.logging.markers': ''
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+    }
 }
 
 repositories {
     maven {
-        url "https://dvs1.progwml6.com/files/maven"
+        url "http://dvs1.progwml6.com/files/maven"
     }
 	maven {
 		url "http://tehnut.info/maven"
 	}
-	maven {
-		url "https://maven.mcmoddev.com/"
-	}
-	maven {
-		url 'http://maven.blamejared.com'
-	}
-	maven {
-		url 'https://minecraft.curseforge.com/api/maven/'
-	}
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_1.12.2:+"
-	deobfCompile "mcp.mobius.waila:Hwyla:1.8.+"
-	deobfCompile "net.darkhax.enchdesc:EnchantmentDescriptions-1.12.2:+"
-	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.+"
-	deobfCompile "slimeknights.mantle:Mantle:1.12-+"
-	deobfCompile "inspirations:Inspirations:1.12.2:0.2.4"
-}
-
-processResources
-{
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+    minecraft 'net.minecraftforge:forge:1.14.4-28.0.41'
+	compile fg.deobf('mezz.jei:jei-1.14.3:+')
+	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10+')
+	compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 jar {
     manifest {
-        attributes 'FMLAT': 'apotheosis_at.cfg'
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
-        attributes 'FMLCorePlugin': 'shadows.ApotheosisCore'
+        attributes(["Specification-Title": "apotheosis",
+                    "Specification-Vendor": "shadows_of_fire",
+                    "Specification-Version": "24.0", // We are version 1 of the modlauncher specification
+                    "Implementation-Title": project.name,
+                    "Implementation-Version": "${version}",
+                    "Implementation-Vendor" :"shadows_of_fire",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }

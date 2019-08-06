@@ -1,6 +1,5 @@
 package shadows.util;
 
-import net.minecraftforge.common.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
 import shadows.placebo.util.SpawnerEditor;
 

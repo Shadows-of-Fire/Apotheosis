@@ -5,30 +5,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.Apotheosis.ApotheosisInit;
 import shadows.ench.EnchModule;
 import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
-import shadows.ench.objects.ItemTypedBook;
-import shadows.placebo.Placebo;
-import shadows.placebo.util.PlaceboUtil;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Side.CLIENT)
 public class ApotheosisClient {
@@ -41,13 +38,13 @@ public class ApotheosisClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
 		if (Apotheosis.enableEnch) {
-			if (EnchModule.allowWeb && i == COBWEB) e.getToolTip().add(I18n.format("info.apotheosis.cobweb"));
-			else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(I18n.format("info.apotheosis.prismatic_cobweb"));
+			if (EnchModule.allowWeb && i == COBWEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.cobweb"));
+			else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.prismatic_cobweb"));
 		}
 		if (i == Items.ENCHANTED_BOOK) {
 			for (Map.Entry<IRegistryDelegate<Enchantment>, List<String>> ent : ENCH_TOOLTIPS.entrySet()) {
 				if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
-					ent.getValue().forEach(s -> e.getToolTip().add(I18n.format(s)));
+					ent.getValue().forEach(s -> e.getToolTip().add(new TranslationTextComponent(s)));
 					return;
 				}
 			}
@@ -55,9 +52,9 @@ public class ApotheosisClient {
 	}
 
 	private static boolean onlyHasEnchant(ItemStack book, Enchantment ench) {
-		NBTTagList list = ItemEnchantedBook.getEnchantments(book);
-		if (list.tagCount() == 1) {
-			NBTTagCompound tag = list.getCompoundTagAt(0);
+		ListNBT list = EnchantedBookItem.getEnchantments(book);
+		if (list.size() == 1) {
+			CompoundNBT tag = list.getCompound(0);
 			int id = tag.getShort("id");
 			Enchantment enchantment = Enchantment.getEnchantmentByID(id);
 			if (enchantment == ench) return true;
@@ -104,20 +101,6 @@ public class ApotheosisClient {
 			}
 		}
 		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
-	}
-
-	@SubscribeEvent
-	public static void models(ModelRegistryEvent e) {
-		if (Apotheosis.enableEnch) {
-			Placebo.PROXY.useRenamedMapper(ApotheosisObjects.HELLSHELF, "hellshelf", "", "normal");
-			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_WEB, 0, "inventory");
-			for (ItemTypedBook b : EnchModule.TYPED_BOOKS)
-				PlaceboUtil.sMRL("minecraft", "enchanted_book", b, 0, "inventory");
-			PlaceboUtil.sMRL(ApotheosisObjects.PRISMATIC_ALTAR, 0, "normal");
-			PlaceboUtil.sMRL("minecraft", "enchanted_book", ApotheosisObjects.SCRAP_TOME, 0, "inventory");
-		}
-		if (Apotheosis.enablePotion) PlaceboUtil.sMRL(ApotheosisObjects.LUCKY_FOOT, 0, "inventory");
-		if (Apotheosis.enableGarden) PlaceboUtil.sMRL(ApotheosisObjects.FARMERS_LEASH, 0, "inventory");
 	}
 
 	public static void registerTooltip(Enchantment e, String... keys) {

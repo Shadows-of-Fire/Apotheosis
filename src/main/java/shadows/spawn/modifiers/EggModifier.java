@@ -3,9 +3,8 @@ package shadows.spawn.modifiers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraft.item.SpawnEggItem;
 import shadows.placebo.util.SpawnerBuilder;
 import shadows.spawn.TileSpawnerExt;
 
@@ -28,12 +27,12 @@ public class EggModifier extends SpawnerModifier {
 
 	@Override
 	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
-		return stack.getItem() instanceof ItemMonsterPlacer;
+		return stack.getItem() instanceof SpawnEggItem;
 	}
 
 	@Override
 	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
-		String name = ItemMonsterPlacer.getNamedIdFrom(stack).toString();
+		String name = ((SpawnEggItem) stack.getItem()).getType(null).getRegistryName().toString();
 		if (!bannedMobs.contains(name) && !name.equals(spawner.spawnerLogic.spawnData.getNbt().getString(SpawnerBuilder.ID))) {
 			spawner.spawnerLogic.potentialSpawns.clear();
 			return false;
@@ -41,13 +40,14 @@ public class EggModifier extends SpawnerModifier {
 		return true;
 	}
 
+	/*
 	@Override
 	public void load(Configuration cfg) {
 		String[] bans = cfg.getStringList("Banned Mobs", getCategory(), new String[0], "A list of entity registry names that cannot be applied to spawners via egg.");
 		for (String s : bans)
 			bannedMobs.add(s);
 	}
-
+	*/
 	@Override
 	public String getCategory() {
 		return "spawn_eggs";

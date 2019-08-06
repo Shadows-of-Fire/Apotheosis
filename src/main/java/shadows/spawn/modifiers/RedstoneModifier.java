@@ -1,8 +1,8 @@
 package shadows.spawn.modifiers;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import shadows.placebo.util.VanillaPacketDispatcher;
+import net.minecraft.item.Items;
+import shadows.placebo.recipe.VanillaPacketDispatcher;
 import shadows.spawn.TileSpawnerExt;
 
 public class RedstoneModifier extends SpawnerModifier {

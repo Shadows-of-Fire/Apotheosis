@@ -1,12 +1,12 @@
 package shadows;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAnvilBlock;
-import net.minecraft.potion.PotionType;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.registries.ObjectHolder;
 import shadows.ench.altar.BlockPrismaticAltar;
 import shadows.ench.anvil.EnchantmentSplitting;
+import shadows.ench.anvil.ItemAnvilExt;
 import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
@@ -51,32 +51,32 @@ public class ApotheosisObjects {
 	public static final EnchantmentBerserk BERSERK = null;
 	public static final EnchantmentCapturing CAPTURING = null;
 	public static final EnchantmentTrueInfinity TRUE_INFINITY = null;
-	public static final PotionType RESISTANCE = null;
-	public static final PotionType LONG_RESISTANCE = null;
-	public static final PotionType STRONG_RESISTANCE = null;
-	public static final PotionType ABSORPTION = null;
-	public static final PotionType LONG_ABSORPTION = null;
-	public static final PotionType STRONG_ABSORPTION = null;
-	public static final PotionType HASTE = null;
-	public static final PotionType LONG_HASTE = null;
-	public static final PotionType STRONG_HASTE = null;
-	public static final PotionType FATIGUE = null;
-	public static final PotionType LONG_FATIGUE = null;
-	public static final PotionType STRONG_FATIGUE = null;
+	public static final Potion RESISTANCE = null;
+	public static final Potion LONG_RESISTANCE = null;
+	public static final Potion STRONG_RESISTANCE = null;
+	public static final Potion ABSORPTION = null;
+	public static final Potion LONG_ABSORPTION = null;
+	public static final Potion STRONG_ABSORPTION = null;
+	public static final Potion HASTE = null;
+	public static final Potion LONG_HASTE = null;
+	public static final Potion STRONG_HASTE = null;
+	public static final Potion FATIGUE = null;
+	public static final Potion LONG_FATIGUE = null;
+	public static final Potion STRONG_FATIGUE = null;
 	@ObjectHolder("witherskelefix:fragment")
 	public static final Item SKULL_FRAGMENT = null;
-	public static final PotionType WITHER = null;
-	public static final PotionType LONG_WITHER = null;
-	public static final PotionType STRONG_WITHER = null;
+	public static final Potion WITHER = null;
+	public static final Potion LONG_WITHER = null;
+	public static final Potion STRONG_WITHER = null;
 	public static final PotionSundering SUNDERING = null;
 	@ObjectHolder("apotheosis:sundering")
-	public static final PotionType T_SUNDERING = null;
-	public static final PotionType LONG_SUNDERING = null;
-	public static final PotionType STRONG_SUNDERING = null;
+	public static final Potion T_SUNDERING = null;
+	public static final Potion LONG_SUNDERING = null;
+	public static final Potion STRONG_SUNDERING = null;
 	public static final EnchantmentKnowledge KNOWLEDGE = null;
 	public static final EnchantmentSplitting SPLITTING = null;
 	@ObjectHolder("minecraft:anvil")
-	public static final ItemAnvilBlock ANVIL = null;
+	public static final ItemAnvilExt ANVIL = null;
 	public static final EnchantmentNatureBless NATURES_BLESSING = null;
 	public static final EnchantmentRebounding REBOUNDING = null;
 	public static final ItemTypedBook NULL_BOOK = null;
@@ -93,9 +93,9 @@ public class ApotheosisObjects {
 	@ObjectHolder("apotheosis:knowledge")
 	public static final PotionKnowledge P_KNOWLEDGE = null;
 	@ObjectHolder("apotheosis:knowledge")
-	public static final PotionType T_KNOWLEDGE = null;
-	public static final PotionType LONG_KNOWLEDGE = null;
-	public static final PotionType STRONG_KNOWLEDGE = null;
+	public static final Potion T_KNOWLEDGE = null;
+	public static final Potion LONG_KNOWLEDGE = null;
+	public static final Potion STRONG_KNOWLEDGE = null;
 	public static final ItemLuckyFoot LUCKY_FOOT = null;
 	public static final EnchantmentMagicProt MAGIC_PROTECTION = null;
 	public static final ItemScrapTome SCRAP_TOME = null;

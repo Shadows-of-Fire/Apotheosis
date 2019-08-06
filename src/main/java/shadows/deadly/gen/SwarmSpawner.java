@@ -5,7 +5,6 @@ import java.util.Random;
 
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.BlockSandStone.EnumType;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;

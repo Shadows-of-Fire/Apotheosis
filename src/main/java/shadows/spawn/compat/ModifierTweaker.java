@@ -1,5 +1,5 @@
 package shadows.spawn.compat;
-
+/*
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
@@ -117,3 +117,4 @@ public class ModifierTweaker {
 
 	}
 }
+*/

@@ -4,49 +4,55 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import io.netty.handler.codec.http2.Http2FrameReader.Configuration;
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
 import shadows.garden.GardenModule;
-import shadows.placebo.util.RecipeHelper;
+import shadows.placebo.recipe.RecipeHelper;
 import shadows.potion.PotionModule;
 import shadows.spawn.SpawnerModule;
 import shadows.util.NBTIngredient;
 import shadows.util.ParticleMessage;
 
-@Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,);after:inspirations;after:forge@[14.23.5.2836,)", acceptableRemoteVersions = "*")
+@Mod(Apotheosis.MODID)
 public class Apotheosis {
 
 	public static final String MODID = "apotheosis";
-	public static final String MODNAME = "Apotheosis";
-	public static final String Version = "1.10.3";
-	public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+	//Formatter::off
+    public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
+            .named(new ResourceLocation(MODID, "channel"))
+            .clientAcceptedVersions(s->true)
+            .serverAcceptedVersions(s->true)
+            .networkProtocolVersion(() -> "1.0.0")
+            .simpleChannel();
+    //Formatter::on
 
 	public static File configDir;
 	public static Configuration config;

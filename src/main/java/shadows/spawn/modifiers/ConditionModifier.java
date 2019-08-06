@@ -1,6 +1,6 @@
 package shadows.spawn.modifiers;
 
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import shadows.spawn.TileSpawnerExt;
 

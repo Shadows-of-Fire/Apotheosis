@@ -1,7 +1,7 @@
 package shadows.ench.objects;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Enchantments;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;

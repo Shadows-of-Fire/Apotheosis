@@ -5,9 +5,10 @@ import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.spawn.modifiers.CapModifier;
 import shadows.spawn.modifiers.ConditionModifier;
 import shadows.spawn.modifiers.EggModifier;
@@ -51,19 +52,19 @@ public class SpawnerModifiers {
 		register(REDSTONE);
 		register(EGG);
 
-		inverseItem = readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
+		inverseItem = Ingredient.fromItems(Items.QUARTZ);//readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
 	}
 
 	public static Ingredient readStackCfg(String s) {
 		String[] split = s.split(":");
 		Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
-		return Ingredient.fromStacks(new ItemStack(i, 1, split.length == 3 ? Integer.parseInt(split[2]) : 0));
+		return Ingredient.fromStacks(new ItemStack(i));
 	}
 
 	public static void register(SpawnerModifier modif) {
 		if (!MODIFIERS.contains(modif)) {
 			MODIFIERS.add(modif);
-			modif.load(SpawnerModule.config);
+			modif.load();//SpawnerModule.config);
 		} else throw new RuntimeException("Tried to register a spawner modifier, but it is already registered!");
 	}
 
