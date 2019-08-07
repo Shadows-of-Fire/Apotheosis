@@ -2,20 +2,19 @@ package shadows.potion;
 
 import java.util.List;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import shadows.Apotheosis;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemLuckyFoot extends Item {
 
 	public ItemLuckyFoot() {
-		setTranslationKey(Apotheosis.MODID + ".lucky_foot");
-		setMaxStackSize(1);
+		super(new Item.Properties().maxStackSize(1));
 	}
 
 	@Override
@@ -24,8 +23,8 @@ public class ItemLuckyFoot extends Item {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(I18n.format("info.apotheosis.lucky"));
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("info.apotheosis.lucky"));
 	}
 }

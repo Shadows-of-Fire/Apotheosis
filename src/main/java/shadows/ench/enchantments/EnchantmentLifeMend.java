@@ -1,16 +1,14 @@
 package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import shadows.Apotheosis;
 
 public class EnchantmentLifeMend extends Enchantment {
 
 	public EnchantmentLifeMend() {
-		super(Rarity.VERY_RARE, EnumEnchantmentType.BREAKABLE, EntityEquipmentSlot.values());
-		setName(Apotheosis.MODID + ".life_mending");
+		super(Rarity.VERY_RARE, EnchantmentType.BREAKABLE, EquipmentSlotType.values());
 	}
 
 	@Override

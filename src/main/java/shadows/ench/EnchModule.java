@@ -4,48 +4,59 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
-import net.minecraft.inventory.ContainerEnchantment;
-import net.minecraft.inventory.ContainerRepair;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.EnchantmentContainer;
+import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BoneMealItem;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
-import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemDye;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTier;
+import net.minecraft.item.Items;
+import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
@@ -59,13 +70,10 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.Apotheosis;
-import shadows.Apotheosis.ApotheosisInit;
-import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
+import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ApotheosisObjects;
 import shadows.deadly.gen.BossItem;
 import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
@@ -95,8 +103,7 @@ import shadows.ench.objects.ItemHellBookshelf;
 import shadows.ench.objects.ItemScrapTome;
 import shadows.ench.objects.ItemShearsExt;
 import shadows.ench.objects.ItemTypedBook;
-import shadows.placebo.itemblock.ItemBlockBase;
-import shadows.placebo.util.PlaceboUtil;
+import shadows.placebo.config.Configuration;
 import shadows.placebo.util.ReflectionHelper;
 import shadows.util.NBTIngredient;
 
@@ -120,15 +127,14 @@ public class EnchModule {
 	public static final List<Enchantment> BLACKLISTED_ENCHANTS = new ArrayList<>();
 	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
 		@Override
-		public ITextComponent getDeathMessage(EntityLivingBase entity) {
-			return new TextComponentTranslation("death.apotheosis.corrupted", entity.getDisplayName());
+		public ITextComponent getDeathMessage(LivingEntity entity) {
+			return new TranslationTextComponent("death.apotheosis.corrupted", entity.getDisplayName());
 		};
 	}.setDamageBypassesArmor().setDamageIsAbsolute();
-	public static final EntityEquipmentSlot[] ARMOR = { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
+	public static final EquipmentSlotType[] ARMOR = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
 
 	public static float localAtkStrength = 1;
 	static Configuration enchInfoConfig;
-	public static OreIngredient blockIron;
 	public static int absMax = 170;
 
 	public static boolean allowWeb = true;
@@ -138,14 +144,16 @@ public class EnchModule {
 	public static boolean itemMerging = false;
 
 	@SubscribeEvent
-	public void init(ApotheosisInit e) {
+	public void init(ApotheosisSetup e) {
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
-		setEnch(ToolMaterial.GOLD, 40);
+		setEnch(ItemTier.GOLD, 40);
 		setEnch(ArmorMaterial.GOLD, 40);
+		/* TODO: Materials and tiers are no longer centralized and no longer have names.  Explore new options.
 		for (ArmorMaterial a : ArmorMaterial.values())
 			setEnch(a, config.getInt(a.name(), "Enchantability - Armor", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this armor material."));
-		for (ToolMaterial a : ToolMaterial.values())
+		for (ItemTier a : ItemTier.values())
 			setEnch(a, config.getInt(a.name(), "Enchantability - Tools", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this tool material."));
+		*/
 		if (config.hasChanged()) config.save();
 
 		config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
@@ -180,8 +188,6 @@ public class EnchModule {
 		if (config.hasChanged()) config.save();
 		enchInfoConfig = config;
 
-		blockIron = new OreIngredient("blockIron");
-
 		if (Apotheosis.enableDeadly) {
 			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.BERSERK);
 			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.LIFE_MENDING);
@@ -197,17 +203,17 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
-	public void preInit(ApotheosisPreInit e) {
-		GameRegistry.registerTileEntity(TileAnvil.class, new ResourceLocation(Apotheosis.MODID, "anvil"));
-		GameRegistry.registerTileEntity(TilePrismaticAltar.class, new ResourceLocation(Apotheosis.MODID, "prismatic_altar"));
+	public void tiles(Register<TileEntityType<?>> e) {
+		e.getRegistry().register(new TileEntityType<>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL), null).setRegistryName("anvil"));
+		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(Blocks.ANVIL), null).setRegistryName("prismatic_altar"));
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new BlockHellBookshelf(new ResourceLocation(Apotheosis.MODID, "hellshelf")),
-				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
+				new BlockHellBookshelf().setRegistryName("hellshelf"),
+				new BlockAnvilExt(),
 				new BlockPrismaticAltar()
 				);
 		//Formatter::on
@@ -217,20 +223,20 @@ public class EnchModule {
 	public void items(Register<Item> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new ItemShearsExt().setRegistryName(Items.SHEARS.getRegistryName()).setTranslationKey("shears"),
+				new ItemShearsExt(),
 				new ItemHellBookshelf(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
-				new Item().setRegistryName(Apotheosis.MODID, "prismatic_web").setTranslationKey(Apotheosis.MODID + ".prismatic_web"),
+				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ItemAnvilExt(Blocks.ANVIL),
 				new ItemTypedBook(Items.AIR, null),
-				new ItemTypedBook(Items.DIAMOND_HELMET, EnumEnchantmentType.ARMOR_HEAD),
-				new ItemTypedBook(Items.DIAMOND_CHESTPLATE, EnumEnchantmentType.ARMOR_CHEST),
-				new ItemTypedBook(Items.DIAMOND_LEGGINGS, EnumEnchantmentType.ARMOR_LEGS),
-				new ItemTypedBook(Items.DIAMOND_BOOTS, EnumEnchantmentType.ARMOR_FEET),
-				new ItemTypedBook(Items.DIAMOND_SWORD, EnumEnchantmentType.WEAPON),
-				new ItemTypedBook(Items.DIAMOND_PICKAXE, EnumEnchantmentType.DIGGER),
-				new ItemTypedBook(Items.FISHING_ROD, EnumEnchantmentType.FISHING_ROD),
-				new ItemTypedBook(Items.BOW, EnumEnchantmentType.BOW),
-				new ItemBlockBase(ApotheosisObjects.PRISMATIC_ALTAR),
+				new ItemTypedBook(Items.DIAMOND_HELMET, EnchantmentType.ARMOR_HEAD),
+				new ItemTypedBook(Items.DIAMOND_CHESTPLATE, EnchantmentType.ARMOR_CHEST),
+				new ItemTypedBook(Items.DIAMOND_LEGGINGS, EnchantmentType.ARMOR_LEGS),
+				new ItemTypedBook(Items.DIAMOND_BOOTS, EnchantmentType.ARMOR_FEET),
+				new ItemTypedBook(Items.DIAMOND_SWORD, EnchantmentType.WEAPON),
+				new ItemTypedBook(Items.DIAMOND_PICKAXE, EnchantmentType.DIGGER),
+				new ItemTypedBook(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
+				new ItemTypedBook(Items.BOW, EnchantmentType.BOW),
+				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("prismatic_altar"),
 				new ItemScrapTome()
 				);
 		//Formatter::on
@@ -266,15 +272,10 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
-	public void models(ModelRegistryEvent e) {
-		PlaceboUtil.sMRL(ApotheosisObjects.HELLSHELF, 0, "normal");
-	}
-
-	@SubscribeEvent
 	public void recipes(ApotheosisRecipeEvent e) {
-		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.REGENERATION));
-		e.helper.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK, Blocks.NETHER_BRICK);
-		e.helper.addShaped(ApotheosisObjects.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.WEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
+		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.REGENERATION));
+		e.helper.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
+		e.helper.addShaped(ApotheosisObjects.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.COBWEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
 		ItemStack book = new ItemStack(Items.BOOK);
 		ItemStack stick = new ItemStack(Items.STICK);
 		ItemStack blaze = new ItemStack(Items.BLAZE_ROD);
@@ -287,10 +288,10 @@ public class EnchModule {
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.FISHING_ROD_BOOK, 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
 		e.helper.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 4), book, book, book, book, blaze);
-		ItemStack msBrick = new ItemStack(Blocks.STONEBRICK, 1, 1);
+		ItemStack msBrick = new ItemStack(Blocks.MOSSY_STONE_BRICKS);
 		e.helper.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Blocks.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 		e.helper.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 16), 3, 3, Items.ENDER_EYE, Items.GOLD_NUGGET, Items.ENDER_EYE, Items.BLAZE_POWDER, Items.DRAGON_BREATH, Items.BLAZE_POWDER, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST);
-		e.helper.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
+		e.helper.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		e.helper.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
 	}
 
@@ -312,11 +313,11 @@ public class EnchModule {
 				return;
 			}
 		}
-		if (e.getLeft().getItem() == ApotheosisObjects.ANVIL && blockIron.apply(e.getRight())) {
-			int dmg = e.getLeft().getMetadata();
-			if (dmg == 0 || e.getLeft().getCount() != 1) return;
-			ItemStack out = e.getLeft().copy();
-			out.setItemDamage(dmg - 1);
+		if ((e.getLeft().getItem() == Items.CHIPPED_ANVIL || e.getLeft().getItem() == Items.DAMAGED_ANVIL) && e.getRight().getItem().isIn(Tags.Items.STORAGE_BLOCKS_IRON)) {
+			int dmg = e.getLeft().getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
+			if (e.getLeft().getCount() != 1) return;
+			ItemStack out = new ItemStack(dmg == 1 ? Items.ANVIL : Items.CHIPPED_ANVIL);
+			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(e.getLeft()), out);
 			out.setCount(1);
 			e.setOutput(out);
 			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) * 2 + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 3);
@@ -331,7 +332,7 @@ public class EnchModule {
 	private boolean mergeAll(AnvilUpdateEvent ev) {
 		ItemStack right = ev.getRight();
 		ItemStack left = ev.getLeft();
-		if (!right.isItemEnchanted() || !left.getItem().isEnchantable(left)) return false;
+		if (!right.isEnchanted() || !left.getItem().isEnchantable(left)) return false;
 		Map<Enchantment, Integer> rightEnch = EnchantmentHelper.getEnchantments(right);
 		Map<Enchantment, Integer> leftEnch = EnchantmentHelper.getEnchantments(left);
 		int cost = 0;
@@ -383,7 +384,7 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
-		EntityPlayer p = e.getEntityPlayer();
+		PlayerEntity p = e.getEntityPlayer();
 		localAtkStrength = p.getCooledAttackStrength(0.5F);
 	}
 
@@ -392,46 +393,46 @@ public class EnchModule {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) throws Exception {
 		Entity attacker = e.getSource().getTrueSource();
-		if (attacker instanceof EntityPlayer) {
-			EntityPlayer p = (EntityPlayer) attacker;
+		if (attacker instanceof PlayerEntity) {
+			PlayerEntity p = (PlayerEntity) attacker;
 			if (p.world.isRemote) return;
 			int scavenger = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SCAVENGER, p.getHeldItemMainhand());
 			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 2.5F) {
 				if (dropLoot == null) {
-					dropLoot = ReflectionHelper.findMethod(EntityLivingBase.class, "dropLoot", "func_184610_a", boolean.class, int.class, DamageSource.class);
+					dropLoot = ReflectionHelper.findMethod(LivingEntity.class, "dropLoot", "func_213354_a", DamageSource.class, boolean.class);
 				}
-				dropLoot.invoke(e.getEntityLiving(), true, e.getLootingLevel(), e.getSource());
+				dropLoot.invoke(e.getEntityLiving(), e.getSource(), true);
 			}
 			int knowledge = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.KNOWLEDGE, p.getHeldItemMainhand());
 			if (knowledge > 0) {
 				int items = 0;
-				for (EntityItem i : e.getDrops())
+				for (ItemEntity i : e.getDrops())
 					items += i.getItem().getCount();
 				if (items > 0) e.getDrops().clear();
 				items *= knowledge * 25;
 				Entity ded = e.getEntityLiving();
 				while (items > 0) {
-					int i = EntityXPOrb.getXPSplit(items);
+					int i = ExperienceOrbEntity.getXPSplit(items);
 					items -= i;
-					p.world.spawnEntity(new EntityXPOrb(p.world, ded.posX, ded.posY, ded.posZ, i));
+					p.world.addEntity(new ExperienceOrbEntity(p.world, ded.posX, ded.posY, ded.posZ, i));
 				}
 			}
 		}
 	}
 
-	final EntityEquipmentSlot[] slots = EntityEquipmentSlot.values();
+	final EquipmentSlotType[] slots = EquipmentSlotType.values();
 
 	@SubscribeEvent
 	public void lifeMend(LivingUpdateEvent e) {
 		if (e.getEntity().world.isRemote) return;
-		for (EntityEquipmentSlot slot : slots) {
+		for (EquipmentSlotType slot : slots) {
 			ItemStack stack = e.getEntityLiving().getItemStackFromSlot(slot);
-			if (!stack.isEmpty() && stack.isItemDamaged()) {
+			if (!stack.isEmpty() && stack.isDamaged()) {
 				int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.LIFE_MENDING, stack);
 				if (level > 0 && e.getEntityLiving().world.rand.nextInt(10) == 0) {
-					int i = Math.min(level, stack.getItemDamage());
+					int i = Math.min(level, stack.getDamage());
 					e.getEntityLiving().attackEntityFrom(CORRUPTED, i * 0.7F);
-					stack.setItemDamage(stack.getItemDamage() - i);
+					stack.setDamage(stack.getDamage() - i);
 					return;
 				}
 			}
@@ -440,7 +441,7 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
-		EntityPlayer p = e.getEntityPlayer();
+		PlayerEntity p = e.getEntityPlayer();
 		if (!p.onGround && EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.STABLE_FOOTING, p) > 0) {
 			if (e.getOriginalSpeed() < e.getNewSpeed() * 5) e.setNewSpeed(e.getNewSpeed() * 5F);
 		}
@@ -459,18 +460,18 @@ public class EnchModule {
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
 		ItemStack s = e.getItemStack();
 		int nbLevel = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.NATURES_BLESSING, s);
-		if (!e.getEntityPlayer().isSneaking() && nbLevel > 0 && ItemDye.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getEntityPlayer(), e.getHand())) {
-			s.damageItem(6 - nbLevel, e.getEntityPlayer());
+		if (!e.getEntity().isSneaking() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getEntityPlayer())) {
+			s.damageItem(6 - nbLevel, e.getEntityPlayer(), ent -> ent.sendBreakAnimation(e.getHand()));
 			e.setCanceled(true);
-			e.setCancellationResult(EnumActionResult.SUCCESS);
+			e.setCancellationResult(ActionResultType.SUCCESS);
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void applyUnbreaking(AnvilRepairEvent e) {
-		if (e.getEntityPlayer().openContainer instanceof ContainerRepair) {
-			ContainerRepair r = (ContainerRepair) e.getEntityPlayer().openContainer;
-			TileEntity te = r.world.getTileEntity(r.pos);
+		if (e.getEntityPlayer().openContainer instanceof RepairContainer) {
+			RepairContainer r = (RepairContainer) e.getEntityPlayer().openContainer;
+			TileEntity te = r.field_216980_g.apply((w, p) -> w.getTileEntity(p)).orElse(null);
 			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getUnbreaking() + 1));
 		}
 	}
@@ -484,29 +485,28 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void enchContainer(PlayerContainerEvent.Open e) {
-		if (!e.getEntityPlayer().world.isRemote && e.getContainer().getClass() == ContainerEnchantment.class) {
-			ContainerEnchantment old = (ContainerEnchantment) e.getContainer();
-			ContainerEnchantmentExt newC = new ContainerEnchantmentExt(e.getEntityPlayer().inventory, old.world, old.position);
-			newC.windowId = old.windowId;
-			newC.addListener((EntityPlayerMP) e.getEntityPlayer());
+		if (!e.getEntity().world.isRemote && e.getContainer().getClass() == EnchantmentContainer.class) {
+			EnchantmentContainer old = (EnchantmentContainer) e.getContainer();
+			ContainerEnchantmentExt newC = new ContainerEnchantmentExt(old.windowId, e.getEntityPlayer().inventory, old.field_217006_g);
+			newC.addListener((ServerPlayerEntity) e.getEntity());
 			e.getEntityPlayer().openContainer = newC;
 		}
 	}
 
 	@SubscribeEvent
 	public void livingHurt(LivingHurtEvent e) {
-		EntityLivingBase user = e.getEntityLiving();
-		if (e.getSource().getTrueSource() instanceof Entity && user.getActivePotionEffect(MobEffects.RESISTANCE) == null) {
+		LivingEntity user = e.getEntityLiving();
+		if (e.getSource().getTrueSource() instanceof Entity && user.getActivePotionEffect(Effects.RESISTANCE) == null) {
 			int level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user);
 			if (level > 0) {
 				user.attackEntityFrom(EnchModule.CORRUPTED, level * level);
-				user.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200 * level, level - 1));
-				user.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200 * level, level - 1));
-				user.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200 * level, level - 1));
+				user.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 200 * level, level - 1));
+				user.addPotionEffect(new EffectInstance(Effects.STRENGTH, 200 * level, level - 1));
+				user.addPotionEffect(new EffectInstance(Effects.SPEED, 200 * level, level - 1));
 			}
 		}
-		if (e.getSource().isMagicDamage() && e.getSource().getTrueSource() instanceof EntityLivingBase) {
-			EntityLivingBase src = (EntityLivingBase) e.getSource().getTrueSource();
+		if (e.getSource().isMagicDamage() && e.getSource().getTrueSource() instanceof LivingEntity) {
+			LivingEntity src = (LivingEntity) e.getSource().getTrueSource();
 			int lvl = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.MAGIC_PROTECTION, src);
 			if (lvl > 0) {
 				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getEnchantmentModifierDamage(src.getArmorInventoryList(), e.getSource())));
@@ -514,12 +514,19 @@ public class EnchModule {
 		}
 	}
 
-	public static void setEnch(ToolMaterial mat, int ench) {
-		ReflectionHelper.setPrivateValue(ToolMaterial.class, mat, ench, "enchantability", "field_78008_j");
+	public static void setEnch(ItemTier mat, int ench) {
+		ReflectionHelper.setPrivateValue(ItemTier.class, mat, ench, "enchantability", "field_78008_j");
 	}
 
 	public static void setEnch(ArmorMaterial mat, int ench) {
 		ReflectionHelper.setPrivateValue(ArmorMaterial.class, mat, ench, "enchantability", "field_78055_h");
+	}
+
+	public static Set<IItemTier> getAllTiers() {
+		Set<IItemTier> tiers = new HashSet<>();
+		for (Item i : ForgeRegistries.ITEMS)
+			if (i instanceof TieredItem) tiers.add(((TieredItem) i).getTier());
+		return tiers;
 	}
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
@@ -569,7 +576,7 @@ public class EnchModule {
 	static void recalcAbsMax() {
 		int max = MathHelper.ceil(maxPower * 2);
 		int maxEnch = 0;
-		for (ToolMaterial m : ToolMaterial.values()) {
+		for (IItemTier m : getAllTiers()) {
 			maxEnch = Math.max(maxEnch, m.getEnchantability());
 		}
 		for (ArmorMaterial m : ArmorMaterial.values()) {

@@ -1,23 +1,27 @@
 package shadows.util;
 
-import javax.xml.ws.handler.MessageContext;
+import java.util.function.Supplier;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleType;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistry;
+import shadows.placebo.util.NetworkUtils;
+import shadows.placebo.util.NetworkUtils.MessageProvider;
 
-public class ParticleMessage implements IMessage {
+public class ParticleMessage extends MessageProvider<ParticleMessage> {
 
-	EnumParticleTypes type;
+	ParticleType<?> type;
 	double x, y, z, velX, velY, velZ;
 	int count;
 
 	public ParticleMessage() {
 	}
 
-	public ParticleMessage(EnumParticleTypes type, double x, double y, double z, double velX, double velY, double velZ, int count) {
+	public ParticleMessage(ParticleType<?> type, double x, double y, double z, double velX, double velY, double velZ, int count) {
 		this.type = type;
 		this.x = x;
 		this.y = y;
@@ -29,16 +33,13 @@ public class ParticleMessage implements IMessage {
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
-		buf.writeInt(type.getParticleID());
-		buf.writeDouble(x).writeDouble(y).writeDouble(z);
-		buf.writeDouble(velX).writeDouble(velY).writeDouble(velZ);
-		buf.writeInt(count);
+	public Class<ParticleMessage> getMsgClass() {
+		return ParticleMessage.class;
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
-		type = EnumParticleTypes.getParticleFromId(buf.readInt());
+	public ParticleMessage read(PacketBuffer buf) {
+		type = ((ForgeRegistry<ParticleType<?>>) ForgeRegistries.PARTICLE_TYPES).getValue(buf.readInt());
 		x = buf.readDouble();
 		y = buf.readDouble();
 		z = buf.readDouble();
@@ -46,19 +47,23 @@ public class ParticleMessage implements IMessage {
 		velY = buf.readDouble();
 		velZ = buf.readDouble();
 		count = buf.readInt();
+		return new ParticleMessage(type, x, y, z, velX, velY, velZ, count);
 	}
 
-	public static class Handler implements IMessageHandler<ParticleMessage, IMessage> {
+	@Override
+	public void write(ParticleMessage msg, PacketBuffer buf) {
+		buf.writeInt(((ForgeRegistry<ParticleType<?>>) ForgeRegistries.PARTICLE_TYPES).getID(type));
+		buf.writeDouble(x).writeDouble(y).writeDouble(z);
+		buf.writeDouble(velX).writeDouble(velY).writeDouble(velZ);
+		buf.writeInt(count);
+	}
 
-		@Override
-		public IMessage onMessage(ParticleMessage msg, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(() -> {
-				for (int i = 0; i < msg.count; i++)
-					Minecraft.getMinecraft().world.spawnParticle(msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
-			});
-			return null;
-		}
-
+	@Override
+	public void handle(ParticleMessage msg, Supplier<Context> ctx) {
+		NetworkUtils.enqueueClient(() -> {
+			for (int i = 0; i < msg.count; i++)
+				Minecraft.getInstance().world.addParticle((IParticleData) msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
+		});
 	}
 
 }

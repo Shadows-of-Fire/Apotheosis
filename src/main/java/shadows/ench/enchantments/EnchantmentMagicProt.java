@@ -1,16 +1,14 @@
 package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.util.DamageSource;
-import shadows.Apotheosis;
 import shadows.ench.EnchModule;
 
 public class EnchantmentMagicProt extends Enchantment {
 
 	public EnchantmentMagicProt() {
-		super(Rarity.UNCOMMON, EnumEnchantmentType.ARMOR, EnchModule.ARMOR);
-		setName(Apotheosis.MODID + ".magic_protection");
+		super(Rarity.UNCOMMON, EnchantmentType.ARMOR, EnchModule.ARMOR);
 	}
 
 	@Override

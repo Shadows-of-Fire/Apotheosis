@@ -7,18 +7,20 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.deadly.DeadlyModule;
+import shadows.placebo.config.Configuration;
 
 public class DeadlyConfig {
 
 	public static final IntList DIM_WHITELIST = new IntArrayList();
-	public static final List<PotionEffect> BRUTAL_POTIONS = new ArrayList<>();
+	public static final List<EffectInstance> BRUTAL_POTIONS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BOSS_MOBS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> SWARM_MOBS = new ArrayList<>();
@@ -93,7 +95,7 @@ public class DeadlyConfig {
 			try {
 				int weight = Integer.parseInt(split[0]);
 				ResourceLocation name = new ResourceLocation(split[1]);
-				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
+				EntityType<?> e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) BRUTAL_MOBS.add(Pair.of(weight, name));
 				else DeadlyModule.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
@@ -123,7 +125,7 @@ public class DeadlyConfig {
 			try {
 				int weight = Integer.parseInt(split[0]);
 				ResourceLocation name = new ResourceLocation(split[1]);
-				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
+				EntityType<?> e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) SWARM_MOBS.add(Pair.of(weight, name));
 				else DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
@@ -138,21 +140,21 @@ public class DeadlyConfig {
 			try {
 				int level = Math.max(1, Integer.parseInt(split[1]));
 				ResourceLocation name = new ResourceLocation(split[0]);
-				Potion p = ForgeRegistries.POTIONS.getValue(name);
-				if (p != null) BRUTAL_POTIONS.add(new PotionEffect(p, Integer.MAX_VALUE, level - 1));
+				Effect p = ForgeRegistries.POTIONS.getValue(name);
+				if (p != null) BRUTAL_POTIONS.add(new EffectInstance(p, Integer.MAX_VALUE, level - 1));
 				else DeadlyModule.LOGGER.error("Invalid brutal potion entry: " + s + ".  It will be ignored! (Potion does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
 				DeadlyModule.LOGGER.error("Invalid brutal potion entry: " + s + ".  It will be ignored! (Invalid format)");
 			}
 		}
 
-		for (EntityEntry e : ForgeRegistries.ENTITIES)
+		for (EntityType<?> e : ForgeRegistries.ENTITIES)
 			if (IMob.class.isAssignableFrom(e.getEntityClass())) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 
 		if (c.hasChanged()) c.save();
 	}
 
-	public static int getWeightForEntry(EntityEntry e) {
+	public static int getWeightForEntry(EntityType<?> e) {
 		return config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 	}
 

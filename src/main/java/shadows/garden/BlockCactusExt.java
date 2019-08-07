@@ -2,24 +2,25 @@ package shadows.garden;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockCactus;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CactusBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 
-public class BlockCactusExt extends BlockCactus {
+public class BlockCactusExt extends CactusBlock {
 
 	public BlockCactusExt() {
-		setHardness(0.4F);
-		setSoundType(SoundType.CLOTH);
-		setTranslationKey("cactus");
+		super(Block.Properties.create(Material.CACTUS).tickRandomly().hardnessAndResistance(0.4F).sound(SoundType.CLOTH));
 		setRegistryName(new ResourceLocation("cactus"));
 	}
 
 	@Override
-	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+	public void tick(BlockState state, World world, BlockPos pos, Random random) {
 		if (!world.isAreaLoaded(pos, 1)) return; // Forge: prevent growing cactus from loading unloaded chunks with block update
 		BlockPos blockpos = pos.up();
 
@@ -30,18 +31,18 @@ public class BlockCactusExt extends BlockCactus {
 				;
 
 			if (i < GardenModule.maxCactusHeight) {
-				int j = state.getValue(AGE).intValue();
+				int j = state.get(AGE);
 
-				if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(world, blockpos, state, true)) {
+				if (ForgeHooks.onCropsGrowPre(world, blockpos, state, true)) {
 					if (j == 15) {
 						world.setBlockState(blockpos, getDefaultState());
-						IBlockState iblockstate = state.withProperty(AGE, Integer.valueOf(0));
+						BlockState iblockstate = state.with(AGE, Integer.valueOf(0));
 						world.setBlockState(pos, iblockstate, 4);
-						iblockstate.neighborChanged(world, blockpos, this, pos);
+						iblockstate.neighborChanged(world, blockpos, this, pos, false);
 					} else {
-						world.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(j + 1)), 4);
+						world.setBlockState(pos, state.with(AGE, Integer.valueOf(j + 1)), 4);
 					}
-					net.minecraftforge.common.ForgeHooks.onCropsGrowPost(world, pos, state, world.getBlockState(pos));
+					ForgeHooks.onCropsGrowPost(world, pos, state);
 				}
 			}
 		}

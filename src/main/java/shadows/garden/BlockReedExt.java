@@ -3,53 +3,52 @@ package shadows.garden;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockReed;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.SugarCaneBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 
-public class BlockReedExt extends BlockReed {
+public class BlockReedExt extends SugarCaneBlock {
 
 	public BlockReedExt() {
-		setHardness(0.0F);
-		setSoundType(SoundType.PLANT);
-		setTranslationKey("reeds");
-		disableStats();
+		super(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT));
 		setRegistryName(new ResourceLocation("reeds"));
 	}
 
 	@Override
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.REEDS || checkForDrop(worldIn, pos, state)) {
-			if (!worldIn.isOutsideBuildHeight(pos.up()) && worldIn.isAirBlock(pos.up())) {
-				int i = 1;
+	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+		if (!state.isValidPosition(worldIn, pos)) {
+			worldIn.destroyBlock(pos, true);
+		} else if (worldIn.isAirBlock(pos.up())) {
+			int i = 0;
+			if (GardenModule.maxReedHeight != 255) for (i = 1; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i)
+				;
 
-				if (GardenModule.maxReedHeight != 255) for (; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i)
-					;
-
-				if (i < GardenModule.maxReedHeight) {
-					int j = state.getValue(AGE).intValue();
-
-					if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
-						if (j == 15) {
-							worldIn.setBlockState(pos.up(), getDefaultState());
-							worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(0)), 4);
-						} else {
-							worldIn.setBlockState(pos, state.withProperty(AGE, Integer.valueOf(j + 1)), 4);
-						}
-						net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
+			if (i < GardenModule.maxReedHeight) {
+				int j = state.get(AGE);
+				if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
+					if (j == 15) {
+						worldIn.setBlockState(pos.up(), this.getDefaultState());
+						worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(0)), 4);
+					} else {
+						worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(j + 1)), 4);
 					}
+					ForgeHooks.onCropsGrowPost(worldIn, pos, state);
 				}
 			}
 		}
+
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos origin) {
+	@Deprecated
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos origin, boolean isMoving) {
 		if (pos.getY() != origin.getY()) {
-			super.neighborChanged(state, world, pos, block, origin);
+			super.neighborChanged(state, world, pos, block, origin, isMoving);
 		}
 	}
 

@@ -1,26 +1,24 @@
 package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemHoe;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
-import shadows.Apotheosis;
 
 public class EnchantmentNatureBless extends Enchantment {
 
 	public EnchantmentNatureBless() {
-		super(Rarity.RARE, null, new EntityEquipmentSlot[0]);
-		setName(Apotheosis.MODID + ".natures_blessing");
+		super(Rarity.RARE, null, new EquipmentSlotType[0]);
 	}
 
 	@Override
 	public boolean canApply(ItemStack stack) {
-		return stack.getItem() instanceof ItemHoe;
+		return stack.getItem() instanceof HoeItem;
 	}
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return stack.getItem() instanceof ItemHoe;
+		return stack.getItem() instanceof HoeItem;
 	}
 
 	@Override

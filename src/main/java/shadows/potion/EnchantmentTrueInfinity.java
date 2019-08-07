@@ -1,15 +1,14 @@
 package shadows.potion;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.inventory.EquipmentSlotType;
 import shadows.Apotheosis;
 
 public class EnchantmentTrueInfinity extends Enchantment {
 
 	protected EnchantmentTrueInfinity() {
-		super(Rarity.VERY_RARE, EnumEnchantmentType.BOW, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
-		setName("apotheosis.true_infinity");
+		super(Rarity.VERY_RARE, EnchantmentType.BOW, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
 	}
 
 	@Override

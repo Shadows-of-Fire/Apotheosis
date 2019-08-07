@@ -2,38 +2,46 @@ package shadows.ench;
 
 import java.util.List;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ContainerEnchantment;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import shadows.ench.objects.BlockHellBookshelf;
 
-public class ContainerEnchantmentExt extends ContainerEnchantment {
+public class ContainerEnchantmentExt extends EnchantmentContainer {
 
-	public ContainerEnchantmentExt(InventoryPlayer playerInv, World worldIn, BlockPos pos) {
-		super(playerInv, worldIn, pos);
+	protected World world;
+	protected BlockPos position;
+
+	public ContainerEnchantmentExt(int id, PlayerInventory inv, IWorldPosCallable wPos) {
+		super(id, inv, wPos);
+		world = wPos.apply((w, p) -> w).get();
+		position = wPos.apply((w, p) -> p).get();
 	}
 
 	/**
 	 * Callback for when the crafting matrix is changed.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCraftMatrixChanged(IInventory inventoryIn) {
 		if (inventoryIn == this.tableInventory) {
 			ItemStack itemstack = inventoryIn.getStackInSlot(0);
 
-			if (!itemstack.isEmpty() && itemstack.isItemEnchantable()) {
+			if (!itemstack.isEmpty() && itemstack.isEnchantable()) {
 				if (!this.world.isRemote) {
 
 					float power = getEnchPower();
-					this.rand.setSeed(this.xpSeed);
+					this.rand.setSeed(this.xpSeed.get());
 
 					for (int i1 = 0; i1 < 3; ++i1) {
 						this.enchantLevels[i1] = EnchantmentHelper.calcItemStackEnchantability(this.rand, i1, (int) power, itemstack);
@@ -52,7 +60,7 @@ public class ContainerEnchantmentExt extends ContainerEnchantment {
 
 							if (list != null && !list.isEmpty()) {
 								EnchantmentData enchantmentdata = list.get(this.rand.nextInt(list.size()));
-								this.enchantClue[j1] = Enchantment.getEnchantmentID(enchantmentdata.enchantment);
+								this.enchantClue[j1] = Registry.ENCHANTMENT.getId(enchantmentdata.enchantment);
 								this.worldClue[j1] = enchantmentdata.enchantmentLevel;
 							}
 						}
@@ -71,7 +79,7 @@ public class ContainerEnchantmentExt extends ContainerEnchantment {
 	}
 
 	private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
-		this.rand.setSeed(this.xpSeed + enchantSlot);
+		this.rand.setSeed(this.xpSeed.get() + enchantSlot);
 		List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, stack, level, false);
 
 		if (stack.getItem() == Items.BOOK && list.size() > 1) {
@@ -102,9 +110,9 @@ public class ContainerEnchantmentExt extends ContainerEnchantment {
 	}
 
 	public void getSinglePower(float[] powers, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		boolean hell = state.getBlock() instanceof BlockHellBookshelf;
-		float power = state.getBlock().getEnchantPowerBonus(world, pos);
+		float power = state.getEnchantPowerBonus(world, pos);
 		powers[hell ? 1 : 0] += power;
 	}
 }

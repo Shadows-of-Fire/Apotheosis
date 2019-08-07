@@ -64,7 +64,7 @@ public class SpawnerModifiers {
 	public static void register(SpawnerModifier modif) {
 		if (!MODIFIERS.contains(modif)) {
 			MODIFIERS.add(modif);
-			modif.load();//SpawnerModule.config);
+			modif.load(SpawnerModule.config);
 		} else throw new RuntimeException("Tried to register a spawner modifier, but it is already registered!");
 	}
 

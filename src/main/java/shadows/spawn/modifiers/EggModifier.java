@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
+import shadows.placebo.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
 import shadows.spawn.TileSpawnerExt;
 
@@ -40,14 +41,13 @@ public class EggModifier extends SpawnerModifier {
 		return true;
 	}
 
-	/*
 	@Override
 	public void load(Configuration cfg) {
 		String[] bans = cfg.getStringList("Banned Mobs", getCategory(), new String[0], "A list of entity registry names that cannot be applied to spawners via egg.");
 		for (String s : bans)
 			bannedMobs.add(s);
 	}
-	*/
+
 	@Override
 	public String getCategory() {
 		return "spawn_eggs";

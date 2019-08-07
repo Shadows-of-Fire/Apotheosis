@@ -2,47 +2,46 @@ package shadows.ench.compat;
 
 import java.util.List;
 
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import mcp.mobius.waila.api.IWailaDataProvider;
+import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
+import mcp.mobius.waila.api.IRegistrar;
+import mcp.mobius.waila.api.IServerDataProvider;
 import mcp.mobius.waila.api.IWailaPlugin;
-import mcp.mobius.waila.api.IWailaRegistrar;
+import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import shadows.ApotheosisObjects;
 import shadows.ench.anvil.BlockAnvilExt;
 import shadows.ench.anvil.TileAnvil;
 
 @WailaPlugin
-public class EnchHwylaPlugin implements IWailaPlugin, IWailaDataProvider {
+public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {
 
 	@Override
-	public void register(IWailaRegistrar reg) {
-		reg.registerBodyProvider(this, BlockAnvilExt.class);
-		reg.registerNBTProvider(this, BlockAnvilExt.class);
+	public void register(IRegistrar reg) {
+		reg.registerComponentProvider(this, TooltipPosition.BODY, BlockAnvilExt.class);
+		reg.registerBlockDataProvider(this, BlockAnvilExt.class);
 	}
 
 	@Override
-	public List<String> getWailaBody(ItemStack stack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		NBTTagCompound tag = accessor.getNBTData();
-		if (tag.getInteger("ub") > 0) tooltip.add(Enchantments.UNBREAKING.getTranslatedName(tag.getInteger("ub")));
-		if (tag.getInteger("sp") > 0) tooltip.add(ApotheosisObjects.SPLITTING.getTranslatedName(tag.getInteger("sp")));
-		return tooltip;
+	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
+		CompoundNBT tag = accessor.getServerData();
+		if (tag.getInt("ub") > 0) tooltip.add(Enchantments.UNBREAKING.getDisplayName(tag.getInt("ub")));
+		if (tag.getInt("sp") > 0) tooltip.add(ApotheosisObjects.SPLITTING.getDisplayName(tag.getInt("sp")));
 	}
 
 	@Override
-	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
+	public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity te) {
 		if (te instanceof TileAnvil) {
-			tag.setInteger("ub", ((TileAnvil) te).getUnbreaking());
-			tag.setInteger("sp", ((TileAnvil) te).getSplitting());
+			tag.putInt("ub", ((TileAnvil) te).getUnbreaking());
+			tag.putInt("sp", ((TileAnvil) te).getSplitting());
 		}
-		return tag;
 	}
 
 }

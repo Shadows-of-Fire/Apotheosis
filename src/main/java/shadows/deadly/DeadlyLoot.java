@@ -1,9 +1,11 @@
 package shadows.deadly;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
@@ -11,8 +13,9 @@ import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import shadows.Apotheosis;
-import shadows.placebo.loot.PlaceboLootPool.PoolBuilder;
+import shadows.placebo.loot.LootSystem;
 import shadows.placebo.loot.PlaceboLootSystem;
+import shadows.placebo.loot.PoolBuilder;
 import shadows.util.ChestBuilder;
 import shadows.util.ChestBuilder.EnchantedEntry;
 
@@ -32,7 +35,8 @@ public class DeadlyLoot {
 	public static final ResourceLocation CHEST_VALUABLE = new ResourceLocation(Apotheosis.MODID, "chest_valuable");
 
 	public static void init() {
-		PoolBuilder build = new PoolBuilder(5, 8, 1, 3);
+		PoolBuilder build = new PoolBuilder(5, 8);
+		build.bonusRolls(1, 3);
 		build.addEntries(ChestBuilder.loot(Items.SKULL, 0, 1, 1, 1, 2));
 		build.addEntries(ChestBuilder.loot(Items.SKULL, 1, 1, 1, 1, 2));
 		build.addEntries(ChestBuilder.loot(Items.SKULL, 2, 1, 1, 1, 2));
@@ -54,7 +58,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.ENCHANTING_TABLE, 0, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 0, 1, 1, 3, 0));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
-		PlaceboLootSystem.registerLootTable(SPAWNER_BRUTAL, new LootTable(new LootPool[] { build.build() }));
+		LootSystem.registerLootTable(SPAWNER_BRUTAL, LootSystem.tableBuilder().addLootPool(build).build());
 
 		build = new PoolBuilder(5, 6, 1, 4);
 		build.addEntries(ChestBuilder.loot(egg("creeper"), 1, 3, 1, 1));

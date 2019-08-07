@@ -1,9 +1,10 @@
 package shadows.spawn;
 
+import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import io.netty.handler.codec.http2.Http2FrameReader.Configuration;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
@@ -25,9 +26,9 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.Apotheosis;
-import shadows.Apotheosis.ApotheosisInit;
-import shadows.Apotheosis.ApotheosisPreInit;
+import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ApotheosisObjects;
+import shadows.placebo.config.Configuration;
 import shadows.spawn.modifiers.SpawnerModifier;
 
 public class SpawnerModule {
@@ -38,19 +39,14 @@ public class SpawnerModule {
 	public static int spawnerSilkLevel = 1;
 
 	@SubscribeEvent
-	public void preInit(ApotheosisPreInit e) {
-		//config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
-		//if (Apotheosis.enableSpawner) {
-		//	TileEntity.register("mob_spawner", TileSpawnerExt.class);
-		//}
-		TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
-	}
-
-	@SubscribeEvent
-	public void init(ApotheosisInit e) {
-		//spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
+	public void setup(ApotheosisSetup e) {
+		config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
+		if (Apotheosis.enableSpawner) {
+			TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
+		}
+		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
 		SpawnerModifiers.init();
-		//if (config.hasChanged()) config.save();
+		if (config.hasChanged()) config.save();
 	}
 
 	@SubscribeEvent

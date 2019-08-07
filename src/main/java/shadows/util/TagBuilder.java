@@ -5,30 +5,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.item.EntityFallingBlock;
-import net.minecraft.entity.item.EntityTNTPrimed;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagDouble;
-import net.minecraft.nbt.NBTTagFloat;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.DoubleNBT;
+import net.minecraft.nbt.FloatNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedSpawnerEntity;
-import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.placebo.util.SpawnerBuilder;
@@ -51,7 +46,7 @@ public class TagBuilder {
 	public static final String ENTITY_FIRE = "Fire";
 	public static final String ARROW_PICKUP = "pickup";
 	public static final String ARROW_DAMAGE = "damage";
-	public static final NBTTagCompound ARROW = getDefaultTag(EntityTippedArrow.class);
+	public static final CompoundNBT ARROW = getDefaultTag(EntityType.ARROW);
 	public static final String EFFECTS = "ActiveEffects";
 	public static final String TIME = "Time";
 	public static final String DROP_ITEM = "DropItem";
@@ -59,31 +54,31 @@ public class TagBuilder {
 	public static final String FALL_HURT_AMOUNT = "FallHurtAmount";
 	public static final String FALL_HURT_MAX = "FallHurtMax";
 	public static final String TILE_ENTITY_DATA = "TileEntityData";
-	public static final NBTTagCompound TNT = getDefaultTag(EntityTNTPrimed.class);
+	public static final CompoundNBT TNT = getDefaultTag(EntityType.TNT);
 	public static final String FUSE = "Fuse";
 
 	/**
 	 * Creates a tag that will spawn this entity, with all default values.
 	 */
-	public static NBTTagCompound getDefaultTag(Class<? extends Entity> entity) {
-		NBTTagCompound tag = new NBTTagCompound();
-		tag.setString(SpawnerBuilder.ID, EntityList.getKey(entity).toString());
+	public static CompoundNBT getDefaultTag(EntityType<? extends Entity> entity) {
+		CompoundNBT tag = new CompoundNBT();
+		tag.putString(SpawnerBuilder.ID, entity.getRegistryName().toString());
 		return tag;
 	}
 
 	/**
 	 * Sets this entity's hp.
 	 */
-	public static NBTTagCompound setHealth(NBTTagCompound entity, float health) {
-		entity.setFloat(HEALTH, health);
+	public static CompoundNBT setHealth(CompoundNBT entity, float health) {
+		entity.putFloat(HEALTH, health);
 		return entity;
 	}
 
 	/**
 	 * Tells this entity to not despawn naturally.
 	 */
-	public static NBTTagCompound setPersistent(NBTTagCompound entity, boolean persistent) {
-		entity.setBoolean(PERSISTENT, persistent);
+	public static CompoundNBT setPersistent(CompoundNBT entity, boolean persistent) {
+		entity.putBoolean(PERSISTENT, persistent);
 		return entity;
 	}
 
@@ -92,27 +87,27 @@ public class TagBuilder {
 	 * @param tag The entity tag, created by {@link Entity#writeToNBT}
 	 * @param equipment Stacks to represent the equipment, in the order of EntityEquipmentSlot
 	 */
-	public static NBTTagCompound setEquipment(NBTTagCompound entity, ItemStack... equipment) {
+	public static CompoundNBT setEquipment(CompoundNBT entity, ItemStack... equipment) {
 		ItemStack[] stacks = fixStacks(equipment);
-		NBTTagList tagListHands = new NBTTagList();
+		ListNBT tagListHands = new ListNBT();
 		for (int i = 0; i < 2; i++)
-			tagListHands.appendTag(new NBTTagCompound());
+			tagListHands.add(new CompoundNBT());
 
-		NBTTagList tagListArmor = new NBTTagList();
+		ListNBT tagListArmor = new ListNBT();
 		for (int i = 0; i < 4; i++)
-			tagListArmor.appendTag(new NBTTagCompound());
+			tagListArmor.add(new CompoundNBT());
 
-		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
+		for (EquipmentSlotType s : EquipmentSlotType.values()) {
 			ItemStack stack = stacks[s.ordinal()];
-			if (s.getSlotType() == EntityEquipmentSlot.Type.HAND && !stack.isEmpty()) {
-				tagListHands.set(s.getIndex(), stack.writeToNBT(new NBTTagCompound()));
+			if (s.getSlotType() == EquipmentSlotType.Group.HAND && !stack.isEmpty()) {
+				tagListHands.set(s.getIndex(), stack.write(new CompoundNBT()));
 			} else if (!stack.isEmpty()) {
-				tagListArmor.set(s.getIndex(), stack.writeToNBT(new NBTTagCompound()));
+				tagListArmor.set(s.getIndex(), stack.write(new CompoundNBT()));
 			}
 		}
 
-		entity.setTag(HAND_ITEMS, tagListHands);
-		entity.setTag(ARMOR_ITEMS, tagListArmor);
+		entity.put(HAND_ITEMS, tagListHands);
+		entity.put(ARMOR_ITEMS, tagListArmor);
 		return entity;
 	}
 
@@ -128,21 +123,21 @@ public class TagBuilder {
 	 * @param tag The entity tag, created by {@link Entity#writeToNBT}
 	 * @param chances Drop chances for each slot, in the order of EntityEquipmentSlot.  If a chance is above 1, that slot can drop without requiring player damage.
 	 */
-	public static NBTTagCompound setDropChances(NBTTagCompound entity, float... chances) {
+	public static CompoundNBT setDropChances(CompoundNBT entity, float... chances) {
 		float[] fixed = fixChances(chances);
-		NBTTagList tagListHands = new NBTTagList();
-		NBTTagList tagListArmor = new NBTTagList();
+		ListNBT tagListHands = new ListNBT();
+		ListNBT tagListArmor = new ListNBT();
 
-		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
-			NBTTagFloat chance = new NBTTagFloat(fixed[s.ordinal()]);
-			if (s.getSlotType() == EntityEquipmentSlot.Type.HAND) {
+		for (EquipmentSlotType s : EquipmentSlotType.values()) {
+			FloatNBT chance = new FloatNBT(fixed[s.ordinal()]);
+			if (s.getSlotType() == EquipmentSlotType.Group.HAND) {
 				tagListHands.set(s.getIndex(), chance);
 			} else tagListArmor.set(s.getIndex(), chance);
 
 		}
 
-		entity.setTag(HAND_ITEMS, tagListHands);
-		entity.setTag(ARMOR_ITEMS, tagListArmor);
+		entity.put(HAND_ITEMS, tagListHands);
+		entity.put(ARMOR_ITEMS, tagListArmor);
 		return entity;
 	}
 
@@ -156,84 +151,84 @@ public class TagBuilder {
 	/**
 	 * Sets this entity to spawn with a given offset from the spawner, instead of using random coordinates.
 	 */
-	public static NBTTagCompound setOffset(NBTTagCompound entity, double x, double y, double z) {
-		entity.setTag(OFFSET, doubleTagList(x, y, z));
+	public static CompoundNBT setOffset(CompoundNBT entity, double x, double y, double z) {
+		entity.put(OFFSET, doubleTagList(x, y, z));
 		return entity;
 	}
 
 	/**
 	 * Sets the motion of an entity.
 	 */
-	public static NBTTagCompound setMotion(NBTTagCompound entity, double x, double y, double z) {
-		entity.setTag(MOTION, doubleTagList(x, y, z));
+	public static CompoundNBT setMotion(CompoundNBT entity, double x, double y, double z) {
+		entity.put(MOTION, doubleTagList(x, y, z));
 		return entity;
 	}
 
 	/**
 	 * Sets fireball motion, because fireballs are stupid and use their own key.
 	 */
-	public static NBTTagCompound setFireballMotion(NBTTagCompound entity, double x, double y, double z) {
-		entity.setTag(DIRECTION, doubleTagList(x, y, z));
+	public static CompoundNBT setFireballMotion(CompoundNBT entity, double x, double y, double z) {
+		entity.put(DIRECTION, doubleTagList(x, y, z));
 		return entity;
 	}
 
-	public static NBTTagList doubleTagList(double... data) {
-		NBTTagList tagList = new NBTTagList();
+	public static ListNBT doubleTagList(double... data) {
+		ListNBT tagList = new ListNBT();
 		for (double d : data)
-			tagList.appendTag(new NBTTagDouble(d));
+			tagList.add(new DoubleNBT(d));
 		return tagList;
 	}
 
 	/**
 	 * Adds a potion effect to the stack and returns it.
 	 */
-	public static ItemStack addPotionEffect(ItemStack stack, Potion potion, int duration, int amplifier) {
-		return PotionUtils.appendEffects(stack, Arrays.asList(new PotionEffect(potion, duration, amplifier)));
+	public static ItemStack addPotionEffect(ItemStack stack, Effect potion, int duration, int amplifier) {
+		return PotionUtils.appendEffects(stack, Arrays.asList(new EffectInstance(potion, duration, amplifier)));
 	}
 
 	/**
 	 * Adds a potion effect to this entity.
 	 */
-	public static void addPotionEffect(NBTTagCompound tag, Potion potion, int amplifier) {
+	public static void addPotionEffect(CompoundNBT tag, Effect potion, int amplifier) {
 		TagBuilder.addPotionEffect(tag, potion, Integer.MAX_VALUE, amplifier, false);
 	}
 
 	/**
 	 * Adds a potion effect to this entity.
 	 */
-	public static void addPotionEffect(NBTTagCompound tag, Potion potion, int amplifier, boolean showParticles) {
+	public static void addPotionEffect(CompoundNBT tag, Effect potion, int amplifier, boolean showParticles) {
 		TagBuilder.addPotionEffect(tag, potion, Integer.MAX_VALUE, amplifier, showParticles);
 	}
 
 	/**
 	 * Adds a potion effect to this entity.
 	 */
-	public static void addPotionEffect(NBTTagCompound tag, Potion potion, int duration, int amplifier) {
+	public static void addPotionEffect(CompoundNBT tag, Effect potion, int duration, int amplifier) {
 		TagBuilder.addPotionEffect(tag, potion, duration, amplifier, false);
 	}
 
 	/**
 	 * Adds a potion effect to this entity.
 	 */
-	public static NBTTagCompound addPotionEffect(NBTTagCompound entity, Potion potion, int duration, int amplifier, boolean showParticles) {
-		NBTTagList effects = entity.getTagList(EFFECTS, 10);
-		PotionEffect fx = new PotionEffect(potion, duration, amplifier, false, showParticles);
-		effects.appendTag(fx.writeCustomPotionEffectToNBT(new NBTTagCompound()));
-		entity.setTag(EFFECTS, effects);
+	public static CompoundNBT addPotionEffect(CompoundNBT entity, Effect potion, int duration, int amplifier, boolean showParticles) {
+		ListNBT effects = entity.getList(EFFECTS, 10);
+		EffectInstance fx = new EffectInstance(potion, duration, amplifier, false, showParticles);
+		effects.add(fx.write(new CompoundNBT()));
+		entity.put(EFFECTS, effects);
 		return entity;
 	}
 
 	/**
 	 * Makes a falling block tag.
 	 */
-	public static NBTTagCompound fallingBlock(IBlockState state, int time) {
+	public static CompoundNBT fallingBlock(BlockState state, int time) {
 		return TagBuilder.fallingBlock(state, time, false, 2, 40, false, null);
 	}
 
 	/**
 	 * Makes a falling block tag.
 	 */
-	public static NBTTagCompound fallingBlock(IBlockState state, int time, float fallDamage) {
+	public static CompoundNBT fallingBlock(BlockState state, int time, float fallDamage) {
 		return TagBuilder.fallingBlock(state, time, true, fallDamage, 40, false, null);
 	}
 
@@ -246,18 +241,17 @@ public class TagBuilder {
 	 * @param maxFallDamage The max amount we can damage an entity for.
 	 * @param dropItem If we drop our block on despawn.
 	 * @param tileData Tile entity data, to be set if we hit the ground/
-	 * @return An NBTTagCompound containing a falling block.
+	 * @return An CompoundNBT containing a falling block.
 	 */
-	public static NBTTagCompound fallingBlock(IBlockState state, int time, boolean hurtEntities, float fallDamage, int maxFallDamage, boolean dropItem, NBTTagCompound tileData) {
-		NBTTagCompound tag = getDefaultTag(EntityFallingBlock.class);
-		tag.setString("Block", state.getBlock().getRegistryName().toString());
-		tag.setByte("Data", (byte) state.getBlock().getMetaFromState(state));
-		tag.setInteger(TIME, time);
-		tag.setBoolean(DROP_ITEM, dropItem);
-		tag.setBoolean(HURT_ENTITIES, hurtEntities);
-		tag.setFloat(FALL_HURT_AMOUNT, fallDamage);
-		tag.setInteger(FALL_HURT_MAX, maxFallDamage);
-		if (tileData != null) tag.setTag(TILE_ENTITY_DATA, tileData);
+	public static CompoundNBT fallingBlock(BlockState state, int time, boolean hurtEntities, float fallDamage, int maxFallDamage, boolean dropItem, CompoundNBT tileData) {
+		CompoundNBT tag = getDefaultTag(EntityType.FALLING_BLOCK);
+		tag.put("BlockState", NBTUtil.writeBlockState(state));
+		tag.putInt(TIME, time);
+		tag.putBoolean(DROP_ITEM, dropItem);
+		tag.putBoolean(HURT_ENTITIES, hurtEntities);
+		tag.putFloat(FALL_HURT_AMOUNT, fallDamage);
+		tag.putInt(FALL_HURT_MAX, maxFallDamage);
+		if (tileData != null) tag.put(TILE_ENTITY_DATA, tileData);
 		return tag;
 	}
 
@@ -269,12 +263,12 @@ public class TagBuilder {
 	 */
 	public static SpawnerBuilder createMobSpawnerRandom() {
 		if (randomPotentials.isEmpty()) {
-			List<EntityEntry> valid = new ArrayList<>();
-			for (EntityEntry e : ForgeRegistries.ENTITIES)
-				if (IMob.class.isAssignableFrom(e.getEntityClass())) valid.add(e);
+			List<EntityType<?>> valid = new ArrayList<>();
+			for (EntityType<?> e : ForgeRegistries.ENTITIES)
+				if (e.getClassification() == EntityClassification.MONSTER) valid.add(e);
 
-			for (EntityEntry e : valid) {
-				NBTTagCompound tag = getDefaultTag(e.getEntityClass());
+			for (EntityType<?> e : valid) {
+				CompoundNBT tag = getDefaultTag(e);
 				checkForSkeleton(tag);
 				int weight = DeadlyConfig.getWeightForEntry(e);
 				if (weight > 0) randomPotentials.add(new WeightedSpawnerEntity(weight, tag));
@@ -295,10 +289,10 @@ public class TagBuilder {
 	 * @param tag An entity written to NBT.
 	 * @return The provided entity, now with TNT on it's head.
 	 */
-	public static NBTTagCompound applyTNTHat(NBTTagCompound tag) {
+	public static CompoundNBT applyTNTHat(CompoundNBT tag) {
 		TagBuilder.setMotion(tag, 0.0, 0.3, 0.0);
-		TagBuilder.addPotionEffect(tag, MobEffects.SPEED, 1);
-		TagBuilder.addPotionEffect(tag, MobEffects.RESISTANCE, -6);
+		TagBuilder.addPotionEffect(tag, Effects.SPEED, 1);
+		TagBuilder.addPotionEffect(tag, Effects.RESISTANCE, -6);
 		addPassengers(tag, TNT.copy());
 		return tag;
 	}
@@ -306,29 +300,29 @@ public class TagBuilder {
 	/**
 	 * Sets the provided passengers to ride on the given entity.
 	 */
-	public static NBTTagCompound addPassengers(NBTTagCompound entity, NBTTagCompound... passengers) {
-		NBTTagList list = entity.getTagList(PASSENGERS, 10);
-		if (list.isEmpty()) entity.setTag(PASSENGERS, list);
-		for (NBTTagCompound nbt : passengers)
-			list.appendTag(nbt);
+	public static CompoundNBT addPassengers(CompoundNBT entity, CompoundNBT... passengers) {
+		ListNBT list = entity.getList(PASSENGERS, 10);
+		if (list.isEmpty()) entity.put(PASSENGERS, list);
+		for (CompoundNBT nbt : passengers)
+			list.add(nbt);
 		return entity;
 	}
 
 	/**
 	 * Forcibly gives skeletons bows.
 	 */
-	public static NBTTagCompound checkForSkeleton(NBTTagCompound entity) {
-		if (EntitySkeleton.class.isAssignableFrom(EntityList.getClass(new ResourceLocation(entity.getString(SpawnerBuilder.ID))))) {
+	public static CompoundNBT checkForSkeleton(CompoundNBT entity) {
+		if (entity.getString(SpawnerBuilder.ID).contains("skeleton")) {
 			TagBuilder.setEquipment(entity, new ItemStack(Items.BOW));
 		}
 		return entity;
 	}
 
-	public static NBTTagCompound checkForCreeper(NBTTagCompound entity) {
-		if (EntityCreeper.class.isAssignableFrom(EntityList.getClass(new ResourceLocation(entity.getString(SpawnerBuilder.ID))))) {
-			NBTTagList effects = entity.getTagList(EFFECTS, 10);
-			for (NBTBase nbt : effects) {
-				((NBTTagCompound) nbt).setInteger("Duration", 300);
+	public static CompoundNBT checkForCreeper(CompoundNBT entity) {
+		if (entity.getString(SpawnerBuilder.ID).contains("creeper")) {
+			ListNBT effects = entity.getList(EFFECTS, 10);
+			for (INBT nbt : effects) {
+				((CompoundNBT) nbt).putInt("Duration", 300);
 			}
 			return entity;
 		}

@@ -1,5 +1,6 @@
 package shadows.util;
 
+import shadows.placebo.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
 import shadows.placebo.util.SpawnerEditor;
 

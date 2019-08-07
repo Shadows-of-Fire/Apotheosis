@@ -1,20 +1,26 @@
 package shadows.garden.compat;
 
 import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 
-@JEIPlugin
+@JeiPlugin
 public class GardenJEIPlugin implements IModPlugin {
 
 	@Override
-	public void register(IModRegistry reg) {
+	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enableGarden) return;
 		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.FARMERS_LEASH), VanillaTypes.ITEM, "info.apotheosis.farmleash");
+	}
+
+	@Override
+	public ResourceLocation getPluginUid() {
+		return new ResourceLocation(Apotheosis.MODID, "garden");
 	}
 
 }

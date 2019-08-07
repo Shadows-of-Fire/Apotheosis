@@ -1,12 +1,12 @@
 package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemAxe;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import shadows.ench.EnchModule;
@@ -14,8 +14,7 @@ import shadows.ench.EnchModule;
 public class EnchantmentMounted extends Enchantment {
 
 	public EnchantmentMounted() {
-		super(Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
-		setName("apotheosis.mounted_strike");
+		super(Rarity.RARE, EnchantmentType.WEAPON, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
 	}
 
 	@Override
@@ -35,13 +34,13 @@ public class EnchantmentMounted extends Enchantment {
 
 	@Override
 	public boolean canApply(ItemStack stack) {
-		return stack.getItem() instanceof ItemAxe ? true : super.canApply(stack);
+		return stack.getItem() instanceof AxeItem ? true : super.canApply(stack);
 	}
 
 	@Override
-	public void onEntityDamaged(EntityLivingBase user, Entity target, int level) {
+	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
 		if (user.getRidingEntity() != null) {
-			DamageSource source = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
+			DamageSource source = user instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity) user) : DamageSource.GENERIC;
 			target.attackEntityFrom(source, (float) Math.pow(1.75F, level) * EnchModule.localAtkStrength);
 		}
 	}

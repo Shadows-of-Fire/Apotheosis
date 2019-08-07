@@ -1,17 +1,15 @@
 package shadows.ench.anvil;
 
+import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAnvil;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import shadows.Apotheosis;
 
 public class EnchantmentSplitting extends Enchantment {
 
 	public EnchantmentSplitting() {
-		super(Rarity.RARE, null, new EntityEquipmentSlot[] {});
-		setName(Apotheosis.MODID + ".splitting");
+		super(Rarity.RARE, null, new EquipmentSlotType[0]);
 	}
 
 	@Override
@@ -31,7 +29,7 @@ public class EnchantmentSplitting extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return Block.getBlockFromItem(stack.getItem()) instanceof BlockAnvil;
+		return Block.getBlockFromItem(stack.getItem()) instanceof AnvilBlock;
 	}
 
 }

@@ -2,11 +2,13 @@ package shadows;
 
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.ench.altar.BlockPrismaticAltar;
+import shadows.ench.altar.TilePrismaticAltar;
 import shadows.ench.anvil.EnchantmentSplitting;
-import shadows.ench.anvil.ItemAnvilExt;
+import shadows.ench.anvil.TileAnvil;
 import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
@@ -25,10 +27,10 @@ import shadows.ench.enchantments.EnchantmentTempting;
 import shadows.ench.objects.BlockHellBookshelf;
 import shadows.ench.objects.ItemScrapTome;
 import shadows.ench.objects.ItemTypedBook;
-import shadows.garden.ItemFarmersLeash;
+import shadows.garden.EnderLeashItem;
 import shadows.potion.EnchantmentTrueInfinity;
 import shadows.potion.ItemLuckyFoot;
-import shadows.potion.potions.PotionKnowledge;
+import shadows.potion.potions.KnowledgeEffect;
 import shadows.potion.potions.PotionSundering;
 import shadows.spawn.EnchantmentCapturing;
 
@@ -75,8 +77,6 @@ public class ApotheosisObjects {
 	public static final Potion STRONG_SUNDERING = null;
 	public static final EnchantmentKnowledge KNOWLEDGE = null;
 	public static final EnchantmentSplitting SPLITTING = null;
-	@ObjectHolder("minecraft:anvil")
-	public static final ItemAnvilExt ANVIL = null;
 	public static final EnchantmentNatureBless NATURES_BLESSING = null;
 	public static final EnchantmentRebounding REBOUNDING = null;
 	public static final ItemTypedBook NULL_BOOK = null;
@@ -91,7 +91,7 @@ public class ApotheosisObjects {
 	public static final BlockPrismaticAltar PRISMATIC_ALTAR = null;
 	public static final SoundEvent ALTAR_SOUND = null;
 	@ObjectHolder("apotheosis:knowledge")
-	public static final PotionKnowledge P_KNOWLEDGE = null;
+	public static final KnowledgeEffect P_KNOWLEDGE = null;
 	@ObjectHolder("apotheosis:knowledge")
 	public static final Potion T_KNOWLEDGE = null;
 	public static final Potion LONG_KNOWLEDGE = null;
@@ -99,5 +99,8 @@ public class ApotheosisObjects {
 	public static final ItemLuckyFoot LUCKY_FOOT = null;
 	public static final EnchantmentMagicProt MAGIC_PROTECTION = null;
 	public static final ItemScrapTome SCRAP_TOME = null;
-	public static final ItemFarmersLeash FARMERS_LEASH = null;
+	public static final EnderLeashItem FARMERS_LEASH = null;
+	public static final TileEntityType<TileAnvil> ANVIL = null;
+	@ObjectHolder("apotheosis:prismatic_altar")
+	public static final TileEntityType<TilePrismaticAltar> ALTAR_TYPE = null;
 }

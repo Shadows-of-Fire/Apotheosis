@@ -7,28 +7,35 @@ import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemEnchantedBook;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.items.ItemStackHandler;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 import shadows.ench.EnchModule;
 import shadows.ench.EnchantmentInfo;
 import shadows.placebo.recipe.VanillaPacketDispatcher;
+import shadows.placebo.util.NetworkUtils;
 import shadows.util.EnchantmentUtils;
 import shadows.util.ParticleMessage;
 
 public class TilePrismaticAltar extends TileEntity implements ITickable {
+
+	public TilePrismaticAltar() {
+		super(ApotheosisObjects.ALTAR_TYPE);
+	}
 
 	protected ItemStackHandler inv = new ItemStackHandler(5);
 	protected float xpDrained = 0;
@@ -38,7 +45,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 	int soundTick = 0;
 
 	@Override
-	public void update() {
+	public void tick() {
 		if (world.isRemote) return;
 		if (!inv.getStackInSlot(4).isEmpty()) return;
 		for (int i = 0; i < 4; i++) {
@@ -81,9 +88,9 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 	}
 
 	public void drainXP() {
-		List<EntityPlayer> nearby = world.getEntities(EntityPlayer.class, p -> p.getDistanceSq(pos) <= 25D);
+		List<PlayerEntity> nearby = world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(pos).grow(5, 5, 5));
 		boolean removed = false;
-		for (EntityPlayer p : nearby) {
+		for (PlayerEntity p : nearby) {
 			int maxDrain = (int) Math.ceil(targetXP / 200);
 			int removable = Math.min(1 + maxDrain, p.experienceTotal);
 			EnchantmentUtils.addPlayerXP(p, -removable);
@@ -95,10 +102,9 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 		}
 		if (soundTick++ % 50 == 0) world.playSound(null, pos, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 1);
 		if (!removed && soundTick % 10 == 0) {
-			TargetPoint point = new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 0);
 			for (int i = 0; i < 4; i++) {
-				ParticleMessage msg = new ParticleMessage(EnumParticleTypes.SPELL, pos.getX() + offsets[i][0], pos.getY() + 0.8, pos.getZ() + offsets[i][1], 0, 0.1, 0, 1);
-				Apotheosis.NETWORK.sendToAllTracking(msg, point);
+				ParticleMessage msg = new ParticleMessage(ParticleTypes.WITCH, pos.getX() + offsets[i][0], pos.getY() + 0.8, pos.getZ() + offsets[i][1], 0, 0.1, 0, 1);
+				NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerWorld) world, pos);
 			}
 		}
 	}
@@ -111,7 +117,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(world.rand, book, value, true);
 		if (!datas.isEmpty()) {
 			for (EnchantmentData d : datas)
-				ItemEnchantedBook.addEnchantment(target, d);
+				EnchantedBookItem.addEnchantment(target, d);
 			world.playSound(null, pos, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 1);
 			soundTick = 0;
 		} else {
@@ -121,47 +127,46 @@ public class TilePrismaticAltar extends TileEntity implements ITickable {
 		}
 	}
 
-	public void trySpawnParticles(EntityPlayer player, int xpDrain) {
-		TargetPoint point = new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 0);
+	public void trySpawnParticles(PlayerEntity player, int xpDrain) {
 		Vec3d to = new Vec3d(player.posX - (pos.getX() + 0.5), player.posY - pos.getY(), player.posZ - (pos.getZ() + 0.5));
-		ParticleMessage msg = new ParticleMessage(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX() + world.rand.nextDouble(), pos.getY() + 1 + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
-		Apotheosis.NETWORK.sendToAllTracking(msg, point);
+		ParticleMessage msg = new ParticleMessage(ParticleTypes.ENCHANT, pos.getX() + world.rand.nextDouble(), pos.getY() + 1 + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
+		NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerWorld) world, pos);
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		tag.setTag("inv", inv.serializeNBT());
-		tag.setFloat("xp", xpDrained);
-		return super.writeToNBT(tag);
+	public CompoundNBT write(CompoundNBT tag) {
+		tag.put("inv", inv.serializeNBT());
+		tag.putFloat("xp", xpDrained);
+		return super.write(tag);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		super.readFromNBT(tag);
-		inv.deserializeNBT(tag.getCompoundTag("inv"));
+	public void read(CompoundNBT tag) {
+		super.read(tag);
+		inv.deserializeNBT(tag.getCompound("inv"));
 		xpDrained = tag.getFloat("xp");
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag() {
-		NBTTagCompound tag = super.getUpdateTag();
-		tag.setTag("inv", inv.serializeNBT());
+	public CompoundNBT getUpdateTag() {
+		CompoundNBT tag = super.getUpdateTag();
+		tag.put("inv", inv.serializeNBT());
 		return tag;
 	}
 
 	@Override
-	public void handleUpdateTag(NBTTagCompound tag) {
+	public void handleUpdateTag(CompoundNBT tag) {
 		super.handleUpdateTag(tag);
-		inv.deserializeNBT(tag.getCompoundTag("inv"));
+		inv.deserializeNBT(tag.getCompound("inv"));
 	}
 
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		return new SPacketUpdateTileEntity(pos, -1, getUpdateTag());
+	public SUpdateTileEntityPacket getUpdatePacket() {
+		return new SUpdateTileEntityPacket(pos, -1, getUpdateTag());
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		handleUpdateTag(pkt.getNbtCompound());
 	}
 

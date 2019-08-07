@@ -3,6 +3,7 @@ package shadows.spawn.modifiers;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import shadows.placebo.config.Configuration;
 import shadows.spawn.SpawnerModifiers;
 import shadows.spawn.TileSpawnerExt;
 
@@ -70,12 +71,12 @@ public abstract class SpawnerModifier {
 	/**
 	 * Reads this modifier from config.  Should update all relevant values.
 	 */
-	public void load(/*Configuration cfg*/) {
-		String s = getDefaultItem(); //cfg.getString(ITEM, getCategory(), getDefaultItem(), "The item that applies this modifier.");
+	public void load(Configuration cfg) {
+		String s = cfg.getString(ITEM, getCategory(), getDefaultItem(), "The item that applies this modifier.");
 		item = SpawnerModifiers.readStackCfg(s);
-		//value = cfg.getInt(VALUE, getCategory(), value, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
-		//min = cfg.getInt(MIN, getCategory(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The min value of this stat.");
-		//max = cfg.getInt(MAX, getCategory(), Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, "The max value of this stat.);
+		value = cfg.getInt(VALUE, getCategory(), value, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
+		min = cfg.getInt(MIN, getCategory(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The min value of this stat.");
+		max = cfg.getInt(MAX, getCategory(), Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, "The max value of this stat.");
 	}
 
 	public Ingredient getIngredient() {

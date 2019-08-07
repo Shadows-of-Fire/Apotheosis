@@ -1,15 +1,13 @@
 package shadows.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import shadows.Apotheosis;
 
 public class EnchantmentReflective extends Enchantment {
 
 	public EnchantmentReflective() {
-		super(Rarity.RARE, null, new EntityEquipmentSlot[] { EntityEquipmentSlot.OFFHAND, EntityEquipmentSlot.MAINHAND });
-		setName(Apotheosis.MODID + ".reflective");
+		super(Rarity.RARE, null, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
 	}
 
 	@Override

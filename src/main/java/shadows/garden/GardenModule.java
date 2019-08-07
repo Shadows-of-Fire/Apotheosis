@@ -3,16 +3,15 @@ package shadows.garden;
 import java.io.File;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlockSpecial;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.Apotheosis;
-import shadows.Apotheosis.ApotheosisPreInit;
+import shadows.Apotheosis.ApotheosisConstruction;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ApotheosisObjects;
+import shadows.placebo.config.Configuration;
 
 public class GardenModule {
 
@@ -20,7 +19,7 @@ public class GardenModule {
 	public static int maxReedHeight = 255;
 
 	@SubscribeEvent
-	public void preInit(ApotheosisPreInit e) {
+	public void preInit(ApotheosisConstruction e) {
 		Configuration c = new Configuration(new File(Apotheosis.configDir, "garden.cfg"));
 		maxCactusHeight = c.getInt("Cactus Height", "general", maxCactusHeight, 1, 255, "The max height a stack of cacti may grow to.");
 		maxReedHeight = c.getInt("Reed Height", "general", maxReedHeight, 1, 255, "The max height a stack of reeds may grow to.");
@@ -29,20 +28,13 @@ public class GardenModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		e.getRegistry().register(new BlockReedExt());
 		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockCactusExt(), Apotheosis.MODID);
+		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockReedExt(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new ItemBlockSpecial(Blocks.REEDS) {
-			@Override
-			public String getCreatorModId(ItemStack itemStack) {
-				return Apotheosis.MODID;
-			}
-		}.setRegistryName(Items.REEDS.getRegistryName()).setTranslationKey("reeds").setCreativeTab(CreativeTabs.MATERIALS));
-
-		e.getRegistry().register(new ItemFarmersLeash());
+		e.getRegistry().register(new EnderLeashItem());
 	}
 
 	@SubscribeEvent

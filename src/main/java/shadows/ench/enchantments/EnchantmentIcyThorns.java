@@ -3,22 +3,20 @@ package shadows.ench.enchantments;
 import java.util.Random;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.common.util.FakePlayer;
-import shadows.Apotheosis;
 
 public class EnchantmentIcyThorns extends Enchantment {
 
 	public EnchantmentIcyThorns() {
-		super(Rarity.RARE, EnumEnchantmentType.ARMOR_CHEST, new EntityEquipmentSlot[] { EntityEquipmentSlot.CHEST });
-		setName(Apotheosis.MODID + ".icy_thorns");
+		super(Rarity.RARE, EnchantmentType.ARMOR_CHEST, new EquipmentSlotType[] { EquipmentSlotType.CHEST });
 	}
 
 	@Override
@@ -38,15 +36,15 @@ public class EnchantmentIcyThorns extends Enchantment {
 
 	@Override
 	public boolean canApply(ItemStack stack) {
-		return stack.getItem() instanceof ItemArmor ? true : super.canApply(stack);
+		return stack.getItem() instanceof ArmorItem ? true : super.canApply(stack);
 	}
 
 	@Override
-	public void onUserHurt(EntityLivingBase user, Entity attacker, int level) {
+	public void onUserHurt(LivingEntity user, Entity attacker, int level) {
 		Random rand = user.getRNG();
-		if (attacker instanceof EntityLivingBase && !(attacker instanceof FakePlayer)) {
-			EntityLivingBase ent = (EntityLivingBase) attacker;
-			ent.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, (100 + rand.nextInt(100)) * level, level));
+		if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
+			LivingEntity ent = (LivingEntity) attacker;
+			ent.addPotionEffect(new EffectInstance(Effects.SLOWNESS, (100 + rand.nextInt(100)) * level, level));
 		}
 	}
 

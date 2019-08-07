@@ -1,0 +1,9 @@
+{
+  "trueInfinity": "javascript/true-infinity.js",
+  "sundering": "javascript/sundering.js",
+  "enchData": "javascript/enchantment-datas.js",
+  "tempting": "javascript/tempting.js",
+  "reflective": "javascript/reflective.js",
+  "itemEnch": "javascript/item-ench.js",
+  "calcStackEnch": "javascript/calc-stack-ench.js"
+}

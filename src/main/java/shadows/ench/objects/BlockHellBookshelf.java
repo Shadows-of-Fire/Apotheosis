@@ -1,101 +1,76 @@
 package shadows.ench.objects;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.BlockStateContainer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import shadows.Apotheosis;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.ApotheosisObjects;
 
 public class BlockHellBookshelf extends Block {
 
-	public static final PropertyInteger INFUSION = PropertyInteger.create("infusion", 0, 15);
+	public static final IntegerProperty INFUSION = IntegerProperty.create("infusion", 0, 30);
 
-	public BlockHellBookshelf(ResourceLocation name) {
-		super(Material.ROCK, MapColor.BLACK);
-		setHardness(2.0F);
-		setResistance(10.0F);
-		setSoundType(SoundType.STONE);
-		setTranslationKey(Apotheosis.MODID + ".hellshelf");
-		setRegistryName(name);
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+	public BlockHellBookshelf() {
+		super(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(2, 10).sound(SoundType.STONE));
 	}
 
 	@Override
-	public float getEnchantPowerBonus(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
-		if (state.getBlock() == this) return 2 + state.getValue(INFUSION) * 0.2F;
+	public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
+		if (state.getBlock() == this) return 2 + state.get(INFUSION) * 0.2F;
 		return 2;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<String> info, ITooltipFlag flag) {
-		info.add(I18n.format("info.apotheosis.hellshelf", String.valueOf(2 + Math.min(15, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)) * 0.2F).substring(0, 3)));
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> info, ITooltipFlag flag) {
+		info.add(new TranslationTextComponent("info.apotheosis.hellshelf", String.valueOf(2 + Math.min(15, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)) * 0.2F).substring(0, 3)));
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, INFUSION);
+	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+		builder.add(INFUSION);
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(INFUSION, meta);
+	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+		ItemStack stack = ctx.getItem();
+		return getDefaultState().with(INFUSION, Math.min(15, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)));
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(INFUSION);
-	}
-
-	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		ItemStack stack = placer.getHeldItem(hand);
-		return getDefaultState().withProperty(INFUSION, Math.min(15, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)));
-	}
-
-	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack stack = new ItemStack(this);
-		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.getValue(INFUSION)), stack);
-		drops.add(stack);
+		if (state.get(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.get(INFUSION)), stack);
+		return Arrays.asList(stack);
 	}
 
 	@Override
-	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
 		ItemStack stack = new ItemStack(this);
-		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.getValue(INFUSION)), stack);
+		if (state.get(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.get(INFUSION)), stack);
 		return stack;
-	}
-
-	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		return false;
 	}
 
 }

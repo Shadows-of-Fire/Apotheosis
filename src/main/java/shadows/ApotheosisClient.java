@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnchantedBookItem;
@@ -16,21 +15,19 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IRegistryDelegate;
-import shadows.Apotheosis.ApotheosisInit;
+import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ench.EnchModule;
 import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
 
-@EventBusSubscriber(modid = Apotheosis.MODID, value = Side.CLIENT)
+@EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT)
 public class ApotheosisClient {
-
-	public static final Item COBWEB = Item.getItemFromBlock(Blocks.WEB);
 
 	private static final Map<IRegistryDelegate<Enchantment>, List<String>> ENCH_TOOLTIPS = new HashMap<>();
 
@@ -38,7 +35,7 @@ public class ApotheosisClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
 		if (Apotheosis.enableEnch) {
-			if (EnchModule.allowWeb && i == COBWEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.cobweb"));
+			if (EnchModule.allowWeb && i == Items.COBWEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.cobweb"));
 			else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.prismatic_cobweb"));
 		}
 		if (i == Items.ENCHANTED_BOOK) {
@@ -63,7 +60,7 @@ public class ApotheosisClient {
 	}
 
 	@SubscribeEvent
-	public static void init(ApotheosisInit e) {
+	public static void init(ApotheosisSetup e) {
 		String masterwork = TextFormatting.DARK_GREEN + I18n.format("info.apotheosis.masterwork");
 		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
 		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");

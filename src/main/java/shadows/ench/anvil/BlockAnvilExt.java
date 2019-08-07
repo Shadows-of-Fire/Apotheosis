@@ -1,62 +1,64 @@
 package shadows.ench.anvil;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAnvil;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityFallingBlock;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBook;
-import net.minecraft.item.ItemEnchantedBook;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.FallingBlockEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BookItem;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.storage.loot.LootContext.Builder;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.ApotheosisObjects;
-import shadows.ench.anvil.compat.InspirationsCompat;
 
-public class BlockAnvilExt extends BlockAnvil {
+public class BlockAnvilExt extends AnvilBlock {
 
 	public BlockAnvilExt() {
-		setHardness(5);
-		setSoundType(SoundType.ANVIL);
-		setResistance(2000);
-		setTranslationKey("anvil");
+		super(Block.Properties.create(Material.ANVIL, MaterialColor.IRON).hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL));
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new TileAnvil();
 	}
 
 	@Override
-	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack) {
-		ItemStack anvil = new ItemStack(this, 1, damageDropped(state));
+	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
+		ItemStack anvil = new ItemStack(this);
 		if (te instanceof TileAnvil) {
 			TileAnvil anv = (TileAnvil) te;
 			Map<Enchantment, Integer> ench = new HashMap<>();
@@ -69,7 +71,7 @@ public class BlockAnvilExt extends BlockAnvil {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileAnvil) {
 			((TileAnvil) te).setUnbreaking(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
@@ -78,56 +80,53 @@ public class BlockAnvilExt extends BlockAnvil {
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+		return Collections.emptyList();
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-		if (!stack.hasEffect()) tooltip.add(I18n.format("info.apotheosis.anvil"));
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		if (!stack.hasEffect()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil"));
 	}
 
 	@Override
-	protected void onStartFalling(EntityFallingBlock e) {
+	protected void onStartFalling(FallingBlockEntity e) {
 		super.onStartFalling(e);
 		TileEntity te = e.world.getTileEntity(new BlockPos(e));
 		if (te instanceof TileAnvil) {
-			e.tileEntityData = new NBTTagCompound();
-			te.writeToNBT(e.tileEntityData);
+			e.tileEntityData = new CompoundNBT();
+			te.write(e.tileEntityData);
 		}
 	}
 
-	boolean inspirations = Loader.isModLoaded("inspirations");
-
 	@Override
-	public void onEndFalling(World world, BlockPos pos, IBlockState fallState, IBlockState hitState) {
-		if (inspirations) InspirationsCompat.onEndFalling(world, pos, fallState, hitState);
-		else super.onEndFalling(world, pos, fallState, hitState);
+	public void onEndFalling(World world, BlockPos pos, BlockState fallState, BlockState hitState) {
+		super.onEndFalling(world, pos, fallState, hitState);
 
-		List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
-		EntityFallingBlock anvil = world.getEntitiesWithinAABB(EntityFallingBlock.class, new AxisAlignedBB(pos, pos.add(1, 1, 1))).get(0);
-		int split = anvil.tileEntityData.getInteger("splitting");
-		int ub = anvil.tileEntityData.getInteger("ub");
-		if (split > 0) for (EntityItem entity : items) {
+		List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
+		FallingBlockEntity anvil = world.getEntitiesWithinAABB(FallingBlockEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1))).get(0);
+		int split = anvil.tileEntityData.getInt("splitting");
+		int ub = anvil.tileEntityData.getInt("ub");
+		if (split > 0) for (ItemEntity entity : items) {
 			ItemStack stack = entity.getItem();
-			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof ItemBook) {
+			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof BookItem) {
 				if (world.rand.nextInt(Math.max(1, 6 - split)) == 0) {
-					NBTTagList enchants = ItemEnchantedBook.getEnchantments(stack);
-					if (stack.getItem() instanceof ItemBook) enchants = stack.getEnchantmentTagList();
-					entity.setDead();
-					for (NBTBase nbt : enchants) {
-						NBTTagCompound tag = (NBTTagCompound) nbt;
-						ItemStack book = ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(Enchantment.getEnchantmentByID(tag.getInteger("id")), tag.getInteger("lvl")));
+					ListNBT enchants = EnchantedBookItem.getEnchantments(stack);
+					if (stack.getItem() instanceof BookItem) enchants = stack.getEnchantmentTagList();
+					entity.remove();
+					for (INBT nbt : enchants) {
+						CompoundNBT tag = (CompoundNBT) nbt;
+						ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(Enchantment.getEnchantmentByID(tag.getInt("id")), tag.getInt("lvl")));
 						Block.spawnAsEntity(world, pos, book);
 					}
 				}
 				if (world.rand.nextInt(1 + ub) == 0) {
-					int dmg = fallState.getValue(BlockAnvil.DAMAGE) + 1;
-					if (dmg > 2) {
-						world.setBlockToAir(pos);
+					BlockState dmg = damage(fallState);
+					if (dmg == null) {
+						world.setBlockState(pos, Blocks.AIR.getDefaultState());
 						world.playEvent(1029, pos, 0);
-					} else world.setBlockState(pos, fallState.withProperty(BlockAnvil.DAMAGE, dmg));
+					} else world.setBlockState(pos, dmg);
 				}
 				break;
 			}

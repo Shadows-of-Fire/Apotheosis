@@ -2,40 +2,32 @@ package shadows;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import io.netty.handler.codec.http2.Http2FrameReader.Configuration;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.PotionType;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
 import shadows.garden.GardenModule;
+import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.RecipeHelper;
+import shadows.placebo.util.NetworkUtils;
 import shadows.potion.PotionModule;
 import shadows.spawn.SpawnerModule;
 import shadows.util.NBTIngredient;
@@ -63,49 +55,42 @@ public class Apotheosis {
 	public static boolean enablePotion = true;
 	public static boolean enchTooltips = true;
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent e) {
-		configDir = new File(e.getModConfigurationDirectory(), MODID);
+	public Apotheosis() {
+		configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
 		config = new Configuration(new File(configDir, MODID + ".cfg"));
 
-		ApotheosisCore.enableEnch = enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
+		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		if (enableEnch) MinecraftForge.EVENT_BUS.register(new EnchModule());
 
-		ApotheosisCore.enableSpawner = enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
+		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		if (enableSpawner) MinecraftForge.EVENT_BUS.register(new SpawnerModule());
 
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
 		if (enableGarden) MinecraftForge.EVENT_BUS.register(new GardenModule());
 
-		ApotheosisCore.enableDeadly = enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		if (enableDeadly) MinecraftForge.EVENT_BUS.register(new DeadlyModule());
 
-		ApotheosisCore.enablePotion = enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
+		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		if (enablePotion) MinecraftForge.EVENT_BUS.register(new PotionModule());
 
 		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
 
 		if (config.hasChanged()) config.save();
-		MinecraftForge.EVENT_BUS.post(new ApotheosisPreInit(e));
+		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisConstruction());
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@EventHandler
-	public void init(FMLInitializationEvent e) throws IOException {
-		MinecraftForge.EVENT_BUS.post(new ApotheosisInit(e));
-		NETWORK.registerMessage(ParticleMessage.Handler.class, ParticleMessage.class, 0, Side.CLIENT);
-	}
-
-	@SubscribeEvent
-	public void recipes(Register<IRecipe> e) {
-		RecipeHelper helper = new RecipeHelper(Apotheosis.MODID, Apotheosis.MODNAME, new ArrayList<>());
+	public void init(FMLCommonSetupEvent e) throws IOException {
+		MinecraftForge.EVENT_BUS.post(new ApotheosisSetup(e));
+		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
+		RecipeHelper helper = new RecipeHelper(Apotheosis.MODID);
 		MinecraftForge.EVENT_BUS.post(new ApotheosisRecipeEvent(helper));
-		helper.register(e.getRegistry());
 	}
 
 	public static void registerOverrideBlock(IForgeRegistry<Block> reg, Block b, String modid) {
 		reg.register(b);
-		ForgeRegistries.ITEMS.register(new ItemBlock(b) {
+		ForgeRegistries.ITEMS.register(new BlockItem(b, new Item.Properties().group(b.asItem().getGroup())) {
 			@Override
 			public String getCreatorModId(ItemStack itemStack) {
 				return modid;
@@ -113,29 +98,19 @@ public class Apotheosis {
 		}.setRegistryName(b.getRegistryName()));
 	}
 
-	public static Ingredient potionIngredient(PotionType type) {
-		return new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), type));
+	public static Ingredient potionIngredient(Potion type) {
+		return new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), type));
 	}
 
-	public static void fakesplode(Object w, Object p) {
-		WorldServer world = (WorldServer) w;
-		BlockPos pos = (BlockPos) p;
-		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
-		world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1, 0, 0, 0, 1D);
-	}
-
-	public static class ApotheosisPreInit extends Event {
-		public FMLPreInitializationEvent ev;
-
-		private ApotheosisPreInit(FMLPreInitializationEvent ev) {
-			this.ev = ev;
+	public static class ApotheosisConstruction extends Event {
+		private ApotheosisConstruction() {
 		}
 	}
 
-	public static class ApotheosisInit extends Event {
-		public FMLInitializationEvent ev;
+	public static class ApotheosisSetup extends Event {
+		public FMLCommonSetupEvent ev;
 
-		private ApotheosisInit(FMLInitializationEvent ev) {
+		private ApotheosisSetup(FMLCommonSetupEvent ev) {
 			this.ev = ev;
 		}
 	}
