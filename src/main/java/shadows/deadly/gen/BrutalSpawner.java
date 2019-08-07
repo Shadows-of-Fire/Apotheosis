@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.BlockStoneBrick;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.Direction;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 import shadows.deadly.DeadlyLoot;
@@ -30,38 +34,39 @@ import shadows.util.TagBuilder;
  */
 public class BrutalSpawner extends WorldFeature {
 
-	public static final NBTTagCompound BASE_TAG = new NBTTagCompound();
+	public static final CompoundNBT BASE_TAG = new CompoundNBT();
 	public static final List<SpawnerItem> BRUTAL_SPAWNERS = new ArrayList<>();
 
 	@Override
-	public void generate(World world, int chunkX, int chunkZ, Random rand) {
-		if (DeadlyConfig.brutalSpawnerChance <= rand.nextDouble()) return;
-		int x = (chunkX << 4) + MathHelper.getInt(rand, 4, 12);
-		int z = (chunkZ << 4) + MathHelper.getInt(rand, 4, 12);
+	public boolean generate(IWorld world, int chunkX, int chunkZ, Random rand) {
+		if (DeadlyConfig.brutalSpawnerChance <= rand.nextDouble()) return false;
+		int x = (chunkX << 4) + MathHelper.nextInt(rand, 4, 12);
+		int z = (chunkZ << 4) + MathHelper.nextInt(rand, 4, 12);
 		int y = 15 + rand.nextInt(35);
 		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.provider.getDimension(), chunkX, chunkZ);
-				return;
+				WorldGenerator.setSuccess(world.getDimension().getType().getRegistryName(), chunkX, chunkZ);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	@Override
-	public boolean canBePlaced(World world, BlockPos pos, Random rand) {
-		return world.getBlockState(pos.down()).isSideSolid(world, pos, EnumFacing.UP) && WorldGenerator.STONE_TEST.apply(world.getBlockState(pos)) && world.getBlockState(pos.up()).getBlock().isReplaceable(world, pos.up());
+	public boolean canBePlaced(IWorld world, BlockPos pos, Random rand) {
+		return Block.func_220055_a(world, pos, Direction.UP) && WorldGenerator.STONE_TEST.test(world.getBlockState(pos));
 	}
 
 	@Override
-	public void place(World world, BlockPos pos, Random rand) {
+	public void place(IWorld world, BlockPos pos, Random rand) {
 		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
-		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
-		world.setBlockState(pos.up(), Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CRACKED), 2);
-		for (EnumFacing f : EnumFacing.HORIZONTALS) {
+		ChestBuilder.place((World) world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
+		world.setBlockState(pos.up(), Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 2);
+		for (Direction f : Direction.HORIZONTALS) {
 			if (world.getBlockState(pos.offset(f)).getBlock().isReplaceable(world, pos.offset(f))) {
-				PropertyBool side = (PropertyBool) Blocks.VINE.getBlockState().getProperty(f.getOpposite().getName());
+				BooleanProperty side = (BooleanProperty) Blocks.VINE.getBlockState().getProperty(f.getOpposite().getName());
 				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().withProperty(side, true));
 			}
 		}

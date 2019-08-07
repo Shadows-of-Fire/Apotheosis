@@ -1,40 +1,51 @@
 package shadows.deadly.gen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.function.Predicate;
 
-import com.google.common.base.Predicate;
-
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
-import net.minecraft.block.BlockStone;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
 import shadows.deadly.DeadlyModule;
 import shadows.deadly.config.DeadlyConfig;
 
-public class WorldGenerator {
+public class WorldGenerator extends Feature<NoFeatureConfig> {
 
 	public static final List<WorldFeature> FEATURES = new ArrayList<>();
 	public static final BrutalSpawner BRUTAL_SPAWNER = new BrutalSpawner();
 	public static final BossFeature BOSS_GENERATOR = new BossFeature();
 	public static final SwarmSpawner SWARM_SPAWNER = new SwarmSpawner();
-	private static final Int2ObjectMap<LongSet> SUCCESSES = new Int2ObjectOpenHashMap<>();
-	public static final Predicate<IBlockState> STONE_TEST = s -> s.getBlock() == Blocks.STONE && s.getValue(BlockStone.VARIANT).isNatural();
+	private static final Map<ResourceLocation, LongSet> SUCCESSES = new HashMap<>();
+	public static final Predicate<BlockState> STONE_TEST = FillerBlockType.NATURAL_STONE.func_214738_b();
 
-	@SubscribeEvent
-	public void terrainGen(PopulateChunkEvent.Pre e) {
-		if (DeadlyConfig.DIM_WHITELIST.contains(e.getWorld().provider.getDimension())) for (WorldFeature feature : FEATURES) {
-			if (wasSuccess(e.getWorld().provider.getDimension(), e.getChunkX(), e.getChunkZ())) return;
-			feature.generate(e.getWorld(), e.getChunkX(), e.getChunkZ(), e.getRand());
+	public WorldGenerator() {
+		super(NoFeatureConfig::deserialize);
+	}
+
+	@Override
+	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+		if (DeadlyConfig.DIM_WHITELIST.contains(world.getDimension().getType().getRegistryName())) for (WorldFeature feature : FEATURES) {
+			ChunkPos cPos = new ChunkPos(pos);
+			if (wasSuccess(world.getDimension().getType().getRegistryName(), cPos.x, cPos.z)) return false;
+			if (feature.generate(world, cPos.x, cPos.z, rand)) return true;
 		}
+		return false;
 	}
 
 	public static void init() {
@@ -56,11 +67,11 @@ public class WorldGenerator {
 		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {}", name, pos);
 	}
 
-	public static void setSuccess(int dim, int x, int z) {
+	public static void setSuccess(ResourceLocation dim, int x, int z) {
 		SUCCESSES.computeIfAbsent(dim, i -> new LongOpenHashSet()).add(ChunkPos.asLong(x, z));
 	}
 
-	public static boolean wasSuccess(int dim, int x, int z) {
+	public static boolean wasSuccess(ResourceLocation dim, int x, int z) {
 		return SUCCESSES.computeIfAbsent(dim, i -> new LongOpenHashSet()).contains(ChunkPos.asLong(x, z));
 	}
 }

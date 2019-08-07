@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConstants;
 import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
@@ -34,9 +36,9 @@ public class SpawnerItem extends WorldFeatureItem {
 	}
 
 	@Override
-	public void place(World world, BlockPos pos) {
-		world.setBlockState(pos, Blocks.MOB_SPAWNER.getDefaultState(), 2);
-		world.setTileEntity(pos, spawner.build(world, pos));
+	public void place(IWorld world, BlockPos pos) {
+		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
+		((World) world).setTileEntity(pos, spawner.build((World) world, pos));
 	}
 
 	public SpawnerBuilder getSpawner() {

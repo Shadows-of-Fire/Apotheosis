@@ -1,5 +1,5 @@
 package shadows.deadly.crt;
-
+/*
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
@@ -81,3 +81,4 @@ public class BossArmorTweaker {
 	}
 
 }
+*/

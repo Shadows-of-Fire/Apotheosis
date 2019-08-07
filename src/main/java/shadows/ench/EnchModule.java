@@ -118,7 +118,6 @@ import shadows.util.NBTIngredient;
  * Max expected table level is 150, 40 before empowered shelves.
  *
  */
-@SuppressWarnings("deprecation")
 public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
@@ -213,7 +212,9 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new BlockHellBookshelf().setRegistryName("hellshelf"),
-				new BlockAnvilExt(),
+				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
+				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
+				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"),
 				new BlockPrismaticAltar()
 				);
 		//Formatter::on
@@ -227,6 +228,8 @@ public class EnchModule {
 				new ItemHellBookshelf(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ItemAnvilExt(Blocks.ANVIL),
+				new ItemAnvilExt(Blocks.CHIPPED_ANVIL),
+				new ItemAnvilExt(Blocks.DAMAGED_ANVIL),
 				new ItemTypedBook(Items.AIR, null),
 				new ItemTypedBook(Items.DIAMOND_HELMET, EnchantmentType.ARMOR_HEAD),
 				new ItemTypedBook(Items.DIAMOND_CHESTPLATE, EnchantmentType.ARMOR_CHEST),

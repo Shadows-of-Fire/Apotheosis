@@ -9,33 +9,34 @@ import java.util.function.Predicate;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.monster.SkeletonEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.Items;
+import net.minecraft.item.SwordItem;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ISpecialArmor;
-import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.Apotheosis;
 import shadows.deadly.config.DeadlyConfig;
@@ -54,7 +55,7 @@ import shadows.util.NameHelper;
 public class BossItem extends WorldFeatureItem {
 
 	//Default lists of boss potions/enchantments.
-	public static final List<Potion> POTIONS = new ArrayList<>();
+	public static final List<Effect> POTIONS = new ArrayList<>();
 	public static final List<Enchantment> BOW_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.LOOTING, Enchantments.UNBREAKING, Enchantments.POWER, Enchantments.PUNCH, Enchantments.FLAME, Enchantments.INFINITY);
 	public static final List<Enchantment> SWORD_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.SHARPNESS, Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS, Enchantments.KNOCKBACK, Enchantments.FIRE_ASPECT, Enchantments.LOOTING);
 	public static final List<Enchantment> TOOL_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.EFFICIENCY, Enchantments.SILK_TOUCH, Enchantments.UNBREAKING, Enchantments.FORTUNE);
@@ -73,50 +74,49 @@ public class BossItem extends WorldFeatureItem {
 		ArmorSet.LEVEL_TO_SETS.put(3, DIAMOND_GEAR);
 	}
 
-	public static final Predicate<EntityAITaskEntry> IS_VILLAGER_ATTACK = a -> a.action instanceof EntityAINearestAttackableTarget && ((EntityAINearestAttackableTarget<?>) a.action).targetClass == EntityVillager.class;
+	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetClass == VillagerEntity.class;
 
-	protected final EntityEntry entityEntry;
+	protected final EntityType<?> entityEntry;
 	protected AxisAlignedBB entityAABB;
 
 	public BossItem(int weight, ResourceLocation entity) {
 		super(weight);
 		entityEntry = ForgeRegistries.ENTITIES.getValue(entity);
 		Preconditions.checkNotNull(entityEntry, "Invalid BossItem (not an entity) created with reloc: " + entity);
-		if (!EntityLiving.class.isAssignableFrom(entityEntry.getEntityClass())) throw new RuntimeException("Invalid BossItem (not an EntityLiving) created with class: " + entityEntry.getEntityClass());
 	}
 
-	public AxisAlignedBB getAABB(World world) {
-		if (entityAABB == null) entityAABB = entityEntry.newInstance(world).getCollisionBoundingBox();
-		if (entityAABB == null) entityAABB = Block.FULL_BLOCK_AABB;
+	public AxisAlignedBB getAABB(IWorld world) {
+		if (entityAABB == null) entityAABB = entityEntry.create((World) world).getCollisionBoundingBox();
+		if (entityAABB == null) entityAABB = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 		return entityAABB;
 	}
 
 	@Override
-	public void place(World world, BlockPos pos) {
-		place(world, pos, world.rand);
+	public void place(IWorld world, BlockPos pos) {
+		place(world, pos, world.getRandom());
 	}
 
-	public void place(World world, BlockPos pos, Random rand) {
-		EntityLiving entity = (EntityLiving) entityEntry.newInstance(world);
+	public void place(IWorld world, BlockPos pos, Random rand) {
+		MobEntity entity = (MobEntity) entityEntry.create((World) world);
 		initBoss(rand, entity);
 		entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
+		world.addEntity(entity);
+		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		entity.enablePersistence();
-		world.spawnEntity(entity);
-		entity.tasks.taskEntries.removeIf(IS_VILLAGER_ATTACK);
-		for (BlockPos p : BlockPos.getAllInBox(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
+		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
-		for (BlockPos p : BlockPos.getAllInBox(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
+		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
 			world.setBlockState(p, Blocks.RED_SANDSTONE.getDefaultState(), 2);
 		}
 		WorldGenerator.debugLog(pos, "Boss " + entity.getName());
 	}
 
-	public static void initBoss(Random random, EntityLiving entity) {
-		if (DeadlyConfig.bossRegenLevel > 0) entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, Integer.MAX_VALUE, DeadlyConfig.bossRegenLevel));
-		if (DeadlyConfig.bossResistLevel > 0) entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, Integer.MAX_VALUE, DeadlyConfig.bossResistLevel));
-		if (DeadlyConfig.bossFireRes) entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE));
-		if (DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, Integer.MAX_VALUE));
+	public static void initBoss(Random random, MobEntity entity) {
+		if (DeadlyConfig.bossRegenLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, Integer.MAX_VALUE, DeadlyConfig.bossRegenLevel));
+		if (DeadlyConfig.bossResistLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, Integer.MAX_VALUE, DeadlyConfig.bossResistLevel));
+		if (DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, Integer.MAX_VALUE));
+		if (DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, Integer.MAX_VALUE));
 		AttributeHelper.addToBase(entity, SharedMonsterAttributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossDamageBonus);
 		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier - 1);
 		AttributeHelper.max(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist);
@@ -131,15 +131,15 @@ public class BossItem extends WorldFeatureItem {
 
 		ArmorSet.SORTED_SETS.get(level).apply(entity);
 
-		if (entity instanceof EntitySkeleton) entity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BOW));
+		if (entity instanceof SkeletonEntity) entity.setHeldItem(Hand.MAIN_HAND, new ItemStack(Items.BOW));
 
 		int guaranteed = random.nextInt(6);
 
-		ItemStack stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed]);
+		ItemStack stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
 		while (guaranteed == 1 || stack.isEmpty())
-			stack = entity.getItemStackFromSlot(EntityEquipmentSlot.values()[guaranteed = random.nextInt(6)]);
+			stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed = random.nextInt(6)]);
 
-		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
+		for (EquipmentSlotType s : EquipmentSlotType.values()) {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat());
 			ItemStack enchantedItem = stack;
@@ -167,7 +167,7 @@ public class BossItem extends WorldFeatureItem {
 
 		if (POTIONS.isEmpty()) initPotions();
 
-		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new PotionEffect(POTIONS.get(random.nextInt(POTIONS.size())), Integer.MAX_VALUE, random.nextInt(3) + 1));
+		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(random.nextInt(POTIONS.size())), Integer.MAX_VALUE, random.nextInt(3) + 1));
 	}
 
 	public static void addSingleEnchantment(ItemStack stack, Random rand, int level, boolean treasure) {
@@ -178,8 +178,8 @@ public class BossItem extends WorldFeatureItem {
 	}
 
 	public static void initPotions() {
-		for (Potion p : ForgeRegistries.POTIONS)
-			if (p.beneficial && !p.isInstant()) POTIONS.add(p);
+		for (Effect p : ForgeRegistries.POTIONS)
+			if (p.isBeneficial() && !p.isInstant()) POTIONS.add(p);
 		POTIONS.removeIf(p -> DeadlyConfig.BLACKLISTED_POTIONS.contains(p.getRegistryName()));
 	}
 
@@ -201,9 +201,9 @@ public class BossItem extends WorldFeatureItem {
 
 		public static EquipmentType getTypeForStack(ItemStack stack) {
 			Item i = stack.getItem();
-			if (i instanceof ItemSword) return SWORD;
-			if (i instanceof ItemBow) return BOW;
-			if (i instanceof ItemArmor || i instanceof ISpecialArmor) return ARMOR;
+			if (i instanceof SwordItem) return SWORD;
+			if (i instanceof BowItem) return BOW;
+			if (i instanceof ArmorItem) return ARMOR;
 			return TOOL;
 		}
 	}

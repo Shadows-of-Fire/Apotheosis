@@ -18,7 +18,6 @@ import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 import shadows.ench.EnchModule;
 import shadows.ench.EnchantmentInfo;
-import shadows.ench.anvil.asm.AnvilTransformer;
 import shadows.ench.objects.ItemTypedBook;
 
 /**
@@ -82,7 +81,7 @@ public class EnchHooks {
 
 	/**
 	 * Replaces the call to {@link Enchantment#getMaxLevel()} in {@link ContainerRepair#updateRepairOutput()}
-	 * Injected by {@link AnvilTransformer}
+	 * Injected by javascript/container-repair.js
 	 */
 	public static int getMaxLevel(Enchantment ench) {
 		if (!Apotheosis.enableEnch) return ench.getMaxLevel();

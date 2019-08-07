@@ -5,5 +5,7 @@
   "tempting": "javascript/tempting.js",
   "reflective": "javascript/reflective.js",
   "itemEnch": "javascript/item-ench.js",
-  "calcStackEnch": "javascript/calc-stack-ench.js"
+  "calcStackEnch": "javascript/calc-stack-ench.js",
+  "containerRepair": "javascript/container-repair.js",
+  "guiRepair": "javascript/gui-repair.js"
 }

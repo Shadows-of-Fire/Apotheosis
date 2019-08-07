@@ -3,16 +3,18 @@ package shadows.ench.anvil;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemAnvilBlock;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 
-public class ItemAnvilExt extends ItemAnvilBlock {
+public class ItemAnvilExt extends BlockItem {
 
 	public ItemAnvilExt(Block block) {
-		super(block);
-		setRegistryName("minecraft", "anvil");
+		super(block, new Item.Properties().group(ItemGroup.DECORATIONS));
+		setRegistryName(block.getRegistryName());
 	}
 
 	@Override

@@ -1,25 +1,30 @@
 package shadows.ench.anvil;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import shadows.ApotheosisObjects;
 
 public class TileAnvil extends TileEntity {
+
+	public TileAnvil() {
+		super(ApotheosisObjects.ANVIL);
+	}
 
 	int unbreaking = 0;
 	int splitting = 0;
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
-		tag.setInteger("ub", unbreaking);
-		tag.setInteger("splitting", splitting);
-		return super.writeToNBT(tag);
+	public CompoundNBT write(CompoundNBT tag) {
+		tag.putInt("ub", unbreaking);
+		tag.putInt("splitting", splitting);
+		return super.write(tag);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		super.readFromNBT(tag);
-		unbreaking = tag.getInteger("ub");
-		splitting = tag.getInteger("splitting");
+	public void read(CompoundNBT tag) {
+		super.read(tag);
+		unbreaking = tag.getInt("ub");
+		splitting = tag.getInt("splitting");
 	}
 
 	public void setUnbreaking(int level) {

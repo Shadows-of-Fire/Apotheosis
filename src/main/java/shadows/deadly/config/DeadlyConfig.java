@@ -5,21 +5,18 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyConfig {
 
-	public static final IntList DIM_WHITELIST = new IntArrayList();
+	public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
 	public static final List<EffectInstance> BRUTAL_POTIONS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BOSS_MOBS = new ArrayList<>();
@@ -57,10 +54,10 @@ public class DeadlyConfig {
 		DeadlyConstants.BRUTAL_SPAWNER_STATS.load(c);
 		DeadlyConstants.SWARM_SPAWNER_STATS.load(c);
 
-		String[] dims = c.getStringList("Generation Dimension Whitelist", DeadlyConstants.GENERAL, new String[] { "0" }, "The dimensions that the deadly module will generate in.");
+		String[] dims = c.getStringList("Generation Dimension Whitelist", DeadlyConstants.GENERAL, new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");
 		for (String s : dims) {
 			try {
-				DIM_WHITELIST.add(Integer.parseInt(s.trim()));
+				DIM_WHITELIST.add(new ResourceLocation(s.trim()));
 			} catch (NumberFormatException e) {
 				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + ".  It will be ignored!  (Not a number)");
 			}
@@ -110,7 +107,7 @@ public class DeadlyConfig {
 			try {
 				int weight = Integer.parseInt(split[0]);
 				ResourceLocation name = new ResourceLocation(split[1]);
-				EntityEntry e = ForgeRegistries.ENTITIES.getValue(name);
+				EntityType<?> e = ForgeRegistries.ENTITIES.getValue(name);
 				if (weight > 0 && e != null) BOSS_MOBS.add(Pair.of(weight, name));
 				else DeadlyModule.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
 			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
@@ -149,7 +146,7 @@ public class DeadlyConfig {
 		}
 
 		for (EntityType<?> e : ForgeRegistries.ENTITIES)
-			if (IMob.class.isAssignableFrom(e.getEntityClass())) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
+			if (e.getClassification() == EntityClassification.MONSTER) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 
 		if (c.hasChanged()) c.save();
 	}
