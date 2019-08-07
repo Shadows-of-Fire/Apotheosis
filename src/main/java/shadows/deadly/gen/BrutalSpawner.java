@@ -6,11 +6,9 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.nbt.INBT;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.WeightedRandom;
@@ -64,10 +62,10 @@ public class BrutalSpawner extends WorldFeature {
 		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
 		ChestBuilder.place((World) world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
 		world.setBlockState(pos.up(), Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 2);
-		for (Direction f : Direction.HORIZONTALS) {
-			if (world.getBlockState(pos.offset(f)).getBlock().isReplaceable(world, pos.offset(f))) {
-				BooleanProperty side = (BooleanProperty) Blocks.VINE.getBlockState().getProperty(f.getOpposite().getName());
-				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().withProperty(side, true));
+		for (Direction f : Direction.BY_HORIZONTAL_INDEX) {
+			if (world.getBlockState(pos.offset(f)).isAir(world, pos.offset(f))) {
+				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateContainer().getProperty(f.getOpposite().getName());
+				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().with(side, true), 2);
 			}
 		}
 		WorldGenerator.debugLog(pos, "Brutal Spawner");
@@ -79,7 +77,7 @@ public class BrutalSpawner extends WorldFeature {
 	}
 
 	public static void init() {
-		for (PotionEffect p : DeadlyConfig.BRUTAL_POTIONS) {
+		for (EffectInstance p : DeadlyConfig.BRUTAL_POTIONS) {
 			TagBuilder.addPotionEffect(BrutalSpawner.BASE_TAG, p.getPotion(), p.getAmplifier());
 		}
 		SpawnerItem.addItems(BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_SPAWNER_STATS, DeadlyConfig.BRUTAL_MOBS);
@@ -93,23 +91,23 @@ public class BrutalSpawner extends WorldFeature {
 	 */
 	public static void initBrutal(SpawnerItem item) {
 		applyBrutalStats(item.getSpawner().getSpawnData());
-		for (NBTBase tag : item.getSpawner().getPotentials()) {
-			applyBrutalStats(getOrCreate((NBTTagCompound) tag, SpawnerBuilder.ENTITY));
+		for (INBT tag : item.getSpawner().getPotentials()) {
+			applyBrutalStats(getOrCreate((CompoundNBT) tag, SpawnerBuilder.ENTITY));
 		}
 	}
 
 	/**
 	 * Copies brutal base stats from the base tag to the given entity tag.
 	 */
-	public static NBTTagCompound applyBrutalStats(NBTTagCompound tag) {
+	public static CompoundNBT applyBrutalStats(CompoundNBT tag) {
 		TagBuilder.checkForSkeleton(tag);
-		for (String name : BASE_TAG.getKeySet())
-			tag.setTag(name, BASE_TAG.getTag(name).copy());
+		for (String name : BASE_TAG.keySet())
+			tag.put(name, BASE_TAG.get(name).copy());
 		return TagBuilder.checkForCreeper(tag);
 	}
 
-	private static NBTTagCompound getOrCreate(NBTTagCompound parent, String key) {
-		if (!parent.hasKey(key, NBT.TAG_COMPOUND)) parent.setTag(key, new NBTTagCompound());
-		return parent.getCompoundTag(key);
+	private static CompoundNBT getOrCreate(CompoundNBT parent, String key) {
+		if (!parent.contains(key, NBT.TAG_COMPOUND)) parent.put(key, new CompoundNBT());
+		return parent.getCompound(key);
 	}
 }
