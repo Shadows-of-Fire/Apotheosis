@@ -11,6 +11,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import shadows.Apotheosis;
+import shadows.ApotheosisObjects;
 import shadows.placebo.trading.BasicTrade;
 import shadows.placebo.trading.VillagerTradingManager.TradeType;
 import shadows.placebo.trading.VillagerTradingManager.WandererTradesEvent;
@@ -43,28 +44,22 @@ public class WandererReplacements {
 		} else {
 			List<ITrade> goodTrades = e.getTrades();
 			ItemStack stack = new ItemStack(Items.DIAMOND_SWORD);
-			stack.addEnchantment(Enchantments.SHARPNESS, 6);
+			stack.addEnchantment(Enchantments.SHARPNESS, 5);
 			stack.addEnchantment(Enchantments.MENDING, 1);
 			stack.addEnchantment(Enchantments.LOOTING, 4);
 			stack.addEnchantment(Enchantments.UNBREAKING, 5);
+			stack.addEnchantment(ApotheosisObjects.CAPTURING, 3);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_sword"));
 			goodTrades.add(new BasicTrade(25, stack, 1, 15));
 
 			stack = new ItemStack(Items.DIAMOND_PICKAXE);
-			stack.addEnchantment(Enchantments.EFFICIENCY, 6);
+			stack.addEnchantment(Enchantments.EFFICIENCY, 5);
 			stack.addEnchantment(Enchantments.MENDING, 1);
 			stack.addEnchantment(Enchantments.FORTUNE, 4);
 			stack.addEnchantment(Enchantments.UNBREAKING, 5);
+			stack.addEnchantment(ApotheosisObjects.DEPTH_MINER, 4);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_pick"));
 			goodTrades.add(new BasicTrade(25, stack, 1, 20));
-
-			stack = new ItemStack(Items.DIAMOND_PICKAXE);
-			stack.addEnchantment(Enchantments.EFFICIENCY, 7);
-			stack.addEnchantment(Enchantments.MENDING, 1);
-			stack.addEnchantment(Enchantments.SILK_TOUCH, 1);
-			stack.addEnchantment(Enchantments.UNBREAKING, 5);
-			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_pick2"));
-			goodTrades.add(new BasicTrade(20, stack, 1, 25));
 
 			stack = new ItemStack(Items.DIAMOND_AXE);
 			stack.addEnchantment(Enchantments.EFFICIENCY, 10);
@@ -73,6 +68,16 @@ public class WandererReplacements {
 			stack.addEnchantment(Enchantments.UNBREAKING, 5);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_axe"));
 			goodTrades.add(new BasicTrade(20, stack, 1, 20));
+
+			stack = new ItemStack(Items.DIAMOND_AXE);
+			stack.addEnchantment(Enchantments.SHARPNESS, 10);
+			stack.addEnchantment(Enchantments.MENDING, 1);
+			stack.addEnchantment(ApotheosisObjects.HELL_INFUSION, 5);
+			stack.addEnchantment(ApotheosisObjects.MOUNTED_STRIKE, 5);
+			stack.addEnchantment(Enchantments.LOOTING, 5);
+			stack.addEnchantment(Enchantments.UNBREAKING, 3);
+			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_axe2"));
+			goodTrades.add(new BasicTrade(30, stack, 1, 20));
 
 			stack = new ItemStack(Items.DIAMOND_SWORD);
 			stack.addEnchantment(Enchantments.BANE_OF_ARTHROPODS, 10);
@@ -87,6 +92,9 @@ public class WandererReplacements {
 			stack.addEnchantment(Enchantments.PROTECTION, 5);
 			stack.addEnchantment(Enchantments.MENDING, 1);
 			stack.addEnchantment(Enchantments.UNBREAKING, 5);
+			stack.addEnchantment(Enchantments.RESPIRATION, 3);
+			stack.addEnchantment(Enchantments.AQUA_AFFINITY, 3);
+			stack.addEnchantment(ApotheosisObjects.REBOUNDING, 3);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_helm"));
 			goodTrades.add(new BasicTrade(40, stack, 1, 20));
 
@@ -94,6 +102,7 @@ public class WandererReplacements {
 			stack.addEnchantment(Enchantments.PROTECTION, 5);
 			stack.addEnchantment(Enchantments.MENDING, 1);
 			stack.addEnchantment(Enchantments.UNBREAKING, 5);
+			stack.addEnchantment(ApotheosisObjects.BERSERK, 2);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_chest"));
 			goodTrades.add(new BasicTrade(40, stack, 1, 20));
 
@@ -101,6 +110,7 @@ public class WandererReplacements {
 			stack.addEnchantment(Enchantments.PROTECTION, 5);
 			stack.addEnchantment(Enchantments.MENDING, 1);
 			stack.addEnchantment(Enchantments.UNBREAKING, 5);
+			stack.addEnchantment(ApotheosisObjects.BERSERK, 2);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_legs"));
 			goodTrades.add(new BasicTrade(40, stack, 1, 20));
 
@@ -108,6 +118,8 @@ public class WandererReplacements {
 			stack.addEnchantment(Enchantments.PROTECTION, 5);
 			stack.addEnchantment(Enchantments.MENDING, 1);
 			stack.addEnchantment(Enchantments.UNBREAKING, 5);
+			stack.addEnchantment(ApotheosisObjects.STABLE_FOOTING, 1);
+			stack.addEnchantment(Enchantments.FEATHER_FALLING, 5);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_boots"));
 			goodTrades.add(new BasicTrade(40, stack, 1, 20));
 
@@ -117,9 +129,10 @@ public class WandererReplacements {
 
 			stack = new ItemStack(Items.DIAMOND_SWORD);
 			stack.addEnchantment(Enchantments.SHARPNESS, 10);
-			stack.addEnchantment(Enchantments.MENDING, 1);
-			stack.addEnchantment(Enchantments.LOOTING, 5);
-			stack.addEnchantment(Enchantments.UNBREAKING, 10);
+			stack.addEnchantment(ApotheosisObjects.LIFE_MENDING, 3);
+			stack.addEnchantment(Enchantments.LOOTING, 3);
+			stack.addEnchantment(Enchantments.UNBREAKING, 5);
+			stack.addEnchantment(ApotheosisObjects.SCAVENGER, 3);
 			stack.setDisplayName(new TranslationTextComponent("name.apotheosis.vigilance"));
 			goodTrades.add(new BasicTrade(new ItemStack(Items.DIAMOND, 64), new ItemStack(Items.PHANTOM_MEMBRANE, 32), stack, 1, 20, 0));
 		}

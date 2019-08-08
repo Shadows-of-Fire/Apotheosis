@@ -292,5 +292,17 @@
     "item.apotheosis.farmers_leash": "Ender-Farmer's Lead",
     "info.apotheosis.noentity": "Held Entity: Nothing",
     "info.apotheosis.containedentity": "Held Entity: %s",
-    "info.apotheosis.farmleash": "The Farmer's Leash is an item that can be used to move animals around.  Capture an animal with left click, and release it with right click.  The leash will not work on other types of entities."
+    "info.apotheosis.farmleash": "The Farmer's Leash is an item that can be used to move animals around.  Capture an animal with left click, and release it with right click.  The leash will not work on other types of entities.",
+
+	"comment_id": "/Villager Module",
+	"name.apotheosis.merch_sword": "Captive Dreams",
+	"name.apotheosis.merch_pick": "Stonebreaker",
+	"name.apotheosis.merch_axe": "Treecapitator",
+	"name.apotheosis.merch_axe2": "Bonesplitter",
+	"name.apotheosis.merch_spider_sword": "Arachnid's Fear",
+	"name.apotheosis.merch_helm": "Timeworn Visage",
+	"name.apotheosis.merch_chest": "Greatplate of Eternity",
+	"name.apotheosis.merch_legs": "Thunder-Forged Legguards",
+	"name.apotheosis.merch_boots": "Rune-Forged Greaves",
+	"name.apotheosis.vigilance": "Eternal Vigilance"
 }
