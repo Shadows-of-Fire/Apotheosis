@@ -59,7 +59,7 @@ public class BrutalSpawner extends WorldFeature {
 	@Override
 	public void place(IWorld world, BlockPos pos, Random rand) {
 		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
-		ChestBuilder.place(world.getWorld(), rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
+		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
 		world.setBlockState(pos.up(), Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 2);
 		for (Direction f : Direction.BY_HORIZONTAL_INDEX) {
 			if (world.getBlockState(pos.offset(f)).isAir(world, pos.offset(f))) {

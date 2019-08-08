@@ -98,7 +98,7 @@ public class BossItem extends WorldFeatureItem {
 	public void place(IWorld world, BlockPos pos, Random rand) {
 		MobEntity entity = (MobEntity) entityEntry.create(world.getWorld());
 		initBoss(rand, entity);
-		entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
+		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		world.addEntity(entity);
 		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		entity.enablePersistence();

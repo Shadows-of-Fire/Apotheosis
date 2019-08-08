@@ -11,7 +11,7 @@ import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.functions.EnchantRandomly;
@@ -29,7 +29,7 @@ public class ChestBuilder {
 	protected ChestTileEntity chest;
 	protected boolean isValid;
 
-	public ChestBuilder(World world, Random rand, BlockPos pos) {
+	public ChestBuilder(IWorld world, Random rand, BlockPos pos) {
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof ChestTileEntity) {
 			random = rand;
@@ -62,7 +62,7 @@ public class ChestBuilder {
 		return new StackLootEntry(item, min, max, weight, quality);
 	}
 
-	public static void place(World world, Random random, BlockPos pos, ResourceLocation loot) {
+	public static void place(IWorld world, Random random, BlockPos pos, ResourceLocation loot) {
 		world.setBlockState(pos, Blocks.CHEST.getDefaultState(), 2);
 		ChestBuilder chest = new ChestBuilder(world, random, pos);
 		if (chest.isValid) {
@@ -70,7 +70,7 @@ public class ChestBuilder {
 		}
 	}
 
-	public static void placeTrapped(World world, Random random, BlockPos pos, ResourceLocation loot) {
+	public static void placeTrapped(IWorld world, Random random, BlockPos pos, ResourceLocation loot) {
 		world.setBlockState(pos, Blocks.TRAPPED_CHEST.getDefaultState(), 2);
 		ChestBuilder chest = new ChestBuilder(world, random, pos);
 		if (chest.isValid) {

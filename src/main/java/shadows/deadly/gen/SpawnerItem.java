@@ -37,7 +37,7 @@ public class SpawnerItem extends WorldFeatureItem {
 	@Override
 	public void place(IWorld world, BlockPos pos) {
 		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
-		(world.getWorld()).setTileEntity(pos, spawner.build(world.getWorld(), pos));
+		spawner.build(world, pos);
 	}
 
 	public SpawnerBuilder getSpawner() {
