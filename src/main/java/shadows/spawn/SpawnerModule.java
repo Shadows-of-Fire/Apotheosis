@@ -18,6 +18,7 @@ import net.minecraft.item.SpawnEggItem;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Hand;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -40,6 +41,7 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void setup(ApotheosisSetup e) {
+		MinecraftForge.EVENT_BUS.register(this);
 		config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
 		if (Apotheosis.enableSpawner) {
 			TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
@@ -86,7 +88,7 @@ public class SpawnerModule {
 		TileEntity te;
 		if ((te = e.getWorld().getTileEntity(e.getPos())) instanceof TileSpawnerExt) {
 			ItemStack s = e.getItemStack();
-			boolean inverse = SpawnerModifiers.inverseItem.test(e.getEntityPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			boolean inverse = SpawnerModifiers.inverseItem.test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
 				if (sm.canModify((TileSpawnerExt) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}

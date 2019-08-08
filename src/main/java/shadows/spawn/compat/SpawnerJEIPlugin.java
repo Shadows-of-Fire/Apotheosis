@@ -1,5 +1,5 @@
 package shadows.spawn.compat;
-
+/*
 import com.google.common.collect.ImmutableSet;
 
 import mezz.jei.api.IModPlugin;
@@ -65,3 +65,4 @@ public class SpawnerJEIPlugin implements IModPlugin {
 	}
 
 }
+*/

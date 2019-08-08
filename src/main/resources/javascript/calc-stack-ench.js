@@ -16,12 +16,14 @@ function initializeCoreMod() {
                 var JumpInsnNode = Java.type('org.objectweb.asm.tree.JumpInsnNode');
                 var IntInsnNode = Java.type('org.objectweb.asm.tree.IntInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				var instr = method.instructions;
 
 				var jumpNode = null;
-				for (int i = 0; i < instr.size(); i++) {
+				var i;
+				for (i = 0; i < instr.size(); i++) {
 					var n = instr.get(i);
-					if (n.getOpcode() == Opcodes.BIPUSH && ((IntInsnNode) n).operand == 15) {
-						jumpNode = (JumpInsnNode) n.getNext();
+					if (n.getOpcode() == Opcodes.BIPUSH && n.operand == 15) {
+						jumpNode = n.getNext();
 						break;
 					}
 				}

@@ -27,21 +27,18 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
-import shadows.Apotheosis;
 
 public class BlockPrismaticAltar extends Block {
 
-	static final double px = 1D / 16;
-
-	public static final VoxelShape DISPLAY = Block.makeCuboidShape(0, 0, 0, 1, 10 * px, 1);
+	public static final VoxelShape DISPLAY = Block.makeCuboidShape(0, 0, 0, 1, 10, 1);
 	//Formatter::off
 	public static final List<VoxelShape> BOXES = ImmutableList.of(
-			Block.makeCuboidShape(0, 0, 0, 1, px, 1),
-			Block.makeCuboidShape(px, px, px, 1 - px, px * 3, 1 - px),
-			Block.makeCuboidShape(2 * px, 4 * px, 2 * px, 4 * px, 10 * px, 4 * px),
-			Block.makeCuboidShape(2 * px, 4 * px, 12 * px, 4 * px, 10 * px, 14 * px),
-			Block.makeCuboidShape(12 * px, 4 * px, 2 * px, 14 * px, 10 * px, 4 * px),
-			Block.makeCuboidShape(12 * px, 4 * px, 12 * px, 14 * px, 10 * px, 14 * px)
+			Block.makeCuboidShape(0, 0, 0, 16, 1, 16),
+			Block.makeCuboidShape(1, 1, 1, 15, 3, 15),
+			Block.makeCuboidShape(2, 4, 2, 4, 10, 4),
+			Block.makeCuboidShape(2, 4, 12, 4, 10, 14),
+			Block.makeCuboidShape(12, 4, 2, 14, 10, 4),
+			Block.makeCuboidShape(12, 4, 12, 14, 10, 14)
 			);
 	//Formatter::on
 	public static final List<VoxelShape> PILLARS = ImmutableList.of(BOXES.get(2), BOXES.get(3), BOXES.get(4), BOXES.get(5));
@@ -49,7 +46,6 @@ public class BlockPrismaticAltar extends Block {
 
 	public BlockPrismaticAltar() {
 		super(Block.Properties.create(Material.ROCK, MaterialColor.LIGHT_GRAY).hardnessAndResistance(1.5F, 10).sound(SoundType.STONE));
-		setRegistryName(Apotheosis.MODID, "prismatic_altar");
 	}
 
 	@Override
@@ -70,7 +66,7 @@ public class BlockPrismaticAltar extends Block {
 		double hitX = hit.getHitVec().x;
 		double hitZ = hit.getHitVec().z;
 
-		if (hitX >= 5.5 * px && hitX <= 1 - 5.5 * px || hitZ >= 5.5 * px && hitZ <= 1 - 5.5 * px) {
+		if (hitX >= 5.5 / 16 && hitX <= 1 - 5.5 / 16 || hitZ >= 5.5 / 16 && hitZ <= 1 - 5.5 / 16) {
 			attemptSwap(altar, 4, player, hand);
 		}
 
@@ -148,7 +144,7 @@ public class BlockPrismaticAltar extends Block {
 	private static VoxelShape merge(List<VoxelShape> shapes) {
 		VoxelShape shape = shapes.get(0);
 		for (VoxelShape s : shapes) {
-			shape = VoxelShapes.combine(shape, s, IBooleanFunction.AND);
+			shape = VoxelShapes.combine(shape, s, IBooleanFunction.OR);
 		}
 		return shape;
 	}

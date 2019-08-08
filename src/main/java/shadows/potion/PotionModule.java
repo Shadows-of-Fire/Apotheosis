@@ -19,6 +19,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionBrewing;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
@@ -27,7 +28,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisConstruction;
-import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ApotheosisObjects;
 import shadows.placebo.config.Configuration;
@@ -85,6 +85,14 @@ public class PotionModule {
 		PotionBrewing.addMix(ApotheosisObjects.T_KNOWLEDGE, Items.EXPERIENCE_BOTTLE, ApotheosisObjects.STRONG_KNOWLEDGE);
 
 		PotionBrewing.addMix(Potions.AWKWARD, ApotheosisObjects.LUCKY_FOOT, ForgeRegistries.POTION_TYPES.getValue(new ResourceLocation("luck")));
+
+		Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
+		Ingredient abs = Apotheosis.potionIngredient(ApotheosisObjects.STRONG_ABSORPTION);
+		Ingredient res = Apotheosis.potionIngredient(ApotheosisObjects.RESISTANCE);
+		Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
+		Apotheosis.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
+
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@SubscribeEvent
@@ -95,15 +103,6 @@ public class PotionModule {
 	@SubscribeEvent
 	public void items(Register<Item> e) {
 		e.getRegistry().register(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"));
-	}
-
-	@SubscribeEvent
-	public void recipes(ApotheosisRecipeEvent e) {
-		Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
-		Ingredient abs = Apotheosis.potionIngredient(ApotheosisObjects.STRONG_ABSORPTION);
-		Ingredient res = Apotheosis.potionIngredient(ApotheosisObjects.RESISTANCE);
-		Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
-		e.helper.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
 	}
 
 	@SubscribeEvent

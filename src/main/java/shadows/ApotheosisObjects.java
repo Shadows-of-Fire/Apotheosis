@@ -37,8 +37,6 @@ import shadows.spawn.EnchantmentCapturing;
 @ObjectHolder(Apotheosis.MODID)
 public class ApotheosisObjects {
 	public static final BlockHellBookshelf HELLSHELF = null;
-	@ObjectHolder("minecraft:web")
-	public static final Item WEB = null;
 	public static final Item PRISMATIC_WEB = null;
 	public static final EnchantmentHellInfused HELL_INFUSION = null;
 	public static final EnchantmentMounted MOUNTED_STRIKE = null;

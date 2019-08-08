@@ -16,21 +16,23 @@ function initializeCoreMod() {
                 var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				var instr = method.instructions;
 
 				var ix = 0;
 				var levelRestriction = null;
 				var getMaxLevel1 = null;
 				var getMaxLevel2 = null;
-				for (int i = 0; i < instr.size(); i++) {
+				var i;
+				for (i = 0; i < instr.size(); i++) {
 					var n = instr.get(i);
-					if (n.getOpcode() == Opcodes.LDC && ((LdcInsnNode) n).cst.equals(40)) {
+					if (n.getOpcode() == Opcodes.LDC && n.cst.equals(40)) {
 						if (ix++ == 2) {
 							levelRestriction = n;
 						}
 					}
 					if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-						var mNode = (MethodInsnNode) n;
-						boolean is = mNode.name.equals("getMaxLevel");
+						var mNode = n;
+						var is = mNode.name.equals("getMaxLevel");
 						if (is && getMaxLevel1 == null) {
 							getMaxLevel1 = mNode;
 						} else if (is) getMaxLevel2 = mNode;

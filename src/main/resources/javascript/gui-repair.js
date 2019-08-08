@@ -13,17 +13,19 @@ function initializeCoreMod() {
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
+				var instr = method.instructions;
 
 				var levelRestriction = null;
-				for (int i = 0; i < instr.size(); i++) {
+				var i;
+				for (i = 0; i < instr.size(); i++) {
 					var n = instr.get(i);
-					if (n.getOpcode() == Opcodes.LDC && ((LdcInsnNode) n).cst.equals(40)) {
+					if (n.getOpcode() == Opcodes.LDC && n.cst.equals(40)) {
 						levelRestriction = n;
 						break;
 					}
 				}
 
-				instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
+				if(levelRestriction != null) instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
 
                 return method;
             }

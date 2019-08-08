@@ -17,7 +17,7 @@ public class ItemShearsExt extends ShearsItem {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment ench) {
-		return ench.canApply(stack) || ench == Enchantments.UNBREAKING || ench == Enchantments.EFFICIENCY;
+		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.EFFICIENCY;
 	}
 
 	@Override

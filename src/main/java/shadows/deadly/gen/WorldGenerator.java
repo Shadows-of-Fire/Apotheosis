@@ -17,11 +17,16 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.deadly.DeadlyModule;
 import shadows.deadly.config.DeadlyConfig;
 
@@ -52,6 +57,9 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		if (BRUTAL_SPAWNER.isEnabled()) FEATURES.add(BRUTAL_SPAWNER);
 		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
 		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
+		ConfiguredFeature<?> gen = new ConfiguredFeature<>(new WorldGenerator(), IFeatureConfig.NO_FEATURE_CONFIG);
+		for (Biome b : ForgeRegistries.BIOMES)
+			b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);
 	}
 
 	public static void debugPillar(World world, BlockPos pos) {

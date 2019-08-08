@@ -18,6 +18,7 @@ function initializeCoreMod() {
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
+				var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
 
 				var insn = new InsnList();

@@ -1,5 +1,5 @@
 package shadows.garden.compat;
-
+/*
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -24,3 +24,4 @@ public class GardenJEIPlugin implements IModPlugin {
 	}
 
 }
+*/

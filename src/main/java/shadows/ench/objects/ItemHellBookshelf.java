@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
-import shadows.ench.EnchModule;
 
 public class ItemHellBookshelf extends BlockItem {
 
@@ -45,7 +44,7 @@ public class ItemHellBookshelf extends BlockItem {
 		super.fillItemGroup(group, items);
 		if (isInGroup(group)) {
 			ItemStack s = new ItemStack(this);
-			EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, EnchModule.getEnchInfo(ApotheosisObjects.HELL_INFUSION).getMaxLevel()), s);
+			EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, 10), s);
 			items.add(s);
 		}
 	}

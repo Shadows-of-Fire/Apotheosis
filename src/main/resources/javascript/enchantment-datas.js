@@ -18,6 +18,7 @@ function initializeCoreMod() {
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
+				var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
 
 				var insn = new InsnList();
@@ -25,9 +26,9 @@ function initializeCoreMod() {
 				insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
 				insn.add(new VarInsnNode(Opcodes.ILOAD, 2));
 				insn.add(ASMAPI.buildMethodCall(
-                    endPoint,
-                    endPointMethod,
-                    endPointDescriptor,
+                    owner,
+                    name,
+                    desc,
                     ASMAPI.MethodType.STATIC));
 				insn.add(new InsnNode(Opcodes.ARETURN));
 				instr.insert(insn);

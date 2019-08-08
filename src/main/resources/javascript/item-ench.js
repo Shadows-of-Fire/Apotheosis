@@ -15,6 +15,7 @@ function initializeCoreMod() {
 				var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				var instr = method.instructions;
 
 				var insn = new InsnList();
 				insn.add(new LdcInsnNode(10));
