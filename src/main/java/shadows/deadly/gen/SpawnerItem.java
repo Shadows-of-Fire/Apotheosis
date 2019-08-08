@@ -8,7 +8,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 import shadows.deadly.config.DeadlyConstants;
 import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
 import shadows.placebo.util.SpawnerBuilder;
@@ -38,7 +37,7 @@ public class SpawnerItem extends WorldFeatureItem {
 	@Override
 	public void place(IWorld world, BlockPos pos) {
 		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
-		((World) world).setTileEntity(pos, spawner.build((World) world, pos));
+		(world.getWorld()).setTileEntity(pos, spawner.build(world.getWorld(), pos));
 	}
 
 	public SpawnerBuilder getSpawner() {

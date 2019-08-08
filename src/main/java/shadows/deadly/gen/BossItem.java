@@ -36,7 +36,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.Apotheosis;
 import shadows.deadly.config.DeadlyConfig;
@@ -86,7 +85,7 @@ public class BossItem extends WorldFeatureItem {
 	}
 
 	public AxisAlignedBB getAABB(IWorld world) {
-		if (entityAABB == null) entityAABB = entityEntry.create((World) world).getCollisionBoundingBox();
+		if (entityAABB == null) entityAABB = entityEntry.create(world.getWorld()).getCollisionBoundingBox();
 		if (entityAABB == null) entityAABB = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 		return entityAABB;
 	}
@@ -97,7 +96,7 @@ public class BossItem extends WorldFeatureItem {
 	}
 
 	public void place(IWorld world, BlockPos pos, Random rand) {
-		MobEntity entity = (MobEntity) entityEntry.create((World) world);
+		MobEntity entity = (MobEntity) entityEntry.create(world.getWorld());
 		initBoss(rand, entity);
 		entity.setPositionAndRotation(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		world.addEntity(entity);
