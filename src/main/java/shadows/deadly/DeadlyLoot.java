@@ -114,7 +114,7 @@ public class DeadlyLoot {
 	}
 
 	private static ItemStack egg(String mob) {
-		return new ItemStack(SpawnEggItem.getEgg(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob))));
+		return new ItemStack(SpawnEggItem.EGGS.get(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob))));
 	}
 
 	private static ItemStack potion(Potion type) {
