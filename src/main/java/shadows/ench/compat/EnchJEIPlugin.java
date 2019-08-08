@@ -1,5 +1,5 @@
 package shadows.ench.compat;
-/*
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
@@ -63,4 +63,3 @@ public class EnchJEIPlugin implements IModPlugin {
 	}
 
 }
-*/

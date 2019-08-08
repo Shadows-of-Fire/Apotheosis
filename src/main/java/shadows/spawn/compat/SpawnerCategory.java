@@ -1,5 +1,5 @@
 package shadows.spawn.compat;
-/*
+
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
@@ -63,4 +63,3 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	}
 
 }
-*/
