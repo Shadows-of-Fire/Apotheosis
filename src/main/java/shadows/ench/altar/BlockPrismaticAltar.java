@@ -63,8 +63,8 @@ public class BlockPrismaticAltar extends Block {
 			if (this.rayTrace(pos, eyes, block, PILLARS.get(i)) != null) return attemptSwap(altar, i, player, hand);
 		}
 
-		double hitX = hit.getHitVec().x;
-		double hitZ = hit.getHitVec().z;
+		double hitX = hit.getHitVec().x - pos.getX();
+		double hitZ = hit.getHitVec().z - pos.getZ();
 
 		if (hitX >= 5.5 / 16 && hitX <= 1 - 5.5 / 16 || hitZ >= 5.5 / 16 && hitZ <= 1 - 5.5 / 16) {
 			attemptSwap(altar, 4, player, hand);

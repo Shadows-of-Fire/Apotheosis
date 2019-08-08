@@ -35,7 +35,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 
 	public BlockSpawnerExt() {
 		super(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL));
-		setRegistryName("minecraft", "mob_spawner");
+		setRegistryName("minecraft", "spawner");
 	}
 
 	@Override

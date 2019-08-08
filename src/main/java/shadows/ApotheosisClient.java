@@ -13,25 +13,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IRegistryDelegate;
-import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ench.EnchModule;
 import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
 
-@EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ApotheosisClient {
 
 	private static final Map<IRegistryDelegate<Enchantment>, List<String>> ENCH_TOOLTIPS = new HashMap<>();
 
-	@SubscribeEvent
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
 		if (Apotheosis.enableEnch) {
@@ -52,15 +55,15 @@ public class ApotheosisClient {
 		ListNBT list = EnchantedBookItem.getEnchantments(book);
 		if (list.size() == 1) {
 			CompoundNBT tag = list.getCompound(0);
-			int id = tag.getShort("id");
-			Enchantment enchantment = Enchantment.getEnchantmentByID(id);
+			ResourceLocation id = new ResourceLocation(tag.getString("id"));
+			Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(id);
 			if (enchantment == ench) return true;
 		}
 		return false;
 	}
 
 	@SubscribeEvent
-	public static void init(ApotheosisSetup e) {
+	public static void init(FMLClientSetupEvent e) {
 		String masterwork = TextFormatting.DARK_GREEN + I18n.format("info.apotheosis.masterwork");
 		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
 		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");
@@ -98,6 +101,7 @@ public class ApotheosisClient {
 			}
 		}
 		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
+		MinecraftForge.EVENT_BUS.addListener(ApotheosisClient::tooltips);
 	}
 
 	public static void registerTooltip(Enchantment e, String... keys) {

@@ -29,6 +29,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -38,6 +39,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext.Builder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.ApotheosisObjects;
 
 public class BlockAnvilExt extends AnvilBlock {
@@ -117,7 +119,7 @@ public class BlockAnvilExt extends AnvilBlock {
 					entity.remove();
 					for (INBT nbt : enchants) {
 						CompoundNBT tag = (CompoundNBT) nbt;
-						ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(Enchantment.getEnchantmentByID(tag.getInt("id")), tag.getInt("lvl")));
+						ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(tag.getString("id"))), tag.getInt("lvl")));
 						Block.spawnAsEntity(world, pos, book);
 					}
 				}

@@ -2,7 +2,7 @@
 	"__comment": "Designed by Shadows_of_Fire with Cubik Studio - https://cubik.studio",
 	"parent": "block/block",
 	"textures": {
-		"particle": "blocks/prismarine_bricks",
+		"particle": "block/prismarine_bricks",
 		"altar_map": "apotheosis:blocks/altar_map"
 	},
 	"elements": [ 	 

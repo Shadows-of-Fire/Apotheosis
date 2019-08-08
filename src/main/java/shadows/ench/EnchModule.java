@@ -226,7 +226,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void tiles(Register<TileEntityType<?>> e) {
 		e.getRegistry().register(new TileEntityType<>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL), null).setRegistryName("anvil"));
-		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(Blocks.ANVIL), null).setRegistryName("prismatic_altar"));
+		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
 	}
 
 	@SubscribeEvent

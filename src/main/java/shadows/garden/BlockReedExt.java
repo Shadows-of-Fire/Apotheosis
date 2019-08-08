@@ -16,7 +16,7 @@ public class BlockReedExt extends SugarCaneBlock {
 
 	public BlockReedExt() {
 		super(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT));
-		setRegistryName(new ResourceLocation("reeds"));
+		setRegistryName(new ResourceLocation("sugar_cane"));
 	}
 
 	@Override

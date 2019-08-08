@@ -39,23 +39,23 @@ public class ParticleMessage extends MessageProvider<ParticleMessage> {
 
 	@Override
 	public ParticleMessage read(PacketBuffer buf) {
-		type = ((ForgeRegistry<ParticleType<?>>) ForgeRegistries.PARTICLE_TYPES).getValue(buf.readInt());
-		x = buf.readDouble();
-		y = buf.readDouble();
-		z = buf.readDouble();
-		velX = buf.readDouble();
-		velY = buf.readDouble();
-		velZ = buf.readDouble();
-		count = buf.readInt();
+		ParticleType<?> type = ((ForgeRegistry<ParticleType<?>>) ForgeRegistries.PARTICLE_TYPES).getValue(buf.readInt());
+		double x = buf.readDouble();
+		double y = buf.readDouble();
+		double z = buf.readDouble();
+		double velX = buf.readDouble();
+		double velY = buf.readDouble();
+		double velZ = buf.readDouble();
+		int count = buf.readInt();
 		return new ParticleMessage(type, x, y, z, velX, velY, velZ, count);
 	}
 
 	@Override
 	public void write(ParticleMessage msg, PacketBuffer buf) {
-		buf.writeInt(((ForgeRegistry<ParticleType<?>>) ForgeRegistries.PARTICLE_TYPES).getID(type));
-		buf.writeDouble(x).writeDouble(y).writeDouble(z);
-		buf.writeDouble(velX).writeDouble(velY).writeDouble(velZ);
-		buf.writeInt(count);
+		buf.writeInt(((ForgeRegistry<ParticleType<?>>) ForgeRegistries.PARTICLE_TYPES).getID(msg.type));
+		buf.writeDouble(msg.x).writeDouble(msg.y).writeDouble(msg.z);
+		buf.writeDouble(msg.velX).writeDouble(msg.velY).writeDouble(msg.velZ);
+		buf.writeInt(msg.count);
 	}
 
 	@Override
@@ -64,6 +64,7 @@ public class ParticleMessage extends MessageProvider<ParticleMessage> {
 			for (int i = 0; i < msg.count; i++)
 				Minecraft.getInstance().world.addParticle((IParticleData) msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
 		});
+		ctx.get().setPacketHandled(true);
 	}
 
 }

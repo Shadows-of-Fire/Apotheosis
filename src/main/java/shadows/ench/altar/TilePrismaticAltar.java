@@ -3,7 +3,6 @@ package shadows.ench.altar;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -15,6 +14,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -31,7 +31,7 @@ import shadows.placebo.util.NetworkUtils;
 import shadows.util.EnchantmentUtils;
 import shadows.util.ParticleMessage;
 
-public class TilePrismaticAltar extends TileEntity implements ITickable {
+public class TilePrismaticAltar extends TileEntity implements ITickableTileEntity {
 
 	public TilePrismaticAltar() {
 		super(ApotheosisObjects.ALTAR_TYPE);

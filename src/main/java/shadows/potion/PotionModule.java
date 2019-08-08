@@ -137,7 +137,7 @@ public class PotionModule {
 	public void potions(Register<Effect> e) {
 		e.getRegistry().register(new PotionSundering().setRegistryName(Apotheosis.MODID, "sundering"));
 		e.getRegistry().register(new KnowledgeEffect().setRegistryName(Apotheosis.MODID, "knowledge"));
-		ObjectHolderRegistry.applyObjectHolders();
+		ObjectHolderRegistry.applyObjectHolders(r -> r.getNamespace().equals(Apotheosis.MODID) && (r.getPath().equals("sundering") || r.getPath().equals("knowledge")));
 	}
 
 	@SubscribeEvent

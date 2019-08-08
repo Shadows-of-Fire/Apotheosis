@@ -1,13 +1,5 @@
 {
-	"forge_marker": 1,
-	"defaults": {
-		"model": "cube_column",
-		"textures": {
-			"end": "blocks/nether_brick",
-			"side": "apotheosis:blocks/nether_bookshelf"
-		}
-	},
-	"variants": {
-		"normal": [{}]
-	}
+    "variants": {
+		"": { "model": "apotheosis:block/hellshelf" }
+    }
 }

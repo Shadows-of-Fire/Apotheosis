@@ -38,7 +38,7 @@ public class Apotheosis {
 	public static final String MODID = "apotheosis";
 	//Formatter::off
     public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
-            .named(new ResourceLocation(MODID, "channel"))
+            .named(new ResourceLocation(MODID, MODID))
             .clientAcceptedVersions(s->true)
             .serverAcceptedVersions(s->true)
             .networkProtocolVersion(() -> "1.0.0")
@@ -85,8 +85,8 @@ public class Apotheosis {
 	}
 
 	public void init(FMLCommonSetupEvent e) {
-		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
+		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
 	}
 
 	public static void registerOverrideBlock(IForgeRegistry<Block> reg, Block b, String modid) {
