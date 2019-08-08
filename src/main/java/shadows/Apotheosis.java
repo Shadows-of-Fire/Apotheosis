@@ -90,8 +90,9 @@ public class Apotheosis {
 	}
 
 	public static void registerOverrideBlock(IForgeRegistry<Block> reg, Block b, String modid) {
+		Block old = ForgeRegistries.BLOCKS.getValue(b.getRegistryName());
 		reg.register(b);
-		ForgeRegistries.ITEMS.register(new BlockItem(b, new Item.Properties().group(b.asItem().getGroup())) {
+		ForgeRegistries.ITEMS.register(new BlockItem(b, new Item.Properties().group(old.asItem().getGroup())) {
 			@Override
 			public String getCreatorModId(ItemStack itemStack) {
 				return modid;

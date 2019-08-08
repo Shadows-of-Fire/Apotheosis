@@ -15,7 +15,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
@@ -114,6 +116,11 @@ public class BlockSpawnerExt extends SpawnerBlock {
 			if (tag.getBoolean("ignore_cap")) tooltip.add(new TranslationTextComponent("waila.spw.ignorecap"));
 			if (tag.getBoolean("redstone_control")) tooltip.add(new TranslationTextComponent("waila.spw.redstone"));
 		}
+	}
+
+	@Override
+	public Item asItem() {
+		return Items.SPAWNER;
 	}
 
 }

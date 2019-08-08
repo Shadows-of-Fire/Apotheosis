@@ -1,5 +1,5 @@
 {
-    "": "/Spawner Module",
+    "comment_id": "/Spawner Module",
     "enchantment.apotheosis.capturing": "Capturing",
 
     "enchantment.apotheosis.capturing.desc": "Makes mobs have a chance to drop their spawn egg.",
@@ -34,7 +34,7 @@
     "jei.spw.instructions": "Spawners can be modified with various items via right clicking on them.\\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\\nSpawners will also be dropped with Silk Touch.",
     "jei.spw.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n+0.4% chance per level.",
 
-    "": "/Enchantment Module",
+    "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "Hellshelf",
     "info.apotheosis.hellshelf": "Provides %s enchanting power.",
     "info.apotheosis.cobweb": "Can be used to remove enchantments.",
@@ -121,7 +121,7 @@
 
     "block.apotheosis.prismatic_altar": "Altar of the Sea",
 
-    "": "/Vanilla",
+    "comment_id": "/Vanilla",
     "block.reeds": "Sugar Cane",
     "potion.potency.3": "IV",
     "enchantment.level.11": "XI",
@@ -242,7 +242,7 @@
     "enchantment.level.126": "CXXVI",
     "enchantment.level.127": "CXXVII",
 
-    "": "/Potion Module",
+    "comment_id": "/Potion Module",
     "enchantment.apotheosis.true_infinity": "Endless Quiver",
     "enchantment.apotheosis.true_infinity.desc": "Makes all arrows infinite.",
 
@@ -285,10 +285,10 @@
 
     "item.apotheosis.lucky_foot": "Lucky Rabbit's Foot",
 
-    "": "/Anvil Module",
+    "comment_id": "/Anvil Module",
     "info.apotheosis.anvil": "Can be enchanted.",
 
-    "": "/Garden Module",
+    "comment_id": "/Garden Module",
     "item.apotheosis.farmers_leash": "Ender-Farmer's Lead",
     "info.apotheosis.noentity": "Held Entity: Nothing",
     "info.apotheosis.containedentity": "Held Entity: %s",

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
@@ -14,6 +13,8 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -33,7 +34,7 @@ import shadows.ench.altar.TilePrismaticAltar;
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ApotheosisClient {
 
-	private static final Map<IRegistryDelegate<Enchantment>, List<String>> ENCH_TOOLTIPS = new HashMap<>();
+	private static final Map<IRegistryDelegate<Enchantment>, List<ITextComponent>> ENCH_TOOLTIPS = new HashMap<>();
 
 	public static void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
@@ -42,9 +43,9 @@ public class ApotheosisClient {
 			else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.prismatic_cobweb"));
 		}
 		if (i == Items.ENCHANTED_BOOK) {
-			for (Map.Entry<IRegistryDelegate<Enchantment>, List<String>> ent : ENCH_TOOLTIPS.entrySet()) {
+			for (Map.Entry<IRegistryDelegate<Enchantment>, List<ITextComponent>> ent : ENCH_TOOLTIPS.entrySet()) {
 				if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
-					ent.getValue().forEach(s -> e.getToolTip().add(new TranslationTextComponent(s)));
+					ent.getValue().forEach(s -> e.getToolTip().add(s));
 					return;
 				}
 			}
@@ -64,9 +65,9 @@ public class ApotheosisClient {
 
 	@SubscribeEvent
 	public static void init(FMLClientSetupEvent e) {
-		String masterwork = TextFormatting.DARK_GREEN + I18n.format("info.apotheosis.masterwork");
-		String twisted = TextFormatting.DARK_PURPLE + I18n.format("info.apotheosis.twisted");
-		String corrupted = TextFormatting.DARK_RED + I18n.format("info.apotheosis.corrupted");
+		ITextComponent masterwork = new TranslationTextComponent("info.apotheosis.masterwork").setStyle(new Style().setColor(TextFormatting.DARK_GREEN));
+		ITextComponent twisted = new TranslationTextComponent("info.apotheosis.twisted").setStyle(new Style().setColor(TextFormatting.DARK_PURPLE));
+		ITextComponent corrupted = new TranslationTextComponent("info.apotheosis.corrupted").setStyle(new Style().setColor(TextFormatting.DARK_RED));
 		if (Apotheosis.enchTooltips) {
 			if (Apotheosis.enableSpawner) registerTooltip(ApotheosisObjects.CAPTURING, "enchantment.apotheosis.capturing.desc");
 			if (Apotheosis.enablePotion) registerTooltip(ApotheosisObjects.TRUE_INFINITY, masterwork, "", "enchantment.apotheosis.true_infinity.desc");
@@ -104,10 +105,12 @@ public class ApotheosisClient {
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisClient::tooltips);
 	}
 
-	public static void registerTooltip(Enchantment e, String... keys) {
-		List<String> tips = ENCH_TOOLTIPS.computeIfAbsent(e.delegate, d -> new ArrayList<>());
-		for (String s : keys)
-			tips.add(s);
+	public static void registerTooltip(Enchantment e, Object... keys) {
+		List<ITextComponent> tips = ENCH_TOOLTIPS.computeIfAbsent(e.delegate, d -> new ArrayList<>());
+		for (Object s : keys) {
+			if (s instanceof ITextComponent) tips.add((ITextComponent) s);
+			else if (s instanceof String) tips.add(new TranslationTextComponent((String) s));
+		}
 	}
 
 }

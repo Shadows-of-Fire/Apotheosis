@@ -5,6 +5,8 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
@@ -45,6 +47,7 @@ public class SpawnerModule {
 		config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
 		if (Apotheosis.enableSpawner) {
 			TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
+			TileEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
 		}
 		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
 		SpawnerModifiers.init();
