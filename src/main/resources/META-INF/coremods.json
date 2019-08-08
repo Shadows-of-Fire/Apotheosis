@@ -7,5 +7,6 @@
   "itemEnch": "javascript/item-ench.js",
   "calcStackEnch": "javascript/calc-stack-ench.js",
   "containerRepair": "javascript/container-repair.js",
-  "guiRepair": "javascript/gui-repair.js"
+  "guiRepair": "javascript/gui-repair.js",
+  "combatRules": "javascript/combat-rules.js"
 }

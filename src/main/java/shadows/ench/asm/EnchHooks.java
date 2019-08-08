@@ -12,7 +12,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
@@ -86,6 +88,21 @@ public class EnchHooks {
 	public static int getMaxLevel(Enchantment ench) {
 		if (!Apotheosis.enableEnch) return ench.getMaxLevel();
 		return EnchModule.getEnchInfo(ench).getMaxLevel();
+	}
+
+	/**
+	 * Override for protection calculations.  Removes the hard cap of total level 20.  Effectiveness is reduced past 20.
+	 * Called from {@link CombatRules#getDamageAfterMagicAbsorb(float, float)}
+	 * Injected by javascript/combat-rules.js
+	 */
+	public static float getDamageAfterMagicAbsorb(float damage, float enchantModifiers) {
+		float clamped = MathHelper.clamp(enchantModifiers, 0, 20);
+		float remaining = MathHelper.clamp(enchantModifiers - 20, 0, 44);
+		float factor = 1 - clamped / 25;
+		if (remaining > 0) {
+			factor -= 0.2F * remaining / 60;
+		}
+		return damage * factor;
 	}
 
 }
