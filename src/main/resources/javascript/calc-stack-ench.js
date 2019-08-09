@@ -16,20 +16,20 @@ function initializeCoreMod() {
                 var JumpInsnNode = Java.type('org.objectweb.asm.tree.JumpInsnNode');
                 var IntInsnNode = Java.type('org.objectweb.asm.tree.IntInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
-				var instr = method.instructions;
+                var instr = method.instructions;
 
-				var jumpNode = null;
-				var i;
-				for (i = 0; i < instr.size(); i++) {
-					var n = instr.get(i);
-					if (n.getOpcode() == Opcodes.BIPUSH && n.operand == 15) {
-						jumpNode = n.getNext();
-						break;
-					}
-				}
-				if (jumpNode != null) {
-					instr.insert(jumpNode, new JumpInsnNode(Opcodes.GOTO, jumpNode.label));
-				}
+                var jumpNode = null;
+                var i;
+                for (i = 0; i < instr.size(); i++) {
+                    var n = instr.get(i);
+                    if (n.getOpcode() == Opcodes.BIPUSH && n.operand == 15) {
+                        jumpNode = n.getNext();
+                        break;
+                    }
+                }
+                if (jumpNode != null) {
+                    instr.insert(jumpNode, new JumpInsnNode(Opcodes.GOTO, jumpNode.label));
+                }
 
                 return method;
             }
