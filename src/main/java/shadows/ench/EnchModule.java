@@ -104,8 +104,8 @@ import shadows.ench.objects.ItemScrapTome;
 import shadows.ench.objects.ItemShearsExt;
 import shadows.ench.objects.ItemTypedBook;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.util.ReflectionHelper;
-import shadows.util.NBTIngredient;
 
 /**
  * Short document on enchanting methods:

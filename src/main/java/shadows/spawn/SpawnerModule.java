@@ -32,6 +32,7 @@ import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ApotheosisObjects;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.util.PlaceboUtil;
 import shadows.spawn.modifiers.SpawnerModifier;
 
 public class SpawnerModule {
@@ -56,7 +57,7 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockSpawnerExt(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new BlockSpawnerExt(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent

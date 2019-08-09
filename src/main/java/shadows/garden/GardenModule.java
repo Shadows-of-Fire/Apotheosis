@@ -11,6 +11,7 @@ import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ApotheosisObjects;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.util.PlaceboUtil;
 
 public class GardenModule {
 
@@ -28,8 +29,8 @@ public class GardenModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockCactusExt(), Apotheosis.MODID);
-		Apotheosis.registerOverrideBlock(e.getRegistry(), new BlockReedExt(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new BlockCactusExt(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new BlockReedExt(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent

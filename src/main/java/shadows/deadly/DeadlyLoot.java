@@ -13,8 +13,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.Apotheosis;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.loot.PoolBuilder;
-import shadows.util.ChestBuilder;
-import shadows.util.ChestBuilder.EnchantedEntry;
+import shadows.placebo.util.ChestBuilder;
+import shadows.placebo.util.ChestBuilder.EnchantedEntry;
 
 /**
  * Loot entries for deadly module

@@ -14,7 +14,7 @@ import net.minecraft.world.IWorld;
 import shadows.deadly.DeadlyLoot;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.config.DeadlyConstants;
-import shadows.util.ChestBuilder;
+import shadows.placebo.util.ChestBuilder;
 
 public class SwarmSpawner extends WorldFeature {
 

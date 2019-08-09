@@ -27,8 +27,8 @@ import shadows.ApotheosisObjects;
 import shadows.ench.EnchModule;
 import shadows.ench.EnchantmentInfo;
 import shadows.placebo.recipe.VanillaPacketDispatcher;
+import shadows.placebo.util.EnchantmentUtils;
 import shadows.placebo.util.NetworkUtils;
-import shadows.util.EnchantmentUtils;
 import shadows.util.ParticleMessage;
 
 public class TilePrismaticAltar extends TileEntity implements ITickableTileEntity {

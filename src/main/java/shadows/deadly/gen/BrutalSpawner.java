@@ -20,8 +20,8 @@ import net.minecraftforge.common.util.Constants.NBT;
 import shadows.deadly.DeadlyLoot;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.config.DeadlyConstants;
+import shadows.placebo.util.ChestBuilder;
 import shadows.placebo.util.SpawnerBuilder;
-import shadows.util.ChestBuilder;
 import shadows.util.TagBuilder;
 
 /**
