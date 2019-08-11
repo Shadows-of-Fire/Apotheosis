@@ -26,6 +26,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.deadly.DeadlyModule;
 import shadows.deadly.config.DeadlyConfig;
@@ -58,8 +59,10 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
 		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
 		ConfiguredFeature<?> gen = new ConfiguredFeature<>(new WorldGenerator(), IFeatureConfig.NO_FEATURE_CONFIG);
-		for (Biome b : ForgeRegistries.BIOMES)
-			b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);
+		DeferredWorkQueue.runLater(() -> {
+			for (Biome b : ForgeRegistries.BIOMES)
+				b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);
+		});
 	}
 
 	public static void debugPillar(World world, BlockPos pos) {
