@@ -11,6 +11,7 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Direction.Plane;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -61,7 +62,7 @@ public class BrutalSpawner extends WorldFeature {
 		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
 		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
 		world.setBlockState(pos.up(), Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 2);
-		for (Direction f : Direction.BY_HORIZONTAL_INDEX) {
+		for (Direction f : Plane.HORIZONTAL) {
 			if (world.getBlockState(pos.offset(f)).isAir(world, pos.offset(f))) {
 				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateContainer().getProperty(f.getOpposite().getName());
 				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().with(side, true), 2);
