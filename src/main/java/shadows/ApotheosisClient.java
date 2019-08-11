@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.tfar.anviltweaks.AnvilTileSpecialRenderer;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
@@ -21,6 +23,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -30,6 +34,7 @@ import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.ench.EnchModule;
 import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
+import shadows.ench.anvil.compat.TileTfarAnvil;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ApotheosisClient {
@@ -103,6 +108,9 @@ public class ApotheosisClient {
 		}
 		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisClient::tooltips);
+		if (ModList.get().isLoaded("anviltweaks")) DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+			ClientRegistry.bindTileEntitySpecialRenderer(TileTfarAnvil.class, new AnvilTileSpecialRenderer());
+		});
 	}
 
 	public static void registerTooltip(Enchantment e, Object... keys) {
