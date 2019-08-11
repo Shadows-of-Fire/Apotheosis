@@ -1,14 +1,14 @@
-package shadows.ench.anvil;
+package shadows.ench.anvil.compat;
+
+import com.tfar.anviltweaks.AnvilTile;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import shadows.ApotheosisObjects;
-import shadows.ench.anvil.compat.IAnvilTile;
 
-public class TileAnvil extends TileEntity implements IAnvilTile {
+public class TileTfarAnvil extends AnvilTile implements IAnvilTile {
 
-	public TileAnvil() {
+	public TileTfarAnvil() {
 		super(ApotheosisObjects.ANVIL);
 	}
 

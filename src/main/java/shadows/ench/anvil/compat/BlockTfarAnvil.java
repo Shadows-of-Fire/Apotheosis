@@ -1,11 +1,12 @@
-package shadows.ench.anvil;
+package shadows.ench.anvil.compat;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.block.AnvilBlock;
+import com.tfar.anviltweaks.AnvilBlockv2;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -41,11 +42,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.ApotheosisObjects;
-import shadows.ench.anvil.compat.IAnvilTile;
 
-public class BlockAnvilExt extends AnvilBlock {
+public class BlockTfarAnvil extends AnvilBlockv2 {
 
-	public BlockAnvilExt() {
+	public BlockTfarAnvil() {
 		super(Block.Properties.create(Material.ANVIL, MaterialColor.IRON).hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL));
 	}
 
@@ -56,7 +56,7 @@ public class BlockAnvilExt extends AnvilBlock {
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileAnvil();
+		return new TileTfarAnvil();
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class BlockAnvilExt extends AnvilBlock {
 	protected void onStartFalling(FallingBlockEntity e) {
 		super.onStartFalling(e);
 		TileEntity te = e.world.getTileEntity(new BlockPos(e));
-		if (te instanceof TileAnvil) {
+		if (te instanceof IAnvilTile) {
 			e.tileEntityData = new CompoundNBT();
 			te.write(e.tileEntityData);
 		}
