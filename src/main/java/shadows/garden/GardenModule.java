@@ -3,6 +3,8 @@ package shadows.garden;
 import java.io.File;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -36,6 +38,8 @@ public class GardenModule {
 	@SubscribeEvent
 	public void items(Register<Item> e) {
 		e.getRegistry().register(new EnderLeashItem().setRegistryName("farmers_leash"));
+		ComposterBlock.CHANCES.put(Blocks.CACTUS, 0.5F);
+		ComposterBlock.CHANCES.put(Blocks.SUGAR_CANE, 0.5F);
 	}
 
 }
