@@ -43,7 +43,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.ApotheosisObjects;
 
-public class BlockTfarAnvil extends AnvilBlockv2 {
+public class BlockTfarAnvil extends AnvilBlockv2 implements IAnvilBlock {
 
 	public BlockTfarAnvil() {
 		super(Block.Properties.create(Material.ANVIL, MaterialColor.IRON).hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL));

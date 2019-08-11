@@ -490,7 +490,7 @@ public class EnchModule {
 	public void enchLevel(EnchantmentLevelSetEvent e) {
 		int power = e.getPower();
 		//Power * 2, Power * 1.5, Power * 1
-		e.setLevel(MathHelper.floor(power * (1 + e.getEnchantRow() * 0.5F)));
+		e.setLevel(Math.max(e.getEnchantRow() + 1, MathHelper.floor(power * (1 + e.getEnchantRow() * 0.5F))));
 	}
 
 	@SubscribeEvent
