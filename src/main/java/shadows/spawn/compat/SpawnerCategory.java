@@ -7,6 +7,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.config.Constants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -60,6 +61,12 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	@Override
 	public void setIngredients(SpawnerWrapper wrapper, IIngredients ing) {
 		wrapper.getIngredients(ing);
+	}
+
+	@Override
+	public void draw(SpawnerWrapper recipe, double mouseX, double mouseY) {
+		IRecipeCategory.super.draw(recipe, mouseX, mouseY);
+		recipe.drawInfo(Minecraft.getInstance(), 0, 40, mouseX, mouseY);
 	}
 
 }

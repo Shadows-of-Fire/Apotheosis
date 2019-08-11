@@ -58,7 +58,7 @@ public class SpawnerWrapper {
 		ingredients.setOutput(VanillaTypes.ITEM, output);
 	}
 
-	public void drawInfo(Minecraft mc, int width, int height, int mouseX, int mouseY) {
+	public void drawInfo(Minecraft mc, int width, int height, double mouseX, double mouseY) {
 		for (int i = 0; i < tooltips.length; i++)
 			mc.fontRenderer.drawString(I18n.format(tooltips[i]), 0, height - mc.fontRenderer.FONT_HEIGHT * (2 - i), 0);
 	}
@@ -71,8 +71,7 @@ public class SpawnerWrapper {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.singletonList(ItemStack.EMPTY), PlaceboUtil.asList(SpawnerModifiers.inverseItem.getMatchingStacks())));
-			ingredients.setOutput(VanillaTypes.ITEM, ItemStack.EMPTY);
+			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.inverseItem.getMatchingStacks())));
 		}
 
 	}
