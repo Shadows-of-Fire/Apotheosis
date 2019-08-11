@@ -20,6 +20,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -166,7 +167,7 @@ public class BossItem extends WorldFeatureItem {
 
 		if (POTIONS.isEmpty()) initPotions();
 
-		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(random.nextInt(POTIONS.size())), Integer.MAX_VALUE, random.nextInt(3) + 1));
+		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(random.nextInt(POTIONS.size())), entity instanceof CreeperEntity ? 6000 : Integer.MAX_VALUE, random.nextInt(3) + 1));
 	}
 
 	public static void addSingleEnchantment(ItemStack stack, Random rand, int level, boolean treasure) {
