@@ -1,4 +1,29 @@
 {
+	"comment_id": "/Advancements",
+	"advancements.apotheosis.root": "Apotheosis",
+	"advancements.apotheosis.root.desc": "Apotheosis is present, changing a number of things about this world",
+	
+	"advancements.apotheosis.enchantment": "Enchanter",
+	"advancements.apotheosis.enchantment.desc": "Obtain an enchanting table, which is no longer capped at level 30",
+	"advancements.apotheosis.40ench": "Level 40 Enchanter",
+	"advancements.apotheosis.40ench.desc": "Enchant an item at level 40, the highest level before using Hellshelves",
+	"advancements.apotheosis.hellshelf": "Hellish Enchanter",
+	"advancements.apotheosis.hellshelf.desc": "Obtain a Hellshelf",
+	"advancements.apotheosis.70ench": "Level 70 Enchanter",
+	"advancements.apotheosis.70ench.desc": "Enchant an item at level 70",
+	"advancements.apotheosis.hellench": "Hell-Infused Enchanter",
+	"advancements.apotheosis.hellench.desc": "Enchant a Hellshelf at level 70",
+	"advancements.apotheosis.150ench": "Max Level Enchanter",
+	"advancements.apotheosis.150ench.desc": "Enchant an item at level 150",
+	
+	"advancements.apotheosis.deadly": "Slay a boss",
+	"advancements.apotheosis.deadly.desc": "Find a boss monster in the caves below, and kill it for powerful gear",
+	
+	
+	"advancements.apotheosis.spawner": "Spawner Harvester",
+	"advancements.apotheosis.spawner.desc": "Collect a mob spawner using silk touch",
+	
+
     "comment_id": "/Spawner Module",
     "enchantment.apotheosis.capturing": "Capturing",
 
@@ -32,7 +57,7 @@
     "jei.spw.ignorecap": "Ignores spawn cap",
     "jei.spw.redstone": "Enables redstone control",
     "jei.spw.instructions": "Spawners can be modified with various items via right clicking on them.\\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\\nSpawners will also be dropped with Silk Touch.",
-    "jei.spw.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n+0.4% chance per level.",
+    "jei.spw.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n+0.4%% chance per level.",
 
     "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "Hellshelf",
@@ -91,6 +116,8 @@
     "info.apotheosis.bow_book": "Accepts bow enchantments.",
     "info.apotheosis.scrap_tome": "Can remove enchantments, taking some of them as it's own.",
     "info.apotheosis.scrap_tome2": "Will consume the item in the process.",
+	"info.apotheosis.table": "Max Normal Level: %s",
+	"info.apotheosis.table2": "Max Hellshelf Level: %s",
 
     "enchantment.apotheosis.tempting": "Temptation",
     "enchantment.apotheosis.tempting.desc": "Entices nearby farm animals.",

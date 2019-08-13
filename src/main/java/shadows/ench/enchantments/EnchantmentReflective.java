@@ -3,11 +3,12 @@ package shadows.ench.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import shadows.ench.EnchModule;
 
 public class EnchantmentReflective extends Enchantment {
 
 	public EnchantmentReflective() {
-		super(Rarity.RARE, null, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
+		super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlotType[] { EquipmentSlotType.OFFHAND, EquipmentSlotType.MAINHAND });
 	}
 
 	@Override
@@ -27,7 +28,7 @@ public class EnchantmentReflective extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return stack.getItem().isShield(stack, null);
+		return type.canEnchantItem(stack.getItem()) || stack.getItem().isShield(stack, null);
 	}
 
 }

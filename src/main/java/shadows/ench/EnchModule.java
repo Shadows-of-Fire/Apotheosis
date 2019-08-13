@@ -2,7 +2,6 @@ package shadows.ench;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -16,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
@@ -34,12 +35,14 @@ import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BoneMealItem;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
@@ -71,6 +74,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.Apotheosis;
@@ -126,7 +130,6 @@ public class EnchModule {
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
 	public static final List<ItemTypedBook> TYPED_BOOKS = new LinkedList<>();
-	public static final List<Enchantment> BLACKLISTED_ENCHANTS = new ArrayList<>();
 	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
 		@Override
 		public ITextComponent getDeathMessage(LivingEntity entity) {
@@ -134,6 +137,10 @@ public class EnchModule {
 		};
 	}.setDamageBypassesArmor().setDamageIsAbsolute();
 	public static final EquipmentSlotType[] ARMOR = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
+	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
+	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
+	public static final EnchantmentType ANVIL = EnchantmentType.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
+	public static final EnchantedTrigger ENCHANTED_ITEM = new EnchantedTrigger();
 
 	public static float localAtkStrength = 1;
 	static Configuration enchInfoConfig;
@@ -159,15 +166,6 @@ public class EnchModule {
 		if (config.hasChanged()) config.save();
 
 		config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
-		String[] blacklist = config.getStringList("Enchantment Blacklist", "general", new String[0], "A list of enchantments that are banned from the enchanting table and other natural sources.");
-		for (String s : blacklist) {
-			Enchantment ex = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
-			if (ex == null) {
-				LOGGER.error("Invalid enchantment blacklist entry {} will be ignored!", ex);
-				continue;
-			}
-			BLACKLISTED_ENCHANTS.add(ex);
-		}
 		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
 		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
 		maxPower = config.getFloat("Max Power", "general", maxPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive.");
@@ -224,6 +222,7 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
 		MinecraftForge.EVENT_BUS.register(this);
+		DeferredWorkQueue.runLater(() -> CriteriaTriggers.register(ENCHANTED_ITEM));
 	}
 
 	@SubscribeEvent

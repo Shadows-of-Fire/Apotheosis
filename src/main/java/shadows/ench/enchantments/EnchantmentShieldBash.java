@@ -12,7 +12,7 @@ import shadows.ench.EnchModule;
 public class EnchantmentShieldBash extends Enchantment {
 
 	public EnchantmentShieldBash() {
-		super(Rarity.RARE, null, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
+		super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class EnchantmentShieldBash extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return stack.getItem().isShield(stack, null);
+		return type.canEnchantItem(stack.getItem()) || stack.getItem().isShield(stack, null);
 	}
 
 	@Override

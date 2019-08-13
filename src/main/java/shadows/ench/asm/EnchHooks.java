@@ -39,7 +39,7 @@ public class EnchHooks {
 		boolean isBook = stack.getItem() == Items.BOOK;
 		boolean typedBook = stack.getItem() instanceof ItemTypedBook;
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
-			if (enchantment.isTreasureEnchantment() && !allowTreasure || EnchModule.BLACKLISTED_ENCHANTS.contains(enchantment)) continue;
+			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
 			if (enchantment.canApplyAtEnchantingTable(stack) || isBook && enchantment.isAllowedOnBooks() || typedBook && stack.getItem().canApplyAtEnchantingTable(stack, enchantment)) {
 				EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
 				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {

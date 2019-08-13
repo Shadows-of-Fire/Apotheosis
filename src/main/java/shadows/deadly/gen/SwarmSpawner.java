@@ -3,9 +3,8 @@ package shadows.deadly.gen;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -39,7 +38,10 @@ public class SwarmSpawner extends WorldFeature {
 
 	@Override
 	public boolean canBePlaced(IWorld world, BlockPos pos, Random rand) {
-		return Block.func_220055_a(world, pos, Direction.UP) && WorldGenerator.STONE_TEST.test(world.getBlockState(pos));
+		BlockState state = world.getBlockState(pos);
+		BlockState downState = world.getBlockState(pos.down());
+		BlockState upState = world.getBlockState(pos.up());
+		return WorldGenerator.STONE_TEST.test(downState) && upState.isAir(world, pos.up()) && (state.isAir(world, pos) || WorldGenerator.STONE_TEST.test(state));
 	}
 
 	@Override

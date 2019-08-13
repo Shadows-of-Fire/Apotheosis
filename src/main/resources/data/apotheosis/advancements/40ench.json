@@ -1,0 +1,31 @@
+{
+  "parent": "apotheosis:enchantment",
+  "display": {
+    "icon": {
+      "item": "minecraft:enchanted_book"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.40ench"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.40ench.desc"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "enchanted_item": {
+      "trigger": "apotheosis:enchanted_item",
+      "conditions": {
+        "levels": {
+            "min": 40,
+			"max": 2000
+          }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enchanted_item"
+    ]
+  ]
+}

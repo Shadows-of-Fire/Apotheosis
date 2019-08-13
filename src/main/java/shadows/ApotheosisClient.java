@@ -51,6 +51,9 @@ public class ApotheosisClient {
 					return;
 				}
 			}
+		} else if (i == Items.ENCHANTING_TABLE) {
+			e.getToolTip().add(new TranslationTextComponent("info.apotheosis.table", (int) EnchModule.maxNormalPower * 2));
+			e.getToolTip().add(new TranslationTextComponent("info.apotheosis.table2", (int) EnchModule.maxPower * 2));
 		}
 	}
 

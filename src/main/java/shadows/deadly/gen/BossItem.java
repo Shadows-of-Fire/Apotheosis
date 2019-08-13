@@ -109,14 +109,16 @@ public class BossItem extends WorldFeatureItem {
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
 			world.setBlockState(p, Blocks.RED_SANDSTONE.getDefaultState(), 2);
 		}
-		WorldGenerator.debugLog(pos, "Boss " + entity.getName());
+		entity.getEntityData().putBoolean("apoth_boss", true);
+		WorldGenerator.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
 	}
 
 	public static void initBoss(Random random, MobEntity entity) {
-		if (DeadlyConfig.bossRegenLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, Integer.MAX_VALUE, DeadlyConfig.bossRegenLevel));
-		if (DeadlyConfig.bossResistLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, Integer.MAX_VALUE, DeadlyConfig.bossResistLevel));
-		if (DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, Integer.MAX_VALUE));
-		if (DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, Integer.MAX_VALUE));
+		int duration = entity instanceof CreeperEntity ? 6000 : Integer.MAX_VALUE;
+		if (DeadlyConfig.bossRegenLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, duration, DeadlyConfig.bossRegenLevel));
+		if (DeadlyConfig.bossResistLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration, DeadlyConfig.bossResistLevel));
+		if (DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
+		if (DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
 		AttributeHelper.addToBase(entity, SharedMonsterAttributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossDamageBonus);
 		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier - 1);
 		AttributeHelper.max(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist);
@@ -167,7 +169,7 @@ public class BossItem extends WorldFeatureItem {
 
 		if (POTIONS.isEmpty()) initPotions();
 
-		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(random.nextInt(POTIONS.size())), entity instanceof CreeperEntity ? 6000 : Integer.MAX_VALUE, random.nextInt(3) + 1));
+		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(random.nextInt(POTIONS.size())), duration, random.nextInt(3) + 1));
 	}
 
 	public static void addSingleEnchantment(ItemStack stack, Random rand, int level, boolean treasure) {

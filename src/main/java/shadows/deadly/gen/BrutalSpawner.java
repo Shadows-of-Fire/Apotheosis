@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -54,7 +54,10 @@ public class BrutalSpawner extends WorldFeature {
 
 	@Override
 	public boolean canBePlaced(IWorld world, BlockPos pos, Random rand) {
-		return Block.func_220055_a(world, pos, Direction.UP) && WorldGenerator.STONE_TEST.test(world.getBlockState(pos));
+		BlockState state = world.getBlockState(pos);
+		BlockState downState = world.getBlockState(pos.down());
+		BlockState upState = world.getBlockState(pos.up());
+		return WorldGenerator.STONE_TEST.test(downState) && upState.isAir(world, pos.up()) && (state.isAir(world, pos) || WorldGenerator.STONE_TEST.test(state));
 	}
 
 	@Override

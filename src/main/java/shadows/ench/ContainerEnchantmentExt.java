@@ -5,11 +5,14 @@ import java.util.List;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -26,6 +29,19 @@ public class ContainerEnchantmentExt extends EnchantmentContainer {
 		super(id, inv, wPos);
 		world = wPos.apply((w, p) -> w).get();
 		position = wPos.apply((w, p) -> p).get();
+	}
+
+	@Override
+	public boolean enchantItem(PlayerEntity playerIn, int id) {
+		int level = enchantLevels[id];
+		boolean ret = super.enchantItem(playerIn, id);
+		if (ret) {
+			playerIn.addStat(Stats.ENCHANT_ITEM);
+			if (playerIn instanceof ServerPlayerEntity) {
+				EnchModule.ENCHANTED_ITEM.trigger((ServerPlayerEntity) playerIn, this.tableInventory.getStackInSlot(0), level);
+			}
+		}
+		return ret;
 	}
 
 	/**

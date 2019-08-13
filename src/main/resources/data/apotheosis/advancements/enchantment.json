@@ -1,0 +1,32 @@
+{
+  "parent": "apotheosis:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:enchanting_table"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.enchantment"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.enchantment.desc"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "enchanting_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:enchanting_table"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enchanting_table"
+    ]
+  ]
+}

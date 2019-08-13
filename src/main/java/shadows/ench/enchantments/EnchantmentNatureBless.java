@@ -4,20 +4,16 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
+import shadows.ench.EnchModule;
 
 public class EnchantmentNatureBless extends Enchantment {
 
 	public EnchantmentNatureBless() {
-		super(Rarity.RARE, null, new EquipmentSlotType[0]);
+		super(Rarity.RARE, EnchModule.HOE, new EquipmentSlotType[0]);
 	}
 
 	@Override
 	public boolean canApply(ItemStack stack) {
-		return stack.getItem() instanceof HoeItem;
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
 		return stack.getItem() instanceof HoeItem;
 	}
 
