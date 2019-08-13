@@ -1,0 +1,27 @@
+{
+  "parent": "apotheosis:spawner/spawner",
+  "display": {
+    "icon": {
+      "item": "minecraft:sugar"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.modifier"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.modifier.desc"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "modifier": {
+      "trigger": "apotheosis:spawner_modifier",
+      "conditions": {
+      }
+    }
+  },
+  "requirements": [
+    [
+      "modifier"
+    ]
+  ]
+}

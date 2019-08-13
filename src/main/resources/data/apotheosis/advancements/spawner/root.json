@@ -1,13 +1,13 @@
 {
   "display": {
     "icon": {
-      "item": "apotheosis:farmers_leash"
+      "item": "minecraft:spawner"
     },
     "title": {
-      "translate": "advancements.apotheosis.root"
+      "translate": "advancements.apotheosis.spawner.root"
     },
     "description": {
-      "translate": "advancements.apotheosis.root.desc"
+      "translate": "advancements.apotheosis.spawner.root.desc"
     },
     "frame": "task",
     "show_toast": false,

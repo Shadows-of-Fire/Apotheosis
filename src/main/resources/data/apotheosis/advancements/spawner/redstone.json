@@ -1,0 +1,28 @@
+{
+  "parent": "apotheosis:spawner/modifier",
+  "display": {
+    "icon": {
+      "item": "minecraft:comparator"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.redstone"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.redstone.desc"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "modifier": {
+      "trigger": "apotheosis:spawner_modifier",
+      "conditions": {
+        "modifier": "redstone_control"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "modifier"
+    ]
+  ]
+}

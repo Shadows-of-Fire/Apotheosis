@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -52,7 +51,7 @@ public class SpawnerModifiers {
 		register(REDSTONE);
 		register(EGG);
 
-		inverseItem = Ingredient.fromItems(Items.QUARTZ);//readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
+		inverseItem = readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
 	}
 
 	public static Ingredient readStackCfg(String s) {

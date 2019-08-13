@@ -1,0 +1,30 @@
+{
+  "parent": "apotheosis:spawner/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:witch_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.capturing"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.capturing.desc"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "apoth": {
+		  "type": "spawn_egg"
+		}
+      }
+    }
+  },
+  "requirements": [
+    [
+      "egg"
+    ]
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "parent": "apotheosis:spawner/modifier",
+  "display": {
+    "icon": {
+      "item": "minecraft:ghast_tear"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.nearbyents"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.nearbyents.desc"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "modifier": {
+      "trigger": "apotheosis:spawner_modifier",
+      "conditions": {
+        "modifier": "max_nearby_entities",
+		"max_nearby_entities": {
+			"min": 50
+		}
+      }
+    }
+  },
+  "requirements": [
+    [
+      "modifier"
+    ]
+  ]
+}

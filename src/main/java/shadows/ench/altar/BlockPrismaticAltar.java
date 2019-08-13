@@ -34,7 +34,7 @@ public class BlockPrismaticAltar extends Block {
 	//Formatter::off
 	public static final List<VoxelShape> BOXES = ImmutableList.of(
 			Block.makeCuboidShape(0, 0, 0, 16, 1, 16),
-			Block.makeCuboidShape(1, 1, 1, 15, 3, 15),
+			Block.makeCuboidShape(1, 1, 1, 15, 4, 15),
 			Block.makeCuboidShape(2, 4, 2, 4, 10, 4),
 			Block.makeCuboidShape(2, 4, 12, 4, 10, 14),
 			Block.makeCuboidShape(12, 4, 2, 14, 10, 4),

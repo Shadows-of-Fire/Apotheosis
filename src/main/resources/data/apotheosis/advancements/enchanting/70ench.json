@@ -1,14 +1,14 @@
 {
-  "parent": "apotheosis:enchantment",
+  "parent": "apotheosis:enchanting/hellshelf",
   "display": {
     "icon": {
       "item": "minecraft:enchanted_book"
     },
     "title": {
-      "translate": "advancements.apotheosis.40ench"
+      "translate": "advancements.apotheosis.70ench"
     },
     "description": {
-      "translate": "advancements.apotheosis.40ench.desc"
+      "translate": "advancements.apotheosis.70ench.desc"
     },
     "frame": "goal"
   },
@@ -17,7 +17,7 @@
       "trigger": "apotheosis:enchanted_item",
       "conditions": {
         "levels": {
-            "min": 40,
+            "min": 70,
 			"max": 2000
           }
       }

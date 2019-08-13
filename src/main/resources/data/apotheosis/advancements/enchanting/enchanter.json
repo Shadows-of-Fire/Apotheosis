@@ -1,0 +1,31 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:enchanting_table"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.enchantment"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.enchantment.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"enchanting_table": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "minecraft:enchanting_table"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanting_table"
+		]
+	]
+}

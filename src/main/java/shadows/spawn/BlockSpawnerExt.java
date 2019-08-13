@@ -92,6 +92,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
 				if (sm.canModify(tile, stack, inverse) && sm.modify(tile, stack, inverse)) {
 					if (!player.isCreative()) stack.shrink(1);
+					SpawnerModule.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
 					return true;
 				}
 			}

@@ -1,24 +1,24 @@
 {
-  "parent": "apotheosis:40ench",
+  "parent": "apotheosis:spawner/root",
   "display": {
     "icon": {
-      "item": "apotheosis:hellshelf"
+      "item": "minecraft:spawner"
     },
     "title": {
-      "translate": "advancements.apotheosis.hellshelf"
+      "translate": "advancements.apotheosis.spawner"
     },
     "description": {
-      "translate": "advancements.apotheosis.hellshelf.desc"
+      "translate": "advancements.apotheosis.spawner.desc"
     },
     "frame": "task"
   },
   "criteria": {
-    "hellshelf": {
+    "spawner": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "apotheosis:hellshelf"
+            "item": "minecraft:spawner"
           }
         ]
       }
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "hellshelf"
+      "spawner"
     ]
   ]
 }

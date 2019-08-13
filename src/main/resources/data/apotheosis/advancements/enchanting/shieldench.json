@@ -1,0 +1,31 @@
+{
+	"parent": "apotheosis:enchanting/enchanter",
+	"display": {
+		"icon": {
+			"item": "minecraft:shield",
+			"nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.shieldench"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.shieldench.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"enchant": {
+			"trigger": "apotheosis:enchanted_item",
+			"conditions": {
+				"item": {
+					"item": "minecraft:shield"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchant"
+		]
+	]
+}

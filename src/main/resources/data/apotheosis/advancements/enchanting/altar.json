@@ -1,0 +1,30 @@
+{
+	"parent": "apotheosis:enchanting/enchanter",
+	"display": {
+		"icon": {
+			"item": "apotheosis:prismatic_altar"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.altar"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.altar.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"altar": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:prismatic_altar"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"altar"
+		]
+	]
+}

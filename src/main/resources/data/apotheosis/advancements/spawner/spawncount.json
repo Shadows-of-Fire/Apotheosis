@@ -1,0 +1,31 @@
+{
+  "parent": "apotheosis:spawner/modifier",
+  "display": {
+    "icon": {
+      "item": "minecraft:fermented_spider_eye"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.spawncount"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.spawncount.desc"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "modifier": {
+      "trigger": "apotheosis:spawner_modifier",
+      "conditions": {
+        "modifier": "spawn_count",
+		"spawn_count": {
+			"min": 100
+		}
+      }
+    }
+  },
+  "requirements": [
+    [
+      "modifier"
+    ]
+  ]
+}

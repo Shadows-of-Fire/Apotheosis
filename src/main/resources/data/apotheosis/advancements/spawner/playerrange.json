@@ -1,0 +1,31 @@
+{
+  "parent": "apotheosis:spawner/modifier",
+  "display": {
+    "icon": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.playerrange"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.playerrange.desc"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "modifier": {
+      "trigger": "apotheosis:spawner_modifier",
+      "conditions": {
+        "modifier": "player_activation_range",
+		"min_delay": {
+			"min": 50
+		}
+      }
+    }
+  },
+  "requirements": [
+    [
+      "modifier"
+    ]
+  ]
+}

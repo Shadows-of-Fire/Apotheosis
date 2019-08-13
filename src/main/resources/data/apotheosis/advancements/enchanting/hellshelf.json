@@ -1,24 +1,24 @@
 {
-  "parent": "apotheosis:root",
+  "parent": "apotheosis:enchanting/40ench",
   "display": {
     "icon": {
-      "item": "minecraft:spawner"
+      "item": "apotheosis:hellshelf"
     },
     "title": {
-      "translate": "advancements.apotheosis.spawner"
+      "translate": "advancements.apotheosis.hellshelf"
     },
     "description": {
-      "translate": "advancements.apotheosis.spawner.desc"
+      "translate": "advancements.apotheosis.hellshelf.desc"
     },
     "frame": "task"
   },
   "criteria": {
-    "spawner": {
+    "hellshelf": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:spawner"
+            "item": "apotheosis:hellshelf"
           }
         ]
       }
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "spawner"
+      "hellshelf"
     ]
   ]
 }

@@ -1,0 +1,39 @@
+{
+	"parent": "apotheosis:spawner/conditions",
+	"display": {
+		"icon": {
+			"item": "minecraft:spawner",
+			"nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.ultimate_spawner"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.ultimate_spawner.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "apotheosis:spawner_modifier",
+			"conditions": {
+				"min_delay": {
+					"max": 0,
+					"min": 0
+				},
+				"max_delay": {
+					"max": 0,
+					"min": 0
+				},
+				"ignore_players": true,
+				"ignore_conditions": true,
+				"ignore_cap": true
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}
