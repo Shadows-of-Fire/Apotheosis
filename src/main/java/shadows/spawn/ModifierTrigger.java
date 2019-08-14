@@ -69,10 +69,11 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		Boolean ignorePlayers = json.has("ignore_players") ? json.get("ignore_players").getAsBoolean() : null;
 		Boolean ignoreConditions = json.has("ignore_conditions") ? json.get("ignore_conditions").getAsBoolean() : null;
 		Boolean ignoreCap = json.has("ignore_cap") ? json.get("ignore_cap").getAsBoolean() : null;
+		Boolean redstone = json.has("redstone") ? json.get("redstone").getAsBoolean() : null;
 		JsonElement modif = json.get("modifier");
 		SpawnerModifier modifier = null;
 		if (modif != null) modifier = SpawnerModifiers.MODIFIERS.stream().filter(m -> m.getCategory().equals(modif.getAsString())).findAny().orElse(null);
-		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, modifier);
+		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, redstone, modifier);
 	}
 
 	public void trigger(ServerPlayerEntity player, TileSpawnerExt tile, SpawnerModifier modif) {
@@ -93,9 +94,10 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		private final Boolean ignorePlayers;
 		private final Boolean ignoreConditions;
 		private final Boolean ignoreCap;
+		private final Boolean redstone;
 		private final SpawnerModifier modifier;
 
-		public Instance(MinMaxBounds.IntBound minDelay, MinMaxBounds.IntBound maxDelay, MinMaxBounds.IntBound spawnCount, MinMaxBounds.IntBound nearbyEnts, MinMaxBounds.IntBound playerRange, MinMaxBounds.IntBound spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, SpawnerModifier modifier) {
+		public Instance(MinMaxBounds.IntBound minDelay, MinMaxBounds.IntBound maxDelay, MinMaxBounds.IntBound spawnCount, MinMaxBounds.IntBound nearbyEnts, MinMaxBounds.IntBound playerRange, MinMaxBounds.IntBound spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone, SpawnerModifier modifier) {
 			super(ModifierTrigger.ID);
 			this.minDelay = minDelay;
 			this.maxDelay = maxDelay;
@@ -106,6 +108,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			this.ignorePlayers = ignorePlayers;
 			this.ignoreConditions = ignoreConditions;
 			this.ignoreCap = ignoreCap;
+			this.redstone = redstone;
 			this.modifier = modifier;
 		}
 
@@ -126,6 +129,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			if (ignorePlayers != null && tile.ignoresPlayers != ignorePlayers) return false;
 			if (ignoreConditions != null && tile.ignoresConditions != ignoreConditions) return false;
 			if (ignoreCap != null && tile.ignoresCap != ignoreCap) return false;
+			if (redstone != null && tile.redstoneEnabled != redstone) return false;
 			return true;
 		}
 	}

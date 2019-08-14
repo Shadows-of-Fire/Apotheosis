@@ -27,7 +27,8 @@
 				},
 				"ignore_players": true,
 				"ignore_conditions": true,
-				"ignore_cap": true
+				"ignore_cap": true,
+				"redstone": true
 			}
 		}
 	},

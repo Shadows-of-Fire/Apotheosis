@@ -19,12 +19,14 @@
 	"advancements.apotheosis.shieldench.desc": "Enchant a shield",
 	"advancements.apotheosis.altar": "Enchantment Recycling",
 	"advancements.apotheosis.altar.desc": "Create an altar of the seas, which can turn unwanted enchanted items into a new book",
+	"advancements.apotheosis.splitting": "Enchantment Crusher",
+	"advancements.apotheosis.splitting.desc": "Successfully drop an anvil enchanted with Splitting on an enchanted book to split it apart",
 	
 	"advancements.apotheosis.deadly": "Slay a boss",
 	"advancements.apotheosis.deadly.desc": "Find a boss monster in the caves below, and kill it for powerful gear",
 	
 	"advancements.apotheosis.spawner.root": "Apotheosis Spawners",
-	"advancements.apotheosis.spawner.root.desc": "Collect a mob spawner using silk touch",
+	"advancements.apotheosis.spawner.root.desc": "Spawners can be collected and modified, see JEI for info.",
 	"advancements.apotheosis.spawner": "Spawner Harvester",
 	"advancements.apotheosis.spawner.desc": "Collect a mob spawner using silk touch",
 	"advancements.apotheosis.capturing": "Captured",
@@ -52,7 +54,7 @@
 	"advancements.apotheosis.redstone": "Engineered Spawners",
 	"advancements.apotheosis.redstone.desc": "Enable redstone control for a spawner",
 	"advancements.apotheosis.ultimate_spawner": "The Ultimate Spawner",
-	"advancements.apotheosis.ultimate_spawner.desc": "Create a spawner with no delays that ignores spawn caps, conditions, and players",
+	"advancements.apotheosis.ultimate_spawner.desc": "Create a spawner with no delays that has redstone control and ignores spawn caps, conditions, and players",
 
     "comment_id": "/Spawner Module",
     "enchantment.apotheosis.capturing": "Capturing",

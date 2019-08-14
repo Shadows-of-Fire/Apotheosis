@@ -141,6 +141,7 @@ public class EnchModule {
 	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
 	public static final EnchantmentType ANVIL = EnchantmentType.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
 	public static final EnchantedTrigger ENCHANTED_ITEM = new EnchantedTrigger();
+	public static final SplittingTrigger SPLIT_BOOK = new SplittingTrigger();
 
 	public static float localAtkStrength = 1;
 	static Configuration enchInfoConfig;
@@ -222,7 +223,10 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
 		MinecraftForge.EVENT_BUS.register(this);
-		DeferredWorkQueue.runLater(() -> CriteriaTriggers.register(ENCHANTED_ITEM));
+		DeferredWorkQueue.runLater(() -> {
+			CriteriaTriggers.register(ENCHANTED_ITEM);
+			CriteriaTriggers.register(SPLIT_BOOK);
+		});
 	}
 
 	@SubscribeEvent

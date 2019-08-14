@@ -22,6 +22,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
@@ -30,6 +31,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -42,6 +44,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.ApotheosisObjects;
+import shadows.ench.EnchModule;
 
 public class BlockTfarAnvil extends AnvilBlockv2 implements IAnvilBlock {
 
@@ -123,6 +126,9 @@ public class BlockTfarAnvil extends AnvilBlockv2 implements IAnvilBlock {
 						ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(tag.getString("id"))), tag.getInt("lvl")));
 						Block.spawnAsEntity(world, pos, book);
 					}
+					world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(pos).grow(5, 5, 5), EntityPredicates.NOT_SPECTATING).forEach(p -> {
+						EnchModule.SPLIT_BOOK.trigger(p.getAdvancements());
+					});
 				}
 				if (world.rand.nextInt(1 + ub) == 0) {
 					BlockState dmg = damage(fallState);

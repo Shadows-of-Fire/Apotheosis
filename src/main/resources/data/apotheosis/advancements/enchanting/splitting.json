@@ -1,0 +1,26 @@
+{
+  "parent": "apotheosis:enchanting/anvilench",
+  "display": {
+    "icon": {
+      "item": "minecraft:anvil",
+	  "nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.splitting"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.splitting.desc"
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "split": {
+      "trigger": "apotheosis:splitting"
+    }
+  },
+  "requirements": [
+    [
+      "split"
+    ]
+  ]
+}
