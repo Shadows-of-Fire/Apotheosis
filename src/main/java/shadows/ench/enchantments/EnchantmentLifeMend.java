@@ -33,7 +33,7 @@ public class EnchantmentLifeMend extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return stack.getItem().isShield(stack, null) || super.canApplyAtEnchantingTable(stack);
+		return super.canApplyAtEnchantingTable(stack) || stack.getItem().isShield(stack, null);
 	}
 
 }

@@ -28,7 +28,7 @@ public class EnchantmentReflective extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return type.canEnchantItem(stack.getItem()) || stack.getItem().isShield(stack, null);
+		return super.canApplyAtEnchantingTable(stack) || stack.getItem().isShield(stack, null);
 	}
 
 }

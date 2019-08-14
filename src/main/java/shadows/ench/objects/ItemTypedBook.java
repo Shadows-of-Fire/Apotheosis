@@ -37,6 +37,7 @@ public class ItemTypedBook extends BookItem {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		if (type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canApply(new ItemStack(b)));
 		return enchantment.type == type || enchantment.canApplyAtEnchantingTable(rep);
 	}
 
