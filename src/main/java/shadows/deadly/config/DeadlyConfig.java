@@ -17,6 +17,7 @@ import shadows.placebo.config.Configuration;
 public class DeadlyConfig {
 
 	public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
+	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
 	public static final List<EffectInstance> BRUTAL_POTIONS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BOSS_MOBS = new ArrayList<>();
@@ -56,11 +57,12 @@ public class DeadlyConfig {
 
 		String[] dims = c.getStringList("Generation Dimension Whitelist", DeadlyConstants.GENERAL, new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");
 		for (String s : dims) {
-			try {
-				DIM_WHITELIST.add(new ResourceLocation(s.trim()));
-			} catch (NumberFormatException e) {
-				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + ".  It will be ignored!  (Not a number)");
-			}
+			DIM_WHITELIST.add(new ResourceLocation(s.trim()));
+		}
+
+		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:ocean, minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
+		for (String s : biomes) {
+			BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
 		}
 
 		bossRegenLevel = c.getInt("Regen Level", DeadlyConstants.BOSSES, bossRegenLevel, 0, Integer.MAX_VALUE, "The regeneration level of bosses.  Set to 0 to disable.");

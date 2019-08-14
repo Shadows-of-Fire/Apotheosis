@@ -39,7 +39,6 @@ public class DeadlyModule {
 		DeadlyLoot.init();
 		SwarmSpawner.init();
 		WorldGenerator.init();
-		MinecraftForge.EVENT_BUS.register(new WorldGenerator());
 		ArmorSet.sortSets();
 		MinecraftForge.EVENT_BUS.addListener(this::death);
 	}

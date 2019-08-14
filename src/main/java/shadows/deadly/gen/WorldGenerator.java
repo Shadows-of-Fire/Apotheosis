@@ -61,7 +61,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		ConfiguredFeature<?> gen = new ConfiguredFeature<>(new WorldGenerator(), IFeatureConfig.NO_FEATURE_CONFIG);
 		DeferredWorkQueue.runLater(() -> {
 			for (Biome b : ForgeRegistries.BIOMES)
-				b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);
+				if (!DeadlyConfig.BIOME_BLACKLIST.contains(b.getRegistryName())) b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);
 		});
 	}
 
