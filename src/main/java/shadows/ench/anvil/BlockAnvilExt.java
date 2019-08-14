@@ -98,8 +98,8 @@ public class BlockAnvilExt extends AnvilBlock implements IAnvilBlock {
 	protected void onStartFalling(FallingBlockEntity e) {
 		super.onStartFalling(e);
 		TileEntity te = e.world.getTileEntity(new BlockPos(e));
+		e.tileEntityData = new CompoundNBT();
 		if (te instanceof TileAnvil) {
-			e.tileEntityData = new CompoundNBT();
 			te.write(e.tileEntityData);
 		}
 	}

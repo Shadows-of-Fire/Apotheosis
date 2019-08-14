@@ -97,8 +97,8 @@ public class BlockTfarAnvil extends AnvilBlockv2 implements IAnvilBlock {
 	protected void onStartFalling(FallingBlockEntity e) {
 		super.onStartFalling(e);
 		TileEntity te = e.world.getTileEntity(new BlockPos(e));
+		e.tileEntityData = new CompoundNBT();
 		if (te instanceof IAnvilTile) {
-			e.tileEntityData = new CompoundNBT();
 			te.write(e.tileEntityData);
 		}
 	}
