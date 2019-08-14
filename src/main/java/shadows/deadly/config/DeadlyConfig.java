@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.ResourceLocationException;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
@@ -57,12 +58,20 @@ public class DeadlyConfig {
 
 		String[] dims = c.getStringList("Generation Dimension Whitelist", DeadlyConstants.GENERAL, new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");
 		for (String s : dims) {
-			DIM_WHITELIST.add(new ResourceLocation(s.trim()));
+			try {
+				DIM_WHITELIST.add(new ResourceLocation(s.trim()));
+			} catch (ResourceLocationException e) {
+				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + " will be ignored");
+			}
 		}
 
-		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:ocean, minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
+		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
 		for (String s : biomes) {
-			BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
+			try {
+				BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
+			} catch (ResourceLocationException e) {
+				DeadlyModule.LOGGER.error("Invalid biome blacklist entry: " + s + " will be ignored!");
+			}
 		}
 
 		bossRegenLevel = c.getInt("Regen Level", DeadlyConstants.BOSSES, bossRegenLevel, 0, Integer.MAX_VALUE, "The regeneration level of bosses.  Set to 0 to disable.");
