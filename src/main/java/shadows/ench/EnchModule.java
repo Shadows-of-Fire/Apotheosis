@@ -227,7 +227,7 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void tiles(Register<TileEntityType<?>> e) {
-		e.getRegistry().register(new TileEntityType<TileEntity>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL), null).setRegistryName("anvil"));
+		e.getRegistry().register(new TileEntityType<TileEntity>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
 		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
 		if (ModList.get().isLoaded("anviltweaks")) ATCompat.tileType();
 	}
