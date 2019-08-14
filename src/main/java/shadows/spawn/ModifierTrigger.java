@@ -66,7 +66,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		MinMaxBounds.IntBound nearbyEnts = MinMaxBounds.IntBound.fromJson(json.get("max_nearby_entities"));
 		MinMaxBounds.IntBound playerRange = MinMaxBounds.IntBound.fromJson(json.get("player_activation_range"));
 		MinMaxBounds.IntBound spawnRange = MinMaxBounds.IntBound.fromJson(json.get("spawn_range"));
-		Boolean ignorePlayers = json.has("ignore_players") ? json.get("ingore_players").getAsBoolean() : null;
+		Boolean ignorePlayers = json.has("ignore_players") ? json.get("ignore_players").getAsBoolean() : null;
 		Boolean ignoreConditions = json.has("ignore_conditions") ? json.get("ignore_conditions").getAsBoolean() : null;
 		Boolean ignoreCap = json.has("ignore_cap") ? json.get("ignore_cap").getAsBoolean() : null;
 		JsonElement modif = json.get("modifier");
