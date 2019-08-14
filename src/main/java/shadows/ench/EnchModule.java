@@ -455,7 +455,7 @@ public class EnchModule {
 		if (depth > 0) {
 			float effectiveness = (p.world.getSeaLevel() - (float) p.posY) / p.world.getSeaLevel();
 			if (effectiveness < 0) effectiveness /= 3;
-			float speedChange = 1 + depth * depth * effectiveness;
+			float speedChange = 1 + depth * 5 * effectiveness;
 			e.setNewSpeed(e.getNewSpeed() + speedChange);
 		}
 	}
