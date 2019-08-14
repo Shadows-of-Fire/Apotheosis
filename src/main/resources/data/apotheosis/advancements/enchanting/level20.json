@@ -1,0 +1,34 @@
+{
+  "parent": "apotheosis:enchanting/150ench",
+  "display": {
+    "icon": {
+      "item": "minecraft:golden_chestplate",
+	  "nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
+    },
+    "title": {
+      "translate": "advancements.apotheosis.level20"
+    },
+    "description": {
+      "translate": "advancements.apotheosis.level20.desc"
+    },
+    "frame": "challenge"
+  },
+  "criteria": {
+    "egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "apoth": {
+		  "type": "enchanted",
+		  "level": {
+			"min": 20
+		  }
+		}
+      }
+    }
+  },
+  "requirements": [
+    [
+      "egg"
+    ]
+  ]
+}
