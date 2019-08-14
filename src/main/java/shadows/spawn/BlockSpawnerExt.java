@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
+import shadows.advancement.AdvancementTriggers;
 import shadows.spawn.modifiers.SpawnerModifier;
 
 public class BlockSpawnerExt extends SpawnerBlock {
@@ -92,7 +93,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
 				if (sm.canModify(tile, stack, inverse) && sm.modify(tile, stack, inverse)) {
 					if (!player.isCreative()) stack.shrink(1);
-					SpawnerModule.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
+					AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
 					return true;
 				}
 			}

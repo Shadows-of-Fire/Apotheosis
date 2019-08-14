@@ -10,12 +10,14 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import shadows.advancement.AdvancementTriggers;
 import shadows.deadly.DeadlyModule;
 import shadows.ench.EnchModule;
 import shadows.garden.GardenModule;
@@ -82,6 +84,7 @@ public class Apotheosis {
 	public void init(FMLCommonSetupEvent e) {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
 		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
+		DeferredWorkQueue.runLater(AdvancementTriggers::init);
 	}
 
 	public static Ingredient potionIngredient(Potion type) {

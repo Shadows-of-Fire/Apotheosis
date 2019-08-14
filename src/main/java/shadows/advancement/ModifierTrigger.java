@@ -1,4 +1,4 @@
-package shadows.spawn;
+package shadows.advancement;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +18,8 @@ import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import shadows.Apotheosis;
+import shadows.spawn.SpawnerModifiers;
+import shadows.spawn.TileSpawnerExt;
 import shadows.spawn.TileSpawnerExt.SpawnerLogicExt;
 import shadows.spawn.modifiers.SpawnerModifier;
 

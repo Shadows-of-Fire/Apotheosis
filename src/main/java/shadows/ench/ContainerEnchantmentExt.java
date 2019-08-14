@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+import shadows.advancement.AdvancementTriggers;
 import shadows.ench.objects.BlockHellBookshelf;
 
 public class ContainerEnchantmentExt extends EnchantmentContainer {
@@ -38,7 +39,7 @@ public class ContainerEnchantmentExt extends EnchantmentContainer {
 		if (ret) {
 			playerIn.addStat(Stats.ENCHANT_ITEM);
 			if (playerIn instanceof ServerPlayerEntity) {
-				EnchModule.ENCHANTED_ITEM.trigger((ServerPlayerEntity) playerIn, this.tableInventory.getStackInSlot(0), level);
+				AdvancementTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity) playerIn, this.tableInventory.getStackInSlot(0), level);
 			}
 		}
 		return ret;

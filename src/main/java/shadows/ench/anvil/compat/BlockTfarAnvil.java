@@ -44,7 +44,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.ApotheosisObjects;
-import shadows.ench.EnchModule;
+import shadows.advancement.AdvancementTriggers;
 
 public class BlockTfarAnvil extends AnvilBlockv2 implements IAnvilBlock {
 
@@ -127,7 +127,7 @@ public class BlockTfarAnvil extends AnvilBlockv2 implements IAnvilBlock {
 						Block.spawnAsEntity(world, pos, book);
 					}
 					world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(pos).grow(5, 5, 5), EntityPredicates.NOT_SPECTATING).forEach(p -> {
-						EnchModule.SPLIT_BOOK.trigger(p.getAdvancements());
+						AdvancementTriggers.SPLIT_BOOK.trigger(p.getAdvancements());
 					});
 				}
 				if (world.rand.nextInt(1 + ub) == 0) {

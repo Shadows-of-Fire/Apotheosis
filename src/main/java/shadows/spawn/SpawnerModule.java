@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
@@ -24,7 +23,6 @@ import net.minecraft.item.SpawnEggItem;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -33,7 +31,6 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ApotheosisObjects;
@@ -45,8 +42,6 @@ import shadows.spawn.modifiers.SpawnerModifier;
 public class SpawnerModule {
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
-	public static final ModifierTrigger SPAWNER_MODIFIER = new ModifierTrigger();
-
 	public static Configuration config;
 	public static int spawnerSilkLevel = 1;
 
@@ -61,11 +56,6 @@ public class SpawnerModule {
 		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
 		SpawnerModifiers.init();
 		if (config.hasChanged()) config.save();
-		DeferredWorkQueue.runLater(() -> {
-			CriteriaTriggers.REGISTRY.remove(new ResourceLocation("inventory_changed"));
-			CriteriaTriggers.INVENTORY_CHANGED = CriteriaTriggers.register(new ExtendedInvTrigger());
-			CriteriaTriggers.register(SPAWNER_MODIFIER);
-		});
 		ReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.MISC, "field_77701_a", "group");
 	}
 

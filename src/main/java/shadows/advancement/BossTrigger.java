@@ -1,4 +1,4 @@
-package shadows.deadly;
+package shadows.advancement;
 
 import java.util.HashMap;
 import java.util.HashSet;
