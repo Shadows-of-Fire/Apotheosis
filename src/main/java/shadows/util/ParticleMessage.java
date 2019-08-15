@@ -60,11 +60,10 @@ public class ParticleMessage extends MessageProvider<ParticleMessage> {
 
 	@Override
 	public void handle(ParticleMessage msg, Supplier<Context> ctx) {
-		NetworkUtils.enqueueClient(() -> {
+		NetworkUtils.handlePacket(() -> () -> {
 			for (int i = 0; i < msg.count; i++)
 				Minecraft.getInstance().world.addParticle((IParticleData) msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
-		});
-		ctx.get().setPacketHandled(true);
+		}, ctx.get());
 	}
 
 }
