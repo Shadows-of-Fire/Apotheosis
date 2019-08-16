@@ -1,8 +1,10 @@
 package shadows.deadly.gen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
@@ -157,9 +159,9 @@ public class BossItem extends WorldFeatureItem {
 					addSingleEnchantment(stack, random, 28 + (Apotheosis.enableEnch ? 10 : 3) * i, true);
 
 				addSingleEnchantment(stack, random, Apotheosis.enableEnch ? 150 : 60, true);
-				Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(stack);
-				for (Enchantment e : enchMap.keySet()) {
-					enchMap.put(e, Math.min(EnchHooks.getMaxLevel(e), enchMap.get(e) + random.nextInt(2)));
+				Map<Enchantment, Integer> enchMap = new HashMap<>();
+				for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
+					enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
 				}
 				EnchantmentHelper.setEnchantments(enchMap, stack);
 			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {

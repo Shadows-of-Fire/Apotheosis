@@ -73,7 +73,7 @@ public class ItemTypedBook extends BookItem {
 				for (Enchantment ench2 : wepEnch.keySet()) {
 					if (ench != ench2 && !ench.isCompatibleWith(ench2)) isCompat = false;
 				}
-				if (!isCompat) return false;
+				if (!isCompat) continue;
 				wepEnch.put(ench, level);
 				int addition = 0;
 				switch (ench.getRarity()) {
