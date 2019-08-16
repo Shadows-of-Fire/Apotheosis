@@ -1,5 +1,6 @@
 package shadows.ench.altar;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -26,6 +27,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext.Builder;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class BlockPrismaticAltar extends Block {
@@ -139,6 +141,11 @@ public class BlockPrismaticAltar extends Block {
 			}
 		}
 		super.onReplaced(state, world, pos, newState, isMoving);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+		return Arrays.asList(new ItemStack(this));
 	}
 
 	private static VoxelShape merge(List<VoxelShape> shapes) {
