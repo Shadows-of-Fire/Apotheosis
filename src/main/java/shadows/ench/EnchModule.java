@@ -457,10 +457,11 @@ public class EnchModule {
 		if (stack.isEmpty()) return;
 		int depth = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.DEPTH_MINER, stack);
 		if (depth > 0) {
+			if (!stack.getToolTypes().stream().anyMatch(e.getState()::isToolEffective)) return;
 			float effectiveness = (p.world.getSeaLevel() - (float) p.posY) / p.world.getSeaLevel();
 			if (effectiveness < 0) effectiveness /= 3;
 			float speedChange = 1 + depth * 5 * effectiveness;
-			e.setNewSpeed(e.getNewSpeed() + speedChange);
+			e.setNewSpeed(Math.max(0.05F, e.getNewSpeed() + speedChange));
 		}
 	}
 
