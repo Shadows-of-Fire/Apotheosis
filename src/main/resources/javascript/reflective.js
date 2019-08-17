@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.entity.LivingEntity',
-                'methodName': 'blockUsingShield',
+                'methodName': 'func_190629_c',
                 'methodDesc': '(Lnet/minecraft/entity/EntityLivingBase;)V'
             },
             'transformer': function(method) {

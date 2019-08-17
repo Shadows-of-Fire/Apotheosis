@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.util.CombatRules',
-                'methodName': 'getDamageAfterMagicAbsorb',
+                'methodName': 'func_188401_b',
                 'methodDesc': '(FF)F'
             },
             'transformer': function(method) {

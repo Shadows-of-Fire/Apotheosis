@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.entity.ai.goal.TemptGoal',
-                'methodName': 'isTempting',
+                'methodName': 'func_188508_a',
                 'methodDesc': '(Lnet/minecraft/item/ItemStack;)Z'
             },
             'transformer': function(method) {

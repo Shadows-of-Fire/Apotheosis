@@ -4,14 +4,13 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.item.Item',
-                'methodName': 'getItemEnchantability',
+                'methodName': 'func_77619_b',
                 'methodDesc': '()I'
             },
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching Item#getItemEnchantability');
 
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
-                var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');

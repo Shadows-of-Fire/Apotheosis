@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.entity.LivingEntity',
-                'methodName': 'applyPotionDamageCalculations',
+                'methodName': 'func_70672_c',
                 'methodDesc': '(Lnet/minecraft/util/DamageSource;F)F'
             },
             'transformer': function(method) {

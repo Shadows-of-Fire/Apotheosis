@@ -42,7 +42,7 @@ public class EnderLeashItem extends Item {
 			if (!player.world.isRemote) {
 				entity.remove();
 				stack.getTag().put("entity_data", tag);
-				stack.getTag().putString("name", entity.getDisplayName().getString());
+				stack.getTag().putString("name", entity.getDisplayName().getFormattedText());
 				playSound(player);
 			}
 			return true;
@@ -96,7 +96,7 @@ public class EnderLeashItem extends Item {
 			CompoundNBT tag = stack.getOrCreateChildTag("entity_data");
 			if (tag.isEmpty()) tooltip.add(new TranslationTextComponent("info.apotheosis.noentity"));
 			else {
-				tooltip.add(new TranslationTextComponent("info.apotheosis.containedentity", tag.getString("name")));
+				tooltip.add(new TranslationTextComponent("info.apotheosis.containedentity", stack.getTag().getString("name")));
 			}
 		}
 	}

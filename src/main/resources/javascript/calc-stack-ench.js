@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.enchantment.EnchantmentHelper',
-                'methodName': 'calcItemStackEnchantability',
+                'methodName': 'func_77514_a',
                 'methodDesc': '(Ljava/util/Random;IILnet/minecraft/item/ItemStack;)I;'
             },
             'transformer': function(method) {
@@ -27,9 +27,7 @@ function initializeCoreMod() {
                         break;
                     }
                 }
-                if (jumpNode != null) {
-                    instr.insert(jumpNode, new JumpInsnNode(Opcodes.GOTO, jumpNode.label));
-                }
+                instr.insert(jumpNode, new JumpInsnNode(Opcodes.GOTO, jumpNode.label));
 
                 return method;
             }

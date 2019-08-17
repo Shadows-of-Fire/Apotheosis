@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.enchantment.EnchantmentHelper',
-                'methodName': 'getEnchantmentDatas',
+                'methodName': 'func_185291_a',
                 'methodDesc': '(ILnet/minecraft/item/ItemStack;Z)Ljava/util/List;'
             },
             'transformer': function(method) {

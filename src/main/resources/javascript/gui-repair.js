@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.client.gui.screen.inventory.AnvilScreen',
-                'methodName': 'drawGuiContainerForegroundLayer',
+                'methodName': 'func_146979_b',
                 'methodDesc': '(II)V'
             },
             'transformer': function(method) {

@@ -4,7 +4,7 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.inventory.container.RepairContainer',
-                'methodName': 'updateRepairOutput',
+                'methodName': 'func_82848_d',
                 'methodDesc': '()V'
             },
             'transformer': function(method) {
@@ -25,34 +25,28 @@ function initializeCoreMod() {
 				var i;
 				for (i = 0; i < instr.size(); i++) {
 					var n = instr.get(i);
-					if (n.getOpcode() == Opcodes.LDC && n.cst.equals(40)) {
+					if (n.getOpcode() == Opcodes.BIPUSH && n.operand.equals(40)) {
 						if (ix++ == 2) {
 							levelRestriction = n;
 						}
 					}
 					if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 						var mNode = n;
-						var is = mNode.name.equals("getMaxLevel");
+						var is = mNode.name.equals(ASMAPI.mapMethod("getMaxLevel"));
 						if (is && getMaxLevel1 == null) {
 							getMaxLevel1 = mNode;
 						} else if (is) getMaxLevel2 = mNode;
 					}
 				}
 
-				if (levelRestriction != null) {
-					instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
-					print('[ApotheosisCore]: Successfully removed the anvil level cap.');
-				}
+				instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
+				print('[ApotheosisCore]: Successfully removed the anvil level cap.');
 
-				if (getMaxLevel1 != null) {
-					instr.set(getMaxLevel1, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
-					print('[ApotheosisCore]: Replaced ContainerRepair Enchantment#getMaxLevel #1.');
-				}
+				instr.set(getMaxLevel1, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
+				print('[ApotheosisCore]: Replaced ContainerRepair Enchantment#getMaxLevel #1.');
 
-				if (getMaxLevel2 != null) {
-					instr.set(getMaxLevel2, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
-					print('[ApotheosisCore]: Replaced ContainerRepair Enchantment#getMaxLevel #2.');
-				}
+				instr.set(getMaxLevel2, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
+				print('[ApotheosisCore]: Replaced ContainerRepair Enchantment#getMaxLevel #2.');
 
                 return method;
             }
