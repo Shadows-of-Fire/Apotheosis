@@ -19,13 +19,13 @@ function initializeCoreMod() {
                 var i;
                 for (i = 0; i < instr.size(); i++) {
                     var n = instr.get(i);
-                    if (n.getOpcode() == Opcodes.LDC && n.cst.equals(40)) {
+                    if (n.getOpcode() == Opcodes.BIPUSH && n.operand.equals(40)) {
                         levelRestriction = n;
                         break;
                     }
                 }
 
-                if (levelRestriction != null) instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
+                instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
 
                 return method;
             }
