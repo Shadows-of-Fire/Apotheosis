@@ -120,11 +120,12 @@ public class BlockTfarAnvil extends AnvilBlockv2 implements IAnvilBlock {
 				if (world.rand.nextInt(Math.max(1, 6 - split)) == 0) {
 					ListNBT enchants = EnchantedBookItem.getEnchantments(stack);
 					if (stack.getItem() instanceof BookItem) enchants = stack.getEnchantmentTagList();
+					if (enchants.size() < 1) continue;
 					entity.remove();
 					for (INBT nbt : enchants) {
 						CompoundNBT tag = (CompoundNBT) nbt;
 						ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(tag.getString("id"))), tag.getInt("lvl")));
-						Block.spawnAsEntity(world, pos, book);
+						Block.spawnAsEntity(world, pos.up(), book);
 					}
 					world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(pos).grow(5, 5, 5), EntityPredicates.NOT_SPECTATING).forEach(p -> {
 						AdvancementTriggers.SPLIT_BOOK.trigger(p.getAdvancements());
