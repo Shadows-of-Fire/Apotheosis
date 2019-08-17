@@ -18,6 +18,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -227,7 +228,7 @@ public class EnchModule {
 		if (ModList.get().isLoaded("anviltweaks")) ATCompat.tileType();
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
+	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
@@ -247,9 +248,11 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
+		Item oldShears = Items.SHEARS;
+		Item shears;
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new ItemShearsExt(),
+				shears = new ItemShearsExt(),
 				new ItemHellBookshelf(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ItemAnvilExt(Blocks.ANVIL), 
@@ -268,6 +271,7 @@ public class EnchModule {
 				new ItemScrapTome()
 				);
 		//Formatter::on
+		DispenserBlock.registerDispenseBehavior(shears, DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(oldShears));
 	}
 
 	@SubscribeEvent
