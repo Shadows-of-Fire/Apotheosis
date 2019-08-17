@@ -19,6 +19,7 @@ import shadows.deadly.DeadlyModule;
 public class DeadlyConfig {
 
 	public static final IntList DIM_WHITELIST = new IntArrayList();
+	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
 	public static final List<PotionEffect> BRUTAL_POTIONS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BOSS_MOBS = new ArrayList<>();
@@ -64,6 +65,10 @@ public class DeadlyConfig {
 				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + ".  It will be ignored!  (Not a number)");
 			}
 		}
+
+		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:ocean, minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
+		for (String s : biomes)
+			BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
 
 		bossRegenLevel = c.getInt("Regen Level", DeadlyConstants.BOSSES, bossRegenLevel, 0, Integer.MAX_VALUE, "The regeneration level of bosses.  Set to 0 to disable.");
 		bossResistLevel = c.getInt("Resistance Level", DeadlyConstants.BOSSES, bossResistLevel, 0, Integer.MAX_VALUE, "The resistance level of bosses.  Set to 0 to disable.");

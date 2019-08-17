@@ -32,9 +32,13 @@ public class WorldGenerator {
 
 	@SubscribeEvent
 	public void terrainGen(PopulateChunkEvent.Pre e) {
-		if (DeadlyConfig.DIM_WHITELIST.contains(e.getWorld().provider.getDimension())) for (WorldFeature feature : FEATURES) {
-			if (wasSuccess(e.getWorld().provider.getDimension(), e.getChunkX(), e.getChunkZ())) return;
-			feature.generate(e.getWorld(), e.getChunkX(), e.getChunkZ(), e.getRand());
+		if (DeadlyConfig.DIM_WHITELIST.contains(e.getWorld().provider.getDimension())) {
+			BlockPos pos = new BlockPos(e.getChunkX() << 4, 0, e.getChunkZ() << 4);
+			if (DeadlyConfig.BIOME_BLACKLIST.contains(e.getWorld().getBiome(pos).getRegistryName())) return;
+			for (WorldFeature feature : FEATURES) {
+				if (wasSuccess(e.getWorld().provider.getDimension(), e.getChunkX(), e.getChunkZ())) return;
+				feature.generate(e.getWorld(), e.getChunkX(), e.getChunkZ(), e.getRand());
+			}
 		}
 	}
 
