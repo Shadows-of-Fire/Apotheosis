@@ -2,6 +2,7 @@ package shadows.ench.altar;
 
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -33,6 +34,8 @@ import shadows.util.ParticleMessage;
 
 public class TilePrismaticAltar extends TileEntity implements ITickableTileEntity {
 
+	private Random rand = new Random();
+
 	public TilePrismaticAltar() {
 		super(ApotheosisObjects.ALTAR_TYPE);
 	}
@@ -41,7 +44,6 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	protected float xpDrained = 0;
 	protected ItemStack target = ItemStack.EMPTY;
 	protected float targetXP = 0;
-	int unusableValue = Integer.MAX_VALUE;
 	int soundTick = 0;
 
 	@Override
@@ -110,11 +112,17 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	}
 
 	public void findTarget(int value) {
-		if (value >= unusableValue) return;
+		value = Math.min(value, EnchModule.absMax);
 		ItemStack book = new ItemStack(Items.BOOK);
 		target = new ItemStack(Items.ENCHANTED_BOOK);
 		targetXP = EnchantmentUtils.getExperienceForLevel(value / 2);
-		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(world.rand, book, value, true);
+		long seed = 1831;
+		for (int i = 0; i < 4; i++)
+			for (Enchantment e : EnchantmentHelper.getEnchantments(this.inv.getStackInSlot(i)).keySet()) {
+				seed ^= e.getRegistryName().hashCode();
+			}
+		rand.setSeed(seed);
+		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(rand, book, value, true);
 		if (!datas.isEmpty()) {
 			for (EnchantmentData d : datas)
 				EnchantedBookItem.addEnchantment(target, d);
@@ -123,7 +131,6 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 		} else {
 			target = ItemStack.EMPTY;
 			targetXP = 0;
-			unusableValue = value;
 		}
 	}
 
@@ -137,6 +144,8 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	public CompoundNBT write(CompoundNBT tag) {
 		tag.put("inv", inv.serializeNBT());
 		tag.putFloat("xp", xpDrained);
+		tag.put("target", target.serializeNBT());
+		tag.putFloat("targetXP", targetXP);
 		return super.write(tag);
 	}
 
@@ -145,6 +154,8 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 		super.read(tag);
 		inv.deserializeNBT(tag.getCompound("inv"));
 		xpDrained = tag.getFloat("xp");
+		target = ItemStack.read(tag.getCompound("target"));
+		targetXP = tag.getFloat("targetXP");
 	}
 
 	@Override
