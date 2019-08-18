@@ -32,7 +32,7 @@ function initializeCoreMod() {
 					}
 					if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 						var mNode = n;
-						var is = mNode.name.equals(ASMAPI.mapMethod("getMaxLevel"));
+						var is = mNode.name.equals(ASMAPI.mapMethod("func_77325_b"));
 						if (is && getMaxLevel1 == null) {
 							getMaxLevel1 = mNode;
 						} else if (is) getMaxLevel2 = mNode;
