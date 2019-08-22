@@ -412,7 +412,7 @@ public class EnchModule {
 				dropLoot.invoke(e.getEntityLiving(), e.getSource(), true);
 			}
 			int knowledge = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.KNOWLEDGE, p.getHeldItemMainhand());
-			if (knowledge > 0) {
+			if (knowledge > 0 && !(e.getEntity() instanceof PlayerEntity)) {
 				int items = 0;
 				for (ItemEntity i : e.getDrops())
 					items += i.getItem().getCount();
