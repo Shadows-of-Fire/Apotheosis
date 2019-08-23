@@ -28,6 +28,7 @@ import shadows.placebo.util.NetworkUtils;
 import shadows.potion.PotionModule;
 import shadows.spawn.SpawnerModule;
 import shadows.util.ParticleMessage;
+import shadows.village.VillagerModule;
 
 @Mod(Apotheosis.MODID)
 public class Apotheosis {
@@ -51,6 +52,7 @@ public class Apotheosis {
 	public static boolean enableDeadly = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
+	public static boolean enableVillager = true;
 	public static boolean enchTooltips = true;
 
 	public Apotheosis() {
@@ -73,6 +75,9 @@ public class Apotheosis {
 
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		if (enablePotion) bus.register(new PotionModule());
+
+		enableVillager = config.getBoolean("Enable Villager Module", "general", enableVillager, "If the villager module is loaded.");
+		if (enableVillager) bus.register(new VillagerModule());
 
 		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
 

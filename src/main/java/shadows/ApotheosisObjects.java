@@ -1,5 +1,6 @@
 package shadows;
 
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
@@ -33,6 +34,7 @@ import shadows.potion.ItemLuckyFoot;
 import shadows.potion.potions.KnowledgeEffect;
 import shadows.potion.potions.PotionSundering;
 import shadows.spawn.EnchantmentCapturing;
+import shadows.village.fletching.FletchingContainer;
 
 @ObjectHolder(Apotheosis.MODID)
 public class ApotheosisObjects {
@@ -101,4 +103,5 @@ public class ApotheosisObjects {
 	public static final TileEntityType<TileAnvil> ANVIL = null;
 	@ObjectHolder("apotheosis:prismatic_altar")
 	public static final TileEntityType<TilePrismaticAltar> ALTAR_TYPE = null;
+	public static final ContainerType<FletchingContainer> FLETCHING = null;
 }

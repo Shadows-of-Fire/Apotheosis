@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
@@ -32,6 +33,7 @@ import shadows.ench.EnchModule;
 import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
 import shadows.ench.anvil.compat.ATCompat;
+import shadows.village.fletching.FletchingScreen;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ApotheosisClient {
@@ -109,6 +111,7 @@ public class ApotheosisClient {
 		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisClient::tooltips);
 		if (ModList.get().isLoaded("anviltweaks")) ATCompat.tesr();
+		if (Apotheosis.enableVillager) ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);
 	}
 
 	public static void registerTooltip(Enchantment e, Object... keys) {

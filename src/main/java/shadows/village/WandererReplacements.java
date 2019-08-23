@@ -8,34 +8,18 @@ import net.minecraft.entity.merchant.villager.VillagerTrades.ITrade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
 import shadows.placebo.trading.BasicTrade;
 import shadows.placebo.trading.VillagerTradingManager.TradeType;
 import shadows.placebo.trading.VillagerTradingManager.WandererTradesEvent;
-import shadows.placebo.util.ReflectionHelper;
 
 /**
  * The wandering merchant sucks.  Trades are totally underwhelming and are borderline garbage 99% of the time.
  * @author Shadows
  *
  */
-@EventBusSubscriber(modid = Apotheosis.MODID)
 public class WandererReplacements {
-
-	@SubscribeEvent
-	public static void starting(AttachCapabilitiesEvent<World> e) {
-		if (e.getObject() instanceof ServerWorld) {
-			ServerWorld w = (ServerWorld) e.getObject();
-			if (w.dimension.getType() == DimensionType.OVERWORLD) ReflectionHelper.setPrivateValue(ServerWorld.class, w, new WandererSpawnerExt(w), "field_217496_L", "wanderingTraderSpawner");
-		}
-	}
 
 	@SubscribeEvent
 	public static void replaceWandererArrays(WandererTradesEvent e) {

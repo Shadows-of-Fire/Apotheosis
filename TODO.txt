@@ -1,12 +1,9 @@
-Move flowerpot stuff from Plants to Apotheosis.
-Target brewing?  Not sure what to do there.
-More stuff involving obscure vanilla materials (chorus, shulker).
+Fletching System (Like crafting, but with a Fletching Table)
+-More Arrow Output
+-Arrowheads
+--Obsidian Arrowhead
+--Bodkin Point Arrowhead (Iron)
+--Wooden Arrowhead
 
-Potions/recipes/types for:
-Health Boost
-Saturation (maybe, might not do this one)
-Glowing
-Levitation
-Luck + Unluck (+- Pair)
-
-Magic Resist enchantment
+Smithing System (Like crafting, but with a Smithing Table)
+-Better Gear when made in the table (likely with an extra attribute)
