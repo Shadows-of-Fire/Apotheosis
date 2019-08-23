@@ -27,6 +27,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -123,6 +124,11 @@ public class BlockSpawnerExt extends SpawnerBlock {
 	@Override
 	public Item asItem() {
 		return Items.SPAWNER;
+	}
+
+	@Override
+	public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silktouch) {
+		return silktouch == 0 ? super.getExpDrop(state, world, pos, fortune, silktouch) : 0;
 	}
 
 }

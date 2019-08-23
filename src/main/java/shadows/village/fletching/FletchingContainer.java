@@ -11,7 +11,6 @@ import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -20,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
+import shadows.ApotheosisObjects;
 import shadows.village.VillagerModule;
 
 public class FletchingContainer extends Container {
@@ -31,7 +31,7 @@ public class FletchingContainer extends Container {
 	protected final PlayerEntity player;
 
 	public FletchingContainer(int id, PlayerInventory inv, World world, BlockPos pos) {
-		super(ContainerType.CRAFTING, id);
+		super(ApotheosisObjects.FLETCHING, id);
 		this.world = world;
 		this.pos = pos;
 		this.player = inv.player;

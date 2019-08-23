@@ -24,7 +24,7 @@ public class FletchingScreen extends ContainerScreen<FletchingContainer> {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.font.drawString(this.title.getFormattedText(), 28.0F, 6.0F, 4210752);
+		this.font.drawString(this.title.getFormattedText(), 47, 6.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, this.ySize - 96 + 2, 4210752);
 	}
 

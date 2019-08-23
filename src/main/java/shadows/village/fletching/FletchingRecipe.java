@@ -74,6 +74,10 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 		return VillagerModule.FLETCHING;
 	}
 
+	public List<Ingredient> getInputs() {
+		return inputs;
+	}
+
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<FletchingRecipe> {
 		public static final ResourceLocation NAME = new ResourceLocation(Apotheosis.MODID, "fletching");
 

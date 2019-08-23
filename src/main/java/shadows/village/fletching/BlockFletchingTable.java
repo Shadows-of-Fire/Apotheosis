@@ -2,7 +2,6 @@ package shadows.village.fletching;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.FletchingTableBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -18,7 +17,7 @@ import net.minecraft.world.World;
 
 public class BlockFletchingTable extends FletchingTableBlock {
 
-	public static final ITextComponent NAME = new TranslationTextComponent(Blocks.FLETCHING_TABLE.getTranslationKey());
+	public static final ITextComponent NAME = new TranslationTextComponent("apotheosis.recipes.fletching");
 
 	public BlockFletchingTable() {
 		super(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD));

@@ -76,7 +76,7 @@ public class Apotheosis {
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		if (enablePotion) bus.register(new PotionModule());
 
-		enableVillager = config.getBoolean("Enable Villager Module", "general", enableVillager, "If the villager module is loaded.");
+		enableVillager = config.getBoolean("Enable Village Module", "general", enableVillager, "If the village module is loaded.");
 		if (enableVillager) bus.register(new VillagerModule());
 
 		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
