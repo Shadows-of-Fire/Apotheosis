@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
@@ -22,6 +24,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -34,6 +37,8 @@ import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
 import shadows.ench.anvil.compat.ATCompat;
 import shadows.village.fletching.FletchingScreen;
+import shadows.village.fletching.arrows.ObsidianArrowEntity;
+import shadows.village.fletching.arrows.ObsidianArrowRenderer;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ApotheosisClient {
@@ -111,7 +116,13 @@ public class ApotheosisClient {
 		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisClient::tooltips);
 		if (ModList.get().isLoaded("anviltweaks")) ATCompat.tesr();
-		if (Apotheosis.enableVillager) ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);
+		if (Apotheosis.enableVillager) {
+			DeferredWorkQueue.runLater(() -> {
+				ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);
+				EntityRendererManager mgr = Minecraft.getInstance().getRenderManager();
+				mgr.register(ObsidianArrowEntity.class, new ObsidianArrowRenderer(mgr));
+			});
+		}
 	}
 
 	public static void registerTooltip(Enchantment e, Object... keys) {

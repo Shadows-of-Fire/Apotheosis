@@ -368,5 +368,7 @@
     "name.apotheosis.merch_legs": "Thunder-Forged Legguards",
     "name.apotheosis.merch_boots": "Rune-Forged Greaves",
     "name.apotheosis.vigilance": "Eternal Vigilance",
-	"apotheosis.recipes.fletching": "Fletching"
+	"apotheosis.recipes.fletching": "Fletching",
+	"info.apotheosis.obsidian_arrow": "+20%% Damage",
+	"item.apotheosis.obsidian_arrow": "Obsidian Arrow"
 }

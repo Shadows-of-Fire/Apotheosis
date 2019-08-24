@@ -1,7 +1,10 @@
 package shadows.village;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.world.World;
@@ -13,11 +16,14 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.Apotheosis;
 import shadows.Apotheosis.ApotheosisSetup;
+import shadows.ApotheosisObjects;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
 import shadows.village.fletching.BlockFletchingTable;
 import shadows.village.fletching.FletchingContainer;
 import shadows.village.fletching.FletchingRecipe;
+import shadows.village.fletching.arrows.ObsidianArrowEntity;
+import shadows.village.fletching.arrows.ObsidianArrowItem;
 
 public class VillagerModule {
 
@@ -28,6 +34,7 @@ public class VillagerModule {
 	public void setup(ApotheosisSetup e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addGenericListener(World.class, this::starting);
+		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
 	}
 
 	@SubscribeEvent
@@ -38,6 +45,26 @@ public class VillagerModule {
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		PlaceboUtil.registerOverrideBlock(new BlockFletchingTable(), Apotheosis.MODID);
+	}
+
+	@SubscribeEvent
+	public void items(Register<Item> e) {
+		e.getRegistry().register(new ObsidianArrowItem().setRegistryName("obsidian_arrow"));
+	}
+
+	@SubscribeEvent
+	public void entities(Register<EntityType<?>> e) {
+		//Formatter::off
+		e.getRegistry().register(EntityType.Builder
+				.<ObsidianArrowEntity>create(ObsidianArrowEntity::new, EntityClassification.MISC)
+				.setShouldReceiveVelocityUpdates(true)
+				.setTrackingRange(4)
+				.setUpdateInterval(20)
+				.size(0.5F, 0.5F)
+				.setCustomClientFactory((se, w) -> new ObsidianArrowEntity(w))
+				.build("ob_arrow")
+				.setRegistryName("ob_arrow_entity"));
+		//Formatter::on
 	}
 
 	@SubscribeEvent

@@ -1,0 +1,18 @@
+{
+  "type": "apotheosis:fletching",
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:feather"
+    }
+  ],
+  "result": {
+    "item": "apotheosis:obsidian_arrow",
+    "count": 6
+  }
+}
