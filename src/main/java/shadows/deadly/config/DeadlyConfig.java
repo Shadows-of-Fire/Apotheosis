@@ -65,7 +65,7 @@ public class DeadlyConfig {
 			}
 		}
 
-		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
+		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
 		for (String s : biomes) {
 			try {
 				BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
