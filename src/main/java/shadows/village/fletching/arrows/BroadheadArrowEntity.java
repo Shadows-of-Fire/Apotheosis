@@ -48,7 +48,7 @@ public class BroadheadArrowEntity extends ArrowEntity {
 	protected void arrowHit(LivingEntity living) {
 		EffectInstance bleed = living.getActivePotionEffect(ApotheosisObjects.BLEEDING);
 		if (bleed != null) {
-			bleed.combine(new EffectInstance(ApotheosisObjects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+			living.addPotionEffect(new EffectInstance(ApotheosisObjects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
 		} else {
 			living.addPotionEffect(new EffectInstance(ApotheosisObjects.BLEEDING, 300));
 		}
