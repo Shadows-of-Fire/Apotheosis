@@ -15,6 +15,7 @@ import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,7 +36,7 @@ public class FletchingContainer extends Container {
 		this.world = world;
 		this.pos = pos;
 		this.player = inv.player;
-		this.addSlot(new CraftingResultSlot(inv.player, this.craftMatrix, this.craftResult, 0, 124, 35));
+		this.addSlot(new FletchingResultSlot(inv.player, this.craftMatrix, this.craftResult, 0, 124, 35));
 
 		for (int i = 0; i < 3; ++i) {
 			this.addSlot(new Slot(this.craftMatrix, i, 48, 17 + i * 18));
@@ -93,13 +94,13 @@ public class FletchingContainer extends Container {
 			itemstack = itemstack1.copy();
 			if (index == 0) {
 				itemstack1.getItem().onCreated(itemstack1, world, playerIn);
-				if (!this.mergeItemStack(itemstack1, 10 - 7, 46 - 7, true)) { return ItemStack.EMPTY; }
+				if (!this.mergeItemStack(itemstack1, 4, 40, true)) { return ItemStack.EMPTY; }
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (index >= 10 - 7 && index < 37 - 7) {
-				if (!this.mergeItemStack(itemstack1, 37 - 7, 46 - 7, false)) { return ItemStack.EMPTY; }
-			} else if (index >= 37 - 7 && index < 46 - 7) {
-				if (!this.mergeItemStack(itemstack1, 10 - 7, 37 - 7, false)) { return ItemStack.EMPTY; }
-			} else if (!this.mergeItemStack(itemstack1, 10 - 7, 46 - 7, false)) { return ItemStack.EMPTY; }
+			} else if (index >= 4 && index < 31) {
+				if (!this.mergeItemStack(itemstack1, 31, 40, false)) { return ItemStack.EMPTY; }
+			} else if (index >= 31 && index < 40) {
+				if (!this.mergeItemStack(itemstack1, 4, 31, false)) { return ItemStack.EMPTY; }
+			} else if (!this.mergeItemStack(itemstack1, 4, 40, false)) { return ItemStack.EMPTY; }
 
 			if (itemstack1.isEmpty()) {
 				slot.putStack(ItemStack.EMPTY);
@@ -121,5 +122,42 @@ public class FletchingContainer extends Container {
 	@Override
 	public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
 		return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
+	}
+
+	protected class FletchingResultSlot extends CraftingResultSlot {
+
+		protected FletchingResultSlot(PlayerEntity player, CraftingInventory inv, IInventory result, int slot, int x, int y) {
+			super(player, inv, result, slot, x, y);
+		}
+
+		@Override
+		public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
+			this.onCrafting(stack);
+			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
+			NonNullList<ItemStack> nonnulllist = thePlayer.world.getRecipeManager().getRecipeNonNull(VillagerModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.world);
+			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
+			for (int i = 0; i < nonnulllist.size(); ++i) {
+				ItemStack itemstack = FletchingContainer.this.craftMatrix.getStackInSlot(i);
+				ItemStack itemstack1 = nonnulllist.get(i);
+				if (!itemstack.isEmpty()) {
+					FletchingContainer.this.craftMatrix.decrStackSize(i, 1);
+					itemstack = FletchingContainer.this.craftMatrix.getStackInSlot(i);
+				}
+
+				if (!itemstack1.isEmpty()) {
+					if (itemstack.isEmpty()) {
+						FletchingContainer.this.craftMatrix.setInventorySlotContents(i, itemstack1);
+					} else if (ItemStack.areItemsEqual(itemstack, itemstack1) && ItemStack.areItemStackTagsEqual(itemstack, itemstack1)) {
+						itemstack1.grow(itemstack.getCount());
+						FletchingContainer.this.craftMatrix.setInventorySlotContents(i, itemstack1);
+					} else if (!FletchingContainer.this.player.inventory.addItemStackToInventory(itemstack1)) {
+						FletchingContainer.this.player.dropItem(itemstack1, false);
+					}
+				}
+			}
+
+			return stack;
+		}
+
 	}
 }
