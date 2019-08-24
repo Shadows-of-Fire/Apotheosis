@@ -7,6 +7,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.potion.Effect;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
@@ -22,8 +23,11 @@ import shadows.placebo.util.ReflectionHelper;
 import shadows.village.fletching.BlockFletchingTable;
 import shadows.village.fletching.FletchingContainer;
 import shadows.village.fletching.FletchingRecipe;
+import shadows.village.fletching.arrows.BroadheadArrowEntity;
+import shadows.village.fletching.arrows.BroadheadArrowItem;
 import shadows.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.village.fletching.arrows.ObsidianArrowItem;
+import shadows.village.fletching.effects.BleedingEffect;
 
 public class VillagerModule {
 
@@ -49,7 +53,7 @@ public class VillagerModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new ObsidianArrowItem().setRegistryName("obsidian_arrow"));
+		e.getRegistry().registerAll(new ObsidianArrowItem().setRegistryName("obsidian_arrow"), new BroadheadArrowItem().setRegistryName("broadhead_arrow"));
 	}
 
 	@SubscribeEvent
@@ -64,12 +68,26 @@ public class VillagerModule {
 				.setCustomClientFactory((se, w) -> new ObsidianArrowEntity(w))
 				.build("ob_arrow")
 				.setRegistryName("ob_arrow_entity"));
+		e.getRegistry().register(EntityType.Builder
+				.<BroadheadArrowEntity>create(BroadheadArrowEntity::new, EntityClassification.MISC)
+				.setShouldReceiveVelocityUpdates(true)
+				.setTrackingRange(4)
+				.setUpdateInterval(20)
+				.size(0.5F, 0.5F)
+				.setCustomClientFactory((se, w) -> new BroadheadArrowEntity(w))
+				.build("bh_arrow")
+				.setRegistryName("bh_arrow_entity"));
 		//Formatter::on
 	}
 
 	@SubscribeEvent
 	public void containers(Register<ContainerType<?>> e) {
 		e.getRegistry().register(new ContainerType<>(FletchingContainer::new).setRegistryName("fletching"));
+	}
+
+	@SubscribeEvent
+	public void effects(Register<Effect> e) {
+		e.getRegistry().register(new BleedingEffect().setRegistryName("bleeding"));
 	}
 
 	public void starting(AttachCapabilitiesEvent<World> e) {

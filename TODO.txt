@@ -1,8 +1,6 @@
 Fletching System (Like crafting, but with a Fletching Table)
 -More Arrow Output
 -Arrowheads
---Obsidian Arrowhead
---Bodkin Point Arrowhead (Iron)
 --Wooden Arrowhead
 
 Smithing System (Like crafting, but with a Smithing Table)

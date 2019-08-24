@@ -3,6 +3,7 @@ package shadows;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
@@ -36,6 +37,8 @@ import shadows.potion.potions.KnowledgeEffect;
 import shadows.potion.potions.PotionSundering;
 import shadows.spawn.EnchantmentCapturing;
 import shadows.village.fletching.FletchingContainer;
+import shadows.village.fletching.arrows.BroadheadArrowEntity;
+import shadows.village.fletching.arrows.BroadheadArrowItem;
 import shadows.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.village.fletching.arrows.ObsidianArrowItem;
 
@@ -109,4 +112,8 @@ public class ApotheosisObjects {
 	public static final ContainerType<FletchingContainer> FLETCHING = null;
 	public static final ObsidianArrowItem OBSIDIAN_ARROW = null;
 	public static final EntityType<ObsidianArrowEntity> OB_ARROW_ENTITY = null;
+	public static final Effect BLEEDING = null;
+	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
+	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
+
 }

@@ -37,6 +37,8 @@ import shadows.ench.altar.RenderPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
 import shadows.ench.anvil.compat.ATCompat;
 import shadows.village.fletching.FletchingScreen;
+import shadows.village.fletching.arrows.BroadheadArrowEntity;
+import shadows.village.fletching.arrows.BroadheadArrowRenderer;
 import shadows.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.village.fletching.arrows.ObsidianArrowRenderer;
 
@@ -121,6 +123,7 @@ public class ApotheosisClient {
 				ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);
 				EntityRendererManager mgr = Minecraft.getInstance().getRenderManager();
 				mgr.register(ObsidianArrowEntity.class, new ObsidianArrowRenderer(mgr));
+				mgr.register(BroadheadArrowEntity.class, new BroadheadArrowRenderer(mgr));
 			});
 		}
 	}

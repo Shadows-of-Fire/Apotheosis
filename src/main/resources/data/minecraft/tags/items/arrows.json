@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "apotheosis:obsidian_arrow"
+    "apotheosis:obsidian_arrow",
+	"apotheosis:broadhead_arrow"
   ]
 }

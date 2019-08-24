@@ -1,0 +1,18 @@
+{
+  "type": "apotheosis:fletching",
+  "ingredients": [
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:arrow"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": {
+    "item": "minecraft:spectral_arrow",
+    "count": 2
+  }
+}
