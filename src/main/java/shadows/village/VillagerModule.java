@@ -1,8 +1,9 @@
 package shadows.village;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Map;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -43,7 +44,8 @@ public class VillagerModule {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addGenericListener(World.class, this::starting);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
-		ReflectionHelper.setPrivateValue(PointOfInterestType.class, PointOfInterestType.FLETCHER, ImmutableSet.of(Blocks.FLETCHING_TABLE.getDefaultState()), "field_221075_w");
+		Map<BlockState, PointOfInterestType> types = ReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
+		types.put(Blocks.FLETCHING_TABLE.getDefaultState(), PointOfInterestType.FLETCHER);
 	}
 
 	@SubscribeEvent
