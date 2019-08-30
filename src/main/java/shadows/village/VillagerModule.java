@@ -1,6 +1,9 @@
 package shadows.village;
 
+import com.google.common.collect.ImmutableSet;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
@@ -8,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.potion.Effect;
+import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
@@ -39,6 +43,7 @@ public class VillagerModule {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addGenericListener(World.class, this::starting);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
+		ReflectionHelper.setPrivateValue(PointOfInterestType.class, PointOfInterestType.FLETCHER, ImmutableSet.of(Blocks.FLETCHING_TABLE.getDefaultState()), "field_221075_w");
 	}
 
 	@SubscribeEvent
