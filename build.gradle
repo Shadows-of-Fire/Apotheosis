@@ -11,14 +11,14 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '2.2.3'
+version = '2.3.0'
 group = 'shadows.apotheosis'
 archivesBaseName = 'Apotheosis-1.14.4'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190804-1.14.3'
+    mappings channel: 'snapshot', version: '20190829-1.14.3'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client = {
@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.0.45'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.0.74'
 	compile fg.deobf('mezz.jei:jei-1.14.4:+')
 	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10+')
 	compile fileTree(dir: 'libs', include: '*.jar')

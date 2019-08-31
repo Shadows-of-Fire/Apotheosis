@@ -110,6 +110,7 @@ import shadows.ench.objects.ItemScrapTome;
 import shadows.ench.objects.ItemShearsExt;
 import shadows.ench.objects.ItemTypedBook;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.loot.LootSystem;
 import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.util.ReflectionHelper;
 
@@ -214,10 +215,11 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
 		Apotheosis.HELPER.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 6), book, book, book, book, book, book, blaze);
 		ItemStack msBrick = new ItemStack(Blocks.MOSSY_STONE_BRICKS);
-		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Blocks.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.HEART_OF_THE_SEA, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 16), 3, 3, Items.ENDER_EYE, Items.GOLD_NUGGET, Items.ENDER_EYE, Items.BLAZE_POWDER, Items.DRAGON_BREATH, Items.BLAZE_POWDER, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST);
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
+		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
