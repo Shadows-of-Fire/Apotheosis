@@ -183,7 +183,7 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 									continue;
 								}
 
-								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn(((MobEntity) entity), getWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this)) {
+								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn(((MobEntity) entity), getWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this, SpawnReason.SPAWNER)) {
 									((MobEntity) entity).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity)), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
 								}
 							}

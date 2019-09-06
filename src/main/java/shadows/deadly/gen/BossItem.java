@@ -111,7 +111,7 @@ public class BossItem extends WorldFeatureItem {
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
 			world.setBlockState(p, Blocks.RED_SANDSTONE.getDefaultState(), 2);
 		}
-		entity.getEntityData().putBoolean("apoth_boss", true);
+		entity.getPersistantData().putBoolean("apoth_boss", true);
 		WorldGenerator.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
 	}
 

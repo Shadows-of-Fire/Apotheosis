@@ -28,7 +28,7 @@ public class ObsidianArrowItem extends ArrowItem {
 	@Override
 	public AbstractArrowEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
 		AbstractArrowEntity e = new ObsidianArrowEntity(shooter, world);
-		e.getEntityData().putBoolean("apoth_obsidian_arrow", true);
+		e.getPersistantData().putBoolean("apoth_obsidian_arrow", true);
 		return e;
 	}
 
@@ -42,9 +42,9 @@ public class ObsidianArrowItem extends ArrowItem {
 	public void handleArrowJoin(EntityJoinWorldEvent e) {
 		if (!e.getWorld().isRemote && e.getEntity() instanceof AbstractArrowEntity) {
 			AbstractArrowEntity ent = (AbstractArrowEntity) e.getEntity();
-			if (ent.getEntityData().getBoolean("apoth_obsidian_arrow")) {
+			if (ent.getPersistantData().getBoolean("apoth_obsidian_arrow")) {
 				ent.setDamage(ent.getDamage() * 1.2F);
-				ent.getEntityData().remove("apoth_obsidian_arrow");
+				ent.getPersistantData().remove("apoth_obsidian_arrow");
 			}
 		}
 	}
