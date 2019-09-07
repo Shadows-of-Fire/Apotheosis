@@ -17,9 +17,11 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionBrewing;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
@@ -31,6 +33,8 @@ import shadows.Apotheosis.ApotheosisConstruction;
 import shadows.Apotheosis.ApotheosisSetup;
 import shadows.ApotheosisObjects;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.recipe.NBTIngredient;
+import shadows.placebo.recipe.TagIngredient;
 import shadows.potion.potions.KnowledgeEffect;
 import shadows.potion.potions.PotionSundering;
 
@@ -92,6 +96,10 @@ public class PotionModule {
 		Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
 		Apotheosis.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
 
+		NBTIngredient potion = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.LONG_INVISIBILITY));
+		Item b = Items.BLAZE_POWDER;
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.INVISIBILITY_CHARM, 3, 3, b, b, b, new TagIngredient(Tags.Items.INGOTS_IRON), potion, new TagIngredient(Tags.Items.INGOTS_IRON), b, b, b);
+
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -102,7 +110,7 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"));
+		e.getRegistry().registerAll(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"), new InvisCharmItem().setRegistryName(Apotheosis.MODID, "invisibility_charm"));
 	}
 
 	@SubscribeEvent

@@ -1,7 +1,5 @@
-Fletching System (Like crafting, but with a Fletching Table)
--More Arrow Output
--Arrowheads
---Wooden Arrowhead
-
 Smithing System (Like crafting, but with a Smithing Table)
 -Better Gear when made in the table (likely with an extra attribute)
+-Specific improvement to tools/armor when combined with their repair material in a smithing table.
+
+Advancements for Fletching

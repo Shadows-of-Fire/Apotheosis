@@ -32,6 +32,7 @@ import shadows.ench.objects.ItemScrapTome;
 import shadows.ench.objects.ItemTypedBook;
 import shadows.garden.EnderLeashItem;
 import shadows.potion.EnchantmentTrueInfinity;
+import shadows.potion.InvisCharmItem;
 import shadows.potion.ItemLuckyFoot;
 import shadows.potion.potions.KnowledgeEffect;
 import shadows.potion.potions.PotionSundering;
@@ -115,5 +116,6 @@ public class ApotheosisObjects {
 	public static final Effect BLEEDING = null;
 	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
+	public static final InvisCharmItem INVISIBILITY_CHARM = null;
 
 }
