@@ -44,7 +44,7 @@ public class DeadlyModule {
 	}
 
 	public void death(LivingDeathEvent e) {
-		if (e.getEntity().getPersistantData().getBoolean("apoth_boss")) {
+		if (e.getEntity().getPersistentData().getBoolean("apoth_boss")) {
 			DamageSource source = e.getSource();
 			if (source.getTrueSource() instanceof ServerPlayerEntity) {
 				AdvancementTriggers.BOSS_TRIGGER.trigger(((ServerPlayerEntity) source.getTrueSource()).getAdvancements());
