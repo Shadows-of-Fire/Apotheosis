@@ -3,3 +3,7 @@ Smithing System (Like crafting, but with a Smithing Table)
 -Specific improvement to tools/armor when combined with their repair material in a smithing table.
 
 Advancements for Fletching
+
+Fix max power functions for vanilla enchantments that cause min > max at high levels.
+
+Bamboo configurable growth heights
