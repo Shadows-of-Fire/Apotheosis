@@ -19,7 +19,7 @@ All things that should have been.
 [[dependencies.apotheosis]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[28.0.93,)" #mandatory
+    versionRange="[28.1,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
