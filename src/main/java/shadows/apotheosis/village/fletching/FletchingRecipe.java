@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.village.VillagerModule;
+import shadows.apotheosis.village.VillageModule;
 
 public class FletchingRecipe implements IRecipe<CraftingInventory> {
 
@@ -66,12 +66,12 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return VillagerModule.FLETCHING_SERIALIZER;
+		return VillageModule.FLETCHING_SERIALIZER;
 	}
 
 	@Override
 	public IRecipeType<?> getType() {
-		return VillagerModule.FLETCHING;
+		return VillageModule.FLETCHING;
 	}
 
 	public List<Ingredient> getInputs() {

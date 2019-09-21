@@ -117,7 +117,7 @@ public class NameHelper {
 		String material = null;
 		if (itemStack.getItem() instanceof TieredItem) {
 			IItemTier tier = ((TieredItem) itemStack.getItem()).getTier();
-			if (tier instanceof Enum<?>) material = (((Enum<?>) tier).name());
+			if (tier instanceof Enum<?>) material = ((Enum<?>) tier).name();
 		}
 		if (material != null) {
 			String[][] materials = { { "Wooden", "Wood", "Hardwood", "Balsa Wood", "Mahogany", "Plywood" }, { "Stone", "Rock", "Marble", "Cobblestone", }, { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" }, { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" }, { "Golden", "Gold", "Gilt", "Auric", "Ornate" } };

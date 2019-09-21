@@ -7,3 +7,5 @@ Advancements for Fletching
 Fix max power functions for vanilla enchantments that cause min > max at high levels.
 
 Bamboo configurable growth heights
+
+Potion Rings

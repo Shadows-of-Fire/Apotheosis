@@ -1,5 +1,6 @@
 package shadows.apotheosis.village;
 
+import java.io.File;
 import java.util.Map;
 
 import net.minecraft.block.Block;
@@ -21,8 +22,8 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
+import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.village.fletching.BlockFletchingTable;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.FletchingRecipe;
@@ -31,13 +32,16 @@ import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import shadows.apotheosis.village.fletching.effects.BleedingEffect;
+import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
 
-public class VillagerModule {
+public class VillageModule {
 
 	public static final IRecipeType<FletchingRecipe> FLETCHING = IRecipeType.register(Apotheosis.MODID + ":fletching");
 	public static final IRecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
+
+	public static Configuration config;
 
 	@SubscribeEvent
 	public void setup(ApotheosisSetup e) {
@@ -46,6 +50,10 @@ public class VillagerModule {
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
 		Map<BlockState, PointOfInterestType> types = ReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
 		types.put(Blocks.FLETCHING_TABLE.getDefaultState(), PointOfInterestType.FLETCHER);
+		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
+		WandererSpawnerExt.defaultChance = config.getInt("Spawn Chance", "Wanderer", 10, 1, 100, "The 1/100 chance the wandering trader has to spawn every attempt.  This chance is increased by it's own value each failure until successful.");
+		WandererSpawnerExt.defaultDelay = config.getInt("Spawn Delay", "Wanderer", 24000, 1, Integer.MAX_VALUE, "The number of ticks that must elapse before a wanderer spawn attempt happens.");
+		if (config.hasChanged()) config.save();
 	}
 
 	@SubscribeEvent

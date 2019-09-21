@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.village.VillagerModule;
+import shadows.apotheosis.village.VillageModule;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 
 @JeiPlugin
@@ -36,7 +36,7 @@ public class VillageJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
-		reg.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == VillagerModule.FLETCHING).collect(Collectors.toList()), FletchingCategory.UID);
+		reg.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == VillageModule.FLETCHING).collect(Collectors.toList()), FletchingCategory.UID);
 	}
 
 	@Override

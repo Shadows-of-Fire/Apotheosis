@@ -19,7 +19,7 @@ public class InvisCharmItem extends Item {
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 		if (entity instanceof ServerPlayerEntity && ((ServerPlayerEntity) entity).getActivePotionEffect(Effects.INVISIBILITY) == null) {
 			((ServerPlayerEntity) entity).addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 200));
-			if (stack.attemptDamageItem(1, world.rand, ((ServerPlayerEntity) entity))) stack.shrink(1);
+			if (stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity) entity)) stack.shrink(1);
 		}
 	}
 

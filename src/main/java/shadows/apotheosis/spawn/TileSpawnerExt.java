@@ -169,7 +169,7 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 							}
 
 							if (!ignoresCap) {
-								int k = world.getEntitiesWithinAABB(entity.getClass(), (new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1)).grow(this.spawnRange)).size();
+								int k = world.getEntitiesWithinAABB(entity.getClass(), new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1).grow(this.spawnRange)).size();
 								if (k >= this.maxNearbyEntities) {
 									this.resetTimer();
 									return;
@@ -183,7 +183,7 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 									continue;
 								}
 
-								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn(((MobEntity) entity), getWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this, SpawnReason.SPAWNER)) {
+								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, getWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this, SpawnReason.SPAWNER)) {
 									((MobEntity) entity).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity)), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
 								}
 							}

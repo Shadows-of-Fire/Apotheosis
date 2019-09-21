@@ -28,6 +28,9 @@ import net.minecraft.world.storage.WorldInfo;
 
 public class WandererSpawnerExt extends WanderingTraderSpawner {
 
+	public static int defaultDelay = 24000;
+	public static int defaultChance = 10;
+
 	protected final Random random = new Random();
 	protected final ServerWorld world;
 	protected int delay;
@@ -42,9 +45,9 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 		this.spawnDelay = worldinfo.getWanderingTraderSpawnDelay();
 		this.spawnChance = worldinfo.getWanderingTraderSpawnChance();
 		if (this.spawnDelay == 0 && this.spawnChance == 0) {
-			this.spawnDelay = 24000;
+			this.spawnDelay = defaultDelay;
 			worldinfo.setWanderingTraderSpawnDelay(this.spawnDelay);
-			this.spawnChance = 10;
+			this.spawnChance = defaultChance;
 			worldinfo.setWanderingTraderSpawnChance(this.spawnChance);
 		}
 	}
@@ -57,14 +60,14 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 			this.spawnDelay -= 1200;
 			worldinfo.setWanderingTraderSpawnDelay(this.spawnDelay);
 			if (this.spawnDelay <= 0) {
-				this.spawnDelay = 24000;
+				this.spawnDelay = defaultDelay;
 				if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_SPAWNING)) {
 					int i = this.spawnChance;
-					this.spawnChance = MathHelper.clamp(this.spawnChance + 10, 10, 100);
+					this.spawnChance = MathHelper.clamp(this.spawnChance + defaultChance, defaultChance, 100);
 					worldinfo.setWanderingTraderSpawnChance(this.spawnChance);
 					if (this.random.nextInt(100) <= i) {
 						if (this.spawnTrader()) {
-							this.spawnChance = 10;
+							this.spawnChance = defaultChance;
 						}
 					}
 				}

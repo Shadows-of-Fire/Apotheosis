@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.village.VillagerModule;
+import shadows.apotheosis.village.VillageModule;
 
 public class FletchingContainer extends Container {
 
@@ -63,7 +63,7 @@ public class FletchingContainer extends Container {
 		if (!world.isRemote) {
 			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) player;
 			ItemStack itemstack = ItemStack.EMPTY;
-			Optional<FletchingRecipe> optional = player.getServer().getRecipeManager().getRecipe(VillagerModule.FLETCHING, craftMatrix, world);
+			Optional<FletchingRecipe> optional = player.getServer().getRecipeManager().getRecipe(VillageModule.FLETCHING, craftMatrix, world);
 			if (optional.isPresent()) {
 				FletchingRecipe icraftingrecipe = optional.get();
 				itemstack = icraftingrecipe.getCraftingResult(craftMatrix);
@@ -134,7 +134,7 @@ public class FletchingContainer extends Container {
 		public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
 			this.onCrafting(stack);
 			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
-			NonNullList<ItemStack> nonnulllist = thePlayer.world.getRecipeManager().getRecipeNonNull(VillagerModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.world);
+			NonNullList<ItemStack> nonnulllist = thePlayer.world.getRecipeManager().getRecipeNonNull(VillageModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.world);
 			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 			for (int i = 0; i < nonnulllist.size(); ++i) {
 				ItemStack itemstack = FletchingContainer.this.craftMatrix.getStackInSlot(i);

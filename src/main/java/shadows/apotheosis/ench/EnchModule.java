@@ -77,8 +77,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
+import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.gen.BossItem;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.apotheosis.ench.altar.BlockPrismaticAltar;
@@ -241,8 +241,8 @@ public class EnchModule {
 			ATCompat.registerBlocks(e);
 		} else {
 			e.getRegistry().registerAll(
-					new BlockAnvilExt().setRegistryName("minecraft", "anvil"), 
-					new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"), 
+					new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
+					new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
 					new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"));
 		}
 		//Formatter::on
@@ -257,8 +257,8 @@ public class EnchModule {
 				shears = new ItemShearsExt(),
 				new ItemHellBookshelf(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
-				new ItemAnvilExt(Blocks.ANVIL), 
-				new ItemAnvilExt(Blocks.CHIPPED_ANVIL), 
+				new ItemAnvilExt(Blocks.ANVIL),
+				new ItemAnvilExt(Blocks.CHIPPED_ANVIL),
 				new ItemAnvilExt(Blocks.DAMAGED_ANVIL),
 				new ItemTypedBook(Items.AIR, null),
 				new ItemTypedBook(Items.DIAMOND_HELMET, EnchantmentType.ARMOR_HEAD),

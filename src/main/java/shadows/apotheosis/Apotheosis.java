@@ -24,7 +24,7 @@ import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.util.ParticleMessage;
-import shadows.apotheosis.village.VillagerModule;
+import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.recipe.RecipeHelper;
@@ -77,7 +77,7 @@ public class Apotheosis {
 		if (enablePotion) bus.register(new PotionModule());
 
 		enableVillager = config.getBoolean("Enable Village Module", "general", enableVillager, "If the village module is loaded.");
-		if (enableVillager) bus.register(new VillagerModule());
+		if (enableVillager) bus.register(new VillageModule());
 
 		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
 
