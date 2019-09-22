@@ -10,7 +10,7 @@ function initializeCoreMod() {
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching LivingEntity#blockUsingShield');
 
-                var owner = "shadows/ench/asm/EnchHooks";
+                var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "reflectiveHook";
                 var desc = "(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)V";
                 var instr = method.instructions;

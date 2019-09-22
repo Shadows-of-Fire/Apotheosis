@@ -10,7 +10,7 @@ function initializeCoreMod() {
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching EnchantmentHelper#getEnchantmentDatas');
 
-                var owner = "shadows/ench/asm/EnchHooks";
+                var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getEnchantmentDatas";
                 var desc = "(ILnet/minecraft/item/ItemStack;Z)Ljava/util/List;";
                 var instr = method.instructions;

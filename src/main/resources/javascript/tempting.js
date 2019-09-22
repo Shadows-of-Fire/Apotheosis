@@ -10,7 +10,7 @@ function initializeCoreMod() {
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching TemptGoal#isTempting');
 
-                var owner = "shadows/ench/asm/EnchHooks";
+                var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "isTempting";
                 var desc = "(ZLnet/minecraft/item/ItemStack;)Z";
                 var instr = method.instructions;

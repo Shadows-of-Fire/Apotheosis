@@ -10,7 +10,7 @@ function initializeCoreMod() {
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching CombatRules#getDamageAfterMagicAbsorb');
 
-                var owner = "shadows/ench/asm/EnchHooks";
+                var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getDamageAfterMagicAbsorb";
                 var desc = "(FF)F";
                 var instr = method.instructions;

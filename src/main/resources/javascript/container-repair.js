@@ -42,10 +42,10 @@ function initializeCoreMod() {
 				instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
 				print('[ApotheosisCore]: Successfully removed the anvil level cap.');
 
-				instr.set(getMaxLevel1, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
+				instr.set(getMaxLevel1, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
 				print('[ApotheosisCore]: Replaced ContainerRepair Enchantment#getMaxLevel #1.');
 
-				instr.set(getMaxLevel2, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
+				instr.set(getMaxLevel2, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
 				print('[ApotheosisCore]: Replaced ContainerRepair Enchantment#getMaxLevel #2.');
 
                 return method;

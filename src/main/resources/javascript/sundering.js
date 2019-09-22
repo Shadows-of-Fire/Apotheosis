@@ -10,7 +10,7 @@ function initializeCoreMod() {
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching LivingEntity#applyPotionDamageCalculations');
 
-                var owner = "shadows/potion/asm/PotionHooks";
+                var owner = "shadows/apotheosis/potion/asm/PotionHooks";
                 var name = "applyPotionDamageCalculations";
                 var desc = "(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/DamageSource;F)F";
                 var instr = method.instructions;

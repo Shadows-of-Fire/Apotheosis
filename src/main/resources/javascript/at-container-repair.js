@@ -23,7 +23,7 @@ function initializeCoreMod() {
 					if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
 						var is = n.name.equals(ASMAPI.mapMethod("func_77325_b"));
 						if (is) { 
-							instr.set(n, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
+							instr.set(n, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
 						}
 					}
 				}

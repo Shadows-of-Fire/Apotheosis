@@ -10,7 +10,7 @@ function initializeCoreMod() {
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching ItemArrow#isInfinite');
 
-                var owner = "shadows/potion/asm/PotionHooks";
+                var owner = "shadows/apotheosis/potion/asm/PotionHooks";
                 var name = "isInfinite";
                 var desc = "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Z";
                 var instr = method.instructions;
