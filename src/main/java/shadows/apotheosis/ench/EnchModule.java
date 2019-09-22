@@ -221,6 +221,11 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
 		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
 		MinecraftForge.EVENT_BUS.register(this);
+		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
+			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
+			for (int i = 1; i <= info.getMaxLevel(); i++)
+				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
+		}
 	}
 
 	@SubscribeEvent
@@ -569,6 +574,7 @@ public class EnchModule {
 	 */
 	public static int getDefaultMax(Enchantment ench) {
 		int level = ench.getMaxLevel();
+		if (level == 1) return 1;
 		int maxPower = ench.getMaxEnchantability(level);
 		if (maxPower >= absMax) return level;
 		int lastMaxPower = maxPower; //Need this to check that we don't get locked up on single-level enchantments.
@@ -580,7 +586,6 @@ public class EnchModule {
 			}
 			lastMaxPower = maxPower;
 		}
-		if (ench == Enchantments.SILK_TOUCH) return 1;
 		return level;
 	}
 
