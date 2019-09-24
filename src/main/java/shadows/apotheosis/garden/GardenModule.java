@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.state.IProperty;
@@ -33,7 +32,6 @@ public class GardenModule {
 		maxBambooHeight = c.getInt("Bamboo Height", "general", maxBambooHeight, 1, 255, "The max height a stack of bamboo may grow to.  Vanilla is 16.");
 		if (c.hasChanged()) c.save();
 		Apotheosis.HELPER.addShapeless(ApotheosisObjects.FARMERS_LEASH, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
-		((FlowerPotBlock) Blocks.POTTED_BAMBOO).flower = Blocks.BAMBOO;
 	}
 
 	@SubscribeEvent
