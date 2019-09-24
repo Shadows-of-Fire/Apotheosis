@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
 
-@SuppressWarnings("deprecation")
 public class RenderPrismaticAltar extends TileEntityRenderer<TilePrismaticAltar> {
 
 	@Override
