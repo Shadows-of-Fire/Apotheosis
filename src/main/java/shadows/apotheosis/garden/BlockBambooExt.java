@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BambooLeaves;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -17,9 +18,13 @@ import net.minecraft.world.World;
 
 public class BlockBambooExt extends BambooBlock {
 
+	BambooBlock old = (BambooBlock) Blocks.BAMBOO;
+
 	public BlockBambooExt() {
 		super(Block.Properties.create(Material.BAMBOO, MaterialColor.FOLIAGE).tickRandomly().hardnessAndResistance(1.0F).sound(SoundType.BAMBOO));
 		setRegistryName(new ResourceLocation("bamboo"));
+		this.setDefaultState(old.getDefaultState());
+		this.getStateContainer().getValidStates().forEach(b -> b.object = this);
 	}
 
 	@Override
@@ -103,6 +108,11 @@ public class BlockBambooExt extends BambooBlock {
 		int i = blockStateIn.get(PROPERTY_AGE) != 1 && blockstate1.getBlock() != Blocks.BAMBOO ? 0 : 1;
 		int j = (size < (GardenModule.maxBambooHeight - (int) GardenModule.maxBambooHeight / 5D) || !(rand.nextFloat() < 0.25F)) && size != GardenModule.maxBambooHeight - 1 ? 0 : 1;
 		worldIn.setBlockState(posIn.up(), this.getDefaultState().with(PROPERTY_AGE, Integer.valueOf(i)).with(PROPERTY_BAMBOO_LEAVES, bambooleaves).with(PROPERTY_STAGE, Integer.valueOf(j)), 3);
+	}
+
+	@Override
+	public StateContainer<Block, BlockState> getStateContainer() {
+		return old.getStateContainer();
 	}
 
 }
