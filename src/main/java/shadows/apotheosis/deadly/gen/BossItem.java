@@ -1,35 +1,44 @@
 package shadows.apotheosis.deadly.gen;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.SkeletonEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
@@ -39,6 +48,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
@@ -47,7 +57,6 @@ import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.util.ArmorSet;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.util.AttributeHelper;
-import shadows.placebo.util.PlaceboUtil;
 
 /**
  * Setup information for bosses.
@@ -58,22 +67,49 @@ public class BossItem extends WorldFeatureItem {
 
 	//Default lists of boss potions/enchantments.
 	public static final List<Effect> POTIONS = new ArrayList<>();
-	public static final List<Enchantment> BOW_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.LOOTING, Enchantments.UNBREAKING, Enchantments.POWER, Enchantments.PUNCH, Enchantments.FLAME, Enchantments.INFINITY);
-	public static final List<Enchantment> SWORD_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.SHARPNESS, Enchantments.SMITE, Enchantments.BANE_OF_ARTHROPODS, Enchantments.KNOCKBACK, Enchantments.FIRE_ASPECT, Enchantments.LOOTING);
-	public static final List<Enchantment> TOOL_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.EFFICIENCY, Enchantments.SILK_TOUCH, Enchantments.UNBREAKING, Enchantments.FORTUNE);
-	public static final List<Enchantment> ARMOR_ENCHANTMENTS = PlaceboUtil.asList(Enchantments.PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.FEATHER_FALLING, Enchantments.BLAST_PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.RESPIRATION, Enchantments.AQUA_AFFINITY, Enchantments.THORNS, Enchantments.UNBREAKING);
+
+	//Formatter::off
+	public static final Map<IAttribute, RandomValueRange> SWORD_ATTR = ImmutableMap.of(
+			SharedMonsterAttributes.ATTACK_DAMAGE, new RandomValueRange(0.5F, 5.0F),
+			SharedMonsterAttributes.ATTACK_KNOCKBACK, new RandomValueRange(0.5F, 2.0F),
+			SharedMonsterAttributes.ATTACK_SPEED, new RandomValueRange(0.25F, 1.0F),
+			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.25F));
+
+	public static final Map<IAttribute, RandomValueRange> BOW_ATTR = ImmutableMap.of(
+			SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.25F, 2.0F),
+			SharedMonsterAttributes.LUCK, new RandomValueRange(0.1F, 1.0F),
+			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.4F));
+
+	public static final Map<IAttribute, RandomValueRange> TOOL_ATTR = ImmutableMap.of(
+			PlayerEntity.REACH_DISTANCE, new RandomValueRange(0.5F, 3.0F),
+			SharedMonsterAttributes.LUCK, new RandomValueRange(0.5F, 2.0F));
+
+	public static final Map<IAttribute, RandomValueRange> ARMOR_ATTR = ImmutableMap.<IAttribute, RandomValueRange>builder()
+			.put(SharedMonsterAttributes.ARMOR, new RandomValueRange(0.2F, 2.0F))
+			.put(SharedMonsterAttributes.ARMOR_TOUGHNESS, new RandomValueRange(0.1F, 0.5F))
+			.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.2F, 0.8F))
+			.put(SharedMonsterAttributes.MAX_HEALTH, new RandomValueRange(3F, 15F))
+			.put(LivingEntity.SWIM_SPEED, new RandomValueRange(0.2F, 0.8F))
+			.put(LivingEntity.ENTITY_GRAVITY, new RandomValueRange(-0.08F, 0.08F)
+			).build();
+
+	public static final Map<IAttribute, RandomValueRange> SHIELD_ATTR = ImmutableMap.of(
+			SharedMonsterAttributes.ARMOR, new RandomValueRange(5F, 10F),
+			SharedMonsterAttributes.ARMOR_TOUGHNESS, new RandomValueRange(1F, 4F),
+			SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.3F, 1F),
+			SharedMonsterAttributes.MAX_HEALTH, new RandomValueRange(5F, 25F));
+
+	//Formatter::on
 
 	//Default gear sets.
-	public static final ArmorSet CHAIN_GEAR = new ArmorSet(0, Items.STONE_SWORD, Items.SHIELD, Items.CHAINMAIL_BOOTS, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_HELMET).addExtraMains(Items.STONE_AXE, Items.STONE_SHOVEL, Items.STONE_PICKAXE);
-	public static final ArmorSet GOLD_GEAR = new ArmorSet(1, Items.GOLDEN_SWORD, Items.SHIELD, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET).addExtraMains(Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE);
-	public static final ArmorSet IRON_GEAR = new ArmorSet(2, Items.IRON_SWORD, Items.SHIELD, Items.IRON_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE, Items.IRON_HELMET).addExtraMains(Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_PICKAXE);
-	public static final ArmorSet DIAMOND_GEAR = new ArmorSet(3, Items.DIAMOND_SWORD, Items.SHIELD, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET).addExtraMains(Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE);
+	public static final ArmorSet GOLD_GEAR = new ArmorSet(0, Items.GOLDEN_SWORD, Items.SHIELD, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET).addExtraMains(Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE);
+	public static final ArmorSet IRON_GEAR = new ArmorSet(1, Items.IRON_SWORD, Items.SHIELD, Items.IRON_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE, Items.IRON_HELMET).addExtraMains(Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_PICKAXE);
+	public static final ArmorSet DIAMOND_GEAR = new ArmorSet(2, Items.DIAMOND_SWORD, Items.SHIELD, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET).addExtraMains(Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE);
 
 	static {
-		ArmorSet.LEVEL_TO_SETS.put(0, CHAIN_GEAR);
-		ArmorSet.LEVEL_TO_SETS.put(1, GOLD_GEAR);
-		ArmorSet.LEVEL_TO_SETS.put(2, IRON_GEAR);
-		ArmorSet.LEVEL_TO_SETS.put(3, DIAMOND_GEAR);
+		ArmorSet.LEVEL_TO_SETS.put(0, GOLD_GEAR);
+		ArmorSet.LEVEL_TO_SETS.put(1, IRON_GEAR);
+		ArmorSet.LEVEL_TO_SETS.put(2, DIAMOND_GEAR);
 	}
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetClass == VillagerEntity.class;
@@ -117,14 +153,16 @@ public class BossItem extends WorldFeatureItem {
 
 	public static void initBoss(Random random, MobEntity entity) {
 		int duration = entity instanceof CreeperEntity ? 6000 : Integer.MAX_VALUE;
-		if (DeadlyConfig.bossRegenLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, duration, DeadlyConfig.bossRegenLevel));
-		if (DeadlyConfig.bossResistLevel > 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration, DeadlyConfig.bossResistLevel));
-		if (DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
-		if (DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
-		AttributeHelper.addToBase(entity, SharedMonsterAttributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossDamageBonus);
-		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier - 1);
-		AttributeHelper.max(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist);
-		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier - 1);
+		int regen = DeadlyConfig.bossRegenLevel.generateInt(random) - 1;
+		if (regen >= 0) entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, duration, regen));
+		int res = DeadlyConfig.bossResistLevel.generateInt(random) - 1;
+		if (res >= 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration, res));
+		if (random.nextFloat() < DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
+		if (random.nextFloat() < DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
+		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
+		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
+		AttributeHelper.addToBase(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
+		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
 		entity.setHealth(entity.getMaxHealth());
 		String name = NameHelper.setEntityName(random, entity);
 		entity.enablePersistence();
@@ -146,26 +184,11 @@ public class BossItem extends WorldFeatureItem {
 		for (EquipmentSlotType s : EquipmentSlotType.values()) {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat());
-			ItemStack enchantedItem = stack;
-
 			if (s.ordinal() == guaranteed) {
-				List<Enchantment> enchants = EquipmentType.getTypeForStack(stack).getEnchants();
-				Enchantment enchantment = enchants.get(random.nextInt(enchants.size()));
-				if (enchants.stream().anyMatch(e -> e.canApply(enchantedItem))) while (!enchantment.canApply(stack))
-					enchantment = enchants.get(random.nextInt(enchants.size()));
-				NameHelper.setItemName(random, stack, name, enchantment);
-
-				for (int i = 0; i < 5; i++)
-					addSingleEnchantment(stack, random, 28 + (Apotheosis.enableEnch ? 10 : 3) * i, true);
-
-				addSingleEnchantment(stack, random, Apotheosis.enableEnch ? 150 : 60, true);
-				Map<Enchantment, Integer> enchMap = new HashMap<>();
-				for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
-					enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
-				}
-				EnchantmentHelper.setEnchantments(enchMap, stack);
+				modifyBossItem(stack, random, name);
 			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {
-				EnchantmentHelper.addRandomEnchantment(random, stack, 30 + random.nextInt(Apotheosis.enableEnch ? 50 : 25), true);
+				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, 30 + random.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
+				EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel)), stack);
 			}
 		}
 
@@ -174,33 +197,48 @@ public class BossItem extends WorldFeatureItem {
 		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(random.nextInt(POTIONS.size())), duration, random.nextInt(3) + 1));
 	}
 
-	public static void addSingleEnchantment(ItemStack stack, Random rand, int level, boolean treasure) {
-		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(rand, stack, level, treasure);
-		if (datas.isEmpty()) return;
-		EnchantmentData d = datas.get(rand.nextInt(datas.size()));
-		stack.addEnchantment(d.enchantment, d.enchantmentLevel);
-	}
-
 	public static void initPotions() {
 		for (Effect p : ForgeRegistries.POTIONS)
 			if (p.isBeneficial() && !p.isInstant()) POTIONS.add(p);
 		POTIONS.removeIf(p -> DeadlyConfig.BLACKLISTED_POTIONS.contains(p.getRegistryName()));
 	}
 
-	public static enum EquipmentType {
-		SWORD(SWORD_ENCHANTMENTS),
-		BOW(BOW_ENCHANTMENTS),
-		TOOL(TOOL_ENCHANTMENTS),
-		ARMOR(ARMOR_ENCHANTMENTS);
+	public static void modifyBossItem(ItemStack stack, Random random, String bossName) {
+		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 60 : 30, true);
+		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel)), stack);
+		NameHelper.setItemName(random, stack, bossName, ench.get(random.nextInt(ench.size())).enchantment);
+		EquipmentType.getTypeForStack(stack).apply(stack, random);
+		Map<Enchantment, Integer> enchMap = new HashMap<>();
+		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
+			enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
+		}
+		EnchantmentHelper.setEnchantments(enchMap, stack);
+		stack.getTag().putBoolean("apoth:boss", true);
+	}
 
-		final List<Enchantment> enchants;
+	static enum EquipmentType {
+		SWORD(SWORD_ATTR, s -> EquipmentSlotType.MAINHAND),
+		BOW(BOW_ATTR, s -> EquipmentSlotType.MAINHAND),
+		TOOL(TOOL_ATTR, s -> EquipmentSlotType.MAINHAND),
+		ARMOR(ARMOR_ATTR, s -> ((ArmorItem) s.getItem()).getEquipmentSlot()),
+		SHIELD(SHIELD_ATTR, s -> EquipmentSlotType.OFFHAND);
 
-		EquipmentType(List<Enchantment> enchants) {
-			this.enchants = enchants;
+		final Map<IAttribute, RandomValueRange> attributes;
+		final Function<ItemStack, EquipmentSlotType> type;
+
+		EquipmentType(Map<IAttribute, RandomValueRange> attributes, Function<ItemStack, EquipmentSlotType> type) {
+			this.attributes = attributes;
+			this.type = type;
 		}
 
-		public List<Enchantment> getEnchants() {
-			return enchants;
+		public void apply(ItemStack stack, Random rand) {
+			int numAttributes = Math.min(attributes.size(), 1 + rand.nextInt(3));
+			List<AttributeModifier> modifiers = new ArrayList<>();
+			List<IAttribute> attr = new ArrayList<>(attributes.keySet());
+			Collections.shuffle(attr, rand);
+			for (int i = 0; i < numAttributes; i++)
+				modifiers.add(new AttributeModifier(attr.get(i).getName(), attributes.get(attr.get(i)).generateFloat(rand), Operation.ADDITION));
+			modifiers.forEach(m -> stack.addAttributeModifier(m.getName(), m, type.apply(stack)));
 		}
 
 		public static EquipmentType getTypeForStack(ItemStack stack) {
@@ -208,6 +246,7 @@ public class BossItem extends WorldFeatureItem {
 			if (i instanceof SwordItem) return SWORD;
 			if (i instanceof BowItem) return BOW;
 			if (i instanceof ArmorItem) return ARMOR;
+			if (i instanceof ShieldItem) return SHIELD;
 			return TOOL;
 		}
 	}

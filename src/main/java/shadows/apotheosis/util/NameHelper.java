@@ -21,7 +21,6 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TieredItem;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 
 /**
@@ -197,6 +196,6 @@ public class NameHelper {
 			String[] temp = modifiers.get(enchantment)[1];
 			name += " of " + temp[random.nextInt(temp.length)];
 		}
-		itemStack.setDisplayName(new StringTextComponent(name).setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)));
+		itemStack.setDisplayName(new StringTextComponent(TextFormatting.RESET + "" + TextFormatting.values()[random.nextInt(15)] + name));
 	}
 }

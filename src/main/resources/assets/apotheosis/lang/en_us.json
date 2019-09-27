@@ -185,6 +185,9 @@
     "block.apotheosis.prismatic_altar": "Altar of the Sea",
 
     "comment_id": "/Vanilla",
+	"attribute.name.generic.reachDistance": "Reach Distance",
+	"attribute.name.forge.swimSpeed": "Swim Speed",
+	"attribute.name.forge.entity_gravity": "Gravity",
     "block.reeds": "Sugar Cane",
     "potion.potency.3": "IV",
     "enchantment.level.11": "XI",

@@ -79,7 +79,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.deadly.gen.BossItem;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.apotheosis.ench.altar.BlockPrismaticAltar;
 import shadows.apotheosis.ench.altar.TilePrismaticAltar;
@@ -185,19 +184,6 @@ public class EnchModule {
 		}
 		if (config.hasChanged()) config.save();
 		enchInfoConfig = config;
-
-		if (Apotheosis.enableDeadly) {
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.BERSERK);
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.LIFE_MENDING);
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.ICY_THORNS);
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.REBOUNDING);
-			if (Apotheosis.enablePotion) BossItem.BOW_ENCHANTMENTS.add(ApotheosisObjects.TRUE_INFINITY);
-			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.SCAVENGER);
-			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.KNOWLEDGE);
-			if (Apotheosis.enableSpawner) BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.CAPTURING);
-			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.HELL_INFUSION);
-			BossItem.TOOL_ENCHANTMENTS.add(ApotheosisObjects.DEPTH_MINER);
-		}
 
 		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.REGENERATION));
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, Blocks.BOOKSHELF, pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
