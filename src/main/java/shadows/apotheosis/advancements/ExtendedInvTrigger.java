@@ -14,6 +14,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,6 +43,12 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 				if (ench != null) return bound.test(enchMap.getOrDefault(ench, 0));
 				return enchMap.values().stream().anyMatch(bound::test);
 			}) };
+		}
+		if (type.equals("sword")) {
+			return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SwordItem) };
+		}
+		if (type.equals("boss_item")) {
+			return new ItemPredicate[] { new TrueItemPredicate(s -> s.hasTag() && s.getTag().getBoolean("apoth:boss")) };
 		}
 		return new ItemPredicate[0];
 	}

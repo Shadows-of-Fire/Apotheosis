@@ -1,0 +1,30 @@
+{
+	"parent": "apotheosis:deadly/root",
+	"display": {
+		"icon": {
+			"item": "minecraft:zombie_head"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.boss"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.boss.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"boss_item": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "boss_item"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"boss_item"
+		]
+	]
+}

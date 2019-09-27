@@ -26,8 +26,10 @@
     "advancements.apotheosis.level20": "Unlimited Power",
     "advancements.apotheosis.level20.desc": "Obtain an item with an enchantment at level XX or higher",
     
-    "advancements.apotheosis.deadly": "Slay a boss",
-    "advancements.apotheosis.deadly.desc": "Find a boss monster in the caves below, and kill it for powerful gear",
+    "advancements.apotheosis.deadly": "To Arms!",
+    "advancements.apotheosis.deadly.desc": "Find a sword.  This world is dangerous.",
+	"advancements.apotheosis.boss": "Slay an Apotheotic Boss",
+    "advancements.apotheosis.boss.desc": "Stronger creatures line the caves.  Look for the red sandstone.",
     
     "advancements.apotheosis.spawner.root": "Apotheosis Spawners",
     "advancements.apotheosis.spawner.root.desc": "Spawners can be collected and modified, see JEI for info.",
