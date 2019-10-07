@@ -188,7 +188,7 @@ public class BossItem extends WorldFeatureItem {
 				modifyBossItem(stack, random, name);
 			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {
 				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, 30 + random.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
-				EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel)), stack);
+				EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (v1, v2) -> v1 > v2 ? v1 : v2, HashMap::new)), stack);
 			}
 		}
 
