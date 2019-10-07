@@ -225,9 +225,9 @@ public class EnchModule {
 			ATCompat.registerBlocks(e);
 		} else {
 			e.getRegistry().registerAll(
-					new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
-					new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
-					new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"));
+				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
+				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
+				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"));
 		}
 		//Formatter::on
 	}

@@ -52,17 +52,17 @@ public class ApotheosisClient {
 		if (Apotheosis.enableEnch) {
 			if (EnchModule.allowWeb && i == Items.COBWEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.cobweb"));
 			else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.prismatic_cobweb"));
-		}
-		if (i == Items.ENCHANTED_BOOK) {
-			for (Map.Entry<IRegistryDelegate<Enchantment>, List<ITextComponent>> ent : ENCH_TOOLTIPS.entrySet()) {
-				if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
-					ent.getValue().forEach(s -> e.getToolTip().add(s));
-					return;
+			if (i == Items.ENCHANTED_BOOK) {
+				for (Map.Entry<IRegistryDelegate<Enchantment>, List<ITextComponent>> ent : ENCH_TOOLTIPS.entrySet()) {
+					if (onlyHasEnchant(e.getItemStack(), ent.getKey().get())) {
+						ent.getValue().forEach(s -> e.getToolTip().add(s));
+						return;
+					}
 				}
+			} else if (i == Items.ENCHANTING_TABLE) {
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.table", (int) EnchModule.maxNormalPower * 2));
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.table2", (int) EnchModule.maxPower * 2));
 			}
-		} else if (i == Items.ENCHANTING_TABLE) {
-			e.getToolTip().add(new TranslationTextComponent("info.apotheosis.table", (int) EnchModule.maxNormalPower * 2));
-			e.getToolTip().add(new TranslationTextComponent("info.apotheosis.table2", (int) EnchModule.maxPower * 2));
 		}
 	}
 
