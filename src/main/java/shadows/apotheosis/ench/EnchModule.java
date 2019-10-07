@@ -57,8 +57,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -129,12 +127,7 @@ public class EnchModule {
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
 	public static final List<ItemTypedBook> TYPED_BOOKS = new LinkedList<>();
-	public static final DamageSource CORRUPTED = new DamageSource("corrupted") {
-		@Override
-		public ITextComponent getDeathMessage(LivingEntity entity) {
-			return new TranslationTextComponent("death.apotheosis.corrupted", entity.getDisplayName());
-		};
-	}.setDamageBypassesArmor().setDamageIsAbsolute();
+	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").setDamageBypassesArmor().setDamageIsAbsolute();
 	public static final EquipmentSlotType[] ARMOR = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
 	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
 	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);

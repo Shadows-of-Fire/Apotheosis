@@ -128,7 +128,7 @@
     "enchantment.apotheosis.icy_thorns": "Icy Thorns",
     "enchantment.apotheosis.icy_thorns.desc": "Slows attackers.",
 
-    "death.apotheosis.corrupted": "%1$s was drained by a corrupted enchantment.",
+    "death.attack.apoth_corrupted": "%1$s was drained by a corrupted enchantment.",
 
     "item.apotheosis.prismatic_web": "Prismatic Cobweb",
     "info.apotheosis.prismatic_cobweb": "Can be used to remove curses.",

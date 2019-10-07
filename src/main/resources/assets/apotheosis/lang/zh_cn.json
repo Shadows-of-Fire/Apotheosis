@@ -126,7 +126,7 @@
     "enchantment.apotheosis.icy_thorns": "冰刺",
     "enchantment.apotheosis.icy_thorns.desc": "使攻击者受到缓慢效果.",
 
-    "death.apotheosis.corrupted": "%1$s 的生命被腐化附魔耗尽了.",
+    "death.attack.apoth_corrupted": "%1$s 的生命被腐化附魔耗尽了.",
 
     "item.apotheosis.prismatic_web": "棱柱形蜘蛛网",
     "info.apotheosis.prismatic_cobweb": "可以用来消除一件装备中的所有腐化附魔.",

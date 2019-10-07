@@ -126,7 +126,7 @@
     "enchantment.apotheosis.icy_thorns": "Ледяные шипы",
     "enchantment.apotheosis.icy_thorns.desc": "Замедляет противника.",
 
-    "death.apotheosis.corrupted": "%1$s был истощён испорченными чарами.",
+    "death.attack.apoth_corrupted": "%1$s был истощён испорченными чарами.",
 
     "item.apotheosis.prismatic_web": "Призмариновая паутина",
     "info.apotheosis.prismatic_cobweb": "Используется для снятия проклятий.",
