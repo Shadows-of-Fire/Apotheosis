@@ -165,7 +165,12 @@ public class EnchModule {
 		recalcAbsMax();
 		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
-			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
+			int max;
+			if (ench == Enchantments.LURE) {
+				max = config.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, ench.getMaxLevel(), "The max level of this enchantment.");
+			} else {
+				max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
+			}
 			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			EnchantmentInfo info = new EnchantmentInfo(ench, max, min);
@@ -532,9 +537,13 @@ public class EnchModule {
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
 		}
 		if (info == null) {
-			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, 127, "The max level of this enchantment.");
+			int max;
+			if (ench == Enchantments.LURE) {
+				max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, ench.getMaxLevel(), "The max level of this enchantment.");
+			} else {
+				max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
+			}
 			int min = enchInfoConfig.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
-			if (ench == Enchantments.LURE) max = Enchantments.LURE.getMaxLevel();
 			if (min > max) min = max;
 			info = new EnchantmentInfo(ench, max, min);
 			String maxF = enchInfoConfig.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
