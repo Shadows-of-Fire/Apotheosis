@@ -9,5 +9,6 @@
   "containerRepair": "javascript/container-repair.js",
   "AnvilTweaks containerRepair": "javascript/at-container-repair.js",
   "guiRepair": "javascript/gui-repair.js",
-  "combatRules": "javascript/combat-rules.js"
+  "combatRules": "javascript/combat-rules.js",
+  "fishingBobber": "javascript/fishing-bobber.js"
 }

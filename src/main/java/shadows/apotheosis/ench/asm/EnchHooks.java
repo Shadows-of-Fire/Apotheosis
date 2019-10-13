@@ -9,11 +9,13 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
@@ -103,6 +105,17 @@ public class EnchHooks {
 			factor -= 0.2F * remaining / 60;
 		}
 		return damage * factor;
+	}
+
+	/**
+	 * Calculates the delay for catching a fish.  Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
+	 * Called at the end of {@link FishingBobberEntity#catchingFish(BlockPos)}
+	 * Injected by javascript/fishing-bobber.js
+	 */
+	public static int getTicksCaughtDelay(FishingBobberEntity bobber) {
+		int lowBound = Math.max(1, 100 - bobber.lureSpeed * 10);
+		int highBound = Math.max(lowBound, 600 - bobber.lureSpeed * 60);
+		return MathHelper.nextInt(bobber.rand, lowBound, highBound);
 	}
 
 }
