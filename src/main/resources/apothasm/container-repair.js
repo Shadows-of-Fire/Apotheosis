@@ -1,6 +1,6 @@
 function initializeCoreMod() {
     return {
-        'coremodmethod': {
+        'apothanvilcontainer': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.inventory.container.RepairContainer',

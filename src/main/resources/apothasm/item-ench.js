@@ -1,6 +1,6 @@
 function initializeCoreMod() {
     return {
-        'coremodmethod': {
+        'apothitemench': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.item.Item',

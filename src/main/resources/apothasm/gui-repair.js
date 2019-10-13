@@ -1,6 +1,6 @@
 function initializeCoreMod() {
     return {
-        'coremodmethod': {
+        'apothanvilscreen': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.client.gui.screen.inventory.AnvilScreen',

@@ -1,6 +1,6 @@
 function initializeCoreMod() {
     return {
-        'coremodmethod': {
+        'apothlure': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.entity.projectile.FishingBobberEntity',

@@ -1,6 +1,6 @@
 function initializeCoreMod() {
     return {
-        'coremodmethod': {
+        'apothanviltweaks': {
             'target': {
                 'type': 'METHOD',
                 'class': 'com.tfar.anviltweaks.RepairContainerv2',

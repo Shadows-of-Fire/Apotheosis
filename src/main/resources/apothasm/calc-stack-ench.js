@@ -1,6 +1,6 @@
 function initializeCoreMod() {
     return {
-        'coremodmethod': {
+        'apothstackenchcalc': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.enchantment.EnchantmentHelper',

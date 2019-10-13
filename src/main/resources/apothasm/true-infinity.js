@@ -1,18 +1,18 @@
 function initializeCoreMod() {
     return {
-        'coremodmethod': {
+        'apotharrowinfinity': {
             'target': {
                 'type': 'METHOD',
-                'class': 'net.minecraft.enchantment.EnchantmentHelper',
-                'methodName': 'func_185291_a',
-                'methodDesc': '(ILnet/minecraft/item/ItemStack;Z)Ljava/util/List;'
+                'class': 'net.minecraft.item.ArrowItem',
+                'methodName': 'isInfinite',
+                'methodDesc': '(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Z'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching EnchantmentHelper#getEnchantmentDatas');
+                print('[ApotheosisCore]: Patching ItemArrow#isInfinite');
 
-                var owner = "shadows/apotheosis/ench/asm/EnchHooks";
-                var name = "getEnchantmentDatas";
-                var desc = "(ILnet/minecraft/item/ItemStack;Z)Ljava/util/List;";
+                var owner = "shadows/apotheosis/potion/asm/PotionHooks";
+                var name = "isInfinite";
+                var desc = "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/PlayerEntity;)Z";
                 var instr = method.instructions;
 
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
@@ -22,15 +22,15 @@ function initializeCoreMod() {
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
 
                 var insn = new InsnList();
-                insn.add(new VarInsnNode(Opcodes.ILOAD, 0));
                 insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
-                insn.add(new VarInsnNode(Opcodes.ILOAD, 2));
+                insn.add(new VarInsnNode(Opcodes.ALOAD, 2));
+                insn.add(new VarInsnNode(Opcodes.ALOAD, 3));
                 insn.add(ASMAPI.buildMethodCall(
                     owner,
                     name,
                     desc,
                     ASMAPI.MethodType.STATIC));
-                insn.add(new InsnNode(Opcodes.ARETURN));
+                insn.add(new InsnNode(Opcodes.IRETURN));
                 instr.insert(insn);
 
                 return method;
