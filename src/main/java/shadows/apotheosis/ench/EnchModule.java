@@ -537,12 +537,7 @@ public class EnchModule {
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
 		}
 		if (info == null) {
-			int max;
-			if (ench == Enchantments.LURE) {
-				max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), ench.getMaxLevel(), 1, ench.getMaxLevel(), "The max level of this enchantment.");
-			} else {
-				max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
-			}
+			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
 			int min = enchInfoConfig.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			info = new EnchantmentInfo(ench, max, min);
