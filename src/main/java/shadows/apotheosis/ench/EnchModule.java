@@ -526,6 +526,11 @@ public class EnchModule {
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
 		EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
+
+		if (!Apotheosis.enableEnch) {
+			return ENCHANTMENT_INFO.computeIfAbsent(ench, e -> new EnchantmentInfo(e, e.getMaxLevel(), e.getMinLevel()));
+		}
+
 		if (enchInfoConfig == null) {
 			LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
 			Thread.dumpStack();

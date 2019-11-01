@@ -26,6 +26,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
+		if (!Apotheosis.enableSpawner) return;
 		ItemStack egg = new ItemStack(SpawnEggItem.getEgg(EntityType.WITCH));
 		//Formatter::off
 		reg.addRecipes(ImmutableSet.of(
@@ -51,11 +52,13 @@ public class SpawnerJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
+		if (!Apotheosis.enableSpawner) return;
 		reg.addRecipeCatalyst(new ItemStack(Blocks.SPAWNER), getPluginUid());
 	}
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration reg) {
+		if (!Apotheosis.enableSpawner) return;
 		reg.addRecipeCategories(new SpawnerCategory(reg.getJeiHelpers().getGuiHelper()));
 	}
 
