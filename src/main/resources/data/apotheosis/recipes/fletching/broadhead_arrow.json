@@ -1,18 +1,21 @@
 {
-  "type": "apotheosis:fletching",
-  "ingredients": [
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:stick"
-    },
-    {
-      "item": "minecraft:feather"
-    }
-  ],
-  "result": {
-    "item": "apotheosis:broadhead_arrow",
-    "count": 6
-  }
+	"type": "apotheosis:fletching",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "villager"
+	}],
+	"ingredients": [{
+			"item": "minecraft:iron_ingot"
+		},
+		{
+			"item": "minecraft:stick"
+		},
+		{
+			"item": "minecraft:feather"
+		}
+	],
+	"result": {
+		"item": "apotheosis:broadhead_arrow",
+		"count": 6
+	}
 }

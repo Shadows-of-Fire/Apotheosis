@@ -1,5 +1,9 @@
 {
 	"parent": "apotheosis:enchanting/enchanter",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
 	"display": {
 		"icon": {
 			"item": "minecraft:shield",

@@ -1,18 +1,21 @@
 {
-  "type": "apotheosis:fletching",
-  "ingredients": [
-    {
-      "item": "minecraft:flint"
-    },
-    {
-      "item": "minecraft:stick"
-    },
-    {
-      "item": "minecraft:feather"
-    }
-  ],
-  "result": {
-    "item": "minecraft:arrow",
-    "count": 6
-  }
+	"type": "apotheosis:fletching",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "villager"
+	}],
+	"ingredients": [{
+			"item": "minecraft:flint"
+		},
+		{
+			"item": "minecraft:stick"
+		},
+		{
+			"item": "minecraft:feather"
+		}
+	],
+	"result": {
+		"item": "minecraft:arrow",
+		"count": 6
+	}
 }

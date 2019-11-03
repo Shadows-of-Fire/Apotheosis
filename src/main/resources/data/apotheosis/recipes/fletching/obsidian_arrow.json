@@ -1,18 +1,21 @@
 {
-  "type": "apotheosis:fletching",
-  "ingredients": [
-    {
-      "item": "minecraft:obsidian"
-    },
-    {
-      "item": "minecraft:stick"
-    },
-    {
-      "item": "minecraft:feather"
-    }
-  ],
-  "result": {
-    "item": "apotheosis:obsidian_arrow",
-    "count": 6
-  }
+	"type": "apotheosis:fletching",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "villager"
+	}],
+	"ingredients": [{
+			"item": "minecraft:obsidian"
+		},
+		{
+			"item": "minecraft:stick"
+		},
+		{
+			"item": "minecraft:feather"
+		}
+	],
+	"result": {
+		"item": "apotheosis:obsidian_arrow",
+		"count": 6
+	}
 }

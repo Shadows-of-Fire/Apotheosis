@@ -1,28 +1,32 @@
 {
-  "parent": "apotheosis:spawner/maxdelay",
-  "display": {
-    "icon": {
-      "item": "minecraft:dragon_egg"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.conditions"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.conditions.desc"
-    },
-    "frame": "challenge"
-  },
-  "criteria": {
-    "modifier": {
-      "trigger": "apotheosis:spawner_modifier",
-      "conditions": {
-        "modifier": "ignore_spawn_conditions"
-      }
-    }
-  },
-  "requirements": [
-    [
-      "modifier"
-    ]
-  ]
+	"parent": "apotheosis:spawner/maxdelay",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:dragon_egg"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.conditions"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.conditions.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "apotheosis:spawner_modifier",
+			"conditions": {
+				"modifier": "ignore_spawn_conditions"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
 }

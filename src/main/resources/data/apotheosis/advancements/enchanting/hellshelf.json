@@ -1,32 +1,34 @@
 {
-  "parent": "apotheosis:enchanting/40ench",
-  "display": {
-    "icon": {
-      "item": "apotheosis:hellshelf"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.hellshelf"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.hellshelf.desc"
-    },
-    "frame": "task"
-  },
-  "criteria": {
-    "hellshelf": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "apotheosis:hellshelf"
-          }
-        ]
-      }
-    }
-  },
-  "requirements": [
-    [
-      "hellshelf"
-    ]
-  ]
+	"parent": "apotheosis:enchanting/40ench",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:hellshelf"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.hellshelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.hellshelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"hellshelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:hellshelf"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"hellshelf"
+		]
+	]
 }

@@ -1,31 +1,35 @@
 {
-  "parent": "apotheosis:enchanting/hellshelf",
-  "display": {
-    "icon": {
-      "item": "minecraft:enchanted_book"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.70ench"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.70ench.desc"
-    },
-    "frame": "goal"
-  },
-  "criteria": {
-    "enchanted_item": {
-      "trigger": "apotheosis:enchanted_item",
-      "conditions": {
-        "levels": {
-            "min": 70,
-			"max": 2000
-          }
-      }
-    }
-  },
-  "requirements": [
-    [
-      "enchanted_item"
-    ]
-  ]
+	"parent": "apotheosis:enchanting/hellshelf",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:enchanted_book"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.70ench"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.70ench.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "apotheosis:enchanted_item",
+			"conditions": {
+				"levels": {
+					"min": 70,
+					"max": 2000
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
 }

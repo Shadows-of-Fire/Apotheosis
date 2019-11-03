@@ -1,32 +1,36 @@
 {
-  "parent": "apotheosis:spawner/modifier",
-  "display": {
-    "icon": {
-      "item": "minecraft:clock"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.maxdelay"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.maxdelay.desc"
-    },
-    "frame": "goal"
-  },
-  "criteria": {
-    "modifier": {
-      "trigger": "apotheosis:spawner_modifier",
-      "conditions": {
-        "modifier": "max_delay",
-		"max_delay": {
-			"max": 0,
-			"min": 0
+	"parent": "apotheosis:spawner/modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:clock"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.maxdelay"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.maxdelay.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "apotheosis:spawner_modifier",
+			"conditions": {
+				"modifier": "max_delay",
+				"max_delay": {
+					"max": 0,
+					"min": 0
+				}
+			}
 		}
-      }
-    }
-  },
-  "requirements": [
-    [
-      "modifier"
-    ]
-  ]
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
 }

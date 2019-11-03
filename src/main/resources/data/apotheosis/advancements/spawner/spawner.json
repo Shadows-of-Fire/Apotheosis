@@ -1,32 +1,34 @@
 {
-  "parent": "apotheosis:spawner/root",
-  "display": {
-    "icon": {
-      "item": "minecraft:spawner"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.spawner"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.spawner.desc"
-    },
-    "frame": "task"
-  },
-  "criteria": {
-    "spawner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "minecraft:spawner"
-          }
-        ]
-      }
-    }
-  },
-  "requirements": [
-    [
-      "spawner"
-    ]
-  ]
+	"parent": "apotheosis:spawner/root",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:spawner"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.spawner"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.spawner.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"spawner": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "minecraft:spawner"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"spawner"
+		]
+	]
 }

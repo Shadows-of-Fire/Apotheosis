@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
@@ -23,6 +24,7 @@ import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
+import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
 import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.config.Configuration;
@@ -90,6 +92,7 @@ public class Apotheosis {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
 		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
 		DeferredWorkQueue.runLater(AdvancementTriggers::init);
+		CraftingHelper.register(new ModuleCondition.Serializer());
 	}
 
 	public static Ingredient potionIngredient(Potion type) {

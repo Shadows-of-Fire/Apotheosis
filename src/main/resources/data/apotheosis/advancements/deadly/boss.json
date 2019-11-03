@@ -1,5 +1,9 @@
 {
 	"parent": "apotheosis:deadly/root",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
 	"display": {
 		"icon": {
 			"item": "minecraft:zombie_head"

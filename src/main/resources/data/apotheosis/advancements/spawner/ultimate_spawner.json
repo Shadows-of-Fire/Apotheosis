@@ -1,5 +1,9 @@
 {
 	"parent": "apotheosis:spawner/conditions",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
 	"display": {
 		"icon": {
 			"item": "minecraft:spawner",

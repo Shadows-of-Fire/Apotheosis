@@ -1,32 +1,36 @@
 {
-  "parent": "apotheosis:spawner/modifier",
-  "display": {
-    "icon": {
-      "item": "minecraft:sugar"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.mindelay"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.mindelay.desc"
-    },
-    "frame": "goal"
-  },
-  "criteria": {
-    "modifier": {
-      "trigger": "apotheosis:spawner_modifier",
-      "conditions": {
-        "modifier": "min_delay",
-		"min_delay": {
-			"max": 0,
-			"min": 0
+	"parent": "apotheosis:spawner/modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:sugar"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.mindelay"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.mindelay.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "apotheosis:spawner_modifier",
+			"conditions": {
+				"modifier": "min_delay",
+				"min_delay": {
+					"max": 0,
+					"min": 0
+				}
+			}
 		}
-      }
-    }
-  },
-  "requirements": [
-    [
-      "modifier"
-    ]
-  ]
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
 }

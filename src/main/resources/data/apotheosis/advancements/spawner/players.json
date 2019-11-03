@@ -1,28 +1,32 @@
 {
-  "parent": "apotheosis:spawner/playerrange",
-  "display": {
-    "icon": {
-      "item": "minecraft:nether_star"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.players"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.players.desc"
-    },
-    "frame": "challenge"
-  },
-  "criteria": {
-    "modifier": {
-      "trigger": "apotheosis:spawner_modifier",
-      "conditions": {
-        "modifier": "require_players"
-      }
-    }
-  },
-  "requirements": [
-    [
-      "modifier"
-    ]
-  ]
+	"parent": "apotheosis:spawner/playerrange",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:nether_star"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.players"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.players.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "apotheosis:spawner_modifier",
+			"conditions": {
+				"modifier": "require_players"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
 }

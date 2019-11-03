@@ -1,31 +1,35 @@
 {
-  "parent": "apotheosis:enchanting/hellench",
-  "display": {
-    "icon": {
-      "item": "minecraft:enchanted_book"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.150ench"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.150ench.desc"
-    },
-    "frame": "challenge"
-  },
-  "criteria": {
-    "enchanted_item": {
-      "trigger": "apotheosis:enchanted_item",
-      "conditions": {
-        "levels": {
-            "min": 150,
-			"max": 2000
-          }
-      }
-    }
-  },
-  "requirements": [
-    [
-      "enchanted_item"
-    ]
-  ]
+	"parent": "apotheosis:enchanting/hellench",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:enchanted_book"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.150ench"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.150ench.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "apotheosis:enchanted_item",
+			"conditions": {
+				"levels": {
+					"min": 150,
+					"max": 2000
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
 }

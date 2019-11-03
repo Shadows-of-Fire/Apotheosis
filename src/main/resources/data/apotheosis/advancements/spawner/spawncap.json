@@ -1,28 +1,32 @@
 {
-  "parent": "apotheosis:spawner/nearbyents",
-  "display": {
-    "icon": {
-      "item": "minecraft:chorus_fruit"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.spawncap"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.spawncap.desc"
-    },
-    "frame": "challenge"
-  },
-  "criteria": {
-    "modifier": {
-      "trigger": "apotheosis:spawner_modifier",
-      "conditions": {
-        "modifier": "ignore_spawn_cap"
-      }
-    }
-  },
-  "requirements": [
-    [
-      "modifier"
-    ]
-  ]
+	"parent": "apotheosis:spawner/nearbyents",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:chorus_fruit"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.spawncap"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.spawncap.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "apotheosis:spawner_modifier",
+			"conditions": {
+				"modifier": "ignore_spawn_cap"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
 }

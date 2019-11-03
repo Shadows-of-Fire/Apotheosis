@@ -1,4 +1,8 @@
 {
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
 	"display": {
 		"icon": {
 			"item": "minecraft:enchanting_table"

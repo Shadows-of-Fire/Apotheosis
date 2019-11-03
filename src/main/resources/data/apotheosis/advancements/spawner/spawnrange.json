@@ -1,31 +1,35 @@
 {
-  "parent": "apotheosis:spawner/modifier",
-  "display": {
-    "icon": {
-      "item": "minecraft:blaze_rod"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.spawnrange"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.spawnrange.desc"
-    },
-    "frame": "goal"
-  },
-  "criteria": {
-    "modifier": {
-      "trigger": "apotheosis:spawner_modifier",
-      "conditions": {
-        "modifier": "spawn_range",
-		"spawn_range": {
-			"min": 50
+	"parent": "apotheosis:spawner/modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:blaze_rod"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.spawnrange"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.spawnrange.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "apotheosis:spawner_modifier",
+			"conditions": {
+				"modifier": "spawn_range",
+				"spawn_range": {
+					"min": 50
+				}
+			}
 		}
-      }
-    }
-  },
-  "requirements": [
-    [
-      "modifier"
-    ]
-  ]
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
 }

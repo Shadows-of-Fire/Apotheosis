@@ -1,28 +1,32 @@
 {
-  "display": {
-    "icon": {
-      "item": "minecraft:spawner"
-    },
-    "title": {
-      "translate": "advancements.apotheosis.spawner.root"
-    },
-    "description": {
-      "translate": "advancements.apotheosis.spawner.root.desc"
-    },
-    "frame": "task",
-    "show_toast": false,
-    "announce_to_chat": false,
-    "hidden": false,
-    "background": "apotheosis:textures/advancements/bg/apoth.png"
-  },
-  "criteria": {
-    "game_start": {
-      "trigger": "tick"
-    }
-  },
-  "requirements": [
-    [
-      "game_start"
-    ]
-  ]
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:spawner"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.spawner.root"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.spawner.root.desc"
+		},
+		"frame": "task",
+		"show_toast": false,
+		"announce_to_chat": false,
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"game_start": {
+			"trigger": "tick"
+		}
+	},
+	"requirements": [
+		[
+			"game_start"
+		]
+	]
 }
