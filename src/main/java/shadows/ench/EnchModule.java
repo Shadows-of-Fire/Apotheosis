@@ -48,6 +48,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -60,6 +61,7 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -79,6 +81,7 @@ import shadows.ench.anvil.BlockAnvilExt;
 import shadows.ench.anvil.EnchantmentSplitting;
 import shadows.ench.anvil.ItemAnvilExt;
 import shadows.ench.anvil.TileAnvil;
+import shadows.ench.compat.keeplapis.KeepLapisEventHandler;
 import shadows.ench.enchantments.EnchantmentBerserk;
 import shadows.ench.enchantments.EnchantmentDepths;
 import shadows.ench.enchantments.EnchantmentHellInfused;
@@ -114,7 +117,6 @@ import shadows.util.NBTIngredient;
  * Max expected table level is 150, 40 before empowered shelves.
  *
  */
-@SuppressWarnings("deprecation")
 public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
@@ -197,6 +199,8 @@ public class EnchModule {
 			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.HELL_INFUSION);
 			BossItem.TOOL_ENCHANTMENTS.add(ApotheosisObjects.DEPTH_MINER);
 		}
+
+		if (Loader.isModLoaded("csb_ench_table")) MinecraftForge.EVENT_BUS.register(KeepLapisEventHandler.class);
 	}
 
 	@SubscribeEvent
