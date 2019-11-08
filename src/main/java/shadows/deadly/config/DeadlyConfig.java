@@ -40,7 +40,7 @@ public class DeadlyConfig {
 	public static float bossKnockbackResist = .85F;
 	public static float bossSpeedMultiplier = 1.15F;
 	public static float bossDamageBonus = 4;
-	public static float bossLevelUpChance = .25F;
+	public static float bossLevelUpChance = .5F;
 	public static float bossEnchantChance = .25F;
 	public static float bossPotionChance = .45F;
 

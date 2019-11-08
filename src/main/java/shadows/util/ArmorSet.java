@@ -1,19 +1,27 @@
 package shadows.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
+import shadows.deadly.DeadlyModule;
 import shadows.placebo.util.PlaceboUtil;
 
 /**
@@ -23,10 +31,12 @@ import shadows.placebo.util.PlaceboUtil;
  */
 public class ArmorSet {
 
-	public static final Map<Integer, ArmorSet> LEVEL_TO_SETS = new HashMap<>();
-	public static final List<ArmorSet> SORTED_SETS = new ArrayList<>();
+	private static final Multimap<Integer, ArmorSet> LEVEL_TO_SETS = HashMultimap.create();
+	private static final Map<ResourceLocation, ArmorSet> REGISTRY = new HashMap<>();
+	private static int maxLevel = 0;
 
 	final int level;
+	final ResourceLocation name;
 
 	ItemStack mainhand;
 	ItemStack offhand;
@@ -42,7 +52,7 @@ public class ArmorSet {
 	 * Construcs an armor set, using the order of EntityEquipmentSlot.
 	 * @param set A 6-length ItemStack array, ordered to match EntityEquipmentSlot.  Stacks may be empty.
 	 */
-	public ArmorSet(int level, ItemStack... set) {
+	public ArmorSet(ResourceLocation name, int level, ItemStack... set) {
 		this.level = level;
 		mainhand = set[0];
 		offhand = set[1];
@@ -52,14 +62,15 @@ public class ArmorSet {
 		head = set[5];
 		for (int i = 0; i < 6; i++)
 			slotMap.put(EntityEquipmentSlot.values()[i], set[i]);
+		this.name = name;
 	}
 
 	/**
 	 * A helper constructor that will take either ItemStack, Block, or Item.
 	 * @param set A 6-length ItemStack/Item/Block array, ordered to match EntityEquipmentSlot.  Stacks may be empty, may not pass null.
 	 */
-	public ArmorSet(int level, Object... set) {
-		this(level, PlaceboUtil.toStackArray(set));
+	public ArmorSet(ResourceLocation name, int level, Object... set) {
+		this(name, level, PlaceboUtil.toStackArray(set));
 	}
 
 	/**
@@ -99,6 +110,38 @@ public class ArmorSet {
 		}
 	}
 
+	public static void register(ArmorSet set) {
+		if (!REGISTRY.containsKey(set.name)) {
+			REGISTRY.put(set.name, set);
+			LEVEL_TO_SETS.put(set.level, set);
+			if (set.level > maxLevel) maxLevel = set.level;
+		} else DeadlyModule.LOGGER.error("Attempted to register an ArmorSet with name {}, but it already exists!", set.name);
+	}
+
+	@Nullable
+	public static ArmorSet getByName(ResourceLocation name) {
+		return REGISTRY.get(name);
+	}
+
+	public static void unregister(ResourceLocation name) {
+		ArmorSet set = REGISTRY.remove(name);
+		if (set != null) {
+			LEVEL_TO_SETS.remove(set.level, set);
+			if (!LEVEL_TO_SETS.containsKey(maxLevel)) {
+				for (int i = maxLevel; i >= 0; i--) {
+					if (LEVEL_TO_SETS.containsKey(i) || i == 0) {
+						maxLevel = i;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	public static int getMaxLevel() {
+		return maxLevel;
+	}
+
 	public static class WeightedRandomStack extends WeightedRandom.Item {
 
 		final ItemStack stack;
@@ -113,10 +156,12 @@ public class ArmorSet {
 		}
 	}
 
-	public static void sortSets() {
-		List<ArmorSet> sorted = LEVEL_TO_SETS.entrySet().stream().sorted((e1, e2) -> e1.getKey().compareTo(e2.getKey())).map(a -> a.getValue()).collect(Collectors.toList());
-		SORTED_SETS.clear();
-		SORTED_SETS.addAll(sorted);
+	public static ArmorSet getSetFor(int level, Random random) {
+		Collection<ArmorSet> sets = null;
+		while (sets == null) {
+			sets = LEVEL_TO_SETS.get(level--);
+		}
+		return sets.stream().skip(random.nextInt(sets.size())).findFirst().get();
 	}
 
 }
