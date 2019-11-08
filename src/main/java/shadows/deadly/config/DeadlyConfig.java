@@ -1,27 +1,23 @@
 package shadows.deadly.config;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import shadows.Apotheosis;
 import shadows.deadly.DeadlyModule;
-import shadows.util.NameHelper;
 
 public class DeadlyConfig {
 
-	public static final IntList DIM_WHITELIST = new IntArrayList();
+	public static final List<Integer> DIM_WHITELIST = new ArrayList<>();
 	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
 	public static final List<PotionEffect> BRUTAL_POTIONS = new ArrayList<>();
 	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
@@ -32,15 +28,15 @@ public class DeadlyConfig {
 	public static Configuration config;
 
 	//Boss Stats
-	public static int bossRegenLevel = 2;
-	public static int bossResistLevel = 1;
-	public static boolean bossFireRes = true;
-	public static boolean bossWaterBreathing = true;
-	public static float bossHealthMultiplier = 4;
-	public static float bossKnockbackResist = .85F;
-	public static float bossSpeedMultiplier = 1.15F;
-	public static float bossDamageBonus = 4;
-	public static float bossLevelUpChance = .5F;
+	public static RandomValueRange bossRegenLevel = new RandomValueRange(0, 2);
+	public static RandomValueRange bossResistLevel = new RandomValueRange(0, 2);
+	public static float bossFireRes = 0.5F;
+	public static float bossWaterBreathing = 1.0F;
+	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(2.5F, 10F);
+	public static RandomValueRange bossKnockbackResist = new RandomValueRange(0.5F, 1F);
+	public static RandomValueRange bossSpeedMultiplier = new RandomValueRange(1F, 1.5F);
+	public static RandomValueRange bossDamageMult = new RandomValueRange(1.2F, 3F);;
+	public static float bossLevelUpChance = .4F;
 	public static float bossEnchantChance = .25F;
 	public static float bossPotionChance = .45F;
 
@@ -65,22 +61,27 @@ public class DeadlyConfig {
 			try {
 				DIM_WHITELIST.add(Integer.parseInt(s.trim()));
 			} catch (NumberFormatException e) {
-				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + ".  It will be ignored!  (Not a number)");
+				DeadlyModule.LOGGER.error("Invalid dim whitelist entry: " + s + " will be ignored");
 			}
 		}
 
-		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:ocean, minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
-		for (String s : biomes)
-			BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
+		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
+		for (String s : biomes) {
+			try {
+				BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
+			} catch (Exception e) {
+				DeadlyModule.LOGGER.error("Invalid biome blacklist entry: " + s + " will be ignored!");
+			}
+		}
 
-		bossRegenLevel = c.getInt("Regen Level", DeadlyConstants.BOSSES, bossRegenLevel, 0, Integer.MAX_VALUE, "The regeneration level of bosses.  Set to 0 to disable.");
-		bossResistLevel = c.getInt("Resistance Level", DeadlyConstants.BOSSES, bossResistLevel, 0, Integer.MAX_VALUE, "The resistance level of bosses.  Set to 0 to disable.");
-		bossFireRes = c.getBoolean("Fire Resistance", DeadlyConstants.BOSSES, true, "If bosses have fire resistance.");
-		bossWaterBreathing = c.getBoolean("Water Breathing", DeadlyConstants.BOSSES, true, "If bosses have water breathing.");
-		bossHealthMultiplier = c.getFloat("Health Multiplier", DeadlyConstants.BOSSES, bossHealthMultiplier, 0, Integer.MAX_VALUE, "The amount boss health is multiplied by.  Base hp * factor = final hp.");
-		bossKnockbackResist = c.getFloat("Knockback Resist", DeadlyConstants.BOSSES, bossKnockbackResist, 0, Integer.MAX_VALUE, "The amount of knockback resist bosses have.");
-		bossSpeedMultiplier = c.getFloat("Speed Multiplier", DeadlyConstants.BOSSES, bossSpeedMultiplier, 0, Integer.MAX_VALUE, "The amount boss speed is multiplied by.  Base speed * factor = final speed.");
-		bossDamageBonus = c.getFloat("Damage Bonus", DeadlyConstants.BOSSES, bossDamageBonus, 0, Integer.MAX_VALUE, "The amount of extra damage bosses do, in half hearts.");
+		bossRegenLevel = getRange(c, "Regen Level", DeadlyConstants.BOSSES, bossRegenLevel, 0, Integer.MAX_VALUE, "The %s regeneration level of bosses.");
+		bossResistLevel = getRange(c, "Resistance Level", DeadlyConstants.BOSSES, bossResistLevel, 0, Integer.MAX_VALUE, "The %s resistance level of bosses.");
+		bossFireRes = c.getFloat("Fire Resistance", DeadlyConstants.BOSSES, bossFireRes, 0, Float.MAX_VALUE, "The percent chance a boss has fire resistance.");
+		bossWaterBreathing = c.getFloat("Water Breathing", DeadlyConstants.BOSSES, bossWaterBreathing, 0, Float.MAX_VALUE, "The percent chance a boss has water breathing.");
+		bossHealthMultiplier = getRange(c, "Health Multiplier", DeadlyConstants.BOSSES, bossHealthMultiplier, 0, Integer.MAX_VALUE, "The %s amount boss health is multiplied by.  Base hp * factor = final hp.");
+		bossKnockbackResist = getRange(c, "Knockback Resist", DeadlyConstants.BOSSES, bossKnockbackResist, 0, Integer.MAX_VALUE, "The %s amount of knockback resist bosses have.");
+		bossSpeedMultiplier = getRange(c, "Speed Multiplier", DeadlyConstants.BOSSES, bossSpeedMultiplier, 0, Integer.MAX_VALUE, "The %s amount boss speed is multiplied by.  Base speed * factor = final speed.");
+		bossDamageMult = getRange(c, "Damage Bonus", DeadlyConstants.BOSSES, bossDamageMult, 0, Integer.MAX_VALUE, "The %s amount of extra damage bosses do, in half hearts.");
 		bossLevelUpChance = c.getFloat("Level Up Chance", DeadlyConstants.BOSSES, bossLevelUpChance, 0, Integer.MAX_VALUE, "The level up chance, this is rolled once per number of levels.  Levels determine gear.");
 		bossEnchantChance = c.getFloat("Random Enchantment Chance", DeadlyConstants.BOSSES, bossEnchantChance, 0, Integer.MAX_VALUE, "The chance a gear piece will be randomly enchanted.");
 		bossPotionChance = c.getFloat("Random Potion Chance", DeadlyConstants.BOSSES, bossPotionChance, 0, Integer.MAX_VALUE, "The chance a boss will have extra random potion effects.");
@@ -156,15 +157,19 @@ public class DeadlyConfig {
 		}
 
 		for (EntityEntry e : ForgeRegistries.ENTITIES)
-			if (IMob.class.isAssignableFrom(e.getEntityClass())) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
+			if (EntityLiving.class.isAssignableFrom(e.getEntityClass())) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 
 		if (c.hasChanged()) c.save();
-
-		NameHelper.load(new Configuration(new File(Apotheosis.configDir, "names.cfg")));
 	}
 
 	public static int getWeightForEntry(EntityEntry e) {
 		return config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
+	}
+
+	public static RandomValueRange getRange(Configuration c, String name, String group, RandomValueRange range, float min, float max, String comment) {
+		float rMin = c.getFloat("Min " + name, group, range.getMin(), min, max, String.format(comment, "min"));
+		float rMax = c.getFloat("Max " + name, group, range.getMax(), min, max, String.format(comment, "max"));
+		return new RandomValueRange(rMin, rMax);
 	}
 
 }

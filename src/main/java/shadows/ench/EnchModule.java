@@ -73,7 +73,6 @@ import shadows.Apotheosis.ApotheosisInit;
 import shadows.Apotheosis.ApotheosisPreInit;
 import shadows.Apotheosis.ApotheosisRecipeEvent;
 import shadows.ApotheosisObjects;
-import shadows.deadly.gen.BossItem;
 import shadows.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.ench.altar.BlockPrismaticAltar;
 import shadows.ench.altar.TilePrismaticAltar;
@@ -186,19 +185,6 @@ public class EnchModule {
 		enchInfoConfig = config;
 
 		blockIron = new OreIngredient("blockIron");
-
-		if (Apotheosis.enableDeadly) {
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.BERSERK);
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.LIFE_MENDING);
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.ICY_THORNS);
-			BossItem.ARMOR_ENCHANTMENTS.add(ApotheosisObjects.REBOUNDING);
-			if (Apotheosis.enablePotion) BossItem.BOW_ENCHANTMENTS.add(ApotheosisObjects.TRUE_INFINITY);
-			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.SCAVENGER);
-			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.KNOWLEDGE);
-			if (Apotheosis.enableSpawner) BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.CAPTURING);
-			BossItem.SWORD_ENCHANTMENTS.add(ApotheosisObjects.HELL_INFUSION);
-			BossItem.TOOL_ENCHANTMENTS.add(ApotheosisObjects.DEPTH_MINER);
-		}
 
 		if (Loader.isModLoaded("csb_ench_table")) MinecraftForge.EVENT_BUS.register(KeepLapisEventHandler.class);
 	}
