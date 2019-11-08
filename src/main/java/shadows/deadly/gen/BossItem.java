@@ -218,7 +218,7 @@ public class BossItem extends WorldFeatureItem {
 		SWORD(SWORD_ATTR, s -> EntityEquipmentSlot.MAINHAND),
 		BOW(BOW_ATTR, s -> EntityEquipmentSlot.MAINHAND),
 		TOOL(TOOL_ATTR, s -> EntityEquipmentSlot.MAINHAND),
-		ARMOR(ARMOR_ATTR, s -> ((ItemArmor) s.getItem()).getEquipmentSlot()),
+		ARMOR(ARMOR_ATTR, s -> ((ItemArmor) s.getItem()).armorType),
 		SHIELD(SHIELD_ATTR, s -> EntityEquipmentSlot.OFFHAND);
 
 		final Map<IAttribute, RandomValueRange> attributes;
