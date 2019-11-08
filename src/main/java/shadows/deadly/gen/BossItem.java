@@ -168,8 +168,7 @@ public class BossItem extends WorldFeatureItem {
 		entity.enablePersistence();
 
 		int level = 0;
-		for (int i = 0; i <= ArmorSet.getMaxLevel(); i++)
-			if (random.nextDouble() < DeadlyConfig.bossLevelUpChance) level++;
+			level++;
 		ArmorSet.getSetFor(level, random).apply(entity);
 
 		if (entity instanceof EntitySkeleton) entity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BOW));
