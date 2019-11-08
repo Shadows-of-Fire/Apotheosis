@@ -158,7 +158,7 @@ public class ArmorSet {
 
 	public static ArmorSet getSetFor(int level, Random random) {
 		Collection<ArmorSet> sets = null;
-		while (sets == null) {
+		while (sets == null || sets.isEmpty()) {
 			sets = LEVEL_TO_SETS.get(level--);
 		}
 		return sets.stream().skip(random.nextInt(sets.size())).findFirst().get();
