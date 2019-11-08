@@ -1,5 +1,6 @@
 package shadows.deadly.config;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import shadows.Apotheosis;
 import shadows.deadly.DeadlyModule;
+import shadows.util.NameHelper;
 
 public class DeadlyConfig {
 
@@ -160,6 +163,7 @@ public class DeadlyConfig {
 			if (EntityLiving.class.isAssignableFrom(e.getEntityClass())) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 
 		if (c.hasChanged()) c.save();
+		NameHelper.load(new Configuration(new File(Apotheosis.configDir, "names.cfg")));
 	}
 
 	public static int getWeightForEntry(EntityEntry e) {
