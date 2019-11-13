@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Multimap;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -78,20 +79,23 @@ public class BossItem extends WorldFeatureItem {
 	public static final Map<IAttribute, RandomValueRange> BOW_ATTR = ImmutableMap.of(
 			SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.25F, 2.0F),
 			SharedMonsterAttributes.LUCK, new RandomValueRange(0.1F, 1.0F),
-			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.4F));
+			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.4F)
+			);
 
 	public static final Map<IAttribute, RandomValueRange> TOOL_ATTR = ImmutableMap.of(
 			EntityPlayer.REACH_DISTANCE, new RandomValueRange(0.5F, 3.0F),
-			SharedMonsterAttributes.LUCK, new RandomValueRange(0.5F, 2.0F));
+			SharedMonsterAttributes.LUCK, new RandomValueRange(0.5F, 2.0F),
+			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.25F));
 
 	public static final Map<IAttribute, RandomValueRange> ARMOR_ATTR = ImmutableMap.<IAttribute, RandomValueRange>builder()
 			.put(SharedMonsterAttributes.ARMOR, new RandomValueRange(0.2F, 2.0F))
 			.put(SharedMonsterAttributes.ARMOR_TOUGHNESS, new RandomValueRange(0.1F, 0.5F))
 			.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.2F, 0.8F))
 			.put(SharedMonsterAttributes.MAX_HEALTH, new RandomValueRange(3F, 15F))
-			.put(EntityLivingBase.SWIM_SPEED, new RandomValueRange(0.2F, 0.8F)
-			//.put(EntityLivingBase.ENTITY_GRAVITY, new RandomValueRange(-0.08F, 0.08F)
-			).build();
+			.put(EntityLivingBase.SWIM_SPEED, new RandomValueRange(0.2F, 1F))
+			.put(SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.02F, 0.1F))
+			//.put(EntityLivingBase.ENTITY_GRAVITY, new RandomValueRange(-0.08F, 0.08F))
+			.build();
 
 	public static final Map<IAttribute, RandomValueRange> SHIELD_ATTR = ImmutableMap.of(
 			SharedMonsterAttributes.ARMOR, new RandomValueRange(5F, 10F),
@@ -231,12 +235,14 @@ public class BossItem extends WorldFeatureItem {
 
 		public void apply(ItemStack stack, Random rand) {
 			int numAttributes = Math.min(attributes.size(), 1 + rand.nextInt(3));
-			List<AttributeModifier> modifiers = new ArrayList<>();
+			Multimap<String, AttributeModifier> modifiers = stack.getAttributeModifiers(type.apply(stack));
 			List<IAttribute> attr = new ArrayList<>(attributes.keySet());
 			Collections.shuffle(attr, rand);
-			for (int i = 0; i < numAttributes; i++)
-				modifiers.add(new AttributeModifier(attr.get(i).getName(), attributes.get(attr.get(i)).generateFloat(rand), 0));
-			modifiers.forEach(m -> stack.addAttributeModifier(m.getName(), m, type.apply(stack)));
+			for (int i = 0; i < numAttributes; i++) {
+				String name = attr.get(i).getName();
+				modifiers.put(name, new AttributeModifier("apoth_boss_" + name, attributes.get(attr.get(i)).generateFloat(rand), 0));
+			}
+			modifiers.forEach((name, modif) -> stack.addAttributeModifier(name, modif, type.apply(stack)));
 		}
 
 		public static EquipmentType getTypeForStack(ItemStack stack) {
