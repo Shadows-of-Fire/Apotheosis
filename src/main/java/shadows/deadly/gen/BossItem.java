@@ -74,25 +74,25 @@ public class BossItem extends WorldFeatureItem {
 			SharedMonsterAttributes.ATTACK_DAMAGE, new RandomValueRange(0.5F, 5.0F),
 			EntityPlayer.REACH_DISTANCE, new RandomValueRange(0.5F, 2.0F),
 			SharedMonsterAttributes.ATTACK_SPEED, new RandomValueRange(0.25F, 1.0F),
-			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.25F));
+			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.005F, 0.05F));
 
 	public static final Map<IAttribute, RandomValueRange> BOW_ATTR = ImmutableMap.of(
 			SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.25F, 2.0F),
 			SharedMonsterAttributes.LUCK, new RandomValueRange(0.1F, 1.0F),
-			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.4F)
+			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.005F, 0.12F)
 			);
 
 	public static final Map<IAttribute, RandomValueRange> TOOL_ATTR = ImmutableMap.of(
 			EntityPlayer.REACH_DISTANCE, new RandomValueRange(0.5F, 3.0F),
 			SharedMonsterAttributes.LUCK, new RandomValueRange(0.5F, 2.0F),
-			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.05F, 0.25F));
+			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.005F, 0.1F));
 
 	public static final Map<IAttribute, RandomValueRange> ARMOR_ATTR = ImmutableMap.<IAttribute, RandomValueRange>builder()
-			.put(SharedMonsterAttributes.ARMOR, new RandomValueRange(0.2F, 2.0F))
-			.put(SharedMonsterAttributes.ARMOR_TOUGHNESS, new RandomValueRange(0.1F, 0.5F))
+			.put(SharedMonsterAttributes.ARMOR, new RandomValueRange(0.2F, 4.0F))
+			.put(SharedMonsterAttributes.ARMOR_TOUGHNESS, new RandomValueRange(0.1F, 1F))
 			.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.2F, 0.8F))
-			.put(SharedMonsterAttributes.MAX_HEALTH, new RandomValueRange(3F, 15F))
-			.put(EntityLivingBase.SWIM_SPEED, new RandomValueRange(0.2F, 1F))
+			.put(SharedMonsterAttributes.MAX_HEALTH, new RandomValueRange(3F, 10F))
+			.put(EntityLivingBase.SWIM_SPEED, new RandomValueRange(0.05F, 1F))
 			.put(SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.02F, 0.1F))
 			//.put(EntityLivingBase.ENTITY_GRAVITY, new RandomValueRange(-0.08F, 0.08F))
 			.build();
