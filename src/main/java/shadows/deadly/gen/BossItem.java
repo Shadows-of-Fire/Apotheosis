@@ -210,7 +210,7 @@ public class BossItem extends WorldFeatureItem {
 		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 60 : 30, true);
 		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel)), stack);
 		NameHelper.setItemName(random, stack, bossName, ench.isEmpty() ? null : ench.get(random.nextInt(ench.size())).enchantment);
-		EquipmentType.getTypeForStack(stack).apply(stack, random);
+		EquipmentType.getTypeFor(stack).apply(stack, random);
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
@@ -218,7 +218,7 @@ public class BossItem extends WorldFeatureItem {
 		EnchantmentHelper.setEnchantments(enchMap, stack);
 	}
 
-	static enum EquipmentType {
+	public static enum EquipmentType {
 		SWORD(SWORD_ATTR, s -> EntityEquipmentSlot.MAINHAND),
 		BOW(BOW_ATTR, s -> EntityEquipmentSlot.MAINHAND),
 		TOOL(TOOL_ATTR, s -> EntityEquipmentSlot.MAINHAND),
@@ -245,7 +245,11 @@ public class BossItem extends WorldFeatureItem {
 			modifiers.forEach((name, modif) -> stack.addAttributeModifier(name, modif, type.apply(stack)));
 		}
 
-		public static EquipmentType getTypeForStack(ItemStack stack) {
+		public EntityEquipmentSlot getSlot(ItemStack stack) {
+			return this.type.apply(stack);
+		}
+
+		public static EquipmentType getTypeFor(ItemStack stack) {
 			Item i = stack.getItem();
 			if (i instanceof ItemSword) return SWORD;
 			if (i instanceof ItemBow) return BOW;

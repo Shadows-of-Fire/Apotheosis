@@ -35,7 +35,7 @@ public class DeadlyConfig {
 	public static RandomValueRange bossResistLevel = new RandomValueRange(0, 2);
 	public static float bossFireRes = 0.5F;
 	public static float bossWaterBreathing = 1.0F;
-	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(2.5F, 10F);
+	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(2F, 4F);
 	public static RandomValueRange bossKnockbackResist = new RandomValueRange(0.5F, 1F);
 	public static RandomValueRange bossSpeedMultiplier = new RandomValueRange(1F, 1.5F);
 	public static RandomValueRange bossDamageMult = new RandomValueRange(1.2F, 3F);;
