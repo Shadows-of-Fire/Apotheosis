@@ -208,7 +208,7 @@ public class BossItem extends WorldFeatureItem {
 
 	public static void modifyBossItem(ItemStack stack, Random random, String bossName) {
 		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 60 : 30, true);
-		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel)), stack);
+		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> b)), stack);
 		NameHelper.setItemName(random, stack, bossName, ench.isEmpty() ? null : ench.get(random.nextInt(ench.size())).enchantment);
 		EquipmentType.getTypeFor(stack).apply(stack, random);
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
