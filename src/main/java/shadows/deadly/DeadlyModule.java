@@ -16,6 +16,7 @@ import shadows.deadly.gen.BossFeature;
 import shadows.deadly.gen.BrutalSpawner;
 import shadows.deadly.gen.SwarmSpawner;
 import shadows.deadly.gen.WorldGenerator;
+import shadows.deadly.loot.affixes.Affixes;
 
 public class DeadlyModule {
 
@@ -34,6 +35,7 @@ public class DeadlyModule {
 		DeadlyLoot.init();
 		SwarmSpawner.init();
 		WorldGenerator.init();
+		Affixes.init();
 		MinecraftForge.EVENT_BUS.register(new WorldGenerator());
 	}
 

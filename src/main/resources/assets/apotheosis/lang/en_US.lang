@@ -1,3 +1,14 @@
+//Deadly Module
+affix.apotheosis:fire_damage=Burning %s
+affix.apotheosis:lunar_damage=%s of the Moon
+affix.apotheosis:solar_damage=%s of the Sun
+affix.apotheosis:cold_damage=Frozen %s
+affix.apotheosis:quartz_fused=Quartz-Fused %s
+attribute.name.apoth.firedmg=Fire Damage
+attribute.name.apoth.colddmg=Cold Damage
+attribute.name.apoth.solardmg=Solar Damage
+attribute.name.apoth.lunardmg=Lunar Damage
+
 //Spawner Module
 enchantment.spw.capturing=Capturing
 

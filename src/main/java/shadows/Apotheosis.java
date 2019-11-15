@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -32,6 +33,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
+import shadows.deadly.cmd.LootCommand;
+import shadows.deadly.loot.affixes.Affix;
 import shadows.ench.EnchModule;
 import shadows.garden.GardenModule;
 import shadows.placebo.util.RecipeHelper;
@@ -45,7 +48,7 @@ public class Apotheosis {
 
 	public static final String MODID = "apotheosis";
 	public static final String MODNAME = "Apotheosis";
-	public static final String Version = "1.11.7";
+	public static final String Version = "1.12.0";
 	public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 
 	public static File configDir;
@@ -56,6 +59,10 @@ public class Apotheosis {
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enchTooltips = true;
+
+	public Apotheosis() {
+		Affix.classload();
+	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -88,6 +95,11 @@ public class Apotheosis {
 	public void init(FMLInitializationEvent e) throws IOException {
 		MinecraftForge.EVENT_BUS.post(new ApotheosisInit(e));
 		NETWORK.registerMessage(ParticleMessage.Handler.class, ParticleMessage.class, 0, Side.CLIENT);
+	}
+
+	@EventHandler
+	public void starting(FMLServerStartingEvent e) {
+		e.registerServerCommand(new LootCommand());
 	}
 
 	@SubscribeEvent
