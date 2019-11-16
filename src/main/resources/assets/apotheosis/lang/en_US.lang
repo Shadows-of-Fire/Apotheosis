@@ -8,6 +8,12 @@ attribute.name.apoth.firedmg=Fire Damage
 attribute.name.apoth.colddmg=Cold Damage
 attribute.name.apoth.solardmg=Solar Damage
 attribute.name.apoth.lunardmg=Lunar Damage
+rarity.apoth.common=Common
+rarity.apoth.magical=Magical
+rarity.apoth.empowered=Empowered
+rarity.apoth.transcended=Transcended
+rarity.apoth.ancient=Ancient
+rarity.apoth.unique=Unique
 
 //Spawner Module
 enchantment.spw.capturing=Capturing

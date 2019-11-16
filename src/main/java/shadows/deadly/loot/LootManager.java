@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -16,7 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import shadows.deadly.gen.BossItem.EquipmentType;
 import shadows.deadly.loot.affixes.Affix;
@@ -126,6 +129,7 @@ public class LootManager {
 		Set<Affix> affixes = new HashSet<>();
 		EntityEquipmentSlot slot = EquipmentType.getTypeFor(stack).getSlot(stack);
 		Multimap<String, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
+		AffixHelper.addLore(stack, new TextComponentTranslation("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(new Style().setColor(rarity.color).setItalic(true)).getFormattedText());
 
 		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
 

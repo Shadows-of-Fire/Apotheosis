@@ -9,7 +9,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import shadows.ench.EnchModule;
+import shadows.Apotheosis;
 
 public class EnchantmentMounted extends Enchantment {
 
@@ -42,7 +42,7 @@ public class EnchantmentMounted extends Enchantment {
 	public void onEntityDamaged(EntityLivingBase user, Entity target, int level) {
 		if (user.getRidingEntity() != null) {
 			DamageSource source = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
-			target.attackEntityFrom(source, (float) Math.pow(1.75F, level) * EnchModule.localAtkStrength);
+			target.attackEntityFrom(source, (float) Math.pow(1.75F, level) * Apotheosis.localAtkStrength);
 		}
 	}
 

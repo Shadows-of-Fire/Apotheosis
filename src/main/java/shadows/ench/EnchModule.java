@@ -57,7 +57,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -130,7 +129,6 @@ public class EnchModule {
 	}.setDamageBypassesArmor().setDamageIsAbsolute();
 	public static final EntityEquipmentSlot[] ARMOR = { EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
 
-	public static float localAtkStrength = 1;
 	static Configuration enchInfoConfig;
 	public static OreIngredient blockIron;
 	public static int absMax = 170;
@@ -372,12 +370,6 @@ public class EnchModule {
 			return true;
 		}
 		return false;
-	}
-
-	@SubscribeEvent
-	public void trackCooldown(AttackEntityEvent e) {
-		EntityPlayer p = e.getEntityPlayer();
-		localAtkStrength = p.getCooledAttackStrength(0.5F);
 	}
 
 	Method dropLoot;

@@ -12,10 +12,10 @@ import net.minecraft.util.text.TextFormatting;
  */
 public enum LootRarity {
 
-	COMMON(TextFormatting.WHITE, 0),
+	COMMON(TextFormatting.GRAY, 0),
 	MAGICAL(TextFormatting.AQUA, 1),
 	EMPOWERED(TextFormatting.YELLOW, 2),
-	TRANSCENDED(TextFormatting.GREEN, 2),
+	TRANSCENDED(TextFormatting.DARK_GREEN, 2),
 	ANCIENT(TextFormatting.BLUE, 3),
 	UNIQUE(TextFormatting.GOLD, 4);
 

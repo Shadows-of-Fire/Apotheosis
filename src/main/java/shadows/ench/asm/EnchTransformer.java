@@ -17,6 +17,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 import shadows.ApotheosisCore;
 import shadows.ApotheosisTransformer.IApotheosisTransformer;
 import shadows.CustomClassWriter;
+import shadows.deadly.asm.DeadlyTransformer;
 
 public class EnchTransformer implements IApotheosisTransformer {
 
@@ -55,6 +56,7 @@ public class EnchTransformer implements IApotheosisTransformer {
 				ApotheosisCore.LOG.info("Successfully transformed EnchantmentHelper.calcItemStackEnchantability");
 			}
 		}
+
 		if (getEnchantmentDatas != null) {
 			InsnList insn = new InsnList();
 			insn.add(new VarInsnNode(Opcodes.ILOAD, 0));
@@ -65,12 +67,18 @@ public class EnchTransformer implements IApotheosisTransformer {
 			getEnchantmentDatas.instructions.insert(insn);
 			ApotheosisCore.LOG.info("Successfully transformed EnchantmentHelper.getEnchantmentDatas");
 		}
+
+		ApotheosisCore.LOG.info("[Deadly] Transforming EnchantmentHelper...");
+		DeadlyTransformer.transformEnchHelper(classNode);
+		ApotheosisCore.LOG.info("[Deadly] Successfully transformed EnchantmentHelper");
+
 		if (calcStackEnch != null && getEnchantmentDatas != null) {
 			CustomClassWriter writer = new CustomClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 			classNode.accept(writer);
 			ApotheosisCore.LOG.info("Successfully transformed EnchantmentHelper");
 			return writer.toByteArray();
 		}
+
 		ApotheosisCore.LOG.info("Failed transforming EnchantmentHelper");
 		return basicClass;
 	}

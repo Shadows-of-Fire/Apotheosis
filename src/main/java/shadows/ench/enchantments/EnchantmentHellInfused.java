@@ -10,7 +10,7 @@ import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.WorldProviderHell;
-import shadows.ench.EnchModule;
+import shadows.Apotheosis;
 
 public class EnchantmentHellInfused extends Enchantment {
 
@@ -45,8 +45,8 @@ public class EnchantmentHellInfused extends Enchantment {
 			if (user instanceof EntityPlayer) {
 				DamageSource source = DamageSource.causePlayerDamage((EntityPlayer) user);
 				source.setMagicDamage().setDamageBypassesArmor();
-				target.attackEntityFrom(source, level * level * 0.5F * EnchModule.localAtkStrength);
-			} else target.attackEntityFrom(DamageSource.MAGIC, level * level * 0.5F * EnchModule.localAtkStrength);
+				target.attackEntityFrom(source, level * level * 0.5F * Apotheosis.localAtkStrength);
+			} else target.attackEntityFrom(DamageSource.MAGIC, level * level * 0.5F * Apotheosis.localAtkStrength);
 		}
 	}
 

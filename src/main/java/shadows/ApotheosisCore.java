@@ -65,6 +65,21 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 	//Block#onBlockActivated
 	private static String onBlockActivated;
 
+	//SharedMonsterAttributes#readAttributeModifierFromNBT
+	private static String readAttributeModifierFromNBT;
+
+	//EnchantmentHelper#getEnchantmentModifierDamage
+	private static String getEnchantmentModifierDamage;
+
+	//EnchantmentHelper#getModifierForCreature
+	private static String getModifierForCreature;
+
+	//EnchantmentHelper#applyArthropodEnchantments
+	private static String applyArthropodEnchantments;
+
+	//EnchantmentHelper#applyThornEnchantments
+	private static String applyThornEnchantments;
+
 	private static String enchantment = "net/minecraft/enchantment/Enchantment";
 	private static String playerCapabilities = "net/minecraft/entity/player/PlayerCapabilities";
 	private static String itemStack = "net/minecraft/item/ItemStack";
@@ -103,6 +118,11 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 		getMaxLevel = dev ? "getMaxLevel" : "func_77325_b";
 		generate = dev ? "generate" : "func_180709_b";
 		onBlockActivated = dev ? "onBlockActivated" : "func_180639_a";
+		readAttributeModifierFromNBT = dev ? "readAttributeModifierFromNBT" : "func_111259_a";
+		getEnchantmentModifierDamage = dev ? "getEnchantmentModifierDamage" : "func_77508_a";
+		getModifierForCreature = dev ? "getModifierForCreature" : "func_152377_a";
+		applyArthropodEnchantments = dev ? "applyArthropodEnchantments" : "func_151385_b";
+		applyThornEnchantments = dev ? "applyThornEnchantments" : "func_151384_a";
 	}
 
 	@Override
@@ -171,6 +191,26 @@ public class ApotheosisCore implements IFMLLoadingPlugin {
 
 	public static boolean isOnBlockActivated(MethodNode m) {
 		return m.name.equals(onBlockActivated);
+	}
+
+	public static boolean isReadAttributeModifierFromNBT(MethodNode m) {
+		return m.name.equals(readAttributeModifierFromNBT);
+	}
+
+	public static boolean isGetEnchantmentModifierDamage(MethodNode m) {
+		return m.name.equals(getEnchantmentModifierDamage);
+	}
+
+	public static boolean isGetModifierForCreature(MethodNode m) {
+		return m.name.equals(getModifierForCreature);
+	}
+
+	public static boolean isApplyArthropodEnchantments(MethodNode m) {
+		return m.name.equals(applyArthropodEnchantments);
+	}
+
+	public static boolean isApplyThornEnchantments(MethodNode m) {
+		return m.name.equals(applyThornEnchantments);
 	}
 
 }

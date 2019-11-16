@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemBlock;
@@ -20,6 +21,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -59,6 +61,7 @@ public class Apotheosis {
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enchTooltips = true;
+	public static float localAtkStrength = 1;
 
 	public Apotheosis() {
 		Affix.classload();
@@ -107,6 +110,12 @@ public class Apotheosis {
 		RecipeHelper helper = new RecipeHelper(Apotheosis.MODID, Apotheosis.MODNAME, new ArrayList<>());
 		MinecraftForge.EVENT_BUS.post(new ApotheosisRecipeEvent(helper));
 		helper.register(e.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void trackCooldown(AttackEntityEvent e) {
+		EntityPlayer p = e.getEntityPlayer();
+		Apotheosis.localAtkStrength = p.getCooledAttackStrength(0.5F);
 	}
 
 	public static void registerOverrideBlock(IForgeRegistry<Block> reg, Block b, String modid) {

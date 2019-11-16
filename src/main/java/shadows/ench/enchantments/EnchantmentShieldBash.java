@@ -8,7 +8,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import shadows.Apotheosis;
-import shadows.ench.EnchModule;
 
 public class EnchantmentShieldBash extends Enchantment {
 
@@ -44,7 +43,7 @@ public class EnchantmentShieldBash extends Enchantment {
 			if (stack.getItem().isShield(stack, user)) {
 				stack.damageItem(35, user);
 				DamageSource src = user instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) user) : DamageSource.GENERIC;
-				((EntityLivingBase) target).attackEntityFrom(src, EnchModule.localAtkStrength * 2.35F * level);
+				((EntityLivingBase) target).attackEntityFrom(src, Apotheosis.localAtkStrength * 2.35F * level);
 			}
 		}
 	}
