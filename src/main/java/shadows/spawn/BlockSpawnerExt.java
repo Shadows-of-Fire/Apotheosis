@@ -102,6 +102,11 @@ public class BlockSpawnerExt extends BlockMobSpawner {
 	}
 
 	@Override
+	protected ItemStack getSilkTouchDrop(IBlockState state) {
+		return ItemStack.EMPTY;
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("spawner", Constants.NBT.TAG_COMPOUND)) {
