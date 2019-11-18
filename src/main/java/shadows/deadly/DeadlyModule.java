@@ -16,7 +16,8 @@ import shadows.deadly.gen.BossFeature;
 import shadows.deadly.gen.BrutalSpawner;
 import shadows.deadly.gen.SwarmSpawner;
 import shadows.deadly.gen.WorldGenerator;
-import shadows.deadly.loot.affixes.Affixes;
+import shadows.deadly.loot.affix.AffixEvents;
+import shadows.deadly.loot.affix.Affixes;
 
 public class DeadlyModule {
 
@@ -25,6 +26,7 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void preInit(ApotheosisPreInit e) {
 		DeadlyConfig.config = new Configuration(new File(Apotheosis.configDir, "deadly.cfg"));
+		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 	}
 
 	@SubscribeEvent

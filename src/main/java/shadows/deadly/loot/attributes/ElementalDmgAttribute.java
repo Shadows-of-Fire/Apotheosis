@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
-import shadows.deadly.loot.affixes.AttributeAffix.IReactiveAttribute;
+import shadows.deadly.loot.affix.impl.AttributeAffix.IReactiveAttribute;
 
 public class ElementalDmgAttribute extends RangedAttribute implements IReactiveAttribute {
 

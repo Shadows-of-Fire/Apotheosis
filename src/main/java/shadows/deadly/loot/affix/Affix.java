@@ -1,4 +1,4 @@
-package shadows.deadly.loot.affixes;
+package shadows.deadly.loot.affix;
 
 import java.util.Random;
 
@@ -40,11 +40,21 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 */
 	protected ResourceLocation name;
 
+	protected final boolean prefix;
+
 	/**
 	 * @param weight The weight of this affix, relative to other affixes in the same group.
 	 */
-	public Affix(int weight) {
+	public Affix(boolean prefix, int weight) {
 		super(weight);
+		this.prefix = prefix;
+	}
+
+	/**
+	 * @return If this Affix represents a prefix.  If false, this is a suffix.
+	 */
+	public boolean isPrefix() {
+		return prefix;
 	}
 
 	/**
@@ -62,7 +72,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @return The new name, consuming the old name in the process.
 	 */
 	public ITextComponent chainName(ITextComponent name, @Nullable AffixModifier modifier) {
-		return new TextComponentTranslation("affix." + this.name, name);
+		return new TextComponentTranslation("affix." + this.name + (modifier == null ? "" : "." + modifier.getKey()), name);
 	}
 
 	/**
@@ -86,18 +96,19 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 
 	/**
 	 * Called when someone attacks an entity with an item containing this affix.
+	 * More specifically, this is invoked whenever the user attacks a target, while having an item with this affix in either hand or any armor slot.
 	 * @param user The wielder of the weapon.  The weapon stack will be in their main hand.
 	 * @param target The target entity being attacked.
 	 * @param level The level of this affix, if applicable.
 	 */
-	public void onEntityDamaged(EntityLivingBase user, Entity target, float level) {
+	public void onEntityDamaged(EntityLivingBase user, @Nullable Entity target, float level) {
 	}
 
 	/**
 	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
 	 * called.
 	 */
-	public void onUserHurt(EntityLivingBase user, Entity attacker, float level) {
+	public void onUserHurt(EntityLivingBase user, @Nullable Entity attacker, float level) {
 	}
 
 	@Override

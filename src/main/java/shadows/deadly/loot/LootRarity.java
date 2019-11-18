@@ -5,26 +5,27 @@ import java.util.Random;
 import net.minecraft.util.text.TextFormatting;
 
 /**
- * Represents a tier of loot.  A rarity will be randomly selected upon generation of a loot item.
- * Higher tiers unlock more affixes, and stronger affixes can also be selected.
- * Transcended items come with an additional designated enchantment.
- * Ancient items are unbreakable, retain the trascended enchantment
+ * Represents a tier of loot.  Each tier is stronger than the last.
+ * Common Items may receive either a "weak" prefix or suffix, or nothing.
+ * Uncommon Items will receive a prefix or suffix.
+ * Rare Items will receive a prefix and suffix.
+ * Epic Items will receive an epic affix, a prefix, a suffix, and an affix modifier.
+ * Ancient Items will receive all that an epic item receives, with another affix modifier, that may be on the epic affix.
+ * Unique Items are special rare items that have their own properties.  They may also roll affixes and modifiers, depending on the unique.
  */
 public enum LootRarity {
 
-	COMMON(TextFormatting.GRAY, 0),
-	MAGICAL(TextFormatting.AQUA, 1),
-	EMPOWERED(TextFormatting.YELLOW, 2),
-	TRANSCENDED(TextFormatting.DARK_GREEN, 2),
-	ANCIENT(TextFormatting.BLUE, 3),
-	UNIQUE(TextFormatting.GOLD, 4);
+	COMMON(TextFormatting.GRAY),
+	UNCOMMON(TextFormatting.YELLOW),
+	RARE(TextFormatting.BLUE),
+	EPIC(TextFormatting.DARK_PURPLE),
+	ANCIENT(TextFormatting.DARK_GREEN),
+	UNIQUE(TextFormatting.GOLD);
 
 	final TextFormatting color;
-	final int affixes;
 
-	private LootRarity(TextFormatting color, int affixes) {
+	private LootRarity(TextFormatting color) {
 		this.color = color;
-		this.affixes = affixes;
 	}
 
 	public TextFormatting getColor() {
@@ -47,11 +48,11 @@ public enum LootRarity {
 		if (range < 400) {
 			return COMMON;
 		} else if (range < 700) {
-			return MAGICAL;
+			return UNCOMMON;
 		} else if (range < 880) {
-			return EMPOWERED;
+			return RARE;
 		} else if (range < 950) {
-			return TRANSCENDED;
+			return EPIC;
 		} else if (range < 990) {
 			return ANCIENT;
 		} else {

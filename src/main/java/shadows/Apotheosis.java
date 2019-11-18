@@ -36,7 +36,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 import shadows.deadly.DeadlyModule;
 import shadows.deadly.cmd.LootCommand;
-import shadows.deadly.loot.affixes.Affix;
+import shadows.deadly.loot.affix.Affix;
 import shadows.ench.EnchModule;
 import shadows.garden.GardenModule;
 import shadows.placebo.util.RecipeHelper;

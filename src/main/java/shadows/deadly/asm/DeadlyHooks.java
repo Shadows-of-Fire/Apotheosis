@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenDungeons;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.gen.WorldGenerator;
-import shadows.deadly.loot.affixes.Affix;
-import shadows.deadly.loot.affixes.AffixHelper;
+import shadows.deadly.loot.affix.Affix;
+import shadows.deadly.loot.affix.AffixHelper;
 
 /**
  * ASM methods for the deadly module.

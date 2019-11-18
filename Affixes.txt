@@ -1,0 +1,39 @@
+Finalized List of Affixes
+
+Armor
+-Armor Toughness [Prefix] (Defiant): Adds 0.2 - 1.5 Armor Toughness
+-Armor [Prefix] (Ironclad): Adds 1.0 - 3.0 Armor
+-Movement Speed [Prefix] (Energetic): Adds 5% - 20% Movement Speed
+-Magic Resistance [Suffix] (Runed Protector): Adds 1.0 - 5.0 Magic Resistance
+
+Weapon
+-Fire Damage [Prefix] (Burning): Adds 0.5 - 4.0 Fire Damage
+-Lunar Damage [Suffix] (of The Moon): Adds 0.5 - 6.0 Lunar Damage
+-Solar Damage [Suffix] (of the Sun): Adds 0.5 - 6.0 Solar Damage
+-Cold Damage [Prefix] (Frozen): Adds 0.5 - 4.0 Cold Damage
+-Always Crit [Prefix] (Empowered): Attacks will always critically strike
+-Critical Damage [Suffix] (of Domination): Adds 10% - 100% critical strike damage
+
+Shield
+-Movement Speed [Prefix] (Energetic): Adds 5% - 20% Movement Speed
+-Armor Toughness [Prefix] (Defiant): Adds 0.2 - 1.5 Armor Toughness
+-Armor [Prefix] (Ironclad): Adds 1.0 - 3.0 Armor
+-Resistance [Suffix] (, Ancient Bulwark): Provides 1 - 10 seconds of Resistance while blocking.
+
+Tool
+-Reach Distance [Suffix] (of the Longest Reach): Adds 1.0 - 3.0 Reach Distance
+-Sifting [Prefix] (Orebound): There is an 0.01% - 0.1% chance to drop a metal nugget when mining.
+
+Ranged
+-Movement Speed [Prefix] (Energetic): Adds 0.05 - 0.02 Movement Speed
+-Sharpshooter [Suffix] of the Deadeye: Adds 5.0 - 15.0 Damage at distances greater than 30 meters.
+
+Epic Affixes
+-Quartz Fused [Prefix] {Weapon} (Quartz-Fused): Adds Sharpness XV
+-Eternal [Prefix] {Tool, Armor} (Eternal): Adds Unbreaking XV
+-Fortunate [Suffix] {Tool} (of Great Fortune): Adds Fortune X
+-Reflective [Suffix] {Shield} (the Spiked Barricade): Adds Reflective Defenses VIII
+-Power [Prefix] {Ranged} (Dwarven-Forged): Adds Power XX
+
+Affix Modifiers
+-Doubly: Doubles affix values

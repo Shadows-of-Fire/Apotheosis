@@ -30,7 +30,7 @@ public class LootEntry extends WeightedRandom.Item {
 		ARMOR,
 		WEAPON,
 		SHIELD,
-		TRINKET,
+		TOOL,
 		RANGED;
 	}
 }

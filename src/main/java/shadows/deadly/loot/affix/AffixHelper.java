@@ -1,4 +1,4 @@
-package shadows.deadly.loot.affixes;
+package shadows.deadly.loot.affix;
 
 import java.util.HashMap;
 import java.util.Map;

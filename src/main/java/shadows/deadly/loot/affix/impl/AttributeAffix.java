@@ -1,4 +1,4 @@
-package shadows.deadly.loot.affixes;
+package shadows.deadly.loot.affix.impl;
 
 import java.util.Random;
 
@@ -15,6 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import shadows.deadly.gen.BossItem.EquipmentType;
 import shadows.deadly.loot.AffixModifier;
+import shadows.deadly.loot.affix.Affix;
 
 public class AttributeAffix extends Affix {
 
@@ -23,22 +24,23 @@ public class AttributeAffix extends Affix {
 	protected final int op;
 	protected final boolean reactive;
 
-	public AttributeAffix(IAttribute attr, RandomValueRange range, int op, int weight) {
-		super(weight);
+	public AttributeAffix(IAttribute attr, RandomValueRange range, int op, boolean prefix, int weight) {
+		super(prefix, weight);
 		this.attr = attr;
 		this.range = range;
 		this.op = op;
 		reactive = attr instanceof IReactiveAttribute;
 	}
 
-	public AttributeAffix(IAttribute attr, float min, float max, int op, int weight) {
-		this(attr, new RandomValueRange(min, max), op, weight);
+	public AttributeAffix(IAttribute attr, float min, float max, int op, boolean prefix, int weight) {
+		this(attr, new RandomValueRange(min, max), op, prefix, weight);
 	}
 
 	@Override
 	public float apply(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
 		EntityEquipmentSlot type = EquipmentType.getTypeFor(stack).getSlot(stack);
 		float lvl = range.generateFloat(rand);
+		if (modifier != null) lvl = modifier.editLevel(lvl);
 		AttributeModifier modif = new AttributeModifier("affix_" + attr.getName(), lvl, op);
 		stack.addAttributeModifier(attr.getName(), modif, type);
 		return lvl;

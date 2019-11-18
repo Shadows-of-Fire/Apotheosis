@@ -2,17 +2,12 @@ package shadows.deadly.loot;
 
 import net.minecraft.util.WeightedRandom;
 
-public abstract class AffixModifier extends WeightedRandom.Item {
+public class AffixModifier extends WeightedRandom.Item {
 
 	/**
 	 * The language key for this modifier.
 	 */
 	protected final String key;
-
-	/**
-	 * If this modifier is for a prefix or a suffix.
-	 */
-	protected final boolean isPrefix;
 
 	/**
 	 * What this modifier does to the underlying affix.
@@ -22,14 +17,27 @@ public abstract class AffixModifier extends WeightedRandom.Item {
 	/**
 	 * The value of this modifier.
 	 */
-	protected final double value;
+	protected final float value;
 
-	public AffixModifier(String key, boolean prefix, Operation op, double value, int weight) {
+	public AffixModifier(String key, Operation op, float value, int weight) {
 		super(weight);
 		this.key = key;
-		this.isPrefix = prefix;
 		this.op = op;
 		this.value = value;
+	}
+
+	/**
+	 * Adjusts the passed level, according to the operation of this modifier.
+	 */
+	public float editLevel(float level) {
+		return op == Operation.ADD ? (level + value) : op == Operation.MULTIPLY ? (level * value) : value;
+	}
+
+	/**
+	 * Get the translation key of this modifier.
+	 */
+	public String getKey() {
+		return key;
 	}
 
 	public static enum Operation {
