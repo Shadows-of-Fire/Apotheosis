@@ -36,9 +36,9 @@ public enum LootRarity {
 	 * Chance table: <br>
 	 * Rarity      | Chance <br>
 	 * Common      | 40% <br>
-	 * Magical     | 30% <br>
-	 * Empowered   | 18% <br>
-	 * Transcended | 7% <br>
+	 * Uncommon    | 30% <br>
+	 * Rare        | 18% <br>
+	 * Epic        | 7% <br>
 	 * Ancient     | 4% <br>
 	 * Unique      | 1% <br>
 	 * @return A random loot rarity.

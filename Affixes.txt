@@ -11,7 +11,7 @@ Weapon
 -Lunar Damage [Suffix] (of The Moon): Adds 0.5 - 6.0 Lunar Damage
 -Solar Damage [Suffix] (of the Sun): Adds 0.5 - 6.0 Solar Damage
 -Cold Damage [Prefix] (Frozen): Adds 0.5 - 4.0 Cold Damage
--Always Crit [Prefix] (Empowered): Attacks will always critically strike
+-Always Crit [Prefix] (Bloodseeking): Attacks will always critically strike
 -Critical Damage [Suffix] (of Domination): Adds 10% - 100% critical strike damage
 
 Shield

@@ -59,7 +59,7 @@ public class AffixEvents {
 	@SubscribeEvent
 	public void tick(PlayerTickEvent e) {
 		EntityPlayer player = e.player;
-		if (e.phase == Phase.END || player.ticksExisted % 100 != 0) return;
+		if (e.phase == Phase.END) return;
 		ItemStack active = player.getActiveItemStack();
 		if (active.getItem().isShield(active, player) && active.hasTagCompound()) {
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(active);

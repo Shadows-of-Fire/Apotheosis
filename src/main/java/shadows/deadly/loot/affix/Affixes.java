@@ -71,7 +71,7 @@ public class Affixes {
 			new EnchantmentAffix(Enchantments.POWER, 10, true, 2).setRegistryName("power"),
 			new AttributeAffix(CustomAttributes.MAGIC_RESIST, 1, 5, 0, false, 1).setRegistryName("magic_resist"),
 			new RangedAffix(0.0001F, 0.001F, true, 1).setRegistryName("sifting"),
-			new RangedAffix(1, 10, false, 1).setRegistryName("resistance")
+			new RangedAffix(3, 15, false, 1).setRegistryName("resistance")
 		);
 		//Formatter::on
 	}
@@ -143,9 +143,9 @@ public class Affixes {
 	}
 
 	private static void initModifiers() {
-		LootManager.registerModifier(new AffixModifier("double", Operation.MULTIPLY, 2, 1));
-		LootManager.registerModifier(new AffixModifier("plus_three", Operation.ADD, 3, 3));
-		LootManager.registerModifier(new AffixModifier("plus_one", Operation.ADD, 1, 5));
+		LootManager.registerModifier(new AffixModifier("double", Operation.MULTIPLY, 2, 3));
+		LootManager.registerModifier(new AffixModifier("plus_three", Operation.ADD, 3, 1));
+		LootManager.registerModifier(new AffixModifier("plus_one", Operation.ADD, 1, 5).dontEditName());
 	}
 
 }

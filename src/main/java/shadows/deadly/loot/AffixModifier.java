@@ -19,11 +19,18 @@ public class AffixModifier extends WeightedRandom.Item {
 	 */
 	protected final float value;
 
+	protected boolean editName = true;
+
 	public AffixModifier(String key, Operation op, float value, int weight) {
 		super(weight);
 		this.key = key;
 		this.op = op;
 		this.value = value;
+	}
+
+	public AffixModifier dontEditName() {
+		editName = false;
+		return this;
 	}
 
 	/**
@@ -38,6 +45,13 @@ public class AffixModifier extends WeightedRandom.Item {
 	 */
 	public String getKey() {
 		return key;
+	}
+
+	/**
+	 * If this modifier should edit the name of the affix.
+	 */
+	public boolean editName() {
+		return editName;
 	}
 
 	public static enum Operation {

@@ -72,7 +72,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @return The new name, consuming the old name in the process.
 	 */
 	public ITextComponent chainName(ITextComponent name, @Nullable AffixModifier modifier) {
-		return new TextComponentTranslation("affix." + this.name + (modifier == null ? "" : "." + modifier.getKey()), name);
+		return new TextComponentTranslation("affix." + this.name + (modifier != null && modifier.editName() ? "." + modifier.getKey() : ""), name);
 	}
 
 	/**
