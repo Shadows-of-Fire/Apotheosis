@@ -1,6 +1,7 @@
 package shadows.deadly.loot.uniques;
 
 import net.minecraft.item.ItemStack;
+import shadows.deadly.gen.BossItem.EquipmentType;
 import shadows.deadly.loot.Unique;
 
 /**
@@ -10,7 +11,7 @@ import shadows.deadly.loot.Unique;
  */
 public class Moonshard extends Unique {
 
-	public Moonshard(ItemStack stack, Type type, int weight) {
+	public Moonshard(ItemStack stack, EquipmentType type, int weight) {
 		super(stack, type, weight);
 	}
 

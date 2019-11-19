@@ -1,7 +1,6 @@
 package shadows.deadly.gen;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,24 +12,18 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Multimap;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -48,12 +41,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import shadows.Apotheosis;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.gen.WorldFeature.WorldFeatureItem;
+import shadows.deadly.loot.LootManager;
+import shadows.deadly.loot.LootRarity;
 import shadows.ench.asm.EnchHooks;
 import shadows.placebo.util.AttributeHelper;
 import shadows.util.ArmorSet;
@@ -68,42 +62,6 @@ public class BossItem extends WorldFeatureItem {
 
 	//Default lists of boss potions/enchantments.
 	public static final List<Potion> POTIONS = new ArrayList<>();
-
-	//Formatter::off
-	public static final Map<IAttribute, RandomValueRange> SWORD_ATTR = ImmutableMap.of(
-			SharedMonsterAttributes.ATTACK_DAMAGE, new RandomValueRange(0.5F, 5.0F),
-			EntityPlayer.REACH_DISTANCE, new RandomValueRange(0.5F, 2.0F),
-			SharedMonsterAttributes.ATTACK_SPEED, new RandomValueRange(0.25F, 1.0F),
-			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.005F, 0.05F));
-
-	public static final Map<IAttribute, RandomValueRange> BOW_ATTR = ImmutableMap.of(
-			SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.25F, 2.0F),
-			SharedMonsterAttributes.LUCK, new RandomValueRange(0.1F, 1.0F),
-			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.005F, 0.12F)
-			);
-
-	public static final Map<IAttribute, RandomValueRange> TOOL_ATTR = ImmutableMap.of(
-			EntityPlayer.REACH_DISTANCE, new RandomValueRange(0.5F, 3.0F),
-			SharedMonsterAttributes.LUCK, new RandomValueRange(0.5F, 2.0F),
-			SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.005F, 0.1F));
-
-	public static final Map<IAttribute, RandomValueRange> ARMOR_ATTR = ImmutableMap.<IAttribute, RandomValueRange>builder()
-			.put(SharedMonsterAttributes.ARMOR, new RandomValueRange(0.2F, 4.0F))
-			.put(SharedMonsterAttributes.ARMOR_TOUGHNESS, new RandomValueRange(0.1F, 1F))
-			.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.2F, 0.8F))
-			.put(SharedMonsterAttributes.MAX_HEALTH, new RandomValueRange(3F, 10F))
-			.put(EntityLivingBase.SWIM_SPEED, new RandomValueRange(0.05F, 1F))
-			.put(SharedMonsterAttributes.MOVEMENT_SPEED, new RandomValueRange(0.02F, 0.1F))
-			//.put(EntityLivingBase.ENTITY_GRAVITY, new RandomValueRange(-0.08F, 0.08F))
-			.build();
-
-	public static final Map<IAttribute, RandomValueRange> SHIELD_ATTR = ImmutableMap.of(
-			SharedMonsterAttributes.ARMOR, new RandomValueRange(5F, 10F),
-			SharedMonsterAttributes.ARMOR_TOUGHNESS, new RandomValueRange(1F, 4F),
-			SharedMonsterAttributes.KNOCKBACK_RESISTANCE, new RandomValueRange(0.3F, 1F),
-			SharedMonsterAttributes.MAX_HEALTH, new RandomValueRange(5F, 25F));
-
-	//Formatter::on
 
 	//Default gear sets.
 	public static final ArmorSet GOLD_GEAR = new ArmorSet(new ResourceLocation(Apotheosis.MODID, "gold"), 0, Items.GOLDEN_SWORD, Items.SHIELD, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET).addExtraMains(Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE);
@@ -188,7 +146,7 @@ public class BossItem extends WorldFeatureItem {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat());
 			if (s.ordinal() == guaranteed) {
-				modifyBossItem(stack, random, name);
+				entity.setItemStackToSlot(s, modifyBossItem(stack, random, name));
 			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {
 				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, 30 + random.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
 				EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (v1, v2) -> v1 > v2 ? v1 : v2, HashMap::new)), stack);
@@ -206,43 +164,33 @@ public class BossItem extends WorldFeatureItem {
 		POTIONS.removeIf(p -> DeadlyConfig.BLACKLISTED_POTIONS.contains(p.getRegistryName()));
 	}
 
-	public static void modifyBossItem(ItemStack stack, Random random, String bossName) {
+	public static ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
 		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 60 : 30, true);
 		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> b)), stack);
-		NameHelper.setItemName(random, stack, bossName, ench.isEmpty() ? null : ench.get(random.nextInt(ench.size())).enchantment);
-		EquipmentType.getTypeFor(stack).apply(stack, random);
+		String itemName = NameHelper.setItemName(random, stack, bossName);
+		stack.setStackDisplayName(itemName);
+		LootRarity rarity = LootRarity.random(random, 500);
+		stack = LootManager.genLootItem(stack, random, rarity);
+		stack.setStackDisplayName(bossName + "'s " + stack.getDisplayName());
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
 		}
 		EnchantmentHelper.setEnchantments(enchMap, stack);
+		return stack;
 	}
 
 	public static enum EquipmentType {
-		SWORD(SWORD_ATTR, s -> EntityEquipmentSlot.MAINHAND),
-		BOW(BOW_ATTR, s -> EntityEquipmentSlot.MAINHAND),
-		TOOL(TOOL_ATTR, s -> EntityEquipmentSlot.MAINHAND),
-		ARMOR(ARMOR_ATTR, s -> ((ItemArmor) s.getItem()).armorType),
-		SHIELD(SHIELD_ATTR, s -> EntityEquipmentSlot.OFFHAND);
+		SWORD(s -> EntityEquipmentSlot.MAINHAND),
+		BOW(s -> EntityEquipmentSlot.MAINHAND),
+		TOOL(s -> EntityEquipmentSlot.MAINHAND),
+		ARMOR(s -> ((ItemArmor) s.getItem()).armorType),
+		SHIELD(s -> EntityEquipmentSlot.OFFHAND);
 
-		final Map<IAttribute, RandomValueRange> attributes;
 		final Function<ItemStack, EntityEquipmentSlot> type;
 
-		EquipmentType(Map<IAttribute, RandomValueRange> attributes, Function<ItemStack, EntityEquipmentSlot> type) {
-			this.attributes = attributes;
+		EquipmentType(Function<ItemStack, EntityEquipmentSlot> type) {
 			this.type = type;
-		}
-
-		public void apply(ItemStack stack, Random rand) {
-			int numAttributes = Math.min(attributes.size(), 1 + rand.nextInt(3));
-			Multimap<String, AttributeModifier> modifiers = stack.getAttributeModifiers(type.apply(stack));
-			List<IAttribute> attr = new ArrayList<>(attributes.keySet());
-			Collections.shuffle(attr, rand);
-			for (int i = 0; i < numAttributes; i++) {
-				String name = attr.get(i).getName();
-				modifiers.put(name, new AttributeModifier("apoth_boss_" + name, attributes.get(attr.get(i)).generateFloat(rand), 0));
-			}
-			modifiers.forEach((name, modif) -> stack.addAttributeModifier(name, modif, type.apply(stack)));
 		}
 
 		public EntityEquipmentSlot getSlot(ItemStack stack) {

@@ -16,6 +16,8 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.EnchantRandomly;
+import shadows.deadly.loot.LootManager;
+import shadows.deadly.loot.LootRarity;
 import shadows.placebo.loot.PlaceboLootEntry;
 
 /**
@@ -95,5 +97,19 @@ public class ChestBuilder {
 			stacks.add(s);
 		}
 
+	}
+
+	public static class AffixEntry extends PlaceboLootEntry {
+
+		public AffixEntry(int weight, int quality) {
+			super(ItemStack.EMPTY, 1, 1, weight, quality);
+		}
+
+		@Override
+		public void addLoot(Collection<ItemStack> stacks, Random rand, LootContext context) {
+			LootRarity rarity = LootRarity.random(rand);
+			ItemStack stack = LootManager.getRandomEntry(rand, rarity);
+			stacks.add(LootManager.genLootItem(stack, rand, rarity));
+		}
 	}
 }

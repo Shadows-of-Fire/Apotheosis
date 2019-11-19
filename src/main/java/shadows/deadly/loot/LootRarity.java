@@ -53,10 +53,38 @@ public enum LootRarity {
 			return RARE;
 		} else if (range < 950) {
 			return EPIC;
-		} else if (range < 990) {
+		} else if (range < 1000) {
 			return ANCIENT;
 		} else {
-			return UNIQUE;
+			return UNIQUE; //Temporarily disabled, so currently Ancient is 5%
+		}
+	}
+
+	/**
+	 * Chance table: <br>
+	 * Rarity      | Chance <br>
+	 * Common      | 40% <br>
+	 * Uncommon    | 30% <br>
+	 * Rare        | 18% <br>
+	 * Epic        | 7% <br>
+	 * Ancient     | 4% <br>
+	 * Unique      | 1% <br>
+	 * @return A random loot rarity, offset by the given min value.
+	 */
+	public static LootRarity random(Random rand, int min) {
+		int range = min + rand.nextInt(1000 - min);
+		if (range < 400) {
+			return COMMON;
+		} else if (range < 700) {
+			return UNCOMMON;
+		} else if (range < 880) {
+			return RARE;
+		} else if (range < 950) {
+			return EPIC;
+		} else if (range < 1000) {
+			return ANCIENT;
+		} else {
+			return UNIQUE; //Temporarily disabled, so currently Ancient is 5%
 		}
 	}
 }

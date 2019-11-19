@@ -32,22 +32,22 @@ public class LootManager {
 	/**
 	 * The collection of all prefix affixes, sorted by loot entry type.
 	 */
-	private static final Map<LootEntry.Type, List<Affix>> PREFIXES = new EnumMap<>(LootEntry.Type.class);
+	private static final Map<EquipmentType, List<Affix>> PREFIXES = new EnumMap<>(EquipmentType.class);
 
 	/**
 	 * The collection of all suffix affixes, sorted by loot entry type.
 	 */
-	private static final Map<LootEntry.Type, List<Affix>> SUFFIXES = new EnumMap<>(LootEntry.Type.class);
+	private static final Map<EquipmentType, List<Affix>> SUFFIXES = new EnumMap<>(EquipmentType.class);
 
 	/**
 	 * The collection of all weak affixes.
 	 */
-	private static final Map<LootEntry.Type, List<Affix>> WEAK_AFFIXES = new EnumMap<>(LootEntry.Type.class);
+	private static final Map<EquipmentType, List<Affix>> WEAK_AFFIXES = new EnumMap<>(EquipmentType.class);
 
 	/**
 	 * The collection of all epic affixes.
 	 */
-	private static final Map<LootEntry.Type, List<Affix>> EPIC_AFFIXES = new EnumMap<>(LootEntry.Type.class);
+	private static final Map<EquipmentType, List<Affix>> EPIC_AFFIXES = new EnumMap<>(EquipmentType.class);
 
 	/**
 	 * A list of all affix modifiers.
@@ -69,9 +69,9 @@ public class LootManager {
 	 * @param type The loot type of the affix.
 	 * @param affix The affix to register.
 	 */
-	public static void registerAffix(LootEntry.Type type, Affix affix) {
+	public static void registerAffix(EquipmentType type, Affix affix) {
 		if (affix == null) throw new NullPointerException("Attempted to register null affix!");
-		Map<LootEntry.Type, List<Affix>> afxMap = affix.isPrefix() ? PREFIXES : SUFFIXES;
+		Map<EquipmentType, List<Affix>> afxMap = affix.isPrefix() ? PREFIXES : SUFFIXES;
 		List<Affix> affixes = afxMap.computeIfAbsent(type, t -> new ArrayList<>());
 		if (affixes.contains(affix)) throw new UnsupportedOperationException("Attempted to register affix " + affix.getRegistryName() + " for category " + type + " but it is already present!");
 		affixes.add(affix);
@@ -84,7 +84,7 @@ public class LootManager {
 	 * @param type The loot type of the affix.
 	 * @param affix The affix to register.
 	 */
-	public static void registerWeakAffix(LootEntry.Type type, Affix affix) {
+	public static void registerWeakAffix(EquipmentType type, Affix affix) {
 		if (affix == null) throw new NullPointerException("Attempted to register null weak affix!");
 		List<Affix> affixes = WEAK_AFFIXES.computeIfAbsent(type, t -> new ArrayList<>());
 		if (affixes.contains(affix)) throw new UnsupportedOperationException("Attempted to register weak affix " + affix.getRegistryName() + " for category " + type + " but it is already present!");
@@ -98,7 +98,7 @@ public class LootManager {
 	 * @param type The loot type of the affix.
 	 * @param affix The affix to register.
 	 */
-	public static void registerEpicAffix(LootEntry.Type type, Affix affix) {
+	public static void registerEpicAffix(EquipmentType type, Affix affix) {
 		if (affix == null) throw new NullPointerException("Attempted to register null epic affix!");
 		List<Affix> affixes = EPIC_AFFIXES.computeIfAbsent(type, t -> new ArrayList<>());
 		if (affixes.contains(affix)) throw new UnsupportedOperationException("Attempted to register epic affix " + affix.getRegistryName() + " for category " + type + " but it is already present!");
@@ -130,15 +130,25 @@ public class LootManager {
 	}
 
 	/**
-	 * Generates a random loot item.
+	 * Selects a random loot entry itemstack from the list of entries.
 	 * @param rand A random.
-	 * @return A loot item, based on the random and all possible rarities, entries, and affixes.
+	 * @param rarity If this is {@link LootRarity#UNIQUE}, then the item returned will be an {@link Unique}
+	 * @return A loot entry's stack, or a unique, if the rarity selected was unique.
 	 */
-	public static ItemStack genLootItem(Random rand) {
-		LootRarity rarity = LootRarity.random(rand);
+	public static ItemStack getRandomEntry(Random rand, LootRarity rarity) {
 		LootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES);
 		ItemStack stack = rarity == LootRarity.UNIQUE ? genUnique(rand) : entry.getStack().copy();
+		return stack;
+	}
+
+	/**
+	 * Applies loot modifiers to the passed in itemstack.
+	 * Note that this will be unusual if the passed in itemstack does not meet the qualities of any equipment type.
+	 * The default equipment type is {@link EquipmentType#TOOL}, so items that do not match will be treated as tools.
+	 */
+	public static ItemStack genLootItem(ItemStack stack, Random rand, LootRarity rarity) {
 		ITextComponent name = new TextComponentString(stack.getDisplayName());
+		EquipmentType type = EquipmentType.getTypeFor(stack);
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
 		EntityEquipmentSlot slot = EquipmentType.getTypeFor(stack).getSlot(stack);
 		Multimap<String, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
@@ -148,12 +158,12 @@ public class LootManager {
 
 		switch (rarity) {
 		case COMMON: {
-			List<Affix> afxList = WEAK_AFFIXES.get(entry.type);
+			List<Affix> afxList = WEAK_AFFIXES.get(type);
 			if (rand.nextFloat() <= 0.33F) affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
 			break;
 		}
 		case UNCOMMON: {
-			List<Affix> afxList = rand.nextBoolean() ? PREFIXES.get(entry.type) : SUFFIXES.get(entry.type);
+			List<Affix> afxList = rand.nextBoolean() ? PREFIXES.get(type) : SUFFIXES.get(type);
 			affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
 			break;
 		}
@@ -161,9 +171,9 @@ public class LootManager {
 		case EPIC:
 		case ANCIENT:
 		case UNIQUE: {
-			List<Affix> afxList = PREFIXES.get(entry.type);
+			List<Affix> afxList = PREFIXES.get(type);
 			affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
-			afxList = SUFFIXES.get(entry.type);
+			afxList = SUFFIXES.get(type);
 			affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
 			break;
 		}
@@ -189,7 +199,7 @@ public class LootManager {
 		}
 
 		if (rarity.ordinal() >= LootRarity.EPIC.ordinal()) {
-			Affix afx = WeightedRandom.getRandomItem(rand, EPIC_AFFIXES.get(entry.type));
+			Affix afx = WeightedRandom.getRandomItem(rand, EPIC_AFFIXES.get(type));
 			AffixModifier epic = epicModif ? getModifier(rand) : null;
 			AffixHelper.applyAffix(stack, afx, afx.apply(stack, rand, epic));
 			name = afx.chainName(name, epic);

@@ -11,10 +11,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import shadows.Apotheosis;
 import shadows.ApotheosisObjects;
+import shadows.deadly.gen.BossItem.EquipmentType;
 import shadows.deadly.loot.AffixModifier;
 import shadows.deadly.loot.AffixModifier.Operation;
 import shadows.deadly.loot.LootEntry;
-import shadows.deadly.loot.LootEntry.Type;
 import shadows.deadly.loot.LootManager;
 import shadows.deadly.loot.affix.impl.AttributeAffix;
 import shadows.deadly.loot.affix.impl.EnchantmentAffix;
@@ -78,68 +78,68 @@ public class Affixes {
 
 	public static void init() {
 		initArmor();
-		initWeapons();
+		initSWORDs();
 		initShield();
-		initRanged();
+		initBOW();
 		initTools();
 		initEpic();
 		initEntries();
 		initModifiers();
 	}
 
-	private static void initWeapons() {
-		LootManager.registerAffix(Type.WEAPON, FIRE_DAMAGE);
-		LootManager.registerAffix(Type.WEAPON, LUNAR_DAMAGE);
-		LootManager.registerAffix(Type.WEAPON, SOLAR_DAMAGE);
-		LootManager.registerAffix(Type.WEAPON, COLD_DAMAGE);
-		LootManager.registerAffix(Type.WEAPON, ALWAYS_CRIT);
-		LootManager.registerAffix(Type.WEAPON, CRIT_DAMAGE);
+	private static void initSWORDs() {
+		LootManager.registerAffix(EquipmentType.SWORD, FIRE_DAMAGE);
+		LootManager.registerAffix(EquipmentType.SWORD, LUNAR_DAMAGE);
+		LootManager.registerAffix(EquipmentType.SWORD, SOLAR_DAMAGE);
+		LootManager.registerAffix(EquipmentType.SWORD, COLD_DAMAGE);
+		LootManager.registerAffix(EquipmentType.SWORD, ALWAYS_CRIT);
+		LootManager.registerAffix(EquipmentType.SWORD, CRIT_DAMAGE);
 	}
 
 	private static void initArmor() {
-		LootManager.registerAffix(Type.ARMOR, MOVEMENT_SPEED);
-		LootManager.registerAffix(Type.ARMOR, ARMOR_TOUGHNESS);
-		LootManager.registerAffix(Type.ARMOR, ARMOR);
-		LootManager.registerAffix(Type.ARMOR, MAGIC_RESIST);
+		LootManager.registerAffix(EquipmentType.ARMOR, MOVEMENT_SPEED);
+		LootManager.registerAffix(EquipmentType.ARMOR, ARMOR_TOUGHNESS);
+		LootManager.registerAffix(EquipmentType.ARMOR, ARMOR);
+		LootManager.registerAffix(EquipmentType.ARMOR, MAGIC_RESIST);
 	}
 
-	private static void initRanged() {
-		LootManager.registerAffix(Type.RANGED, MOVEMENT_SPEED);
-		LootManager.registerAffix(Type.RANGED, SHARPSHOOTER);
+	private static void initBOW() {
+		LootManager.registerAffix(EquipmentType.BOW, MOVEMENT_SPEED);
+		LootManager.registerAffix(EquipmentType.BOW, SHARPSHOOTER);
 	}
 
 	private static void initTools() {
-		LootManager.registerAffix(Type.TOOL, REACH_DISTANCE);
-		LootManager.registerAffix(Type.TOOL, SIFTING);
+		LootManager.registerAffix(EquipmentType.TOOL, REACH_DISTANCE);
+		LootManager.registerAffix(EquipmentType.TOOL, SIFTING);
 	}
 
 	private static void initShield() {
-		LootManager.registerAffix(Type.SHIELD, MOVEMENT_SPEED);
-		LootManager.registerAffix(Type.SHIELD, ARMOR_TOUGHNESS);
-		LootManager.registerAffix(Type.SHIELD, ARMOR);
-		LootManager.registerAffix(Type.SHIELD, RESISTANCE);
+		LootManager.registerAffix(EquipmentType.SHIELD, MOVEMENT_SPEED);
+		LootManager.registerAffix(EquipmentType.SHIELD, ARMOR_TOUGHNESS);
+		LootManager.registerAffix(EquipmentType.SHIELD, ARMOR);
+		LootManager.registerAffix(EquipmentType.SHIELD, RESISTANCE);
 	}
 
 	private static void initEpic() {
-		LootManager.registerEpicAffix(Type.WEAPON, QUARTZ_FUSED);
-		LootManager.registerEpicAffix(Type.ARMOR, ETERNAL);
-		LootManager.registerEpicAffix(Type.TOOL, ETERNAL);
-		LootManager.registerEpicAffix(Type.TOOL, FORTUNATE);
-		LootManager.registerEpicAffix(Type.SHIELD, REFLECTIVE);
-		LootManager.registerEpicAffix(Type.RANGED, POWER);
+		LootManager.registerEpicAffix(EquipmentType.SWORD, QUARTZ_FUSED);
+		LootManager.registerEpicAffix(EquipmentType.ARMOR, ETERNAL);
+		LootManager.registerEpicAffix(EquipmentType.TOOL, ETERNAL);
+		LootManager.registerEpicAffix(EquipmentType.TOOL, FORTUNATE);
+		LootManager.registerEpicAffix(EquipmentType.SHIELD, REFLECTIVE);
+		LootManager.registerEpicAffix(EquipmentType.BOW, POWER);
 	}
 
 	private static void initEntries() {
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_SWORD), Type.WEAPON, 3));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.BOW), Type.RANGED, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.SHIELD), Type.SHIELD, 1));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_HELMET), Type.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_CHESTPLATE), Type.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_LEGGINGS), Type.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_BOOTS), Type.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_SHOVEL), Type.TOOL, 1));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_AXE), Type.TOOL, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_PICKAXE), Type.TOOL, 2));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_SWORD), EquipmentType.SWORD, 3));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.BOW), EquipmentType.BOW, 2));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.SHIELD), EquipmentType.SHIELD, 1));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_HELMET), EquipmentType.ARMOR, 2));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_CHESTPLATE), EquipmentType.ARMOR, 2));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_LEGGINGS), EquipmentType.ARMOR, 2));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_BOOTS), EquipmentType.ARMOR, 2));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_SHOVEL), EquipmentType.TOOL, 1));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_AXE), EquipmentType.TOOL, 2));
+		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_PICKAXE), EquipmentType.TOOL, 2));
 	}
 
 	private static void initModifiers() {

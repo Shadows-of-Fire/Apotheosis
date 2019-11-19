@@ -1,6 +1,7 @@
 package shadows.deadly.loot;
 
 import net.minecraft.item.ItemStack;
+import shadows.deadly.gen.BossItem.EquipmentType;
 
 /**
  * A Unique is a loot drop with rarity equal to {@link LootRarity#UNIQUE}
@@ -8,7 +9,7 @@ import net.minecraft.item.ItemStack;
  */
 public abstract class Unique extends LootEntry {
 
-	public Unique(ItemStack stack, Type type, int weight) {
+	public Unique(ItemStack stack, EquipmentType type, int weight) {
 		super(stack, type, weight);
 	}
 
