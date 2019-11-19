@@ -12,6 +12,7 @@ import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -55,7 +56,7 @@ public class WorldGenerator {
 			world.setBlockState(mPos.setPos(mPos.getX(), mPos.getY() + 1, mPos.getZ()), Blocks.GLASS.getDefaultState());
 	}
 
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
 	public static void debugLog(BlockPos pos, String name) {
 		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {}", name, pos);

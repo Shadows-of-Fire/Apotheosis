@@ -144,7 +144,7 @@ public class BossItem extends WorldFeatureItem {
 
 		for (EntityEquipmentSlot s : EntityEquipmentSlot.values()) {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
-			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat());
+			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemStackToSlot(s, modifyBossItem(stack, random, name));
 			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {
@@ -171,7 +171,7 @@ public class BossItem extends WorldFeatureItem {
 		stack.setStackDisplayName(itemName);
 		LootRarity rarity = LootRarity.random(random, 500);
 		stack = LootManager.genLootItem(stack, random, rarity);
-		stack.setStackDisplayName(bossName + "'s " + stack.getDisplayName());
+		stack.setStackDisplayName(rarity.getColor() + bossName + "'s " + stack.getDisplayName());
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
