@@ -174,7 +174,7 @@ public class BossItem extends WorldFeatureItem {
 		stack.setStackDisplayName(rarity.getColor() + bossName + "'s " + stack.getDisplayName());
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
-			enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
+			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
 		}
 		EnchantmentHelper.setEnchantments(enchMap, stack);
 		return stack;
