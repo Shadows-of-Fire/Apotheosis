@@ -159,7 +159,7 @@ public class LootManager {
 		switch (rarity) {
 		case COMMON: {
 			List<Affix> afxList = WEAK_AFFIXES.get(type);
-			if (rand.nextFloat() <= 0.33F) affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
+			if (rand.nextFloat() <= 0.33F && afxList != null) affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
 			break;
 		}
 		case UNCOMMON: {

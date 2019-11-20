@@ -1,13 +1,14 @@
 package shadows.spawn.modifiers;
 
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import shadows.spawn.TileSpawnerExt;
 
 public class ConditionModifier extends SpawnerModifier {
 
 	public ConditionModifier() {
-		super(new ItemStack(Blocks.DRAGON_EGG), 0);
+		super(new ItemStack(Items.CHORUS_FRUIT), 0);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package shadows.spawn.modifiers;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import shadows.spawn.TileSpawnerExt;
@@ -7,7 +8,7 @@ import shadows.spawn.TileSpawnerExt;
 public class CapModifier extends SpawnerModifier {
 
 	public CapModifier() {
-		super(new ItemStack(Items.CHORUS_FRUIT), 0);
+		super(new ItemStack(Blocks.DRAGON_EGG), 0);
 	}
 
 	@Override
