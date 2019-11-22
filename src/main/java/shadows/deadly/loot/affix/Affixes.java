@@ -51,7 +51,8 @@ public class Affixes {
 	public static final Affix WEAK_ARMOR = null;
 	//TODO SWIM_SPEED
 	//TODO ATTACK_SPEED
-	//TODO MORE_IDEAS_PLS
+	//TODO FLYING_SPEED?
+	//TODO MAX_HEALTH
 
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
