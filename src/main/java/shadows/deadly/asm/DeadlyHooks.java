@@ -15,6 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenDungeons;
+import shadows.Apotheosis;
 import shadows.deadly.config.DeadlyConfig;
 import shadows.deadly.gen.WorldGenerator;
 import shadows.deadly.loot.affix.Affix;
@@ -33,6 +34,7 @@ public class DeadlyHooks {
 	 * Injected by {@link DeadlyTransformer}
 	 */
 	public static void setDungeonMobSpawner(World world, BlockPos pos, Random rand) {
+		if (!Apotheosis.enableDeadly) return;
 		if (rand.nextFloat() <= DeadlyConfig.dungeonBrutalChance) {
 			WorldGenerator.BRUTAL_SPAWNER.place(world, pos, rand);
 		} else if (rand.nextFloat() <= DeadlyConfig.dungeonSwarmChance) {
@@ -42,15 +44,16 @@ public class DeadlyHooks {
 
 	static Access access = new Access();
 
+	/**
+	 * ASM Hook: Called from {@link SharedMonsterAttributes#readAttributeModifierFromNBT(net.minecraft.nbt.NBTTagCompound)}
+	 */
 	public static UUID getRealUUID(UUID uuid) {
+		if (!Apotheosis.enableDeadly) return uuid;
 		if (access.getADM().equals(uuid)) return access.getADM();
 		if (access.getASM().equals(uuid)) return access.getASM();
 		return uuid;
 	}
 
-	/**
-	 * ASM Hook: Called from {@link SharedMonsterAttributes#readAttributeModifierFromNBT(net.minecraft.nbt.NBTTagCompound)}
-	 */
 	private static class Access extends Item {
 		public UUID getADM() {
 			return Item.ATTACK_DAMAGE_MODIFIER;
