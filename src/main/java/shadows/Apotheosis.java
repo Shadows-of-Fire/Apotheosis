@@ -45,12 +45,12 @@ import shadows.spawn.SpawnerModule;
 import shadows.util.NBTIngredient;
 import shadows.util.ParticleMessage;
 
-@Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.Version, dependencies = "required-after:placebo@[1.5.1,);after:inspirations;after:forge@[14.23.5.2836,)", acceptableRemoteVersions = "*")
+@Mod(modid = Apotheosis.MODID, name = Apotheosis.MODNAME, version = Apotheosis.VERSION, dependencies = "required-after:placebo@[1.5.1,);after:inspirations;after:forge@[14.23.5.2836,)")
 public class Apotheosis {
 
 	public static final String MODID = "apotheosis";
 	public static final String MODNAME = "Apotheosis";
-	public static final String Version = "1.12.2";
+	public static final String VERSION = "1.12.3";
 	public static final SimpleNetworkWrapper NETWORK = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 
 	public static File configDir;

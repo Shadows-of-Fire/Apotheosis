@@ -47,6 +47,11 @@ public class Affixes {
 	public static final Affix MAGIC_RESIST = null;
 	public static final Affix SIFTING = null;
 	public static final Affix RESISTANCE = null;
+	public static final Affix WEAK_DAMAGE = null;
+	public static final Affix WEAK_ARMOR = null;
+	//TODO SWIM_SPEED
+	//TODO ATTACK_SPEED
+	//TODO MORE_IDEAS_PLS
 
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
@@ -71,29 +76,32 @@ public class Affixes {
 			new EnchantmentAffix(Enchantments.POWER, 10, true, 2).setRegistryName("power"),
 			new AttributeAffix(CustomAttributes.MAGIC_RESIST, 1, 5, 0, false, 1).setRegistryName("magic_resist"),
 			new RangedAffix(0.0001F, 0.001F, true, 1).setRegistryName("sifting"),
-			new RangedAffix(3, 15, false, 1).setRegistryName("resistance")
+			new RangedAffix(3, 15, false, 1).setRegistryName("resistance"),
+			new AttributeAffix(SharedMonsterAttributes.ATTACK_DAMAGE, 0.3F, 1.0F, 0, true, 1).setRegistryName("weak_damage"),
+			new AttributeAffix(SharedMonsterAttributes.ARMOR, 0.3F, 1.0F, 0, true, 1).setRegistryName("weak_armor")
 		);
 		//Formatter::on
 	}
 
 	public static void init() {
 		initArmor();
-		initSWORDs();
+		initSwords();
 		initShield();
-		initBOW();
+		initRanged();
 		initTools();
 		initEpic();
 		initEntries();
 		initModifiers();
 	}
 
-	private static void initSWORDs() {
+	private static void initSwords() {
 		LootManager.registerAffix(EquipmentType.SWORD, FIRE_DAMAGE);
 		LootManager.registerAffix(EquipmentType.SWORD, LUNAR_DAMAGE);
 		LootManager.registerAffix(EquipmentType.SWORD, SOLAR_DAMAGE);
 		LootManager.registerAffix(EquipmentType.SWORD, COLD_DAMAGE);
 		LootManager.registerAffix(EquipmentType.SWORD, ALWAYS_CRIT);
 		LootManager.registerAffix(EquipmentType.SWORD, CRIT_DAMAGE);
+		LootManager.registerWeakAffix(EquipmentType.SWORD, WEAK_DAMAGE);
 	}
 
 	private static void initArmor() {
@@ -101,9 +109,10 @@ public class Affixes {
 		LootManager.registerAffix(EquipmentType.ARMOR, ARMOR_TOUGHNESS);
 		LootManager.registerAffix(EquipmentType.ARMOR, ARMOR);
 		LootManager.registerAffix(EquipmentType.ARMOR, MAGIC_RESIST);
+		LootManager.registerWeakAffix(EquipmentType.ARMOR, WEAK_ARMOR);
 	}
 
-	private static void initBOW() {
+	private static void initRanged() {
 		LootManager.registerAffix(EquipmentType.BOW, MOVEMENT_SPEED);
 		LootManager.registerAffix(EquipmentType.BOW, SHARPSHOOTER);
 	}
@@ -143,9 +152,10 @@ public class Affixes {
 	}
 
 	private static void initModifiers() {
-		LootManager.registerModifier(new AffixModifier("double", Operation.MULTIPLY, 2, 3));
-		LootManager.registerModifier(new AffixModifier("plus_three", Operation.ADD, 3, 1));
-		LootManager.registerModifier(new AffixModifier("plus_one", Operation.ADD, 1, 5).dontEditName());
+		LootManager.registerModifier(new AffixModifier("double", Operation.MULTIPLY, 2, 6));
+		LootManager.registerModifier(new AffixModifier("plus_three", Operation.ADD, 3, 2).dontEditName());
+		LootManager.registerModifier(new AffixModifier("plus_one", Operation.ADD, 1, 10).dontEditName());
+		LootManager.registerModifier(new AffixModifier("set_to_five", Operation.SET, 5, 1).dontEditName());
 	}
 
 }
