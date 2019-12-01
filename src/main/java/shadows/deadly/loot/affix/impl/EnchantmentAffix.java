@@ -35,10 +35,10 @@ public class EnchantmentAffix extends Affix {
 		Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(stack);
 		if (ench == null) ench = enchSup.get();
 		int lvl = level;
-		if (modifier != null) lvl = (int) modifier.editLevel(lvl);
+		if (modifier != null) lvl = (int) Math.max(level, modifier.editLevel(lvl));
 		enchMap.put(ench, lvl);
 		EnchantmentHelper.setEnchantments(enchMap, stack);
-		return 0;
+		return lvl;
 	}
 
 }

@@ -59,7 +59,7 @@ public class WorldGenerator {
 	public static final boolean DEBUG = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
 	public static void debugLog(BlockPos pos, String name) {
-		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {}", name, pos);
+		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
 	}
 
 	public static void setSuccess(int dim, int x, int z) {

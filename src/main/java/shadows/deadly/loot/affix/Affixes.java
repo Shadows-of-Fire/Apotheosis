@@ -1,5 +1,6 @@
 package shadows.deadly.loot.affix;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -23,6 +24,14 @@ import shadows.deadly.loot.affix.impl.RangedAffix;
 import shadows.deadly.loot.affix.impl.SharpshooterAffix;
 import shadows.deadly.loot.attributes.CustomAttributes;
 
+/**
+ * Current Affix Counts (Prefix/Suffix)
+ * Weapons: 4/3
+ * Ranged: 1/1
+ * Tools: 1/1
+ * Armor: 2/4
+ * Shields: 2/3
+ */
 @EventBusSubscriber(modid = Apotheosis.MODID)
 @ObjectHolder(Apotheosis.MODID)
 public class Affixes {
@@ -49,10 +58,10 @@ public class Affixes {
 	public static final Affix RESISTANCE = null;
 	public static final Affix WEAK_DAMAGE = null;
 	public static final Affix WEAK_ARMOR = null;
-	//TODO SWIM_SPEED
-	//TODO ATTACK_SPEED
-	//TODO FLYING_SPEED?
-	//TODO MAX_HEALTH
+	public static final Affix SWIM_SPEED = null;
+	public static final Affix ATTACK_SPEED = null;
+	public static final Affix MAX_HEALTH = null;
+	public static final Affix REGENERATION = null;
 
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
@@ -64,7 +73,7 @@ public class Affixes {
 			new AttributeAffix(CustomAttributes.COLD_DAMAGE, 0.5F, 4.0F, 0, true, 3).setRegistryName("cold_damage"),
 			new EnchantmentAffix(Enchantments.SHARPNESS, 15, true, 2).setRegistryName("quartz_fused"),
 			new AttributeAffix(SharedMonsterAttributes.MOVEMENT_SPEED, 0.05F, 0.2F, 1, true, 3).setRegistryName("movement_speed"),
-			new AttributeAffix(SharedMonsterAttributes.ARMOR_TOUGHNESS, 0.2F, 1.5F, 0, true, 1).setRegistryName("armor_toughness"),
+			new AttributeAffix(SharedMonsterAttributes.ARMOR_TOUGHNESS, 0.2F, 1.5F, 0, false, 1).setRegistryName("armor_toughness"),
 			new AttributeAffix(CustomAttributes.VORPAL_DAMAGE, 1.0F, 5.0F, 0, true, 2).setRegistryName("ender_slaying"),
 			new AttributeAffix(SharedMonsterAttributes.ARMOR, 1.0F, 3.0F, 0, true, 3).setRegistryName("armor"),
 			new GenericAffix(true, 1).setRegistryName("always_crit"),
@@ -79,7 +88,10 @@ public class Affixes {
 			new RangedAffix(0.0001F, 0.001F, true, 1).setRegistryName("sifting"),
 			new RangedAffix(3, 15, false, 1).setRegistryName("resistance"),
 			new AttributeAffix(SharedMonsterAttributes.ATTACK_DAMAGE, 0.3F, 1.0F, 0, true, 1).setRegistryName("weak_damage"),
-			new AttributeAffix(SharedMonsterAttributes.ARMOR, 0.3F, 1.0F, 0, true, 1).setRegistryName("weak_armor")
+			new AttributeAffix(SharedMonsterAttributes.ARMOR, 0.3F, 1.0F, 0, true, 1).setRegistryName("weak_armor"),
+			new AttributeAffix(EntityLivingBase.SWIM_SPEED, 0.1F, 0.4F, 1, false, 3).setRegistryName("swim_speed"),
+			new AttributeAffix(SharedMonsterAttributes.ATTACK_SPEED, 0.3F, 1.0F, 1, true, 2).setRegistryName("attack_speed"),
+			new AttributeAffix(SharedMonsterAttributes.MAX_HEALTH, 4, 20, 0, true, 1).setRegistryName("max_health")
 		);
 		//Formatter::on
 	}
@@ -102,6 +114,7 @@ public class Affixes {
 		LootManager.registerAffix(EquipmentType.SWORD, COLD_DAMAGE);
 		LootManager.registerAffix(EquipmentType.SWORD, ALWAYS_CRIT);
 		LootManager.registerAffix(EquipmentType.SWORD, CRIT_DAMAGE);
+		LootManager.registerAffix(EquipmentType.SWORD, ATTACK_SPEED);
 		LootManager.registerWeakAffix(EquipmentType.SWORD, WEAK_DAMAGE);
 	}
 
@@ -110,6 +123,8 @@ public class Affixes {
 		LootManager.registerAffix(EquipmentType.ARMOR, ARMOR_TOUGHNESS);
 		LootManager.registerAffix(EquipmentType.ARMOR, ARMOR);
 		LootManager.registerAffix(EquipmentType.ARMOR, MAGIC_RESIST);
+		LootManager.registerAffix(EquipmentType.ARMOR, MAX_HEALTH);
+		LootManager.registerAffix(EquipmentType.ARMOR, SWIM_SPEED);
 		LootManager.registerWeakAffix(EquipmentType.ARMOR, WEAK_ARMOR);
 	}
 
@@ -128,6 +143,7 @@ public class Affixes {
 		LootManager.registerAffix(EquipmentType.SHIELD, ARMOR_TOUGHNESS);
 		LootManager.registerAffix(EquipmentType.SHIELD, ARMOR);
 		LootManager.registerAffix(EquipmentType.SHIELD, RESISTANCE);
+		LootManager.registerAffix(EquipmentType.SHIELD, MAX_HEALTH);
 	}
 
 	private static void initEpic() {

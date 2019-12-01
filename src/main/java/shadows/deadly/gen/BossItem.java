@@ -166,10 +166,10 @@ public class BossItem extends WorldFeatureItem {
 
 	public static ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
 		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 60 : 30, true);
-		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> b)), stack);
+		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> a > b ? a : b)), stack);
 		String itemName = NameHelper.setItemName(random, stack, bossName);
 		stack.setStackDisplayName(itemName);
-		LootRarity rarity = LootRarity.random(random, 500);
+		LootRarity rarity = LootRarity.random(random, 400);
 		stack = LootManager.genLootItem(stack, random, rarity);
 		stack.setStackDisplayName(rarity.getColor() + bossName + "'s " + stack.getDisplayName());
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
