@@ -32,10 +32,10 @@ public class WandererReplacements {
 		randTrades.add(new BasicTrade(4, new ItemStack(Items.SKELETON_SKULL), 5, 5));
 		randTrades.add(new BasicTrade(2, new ItemStack(Items.ZOMBIE_HEAD), 5, 5));
 		randTrades.add(new BasicTrade(4, new ItemStack(Items.PRISMARINE_SHARD, 5), 5, 5));
-		randTrades.add(new BasicTrade(2, new ItemStack(Items.SADDLE, 5), 5, 5));
-		randTrades.add(new BasicTrade(6, new ItemStack(Items.DIAMOND_HORSE_ARMOR, 5), 5, 5));
-		randTrades.add(new BasicTrade(4, new ItemStack(Items.GOLDEN_HORSE_ARMOR, 5), 5, 5));
-		randTrades.add(new BasicTrade(2, new ItemStack(Items.IRON_HORSE_ARMOR, 5), 5, 5));
+		randTrades.add(new BasicTrade(2, new ItemStack(Items.SADDLE), 2, 5));
+		randTrades.add(new BasicTrade(6, new ItemStack(Items.DIAMOND_HORSE_ARMOR), 5, 7));
+		randTrades.add(new BasicTrade(4, new ItemStack(Items.GOLDEN_HORSE_ARMOR), 4, 6));
+		randTrades.add(new BasicTrade(2, new ItemStack(Items.IRON_HORSE_ARMOR), 3, 5));
 
 		List<ITrade> goodTrades = e.getRareTrades();
 		ItemStack stack = new ItemStack(Items.DIAMOND_SWORD);
