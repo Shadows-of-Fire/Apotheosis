@@ -4,16 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.lang3.text.WordUtils;
+import com.google.common.base.Preconditions;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.PickaxeItem;
@@ -21,170 +20,200 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TieredItem;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.registries.ForgeRegistries;
+import shadows.placebo.config.Configuration;
 
 /**
- * This class is functional.  It's a mess tho.
- * @author FatherToast
+ * Generates names for various objects, based on stuff.
+ * @author Shadows
  *
  */
 public class NameHelper {
-	/// List of all possible full names.
-	public static String[] names = { "Albert", "Andrew", "Anderson", "Andy", "Allan", "Arthur", "Aaron", "Allison", "Arielle", "Amanda", "Anne", "Annie", "Amy", "Alana", "Brandon", "Brady", "Bernard", "Ben", "Benjamin", "Bob", "Bobette", "Brooke", "Brandy", "Beatrice", "Bea", "Bella", "Becky", "Carlton", "Carl", "Calvin", "Cameron", "Carson", "Chase", "Cassandra", "Cassie", "Cas", "Carol", "Carly", "Cherise", "Charlotte", "Cheryl", "Chasity", "Danny", "Drake", "Daniel", "Derrel", "David", "Dave", "Donovan", "Don", "Donald", "Darkosto", "Darksoto", "Darktoasto", "Drew", "Derrick", "Darla", "Donna", "Dora", "Danielle", "Edward", "Elliot", "Ed", "Edson", "Elton", "Eddison", "Earl", "Eric", "Ericson", "Eddie", "Ediovany", "Emma", "Elizabeth", "Eliza", "Esperanza", "Esper", "Esmeralda", "Emi", "Emily", "Elaine", "Fernando", "Ferdinand", "Fred", "Feddie", "Fredward", "Frank", "Franklin", "Felix", "Felicia", "Fran", "Greg", "Gregory", "George", "Gerald", "Gina", "Geraldine", "Gabby", "Hendrix", "Henry", "Hobbes", "Herbert", "Heath", "Henderson", "Helga", "Hera", "Helen", "Helena", "Hannah", "Ike", "Issac", "Israel", "Ismael", "Irlanda", "Isabelle", "Irene", "Irenia", "Jimmy", "Jim", "Justin", "Jacob", "Jake", "Jon", "Johnson", "Jonny", "Jonathan", "Josh", "Joshua", "Julian", "Jesus", "Jericho", "Jeb", "Jess", "Joan", "Jill", "Jillian", "Jessica", "Jennifer", "Jenny", "Jen", "Judy", "Kenneth", "Kenny", "Ken", "Keith", "Kevin", "Karen", "Kassandra", "Kassie", "Leonard", "Leo", "Leroy", "Lee", "Lenny", "Luke", "Lucas", "Liam", "Lorraine", "Latasha", "Lauren", "Laquisha", "Livia", "Lydia", "Lila", "Lilly", "Lillian", "Lilith", "Lana", "Mason", "Mike", "Mickey", "Mario", "Manny", "Mark", "Marcus", "Martin", "Marty", "Matthew", "Matt", "Max", "Maximillian", "Marth", "Mia", "Marriah", "Maddison", "Maddie", "Marissa", "Miranda", "Mary", "Martha", "Melonie", "Melody", "Mel", "Minnie", "Nathan", "Nathaniel", "Nate", "Ned", "Nick", "Norman", "Nicholas", "Natasha", "Nicki", "Nora", "Nelly", "Nina", "Orville", "Oliver", "Orlando", "Owen", "Olsen", "Odin", "Olaf", "Ortega", "Olivia", "Patrick", "Pat", "Paul", "Perry", "Pinnochio", "Patrice", "Patricia", "Pennie", "Petunia", "Patti", "Pernelle", "Quade", "Quincy", "Quentin", "Quinn", "Roberto", "Robbie", "Rob", "Robert", "Roy", "Roland", "Ronald", "Richard", "Rick", "Ricky", "Rose", "Rosa", "Rhonda", "Rebecca", "Roberta", "Sparky", "Shiloh", "Stephen", "Steve", "Saul", "Sheen", "Shane", "Sean", "Sampson", "Samuel", "Sammy", "Stefan", "Sasha", "Sam", "Susan", "Suzy", "Shelby", "Samantha", "Sheila", "Sharon", "Sally", "Stephanie", "Sandra", "Sandy", "Sage", "Tim", "Thomas", "Thompson", "Tyson", "Tyler", "Tom", "Tyrone", "Timmothy", "Tamara", "Tabby", "Tabitha", "Tessa", "Tiara", "Tyra", "Uriel", "Ursala", "Uma", "Victor", "Vincent", "Vince", "Vance", "Vinny", "Velma", "Victoria", "Veronica", "Wilson", "Wally", "Wallace", "Will", "Wilard", "William", "Wilhelm", "Xavier", "Xandra", "Young", "Yvonne", "Yolanda", "Zach", "Zachary" };
-	/// List of all name parts.
-	public static String[] nameParts = { "Grab", "Thar", "Ger", "Ald", "Mas", "On", "O", "Din", "Thor", "Jon", "Ath", "Burb", "En", "A", "E", "I", "U", "Hab", "Bloo", "Ena", "Dit", "Aph", "Ern", "Bor", "Dav", "Id", "Toast", "Son", "Dottir", "For", "Wen", "Lob", "Ed", "Die", "Van", "Y", "Zap", "Ear", "Ben", "Don", "Bran", "Gro", "Jen", "Bob", "Ette", "Ere", "Man", "Qua", "Bro", "Cree", "Per", "Skel", "Ton", "Zom", "Bie", "Wolf", "End", "Er", "Pig", "Sil", "Ver", "Fish", "Cow", "Chic", "Ken", "Sheep", "Squid", "Hell" };
-	/// List of salutations.
-	public static String[] salutations = { "Sir", "Mister", "Madam", "Doctor", "Father", "Mother" };
-	/// List of all mob descriptors.
-	public static String[] descriptors = { "Mighty", "Supreme", "Superior", "Ultimate", "Lame", "Wimpy", "Curious", "Sneaky", "Pathetic", "Crying", "Eagle", "Errant", "Unholy", "Questionable", "Mean", "Hungry", "Thirsty", "Feeble", "Wise", "Sage", "Magical", "Mythical", "Legendary", "Not Very Nice", "Jerk", "Doctor", "Misunderstood", "Angry", "Knight", "Bishop", "Godly", "Special", "Toasty", "Shiny", "Shimmering", "Light", "Dark", "Odd-Smelling", "Funky", "Rock Smasher", "Son of Herobrine", "Cracked", "Sticky", "\u00a7kAlien\u00a7r", "Baby", "Manly", "Rough", "Scary", "Undoubtable", "Honest", "Non-Suspicious", "Boring", "Odd", "Lazy", "Super", "Nifty", "Ogre Slayer", "Pig Thief", "Dirt Digger", "Really Cool", "Doominator", "... Something" };
-	/// 3D array of all enchantment prefixes and postfixes. (enchantment id, pre or post, values)
-	public static Map<Enchantment, String[][]> modifiers = new HashMap<>();
+
+	/**
+	 * List of all possible full names.
+	*/
+	private static String[] names = { "Albert", "Andrew", "Anderson", "Andy", "Allan", "Arthur", "Aaron", "Allison", "Arielle", "Amanda", "Anne", "Annie", "Amy", "Alana", "Brandon", "Brady", "Bernard", "Ben", "Benjamin", "Bob", "Bobette", "Brooke", "Brandy", "Beatrice", "Bea", "Bella", "Becky", "Carlton", "Carl", "Calvin", "Cameron", "Carson", "Chase", "Cassandra", "Cassie", "Cas", "Carol", "Carly", "Cherise", "Charlotte", "Cheryl", "Chasity", "Danny", "Drake", "Daniel", "Derrel", "David", "Dave", "Donovan", "Don", "Donald", "Drew", "Derrick", "Darla", "Donna", "Dora", "Danielle", "Edward", "Elliot", "Ed", "Edson", "Elton", "Eddison", "Earl", "Eric", "Ericson", "Eddie", "Ediovany", "Emma", "Elizabeth", "Eliza", "Esperanza", "Esper", "Esmeralda", "Emi", "Emily", "Elaine", "Fernando", "Ferdinand", "Fred", "Feddie", "Fredward", "Frank", "Franklin", "Felix", "Felicia", "Fran", "Greg", "Gregory", "George", "Gerald", "Gina", "Geraldine", "Gabby", "Hendrix", "Henry", "Hobbes", "Herbert", "Heath", "Henderson", "Helga", "Hera", "Helen", "Helena", "Hannah", "Ike", "Issac", "Israel", "Ismael", "Irlanda", "Isabelle", "Irene", "Irenia", "Jimmy", "Jim", "Justin", "Jacob", "Jake", "Jon", "Johnson", "Jonny", "Jonathan", "Josh", "Joshua", "Julian", "Jesus", "Jericho", "Jeb", "Jess", "Joan", "Jill", "Jillian", "Jessica", "Jennifer", "Jenny", "Jen", "Judy", "Kenneth", "Kenny", "Ken", "Keith", "Kevin", "Karen", "Kassandra", "Kassie", "Leonard", "Leo", "Leroy", "Lee", "Lenny", "Luke", "Lucas", "Liam", "Lorraine", "Latasha", "Lauren", "Laquisha", "Livia", "Lydia", "Lila", "Lilly", "Lillian", "Lilith", "Lana", "Mason", "Mike", "Mickey", "Mario", "Manny", "Mark", "Marcus", "Martin", "Marty", "Matthew", "Matt", "Max", "Maximillian", "Marth", "Mia", "Marriah", "Maddison", "Maddie", "Marissa", "Miranda", "Mary", "Martha", "Melonie", "Melody", "Mel", "Minnie", "Nathan", "Nathaniel", "Nate", "Ned", "Nick", "Norman", "Nicholas", "Natasha", "Nicki", "Nora", "Nelly", "Nina", "Orville", "Oliver", "Orlando", "Owen", "Olsen", "Odin", "Olaf", "Ortega", "Olivia", "Patrick", "Pat", "Paul", "Perry", "Pinnochio", "Patrice", "Patricia", "Pennie", "Petunia", "Patti", "Pernelle", "Quade", "Quincy", "Quentin", "Quinn", "Roberto", "Robbie", "Rob", "Robert", "Roy", "Roland", "Ronald", "Richard", "Rick", "Ricky", "Rose", "Rosa", "Rhonda", "Rebecca", "Roberta", "Sparky", "Shiloh", "Stephen", "Steve", "Saul", "Sheen", "Shane", "Sean", "Sampson", "Samuel", "Sammy", "Stefan", "Sasha", "Sam", "Susan", "Suzy", "Shelby", "Samantha", "Sheila", "Sharon", "Sally", "Stephanie", "Sandra", "Sandy", "Sage", "Tim", "Thomas", "Thompson", "Tyson", "Tyler", "Tom", "Tyrone", "Timmothy", "Tamara", "Tabby", "Tabitha", "Tessa", "Tiara", "Tyra", "Uriel", "Ursala", "Uma", "Victor", "Vincent", "Vince", "Vance", "Vinny", "Velma", "Victoria", "Veronica", "Wilson", "Wally", "Wallace", "Will", "Wilard", "William", "Wilhelm", "Xavier", "Xandra", "Young", "Yvonne", "Yolanda", "Zach", "Zachary" };
+
+	/**
+	 * List of all name parts.
+	 */
+	private static String[] nameParts = { "Grab", "Thar", "Ger", "Ald", "Mas", "On", "O", "Din", "Thor", "Jon", "Ath", "Burb", "En", "A", "E", "I", "U", "Hab", "Bloo", "Ena", "Dit", "Aph", "Ern", "Bor", "Dav", "Id", "Toast", "Son", "Dottir", "For", "Wen", "Lob", "Ed", "Die", "Van", "Y", "Zap", "Ear", "Ben", "Don", "Bran", "Gro", "Jen", "Bob", "Ette", "Ere", "Man", "Qua", "Bro", "Cree", "Per", "Skel", "Ton", "Zom", "Bie", "Wolf", "End", "Er", "Pig", "Sil", "Ver", "Fish", "Cow", "Chic", "Ken", "Sheep", "Squid", "Hell" };
+
+	/**
+	 * List of prefixes, that are optionally applied to names.
+	 */
+	private static String[] prefixes = { "Sir", "Mister", "Madam", "Doctor", "Father", "Mother" };
+
+	/**
+	 * List of suffixes, that are optionally applied to names.  A suffix will always be preceeded by "the"
+	 * That is, selecting "Mighty" from this list would incur the addition of "The Mighty" to the name.
+	 */
+	private static String[] suffixes = { "Mighty", "Supreme", "Superior", "Ultimate", "Lame", "Wimpy", "Curious", "Sneaky", "Pathetic", "Crying", "Eagle", "Errant", "Unholy", "Questionable", "Mean", "Hungry", "Thirsty", "Feeble", "Wise", "Sage", "Magical", "Mythical", "Legendary", "Not Very Nice", "Jerk", "Doctor", "Misunderstood", "Angry", "Knight", "Bishop", "Godly", "Special", "Toasty", "Shiny", "Shimmering", "Light", "Dark", "Odd-Smelling", "Funky", "Rock Smasher", "Son of Herobrine", "Cracked", "Sticky", "\u00a7kAlien\u00a7r", "Baby", "Manly", "Rough", "Scary", "Undoubtable", "Honest", "Non-Suspicious", "Boring", "Odd", "Lazy", "Super", "Nifty", "Ogre Slayer", "Pig Thief", "Dirt Digger", "Really Cool", "Doominator", "... Something" };
+
+	/**
+	 * Possible primary names for helmets.
+	 */
+	private static String[] helms = { "Helmet", "Cap", "Crown", "Great Helm", "Bassinet", "Sallet", "Close Helm", "Barbute" };
+
+	/**
+	 * Possible primary names for chestplates.
+	 */
+	private static String[] chestplates = { "Chestplate", "Tunic", "Brigandine", "Hauberk", "Cuirass" };
+
+	/**
+	 * Possible primary names for leggings.
+	 */
+	private static String[] leggings = { "Leggings", "Pants", "Tassets", "Cuisses", "Schynbalds" };
+
+	/**
+	 * Possible primary names for boots.
+	 */
+	private static String[] boots = { "Boots", "Shoes", "Greaves", "Sabatons", "Sollerets" };
+
+	/**
+	 * Possible primary names for swords.
+	 */
+	private static String[] swords = { "Sword", "Cutter", "Slicer", "Dicer", "Knife", "Blade", "Machete", "Brand", "Claymore", "Cutlass", "Foil", "Dagger", "Glaive", "Rapier", "Saber", "Scimitar", "Shortsword", "Longsword", "Broadsword", "Calibur" };
+
+	/**
+	 * Possible primary names for axes.
+	 */
+	private static String[] axes = { "Axe", "Chopper", "Hatchet", "Tomahawk", "Cleaver", "Hacker", "Tree-Cutter", "Truncator" };
+
+	/**
+	 * Possible primary names for pickaxes.
+	 */
+	private static String[] pickaxes = { "Pickaxe", "Pick", "Mattock", "Rock-Smasher", "Miner" };
+
+	/**
+	 * Possible primary names for shovels.
+	 */
+	private static String[] shovels = { "Shovel", "Spade", "Digger", "Excavator", "Trowel", "Scoop" };
+
+	/**
+	 * Possible primary names for bows.
+	 */
+	private static String[] bows = { "Bow", "Shortbow", "Longbow", "Flatbow", "Recurve Bow", "Reflex Bow", "Self Bow", "Composite Bow", "Arrow-Flinger" };
+
+	/**
+	 * Array of descriptors for items based on tool material.
+	 */
+	private static Map<IItemTier, String[]> materials = new HashMap<>();
 	static {
-		modifiers.put(Enchantments.PROTECTION, new String[][] { { "Protective", "Shielding", "Fortified", "Tough", "Sturdy", "Defensive" }, { "Resistance", "Protection", "Shielding", "Fortitude", "Toughness", "Sturdiness", "Defense" } });
-		modifiers.put(Enchantments.FIRE_PROTECTION, new String[][] { { "Flame-Resistant", "Flameproof", "Fire-Resistant", "Fireproof", "Cold", "Frigid" }, { "Flame Resistance", "Flame", "Fire Resistance", "Fire", "Coldness", "Ice" } });
-		modifiers.put(Enchantments.FEATHER_FALLING, new String[][] { { "Feather", "Feathered", "Mercury", "Hermes", "Winged", "Lightweight", "Soft", "Cushioned" }, { "Feather Falling", "Feathers", "Mercury", "Hermes", "Wings", "Gravity", "Softness", "Cushioning" } });
-		modifiers.put(Enchantments.BLAST_PROTECTION, new String[][] { { "Blast-Resistant", "Creeperproof", "Anti-Creeper", "Bomb", "Explosion-Damping", "Bombproof" }, { "Blast Resistance", "Creeper Hugging", "Creeper Slaying", "Bomb Repelling", "Explosion Damping", "Bomb Resistance" } });
-		modifiers.put(Enchantments.PROJECTILE_PROTECTION, new String[][] { { "Arrow-Blocking", "Skeletonproof", "Anti-Skeleton", "Arrow-Breaking", "Arrowproof" }, { "Arrow Blocking", "Skeleton Hugging", "Skeleton Slaying", "Arrow Resistance", "Arrow Defense" } });
-		modifiers.put(Enchantments.RESPIRATION, new String[][] { { "Waterbreathing", "Dive", "Diving", "Water", "Scuba", "Fishy", "Underwater", "Deep-sea", "Submarine" }, { "Waterbreathing", "Diving", "Deep-Sea Diving", "Water", "Swimming", "Fishiness", "Underwater Exploration", "Deep-sea Exploration", "Submersion" } });
-		modifiers.put(Enchantments.AQUA_AFFINITY, new String[][] { { "Aquatic", "Watery", "Wet", "Deep-Sea Mining", "Fish", "Fishy" }, { "Aquatic Mining", "Water", "Wetness", "Deep-Sea Mining", "Fish" } });
-		modifiers.put(Enchantments.THORNS, new String[][] { { "Thorned", "Spiked", "Angry", "Vengeful", "Retaliating", "Splintering", "Harmful", "Painful", "Spiny", "Pointy", "Sharp" }, { "Thorns", "Spikes", "Anger", "Vengeance", "Retaliation", "Splinters", "Harm", "Pain", "Spines", "Pointiness", "Sharpness" } });
-		modifiers.put(Enchantments.SHARPNESS, new String[][] { { "Sharp", "Razor Sharp", "Pointy", "Razor-Edged", "Serrated", "Painful", "Smart" }, { "Sharpness", "Razor Sharpness", "Pointiness", "Pain", "Smarting" } });
-		modifiers.put(Enchantments.SMITE, new String[][] { { "Smiting", "Holy", "Banishing", "Burying", "Purging", "Cleansing", "Wrathful", "Zombie-Slaying", "Skeleton-Slaying", "Undead-Slaying" }, { "Smiting", "Holiness", "Banishing", "Burying", "Purging", "Cleansing", "Wrath", "Zombie Slaying", "Skeleton Slaying", "Undead Slaying" } });
-		modifiers.put(Enchantments.BANE_OF_ARTHROPODS, new String[][] { { "Spider-Slaying", "Bug-Crushing", "Flyswatting", "Bugbane", "Arachnophobic", "Spiderbane" }, { "Spider Slaying", "Bug Crushing", "Flyswatting", "Bugbane", "Arachnophobia", "Spiderbane" } });
-		modifiers.put(Enchantments.KNOCKBACK, new String[][] { { "Forceful", "Heavy", "Dull", "Powerful", "Pushing", "Launching", "Furious", "Charging", "Ram's" }, { "Forcefulness", "Knockback", "Dullness", "Power", "Pushing", "Launching", "Fury", "Charging", "The Ram" } });
-		modifiers.put(Enchantments.FIRE_ASPECT, new String[][] { { "Fiery", "Fiery Dragon", "Fire", "Burning", "Hot", "Volcanic", "Lava", "Dragon", "Tree-Slaying" }, { "Fire", "The Fire Dragon", "Flame", "Burning", "Heat", "Volcanoes", "Lava", "The Dragon", "Tree Slaying" } });
-		modifiers.put(Enchantments.LOOTING, new String[][] { { "Looting", "Lucky", "Fortunate", "Greedy", "Grubby", "Thievish", "Thieving" }, { "Looting", "Luck", "Fortune", "Greed", "Grubbiness", "Thievishness", "Thieving" } });
-		modifiers.put(Enchantments.EFFICIENCY, new String[][] { { "Efficient", "Quick", "Fast", "Speedy", "Quick-Mining", "Rushing" }, { "Efficiency", "Quickness", "Fastness", "Speed", "Quick-Mining", "Rushing" } });
-		modifiers.put(Enchantments.SILK_TOUCH, new String[][] { { "Careful", "Delicate", "Gentle", "Courteous", "Polite", "Ice-Harvesting", "Glass-Removing" }, { "Carefulness", "Delicate Mining", "Gentleness", "Courtesy", "Politeness", "Ice Harvesting", "Glass Removing" } });
-		modifiers.put(Enchantments.UNBREAKING, new String[][] { { "Unbreaking", "Reliable", "Trusty", "Flexible", "Unbreakable", "Timeless", "Quality", "Made-Like-They-Used-To-Make-Them" }, { "Unbreaking", "Reliabitlity", "Trustiness", "Flexibility", "Unbreakability", "Timelessness", "Quality" } });
-		modifiers.put(Enchantments.FORTUNE, new String[][] { { "Fortunate", "Lucky", "Greedy", "Effective", "Collector's", "Flint-Finding", "Resourceful" }, { "Fortune", "Luck", "Greed", "Effectiveness", "Collecting", "Flint Finding", "Resourcefulness" } });
-		modifiers.put(Enchantments.POWER, new String[][] { { "Powerful", "Heart-Seeking", "Head-Seeking", "Killer", "Sniper", "Efficient", "Arrow-Saving", "Ogre-Slaying" }, { "Power", "Heart Seeking", "Head Seeking", "Killing", "Sniping", "Efficiency", "Arrow Saving", "Ogre Slaying" } });
-		modifiers.put(Enchantments.PUNCH, new String[][] { { "Forceful", "Heavy", "Self-Defense", "Crushing", "Smashing" }, { "Force", "Heavy Arrows", "Self-Defense", "Crushing", "Smashing" } });
-		modifiers.put(Enchantments.FLAME, new String[][] { { "Fiery", "Fiery Dragon", "Fire", "Burning", "Hot", "Volcanic", "Lava", "Dragon", "Fire-Arrow", "Tree-Slaying" }, { "Fire", "The Fire Dragon", "Flame", "Burning", "Heat", "Volcanoes", "Lava", "The Dragon", "Flaming Arrows", "Tree Slaying" } });
-		modifiers.put(Enchantments.INFINITY, new String[][] { { "Efficient", "Infinite", "Arrow-Making", "Arrow-Saving", "Boomerang", "Magic Arrow" }, { "Efficiency", "Infinity", "Arrow Making", "Arrow Saving", "Boomerang Arrows", "Magic Arrow Creation" } });
+		materials.put(ItemTier.WOOD, new String[] { "Wooden", "Wood", "Hardwood", "Balsa Wood", "Mahogany", "Plywood" });
+		materials.put(ItemTier.STONE, new String[] { "Stone", "Rock", "Marble", "Cobblestone", });
+		materials.put(ItemTier.IRON, new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
+		materials.put(ItemTier.DIAMOND, new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
+		materials.put(ItemTier.GOLD, new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
 	}
 
-	/// Returns a mash name.
-	public static String buildName(Random random) {
+	/**
+	 * Array of descriptors for items based on armor material.
+	 */
+	private static Map<String, String[]> armors = new HashMap<>();
+	static {
+		armors.put(ArmorMaterial.LEATHER.toString(), new String[] { "Leather", "Rawhide", "Lamellar", "Cow Skin" });
+		armors.put(ArmorMaterial.CHAIN.toString(), new String[] { "Chainmail", "Chain", "Chain Link", "Scale" });
+		armors.put(ArmorMaterial.IRON.toString(), new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
+		armors.put(ArmorMaterial.DIAMOND.toString(), new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
+		armors.put(ArmorMaterial.GOLD.toString(), new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
+	}
+
+	/**
+	 * Makes a name using {@link NameHelper#nameParts}.
+	 * The name is made out of a random value from name parts, combined with up to two more values from the array.
+	 * The selected values are not unique, and may overlap.
+	 */
+	public static String nameFromParts(Random random) {
 		String name = NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)] + NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
-		if (random.nextInt(2) == 0) {
+		if (random.nextBoolean()) {
 			name += NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
 		}
 		return name;
 	}
 
-	/// Applies a random name to a mob and returns the root name (to be passed to the item name method).
-	public static String setEntityName(Random random, LivingEntity entity) {
-		String root = random.nextInt(2) == 0 ? NameHelper.names[random.nextInt(NameHelper.names.length)] : NameHelper.buildName(random);
-		String name = root;
-		if (random.nextInt(5) == 0) {
-			name = NameHelper.salutations[random.nextInt(NameHelper.salutations.length)] + " " + name;
-		}
-		if (random.nextInt(2) == 0) {
-			name += " ";
-			if (random.nextInt(10) == 0) {
-				if (random.nextInt(2) == 0) {
-					name += "Mac";
-				} else {
-					name += "Mc";
-				}
-			}
-			name += NameHelper.buildName(random);
+	/**
+	 * Applies a random name to an entity.
+	 * The root name is either randomly selected from {@link NameHelper#names} or generated by {@link NameHelper#nameFromParts(Random)}
+	 * There is a 20% chance for a prefix to be selected from {@link NameHelper#prefixes}
+	 * There is a 50% chance for a suffix to be selected from {@link NameHelper#suffixes}
+	 * @return The root name of the entity, without any prefixes or suffixes.
+	 */
+	public static String setEntityName(Random random, MobEntity entity) {
+		String root;
+
+		if (names.length > 0 && nameParts.length > 0) {
+			root = random.nextBoolean() ? NameHelper.names[random.nextInt(NameHelper.names.length)] : NameHelper.nameFromParts(random);
+		} else if (names.length > 0) {
+			root = NameHelper.names[random.nextInt(NameHelper.names.length)];
 		} else {
-			name += " the " + NameHelper.descriptors[random.nextInt(NameHelper.descriptors.length)];
+			root = NameHelper.nameFromParts(random);
+		}
+
+		String name = root;
+		if (random.nextInt(5) == 0 && prefixes.length > 0) name = NameHelper.prefixes[random.nextInt(NameHelper.prefixes.length)] + " " + name;
+		if (random.nextBoolean() && suffixes.length > 0) {
+			name += " the " + NameHelper.suffixes[random.nextInt(NameHelper.suffixes.length)];
 		}
 		entity.setCustomName(new StringTextComponent(name));
 		return root;
 	}
 
-	/// Sets the item's name based on what it is, the owner's name, and its main feature.
-	public static void setItemName(Random random, ItemStack itemStack, String name, Enchantment enchantment) {
-		name += "'s ";
+	/**
+	 * Applies a random name to an itemstack, based on the owning entity name, and the item itself.
+	 * An additional prefix will be selected based on the item type.
+	 * This is a best-guess system.  One half of the name is based on the material, the other half is based on the item type.
+	 * The secondary half will fall back to the item display name, if what the item is cannot be inferred.
+	 * @param itemStack The stack to be named.
+	 * @param name The name of the owning entity, usually created by {@link NameHelper#setEntityName(Random, EntityLiving)}
+	 * @return The name of the item, without the owning prefix of the boss's name
+	 */
+	public static String setItemName(Random random, ItemStack itemStack, String bossName) {
+		bossName += "'s";
 
-		boolean prefixed = false;
-		if (random.nextInt(5) == 0) {
-			prefixed = true;
-		} else if (random.nextInt(2) == 0) {
-			prefixed = true;
-			if (NameHelper.modifiers.get(enchantment) != null) {
-				String[] temp = modifiers.get(enchantment)[0];
-				name += temp[random.nextInt(temp.length)] + " ";
-			}
-		}
+		String name = "";
 
-		String material = null;
-		if (itemStack.getItem() instanceof TieredItem) {
-			IItemTier tier = ((TieredItem) itemStack.getItem()).getTier();
-			if (tier instanceof Enum<?>) material = ((Enum<?>) tier).name();
-		}
+		IItemTier material = null;
+		if (itemStack.getItem() instanceof TieredItem) material = ((SwordItem) itemStack.getItem()).getTier();
+
 		if (material != null) {
-			String[][] materials = { { "Wooden", "Wood", "Hardwood", "Balsa Wood", "Mahogany", "Plywood" }, { "Stone", "Rock", "Marble", "Cobblestone", }, { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" }, { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" }, { "Golden", "Gold", "Gilt", "Auric", "Ornate" } };
-			int index = -1;
-			if (material.equals(ItemTier.WOOD.toString())) {
-				index = 0;
-			} else if (material.equals(ItemTier.STONE.toString())) {
-				index = 1;
-			} else if (material.equals(ItemTier.IRON.toString())) {
-				index = 2;
-			} else if (material.equals(ItemTier.DIAMOND.toString())) {
-				index = 3;
-			} else if (material.equals(ItemTier.GOLD.toString())) {
-				index = 4;
-			}
-			if (index < 0) {
-				name += WordUtils.capitalize(material.toLowerCase()) + " ";
-			} else {
-				name += materials[index][random.nextInt(materials[index].length)] + " ";
-			}
+			String[] descriptors = getMaterialDescriptors(material);
+			name += descriptors[random.nextInt(descriptors.length)] + " ";
 
 			String[] type = { "Tool" };
 			if (itemStack.getItem() instanceof SwordItem) {
-				type = new String[] { "Sword", "Cutter", "Slicer", "Dicer", "Knife", "Blade", "Machete", "Brand", "Claymore", "Cutlass", "Foil", "Dagger", "Glaive", "Rapier", "Saber", "Scimitar", "Shortsword", "Longsword", "Broadsword", "Calibur" };
+				type = swords;
 			} else if (itemStack.getItem() instanceof AxeItem) {
-				type = new String[] { "Axe", "Chopper", "Hatchet", "Tomahawk", "Cleaver", "Hacker", "Tree-Cutter", "Truncator" };
+				type = axes;
 			} else if (itemStack.getItem() instanceof PickaxeItem) {
-				type = new String[] { "Pickaxe", "Pick", "Mattock", "Rock-Smasher", "Miner" };
+				type = pickaxes;
 			} else if (itemStack.getItem() instanceof ShovelItem) {
-				type = new String[] { "Shovel", "Spade", "Digger", "Excavator", "Trowel", "Scoop" };
+				type = shovels;
 			}
 			name += type[random.nextInt(type.length)];
 		} else if (itemStack.getItem() instanceof BowItem) {
-			String[] type = { "Bow", "Shortbow", "Longbow", "Flatbow", "Recurve Bow", "Reflex Bow", "Self Bow", "Composite Bow", "Arrow-Flinger" };
+			String[] type = bows;
 			name += type[random.nextInt(type.length)];
 		} else if (itemStack.getItem() instanceof ArmorItem) {
-			String[][] materials = { { "Leather", "Rawhide", "Lamellar", "Cow Skin" }, { "Chainmail", "Chain", "Chain Link", "Scale" }, { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" }, { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" }, { "Golden", "Gold", "Gilt", "Auric", "Ornate" } };
-			material = ((ArmorItem) itemStack.getItem()).getArmorMaterial().toString();
-			int index = -1;
-			if (material.equals(ArmorMaterial.LEATHER.toString())) {
-				index = 0;
-			} else if (material.equals(ArmorMaterial.CHAIN.toString())) {
-				index = 1;
-			} else if (material.equals(ArmorMaterial.IRON.toString())) {
-				index = 2;
-			} else if (material.equals(ArmorMaterial.DIAMOND.toString())) {
-				index = 3;
-			} else if (material.equals(ArmorMaterial.GOLD.toString())) {
-				index = 4;
-			}
-			if (index < 0) {
-				name += WordUtils.capitalize(material.toLowerCase()) + " ";
-			} else {
-				name += materials[index][random.nextInt(materials[index].length)] + " ";
-			}
+
+			String amaterial = ((ArmorItem) itemStack.getItem()).getArmorMaterial().toString();
+			String[] descriptors = getArmorDescriptors(amaterial);
+			name += descriptors[random.nextInt(descriptors.length)] + " ";
 
 			String[] type = { "Armor" };
 			switch (((ArmorItem) itemStack.getItem()).getEquipmentSlot()) {
 			case HEAD:
-				type = new String[] { "Helmet", "Cap", "Crown", "Great Helm", "Bassinet", "Sallet", "Close Helm", "Barbute" };
+				type = helms;
 				break;
 			case CHEST:
-				type = new String[] { "Chestplate", "Tunic", "Brigandine", "Hauberk", "Cuirass" };
+				type = chestplates;
 				break;
 			case LEGS:
-				type = new String[] { "Leggings", "Pants", "Tassets", "Cuisses", "Schynbalds" };
+				type = leggings;
 				break;
 			case FEET:
-				type = new String[] { "Boots", "Shoes", "Greaves", "Sabatons", "Sollerets" };
+				type = boots;
 				break;
 			default:
 			}
@@ -192,10 +221,57 @@ public class NameHelper {
 		} else {
 			name += itemStack.getItem().getDisplayName(itemStack);
 		}
-		if (!prefixed && modifiers.get(enchantment) != null) {
-			String[] temp = modifiers.get(enchantment)[1];
-			name += " of " + temp[random.nextInt(temp.length)];
+
+		itemStack.setDisplayName(new StringTextComponent(bossName + " " + name));
+		return name;
+	}
+
+	private static String[] getMaterialDescriptors(IItemTier materialName) {
+		return materials.computeIfAbsent(materialName, s -> new String[] { "" });
+	}
+
+	private static String[] getArmorDescriptors(String materialName) {
+		return armors.computeIfAbsent(materialName, s -> new String[] { "" });
+	}
+
+	public static void load(Configuration c) {
+
+		names = c.getStringList("Names", "entity", names, "A list of full names, which are used in the generation of boss names. May be empty only if name parts is not empty.");
+		nameParts = c.getStringList("Name Parts", "entity", nameParts, "A list of name pieces, which can be spliced together to create full names.  May be empty only if names is not empty.");
+		Preconditions.checkArgument(names.length != 0 || nameParts.length != 0, "Both names and name parts are empty in apotheosis/names.cfg, this is not allowed.");
+
+		prefixes = c.getStringList("Prefixes", "entity", prefixes, "A list of prefixes, which are used in the generation of boss names. May be empty.");
+		suffixes = c.getStringList("Suffixes", "entity", suffixes, "A list of suffixes, which are used in the generation of boss names. A suffix is always preceeded by \"The\". May be empty.");
+
+		helms = c.getStringList("Helms", "items", helms, "A list of root names for helms, used in the generation of item names. May not be empty.");
+		chestplates = c.getStringList("chestplates", "items", chestplates, "A list of root names for chestplates, used in the generation of item names. May not be empty.");
+		leggings = c.getStringList("leggings", "items", leggings, "A list of root names for leggings, used in the generation of item names. May not be empty.");
+		boots = c.getStringList("boots", "items", boots, "A list of root names for boots, used in the generation of item names. May not be empty.");
+
+		Preconditions.checkArgument(helms.length > 0 && chestplates.length > 0 && leggings.length > 0 && boots.length > 0, "Detected empty lists for armor root names in apotheosis/names.cfg, this is not allowed.");
+
+		swords = c.getStringList("swords", "items", swords, "A list of root names for swords, used in the generation of item names. May not be empty.");
+		axes = c.getStringList("axes", "items", axes, "A list of root names for axes, used in the generation of item names. May not be empty.");
+		pickaxes = c.getStringList("pickaxes", "items", pickaxes, "A list of root names for pickaxes, used in the generation of item names. May not be empty.");
+		shovels = c.getStringList("shovels", "items", shovels, "A list of root names for shovels, used in the generation of item names. May not be empty.");
+		bows = c.getStringList("bows", "items", bows, "A list of root names for bows, used in the generation of item names. May not be empty.");
+
+		Preconditions.checkArgument(swords.length > 0 && axes.length > 0 && pickaxes.length > 0 && shovels.length > 0 && bows.length > 0, "Detected empty lists for weapon root names in apotheosis/names.cfg, this is not allowed.");
+
+		for (Item i : ForgeRegistries.ITEMS) {
+			if (i instanceof TieredItem) {
+				IItemTier mat = ((TieredItem) i).getTier();
+				if (mat.getRepairMaterial() == null || mat.getRepairMaterial().hasNoMatchingItems()) continue;
+				String[] read = c.getStringList(mat.getRepairMaterial().getMatchingStacks()[0].getItem().getRegistryName().toString(), "tools", materials.getOrDefault(mat.toString(), new String[0]), "A list of material-based prefix names for the given tool material. May be empty.");
+				if (read.length > 0) materials.put(mat, read);
+			}
 		}
-		itemStack.setDisplayName(new StringTextComponent(TextFormatting.RESET + "" + TextFormatting.values()[random.nextInt(15)] + name));
+
+		for (ArmorMaterial mat : ArmorMaterial.values()) {
+			String[] read = c.getStringList(mat.toString(), "armors", armors.getOrDefault(mat.toString(), new String[0]), "A list of material-based prefix names for the given armor material. May be empty.");
+			if (read.length > 0) armors.put(mat.toString(), read);
+		}
+
+		if (c.hasChanged()) c.save();
 	}
 }

@@ -84,6 +84,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	}
 
 	public int getValueForEnch(Entry<Enchantment, Integer> ench) {
+		if (ench.getKey() == null) return 0;
 		EnchantmentInfo info = EnchModule.getEnchInfo(ench.getKey());
 		double avg = (info.getMaxPower(ench.getValue()) + info.getMinPower(ench.getValue())) / 2.5D;
 		return (int) Math.floor(avg / 4);

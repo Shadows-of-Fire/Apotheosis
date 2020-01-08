@@ -41,6 +41,7 @@ public class EnchantmentIcyThorns extends Enchantment {
 
 	@Override
 	public void onUserHurt(LivingEntity user, Entity attacker, int level) {
+		if (user == null) return;
 		Random rand = user.getRNG();
 		if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
 			LivingEntity ent = (LivingEntity) attacker;

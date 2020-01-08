@@ -2,12 +2,13 @@ package shadows.apotheosis.spawn.modifiers;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import shadows.apotheosis.spawn.TileSpawnerExt;
 
 public class ConditionModifier extends SpawnerModifier {
 
 	public ConditionModifier() {
-		super(new ItemStack(Blocks.DRAGON_EGG), 0);
+		super(new ItemStack(Items.CHORUS_FRUIT), 0);
 	}
 
 	@Override
