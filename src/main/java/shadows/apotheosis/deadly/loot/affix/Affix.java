@@ -18,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
-import shadows.Apotheosis;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.loot.AffixModifier;
 
 public abstract class Affix extends WeightedRandom.Item implements IForgeRegistryEntry<Affix> {

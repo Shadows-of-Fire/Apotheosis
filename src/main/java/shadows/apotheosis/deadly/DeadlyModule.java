@@ -5,6 +5,7 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -14,7 +15,8 @@ import shadows.apotheosis.deadly.gen.BossFeature;
 import shadows.apotheosis.deadly.gen.BrutalSpawner;
 import shadows.apotheosis.deadly.gen.SwarmSpawner;
 import shadows.apotheosis.deadly.gen.WorldGenerator;
-import shadows.apotheosis.util.ArmorSet;
+import shadows.apotheosis.deadly.loot.affix.AffixEvents;
+import shadows.apotheosis.deadly.loot.affix.Affixes;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyModule {

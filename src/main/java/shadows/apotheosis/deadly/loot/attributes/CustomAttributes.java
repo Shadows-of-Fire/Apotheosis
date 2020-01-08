@@ -1,12 +1,9 @@
 package shadows.apotheosis.deadly.loot.attributes;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import shadows.Apotheosis;
+import shadows.apotheosis.Apotheosis;
 
 /**
  * Holds special attributes that are added by apoth.  These require custom handling because minecraft isn't nice.

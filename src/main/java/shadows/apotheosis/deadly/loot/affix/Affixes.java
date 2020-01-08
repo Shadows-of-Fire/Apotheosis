@@ -1,28 +1,27 @@
 package shadows.apotheosis.deadly.loot.affix;
 
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
-import shadows.Apotheosis;
-import shadows.ApotheosisObjects;
+import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.deadly.gen.BossItem.EquipmentType;
 import shadows.apotheosis.deadly.loot.AffixModifier;
+import shadows.apotheosis.deadly.loot.AffixModifier.Operation;
 import shadows.apotheosis.deadly.loot.LootEntry;
 import shadows.apotheosis.deadly.loot.LootManager;
-import shadows.apotheosis.deadly.loot.AffixModifier.Operation;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.EnchantmentAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.GenericAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.SharpshooterAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
-import shadows.deadly.gen.BossItem.EquipmentType;
 
 /**
  * Current Affix Counts (Prefix/Suffix)

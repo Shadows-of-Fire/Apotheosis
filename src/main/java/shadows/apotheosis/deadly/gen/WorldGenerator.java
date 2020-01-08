@@ -30,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 
+@SuppressWarnings("deprecation")
 public class WorldGenerator extends Feature<NoFeatureConfig> {
 
 	public static final List<WorldFeature> FEATURES = new ArrayList<>();

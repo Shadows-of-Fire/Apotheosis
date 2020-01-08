@@ -13,9 +13,9 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.storage.loot.RandomValueRange;
+import shadows.apotheosis.deadly.gen.BossItem.EquipmentType;
 import shadows.apotheosis.deadly.loot.AffixModifier;
 import shadows.apotheosis.deadly.loot.affix.Affix;
-import shadows.deadly.gen.BossItem.EquipmentType;
 
 public class AttributeAffix extends Affix {
 

@@ -2,7 +2,7 @@ package shadows.apotheosis.deadly.loot;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
-import shadows.deadly.gen.BossItem.EquipmentType;
+import shadows.apotheosis.deadly.gen.BossItem.EquipmentType;
 
 /**
  * A loot entry represents a possible item that can come out of a loot roll.

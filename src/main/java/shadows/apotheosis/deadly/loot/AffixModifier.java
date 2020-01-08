@@ -37,7 +37,7 @@ public class AffixModifier extends WeightedRandom.Item {
 	 * Adjusts the passed level, according to the operation of this modifier.
 	 */
 	public float editLevel(float level) {
-		return op == Operation.ADD ? (level + value) : op == Operation.MULTIPLY ? (level * value) : value;
+		return op == Operation.ADD ? level + value : op == Operation.MULTIPLY ? level * value : value;
 	}
 
 	/**

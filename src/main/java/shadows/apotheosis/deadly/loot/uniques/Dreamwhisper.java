@@ -1,13 +1,13 @@
 package shadows.apotheosis.deadly.loot.uniques;
 
 import net.minecraft.item.ItemStack;
+import shadows.apotheosis.deadly.gen.BossItem.EquipmentType;
 import shadows.apotheosis.deadly.loot.Unique;
-import shadows.deadly.gen.BossItem.EquipmentType;
 
 /**
  * Dreamwhisper
  * An ancient relic from a forgotten race of druids, arrows fired from this bow will become faster, stronger, and ignore armor.
- * 
+ *
  */
 public class Dreamwhisper extends Unique {
 

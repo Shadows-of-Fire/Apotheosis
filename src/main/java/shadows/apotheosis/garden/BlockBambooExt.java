@@ -107,7 +107,7 @@ public class BlockBambooExt extends BambooBlock {
 		}
 
 		int i = blockStateIn.get(PROPERTY_AGE) != 1 && blockstate1.getBlock() != Blocks.BAMBOO ? 0 : 1;
-		int j = (size < (GardenModule.maxBambooHeight - (int) GardenModule.maxBambooHeight / 5D) || !(rand.nextFloat() < 0.25F)) && size != GardenModule.maxBambooHeight - 1 ? 0 : 1;
+		int j = (size < GardenModule.maxBambooHeight - GardenModule.maxBambooHeight / 5D || !(rand.nextFloat() < 0.25F)) && size != GardenModule.maxBambooHeight - 1 ? 0 : 1;
 		worldIn.setBlockState(posIn.up(), this.getDefaultState().with(PROPERTY_AGE, Integer.valueOf(i)).with(PROPERTY_BAMBOO_LEAVES, bambooleaves).with(PROPERTY_STAGE, Integer.valueOf(j)), 3);
 	}
 
