@@ -12,7 +12,6 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.PickaxeItem;
@@ -20,7 +19,6 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TieredItem;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.registries.ForgeRegistries;
 import shadows.placebo.config.Configuration;
 
 /**
@@ -258,6 +256,7 @@ public class NameHelper {
 
 		Preconditions.checkArgument(swords.length > 0 && axes.length > 0 && pickaxes.length > 0 && shovels.length > 0 && bows.length > 0, "Detected empty lists for weapon root names in apotheosis/names.cfg, this is not allowed.");
 
+		/* TODO: Find a way to map item tiers to names, or force forge to put names on them.
 		for (Item i : ForgeRegistries.ITEMS) {
 			if (i instanceof TieredItem) {
 				IItemTier mat = ((TieredItem) i).getTier();
@@ -265,7 +264,7 @@ public class NameHelper {
 				String[] read = c.getStringList(mat.getRepairMaterial().getMatchingStacks()[0].getItem().getRegistryName().toString(), "tools", materials.getOrDefault(mat.toString(), new String[0]), "A list of material-based prefix names for the given tool material. May be empty.");
 				if (read.length > 0) materials.put(mat, read);
 			}
-		}
+		}*/
 
 		for (ArmorMaterial mat : ArmorMaterial.values()) {
 			String[] read = c.getStringList(mat.toString(), "armors", armors.getOrDefault(mat.toString(), new String[0]), "A list of material-based prefix names for the given armor material. May be empty.");
