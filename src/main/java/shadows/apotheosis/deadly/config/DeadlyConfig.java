@@ -1,5 +1,6 @@
 package shadows.apotheosis.deadly.config;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyConfig {
@@ -161,6 +164,7 @@ public class DeadlyConfig {
 			if (e.getClassification() == EntityClassification.MONSTER) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 
 		if (c.hasChanged()) c.save();
+		NameHelper.load(new Configuration(new File(Apotheosis.configDir, "names.cfg")));
 	}
 
 	public static int getWeightForEntry(EntityType<?> e) {

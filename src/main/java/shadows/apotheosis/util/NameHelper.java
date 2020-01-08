@@ -175,7 +175,7 @@ public class NameHelper {
 		String name = "";
 
 		IItemTier material = null;
-		if (itemStack.getItem() instanceof TieredItem) material = ((SwordItem) itemStack.getItem()).getTier();
+		if (itemStack.getItem() instanceof TieredItem) material = ((TieredItem) itemStack.getItem()).getTier();
 
 		if (material != null) {
 			String[] descriptors = getMaterialDescriptors(material);
