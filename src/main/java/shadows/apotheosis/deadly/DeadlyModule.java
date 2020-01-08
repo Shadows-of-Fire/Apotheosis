@@ -24,6 +24,7 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
 		DeadlyConfig.config = new Configuration(new File(Apotheosis.configDir, "deadly.cfg"));
+		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 	}
 
 	@SubscribeEvent
@@ -34,7 +35,7 @@ public class DeadlyModule {
 		DeadlyLoot.init();
 		SwarmSpawner.init();
 		WorldGenerator.init();
-		ArmorSet.sortSets();
+		Affixes.init();
 	}
 
 }

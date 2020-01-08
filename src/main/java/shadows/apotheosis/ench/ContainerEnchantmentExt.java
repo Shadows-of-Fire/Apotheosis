@@ -48,6 +48,7 @@ public class ContainerEnchantmentExt extends EnchantmentContainer {
 	/**
 	 * Callback for when the crafting matrix is changed.
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCraftMatrixChanged(IInventory inventoryIn) {
 		if (inventoryIn == this.tableInventory) {

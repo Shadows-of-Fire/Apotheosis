@@ -1,5 +1,7 @@
 package shadows.apotheosis.deadly;
 
+import java.util.function.Consumer;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,10 +11,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.deadly.loot.LootManager;
+import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.loot.PoolBuilder;
+import shadows.placebo.loot.StackLootEntry;
 import shadows.placebo.util.ChestBuilder;
 import shadows.placebo.util.ChestBuilder.EnchantedEntry;
 
@@ -53,6 +59,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.ENCHANTING_TABLE, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 1, 1, 3, 0));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
+		build.addEntries(new AffixEntry(4, 5));
 		LootSystem.registerLootTable(SPAWNER_BRUTAL, LootSystem.tableBuilder().addLootPool(build).build());
 
 		build = new PoolBuilder(5, 6);
@@ -79,6 +86,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.OBSIDIAN, 3, 8, 3, 0));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
+		build.addEntries(new AffixEntry(4, 5));
 		LootSystem.registerLootTable(SPAWNER_SWARM, LootSystem.tableBuilder().addLootPool(build).build());
 
 		build = new PoolBuilder(6, 12);
@@ -110,6 +118,7 @@ public class DeadlyLoot {
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_HELMET, 20));
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_CHESTPLATE, 20));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 40));
+		build.addEntries(new AffixEntry(20, 15));
 		LootSystem.registerLootTable(CHEST_VALUABLE, LootSystem.tableBuilder().addLootPool(build).build());
 	}
 
@@ -125,6 +134,20 @@ public class DeadlyLoot {
 		ItemStack s = new ItemStack(pot);
 		PotionUtils.addPotionToItemStack(s, type);
 		return s;
+	}
+
+	public static class AffixEntry extends StackLootEntry {
+
+		public AffixEntry(int weight, int quality) {
+			super(ItemStack.EMPTY, 1, 1, weight, quality);
+		}
+
+		@Override
+		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
+			LootRarity rarity = LootRarity.random(ctx.getRandom());
+			ItemStack stack = LootManager.getRandomEntry(ctx.getRandom(), rarity);
+			list.accept(LootManager.genLootItem(stack, ctx.getRandom(), rarity));
+		}
 	}
 
 }

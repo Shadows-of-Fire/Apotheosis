@@ -39,6 +39,7 @@ import shadows.apotheosis.village.fletching.FletchingScreen;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowRenderer;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowRenderer;
 
+@SuppressWarnings("deprecation")
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
 public class ApotheosisClient {
 

@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 
+@SuppressWarnings("deprecation")
 public class RenderPrismaticAltar extends TileEntityRenderer<TilePrismaticAltar> {
 
 	public RenderPrismaticAltar(TileEntityRendererDispatcher terd) {

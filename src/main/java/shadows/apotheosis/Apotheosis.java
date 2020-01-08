@@ -32,6 +32,7 @@ import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.recipe.RecipeHelper;
 import shadows.placebo.util.NetworkUtils;
 
+@SuppressWarnings("deprecation")
 @Mod(Apotheosis.MODID)
 public class Apotheosis {
 
