@@ -26,8 +26,10 @@
     "advancements.apotheosis.level20": "激发无限潜能",
     "advancements.apotheosis.level20.desc": "获得一个附魔等级XX或更高等级的物品",
     
-    "advancements.apotheosis.deadly": "击杀一个BOSS",
-    "advancements.apotheosis.deadly.desc": "在地下的洞穴中找到一个BOSS,杀死它可以获得更强大的装备",
+    "advancements.apotheosis.deadly": "武装起来！",
+    "advancements.apotheosis.deadly.desc": "弄一把剑。这个世界很危险。",
+	"advancements.apotheosis.boss": "击杀一个神话 BOSS",
+    "advancements.apotheosis.boss.desc": "更强的怪物布满洞穴。注意红色砂岩。",
     
     "advancements.apotheosis.spawner.root": "顶级刷怪笼",
     "advancements.apotheosis.spawner.root.desc": "刷怪笼可以收集并修改，详细请从合成表/JEI中查看.",
@@ -93,7 +95,7 @@
     "jei.spw.ignorecap": "忽略区域刷怪限制",
     "jei.spw.redstone": "启用红石控制",
     "jei.spw.instructions": "手持各种物品右击刷怪笼可以调节刷怪笼.\\n某个物品可以反转此行为, 导致反方向调节刷怪笼的数据.\\n使用精准采集可以获得刷怪笼.",
-    "jei.spw.capturing": "捕捉附魔有机会让怪物掉落它们的刷怪蛋.\\n每个附魔等级增加+0.4% 的几率.",
+    "jei.spw.capturing": "捕捉附魔让怪物有机会掉落它们的刷怪蛋.\\n每个附魔等级增加+0.4% 的几率.",
 
     "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "地狱书架",
@@ -186,6 +188,9 @@
 
     "comment_id": "/Vanilla",
     "block.reeds": "甘蔗",
+    "attribute.name.generic.reachDistance": "操作距离",
+	"attribute.name.forge.swimSpeed": "游泳速度",
+	"attribute.name.forge.entity_gravity": "重力",
     "potion.potency.3": "IV",
     "enchantment.level.11": "XI",
     "enchantment.level.12": "XII",
@@ -348,6 +353,8 @@
 
     "item.apotheosis.lucky_foot": "幸运兔子脚",
 
+	"item.apotheosis.invisibility_charm": "隐形护符",
+
     "comment_id": "/Anvil Module",
     "info.apotheosis.anvil": "可以被附魔.",
 
@@ -368,4 +375,11 @@
     "name.apotheosis.merch_legs": "雷鸣护腿",
     "name.apotheosis.merch_boots": "符文鞋子",
     "name.apotheosis.vigilance": "永恒的警戒"
+	"apotheosis.recipes.fletching": "制箭",
+	"info.apotheosis.obsidian_arrow": "+20% 伤害",
+	"item.apotheosis.obsidian_arrow": "黑曜石箭",
+	"info.apotheosis.broadhead_arrow": "流血 (0:15)",
+	"item.apotheosis.broadhead_arrow": "宽头箭",
+	"effect.apotheosis.bleeding": "流血",
+	"death.attack.apotheosis.bleeding.player": "%s 失血过多而死"
 }
