@@ -3,7 +3,7 @@ package shadows.apotheosis.deadly.loot.affix.impl;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.loot.AffixModifier;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
@@ -16,7 +16,7 @@ public class GenericAffix extends Affix {
 
 	@Override
 	public float apply(ItemStack stack, Random rand, AffixModifier modifier) {
-		AffixHelper.addLore(stack, new TextComponentTranslation("affix." + this.getRegistryName() + ".desc").getFormattedText());
+		AffixHelper.addLore(stack, new TranslationTextComponent("affix." + this.getRegistryName() + ".desc"));
 		return 0;
 	}
 

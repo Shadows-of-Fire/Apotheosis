@@ -1,7 +1,10 @@
 package shadows.apotheosis.deadly.loot.attributes;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import shadows.apotheosis.Apotheosis;
 
@@ -25,8 +28,8 @@ public class CustomAttributes {
 		e.attackEntityFrom(SOLAR, Apotheosis.localAtkStrength * (!e.world.isDaytime() ? l : 2 * l));
 	});
 	public static final IAttribute COLD_DAMAGE = new ElementalDmgAttribute("apoth.colddmg", (e, l) -> {
-		if (e instanceof EntityLivingBase) {
-			((EntityLivingBase) e).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100));
+		if (e instanceof LivingEntity) {
+			((LivingEntity) e).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100));
 		}
 		e.attackEntityFrom(COLD, Apotheosis.localAtkStrength * l);
 	});

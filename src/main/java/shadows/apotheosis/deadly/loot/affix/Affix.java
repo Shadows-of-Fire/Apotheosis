@@ -4,16 +4,16 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -72,7 +72,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @return The new name, consuming the old name in the process.
 	 */
 	public ITextComponent chainName(ITextComponent name, @Nullable AffixModifier modifier) {
-		return new TextComponentTranslation("affix." + this.name + (modifier != null && modifier.editName() ? "." + modifier.getKey() : ""), name);
+		return new TranslationTextComponent("affix." + this.name + (modifier != null && modifier.editName() ? "." + modifier.getKey() : ""), name);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * Calculates the additional damage this affix deals.
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
-	public float getExtraDamageFor(float level, EnumCreatureAttribute creatureType) {
+	public float getExtraDamageFor(float level, CreatureAttribute creatureType) {
 		return 0.0F;
 	}
 
@@ -101,14 +101,14 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param target The target entity being attacked.
 	 * @param level The level of this affix, if applicable.
 	 */
-	public void onEntityDamaged(EntityLivingBase user, @Nullable Entity target, float level) {
+	public void onEntityDamaged(LivingEntity user, @Nullable Entity target, float level) {
 	}
 
 	/**
 	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
 	 * called.
 	 */
-	public void onUserHurt(EntityLivingBase user, @Nullable Entity attacker, float level) {
+	public void onUserHurt(LivingEntity user, @Nullable Entity attacker, float level) {
 	}
 
 	@Override

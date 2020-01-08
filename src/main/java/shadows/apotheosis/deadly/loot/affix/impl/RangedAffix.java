@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import shadows.apotheosis.deadly.loot.AffixModifier;
 import shadows.apotheosis.deadly.loot.affix.Affix;
@@ -28,7 +28,7 @@ public class RangedAffix extends Affix {
 	public float apply(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
 		float lvl = range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(lvl);
-		AffixHelper.addLore(stack, new TextComponentTranslation("affix." + this.getRegistryName() + ".desc", lvl).getFormattedText());
+		AffixHelper.addLore(stack, new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", lvl));
 		return lvl;
 	}
 

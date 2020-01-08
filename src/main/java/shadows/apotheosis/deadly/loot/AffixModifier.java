@@ -12,7 +12,7 @@ public class AffixModifier extends WeightedRandom.Item {
 	/**
 	 * What this modifier does to the underlying affix.
 	 */
-	protected final Operation op;
+	protected final AffixOp op;
 
 	/**
 	 * The value of this modifier.
@@ -21,7 +21,7 @@ public class AffixModifier extends WeightedRandom.Item {
 
 	protected boolean editName = true;
 
-	public AffixModifier(String key, Operation op, float value, int weight) {
+	public AffixModifier(String key, AffixOp op, float value, int weight) {
 		super(weight);
 		this.key = key;
 		this.op = op;
@@ -37,7 +37,7 @@ public class AffixModifier extends WeightedRandom.Item {
 	 * Adjusts the passed level, according to the operation of this modifier.
 	 */
 	public float editLevel(float level) {
-		return op == Operation.ADD ? level + value : op == Operation.MULTIPLY ? level * value : value;
+		return op == AffixOp.ADD ? level + value : op == AffixOp.MULTIPLY ? level * value : value;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class AffixModifier extends WeightedRandom.Item {
 		return editName;
 	}
 
-	public static enum Operation {
+	public static enum AffixOp {
 		ADD,
 		MULTIPLY,
 		SET;

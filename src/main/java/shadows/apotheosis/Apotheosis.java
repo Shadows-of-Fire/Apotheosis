@@ -2,15 +2,19 @@ package shadows.apotheosis;
 
 import java.io.File;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -20,6 +24,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
@@ -58,7 +63,10 @@ public class Apotheosis {
 	public static boolean enableVillager = true;
 	public static boolean enchTooltips = true;
 
+	public static float localAtkStrength = 1;
+
 	public Apotheosis() {
+		Affix.classload();
 		configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
 		config = new Configuration(new File(configDir, MODID + ".cfg"));
 
@@ -87,13 +95,21 @@ public class Apotheosis {
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
+		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 	}
 
+	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
 		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
 		DeferredWorkQueue.runLater(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
+	}
+
+	@SubscribeEvent
+	public void trackCooldown(AttackEntityEvent e) {
+		PlayerEntity p = e.getPlayer();
+		localAtkStrength = p.getCooledAttackStrength(0.5F);
 	}
 
 	public static Ingredient potionIngredient(Potion type) {

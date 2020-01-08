@@ -66,7 +66,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -132,7 +131,6 @@ public class EnchModule {
 	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
 	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
 	public static final EnchantmentType ANVIL = EnchantmentType.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
-	public static float localAtkStrength = 1;
 	static Configuration enchInfoConfig;
 	public static int absMax = 170;
 
@@ -374,12 +372,6 @@ public class EnchModule {
 			return true;
 		}
 		return false;
-	}
-
-	@SubscribeEvent
-	public void trackCooldown(AttackEntityEvent e) {
-		PlayerEntity p = e.getPlayer();
-		localAtkStrength = p.getCooledAttackStrength(0.5F);
 	}
 
 	Method dropLoot;

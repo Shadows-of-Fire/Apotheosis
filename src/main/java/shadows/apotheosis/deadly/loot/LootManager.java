@@ -11,15 +11,15 @@ import java.util.Random;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.gen.BossItem.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
@@ -147,12 +147,12 @@ public class LootManager {
 	 * The default equipment type is {@link EquipmentType#TOOL}, so items that do not match will be treated as tools.
 	 */
 	public static ItemStack genLootItem(ItemStack stack, Random rand, LootRarity rarity) {
-		ITextComponent name = new TextComponentString(stack.getDisplayName());
+		ITextComponent name = stack.getDisplayName();
 		EquipmentType type = EquipmentType.getTypeFor(stack);
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
-		EntityEquipmentSlot slot = EquipmentType.getTypeFor(stack).getSlot(stack);
+		EquipmentSlotType slot = EquipmentType.getTypeFor(stack).getSlot(stack);
 		Multimap<String, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
-		AffixHelper.addLore(stack, new TextComponentTranslation("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(new Style().setColor(rarity.color).setItalic(true)).getFormattedText());
+		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(new Style().setColor(rarity.color).setItalic(true)));
 
 		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
 
@@ -206,12 +206,11 @@ public class LootManager {
 		}
 
 		if (rarity.ordinal() >= LootRarity.ANCIENT.ordinal()) {
-			NBTTagCompound tag = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
-			tag.setBoolean("Unbreakable", true);
-			stack.setTagCompound(tag);
+			CompoundNBT tag = stack.getOrCreateTag();
+			tag.putBoolean("Unbreakable", true);
 		}
 
-		stack.setStackDisplayName(TextFormatting.RESET + rarity.getColor().toString() + name.getFormattedText().replace(TextFormatting.RESET.toString(), ""));
+		stack.setDisplayName(new StringTextComponent(TextFormatting.RESET + rarity.getColor().toString() + name.getFormattedText().replace(TextFormatting.RESET.toString(), "")));
 		return stack;
 	}
 

@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
 
 public class EnchantmentShieldBash extends Enchantment {
@@ -44,7 +45,7 @@ public class EnchantmentShieldBash extends Enchantment {
 					e.sendBreakAnimation(EquipmentSlotType.OFFHAND);
 				});
 				DamageSource src = user instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity) user) : DamageSource.GENERIC;
-				((LivingEntity) target).attackEntityFrom(src, EnchModule.localAtkStrength * 2.35F * level);
+				((LivingEntity) target).attackEntityFrom(src, Apotheosis.localAtkStrength * 2.35F * level);
 			}
 		}
 	}

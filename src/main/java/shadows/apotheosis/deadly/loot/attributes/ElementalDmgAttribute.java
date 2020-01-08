@@ -3,7 +3,7 @@ package shadows.apotheosis.deadly.loot.attributes;
 import java.util.function.BiConsumer;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix.IReactiveAttribute;
 
@@ -17,7 +17,7 @@ public class ElementalDmgAttribute extends RangedAttribute implements IReactiveA
 	}
 
 	@Override
-	public void onEntityDamaged(EntityLivingBase user, Entity target, float level) {
+	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
 		if (target != null) {
 			attackFunc.accept(target, level);
 		}
