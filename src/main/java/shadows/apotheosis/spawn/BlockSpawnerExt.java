@@ -85,7 +85,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 	}
 
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (world.isRemote) return ActionResultType.SUCCESS;
 		ItemStack stack = player.getHeldItem(hand);
 		TileEntity te = world.getTileEntity(pos);

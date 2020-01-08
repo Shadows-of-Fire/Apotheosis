@@ -35,7 +35,7 @@ public class AffixHelper {
 	public static void addLore(ItemStack stack, ITextComponent lore) {
 		CompoundNBT display = stack.getOrCreateChildTag("display");
 		ListNBT tag = display.getList("Lore", 8);
-		tag.add(StringNBT.func_229705_a_(ITextComponent.Serializer.toJson(lore)));
+		tag.add(StringNBT.of(ITextComponent.Serializer.toJson(lore)));
 		display.put("Lore", tag);
 	}
 

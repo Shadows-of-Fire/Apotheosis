@@ -29,11 +29,11 @@ public class BlockBambooExt extends BambooBlock {
 	}
 
 	@Override
-	public void func_225542_b_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		if (!state.isValidPosition(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true);
 		} else if (state.get(PROPERTY_STAGE) == 0) {
-			if (random.nextInt(3) == 0 && worldIn.isAirBlock(pos.up()) && worldIn.func_226659_b_(pos.up(), 0) >= 9) {
+			if (random.nextInt(3) == 0 && worldIn.isAirBlock(pos.up()) && worldIn.getBaseLightLevel(pos.up(), 0) >= 9) {
 				int i = this.getNumBambooBlocksBelow(worldIn, pos) + 1;
 				if (i < GardenModule.maxBambooHeight) {
 					this.grow(state, worldIn, pos, random, i);
@@ -50,7 +50,7 @@ public class BlockBambooExt extends BambooBlock {
 	}
 
 	@Override
-	public void func_225535_a_(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
 		int bambooAbove = this.getNumBambooBlocksAbove(worldIn, pos);
 		int bambooBelow = this.getNumBambooBlocksBelow(worldIn, pos);
 		int bambooSize = bambooAbove + bambooBelow + 1;

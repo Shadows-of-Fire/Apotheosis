@@ -400,7 +400,7 @@ public class EnchModule {
 				while (items > 0) {
 					int i = ExperienceOrbEntity.getXPSplit(items);
 					items -= i;
-					p.world.addEntity(new ExperienceOrbEntity(p.world, ded.func_226277_ct_(), ded.func_226278_cu_(), ded.func_226281_cx_(), i));
+					p.world.addEntity(new ExperienceOrbEntity(p.world, ded.getX(), ded.getY(), ded.getZ(), i));
 				}
 			}
 		}
@@ -436,7 +436,7 @@ public class EnchModule {
 		int depth = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.DEPTH_MINER, stack);
 		if (depth > 0) {
 			if (!stack.getToolTypes().stream().anyMatch(e.getState()::isToolEffective)) return;
-			float effectiveness = (p.world.getSeaLevel() - (float) p.func_226278_cu_()) / p.world.getSeaLevel();
+			float effectiveness = (p.world.getSeaLevel() - (float) p.getY()) / p.world.getSeaLevel();
 			if (effectiveness < 0) effectiveness /= 3;
 			float speedChange = 1 + depth * 5 * effectiveness;
 			e.setNewSpeed(Math.max(0.05F, e.getNewSpeed() + speedChange));
@@ -447,7 +447,7 @@ public class EnchModule {
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
 		ItemStack s = e.getItemStack();
 		int nbLevel = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.NATURES_BLESSING, s);
-		if (!e.getEntity().func_225608_bj_() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getPlayer())) {
+		if (!e.getEntity().isSneaking() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getPlayer())) {
 			s.damageItem(6 - nbLevel, e.getPlayer(), ent -> ent.sendBreakAnimation(e.getHand()));
 			e.setCanceled(true);
 			e.setCancellationResult(ActionResultType.SUCCESS);

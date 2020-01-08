@@ -136,7 +136,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	}
 
 	public void trySpawnParticles(PlayerEntity player, int xpDrain) {
-		Vec3d to = new Vec3d(player.func_226277_ct_() - (pos.getX() + 0.5), player.func_226278_cu_() - pos.getY(), player.func_226281_cx_() - (pos.getZ() + 0.5));
+		Vec3d to = new Vec3d(player.getX() - (pos.getX() + 0.5), player.getY() - pos.getY(), player.getZ() - (pos.getZ() + 0.5));
 		ParticleMessage msg = new ParticleMessage(ParticleTypes.ENCHANT, pos.getX() + world.rand.nextDouble(), pos.getY() + 1 + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
 		NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerWorld) world, pos);
 	}

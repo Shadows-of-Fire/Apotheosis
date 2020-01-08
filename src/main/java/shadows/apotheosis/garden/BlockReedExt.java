@@ -21,7 +21,7 @@ public class BlockReedExt extends SugarCaneBlock {
 	}
 
 	@Override
-	public void func_225542_b_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		if (!state.isValidPosition(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true);
 		} else if (worldIn.isAirBlock(pos.up())) {

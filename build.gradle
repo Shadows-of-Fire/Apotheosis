@@ -18,7 +18,7 @@ archivesBaseName = 'Apotheosis-1.15.1'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200107-1.14.3'
+    mappings channel: 'snapshot', version: '20200108-mixed-1.15.1'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client = {
@@ -45,6 +45,9 @@ repositories {
 	}
 	maven {
 		url 'http://maven.blamejared.com'
+	}
+	maven { 
+		url 'https://maven.tterrag.com/' 
 	}
 }
 

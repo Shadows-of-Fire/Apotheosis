@@ -34,7 +34,7 @@ public class BossFeature extends WorldFeature {
 		BossItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
 		for (; y > 10; y--) {
 			if (Block.hasEnoughSolidSide(world, mPos.setPos(x, y, z), Direction.UP)) {
-				if (world.func_226664_a_(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
+				if (world.doesNotCollide(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 					item.place(world, mPos, rand);
 					WorldGenerator.setSuccess(world.getDimension().getType().getRegistryName(), chunkX, chunkZ);
 					return true;

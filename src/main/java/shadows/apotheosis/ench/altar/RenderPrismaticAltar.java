@@ -20,10 +20,10 @@ public class RenderPrismaticAltar extends TileEntityRenderer<TilePrismaticAltar>
 	}
 
 	@Override
-	public void func_225616_a_(TilePrismaticAltar te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buf, int p_225616_5_, int p_225616_6_) {
-		if (this.field_228858_b_.renderInfo != null && te.getDistanceSq(this.field_228858_b_.renderInfo.getProjectedView().x, this.field_228858_b_.renderInfo.getProjectedView().y, this.field_228858_b_.renderInfo.getProjectedView().z) < 128d) {
+	public void render(TilePrismaticAltar te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buf, int p_225616_5_, int p_225616_6_) {
+		if (this.dispatcher.renderInfo != null && te.getDistanceSq(this.dispatcher.renderInfo.getProjectedView().x, this.dispatcher.renderInfo.getProjectedView().y, this.dispatcher.renderInfo.getProjectedView().z) < 128d) {
 
-			matrix.func_227860_a_();
+			matrix.push();
 			boolean thirdPerson = Minecraft.getInstance().getRenderManager().options.thirdPersonView == 2;
 			float viewerYaw = Minecraft.getInstance().renderViewEntity.getYaw(partialTicks);
 			float angleRotateItem = !thirdPerson ? -viewerYaw : -viewerYaw % 360 + 180;
@@ -33,26 +33,26 @@ public class RenderPrismaticAltar extends TileEntityRenderer<TilePrismaticAltar>
 			double yOffset = 0.75;
 
 			for (int i = 0; i < 4; i++) {
-				matrix.func_227860_a_();
-				matrix.func_227861_a_(offsets[i][0], yOffset, offsets[i][1]);
-				matrix.func_227863_a_(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
-				matrix.func_227862_a_(scale, scale, scale);
+				matrix.push();
+				matrix.translate(offsets[i][0], yOffset, offsets[i][1]);
+				matrix.multiply(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
+				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(i);
-				if (!s.isEmpty()) Minecraft.getInstance().getItemRenderer().func_229110_a_(s, TransformType.FIXED, p_225616_5_, OverlayTexture.field_229196_a_, matrix, buf);
-				matrix.func_227865_b_();
+				if (!s.isEmpty()) Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.DEFAULT_UV, matrix, buf);
+				matrix.pop();
 			}
 
 			if (!te.getInv().getStackInSlot(4).isEmpty()) {
-				matrix.func_227860_a_();
-				matrix.func_227861_a_(0.5, 0.4, 0.5);
-				matrix.func_227863_a_(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
-				matrix.func_227862_a_(scale, scale, scale);
+				matrix.push();
+				matrix.translate(0.5, 0.4, 0.5);
+				matrix.multiply(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
+				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(4);
-				Minecraft.getInstance().getItemRenderer().func_229110_a_(s, TransformType.FIXED, p_225616_5_, OverlayTexture.field_229196_a_, matrix, buf);
-				matrix.func_227865_b_();
+				Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.DEFAULT_UV, matrix, buf);
+				matrix.pop();
 			}
 
-			matrix.func_227865_b_();
+			matrix.pop();
 		}
 	}
 }

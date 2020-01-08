@@ -20,7 +20,7 @@ public class BlockCactusExt extends CactusBlock {
 	}
 
 	@Override
-	public void func_225542_b_(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		if (!world.isAreaLoaded(pos, 1)) return; // Forge: prevent growing cactus from loading unloaded chunks with block update
 		if (!state.isValidPosition(world, pos)) {
 			world.destroyBlock(pos, true);

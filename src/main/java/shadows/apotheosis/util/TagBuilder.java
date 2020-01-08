@@ -129,7 +129,7 @@ public class TagBuilder {
 		ListNBT tagListArmor = new ListNBT();
 
 		for (EquipmentSlotType s : EquipmentSlotType.values()) {
-			FloatNBT chance = FloatNBT.func_229689_a_(fixed[s.ordinal()]);
+			FloatNBT chance = FloatNBT.of(fixed[s.ordinal()]);
 			if (s.getSlotType() == EquipmentSlotType.Group.HAND) {
 				tagListHands.set(s.getIndex(), chance);
 			} else tagListArmor.set(s.getIndex(), chance);
@@ -175,7 +175,7 @@ public class TagBuilder {
 	public static ListNBT doubleTagList(double... data) {
 		ListNBT tagList = new ListNBT();
 		for (double d : data)
-			tagList.add(DoubleNBT.func_229684_a_(d));
+			tagList.add(DoubleNBT.of(d));
 		return tagList;
 	}
 

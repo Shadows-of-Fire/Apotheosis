@@ -85,7 +85,7 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 		BlockPos poiPos = optional.orElse(pos);
 		BlockPos spawnPos = this.findSpawnPoint(poiPos, 48);
 		if (spawnPos != null) {
-			if (this.world.func_225523_d_().func_226836_a_(spawnPos) == Biomes.THE_VOID) return false;
+			if (this.world.getBiome(spawnPos) == Biomes.THE_VOID) return false;
 
 			WanderingTraderEntity wanderingtraderentity = EntityType.WANDERING_TRADER.spawn(this.world, null, null, null, spawnPos, SpawnReason.EVENT, false, false);
 			if (wanderingtraderentity != null) {
@@ -123,7 +123,7 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 			int k = pos.getZ() + this.random.nextInt(radius * 2) - radius;
 			int l = this.world.getHeight(Heightmap.Type.WORLD_SURFACE, j, k);
 			BlockPos spawnPos = new BlockPos(j, l, k);
-			if (world.getBlockState(spawnPos).getBlock().canSpawnInBlock() || world.func_226664_a_(aabb.offset(spawnPos))) {
+			if (world.getBlockState(spawnPos).getBlock().canSpawnInBlock() || world.doesNotCollide(aabb.offset(spawnPos))) {
 				return spawnPos;
 			}
 		}

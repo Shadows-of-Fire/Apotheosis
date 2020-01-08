@@ -120,8 +120,8 @@ public class ApotheosisClient {
 			DeferredWorkQueue.runLater(() -> {
 				ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);
 				EntityRendererManager mgr = Minecraft.getInstance().getRenderManager();
-				mgr.func_229087_a_(ApotheosisObjects.OB_ARROW_ENTITY, new ObsidianArrowRenderer(mgr));
-				mgr.func_229087_a_(ApotheosisObjects.BH_ARROW_ENTITY, new BroadheadArrowRenderer(mgr));
+				mgr.register(ApotheosisObjects.OB_ARROW_ENTITY, new ObsidianArrowRenderer(mgr));
+				mgr.register(ApotheosisObjects.BH_ARROW_ENTITY, new BroadheadArrowRenderer(mgr));
 			});
 		}
 	}

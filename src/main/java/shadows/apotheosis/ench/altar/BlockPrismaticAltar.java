@@ -50,7 +50,7 @@ public class BlockPrismaticAltar extends Block {
 	}
 
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (world.isRemote) return ActionResultType.SUCCESS;
 		TileEntity te = world.getTileEntity(pos);
 		if (!(te instanceof TilePrismaticAltar)) return ActionResultType.FAIL;
