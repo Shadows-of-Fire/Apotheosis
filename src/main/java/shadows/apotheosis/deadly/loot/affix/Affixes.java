@@ -10,6 +10,7 @@ import net.minecraft.item.Items;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
@@ -33,7 +34,7 @@ import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
  * Armor: 2/4
  * Shields: 2/3
  */
-@EventBusSubscriber(modid = Apotheosis.MODID)
+@EventBusSubscriber(modid = Apotheosis.MODID, bus = Bus.MOD)
 @ObjectHolder(Apotheosis.MODID)
 public class Affixes {
 

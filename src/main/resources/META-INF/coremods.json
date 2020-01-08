@@ -10,5 +10,10 @@
   "AnvilTweaks containerRepair": "apothasm/at-container-repair.js",
   "guiRepair": "apothasm/gui-repair.js",
   "combatRules": "apothasm/combat-rules.js",
-  "fishingBobber": "apothasm/fishing-bobber.js"
+  "fishingBobber": "apothasm/fishing-bobber.js",
+  "affixDmg": "apothasm/affix-entity-dmg.js",
+  "affixEntity": "apothasm/affix-extra-dmg.js",
+  "affixProt": "apothasm/affix-prot-level.js",
+  "affixUser": "apothasm/affix-user-hurt.js",
+  "stackUUID": "apothasm/stack-modifier-hack.js"
 }
