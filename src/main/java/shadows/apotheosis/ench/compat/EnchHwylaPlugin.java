@@ -1,5 +1,5 @@
 package shadows.apotheosis.ench.compat;
-
+/*
 import java.util.List;
 
 import mcp.mobius.waila.api.IComponentProvider;
@@ -45,3 +45,4 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 	}
 
 }
+*/

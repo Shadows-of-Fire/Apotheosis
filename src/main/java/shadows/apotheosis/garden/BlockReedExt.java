@@ -10,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 
 public class BlockReedExt extends SugarCaneBlock {
@@ -20,7 +21,7 @@ public class BlockReedExt extends SugarCaneBlock {
 	}
 
 	@Override
-	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+	public void func_225542_b_(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		if (!state.isValidPosition(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true);
 		} else if (worldIn.isAirBlock(pos.up())) {

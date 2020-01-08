@@ -80,12 +80,12 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 		if (player == null) return false;
 
 		BlockPos pos = player.getPosition();
-		PointOfInterestManager poiMgr = this.world.func_217443_B();
+		PointOfInterestManager poiMgr = this.world.getPointOfInterestManager();
 		Optional<BlockPos> optional = poiMgr.func_219127_a(PointOfInterestType.MEETING.func_221045_c(), Predicates.alwaysTrue(), pos, 48, PointOfInterestManager.Status.ANY);
 		BlockPos poiPos = optional.orElse(pos);
 		BlockPos spawnPos = this.findSpawnPoint(poiPos, 48);
 		if (spawnPos != null) {
-			if (this.world.getBiome(spawnPos) == Biomes.THE_VOID) return false;
+			if (this.world.func_225523_d_().func_226836_a_(spawnPos) == Biomes.THE_VOID) return false;
 
 			WanderingTraderEntity wanderingtraderentity = EntityType.WANDERING_TRADER.spawn(this.world, null, null, null, spawnPos, SpawnReason.EVENT, false, false);
 			if (wanderingtraderentity != null) {
@@ -94,8 +94,8 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 				}
 
 				this.world.getWorldInfo().setWanderingTraderId(wanderingtraderentity.getUniqueID());
-				wanderingtraderentity.func_213728_s(48000);
-				wanderingtraderentity.func_213726_g(poiPos);
+				wanderingtraderentity.setDespawnDelay(48000);
+				wanderingtraderentity.setWanderTarget(poiPos);
 				wanderingtraderentity.setHomePosAndDistance(poiPos, 16);
 				return true;
 			}
@@ -123,7 +123,7 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 			int k = pos.getZ() + this.random.nextInt(radius * 2) - radius;
 			int l = this.world.getHeight(Heightmap.Type.WORLD_SURFACE, j, k);
 			BlockPos spawnPos = new BlockPos(j, l, k);
-			if (world.getBlockState(spawnPos).getBlock().canSpawnInBlock() || world.areCollisionShapesEmpty(aabb.offset(spawnPos))) {
+			if (world.getBlockState(spawnPos).getBlock().canSpawnInBlock() || world.func_226664_a_(aabb.offset(spawnPos))) {
 				return spawnPos;
 			}
 		}

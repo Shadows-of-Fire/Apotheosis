@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -84,8 +85,8 @@ public class BlockSpawnerExt extends SpawnerBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (world.isRemote) return true;
+	public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (world.isRemote) return ActionResultType.SUCCESS;
 		ItemStack stack = player.getHeldItem(hand);
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileSpawnerExt) {
@@ -95,11 +96,11 @@ public class BlockSpawnerExt extends SpawnerBlock {
 				if (sm.canModify(tile, stack, inverse) && sm.modify(tile, stack, inverse)) {
 					if (!player.isCreative()) stack.shrink(1);
 					AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
-					return true;
+					return ActionResultType.SUCCESS;
 				}
 			}
 		}
-		return false;
+		return ActionResultType.PASS;
 	}
 
 	@Override

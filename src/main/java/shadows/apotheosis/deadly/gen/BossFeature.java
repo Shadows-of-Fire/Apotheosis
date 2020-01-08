@@ -11,7 +11,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
@@ -31,11 +30,11 @@ public class BossFeature extends WorldFeature {
 		int x = (chunkX << 4) + MathHelper.nextInt(rand, 4, 12);
 		int z = (chunkZ << 4) + MathHelper.nextInt(rand, 4, 12);
 		int y = 15 + rand.nextInt(35);
-		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
+		BlockPos.Mutable mPos = new BlockPos.Mutable(x, y, z);
 		BossItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
 		for (; y > 10; y--) {
-			if (Block.func_220055_a(world, mPos.setPos(x, y, z), Direction.UP)) {
-				if (world.areCollisionShapesEmpty(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
+			if (Block.hasEnoughSolidSide(world, mPos.setPos(x, y, z), Direction.UP)) {
+				if (world.func_226664_a_(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 					item.place(world, mPos, rand);
 					WorldGenerator.setSuccess(world.getDimension().getType().getRegistryName(), chunkX, chunkZ);
 					return true;

@@ -1,5 +1,5 @@
 package shadows.apotheosis.spawn.compat;
-
+/*
 import java.util.List;
 
 import mcp.mobius.waila.api.IComponentProvider;
@@ -61,4 +61,4 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IComponentProvider, ISe
 		}
 	}
 
-}
+}*/

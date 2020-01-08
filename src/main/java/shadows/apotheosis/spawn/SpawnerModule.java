@@ -77,7 +77,7 @@ public class SpawnerModule {
 			if (e.getEntityLiving().world.rand.nextFloat() < level / 250F) {
 				LivingEntity killed = e.getEntityLiving();
 				ItemStack egg = new ItemStack(SpawnEggItem.EGGS.get(killed.getType()));
-				e.getDrops().add(new ItemEntity(killed.world, killed.posX, killed.posY, killed.posZ, egg));
+				e.getDrops().add(new ItemEntity(killed.world, killed.func_226277_ct_(), killed.func_226278_cu_(), killed.func_226281_cx_(), egg));
 			}
 		}
 	}

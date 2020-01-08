@@ -158,7 +158,7 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 						double x = j >= 1 ? listnbt.getDouble(0) : blockpos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
 						double y = j >= 2 ? listnbt.getDouble(1) : (double) (blockpos.getY() + world.rand.nextInt(3) - 1);
 						double z = j >= 3 ? listnbt.getDouble(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
-						if (ignoresConditions || world.areCollisionShapesEmpty(optional.get().func_220328_a(x, y, z)) && EntitySpawnPlacementRegistry.func_223515_a(optional.get(), world.getWorld(), SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
+						if (ignoresConditions || world.func_226664_a_(optional.get().func_220328_a(x, y, z)) && EntitySpawnPlacementRegistry.func_223515_a(optional.get(), world.getWorld(), SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
 							Entity entity = EntityType.func_220335_a(compoundnbt, world, (p_221408_6_) -> {
 								p_221408_6_.setLocationAndAngles(x, y, z, p_221408_6_.rotationYaw, p_221408_6_.rotationPitch);
 								return p_221408_6_;
@@ -176,14 +176,14 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 								}
 							}
 
-							entity.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, world.rand.nextFloat() * 360.0F, 0.0F);
+							entity.setLocationAndAngles(entity.func_226277_ct_(), entity.func_226278_cu_(), entity.func_226281_cx_(), world.rand.nextFloat() * 360.0F, 0.0F);
 							if (entity instanceof MobEntity) {
 								MobEntity mobentity = (MobEntity) entity;
-								if (!ignoresConditions && !ForgeEventFactory.canEntitySpawnSpawner(mobentity, world, (float) entity.posX, (float) entity.posY, (float) entity.posZ, this)) {
+								if (!ignoresConditions && !ForgeEventFactory.canEntitySpawnSpawner(mobentity, world, (float) entity.func_226277_ct_(), (float) entity.func_226278_cu_(), (float) entity.func_226281_cx_(), this)) {
 									continue;
 								}
 
-								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, getWorld(), (float) entity.posX, (float) entity.posY, (float) entity.posZ, this, SpawnReason.SPAWNER)) {
+								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, getWorld(), (float) entity.func_226277_ct_(), (float) entity.func_226278_cu_(), (float) entity.func_226281_cx_(), this, SpawnReason.SPAWNER)) {
 									((MobEntity) entity).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity)), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
 								}
 							}

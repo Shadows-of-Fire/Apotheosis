@@ -15,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -49,10 +50,10 @@ public class BlockPrismaticAltar extends Block {
 	}
 
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (world.isRemote) return true;
+	public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (world.isRemote) return ActionResultType.SUCCESS;
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TilePrismaticAltar)) return false;
+		if (!(te instanceof TilePrismaticAltar)) return ActionResultType.FAIL;
 		TilePrismaticAltar altar = (TilePrismaticAltar) te;
 		Vec3d eyes = player.getEyePosition(1);
 		Vec3d look = player.getLook(1);
@@ -70,7 +71,7 @@ public class BlockPrismaticAltar extends Block {
 			attemptSwap(altar, 4, player, hand);
 		}
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 
 	@Nullable
@@ -79,23 +80,25 @@ public class BlockPrismaticAltar extends Block {
 		return result == null ? null : new BlockRayTraceResult(result.getHitVec().add(pos.getX(), pos.getY(), pos.getZ()), result.getFace(), pos, result.isInside());
 	}
 
-	protected boolean attemptSwap(TilePrismaticAltar altar, int slot, PlayerEntity player, Hand hand) {
+	protected ActionResultType attemptSwap(TilePrismaticAltar altar, int slot, PlayerEntity player, Hand hand) {
 		ItemStackHandler inv = altar.getInv();
 		ItemStack inAltar = inv.getStackInSlot(slot);
 		ItemStack inHand = player.getHeldItem(hand);
-		if (slot == 4 && !inHand.isEmpty()) return true;
+		if (slot == 4 && !inHand.isEmpty()) return ActionResultType.FAIL;
 		if (inAltar.isEmpty() && (inHand.isEnchanted() || inHand.getItem() == Items.ENCHANTED_BOOK)) {
 			ItemStack toAltar = inHand.copy();
 			inHand.shrink(1);
 			toAltar.setCount(1);
 			inv.setStackInSlot(slot, toAltar);
 			altar.markAndNotify();
+			return ActionResultType.SUCCESS;
 		} else if (!inAltar.isEmpty() && inHand.isEmpty()) {
 			player.setHeldItem(hand, inAltar.copy());
 			inAltar.setCount(0);
 			altar.markAndNotify();
+			return ActionResultType.SUCCESS;
 		}
-		return true;
+		return ActionResultType.FAIL;
 	}
 
 	@Override

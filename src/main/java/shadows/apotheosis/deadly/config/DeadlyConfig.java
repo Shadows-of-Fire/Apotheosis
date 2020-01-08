@@ -29,14 +29,14 @@ public class DeadlyConfig {
 	public static Configuration config;
 
 	//Boss Stats
-	public static RandomValueRange bossRegenLevel = RandomValueRange.func_215837_a(0, 2);
-	public static RandomValueRange bossResistLevel = RandomValueRange.func_215837_a(0, 2);
+	public static RandomValueRange bossRegenLevel = RandomValueRange.of(0, 2);
+	public static RandomValueRange bossResistLevel = RandomValueRange.of(0, 2);
 	public static float bossFireRes = 0.5F;
 	public static float bossWaterBreathing = 1.0F;
-	public static RandomValueRange bossHealthMultiplier = RandomValueRange.func_215837_a(2.5F, 10F);
-	public static RandomValueRange bossKnockbackResist = RandomValueRange.func_215837_a(0.5F, 1F);
-	public static RandomValueRange bossSpeedMultiplier = RandomValueRange.func_215837_a(1F, 1.5F);
-	public static RandomValueRange bossDamageMult = RandomValueRange.func_215837_a(1.2F, 3F);;
+	public static RandomValueRange bossHealthMultiplier = RandomValueRange.of(2.5F, 10F);
+	public static RandomValueRange bossKnockbackResist = RandomValueRange.of(0.5F, 1F);
+	public static RandomValueRange bossSpeedMultiplier = RandomValueRange.of(1F, 1.5F);
+	public static RandomValueRange bossDamageMult = RandomValueRange.of(1.2F, 3F);;
 	public static float bossLevelUpChance = .25F;
 	public static float bossEnchantChance = .25F;
 	public static float bossPotionChance = .45F;
@@ -86,7 +86,7 @@ public class DeadlyConfig {
 		bossLevelUpChance = c.getFloat("Level Up Chance", DeadlyConstants.BOSSES, bossLevelUpChance, 0, Integer.MAX_VALUE, "The level up chance, this is rolled once per number of levels.  Levels determine gear.");
 		bossEnchantChance = c.getFloat("Random Enchantment Chance", DeadlyConstants.BOSSES, bossEnchantChance, 0, Integer.MAX_VALUE, "The chance a gear piece will be randomly enchanted.");
 		bossPotionChance = c.getFloat("Random Potion Chance", DeadlyConstants.BOSSES, bossPotionChance, 0, Integer.MAX_VALUE, "The chance a boss will have extra random potion effects.");
-		String[] blacklistPotions = c.getStringList("Blacklisted Potions", DeadlyConstants.BOSSES, new String[] {"forbidden_arcanus:spectral_vision"}, "A list of potions (registry names) that bosses cannot generate with.");
+		String[] blacklistPotions = c.getStringList("Blacklisted Potions", DeadlyConstants.BOSSES, new String[] { "forbidden_arcanus:spectral_vision" }, "A list of potions (registry names) that bosses cannot generate with.");
 		for (String s : blacklistPotions)
 			BLACKLISTED_POTIONS.add(new ResourceLocation(s));
 
@@ -170,7 +170,7 @@ public class DeadlyConfig {
 	public static RandomValueRange getRange(Configuration c, String name, String group, RandomValueRange range, float min, float max, String comment) {
 		float rMin = c.getFloat("Min " + name, group, range.getMin(), min, max, String.format(comment, "min"));
 		float rMax = c.getFloat("Max " + name, group, range.getMax(), min, max, String.format(comment, "max"));
-		return RandomValueRange.func_215837_a(rMin, rMax);
+		return RandomValueRange.of(rMin, rMax);
 	}
 
 }

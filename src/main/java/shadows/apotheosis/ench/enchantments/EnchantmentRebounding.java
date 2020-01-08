@@ -34,7 +34,7 @@ public class EnchantmentRebounding extends Enchantment {
 	public void onUserHurt(LivingEntity user, Entity attacker, int level) {
 		if (attacker != null && user.getDistanceSq(attacker) <= 4D) {
 			level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.REBOUNDING, user);
-			Vec3d vec = new Vec3d(attacker.posX - user.posX, attacker.posY - user.posY, attacker.posZ - user.posZ);
+			Vec3d vec = new Vec3d(attacker.func_226277_ct_() - user.func_226277_ct_(), attacker.func_226278_cu_() - user.func_226278_cu_(), attacker.func_226281_cx_() - user.func_226281_cx_());
 			attacker.addVelocity(vec.x * 2 * level, vec.y * 3 * level, vec.z * 2 * level);
 		}
 	}

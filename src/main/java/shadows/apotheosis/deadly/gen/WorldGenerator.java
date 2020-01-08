@@ -13,7 +13,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -58,7 +57,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		if (BRUTAL_SPAWNER.isEnabled()) FEATURES.add(BRUTAL_SPAWNER);
 		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
 		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
-		ConfiguredFeature<?> gen = new ConfiguredFeature<>(new WorldGenerator(), IFeatureConfig.NO_FEATURE_CONFIG);
+		ConfiguredFeature<?, ?> gen = new ConfiguredFeature<>(new WorldGenerator(), IFeatureConfig.NO_FEATURE_CONFIG);
 		DeferredWorkQueue.runLater(() -> {
 			for (Biome b : ForgeRegistries.BIOMES)
 				if (!DeadlyConfig.BIOME_BLACKLIST.contains(b.getRegistryName())) b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);
@@ -66,7 +65,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 	}
 
 	public static void debugPillar(World world, BlockPos pos) {
-		MutableBlockPos mPos = new MutableBlockPos(pos);
+		BlockPos.Mutable mPos = new BlockPos.Mutable(pos);
 		DeadlyModule.LOGGER.info("Marking! " + pos.toString());
 		while (mPos.getY() < 127)
 			world.setBlockState(mPos.setPos(mPos.getX(), mPos.getY() + 1, mPos.getZ()), Blocks.GLASS.getDefaultState());

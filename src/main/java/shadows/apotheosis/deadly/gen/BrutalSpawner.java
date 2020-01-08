@@ -14,7 +14,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Plane;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -41,7 +40,7 @@ public class BrutalSpawner extends WorldFeature {
 		int x = (chunkX << 4) + MathHelper.nextInt(rand, 4, 12);
 		int z = (chunkZ << 4) + MathHelper.nextInt(rand, 4, 12);
 		int y = 15 + rand.nextInt(35);
-		MutableBlockPos mPos = new MutableBlockPos(x, y, z);
+		BlockPos.Mutable mPos = new BlockPos.Mutable(x, y, z);
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);

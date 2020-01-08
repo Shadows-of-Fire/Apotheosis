@@ -9,7 +9,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
 
 public class BlockCactusExt extends CactusBlock {
@@ -20,7 +20,7 @@ public class BlockCactusExt extends CactusBlock {
 	}
 
 	@Override
-	public void tick(BlockState state, World world, BlockPos pos, Random random) {
+	public void func_225542_b_(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		if (!world.isAreaLoaded(pos, 1)) return; // Forge: prevent growing cactus from loading unloaded chunks with block update
 		if (!state.isValidPosition(world, pos)) {
 			world.destroyBlock(pos, true);

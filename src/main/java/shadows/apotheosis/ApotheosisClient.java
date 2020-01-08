@@ -34,12 +34,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.altar.RenderPrismaticAltar;
-import shadows.apotheosis.ench.altar.TilePrismaticAltar;
 import shadows.apotheosis.ench.anvil.compat.ATCompat;
 import shadows.apotheosis.village.fletching.FletchingScreen;
-import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowRenderer;
-import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowRenderer;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
@@ -115,15 +112,15 @@ public class ApotheosisClient {
 				registerTooltip(ApotheosisObjects.MAGIC_PROTECTION, twisted);
 			}
 		}
-		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntitySpecialRenderer(TilePrismaticAltar.class, new RenderPrismaticAltar());
+		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, RenderPrismaticAltar::new);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisClient::tooltips);
 		if (ModList.get().isLoaded("anviltweaks")) ATCompat.tesr();
 		if (Apotheosis.enableVillager) {
 			DeferredWorkQueue.runLater(() -> {
 				ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);
 				EntityRendererManager mgr = Minecraft.getInstance().getRenderManager();
-				mgr.register(ObsidianArrowEntity.class, new ObsidianArrowRenderer(mgr));
-				mgr.register(BroadheadArrowEntity.class, new BroadheadArrowRenderer(mgr));
+				mgr.func_229087_a_(ApotheosisObjects.OB_ARROW_ENTITY, new ObsidianArrowRenderer(mgr));
+				mgr.func_229087_a_(ApotheosisObjects.BH_ARROW_ENTITY, new BroadheadArrowRenderer(mgr));
 			});
 		}
 	}

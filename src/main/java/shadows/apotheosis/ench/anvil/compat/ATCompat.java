@@ -1,6 +1,7 @@
 package shadows.apotheosis.ench.anvil.compat;
 
-import com.tfar.anviltweaks.AnvilTileSpecialRenderer;
+import com.tfar.anviltweaks.AnvilTile;
+import com.tfar.anviltweaks.AnvilTileRenderer;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
@@ -25,8 +26,10 @@ public class ATCompat {
 		type.factory = TileTfarAnvil::new;
 	}
 
+	@SuppressWarnings("unchecked")
 	@OnlyIn(Dist.CLIENT)
 	public static void tesr() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileTfarAnvil.class, new AnvilTileSpecialRenderer());
+		TileEntityType<AnvilTile> type = (TileEntityType<AnvilTile>) ForgeRegistries.TILE_ENTITIES.getValue(new ResourceLocation(Apotheosis.MODID, "anvil"));
+		ClientRegistry.bindTileEntityRenderer(type, AnvilTileRenderer::new);
 	}
 }

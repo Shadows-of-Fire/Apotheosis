@@ -154,7 +154,7 @@ public class PotionModule {
 			RabbitEntity rabbit = (RabbitEntity) e.getEntityLiving();
 			if (rabbit.world.rand.nextFloat() < 0.02F) {
 				e.getDrops().clear();
-				e.getDrops().add(new ItemEntity(rabbit.world, rabbit.posX, rabbit.posY, rabbit.posZ, new ItemStack(ApotheosisObjects.LUCKY_FOOT)));
+				e.getDrops().add(new ItemEntity(rabbit.world, rabbit.func_226277_ct_(), rabbit.func_226278_cu_(), rabbit.func_226281_cx_(), new ItemStack(ApotheosisObjects.LUCKY_FOOT)));
 			}
 		}
 	}
