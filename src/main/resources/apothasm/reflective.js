@@ -5,14 +5,14 @@ function initializeCoreMod() {
                 'type': 'METHOD',
                 'class': 'net.minecraft.entity.LivingEntity',
                 'methodName': 'func_190629_c',
-                'methodDesc': '(Lnet/minecraft/entity/EntityLivingBase;)V'
+                'methodDesc': '(Lnet/minecraft/entity/LivingEntity;)V'
             },
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching LivingEntity#blockUsingShield');
 
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "reflectiveHook";
-                var desc = "(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/entity/EntityLivingBase;)V";
+                var desc = "(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/LivingEntity;)V";
                 var instr = method.instructions;
 
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
