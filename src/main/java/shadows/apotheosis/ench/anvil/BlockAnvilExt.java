@@ -119,7 +119,7 @@ public class BlockAnvilExt extends AnvilBlock implements IAnvilBlock {
 		if (split > 0) for (ItemEntity entity : items) {
 			ItemStack stack = entity.getItem();
 			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof BookItem) {
-				if (world.rand.nextInt(Math.max(1, 6 - split)) == 0) {
+				if (world.rand.nextFloat() < 0.2F * split) {
 					ListNBT enchants = EnchantedBookItem.getEnchantments(stack);
 					if (stack.getItem() instanceof BookItem) enchants = stack.getEnchantmentTagList();
 					if (enchants.size() < 1) continue;
