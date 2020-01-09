@@ -113,6 +113,7 @@ public class BlockAnvilExt extends AnvilBlock implements IAnvilBlock {
 
 		List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
 		FallingBlockEntity anvil = world.getEntitiesWithinAABB(FallingBlockEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1))).get(0);
+		if (anvil.tileEntityData == null) return;
 		int split = anvil.tileEntityData.getInt("splitting");
 		int ub = anvil.tileEntityData.getInt("ub");
 		if (split > 0) for (ItemEntity entity : items) {
