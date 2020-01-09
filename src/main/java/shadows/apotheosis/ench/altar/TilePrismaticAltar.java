@@ -123,7 +123,11 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 				seed ^= e.getRegistryName().hashCode();
 			}
 		rand.setSeed(seed);
+		int half = value / 2;
 		List<EnchantmentData> datas = EnchantmentHelper.buildEnchantmentList(rand, book, value, true);
+		while (datas.isEmpty() && value >= half) {
+			datas = EnchantmentHelper.buildEnchantmentList(rand, book, value -= 5, true);
+		}
 		if (!datas.isEmpty()) {
 			for (EnchantmentData d : datas)
 				EnchantedBookItem.addEnchantment(target, d);
