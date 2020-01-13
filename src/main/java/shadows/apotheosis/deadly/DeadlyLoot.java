@@ -32,7 +32,6 @@ public class DeadlyLoot {
 
 	public static final ResourceLocation SPAWNER_BRUTAL = new ResourceLocation(Apotheosis.MODID, "spawner_brutal");
 	public static final ResourceLocation SPAWNER_SWARM = new ResourceLocation(Apotheosis.MODID, "spawner_swarm");
-
 	public static final ResourceLocation CHEST_VALUABLE = new ResourceLocation(Apotheosis.MODID, "chest_valuable");
 
 	public static void init() {
