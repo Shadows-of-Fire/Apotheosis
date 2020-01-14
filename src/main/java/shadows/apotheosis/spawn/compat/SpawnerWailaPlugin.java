@@ -1,5 +1,5 @@
 package shadows.apotheosis.spawn.compat;
-/*
+
 import java.util.List;
 
 import mcp.mobius.waila.api.IComponentProvider;
@@ -36,7 +36,7 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IComponentProvider, ISe
 
 	@Override
 	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-		if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
+		if (Minecraft.getInstance().gameSettings.keySneak.isKeyDown()) {
 			int[] stats = accessor.getServerData().getIntArray(STATS);
 			if (stats.length != 10) return;
 			tooltip.add(new TranslationTextComponent("waila.spw.mindelay", stats[0]));
@@ -61,4 +61,4 @@ public class SpawnerWailaPlugin implements IWailaPlugin, IComponentProvider, ISe
 		}
 	}
 
-}*/
+}
