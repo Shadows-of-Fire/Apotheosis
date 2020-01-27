@@ -33,6 +33,6 @@ All things that should have been.
 [[dependencies.apotheosis]]
     modId="placebo"
     mandatory=true
-    versionRange="[3,)"
+    versionRange="[3.0.1,)"
     ordering="NONE"
     side="BOTH"
