@@ -39,7 +39,7 @@ import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 public class BlockSpawnerExt extends SpawnerBlock {
 
 	public BlockSpawnerExt() {
-		super(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL));
+		super(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).nonOpaque());
 		setRegistryName("minecraft", "spawner");
 	}
 
