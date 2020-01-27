@@ -1,15 +1,20 @@
 package shadows.apotheosis.garden;
 
 import java.io.File;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
+import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.properties.BambooLeaves;
+import net.minecraft.world.biome.DefaultBiomeFeatures;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.feature.BambooFeature;
+import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
@@ -32,6 +37,12 @@ public class GardenModule {
 		maxBambooHeight = c.getInt("Bamboo Height", "general", maxBambooHeight, 1, 255, "The max height a stack of bamboo may grow to.  Vanilla is 16.");
 		if (c.hasChanged()) c.save();
 		Apotheosis.HELPER.addShapeless(ApotheosisObjects.FARMERS_LEASH, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
+		fix(DefaultBiomeFeatures.SUGAR_CANE_CONFIG, Blocks.SUGAR_CANE);
+		fix(DefaultBiomeFeatures.CACTUS_CONFIG, Blocks.CACTUS);
+		BambooFeature.BAMBOO_BASE = Blocks.BAMBOO.getDefaultState().with(BambooBlock.PROPERTY_AGE, 1).with(BambooBlock.PROPERTY_BAMBOO_LEAVES, BambooLeaves.NONE).with(BambooBlock.PROPERTY_STAGE, 0);
+		BambooFeature.BAMBOO_LARGE_LEAVES_GROWN = BambooFeature.BAMBOO_BASE.with(BambooBlock.PROPERTY_BAMBOO_LEAVES, BambooLeaves.LARGE).with(BambooBlock.PROPERTY_STAGE, 1);
+		BambooFeature.BAMBOO_LARGE_LEAVES = BambooFeature.BAMBOO_BASE.with(BambooBlock.PROPERTY_BAMBOO_LEAVES, BambooLeaves.LARGE);
+		BambooFeature.BAMBOO_SMALL_LEAVES = BambooFeature.BAMBOO_BASE.with(BambooBlock.PROPERTY_BAMBOO_LEAVES, BambooLeaves.SMALL);
 	}
 
 	@SubscribeEvent
@@ -48,13 +59,19 @@ public class GardenModule {
 		ComposterBlock.CHANCES.put(Blocks.SUGAR_CANE, 0.5F);
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <T extends Comparable<T>> BlockState update(BlockState state) {
-		BlockState ret = state.getBlock().delegate.get().getDefaultState();
-		for (Map.Entry<IProperty<?>, Comparable<?>> ent : state.getValues().entrySet()) {
-			ret = state.with((IProperty<T>) ent.getKey(), (T) ent.getValue());
+	/**
+	 * Updates the blockstate of a feature config.  Since the thing isn't mapped, "nice" reflection isn't possible...
+	 */
+	private static void fix(BlockClusterFeatureConfig cfg, Block newBlock) {
+		Field f = cfg.getClass().getFields()[0]; //stateProvider, first public field.
+		try {
+			Field modifiersField = Field.class.getDeclaredField("modifiers");
+			modifiersField.setAccessible(true);
+			modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+			f.set(cfg, new SimpleBlockStateProvider(newBlock.getDefaultState()));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		return ret;
 	}
 
 }
