@@ -1,8 +1,6 @@
 package shadows.apotheosis.garden;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
@@ -17,6 +15,7 @@ import net.minecraft.world.gen.feature.BambooFeature;
 import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
@@ -59,19 +58,8 @@ public class GardenModule {
 		ComposterBlock.CHANCES.put(Blocks.SUGAR_CANE, 0.5F);
 	}
 
-	/**
-	 * Updates the blockstate of a feature config.  Since the thing isn't mapped, "nice" reflection isn't possible...
-	 */
 	private static void fix(BlockClusterFeatureConfig cfg, Block newBlock) {
-		Field f = cfg.getClass().getFields()[0]; //stateProvider, first public field.
-		try {
-			Field modifiersField = Field.class.getDeclaredField("modifiers");
-			modifiersField.setAccessible(true);
-			modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-			f.set(cfg, new SimpleBlockStateProvider(newBlock.getDefaultState()));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		ObfuscationReflectionHelper.setPrivateValue(BlockClusterFeatureConfig.class, cfg, new SimpleBlockStateProvider(newBlock.getDefaultState()), "field_227289_a_");
 	}
 
 }
