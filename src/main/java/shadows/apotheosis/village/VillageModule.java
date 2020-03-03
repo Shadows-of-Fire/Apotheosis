@@ -43,6 +43,9 @@ public class VillageModule {
 
 	public static Configuration config;
 
+	public static boolean enableWandererSpawner = true;
+	public static boolean enableNewTrades = true;
+
 	@SubscribeEvent
 	public void setup(ApotheosisSetup e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
@@ -53,6 +56,8 @@ public class VillageModule {
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		WandererSpawnerExt.defaultChance = config.getInt("Spawn Chance", "Wanderer", 10, 1, 100, "The 1/100 chance the wandering trader has to spawn every attempt.  This chance is increased by it's own value each failure until successful.");
 		WandererSpawnerExt.defaultDelay = config.getInt("Spawn Delay", "Wanderer", 24000, 1, Integer.MAX_VALUE, "The number of ticks that must elapse before a wanderer spawn attempt happens.");
+		enableWandererSpawner = config.getBoolean("Enable Wanderer Spawner", "Wanderer", true, "If the Apotheosis Wanderer Spawner is enabled, instead of the default.");
+		enableNewTrades = config.getBoolean("Enable New Trades", "Wanderer", true, "If new trades are added to the wandering merchant.");
 		if (config.hasChanged()) config.save();
 	}
 
@@ -106,7 +111,7 @@ public class VillageModule {
 	}
 
 	public void starting(AttachCapabilitiesEvent<World> e) {
-		if (e.getObject() instanceof ServerWorld) {
+		if (enableWandererSpawner && e.getObject() instanceof ServerWorld) {
 			ServerWorld w = (ServerWorld) e.getObject();
 			if (w.dimension.getType() == DimensionType.OVERWORLD) ReflectionHelper.setPrivateValue(ServerWorld.class, w, new WandererSpawnerExt(w), "field_217496_L", "wanderingTraderSpawner");
 		}

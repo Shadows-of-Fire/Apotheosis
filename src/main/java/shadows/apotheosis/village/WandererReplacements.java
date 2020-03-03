@@ -22,6 +22,7 @@ public class WandererReplacements {
 
 	@SubscribeEvent
 	public static void replaceWandererArrays(WandererTradesEvent e) {
+		if (!VillageModule.enableNewTrades) return;
 		List<ITrade> randTrades = e.getGenericTrades();
 		randTrades.add(new BasicTrade(2, new ItemStack(Items.ENDER_EYE), 3, 5));
 		randTrades.add(new BasicTrade(1, new ItemStack(Items.BLAZE_POWDER), 5, 5));
