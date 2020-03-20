@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '3.0.6'
+version = '3.0.7'
 group = 'shadows.apotheosis'
 archivesBaseName = 'Apotheosis-1.15.2'
 
@@ -52,7 +52,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.0.1'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.25'
 	compile fg.deobf('mezz.jei:jei-1.15.2:+')
 	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10+')
 	//compile fg.deobf('com.blamejared.crafttweaker:CraftTweaker-1.15.2:+')

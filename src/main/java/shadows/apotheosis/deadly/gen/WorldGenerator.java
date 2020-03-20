@@ -27,6 +27,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 
@@ -58,7 +59,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		if (BRUTAL_SPAWNER.isEnabled()) FEATURES.add(BRUTAL_SPAWNER);
 		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
 		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
-		ConfiguredFeature<?, ?> gen = new ConfiguredFeature<>(new WorldGenerator(), IFeatureConfig.NO_FEATURE_CONFIG);
+		ConfiguredFeature<?, ?> gen = new ConfiguredFeature<>(ApotheosisObjects.DEADLY_WORLD_GEN, IFeatureConfig.NO_FEATURE_CONFIG);
 		DeferredWorkQueue.runLater(() -> {
 			for (Biome b : ForgeRegistries.BIOMES)
 				if (!DeadlyConfig.BIOME_BLACKLIST.contains(b.getRegistryName())) b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);

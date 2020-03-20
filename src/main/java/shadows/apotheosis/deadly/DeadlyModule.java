@@ -5,7 +5,9 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -38,6 +40,11 @@ public class DeadlyModule {
 		SwarmSpawner.init();
 		WorldGenerator.init();
 		Affixes.init();
+	}
+
+	@SubscribeEvent
+	public void register(Register<Feature<?>> e) {
+		e.getRegistry().register(new WorldGenerator().setRegistryName("deadly_world_gen"));
 	}
 
 }
