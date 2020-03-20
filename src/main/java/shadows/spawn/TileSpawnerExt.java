@@ -36,7 +36,7 @@ public class TileSpawnerExt extends TileEntityMobSpawner {
 	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		tag.setBoolean("ignore_players", ignoresPlayers);
 		tag.setBoolean("ignore_conditions", ignoresConditions);
-		tag.setBoolean("ignore_cap", ignoresPlayers);
+		tag.setBoolean("ignore_cap", ignoresCap);
 		tag.setBoolean("redstone_control", redstoneEnabled);
 		return super.writeToNBT(tag);
 	}
