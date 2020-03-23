@@ -137,7 +137,7 @@ public class LootManager {
 	 */
 	public static ItemStack getRandomEntry(Random rand, LootRarity rarity) {
 		LootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES);
-		ItemStack stack = rarity == LootRarity.UNIQUE ? genUnique(rand) : entry.getStack().copy();
+		ItemStack stack = rarity == LootRarity.ANCIENT ? genUnique(rand) : entry.getStack().copy();
 		return stack;
 	}
 
@@ -169,8 +169,8 @@ public class LootManager {
 		}
 		case RARE:
 		case EPIC:
-		case ANCIENT:
-		case UNIQUE: {
+		case MYTHIC:
+		case ANCIENT: {
 			List<Affix> afxList = PREFIXES.get(type);
 			affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
 			afxList = SUFFIXES.get(type);
@@ -182,7 +182,7 @@ public class LootManager {
 		boolean epicModif = false;
 
 		if (rarity.ordinal() >= LootRarity.EPIC.ordinal()) {
-			if (rarity.ordinal() >= LootRarity.ANCIENT.ordinal()) epicModif = rand.nextBoolean();
+			if (rarity.ordinal() >= LootRarity.MYTHIC.ordinal()) epicModif = rand.nextBoolean();
 			int numModifs = rarity == LootRarity.EPIC ? 1 : epicModif ? 1 : 2;
 			Affix[] keys = affixes.keySet().toArray(new Affix[2]);
 			int modifKey = rand.nextInt(2);

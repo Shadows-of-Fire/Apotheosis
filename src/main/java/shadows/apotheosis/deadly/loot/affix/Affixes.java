@@ -87,7 +87,7 @@ public class Affixes {
 			new EnchantmentAffix(() -> ApotheosisObjects.REFLECTIVE, 8, false, 2).setRegistryName("reflective"),
 			new EnchantmentAffix(Enchantments.POWER, 10, true, 2).setRegistryName("power"),
 			new AttributeAffix(CustomAttributes.MAGIC_RESIST, 1, 5, Operation.ADDITION, false, 1).setRegistryName("magic_resist"),
-			new RangedAffix(0.0001F, 0.001F, true, 1).setRegistryName("sifting"),
+			new RangedAffix(0.03F, 0.08F, true, 1).setRegistryName("sifting"),
 			new RangedAffix(3, 15, false, 1).setRegistryName("resistance"),
 			new AttributeAffix(SharedMonsterAttributes.ATTACK_DAMAGE, 0.3F, 1.0F, Operation.ADDITION, true, 1).setRegistryName("weak_damage"),
 			new AttributeAffix(SharedMonsterAttributes.ARMOR, 0.3F, 1.0F, Operation.ADDITION, true, 1).setRegistryName("weak_armor"),

@@ -9,3 +9,5 @@ Fix max power functions for vanilla enchantments that cause min > max at high le
 Bamboo configurable growth heights
 
 Potion Rings
+
+Glass break faster with pickaxe

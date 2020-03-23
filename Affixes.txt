@@ -1,0 +1,62 @@
+Add Crossbows
+Remove all enchantment affixes
+Add loot items to random mobs (not from spawners)
+Add loot items to dungeon loot
+
+Ranged Weapons:
+Movement Speed
+% Less Arrow Usage 25-50% chance to not use arrow
+Fire an additional "ghost" arrow
+Lower Arrow Gravity
+Faster bow charge time
+Snipe Damage
+
+Melee Weapons:
+Fire Damage (Applies burning)
+100% Critical Strike Chance
+Critical Hit Damage
+Attack Speed
+Cleave Targets
+Cold Damaage (Applies slowness)
+Reach Distance
+Life Steal
+%Current HP Damage
+Loot Pinata (Full attacks have a chance to drop additional loot)
+
+Heavy Weapons:
+Base Damage -> Armor Piercing Damage (Mandatory)
+Fire Damage (Applies burning)
+100% Critical Strike Chance
+Critical Hit Damage
+Attack Speed
+Cleave Targets
+Cold Damaage (Applies slowness)
+Life Steal
+%Current HP Damage
+
+Tools:
+Reach Distance
+Auto Smelt
+
+Pickaxes:
+3x3 Mining
+Sifting (Find metal nuggets)
+
+Shovels:
+3x3 Mining
+Sifting (find metal nuggets)
+
+Armor:
+Max Health
+Armor
+Armor Toughness
+Magic Resistant
+Reduces duration of negative effects
+
+Shields:
+Movement Speed
+Armor
+Armor Toughness
+Resistance while blocking
+
+

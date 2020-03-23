@@ -21,8 +21,8 @@
     "affix.apotheosis:crit_damage.double": "%s of Subjugationn",
     "affix.apotheosis:eternal": "Eternal %s",
     "affix.apotheosis:eternal.double": "Truly-Eternal %s",
-    "affix.apotheosis:fortunate": "% of Great Fortune",
-    "affix.apotheosis:fortunate.double": "% of Cosmic Fortunes",
+    "affix.apotheosis:fortunate": "%s of Great Fortune",
+    "affix.apotheosis:fortunate.double": "%s of Cosmic Fortunes",
     "affix.apotheosis:reflective": "%s the Spiked Barricade",
     "affix.apotheosis:reflective.double": "%s the Vengeful Barricade",
     "affix.apotheosis:power": "Dwarven-Forged %s",
@@ -66,8 +66,8 @@
     "rarity.apoth.uncommon": "Uncommon",
     "rarity.apoth.rare": "Rare",
     "rarity.apoth.epic": "Epic",
+    "rarity.apoth.mythic": "Mythic",
     "rarity.apoth.ancient": "Ancient",
-    "rarity.apoth.unique": "Unique",
 
     "comment_id": "/Advancements",
 
@@ -451,5 +451,5 @@
 	"info.apotheosis.broadhead_arrow": "Bleeding (0:15)",
 	"item.apotheosis.broadhead_arrow": "Broadhead Arrow",
 	"effect.apotheosis.bleeding": "Bleeding",
-	"death.attack.apotheosis.bleeding.player": "%s bled out"
+	"death.attack.apotheosis.bleeding": "%s bled out"
 }
