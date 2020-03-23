@@ -134,4 +134,9 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	public static void classload() {
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Affix: %s", this.name);
+	}
+
 }

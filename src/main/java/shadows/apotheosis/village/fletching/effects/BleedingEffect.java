@@ -16,7 +16,7 @@ public class BleedingEffect extends Effect {
 
 	@Override
 	public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-		entityLivingBaseIn.attackEntityFrom(BLEEDING, 1.0F + amplifier * 0.5F);
+		entityLivingBaseIn.attackEntityFrom(BLEEDING, 1.0F + amplifier);
 	}
 
 	@Override

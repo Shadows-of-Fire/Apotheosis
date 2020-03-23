@@ -5,7 +5,7 @@ function initializeCoreMod() {
                 'type': 'METHOD',
                 'class': 'net.minecraft.entity.SharedMonsterAttributes',
                 'methodName': 'func_111259_a',
-                'methodDesc': '(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/entity/ai/attributes/AttributeModifier'
+                'methodDesc': '(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/entity/ai/attributes/AttributeModifier;'
             },
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching SharedMonsterAttributes#readAttributeModifier');
