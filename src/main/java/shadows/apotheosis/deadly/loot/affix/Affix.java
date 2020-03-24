@@ -7,11 +7,13 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistry;
@@ -19,7 +21,8 @@ import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.loot.AffixModifier;
+import shadows.apotheosis.deadly.loot.EquipmentType;
+import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
 public abstract class Affix extends WeightedRandom.Item implements IForgeRegistryEntry<Affix> {
 
@@ -40,21 +43,11 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 */
 	protected ResourceLocation name;
 
-	protected final boolean prefix;
-
 	/**
 	 * @param weight The weight of this affix, relative to other affixes in the same group.
 	 */
-	public Affix(boolean prefix, int weight) {
+	public Affix(int weight) {
 		super(weight);
-		this.prefix = prefix;
-	}
-
-	/**
-	 * @return If this Affix represents a prefix.  If false, this is a suffix.
-	 */
-	public boolean isPrefix() {
-		return prefix;
 	}
 
 	/**
@@ -111,6 +104,20 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	public void onUserHurt(LivingEntity user, @Nullable Entity attacker, float level) {
 	}
 
+	/**
+	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
+	 */
+	public void onArrowFired(LivingEntity user, AbstractArrowEntity arrow, ItemStack bow, float level) {
+
+	}
+
+	/**
+	 * Called when an arrow that was marked with this affix hits a target.
+	 */
+	public void onArrowImpact(AbstractArrowEntity arrow, RayTraceResult res, RayTraceResult.Type type, float level) {
+
+	}
+
 	@Override
 	public Affix setRegistryName(ResourceLocation name) {
 		if (this.name == null) this.name = name;
@@ -138,5 +145,17 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	public String toString() {
 		return String.format("Affix: %s", this.name);
 	}
+
+	public abstract boolean canApply(EquipmentType type);
+
+	/**
+	 * The minimum possible value for this affix, after modifiers.
+	 */
+	public abstract float getMin();
+
+	/**
+	 * The maximum possible value for this affix, after modifiers.
+	 */
+	public abstract float getMax();
 
 }

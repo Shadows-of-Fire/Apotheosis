@@ -1,41 +1,28 @@
 package shadows.apotheosis.deadly.loot.attributes;
 
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import shadows.apotheosis.Apotheosis;
 
 /**
  * Holds special attributes that are added by apoth.  These require custom handling because minecraft isn't nice.
  */
 public class CustomAttributes {
 
-	public static final DamageSource LUNAR = new DamageSource("apoth.lunar").setMagicDamage().setDamageBypassesArmor();
-	public static final DamageSource SOLAR = new DamageSource("apoth.solar").setMagicDamage().setDamageBypassesArmor();
-	public static final DamageSource COLD = new DamageSource("apoth.cold").setMagicDamage();
+	public static final IAttribute DRAW_SPEED = new Attribute("apoth.draw_speed", 1, 0, 1024);
+	public static final IAttribute SNIPE_DAMAGE = new Attribute("apoth.snipe_damage", 0, 0, 1024);
+	public static final IAttribute FIRE_DAMAGE = new Attribute("apoth.fire_damage", 0, 0, 1024);
+	public static final IAttribute COLD_DAMAGE = new Attribute("apoth.cold_damage", 0, 0, 1024);
+	public static final IAttribute LIFE_STEAL = new Attribute("apoth.life_steal", 0, 0, 1024);
+	public static final IAttribute PIERCING_DAMAGE = new Attribute("apoth.piercing_damage", 0, 0, 1024);
+	public static final IAttribute CURRENT_HP_DAMAGE = new Attribute("apoth.current_hp_damage", 0, 0, 1024);
+	public static final IAttribute CRIT_CHANCE = new Attribute("apoth.crit_chance", 0, 0, 1024);
+	public static final IAttribute CRIT_DAMAGE = new Attribute("apoth.crit_damage", 0, 0, 1024);
 
-	public static final IAttribute FIRE_DAMAGE = new ElementalDmgAttribute("apoth.firedmg", (e, l) -> {
-		e.setFire(3);
-		e.attackEntityFrom(DamageSource.IN_FIRE, Apotheosis.localAtkStrength * l);
-	});
-	public static final IAttribute LUNAR_DAMAGE = new ElementalDmgAttribute("apoth.lunardmg", (e, l) -> {
-		e.attackEntityFrom(LUNAR, Apotheosis.localAtkStrength * (e.world.isDaytime() ? l : 2 * l));
-	});
-	public static final IAttribute SOLAR_DAMAGE = new ElementalDmgAttribute("apoth.solardmg", (e, l) -> {
-		e.attackEntityFrom(SOLAR, Apotheosis.localAtkStrength * (!e.world.isDaytime() ? l : 2 * l));
-	});
-	public static final IAttribute COLD_DAMAGE = new ElementalDmgAttribute("apoth.colddmg", (e, l) -> {
-		if (e instanceof LivingEntity) {
-			((LivingEntity) e).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100));
+	public static class Attribute extends RangedAttribute {
+
+		public Attribute(String key, double baseValue, double minValue, double maxValue) {
+			super(null, key, baseValue, minValue, maxValue);
 		}
-		e.attackEntityFrom(COLD, Apotheosis.localAtkStrength * l);
-	});
-	public static final IAttribute VORPAL_DAMAGE = new RangedAttribute(null, "apoth.vorpaldmg", 0, 0, 1024);
-	public static final IAttribute CRIT_DAMAGE = new RangedAttribute(null, "apoth.critdmg", 1.5, 1.0, 1024);
-	public static final IAttribute MAGIC_RESIST = new DefenseAttribute("apoth.magicresist", (l, s) -> s.isMagicDamage() ? Math.round(l) : 0);
-	public static final IAttribute LONGSHOT_DAMAGE = new RangedAttribute(null, "apoth.longshot", 0, 0, 1024);
 
+	}
 }

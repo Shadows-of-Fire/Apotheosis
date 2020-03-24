@@ -120,5 +120,6 @@ public class ApotheosisObjects {
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
 	public static final InvisCharmItem INVISIBILITY_CHARM = null;
 	public static final Feature<NoFeatureConfig> DEADLY_WORLD_GEN = null;
+	public static final SoundEvent CHAIN_ZAP = null;
 
 }

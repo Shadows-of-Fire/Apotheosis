@@ -1,132 +1,73 @@
 package shadows.apotheosis.deadly.loot;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import com.google.common.collect.Multimap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonObject;
 
+import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.profiler.IProfiler;
+import net.minecraft.resources.IResourceManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import shadows.apotheosis.deadly.gen.BossItem.EquipmentType;
+import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
+import shadows.apotheosis.deadly.loot.modifiers.Modifiers;
 
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
  */
-public class LootManager {
+public class LootManager extends JsonReloadListener {
 
-	/**
-	 * The collection of all prefix affixes, sorted by loot entry type.
-	 */
-	private static final Map<EquipmentType, List<Affix>> PREFIXES = new EnumMap<>(EquipmentType.class);
+	public static final Gson GSON = new GsonBuilder().registerTypeAdapter(LootEntry.class, (JsonDeserializer<LootEntry>) (json, type, ctx) -> {
+		return LootEntry.deserialize(json.getAsJsonObject());
+	}).setPrettyPrinting().create();
 
-	/**
-	 * The collection of all suffix affixes, sorted by loot entry type.
-	 */
-	private static final Map<EquipmentType, List<Affix>> SUFFIXES = new EnumMap<>(EquipmentType.class);
+	public static final LootManager INSTANCE = new LootManager();
 
-	/**
-	 * The collection of all weak affixes.
-	 */
-	private static final Map<EquipmentType, List<Affix>> WEAK_AFFIXES = new EnumMap<>(EquipmentType.class);
-
-	/**
-	 * The collection of all epic affixes.
-	 */
-	private static final Map<EquipmentType, List<Affix>> EPIC_AFFIXES = new EnumMap<>(EquipmentType.class);
-
-	/**
-	 * A list of all affix modifiers.
-	 */
-	private static final List<AffixModifier> MODIFIERS = new ArrayList<>();
-
-	/**
-	 * A list of all loot entries that can be dropped.
-	 */
 	private static final List<LootEntry> ENTRIES = new ArrayList<>();
 
-	/**
-	 * A list of all the possible unique items.
-	 */
-	private static final List<Unique> UNIQUES = new ArrayList<>();
-
-	/**
-	 * Registers an affix.  Throws {@link UnsupportedOperationException} if the affix is found to be present already.
-	 * @param type The loot type of the affix.
-	 * @param affix The affix to register.
-	 */
-	public static void registerAffix(EquipmentType type, Affix affix) {
-		if (affix == null) throw new NullPointerException("Attempted to register null affix!");
-		Map<EquipmentType, List<Affix>> afxMap = affix.isPrefix() ? PREFIXES : SUFFIXES;
-		List<Affix> affixes = afxMap.computeIfAbsent(type, t -> new ArrayList<>());
-		if (affixes.contains(affix)) throw new UnsupportedOperationException("Attempted to register affix " + affix.getRegistryName() + " for category " + type + " but it is already present!");
-		affixes.add(affix);
+	private LootManager() {
+		super(GSON, "affix_loot_entries");
 	}
 
-	/**
-	 * Registers an epic affix.  Throws {@link UnsupportedOperationException} if the affix is found to be present already.
-	 * An epic affix is a special affix available only to epic rarity items and above.  It's name (and modifier) are applied last.
-	 * This means it may override any existing name changes or modifications.
-	 * @param type The loot type of the affix.
-	 * @param affix The affix to register.
-	 */
-	public static void registerWeakAffix(EquipmentType type, Affix affix) {
-		if (affix == null) throw new NullPointerException("Attempted to register null weak affix!");
-		List<Affix> affixes = WEAK_AFFIXES.computeIfAbsent(type, t -> new ArrayList<>());
-		if (affixes.contains(affix)) throw new UnsupportedOperationException("Attempted to register weak affix " + affix.getRegistryName() + " for category " + type + " but it is already present!");
-		affixes.add(affix);
+	@Override
+	protected void apply(Map<ResourceLocation, JsonObject> objects, IResourceManager mgr, IProfiler profiler) {
+		ENTRIES.clear();
+		for (Entry<ResourceLocation, JsonObject> obj : objects.entrySet()) {
+			try {
+				LootEntry ent = GSON.fromJson(obj.getValue(), LootEntry.class);
+				ENTRIES.add(ent);
+			} catch (Exception e) {
+				DeadlyModule.LOGGER.error("Failed to load affix loot entry {}.", obj.getKey());
+				e.printStackTrace();
+			}
+		}
+		DeadlyModule.LOGGER.info("Loaded {} affix loot entries from resources.", ENTRIES.size());
 	}
 
-	/**
-	 * Registers an epic affix.  Throws {@link UnsupportedOperationException} if the affix is found to be present already.
-	 * An epic affix is a special affix available only to epic rarity items and above.  It's name (and modifier) are applied last.
-	 * This means it may override any existing name changes or modifications.
-	 * @param type The loot type of the affix.
-	 * @param affix The affix to register.
-	 */
-	public static void registerEpicAffix(EquipmentType type, Affix affix) {
-		if (affix == null) throw new NullPointerException("Attempted to register null epic affix!");
-		List<Affix> affixes = EPIC_AFFIXES.computeIfAbsent(type, t -> new ArrayList<>());
-		if (affixes.contains(affix)) throw new UnsupportedOperationException("Attempted to register epic affix " + affix.getRegistryName() + " for category " + type + " but it is already present!");
-		affixes.add(affix);
-	}
-
-	/**
-	 * Registers an affix modifier.  Null modifiers are not permitted.
-	 */
-	public static void registerModifier(AffixModifier entry) {
-		if (entry == null) throw new NullPointerException("Attempted to register invalid affix modifier!");
-		MODIFIERS.add(entry);
-	}
-
-	/**
-	 * Registers a loot entry.  Null entries, or entries with empty itemstacks, are not permitted.
-	 */
-	public static void registerEntry(LootEntry entry) {
-		if (entry == null || entry.getStack().isEmpty()) throw new NullPointerException("Attempted to register invalid loot entry!");
-		ENTRIES.add(entry);
-	}
-
-	/**
-	 * Registers a unique entry.  Null entries, or entries with empty itemstacks, are not permitted.
-	 */
-	public static void registerUnique(Unique entry) {
-		if (entry == null || entry.getStack().isEmpty()) throw new NullPointerException("Attempted to register invalid loot entry!");
-		UNIQUES.add(entry);
+	public static List<LootEntry> getEntries() {
+		return ENTRIES;
 	}
 
 	/**
@@ -156,40 +97,16 @@ public class LootManager {
 
 		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
 
-		switch (rarity) {
-		case COMMON: {
-			List<Affix> afxList = WEAK_AFFIXES.get(type);
-			if (rand.nextFloat() <= 0.33F && afxList != null) affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
-			break;
+		List<Affix> afxList = AffixHelper.getAffixesFor(type);
+		int affixCount = rarity.getAffixes();
+		while (affixes.size() < Math.min(affixCount, afxList.size())) {
+			affixes.put(WeightedRandom.getRandomItem(rand, afxList), rarity == LootRarity.COMMON ? rand.nextBoolean() ? Modifiers.MIN : Modifiers.HALF : null);
 		}
-		case UNCOMMON: {
-			List<Affix> afxList = rand.nextBoolean() ? PREFIXES.get(type) : SUFFIXES.get(type);
-			affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
-			break;
-		}
-		case RARE:
-		case EPIC:
-		case MYTHIC:
-		case ANCIENT: {
-			List<Affix> afxList = PREFIXES.get(type);
-			affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
-			afxList = SUFFIXES.get(type);
-			affixes.put(WeightedRandom.getRandomItem(rand, afxList), null);
-			break;
-		}
-		}
-
-		boolean epicModif = false;
 
 		if (rarity.ordinal() >= LootRarity.EPIC.ordinal()) {
-			if (rarity.ordinal() >= LootRarity.MYTHIC.ordinal()) epicModif = rand.nextBoolean();
-			int numModifs = rarity == LootRarity.EPIC ? 1 : epicModif ? 1 : 2;
-			Affix[] keys = affixes.keySet().toArray(new Affix[2]);
-			int modifKey = rand.nextInt(2);
-			affixes.put(keys[modifKey], getModifier(rand));
-			if (numModifs == 2) {
-				modifKey = modifKey == 1 ? 0 : 1;
-				affixes.put(keys[modifKey], getModifier(rand));
+			float modifChance = rarity == LootRarity.EPIC ? 0.3F : 0.65F;
+			for (Affix a : affixes.keySet()) {
+				if (rand.nextFloat() <= modifChance) affixes.put(a, Modifiers.getRandomModifier(rand));
 			}
 		}
 
@@ -198,14 +115,7 @@ public class LootManager {
 			AffixHelper.applyAffix(stack, a, a.apply(stack, rand, affixes.get(a)));
 		}
 
-		if (rarity.ordinal() >= LootRarity.EPIC.ordinal()) {
-			Affix afx = WeightedRandom.getRandomItem(rand, EPIC_AFFIXES.get(type));
-			AffixModifier epic = epicModif ? getModifier(rand) : null;
-			AffixHelper.applyAffix(stack, afx, afx.apply(stack, rand, epic));
-			name = afx.chainName(name, epic);
-		}
-
-		if (rarity.ordinal() >= LootRarity.ANCIENT.ordinal()) {
+		if (rarity.ordinal() >= LootRarity.MYTHIC.ordinal()) {
 			CompoundNBT tag = stack.getOrCreateTag();
 			tag.putBoolean("Unbreakable", true);
 		}
@@ -215,16 +125,10 @@ public class LootManager {
 	}
 
 	/**
-	 * Returns a random affix modifier.
-	 */
-	public static AffixModifier getModifier(Random rand) {
-		return WeightedRandom.getRandomItem(rand, MODIFIERS);
-	}
-
-	/**
 	 * Creates a unique item. Should only be used during {@link genLootItem} when it rolls {@link LootRarity#UNIQUE}
 	 */
 	public static ItemStack genUnique(Random rand) {
-		return ItemStack.EMPTY;//WeightedRandom.getRandomItem(rand, UNIQUES).makeStack();
+		return ItemStack.EMPTY;
 	}
+
 }

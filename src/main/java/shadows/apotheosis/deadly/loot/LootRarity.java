@@ -6,29 +6,35 @@ import net.minecraft.util.text.TextFormatting;
 
 /**
  * Represents a tier of loot.  Each tier is stronger than the last.
- * Common Items may receive either a "weak" prefix or suffix, or nothing.
- * Uncommon Items will receive a prefix or suffix.
- * Rare Items will receive a prefix and suffix.
- * Epic Items will receive an epic affix, a prefix, a suffix, and an affix modifier.
- * Mythic Items will receive all that an epic item receives, with another affix modifier, that may be on the epic affix.
+ * Common Items will receive an affix with it's effect cut in half.
+ * Uncommon Items will receive one affix.
+ * Rare Items will receive two affixes.
+ * Epic Items will receive three affixes, with a chance for affix modifiers.
+ * Mythic Items will receive three affixes, with a higher chance for modifiers, and become unbreakable.
  * Ancient Items are special rare items that have their own properties.  They may also roll affixes and modifiers, depending on the unique.
  */
 public enum LootRarity {
-	COMMON(TextFormatting.GRAY),
-	UNCOMMON(TextFormatting.YELLOW),
-	RARE(TextFormatting.BLUE),
-	EPIC(TextFormatting.DARK_PURPLE),
-	MYTHIC(TextFormatting.DARK_GREEN),
-	ANCIENT(TextFormatting.GOLD);
+	COMMON(TextFormatting.GRAY, 1),
+	UNCOMMON(TextFormatting.YELLOW, 1),
+	RARE(TextFormatting.BLUE, 2),
+	EPIC(TextFormatting.DARK_PURPLE, 3),
+	MYTHIC(TextFormatting.DARK_GREEN, 3),
+	ANCIENT(TextFormatting.GOLD, 3);
 
 	final TextFormatting color;
+	final int affixes;
 
-	private LootRarity(TextFormatting color) {
+	private LootRarity(TextFormatting color, int affixes) {
 		this.color = color;
+		this.affixes = affixes;
 	}
 
 	public TextFormatting getColor() {
 		return color;
+	}
+
+	public int getAffixes() {
+		return affixes;
 	}
 
 	/**

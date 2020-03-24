@@ -8,21 +8,31 @@ import java.util.Map;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import shadows.apotheosis.deadly.loot.LootManager;
@@ -30,53 +40,121 @@ import shadows.apotheosis.deadly.loot.LootRarity;
 
 public class AffixEvents {
 
-	public static final List<ItemStack> NUGGETS = new ArrayList<>();
-	static { //TODO: Config or auto-scan for all nuggetX
-		NUGGETS.add(new ItemStack(Items.GOLD_NUGGET));
-		NUGGETS.add(new ItemStack(Items.IRON_NUGGET));
+	@SubscribeEvent
+	public void onEntityJoin(EntityJoinWorldEvent e) {
+		if (e.getEntity() instanceof AbstractArrowEntity && !e.getEntity().getPersistentData().getBoolean("apoth.generated")) {
+			AbstractArrowEntity ent = (AbstractArrowEntity) e.getEntity();
+			Entity shooter = ent.getShooter();
+			if (shooter instanceof LivingEntity) {
+				LivingEntity living = (LivingEntity) shooter;
+				ItemStack bow = living.getHeldItemMainhand();
+				Map<Affix, Float> affixes = AffixHelper.getAffixes(bow);
+				CompoundNBT nbt = new CompoundNBT();
+				affixes.keySet().forEach(a -> {
+					a.onArrowFired(living, ent, bow, affixes.get(a));
+					nbt.putFloat(a.getRegistryName().toString(), affixes.get(a));
+				});
+				ent.getPersistentData().put("apoth.affixes", nbt);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void impact(ProjectileImpactEvent.Arrow e) {
+		CompoundNBT nbt = e.getArrow().getPersistentData().getCompound("apoth.affixes");
+		for (String s : nbt.keySet()) {
+			Affix a = Affix.REGISTRY.getValue(new ResourceLocation(s));
+			a.onArrowImpact(e.getArrow(), e.getRayTraceResult(), e.getRayTraceResult().getType(), nbt.getFloat(s));
+		}
+	}
+
+	@SubscribeEvent
+	public void onDamage(LivingHurtEvent e) {
+		if (e.getSource() instanceof IndirectEntityDamageSource) {
+			IndirectEntityDamageSource src = (IndirectEntityDamageSource) e.getSource();
+			if ("arrow".equals(src.damageType)) {
+				CompoundNBT affixes = src.getImmediateSource().getPersistentData().getCompound("apoth.affixes");
+				if (affixes.contains(Affixes.MAGIC_ARROW.getRegistryName().toString())) {
+					e.setCanceled(true);
+					DamageSource nSrc = new IndirectEntityDamageSource("apoth.magic_arrow", src.getImmediateSource(), src.getTrueSource()).setDamageBypassesArmor().setMagicDamage().setProjectile();
+					e.getEntityLiving().hurtResistantTime = 0;
+					e.getEntityLiving().attackEntityFrom(nSrc, e.getAmount());
+				}
+			}
+		}
+		if (e.getSource() instanceof EntityDamageSource && e.getSource().getTrueSource() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) e.getSource().getTrueSource();
+			float lifeSteal = AffixHelper.getAffixes(player.getHeldItemMainhand()).getOrDefault(Affixes.LIFE_STEAL, 0F);
+			if (lifeSteal > 0 && !e.getSource().isMagicDamage()) {
+				player.heal(e.getAmount() * lifeSteal);
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void drops(LivingDropsEvent e) {
+		if (e.getSource() instanceof IndirectEntityDamageSource) {
+			IndirectEntityDamageSource src = (IndirectEntityDamageSource) e.getSource();
+			if (src.getImmediateSource() instanceof AbstractArrowEntity && src.getTrueSource() != null) {
+				CompoundNBT affixes = src.getImmediateSource().getPersistentData().getCompound("apoth.affixes");
+				int canTeleport = (int) affixes.getFloat(Affixes.TELEPORT_DROPS.getRegistryName().toString());
+				for (ItemEntity item : e.getDrops()) {
+					if (canTeleport > 0) {
+						Entity tSrc = src.getTrueSource();
+						item.setPosition(tSrc.getX(), tSrc.getY(), tSrc.getZ());
+						canTeleport--;
+					}
+				}
+			}
+		}
+		if (e.getSource().getTrueSource() instanceof PlayerEntity && !e.getDrops().isEmpty() && e.getEntityLiving().isNonBoss()) {
+			LivingEntity dead = e.getEntityLiving();
+			PlayerEntity player = (PlayerEntity) e.getSource().getTrueSource();
+			float chance = AffixHelper.getAffixes(player.getHeldItemMainhand()).getOrDefault(Affixes.LOOT_PINATA, 0F);
+			if (player.world.rand.nextFloat() < chance) {
+				player.world.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (player.world.rand.nextFloat() - player.world.rand.nextFloat()) * 0.2F) * 0.7F);
+				((ServerWorld) player.world).spawnParticle(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
+				List<ItemEntity> drops = new ArrayList<>(e.getDrops());
+				for (int i = 0; i < 20; i++) {
+					for (ItemEntity item : drops) {
+						e.getDrops().add(new ItemEntity(player.world, item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
+					}
+				}
+				for (ItemEntity item : e.getDrops()) {
+					if (!item.getItem().getItem().isDamageable()) {
+						item.setPosition(dead.getX(), dead.getY(), dead.getZ());
+						item.setMotion(-0.3 + dead.world.rand.nextDouble() * 0.6, 0.3 + dead.world.rand.nextDouble() * 0.3, -0.3 + dead.world.rand.nextDouble() * 0.6);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void update(LivingEntityUseItemEvent.Tick e) {
+		if (e.getEntity() instanceof PlayerEntity) {
+			ItemStack stack = e.getItem();
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+			if (affixes.containsKey(Affixes.DRAW_SPEED)) {
+				float t = affixes.get(Affixes.DRAW_SPEED);
+				while (t > 0) {
+					if (e.getEntity().ticksExisted % (int) Math.floor(1 / Math.min(1, t)) == 0) e.setDuration(e.getDuration() - 1);
+					t--;
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
 	public void crit(CriticalHitEvent e) {
 		Map<Affix, Float> affixes = AffixHelper.getAffixes(e.getPlayer().getHeldItemMainhand());
 
-		if (!e.isVanillaCritical() && affixes.containsKey(Affixes.ALWAYS_CRIT)) {
+		if (!e.isVanillaCritical() && e.getPlayer().world.rand.nextFloat() < affixes.getOrDefault(Affixes.CRIT_CHANCE, 0F)) {
 			e.setResult(Result.ALLOW);
 		}
 
 		if (affixes.containsKey(Affixes.CRIT_DAMAGE)) {
 			e.setDamageModifier(affixes.get(Affixes.CRIT_DAMAGE) + e.getDamageModifier());
-		}
-	}
-
-	@SubscribeEvent
-	public void harvest(BreakEvent e) {
-		if (e.getPlayer() == null) return;
-		ItemStack stack = e.getPlayer().getHeldItemMainhand();
-		if (stack.isEmpty() || !stack.hasTag() || !isEffective(stack, e.getState())) return;
-		Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
-		if (affixes.containsKey(Affixes.SIFTING) && e.getWorld().getRandom().nextFloat() <= affixes.get(Affixes.SIFTING)) {
-			Block.spawnAsEntity(e.getPlayer().world, e.getPos(), NUGGETS.get(e.getWorld().getRandom().nextInt(NUGGETS.size())).copy());
-		}
-	}
-
-	private static boolean isEffective(ItemStack stack, BlockState state) {
-		for (ToolType s : stack.getItem().getToolTypes(stack)) {
-			if (state.getBlock().isToolEffective(state, s)) return true;
-		}
-		return false;
-	}
-
-	@SubscribeEvent
-	public void tick(PlayerTickEvent e) {
-		PlayerEntity player = e.player;
-		if (e.phase == Phase.END) return;
-		ItemStack active = player.getActiveItemStack();
-		if (active.getItem().isShield(active, player) && active.hasTag()) {
-			Map<Affix, Float> affixes = AffixHelper.getAffixes(active);
-			if (affixes.containsKey(Affixes.RESISTANCE)) {
-				player.addPotionEffect(new EffectInstance(Effects.RESISTANCE, (int) (affixes.get(Affixes.RESISTANCE) * 20)));
-			}
 		}
 	}
 

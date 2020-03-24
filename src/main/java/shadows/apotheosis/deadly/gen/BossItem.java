@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -26,13 +25,8 @@ import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.item.SwordItem;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -178,32 +172,5 @@ public class BossItem extends WorldFeatureItem {
 		}
 		EnchantmentHelper.setEnchantments(enchMap, stack);
 		return stack;
-	}
-
-	public static enum EquipmentType {
-		SWORD(s -> EquipmentSlotType.MAINHAND),
-		BOW(s -> EquipmentSlotType.MAINHAND),
-		TOOL(s -> EquipmentSlotType.MAINHAND),
-		ARMOR(s -> ((ArmorItem) s.getItem()).getEquipmentSlot()),
-		SHIELD(s -> EquipmentSlotType.OFFHAND);
-
-		final Function<ItemStack, EquipmentSlotType> type;
-
-		EquipmentType(Function<ItemStack, EquipmentSlotType> type) {
-			this.type = type;
-		}
-
-		public EquipmentSlotType getSlot(ItemStack stack) {
-			return this.type.apply(stack);
-		}
-
-		public static EquipmentType getTypeFor(ItemStack stack) {
-			Item i = stack.getItem();
-			if (i instanceof SwordItem) return SWORD;
-			if (i instanceof BowItem) return BOW;
-			if (i instanceof ArmorItem) return ARMOR;
-			if (i instanceof ShieldItem) return SHIELD;
-			return TOOL;
-		}
 	}
 }

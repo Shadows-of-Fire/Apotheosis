@@ -2,41 +2,63 @@ Add Crossbows
 Remove all enchantment affixes
 Add loot items to random mobs (not from spawners)
 Add loot items to dungeon loot
+Add low-level loot items to blacksmith tables
+Bosses spawn at night on surface, on full moon
+Reroll / Combine affix loot items
+
+Key:
++ Implemented
+- Not Implemented
+~ Cannot Implement (Technical Limitation)
 
 Ranged Weapons:
-Movement Speed
-% Less Arrow Usage 25-50% chance to not use arrow
-Fire an additional "ghost" arrow
-Lower Arrow Gravity
-Faster bow charge time
-Snipe Damage
++ Movement Speed
+- % Less Arrow Usage 25-50% chance to not use arrow
++ Fire an additional "ghost" arrow
+~ Lower Arrow Gravity
++ Faster bow charge time
++ Snipe Damage
++ Melee Damage
+- Burst of Arrows (Multishot?)
+~ Arrow Speed
++ Snares hit targets
++ Converts arrow damage to another type
+- Can use additional (xyz) as arrow source
++ Teleports drops from killed enemies to the shooter
+- Randomly transforms arrows to potion arrows
 
 Melee Weapons:
-Fire Damage (Applies burning)
-100% Critical Strike Chance
-Critical Hit Damage
-Attack Speed
-Cleave Targets
-Cold Damaage (Applies slowness)
-Reach Distance
-Life Steal
-%Current HP Damage
-Loot Pinata (Full attacks have a chance to drop additional loot)
++ Fire Damage (Applies burning)
++ Critical Strike Chance
++ Critical Hit Damage
++ Attack Speed
+- Cleave Targets
++ Cold Damaage (Applies slowness)
++ Reach Distance
++ Life Steal
+- %Current HP Damage
++ Loot Pinata (Full attacks have a chance to drop additional loot)
+- Piercing Damage
++ AOE Damage Chain
 
 Heavy Weapons:
 Base Damage -> Armor Piercing Damage (Mandatory)
-Fire Damage (Applies burning)
 100% Critical Strike Chance
 Critical Hit Damage
-Attack Speed
 Cleave Targets
-Cold Damaage (Applies slowness)
 Life Steal
 %Current HP Damage
+Beheading
+Nausea on Hit
+Execute at % hp threshold
+Overheal (dmg to absorption hearts)
 
 Tools:
 Reach Distance
 Auto Smelt
+Food or Light Source
+Remove underwater/flying penalty (conflicts with aqua affinity / stable footing)
+Omnitool
 
 Pickaxes:
 3x3 Mining
@@ -45,6 +67,7 @@ Sifting (Find metal nuggets)
 Shovels:
 3x3 Mining
 Sifting (find metal nuggets)
+Right click to cycle blocks (sand -> red sand -> gravel -> etc)
 
 Armor:
 Max Health
@@ -58,5 +81,9 @@ Movement Speed
 Armor
 Armor Toughness
 Resistance while blocking
-
-
+AOE Knockback sphere while blocking
+Debuff Attackers on Block
+Parry Timing
+Store blocked damage for next attack
+Shields should have patterns on them, not just defaults.
+Slowfall while blocking

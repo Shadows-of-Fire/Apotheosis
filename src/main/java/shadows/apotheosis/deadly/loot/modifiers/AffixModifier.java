@@ -1,6 +1,8 @@
-package shadows.apotheosis.deadly.loot;
+package shadows.apotheosis.deadly.loot.modifiers;
 
 import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.math.MathHelper;
+import shadows.apotheosis.deadly.loot.affix.Affix;
 
 public class AffixModifier extends WeightedRandom.Item {
 
@@ -36,8 +38,9 @@ public class AffixModifier extends WeightedRandom.Item {
 	/**
 	 * Adjusts the passed level, according to the operation of this modifier.
 	 */
-	public float editLevel(float level) {
-		return op == AffixOp.ADD ? level + value : op == AffixOp.MULTIPLY ? level * value : value;
+	public float editLevel(Affix affix, float level) {
+		float newLevel = op == AffixOp.ADD ? level + value : op == AffixOp.MULTIPLY ? level * value : value;
+		return MathHelper.clamp(newLevel, affix.getMin(), affix.getMax());
 	}
 
 	/**
