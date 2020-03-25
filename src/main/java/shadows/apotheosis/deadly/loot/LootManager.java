@@ -31,6 +31,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.loot.affix.Affixes;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 import shadows.apotheosis.deadly.loot.modifiers.Modifiers;
 
@@ -96,6 +97,8 @@ public class LootManager extends JsonReloadListener {
 		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(new Style().setColor(rarity.color).setItalic(true)));
 
 		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
+
+		if (type == EquipmentType.AXE) AffixHelper.applyAffix(stack, Affixes.PIERCING, Affixes.PIERCING.apply(stack, rand, null));
 
 		List<Affix> afxList = AffixHelper.getAffixesFor(type);
 		int affixCount = rarity.getAffixes();

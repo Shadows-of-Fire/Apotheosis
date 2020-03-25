@@ -7,6 +7,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.deadly.loot.affix.impl.heavy.CleaveAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.heavy.CurrentHPAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.heavy.ExecuteAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.heavy.MaxCritAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.heavy.OverhealAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.heavy.PiercingAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.melee.AttackSpeedAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.melee.ColdDamageAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.melee.CritChanceAffix;
@@ -52,6 +58,12 @@ public class Affixes {
 	public static final Affix LIFE_STEAL = null;
 	public static final Affix LOOT_PINATA = null;
 	public static final Affix REACH_DISTANCE = null;
+	public static final Affix PIERCING = null;
+	public static final Affix MAX_CRIT = null;
+	public static final Affix CLEAVE = null;
+	public static final Affix CURRENT_HP_DAMAGE = null;
+	public static final Affix EXECUTE = null;
+	public static final Affix OVERHEAL = null;
 
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
@@ -72,6 +84,12 @@ public class Affixes {
 		reg.register(new LifeStealAffix(2).setRegistryName("life_steal"));
 		reg.register(new LootPinataAffix(1).setRegistryName("loot_pinata"));
 		reg.register(new ReachDistanceAffix(3).setRegistryName("reach_distance"));
+		reg.register(new PiercingAffix(0).setRegistryName("piercing"));
+		reg.register(new MaxCritAffix(1).setRegistryName("max_crit"));
+		reg.register(new CleaveAffix(1).setRegistryName("cleave"));
+		reg.register(new CurrentHPAffix(1).setRegistryName("current_hp_damage"));
+		reg.register(new ExecuteAffix(1).setRegistryName("execute"));
+		reg.register(new OverhealAffix(2).setRegistryName("overheal"));
 	}
 
 	public static void init() {
@@ -91,13 +109,13 @@ public class Affixes {
 		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_AXE), EquipmentType.TOOL, 2));
 		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_PICKAXE), EquipmentType.TOOL, 2));
 	}
-
+	
 	private static void initModifiers() {
 		LootManager.registerModifier(new AffixModifier("double", AffixOp.MULTIPLY, 2, 6));
 		LootManager.registerModifier(new AffixModifier("plus_three", AffixOp.ADD, 3, 2).dontEditName());
 		LootManager.registerModifier(new AffixModifier("plus_one", AffixOp.ADD, 1, 10).dontEditName());
 		LootManager.registerModifier(new AffixModifier("set_to_five", AffixOp.SET, 5, 1).dontEditName());
 	}
-
+	
 	*/
 }

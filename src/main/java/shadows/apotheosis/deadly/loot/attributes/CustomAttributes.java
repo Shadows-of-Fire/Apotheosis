@@ -17,6 +17,7 @@ public class CustomAttributes {
 	public static final IAttribute CURRENT_HP_DAMAGE = new Attribute("apoth.current_hp_damage", 0, 0, 1024);
 	public static final IAttribute CRIT_CHANCE = new Attribute("apoth.crit_chance", 0, 0, 1024);
 	public static final IAttribute CRIT_DAMAGE = new Attribute("apoth.crit_damage", 0, 0, 1024);
+	public static final IAttribute OVERHEALING = new Attribute("apoth.overhealing", 0, 0, 1024);
 
 	public static class Attribute extends RangedAttribute {
 

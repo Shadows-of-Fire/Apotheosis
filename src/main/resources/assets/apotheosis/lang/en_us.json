@@ -12,12 +12,17 @@
 	"affix.apotheosis:attack_speed": "Nimble %s",
 	"affix.apotheosis:cold_damage": "Iceborne %s",
 	"affix.apotheosis:crit_chance": "Lethal %s",
-	"affix.apotheosis:crit_damage": "Spectral %s",
+	"affix.apotheosis:crit_damage": "Bloodseeking %s",
 	"affix.apotheosis:fire_damage": "Molten %s",
 	"affix.apotheosis:life_steal": "Vampiric %s",
 	"affix.apotheosis:loot_pinata": "%s of Explosive Fortune",
 	"affix.apotheosis:reach_distance": "%s of Great Lengths",
 	"affix.apotheosis:damage_chain": "%s of Electrocution",
+	"affix.apotheosis:cleave": "Berserker's %s",
+	"affix.apotheosis:max_crit": "%s of Violence",
+	"affix.apotheosis:current_hp_damage": "%s, the God-Slayer",
+	"affix.apotheosis:execute": "Culling %s",
+	"affix.apotheosis:overheal": "%s of Divinity"
 	
 	"attribute.name.apoth.draw_speed": "Draw Speed",
 	"attribute.name.apoth.snipe_damage": "Sniper Damage",
@@ -28,6 +33,7 @@
 	"attribute.name.apoth.current_hp_damage": "Current HP Damage",
 	"attribute.name.apoth.crit_chance": "Critical Hit Chance",
 	"attribute.name.apoth.crit_damage": "Critical Hit Damage",
+	"attribute.name.apoth.overhealing": "Overhealing",
 
 	"affix.apotheosis:snare_hit.desc": "Snares targets for %d seconds on hit.",
 	"affix.apotheosis:spectral_shot.desc": "Your shots have a %s%% chance to fire a spectral arrow.",
@@ -35,6 +41,9 @@
 	"affix.apotheosis:teleport_drops.desc": "Up to %d items from killed mobs will teleport to you.",
 	"affix.apotheosis:loot_pinata.desc": "Mobs you slay have a %s%% chance to explode into a loot pile.",
 	"affix.apotheosis:damage_chain.desc": "Full-strength attacks will deal %s lightning damage to nearby enemies.",
+	"affix.apotheosis:piercing.desc": "Physical damage pierces armor.",
+	"affix.apotheosis:cleave.desc": "Your attacks have a %s%% chance to cleave %s nearby enemies.",
+	"affix.apotheosis:execute.desc": "Your attacks execute foes below %s%% health.",
 
     "rarity.apoth.common": "Common",
     "rarity.apoth.uncommon": "Uncommon",
@@ -44,6 +53,7 @@
     "rarity.apoth.ancient": "Ancient",
 	
 	"death.attack.apoth.frozen_solid": "%s was frozen solid.",
+	"death.attack.apoth.execute": "%s was executed.",
 
     "comment_id": "/Advancements",
 

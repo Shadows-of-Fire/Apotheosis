@@ -42,16 +42,16 @@ Melee Weapons:
 + AOE Damage Chain
 
 Heavy Weapons:
-Base Damage -> Armor Piercing Damage (Mandatory)
-100% Critical Strike Chance
-Critical Hit Damage
-Cleave Targets
-Life Steal
-%Current HP Damage
++ Base Damage -> Armor Piercing Damage (Mandatory)
++ 100% Critical Strike Chance
++ Critical Hit Damage
++ Cleave Targets
+- Life Steal
++ %Current HP Damage
 Beheading
 Nausea on Hit
-Execute at % hp threshold
-Overheal (dmg to absorption hearts)
++ Execute at % hp threshold
++ Overheal (dmg to absorption hearts)
 
 Tools:
 Reach Distance

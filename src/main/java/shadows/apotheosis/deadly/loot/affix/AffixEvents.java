@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -84,9 +86,17 @@ public class AffixEvents {
 		}
 		if (e.getSource() instanceof EntityDamageSource && e.getSource().getTrueSource() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) e.getSource().getTrueSource();
-			float lifeSteal = AffixHelper.getAffixes(player.getHeldItemMainhand()).getOrDefault(Affixes.LIFE_STEAL, 0F);
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(player.getHeldItemMainhand());
+			float lifeSteal = affixes.getOrDefault(Affixes.LIFE_STEAL, 0F);
 			if (lifeSteal > 0 && !e.getSource().isMagicDamage()) {
 				player.heal(e.getAmount() * lifeSteal);
+			}
+			float overheal = affixes.getOrDefault(Affixes.OVERHEAL, 0F);
+			if (overheal > 0 && !e.getSource().isMagicDamage()) {
+				player.setAbsorptionAmount(player.getAbsorptionAmount() + e.getAmount() * overheal);
+			}
+			if (affixes.containsKey(Affixes.PIERCING)) {
+				e.getSource().setDamageBypassesArmor();
 			}
 		}
 	}
@@ -153,16 +163,19 @@ public class AffixEvents {
 			e.setResult(Result.ALLOW);
 		}
 
+		if (!e.isVanillaCritical() && affixes.containsKey(Affixes.MAX_CRIT)) {
+			e.setResult(Result.ALLOW);
+		}
+
 		if (affixes.containsKey(Affixes.CRIT_DAMAGE)) {
-			e.setDamageModifier(affixes.get(Affixes.CRIT_DAMAGE) + e.getDamageModifier());
+			e.setDamageModifier((1 + affixes.get(Affixes.CRIT_DAMAGE)) * Math.max(1.5F, e.getDamageModifier()));
 		}
 	}
 
 	@SubscribeEvent
 	public void starting(FMLServerStartingEvent e) {
 		e.getServer().getCommandManager().getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("affixloot").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests((a, b) -> {
-			Arrays.stream(LootRarity.values()).map(r -> r.toString()).forEach(b::suggest);
-			return b.buildFuture();
+			return ISuggestionProvider.suggest(Arrays.stream(LootRarity.values()).map(r -> r.toString()).collect(Collectors.toList()), b);
 		}).executes(c -> {
 			PlayerEntity p = c.getSource().asPlayer();
 			p.addItemStackToInventory(LootManager.genLootItem(LootManager.getRandomEntry(p.world.rand, null), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));

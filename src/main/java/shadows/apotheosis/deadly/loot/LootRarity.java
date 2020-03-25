@@ -17,7 +17,7 @@ public enum LootRarity {
 	COMMON(TextFormatting.GRAY, 1),
 	UNCOMMON(TextFormatting.YELLOW, 1),
 	RARE(TextFormatting.BLUE, 2),
-	EPIC(TextFormatting.DARK_PURPLE, 3),
+	EPIC(TextFormatting.RED, 3),
 	MYTHIC(TextFormatting.DARK_GREEN, 3),
 	ANCIENT(TextFormatting.GOLD, 3);
 

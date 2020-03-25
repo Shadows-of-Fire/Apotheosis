@@ -64,7 +64,7 @@ public class EnderLeashItem extends Item {
 					((ServerWorld) ctx.getWorld()).addEntityIfNotDuplicate(e);
 					ctx.getItem().getTag().remove("entity_data");
 					playSound(ctx.getPlayer());
-					if (ctx.getItem().attemptDamageItem(1, ctx.getWorld().rand, (ServerPlayerEntity) ctx.getPlayer())) {
+					if (!ctx.getPlayer().isCreative() && ctx.getItem().attemptDamageItem(1, ctx.getWorld().rand, (ServerPlayerEntity) ctx.getPlayer())) {
 						ctx.getItem().shrink(1);
 					}
 					return ActionResultType.SUCCESS;

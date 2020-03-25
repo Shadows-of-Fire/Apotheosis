@@ -3,10 +3,5 @@
 		"category": "block",
 		"subtitle": "apotheosis.subtitle.altar",
 		"sounds": ["apotheosis:altar"]
-	},
-	"chain_zap": {
-		"category": "player",
-		"subtitle": "apotheosis.subtitle.chain_zap",
-		"sounds": ["apotheosis:chain_zap"]
 	}
 }

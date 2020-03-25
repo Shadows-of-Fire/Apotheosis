@@ -32,7 +32,7 @@ public class DeadlyHooks {
 		return uuid;
 	}
 
-	private static class Access extends Item {
+	public static class Access extends Item {
 		public Access(Properties properties) {
 			super(properties);
 		}
