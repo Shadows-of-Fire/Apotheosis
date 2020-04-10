@@ -22,7 +22,7 @@
 	"affix.apotheosis:max_crit": "%s of Violence",
 	"affix.apotheosis:current_hp_damage": "%s, the God-Slayer",
 	"affix.apotheosis:execute": "Culling %s",
-	"affix.apotheosis:overheal": "%s of Divinity"
+	"affix.apotheosis:overheal": "%s of Divinity",
 	
 	"attribute.name.apoth.draw_speed": "Draw Speed",
 	"attribute.name.apoth.snipe_damage": "Sniper Damage",
@@ -410,6 +410,8 @@
     "item.apotheosis.lucky_foot": "Lucky Rabbit's Foot",
 
 	"item.apotheosis.invisibility_charm": "Charm of Invisibility",
+	"item.apotheosis.invisibility_charm.desc": "Applies invisibility when active and in the inventory.  Right click to enable/disable.",
+	"item.apotheosis.invisibility_charm.enabled": "Enabled: %s",
 
     "comment_id": "/Anvil Module",
     "info.apotheosis.anvil": "Can be enchanted.",

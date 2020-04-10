@@ -48,8 +48,8 @@ Heavy Weapons:
 + Cleave Targets
 - Life Steal
 + %Current HP Damage
-Beheading
-Nausea on Hit
+- Beheading
+- Nausea on Hit
 + Execute at % hp threshold
 + Overheal (dmg to absorption hearts)
 
