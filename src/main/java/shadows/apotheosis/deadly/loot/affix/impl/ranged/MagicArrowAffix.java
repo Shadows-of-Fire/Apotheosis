@@ -9,6 +9,9 @@ import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Arrow damage is converted into magic damage.
+ */
 public class MagicArrowAffix extends Affix {
 
 	public MagicArrowAffix(int weight) {

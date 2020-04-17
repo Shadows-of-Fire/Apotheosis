@@ -5,6 +5,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 
+/**
+ * Increases reach distance.
+ */
 public class ReachDistanceAffix extends AttributeAffix {
 
 	public ReachDistanceAffix(int weight) {
@@ -13,7 +16,7 @@ public class ReachDistanceAffix extends AttributeAffix {
 
 	@Override
 	public boolean canApply(EquipmentType type) {
-		return type == EquipmentType.SWORD;
+		return type == EquipmentType.SWORD || type == EquipmentType.PICKAXE || type == EquipmentType.SHOVEL;
 	}
 
 	@Override

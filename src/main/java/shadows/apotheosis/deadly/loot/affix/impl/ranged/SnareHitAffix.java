@@ -17,6 +17,9 @@ import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Targets hit with an arrow are snared (by application of slowness 11)
+ */
 public class SnareHitAffix extends Affix {
 
 	public SnareHitAffix(int weight) {

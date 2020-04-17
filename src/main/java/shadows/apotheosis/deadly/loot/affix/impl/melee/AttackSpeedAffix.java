@@ -5,6 +5,9 @@ import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 
+/**
+ * Increases attack speed.
+ */
 public class AttackSpeedAffix extends AttributeAffix {
 
 	public AttackSpeedAffix(int weight) {

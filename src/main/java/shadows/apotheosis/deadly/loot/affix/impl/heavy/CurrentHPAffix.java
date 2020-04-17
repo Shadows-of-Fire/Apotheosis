@@ -10,6 +10,9 @@ import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 
+/**
+ * Attacks do a percent of the target's current hp as damage.
+ */
 public class CurrentHPAffix extends AttributeAffix {
 
 	public CurrentHPAffix(int weight) {

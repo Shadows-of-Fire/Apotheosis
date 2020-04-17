@@ -10,6 +10,9 @@ import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 
+/**
+ * Targets more than 30 blocks away take additional damage.
+ */
 public class SnipeDamageAffix extends AttributeAffix {
 
 	public SnipeDamageAffix(int weight) {

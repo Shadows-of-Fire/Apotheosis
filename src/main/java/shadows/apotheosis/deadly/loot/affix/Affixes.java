@@ -29,14 +29,16 @@ import shadows.apotheosis.deadly.loot.affix.impl.ranged.SnareHitAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.ranged.SnipeDamageAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.ranged.SpectralShotAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.ranged.TeleportDropsAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.tool.TorchPlacementAffix;
 
 /**
- * Current Affix Counts (Prefix/Suffix)
- * Weapons: x/x
- * Ranged: x/x
- * Tools: x/x
- * Armor: x/x
- * Shields: x/x
+ * Current Affix Counts
+ * Weapons: 9
+ * Ranged: 7
+ * Heavy Weapons: 8
+ * Tools: 6
+ * Armor: x
+ * Shields: x
  */
 @EventBusSubscriber(modid = Apotheosis.MODID, bus = Bus.MOD)
 @ObjectHolder(Apotheosis.MODID)
@@ -64,6 +66,12 @@ public class Affixes {
 	public static final Affix CURRENT_HP_DAMAGE = null;
 	public static final Affix EXECUTE = null;
 	public static final Affix OVERHEAL = null;
+	//public static final Affix AUTO_SMELT = null; Requires a harvest drops event
+	public static final Affix TORCH_PLACEMENT = null;
+	public static final Affix OMNITOOL = null;
+	public static final Affix FOOD_SOURCE = null;
+	public static final Affix RADIUS_MINING = null;
+	public static final Affix SIFTING = null;
 
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
@@ -90,6 +98,7 @@ public class Affixes {
 		reg.register(new CurrentHPAffix(1).setRegistryName("current_hp_damage"));
 		reg.register(new ExecuteAffix(1).setRegistryName("execute"));
 		reg.register(new OverhealAffix(2).setRegistryName("overheal"));
+		reg.register(new TorchPlacementAffix(4).setRegistryName("torch_placement"));
 	}
 
 	public static void init() {

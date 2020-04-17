@@ -11,6 +11,9 @@ import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 
+/**
+ * Adds cold damage, and slows hit enemies.
+ */
 public class ColdDamageAffix extends AttributeAffix {
 
 	public static final DamageSource COLD = new DamageSource("apoth.frozen_solid").setMagicDamage().setDamageIsAbsolute();

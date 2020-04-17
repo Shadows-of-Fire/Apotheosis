@@ -11,6 +11,9 @@ import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Baseline affix for all heavy weapons.  Damage is converted into armor piercing damage.
+ */
 public class PiercingAffix extends Affix {
 
 	public PiercingAffix(int weight) {

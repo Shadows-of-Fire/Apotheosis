@@ -54,19 +54,17 @@ Heavy Weapons:
 + Overheal (dmg to absorption hearts)
 
 Tools:
-Reach Distance
-Auto Smelt
-Food or Light Source
-Remove underwater/flying penalty (conflicts with aqua affinity / stable footing)
-Omnitool
++ Reach Distance
+~ Auto Smelt
++ Food or Light Source
+- Remove underwater/flying penalty (conflicts with aqua affinity / stable footing)
++ Omnitool
++ 3x3 Mining
++ Sifting (Find metal nuggets)
 
 Pickaxes:
-3x3 Mining
-Sifting (Find metal nuggets)
 
 Shovels:
-3x3 Mining
-Sifting (find metal nuggets)
 Right click to cycle blocks (sand -> red sand -> gravel -> etc)
 
 Armor:

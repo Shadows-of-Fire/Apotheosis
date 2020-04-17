@@ -5,6 +5,9 @@ import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 
+/**
+ * Critical Strike chance is set to 100%
+ */
 public class MaxCritAffix extends AttributeAffix {
 
 	public MaxCritAffix(int weight) {

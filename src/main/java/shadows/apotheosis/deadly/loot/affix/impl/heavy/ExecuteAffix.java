@@ -14,6 +14,9 @@ import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Targets below a certain percent HP threshold are instantly killed.
+ */
 public class ExecuteAffix extends RangedAffix {
 
 	private static final DamageSource EXECUTION = new DamageSource("apoth.execute").setDamageAllowedInCreativeMode().setDamageIsAbsolute();

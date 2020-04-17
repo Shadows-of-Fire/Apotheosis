@@ -11,6 +11,9 @@ import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Slain monsters have a chance to explode into a loot pinata.
+ */
 public class LootPinataAffix extends RangedAffix {
 
 	public LootPinataAffix(int weight) {

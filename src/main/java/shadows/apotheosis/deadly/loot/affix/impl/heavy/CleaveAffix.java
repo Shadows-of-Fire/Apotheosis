@@ -19,6 +19,9 @@ import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Cleave Affix.  Allows for full strength attacks to trigger a full-strength attack against nearby enemies.
+ */
 public class CleaveAffix extends Affix {
 
 	private static boolean cleaving = false;

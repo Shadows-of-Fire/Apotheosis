@@ -20,6 +20,9 @@ import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Full strength attacks will zap nearby enemies.
+ */
 public class DamageChainAffix extends RangedAffix {
 
 	public DamageChainAffix(int weight) {

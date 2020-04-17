@@ -9,6 +9,9 @@ import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
 
+/**
+ * Drops from killed enemies are teleported to the shooter.
+ */
 public class TeleportDropsAffix extends Affix {
 
 	public TeleportDropsAffix(int weight) {

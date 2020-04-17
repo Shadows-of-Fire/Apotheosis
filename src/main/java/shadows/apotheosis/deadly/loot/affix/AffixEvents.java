@@ -20,12 +20,15 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -33,6 +36,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -92,8 +96,8 @@ public class AffixEvents {
 				player.heal(e.getAmount() * lifeSteal);
 			}
 			float overheal = affixes.getOrDefault(Affixes.OVERHEAL, 0F);
-			if (overheal > 0 && !e.getSource().isMagicDamage()) {
-				player.setAbsorptionAmount(player.getAbsorptionAmount() + e.getAmount() * overheal);
+			if (overheal > 0 && !e.getSource().isMagicDamage() && player.getAbsorptionAmount() < 20) {
+				player.setAbsorptionAmount(Math.min(20, player.getAbsorptionAmount() + e.getAmount() * overheal));
 			}
 			if (affixes.containsKey(Affixes.PIERCING)) {
 				e.getSource().setDamageBypassesArmor();
@@ -181,6 +185,35 @@ public class AffixEvents {
 			p.addItemStackToInventory(LootManager.genLootItem(LootManager.getRandomEntry(p.world.rand, null), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
 			return 0;
 		})));
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void use(PlayerInteractEvent.RightClickBlock e) {
+		ItemStack s = e.getItemStack();
+
+		PlayerEntity player = e.getPlayer();
+		boolean flag = !player.getHeldItemMainhand().isEmpty() || !player.getHeldItemOffhand().isEmpty();
+		boolean flag1 = (player.shouldCancelInteraction() && flag) && !(player.getHeldItemMainhand().doesSneakBypassUse(e.getWorld(), e.getPos(), player) && player.getHeldItemOffhand().doesSneakBypassUse(e.getWorld(), e.getPos(), player));
+		if (e.getUseBlock() != net.minecraftforge.eventbus.api.Event.Result.DENY && !flag1) {
+			ActionResultType actionresulttype = e.getWorld().getBlockState(e.getPos()).onUse(e.getWorld(), player, e.getHand(), new BlockRayTraceResult(new Vec3d(0.5, 0.5, 0.5), e.getFace(), e.getPos(), false));
+			if (actionresulttype.isAccepted()) {
+				e.setCancellationResult(actionresulttype);
+				e.setCanceled(true);
+				return;
+			}
+		}
+
+		if (!s.isEmpty()) {
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(s);
+			boolean ret = false;
+			for (Map.Entry<Affix, Float> ent : affixes.entrySet()) {
+				if (ent.getKey().onBlockClicked(e.getPlayer(), e.getWorld(), e.getPos(), e.getFace(), e.getHand(), ent.getValue())) ret = true;
+			}
+			if (ret) {
+				e.setCanceled(true);
+				e.setCancellationResult(ActionResultType.SUCCESS);
+			}
+		}
 	}
 
 }

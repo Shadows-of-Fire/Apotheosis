@@ -5,6 +5,9 @@ import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 
+/**
+ * Increases crit damage.
+ */
 public class CritDamageAffix extends AttributeAffix {
 
 	public CritDamageAffix(int weight) {

@@ -9,6 +9,9 @@ import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 
+/*
+ * Adds fire damage, and attacks set enemies on fire.
+ */
 public class FireDamageAffix extends AttributeAffix {
 
 	public FireDamageAffix(int weight) {

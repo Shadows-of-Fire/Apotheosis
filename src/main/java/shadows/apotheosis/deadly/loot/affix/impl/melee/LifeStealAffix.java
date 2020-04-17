@@ -5,6 +5,9 @@ import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 
+/**
+ * Damage dealt is returned as health.
+ */
 public class LifeStealAffix extends AttributeAffix {
 
 	public LifeStealAffix(int weight) {
