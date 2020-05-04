@@ -9,6 +9,8 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.SpawnerModifiers;
+import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.compat.SpawnerWrapper.SpawnerInverseWrapper;
 
 @JeiPlugin
@@ -44,7 +47,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerInverseWrapper()
 				), getPluginUid());
 		//Formatter::on
-		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, "jei.spw.instructions");
+		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, I18n.format("jei.spw.instructions", Enchantments.SILK_TOUCH.getDisplayName(SpawnerModule.spawnerSilkLevel).getFormattedText()));
 		for (Item i : ForgeRegistries.ITEMS) {
 			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM, "jei.spw.capturing");
 		}
