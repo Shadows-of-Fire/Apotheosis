@@ -18,7 +18,7 @@ archivesBaseName = 'Apotheosis-1.15.2'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200301-mixed-1.15.2'
+    mappings channel: 'snapshot', version: '20200426-mixed-1.15.2'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client = {
@@ -38,7 +38,7 @@ minecraft {
 
 repositories {
     maven {
-        url "http://dvs1.progwml6.com/files/maven"
+        url "https://dvs1.progwml6.com/files/maven"
     }
 	maven {
 		url "http://tehnut.info/maven"
@@ -52,12 +52,15 @@ repositories {
 	maven {
 	 	url 'https://maven.theillusivec4.top/'
 	}
+	maven {
+		url 'https://github.com/TehNut/temporary-maven-thing/tree/master/maven/'
+	}
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.25'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.79'
 	compile fg.deobf('mezz.jei:jei-1.15.2:+')
-	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10+')
+	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.8-B72_1.15.2')
 	compile fileTree(dir: 'libs', include: '*.jar')
 	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.15.2-+')
 }

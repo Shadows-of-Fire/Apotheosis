@@ -63,6 +63,7 @@ Tools:
 + Sifting (Find metal nuggets)
 
 Pickaxes:
+Breaking Stone does not cost durability
 
 Shovels:
 Right click to cycle blocks (sand -> red sand -> gravel -> etc)
