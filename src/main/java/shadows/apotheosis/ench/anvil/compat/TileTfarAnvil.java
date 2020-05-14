@@ -1,10 +1,9 @@
 package shadows.apotheosis.ench.anvil.compat;
 
-import com.tfar.anviltweaks.AnvilTile;
-
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import shadows.apotheosis.ApotheosisObjects;
+import tfar.anviltweaks.AnvilTile;
 
 public class TileTfarAnvil extends AnvilTile implements IAnvilTile {
 

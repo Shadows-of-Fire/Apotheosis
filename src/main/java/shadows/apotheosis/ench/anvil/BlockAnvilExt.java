@@ -44,10 +44,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.advancements.AdvancementTriggers;
-import shadows.apotheosis.ench.anvil.compat.IAnvilBlock;
 import shadows.apotheosis.ench.anvil.compat.IAnvilTile;
 
-public class BlockAnvilExt extends AnvilBlock implements IAnvilBlock {
+public class BlockAnvilExt extends AnvilBlock {
 
 	public BlockAnvilExt() {
 		super(Block.Properties.create(Material.ANVIL, MaterialColor.IRON).hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL));

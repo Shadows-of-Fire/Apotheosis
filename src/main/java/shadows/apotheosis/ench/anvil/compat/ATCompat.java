@@ -1,8 +1,5 @@
 package shadows.apotheosis.ench.anvil.compat;
 
-import com.tfar.anviltweaks.AnvilTile;
-import com.tfar.anviltweaks.AnvilTileRenderer;
-
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -13,6 +10,8 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
+import tfar.anviltweaks.AnvilTile;
+import tfar.anviltweaks.AnvilTileRenderer;
 
 public class ATCompat {
 

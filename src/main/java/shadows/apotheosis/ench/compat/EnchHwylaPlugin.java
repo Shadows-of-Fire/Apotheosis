@@ -17,7 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.ench.anvil.compat.IAnvilBlock;
+import shadows.apotheosis.ench.anvil.BlockAnvilExt;
 import shadows.apotheosis.ench.anvil.compat.IAnvilTile;
 
 @WailaPlugin
@@ -25,8 +25,8 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 
 	@Override
 	public void register(IRegistrar reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, IAnvilBlock.class);
-		reg.registerBlockDataProvider(this, IAnvilBlock.class);
+		reg.registerComponentProvider(this, TooltipPosition.BODY, BlockAnvilExt.class);
+		reg.registerBlockDataProvider(this, BlockAnvilExt.class);
 	}
 
 	@Override
