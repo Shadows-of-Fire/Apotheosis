@@ -9,17 +9,25 @@ import java.util.stream.Collectors;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectUtils;
+import net.minecraft.potion.Effects;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
@@ -27,8 +35,7 @@ import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -36,7 +43,8 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -187,33 +195,85 @@ public class AffixEvents {
 		})));
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void use(PlayerInteractEvent.RightClickBlock e) {
-		ItemStack s = e.getItemStack();
-
-		PlayerEntity player = e.getPlayer();
-		boolean flag = !player.getHeldItemMainhand().isEmpty() || !player.getHeldItemOffhand().isEmpty();
-		boolean flag1 = (player.shouldCancelInteraction() && flag) && !(player.getHeldItemMainhand().doesSneakBypassUse(e.getWorld(), e.getPos(), player) && player.getHeldItemOffhand().doesSneakBypassUse(e.getWorld(), e.getPos(), player));
-		if (e.getUseBlock() != net.minecraftforge.eventbus.api.Event.Result.DENY && !flag1) {
-			ActionResultType actionresulttype = e.getWorld().getBlockState(e.getPos()).onUse(e.getWorld(), player, e.getHand(), new BlockRayTraceResult(new Vec3d(0.5, 0.5, 0.5), e.getFace(), e.getPos(), false));
-			if (actionresulttype.isAccepted()) {
-				e.setCancellationResult(actionresulttype);
-				e.setCanceled(true);
-				return;
-			}
-		}
-
+	public static ActionResultType onItemUse(ItemUseContext ctx) {
+		ItemStack s = ctx.getItem();
 		if (!s.isEmpty()) {
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(s);
-			boolean ret = false;
 			for (Map.Entry<Affix, Float> ent : affixes.entrySet()) {
-				if (ent.getKey().onBlockClicked(e.getPlayer(), e.getWorld(), e.getPos(), e.getFace(), e.getHand(), ent.getValue())) ret = true;
-			}
-			if (ret) {
-				e.setCanceled(true);
-				e.setCancellationResult(ActionResultType.SUCCESS);
+				ActionResultType type = ent.getKey().onItemUse(ctx, ent.getValue());
+				if (type != null) return type;
 			}
 		}
+		return null;
+	}
+
+	@SubscribeEvent
+	public void harvest(HarvestCheck e) {
+		ItemStack stack = e.getPlayer().getHeldItemMainhand();
+		if (!stack.isEmpty()) {
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+			if (affixes.containsKey(Affixes.OMNITOOL)) {
+				if (Items.DIAMOND_PICKAXE.canHarvestBlock(e.getTargetBlock()) || Items.DIAMOND_SHOVEL.canHarvestBlock(e.getTargetBlock()) || Items.DIAMOND_AXE.canHarvestBlock(e.getTargetBlock())) e.setCanHarvest(true);
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void speed(BreakSpeed e) {
+		ItemStack stack = e.getPlayer().getHeldItemMainhand();
+		if (!stack.isEmpty()) {
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+			if (affixes.containsKey(Affixes.OMNITOOL)) {
+				float shovel = getBaseSpeed(e.getPlayer(), Items.DIAMOND_SHOVEL, e.getState(), e.getPos());
+				float axe = getBaseSpeed(e.getPlayer(), Items.DIAMOND_AXE, e.getState(), e.getPos());
+				float pickaxe = getBaseSpeed(e.getPlayer(), Items.DIAMOND_PICKAXE, e.getState(), e.getPos());
+				e.setNewSpeed(Math.max(shovel, Math.max(axe, Math.max(pickaxe, e.getOriginalSpeed()))));
+			}
+		}
+	}
+
+	static float getBaseSpeed(PlayerEntity player, Item tool, BlockState state, BlockPos pos) {
+		float f = tool.getDestroySpeed(ItemStack.EMPTY, state);
+		if (f > 1.0F) {
+			int i = EnchantmentHelper.getEfficiencyModifier(player);
+			ItemStack itemstack = player.getHeldItemMainhand();
+			if (i > 0 && !itemstack.isEmpty()) {
+				f += (float) (i * i + 1);
+			}
+		}
+
+		if (EffectUtils.hasMiningSpeedup(player)) {
+			f *= 1.0F + (float) (EffectUtils.getMiningSpeedup(player) + 1) * 0.2F;
+		}
+
+		if (player.isPotionActive(Effects.MINING_FATIGUE)) {
+			float f1;
+			switch (player.getActivePotionEffect(Effects.MINING_FATIGUE).getAmplifier()) {
+			case 0:
+				f1 = 0.3F;
+				break;
+			case 1:
+				f1 = 0.09F;
+				break;
+			case 2:
+				f1 = 0.0027F;
+				break;
+			case 3:
+			default:
+				f1 = 8.1E-4F;
+			}
+
+			f *= f1;
+		}
+
+		if (player.areEyesInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
+			f /= 5.0F;
+		}
+
+		if (!player.onGround) {
+			f /= 5.0F;
+		}
+		return f;
 	}
 
 }

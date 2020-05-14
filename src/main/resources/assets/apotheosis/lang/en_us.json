@@ -23,6 +23,8 @@
 	"affix.apotheosis:current_hp_damage": "%s, the God-Slayer",
 	"affix.apotheosis:execute": "Culling %s",
 	"affix.apotheosis:overheal": "%s of Divinity",
+	"affix.apotheosis:omnitool": "Omnetic %s",
+	"affix.apotheosis:torch_placement": "%s of Lights",
 	
 	"attribute.name.apoth.draw_speed": "Draw Speed",
 	"attribute.name.apoth.snipe_damage": "Sniper Damage",
@@ -44,6 +46,8 @@
 	"affix.apotheosis:piercing.desc": "Physical damage pierces armor.",
 	"affix.apotheosis:cleave.desc": "Your attacks have a %s%% chance to cleave %s nearby enemies.",
 	"affix.apotheosis:execute.desc": "Your attacks execute foes below %s%% health.",
+	"affix.apotheosis:omnitool.desc": "This tool has diamond effectiveness against all blocks.",
+	"affix.apotheosis:torch_placement.desc": "Right clicking will place a torch at a cost of %d durability.",
 
     "rarity.apoth.common": "Common",
     "rarity.apoth.uncommon": "Uncommon",
@@ -150,7 +154,7 @@
     "jei.spw.changeentity": "Changes entity spawned",
     "jei.spw.ignorecap": "Ignores spawn cap",
     "jei.spw.redstone": "Enables redstone control",
-    "jei.spw.instructions": "Spawners can be modified with various items via right clicking on them.\\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\\nSpawners will also be dropped with Silk Touch.",
+    "jei.spw.instructions": "Spawners can be modified with various items via right clicking on them.\\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\\nSpawners will also be dropped with %s.",
     "jei.spw.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n+0.4%% chance per level.",
 
     "comment_id": "/Enchantment Module",

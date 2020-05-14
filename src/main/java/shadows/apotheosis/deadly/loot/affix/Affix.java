@@ -7,20 +7,18 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -117,10 +115,12 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	}
 
 	/**
-	 * Called when a user clicks on a block while holding an item with this affix.
+	 * Called when {@link Item#onItemUse(ItemUseContext)} would be called for an item with this affix.
+	 * Return null to not impact the original result type.
 	 */
-	public boolean onBlockClicked(PlayerEntity user, World world, BlockPos pos, Direction dir, Hand hand, float level) {
-		return false;
+	@Nullable
+	public ActionResultType onItemUse(ItemUseContext ctx, float level) {
+		return null;
 	}
 
 	/**

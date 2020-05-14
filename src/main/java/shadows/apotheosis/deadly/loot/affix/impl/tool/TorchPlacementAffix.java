@@ -9,13 +9,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
@@ -54,16 +49,14 @@ public class TorchPlacementAffix extends Affix {
 	}
 
 	@Override
-	public boolean onBlockClicked(PlayerEntity user, World world, BlockPos pos, Direction dir, Hand hand, float level) {
-		ItemUseContext ctx = new ItemUseContext(world, user, Hand.MAIN_HAND, new ItemStack(Items.TORCH), new BlockRayTraceResult(new Vec3d(0.5, 0.5, 0.5), dir, pos, false)) {
-		};
+	public ActionResultType onItemUse(ItemUseContext ctx, float level) {
+		PlayerEntity player = ctx.getPlayer();
 		if (Items.TORCH.onItemUse(ctx).shouldSwingHand()) {
-			user.getHeldItem(hand).damageItem((int) level, user, (p_220042_0_) -> {
-				p_220042_0_.sendBreakAnimation(EquipmentSlotType.MAINHAND);
-			});
-			return true;
+			ctx.getItem().grow(1);
+			player.getHeldItem(ctx.getHand()).damageItem((int) level, player, p -> p.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+			return ActionResultType.SUCCESS;
 		}
-		return false;
+		return null;
 	}
 
 }

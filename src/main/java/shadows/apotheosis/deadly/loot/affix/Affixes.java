@@ -29,6 +29,7 @@ import shadows.apotheosis.deadly.loot.affix.impl.ranged.SnareHitAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.ranged.SnipeDamageAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.ranged.SpectralShotAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.ranged.TeleportDropsAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.tool.OmniToolAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.tool.TorchPlacementAffix;
 
 /**
@@ -95,10 +96,11 @@ public class Affixes {
 		reg.register(new PiercingAffix(0).setRegistryName("piercing"));
 		reg.register(new MaxCritAffix(1).setRegistryName("max_crit"));
 		reg.register(new CleaveAffix(1).setRegistryName("cleave"));
-		reg.register(new CurrentHPAffix(1).setRegistryName("current_hp_damage"));
-		reg.register(new ExecuteAffix(1).setRegistryName("execute"));
+		reg.register(new CurrentHPAffix(2).setRegistryName("current_hp_damage"));
+		reg.register(new ExecuteAffix(3).setRegistryName("execute"));
 		reg.register(new OverhealAffix(2).setRegistryName("overheal"));
 		reg.register(new TorchPlacementAffix(4).setRegistryName("torch_placement"));
+		reg.register(new OmniToolAffix(2).setRegistryName("omnitool"));
 	}
 
 	public static void init() {

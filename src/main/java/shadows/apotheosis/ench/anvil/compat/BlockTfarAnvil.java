@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import shadows.apotheosis.ench.anvil.BlockAnvilExt;
 
-public class BlockTfarAnvil extends BlockAnvilExt implements IAnvilBlock {
+public class BlockTfarAnvil extends BlockAnvilExt {
 
 	@Override
 	public boolean hasTileEntity(BlockState state) {

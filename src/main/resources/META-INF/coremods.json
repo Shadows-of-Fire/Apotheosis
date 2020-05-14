@@ -15,5 +15,6 @@
   "affixEntity": "apothasm/affix-extra-dmg.js",
   "affixProt": "apothasm/affix-prot-level.js",
   "affixUser": "apothasm/affix-user-hurt.js",
-  "stackUUID": "apothasm/stack-modifier-hack.js"
+  "stackUUID": "apothasm/stack-modifier-hack.js",
+  "itemUseHook": "apothasm/item-use-hook.js"
 }
