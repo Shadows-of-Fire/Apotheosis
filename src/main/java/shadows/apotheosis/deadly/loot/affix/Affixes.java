@@ -10,6 +10,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.loot.affix.impl.armor.ArmorAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.armor.ArmorToughnessAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.armor.MaxHealthAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.generic.EnchantabilityAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.heavy.CleaveAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.heavy.CurrentHPAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.heavy.ExecuteAffix;
@@ -79,6 +80,7 @@ public class Affixes {
 	public static final Affix ARMOR = null;
 	public static final Affix ARMOR_TOUGHNESS = null;
 	public static final Affix MAX_HEALTH = null;
+	public static final Affix ENCHANTABILITY = null;
 
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
@@ -110,6 +112,7 @@ public class Affixes {
 		reg.register(new ArmorAffix(3).setRegistryName("armor"));
 		reg.register(new ArmorToughnessAffix(1).setRegistryName("armor_toughness"));
 		reg.register(new MaxHealthAffix(2).setRegistryName("max_health"));
+		reg.register(new EnchantabilityAffix(3).setRegistryName("enchantability"));
 	}
 
 }

@@ -22,6 +22,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixEvents;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.loot.affix.Affixes;
 
 /**
  * ASM methods for the deadly module.
@@ -138,6 +139,18 @@ public class DeadlyHooks {
 
 			return actionresulttype;
 		}
+	}
+
+	/**
+	 * Allows for the enchantability affix to work properly.
+	 */
+	public static int getEnchantability(ItemStack stack) {
+		int ench = stack.getItemEnchantability();
+		Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+		if (!affixes.isEmpty()) {
+			ench += affixes.getOrDefault(Affixes.ENCHANTABILITY, 0F).intValue();
+		}
+		return ench;
 	}
 
 }

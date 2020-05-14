@@ -28,6 +28,7 @@
 	"affix.apotheosis:armor": "Ironclad %s",
 	"affix.apotheosis:armor_toughness": "Reinforced %s",
 	"affix.apotheosis:max_health": "%s of Tenacity",
+	"affix.apotheosis:enchantability": "%s of Latent Magic",
 	
 	"attribute.name.apoth.draw_speed": "Draw Speed",
 	"attribute.name.apoth.snipe_damage": "Sniper Damage",
@@ -51,6 +52,7 @@
 	"affix.apotheosis:execute.desc": "Your attacks execute foes below %s%% health.",
 	"affix.apotheosis:omnitool.desc": "This tool has diamond effectiveness against all blocks.",
 	"affix.apotheosis:torch_placement.desc": "Right clicking will place a torch at a cost of %d durability.",
+	"affix.apotheosis:enchantability.desc": "This item's enchantability is increased by %d.",
 
     "rarity.apoth.common": "Common",
     "rarity.apoth.uncommon": "Uncommon",

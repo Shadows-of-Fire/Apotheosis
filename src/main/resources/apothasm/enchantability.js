@@ -1,14 +1,14 @@
 function initializeCoreMod() {
     return {
-        'apothanviltweaks': {
+        'apothenchaffix': {
             'target': {
                 'type': 'METHOD',
-                'class': 'com.tfar.anviltweaks.RepairContainerv2',
-                'methodName': 'updateRepairOutput',
-                'methodDesc': '()V'
+                'class': 'net.minecraft.enchantment.EnchantmentHelper',
+                'methodName': 'func_77513_b',
+                'methodDesc': '(Ljava/util/Random;Lnet/minecraft/item/ItemStack;IZ)Ljava/util/List;'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching AnvilTweaks\' RepairContainerv2#updateRepairOutput');
+                print('[ApotheosisCore]: Patching buildEnchantmentList for the Enchantability affix.');
 
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
@@ -21,13 +21,11 @@ function initializeCoreMod() {
 				for (i = 0; i < instr.size(); i++) {
 					var n = instr.get(i);
 					if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-						var is = n.name.equals(ASMAPI.mapMethod("func_77325_b"));
-						if (is) { 
-							instr.set(n, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/ench/asm/EnchHooks", "getMaxLevel", "(Lnet/minecraft/enchantment/Enchantment;)I", false));
+						if(n.name.equals("getItemEnchantability")) { 
+							instr.set(n, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "getEnchantability", "(Lnet/minecraft/item/ItemStack;)I", false));
 						}
 					}
 				}
-
                 return method;
             }
         }

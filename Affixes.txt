@@ -69,9 +69,9 @@ Shovels:
 Right click to cycle blocks (sand -> red sand -> gravel -> etc)
 
 Armor:
-Max Health
-Armor
-Armor Toughness
++Max Health
++Armor
++Armor Toughness
 Magic Resistant
 Reduces duration of negative effects
 
@@ -88,4 +88,4 @@ Shields should have patterns on them, not just defaults.
 Slowfall while blocking
 
 General:
-Enchantability
++Enchantability
