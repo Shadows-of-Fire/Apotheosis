@@ -19,7 +19,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -35,12 +37,14 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -55,6 +59,8 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import shadows.apotheosis.deadly.gen.BossItem;
+import shadows.apotheosis.deadly.loot.LootEntry;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.LootRarity;
 
@@ -287,10 +293,22 @@ public class AffixEvents {
 		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION) {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
-			if (entity instanceof MobEntity && entity.getHeldItemMainhand().isEmpty() && rand.nextInt(75) == 0) {
-				ItemStack stack = LootManager.getRandomEntry(rand, LootRarity.random(rand));
-				entity.setHeldItem(Hand.MAIN_HAND, stack);
-				((MobEntity) entity).setDropChance(EquipmentSlotType.MAINHAND, 2);
+			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity) {
+				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(150) == 0) {
+					LootRarity rarity = LootRarity.random(rand);
+					LootEntry entry = WeightedRandom.getRandomItem(rand, LootManager.getEntries());
+					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());
+					ItemStack loot = LootManager.genLootItem(entry.getStack().copy(), rand, rarity);
+					entity.setItemStackToSlot(slot, loot);
+					((MobEntity) entity).setDropChance(slot, 2);
+					return;
+				}
+				if (rand.nextInt(450) == 0) {
+					BossItem.initBoss(rand, (MobEntity) entity);
+					Vec3d pos = e.getEntity().getPositionVec();
+					((ServerWorld) e.getWorld()).addLightningBolt(new LightningBoltEntity((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ(), true));
+					return;
+				}
 			}
 		}
 	}

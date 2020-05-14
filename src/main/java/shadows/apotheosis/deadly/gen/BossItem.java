@@ -96,8 +96,6 @@ public class BossItem extends WorldFeatureItem {
 		initBoss(rand, entity);
 		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		world.addEntity(entity);
-		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
-		entity.enablePersistence();
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
@@ -120,8 +118,9 @@ public class BossItem extends WorldFeatureItem {
 		AttributeHelper.addToBase(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
 		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
 		entity.setHealth(entity.getMaxHealth());
-		String name = NameHelper.setEntityName(random, entity);
+		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		entity.enablePersistence();
+		String name = NameHelper.setEntityName(random, entity);
 
 		int level = 0;
 		while (random.nextDouble() <= DeadlyConfig.bossLevelUpChance && level <= ArmorSet.getMaxLevel())

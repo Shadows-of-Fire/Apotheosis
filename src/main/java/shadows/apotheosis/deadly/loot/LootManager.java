@@ -74,8 +74,8 @@ public class LootManager extends JsonReloadListener {
 	/**
 	 * Selects a random loot entry itemstack from the list of entries.
 	 * @param rand A random.
-	 * @param rarity If this is {@link LootRarity#UNIQUE}, then the item returned will be an {@link Unique}
-	 * @return A loot entry's stack, or a unique, if the rarity selected was unique.
+	 * @param rarity If this is {@link LootRarity#ANCIENT}, then the item returned will be an {@link Unique}
+	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
 	public static ItemStack getRandomEntry(Random rand, LootRarity rarity) {
 		LootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES);
