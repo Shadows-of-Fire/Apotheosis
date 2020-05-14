@@ -25,6 +25,9 @@
 	"affix.apotheosis:overheal": "%s of Divinity",
 	"affix.apotheosis:omnitool": "Omnetic %s",
 	"affix.apotheosis:torch_placement": "%s of Lights",
+	"affix.apotheosis:armor": "Ironclad %s",
+	"affix.apotheosis:armor_toughness": "Reinforced %s",
+	"affix.apotheosis:max_health": "%s of Tenacity",
 	
 	"attribute.name.apoth.draw_speed": "Draw Speed",
 	"attribute.name.apoth.snipe_damage": "Sniper Damage",

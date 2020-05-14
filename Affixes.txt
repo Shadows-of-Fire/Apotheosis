@@ -86,3 +86,6 @@ Parry Timing
 Store blocked damage for next attack
 Shields should have patterns on them, not just defaults.
 Slowfall while blocking
+
+General:
+Enchantability

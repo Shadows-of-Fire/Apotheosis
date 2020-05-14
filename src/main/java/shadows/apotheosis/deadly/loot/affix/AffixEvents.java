@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -16,9 +17,12 @@ import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -31,6 +35,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -42,6 +47,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
@@ -276,4 +282,16 @@ public class AffixEvents {
 		return f;
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void spawns(LivingSpawnEvent.SpecialSpawn e) {
+		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION) {
+			LivingEntity entity = e.getEntityLiving();
+			Random rand = e.getWorld().getRandom();
+			if (entity instanceof MobEntity && entity.getHeldItemMainhand().isEmpty() && rand.nextInt(75) == 0) {
+				ItemStack stack = LootManager.getRandomEntry(rand, LootRarity.random(rand));
+				entity.setHeldItem(Hand.MAIN_HAND, stack);
+				((MobEntity) entity).setDropChance(EquipmentSlotType.MAINHAND, 2);
+			}
+		}
+	}
 }

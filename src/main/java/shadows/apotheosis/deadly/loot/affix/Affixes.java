@@ -7,6 +7,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.deadly.loot.affix.impl.armor.ArmorAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.armor.ArmorToughnessAffix;
+import shadows.apotheosis.deadly.loot.affix.impl.armor.MaxHealthAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.heavy.CleaveAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.heavy.CurrentHPAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.heavy.ExecuteAffix;
@@ -70,9 +73,12 @@ public class Affixes {
 	//public static final Affix AUTO_SMELT = null; Requires a harvest drops event
 	public static final Affix TORCH_PLACEMENT = null;
 	public static final Affix OMNITOOL = null;
-	public static final Affix FOOD_SOURCE = null;
-	public static final Affix RADIUS_MINING = null;
-	public static final Affix SIFTING = null;
+	//public static final Affix FOOD_SOURCE = null;
+	//public static final Affix RADIUS_MINING = null;
+	//public static final Affix SIFTING = null;
+	public static final Affix ARMOR = null;
+	public static final Affix ARMOR_TOUGHNESS = null;
+	public static final Affix MAX_HEALTH = null;
 
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
@@ -101,32 +107,9 @@ public class Affixes {
 		reg.register(new OverhealAffix(2).setRegistryName("overheal"));
 		reg.register(new TorchPlacementAffix(4).setRegistryName("torch_placement"));
 		reg.register(new OmniToolAffix(2).setRegistryName("omnitool"));
+		reg.register(new ArmorAffix(3).setRegistryName("armor"));
+		reg.register(new ArmorToughnessAffix(1).setRegistryName("armor_toughness"));
+		reg.register(new MaxHealthAffix(2).setRegistryName("max_health"));
 	}
 
-	public static void init() {
-	}
-
-	/*
-	private static void initEntries() {
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_SWORD), EquipmentType.SWORD, 3));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.BOW), EquipmentType.BOW, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.CROSSBOW), EquipmentType.BOW, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.SHIELD), EquipmentType.SHIELD, 1));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_HELMET), EquipmentType.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_CHESTPLATE), EquipmentType.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_LEGGINGS), EquipmentType.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_BOOTS), EquipmentType.ARMOR, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_SHOVEL), EquipmentType.TOOL, 1));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_AXE), EquipmentType.TOOL, 2));
-		LootManager.registerEntry(new LootEntry(new ItemStack(Items.DIAMOND_PICKAXE), EquipmentType.TOOL, 2));
-	}
-	
-	private static void initModifiers() {
-		LootManager.registerModifier(new AffixModifier("double", AffixOp.MULTIPLY, 2, 6));
-		LootManager.registerModifier(new AffixModifier("plus_three", AffixOp.ADD, 3, 2).dontEditName());
-		LootManager.registerModifier(new AffixModifier("plus_one", AffixOp.ADD, 1, 10).dontEditName());
-		LootManager.registerModifier(new AffixModifier("set_to_five", AffixOp.SET, 5, 1).dontEditName());
-	}
-	
-	*/
 }

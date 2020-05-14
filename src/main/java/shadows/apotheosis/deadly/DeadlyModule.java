@@ -22,7 +22,6 @@ import shadows.apotheosis.deadly.gen.SwarmSpawner;
 import shadows.apotheosis.deadly.gen.WorldGenerator;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.affix.AffixEvents;
-import shadows.apotheosis.deadly.loot.affix.Affixes;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyModule {
@@ -44,7 +43,6 @@ public class DeadlyModule {
 		DeadlyLoot.init();
 		SwarmSpawner.init();
 		WorldGenerator.init();
-		Affixes.init();
 	}
 
 	@SubscribeEvent
