@@ -303,7 +303,7 @@ public class AffixEvents {
 					((MobEntity) entity).setDropChance(slot, 2);
 					return;
 				}
-				if (rand.nextInt(450) == 0) {
+				if (rand.nextInt(900) == 0) {
 					BossItem.initBoss(rand, (MobEntity) entity);
 					Vec3d pos = e.getEntity().getPositionVec();
 					((ServerWorld) e.getWorld()).addLightningBolt(new LightningBoltEntity((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ(), true));

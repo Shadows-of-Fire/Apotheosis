@@ -36,15 +36,6 @@ import shadows.apotheosis.deadly.loot.affix.impl.ranged.TeleportDropsAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.tool.OmniToolAffix;
 import shadows.apotheosis.deadly.loot.affix.impl.tool.TorchPlacementAffix;
 
-/**
- * Current Affix Counts
- * Weapons: 9
- * Ranged: 7
- * Heavy Weapons: 8
- * Tools: 6
- * Armor: x
- * Shields: x
- */
 @EventBusSubscriber(modid = Apotheosis.MODID, bus = Bus.MOD)
 @ObjectHolder(Apotheosis.MODID)
 public class Affixes {
