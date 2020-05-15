@@ -28,6 +28,7 @@ public class AffixHelper {
 			CompoundNBT tag = stack.getTag().getCompound(AFFIXES);
 			for (String key : tag.keySet()) {
 				Affix affix = Affix.REGISTRY.getValue(new ResourceLocation(key));
+				if (affix == null) continue;
 				float lvl = tag.getFloat(key);
 				map.put(affix, lvl);
 			}
