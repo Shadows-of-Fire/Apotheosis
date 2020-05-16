@@ -11,7 +11,7 @@ import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 public class MaxHealthAffix extends AttributeAffix {
 
 	public MaxHealthAffix(int weight) {
-		super(SharedMonsterAttributes.MAX_HEALTH, 2F, 12F, Operation.ADDITION, weight);
+		super(SharedMonsterAttributes.MAX_HEALTH, 1F, 5F, Operation.ADDITION, weight);
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class MaxHealthAffix extends AttributeAffix {
 
 	@Override
 	public float getMax() {
-		return 20F;
+		return 8F;
 	}
 
 }

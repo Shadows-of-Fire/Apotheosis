@@ -294,7 +294,7 @@ public class AffixEvents {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
 			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity) {
-				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(150) == 0) {
+				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(350) == 0) {
 					LootRarity rarity = LootRarity.random(rand);
 					LootEntry entry = WeightedRandom.getRandomItem(rand, LootManager.getEntries());
 					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());

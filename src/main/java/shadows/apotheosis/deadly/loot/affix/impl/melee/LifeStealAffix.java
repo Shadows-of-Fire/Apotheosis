@@ -11,7 +11,7 @@ import shadows.apotheosis.deadly.loot.attributes.CustomAttributes;
 public class LifeStealAffix extends AttributeAffix {
 
 	public LifeStealAffix(int weight) {
-		super(CustomAttributes.LIFE_STEAL, 0.1F, 1, Operation.MULTIPLY_TOTAL, weight);
+		super(CustomAttributes.LIFE_STEAL, 0.1F, 0.25F, Operation.MULTIPLY_TOTAL, weight);
 	}
 
 	@Override
@@ -26,6 +26,6 @@ public class LifeStealAffix extends AttributeAffix {
 
 	@Override
 	public float getMax() {
-		return 1.5F;
+		return 0.75F;
 	}
 }

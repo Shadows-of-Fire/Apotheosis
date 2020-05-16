@@ -18,7 +18,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.anvil.BlockAnvilExt;
-import shadows.apotheosis.ench.anvil.compat.IAnvilTile;
+import shadows.apotheosis.ench.anvil.TileAnvil;
 
 @WailaPlugin
 public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {
@@ -38,9 +38,9 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 
 	@Override
 	public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity te) {
-		if (te instanceof IAnvilTile) {
-			tag.putInt("ub", ((IAnvilTile) te).getUnbreaking());
-			tag.putInt("sp", ((IAnvilTile) te).getSplitting());
+		if (te instanceof TileAnvil) {
+			tag.putInt("ub", ((TileAnvil) te).getUnbreaking());
+			tag.putInt("sp", ((TileAnvil) te).getSplitting());
 		}
 	}
 

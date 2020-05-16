@@ -4,9 +4,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.ench.anvil.compat.IAnvilTile;
 
-public class TileAnvil extends TileEntity implements IAnvilTile {
+public class TileAnvil extends TileEntity {
 
 	public TileAnvil() {
 		super(ApotheosisObjects.ANVIL);
@@ -29,22 +28,18 @@ public class TileAnvil extends TileEntity implements IAnvilTile {
 		splitting = tag.getInt("splitting");
 	}
 
-	@Override
 	public void setUnbreaking(int level) {
 		unbreaking = level;
 	}
 
-	@Override
 	public int getUnbreaking() {
 		return unbreaking;
 	}
 
-	@Override
 	public void setSplitting(int level) {
 		splitting = level;
 	}
 
-	@Override
 	public int getSplitting() {
 		return splitting;
 	}

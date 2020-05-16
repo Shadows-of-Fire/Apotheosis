@@ -101,8 +101,8 @@ public class Affixes {
 		reg.register(new TorchPlacementAffix(4).setRegistryName("torch_placement"));
 		reg.register(new OmniToolAffix(2).setRegistryName("omnitool"));
 		reg.register(new ArmorAffix(3).setRegistryName("armor"));
-		reg.register(new ArmorToughnessAffix(1).setRegistryName("armor_toughness"));
-		reg.register(new MaxHealthAffix(2).setRegistryName("max_health"));
+		reg.register(new ArmorToughnessAffix(2).setRegistryName("armor_toughness"));
+		reg.register(new MaxHealthAffix(1).setRegistryName("max_health"));
 		reg.register(new EnchantabilityAffix(3).setRegistryName("enchantability"));
 	}
 

@@ -71,7 +71,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
@@ -83,8 +82,6 @@ import shadows.apotheosis.ench.anvil.BlockAnvilExt;
 import shadows.apotheosis.ench.anvil.EnchantmentSplitting;
 import shadows.apotheosis.ench.anvil.ItemAnvilExt;
 import shadows.apotheosis.ench.anvil.TileAnvil;
-import shadows.apotheosis.ench.anvil.compat.ATCompat;
-import shadows.apotheosis.ench.anvil.compat.IAnvilTile;
 import shadows.apotheosis.ench.enchantments.EnchantmentBerserk;
 import shadows.apotheosis.ench.enchantments.EnchantmentDepths;
 import shadows.apotheosis.ench.enchantments.EnchantmentHellInfused;
@@ -209,7 +206,6 @@ public class EnchModule {
 	public void tiles(Register<TileEntityType<?>> e) {
 		e.getRegistry().register(new TileEntityType<TileEntity>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
 		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
-		if (ModList.get().isLoaded("anviltweaks")) ATCompat.tileType();
 	}
 
 	@SubscribeEvent
@@ -217,16 +213,10 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new BlockHellBookshelf().setRegistryName("hellshelf"),
-				new BlockPrismaticAltar().setRegistryName(Apotheosis.MODID, "prismatic_altar")
-				);
-		if (ModList.get().isLoaded("anviltweaks")) {
-			ATCompat.registerBlocks(e);
-		} else {
-			e.getRegistry().registerAll(
+				new BlockPrismaticAltar().setRegistryName(Apotheosis.MODID, "prismatic_altar"),
 				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
 				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
 				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"));
-		}
 		//Formatter::on
 	}
 
@@ -459,7 +449,7 @@ public class EnchModule {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
 			RepairContainer r = (RepairContainer) e.getPlayer().openContainer;
 			TileEntity te = r.field_216980_g.apply((w, p) -> w.getTileEntity(p)).orElse(null);
-			if (te instanceof IAnvilTile) e.setBreakChance(e.getBreakChance() / (((IAnvilTile) te).getUnbreaking() + 1));
+			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getUnbreaking() + 1));
 		}
 	}
 
