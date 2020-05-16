@@ -25,7 +25,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -34,7 +33,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.altar.RenderPrismaticAltar;
-import shadows.apotheosis.ench.anvil.compat.ATCompat;
 import shadows.apotheosis.village.fletching.FletchingScreen;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowRenderer;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowRenderer;
@@ -115,7 +113,6 @@ public class ApotheosisClient {
 		}
 		if (Apotheosis.enableEnch) ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, RenderPrismaticAltar::new);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisClient::tooltips);
-		if (ModList.get().isLoaded("anviltweaks")) ATCompat.tesr();
 		if (Apotheosis.enableVillager) {
 			DeferredWorkQueue.runLater(() -> {
 				ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);

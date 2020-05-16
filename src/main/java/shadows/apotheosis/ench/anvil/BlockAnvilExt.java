@@ -44,7 +44,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.advancements.AdvancementTriggers;
-import shadows.apotheosis.ench.anvil.compat.IAnvilTile;
 
 public class BlockAnvilExt extends AnvilBlock {
 
@@ -65,8 +64,8 @@ public class BlockAnvilExt extends AnvilBlock {
 	@Override
 	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
 		ItemStack anvil = new ItemStack(this);
-		if (te instanceof IAnvilTile) {
-			IAnvilTile anv = (IAnvilTile) te;
+		if (te instanceof TileAnvil) {
+			TileAnvil anv = (TileAnvil) te;
 			Map<Enchantment, Integer> ench = new HashMap<>();
 			if (anv.getUnbreaking() > 0) ench.put(Enchantments.UNBREAKING, anv.getUnbreaking());
 			if (anv.getSplitting() > 0) ench.put(ApotheosisObjects.SPLITTING, anv.getSplitting());
@@ -79,9 +78,9 @@ public class BlockAnvilExt extends AnvilBlock {
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof IAnvilTile) {
-			((IAnvilTile) te).setUnbreaking(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
-			((IAnvilTile) te).setSplitting(EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, stack));
+		if (te instanceof TileAnvil) {
+			((TileAnvil) te).setUnbreaking(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
+			((TileAnvil) te).setSplitting(EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, stack));
 		}
 	}
 
