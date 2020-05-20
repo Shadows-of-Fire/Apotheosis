@@ -62,6 +62,9 @@ public class EnchantmentInfo {
 		this.minPower = minPower;
 	}
 
+	/**
+	 * Simple int to int function, used for converting a level into a required enchanting power.
+	 */
 	public static interface PowerFunc {
 		int getPower(int level);
 	}

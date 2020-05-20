@@ -294,7 +294,7 @@ public class AffixEvents {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
 			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity) {
-				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(350) == 0) {
+				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(250) == 0) {
 					LootRarity rarity = LootRarity.random(rand);
 					LootEntry entry = WeightedRandom.getRandomItem(rand, LootManager.getEntries());
 					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());
@@ -303,7 +303,8 @@ public class AffixEvents {
 					((MobEntity) entity).setDropChance(slot, 2);
 					return;
 				}
-				if (rand.nextInt(900) == 0) {
+				if (!e.getWorld().canBlockSeeSky(new BlockPos((int) e.getX(), (int) e.getY() + 1, (int) e.getZ()))) return;
+				if (rand.nextInt(600) == 0) {
 					BossItem.initBoss(rand, (MobEntity) entity);
 					Vec3d pos = e.getEntity().getPositionVec();
 					((ServerWorld) e.getWorld()).addLightningBolt(new LightningBoltEntity((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ(), true));

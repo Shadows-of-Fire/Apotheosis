@@ -17,6 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.util.NameHelper;
+import shadows.apotheosis.util.RandomIntRange;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyConfig {
@@ -32,8 +33,8 @@ public class DeadlyConfig {
 	public static Configuration config;
 
 	//Boss Stats
-	public static RandomValueRange bossRegenLevel = new RandomValueRange(0, 2);
-	public static RandomValueRange bossResistLevel = new RandomValueRange(0, 2);
+	public static RandomIntRange bossRegenLevel = new RandomIntRange(0, 2);
+	public static RandomIntRange bossResistLevel = new RandomIntRange(0, 2);
 	public static float bossFireRes = 0.5F;
 	public static float bossWaterBreathing = 1.0F;
 	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(2F, 4F);
@@ -175,6 +176,12 @@ public class DeadlyConfig {
 		float rMin = c.getFloat("Min " + name, group, range.getMin(), min, max, String.format(comment, "min"));
 		float rMax = c.getFloat("Max " + name, group, range.getMax(), min, max, String.format(comment, "max"));
 		return RandomValueRange.of(rMin, rMax);
+	}
+
+	public static RandomIntRange getRange(Configuration c, String name, String group, RandomIntRange range, int min, int max, String comment) {
+		int rMin = c.getInt("Min " + name, group, range.getMin(), min, max, String.format(comment, "min"));
+		int rMax = c.getInt("Max " + name, group, range.getMax(), min, max, String.format(comment, "max"));
+		return new RandomIntRange(rMin, rMax);
 	}
 
 }

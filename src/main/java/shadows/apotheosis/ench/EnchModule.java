@@ -139,7 +139,7 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void init(ApotheosisSetup e) {
-		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
+		//config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
 		setEnch(ItemTier.GOLD, 40);
 		setEnch(ArmorMaterial.GOLD, 40);
 		/* TODO: Materials and tiers are no longer centralized and no longer have names.  Explore new options.
@@ -148,9 +148,9 @@ public class EnchModule {
 		for (ItemTier a : ItemTier.values())
 			setEnch(a, config.getInt(a.name(), "Enchantability - Tools", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this tool material."));
 		*/
-		if (config.hasChanged()) config.save();
+		//if (config.hasChanged()) config.save();
 
-		config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
+		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
 		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
 		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
 		maxPower = config.getFloat("Max Power", "general", maxPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive.");

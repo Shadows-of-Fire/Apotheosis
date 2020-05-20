@@ -38,7 +38,7 @@ public class BlockHellBookshelf extends Block {
 
 	@Override
 	public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
-		if (state.getBlock() == this) return 2 + state.get(INFUSION) * 0.2F;
+		if (state.getBlock() == this) return 2 + state.get(INFUSION) * 0.175F;
 		return 2;
 	}
 

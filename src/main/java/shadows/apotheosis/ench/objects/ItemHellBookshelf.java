@@ -1,14 +1,13 @@
 package shadows.apotheosis.ench.objects;
 
-import com.google.common.collect.ImmutableMap;
-
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
@@ -36,7 +35,7 @@ public class ItemHellBookshelf extends BlockItem {
 
 	@Override
 	public int getItemEnchantability(ItemStack stack) {
-		return 40;
+		return 15;
 	}
 
 	@Override
@@ -44,7 +43,12 @@ public class ItemHellBookshelf extends BlockItem {
 		super.fillItemGroup(group, items);
 		if (isInGroup(group)) {
 			ItemStack s = new ItemStack(this);
-			EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, 10), s);
+			ListNBT list = new ListNBT();
+			CompoundNBT tag = new CompoundNBT();
+			tag.putString("id", "apotheosis:hell_infusion");
+			tag.putShort("lvl", (short) 10);
+			list.add(tag);
+			s.setTagInfo("Enchantments", list);
 			items.add(s);
 		}
 	}
