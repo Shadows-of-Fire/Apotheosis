@@ -1,7 +1,68 @@
+//Deadly Module
+affix.apotheosis:fire_damage=燃烧Ⅰ %s
+affix.apotheosis:fire_damage.double=燃烧Ⅱ %s
+affix.apotheosis:lunar_damage=月光Ⅰ %s
+affix.apotheosis:lunar_damage.double=月光Ⅱ %s
+affix.apotheosis:solar_damage=日光Ⅰ %s
+affix.apotheosis:solar_damage.double=日光Ⅱ %s
+affix.apotheosis:cold_damage=寒气Ⅰ %s
+affix.apotheosis:cold_damage.double=寒气Ⅱ %s
+affix.apotheosis:quartz_fused=石英溶解者Ⅰ %s
+affix.apotheosis:quartz_fused.double=石英溶解者Ⅱ %s
+affix.apotheosis:movement_speed=敏捷Ⅰ %s
+affix.apotheosis:movement_speed.double=敏捷Ⅱ %s
+affix.apotheosis:armor=装甲Ⅰ %s
+affix.apotheosis:armor.double=装甲Ⅱ %s
+affix.apotheosis:armor_toughness=钢化Ⅰ %s
+affix.apotheosis:armor_toughness.double=钢化Ⅱ %s
+affix.apotheosis:crit_damage=%s 威慑Ⅰ
+affix.apotheosis:crit_damage.double= %s 威慑Ⅱ
+affix.apotheosis:eternal=永恒 %s
+affix.apotheosis:eternal.double=不灭 %s
+affix.apotheosis:fortunate=% 幸运
+affix.apotheosis:fortunate.double=% 命运
+affix.apotheosis:reflective=%s 报复性防御Ⅰ
+affix.apotheosis:reflective.double=%s 报复性防御Ⅱ
+affix.apotheosis:power=矮人族手艺Ⅰ %s
+affix.apotheosis:power.double=矮人族手艺Ⅱ %s
+affix.apotheosis:reach_distance=无限Ⅰ %s 
+affix.apotheosis:reach_distance.double=无限Ⅱ %s 
+affix.apotheosis:resistance=反抗Ⅰ %s
+affix.apotheosis:resistance.double=反抗Ⅱ %s
+affix.apotheosis:resistance.desc=你可以从格挡中获得反抗的机会.
+affix.apotheosis:magic_resist=魔力Ⅰ %s
+affix.apotheosis:magic_resist.double=魔力Ⅱ %s
+affix.apotheosis:sifting=矿物血统Ⅰ %s
+affix.apotheosis:sifting.double=矿物血统Ⅱ %s
+affix.apotheosis:sifting.desc=你可能会找到矿物粒.
+affix.apotheosis:sharpshooter=死亡凝视Ⅰ %s
+affix.apotheosis:sharpshooter.double=死亡凝视Ⅱ %s
+affix.apotheosis:sharpshooter.desc=对30格开外的敌人造成更多伤害.
+affix.apotheosis:always_crit=吸血Ⅰ %s
+affix.apotheosis:always_crit.double=吸血Ⅱ %s
+affix.apotheosis:always_crit.desc=你的攻击将会变得恐怖.
+affix.apotheosis:weak_damage=锐利 %s
+affix.apotheosis:weak_armor=抛光 %s
+
+attribute.name.apoth.firedmg=火焰伤害
+attribute.name.apoth.colddmg=寒冷伤害
+attribute.name.apoth.solardmg=太阳伤害
+attribute.name.apoth.lunardmg=月亮伤害
+attribute.name.apoth.critdmg=暴击伤害
+attribute.name.apoth.magicresist=魔法抗性
+attribute.name.apoth.longshot=持续伤害
+
+rarity.apoth.common=普通
+rarity.apoth.uncommon=罕见
+rarity.apoth.rare=珍贵
+rarity.apoth.epic=史诗
+rarity.apoth.ancient=古老
+rarity.apoth.unique=独特
+
 //Spawner Module
 enchantment.spw.capturing=捕捉
 
-enchantment.apotheosis.capturing.desc=使生物有机会掉落它们的刷怪蛋.
+enchantment.apotheosis.capturing.desc=使生物有一定概率在死亡时掉落它们的刷怪蛋.
 info.spw.entity=实体: %s
 
 waila.spw.mindelay=最小延迟: %s
@@ -47,13 +108,13 @@ enchantment.apotheosis.hell_infusion=炼狱灌注
 enchantment.apotheosis.hell_infusion.desc=在地狱可以造成额外的魔法伤害.
 
 enchantment.apotheosis.mounted_strike=骑砍
-enchantment.apotheosis.mounted_strike.desc=骑马时造成额外伤害.
+enchantment.apotheosis.mounted_strike.desc=骑马时攻击能够造成额外伤害.
 
-enchantment.apotheosis.depth_miner=矿工的热情
-enchantment.apotheosis.depth_miner.desc=根据等级调整Y的挖掘速度.
+enchantment.apotheosis.depth_miner=矿工热枕
+enchantment.apotheosis.depth_miner.desc=调整玩家在不同高度时的挖掘速度, Y值越低挖掘速度越快, 反之越慢.
 
 enchantment.apotheosis.stable_footing=稳住脚步
-enchantment.apotheosis.stable_footing.desc=取消飞行时的采矿速度惩罚.
+enchantment.apotheosis.stable_footing.desc=取消飞行时的挖掘速度惩罚.
 
 enchantment.apotheosis.scavenger=拾荒者
 enchantment.apotheosis.scavenger.desc=生物被杀死后它们的战利品有可能会翻2倍.
@@ -61,7 +122,7 @@ enchantment.apotheosis.scavenger.desc=生物被杀死后它们的战利品有可
 enchantment.apotheosis.life_mending=生命修补
 enchantment.apotheosis.life_mending.desc=将生命转化为耐久.
 
-enchantment.apotheosis.icy_thorns=冰刺
+enchantment.apotheosis.icy_thorns=冰霜荆棘
 enchantment.apotheosis.icy_thorns.desc=使攻击者受到缓慢效果.
 
 death.apotheosis.corrupted=%1$s 的生命被腐化附魔耗尽了.
@@ -79,15 +140,15 @@ item.apotheosis.digger_book.name=矿工宝典
 item.apotheosis.fishing_rod_book.name=渔夫宝典
 item.apotheosis.bow_book.name=弓宝典
 item.apotheosis.scrap_tome.name=分解宝典
-info.apotheosis.null_book=接受其他附魔.
-info.apotheosis.armor_head_book=接受头盔附魔.
-info.apotheosis.armor_chest_book=接受胸甲附魔.
-info.apotheosis.armor_legs_book=接受护腿附魔.
-info.apotheosis.armor_feet_book=接受鞋子附魔
-info.apotheosis.weapon_book=接受武器附魔.
-info.apotheosis.digger_book=接受矿工附魔.
-info.apotheosis.fishing_rod_book=接受渔夫附魔.
-info.apotheosis.bow_book=接受弓附魔.
+info.apotheosis.null_book=只接受其他附魔.
+info.apotheosis.armor_head_book=只接受头盔类型的附魔.
+info.apotheosis.armor_chest_book=只接受胸甲类型的附魔.
+info.apotheosis.armor_legs_book=只接受护腿类型的附魔.
+info.apotheosis.armor_feet_book=只接受鞋子类型的附魔
+info.apotheosis.weapon_book=只接受武器类型的附魔.
+info.apotheosis.digger_book=只接受挖掘类型的附魔.
+info.apotheosis.fishing_rod_book=只接受垂钓类型的附魔.
+info.apotheosis.bow_book=只接受弓类型的附魔.
 info.apotheosis.scrap_tome=可以将一些附魔转移到分解宝典上，之后使用方法与附魔书相同.
 info.apotheosis.scrap_tome2=使用后将会被消耗.
 
@@ -98,7 +159,7 @@ enchantment.apotheosis.shield_bash=盾击
 enchantment.apotheosis.shield_bash.desc=增加盾牌造成的伤害.
 
 enchantment.apotheosis.reflective=反甲
-enchantment.apotheosis.reflective.desc=格挡有可能会对攻击者造成伤害.
+enchantment.apotheosis.reflective.desc=格挡时受到攻击有可能会对攻击者造成伤害.
 
 enchantment.apotheosis.berserk=狂战士
 enchantment.apotheosis.berserk.desc=受到伤害时会变得愤怒.
@@ -107,16 +168,16 @@ enchantment.apotheosis.knowledge=阅历
 enchantment.apotheosis.knowledge.desc=敌人的掉落物将会被转化为经验.
 
 enchantment.apotheosis.splitting=拆分
-enchantment.apotheosis.splitting.desc=允许当铁砧砸中有多种附魔的附魔书时能将它们依次拆分.
+enchantment.apotheosis.splitting.desc=当拥有该附魔的铁砧砸中有多种附魔的附魔书时附魔书将会被拆分.
 
 enchantment.apotheosis.natures_blessing=大自然的祝福
-enchantment.apotheosis.natures_blessing.desc=锄头右键可以对作物施加骨粉.
+enchantment.apotheosis.natures_blessing.desc=手持锄头右键可以直接对作物施加骨粉.
 
 enchantment.apotheosis.rebounding=反弹
-enchantment.apotheosis.rebounding.desc=近战攻击者有可能会被弹飞.
+enchantment.apotheosis.rebounding.desc=被近战攻击时攻击者有可能会被弹飞.
 
 enchantment.apotheosis.magic_protection=神秘的厌恶
-enchantment.apotheosis.magic_protection.desc=减少对玩家造成的魔法伤害.
+enchantment.apotheosis.magic_protection.desc=减少受到的魔法伤害.
 
 tile.apotheosis.prismatic_altar.name=海之祭坛
 
@@ -243,7 +304,7 @@ enchantment.level.127=CXXVII
 
 //Potion Module
 enchantment.apotheosis.true_infinity=无限箭袋
-enchantment.apotheosis.true_infinity.desc=使所有的箭无限(附魔在弓上,无需箭).
+enchantment.apotheosis.true_infinity.desc=射击将不再需要消耗箭(附魔在弓上,无需箭).
 
 potion.effect.resistance=抗性药水
 splash_potion.effect.resistance=喷溅型抗性药水
