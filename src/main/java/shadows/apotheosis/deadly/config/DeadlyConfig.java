@@ -44,6 +44,8 @@ public class DeadlyConfig {
 	public static float bossLevelUpChance = .4F;
 	public static float bossEnchantChance = .25F;
 	public static float bossPotionChance = .45F;
+	public static int surfaceBossChance = 600;
+	public static int randomAffixItem = 250;
 
 	//Generation Chances
 	public static float brutalSpawnerChance = .12F;
@@ -93,6 +95,8 @@ public class DeadlyConfig {
 		String[] blacklistPotions = c.getStringList("Blacklisted Potions", DeadlyConstants.BOSSES, new String[] { "forbidden_arcanus:spectral_vision" }, "A list of potions (registry names) that bosses cannot generate with.");
 		for (String s : blacklistPotions)
 			BLACKLISTED_POTIONS.add(new ResourceLocation(s));
+		surfaceBossChance = c.getInt("Surface Boss Chance", DeadlyConstants.BOSSES, surfaceBossChance, 1, 500000, "The 1/n chance that a naturally spawned mob that can see the sky is transformed into a boss.");
+		randomAffixItem = c.getInt("Random Affix Chance", DeadlyConstants.AFFIXES, randomAffixItem, 1, 500000, "The 1/n chance that a naturally spawned mob will be granted an affix item.");
 
 		brutalSpawnerChance = c.getFloat("Brutal Spawner Chance", DeadlyConstants.FREQUENCY, brutalSpawnerChance, 0, 1, "The chance (per chunk) for a brutal spawner to try spawning.");
 		swarmSpawnerChance = c.getFloat("Swarm Spawner Chance", DeadlyConstants.FREQUENCY, swarmSpawnerChance, 0, 1, "The chance (per chunk) for a swarm spawner to try spawning.");
