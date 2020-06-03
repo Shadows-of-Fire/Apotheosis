@@ -251,12 +251,12 @@ public class AffixEvents {
 			int i = EnchantmentHelper.getEfficiencyModifier(player);
 			ItemStack itemstack = player.getHeldItemMainhand();
 			if (i > 0 && !itemstack.isEmpty()) {
-				f += (float) (i * i + 1);
+				f += i * i + 1;
 			}
 		}
 
 		if (EffectUtils.hasMiningSpeedup(player)) {
-			f *= 1.0F + (float) (EffectUtils.getMiningSpeedup(player) + 1) * 0.2F;
+			f *= 1.0F + (EffectUtils.getMiningSpeedup(player) + 1) * 0.2F;
 		}
 
 		if (player.isPotionActive(Effects.MINING_FATIGUE)) {

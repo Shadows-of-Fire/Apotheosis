@@ -1,4 +1,4 @@
-package shadows.apotheosis.ench;
+package shadows.apotheosis.ench.table;
 
 import java.util.List;
 
@@ -19,14 +19,15 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.objects.BlockHellBookshelf;
 
-public class ContainerEnchantmentExt extends EnchantmentContainer {
+public class EnchantmentContainerExt extends EnchantmentContainer {
 
 	protected World world;
 	protected BlockPos position;
 
-	public ContainerEnchantmentExt(int id, PlayerInventory inv, IWorldPosCallable wPos) {
+	public EnchantmentContainerExt(int id, PlayerInventory inv, IWorldPosCallable wPos) {
 		super(id, inv, wPos);
 		world = wPos.apply((w, p) -> w).get();
 		position = wPos.apply((w, p) -> p).get();

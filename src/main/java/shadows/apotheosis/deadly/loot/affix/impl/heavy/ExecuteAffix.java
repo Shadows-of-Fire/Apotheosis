@@ -33,7 +33,7 @@ public class ExecuteAffix extends RangedAffix {
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
 		if (target instanceof LivingEntity) {
-			LivingEntity living = ((LivingEntity) target);
+			LivingEntity living = (LivingEntity) target;
 			if (living.getHealth() / living.getMaxHealth() < level) {
 				living.attackEntityFrom(EXECUTION, Float.MAX_VALUE);
 			}

@@ -102,6 +102,7 @@ import shadows.apotheosis.ench.objects.ItemHellBookshelf;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
 import shadows.apotheosis.ench.objects.ItemShearsExt;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.table.EnchantmentContainerExt;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.recipe.NBTIngredient;
@@ -464,7 +465,7 @@ public class EnchModule {
 	public void enchContainer(PlayerContainerEvent.Open e) {
 		if (!e.getEntity().world.isRemote && e.getContainer().getClass() == EnchantmentContainer.class) {
 			EnchantmentContainer old = (EnchantmentContainer) e.getContainer();
-			ContainerEnchantmentExt newC = new ContainerEnchantmentExt(old.windowId, e.getPlayer().inventory, old.field_217006_g);
+			EnchantmentContainerExt newC = new EnchantmentContainerExt(old.windowId, e.getPlayer().inventory, old.field_217006_g);
 			newC.addListener((ServerPlayerEntity) e.getEntity());
 			e.getPlayer().openContainer = newC;
 		}

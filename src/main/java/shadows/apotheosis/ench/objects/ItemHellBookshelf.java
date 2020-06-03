@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
-import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 
 public class ItemHellBookshelf extends BlockItem {
@@ -21,11 +20,6 @@ public class ItemHellBookshelf extends BlockItem {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 		return !stack.isEnchanted() && stack.getCount() == 1 && enchantment == ApotheosisObjects.HELL_INFUSION;
-	}
-
-	@Override
-	public String getCreatorModId(ItemStack itemStack) {
-		return Apotheosis.MODID;
 	}
 
 	@Override
