@@ -55,14 +55,17 @@ repositories {
 	maven {
 		url 'https://github.com/TehNut/temporary-maven-thing/tree/master/maven/'
 	}
+	
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.79'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.2.5'
 	compile fg.deobf('mezz.jei:jei-1.15.2:+')
 	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.8-B72_1.15.2')
 	compile fileTree(dir: 'libs', include: '*.jar')
 	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.15.2-+')
+	compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168")
 }
 
 jar {
