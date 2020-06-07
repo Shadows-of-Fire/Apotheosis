@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.spawn.SpawnerModifiers;
-import shadows.apotheosis.spawn.TileSpawnerExt;
 import shadows.apotheosis.spawn.modifiers.EggModifier;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 import shadows.placebo.util.PlaceboUtil;
 
 public class SpawnerWrapper {

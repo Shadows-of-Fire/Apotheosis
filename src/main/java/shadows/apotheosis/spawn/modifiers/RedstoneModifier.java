@@ -2,7 +2,7 @@ package shadows.apotheosis.spawn.modifiers;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 import shadows.placebo.recipe.VanillaPacketDispatcher;
 
 public class RedstoneModifier extends SpawnerModifier {

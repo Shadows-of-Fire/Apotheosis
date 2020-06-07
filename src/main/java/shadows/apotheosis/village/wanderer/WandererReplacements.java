@@ -1,4 +1,4 @@
-package shadows.apotheosis.village;
+package shadows.apotheosis.village.wanderer;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.village.VillageModule;
 
 /**
  * The wandering merchant sucks.  Trades are totally underwhelming and are borderline garbage 99% of the time.

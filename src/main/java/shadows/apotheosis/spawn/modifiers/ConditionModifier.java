@@ -3,7 +3,7 @@ package shadows.apotheosis.spawn.modifiers;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 
 public class ConditionModifier extends SpawnerModifier {
 

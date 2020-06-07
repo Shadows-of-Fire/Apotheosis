@@ -164,7 +164,7 @@
 
     "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "地狱书架",
-    "info.apotheosis.hellshelf": "为附魔台提供 %s 的附魔能力.",
+    "info.apotheosis.ench_power": "为附魔台提供 %s 的附魔能力.",
     "info.apotheosis.cobweb": "可以用来去除所有附魔属性.",
     "info.apotheosis.masterwork": "极品",
     "info.apotheosis.twisted": "扭曲",

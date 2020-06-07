@@ -3,11 +3,9 @@ package shadows.apotheosis.ench;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,22 +26,17 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.EnchantmentContainer;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.HoeItem;
-import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTier;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
-import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -56,23 +49,21 @@ import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
@@ -102,10 +93,13 @@ import shadows.apotheosis.ench.objects.ItemHellBookshelf;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
 import shadows.apotheosis.ench.objects.ItemShearsExt;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
+import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.recipe.NBTIngredient;
+import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
 
 /**
@@ -130,35 +124,12 @@ public class EnchModule {
 	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
 	public static final EnchantmentType ANVIL = EnchantmentType.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
 	static Configuration enchInfoConfig;
-	public static int absMax = 170;
-
-	public static boolean allowWeb = true;
-	public static float maxNormalPower = 20;
-	public static float maxPower = 75;
-
-	public static boolean itemMerging = false;
 
 	@SubscribeEvent
 	public void init(ApotheosisSetup e) {
-		//config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
-		setEnch(ItemTier.GOLD, 40);
-		setEnch(ArmorMaterial.GOLD, 40);
-		/* TODO: Materials and tiers are no longer centralized and no longer have names.  Explore new options.
-		for (ArmorMaterial a : ArmorMaterial.values())
-			setEnch(a, config.getInt(a.name(), "Enchantability - Armor", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this armor material."));
-		for (ItemTier a : ItemTier.values())
-			setEnch(a, config.getInt(a.name(), "Enchantability - Tools", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this tool material."));
-		*/
-		//if (config.hasChanged()) config.save();
-
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
-		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
-		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
-		maxPower = config.getFloat("Max Power", "general", maxPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive.");
-		itemMerging = config.getBoolean("Item Merging", "general", false, "If any two enchanted items can be combined in an Anvil.");
 		if (config.hasChanged()) config.save();
 
-		recalcAbsMax();
 		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
@@ -204,9 +175,21 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
+	public void client(ApotheosisClientSetup e) {
+		MinecraftForge.EVENT_BUS.register(new EnchModuleClient());
+		EnchModuleClient.init();
+	}
+
+	@SubscribeEvent
 	public void tiles(Register<TileEntityType<?>> e) {
-		e.getRegistry().register(new TileEntityType<TileEntity>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
+		e.getRegistry().register(new TileEntityType<>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
 		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
+		e.getRegistry().register(new TileEntityType<>(EnchantingTableTileEntityExt::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
+	}
+
+	@SubscribeEvent
+	public void containers(Register<ContainerType<?>> e) {
+		e.getRegistry().register(new ContainerType<>(EnchantmentContainerExt::new).setRegistryName("enchanting"));
 	}
 
 	@SubscribeEvent
@@ -219,6 +202,7 @@ public class EnchModule {
 				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
 				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"));
 		//Formatter::on
+		PlaceboUtil.registerOverrideBlock(new EnchantingTableBlockExt().setRegistryName("minecraft:enchanting_table"), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
@@ -281,7 +265,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void anvilEvent(AnvilUpdateEvent e) {
 		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty()) {
-			if (allowWeb && e.getRight().getItem() == Items.COBWEB) {
+			if (e.getRight().getItem() == Items.COBWEB) {
 				ItemStack stack = e.getLeft().copy();
 				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
 				e.setCost(1);
@@ -297,76 +281,25 @@ public class EnchModule {
 			}
 		}
 		if ((e.getLeft().getItem() == Items.CHIPPED_ANVIL || e.getLeft().getItem() == Items.DAMAGED_ANVIL) && e.getRight().getItem().isIn(Tags.Items.STORAGE_BLOCKS_IRON)) {
-			int dmg = e.getLeft().getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
 			if (e.getLeft().getCount() != 1) return;
+			int dmg = e.getLeft().getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
 			ItemStack out = new ItemStack(dmg == 1 ? Items.ANVIL : Items.CHIPPED_ANVIL);
 			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(e.getLeft()), out);
 			out.setCount(1);
 			e.setOutput(out);
-			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) * 2 + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 3);
+			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 2);
 			e.setMaterialCost(1);
 			return;
 		}
 		if (ItemTypedBook.updateAnvil(e)) return;
 		if (ItemScrapTome.updateAnvil(e)) return;
-		if (itemMerging && mergeAll(e)) return;
-	}
-
-	private boolean mergeAll(AnvilUpdateEvent ev) {
-		ItemStack right = ev.getRight();
-		ItemStack left = ev.getLeft();
-		if (!right.isEnchanted() || !left.getItem().isEnchantable(left)) return false;
-		Map<Enchantment, Integer> rightEnch = EnchantmentHelper.getEnchantments(right);
-		Map<Enchantment, Integer> leftEnch = EnchantmentHelper.getEnchantments(left);
-		int cost = 0;
-
-		for (Enchantment ench : rightEnch.keySet()) {
-			if (ench == null) continue;
-
-			int level = rightEnch.get(ench);
-			int curLevel = leftEnch.containsKey(ench) ? leftEnch.get(ench) : 0;
-			if (level > 0 && level == curLevel) level = Math.min(EnchModule.getEnchInfo(ench).getMaxLevel(), level + 1);
-			if (curLevel > level) level = curLevel;
-
-			if (ench.canApply(left)) {
-				boolean isCompat = true;
-				for (Enchantment ench2 : leftEnch.keySet()) {
-					if (ench != ench2 && !ench.isCompatibleWith(ench2)) isCompat = false;
-				}
-				if (!isCompat) return false;
-				leftEnch.put(ench, level);
-				int addition = 0;
-				switch (ench.getRarity()) {
-				case COMMON:
-					addition += 2 * level;
-					break;
-				case UNCOMMON:
-					addition += 4 * level;
-					break;
-				case RARE:
-					addition += 6 * level;
-					break;
-				case VERY_RARE:
-					addition += 12 * level;
-				}
-				cost += Math.max(1, addition / 2);
-			}
-		}
-		if (cost > 0) {
-			cost += left.getRepairCost();
-			ItemStack out = left.copy();
-			out.setRepairCost(left.getRepairCost() * 2 + 1);
-			EnchantmentHelper.setEnchantments(leftEnch, out);
-			ev.setMaterialCost(1);
-			ev.setCost(cost);
-			ev.setOutput(out);
-			return true;
-		}
-		return false;
 	}
 
 	Method dropLoot;
 
+	/**
+	 * Event handler for the Scavenger and Knowledge of the Ages enchantments.
+	 */
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) throws Exception {
 		Entity attacker = e.getSource().getTrueSource();
@@ -399,14 +332,17 @@ public class EnchModule {
 
 	final EquipmentSlotType[] slots = EquipmentSlotType.values();
 
+	/**
+	 * Event handler for the Life Mending enchantment
+	 */
 	@SubscribeEvent
 	public void lifeMend(LivingUpdateEvent e) {
-		if (e.getEntity().world.isRemote) return;
+		if (e.getEntity().world.isRemote || e.getEntity().ticksExisted % 20 != 0) return;
 		for (EquipmentSlotType slot : slots) {
 			ItemStack stack = e.getEntityLiving().getItemStackFromSlot(slot);
 			if (!stack.isEmpty() && stack.isDamaged()) {
 				int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.LIFE_MENDING, stack);
-				if (level > 0 && e.getEntityLiving().world.rand.nextInt(10) == 0) {
+				if (level > 0) {
 					int i = Math.min(level, stack.getDamage());
 					e.getEntityLiving().attackEntityFrom(CORRUPTED, i * 0.7F);
 					stack.setDamage(stack.getDamage() - i);
@@ -416,6 +352,9 @@ public class EnchModule {
 		}
 	}
 
+	/**
+	 * Event handler for the Stable Footing and Miner's Fervor enchants.
+	 */
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		PlayerEntity p = e.getPlayer();
@@ -434,6 +373,9 @@ public class EnchModule {
 		}
 	}
 
+	/**
+	 * Event handler for the Nature's Blessing enchantment.
+	 */
 	@SubscribeEvent
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
 		ItemStack s = e.getItemStack();
@@ -445,6 +387,9 @@ public class EnchModule {
 		}
 	}
 
+	/**
+	 * Event handler for Anvil Unbreaking.
+	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void applyUnbreaking(AnvilRepairEvent e) {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
@@ -454,23 +399,9 @@ public class EnchModule {
 		}
 	}
 
-	@SubscribeEvent
-	public void enchLevel(EnchantmentLevelSetEvent e) {
-		int power = e.getPower();
-		//Power * 2, Power * 1.5, Power * 1
-		e.setLevel(Math.max(e.getEnchantRow() + 1, MathHelper.floor(power * (1 + e.getEnchantRow() * 0.5F))));
-	}
-
-	@SubscribeEvent
-	public void enchContainer(PlayerContainerEvent.Open e) {
-		if (!e.getEntity().world.isRemote && e.getContainer().getClass() == EnchantmentContainer.class) {
-			EnchantmentContainer old = (EnchantmentContainer) e.getContainer();
-			EnchantmentContainerExt newC = new EnchantmentContainerExt(old.windowId, e.getPlayer().inventory, old.field_217006_g);
-			newC.addListener((ServerPlayerEntity) e.getEntity());
-			e.getPlayer().openContainer = newC;
-		}
-	}
-
+	/**
+	 * Handles the Berserker's Fury and Occult Aversion enchantments.
+	 */
 	@SubscribeEvent
 	public void livingHurt(LivingHurtEvent e) {
 		LivingEntity user = e.getEntityLiving();
@@ -487,24 +418,10 @@ public class EnchModule {
 			LivingEntity src = (LivingEntity) e.getSource().getTrueSource();
 			int lvl = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.MAGIC_PROTECTION, src);
 			if (lvl > 0) {
+				//TODO: FIXME should only be reducing damage by the value of OA, this will use all active protection enchantments.
 				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getEnchantmentModifierDamage(src.getArmorInventoryList(), e.getSource())));
 			}
 		}
-	}
-
-	public static void setEnch(ItemTier mat, int ench) {
-		ReflectionHelper.setPrivateValue(ItemTier.class, mat, ench, "enchantability", "field_78008_j");
-	}
-
-	public static void setEnch(ArmorMaterial mat, int ench) {
-		ReflectionHelper.setPrivateValue(ArmorMaterial.class, mat, ench, "enchantability", "field_78055_h");
-	}
-
-	public static Set<IItemTier> getAllTiers() {
-		Set<IItemTier> tiers = new HashSet<>();
-		for (Item i : ForgeRegistries.ITEMS)
-			if (i instanceof TieredItem) tiers.add(((TieredItem) i).getTier());
-		return tiers;
 	}
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
@@ -542,9 +459,9 @@ public class EnchModule {
 		int level = ench.getMaxLevel();
 		if (level == 1) return 1;
 		int maxPower = ench.getMaxEnchantability(level);
-		if (maxPower >= absMax) return level;
+		if (maxPower >= 85) return level;
 		int lastMaxPower = maxPower; //Need this to check that we don't get locked up on single-level enchantments.
-		while (maxPower < absMax) {
+		while (maxPower < 85) {
 			maxPower = ench.getMaxEnchantability(++level);
 			if (lastMaxPower == maxPower) {
 				level--;
@@ -553,18 +470,6 @@ public class EnchModule {
 			lastMaxPower = maxPower;
 		}
 		return level;
-	}
-
-	static void recalcAbsMax() {
-		int max = MathHelper.ceil(maxPower * 2);
-		int maxEnch = 0;
-		for (IItemTier m : getAllTiers()) {
-			maxEnch = Math.max(maxEnch, m.getEnchantability());
-		}
-		for (ArmorMaterial m : ArmorMaterial.values()) {
-			maxEnch = Math.max(maxEnch, m.getEnchantability());
-		}
-		absMax = max + maxEnch / 2 + 3;
 	}
 
 }

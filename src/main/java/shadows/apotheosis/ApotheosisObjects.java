@@ -32,13 +32,15 @@ import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
 import shadows.apotheosis.ench.objects.BlockHellBookshelf;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
+import shadows.apotheosis.ench.table.EnchantmentContainerExt;
 import shadows.apotheosis.garden.EnderLeashItem;
 import shadows.apotheosis.potion.EnchantmentTrueInfinity;
 import shadows.apotheosis.potion.InvisCharmItem;
 import shadows.apotheosis.potion.ItemLuckyFoot;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.PotionSundering;
-import shadows.apotheosis.spawn.EnchantmentCapturing;
+import shadows.apotheosis.spawn.enchantment.EnchantmentCapturing;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
@@ -120,5 +122,8 @@ public class ApotheosisObjects {
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
 	public static final InvisCharmItem INVISIBILITY_CHARM = null;
 	public static final Feature<NoFeatureConfig> DEADLY_WORLD_GEN = null;
+	@ObjectHolder("minecraft:enchanting_table")
+	public static final TileEntityType<EnchantingTableTileEntityExt> ENCHANTING_TABLE = null;
+	public static final ContainerType<EnchantmentContainerExt> ENCHANTING = null;
 
 }

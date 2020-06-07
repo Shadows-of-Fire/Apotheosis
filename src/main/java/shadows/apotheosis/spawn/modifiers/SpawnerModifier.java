@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import shadows.apotheosis.spawn.SpawnerModifiers;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 import shadows.placebo.config.Configuration;
 
 /**

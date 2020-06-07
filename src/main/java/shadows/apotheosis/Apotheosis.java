@@ -17,6 +17,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -95,6 +96,7 @@ public class Apotheosis {
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
+		bus.addListener(this::initC);
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 	}
 
@@ -104,6 +106,11 @@ public class Apotheosis {
 		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
 		DeferredWorkQueue.runLater(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
+	}
+
+	@SubscribeEvent
+	public void initC(FMLClientSetupEvent e) {
+		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisClientSetup());
 	}
 
 	@SubscribeEvent
@@ -123,6 +130,11 @@ public class Apotheosis {
 
 	public static class ApotheosisSetup extends Event {
 		public ApotheosisSetup() {
+		}
+	}
+
+	public static class ApotheosisClientSetup extends Event {
+		public ApotheosisClientSetup() {
 		}
 	}
 

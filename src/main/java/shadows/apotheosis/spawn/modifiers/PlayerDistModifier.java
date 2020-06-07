@@ -3,7 +3,7 @@ package shadows.apotheosis.spawn.modifiers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 
 public class PlayerDistModifier extends SpawnerModifier {
 

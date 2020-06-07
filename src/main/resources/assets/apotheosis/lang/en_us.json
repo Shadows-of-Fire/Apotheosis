@@ -164,13 +164,16 @@
 
     "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "Hellshelf",
-    "info.apotheosis.hellshelf": "Provides %s enchanting power.",
+    "info.apotheosis.ench_power": "Provides %s enchanting power.",
     "info.apotheosis.cobweb": "Can be used to remove enchantments.",
     "info.apotheosis.masterwork": "Masterwork",
     "info.apotheosis.twisted": "Twisted",
     "info.apotheosis.corrupted": "Corrupted",
     "info.apotheosis.enchanting": "Enchanting tables can now exceed 30 levels.  Some enchantments may only show up past level 30.",
     "info.apotheosis.altar": "The Altar of the Sea is a focus for conversion of enchanted items.\\n\\nTo begin, place one enchanted item on each pillar. Once all items are provided, the altar will drain experience from nearby players.\\nIf experience cannot be drained, white particles will spawn.\\n\\nOnce complete, all items are consumed, and an enchanted book is generated.  Treasure enchantments can be obtained.",
+	"gui.apotheosis.enchant.power": "Power",
+	"gui.apotheosis.enchant.rarity": "Rarity",
+	"gui.apotheosis.enchant.count": "Count",
 
     "enchantment.apotheosis.hell_infusion": "Hell Infusion",
     "enchantment.apotheosis.hell_infusion.desc": "Deals extra magic damage in the Nether.",

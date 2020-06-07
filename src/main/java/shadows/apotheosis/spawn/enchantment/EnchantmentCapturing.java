@@ -1,4 +1,4 @@
-package shadows.apotheosis.spawn;
+package shadows.apotheosis.spawn.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -7,7 +7,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 
 public class EnchantmentCapturing extends Enchantment {
 
-	protected EnchantmentCapturing() {
+	public EnchantmentCapturing() {
 		super(Rarity.VERY_RARE, EnchantmentType.WEAPON, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
 	}
 

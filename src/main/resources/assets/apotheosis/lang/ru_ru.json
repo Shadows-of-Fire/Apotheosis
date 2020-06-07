@@ -97,7 +97,7 @@
 
     "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "Адская полка",
-    "info.apotheosis.hellshelf": "Обеспечивает %s силу зачарования.",
+    "info.apotheosis.ench_power": "Обеспечивает %s силу зачарования.",
     "info.apotheosis.cobweb": "Используется для снятия чар.",
     "info.apotheosis.masterwork": "Шедевр",
     "info.apotheosis.twisted": "Скрученный",

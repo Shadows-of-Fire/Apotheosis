@@ -19,9 +19,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.SpawnerModifiers;
-import shadows.apotheosis.spawn.TileSpawnerExt;
-import shadows.apotheosis.spawn.TileSpawnerExt.SpawnerLogicExt;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt.SpawnerLogicExt;
 
 public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instance> {
 	private static final ResourceLocation ID = new ResourceLocation(Apotheosis.MODID, "spawner_modifier");

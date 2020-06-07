@@ -1,4 +1,4 @@
-package shadows.apotheosis.village;
+package shadows.apotheosis.village.wanderer;
 
 import java.util.Optional;
 import java.util.Random;

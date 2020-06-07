@@ -1,4 +1,4 @@
-package shadows.apotheosis.spawn;
+package shadows.apotheosis.spawn.spawner;
 
 import java.util.Optional;
 

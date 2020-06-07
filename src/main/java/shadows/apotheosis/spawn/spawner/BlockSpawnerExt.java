@@ -1,4 +1,4 @@
-package shadows.apotheosis.spawn;
+package shadows.apotheosis.spawn.spawner;
 
 import java.util.List;
 
@@ -34,6 +34,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.spawn.SpawnerModifiers;
+import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 
 public class BlockSpawnerExt extends SpawnerBlock {
