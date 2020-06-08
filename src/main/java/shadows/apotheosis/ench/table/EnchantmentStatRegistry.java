@@ -16,7 +16,7 @@ public class EnchantmentStatRegistry {
 	private static final Map<IRegistryDelegate<Block>, Stats> STATS = new HashMap<>();
 
 	public static void init() {
-		register(Blocks.JACK_O_LANTERN, 0, 1.5F, 0);
+		register(Blocks.JACK_O_LANTERN, 0, 0.25F, 0);
 	}
 
 	private static void register(Block block, float eterna, float quanta, float arcana) {

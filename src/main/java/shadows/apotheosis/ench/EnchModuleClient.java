@@ -24,6 +24,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.altar.RenderPrismaticAltar;
 import shadows.apotheosis.ench.table.EnchantmentScreenExt;
+import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
 
 @SuppressWarnings("deprecation")
 public class EnchModuleClient {
@@ -41,9 +42,21 @@ public class EnchModuleClient {
 			BlockItemUseContext ctx = new BlockItemUseContext(world, Minecraft.getInstance().player, Hand.MAIN_HAND, e.getItemStack(), res) {
 			};
 			BlockState state = block.getStateForPlacement(ctx);
-			float power = block.getEnchantPowerBonus(state, world, BlockPos.ZERO);
-			if (power > 0) {
-				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.ench_power", String.valueOf(power).substring(0, 3)).applyTextStyle(TextFormatting.GRAY));
+			if (state == null) return;
+			float eterna = EnchantmentStatRegistry.getEterna(state, world, BlockPos.ZERO);
+			float quanta = EnchantmentStatRegistry.getQuanta(state, world, BlockPos.ZERO);
+			float arcana = EnchantmentStatRegistry.getArcana(state, world, BlockPos.ZERO);
+			if (eterna > 0 || quanta > 0 || arcana > 0) {
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.ench_stats").applyTextStyle(TextFormatting.GOLD));
+			}
+			if (eterna > 0) {
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.eterna", eterna).applyTextStyle(TextFormatting.GREEN));
+			}
+			if (quanta > 0) {
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.quanta", quanta).applyTextStyle(TextFormatting.RED));
+			}
+			if (arcana > 0) {
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.arcana", arcana).applyTextStyle(TextFormatting.DARK_PURPLE));
 			}
 		}
 	}

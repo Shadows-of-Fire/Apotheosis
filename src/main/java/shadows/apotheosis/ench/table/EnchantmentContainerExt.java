@@ -172,7 +172,6 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 			if (inventoryIn == this.tableInventory) {
 				ItemStack itemstack = inventoryIn.getStackInSlot(0);
 				if (itemstack.getCount() == 1 && itemstack.isEnchantable()) {
-					this.quanta.set(2.25F);
 					float power = getEnchPower();
 					this.rand.setSeed(this.xpSeed.get());
 
@@ -225,7 +224,8 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 		return wPos.apply((world, pos) -> {
 
 			Int2FloatMap powers = new Int2FloatOpenHashMap();
-
+			this.arcana.set(0);
+			this.quanta.set(2.25F);
 			for (int j = -1; j <= 1; ++j) {
 				for (int k = -1; k <= 1; ++k) {
 					if ((j != 0 || k != 0) && world.isAirBlock(pos.add(k, 0, j)) && world.isAirBlock(pos.add(k, 1, j))) {
@@ -253,6 +253,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 
 	public void gatherStats(Int2FloatMap powers, World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
+		if (state.getBlock().isAir(state, world, pos)) return;
 		int max = EnchantmentStatRegistry.getMaxEterna(state, world, pos);
 		float power = EnchantmentStatRegistry.getEterna(state, world, pos);
 		powers.put(max, powers.getOrDefault(max, 0) + power);

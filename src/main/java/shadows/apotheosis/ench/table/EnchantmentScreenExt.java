@@ -46,31 +46,35 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
 		this.font.drawString(this.title.getFormattedText(), 12.0F, 5.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 7.0F, this.ySize - 96 + 4F, 4210752);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x737300);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.quanta"), 19, 84, 0x005A73);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.arcana"), 19, 94, 0x891F00);
+		this.font.drawString(I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);
+		this.font.drawString(I18n.format("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454);
+		this.font.drawString(I18n.format("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
+
 		float current = this.container.eterna.get();
 		if (current != eterna) {
-			if (current > eterna) eterna = Math.min(eterna + current * 0.075F, current);
+			if (current > eterna) eterna += Math.min(current - eterna, Math.max(0.16F, (current - eterna) * 0.1F));
 			else eterna = Math.max(eterna - lastEterna * 0.075F, current);
-		} else if (current > 0) lastEterna = current;
+		}
+		if (current > 0) lastEterna = current;
 
 		current = this.container.quanta.get();
 		if (current != quanta) {
-			if (current > quanta) quanta = Math.min(quanta + current * 0.075F, current);
+			if (current > quanta) quanta += Math.min(current - quanta, Math.max(0.04F, (current - quanta) * 0.1F));
 			else quanta = Math.max(quanta - lastQuanta * 0.075F, current);
-		} else if (current > 0) lastQuanta = current;
+		}
+		if (current > 0) lastQuanta = current;
 
 		current = this.container.arcana.get();
 		if (current != arcana) {
-			if (current > arcana) arcana = Math.min(arcana + current * 0.075F, current);
+			if (current > arcana) arcana += Math.min(current - arcana, Math.max(0.04F, (current - arcana) * 0.1F));
 			else arcana = Math.max(arcana - lastArcana * 0.075F, current);
-		} else if (current > 0) lastArcana = current;
+		}
+		if (current > 0) lastArcana = current;
 	}
 
 	@Override
