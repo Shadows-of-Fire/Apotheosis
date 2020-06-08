@@ -9,14 +9,14 @@ import net.minecraftforge.common.extensions.IForgeBlock;
  * This is the main interface for all blocks that provide stats to an enchanting table.
  * The stats allocated to an enchanting table are as follows:
  * Enchanting Power: This is the primary stat, which controls the level at which the table enchants at.
- * Rarity Offset: This stat controls the weights of certain rarities, shifting towards more common (negative) or more rare (positive).
+ * Flux: This stat controls how volatile the real level is.  With the base flux, the table ranges from -15% to +30% of the original.
  * Enchantment Count: This controls the number of enchantments that can be placed on an item.
  *
  */
 public interface IEnchantingBlock extends IForgeBlock {
 
 	/**
-	 * Determines the amount of enchanting power this block can provide to an enchanting table.
+	 * Determines the amount of enchanting power (Eterna) this block can provide to an enchanting table.
 	 * @param world The World
 	 * @param pos Block position in world
 	 * @return The amount of enchanting power this block produces.
@@ -25,19 +25,33 @@ public interface IEnchantingBlock extends IForgeBlock {
 	float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos);
 
 	/**
-	 * Determines the amount of rarity offset this block provides to an enchanting table.
+	 * Determines the maximum enchanting power (Eterna) that this block may contribute up to.
 	 * @param world The World
 	 * @param pos Block position in world
-	 * @return The rarity offset this block produces.
+	 * @return The max Eterna this block may contribute towards.  Once past this value, this block has no effect.
 	 */
-	float getRarityOffset(BlockState state, IWorldReader world, BlockPos pos);
+	default int getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
+		return 15;
+	}
 
 	/**
-	 * Determines the amount of rarity offset this block provides to an enchanting table.
+	 * Determines the amount of Quanta this block provides to an enchanting table.
 	 * @param world The World
 	 * @param pos Block position in world
-	 * @return The amount of enchanting power this block produces.
+	 * @return The change in Quanta caused by this block.
 	 */
-	float getEnchantmentCount(BlockState state, IWorldReader world, BlockPos pos);
+	default float getQuantaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+		return 0;
+	}
+
+	/**
+	 * Determines the amount of Arcana this block provides to an enchanting table.
+	 * @param world The World
+	 * @param pos Block position in world
+	 * @return The change in Arcana caused by this block.
+	 */
+	default float getArcanaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+		return 0;
+	}
 
 }

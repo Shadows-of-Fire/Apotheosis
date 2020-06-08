@@ -24,7 +24,7 @@ public class ItemHellBookshelf extends BlockItem {
 
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
-		return stack.getCount() == 1;
+		return true;
 	}
 
 	@Override

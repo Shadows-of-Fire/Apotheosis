@@ -1,6 +1,7 @@
 package shadows.apotheosis.util;
 
 import net.minecraft.util.IntArray;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * A thing that allows floats to be synced over the container system.
@@ -11,6 +12,8 @@ public class FloatReferenceHolder {
 	boolean updating = false;
 
 	float internal = 0;
+	final float min, max;
+
 	IntArray array = new IntArray(3) {
 		@Override
 		public void set(int p_221477_1_, int p_221477_2_) {
@@ -18,6 +21,12 @@ public class FloatReferenceHolder {
 			if (!updating) FloatReferenceHolder.this.updateFromArray();
 		};
 	};
+
+	public FloatReferenceHolder(float def, float min, float max) {
+		this.set(def);
+		this.min = min;
+		this.max = max;
+	}
 
 	/**
 	 * Returns the internal array object so the container may register it for tracking.
@@ -31,6 +40,7 @@ public class FloatReferenceHolder {
 	}
 
 	public void set(float f) {
+		f = MathHelper.clamp(f, min, max);
 		this.internal = f;
 		updating = true;
 		this.array.set(0, (int) f);

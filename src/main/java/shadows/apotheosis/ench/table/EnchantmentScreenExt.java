@@ -34,6 +34,7 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 	private static final ResourceLocation ENCHANTMENT_TABLE_BOOK_TEXTURE = new ResourceLocation("textures/entity/enchanting_table_book.png");
 	private static final BookModel MODEL_BOOK = new BookModel();
 	protected final EnchantmentContainerExt container;
+	protected float eterna = 0, lastEterna = 0, quanta = 0, lastQuanta = 0, arcana = 0, lastArcana = 0;
 
 	public EnchantmentScreenExt(EnchantmentContainer container, PlayerInventory inv, ITextComponent title) {
 		super(container, inv, title);
@@ -45,9 +46,31 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
 		this.font.drawString(this.title.getFormattedText(), 12.0F, 5.0F, 4210752);
 		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 7.0F, this.ySize - 96 + 4F, 4210752);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.power"), 19, 74, 0x737300);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.rarity"), 19, 84, 0x005A73);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.count"), 19, 94, 0x891F00);
+		this.font.drawString(I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x737300);
+		this.font.drawString(I18n.format("gui.apotheosis.enchant.quanta"), 19, 84, 0x005A73);
+		this.font.drawString(I18n.format("gui.apotheosis.enchant.arcana"), 19, 94, 0x891F00);
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		float current = this.container.eterna.get();
+		if (current != eterna) {
+			if (current > eterna) eterna = Math.min(eterna + current * 0.075F, current);
+			else eterna = Math.max(eterna - lastEterna * 0.075F, current);
+		} else if (current > 0) lastEterna = current;
+
+		current = this.container.quanta.get();
+		if (current != quanta) {
+			if (current > quanta) quanta = Math.min(quanta + current * 0.075F, current);
+			else quanta = Math.max(quanta - lastQuanta * 0.075F, current);
+		} else if (current > 0) lastQuanta = current;
+
+		current = this.container.arcana.get();
+		if (current != arcana) {
+			if (current > arcana) arcana = Math.min(arcana + current * 0.075F, current);
+			else arcana = Math.max(arcana - lastArcana * 0.075F, current);
+		} else if (current > 0) lastArcana = current;
 	}
 
 	@Override
@@ -71,13 +94,13 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 	 * Draws the background layer of this container (behind the items).
 	 */
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		RenderHelper.disableGuiDepthLighting();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
-		this.blit(i, j, 0, 0, this.xSize, this.ySize);
+		int xCenter = (this.width - this.xSize) / 2;
+		int yCenter = (this.height - this.ySize) / 2;
+		this.blit(xCenter, yCenter, 0, 0, this.xSize, this.ySize);
 		RenderSystem.matrixMode(5889);
 		RenderSystem.pushMatrix();
 		RenderSystem.loadIdentity();
@@ -96,15 +119,15 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 		matrixstack.scale(5.0F, 5.0F, 5.0F);
 		matrixstack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
 		matrixstack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(20.0F));
-		float f1 = MathHelper.lerp(p_146976_1_, this.oOpen, this.open);
+		float f1 = MathHelper.lerp(partialTicks, this.oOpen, this.open);
 
 		matrixstack.translate((1.0F - f1) * 0.2F, (1.0F - f1) * 0.1F, (1.0F - f1) * 0.25F);
 		float f2 = -(1.0F - f1) * 90.0F - 90.0F;
 		matrixstack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(f2));
 		matrixstack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180.0F));
 
-		float f3 = MathHelper.lerp(p_146976_1_, this.oFlip, this.flip) + 0.25F;
-		float f4 = MathHelper.lerp(p_146976_1_, this.oFlip, this.flip) + 0.75F;
+		float f3 = MathHelper.lerp(partialTicks, this.oFlip, this.flip) + 0.25F;
+		float f4 = MathHelper.lerp(partialTicks, this.oFlip, this.flip) + 0.75F;
 		f3 = (f3 - MathHelper.fastFloor(f3)) * 1.6F - 0.3F;
 		f4 = (f4 - MathHelper.fastFloor(f4)) * 1.6F - 0.3F;
 		if (f3 < 0.0F) {
@@ -131,8 +154,6 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 		irendertypebuffer$impl.draw();
 		matrixstack.pop();
 
-		j = (this.height - this.ySize) / 2;
-
 		RenderSystem.matrixMode(5889);
 		RenderSystem.viewport(0, 0, this.minecraft.getWindow().getFramebufferWidth(), this.minecraft.getWindow().getFramebufferHeight());
 		RenderSystem.popMatrix();
@@ -140,53 +161,58 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 		RenderHelper.enableGuiDepthLighting();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		EnchantmentNameParts.getInstance().reseedRandomGenerator(this.container.func_217005_f());
-		int l = this.container.getLapisAmount();
+		int lapis = this.container.getLapisAmount();
 
-		for (int i1 = 0; i1 < 3; ++i1) {
-			int j1 = i + 60;
+		for (int slot = 0; slot < 3; ++slot) {
+			int j1 = xCenter + 60;
 			int k1 = j1 + 20;
 			this.setBlitOffset(0);
 			this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
 
-			int l1 = this.container.enchantLevels[i1];
+			int level = this.container.enchantLevels[slot];
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			if (l1 == 0) {
-				this.blit(j1, j + 14 + 19 * i1, 148, 218, 108, 19);
+			if (level == 0) {
+				this.blit(j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
 			} else {
-				String s = "" + l1;
-				int i2 = 86 - this.font.getStringWidth(s);
-				String s1 = EnchantmentNameParts.getInstance().generateNewRandomName(this.font, i2);
+				String s = "" + level;
+				int nameWidth = 86 - this.font.getStringWidth(s);
+				String s1 = EnchantmentNameParts.getInstance().generateNewRandomName(this.font, nameWidth);
 				FontRenderer fontrenderer = this.minecraft.getFontResourceManager().getFontRenderer(Minecraft.standardGalacticFontRenderer);
 				int j2 = 6839882;
-				if ((l < i1 + 1 || this.minecraft.player.experienceLevel < l1) && !this.minecraft.player.abilities.isCreativeMode || this.container.enchantClue[i1] == -1) { // Forge: render buttons as disabled when enchantable but enchantability not met on lower levels
-					this.blit(j1, j + 14 + 19 * i1, 148, 218, 108, 19);
-					this.blit(j1 + 1, j + 15 + 19 * i1, 16 * i1, 238, 16, 16);
-					fontrenderer.drawSplitString(s1, k1, j + 16 + 19 * i1, i2, (j2 & 16711422) >> 1);
+				if ((lapis < slot + 1 || this.minecraft.player.experienceLevel < level) && !this.minecraft.player.abilities.isCreativeMode || this.container.enchantClue[slot] == -1) { // Forge: render buttons as disabled when enchantable but enchantability not met on lower levels
+					this.blit(j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
+					this.blit(j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 238, 16, 16);
+					fontrenderer.drawSplitString(s1, k1, yCenter + 16 + 19 * slot, nameWidth, (j2 & 16711422) >> 1);
 					j2 = 4226832;
 				} else {
-					int k2 = p_146976_2_ - (i + 60);
-					int l2 = p_146976_3_ - (j + 14 + 19 * i1);
+					int k2 = mouseX - (xCenter + 60);
+					int l2 = mouseY - (yCenter + 14 + 19 * slot);
 					if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-						this.blit(j1, j + 14 + 19 * i1, 148, 237, 108, 19);
+						this.blit(j1, yCenter + 14 + 19 * slot, 148, 237, 108, 19);
 						j2 = 16777088;
 					} else {
-						this.blit(j1, j + 14 + 19 * i1, 148, 199, 108, 19);
+						this.blit(j1, yCenter + 14 + 19 * slot, 148, 199, 108, 19);
 					}
 
-					this.blit(j1 + 1, j + 15 + 19 * i1, 16 * i1, 223, 16, 16);
-					fontrenderer.drawSplitString(s1, k1, j + 16 + 19 * i1, i2, j2);
+					this.blit(j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
+					fontrenderer.drawSplitString(s1, k1, yCenter + 16 + 19 * slot, nameWidth, j2);
 					j2 = 8453920;
 				}
 				fontrenderer = this.minecraft.fontRenderer;
-				fontrenderer.drawStringWithShadow(s, k1 + 86 - fontrenderer.getStringWidth(s), j + 16 + 19 * i1 + 7, j2);
+				fontrenderer.drawStringWithShadow(s, k1 + 86 - fontrenderer.getStringWidth(s), yCenter + 16 + 19 * slot + 7, j2);
 			}
 		}
 
 		this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
-		//if (this.container.power.get() > 0) {
-		//	this.blit(i + 59, j + 75, 0, 197, (int) (this.container.power.get() / 35.2 * 110), 5);
-		//}
-
+		if (eterna > 0) {
+			this.blit(xCenter + 59, yCenter + 75, 0, 197, (int) (eterna / 40 * 110), 5);
+		}
+		if (quanta > 0) {
+			this.blit(xCenter + 59, yCenter + 85, 0, 202, (int) (quanta / 10 * 110), 5);
+		}
+		if (arcana > 0) {
+			this.blit(xCenter + 59, yCenter + 95, 0, 207, (int) (arcana / 10 * 110), 5);
+		}
 	}
 
 	@Override

@@ -96,6 +96,7 @@ import shadows.apotheosis.ench.objects.ItemTypedBook;
 import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
 import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
+import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.recipe.NBTIngredient;
@@ -172,6 +173,7 @@ public class EnchModule {
 			for (int i = 1; i <= info.getMaxLevel(); i++)
 				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
 		}
+		EnchantmentStatRegistry.init();
 	}
 
 	@SubscribeEvent

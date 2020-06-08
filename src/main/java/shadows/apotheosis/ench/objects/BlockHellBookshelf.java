@@ -23,7 +23,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.storage.loot.LootContext;
 import shadows.apotheosis.ApotheosisObjects;
 
-public class BlockHellBookshelf extends Block {
+public class BlockHellBookshelf extends Block implements IEnchantingBlock {
 
 	public static final IntegerProperty INFUSION = IntegerProperty.create("infusion", 0, 10);
 
@@ -33,8 +33,23 @@ public class BlockHellBookshelf extends Block {
 
 	@Override
 	public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
-		if (state.getBlock() == this) return 1.5F + state.get(INFUSION) * 0.07F;
+		if (state.getBlock() == this) return 2F + state.get(INFUSION) * 0.1F;
 		return 2;
+	}
+
+	@Override
+	public float getQuantaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+		return 1F;
+	}
+
+	@Override
+	public float getArcanaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+		return 1F;
+	}
+
+	@Override
+	public int getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
+		return state.get(INFUSION) > 0 ? 40 : 30;
 	}
 
 	@Override
