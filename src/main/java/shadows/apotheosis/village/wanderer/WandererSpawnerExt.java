@@ -54,7 +54,7 @@ public class WandererSpawnerExt extends WanderingTraderSpawner {
 
 	@Override
 	public void tick() {
-		if (--this.delay <= 0) {
+		if (world.getGameRules().get(GameRules.field_230128_E_).get() && --this.delay <= 0) {
 			this.delay = 1200;
 			WorldInfo worldinfo = this.world.getWorldInfo();
 			this.spawnDelay -= 1200;
