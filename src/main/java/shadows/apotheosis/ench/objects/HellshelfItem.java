@@ -11,9 +11,9 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
 import shadows.apotheosis.ApotheosisObjects;
 
-public class ItemHellBookshelf extends BlockItem {
+public class HellshelfItem extends BlockItem {
 
-	public ItemHellBookshelf(Block block) {
+	public HellshelfItem(Block block) {
 		super(block, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS));
 	}
 
@@ -40,7 +40,7 @@ public class ItemHellBookshelf extends BlockItem {
 			ListNBT list = new ListNBT();
 			CompoundNBT tag = new CompoundNBT();
 			tag.putString("id", "apotheosis:hell_infusion");
-			tag.putShort("lvl", (short) 10);
+			tag.putShort("lvl", (short) 5);
 			list.add(tag);
 			s.setTagInfo("Enchantments", list);
 			items.add(s);

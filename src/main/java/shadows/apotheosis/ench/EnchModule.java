@@ -75,7 +75,6 @@ import shadows.apotheosis.ench.anvil.ItemAnvilExt;
 import shadows.apotheosis.ench.anvil.TileAnvil;
 import shadows.apotheosis.ench.enchantments.EnchantmentBerserk;
 import shadows.apotheosis.ench.enchantments.EnchantmentDepths;
-import shadows.apotheosis.ench.enchantments.EnchantmentHellInfused;
 import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
 import shadows.apotheosis.ench.enchantments.EnchantmentKnowledge;
 import shadows.apotheosis.ench.enchantments.EnchantmentLifeMend;
@@ -88,9 +87,13 @@ import shadows.apotheosis.ench.enchantments.EnchantmentScavenger;
 import shadows.apotheosis.ench.enchantments.EnchantmentShieldBash;
 import shadows.apotheosis.ench.enchantments.EnchantmentStableFooting;
 import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
-import shadows.apotheosis.ench.objects.BlockHellBookshelf;
-import shadows.apotheosis.ench.objects.ItemHellBookshelf;
+import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
+import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
+import shadows.apotheosis.ench.objects.HellshelfBlock;
+import shadows.apotheosis.ench.objects.SeashelfBlock;
+import shadows.apotheosis.ench.objects.HellshelfItem;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
+import shadows.apotheosis.ench.objects.SeashelfItem;
 import shadows.apotheosis.ench.objects.ItemShearsExt;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
 import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
@@ -162,7 +165,7 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
 		Apotheosis.HELPER.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 6), book, book, book, book, book, book, blaze);
 		ItemStack msBrick = new ItemStack(Blocks.MOSSY_STONE_BRICKS);
-		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.HEART_OF_THE_SEA, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 16), 3, 3, Items.ENDER_EYE, Items.GOLD_NUGGET, Items.ENDER_EYE, Items.BLAZE_POWDER, Items.DRAGON_BREATH, Items.BLAZE_POWDER, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST);
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
@@ -198,11 +201,12 @@ public class EnchModule {
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new BlockHellBookshelf().setRegistryName("hellshelf"),
+				new HellshelfBlock().setRegistryName("hellshelf"),
 				new BlockPrismaticAltar().setRegistryName(Apotheosis.MODID, "prismatic_altar"),
 				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
 				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
-				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"));
+				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"),
+				new SeashelfBlock().setRegistryName("seashelf"));
 		//Formatter::on
 		PlaceboUtil.registerOverrideBlock(new EnchantingTableBlockExt().setRegistryName("minecraft:enchanting_table"), Apotheosis.MODID);
 	}
@@ -214,7 +218,7 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				shears = new ItemShearsExt(),
-				new ItemHellBookshelf(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
+				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ItemAnvilExt(Blocks.ANVIL),
 				new ItemAnvilExt(Blocks.CHIPPED_ANVIL),
@@ -229,7 +233,8 @@ public class EnchModule {
 				new ItemTypedBook(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
 				new ItemTypedBook(Items.BOW, EnchantmentType.BOW),
 				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("prismatic_altar"),
-				new ItemScrapTome()
+				new ItemScrapTome(),
+				new SeashelfItem(ApotheosisObjects.SEASHELF).setRegistryName(ApotheosisObjects.SEASHELF.getRegistryName())
 				);
 		//Formatter::on
 		DispenserBlock.registerDispenseBehavior(shears, DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(oldShears));
@@ -239,7 +244,7 @@ public class EnchModule {
 	public void enchants(Register<Enchantment> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new EnchantmentHellInfused().setRegistryName(Apotheosis.MODID, "hell_infusion"),
+				new HellInfusionEnchantment().setRegistryName(Apotheosis.MODID, "hell_infusion"),
 				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"),
 				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
 				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
@@ -254,7 +259,8 @@ public class EnchModule {
 				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"),
 				new EnchantmentNatureBless().setRegistryName(Apotheosis.MODID, "natures_blessing"),
 				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding"),
-				new EnchantmentMagicProt().setRegistryName(Apotheosis.MODID, "magic_protection")
+				new EnchantmentMagicProt().setRegistryName(Apotheosis.MODID, "magic_protection"),
+				new SeaInfusionEnchantment().setRegistryName("sea_infusion")
 				);
 		//Formatter::on
 	}

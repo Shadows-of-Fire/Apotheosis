@@ -18,26 +18,33 @@ import shadows.apotheosis.ench.table.EnchantmentContainerExt.Arcana;
 public class RealEnchantmentHelper {
 
 	/**
-	* Returns the enchantability of itemstack, using a separate calculation for each enchantNum (0, 1 or 2).
-	*/
-	public static int calcItemStackEnchantability(Random rand, int num, int power, ItemStack stack) {
-		int i = stack.getItemEnchantability();
-		if (i <= 0) {
-			return 0;
-		} else {
-			int j = rand.nextInt(8) + 1 + (power >> 1) + rand.nextInt(power + 1);
-			if (num == 0) {
-				return Math.max(j / 3, 1);
-			} else {
-				return num == 1 ? j * 2 / 3 + 1 : Math.max(j, power * 2);
-			}
-		}
+	 * Determines the level of the given enchantment table slot.
+	 * @param rand Pre-seeded random.
+	 * @param num Enchantment Slot Number [0-2]
+	 * @param power Enchantment Power (Eterna Level)
+	 * @param stack Itemstack to be enchanted.
+	 * @return The level that the table will use for this specific slot.
+	 */
+	public static int calcSlotLevel(Random rand, int num, float power, ItemStack stack) {
+		int ench = stack.getItemEnchantability();
+		if (ench <= 0) return 0;
+		int level = (int) (power * 2);
+		if (num == 2) return level;
+		float lowBound = 0.6F - 0.4F * (1 - num) + ench / 200F;
+		float highBound = 0.8F - 0.4F * (1 - num) + ench / 200F;
+		return (int) (level * MathHelper.nextFloat(rand, lowBound, highBound));
 	}
 
 	/**
-	* Create a list of random EnchantmentData (enchantments) that can be added together to the ItemStack, the 3rd
-	* parameter is the table level.
-	*/
+	 * Creates a list of enchantments for a specific slot given various variables.
+	 * @param rand Pre-seeded random.
+	 * @param stack Itemstack to be enchanted.
+	 * @param power Enchantment Power (Eterna Level)
+	 * @param quanta Quanta Level
+	 * @param arcanaLevel Arcana Level
+	 * @param treasure If treasure enchantments can show up.
+	 * @return A list of enchantments based on the seed, item, and eterna/quanta/arcana levels.
+	 */
 	public static List<EnchantmentData> buildEnchantmentList(Random rand, ItemStack stack, int power, float quanta, float arcanaLevel, boolean treasure) {
 		List<EnchantmentData> chosenEnchants = Lists.newArrayList();
 		int enchantability = stack.getItemEnchantability();
@@ -52,14 +59,14 @@ public class RealEnchantmentHelper {
 			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
 			if (!possibleEnchants.isEmpty()) {
 				chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
+				removeIncompatible(possibleEnchants, Util.getLast(chosenEnchants));
 
 				if (arcanaLevel >= 2.5F && !possibleEnchants.isEmpty()) {
-					removeIncompatible(possibleEnchants, Util.getLast(chosenEnchants));
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
+					removeIncompatible(possibleEnchants, Util.getLast(chosenEnchants));
 				}
 
 				if (arcanaLevel >= 7.5F && !possibleEnchants.isEmpty()) {
-					removeIncompatible(possibleEnchants, Util.getLast(chosenEnchants));
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
 				}
 

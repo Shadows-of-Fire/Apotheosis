@@ -9,28 +9,27 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.dimension.NetherDimension;
 import shadows.apotheosis.Apotheosis;
 
-public class EnchantmentHellInfused extends Enchantment {
+public class SeaInfusionEnchantment extends Enchantment {
 
-	public EnchantmentHellInfused() {
+	public SeaInfusionEnchantment() {
 		super(Rarity.VERY_RARE, EnchantmentType.WEAPON, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
 	}
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 50 + level * 7;
+		return 40 + (level - 1) * 7;
 	}
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level) + level * 4;
+		return getMinEnchantability(level + 1);
 	}
 
 	@Override
 	public int getMaxLevel() {
-		return 10;
+		return 5;
 	}
 
 	@Override
@@ -40,12 +39,12 @@ public class EnchantmentHellInfused extends Enchantment {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-		if (user.world.dimension instanceof NetherDimension) {
+		if (user.isInWaterRainOrBubbleColumn()) {
 			if (user instanceof PlayerEntity) {
 				DamageSource source = DamageSource.causePlayerDamage((PlayerEntity) user);
 				source.setMagicDamage().setDamageBypassesArmor();
-				target.attackEntityFrom(source, level * level * 0.5F * Apotheosis.localAtkStrength);
-			} else target.attackEntityFrom(DamageSource.MAGIC, level * level * 0.5F * Apotheosis.localAtkStrength);
+				target.attackEntityFrom(source, level * level * 0.8F * Apotheosis.localAtkStrength);
+			} else target.attackEntityFrom(DamageSource.MAGIC, level * level * 0.8F * Apotheosis.localAtkStrength);
 		}
 	}
 

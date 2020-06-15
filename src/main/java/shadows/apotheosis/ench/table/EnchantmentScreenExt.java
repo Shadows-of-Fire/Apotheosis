@@ -1,6 +1,8 @@
 package shadows.apotheosis.ench.table;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -9,7 +11,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.EnchantmentScreen;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.RenderHelper;
@@ -20,7 +22,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.EnchantmentContainer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnchantmentNameParts;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -28,17 +30,24 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import shadows.apotheosis.Apotheosis;
 
-public class EnchantmentScreenExt extends EnchantmentScreen {
+public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerExt> {
 
 	private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_table.png");
 	private static final ResourceLocation ENCHANTMENT_TABLE_BOOK_TEXTURE = new ResourceLocation("textures/entity/enchanting_table_book.png");
 	private static final BookModel MODEL_BOOK = new BookModel();
-	protected final EnchantmentContainerExt container;
+	private final Random random = new Random();
+	public int ticks;
+	public float flip;
+	public float oFlip;
+	public float flipT;
+	public float flipA;
+	public float open;
+	public float oOpen;
+	private ItemStack last = ItemStack.EMPTY;
 	protected float eterna = 0, lastEterna = 0, quanta = 0, lastQuanta = 0, arcana = 0, lastArcana = 0;
 
-	public EnchantmentScreenExt(EnchantmentContainer container, PlayerInventory inv, ITextComponent title) {
+	public EnchantmentScreenExt(EnchantmentContainerExt container, PlayerInventory inv, ITextComponent title) {
 		super(container, inv, title);
-		this.container = (EnchantmentContainerExt) container;
 		this.ySize = 197;
 	}
 
@@ -54,7 +63,7 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 	@Override
 	public void tick() {
 		super.tick();
-
+		this.tickBook();
 		float current = this.container.eterna.get();
 		if (current != eterna) {
 			if (current > eterna) eterna += Math.min(current - eterna, Math.max(0.16F, (current - eterna) * 0.1F));
@@ -225,22 +234,22 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 		this.renderBackground();
 		super.render(p_render_1_, p_render_2_, p_render_3_);
 		this.renderHoveredToolTip(p_render_1_, p_render_2_);
-		boolean flag = this.minecraft.player.abilities.isCreativeMode;
-		int i = this.container.getLapisAmount();
+		boolean creative = this.minecraft.player.abilities.isCreativeMode;
+		int lapis = this.container.getLapisAmount();
 
 		for (int j = 0; j < 3; ++j) {
-			int k = this.container.enchantLevels[j];
+			int level = this.container.enchantLevels[j];
 			Enchantment enchantment = Enchantment.getEnchantmentByID(this.container.enchantClue[j]);
-			int l = this.container.worldClue[j];
+			int clue = this.container.worldClue[j];
 			int i1 = j + 1;
-			if (this.isPointInRegion(60, 14 + 19 * j, 108, 17, p_render_1_, p_render_2_) && k > 0) {
+			if (this.isPointInRegion(60, 14 + 19 * j, 108, 17, p_render_1_, p_render_2_) && level > 0) {
 				List<String> list = Lists.newArrayList();
-				list.add("" + TextFormatting.WHITE + TextFormatting.ITALIC + I18n.format("container.enchant.clue", enchantment == null ? "" : enchantment.getDisplayName(l).getFormattedText()));
+				list.add("" + TextFormatting.GRAY + TextFormatting.ITALIC + I18n.format("container.enchant.clue", enchantment == null ? "" : enchantment.getDisplayName(clue).getFormattedText()));
 				if (enchantment == null) {
-					java.util.Collections.addAll(list, "", TextFormatting.RED + I18n.format("forge.container.enchant.limitedEnchantability"));
-				} else if (!flag) {
+					Collections.addAll(list, "", TextFormatting.RED + I18n.format("forge.container.enchant.limitedEnchantability"));
+				} else if (!creative) {
 					list.add("");
-					if (this.minecraft.player.experienceLevel < k) {
+					if (this.minecraft.player.experienceLevel < level) {
 						list.add(TextFormatting.RED + I18n.format("container.enchant.level.requirement", this.container.enchantLevels[j]));
 					} else {
 						String s;
@@ -250,7 +259,7 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 							s = I18n.format("container.enchant.lapis.many", i1);
 						}
 
-						TextFormatting textformatting = i >= i1 ? TextFormatting.GRAY : TextFormatting.RED;
+						TextFormatting textformatting = lapis >= i1 ? TextFormatting.GRAY : TextFormatting.RED;
 						list.add(textformatting + "" + s);
 						if (i1 == 1) {
 							s = I18n.format("container.enchant.level.one");
@@ -261,12 +270,95 @@ public class EnchantmentScreenExt extends EnchantmentScreen {
 						list.add(TextFormatting.GRAY + "" + s);
 					}
 				}
-
 				this.renderTooltip(list, p_render_1_, p_render_2_);
 				break;
 			}
 		}
 
+		if (this.isPointInRegion(60, 14 + 19 * 3 + 5, 110, 5, p_render_1_, p_render_2_))
+
+		{
+			List<String> list = Lists.newArrayList();
+			list.add(eterna() + I18n.format("gui.apotheosis.enchant.eterna.desc"));
+			list.add(I18n.format("gui.apotheosis.enchant.eterna.desc2"));
+			list.add("");
+			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 40F));
+			this.renderTooltip(list, p_render_1_, p_render_2_);
+		}
+
+		if (this.isPointInRegion(60, 14 + 19 * 3 + 15, 110, 5, p_render_1_, p_render_2_)) {
+			List<String> list = Lists.newArrayList();
+			list.add(quanta() + I18n.format("gui.apotheosis.enchant.quanta.desc"));
+			list.add(I18n.format("gui.apotheosis.enchant.quanta.desc2"));
+			list.add(I18n.format("gui.apotheosis.enchant.quanta.desc3"));
+			list.add("");
+			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.quanta.desc4", f(this.container.quanta.get() * 10F)));
+			this.renderTooltip(list, p_render_1_, p_render_2_);
+		}
+
+		if (this.isPointInRegion(60, 14 + 19 * 3 + 25, 110, 5, p_render_1_, p_render_2_)) {
+			List<String> list = Lists.newArrayList();
+			list.add(arcana() + I18n.format("gui.apotheosis.enchant.arcana.desc"));
+			list.add(I18n.format("gui.apotheosis.enchant.arcana.desc2"));
+			list.add(I18n.format("gui.apotheosis.enchant.arcana.desc3"));
+			list.add("");
+			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.arcana.desc4", f(this.container.arcana.get() * 10F)));
+			this.renderTooltip(list, p_render_1_, p_render_2_);
+		}
+
+	}
+
+	public void tickBook() {
+		ItemStack itemstack = this.container.getSlot(0).getStack();
+		if (!ItemStack.areItemStacksEqual(itemstack, this.last)) {
+			this.last = itemstack;
+
+			while (true) {
+				this.flipT += (float) (this.random.nextInt(4) - this.random.nextInt(4));
+				if (!(this.flip <= this.flipT + 1.0F) || !(this.flip >= this.flipT - 1.0F)) {
+					break;
+				}
+			}
+		}
+
+		++this.ticks;
+		this.oFlip = this.flip;
+		this.oOpen = this.open;
+		boolean flag = false;
+
+		for (int i = 0; i < 3; ++i) {
+			if ((this.container).enchantLevels[i] != 0) {
+				flag = true;
+			}
+		}
+
+		if (flag) {
+			this.open += 0.2F;
+		} else {
+			this.open -= 0.2F;
+		}
+
+		this.open = MathHelper.clamp(this.open, 0.0F, 1.0F);
+		float f1 = (this.flipT - this.flip) * 0.4F;
+		f1 = MathHelper.clamp(f1, -0.2F, 0.2F);
+		this.flipA += (f1 - this.flipA) * 0.9F;
+		this.flip += this.flipA;
+	}
+
+	private static String eterna() {
+		return TextFormatting.GREEN + I18n.format("gui.apotheosis.enchant.eterna") + TextFormatting.RESET;
+	}
+
+	private static String quanta() {
+		return TextFormatting.RED + I18n.format("gui.apotheosis.enchant.quanta") + TextFormatting.RESET;
+	}
+
+	private static String arcana() {
+		return TextFormatting.DARK_PURPLE + I18n.format("gui.apotheosis.enchant.arcana") + TextFormatting.RESET;
+	}
+
+	private static String f(float f) {
+		return String.format("%.2f", f);
 	}
 
 }

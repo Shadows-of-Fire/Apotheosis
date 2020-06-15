@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import it.unimi.dsi.fastutil.ints.Int2FloatMap;
-import it.unimi.dsi.fastutil.ints.Int2FloatOpenHashMap;
+import it.unimi.dsi.fastutil.floats.Float2FloatMap;
+import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentData;
@@ -46,7 +46,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 		this.inventorySlots.clear();
 		this.addSlot(new Slot(this.tableInventory, 0, 15, 47) {
 			@Override
-			public boolean isItemValid(ItemStack p_75214_1_) {
+			public boolean isItemValid(ItemStack stack) {
 				return true;
 			}
 
@@ -57,21 +57,11 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 		});
 		this.addSlot(new Slot(this.tableInventory, 1, 35, 47) {
 			@Override
-			public boolean isItemValid(ItemStack p_75214_1_) {
-				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(p_75214_1_.getItem());
+			public boolean isItemValid(ItemStack stack) {
+				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
 			}
 		});
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18 + 31));
-			}
-		}
-		for (int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(inv, k, 8 + k * 18, 142 + 31));
-		}
-		this.trackIntArray(eterna.getArray());
-		this.trackIntArray(quanta.getArray());
-		this.trackIntArray(arcana.getArray());
+		initCommon(inv);
 	}
 
 	public EnchantmentContainerExt(int id, PlayerInventory inv, IWorldPosCallable wPos, EnchantingTableTileEntityExt te) {
@@ -79,7 +69,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 		this.inventorySlots.clear();
 		this.addSlot(new Slot(this.tableInventory, 0, 15, 47) {
 			@Override
-			public boolean isItemValid(ItemStack p_75214_1_) {
+			public boolean isItemValid(ItemStack stack) {
 				return true;
 			}
 
@@ -90,10 +80,14 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 		});
 		this.addSlot(new SlotItemHandler(te.inv, 0, 35, 47) {
 			@Override
-			public boolean isItemValid(ItemStack p_75214_1_) {
-				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(p_75214_1_.getItem());
+			public boolean isItemValid(ItemStack stack) {
+				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
 			}
 		});
+		initCommon(inv);
+	}
+
+	private void initCommon(PlayerInventory inv) {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
 				this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18 + 31));
@@ -119,7 +113,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 
 		this.wPos.consume((world, pos) -> {
 			ItemStack enchanted = toEnchant;
-			List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.enchantLevels[id], quanta.get(), arcana.get());
+			List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.enchantLevels[id]);
 			if (!list.isEmpty()) {
 				player.onEnchant(toEnchant, i);
 				boolean flag = toEnchant.getItem() == Items.BOOK;
@@ -176,7 +170,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 					this.rand.setSeed(this.xpSeed.get());
 
 					for (int num = 0; num < 3; ++num) {
-						this.enchantLevels[num] = RealEnchantmentHelper.calcItemStackEnchantability(this.rand, num, (int) power, itemstack);
+						this.enchantLevels[num] = RealEnchantmentHelper.calcSlotLevel(this.rand, num, power, itemstack);
 						this.enchantClue[num] = -1;
 						this.worldClue[num] = -1;
 
@@ -188,7 +182,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 
 					for (int j1 = 0; j1 < 3; ++j1) {
 						if (this.enchantLevels[j1] > 0) {
-							List<EnchantmentData> list = this.getEnchantmentList(itemstack, j1, this.enchantLevels[j1], this.quanta.get(), this.arcana.get());
+							List<EnchantmentData> list = this.getEnchantmentList(itemstack, j1, this.enchantLevels[j1]);
 
 							if (list != null && !list.isEmpty()) {
 								EnchantmentData enchantmentdata = list.get(this.rand.nextInt(list.size()));
@@ -204,63 +198,64 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 						this.enchantLevels[i] = 0;
 						this.enchantClue[i] = -1;
 						this.worldClue[i] = -1;
-						this.eterna.set(0);
-						this.quanta.set(0);
-						this.arcana.set(0);
 					}
+					this.eterna.set(0);
+					this.quanta.set(0);
+					this.arcana.set(0);
 				}
 			}
 			return this;
 		});
 	}
 
-	private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level, float quanta, float arcana) {
+	private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
 		this.rand.setSeed(this.xpSeed.get() + enchantSlot);
-		List<EnchantmentData> list = RealEnchantmentHelper.buildEnchantmentList(this.rand, stack, level, quanta, arcana, false);
+		List<EnchantmentData> list = RealEnchantmentHelper.buildEnchantmentList(this.rand, stack, level, this.quanta.get(), this.arcana.get(), false);
 		return list;
 	}
 
 	public float getEnchPower() {
 		return wPos.apply((world, pos) -> {
 
-			Int2FloatMap powers = new Int2FloatOpenHashMap();
-			this.arcana.set(0);
-			this.quanta.set(2.25F);
+			Float2FloatMap eternaMap = new Float2FloatOpenHashMap();
+			float[] stats = { 0, 1, 0 };
 			for (int j = -1; j <= 1; ++j) {
 				for (int k = -1; k <= 1; ++k) {
 					if ((j != 0 || k != 0) && world.isAirBlock(pos.add(k, 0, j)) && world.isAirBlock(pos.add(k, 1, j))) {
-						gatherStats(powers, world, pos.add(k * 2, 0, j * 2));
-						gatherStats(powers, world, pos.add(k * 2, 1, j * 2));
+						gatherStats(eternaMap, stats, world, pos.add(k * 2, 0, j * 2));
+						gatherStats(eternaMap, stats, world, pos.add(k * 2, 1, j * 2));
 						if (k != 0 && j != 0) {
-							gatherStats(powers, world, pos.add(k * 2, 0, j));
-							gatherStats(powers, world, pos.add(k * 2, 1, j));
-							gatherStats(powers, world, pos.add(k, 0, j * 2));
-							gatherStats(powers, world, pos.add(k, 1, j * 2));
+							gatherStats(eternaMap, stats, world, pos.add(k * 2, 0, j));
+							gatherStats(eternaMap, stats, world, pos.add(k * 2, 1, j));
+							gatherStats(eternaMap, stats, world, pos.add(k, 0, j * 2));
+							gatherStats(eternaMap, stats, world, pos.add(k, 1, j * 2));
 						}
 					}
 				}
 			}
-			float power = 0;
-			List<Int2FloatMap.Entry> entries = new ArrayList<>(powers.int2FloatEntrySet());
-			Collections.sort(entries, Comparator.comparingInt(Int2FloatMap.Entry::getIntKey));
-			for (Int2FloatMap.Entry e : entries) {
-				power = Math.min(e.getIntKey(), power + e.getFloatValue());
+			List<Float2FloatMap.Entry> entries = new ArrayList<>(eternaMap.float2FloatEntrySet());
+			Collections.sort(entries, Comparator.comparing(Float2FloatMap.Entry::getFloatKey));
+			for (Float2FloatMap.Entry e : entries) {
+				if (e.getFloatKey() > 0) stats[0] = Math.min(e.getFloatKey(), stats[0] + e.getFloatValue());
+				else stats[0] += e.getFloatValue();
 			}
-			this.eterna.set(power);
-			return power;
+			this.eterna.set(stats[0]);
+			this.quanta.set(stats[1]);
+			this.arcana.set(stats[2]);
+			return stats[0];
 		}).orElse(0F);
 	}
 
-	public void gatherStats(Int2FloatMap powers, World world, BlockPos pos) {
+	public void gatherStats(Float2FloatMap eternaMap, float[] stats, World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		if (state.getBlock().isAir(state, world, pos)) return;
-		int max = EnchantmentStatRegistry.getMaxEterna(state, world, pos);
-		float power = EnchantmentStatRegistry.getEterna(state, world, pos);
-		powers.put(max, powers.getOrDefault(max, 0) + power);
+		float max = EnchantmentStatRegistry.getMaxEterna(state, world, pos);
+		float eterna = EnchantmentStatRegistry.getEterna(state, world, pos);
+		eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
 		float quanta = EnchantmentStatRegistry.getQuanta(state, world, pos);
-		this.quanta.set(this.quanta.get() + quanta);
+		stats[1] += quanta;
 		float arcana = EnchantmentStatRegistry.getArcana(state, world, pos);
-		this.arcana.set(this.arcana.get() + arcana);
+		stats[2] += arcana;
 	}
 
 	@Override
@@ -300,7 +295,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 
 		public static Arcana getForThreshold(float threshold) {
 			for (int i = VALUES.length - 1; i >= 0; i--) {
-				if (threshold > VALUES[i].threshold) return VALUES[i];
+				if (threshold >= VALUES[i].threshold) return VALUES[i];
 			}
 			return EMPTY;
 		}

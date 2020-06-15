@@ -16,7 +16,8 @@ public class EnchantmentStatRegistry {
 	private static final Map<IRegistryDelegate<Block>, Stats> STATS = new HashMap<>();
 
 	public static void init() {
-		register(Blocks.JACK_O_LANTERN, 0, 0.25F, 0);
+		register(Blocks.JACK_O_LANTERN, -1/3F, 0.25F, 0);
+		register(Blocks.GLOWSTONE, -1/3F, 0, 0.25F);
 	}
 
 	private static void register(Block block, float eterna, float quanta, float arcana) {
@@ -39,7 +40,7 @@ public class EnchantmentStatRegistry {
 		return state.getEnchantPowerBonus(world, pos);
 	}
 
-	public static int getMaxEterna(BlockState state, World world, BlockPos pos) {
+	public static float getMaxEterna(BlockState state, World world, BlockPos pos) {
 		Block block = state.getBlock();
 		if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getMaxEnchantingPower(state, world, pos);
 		return 15;

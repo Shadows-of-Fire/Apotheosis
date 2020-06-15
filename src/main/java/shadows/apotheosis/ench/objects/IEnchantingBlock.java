@@ -30,8 +30,8 @@ public interface IEnchantingBlock extends IForgeBlock {
 	 * @param pos Block position in world
 	 * @return The max Eterna this block may contribute towards.  Once past this value, this block has no effect.
 	 */
-	default int getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
-		return 15;
+	default float getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
+		return 15F;
 	}
 
 	/**

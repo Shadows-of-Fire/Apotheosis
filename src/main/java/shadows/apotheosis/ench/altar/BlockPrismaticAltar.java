@@ -132,6 +132,11 @@ public class BlockPrismaticAltar extends Block {
 	}
 
 	@Override
+	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+		return 8;
+	}
+
+	@Override
 	@Deprecated
 	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		TileEntity te = world.getTileEntity(pos);

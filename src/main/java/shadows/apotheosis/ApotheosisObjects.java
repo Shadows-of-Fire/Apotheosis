@@ -16,7 +16,6 @@ import shadows.apotheosis.ench.anvil.EnchantmentSplitting;
 import shadows.apotheosis.ench.anvil.TileAnvil;
 import shadows.apotheosis.ench.enchantments.EnchantmentBerserk;
 import shadows.apotheosis.ench.enchantments.EnchantmentDepths;
-import shadows.apotheosis.ench.enchantments.EnchantmentHellInfused;
 import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
 import shadows.apotheosis.ench.enchantments.EnchantmentKnowledge;
 import shadows.apotheosis.ench.enchantments.EnchantmentLifeMend;
@@ -29,7 +28,10 @@ import shadows.apotheosis.ench.enchantments.EnchantmentScavenger;
 import shadows.apotheosis.ench.enchantments.EnchantmentShieldBash;
 import shadows.apotheosis.ench.enchantments.EnchantmentStableFooting;
 import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
-import shadows.apotheosis.ench.objects.BlockHellBookshelf;
+import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
+import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
+import shadows.apotheosis.ench.objects.HellshelfBlock;
+import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
 import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
@@ -49,9 +51,9 @@ import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 
 @ObjectHolder(Apotheosis.MODID)
 public class ApotheosisObjects {
-	public static final BlockHellBookshelf HELLSHELF = null;
+	public static final HellshelfBlock HELLSHELF = null;
 	public static final Item PRISMATIC_WEB = null;
-	public static final EnchantmentHellInfused HELL_INFUSION = null;
+	public static final HellInfusionEnchantment HELL_INFUSION = null;
 	public static final EnchantmentMounted MOUNTED_STRIKE = null;
 	public static final EnchantmentDepths DEPTH_MINER = null;
 	public static final EnchantmentStableFooting STABLE_FOOTING = null;
@@ -125,5 +127,7 @@ public class ApotheosisObjects {
 	@ObjectHolder("minecraft:enchanting_table")
 	public static final TileEntityType<EnchantingTableTileEntityExt> ENCHANTING_TABLE = null;
 	public static final ContainerType<EnchantmentContainerExt> ENCHANTING = null;
+	public static final SeaInfusionEnchantment SEA_INFUSION = null;
+	public static final SeashelfBlock SEASHELF = null;
 
 }
