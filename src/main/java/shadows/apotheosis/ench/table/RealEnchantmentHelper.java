@@ -53,7 +53,7 @@ public class RealEnchantmentHelper {
 		} else {
 			power = power + rand.nextInt(Math.max(enchantability / 2, 1));
 			float factor = MathHelper.nextFloat(rand, -1F, 1F) * quanta / 10;
-			power = MathHelper.clamp(Math.round(power + power * factor), 1, Integer.MAX_VALUE);
+			power = MathHelper.clamp(Math.round(power + power * factor), 1, 200);
 			Arcana arcana = Arcana.getForThreshold(arcanaLevel);
 			List<EnchantmentData> allEnchants = getEnchantmentDatas(power, stack, treasure);
 			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
