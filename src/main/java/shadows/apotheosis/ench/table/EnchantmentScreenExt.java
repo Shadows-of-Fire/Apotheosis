@@ -218,7 +218,7 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 
 		this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
 		if (eterna > 0) {
-			this.blit(xCenter + 59, yCenter + 75, 0, 197, (int) (eterna / 40 * 110), 5);
+			this.blit(xCenter + 59, yCenter + 75, 0, 197, (int) (eterna / 50 * 110), 5);
 		}
 		if (quanta > 0) {
 			this.blit(xCenter + 59, yCenter + 85, 0, 202, (int) (quanta / 10 * 110), 5);
@@ -282,7 +282,7 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 			list.add(eterna() + I18n.format("gui.apotheosis.enchant.eterna.desc"));
 			list.add(I18n.format("gui.apotheosis.enchant.eterna.desc2"));
 			list.add("");
-			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 40F));
+			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 50F));
 			this.renderTooltip(list, p_render_1_, p_render_2_);
 		}
 

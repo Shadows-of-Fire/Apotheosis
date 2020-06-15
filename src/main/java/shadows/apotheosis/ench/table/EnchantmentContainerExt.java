@@ -37,7 +37,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 
 	protected IWorldPosCallable wPos = super.field_217006_g;
 
-	protected FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, 40);
+	protected FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, 50);
 	protected FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 10);
 	protected FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 10);
 
@@ -166,7 +166,8 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 			if (inventoryIn == this.tableInventory) {
 				ItemStack itemstack = inventoryIn.getStackInSlot(0);
 				if (itemstack.getCount() == 1 && itemstack.isEnchantable()) {
-					float power = getEnchPower();
+					gatherStats();
+					float power = this.eterna.get();
 					this.rand.setSeed(this.xpSeed.get());
 
 					for (int num = 0; num < 3; ++num) {
@@ -214,9 +215,8 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 		return list;
 	}
 
-	public float getEnchPower() {
-		return wPos.apply((world, pos) -> {
-
+	public void gatherStats() {
+		wPos.apply((world, pos) -> {
 			Float2FloatMap eternaMap = new Float2FloatOpenHashMap();
 			float[] stats = { 0, 1, 0 };
 			for (int j = -1; j <= 1; ++j) {
@@ -242,8 +242,8 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 			this.eterna.set(stats[0]);
 			this.quanta.set(stats[1]);
 			this.arcana.set(stats[2]);
-			return stats[0];
-		}).orElse(0F);
+			return this;
+		}).orElse(this);
 	}
 
 	public void gatherStats(Float2FloatMap eternaMap, float[] stats, World world, BlockPos pos) {

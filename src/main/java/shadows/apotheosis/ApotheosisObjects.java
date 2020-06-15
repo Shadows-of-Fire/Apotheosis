@@ -1,5 +1,6 @@
 package shadows.apotheosis;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -31,9 +32,9 @@ import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
-import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
 import shadows.apotheosis.garden.EnderLeashItem;
@@ -129,5 +130,14 @@ public class ApotheosisObjects {
 	public static final ContainerType<EnchantmentContainerExt> ENCHANTING = null;
 	public static final SeaInfusionEnchantment SEA_INFUSION = null;
 	public static final SeashelfBlock SEASHELF = null;
+	public static final Block BLAZING_HELLSHELF = null;
+	public static final Block GLOWING_HELLSHELF = null;
+	public static final Block CRYSTAL_SEASHELF = null;
+	public static final Block HEART_SEASHELF = null;
+	public static final Block ENDSHELF = null;
+	public static final Block PEARL_ENDSHELF = null;
+	public static final Block DRACONIC_ENDSHELF = null;
+	public static final Block BEESHELF = null;
+	public static final Block MELONSHELF = null;
 
 }

@@ -17,6 +17,8 @@ import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
@@ -90,12 +92,12 @@ import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
-import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.objects.HellshelfItem;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
-import shadows.apotheosis.ench.objects.SeashelfItem;
 import shadows.apotheosis.ench.objects.ItemShearsExt;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.objects.SeashelfBlock;
+import shadows.apotheosis.ench.objects.SeashelfItem;
 import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
 import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
@@ -170,6 +172,15 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
 		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
+		LootSystem.defaultBlockTable(ApotheosisObjects.BLAZING_HELLSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.GLOWING_HELLSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.CRYSTAL_SEASHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.HEART_SEASHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.ENDSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.PEARL_ENDSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.DRACONIC_ENDSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.BEESHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.MELONSHELF);
 		MinecraftForge.EVENT_BUS.register(this);
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
@@ -201,12 +212,22 @@ public class EnchModule {
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new HellshelfBlock().setRegistryName("hellshelf"),
 				new BlockPrismaticAltar().setRegistryName(Apotheosis.MODID, "prismatic_altar"),
 				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
 				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
 				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"),
-				new SeashelfBlock().setRegistryName("seashelf"));
+				new HellshelfBlock().setRegistryName("hellshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
+				new SeashelfBlock().setRegistryName("seashelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("crystal_seashelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("heart_seashelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("endshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
+				new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
+				new Block(Block.Properties.create(Material.GOURD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
+				);
 		//Formatter::on
 		PlaceboUtil.registerOverrideBlock(new EnchantingTableBlockExt().setRegistryName("minecraft:enchanting_table"), Apotheosis.MODID);
 	}
@@ -218,7 +239,6 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				shears = new ItemShearsExt(),
-				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ItemAnvilExt(Blocks.ANVIL),
 				new ItemAnvilExt(Blocks.CHIPPED_ANVIL),
@@ -234,7 +254,17 @@ public class EnchModule {
 				new ItemTypedBook(Items.BOW, EnchantmentType.BOW),
 				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("prismatic_altar"),
 				new ItemScrapTome(),
-				new SeashelfItem(ApotheosisObjects.SEASHELF).setRegistryName(ApotheosisObjects.SEASHELF.getRegistryName())
+				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
+				new BlockItem(ApotheosisObjects.BLAZING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("blazing_hellshelf"),
+				new BlockItem(ApotheosisObjects.GLOWING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("glowing_hellshelf"),
+				new SeashelfItem(ApotheosisObjects.SEASHELF).setRegistryName(ApotheosisObjects.SEASHELF.getRegistryName()),
+				new BlockItem(ApotheosisObjects.CRYSTAL_SEASHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("crystal_seashelf"),
+				new BlockItem(ApotheosisObjects.HEART_SEASHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("heart_seashelf"),
+				new BlockItem(ApotheosisObjects.ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("endshelf"),
+				new BlockItem(ApotheosisObjects.DRACONIC_ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("draconic_endshelf"),
+				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("pearl_endshelf"),
+				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("beeshelf"),
+				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("melonshelf")
 				);
 		//Formatter::on
 		DispenserBlock.registerDispenseBehavior(shears, DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(oldShears));

@@ -25,7 +25,7 @@ import shadows.apotheosis.ApotheosisObjects;
 
 public class SeashelfBlock extends Block implements IEnchantingBlock {
 
-	public static final IntegerProperty INFUSION = IntegerProperty.create("infusion", 0, 10);
+	public static final IntegerProperty INFUSION = IntegerProperty.create("infusion", 0, 5);
 
 	public SeashelfBlock() {
 		super(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(2, 10).sound(SoundType.STONE));
@@ -43,7 +43,7 @@ public class SeashelfBlock extends Block implements IEnchantingBlock {
 
 	@Override
 	public float getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
-		return state.get(INFUSION) > 0 ? 30 : 22.5F;
+		return 22.5F + state.get(INFUSION) * 1.5F;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class SeashelfBlock extends Block implements IEnchantingBlock {
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 		ItemStack stack = ctx.getItem();
-		return getDefaultState().with(INFUSION, Math.min(15, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SEA_INFUSION, stack)));
+		return getDefaultState().with(INFUSION, Math.min(5, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SEA_INFUSION, stack)));
 	}
 
 	@Override
