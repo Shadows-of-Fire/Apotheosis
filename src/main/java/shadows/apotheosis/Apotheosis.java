@@ -30,6 +30,7 @@ import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
+import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
 import shadows.apotheosis.village.VillageModule;
@@ -106,6 +107,7 @@ public class Apotheosis {
 		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
 		DeferredWorkQueue.runLater(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
+		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
 	}
 
 	@SubscribeEvent

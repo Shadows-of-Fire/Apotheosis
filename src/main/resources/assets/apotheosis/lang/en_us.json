@@ -202,10 +202,14 @@
 	"gui.apotheosis.enchant.arcana.desc2": "It makes rare enchantments more common,",
 	"gui.apotheosis.enchant.arcana.desc3": "and increases the number of enchantments.",
 	"gui.apotheosis.enchant.arcana.desc4": "Current Value: %s%%",
+	"ingredient.apotheosis.ench": "Requires at least %s",
 	
 
     "enchantment.apotheosis.hell_infusion": "Hell Infusion",
     "enchantment.apotheosis.hell_infusion.desc": "Deals extra magic damage in the Nether.",
+	
+	"enchantment.apotheosis.sea_infusion": "Sea Infusion",
+    "enchantment.apotheosis.sea_infusion.desc": "Deals extra magic damage when wet.",
 
     "enchantment.apotheosis.mounted_strike": "Mounted Strike",
     "enchantment.apotheosis.mounted_strike.desc": "Deals extra damage when on a horse.",

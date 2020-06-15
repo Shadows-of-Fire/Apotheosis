@@ -102,9 +102,9 @@ import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
 import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
 import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
+import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
-import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
 
@@ -151,7 +151,7 @@ public class EnchModule {
 		if (config.hasChanged()) config.save();
 		enchInfoConfig = config;
 
-		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.REGENERATION));
+		Ingredient pot = Apotheosis.potionIngredient(Potions.REGENERATION);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "forge:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.COBWEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
 		ItemStack book = new ItemStack(Items.BOOK);
@@ -171,6 +171,19 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 16), 3, 3, Items.ENDER_EYE, Items.GOLD_NUGGET, Items.ENDER_EYE, Items.BLAZE_POWDER, Items.DRAGON_BREATH, Items.BLAZE_POWDER, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST);
 		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
+		Ingredient maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, ApotheosisObjects.HELL_INFUSION, 5);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
+		Ingredient maxSeashelf = new EnchantmentIngredient(ApotheosisObjects.SEASHELF, ApotheosisObjects.SEA_INFUSION, 5);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.ENDSHELF, 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.PEARL_ENDSHELF, 3, 3, Items.END_ROD, null, Items.END_ROD, Items.ENDER_PEARL, ApotheosisObjects.ENDSHELF, Items.ENDER_PEARL, Items.END_ROD, null, Items.END_ROD);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, ApotheosisObjects.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.BEESHELF, 3, 3, Items.field_226635_pU_, Items.BEEHIVE, Items.field_226635_pU_, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.field_226635_pU_, Items.BEEHIVE, Items.field_226635_pU_);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
+
 		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
 		LootSystem.defaultBlockTable(ApotheosisObjects.BLAZING_HELLSHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.GLOWING_HELLSHELF);
