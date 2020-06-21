@@ -2,7 +2,6 @@ package shadows.apotheosis.spawn.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
 
 public class EnchantmentCapturing extends Enchantment {
@@ -18,12 +17,12 @@ public class EnchantmentCapturing extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return Enchantments.FORTUNE.getMinEnchantability(level);
+		return 35 + (level - 1) * 9;
 	}
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return Enchantments.FORTUNE.getMaxEnchantability(level) + (level == getMaxLevel() ? 50 : 0);
+		return getMinEnchantability(level) + 9;
 	}
 
 }
