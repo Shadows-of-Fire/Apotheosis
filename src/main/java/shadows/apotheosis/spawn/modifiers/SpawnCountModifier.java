@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 public class SpawnCountModifier extends SpawnerModifier {
 
 	public SpawnCountModifier() {
-		super(new ItemStack(Items.FERMENTED_SPIDER_EYE), 1);
+		super(new ItemStack(Items.FERMENTED_SPIDER_EYE), 1, 1, 20);
 	}
 
 	@Override

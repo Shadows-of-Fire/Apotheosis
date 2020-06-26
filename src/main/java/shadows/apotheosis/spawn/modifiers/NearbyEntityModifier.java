@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 public class NearbyEntityModifier extends SpawnerModifier {
 
 	public NearbyEntityModifier() {
-		super(new ItemStack(Items.GHAST_TEAR), 2);
+		super(new ItemStack(Items.GHAST_TEAR), 2, 0, 40);
 	}
 
 	@Override

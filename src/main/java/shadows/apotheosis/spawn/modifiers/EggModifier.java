@@ -19,7 +19,7 @@ public class EggModifier extends SpawnerModifier {
 	List<String> bannedMobs = new ArrayList<>();
 
 	public EggModifier(ItemStack item) {
-		super(item, -1);
+		super(item, -1, 0, 0);
 	}
 
 	public EggModifier() {
