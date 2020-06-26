@@ -161,6 +161,7 @@
     "jei.spw.redstone": "Enables redstone control",
     "jei.spw.instructions": "Spawners can be modified with various items via right clicking on them.\\nA certain item can invert this behavior, causing modifiers to change stats in the opposite direction.\\nSpawners will also be dropped with %s.",
     "jei.spw.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n+0.4%% chance per level.",
+	"jei.spw.minmax": "Min Value: %s    Max Value: %s",
 
     "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "Hellshelf",

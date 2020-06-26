@@ -25,32 +25,32 @@ public class SpawnerWrapper {
 		new TileSpawnerExt().write(SPAWNER.get(0).getOrCreateChildTag("BlockEntityTag"));
 	}
 
-	SpawnerModifier modifier;
-	ItemStack output;
-	String[] tooltips;
+	final SpawnerModifier modifier;
+	final ItemStack output;
+	final String tooltip;
 
-	public SpawnerWrapper(SpawnerModifier modifier, String nbt, String... tooltips) {
+	public SpawnerWrapper(SpawnerModifier modifier, String nbt, String tooltip) {
 		this.modifier = modifier;
 		output = SPAWNER.get(0).copy();
 		CompoundNBT tag = output.getOrCreateChildTag("BlockEntityTag");
 		tag.putInt(nbt, tag.getInt(nbt) + modifier.getValue());
-		this.tooltips = tooltips;
+		this.tooltip = tooltip;
 	}
 
-	public SpawnerWrapper(SpawnerModifier modifier, String nbt, boolean change, String... tooltips) {
+	public SpawnerWrapper(SpawnerModifier modifier, String nbt, boolean change, String tooltip) {
 		this.modifier = modifier;
 		output = SPAWNER.get(0).copy();
 		CompoundNBT tag = output.getOrCreateChildTag("BlockEntityTag");
 		tag.putBoolean(nbt, change);
-		this.tooltips = tooltips;
+		this.tooltip = tooltip;
 	}
 
-	public SpawnerWrapper(ItemStack catalyst, ResourceLocation entityOut, String... tooltips) {
+	public SpawnerWrapper(ItemStack catalyst, ResourceLocation entityOut, String tooltip) {
 		modifier = new EggModifier(catalyst);
 		output = SPAWNER.get(0).copy();
 		CompoundNBT tag = output.getOrCreateChildTag("BlockEntityTag");
 		tag.getCompound("SpawnData").putString("id", entityOut.toString());
-		this.tooltips = tooltips;
+		this.tooltip = tooltip;
 	}
 
 	public void getIngredients(IIngredients ingredients) {
@@ -59,19 +59,24 @@ public class SpawnerWrapper {
 	}
 
 	public void drawInfo(Minecraft mc, int width, int height, double mouseX, double mouseY) {
-		for (int i = 0; i < tooltips.length; i++)
-			mc.fontRenderer.drawString(I18n.format(tooltips[i]), 0, height - mc.fontRenderer.FONT_HEIGHT * (2 - i), 0);
+		mc.fontRenderer.drawString(I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
+		if (modifier.getMin() != -1) mc.fontRenderer.drawString(I18n.format("jei.spw.minmax", modifier.getMin(), modifier.getMax()), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
 	}
 
 	public static class SpawnerInverseWrapper extends SpawnerWrapper {
 
 		public SpawnerInverseWrapper() {
-			super(null, "", false, "jei.spw.invert", "jei.spw.invert2");
+			super(null, "", false, "jei.spw.invert");
 		}
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
 			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.inverseItem.getMatchingStacks())));
+		}
+
+		public void drawInfo(Minecraft mc, int width, int height, double mouseX, double mouseY) {
+			mc.fontRenderer.drawString(I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
+			mc.fontRenderer.drawString(I18n.format("jei.spw.invert2"), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
 		}
 
 	}

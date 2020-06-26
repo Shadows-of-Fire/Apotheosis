@@ -10,7 +10,7 @@ import shadows.placebo.recipe.VanillaPacketDispatcher;
 public class RedstoneModifier extends SpawnerModifier {
 
 	public RedstoneModifier() {
-		super(new ItemStack(Items.COMPARATOR), 0, 0, 0);
+		super(new ItemStack(Items.COMPARATOR), -1, -1, -1);
 	}
 
 	@Override

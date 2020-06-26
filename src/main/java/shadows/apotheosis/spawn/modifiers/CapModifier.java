@@ -10,7 +10,7 @@ import shadows.placebo.config.Configuration;
 public class CapModifier extends SpawnerModifier {
 
 	public CapModifier() {
-		super(new ItemStack(Blocks.DRAGON_EGG), 0, 0, 0);
+		super(new ItemStack(Blocks.DRAGON_EGG), -1, -1, -1);
 	}
 
 	@Override

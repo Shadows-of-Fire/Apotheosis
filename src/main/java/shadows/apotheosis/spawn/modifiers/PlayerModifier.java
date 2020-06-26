@@ -9,7 +9,7 @@ import shadows.placebo.config.Configuration;
 public class PlayerModifier extends SpawnerModifier {
 
 	public PlayerModifier() {
-		super(new ItemStack(Items.NETHER_STAR), 0, 0, 0);
+		super(new ItemStack(Items.NETHER_STAR), -1, -1, -1);
 	}
 
 	@Override

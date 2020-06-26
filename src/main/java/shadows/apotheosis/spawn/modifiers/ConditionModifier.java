@@ -10,7 +10,7 @@ import shadows.placebo.config.Configuration;
 public class ConditionModifier extends SpawnerModifier {
 
 	public ConditionModifier() {
-		super(new ItemStack(Items.CHORUS_FRUIT), 0, 0, 0);
+		super(new ItemStack(Items.CHORUS_FRUIT), -1, -1, -1);
 	}
 
 	@Override

@@ -96,4 +96,12 @@ public abstract class SpawnerModifier {
 	public abstract String getCategory();
 
 	public abstract String getDefaultItem();
+
+	public int getMin() {
+		return min;
+	}
+
+	public int getMax() {
+		return max;
+	}
 }
