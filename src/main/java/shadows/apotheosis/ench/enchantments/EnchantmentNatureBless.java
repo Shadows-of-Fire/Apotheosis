@@ -24,7 +24,7 @@ public class EnchantmentNatureBless extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 25 + 10 * level;
+		return 30 + level * 10;
 	}
 
 	@Override

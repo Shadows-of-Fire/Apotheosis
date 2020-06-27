@@ -3,6 +3,8 @@ package shadows.apotheosis.ench.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class EnchantmentScavenger extends Enchantment {
 
@@ -12,7 +14,7 @@ public class EnchantmentScavenger extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 45 + level * level * 12;
+		return 50 + level * level * 12;
 	}
 
 	@Override
@@ -23,6 +25,11 @@ public class EnchantmentScavenger extends Enchantment {
 	@Override
 	public int getMaxLevel() {
 		return 3;
+	}
+
+	@Override
+	public ITextComponent getDisplayName(int level) {
+		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_GREEN);
 	}
 
 }

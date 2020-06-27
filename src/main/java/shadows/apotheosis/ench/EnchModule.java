@@ -81,7 +81,6 @@ import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
 import shadows.apotheosis.ench.enchantments.EnchantmentKnowledge;
 import shadows.apotheosis.ench.enchantments.EnchantmentLifeMend;
 import shadows.apotheosis.ench.enchantments.EnchantmentMagicProt;
-import shadows.apotheosis.ench.enchantments.EnchantmentMounted;
 import shadows.apotheosis.ench.enchantments.EnchantmentNatureBless;
 import shadows.apotheosis.ench.enchantments.EnchantmentRebounding;
 import shadows.apotheosis.ench.enchantments.EnchantmentReflective;
@@ -116,7 +115,7 @@ import shadows.placebo.util.ReflectionHelper;
  *
  * Enchantment min/max enchantability should really be called something else, they aren't fully based on enchantability.
  * Enchantment rarity affects weight in WeightedRandom list picking.
- * Max expected table level is 150, 40 before empowered shelves.
+ * Max table level is 100, 30 before better shelves.
  *
  */
 public class EnchModule {
@@ -138,7 +137,7 @@ public class EnchModule {
 
 		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
-			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
+			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
 			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			EnchantmentInfo info = new EnchantmentInfo(ench, max, min);
@@ -199,6 +198,11 @@ public class EnchModule {
 			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 			for (int i = 1; i <= info.getMaxLevel(); i++)
 				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
+			String s = "Enchantment: " + ench.getRegistryName() + " Powers: [";
+			for (int i = 1; i <= info.getMaxLevel(); i++)
+				s += info.getMinPower(i) + "/";
+			s = s.substring(0, s.length() - 1) + "]";
+			LOGGER.info(s);
 		}
 		EnchantmentStatRegistry.init();
 	}
@@ -288,7 +292,6 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new HellInfusionEnchantment().setRegistryName(Apotheosis.MODID, "hell_infusion"),
-				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"),
 				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
 				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
 				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"),
@@ -488,7 +491,7 @@ public class EnchModule {
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
 		}
 		if (info == null) {
-			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
+			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
 			int min = enchInfoConfig.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			info = new EnchantmentInfo(ench, max, min);
@@ -509,16 +512,18 @@ public class EnchModule {
 	public static int getDefaultMax(Enchantment ench) {
 		int level = ench.getMaxLevel();
 		if (level == 1) return 1;
-		int maxPower = ench.getMaxEnchantability(level);
-		if (maxPower >= 85) return level;
-		int lastMaxPower = maxPower; //Need this to check that we don't get locked up on single-level enchantments.
-		while (maxPower < 85) {
-			maxPower = ench.getMaxEnchantability(++level);
-			if (lastMaxPower == maxPower) {
+		int minPower = ench.getMinEnchantability(level);
+		if (minPower >= 150) return level;
+		int lastPower = minPower; //Need this to check that we don't get locked up on static-power enchantments.
+		while (minPower < 150) {
+			++level;
+			int diff = ench.getMinEnchantability(level) - ench.getMinEnchantability(level - 1);
+			minPower = level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow((level - ench.getMaxLevel()), 1.6) : ench.getMinEnchantability(level);
+			if (lastPower == minPower) {
 				level--;
 				break;
 			}
-			lastMaxPower = maxPower;
+			lastPower = minPower;
 		}
 		return level;
 	}

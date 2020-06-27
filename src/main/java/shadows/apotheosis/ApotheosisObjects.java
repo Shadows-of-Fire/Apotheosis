@@ -21,7 +21,6 @@ import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
 import shadows.apotheosis.ench.enchantments.EnchantmentKnowledge;
 import shadows.apotheosis.ench.enchantments.EnchantmentLifeMend;
 import shadows.apotheosis.ench.enchantments.EnchantmentMagicProt;
-import shadows.apotheosis.ench.enchantments.EnchantmentMounted;
 import shadows.apotheosis.ench.enchantments.EnchantmentNatureBless;
 import shadows.apotheosis.ench.enchantments.EnchantmentRebounding;
 import shadows.apotheosis.ench.enchantments.EnchantmentReflective;
@@ -55,7 +54,6 @@ public class ApotheosisObjects {
 	public static final HellshelfBlock HELLSHELF = null;
 	public static final Item PRISMATIC_WEB = null;
 	public static final HellInfusionEnchantment HELL_INFUSION = null;
-	public static final EnchantmentMounted MOUNTED_STRIKE = null;
 	public static final EnchantmentDepths DEPTH_MINER = null;
 	public static final EnchantmentStableFooting STABLE_FOOTING = null;
 	public static final EnchantmentScavenger SCAVENGER = null;

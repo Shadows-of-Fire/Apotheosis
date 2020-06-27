@@ -9,10 +9,10 @@
 			"item": "minecraft:enchanted_book"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.150ench"
+			"translate": "advancements.apotheosis.100ench"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.150ench.desc"
+			"translate": "advancements.apotheosis.100ench.desc"
 		},
 		"frame": "challenge"
 	},
@@ -21,7 +21,7 @@
 			"trigger": "apotheosis:enchanted_item",
 			"conditions": {
 				"levels": {
-					"min": 150,
+					"min": 100,
 					"max": 2000
 				}
 			}

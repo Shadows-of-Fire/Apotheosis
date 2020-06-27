@@ -70,7 +70,7 @@ public class WandererReplacements {
 		stack.addEnchantment(Enchantments.SHARPNESS, 10);
 		stack.addEnchantment(Enchantments.MENDING, 1);
 		stack.addEnchantment(ApotheosisObjects.HELL_INFUSION, 5);
-		stack.addEnchantment(ApotheosisObjects.MOUNTED_STRIKE, 5);
+		stack.addEnchantment(ApotheosisObjects.CAPTURING, 2);
 		stack.addEnchantment(Enchantments.LOOTING, 5);
 		stack.addEnchantment(Enchantments.UNBREAKING, 3);
 		stack.setDisplayName(new TranslationTextComponent("name.apotheosis.merch_axe2"));

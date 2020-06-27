@@ -1,27 +1,12 @@
 package shadows.apotheosis.ench;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.udojava.evalex.Expression;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 
 public class EnchantmentInfo {
-
-	/**
-	 * Special cased vanilla defaults to enchantments that cause min power > max power at higher levels.
-	 * These override the max power functions.
-	 */
-	static Map<Enchantment, PowerFunc> overrides = new HashMap<>();
-	static {
-		overrides.put(Enchantments.THORNS, l -> Enchantments.THORNS.getMinEnchantability(l) + 20);
-		overrides.put(Enchantments.KNOCKBACK, l -> Enchantments.KNOCKBACK.getMinEnchantability(l) + 20);
-		overrides.put(Enchantments.FIRE_ASPECT, l -> Enchantments.FIRE_ASPECT.getMinEnchantability(l) + 20);
-		overrides.put(Enchantments.QUICK_CHARGE, l -> Enchantments.QUICK_CHARGE.getMinEnchantability(l) + 20);
-	}
 
 	final Enchantment ench;
 	final int maxLevel;
@@ -33,9 +18,8 @@ public class EnchantmentInfo {
 		this.ench = ench;
 		this.maxLevel = maxLevel;
 		this.minLevel = minLevel;
-		maxPower = level -> ench.getMaxEnchantability(level);
-		if (overrides.containsKey(ench)) maxPower = overrides.get(ench);
-		minPower = level -> ench.getMinEnchantability(level);
+		maxPower = defaultMax(ench);
+		minPower = defaultMin(ench);
 	}
 
 	public int getMaxLevel() {
@@ -82,6 +66,22 @@ public class EnchantmentInfo {
 			return ex.setVariable("x", new BigDecimal(level)).eval().intValue();
 		}
 
+	}
+
+	private static PowerFunc defaultMax(Enchantment ench) {
+		return level -> {
+			return 200;
+		};
+	}
+
+	private static PowerFunc defaultMin(Enchantment ench) {
+		return level -> {
+			if (level > 1) {
+				int diff = ench.getMinEnchantability(ench.getMaxLevel()) - ench.getMinEnchantability(ench.getMaxLevel() - 1);
+				return level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow((level - ench.getMaxLevel()), 1.6) : ench.getMinEnchantability(level);
+			}
+			return ench.getMinEnchantability(level);
+		};
 	}
 
 }

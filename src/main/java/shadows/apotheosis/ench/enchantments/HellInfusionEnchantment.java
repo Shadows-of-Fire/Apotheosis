@@ -9,8 +9,11 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.dimension.NetherDimension;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.ApotheosisObjects;
 
 public class HellInfusionEnchantment extends Enchantment {
 
@@ -20,7 +23,7 @@ public class HellInfusionEnchantment extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 40 + (level - 1) * 7;
+		return 50 + (level - 1) * 13;
 	}
 
 	@Override
@@ -49,4 +52,13 @@ public class HellInfusionEnchantment extends Enchantment {
 		}
 	}
 
+	@Override
+	public ITextComponent getDisplayName(int level) {
+		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_GREEN);
+	}
+
+	@Override
+	protected boolean canApplyTogether(Enchantment ench) {
+		return super.canApplyTogether(ench) && ench != ApotheosisObjects.SEA_INFUSION;
+	}
 }

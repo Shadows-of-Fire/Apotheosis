@@ -17,12 +17,12 @@ public class EnchantmentCapturing extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 35 + (level - 1) * 9;
+		return 35 + (level - 1) * 15;
 	}
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level) + 9;
+		return getMinEnchantability(level) + 15;
 	}
 
 }

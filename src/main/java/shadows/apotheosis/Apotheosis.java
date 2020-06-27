@@ -63,7 +63,6 @@ public class Apotheosis {
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillager = true;
-	public static boolean enchTooltips = true;
 
 	public static float localAtkStrength = 1;
 
@@ -91,8 +90,6 @@ public class Apotheosis {
 
 		enableVillager = config.getBoolean("Enable Village Module", "general", enableVillager, "If the village module is loaded.");
 		if (enableVillager) bus.register(new VillageModule());
-
-		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
 
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());

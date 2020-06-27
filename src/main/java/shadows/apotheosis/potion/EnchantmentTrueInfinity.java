@@ -3,6 +3,8 @@ package shadows.apotheosis.potion;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import shadows.apotheosis.Apotheosis;
 
 public class EnchantmentTrueInfinity extends Enchantment {
@@ -26,4 +28,8 @@ public class EnchantmentTrueInfinity extends Enchantment {
 		return 135;
 	}
 
+	@Override
+	public ITextComponent getDisplayName(int level) {
+		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_GREEN);
+	}
 }

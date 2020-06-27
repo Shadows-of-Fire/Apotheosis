@@ -168,6 +168,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 				if (itemstack.getCount() == 1 && itemstack.isEnchantable()) {
 					gatherStats();
 					float power = this.eterna.get();
+					if (power < 1.5) power = 1.5F;
 					this.rand.setSeed(this.xpSeed.get());
 
 					for (int num = 0; num < 3; ++num) {
