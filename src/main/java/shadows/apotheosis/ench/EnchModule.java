@@ -20,9 +20,12 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.ProtectionEnchantment;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -42,7 +45,6 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -97,6 +99,8 @@ import shadows.apotheosis.ench.objects.ItemShearsExt;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
 import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.objects.SeashelfItem;
+import shadows.apotheosis.ench.replacements.BaneEnchantment;
+import shadows.apotheosis.ench.replacements.DefenseEnchantment;
 import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
 import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
@@ -167,8 +171,6 @@ public class EnchModule {
 		Apotheosis.HELPER.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 6), book, book, book, book, book, book, blaze);
 		ItemStack msBrick = new ItemStack(Blocks.MOSSY_STONE_BRICKS);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
-		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 16), 3, 3, Items.ENDER_EYE, Items.GOLD_NUGGET, Items.ENDER_EYE, Items.BLAZE_POWDER, Items.DRAGON_BREATH, Items.BLAZE_POWDER, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST);
-		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
 		Ingredient maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, ApotheosisObjects.HELL_INFUSION, 5);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
@@ -198,11 +200,6 @@ public class EnchModule {
 			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 			for (int i = 1; i <= info.getMaxLevel(); i++)
 				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
-			String s = "Enchantment: " + ench.getRegistryName() + " Powers: [";
-			for (int i = 1; i <= info.getMaxLevel(); i++)
-				s += info.getMinPower(i) + "/";
-			s = s.substring(0, s.length() - 1) + "]";
-			LOGGER.info(s);
 		}
 		EnchantmentStatRegistry.init();
 	}
@@ -306,7 +303,16 @@ public class EnchModule {
 				new EnchantmentNatureBless().setRegistryName(Apotheosis.MODID, "natures_blessing"),
 				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding"),
 				new EnchantmentMagicProt().setRegistryName(Apotheosis.MODID, "magic_protection"),
-				new SeaInfusionEnchantment().setRegistryName("sea_infusion")
+				new SeaInfusionEnchantment().setRegistryName("sea_infusion"),
+				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.ARTHROPOD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
+				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.UNDEAD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "smite"),
+				new BaneEnchantment(Rarity.COMMON, CreatureAttribute.UNDEFINED, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "sharpness"),
+				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.ILLAGER, EquipmentSlotType.MAINHAND).setRegistryName("bane_of_illagers"),
+				new DefenseEnchantment(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"),
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
+				new DefenseEnchantment(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "feather_falling")
 				);
 		//Formatter::on
 	}
