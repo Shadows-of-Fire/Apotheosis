@@ -19,7 +19,7 @@
 	},
 	"criteria": {
 		"anvil1": {
-			"trigger": "apotheosis:enchanted_item",
+			"trigger": "minecraft:enchanted_item",
 			"conditions": {
 				"item": {
 					"item": "minecraft:anvil"
@@ -27,7 +27,7 @@
 			}
 		},
 		"anvil2": {
-			"trigger": "apotheosis:enchanted_item",
+			"trigger": "minecraft:enchanted_item",
 			"conditions": {
 				"item": {
 					"item": "minecraft:chipped_anvil"
@@ -35,7 +35,7 @@
 			}
 		},
 		"anvil3": {
-			"trigger": "apotheosis:enchanted_item",
+			"trigger": "minecraft:enchanted_item",
 			"conditions": {
 				"item": {
 					"item": "minecraft:damaged_anvil"

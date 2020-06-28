@@ -2,6 +2,7 @@ package shadows.apotheosis.potion;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -25,11 +26,16 @@ public class EnchantmentTrueInfinity extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return 135;
+		return 200;
 	}
 
 	@Override
 	public ITextComponent getDisplayName(int level) {
 		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_GREEN);
+	}
+
+	@Override
+	protected boolean canApplyTogether(Enchantment ench) {
+		return super.canApplyTogether(ench) && ench != Enchantments.INFINITY;
 	}
 }

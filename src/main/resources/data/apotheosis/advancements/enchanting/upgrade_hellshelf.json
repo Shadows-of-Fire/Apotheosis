@@ -1,0 +1,42 @@
+{
+	"parent": "apotheosis:enchanting/hellshelf",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:blazing_hellshelf"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.upgrade_hellshelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.upgrade_hellshelf.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"blazing": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:blazing_hellshelf"
+				}]
+			}
+		},
+		"glowing": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:glowing_hellshelf"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"blazing", "glowing"
+		]
+	]
+}

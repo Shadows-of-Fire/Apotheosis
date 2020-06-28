@@ -44,7 +44,7 @@ public class PotionModule {
 	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
 	static Configuration config;
-	static int knowledgeMult = 10;
+	static int knowledgeMult = 4;
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {

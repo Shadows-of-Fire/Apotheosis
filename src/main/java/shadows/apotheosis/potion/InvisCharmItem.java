@@ -31,7 +31,7 @@ public class InvisCharmItem extends Item {
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
 		if (stack.getOrCreateTag().getBoolean("charm_enabled") && entity instanceof ServerPlayerEntity && ((ServerPlayerEntity) entity).getActivePotionEffect(Effects.INVISIBILITY) == null) {
-			((ServerPlayerEntity) entity).addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 400));
+			((ServerPlayerEntity) entity).addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 400, 0, false, false));
 			if (stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity) entity)) stack.shrink(1);
 		}
 	}

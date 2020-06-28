@@ -19,7 +19,7 @@
 	},
 	"criteria": {
 		"enchant": {
-			"trigger": "apotheosis:enchanted_item",
+			"trigger": "minecraft:enchanted_item",
 			"conditions": {
 				"item": {
 					"item": "minecraft:shield"

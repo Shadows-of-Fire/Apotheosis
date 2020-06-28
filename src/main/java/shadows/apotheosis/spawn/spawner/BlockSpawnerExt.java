@@ -26,6 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
@@ -110,18 +111,22 @@ public class BlockSpawnerExt extends SpawnerBlock {
 	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
 			CompoundNBT tag = stack.getTag().getCompound("BlockEntityTag");
-			if (tag.contains("SpawnData")) tooltip.add(new TranslationTextComponent("info.spw.entity", tag.getCompound("SpawnData").getString("id")));
-			if (tag.contains("MinSpawnDelay")) tooltip.add(new TranslationTextComponent("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
-			if (tag.contains("MaxSpawnDelay")) tooltip.add(new TranslationTextComponent("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
-			if (tag.contains("SpawnCount")) tooltip.add(new TranslationTextComponent("waila.spw.spawncount", tag.getShort("SpawnCount")));
-			if (tag.contains("MaxNearbyEntities")) tooltip.add(new TranslationTextComponent("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
-			if (tag.contains("RequiredPlayerRange")) tooltip.add(new TranslationTextComponent("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
-			if (tag.contains("SpawnRange")) tooltip.add(new TranslationTextComponent("waila.spw.spawnrange", tag.getShort("SpawnRange")));
-			if (tag.getBoolean("ignore_players")) tooltip.add(new TranslationTextComponent("waila.spw.ignoreplayers"));
-			if (tag.getBoolean("ignore_conditions")) tooltip.add(new TranslationTextComponent("waila.spw.ignoreconditions"));
-			if (tag.getBoolean("ignore_cap")) tooltip.add(new TranslationTextComponent("waila.spw.ignorecap"));
-			if (tag.getBoolean("redstone_control")) tooltip.add(new TranslationTextComponent("waila.spw.redstone"));
+			if (tag.contains("SpawnData")) tooltip.add(grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getString("id")));
+			if (tag.contains("MinSpawnDelay")) tooltip.add(grayTranslated("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
+			if (tag.contains("MaxSpawnDelay")) tooltip.add(grayTranslated("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
+			if (tag.contains("SpawnCount")) tooltip.add(grayTranslated("waila.spw.spawncount", tag.getShort("SpawnCount")));
+			if (tag.contains("MaxNearbyEntities")) tooltip.add(grayTranslated("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
+			if (tag.contains("RequiredPlayerRange")) tooltip.add(grayTranslated("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
+			if (tag.contains("SpawnRange")) tooltip.add(grayTranslated("waila.spw.spawnrange", tag.getShort("SpawnRange")));
+			if (tag.getBoolean("ignore_players")) tooltip.add(grayTranslated("waila.spw.ignoreplayers"));
+			if (tag.getBoolean("ignore_conditions")) tooltip.add(grayTranslated("waila.spw.ignoreconditions"));
+			if (tag.getBoolean("ignore_cap")) tooltip.add(grayTranslated("waila.spw.ignorecap"));
+			if (tag.getBoolean("redstone_control")) tooltip.add(grayTranslated("waila.spw.redstone"));
 		}
+	}
+
+	private ITextComponent grayTranslated(String s, Object... args) {
+		return new TranslationTextComponent(s, args).applyTextStyle(TextFormatting.GRAY);
 	}
 
 	@Override

@@ -1,34 +1,34 @@
 {
-	"parent": "apotheosis:enchanting/bookshelf",
+	"parent": "apotheosis:enchanting/enchanter",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
 	}],
 	"display": {
 		"icon": {
-			"item": "apotheosis:hellshelf"
+			"item": "minecraft:bookshelf"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.hellshelf"
+			"translate": "advancements.apotheosis.bookshelf"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.hellshelf.desc"
+			"translate": "advancements.apotheosis.bookshelf.desc"
 		},
 		"frame": "task"
 	},
 	"criteria": {
-		"hellshelf": {
+		"bookshelf": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:hellshelf"
+					"item": "minecraft:bookshelf"
 				}]
 			}
 		}
 	},
 	"requirements": [
 		[
-			"hellshelf"
+			"bookshelf"
 		]
 	]
 }

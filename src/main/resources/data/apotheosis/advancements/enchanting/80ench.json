@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:enchanting/enchanter",
+	"parent": "apotheosis:enchanting/60ench",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
@@ -9,19 +9,19 @@
 			"item": "minecraft:enchanted_book"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.40ench"
+			"translate": "advancements.apotheosis.80ench"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.40ench.desc"
+			"translate": "advancements.apotheosis.80ench.desc"
 		},
 		"frame": "goal"
 	},
 	"criteria": {
 		"enchanted_item": {
-			"trigger": "apotheosis:enchanted_item",
+			"trigger": "minecraft:enchanted_item",
 			"conditions": {
 				"levels": {
-					"min": 40,
+					"min": 80,
 					"max": 2000
 				}
 			}

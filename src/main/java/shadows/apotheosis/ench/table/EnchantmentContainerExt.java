@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.SlotItemHandler;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.advancements.EnchantedTrigger;
 import shadows.apotheosis.util.FloatReferenceHolder;
 
 public class EnchantmentContainerExt extends EnchantmentContainer {
@@ -140,9 +140,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 
 				player.addStat(Stats.ENCHANT_ITEM);
 				if (player instanceof ServerPlayerEntity) {
-					CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity) player, enchanted, i);
-					AdvancementTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity) player, this.tableInventory.getStackInSlot(0), level);
-
+					((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayerEntity) player, enchanted, level, this.eterna.get(), this.quanta.get(), this.arcana.get());
 				}
 
 				this.tableInventory.markDirty();

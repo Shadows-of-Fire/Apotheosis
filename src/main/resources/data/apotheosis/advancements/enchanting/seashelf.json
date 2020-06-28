@@ -6,29 +6,29 @@
 	}],
 	"display": {
 		"icon": {
-			"item": "apotheosis:hellshelf"
+			"item": "apotheosis:seashelf"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.hellshelf"
+			"translate": "advancements.apotheosis.seashelf"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.hellshelf.desc"
+			"translate": "advancements.apotheosis.seashelf.desc"
 		},
 		"frame": "task"
 	},
 	"criteria": {
-		"hellshelf": {
+		"seashelf": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:hellshelf"
+					"item": "apotheosis:seashelf"
 				}]
 			}
 		}
 	},
 	"requirements": [
 		[
-			"hellshelf"
+			"seashelf"
 		]
 	]
 }
