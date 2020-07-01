@@ -38,7 +38,7 @@ import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
 import shadows.apotheosis.garden.EnderLeashItem;
 import shadows.apotheosis.potion.EnchantmentTrueInfinity;
-import shadows.apotheosis.potion.InvisCharmItem;
+import shadows.apotheosis.potion.PotionCharmItem;
 import shadows.apotheosis.potion.ItemLuckyFoot;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.PotionSundering;
@@ -121,7 +121,7 @@ public class ApotheosisObjects {
 	public static final Effect BLEEDING = null;
 	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
-	public static final InvisCharmItem INVISIBILITY_CHARM = null;
+	public static final PotionCharmItem POTION_CHARM = null;
 	public static final Feature<NoFeatureConfig> DEADLY_WORLD_GEN = null;
 	@ObjectHolder("minecraft:enchanting_table")
 	public static final TileEntityType<EnchantingTableTileEntityExt> ENCHANTING_TABLE = null;

@@ -96,6 +96,7 @@ public class Apotheosis {
 		bus.addListener(this::init);
 		bus.addListener(this::initC);
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
+
 	}
 
 	@SubscribeEvent

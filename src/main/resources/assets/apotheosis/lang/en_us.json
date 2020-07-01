@@ -98,7 +98,7 @@
     "advancements.apotheosis.anvilench.desc": "Enchant an anvil",
     "advancements.apotheosis.shieldench": "Shield Enchanter",
     "advancements.apotheosis.shieldench.desc": "Enchant a shield",
-    "advancements.apotheosis.altar": "Enchantment Recycling",
+    "advancements.apotheosis.altar": "Oceanic Transformation",
     "advancements.apotheosis.altar.desc": "Create an Altar of the Seas, which can turn unwanted enchanted items into a new book.",
     "advancements.apotheosis.splitting": "Enchantment Crusher",
     "advancements.apotheosis.splitting.desc": "Successfully drop an anvil enchanted with Splitting on an enchanted book to split it apart",
@@ -471,10 +471,13 @@
 
     "item.apotheosis.lucky_foot": "Lucky Rabbit's Foot",
 
-	"item.apotheosis.invisibility_charm": "Charm of Invisibility",
-	"item.apotheosis.invisibility_charm.desc": "Applies invisibility when active and in the inventory.  Right click to enable/disable.",
-	"item.apotheosis.invisibility_charm.enabled": "Enabled: %s",
-
+    "item.apotheosis.potion_charm_broke": "Invalid Potion Charm",
+	"item.apotheosis.potion_charm": "Charm of %s",
+	"item.apotheosis.potion_charm.desc": "Applies %s when active and in the inventory.  Right click to enable/disable.",
+	"item.apotheosis.potion_charm.enabled": "Enabled: %s",
+	"info.apotheosis.any_same_potion": "Accepts any potion the same as the other two.",
+	"info.apotheosis.req_3_potions": "Requires three of the same potion.",
+	
     "comment_id": "/Anvil Module",
     "info.apotheosis.anvil": "Can be enchanted.",
 

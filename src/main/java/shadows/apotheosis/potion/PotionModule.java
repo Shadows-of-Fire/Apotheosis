@@ -11,32 +11,35 @@ import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionBrewing;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.potion.compat.CuriosCompat;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.PotionSundering;
 import shadows.placebo.config.Configuration;
-import shadows.placebo.recipe.NBTIngredient;
-import shadows.placebo.recipe.TagIngredient;
+import shadows.placebo.recipe.RecipeHelper;
 
 public class PotionModule {
 
@@ -51,6 +54,9 @@ public class PotionModule {
 		config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
 		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
 		if (config.hasChanged()) config.save();
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			FMLJavaModLoadingContext.get().getModEventBus().register(new PotionModuleClient());
+		});
 	}
 
 	@SubscribeEvent
@@ -95,12 +101,9 @@ public class PotionModule {
 		Ingredient res = Apotheosis.potionIngredient(ApotheosisObjects.RESISTANCE);
 		Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
 		Apotheosis.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
-
-		NBTIngredient potion = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.LONG_INVISIBILITY));
-		Item b = Items.BLAZE_POWDER;
-		Apotheosis.HELPER.addShaped(ApotheosisObjects.INVISIBILITY_CHARM, 3, 3, b, b, b, new TagIngredient(Tags.Items.INGOTS_IRON), potion, new TagIngredient(Tags.Items.INGOTS_IRON), b, b, b);
-
+		RecipeHelper.addRecipe(new PotionCharmRecipe());
 		MinecraftForge.EVENT_BUS.register(this);
+		if (ModList.get().isLoaded("curios")) CuriosCompat.sendIMC();
 	}
 
 	@SubscribeEvent
@@ -110,7 +113,7 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().registerAll(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"), new InvisCharmItem().setRegistryName(Apotheosis.MODID, "invisibility_charm"));
+		e.getRegistry().registerAll(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"), new PotionCharmItem().setRegistryName(Apotheosis.MODID, "potion_charm"));
 	}
 
 	@SubscribeEvent
@@ -146,6 +149,11 @@ public class PotionModule {
 		e.getRegistry().register(new PotionSundering().setRegistryName(Apotheosis.MODID, "sundering"));
 		e.getRegistry().register(new KnowledgeEffect().setRegistryName(Apotheosis.MODID, "knowledge"));
 		ObjectHolderRegistry.applyObjectHolders(r -> r.getNamespace().equals(Apotheosis.MODID) && (r.getPath().equals("sundering") || r.getPath().equals("knowledge")));
+	}
+
+	@SubscribeEvent
+	public void serializers(Register<IRecipeSerializer<?>> e) {
+		e.getRegistry().register(PotionCharmRecipe.Serializer.INSTANCE.setRegistryName(ApotheosisObjects.POTION_CHARM.getRegistryName()));
 	}
 
 	@SubscribeEvent
