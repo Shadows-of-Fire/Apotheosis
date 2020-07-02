@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 public class PlayerDistModifier extends SpawnerModifier {
 
 	public PlayerDistModifier() {
-		super(new ItemStack(Items.PRISMARINE_CRYSTALS), 2, 0, 100);
+		super(new ItemStack(Items.PRISMARINE_CRYSTALS), 2, 0, 50);
 	}
 
 	@Override

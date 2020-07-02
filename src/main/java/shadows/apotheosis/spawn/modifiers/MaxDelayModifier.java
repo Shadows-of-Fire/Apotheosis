@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 public class MaxDelayModifier extends SpawnerModifier {
 
 	public MaxDelayModifier() {
-		super(new ItemStack(Items.CLOCK), -10, 20, 99999);
+		super(new ItemStack(Items.CLOCK), -10, 10, 99999);
 	}
 
 	@Override

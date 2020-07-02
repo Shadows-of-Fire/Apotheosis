@@ -89,17 +89,19 @@ public class BlockSpawnerExt extends SpawnerBlock {
 
 	@Override
 	public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (world.isRemote) return ActionResultType.SUCCESS;
 		ItemStack stack = player.getHeldItem(hand);
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileSpawnerExt) {
 			TileSpawnerExt tile = (TileSpawnerExt) te;
 			boolean inverse = SpawnerModifiers.inverseItem.test(player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
-				if (sm.canModify(tile, stack, inverse) && sm.modify(tile, stack, inverse)) {
-					if (!player.isCreative()) stack.shrink(1);
-					AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
-					return ActionResultType.SUCCESS;
+				if (sm.canModify(tile, stack, inverse)) {
+					if (world.isRemote) return ActionResultType.SUCCESS;
+					if (sm.modify(tile, stack, inverse)) {
+						if (!player.isCreative()) stack.shrink(1);
+						AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
+						return ActionResultType.SUCCESS;
+					}
 				}
 			}
 		}

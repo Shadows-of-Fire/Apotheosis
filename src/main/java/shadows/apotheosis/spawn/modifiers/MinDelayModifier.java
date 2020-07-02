@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 public class MinDelayModifier extends SpawnerModifier {
 
 	public MinDelayModifier() {
-		super(new ItemStack(Items.SUGAR), -5, 10, 99999);
+		super(new ItemStack(Items.SUGAR), -5, 5, 99999);
 	}
 
 	@Override

@@ -22,7 +22,7 @@
 			"conditions": {
 				"modifier": "spawn_range",
 				"spawn_range": {
-					"min": 50
+					"min": 32
 				}
 			}
 		}

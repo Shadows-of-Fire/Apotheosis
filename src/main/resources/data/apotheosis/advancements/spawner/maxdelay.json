@@ -22,7 +22,7 @@
 			"conditions": {
 				"modifier": "max_delay",
 				"max_delay": {
-					"max": 0,
+					"max": 10,
 					"min": 0
 				}
 			}
