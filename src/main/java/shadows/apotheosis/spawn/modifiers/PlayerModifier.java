@@ -5,6 +5,7 @@ import net.minecraft.item.Items;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.recipe.VanillaPacketDispatcher;
 
 public class PlayerModifier extends SpawnerModifier {
 
@@ -20,6 +21,7 @@ public class PlayerModifier extends SpawnerModifier {
 	@Override
 	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
 		spawner.ignoresPlayers = !inverting;
+		VanillaPacketDispatcher.dispatchTEToNearbyPlayers(spawner);
 		return true;
 	}
 

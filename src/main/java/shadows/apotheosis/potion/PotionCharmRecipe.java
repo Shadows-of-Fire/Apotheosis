@@ -33,10 +33,8 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	private static NonNullList<Ingredient> makeIngredients() {
 		Ingredient blaze = Ingredient.fromStacks(new ItemStack(Items.BLAZE_POWDER));
 		List<ItemStack> potionStacks = new ArrayList<>();
-		int k = 0;
 		for (Potion p : ForgeRegistries.POTION_TYPES) {
-			if (k++ < 6) continue; //skip empty potion types
-			if (potionStacks.size() > 10) break;
+			if (p.getEffects() == null || p.getEffects().size() != 1) continue;
 			ItemStack potion = new ItemStack(Items.POTION);
 			PotionUtils.addPotionToItemStack(potion, p);
 			AffixHelper.addLore(potion, new TranslationTextComponent("info.apotheosis.any_same_potion"));

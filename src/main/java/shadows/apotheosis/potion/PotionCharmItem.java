@@ -40,7 +40,7 @@ public class PotionCharmItem extends Item {
 			EffectInstance contained = p.getEffects().get(0);
 			EffectInstance active = ((ServerPlayerEntity) entity).getActivePotionEffect(contained.getPotion());
 			if (active == null || active.getDuration() < (active.getPotion() == Effects.NIGHT_VISION ? 210 : 5)) {
-				((ServerPlayerEntity) entity).addPotionEffect(new EffectInstance(contained.getPotion(), contained.getDuration() / 24 + (contained.getPotion() == Effects.NIGHT_VISION ? 210 : 5), contained.getAmplifier(), false, false));
+				((ServerPlayerEntity) entity).addPotionEffect(new EffectInstance(contained.getPotion(), (int) Math.ceil(contained.getDuration() / 24D) + (contained.getPotion() == Effects.NIGHT_VISION ? 210 : 5), contained.getAmplifier(), false, false));
 				if (stack.attemptDamageItem(1, world.rand, (ServerPlayerEntity) entity)) stack.shrink(1);
 			}
 		}

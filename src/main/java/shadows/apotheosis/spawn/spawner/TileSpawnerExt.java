@@ -53,14 +53,6 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 		super.read(tag);
 	}
 
-	public void setIgnoresPlayers(boolean val) {
-		ignoresPlayers = val;
-	}
-
-	public void setIgnoresConditions(boolean val) {
-		ignoresConditions = val;
-	}
-
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		read(pkt.getNbtCompound());
