@@ -55,6 +55,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
+import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -313,5 +314,10 @@ public class AffixEvents {
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void trades(WandererTradesEvent e) {
+		e.getRareTrades().add(new AffixTrade());
 	}
 }
