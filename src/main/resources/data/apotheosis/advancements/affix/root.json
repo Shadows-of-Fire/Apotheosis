@@ -5,17 +5,15 @@
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:wooden_sword"
+			"item": "minecraft:wooden_axe"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.deadly"
+			"translate": "advancements.apotheosis.affix"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.deadly.desc"
+			"translate": "advancements.apotheosis.affix.desc"
 		},
 		"frame": "task",
-		"show_toast": false,
-		"announce_to_chat": false,
 		"hidden": false,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
@@ -24,7 +22,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"apoth": {
-					"type": "sword"
+					"type": "affix"
 				}
 			}
 		}

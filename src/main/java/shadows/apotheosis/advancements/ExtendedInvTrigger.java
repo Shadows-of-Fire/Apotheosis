@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -14,10 +15,13 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.deadly.loot.LootRarity;
+import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
@@ -44,11 +48,28 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 				return enchMap.values().stream().anyMatch(bound::test);
 			}) };
 		}
-		if (type.equals("sword")) {
-			return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SwordItem) };
+		if (type.equals("affix")) {
+			return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
 		}
-		if (type.equals("boss_item")) {
-			return new ItemPredicate[] { new TrueItemPredicate(s -> s.hasTag() && s.getTag().getBoolean("apoth:boss")) };
+		if (type.equals("rarity")) {
+			LootRarity rarity = LootRarity.valueOf(json.get("rarity").getAsString());
+			return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
+		}
+		if (type.equals("nbt")) {
+			CompoundNBT tag;
+			try {
+				tag = JsonToNBT.getTagFromJson(JSONUtils.getString(json.get("nbt"), "nbt"));
+			} catch (CommandSyntaxException e) {
+				throw new RuntimeException(e);
+			}
+			return new ItemPredicate[] { new TrueItemPredicate(s -> {
+				if (!s.hasTag()) return false;
+				for (String key : tag.keySet()) {
+					if (!tag.get(key).equals(s.getTag().get(key))) return false;
+				}
+				return true;
+			}) };
+
 		}
 		return new ItemPredicate[0];
 	}

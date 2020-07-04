@@ -301,6 +301,7 @@ public class AffixEvents {
 					LootEntry entry = WeightedRandom.getRandomItem(rand, LootManager.getEntries());
 					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());
 					ItemStack loot = LootManager.genLootItem(entry.getStack().copy(), rand, rarity);
+					loot.getTag().putBoolean("apoth_rspawn", true);
 					entity.setItemStackToSlot(slot, loot);
 					((MobEntity) entity).setDropChance(slot, 2);
 					return;
@@ -309,7 +310,7 @@ public class AffixEvents {
 				if (rand.nextInt(DeadlyConfig.surfaceBossChance) == 0) {
 					BossItem.initBoss(rand, (MobEntity) entity);
 					Vec3d pos = e.getEntity().getPositionVec();
-					((ServerWorld) e.getWorld()).addLightningBolt(new LightningBoltEntity((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ(), true));
+					if (DeadlyConfig.surfaceBossLightning) ((ServerWorld) e.getWorld()).addLightningBolt(new LightningBoltEntity((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ(), true));
 					return;
 				}
 			}

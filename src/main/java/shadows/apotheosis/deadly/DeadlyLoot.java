@@ -145,6 +145,7 @@ public class DeadlyLoot {
 		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
 			LootRarity rarity = LootRarity.random(ctx.getRandom());
 			ItemStack stack = LootManager.getRandomEntry(ctx.getRandom(), rarity);
+			stack.getTag().putBoolean("apoth_rchest", true);
 			list.accept(LootManager.genLootItem(stack, ctx.getRandom(), rarity));
 		}
 	}

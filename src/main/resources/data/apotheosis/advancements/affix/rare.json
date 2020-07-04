@@ -1,20 +1,20 @@
 {
-	"parent": "apotheosis:affix/random",
+	"parent": "apotheosis:affix/uncommon",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "deadly"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:zombie_head"
+			"item": "minecraft:golden_sword"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.boss"
+			"translate": "advancements.apotheosis.rare"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.boss.desc"
+			"translate": "advancements.apotheosis.rare.desc"
 		},
-		"frame": "challenge",
+		"frame": "task",
 		"hidden": false,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
@@ -23,8 +23,8 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"apoth": {
-					"type": "nbt",
-					"nbt": "{apoth_boss:true}"
+					"type": "rarity",
+					"rarity": "RARE"
 				}
 			}
 		}

@@ -31,6 +31,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.SlotItemHandler;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.advancements.EnchantedTrigger;
+import shadows.apotheosis.ench.objects.ItemTypedBook;
 import shadows.apotheosis.util.FloatReferenceHolder;
 
 public class EnchantmentContainerExt extends EnchantmentContainer {
@@ -116,7 +117,7 @@ public class EnchantmentContainerExt extends EnchantmentContainer {
 			List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.enchantLevels[id]);
 			if (!list.isEmpty()) {
 				player.onEnchant(toEnchant, i);
-				boolean flag = toEnchant.getItem() == Items.BOOK;
+				boolean flag = toEnchant.getItem() == Items.BOOK || toEnchant.getItem() instanceof ItemTypedBook;
 				if (flag) {
 					enchanted = new ItemStack(Items.ENCHANTED_BOOK);
 					this.tableInventory.setInventorySlotContents(0, enchanted);

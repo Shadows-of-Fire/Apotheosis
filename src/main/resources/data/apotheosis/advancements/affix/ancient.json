@@ -1,18 +1,19 @@
 {
-	"parent": "apotheosis:affix/random",
+	"parent": "apotheosis:affix/mythic",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "deadly"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:zombie_head"
+			"item": "minecraft:diamond_sword",
+			"nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.boss"
+			"translate": "advancements.apotheosis.ancient"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.boss.desc"
+			"translate": "advancements.apotheosis.ancient.desc"
 		},
 		"frame": "challenge",
 		"hidden": false,
@@ -23,8 +24,8 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"apoth": {
-					"type": "nbt",
-					"nbt": "{apoth_boss:true}"
+					"type": "rarity",
+					"rarity": "ANCIENT"
 				}
 			}
 		}

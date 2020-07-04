@@ -1,20 +1,20 @@
 {
-	"parent": "apotheosis:affix/random",
+	"parent": "apotheosis:affix/root",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "deadly"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:zombie_head"
+			"item": "minecraft:skeleton_skull"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.boss"
+			"translate": "advancements.apotheosis.random"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.boss.desc"
+			"translate": "advancements.apotheosis.random.desc"
 		},
-		"frame": "challenge",
+		"frame": "task",
 		"hidden": false,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
@@ -24,7 +24,7 @@
 			"conditions": {
 				"apoth": {
 					"type": "nbt",
-					"nbt": "{apoth_boss:true}"
+					"nbt": "{apoth_rspawn:true}"
 				}
 			}
 		}

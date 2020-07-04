@@ -3,7 +3,6 @@ package shadows.apotheosis.deadly.loot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -25,9 +24,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
@@ -94,7 +91,7 @@ public class LootManager extends JsonReloadListener {
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
 		EquipmentSlotType slot = EquipmentType.getTypeFor(stack).getSlot(stack);
 		Multimap<String, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
-		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(new Style().setColor(rarity.color).setItalic(true)));
+		AffixHelper.setRarity(stack, rarity);
 
 		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
 
