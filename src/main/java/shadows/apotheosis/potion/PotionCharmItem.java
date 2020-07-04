@@ -71,6 +71,7 @@ public class PotionCharmItem extends Item {
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotionFromItem(stack);
 			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc", new TranslationTextComponent(p.getEffects().get(0).getEffectName())).applyTextStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc2").applyTextStyle(TextFormatting.GRAY));
 			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".enabled", stack.getOrCreateTag().getBoolean("charm_enabled")).applyTextStyle(TextFormatting.BLUE));
 		}
 	}

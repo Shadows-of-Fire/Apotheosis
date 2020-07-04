@@ -279,6 +279,9 @@
 
     "enchantment.apotheosis.icy_thorns": "Icy Thorns",
     "enchantment.apotheosis.icy_thorns.desc": "Slows attackers.",
+	
+	"enchantment.apotheosis.bane_of_illagers": "Bane of Illagers",
+    "enchantment.apotheosis.bane_of_illagers.desc": "Illagers take increased damage.",
 
     "death.attack.apoth_corrupted": "%1$s was drained by a corrupted enchantment.",
 
@@ -507,7 +510,8 @@
 
     "item.apotheosis.potion_charm_broke": "Invalid Potion Charm",
 	"item.apotheosis.potion_charm": "Charm of %s",
-	"item.apotheosis.potion_charm.desc": "Applies %s when active and in the inventory.\nRight click to enable/disable.",
+	"item.apotheosis.potion_charm.desc": "Applies %s when active and in the inventory.",
+	"item.apotheosis.potion_charm.desc2": "Right click to enable/disable.",
 	"item.apotheosis.potion_charm.enabled": "Enabled: %s",
 	"info.apotheosis.any_same_potion": "Accepts any potion the same as the other two.",
 	"info.apotheosis.req_3_potions": "Requires three of the same potion.",

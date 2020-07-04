@@ -4,10 +4,25 @@ Smithing System (Like crafting, but with a Smithing Table)
 
 Advancements for Fletching
 
-Fix max power functions for vanilla enchantments that cause min > max at high levels.
-
 Bamboo configurable growth heights
 
-Potion Rings
-
 Glass break faster with pickaxe
+
+Experience Storage System with level precision
+
+---Suggestions---
+
+ Some sort of item to directly upgrade 1 enchantment by 1 level. 
+ Maybe a sort of legendary tome that can be enchanted or combined with
+ books in order to make a sort of "tier up" for a certain enchant. 
+ Would be nice for maxing out items via slow and steady progress rather than chance.
+ 
+ a "payload" enchantment for crossbows that increases the damage of firework rockets?
+ 
+ 
+ some changes to lapis, because it piles up really fast and you never
+ actually have to worry about running out of it (configurable "fuel"
+ for ench table or something else optional to make the ench process in general more end-gamish) 
+ or rare temporary buffs to new table stats
+ 
+ trident had a damage increasing enchant. One that wasn't specific to certain mobs 
