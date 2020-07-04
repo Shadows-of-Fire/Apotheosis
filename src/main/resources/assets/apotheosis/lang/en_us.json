@@ -266,7 +266,7 @@
     "enchantment.apotheosis.mounted_strike.desc": "Deals extra damage when on a horse.",
 
     "enchantment.apotheosis.depth_miner": "Miner's Fervor",
-    "enchantment.apotheosis.depth_miner.desc": "Adjusts mining speed based on Y-level.",
+    "enchantment.apotheosis.depth_miner.desc": "You will mine very fast, but never instantly.",
 
     "enchantment.apotheosis.stable_footing": "Stable Footing",
     "enchantment.apotheosis.stable_footing.desc": "Negates the mining speed penalty for flying.",
