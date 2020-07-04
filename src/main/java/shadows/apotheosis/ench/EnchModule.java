@@ -427,7 +427,7 @@ public class EnchModule {
 		if (depth > 0) {
 			if (stack.getDestroySpeed(e.getState()) > 1.0F) {
 				float hardness = e.getState().getBlockHardness(e.getPlayer().world, e.getPos());
-				e.setNewSpeed(Math.min(29.99F, 10 + 4 * depth) * hardness);
+				e.setNewSpeed(Math.min(29.99F, 7.5F + 4.5F * depth) * hardness);
 			}
 		}
 	}
@@ -523,7 +523,7 @@ public class EnchModule {
 		while (minPower < 150) {
 			++level;
 			int diff = ench.getMinEnchantability(level) - ench.getMinEnchantability(level - 1);
-			minPower = level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow((level - ench.getMaxLevel()), 1.6) : ench.getMinEnchantability(level);
+			minPower = level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow(level - ench.getMaxLevel(), 1.6) : ench.getMinEnchantability(level);
 			if (lastPower == minPower) {
 				level--;
 				break;

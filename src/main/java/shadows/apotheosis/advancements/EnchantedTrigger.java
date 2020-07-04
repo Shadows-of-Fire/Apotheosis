@@ -51,6 +51,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 			return super.test(stack, level) && this.eterna.test(eterna) && this.quanta.test(quanta) && this.arcana.test(arcana);
 		}
 
+		@Override
 		public JsonElement serialize() {
 			JsonObject jsonobject = (JsonObject) super.serialize();
 			jsonobject.add("eterna", this.eterna.serialize());

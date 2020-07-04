@@ -19,25 +19,30 @@ public class BaneEnchantment extends DamageEnchantment {
 		this.attrib = attrib;
 	}
 
+	@Override
 	public int getMinEnchantability(int level) {
 		if (this.attrib == CreatureAttribute.UNDEFINED) return 1 + (level - 1) * 11;
 		return 5 + (level - 1) * 8;
 	}
 
+	@Override
 	public int getMaxEnchantability(int level) {
 		return getMinEnchantability(level) + 20;
 	}
 
+	@Override
 	public int getMaxLevel() {
 		return 5;
 	}
 
+	@Override
 	public float calcDamageByCreature(int level, CreatureAttribute attrib) {
 		if (this.attrib == CreatureAttribute.UNDEFINED) return 1 + level * 0.5F;
 		if (this.attrib == attrib) return level * 1.5F;
 		return 0;
 	}
 
+	@Override
 	public boolean canApplyTogether(Enchantment ench) {
 		if (this.attrib == CreatureAttribute.UNDEFINED) return ench != this;
 		return ench == Enchantments.SHARPNESS ? ench != this : !(ench instanceof BaneEnchantment);
@@ -46,6 +51,7 @@ public class BaneEnchantment extends DamageEnchantment {
 	/**
 	* Called whenever a mob is damaged with an item that has this enchantment on it.
 	*/
+	@Override
 	public void onEntityDamaged(LivingEntity p_151368_1_, Entity p_151368_2_, int p_151368_3_) {
 		if (p_151368_2_ instanceof LivingEntity) {
 			LivingEntity livingentity = (LivingEntity) p_151368_2_;

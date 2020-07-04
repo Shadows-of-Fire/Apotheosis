@@ -13,6 +13,7 @@ public class DefenseEnchantment extends ProtectionEnchantment {
 		super(rarity, type, slots);
 	}
 
+	@Override
 	public int calcModifierDamage(int level, DamageSource source) {
 		if (source.canHarmInCreative()) {
 			return 0;
@@ -32,6 +33,7 @@ public class DefenseEnchantment extends ProtectionEnchantment {
 	/**
 	 * Determines if the enchantment passed can be applyied together with this enchantment.
 	 */
+	@Override
 	public boolean canApplyTogether(Enchantment ench) {
 		if (this == Enchantments.FEATHER_FALLING) return ench != this;
 		if (this == Enchantments.PROTECTION) return ench != this;

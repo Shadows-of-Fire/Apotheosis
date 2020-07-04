@@ -78,7 +78,7 @@ public class EnchantmentInfo {
 		return level -> {
 			if (level > 1) {
 				int diff = ench.getMinEnchantability(ench.getMaxLevel()) - ench.getMinEnchantability(ench.getMaxLevel() - 1);
-				return level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow((level - ench.getMaxLevel()), 1.6) : ench.getMinEnchantability(level);
+				return level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow(level - ench.getMaxLevel(), 1.6) : ench.getMinEnchantability(level);
 			}
 			return ench.getMinEnchantability(level);
 		};

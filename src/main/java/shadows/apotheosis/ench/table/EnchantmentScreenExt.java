@@ -314,7 +314,7 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 			this.last = itemstack;
 
 			while (true) {
-				this.flipT += (float) (this.random.nextInt(4) - this.random.nextInt(4));
+				this.flipT += this.random.nextInt(4) - this.random.nextInt(4);
 				if (!(this.flip <= this.flipT + 1.0F) || !(this.flip >= this.flipT - 1.0F)) {
 					break;
 				}
@@ -327,7 +327,7 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 		boolean flag = false;
 
 		for (int i = 0; i < 3; ++i) {
-			if ((this.container).enchantLevels[i] != 0) {
+			if (this.container.enchantLevels[i] != 0) {
 				flag = true;
 			}
 		}

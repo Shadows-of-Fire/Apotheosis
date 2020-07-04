@@ -24,6 +24,7 @@ public class ConditionModifier extends SpawnerModifier {
 		return true;
 	}
 
+	@Override
 	public void load(Configuration cfg) {
 		String s = cfg.getString(ITEM, getCategory(), getDefaultItem(), "The item that applies this modifier.");
 		item = SpawnerModifiers.readStackCfg(s);

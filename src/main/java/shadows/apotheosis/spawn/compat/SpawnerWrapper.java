@@ -74,6 +74,7 @@ public class SpawnerWrapper {
 			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.inverseItem.getMatchingStacks())));
 		}
 
+		@Override
 		public void drawInfo(Minecraft mc, int width, int height, double mouseX, double mouseY) {
 			mc.fontRenderer.drawString(I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
 			mc.fontRenderer.drawString(I18n.format("jei.spw.invert2"), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
