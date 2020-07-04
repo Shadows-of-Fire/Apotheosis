@@ -3,11 +3,9 @@ package shadows.apotheosis.ench;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,35 +17,34 @@ import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.ProtectionEnchantment;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.EnchantmentContainer;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.HoeItem;
-import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTier;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
-import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -56,23 +53,21 @@ import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
@@ -84,12 +79,10 @@ import shadows.apotheosis.ench.anvil.ItemAnvilExt;
 import shadows.apotheosis.ench.anvil.TileAnvil;
 import shadows.apotheosis.ench.enchantments.EnchantmentBerserk;
 import shadows.apotheosis.ench.enchantments.EnchantmentDepths;
-import shadows.apotheosis.ench.enchantments.EnchantmentHellInfused;
 import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
 import shadows.apotheosis.ench.enchantments.EnchantmentKnowledge;
 import shadows.apotheosis.ench.enchantments.EnchantmentLifeMend;
 import shadows.apotheosis.ench.enchantments.EnchantmentMagicProt;
-import shadows.apotheosis.ench.enchantments.EnchantmentMounted;
 import shadows.apotheosis.ench.enchantments.EnchantmentNatureBless;
 import shadows.apotheosis.ench.enchantments.EnchantmentRebounding;
 import shadows.apotheosis.ench.enchantments.EnchantmentReflective;
@@ -97,15 +90,25 @@ import shadows.apotheosis.ench.enchantments.EnchantmentScavenger;
 import shadows.apotheosis.ench.enchantments.EnchantmentShieldBash;
 import shadows.apotheosis.ench.enchantments.EnchantmentStableFooting;
 import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
-import shadows.apotheosis.ench.objects.BlockHellBookshelf;
-import shadows.apotheosis.ench.objects.ItemHellBookshelf;
+import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
+import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
+import shadows.apotheosis.ench.objects.HellshelfBlock;
+import shadows.apotheosis.ench.objects.HellshelfItem;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
 import shadows.apotheosis.ench.objects.ItemShearsExt;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.objects.SeashelfBlock;
+import shadows.apotheosis.ench.objects.SeashelfItem;
+import shadows.apotheosis.ench.replacements.BaneEnchantment;
+import shadows.apotheosis.ench.replacements.DefenseEnchantment;
+import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
+import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
 import shadows.apotheosis.ench.table.EnchantmentContainerExt;
+import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
+import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
-import shadows.placebo.recipe.NBTIngredient;
+import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
 
 /**
@@ -116,7 +119,7 @@ import shadows.placebo.util.ReflectionHelper;
  *
  * Enchantment min/max enchantability should really be called something else, they aren't fully based on enchantability.
  * Enchantment rarity affects weight in WeightedRandom list picking.
- * Max expected table level is 150, 40 before empowered shelves.
+ * Max table level is 100, 30 before better shelves.
  *
  */
 public class EnchModule {
@@ -130,38 +133,15 @@ public class EnchModule {
 	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
 	public static final EnchantmentType ANVIL = EnchantmentType.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
 	static Configuration enchInfoConfig;
-	public static int absMax = 170;
-
-	public static boolean allowWeb = true;
-	public static float maxNormalPower = 20;
-	public static float maxPower = 75;
-
-	public static boolean itemMerging = false;
 
 	@SubscribeEvent
 	public void init(ApotheosisSetup e) {
-		//config = new Configuration(new File(Apotheosis.configDir, "enchantability.cfg"));
-		setEnch(ItemTier.GOLD, 40);
-		setEnch(ArmorMaterial.GOLD, 40);
-		/* TODO: Materials and tiers are no longer centralized and no longer have names.  Explore new options.
-		for (ArmorMaterial a : ArmorMaterial.values())
-			setEnch(a, config.getInt(a.name(), "Enchantability - Armor", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this armor material."));
-		for (ItemTier a : ItemTier.values())
-			setEnch(a, config.getInt(a.name(), "Enchantability - Tools", a.getEnchantability(), 0, Integer.MAX_VALUE, "The enchantability of this tool material."));
-		*/
-		//if (config.hasChanged()) config.save();
-
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
-		allowWeb = config.getBoolean("Enable Cobwebs", "general", allowWeb, "If cobwebs can be used in anvils to remove enchantments.");
-		maxNormalPower = config.getFloat("Max Normal Power", "general", maxNormalPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive from normal sources.");
-		maxPower = config.getFloat("Max Power", "general", maxPower, 0, Float.MAX_VALUE, "The maximum enchantment power a table can receive.");
-		itemMerging = config.getBoolean("Item Merging", "general", false, "If any two enchanted items can be combined in an Anvil.");
 		if (config.hasChanged()) config.save();
 
-		recalcAbsMax();
 		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
-			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
+			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
 			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			EnchantmentInfo info = new EnchantmentInfo(ench, max, min);
@@ -174,7 +154,7 @@ public class EnchModule {
 		if (config.hasChanged()) config.save();
 		enchInfoConfig = config;
 
-		Ingredient pot = new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.REGENERATION));
+		Ingredient pot = Apotheosis.potionIngredient(Potions.REGENERATION);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "forge:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.COBWEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
 		ItemStack book = new ItemStack(Items.BOOK);
@@ -190,35 +170,80 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.BOW_BOOK, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
 		Apotheosis.HELPER.addShapeless(new ItemStack(ApotheosisObjects.NULL_BOOK, 6), book, book, book, book, book, book, blaze);
 		ItemStack msBrick = new ItemStack(Blocks.MOSSY_STONE_BRICKS);
-		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.HEART_OF_THE_SEA, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
-		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 16), 3, 3, Items.ENDER_EYE, Items.GOLD_NUGGET, Items.ENDER_EYE, Items.BLAZE_POWDER, Items.DRAGON_BREATH, Items.BLAZE_POWDER, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST);
-		Apotheosis.HELPER.addShaped(new ItemStack(Items.EXPERIENCE_BOTTLE, 1), 3, 3, Items.ENDER_EYE, Blocks.GOLD_BLOCK, Items.ENDER_EYE, Items.BLAZE_ROD, PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), Items.BLAZE_ROD, Blocks.GLOWSTONE, Blocks.GLOWSTONE, Blocks.GLOWSTONE);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
+		Ingredient maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, ApotheosisObjects.HELL_INFUSION, 5);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
+		Ingredient maxSeashelf = new EnchantmentIngredient(ApotheosisObjects.SEASHELF, ApotheosisObjects.SEA_INFUSION, 5);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.ENDSHELF, 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.PEARL_ENDSHELF, 3, 3, Items.END_ROD, null, Items.END_ROD, Items.ENDER_PEARL, ApotheosisObjects.ENDSHELF, Items.ENDER_PEARL, Items.END_ROD, null, Items.END_ROD);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, ApotheosisObjects.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.BEESHELF, 3, 3, Items.field_226635_pU_, Items.BEEHIVE, Items.field_226635_pU_, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.field_226635_pU_, Items.BEEHIVE, Items.field_226635_pU_);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
+
 		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
+		LootSystem.defaultBlockTable(ApotheosisObjects.BLAZING_HELLSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.GLOWING_HELLSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.CRYSTAL_SEASHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.HEART_SEASHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.ENDSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.PEARL_ENDSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.DRACONIC_ENDSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.BEESHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.MELONSHELF);
 		MinecraftForge.EVENT_BUS.register(this);
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 			for (int i = 1; i <= info.getMaxLevel(); i++)
 				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
 		}
+		EnchantmentStatRegistry.init();
+	}
+
+	@SubscribeEvent
+	public void client(ApotheosisClientSetup e) {
+		MinecraftForge.EVENT_BUS.register(new EnchModuleClient());
+		EnchModuleClient.init();
 	}
 
 	@SubscribeEvent
 	public void tiles(Register<TileEntityType<?>> e) {
-		e.getRegistry().register(new TileEntityType<TileEntity>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
+		e.getRegistry().register(new TileEntityType<>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
 		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
+		e.getRegistry().register(new TileEntityType<>(EnchantingTableTileEntityExt::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
+	}
+
+	@SubscribeEvent
+	public void containers(Register<ContainerType<?>> e) {
+		e.getRegistry().register(new ContainerType<>(EnchantmentContainerExt::new).setRegistryName("enchanting"));
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new BlockHellBookshelf().setRegistryName("hellshelf"),
 				new BlockPrismaticAltar().setRegistryName(Apotheosis.MODID, "prismatic_altar"),
 				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
 				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
-				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"));
+				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"),
+				new HellshelfBlock().setRegistryName("hellshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
+				new SeashelfBlock().setRegistryName("seashelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("crystal_seashelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("heart_seashelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("endshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
+				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
+				new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
+				new Block(Block.Properties.create(Material.GOURD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
+				);
 		//Formatter::on
+		PlaceboUtil.registerOverrideBlock(new EnchantingTableBlockExt().setRegistryName("minecraft:enchanting_table"), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
@@ -228,7 +253,6 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				shears = new ItemShearsExt(),
-				new ItemHellBookshelf(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ItemAnvilExt(Blocks.ANVIL),
 				new ItemAnvilExt(Blocks.CHIPPED_ANVIL),
@@ -243,7 +267,18 @@ public class EnchModule {
 				new ItemTypedBook(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
 				new ItemTypedBook(Items.BOW, EnchantmentType.BOW),
 				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("prismatic_altar"),
-				new ItemScrapTome()
+				new ItemScrapTome(),
+				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
+				new BlockItem(ApotheosisObjects.BLAZING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("blazing_hellshelf"),
+				new BlockItem(ApotheosisObjects.GLOWING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("glowing_hellshelf"),
+				new SeashelfItem(ApotheosisObjects.SEASHELF).setRegistryName(ApotheosisObjects.SEASHELF.getRegistryName()),
+				new BlockItem(ApotheosisObjects.CRYSTAL_SEASHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("crystal_seashelf"),
+				new BlockItem(ApotheosisObjects.HEART_SEASHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("heart_seashelf"),
+				new BlockItem(ApotheosisObjects.ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("endshelf"),
+				new BlockItem(ApotheosisObjects.DRACONIC_ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("draconic_endshelf"),
+				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("pearl_endshelf"),
+				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("beeshelf"),
+				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("melonshelf")
 				);
 		//Formatter::on
 		DispenserBlock.registerDispenseBehavior(shears, DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(oldShears));
@@ -253,8 +288,7 @@ public class EnchModule {
 	public void enchants(Register<Enchantment> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new EnchantmentHellInfused().setRegistryName(Apotheosis.MODID, "hell_infusion"),
-				new EnchantmentMounted().setRegistryName(Apotheosis.MODID, "mounted_strike"),
+				new HellInfusionEnchantment().setRegistryName(Apotheosis.MODID, "hell_infusion"),
 				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
 				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
 				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"),
@@ -268,7 +302,17 @@ public class EnchModule {
 				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"),
 				new EnchantmentNatureBless().setRegistryName(Apotheosis.MODID, "natures_blessing"),
 				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding"),
-				new EnchantmentMagicProt().setRegistryName(Apotheosis.MODID, "magic_protection")
+				new EnchantmentMagicProt().setRegistryName(Apotheosis.MODID, "magic_protection"),
+				new SeaInfusionEnchantment().setRegistryName("sea_infusion"),
+				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.ARTHROPOD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
+				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.UNDEAD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "smite"),
+				new BaneEnchantment(Rarity.COMMON, CreatureAttribute.UNDEFINED, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "sharpness"),
+				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.ILLAGER, EquipmentSlotType.MAINHAND).setRegistryName("bane_of_illagers"),
+				new DefenseEnchantment(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"),
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
+				new DefenseEnchantment(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "feather_falling")
 				);
 		//Formatter::on
 	}
@@ -281,7 +325,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void anvilEvent(AnvilUpdateEvent e) {
 		if (!EnchantmentHelper.getEnchantments(e.getLeft()).isEmpty()) {
-			if (allowWeb && e.getRight().getItem() == Items.COBWEB) {
+			if (e.getRight().getItem() == Items.COBWEB) {
 				ItemStack stack = e.getLeft().copy();
 				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(ent -> ent.getKey(), ent -> ent.getValue())), stack);
 				e.setCost(1);
@@ -297,76 +341,25 @@ public class EnchModule {
 			}
 		}
 		if ((e.getLeft().getItem() == Items.CHIPPED_ANVIL || e.getLeft().getItem() == Items.DAMAGED_ANVIL) && e.getRight().getItem().isIn(Tags.Items.STORAGE_BLOCKS_IRON)) {
-			int dmg = e.getLeft().getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
 			if (e.getLeft().getCount() != 1) return;
+			int dmg = e.getLeft().getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
 			ItemStack out = new ItemStack(dmg == 1 ? Items.ANVIL : Items.CHIPPED_ANVIL);
 			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(e.getLeft()), out);
 			out.setCount(1);
 			e.setOutput(out);
-			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) * 2 + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 3);
+			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 2);
 			e.setMaterialCost(1);
 			return;
 		}
 		if (ItemTypedBook.updateAnvil(e)) return;
 		if (ItemScrapTome.updateAnvil(e)) return;
-		if (itemMerging && mergeAll(e)) return;
-	}
-
-	private boolean mergeAll(AnvilUpdateEvent ev) {
-		ItemStack right = ev.getRight();
-		ItemStack left = ev.getLeft();
-		if (!right.isEnchanted() || !left.getItem().isEnchantable(left)) return false;
-		Map<Enchantment, Integer> rightEnch = EnchantmentHelper.getEnchantments(right);
-		Map<Enchantment, Integer> leftEnch = EnchantmentHelper.getEnchantments(left);
-		int cost = 0;
-
-		for (Enchantment ench : rightEnch.keySet()) {
-			if (ench == null) continue;
-
-			int level = rightEnch.get(ench);
-			int curLevel = leftEnch.containsKey(ench) ? leftEnch.get(ench) : 0;
-			if (level > 0 && level == curLevel) level = Math.min(EnchModule.getEnchInfo(ench).getMaxLevel(), level + 1);
-			if (curLevel > level) level = curLevel;
-
-			if (ench.canApply(left)) {
-				boolean isCompat = true;
-				for (Enchantment ench2 : leftEnch.keySet()) {
-					if (ench != ench2 && !ench.isCompatibleWith(ench2)) isCompat = false;
-				}
-				if (!isCompat) return false;
-				leftEnch.put(ench, level);
-				int addition = 0;
-				switch (ench.getRarity()) {
-				case COMMON:
-					addition += 2 * level;
-					break;
-				case UNCOMMON:
-					addition += 4 * level;
-					break;
-				case RARE:
-					addition += 6 * level;
-					break;
-				case VERY_RARE:
-					addition += 12 * level;
-				}
-				cost += Math.max(1, addition / 2);
-			}
-		}
-		if (cost > 0) {
-			cost += left.getRepairCost();
-			ItemStack out = left.copy();
-			out.setRepairCost(left.getRepairCost() * 2 + 1);
-			EnchantmentHelper.setEnchantments(leftEnch, out);
-			ev.setMaterialCost(1);
-			ev.setCost(cost);
-			ev.setOutput(out);
-			return true;
-		}
-		return false;
 	}
 
 	Method dropLoot;
 
+	/**
+	 * Event handler for the Scavenger and Knowledge of the Ages enchantments.
+	 */
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) throws Exception {
 		Entity attacker = e.getSource().getTrueSource();
@@ -399,14 +392,17 @@ public class EnchModule {
 
 	final EquipmentSlotType[] slots = EquipmentSlotType.values();
 
+	/**
+	 * Event handler for the Life Mending enchantment
+	 */
 	@SubscribeEvent
 	public void lifeMend(LivingUpdateEvent e) {
-		if (e.getEntity().world.isRemote) return;
+		if (e.getEntity().world.isRemote || e.getEntity().ticksExisted % 20 != 0) return;
 		for (EquipmentSlotType slot : slots) {
 			ItemStack stack = e.getEntityLiving().getItemStackFromSlot(slot);
 			if (!stack.isEmpty() && stack.isDamaged()) {
 				int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.LIFE_MENDING, stack);
-				if (level > 0 && e.getEntityLiving().world.rand.nextInt(10) == 0) {
+				if (level > 0) {
 					int i = Math.min(level, stack.getDamage());
 					e.getEntityLiving().attackEntityFrom(CORRUPTED, i * 0.7F);
 					stack.setDamage(stack.getDamage() - i);
@@ -416,6 +412,9 @@ public class EnchModule {
 		}
 	}
 
+	/**
+	 * Event handler for the Stable Footing and Miner's Fervor enchants.
+	 */
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		PlayerEntity p = e.getPlayer();
@@ -434,6 +433,9 @@ public class EnchModule {
 		}
 	}
 
+	/**
+	 * Event handler for the Nature's Blessing enchantment.
+	 */
 	@SubscribeEvent
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
 		ItemStack s = e.getItemStack();
@@ -445,6 +447,9 @@ public class EnchModule {
 		}
 	}
 
+	/**
+	 * Event handler for Anvil Unbreaking.
+	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void applyUnbreaking(AnvilRepairEvent e) {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
@@ -454,23 +459,9 @@ public class EnchModule {
 		}
 	}
 
-	@SubscribeEvent
-	public void enchLevel(EnchantmentLevelSetEvent e) {
-		int power = e.getPower();
-		//Power * 2, Power * 1.5, Power * 1
-		e.setLevel(Math.max(e.getEnchantRow() + 1, MathHelper.floor(power * (1 + e.getEnchantRow() * 0.5F))));
-	}
-
-	@SubscribeEvent
-	public void enchContainer(PlayerContainerEvent.Open e) {
-		if (!e.getEntity().world.isRemote && e.getContainer().getClass() == EnchantmentContainer.class) {
-			EnchantmentContainer old = (EnchantmentContainer) e.getContainer();
-			EnchantmentContainerExt newC = new EnchantmentContainerExt(old.windowId, e.getPlayer().inventory, old.field_217006_g);
-			newC.addListener((ServerPlayerEntity) e.getEntity());
-			e.getPlayer().openContainer = newC;
-		}
-	}
-
+	/**
+	 * Handles the Berserker's Fury and Occult Aversion enchantments.
+	 */
 	@SubscribeEvent
 	public void livingHurt(LivingHurtEvent e) {
 		LivingEntity user = e.getEntityLiving();
@@ -487,24 +478,10 @@ public class EnchModule {
 			LivingEntity src = (LivingEntity) e.getSource().getTrueSource();
 			int lvl = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.MAGIC_PROTECTION, src);
 			if (lvl > 0) {
+				//TODO: FIXME should only be reducing damage by the value of OA, this will use all active protection enchantments.
 				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getEnchantmentModifierDamage(src.getArmorInventoryList(), e.getSource())));
 			}
 		}
-	}
-
-	public static void setEnch(ItemTier mat, int ench) {
-		ReflectionHelper.setPrivateValue(ItemTier.class, mat, ench, "enchantability", "field_78008_j");
-	}
-
-	public static void setEnch(ArmorMaterial mat, int ench) {
-		ReflectionHelper.setPrivateValue(ArmorMaterial.class, mat, ench, "enchantability", "field_78055_h");
-	}
-
-	public static Set<IItemTier> getAllTiers() {
-		Set<IItemTier> tiers = new HashSet<>();
-		for (Item i : ForgeRegistries.ITEMS)
-			if (i instanceof TieredItem) tiers.add(((TieredItem) i).getTier());
-		return tiers;
 	}
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
@@ -520,7 +497,7 @@ public class EnchModule {
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
 		}
 		if (info == null) {
-			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment.");
+			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
 			int min = enchInfoConfig.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
 			if (min > max) min = max;
 			info = new EnchantmentInfo(ench, max, min);
@@ -541,30 +518,20 @@ public class EnchModule {
 	public static int getDefaultMax(Enchantment ench) {
 		int level = ench.getMaxLevel();
 		if (level == 1) return 1;
-		int maxPower = ench.getMaxEnchantability(level);
-		if (maxPower >= absMax) return level;
-		int lastMaxPower = maxPower; //Need this to check that we don't get locked up on single-level enchantments.
-		while (maxPower < absMax) {
-			maxPower = ench.getMaxEnchantability(++level);
-			if (lastMaxPower == maxPower) {
+		int minPower = ench.getMinEnchantability(level);
+		if (minPower >= 150) return level;
+		int lastPower = minPower; //Need this to check that we don't get locked up on static-power enchantments.
+		while (minPower < 150) {
+			++level;
+			int diff = ench.getMinEnchantability(level) - ench.getMinEnchantability(level - 1);
+			minPower = level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow((level - ench.getMaxLevel()), 1.6) : ench.getMinEnchantability(level);
+			if (lastPower == minPower) {
 				level--;
 				break;
 			}
-			lastMaxPower = maxPower;
+			lastPower = minPower;
 		}
 		return level;
-	}
-
-	static void recalcAbsMax() {
-		int max = MathHelper.ceil(maxPower * 2);
-		int maxEnch = 0;
-		for (IItemTier m : getAllTiers()) {
-			maxEnch = Math.max(maxEnch, m.getEnchantability());
-		}
-		for (ArmorMaterial m : ArmorMaterial.values()) {
-			maxEnch = Math.max(maxEnch, m.getEnchantability());
-		}
-		absMax = max + maxEnch / 2 + 3;
 	}
 
 }

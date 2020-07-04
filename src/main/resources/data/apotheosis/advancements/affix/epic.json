@@ -1,0 +1,37 @@
+{
+	"parent": "apotheosis:affix/rare",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:diamond_sword"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.epic"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.epic.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "rarity",
+					"rarity": "EPIC"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

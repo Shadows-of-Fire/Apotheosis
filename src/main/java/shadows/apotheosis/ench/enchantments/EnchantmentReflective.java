@@ -13,7 +13,7 @@ public class EnchantmentReflective extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return 1 + enchantmentLevel * 15;
+		return 1 + enchantmentLevel * 18;
 	}
 
 	@Override

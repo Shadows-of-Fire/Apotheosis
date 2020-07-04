@@ -3,12 +3,12 @@ package shadows.apotheosis.spawn.modifiers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 
 public class MaxDelayModifier extends SpawnerModifier {
 
 	public MaxDelayModifier() {
-		super(new ItemStack(Items.CLOCK), -10);
+		super(new ItemStack(Items.CLOCK), -10, 10, 99999);
 	}
 
 	@Override

@@ -1,0 +1,43 @@
+{
+	"parent": "apotheosis:enchanting/enchanter",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:experience_bottle"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.enchanting_stats"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.enchanting_stats.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "minecraft:enchanted_item",
+			"conditions": {
+				"eterna": {
+					"min": 10,
+					"max": 2000
+				},
+				"quanta": {
+					"min": 1,
+					"max": 2000
+				},
+				"arcana": {
+					"min": 1,
+					"max": 2000
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
+}

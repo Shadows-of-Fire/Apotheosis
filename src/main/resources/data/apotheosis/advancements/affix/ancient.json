@@ -1,0 +1,38 @@
+{
+	"parent": "apotheosis:affix/mythic",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:diamond_sword",
+			"nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.ancient"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.ancient.desc"
+		},
+		"frame": "challenge",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "rarity",
+					"rarity": "ANCIENT"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

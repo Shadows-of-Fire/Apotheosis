@@ -3,6 +3,8 @@ package shadows.apotheosis.ench.enchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class EnchantmentBerserk extends Enchantment {
 
@@ -12,7 +14,7 @@ public class EnchantmentBerserk extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 60 + level * 15;
+		return 40 + level * 30;
 	}
 
 	@Override
@@ -22,12 +24,17 @@ public class EnchantmentBerserk extends Enchantment {
 
 	@Override
 	public int getMaxLevel() {
-		return 4;
+		return 3;
 	}
 
 	@Override
 	public boolean isCurse() {
 		return true;
+	}
+
+	@Override
+	public ITextComponent getDisplayName(int level) {
+		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_RED);
 	}
 
 }

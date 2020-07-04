@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.SpawnerModifiers;
@@ -47,7 +48,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerInverseWrapper()
 				), getPluginUid());
 		//Formatter::on
-		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, I18n.format("jei.spw.instructions", Enchantments.SILK_TOUCH.getDisplayName(SpawnerModule.spawnerSilkLevel).getFormattedText()));
+		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, I18n.format("jei.spw.instructions", Enchantments.SILK_TOUCH.getDisplayName(SpawnerModule.spawnerSilkLevel).applyTextStyle(TextFormatting.DARK_BLUE).getFormattedText()));
 		for (Item i : ForgeRegistries.ITEMS) {
 			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM, "jei.spw.capturing");
 		}

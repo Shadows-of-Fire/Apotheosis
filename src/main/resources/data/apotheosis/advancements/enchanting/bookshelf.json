@@ -1,0 +1,34 @@
+{
+	"parent": "apotheosis:enchanting/enchanter",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:bookshelf"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.bookshelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.bookshelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"bookshelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "minecraft:bookshelf"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"bookshelf"
+		]
+	]
+}

@@ -1,0 +1,37 @@
+{
+	"parent": "apotheosis:affix/random",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:zombie_head"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.boss"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.boss.desc"
+		},
+		"frame": "challenge",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "nbt",
+					"nbt": "{apoth_boss:true}"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

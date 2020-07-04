@@ -17,6 +17,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -29,6 +30,7 @@ import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
+import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
 import shadows.apotheosis.village.VillageModule;
@@ -61,7 +63,6 @@ public class Apotheosis {
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillager = true;
-	public static boolean enchTooltips = true;
 
 	public static float localAtkStrength = 1;
 
@@ -90,12 +91,12 @@ public class Apotheosis {
 		enableVillager = config.getBoolean("Enable Village Module", "general", enableVillager, "If the village module is loaded.");
 		if (enableVillager) bus.register(new VillageModule());
 
-		enchTooltips = config.getBoolean("Enchantment Tooltips", "client", true, "If apotheosis enchantments have tooltips on books.");
-
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
+		bus.addListener(this::initC);
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
+
 	}
 
 	@SubscribeEvent
@@ -104,6 +105,12 @@ public class Apotheosis {
 		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
 		DeferredWorkQueue.runLater(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
+		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
+	}
+
+	@SubscribeEvent
+	public void initC(FMLClientSetupEvent e) {
+		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisClientSetup());
 	}
 
 	@SubscribeEvent
@@ -123,6 +130,11 @@ public class Apotheosis {
 
 	public static class ApotheosisSetup extends Event {
 		public ApotheosisSetup() {
+		}
+	}
+
+	public static class ApotheosisClientSetup extends Event {
+		public ApotheosisClientSetup() {
 		}
 	}
 

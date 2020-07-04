@@ -1,5 +1,6 @@
 package shadows.apotheosis;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -16,12 +17,10 @@ import shadows.apotheosis.ench.anvil.EnchantmentSplitting;
 import shadows.apotheosis.ench.anvil.TileAnvil;
 import shadows.apotheosis.ench.enchantments.EnchantmentBerserk;
 import shadows.apotheosis.ench.enchantments.EnchantmentDepths;
-import shadows.apotheosis.ench.enchantments.EnchantmentHellInfused;
 import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
 import shadows.apotheosis.ench.enchantments.EnchantmentKnowledge;
 import shadows.apotheosis.ench.enchantments.EnchantmentLifeMend;
 import shadows.apotheosis.ench.enchantments.EnchantmentMagicProt;
-import shadows.apotheosis.ench.enchantments.EnchantmentMounted;
 import shadows.apotheosis.ench.enchantments.EnchantmentNatureBless;
 import shadows.apotheosis.ench.enchantments.EnchantmentRebounding;
 import shadows.apotheosis.ench.enchantments.EnchantmentReflective;
@@ -29,16 +28,21 @@ import shadows.apotheosis.ench.enchantments.EnchantmentScavenger;
 import shadows.apotheosis.ench.enchantments.EnchantmentShieldBash;
 import shadows.apotheosis.ench.enchantments.EnchantmentStableFooting;
 import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
-import shadows.apotheosis.ench.objects.BlockHellBookshelf;
+import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
+import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
+import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.ItemScrapTome;
 import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.objects.SeashelfBlock;
+import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
+import shadows.apotheosis.ench.table.EnchantmentContainerExt;
 import shadows.apotheosis.garden.EnderLeashItem;
 import shadows.apotheosis.potion.EnchantmentTrueInfinity;
-import shadows.apotheosis.potion.InvisCharmItem;
+import shadows.apotheosis.potion.PotionCharmItem;
 import shadows.apotheosis.potion.ItemLuckyFoot;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.PotionSundering;
-import shadows.apotheosis.spawn.EnchantmentCapturing;
+import shadows.apotheosis.spawn.enchantment.EnchantmentCapturing;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
@@ -47,10 +51,9 @@ import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 
 @ObjectHolder(Apotheosis.MODID)
 public class ApotheosisObjects {
-	public static final BlockHellBookshelf HELLSHELF = null;
+	public static final HellshelfBlock HELLSHELF = null;
 	public static final Item PRISMATIC_WEB = null;
-	public static final EnchantmentHellInfused HELL_INFUSION = null;
-	public static final EnchantmentMounted MOUNTED_STRIKE = null;
+	public static final HellInfusionEnchantment HELL_INFUSION = null;
 	public static final EnchantmentDepths DEPTH_MINER = null;
 	public static final EnchantmentStableFooting STABLE_FOOTING = null;
 	public static final EnchantmentScavenger SCAVENGER = null;
@@ -118,7 +121,21 @@ public class ApotheosisObjects {
 	public static final Effect BLEEDING = null;
 	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
-	public static final InvisCharmItem INVISIBILITY_CHARM = null;
+	public static final PotionCharmItem POTION_CHARM = null;
 	public static final Feature<NoFeatureConfig> DEADLY_WORLD_GEN = null;
+	@ObjectHolder("minecraft:enchanting_table")
+	public static final TileEntityType<EnchantingTableTileEntityExt> ENCHANTING_TABLE = null;
+	public static final ContainerType<EnchantmentContainerExt> ENCHANTING = null;
+	public static final SeaInfusionEnchantment SEA_INFUSION = null;
+	public static final SeashelfBlock SEASHELF = null;
+	public static final Block BLAZING_HELLSHELF = null;
+	public static final Block GLOWING_HELLSHELF = null;
+	public static final Block CRYSTAL_SEASHELF = null;
+	public static final Block HEART_SEASHELF = null;
+	public static final Block ENDSHELF = null;
+	public static final Block PEARL_ENDSHELF = null;
+	public static final Block DRACONIC_ENDSHELF = null;
+	public static final Block BEESHELF = null;
+	public static final Block MELONSHELF = null;
 
 }

@@ -2,6 +2,8 @@ package shadows.apotheosis.ench.enchantments;
 
 import net.minecraft.enchantment.EfficiencyEnchantment;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class EnchantmentDepths extends EfficiencyEnchantment {
 
@@ -11,7 +13,7 @@ public class EnchantmentDepths extends EfficiencyEnchantment {
 
 	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
-		return 1 + 13 * (enchantmentLevel - 1);
+		return 30 + (enchantmentLevel - 1) * 30;
 	}
 
 	@Override
@@ -21,7 +23,12 @@ public class EnchantmentDepths extends EfficiencyEnchantment {
 
 	@Override
 	public int getMaxLevel() {
-		return 7;
+		return 5;
+	}
+
+	@Override
+	public ITextComponent getDisplayName(int level) {
+		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_PURPLE);
 	}
 
 }

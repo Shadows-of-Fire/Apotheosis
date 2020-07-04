@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
 
@@ -19,7 +19,7 @@ public class EggModifier extends SpawnerModifier {
 	List<String> bannedMobs = new ArrayList<>();
 
 	public EggModifier(ItemStack item) {
-		super(item, -1);
+		super(item, -1, -1, -1);
 	}
 
 	public EggModifier() {

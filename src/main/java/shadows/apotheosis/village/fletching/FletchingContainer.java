@@ -54,6 +54,7 @@ public class FletchingContainer extends Container {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public FletchingContainer(int id, PlayerInventory inv) {
 		this(id, inv, DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().world), BlockPos.ZERO);
 	}

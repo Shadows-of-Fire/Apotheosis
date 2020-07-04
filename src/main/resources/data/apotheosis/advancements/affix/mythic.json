@@ -1,0 +1,38 @@
+{
+	"parent": "apotheosis:affix/epic",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:diamond_sword",
+			"nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.mythic"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.mythic.desc"
+		},
+		"frame": "goal",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "rarity",
+					"rarity": "MYTHIC"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

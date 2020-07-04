@@ -3,12 +3,12 @@ package shadows.apotheosis.spawn.modifiers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 
 public class NearbyEntityModifier extends SpawnerModifier {
 
 	public NearbyEntityModifier() {
-		super(new ItemStack(Items.GHAST_TEAR), 2);
+		super(new ItemStack(Items.GHAST_TEAR), 2, 0, 40);
 	}
 
 	@Override

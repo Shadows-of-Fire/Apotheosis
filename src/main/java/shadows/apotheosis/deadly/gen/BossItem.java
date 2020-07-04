@@ -170,7 +170,7 @@ public class BossItem extends WorldFeatureItem {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
 		}
 		EnchantmentHelper.setEnchantments(enchMap, stack);
-		stack.getTag().putBoolean("apoth:boss", true);
+		stack.getTag().putBoolean("apoth_boss", true);
 		return stack;
 	}
 }

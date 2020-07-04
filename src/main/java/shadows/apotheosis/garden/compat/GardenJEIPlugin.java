@@ -1,13 +1,13 @@
 package shadows.apotheosis.garden.compat;
-/*
+
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import shadows.Apotheosis;
-import shadows.ApotheosisObjects;
+import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.ApotheosisObjects;
 
 @JeiPlugin
 public class GardenJEIPlugin implements IModPlugin {
@@ -24,4 +24,3 @@ public class GardenJEIPlugin implements IModPlugin {
 	}
 
 }
-*/

@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import shadows.apotheosis.spawn.SpawnerModifiers;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 import shadows.placebo.config.Configuration;
 
 /**
@@ -39,13 +39,15 @@ public abstract class SpawnerModifier {
 	 */
 	protected int max;
 
-	public SpawnerModifier(Ingredient item, int value) {
+	public SpawnerModifier(Ingredient item, int value, int min, int max) {
 		this.item = item;
 		this.value = value;
+		this.min = min;
+		this.max = max;
 	}
 
-	public SpawnerModifier(ItemStack item, int value) {
-		this(Ingredient.fromStacks(item), value);
+	public SpawnerModifier(ItemStack item, int value, int min, int max) {
+		this(Ingredient.fromStacks(item), value, min, max);
 	}
 
 	/**
@@ -75,8 +77,8 @@ public abstract class SpawnerModifier {
 		String s = cfg.getString(ITEM, getCategory(), getDefaultItem(), "The item that applies this modifier.");
 		item = SpawnerModifiers.readStackCfg(s);
 		value = cfg.getInt(VALUE, getCategory(), value, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
-		min = cfg.getInt(MIN, getCategory(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The min value of this stat.");
-		max = cfg.getInt(MAX, getCategory(), Integer.MAX_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, "The max value of this stat.");
+		min = cfg.getInt(MIN, getCategory(), min, Integer.MIN_VALUE, Integer.MAX_VALUE, "The min value of this stat.");
+		max = cfg.getInt(MAX, getCategory(), max, Integer.MIN_VALUE, Integer.MAX_VALUE, "The max value of this stat.");
 	}
 
 	public Ingredient getIngredient() {
@@ -94,4 +96,12 @@ public abstract class SpawnerModifier {
 	public abstract String getCategory();
 
 	public abstract String getDefaultItem();
+
+	public int getMin() {
+		return min;
+	}
+
+	public int getMax() {
+		return max;
+	}
 }

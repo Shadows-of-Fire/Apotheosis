@@ -1,0 +1,42 @@
+{
+	"parent": "apotheosis:enchanting/endshelf",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:draconic_endshelf"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.upgrade_endshelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.upgrade_endshelf.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"blazing": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:draconic_endshelf"
+				}]
+			}
+		},
+		"glowing": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:pearl_endshelf"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"blazing", "glowing"
+		]
+	]
+}

@@ -34,7 +34,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.spawn.enchantment.EnchantmentCapturing;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
+import shadows.apotheosis.spawn.spawner.BlockSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
@@ -47,12 +50,10 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void setup(ApotheosisSetup e) {
+		TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
+		TileEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
 		MinecraftForge.EVENT_BUS.register(this);
 		config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
-		if (Apotheosis.enableSpawner) {
-			TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
-			TileEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
-		}
 		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
 		SpawnerModifiers.init();
 		if (config.hasChanged()) config.save();

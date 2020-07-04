@@ -113,7 +113,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	}
 
 	public void findTarget(int value) {
-		value = Math.min(value, EnchModule.absMax);
+		value = Math.min(value, 85);
 		ItemStack book = new ItemStack(Items.BOOK);
 		target = new ItemStack(Items.ENCHANTED_BOOK);
 		targetXP = EnchantmentUtils.getExperienceForLevel(value / 2);

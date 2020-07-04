@@ -22,6 +22,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.village.fletching.BlockFletchingTable;
@@ -32,6 +33,8 @@ import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import shadows.apotheosis.village.fletching.effects.BleedingEffect;
+import shadows.apotheosis.village.wanderer.WandererReplacements;
+import shadows.apotheosis.village.wanderer.WandererSpawnerExt;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
@@ -59,6 +62,11 @@ public class VillageModule {
 		enableWandererSpawner = config.getBoolean("Enable Wanderer Spawner", "Wanderer", true, "If the Apotheosis Wanderer Spawner is enabled, instead of the default.");
 		enableNewTrades = config.getBoolean("Enable New Trades", "Wanderer", true, "If new trades are added to the wandering merchant.");
 		if (config.hasChanged()) config.save();
+	}
+
+	@SubscribeEvent
+	public void setup(ApotheosisClientSetup e) {
+		VillageModuleClient.init();
 	}
 
 	@SubscribeEvent

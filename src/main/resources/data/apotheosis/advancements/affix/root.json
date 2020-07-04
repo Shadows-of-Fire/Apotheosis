@@ -1,0 +1,35 @@
+{
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:wooden_axe"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.affix"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.affix.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "affix"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

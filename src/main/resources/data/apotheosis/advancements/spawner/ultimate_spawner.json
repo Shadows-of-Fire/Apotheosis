@@ -22,11 +22,11 @@
 			"trigger": "apotheosis:spawner_modifier",
 			"conditions": {
 				"min_delay": {
-					"max": 0,
+					"max": 5,
 					"min": 0
 				},
 				"max_delay": {
-					"max": 0,
+					"max": 10,
 					"min": 0
 				},
 				"ignore_players": true,

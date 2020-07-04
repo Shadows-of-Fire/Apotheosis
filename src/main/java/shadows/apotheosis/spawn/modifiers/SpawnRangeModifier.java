@@ -3,12 +3,12 @@ package shadows.apotheosis.spawn.modifiers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 
 public class SpawnRangeModifier extends SpawnerModifier {
 
 	public SpawnRangeModifier() {
-		super(new ItemStack(Items.BLAZE_ROD), 1);
+		super(new ItemStack(Items.BLAZE_ROD), 1, 0, 32);
 	}
 
 	@Override

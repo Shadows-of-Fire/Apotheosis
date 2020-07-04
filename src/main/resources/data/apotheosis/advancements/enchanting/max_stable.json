@@ -1,0 +1,43 @@
+{
+	"parent": "apotheosis:enchanting/quanta0",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:experience_bottle"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.max_stable"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.max_stable.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "minecraft:enchanted_item",
+			"conditions": {
+				"arcana": {
+					"min": 10,
+					"max": 1000
+				},
+				"eterna": {
+					"min": 50,
+					"max": 1000
+				},
+				"quanta": {
+					"min": 0,
+					"max": 0
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
+}

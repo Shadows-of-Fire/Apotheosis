@@ -19,8 +19,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.spawn.BlockSpawnerExt;
-import shadows.apotheosis.spawn.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.BlockSpawnerExt;
+import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 
 @WailaPlugin
 public class SpawnerWailaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {

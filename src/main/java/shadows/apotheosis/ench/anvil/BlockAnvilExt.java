@@ -35,6 +35,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -92,7 +93,7 @@ public class BlockAnvilExt extends AnvilBlock {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (!stack.hasEffect()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil"));
+		if (!stack.hasEffect()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil").applyTextStyle(TextFormatting.GRAY));
 	}
 
 	@Override

@@ -22,7 +22,7 @@
 			"conditions": {
 				"modifier": "max_nearby_entities",
 				"max_nearby_entities": {
-					"min": 50
+					"min": 40
 				}
 			}
 		}

@@ -17,7 +17,6 @@ import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.ench.EnchModule;
 
 @JeiPlugin
 public class EnchJEIPlugin implements IModPlugin {
@@ -33,7 +32,6 @@ public class EnchJEIPlugin implements IModPlugin {
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), scrapTome);
 		IVanillaRecipeFactory factory = reg.getVanillaRecipeFactory();
 		//Formatter::off
-		if(EnchModule.allowWeb)
 		reg.addRecipes(ImmutableList.of(
 			factory.createAnvilRecipe(
 				enchDiaSword,

@@ -1,0 +1,37 @@
+{
+	"parent": "apotheosis:affix/common",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:stone_sword"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.uncommon"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.uncommon.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "rarity",
+					"rarity": "UNCOMMON"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

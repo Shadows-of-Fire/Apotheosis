@@ -4,6 +4,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class EnchantmentLifeMend extends Enchantment {
 
@@ -13,7 +15,7 @@ public class EnchantmentLifeMend extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 80 + level * 15;
+		return 60 + level * 20;
 	}
 
 	@Override
@@ -34,6 +36,11 @@ public class EnchantmentLifeMend extends Enchantment {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
 		return super.canApplyAtEnchantingTable(stack) || stack.getItem().isShield(stack, null);
+	}
+
+	@Override
+	public ITextComponent getDisplayName(int level) {
+		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_RED);
 	}
 
 }

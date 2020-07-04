@@ -22,7 +22,7 @@ public class EnchantmentRebounding extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 30 + 7 * level;
+		return 30 + level * 13;
 	}
 
 	@Override

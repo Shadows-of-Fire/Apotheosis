@@ -1,0 +1,37 @@
+{
+	"parent": "apotheosis:affix/uncommon",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:golden_sword"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.rare"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.rare.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "rarity",
+					"rarity": "RARE"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

@@ -1,0 +1,37 @@
+{
+	"parent": "apotheosis:affix/root",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "deadly"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:emerald"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.merchant"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.merchant.desc"
+		},
+		"frame": "goal",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "nbt",
+					"nbt": "{apoth_merchant:true}"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

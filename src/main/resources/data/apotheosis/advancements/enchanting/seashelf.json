@@ -1,0 +1,34 @@
+{
+	"parent": "apotheosis:enchanting/bookshelf",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:seashelf"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.seashelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.seashelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"seashelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:seashelf"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"seashelf"
+		]
+	]
+}

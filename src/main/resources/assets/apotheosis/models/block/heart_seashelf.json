@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "block/prismarine_bricks",
+        "side": "apotheosis:blocks/heart_seashelf"
+    }
+}

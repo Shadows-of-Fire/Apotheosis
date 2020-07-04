@@ -21,7 +21,7 @@ public class EnchantmentIcyThorns extends Enchantment {
 
 	@Override
 	public int getMinEnchantability(int level) {
-		return 40 + level * 15;
+		return 40 + (level - 1) * 35;
 	}
 
 	@Override

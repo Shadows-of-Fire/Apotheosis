@@ -1,0 +1,42 @@
+{
+	"parent": "apotheosis:enchanting/seashelf",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:heart_seashelf"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.upgrade_seashelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.upgrade_seashelf.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"heart": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:heart_seashelf"
+				}]
+			}
+		},
+		"crystal": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "apotheosis:crystal_seashelf"
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"heart", "crystal"
+		]
+	]
+}
