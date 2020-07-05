@@ -16,5 +16,6 @@
   "affixProt": "apothasm/affix-prot-level.js",
   "affixUser": "apothasm/affix-user-hurt.js",
   "stackUUID": "apothasm/stack-modifier-hack.js",
-  "itemUseHook": "apothasm/item-use-hook.js"
+  "itemUseHook": "apothasm/item-use-hook.js",
+  "quarkMatrix": "apothasm/quark-matrix.js"
 }
