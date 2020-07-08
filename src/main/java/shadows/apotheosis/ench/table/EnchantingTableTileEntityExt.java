@@ -1,14 +1,25 @@
 package shadows.apotheosis.ench.table;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.EnchantingTableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import shadows.apotheosis.ApotheosisObjects;
 
 public class EnchantingTableTileEntityExt extends EnchantingTableTileEntity {
 
-	protected ItemStackHandler inv = new ItemStackHandler(1);
+	protected ItemStackHandler inv = new ItemStackHandler(1) {
+		public boolean isItemValid(int slot, ItemStack stack) {
+			return Tags.Items.GEMS_LAPIS.contains(stack.getItem());
+		};
+	};
 
 	public EnchantingTableTileEntityExt() {
 
@@ -30,6 +41,14 @@ public class EnchantingTableTileEntityExt extends EnchantingTableTileEntity {
 	@Override
 	public TileEntityType<?> getType() {
 		return ApotheosisObjects.ENCHANTING_TABLE;
+	}
+
+	LazyOptional<IItemHandler> invCap = LazyOptional.of(() -> inv);
+
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return invCap.cast();
+		return super.getCapability(cap, side);
 	}
 
 }

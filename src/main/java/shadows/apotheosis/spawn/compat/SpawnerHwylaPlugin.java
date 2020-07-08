@@ -23,7 +23,7 @@ import shadows.apotheosis.spawn.spawner.BlockSpawnerExt;
 import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
 
 @WailaPlugin
-public class SpawnerWailaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {
+public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {
 
 	public static final String STATS = "spw_stats";
 
