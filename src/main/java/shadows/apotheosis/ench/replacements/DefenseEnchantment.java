@@ -9,7 +9,7 @@ import shadows.apotheosis.ApotheosisObjects;
 
 public class DefenseEnchantment extends ProtectionEnchantment {
 
-	public DefenseEnchantment(Rarity rarity, Type type, EquipmentSlotType[] slots) {
+	public DefenseEnchantment(Rarity rarity, Type type, EquipmentSlotType... slots) {
 		super(rarity, type, slots);
 	}
 

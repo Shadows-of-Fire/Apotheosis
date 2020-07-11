@@ -19,12 +19,12 @@ public class EnchantmentStatRegistry {
 	public static void init() {
 		register(Blocks.JACK_O_LANTERN, 0, -1 / 3F, 0.25F, 0);
 		register(Blocks.GLOWSTONE, 0, -1 / 3F, 0, 0.25F);
-		register(ApotheosisObjects.BLAZING_HELLSHELF, 30, 2, 0.25F, 0);
-		register(ApotheosisObjects.GLOWING_HELLSHELF, 30, 1.5F, 0, 0.25F);
-		register(ApotheosisObjects.CRYSTAL_SEASHELF, 30, 2, 0.25F, 0.2F);
-		register(ApotheosisObjects.HEART_SEASHELF, 30, 1.75F, 0, 0.5F);
-		register(ApotheosisObjects.ENDSHELF, 40, 3, 0.25F, 0.25F);
-		register(ApotheosisObjects.PEARL_ENDSHELF, 40, 3, 0.5F, 0.5F);
+		register(ApotheosisObjects.BLAZING_HELLSHELF, 30, 2, 0.3F, 0);
+		register(ApotheosisObjects.GLOWING_HELLSHELF, 30, 1.5F, 0, 0.5F);
+		register(ApotheosisObjects.CRYSTAL_SEASHELF, 30, 2, 0.3F, 0.3F);
+		register(ApotheosisObjects.HEART_SEASHELF, 30, 1.75F, 0, 1F);
+		register(ApotheosisObjects.ENDSHELF, 40, 3, 0.35F, 0.35F);
+		register(ApotheosisObjects.PEARL_ENDSHELF, 40, 3, 0.5F, 0.75F);
 		register(ApotheosisObjects.DRACONIC_ENDSHELF, 50, 4, 0, 0);
 		register(ApotheosisObjects.BEESHELF, 0, -15, 10, 0);
 		register(ApotheosisObjects.MELONSHELF, 0, -1, -1, 0);

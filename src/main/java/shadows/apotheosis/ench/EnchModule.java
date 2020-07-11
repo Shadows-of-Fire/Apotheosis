@@ -184,6 +184,7 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, ApotheosisObjects.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.BEESHELF, 3, 3, Items.field_226635_pU_, Items.BEEHIVE, Items.field_226635_pU_, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.field_226635_pU_, Items.BEEHIVE, Items.field_226635_pU_);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
+		Apotheosis.HELPER.addShaped(Items.EXPERIENCE_BOTTLE, 3, 3, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE, Items.ENCHANTED_BOOK, Items.field_226638_pX_, Items.ENCHANTED_BOOK, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE);
 
 		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
 		LootSystem.defaultBlockTable(ApotheosisObjects.BLAZING_HELLSHELF);
@@ -312,7 +313,7 @@ public class EnchModule {
 				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
 				new DefenseEnchantment(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
 				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
-				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "feather_falling")
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling")
 				);
 		//Formatter::on
 	}

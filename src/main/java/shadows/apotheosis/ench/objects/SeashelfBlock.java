@@ -38,7 +38,7 @@ public class SeashelfBlock extends Block implements IEnchantingBlock {
 
 	@Override
 	public float getArcanaBonus(BlockState state, IWorldReader world, BlockPos pos) {
-		return 0.05F + state.get(INFUSION) * 0.01F;
+		return 0.15F + state.get(INFUSION) * 0.01F;
 	}
 
 	@Override
