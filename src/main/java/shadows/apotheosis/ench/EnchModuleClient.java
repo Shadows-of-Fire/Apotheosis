@@ -39,6 +39,7 @@ public class EnchModuleClient {
 		else if (i instanceof BlockItem) {
 			Block block = ((BlockItem) i).getBlock();
 			World world = Minecraft.getInstance().world;
+			if (world == null || Minecraft.getInstance().player == null) return;
 			BlockItemUseContext ctx = new BlockItemUseContext(world, Minecraft.getInstance().player, Hand.MAIN_HAND, e.getItemStack(), res) {
 			};
 			BlockState state = block.getStateForPlacement(ctx);
