@@ -16,6 +16,7 @@ import shadows.apotheosis.ApotheosisObjects;
 public class EnchantingTableTileEntityExt extends EnchantingTableTileEntity {
 
 	protected ItemStackHandler inv = new ItemStackHandler(1) {
+		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
 			return Tags.Items.GEMS_LAPIS.contains(stack.getItem());
 		};

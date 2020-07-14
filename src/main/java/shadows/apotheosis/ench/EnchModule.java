@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.block.AnvilBlock;
@@ -349,6 +350,21 @@ public class EnchModule {
 			out.setCount(1);
 			e.setOutput(out);
 			e.setCost(5 + EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) + EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, e.getLeft()) * 2);
+			e.setMaterialCost(1);
+			return;
+		}
+		if (e.getLeft().getItem() == ApotheosisObjects.HELLSHELF.asItem() || e.getLeft().getItem() == ApotheosisObjects.SEASHELF.asItem()) {
+			if (e.getLeft().getItem() != e.getRight().getItem() || e.getLeft().getCount() != 1) return;
+			Enchantment ench = e.getLeft().getItem() == ApotheosisObjects.HELLSHELF.asItem() ? ApotheosisObjects.HELL_INFUSION : ApotheosisObjects.SEA_INFUSION;
+			int leftLvl = EnchantmentHelper.getEnchantmentLevel(ench, e.getLeft());
+			int rightLvl = EnchantmentHelper.getEnchantmentLevel(ench, e.getRight());
+			if (leftLvl == 0 || rightLvl != leftLvl) return;
+			if (leftLvl + 1 > EnchModule.getEnchInfo(ench).getMaxLevel()) return;
+			ItemStack out = e.getLeft().copy();
+			EnchantmentHelper.setEnchantments(ImmutableMap.of(ench, leftLvl + 1), out);
+			out.setCount(1);
+			e.setOutput(out);
+			e.setCost(1 + leftLvl);
 			e.setMaterialCost(1);
 			return;
 		}
