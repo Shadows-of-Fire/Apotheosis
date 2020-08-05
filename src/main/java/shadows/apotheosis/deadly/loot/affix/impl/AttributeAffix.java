@@ -9,7 +9,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.loot.RandomValueRange;
 import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;

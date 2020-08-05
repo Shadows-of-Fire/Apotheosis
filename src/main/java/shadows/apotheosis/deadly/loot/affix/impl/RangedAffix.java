@@ -5,8 +5,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.RandomValueRange;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.storage.loot.RandomValueRange;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;

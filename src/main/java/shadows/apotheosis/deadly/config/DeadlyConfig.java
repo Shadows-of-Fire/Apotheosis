@@ -8,11 +8,11 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.loot.RandomValueRange;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
-import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.DeadlyModule;

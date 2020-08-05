@@ -14,13 +14,13 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.storage.loot.LootContext;
 import shadows.apotheosis.ApotheosisObjects;
 
 public class HellshelfBlock extends Block implements IEnchantingBlock {
