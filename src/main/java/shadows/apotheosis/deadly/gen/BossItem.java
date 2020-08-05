@@ -18,7 +18,7 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
@@ -113,10 +113,10 @@ public class BossItem extends WorldFeatureItem {
 		if (res >= 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration, res));
 		if (random.nextFloat() < DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
 		if (random.nextFloat() < DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
-		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
-		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
-		AttributeHelper.addToBase(entity, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
-		AttributeHelper.multiplyFinal(entity, SharedMonsterAttributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
+		AttributeHelper.multiplyFinal(entity, Attributes.field_233823_f_, "boss_damage_bonus", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
+		AttributeHelper.multiplyFinal(entity, Attributes.field_233818_a_, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
+		AttributeHelper.addToBase(entity, Attributes.field_233820_c_, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
+		AttributeHelper.multiplyFinal(entity, Attributes.field_233821_d_, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
 		entity.setHealth(entity.getMaxHealth());
 		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		entity.enablePersistence();
@@ -164,7 +164,7 @@ public class BossItem extends WorldFeatureItem {
 		stack.setDisplayName(new StringTextComponent(itemName));
 		LootRarity rarity = LootRarity.random(random, 400);
 		stack = LootManager.genLootItem(stack, random, rarity);
-		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + bossName + "'s", stack.getDisplayName()).applyTextStyle(rarity.getColor()));
+		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + bossName + "'s", stack.getDisplayName()).formatted(rarity.getColor()));
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));

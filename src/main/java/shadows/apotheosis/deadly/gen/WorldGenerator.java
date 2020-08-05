@@ -11,20 +11,20 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.DimensionType;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
+import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
@@ -38,18 +38,19 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 	public static final BrutalSpawner BRUTAL_SPAWNER = new BrutalSpawner();
 	public static final BossFeature BOSS_GENERATOR = new BossFeature();
 	public static final SwarmSpawner SWARM_SPAWNER = new SwarmSpawner();
-	private static final Map<ResourceLocation, LongSet> SUCCESSES = new HashMap<>();
+	private static final Map<DimensionType, LongSet> SUCCESSES = new HashMap<>();
 	public static final Predicate<BlockState> STONE_TEST = FillerBlockType.NATURAL_STONE.func_214738_b();
 
 	public WorldGenerator() {
-		super(NoFeatureConfig::deserialize);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-		if (DeadlyConfig.DIM_WHITELIST.contains(world.getDimension().getType().getRegistryName())) for (WorldFeature feature : FEATURES) {
+	public boolean generate(ISeedReader world, StructureManager struct, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
+		//if (DeadlyConfig.DIM_WHITELIST.contains(world.getDimension().getType().getRegistryName())) 
+		for (WorldFeature feature : FEATURES) {
 			ChunkPos cPos = new ChunkPos(pos);
-			if (wasSuccess(world.getDimension().getType().getRegistryName(), cPos.x, cPos.z)) return false;
+			if (wasSuccess(world.getDimension(), cPos.x, cPos.z)) return false;
 			if (feature.generate(world, cPos.x, cPos.z, rand)) return true;
 		}
 		return false;
@@ -67,7 +68,8 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 	}
 
 	public static void debugPillar(World world, BlockPos pos) {
-		BlockPos.Mutable mPos = new BlockPos.Mutable(pos);
+		BlockPos.Mutable mPos = new BlockPos.Mutable();
+		mPos.setPos(pos);
 		DeadlyModule.LOGGER.info("Marking! " + pos.toString());
 		while (mPos.getY() < 127)
 			world.setBlockState(mPos.setPos(mPos.getX(), mPos.getY() + 1, mPos.getZ()), Blocks.GLASS.getDefaultState());
@@ -79,11 +81,11 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
 	}
 
-	public static void setSuccess(ResourceLocation dim, int x, int z) {
+	public static void setSuccess(DimensionType dim, int x, int z) {
 		SUCCESSES.computeIfAbsent(dim, i -> new LongOpenHashSet()).add(ChunkPos.asLong(x, z));
 	}
 
-	public static boolean wasSuccess(ResourceLocation dim, int x, int z) {
+	public static boolean wasSuccess(DimensionType dim, int x, int z) {
 		return SUCCESSES.computeIfAbsent(dim, i -> new LongOpenHashSet()).contains(ChunkPos.asLong(x, z));
 	}
 }

@@ -1,7 +1,7 @@
 package shadows.apotheosis.deadly.loot.affix.impl.melee;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.common.ForgeMod;
 import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 
@@ -11,7 +11,7 @@ import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 public class ReachDistanceAffix extends AttributeAffix {
 
 	public ReachDistanceAffix(int weight) {
-		super(PlayerEntity.REACH_DISTANCE, 0.5F, 2.0F, Operation.ADDITION, weight);
+		super(ForgeMod.REACH_DISTANCE.get(), 0.5F, 2.0F, Operation.ADDITION, weight);
 	}
 
 	@Override

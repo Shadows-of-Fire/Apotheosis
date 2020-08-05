@@ -35,12 +35,12 @@ public class SpectralShotAffix extends RangedAffix {
 			if (!user.world.isRemote) {
 				ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
 				AbstractArrowEntity spectralArrow = arrowitem.createArrow(user.world, ItemStack.EMPTY, user);
-				spectralArrow.shoot(user, user.rotationPitch, user.rotationYaw, 0.0F, 1 * 3.0F, 1.0F);
+				spectralArrow.shoot(user.rotationPitch, user.rotationYaw, 0.0F, 1 * 3.0F, 1.0F);
 				cloneMotion(arrow, spectralArrow);
 				spectralArrow.setIsCritical(arrow.getIsCritical());
 				spectralArrow.setDamage(arrow.getDamage());
 				spectralArrow.setKnockbackStrength(arrow.knockbackStrength);
-				spectralArrow.setFireTimer(arrow.getFireTimer());
+				spectralArrow.setFireTicks(arrow.getFireTimer());
 				spectralArrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 				spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
 				arrow.world.addEntity(spectralArrow);

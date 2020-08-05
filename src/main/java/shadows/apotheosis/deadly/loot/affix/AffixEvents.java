@@ -16,6 +16,7 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
@@ -43,7 +44,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -72,7 +73,7 @@ public class AffixEvents {
 	public void onEntityJoin(EntityJoinWorldEvent e) {
 		if (e.getEntity() instanceof AbstractArrowEntity && !e.getEntity().getPersistentData().getBoolean("apoth.generated")) {
 			AbstractArrowEntity ent = (AbstractArrowEntity) e.getEntity();
-			Entity shooter = ent.getShooter();
+			Entity shooter = ent.getOwner();
 			if (shooter instanceof LivingEntity) {
 				LivingEntity living = (LivingEntity) shooter;
 				ItemStack bow = living.getHeldItemMainhand();
@@ -284,7 +285,7 @@ public class AffixEvents {
 			f /= 5.0F;
 		}
 
-		if (!player.onGround) {
+		if (!player.isOnGround()) {
 			f /= 5.0F;
 		}
 		return f;
@@ -309,8 +310,13 @@ public class AffixEvents {
 				if (!e.getWorld().canBlockSeeSky(new BlockPos((int) e.getX(), (int) e.getY() + 1, (int) e.getZ()))) return;
 				if (rand.nextInt(DeadlyConfig.surfaceBossChance) == 0) {
 					BossItem.initBoss(rand, (MobEntity) entity);
-					Vec3d pos = e.getEntity().getPositionVec();
-					if (DeadlyConfig.surfaceBossLightning) ((ServerWorld) e.getWorld()).addLightningBolt(new LightningBoltEntity((World) e.getWorld(), pos.getX(), pos.getY(), pos.getZ(), true));
+					Vector3d pos = e.getEntity().getPositionVec();
+					if (DeadlyConfig.surfaceBossLightning) {
+						LightningBoltEntity bolt = EntityType.LIGHTNING_BOLT.create((World) e.getWorld());
+						bolt.setPos(pos.getX(), pos.getY(), pos.getZ());
+						bolt.func_233623_a_(true);
+						e.getWorld().addEntity(bolt);
+					}
 					return;
 				}
 			}

@@ -38,7 +38,7 @@ public class DamageChainAffix extends RangedAffix {
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
 		if (Apotheosis.localAtkStrength >= 0.98) {
 			Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttack(EntityType.PLAYER);
-			List<Entity> nearby = target.world.getEntitiesInAABBexcluding(target, new AxisAlignedBB(target.getPosition()).grow(6), pred);
+			List<Entity> nearby = target.world.getEntitiesInAABBexcluding(target, new AxisAlignedBB(target.getBlockPos()).grow(6), pred);
 			if (!user.world.isRemote) for (Entity e : nearby) {
 				e.attackEntityFrom(DamageSource.LIGHTNING_BOLT, level);
 			}

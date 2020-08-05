@@ -1,7 +1,7 @@
 package shadows.apotheosis.deadly.loot.affix.impl.melee;
 
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.entity.ai.attributes.Attributes;
 import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 
@@ -11,7 +11,7 @@ import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 public class AttackSpeedAffix extends AttributeAffix {
 
 	public AttackSpeedAffix(int weight) {
-		super(SharedMonsterAttributes.ATTACK_SPEED, 0.05F, 1F, Operation.MULTIPLY_TOTAL, weight);
+		super(Attributes.field_233825_h_, 0.05F, 1F, Operation.MULTIPLY_TOTAL, weight);
 	}
 
 	@Override

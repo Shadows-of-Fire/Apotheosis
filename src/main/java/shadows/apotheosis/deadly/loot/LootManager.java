@@ -7,13 +7,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.spongepowered.asm.mixin.Unique;
+
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 
 import net.minecraft.client.resources.JsonReloadListener;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -50,9 +53,9 @@ public class LootManager extends JsonReloadListener {
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonObject> objects, IResourceManager mgr, IProfiler profiler) {
+	protected void apply(Map<ResourceLocation, JsonElement> objects, IResourceManager mgr, IProfiler profiler) {
 		ENTRIES.clear();
-		for (Entry<ResourceLocation, JsonObject> obj : objects.entrySet()) {
+		for (Entry<ResourceLocation, JsonElement> obj : objects.entrySet()) {
 			try {
 				LootEntry ent = GSON.fromJson(obj.getValue(), LootEntry.class);
 				ENTRIES.add(ent);
@@ -90,7 +93,7 @@ public class LootManager extends JsonReloadListener {
 		EquipmentType type = EquipmentType.getTypeFor(stack);
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
 		EquipmentSlotType slot = EquipmentType.getTypeFor(stack).getSlot(stack);
-		Multimap<String, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
+		Multimap<Attribute, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
 		AffixHelper.setRarity(stack, rarity);
 
 		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
@@ -120,7 +123,7 @@ public class LootManager extends JsonReloadListener {
 			tag.putBoolean("Unbreakable", true);
 		}
 
-		stack.setDisplayName(new StringTextComponent(TextFormatting.RESET + rarity.getColor().toString() + name.getFormattedText().replace(TextFormatting.RESET.toString(), "")));
+		stack.setDisplayName(new StringTextComponent(TextFormatting.RESET + rarity.getColor().toString() + name.getString().replace(TextFormatting.RESET.toString(), "")));
 		return stack;
 	}
 

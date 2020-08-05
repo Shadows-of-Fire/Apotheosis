@@ -9,9 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
@@ -55,8 +55,8 @@ public class DeadlyModule {
 		e.getRegistry().register(new SoundEvent(new ResourceLocation(Apotheosis.MODID, "chain_zap")).setRegistryName("chain_zap"));
 	}
 
-	public void reloads(FMLServerAboutToStartEvent e) {
-		e.getServer().getResourceManager().addReloadListener(LootManager.INSTANCE);
+	public void reloads(AddReloadListenerEvent e) {
+		e.addListener(LootManager.INSTANCE);
 	}
 
 }

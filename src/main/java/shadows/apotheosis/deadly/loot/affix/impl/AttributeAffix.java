@@ -4,9 +4,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.RandomValueRange;
@@ -19,18 +19,18 @@ import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
  */
 public abstract class AttributeAffix extends Affix {
 
-	protected final IAttribute attr;
+	protected final Attribute attr;
 	protected final RandomValueRange range;
 	protected final Operation op;
 
-	public AttributeAffix(IAttribute attr, RandomValueRange range, Operation op, int weight) {
+	public AttributeAffix(Attribute attr, RandomValueRange range, Operation op, int weight) {
 		super(weight);
 		this.attr = attr;
 		this.range = range;
 		this.op = op;
 	}
 
-	public AttributeAffix(IAttribute attr, float min, float max, Operation op, int weight) {
+	public AttributeAffix(Attribute attr, float min, float max, Operation op, int weight) {
 		this(attr, new RandomValueRange(min, max), op, weight);
 	}
 
@@ -39,8 +39,8 @@ public abstract class AttributeAffix extends Affix {
 		EquipmentSlotType type = EquipmentType.getTypeFor(stack).getSlot(stack);
 		float lvl = range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
-		AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.getName(), lvl, op);
-		stack.addAttributeModifier(attr.getName(), modif, type);
+		AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.getRegistryName(), lvl, op);
+		stack.addAttributeModifier(attr, modif, type);
 		return lvl;
 	}
 

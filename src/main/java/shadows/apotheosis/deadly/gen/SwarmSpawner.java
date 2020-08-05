@@ -28,7 +28,7 @@ public class SwarmSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.getDimension().getType().getRegistryName(), chunkX, chunkZ);
+				WorldGenerator.setSuccess(world.getDimension(), chunkX, chunkZ);
 				return true;
 			}
 		}

@@ -36,7 +36,7 @@ public class BossFeature extends WorldFeature {
 			if (Block.hasEnoughSolidSide(world, mPos.setPos(x, y, z), Direction.UP)) {
 				if (world.doesNotCollide(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 					item.place(world, mPos, rand);
-					WorldGenerator.setSuccess(world.getDimension().getType().getRegistryName(), chunkX, chunkZ);
+					WorldGenerator.setSuccess(world.getDimension(), chunkX, chunkZ);
 					return true;
 				}
 			}

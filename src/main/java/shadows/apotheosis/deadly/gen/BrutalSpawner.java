@@ -44,7 +44,7 @@ public class BrutalSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.getDimension().getType().getRegistryName(), chunkX, chunkZ);
+				WorldGenerator.setSuccess(world.getDimension(), chunkX, chunkZ);
 				return true;
 			}
 		}
@@ -66,7 +66,7 @@ public class BrutalSpawner extends WorldFeature {
 		world.setBlockState(pos.up(), Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 2);
 		for (Direction f : Plane.HORIZONTAL) {
 			if (world.getBlockState(pos.offset(f)).isAir(world, pos.offset(f))) {
-				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateContainer().getProperty(f.getOpposite().getName());
+				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateContainer().getProperty(f.getOpposite().getName2());
 				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().with(side, true), 2);
 			}
 		}

@@ -14,7 +14,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.loot.EquipmentType;
 import shadows.apotheosis.deadly.loot.LootRarity;
@@ -56,7 +56,7 @@ public class AffixHelper {
 	}
 
 	public static void setRarity(ItemStack stack, LootRarity rarity) {
-		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(new Style().setColor(rarity.getColor()).setItalic(true)));
+		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).formatted(rarity.getColor(), TextFormatting.ITALIC));
 		stack.getOrCreateTag().putString("apoth.rarity", rarity.name());
 	}
 
