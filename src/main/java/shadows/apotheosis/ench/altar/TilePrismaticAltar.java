@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -20,7 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.items.ItemStackHandler;
 import shadows.apotheosis.Apotheosis;
@@ -140,7 +141,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	}
 
 	public void trySpawnParticles(PlayerEntity player, int xpDrain) {
-		Vec3d to = new Vec3d(player.getX() - (pos.getX() + 0.5), player.getY() - pos.getY(), player.getZ() - (pos.getZ() + 0.5));
+		Vector3d to = new Vector3d(player.getX() - (pos.getX() + 0.5), player.getY() - pos.getY(), player.getZ() - (pos.getZ() + 0.5));
 		ParticleMessage msg = new ParticleMessage(ParticleTypes.ENCHANT, pos.getX() + world.rand.nextDouble(), pos.getY() + 1 + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
 		NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerWorld) world, pos);
 	}
@@ -155,8 +156,8 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
-		super.read(tag);
+	public void fromTag(BlockState state, CompoundNBT tag) {
+		super.fromTag(state, tag);
 		inv.deserializeNBT(tag.getCompound("inv"));
 		xpDrained = tag.getFloat("xp");
 		target = ItemStack.read(tag.getCompound("target"));
@@ -171,8 +172,8 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 	}
 
 	@Override
-	public void handleUpdateTag(CompoundNBT tag) {
-		super.handleUpdateTag(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+		super.handleUpdateTag(state, tag);
 		inv.deserializeNBT(tag.getCompound("inv"));
 	}
 
@@ -183,7 +184,7 @@ public class TilePrismaticAltar extends TileEntity implements ITickableTileEntit
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		handleUpdateTag(pkt.getNbtCompound());
+		handleUpdateTag(this.getBlockState(), pkt.getNbtCompound());
 	}
 
 	public ItemStackHandler getInv() {

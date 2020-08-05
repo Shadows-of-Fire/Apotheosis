@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import shadows.apotheosis.ench.EnchModule;
@@ -36,7 +37,7 @@ public class EnchantmentMagicProt extends Enchantment {
 
 	@Override
 	public ITextComponent getDisplayName(int level) {
-		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_PURPLE);
+		return ((IFormattableTextComponent) super.getDisplayName(level)).formatted(TextFormatting.DARK_PURPLE);
 	}
 
 	@Override

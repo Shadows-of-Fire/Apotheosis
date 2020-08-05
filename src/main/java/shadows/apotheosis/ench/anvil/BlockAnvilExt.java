@@ -26,6 +26,7 @@ import net.minecraft.item.BookItem;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -92,13 +93,13 @@ public class BlockAnvilExt extends AnvilBlock {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (!stack.hasEffect()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil").applyTextStyle(TextFormatting.GRAY));
+		if (!stack.hasEffect()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil").formatted(TextFormatting.GRAY));
 	}
 
 	@Override
 	protected void onStartFalling(FallingBlockEntity e) {
 		super.onStartFalling(e);
-		TileEntity te = e.world.getTileEntity(new BlockPos(e));
+		TileEntity te = e.world.getTileEntity(new BlockPos(e.getPositionVec()));
 		e.tileEntityData = new CompoundNBT();
 		if (te instanceof TileAnvil) {
 			te.write(e.tileEntityData);
@@ -106,11 +107,9 @@ public class BlockAnvilExt extends AnvilBlock {
 	}
 
 	@Override
-	public void onEndFalling(World world, BlockPos pos, BlockState fallState, BlockState hitState) {
-		super.onEndFalling(world, pos, fallState, hitState);
-
+	public void onEndFalling(World world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil) {
+		super.onEndFalling(world, pos, fallState, hitState, anvil);
 		List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
-		FallingBlockEntity anvil = world.getEntitiesWithinAABB(FallingBlockEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1))).get(0);
 		if (anvil.tileEntityData == null) return;
 		int split = anvil.tileEntityData.getInt("splitting");
 		int ub = anvil.tileEntityData.getInt("ub");

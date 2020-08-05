@@ -59,7 +59,7 @@ public class SpawnerWrapper {
 	}
 
 	public void drawInfo(Minecraft mc, int width, int height, double mouseX, double mouseY) {
-		mc.fontRenderer.drawString(I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
+		mc.fontRenderer.draw(I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
 		if (modifier.getMin() != -1) mc.fontRenderer.drawString(I18n.format("jei.spw.minmax", modifier.getMin(), modifier.getMax()), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
 	}
 

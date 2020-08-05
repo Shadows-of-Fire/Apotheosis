@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.anvil;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -22,8 +23,8 @@ public class TileAnvil extends TileEntity {
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
-		super.read(tag);
+	public void fromTag(BlockState state, CompoundNBT tag) {
+		super.fromTag(state, tag);
 		unbreaking = tag.getInt("ub");
 		splitting = tag.getInt("splitting");
 	}

@@ -59,7 +59,7 @@ dependencies {
 	compile fg.deobf('mezz.jei:jei-1.16.1:+')
 	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.10-B77_1.16.1')
 	compile fileTree(dir: 'libs', include: '*.jar')
-	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.16.1-+')
+	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.16.1-3.0.0.2')
 	//compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168:api")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168")
 }

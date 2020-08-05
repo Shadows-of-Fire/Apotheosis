@@ -52,12 +52,12 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
-		this.font.drawString(this.title.getFormattedText(), 12.0F, 5.0F, 4210752);
-		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 7.0F, this.ySize - 96 + 4F, 4210752);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454);
-		this.font.drawString(I18n.format("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8);
+	protected void drawForeground(MatrixStack stack, int p_146979_1_, int p_146979_2_) {
+		this.textRenderer.draw(stack, this.title, 12.0F, 5.0F, 4210752);
+		this.textRenderer.draw(stack, this.playerInventory.getDisplayName(), 7.0F, this.ySize - 96 + 4F, 4210752);
+		this.textRenderer.draw(stack, I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);
+		this.textRenderer.draw(stack, I18n.format("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454);
+		this.textRenderer.draw(stack, I18n.format("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8);
 	}
 
 	@Override
@@ -94,8 +94,8 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 		for (int k = 0; k < 3; ++k) {
 			double d0 = p_mouseClicked_1_ - (i + 60);
 			double d1 = p_mouseClicked_3_ - (j + 14 + 19 * k);
-			if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.container.enchantItem(this.minecraft.player, k)) {
-				this.minecraft.playerController.sendEnchantPacket(this.container.windowId, k);
+			if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.container.enchantItem(this.client.player, k)) {
+				this.client.playerController.sendEnchantPacket(this.container.windowId, k);
 				return true;
 			}
 		}
@@ -107,17 +107,17 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 	 * Draws the background layer of this container (behind the items).
 	 */
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void drawBackground(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderHelper.disableGuiDepthLighting();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
+		this.client.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
 		int xCenter = (this.width - this.xSize) / 2;
 		int yCenter = (this.height - this.ySize) / 2;
-		this.blit(xCenter, yCenter, 0, 0, this.xSize, this.ySize);
+		this.drawTexture(stack, xCenter, yCenter, 0, 0, this.xSize, this.ySize);
 		RenderSystem.matrixMode(5889);
 		RenderSystem.pushMatrix();
 		RenderSystem.loadIdentity();
-		int k = (int) this.minecraft.getWindow().getGuiScaleFactor();
+		int k = (int) this.client.getWindow().getGuiScaleFactor();
 		RenderSystem.viewport((this.width - 320) / 2 * k, (this.height - 240) / 2 * k, 320 * k, 240 * k);
 		RenderSystem.translatef(-0.34F, 0.23F, 0.0F);
 		RenderSystem.multMatrix(Matrix4f.perspective(90.0D, 1.3333334F, 9.0F, 80.0F));
@@ -179,8 +179,8 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 		for (int slot = 0; slot < 3; ++slot) {
 			int j1 = xCenter + 60;
 			int k1 = j1 + 20;
-			this.setBlitOffset(0);
-			this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
+			this.setZOffset(0);
+			this.client.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
 
 			int level = this.container.enchantLevels[slot];
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -229,12 +229,12 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 	}
 
 	@Override
-	public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
-		p_render_3_ = this.minecraft.getRenderPartialTicks();
-		this.renderBackground();
-		super.render(p_render_1_, p_render_2_, p_render_3_);
-		this.renderHoveredToolTip(p_render_1_, p_render_2_);
-		boolean creative = this.minecraft.player.abilities.isCreativeMode;
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+		partialTicks = this.client.getRenderPartialTicks();
+		this.renderBackground(stack);
+		super.render(stack, mouseX, mouseY, partialTicks);
+		this.drawMouseoverTooltip(stack, mouseX, mouseY);
+		boolean creative = this.client.player.abilities.isCreativeMode;
 		int lapis = this.container.getLapisAmount();
 
 		for (int j = 0; j < 3; ++j) {
@@ -242,14 +242,14 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 			Enchantment enchantment = Enchantment.getEnchantmentByID(this.container.enchantClue[j]);
 			int clue = this.container.worldClue[j];
 			int i1 = j + 1;
-			if (this.isPointInRegion(60, 14 + 19 * j, 108, 17, p_render_1_, p_render_2_) && level > 0) {
+			if (this.isPointInRegion(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && level > 0) {
 				List<String> list = Lists.newArrayList();
-				list.add("" + TextFormatting.GRAY + TextFormatting.ITALIC + I18n.format("container.enchant.clue", enchantment == null ? "" : enchantment.getDisplayName(clue).getFormattedText()));
+				list.add("" + TextFormatting.GRAY + TextFormatting.ITALIC + I18n.format("container.enchant.clue", enchantment == null ? "" : enchantment.getDisplayName(clue).getString()));
 				if (enchantment == null) {
 					Collections.addAll(list, "", TextFormatting.RED + I18n.format("forge.container.enchant.limitedEnchantability"));
 				} else if (!creative) {
 					list.add("");
-					if (this.minecraft.player.experienceLevel < level) {
+					if (this.client.player.experienceLevel < level) {
 						list.add(TextFormatting.RED + I18n.format("container.enchant.level.requirement", this.container.enchantLevels[j]));
 					} else {
 						String s;
@@ -270,12 +270,12 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 						list.add(TextFormatting.GRAY + "" + s);
 					}
 				}
-				this.renderTooltip(list, p_render_1_, p_render_2_);
+				this.renderTooltip(stack, list, mouseX, mouseY);
 				break;
 			}
 		}
 
-		if (this.isPointInRegion(60, 14 + 19 * 3 + 5, 110, 5, p_render_1_, p_render_2_))
+		if (this.isPointInRegion(60, 14 + 19 * 3 + 5, 110, 5, mouseX, mouseY))
 
 		{
 			List<String> list = Lists.newArrayList();
@@ -283,27 +283,27 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 			list.add(I18n.format("gui.apotheosis.enchant.eterna.desc2"));
 			list.add("");
 			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 50F));
-			this.renderTooltip(list, p_render_1_, p_render_2_);
+			this.renderTooltip(list, mouseX, mouseY);
 		}
 
-		if (this.isPointInRegion(60, 14 + 19 * 3 + 15, 110, 5, p_render_1_, p_render_2_)) {
+		if (this.isPointInRegion(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
 			List<String> list = Lists.newArrayList();
 			list.add(quanta() + I18n.format("gui.apotheosis.enchant.quanta.desc"));
 			list.add(I18n.format("gui.apotheosis.enchant.quanta.desc2"));
 			list.add(I18n.format("gui.apotheosis.enchant.quanta.desc3"));
 			list.add("");
 			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.quanta.desc4", f(this.container.quanta.get() * 10F)));
-			this.renderTooltip(list, p_render_1_, p_render_2_);
+			this.renderTooltip(list, mouseX, mouseY);
 		}
 
-		if (this.isPointInRegion(60, 14 + 19 * 3 + 25, 110, 5, p_render_1_, p_render_2_)) {
+		if (this.isPointInRegion(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
 			List<String> list = Lists.newArrayList();
 			list.add(arcana() + I18n.format("gui.apotheosis.enchant.arcana.desc"));
 			list.add(I18n.format("gui.apotheosis.enchant.arcana.desc2"));
 			list.add(I18n.format("gui.apotheosis.enchant.arcana.desc3"));
 			list.add("");
 			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.arcana.desc4", f(this.container.arcana.get() * 10F)));
-			this.renderTooltip(list, p_render_1_, p_render_2_);
+			this.renderTooltip(list, mouseX, mouseY);
 		}
 
 	}

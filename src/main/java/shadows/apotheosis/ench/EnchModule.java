@@ -435,7 +435,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		PlayerEntity p = e.getPlayer();
-		if (!p.onGround && EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.STABLE_FOOTING, p) > 0) {
+		if (!p.isOnGround() && EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.STABLE_FOOTING, p) > 0) {
 			if (e.getOriginalSpeed() < e.getNewSpeed() * 5) e.setNewSpeed(e.getNewSpeed() * 5F);
 		}
 		ItemStack stack = p.getHeldItemMainhand();
@@ -470,7 +470,7 @@ public class EnchModule {
 	public void applyUnbreaking(AnvilRepairEvent e) {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
 			RepairContainer r = (RepairContainer) e.getPlayer().openContainer;
-			TileEntity te = r.field_216980_g.apply((w, p) -> w.getTileEntity(p)).orElse(null);
+			TileEntity te = r.context.apply((w, p) -> w.getTileEntity(p)).orElse(null);
 			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getUnbreaking() + 1));
 		}
 	}

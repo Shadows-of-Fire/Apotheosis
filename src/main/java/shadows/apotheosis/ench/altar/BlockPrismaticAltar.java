@@ -20,13 +20,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class BlockPrismaticAltar extends Block {
@@ -55,10 +56,10 @@ public class BlockPrismaticAltar extends Block {
 		TileEntity te = world.getTileEntity(pos);
 		if (!(te instanceof TilePrismaticAltar)) return ActionResultType.FAIL;
 		TilePrismaticAltar altar = (TilePrismaticAltar) te;
-		Vec3d eyes = player.getEyePosition(1);
-		Vec3d look = player.getLook(1);
-		double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
-		Vec3d block = eyes.add(look.x * reach, look.y * reach, look.z * reach);
+		Vector3d eyes = player.getEyePosition(1);
+		Vector3d look = player.getLook(1);
+		double reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
+		Vector3d block = eyes.add(look.x * reach, look.y * reach, look.z * reach);
 
 		for (int i = 0; i < 4; i++) {
 			if (this.rayTrace(pos, eyes, block, PILLARS.get(i)) != null) return attemptSwap(altar, i, player, hand);
@@ -75,7 +76,7 @@ public class BlockPrismaticAltar extends Block {
 	}
 
 	@Nullable
-	protected RayTraceResult rayTrace(BlockPos pos, Vec3d start, Vec3d end, VoxelShape boundingBox) {
+	protected RayTraceResult rayTrace(BlockPos pos, Vector3d start, Vector3d end, VoxelShape boundingBox) {
 		BlockRayTraceResult result = boundingBox.rayTrace(start, end, pos);
 		return result == null ? null : new BlockRayTraceResult(result.getHitVec().add(pos.getX(), pos.getY(), pos.getZ()), result.getFace(), pos, result.isInside());
 	}
@@ -114,11 +115,6 @@ public class BlockPrismaticAltar extends Block {
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return SHAPE;
-	}
-
-	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class RenderPrismaticAltar extends TileEntityRenderer<TilePrismaticAltar>
 
 	@Override
 	public void render(TilePrismaticAltar te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buf, int p_225616_5_, int p_225616_6_) {
-		if (this.dispatcher.renderInfo != null && te.getDistanceSq(this.dispatcher.renderInfo.getProjectedView().x, this.dispatcher.renderInfo.getProjectedView().y, this.dispatcher.renderInfo.getProjectedView().z) < 128d) {
+		if (this.dispatcher.renderInfo != null && te.getPos().distanceSq(this.dispatcher.renderInfo.getProjectedView().x, this.dispatcher.renderInfo.getProjectedView().y, this.dispatcher.renderInfo.getProjectedView().z, true) < 128d) {
 
 			matrix.push();
 			boolean thirdPerson = Minecraft.getInstance().getRenderManager().options.thirdPersonView == 2;

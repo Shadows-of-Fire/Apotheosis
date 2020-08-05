@@ -1,5 +1,7 @@
 package shadows.apotheosis.spawn.compat;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
@@ -64,8 +66,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	}
 
 	@Override
-	public void draw(SpawnerWrapper recipe, double mouseX, double mouseY) {
-		IRecipeCategory.super.draw(recipe, mouseX, mouseY);
+	public void draw(SpawnerWrapper recipe, MatrixStack stack, double mouseX, double mouseY) {
+		IRecipeCategory.super.draw(recipe, stack, mouseX, mouseY);
 		recipe.drawInfo(Minecraft.getInstance(), 0, 40, mouseX, mouseY);
 	}
 

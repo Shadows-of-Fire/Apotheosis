@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
@@ -35,7 +36,7 @@ public class EnchantmentIngredient extends Ingredient {
 	private static ItemStack format(IItemProvider item, Enchantment enchantment, int minLevel) {
 		ItemStack stack = new ItemStack(item);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, minLevel), stack);
-		AffixHelper.addLore(stack, new TranslationTextComponent("ingredient.apotheosis.ench", enchantment.getDisplayName(minLevel).applyTextStyles(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC)));
+		AffixHelper.addLore(stack, new TranslationTextComponent("ingredient.apotheosis.ench", ((IFormattableTextComponent) enchantment.getDisplayName(minLevel)).formatted(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC)));
 		return stack;
 	}
 

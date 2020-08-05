@@ -9,6 +9,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import shadows.apotheosis.Apotheosis;
@@ -53,7 +54,7 @@ public class SeaInfusionEnchantment extends Enchantment {
 
 	@Override
 	public ITextComponent getDisplayName(int level) {
-		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_GREEN);
+		return ((IFormattableTextComponent) super.getDisplayName(level)).formatted(TextFormatting.DARK_GREEN);
 	}
 
 	@Override

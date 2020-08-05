@@ -50,7 +50,7 @@ public class ItemTypedBook extends BookItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis." + getRegistryName().getPath()).applyTextStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("info.apotheosis." + getRegistryName().getPath()).formatted(TextFormatting.GRAY));
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.table;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.EnchantingTableTileEntity;
@@ -34,8 +35,8 @@ public class EnchantingTableTileEntityExt extends EnchantingTableTileEntity {
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
-		super.read(tag);
+	public void fromTag(BlockState state, CompoundNBT tag) {
+		super.fromTag(state, tag);
 		inv.deserializeNBT(tag.getCompound("inventory"));
 	}
 
