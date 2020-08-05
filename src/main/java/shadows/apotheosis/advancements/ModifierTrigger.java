@@ -7,15 +7,17 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.loot.ConditionArraySerializer;
 import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.SpawnerModifiers;
@@ -61,7 +63,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 	}
 
 	@Override
-	public ModifierTrigger.Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
+	public ModifierTrigger.Instance conditionsFromJson(JsonObject json, ConditionArrayParser p_230241_3_) {
 		MinMaxBounds.IntBound minDelay = MinMaxBounds.IntBound.fromJson(json.get("min_delay"));
 		MinMaxBounds.IntBound maxDelay = MinMaxBounds.IntBound.fromJson(json.get("max_delay"));
 		MinMaxBounds.IntBound spawnCount = MinMaxBounds.IntBound.fromJson(json.get("spawn_count"));
@@ -100,7 +102,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		private final SpawnerModifier modifier;
 
 		public Instance(MinMaxBounds.IntBound minDelay, MinMaxBounds.IntBound maxDelay, MinMaxBounds.IntBound spawnCount, MinMaxBounds.IntBound nearbyEnts, MinMaxBounds.IntBound playerRange, MinMaxBounds.IntBound spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone, SpawnerModifier modifier) {
-			super(ModifierTrigger.ID);
+			super(ModifierTrigger.ID, EntityPredicate.AndPredicate.EMPTY);
 			this.minDelay = minDelay;
 			this.maxDelay = maxDelay;
 			this.spawnCount = spawnCount;
@@ -115,7 +117,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		}
 
 		@Override
-		public JsonElement serialize() {
+		public JsonObject toJson(ConditionArraySerializer serializer) {
 			return new JsonObject();
 		}
 

@@ -5,12 +5,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
+import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.Apotheosis;
 
@@ -40,8 +41,9 @@ public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
 	}
 
 	@Override
-	public CriterionInstance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
-		return new CriterionInstance(ID);
+	public CriterionInstance conditionsFromJson(JsonObject json, ConditionArrayParser parser) {
+		return new CriterionInstance(ID, AndPredicate.EMPTY) {
+		};
 	}
 
 	public void trigger(PlayerAdvancements adv) {

@@ -1,21 +1,22 @@
 package shadows.apotheosis.advancements;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.criterion.EnchantedItemTrigger;
+import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.advancements.criterion.MinMaxBounds.FloatBound;
 import net.minecraft.advancements.criterion.MinMaxBounds.IntBound;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.loot.ConditionArraySerializer;
 
 public class EnchantedTrigger extends EnchantedItemTrigger {
 
 	@Override
-	public Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
+	public Instance conditionsFromJson(JsonObject json, EntityPredicate.AndPredicate p_230241_2_, ConditionArrayParser p_230241_3_) {
 		ItemPredicate item = ItemPredicate.deserialize(json.get("item"));
 		IntBound levels = IntBound.fromJson(json.get("levels"));
 		FloatBound eterna = FloatBound.fromJson(json.get("eterna"));
@@ -26,7 +27,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 	}
 
 	public void trigger(ServerPlayerEntity player, ItemStack stack, int level, float eterna, float quanta, float arcana) {
-		this.test(player.getAdvancements(), (inst) -> {
+		this.test(player, (inst) -> {
 			if (inst instanceof Instance) return ((Instance) inst).test(stack, level, eterna, quanta, arcana);
 			return inst.test(stack, level);
 		});
@@ -37,14 +38,14 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 		protected final FloatBound eterna, quanta, arcana;
 
 		public Instance(ItemPredicate item, IntBound levels, FloatBound eterna, FloatBound quanta, FloatBound arcana) {
-			super(item, levels);
+			super(EntityPredicate.AndPredicate.EMPTY, item, levels);
 			this.eterna = eterna;
 			this.quanta = quanta;
 			this.arcana = arcana;
 		}
 
 		public static EnchantedItemTrigger.Instance any() {
-			return new EnchantedItemTrigger.Instance(ItemPredicate.ANY, MinMaxBounds.IntBound.UNBOUNDED);
+			return new EnchantedItemTrigger.Instance(EntityPredicate.AndPredicate.EMPTY, ItemPredicate.ANY, MinMaxBounds.IntBound.UNBOUNDED);
 		}
 
 		public boolean test(ItemStack stack, int level, float eterna, float quanta, float arcana) {
@@ -52,8 +53,8 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 		}
 
 		@Override
-		public JsonElement serialize() {
-			JsonObject jsonobject = (JsonObject) super.serialize();
+		public JsonObject toJson(ConditionArraySerializer serializer) {
+			JsonObject jsonobject = super.toJson(serializer);
 			jsonobject.add("eterna", this.eterna.serialize());
 			jsonobject.add("quanta", this.quanta.serialize());
 			jsonobject.add("arcana", this.arcana.serialize());
