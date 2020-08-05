@@ -4,8 +4,6 @@ Smithing System (Like crafting, but with a Smithing Table)
 
 Advancements for Fletching
 
-Bamboo configurable growth heights
-
 Glass break faster with pickaxe
 
 Experience Storage System with level precision

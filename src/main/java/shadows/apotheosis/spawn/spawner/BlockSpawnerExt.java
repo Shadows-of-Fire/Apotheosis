@@ -69,7 +69,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 			ItemStack s = new ItemStack(this);
 			if (te != null) te.write(s.getOrCreateChildTag("BlockEntityTag"));
 			spawnAsEntity(world, pos, s);
-			player.getHeldItemMainhand().attemptDamageItem(1, world.rand, (ServerPlayerEntity) player);
+			player.getHeldItemMainhand().attemptDamageItem(SpawnerModule.spawnerSilkDamage, world.rand, (ServerPlayerEntity) player);
 		}
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
 		super.harvestBlock(world, player, pos, state, te, stack);
