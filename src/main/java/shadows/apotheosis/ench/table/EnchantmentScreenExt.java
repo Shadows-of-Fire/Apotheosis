@@ -107,6 +107,7 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 	/**
 	 * Draws the background layer of this container (behind the items).
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void drawBackground(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderHelper.disableGuiDepthLighting();
@@ -192,7 +193,7 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 				ITextProperties itextproperties = EnchantmentNameParts.getInstance().generatePhrase(this.textRenderer, width);
 				int color = 6839882;
 				if (((lapis < slot + 1 || this.client.player.experienceLevel < level) && !this.client.player.abilities.isCreativeMode) || this.container.enchantClue[slot] == -1) { // Forge: render buttons as disabled when enchantable but enchantability not met on lower levels
-					this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 0, 185, 108, 19);
+					this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
 					this.drawTexture(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
 					this.textRenderer.drawTrimmed(itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
 					color = 4226832;
@@ -200,10 +201,10 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 					int k2 = mouseX - (xCenter + 60);
 					int l2 = mouseY - (yCenter + 14 + 19 * slot);
 					if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-						this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 0, 204, 108, 19);
+						this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 237, 108, 19);
 						color = 16777088;
 					} else {
-						this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 0, 166, 108, 19);
+						this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 199, 108, 19);
 					}
 
 					this.drawTexture(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
@@ -278,30 +279,30 @@ public class EnchantmentScreenExt extends ContainerScreen<EnchantmentContainerEx
 
 		{
 			List<ITextComponent> list = Lists.newArrayList();
-			list.add(eterna() + I18n.format("gui.apotheosis.enchant.eterna.desc"));
-			list.add(I18n.format("gui.apotheosis.enchant.eterna.desc2"));
-			list.add("");
-			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 50F));
+			list.add(new StringTextComponent(eterna() + I18n.format("gui.apotheosis.enchant.eterna.desc")));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc2")));
+			list.add(new StringTextComponent(""));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 50F)).formatted(TextFormatting.GRAY));
 			this.renderTooltip(stack, list, mouseX, mouseY);
 		}
 
 		if (this.isPointInRegion(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
 			List<ITextComponent> list = Lists.newArrayList();
-			list.add(quanta() + I18n.format("gui.apotheosis.enchant.quanta.desc"));
-			list.add(I18n.format("gui.apotheosis.enchant.quanta.desc2"));
-			list.add(I18n.format("gui.apotheosis.enchant.quanta.desc3"));
-			list.add("");
-			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.quanta.desc4", f(this.container.quanta.get() * 10F)));
+			list.add(new StringTextComponent(quanta() + I18n.format("gui.apotheosis.enchant.quanta.desc")));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.quanta.desc2")));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.quanta.desc3")));
+			list.add(new StringTextComponent(""));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.quanta.desc4", f(this.container.quanta.get() * 10F))).formatted(TextFormatting.GRAY));
 			this.renderTooltip(stack, list, mouseX, mouseY);
 		}
 
 		if (this.isPointInRegion(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
 			List<ITextComponent> list = Lists.newArrayList();
-			list.add(arcana() + I18n.format("gui.apotheosis.enchant.arcana.desc"));
-			list.add(I18n.format("gui.apotheosis.enchant.arcana.desc2"));
-			list.add(I18n.format("gui.apotheosis.enchant.arcana.desc3"));
-			list.add("");
-			list.add(TextFormatting.GRAY + I18n.format("gui.apotheosis.enchant.arcana.desc4", f(this.container.arcana.get() * 10F)));
+			list.add(new StringTextComponent(arcana() + I18n.format("gui.apotheosis.enchant.arcana.desc")));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.arcana.desc2")));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.arcana.desc3")));
+			list.add(new StringTextComponent(""));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.arcana.desc4", f(this.container.arcana.get() * 10F))).formatted(TextFormatting.GRAY));
 			this.renderTooltip(stack, list, mouseX, mouseY);
 		}
 

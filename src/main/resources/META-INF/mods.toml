@@ -19,20 +19,20 @@ All things that should have been.
 [[dependencies.apotheosis]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[31.1.79,)" #mandatory
+    versionRange="[32.0.106,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15,)"
+    versionRange="[1.16.1,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="placebo"
     mandatory=true
-    versionRange="[3.0.1,)"
+    versionRange="[4.1.1,)"
     ordering="NONE"
     side="BOTH"

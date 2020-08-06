@@ -33,8 +33,8 @@ public class DrawSpeedAffix extends AttributeAffix {
 	public float apply(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
 		EquipmentSlotType type = EquipmentType.getTypeFor(stack).getSlot(stack);
 		float lvl = values[rand.nextInt(values.length)];
-		AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.getRegistryName(), lvl, op);
-		stack.addAttributeModifier(attr, modif, type);
+		AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.get().getRegistryName(), lvl, op);
+		stack.addAttributeModifier(attr.get(), modif, type);
 		return lvl;
 	}
 

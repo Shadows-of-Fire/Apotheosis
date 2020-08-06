@@ -1,6 +1,7 @@
 package shadows.apotheosis.deadly.loot.affix.impl;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
@@ -19,19 +20,27 @@ import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
  */
 public abstract class AttributeAffix extends Affix {
 
-	protected final Attribute attr;
+	protected final Supplier<Attribute> attr;
 	protected final RandomValueRange range;
 	protected final Operation op;
 
-	public AttributeAffix(Attribute attr, RandomValueRange range, Operation op, int weight) {
+	public AttributeAffix(Supplier<Attribute> attr, RandomValueRange range, Operation op, int weight) {
 		super(weight);
 		this.attr = attr;
 		this.range = range;
 		this.op = op;
 	}
 
-	public AttributeAffix(Attribute attr, float min, float max, Operation op, int weight) {
+	public AttributeAffix(Supplier<Attribute> attr, float min, float max, Operation op, int weight) {
 		this(attr, new RandomValueRange(min, max), op, weight);
+	}
+
+	public AttributeAffix(Attribute attr, RandomValueRange range, Operation op, int weight) {
+		this(() -> attr, range, op, weight);
+	}
+
+	public AttributeAffix(Attribute attr, float min, float max, Operation op, int weight) {
+		this(() -> attr, new RandomValueRange(min, max), op, weight);
 	}
 
 	@Override
@@ -39,8 +48,8 @@ public abstract class AttributeAffix extends Affix {
 		EquipmentSlotType type = EquipmentType.getTypeFor(stack).getSlot(stack);
 		float lvl = range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
-		AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.getRegistryName(), lvl, op);
-		stack.addAttributeModifier(attr, modif, type);
+		AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.get().getRegistryName(), lvl, op);
+		stack.addAttributeModifier(attr.get(), modif, type);
 		return lvl;
 	}
 

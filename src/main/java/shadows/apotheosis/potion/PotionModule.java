@@ -102,7 +102,8 @@ public class PotionModule {
 		Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
 		Apotheosis.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
 		RecipeHelper.addRecipe(new PotionCharmRecipe());
-		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.addListener(this::drops);
+		MinecraftForge.EVENT_BUS.addListener(this::xp);
 		if (ModList.get().isLoaded("curios")) CuriosCompat.sendIMC();
 	}
 
@@ -156,7 +157,6 @@ public class PotionModule {
 		e.getRegistry().register(PotionCharmRecipe.Serializer.INSTANCE.setRegistryName(ApotheosisObjects.POTION_CHARM.getRegistryName()));
 	}
 
-	@SubscribeEvent
 	public void drops(LivingDropsEvent e) {
 		if (e.getEntityLiving() instanceof RabbitEntity) {
 			RabbitEntity rabbit = (RabbitEntity) e.getEntityLiving();
@@ -167,7 +167,6 @@ public class PotionModule {
 		}
 	}
 
-	@SubscribeEvent
 	public void xp(LivingExperienceDropEvent e) {
 		if (e.getAttackingPlayer() != null && e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE) != null) {
 			int level = e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE).getAmplifier() + 1;

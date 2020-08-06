@@ -19,6 +19,7 @@ import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.IModBusEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -113,7 +114,6 @@ public class Apotheosis {
 		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisClientSetup());
 	}
 
-	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
 		PlayerEntity p = e.getPlayer();
 		localAtkStrength = p.getCooledAttackStrength(0.5F);
@@ -123,17 +123,17 @@ public class Apotheosis {
 		return new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), type));
 	}
 
-	public static class ApotheosisConstruction extends Event {
+	public static class ApotheosisConstruction extends Event implements IModBusEvent {
 		public ApotheosisConstruction() {
 		}
 	}
 
-	public static class ApotheosisSetup extends Event {
+	public static class ApotheosisSetup extends Event implements IModBusEvent {
 		public ApotheosisSetup() {
 		}
 	}
 
-	public static class ApotheosisClientSetup extends Event {
+	public static class ApotheosisClientSetup extends Event implements IModBusEvent {
 		public ApotheosisClientSetup() {
 		}
 	}

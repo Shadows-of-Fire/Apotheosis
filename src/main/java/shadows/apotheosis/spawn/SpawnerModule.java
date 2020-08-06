@@ -11,7 +11,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -27,9 +26,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
@@ -53,7 +50,8 @@ public class SpawnerModule {
 	public void setup(ApotheosisSetup e) {
 		TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
 		TileEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
-		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.addListener(this::handleCapturing);
+		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
 		config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
 		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
 		spawnerSilkDamage = config.getInt("Spawner Silk Damage", "general", 100, 0, 100000, "The durability damage dealt to an item that silk touches a spawner.");
@@ -72,7 +70,6 @@ public class SpawnerModule {
 		e.getRegistry().register(new EnchantmentCapturing().setRegistryName(Apotheosis.MODID, "capturing"));
 	}
 
-	@SubscribeEvent
 	public void handleCapturing(LivingDropsEvent e) {
 		Entity killer = e.getSource().getTrueSource();
 		if (killer instanceof LivingEntity) {
@@ -85,16 +82,6 @@ public class SpawnerModule {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void drops(BlockEvent.HarvestDropsEvent e) {
-		if (e.getState().getBlock() == Blocks.SPAWNER && e.getHarvester() != null) {
-			if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, e.getHarvester().getHeldItemMainhand()) >= SpawnerModule.spawnerSilkLevel) {
-				e.getDrops().clear();
-			}
-		}
-	}
-
-	@SubscribeEvent
 	public void handleUseItem(RightClickBlock e) {
 		TileEntity te;
 		if ((te = e.getWorld().getTileEntity(e.getPos())) instanceof TileSpawnerExt) {
