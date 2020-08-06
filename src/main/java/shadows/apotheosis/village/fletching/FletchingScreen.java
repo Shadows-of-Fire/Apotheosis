@@ -1,5 +1,6 @@
 package shadows.apotheosis.village.fletching;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -16,24 +17,25 @@ public class FletchingScreen extends ContainerScreen<FletchingContainer> {
 	}
 
 	@Override
-	public void render(int x, int y, float partialTicks) {
-		this.renderBackground();
-		super.render(x, y, partialTicks);
-		this.renderHoveredToolTip(x, y);
+	public void render(MatrixStack stack, int x, int y, float partialTicks) {
+		this.renderBackground(stack);
+		super.render(stack, x, y, partialTicks);
+		this.drawMouseoverTooltip(stack, x, y);
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.font.drawString(this.title.getFormattedText(), 47, 6.0F, 4210752);
-		this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0F, this.ySize - 96 + 2, 4210752);
+	protected void drawForeground(MatrixStack stack, int mouseX, int mouseY) {
+		this.textRenderer.draw(stack, this.title, 47, 6.0F, 4210752);
+		this.textRenderer.draw(stack, this.playerInventory.getDisplayName(), 8.0F, this.ySize - 96 + 2, 4210752);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void drawBackground(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(TEXTURES);
+		this.client.getTextureManager().bindTexture(TEXTURES);
 		int i = this.guiLeft;
 		int j = (this.height - this.ySize) / 2;
-		this.blit(i, j, 0, 0, this.xSize, this.ySize);
+		this.drawTexture(stack, i, j, 0, 0, this.xSize, this.ySize);
 	}
 }

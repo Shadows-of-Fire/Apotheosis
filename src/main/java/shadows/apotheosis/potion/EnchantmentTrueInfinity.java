@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import shadows.apotheosis.Apotheosis;
@@ -31,7 +32,7 @@ public class EnchantmentTrueInfinity extends Enchantment {
 
 	@Override
 	public ITextComponent getDisplayName(int level) {
-		return super.getDisplayName(level).applyTextStyle(TextFormatting.DARK_GREEN);
+		return ((IFormattableTextComponent) super.getDisplayName(level)).formatted(TextFormatting.DARK_GREEN);
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class BlockBambooExt extends BambooBlock {
 		super(Block.Properties.create(Material.BAMBOO, MaterialColor.FOLIAGE).tickRandomly().hardnessAndResistance(1.0F).sound(SoundType.BAMBOO));
 		setRegistryName(new ResourceLocation("bamboo"));
 		this.setDefaultState(old.getDefaultState());
-		this.getStateContainer().getValidStates().forEach(b -> b.object = this);
+		this.getStateContainer().getValidStates().forEach(b -> b.owner = this);
 	}
 
 	@Override

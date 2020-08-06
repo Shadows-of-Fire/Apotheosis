@@ -56,7 +56,7 @@ public class PotionCharmItem extends Item {
 		ItemStack stack = player.getHeldItem(hand);
 		if (!world.isRemote) {
 			stack.getOrCreateTag().putBoolean("charm_enabled", !stack.getTag().getBoolean("charm_enabled"));
-		} else if (!stack.getTag().getBoolean("charm_enabled")) world.playSound(player, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1, 0.3F);
+		} else if (!stack.getTag().getBoolean("charm_enabled")) world.playSound(player, player.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1, 0.3F);
 		return ActionResult.success(stack);
 	}
 
@@ -70,9 +70,9 @@ public class PotionCharmItem extends Item {
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotionFromItem(stack);
-			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc", new TranslationTextComponent(p.getEffects().get(0).getEffectName())).applyTextStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc2").applyTextStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".enabled", stack.getOrCreateTag().getBoolean("charm_enabled")).applyTextStyle(TextFormatting.BLUE));
+			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc", new TranslationTextComponent(p.getEffects().get(0).getEffectName())).formatted(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc2").formatted(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".enabled", stack.getOrCreateTag().getBoolean("charm_enabled")).formatted(TextFormatting.BLUE));
 		}
 	}
 

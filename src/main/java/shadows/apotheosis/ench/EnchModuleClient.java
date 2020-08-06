@@ -13,7 +13,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -29,13 +29,13 @@ import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
 @SuppressWarnings("deprecation")
 public class EnchModuleClient {
 
-	static BlockRayTraceResult res = BlockRayTraceResult.createMiss(Vec3d.ZERO, Direction.NORTH, BlockPos.ZERO);
+	static BlockRayTraceResult res = BlockRayTraceResult.createMiss(Vector3d.ZERO, Direction.NORTH, BlockPos.ZERO);
 
 	@SubscribeEvent
 	public void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
-		if (i == Items.COBWEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.cobweb").applyTextStyle(TextFormatting.GRAY));
-		else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.prismatic_cobweb").applyTextStyle(TextFormatting.GRAY));
+		if (i == Items.COBWEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.cobweb").formatted(TextFormatting.GRAY));
+		else if (i == ApotheosisObjects.PRISMATIC_WEB) e.getToolTip().add(new TranslationTextComponent("info.apotheosis.prismatic_cobweb").formatted(TextFormatting.GRAY));
 		else if (i instanceof BlockItem) {
 			Block block = ((BlockItem) i).getBlock();
 			World world = Minecraft.getInstance().world;
@@ -49,18 +49,18 @@ public class EnchModuleClient {
 			float quanta = EnchantmentStatRegistry.getQuanta(state, world, BlockPos.ZERO);
 			float arcana = EnchantmentStatRegistry.getArcana(state, world, BlockPos.ZERO);
 			if (eterna != 0 || quanta != 0 || arcana != 0) {
-				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.ench_stats").applyTextStyle(TextFormatting.GOLD));
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.ench_stats").formatted(TextFormatting.GOLD));
 			}
 			if (eterna != 0) {
 				if (eterna > 0) {
-					e.getToolTip().add(new TranslationTextComponent("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).applyTextStyle(TextFormatting.GREEN));
-				} else e.getToolTip().add(new TranslationTextComponent("info.apotheosis.eterna", String.format("%.2f", eterna)).applyTextStyle(TextFormatting.GREEN));
+					e.getToolTip().add(new TranslationTextComponent("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).formatted(TextFormatting.GREEN));
+				} else e.getToolTip().add(new TranslationTextComponent("info.apotheosis.eterna", String.format("%.2f", eterna)).formatted(TextFormatting.GREEN));
 			}
 			if (quanta != 0) {
-				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta * 10)).applyTextStyle(TextFormatting.RED));
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta * 10)).formatted(TextFormatting.RED));
 			}
 			if (arcana != 0) {
-				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana * 10)).applyTextStyle(TextFormatting.DARK_PURPLE));
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana * 10)).formatted(TextFormatting.DARK_PURPLE));
 			}
 		}
 	}

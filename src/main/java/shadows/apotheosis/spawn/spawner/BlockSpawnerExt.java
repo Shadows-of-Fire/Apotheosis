@@ -14,7 +14,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -58,7 +58,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity te = world.getTileEntity(pos);
 		if (te != null) {
-			te.read(stack.getOrCreateChildTag("BlockEntityTag"));
+			te.fromTag(state, stack.getOrCreateChildTag("BlockEntityTag"));
 			te.setPos(pos);
 		}
 	}
@@ -76,7 +76,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 	}
 
 	@Override
-	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid) {
+	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
 		onBlockHarvested(world, pos, state, player);
 		if (player.isCreative()) return world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
 		return willHarvest;
@@ -128,7 +128,7 @@ public class BlockSpawnerExt extends SpawnerBlock {
 	}
 
 	private ITextComponent grayTranslated(String s, Object... args) {
-		return new TranslationTextComponent(s, args).applyTextStyle(TextFormatting.GRAY);
+		return new TranslationTextComponent(s, args).formatted(TextFormatting.GRAY);
 	}
 
 	@Override

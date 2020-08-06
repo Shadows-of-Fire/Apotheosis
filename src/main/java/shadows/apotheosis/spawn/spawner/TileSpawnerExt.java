@@ -45,17 +45,17 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
+	public void fromTag(BlockState state, CompoundNBT tag) {
 		ignoresPlayers = tag.getBoolean("ignore_players");
 		ignoresConditions = tag.getBoolean("ignore_conditions");
 		ignoresCap = tag.getBoolean("ignore_cap");
 		redstoneEnabled = tag.getBoolean("redstone_control");
-		super.read(tag);
+		super.fromTag(state, tag);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		read(pkt.getNbtCompound());
+		fromTag(Blocks.SPAWNER.getDefaultState(), pkt.getNbtCompound());
 	}
 
 	public class SpawnerLogicExt extends AbstractSpawner {
@@ -176,7 +176,7 @@ public class TileSpawnerExt extends MobSpawnerTileEntity {
 								}
 
 								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, getWorld(), (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, SpawnReason.SPAWNER)) {
-									((MobEntity) entity).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity)), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
+									((MobEntity) entity).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
 								}
 							}
 

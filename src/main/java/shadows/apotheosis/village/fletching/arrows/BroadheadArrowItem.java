@@ -11,7 +11,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -35,7 +34,7 @@ public class BroadheadArrowItem extends ArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.broadhead_arrow").setStyle(new Style().setColor(TextFormatting.RED)));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.broadhead_arrow").formatted(TextFormatting.RED));
 	}
 
 }

@@ -10,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -35,7 +34,7 @@ public class ObsidianArrowItem extends ArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.obsidian_arrow").setStyle(new Style().setColor(TextFormatting.BLUE)));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.obsidian_arrow").formatted(TextFormatting.BLUE));
 	}
 
 	@SubscribeEvent

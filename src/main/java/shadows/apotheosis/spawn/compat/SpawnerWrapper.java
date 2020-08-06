@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.block.Blocks;
@@ -58,9 +60,9 @@ public class SpawnerWrapper {
 		ingredients.setOutput(VanillaTypes.ITEM, output);
 	}
 
-	public void drawInfo(Minecraft mc, int width, int height, double mouseX, double mouseY) {
-		mc.fontRenderer.draw(I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
-		if (modifier.getMin() != -1) mc.fontRenderer.drawString(I18n.format("jei.spw.minmax", modifier.getMin(), modifier.getMax()), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
+	public void drawInfo(Minecraft mc, MatrixStack stack, int width, int height, double mouseX, double mouseY) {
+		mc.fontRenderer.draw(stack, I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
+		if (modifier.getMin() != -1) mc.fontRenderer.draw(stack, I18n.format("jei.spw.minmax", modifier.getMin(), modifier.getMax()), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
 	}
 
 	public static class SpawnerInverseWrapper extends SpawnerWrapper {
@@ -75,9 +77,9 @@ public class SpawnerWrapper {
 		}
 
 		@Override
-		public void drawInfo(Minecraft mc, int width, int height, double mouseX, double mouseY) {
-			mc.fontRenderer.drawString(I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
-			mc.fontRenderer.drawString(I18n.format("jei.spw.invert2"), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
+		public void drawInfo(Minecraft mc, MatrixStack stack, int width, int height, double mouseX, double mouseY) {
+			mc.fontRenderer.draw(stack, I18n.format(tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
+			mc.fontRenderer.draw(stack, I18n.format("jei.spw.invert2"), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
 		}
 
 	}

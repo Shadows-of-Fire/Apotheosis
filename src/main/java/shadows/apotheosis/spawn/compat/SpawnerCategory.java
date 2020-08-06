@@ -68,7 +68,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	@Override
 	public void draw(SpawnerWrapper recipe, MatrixStack stack, double mouseX, double mouseY) {
 		IRecipeCategory.super.draw(recipe, stack, mouseX, mouseY);
-		recipe.drawInfo(Minecraft.getInstance(), 0, 40, mouseX, mouseY);
+		recipe.drawInfo(Minecraft.getInstance(), stack, 0, 40, mouseX, mouseY);
 	}
 
 }

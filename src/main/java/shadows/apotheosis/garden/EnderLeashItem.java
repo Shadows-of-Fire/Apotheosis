@@ -42,7 +42,7 @@ public class EnderLeashItem extends Item {
 			if (!player.world.isRemote) {
 				entity.remove();
 				stack.getTag().put("entity_data", tag);
-				stack.getTag().putString("name", entity.getDisplayName().getFormattedText());
+				stack.getTag().putString("name", entity.getDisplayName().getString());
 				playSound(player);
 			}
 			return true;
@@ -86,7 +86,7 @@ public class EnderLeashItem extends Item {
 	}
 
 	void playSound(PlayerEntity player) {
-		player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1, 1);
+		player.world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1, 1);
 	}
 
 	@Override
