@@ -4,8 +4,8 @@ function initializeCoreMod() {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.client.gui.screen.inventory.AnvilScreen',
-                'methodName': 'func_146979_b',
-                'methodDesc': '(II)V'
+                'methodName': 'func_230451_b_',
+                'methodDesc': '(Lcom/mojang/blaze3d/matrix/MatrixStack;II)V'
             },
             'transformer': function(method) {
                 print('[ApotheosisCore]: Patching AnvilScreen#drawGuiContainerForegroundLayer');
