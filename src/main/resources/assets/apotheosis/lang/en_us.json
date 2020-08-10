@@ -542,5 +542,8 @@
 	"info.apotheosis.broadhead_arrow": "Bleeding (0:15)",
 	"item.apotheosis.broadhead_arrow": "Broadhead Arrow",
 	"effect.apotheosis.bleeding": "Bleeding",
-	"death.attack.apotheosis.bleeding": "%s bled out."
+	"death.attack.apotheosis.bleeding": "%s bled out.",
+	
+	"comment_id": "/Misc",
+	"generic.reachDistance": "Reach Distance"
 }

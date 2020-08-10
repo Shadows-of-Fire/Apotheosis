@@ -3,8 +3,8 @@ function initializeCoreMod() {
         'apothstackmodifier': {
             'target': {
                 'type': 'METHOD',
-                'class': 'net.minecraft.entity.SharedMonsterAttributes',
-                'methodName': 'func_111259_a',
+                'class': 'net.minecraft.entity.ai.attributes.AttributeModifier',
+                'methodName': 'func_233800_a_',
                 'methodDesc': '(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/entity/ai/attributes/AttributeModifier;'
             },
             'transformer': function(method) {

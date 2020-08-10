@@ -8,6 +8,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,7 +32,7 @@ import shadows.apotheosis.deadly.loot.affix.Affixes;
 public class DeadlyHooks {
 
 	/**
-	 * ASM Hook: Called from {@link SharedMonsterAttributes#readAttributeModifier(net.minecraft.nbt.CompoundNBT)}
+	 * ASM Hook: Called from {@link AttributeModifier#fromTag}
 	 */
 	public static UUID getRealUUID(UUID uuid) {
 		if (!Apotheosis.enableDeadly) return uuid;
