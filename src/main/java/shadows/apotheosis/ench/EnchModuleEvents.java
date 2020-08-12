@@ -37,7 +37,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
-import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.placebo.util.ReflectionHelper;
 
 public class EnchModuleEvents {
@@ -86,7 +85,6 @@ public class EnchModuleEvents {
 			e.setMaterialCost(1);
 			return;
 		}
-		if (TomeItem.updateAnvil(e)) return;
 		if (ScrappingTomeItem.updateAnvil(e)) return;
 	}
 
