@@ -13,7 +13,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.MathHelper;
 import shadows.apotheosis.ench.asm.EnchHooks;
-import shadows.apotheosis.ench.table.EnchantmentContainerExt.Arcana;
+import shadows.apotheosis.ench.table.ApothEnchantContainer.Arcana;
 
 public class RealEnchantmentHelper {
 

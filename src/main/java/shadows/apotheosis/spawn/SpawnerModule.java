@@ -31,10 +31,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.spawn.enchantment.EnchantmentCapturing;
+import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
-import shadows.apotheosis.spawn.spawner.BlockSpawnerExt;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
 import shadows.placebo.util.ReflectionHelper;
@@ -48,7 +48,7 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void setup(ApotheosisSetup e) {
-		TileEntityType.MOB_SPAWNER.factory = TileSpawnerExt::new;
+		TileEntityType.MOB_SPAWNER.factory = ApothSpawnerTile::new;
 		TileEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
 		MinecraftForge.EVENT_BUS.addListener(this::handleCapturing);
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
@@ -62,12 +62,12 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverrideBlock(new BlockSpawnerExt(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new ApothSpawnerBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
-		e.getRegistry().register(new EnchantmentCapturing().setRegistryName(Apotheosis.MODID, "capturing"));
+		e.getRegistry().register(new CapturingEnchant().setRegistryName(Apotheosis.MODID, "capturing"));
 	}
 
 	public void handleCapturing(LivingDropsEvent e) {
@@ -84,11 +84,11 @@ public class SpawnerModule {
 
 	public void handleUseItem(RightClickBlock e) {
 		TileEntity te;
-		if ((te = e.getWorld().getTileEntity(e.getPos())) instanceof TileSpawnerExt) {
+		if ((te = e.getWorld().getTileEntity(e.getPos())) instanceof ApothSpawnerTile) {
 			ItemStack s = e.getItemStack();
 			boolean inverse = SpawnerModifiers.inverseItem.test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
-				if (sm.canModify((TileSpawnerExt) te, s, inverse)) e.setUseBlock(Result.ALLOW);
+				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}
 	}
 

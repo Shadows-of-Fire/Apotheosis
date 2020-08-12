@@ -5,8 +5,6 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -48,11 +46,6 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
 		e.getRegistry().register(new WorldGenerator().setRegistryName("deadly_world_gen"));
-	}
-
-	@SubscribeEvent
-	public void registerSounds(Register<SoundEvent> e) {
-		e.getRegistry().register(new SoundEvent(new ResourceLocation(Apotheosis.MODID, "chain_zap")).setRegistryName("chain_zap"));
 	}
 
 	public void reloads(AddReloadListenerEvent e) {

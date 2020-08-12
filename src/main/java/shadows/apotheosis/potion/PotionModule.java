@@ -109,12 +109,12 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
-		e.getRegistry().register(new EnchantmentTrueInfinity().setRegistryName(Apotheosis.MODID, "true_infinity"));
+		e.getRegistry().register(new TrueInfinityEnchant().setRegistryName(Apotheosis.MODID, "true_infinity"));
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().registerAll(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"), new PotionCharmItem().setRegistryName(Apotheosis.MODID, "potion_charm"));
+		e.getRegistry().registerAll(new LuckyFootItem().setRegistryName(Apotheosis.MODID, "lucky_foot"), new PotionCharmItem().setRegistryName(Apotheosis.MODID, "potion_charm"));
 	}
 
 	@SubscribeEvent

@@ -17,16 +17,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.ench.anvil.BlockAnvilExt;
-import shadows.apotheosis.ench.anvil.TileAnvil;
+import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
+import shadows.apotheosis.ench.anvil.AnvilTile;
 
 @WailaPlugin
 public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {
 
 	@Override
 	public void register(IRegistrar reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, BlockAnvilExt.class);
-		reg.registerBlockDataProvider(this, BlockAnvilExt.class);
+		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothAnvilBlock.class);
+		reg.registerBlockDataProvider(this, ApothAnvilBlock.class);
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 
 	@Override
 	public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity te) {
-		if (te instanceof TileAnvil) {
-			tag.putInt("ub", ((TileAnvil) te).getUnbreaking());
-			tag.putInt("sp", ((TileAnvil) te).getSplitting());
+		if (te instanceof AnvilTile) {
+			tag.putInt("ub", ((AnvilTile) te).getUnbreaking());
+			tag.putInt("sp", ((AnvilTile) te).getSplitting());
 		}
 	}
 

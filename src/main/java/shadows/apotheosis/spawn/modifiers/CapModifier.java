@@ -4,7 +4,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import shadows.apotheosis.spawn.SpawnerModifiers;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 
 public class CapModifier extends SpawnerModifier {
@@ -14,12 +14,12 @@ public class CapModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		return super.canModify(spawner, stack, inverting) && spawner.ignoresCap == inverting;
 	}
 
 	@Override
-	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		spawner.ignoresCap = !inverting;
 		return true;
 	}

@@ -35,9 +35,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.ench.anvil.TileAnvil;
-import shadows.apotheosis.ench.objects.ItemScrapTome;
-import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.anvil.AnvilTile;
+import shadows.apotheosis.ench.objects.ScrappingTomeItem;
+import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.placebo.util.ReflectionHelper;
 
 public class EnchModuleEvents {
@@ -86,8 +86,8 @@ public class EnchModuleEvents {
 			e.setMaterialCost(1);
 			return;
 		}
-		if (ItemTypedBook.updateAnvil(e)) return;
-		if (ItemScrapTome.updateAnvil(e)) return;
+		if (TomeItem.updateAnvil(e)) return;
+		if (ScrappingTomeItem.updateAnvil(e)) return;
 	}
 
 	Method dropLoot;
@@ -189,7 +189,7 @@ public class EnchModuleEvents {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
 			RepairContainer r = (RepairContainer) e.getPlayer().openContainer;
 			TileEntity te = r.context.apply((w, p) -> w.getTileEntity(p)).orElse(null);
-			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getUnbreaking() + 1));
+			if (te instanceof AnvilTile) e.setBreakChance(e.getBreakChance() / (((AnvilTile) te).getUnbreaking() + 1));
 		}
 	}
 

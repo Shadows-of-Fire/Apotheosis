@@ -28,8 +28,8 @@ public class EnchJEIPlugin implements IModPlugin {
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchDiaSword);
 		ItemStack cursedDiaSword = new ItemStack(Items.DIAMOND_SWORD);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.BINDING_CURSE, 1), cursedDiaSword);
-		ItemStack scrapTome = new ItemStack(ApotheosisObjects.SCRAP_TOME);
-		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), scrapTome);
+		ItemStack enchBook = new ItemStack(Items.ENCHANTED_BOOK);
+		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchBook);
 		IVanillaRecipeFactory factory = reg.getVanillaRecipeFactory();
 		//Formatter::off
 		reg.addRecipes(ImmutableList.of(
@@ -44,7 +44,7 @@ public class EnchJEIPlugin implements IModPlugin {
 			factory.createAnvilRecipe(
 				enchDiaSword,
 				ImmutableList.of(new ItemStack(ApotheosisObjects.SCRAP_TOME)),
-				ImmutableList.of(scrapTome)),
+				ImmutableList.of(enchBook)),
 			factory.createAnvilRecipe(
 				new ItemStack(Blocks.DAMAGED_ANVIL),
 				ImmutableList.of(new ItemStack(Blocks.IRON_BLOCK)),

@@ -46,9 +46,9 @@ public class GardenModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverrideBlock(new BlockCactusExt(), Apotheosis.MODID);
-		PlaceboUtil.registerOverrideBlock(new BlockReedExt(), Apotheosis.MODID);
-		PlaceboUtil.registerOverrideBlock(new BlockBambooExt(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new ApothCactusBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new ApothSugarcaneBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new ApothBambooBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
