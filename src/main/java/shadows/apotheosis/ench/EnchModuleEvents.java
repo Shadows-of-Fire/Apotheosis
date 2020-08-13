@@ -187,7 +187,7 @@ public class EnchModuleEvents {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
 			RepairContainer r = (RepairContainer) e.getPlayer().openContainer;
 			TileEntity te = r.context.apply((w, p) -> w.getTileEntity(p)).orElse(null);
-			if (te instanceof AnvilTile) e.setBreakChance(e.getBreakChance() / (((AnvilTile) te).getUnbreaking() + 1));
+			if (te instanceof AnvilTile) e.setBreakChance(e.getBreakChance() / (((AnvilTile) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
 		}
 	}
 

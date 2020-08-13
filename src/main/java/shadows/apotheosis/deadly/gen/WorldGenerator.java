@@ -47,7 +47,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 
 	@Override
 	public boolean generate(ISeedReader world, StructureManager struct, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
-		//if (DeadlyConfig.DIM_WHITELIST.contains(world.getDimension().getType().getRegistryName())) 
+		//if (DeadlyConfig.DIM_WHITELIST.contains(world.getDimension().getType().getRegistryName()))
 		for (WorldFeature feature : FEATURES) {
 			ChunkPos cPos = new ChunkPos(pos);
 			if (wasSuccess(world.getDimension(), cPos.x, cPos.z)) return false;

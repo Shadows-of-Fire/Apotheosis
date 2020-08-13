@@ -48,37 +48,38 @@ import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.apotheosis.ench.altar.SeaAltarBlock;
 import shadows.apotheosis.ench.altar.SeaAltarTile;
-import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
-import shadows.apotheosis.ench.anvil.SplittingEnchant;
-import shadows.apotheosis.ench.anvil.ApothAnvilItem;
 import shadows.apotheosis.ench.anvil.AnvilTile;
+import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
+import shadows.apotheosis.ench.anvil.ApothAnvilItem;
+import shadows.apotheosis.ench.anvil.ObliterationEnchant;
+import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
-import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
+import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
 import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
 import shadows.apotheosis.ench.enchantments.MagicProtEnchant;
+import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
 import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import shadows.apotheosis.ench.enchantments.ReboundingEnchant;
 import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
 import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
+import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
-import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
-import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
+import shadows.apotheosis.ench.objects.ApothShearsItem;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.HellshelfItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
-import shadows.apotheosis.ench.objects.ApothShearsItem;
-import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.objects.SeashelfItem;
+import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
 import shadows.apotheosis.ench.replacements.DefenseEnchant;
 import shadows.apotheosis.ench.table.ApothEnchantBlock;
-import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
+import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
@@ -287,7 +288,8 @@ public class EnchModule {
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
 				new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling")
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
+				new ObliterationEnchant().setRegistryName("obliteration")
 				);
 		//Formatter::on
 	}

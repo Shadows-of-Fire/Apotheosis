@@ -1,7 +1,6 @@
 package shadows.apotheosis.ench.anvil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +41,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.advancements.AdvancementTriggers;
@@ -66,11 +66,7 @@ public class ApothAnvilBlock extends AnvilBlock {
 	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
 		ItemStack anvil = new ItemStack(this);
 		if (te instanceof AnvilTile) {
-			AnvilTile anv = (AnvilTile) te;
-			Map<Enchantment, Integer> ench = new HashMap<>();
-			if (anv.getUnbreaking() > 0) ench.put(Enchantments.UNBREAKING, anv.getUnbreaking());
-			if (anv.getSplitting() > 0) ench.put(ApotheosisObjects.SPLITTING, anv.getSplitting());
-			EnchantmentHelper.setEnchantments(ench, anvil);
+			EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), anvil);
 		}
 		spawnAsEntity(world, pos, anvil);
 		super.harvestBlock(world, player, pos, state, te, stack);
@@ -80,8 +76,7 @@ public class ApothAnvilBlock extends AnvilBlock {
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof AnvilTile) {
-			((AnvilTile) te).setUnbreaking(EnchantmentHelper.getEnchantmentLevel(Enchantments.UNBREAKING, stack));
-			((AnvilTile) te).setSplitting(EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SPLITTING, stack));
+			((AnvilTile) te).getEnchantments().putAll(EnchantmentHelper.getEnchantments(stack));
 		}
 	}
 
@@ -111,8 +106,9 @@ public class ApothAnvilBlock extends AnvilBlock {
 		super.onEndFalling(world, pos, fallState, hitState, anvil);
 		List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
 		if (anvil.tileEntityData == null) return;
-		int split = anvil.tileEntityData.getInt("splitting");
-		int ub = anvil.tileEntityData.getInt("ub");
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.fromTag(anvil.tileEntityData.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		int split = enchantments.getOrDefault(ApotheosisObjects.SPLITTING, 0);
+		int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
 		if (split > 0) for (ItemEntity entity : items) {
 			ItemStack stack = entity.getItem();
 			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof BookItem) {

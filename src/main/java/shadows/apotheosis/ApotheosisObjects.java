@@ -1,6 +1,7 @@
 package shadows.apotheosis;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -13,33 +14,33 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.ench.altar.SeaAltarBlock;
 import shadows.apotheosis.ench.altar.SeaAltarTile;
-import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.anvil.AnvilTile;
+import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
-import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
+import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
 import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
 import shadows.apotheosis.ench.enchantments.MagicProtEnchant;
+import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
 import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import shadows.apotheosis.ench.enchantments.ReboundingEnchant;
 import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
 import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
+import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
-import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
-import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
-import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.objects.SeashelfBlock;
-import shadows.apotheosis.ench.table.ApothEnchantTile;
+import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
+import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.garden.EnderLeashItem;
-import shadows.apotheosis.potion.TrueInfinityEnchant;
 import shadows.apotheosis.potion.LuckyFootItem;
 import shadows.apotheosis.potion.PotionCharmItem;
+import shadows.apotheosis.potion.TrueInfinityEnchant;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.PotionSundering;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
@@ -137,5 +138,6 @@ public class ApotheosisObjects {
 	public static final Block DRACONIC_ENDSHELF = null;
 	public static final Block BEESHELF = null;
 	public static final Block MELONSHELF = null;
+	public static final Enchantment OBLITERATION = null;
 
 }

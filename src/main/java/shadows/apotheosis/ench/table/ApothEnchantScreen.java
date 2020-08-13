@@ -192,7 +192,7 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 				int width = 86 - this.textRenderer.getStringWidth(s);
 				ITextProperties itextproperties = EnchantmentNameParts.getInstance().generatePhrase(this.textRenderer, width);
 				int color = 6839882;
-				if (((lapis < slot + 1 || this.client.player.experienceLevel < level) && !this.client.player.abilities.isCreativeMode) || this.container.enchantClue[slot] == -1) { // Forge: render buttons as disabled when enchantable but enchantability not met on lower levels
+				if ((lapis < slot + 1 || this.client.player.experienceLevel < level) && !this.client.player.abilities.isCreativeMode || this.container.enchantClue[slot] == -1) { // Forge: render buttons as disabled when enchantable but enchantability not met on lower levels
 					this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
 					this.drawTexture(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
 					this.textRenderer.drawTrimmed(itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
@@ -212,7 +212,7 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 					color = 8453920;
 				}
 
-				this.textRenderer.drawWithShadow(stack, s, (float) (k1 + 86 - this.textRenderer.getStringWidth(s)), (float) (yCenter + 16 + 19 * slot + 7), color);
+				this.textRenderer.drawWithShadow(stack, s, k1 + 86 - this.textRenderer.getStringWidth(s), yCenter + 16 + 19 * slot + 7, color);
 			}
 		}
 
