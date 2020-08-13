@@ -28,6 +28,7 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.apotheosis.Apotheosis;
@@ -103,7 +104,6 @@ public class PotionModule {
 		RecipeHelper.addRecipe(new PotionCharmRecipe());
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
 		MinecraftForge.EVENT_BUS.addListener(this::xp);
-		if (ModList.get().isLoaded("curios")) CuriosCompat.sendIMC();
 	}
 
 	@SubscribeEvent
@@ -154,6 +154,11 @@ public class PotionModule {
 	@SubscribeEvent
 	public void serializers(Register<IRecipeSerializer<?>> e) {
 		e.getRegistry().register(PotionCharmRecipe.Serializer.INSTANCE.setRegistryName(ApotheosisObjects.POTION_CHARM.getRegistryName()));
+	}
+
+	@SubscribeEvent
+	public void imcEvent(InterModEnqueueEvent e) {
+		if (ModList.get().isLoaded("curios")) CuriosCompat.sendIMC();
 	}
 
 	public void drops(LivingDropsEvent e) {

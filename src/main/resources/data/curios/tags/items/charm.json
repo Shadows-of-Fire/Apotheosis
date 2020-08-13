@@ -1,6 +1,7 @@
 {
   "replace": false,
-  "values": [
+  "optional": [
     "apotheosis:potion_charm"
-  ]
+  ],
+  "values": []
 }
