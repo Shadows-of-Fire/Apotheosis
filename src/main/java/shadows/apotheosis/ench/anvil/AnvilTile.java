@@ -38,10 +38,10 @@ public class AnvilTile extends TileEntity {
 		super.fromTag(state, tag);
 		ListNBT enchants = tag.getList("enchantments", Constants.NBT.TAG_COMPOUND);
 		Map<Enchantment, Integer> map = EnchantmentHelper.fromTag(enchants);
-		if (tag.contains("ub")) {
+		if (tag.getInt("ub") > 0) {
 			map.put(Enchantments.UNBREAKING, tag.getInt("ub"));
 		}
-		if (tag.contains("splitting")) {
+		if (tag.getInt("splitting") > 0) {
 			map.put(ApotheosisObjects.SPLITTING, tag.getInt("splitting"));
 		}
 		enchantments.clear();

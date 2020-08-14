@@ -329,6 +329,9 @@
 
     "enchantment.apotheosis.splitting": "Splitting",
     "enchantment.apotheosis.splitting.desc": "Allows anvils to split multiple enchantments from books they fall upon.",
+	
+	"enchantment.apotheosis.obliteration": "Obliteration",
+    "enchantment.apotheosis.obliteration.desc": "Allows anvils to split single enchantments from books they fall upon.",
 
     "enchantment.apotheosis.natures_blessing": "Nature's Blessing",
     "enchantment.apotheosis.natures_blessing.desc": "Hoes may be used to bonemeal crops.",
