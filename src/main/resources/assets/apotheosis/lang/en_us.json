@@ -341,6 +341,9 @@
 
     "enchantment.apotheosis.magic_protection": "Occult Aversion",
     "enchantment.apotheosis.magic_protection.desc": "Magic damage dealt by and to the user is reduced.",
+	
+	"enchantment.apotheosis.crescendo": "Crescendo of Bolts",
+    "enchantment.apotheosis.crescendo.desc": "Your crossbow may be fired additional times per reload.",
 
     "block.apotheosis.prismatic_altar": "Altar of the Sea",
 

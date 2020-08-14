@@ -139,5 +139,6 @@ public class ApotheosisObjects {
 	public static final Block BEESHELF = null;
 	public static final Block MELONSHELF = null;
 	public static final Enchantment OBLITERATION = null;
+	public static final Enchantment CRESCENDO = null;
 
 }

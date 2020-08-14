@@ -54,6 +54,7 @@ import shadows.apotheosis.ench.anvil.ApothAnvilItem;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
+import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
@@ -289,7 +290,8 @@ public class EnchModule {
 				new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
-				new ObliterationEnchant().setRegistryName("obliteration")
+				new ObliterationEnchant().setRegistryName("obliteration"),
+				new CrescendoEnchant().setRegistryName("crescendo")
 				);
 		//Formatter::on
 	}
