@@ -2,6 +2,7 @@ package shadows.apotheosis.ench.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -61,5 +62,10 @@ public class HellInfusionEnchantment extends Enchantment {
 	@Override
 	protected boolean canApplyTogether(Enchantment ench) {
 		return super.canApplyTogether(ench) && ench != ApotheosisObjects.SEA_INFUSION;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		return super.canApplyAtEnchantingTable(stack) || Enchantments.IMPALING.canApplyAtEnchantingTable(stack);
 	}
 }
