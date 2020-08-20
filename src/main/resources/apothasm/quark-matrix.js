@@ -13,9 +13,9 @@ function initializeCoreMod() {
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
-				var FieldInsnNode = Java.type('org.objectweb.asm.tree.FieldInsnNode');
-				var JumpInsnNode = Java.type('org.objectweb.asm.tree.JumpInsnNode');
-				var LabelNode = Java.type('org.objectweb.asm.tree.LabelNode');
+                var FieldInsnNode = Java.type('org.objectweb.asm.tree.FieldInsnNode');
+                var JumpInsnNode = Java.type('org.objectweb.asm.tree.JumpInsnNode');
+                var LabelNode = Java.type('org.objectweb.asm.tree.LabelNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
 
@@ -23,7 +23,7 @@ function initializeCoreMod() {
                 insn.add(new FieldInsnNode(Opcodes.GETSTATIC, "shadows/apotheosis/Apotheosis", "enableEnch", "Z"));
                 var label = new LabelNode();
                 insn.add(new JumpInsnNode(Opcodes.IFEQ, label));
-				insn.add(new InsnNode(Opcodes.RETURN));
+                insn.add(new InsnNode(Opcodes.RETURN));
                 insn.add(label);
                 method.instructions.insert(insn);
 

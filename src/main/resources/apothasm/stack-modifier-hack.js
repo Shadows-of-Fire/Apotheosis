@@ -19,16 +19,16 @@ function initializeCoreMod() {
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var AbstractInsnNode = Java.type('org.objectweb.asm.tree.AbstractInsnNode');
 
-				var n = null;
-				var i;
-				for (i = 0; i < instr.size(); i++) {
-					n = instr.get(i);
-					if (n.getOpcode() == Opcodes.ASTORE) {
-						break;
-					}
-				}
+                var n = null;
+                var i;
+                for (i = 0; i < instr.size(); i++) {
+                    n = instr.get(i);
+                    if (n.getOpcode() == Opcodes.ASTORE) {
+                        break;
+                    }
+                }
 
-				instr.insertBefore(n, ASMAPI.buildMethodCall(
+                instr.insertBefore(n, ASMAPI.buildMethodCall(
                     owner,
                     name,
                     desc,

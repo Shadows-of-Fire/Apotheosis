@@ -16,16 +16,16 @@ function initializeCoreMod() {
                 var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
-				var instr = method.instructions;
-				var i;
-				for (i = 0; i < instr.size(); i++) {
-					var n = instr.get(i);
-					if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-						if(n.name.equals("getItemEnchantability")) { 
-							instr.set(n, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "getEnchantability", "(Lnet/minecraft/item/ItemStack;)I", false));
-						}
-					}
-				}
+                var instr = method.instructions;
+                var i;
+                for (i = 0; i < instr.size(); i++) {
+                    var n = instr.get(i);
+                    if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+                        if (n.name.equals("getItemEnchantability")) {
+                            instr.set(n, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "getEnchantability", "(Lnet/minecraft/item/ItemStack;)I", false));
+                        }
+                    }
+                }
                 return method;
             }
         }

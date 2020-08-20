@@ -20,7 +20,7 @@ function initializeCoreMod() {
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
 
-				var fireProjCall = null;
+                var fireProjCall = null;
                 var firstReturn = null;
                 var i;
                 for (i = 0; i < instr.size(); i++) {
@@ -28,10 +28,10 @@ function initializeCoreMod() {
                     if (firstReturn == null && n.getOpcode() == Opcodes.ARETURN) {
                         firstReturn = n;
                     }
-					if (fireProjCall == null && n.getOpcode() == Opcodes.INVOKESTATIC && ASMAPI.mapMethod('func_220014_a') === n.name) {
+                    if (fireProjCall == null && n.getOpcode() == Opcodes.INVOKESTATIC && ASMAPI.mapMethod('func_220014_a') === n.name) {
                         fireProjCall = n;
                     }
-					if(firstReturn != null && fireProjCall != null) break;
+                    if (firstReturn != null && fireProjCall != null) break;
                 }
 
                 var insn = new InsnList();
@@ -42,7 +42,7 @@ function initializeCoreMod() {
                     desc,
                     ASMAPI.MethodType.STATIC));
                 instr.insertBefore(firstReturn, insn);
-				
+
                 name = "preArrowFired";
 
                 var insn = new InsnList();

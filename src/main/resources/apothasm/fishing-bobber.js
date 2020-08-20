@@ -21,7 +21,7 @@ function initializeCoreMod() {
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
 
-				var insertion = null;
+                var insertion = null;
                 var i;
                 for (i = instr.size() - 1; i > 0; i--) {
                     var n = instr.get(i);
@@ -31,8 +31,8 @@ function initializeCoreMod() {
                     }
                 }
 
-				var insn = new InsnList();
-				insn.add(new InsnNode(Opcodes.POP));
+                var insn = new InsnList();
+                insn.add(new InsnNode(Opcodes.POP));
                 insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
                 insn.add(ASMAPI.buildMethodCall(
                     owner,
