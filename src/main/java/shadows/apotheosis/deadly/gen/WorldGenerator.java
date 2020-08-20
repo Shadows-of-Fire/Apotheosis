@@ -75,7 +75,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 			world.setBlockState(mPos.setPos(mPos.getX(), mPos.getY() + 1, mPos.getZ()), Blocks.GLASS.getDefaultState());
 	}
 
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	public static void debugLog(BlockPos pos, String name) {
 		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
