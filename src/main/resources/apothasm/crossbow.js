@@ -1,6 +1,6 @@
 function initializeCoreMod() {
     return {
-        'apothshieldblock': {
+        'crossbowuse': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.item.CrossbowItem',
