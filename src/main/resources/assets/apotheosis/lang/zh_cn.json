@@ -193,7 +193,7 @@
     "waila.spw.ignoreconditions": "忽略生成条件",
     "waila.spw.ignorecap": "忽略区域刷怪限制",
     "waila.spw.redstone": "红石控制已启用",
-    "waila.spw.sneak": "偷看消息",
+    "waila.spw.sneak": "按住Shift潜行查看信息",
 
     "jei.spw.title": "刷怪笼修改",
     "jei.spw.invert": "反转调节器的行为",
@@ -328,7 +328,10 @@
     "enchantment.apotheosis.knowledge.desc": "敌人的掉落物将会被转化为经验.",
 
     "enchantment.apotheosis.splitting": "拆分",
-    "enchantment.apotheosis.splitting.desc": "当拥有该附魔的铁砧砸中有多种附魔的附魔书时附魔书将会被拆分.",
+    "enchantment.apotheosis.splitting.desc": "当拥有该附魔的铁砧砸中有多种附魔的附魔书时附魔书将会被拆分.",	
+    
+	"enchantment.apotheosis.obliteration": "分裂",
+    "enchantment.apotheosis.obliteration.desc": "当拥有该附魔的铁砧砸中有单一附魔且等级高于1级的附魔书时附魔书将被拆分为2个, 附魔等级下降1级.",
 
     "enchantment.apotheosis.natures_blessing": "大自然的祝福",
     "enchantment.apotheosis.natures_blessing.desc": "手持锄头右键可以直接对作物施加骨粉.",
@@ -339,10 +342,13 @@
     "enchantment.apotheosis.magic_protection": "魔法抗性",
     "enchantment.apotheosis.magic_protection.desc": "减少受到的魔法伤害.",
 
+    "enchantment.apotheosis.crescendo": "快速射击",
+    "enchantment.apotheosis.crescendo.desc": "增加你的弩在装填完箭后瞄准时的射击次数.",
+
     "block.apotheosis.prismatic_altar": "海之祭坛",
 
     "comment_id": "/Vanilla",
-	"generic.reachDistance": "操作距离",
+	"generic.reachDistance": "攻击距离",
 	"forge.swimSpeed": "游泳速度",
 	"forge.entity_gravity": "重力",
     "block.reeds": "甘蔗",
@@ -542,5 +548,8 @@
 	"info.apotheosis.broadhead_arrow": "流血 (0:15)",
 	"item.apotheosis.broadhead_arrow": "宽头箭",
 	"effect.apotheosis.bleeding": "流血",
-	"death.attack.apotheosis.bleeding.player": "%s 失血过多而死"
+    "death.attack.apotheosis.bleeding.player": "%s 失血过多而死",
+    	
+	"comment_id": "/Misc",
+	"generic.reachDistance": "攻击距离"
 }
