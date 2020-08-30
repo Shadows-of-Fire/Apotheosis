@@ -29,7 +29,7 @@ public class SeashelfItem extends BlockItem {
 
 	@Override
 	public int getItemEnchantability(ItemStack stack) {
-		return 50;
+		return 65;
 	}
 
 	@Override

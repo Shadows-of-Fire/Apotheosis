@@ -81,7 +81,7 @@ public class EnchModuleEvents {
 			EnchantmentHelper.setEnchantments(ImmutableMap.of(ench, leftLvl + 1), out);
 			out.setCount(1);
 			e.setOutput(out);
-			e.setCost(1 + leftLvl);
+			e.setCost(1);
 			e.setMaterialCost(1);
 			return;
 		}

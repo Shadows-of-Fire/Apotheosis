@@ -148,11 +148,11 @@ public class EnchModule {
 		ItemStack msBrick = new ItemStack(Blocks.MOSSY_STONE_BRICKS);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
-		Ingredient maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, ApotheosisObjects.HELL_INFUSION, Math.min(5, getEnchInfo(ApotheosisObjects.HELL_INFUSION).getMaxLevel()));
+		Ingredient maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, ApotheosisObjects.HELL_INFUSION, Math.min(3, getEnchInfo(ApotheosisObjects.HELL_INFUSION).getMaxLevel()));
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
-		Ingredient maxSeashelf = new EnchantmentIngredient(ApotheosisObjects.SEASHELF, ApotheosisObjects.SEA_INFUSION, Math.min(5, getEnchInfo(ApotheosisObjects.SEA_INFUSION).getMaxLevel()));
+		Ingredient maxSeashelf = new EnchantmentIngredient(ApotheosisObjects.SEASHELF, ApotheosisObjects.SEA_INFUSION, Math.min(3, getEnchInfo(ApotheosisObjects.SEA_INFUSION).getMaxLevel()));
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.ENDSHELF, 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
