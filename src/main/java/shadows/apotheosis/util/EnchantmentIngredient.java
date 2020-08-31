@@ -36,7 +36,7 @@ public class EnchantmentIngredient extends Ingredient {
 	private static ItemStack format(IItemProvider item, Enchantment enchantment, int minLevel) {
 		ItemStack stack = new ItemStack(item);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, minLevel), stack);
-		AffixHelper.addLore(stack, new TranslationTextComponent("ingredient.apotheosis.ench", ((IFormattableTextComponent) enchantment.getDisplayName(minLevel)).formatted(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC)));
+		AffixHelper.addLore(stack, new TranslationTextComponent("ingredient.apotheosis.ench", ((IFormattableTextComponent) enchantment.getDisplayName(minLevel)).mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC)));
 		return stack;
 	}
 

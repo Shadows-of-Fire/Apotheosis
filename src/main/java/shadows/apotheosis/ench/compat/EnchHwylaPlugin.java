@@ -36,7 +36,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 	@Override
 	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
 		CompoundNBT tag = accessor.getServerData();
-		Map<Enchantment, Integer> enchants = EnchantmentHelper.fromTag(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
 		for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
 			tooltip.add(e.getKey().getDisplayName(e.getValue()));
 		}

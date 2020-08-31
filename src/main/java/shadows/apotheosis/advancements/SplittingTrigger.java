@@ -41,8 +41,8 @@ public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
 	}
 
 	@Override
-	public CriterionInstance conditionsFromJson(JsonObject json, ConditionArrayParser parser) {
-		return new CriterionInstance(ID, AndPredicate.EMPTY) {
+	public CriterionInstance deserialize(JsonObject json, ConditionArrayParser parser) {
+		return new CriterionInstance(ID, AndPredicate.ANY_AND) {
 		};
 	}
 

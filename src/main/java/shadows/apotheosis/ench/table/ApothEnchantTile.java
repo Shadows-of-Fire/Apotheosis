@@ -35,8 +35,8 @@ public class ApothEnchantTile extends EnchantingTableTileEntity {
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundNBT tag) {
-		super.fromTag(state, tag);
+	public void read(BlockState state, CompoundNBT tag) {
+		super.read(state, tag);
 		inv.deserializeNBT(tag.getCompound("inventory"));
 	}
 

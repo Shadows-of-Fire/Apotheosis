@@ -11,7 +11,7 @@ import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 public class MovementSpeedAffix extends AttributeAffix {
 
 	public MovementSpeedAffix(int weight) {
-		super(Attributes.field_233821_d_, 0.05F, 0.75F, Operation.MULTIPLY_TOTAL, weight);
+		super(Attributes.MOVEMENT_SPEED, 0.05F, 0.75F, Operation.MULTIPLY_TOTAL, weight);
 	}
 
 	@Override

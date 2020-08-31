@@ -45,7 +45,7 @@ public class AffixHelper {
 	public static void addLore(ItemStack stack, ITextComponent lore) {
 		CompoundNBT display = stack.getOrCreateChildTag("display");
 		ListNBT tag = display.getList("Lore", 8);
-		tag.add(StringNBT.of(ITextComponent.Serializer.toJson(lore)));
+		tag.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(lore)));
 		display.put("Lore", tag);
 	}
 
@@ -56,7 +56,7 @@ public class AffixHelper {
 	}
 
 	public static void setRarity(ItemStack stack, LootRarity rarity) {
-		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).formatted(rarity.getColor(), TextFormatting.ITALIC));
+		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).mergeStyle(rarity.getColor(), TextFormatting.ITALIC));
 		stack.getOrCreateTag().putString("apoth.rarity", rarity.name());
 	}
 

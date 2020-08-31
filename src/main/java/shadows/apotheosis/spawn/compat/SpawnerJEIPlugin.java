@@ -49,7 +49,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerInverseWrapper()
 				), getPluginUid());
 		//Formatter::on
-		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, I18n.format("jei.spw.instructions", ((IFormattableTextComponent) Enchantments.SILK_TOUCH.getDisplayName(SpawnerModule.spawnerSilkLevel)).formatted(TextFormatting.DARK_BLUE).getString()));
+		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, I18n.format("jei.spw.instructions", ((IFormattableTextComponent) Enchantments.SILK_TOUCH.getDisplayName(SpawnerModule.spawnerSilkLevel)).mergeStyle(TextFormatting.DARK_BLUE).getString()));
 		for (Item i : ForgeRegistries.ITEMS) {
 			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM, "jei.spw.capturing");
 		}

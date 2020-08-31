@@ -73,7 +73,7 @@ public class AffixEvents {
 	public void onEntityJoin(EntityJoinWorldEvent e) {
 		if (e.getEntity() instanceof AbstractArrowEntity && !e.getEntity().getPersistentData().getBoolean("apoth.generated")) {
 			AbstractArrowEntity ent = (AbstractArrowEntity) e.getEntity();
-			Entity shooter = ent.getOwner();
+			Entity shooter = ent.func_234616_v_();
 			if (shooter instanceof LivingEntity) {
 				LivingEntity living = (LivingEntity) shooter;
 				ItemStack bow = living.getHeldItemMainhand();
@@ -138,7 +138,7 @@ public class AffixEvents {
 				for (ItemEntity item : e.getDrops()) {
 					if (canTeleport > 0) {
 						Entity tSrc = src.getTrueSource();
-						item.setPosition(tSrc.getX(), tSrc.getY(), tSrc.getZ());
+						item.setPosition(tSrc.getPosX(), tSrc.getPosY(), tSrc.getPosZ());
 						canTeleport--;
 					}
 				}
@@ -149,17 +149,17 @@ public class AffixEvents {
 			PlayerEntity player = (PlayerEntity) e.getSource().getTrueSource();
 			float chance = AffixHelper.getAffixes(player.getHeldItemMainhand()).getOrDefault(Affixes.LOOT_PINATA, 0F);
 			if (player.world.rand.nextFloat() < chance) {
-				player.world.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (player.world.rand.nextFloat() - player.world.rand.nextFloat()) * 0.2F) * 0.7F);
-				((ServerWorld) player.world).spawnParticle(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
+				player.world.playSound(null, dead.getPosX(), dead.getPosY(), dead.getPosZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (player.world.rand.nextFloat() - player.world.rand.nextFloat()) * 0.2F) * 0.7F);
+				((ServerWorld) player.world).spawnParticle(ParticleTypes.EXPLOSION_EMITTER, dead.getPosX(), dead.getPosY(), dead.getPosZ(), 2, 1.0D, 0.0D, 0.0D, 0);
 				List<ItemEntity> drops = new ArrayList<>(e.getDrops());
 				for (int i = 0; i < 20; i++) {
 					for (ItemEntity item : drops) {
-						e.getDrops().add(new ItemEntity(player.world, item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
+						e.getDrops().add(new ItemEntity(player.world, item.getPosX(), item.getPosY(), item.getPosZ(), item.getItem().copy()));
 					}
 				}
 				for (ItemEntity item : e.getDrops()) {
 					if (!item.getItem().getItem().isDamageable()) {
-						item.setPosition(dead.getX(), dead.getY(), dead.getZ());
+						item.setPosition(dead.getPosX(), dead.getPosY(), dead.getPosZ());
 						item.setMotion(-0.3 + dead.world.rand.nextDouble() * 0.6, 0.3 + dead.world.rand.nextDouble() * 0.3, -0.3 + dead.world.rand.nextDouble() * 0.6);
 					}
 				}
@@ -313,8 +313,8 @@ public class AffixEvents {
 					Vector3d pos = e.getEntity().getPositionVec();
 					if (DeadlyConfig.surfaceBossLightning) {
 						LightningBoltEntity bolt = EntityType.LIGHTNING_BOLT.create((World) e.getWorld());
-						bolt.setPos(pos.getX(), pos.getY(), pos.getZ());
-						bolt.func_233623_a_(true);
+						bolt.setPosition(pos.getX(), pos.getY(), pos.getZ());
+						bolt.setEffectOnly(true);
 						e.getWorld().addEntity(bolt);
 					}
 					return;

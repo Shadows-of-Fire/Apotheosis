@@ -7,7 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import shadows.apotheosis.deadly.config.DeadlyConstants;
 import shadows.apotheosis.deadly.gen.WorldFeature.WorldFeatureItem;
 import shadows.apotheosis.util.SpawnerStats;
@@ -35,7 +35,7 @@ public class SpawnerItem extends WorldFeatureItem {
 	}
 
 	@Override
-	public void place(IWorld world, BlockPos pos) {
+	public void place(IServerWorld world, BlockPos pos) {
 		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
 		spawner.build(world, pos);
 	}

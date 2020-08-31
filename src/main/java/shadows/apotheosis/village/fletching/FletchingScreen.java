@@ -14,28 +14,26 @@ public class FletchingScreen extends ContainerScreen<FletchingContainer> {
 
 	public FletchingScreen(FletchingContainer container, PlayerInventory player, ITextComponent title) {
 		super(container, player, title);
+		this.titleX = 47;
+		this.titleY = 6;
+		this.playerInventoryTitleX = 8;
+		this.playerInventoryTitleY = this.ySize - 96 + 2;
 	}
 
 	@Override
 	public void render(MatrixStack stack, int x, int y, float partialTicks) {
 		this.renderBackground(stack);
 		super.render(stack, x, y, partialTicks);
-		this.drawMouseoverTooltip(stack, x, y);
-	}
-
-	@Override
-	protected void drawForeground(MatrixStack stack, int mouseX, int mouseY) {
-		this.textRenderer.draw(stack, this.title, 47, 6.0F, 4210752);
-		this.textRenderer.draw(stack, this.playerInventory.getDisplayName(), 8.0F, this.ySize - 96 + 2, 4210752);
+		this.renderHoveredTooltip(stack, x, y);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void drawBackground(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.client.getTextureManager().bindTexture(TEXTURES);
+		this.minecraft.getTextureManager().bindTexture(TEXTURES);
 		int i = this.guiLeft;
 		int j = (this.height - this.ySize) / 2;
-		this.drawTexture(stack, i, j, 0, 0, this.xSize, this.ySize);
+		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
 	}
 }

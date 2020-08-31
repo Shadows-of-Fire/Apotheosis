@@ -34,7 +34,7 @@ public class ObsidianArrowItem extends ArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.obsidian_arrow").formatted(TextFormatting.BLUE));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.obsidian_arrow").mergeStyle(TextFormatting.BLUE));
 	}
 
 	@SubscribeEvent

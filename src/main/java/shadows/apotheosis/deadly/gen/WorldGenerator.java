@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import io.netty.util.internal.ThreadLocalRandom;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.block.BlockState;
@@ -24,12 +25,12 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
-import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
+import shadows.placebo.util.BiomeUtil;
 
 @SuppressWarnings("deprecation")
 public class WorldGenerator extends Feature<NoFeatureConfig> {
@@ -39,18 +40,18 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 	public static final BossFeature BOSS_GENERATOR = new BossFeature();
 	public static final SwarmSpawner SWARM_SPAWNER = new SwarmSpawner();
 	private static final Map<DimensionType, LongSet> SUCCESSES = new HashMap<>();
-	public static final Predicate<BlockState> STONE_TEST = FillerBlockType.NATURAL_STONE.func_214738_b();
+	public static final Predicate<BlockState> STONE_TEST = b -> FillerBlockType.field_241882_a.test(b, ThreadLocalRandom.current());
 
 	public WorldGenerator() {
-		super(NoFeatureConfig.CODEC);
+		super(NoFeatureConfig.field_236558_a_);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, StructureManager struct, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
+	public boolean func_241855_a(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
 		//if (DeadlyConfig.DIM_WHITELIST.contains(world.getDimension().getType().getRegistryName()))
 		for (WorldFeature feature : FEATURES) {
 			ChunkPos cPos = new ChunkPos(pos);
-			if (wasSuccess(world.getDimension(), cPos.x, cPos.z)) return false;
+			if (wasSuccess(world.func_230315_m_(), cPos.x, cPos.z)) return false;
 			if (feature.generate(world, cPos.x, cPos.z, rand)) return true;
 		}
 		return false;
@@ -63,7 +64,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		ConfiguredFeature<?, ?> gen = new ConfiguredFeature<>(ApotheosisObjects.DEADLY_WORLD_GEN, IFeatureConfig.NO_FEATURE_CONFIG);
 		DeferredWorkQueue.runLater(() -> {
 			for (Biome b : ForgeRegistries.BIOMES)
-				if (!DeadlyConfig.BIOME_BLACKLIST.contains(b.getRegistryName())) b.addFeature(Decoration.UNDERGROUND_DECORATION, gen);
+				if (!DeadlyConfig.BIOME_BLACKLIST.contains(b.getRegistryName())) BiomeUtil.addFeature(b, Decoration.UNDERGROUND_DECORATION, gen);
 		});
 	}
 

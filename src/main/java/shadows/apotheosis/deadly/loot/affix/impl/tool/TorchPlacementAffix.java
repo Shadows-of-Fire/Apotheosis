@@ -51,7 +51,7 @@ public class TorchPlacementAffix extends Affix {
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx, float level) {
 		PlayerEntity player = ctx.getPlayer();
-		if (Items.TORCH.onItemUse(ctx).shouldSwingHand()) {
+		if (Items.TORCH.onItemUse(ctx).isSuccessOrConsume()) {
 			ctx.getItem().grow(1);
 			player.getHeldItem(ctx.getHand()).damageItem((int) level, player, p -> p.sendBreakAnimation(EquipmentSlotType.MAINHAND));
 			return ActionResultType.SUCCESS;

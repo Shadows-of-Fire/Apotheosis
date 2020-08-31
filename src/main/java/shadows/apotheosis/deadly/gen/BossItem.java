@@ -37,7 +37,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
@@ -80,18 +80,18 @@ public class BossItem extends WorldFeatureItem {
 		Preconditions.checkNotNull(entityEntry, "Invalid BossItem (not an entity) created with reloc: " + entity);
 	}
 
-	public AxisAlignedBB getAABB(IWorld world) {
-		if (entityAABB == null) entityAABB = entityEntry.create(world.getWorld()).getCollisionBoundingBox();
+	public AxisAlignedBB getAABB(IServerWorld world) {
+		if (entityAABB == null) entityAABB = entityEntry.create(world.getWorld()).getBoundingBox();
 		if (entityAABB == null) entityAABB = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 		return entityAABB;
 	}
 
 	@Override
-	public void place(IWorld world, BlockPos pos) {
+	public void place(IServerWorld world, BlockPos pos) {
 		place(world, pos, world.getRandom());
 	}
 
-	public void place(IWorld world, BlockPos pos, Random rand) {
+	public void place(IServerWorld world, BlockPos pos, Random rand) {
 		MobEntity entity = (MobEntity) entityEntry.create(world.getWorld());
 		initBoss(rand, entity);
 		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
@@ -113,10 +113,10 @@ public class BossItem extends WorldFeatureItem {
 		if (res >= 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration, res));
 		if (random.nextFloat() < DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
 		if (random.nextFloat() < DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
-		AttributeHelper.multiplyFinal(entity, Attributes.field_233823_f_, "boss_damage_bonus", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
-		AttributeHelper.multiplyFinal(entity, Attributes.field_233818_a_, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
-		AttributeHelper.addToBase(entity, Attributes.field_233820_c_, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
-		AttributeHelper.multiplyFinal(entity, Attributes.field_233821_d_, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
+		AttributeHelper.multiplyFinal(entity, Attributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
+		AttributeHelper.multiplyFinal(entity, Attributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
+		AttributeHelper.addToBase(entity, Attributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
+		AttributeHelper.multiplyFinal(entity, Attributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
 		entity.setHealth(entity.getMaxHealth());
 		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		entity.enablePersistence();
@@ -164,7 +164,7 @@ public class BossItem extends WorldFeatureItem {
 		stack.setDisplayName(new StringTextComponent(itemName));
 		LootRarity rarity = LootRarity.random(random, 400);
 		stack = LootManager.genLootItem(stack, random, rarity);
-		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + bossName + "'s", stack.getDisplayName()).formatted(rarity.getColor()));
+		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + bossName + "'s", stack.getDisplayName()).mergeStyle(rarity.getColor()));
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));

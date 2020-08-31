@@ -17,6 +17,7 @@ import net.minecraft.village.PointOfInterestType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
@@ -32,7 +33,6 @@ import shadows.apotheosis.village.fletching.effects.BleedingEffect;
 import shadows.apotheosis.village.wanderer.WandererReplacements;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
-import shadows.placebo.util.ReflectionHelper;
 
 public class VillageModule {
 
@@ -47,7 +47,7 @@ public class VillageModule {
 	public void setup(ApotheosisSetup e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
-		Map<BlockState, PointOfInterestType> types = ReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
+		Map<BlockState, PointOfInterestType> types = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
 		types.put(Blocks.FLETCHING_TABLE.getDefaultState(), PointOfInterestType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		enableNewTrades = config.getBoolean("Enable New Trades", "Wanderer", true, "If new trades are added to the wandering merchant.");

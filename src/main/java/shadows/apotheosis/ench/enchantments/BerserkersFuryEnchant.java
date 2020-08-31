@@ -35,7 +35,7 @@ public class BerserkersFuryEnchant extends Enchantment {
 
 	@Override
 	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).formatted(TextFormatting.DARK_RED);
+		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_RED);
 	}
 
 }

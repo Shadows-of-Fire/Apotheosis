@@ -34,7 +34,7 @@ public class BroadheadArrowItem extends ArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.broadhead_arrow").formatted(TextFormatting.RED));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.broadhead_arrow").mergeStyle(TextFormatting.RED));
 	}
 
 }

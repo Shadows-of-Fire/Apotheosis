@@ -53,12 +53,12 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 	}
 
 	@Override
-	protected void drawForeground(MatrixStack stack, int p_146979_1_, int p_146979_2_) {
-		this.textRenderer.draw(stack, this.title, 12.0F, 5.0F, 4210752);
-		this.textRenderer.draw(stack, this.playerInventory.getDisplayName(), 7.0F, this.ySize - 96 + 4F, 4210752);
-		this.textRenderer.draw(stack, I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);
-		this.textRenderer.draw(stack, I18n.format("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454);
-		this.textRenderer.draw(stack, I18n.format("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8);
+	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int p_146979_1_, int p_146979_2_) {
+		this.font.func_243248_b(stack, this.title, 12.0F, 5.0F, 4210752);
+		this.font.func_243248_b(stack, this.playerInventory.getDisplayName(), 7.0F, this.ySize - 96 + 4F, 4210752);
+		this.font.drawString(stack, I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);
+		this.font.drawString(stack, I18n.format("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454);
+		this.font.drawString(stack, I18n.format("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8);
 	}
 
 	@Override
@@ -95,8 +95,8 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 		for (int k = 0; k < 3; ++k) {
 			double d0 = p_mouseClicked_1_ - (i + 60);
 			double d1 = p_mouseClicked_3_ - (j + 14 + 19 * k);
-			if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.container.enchantItem(this.client.player, k)) {
-				this.client.playerController.sendEnchantPacket(this.container.windowId, k);
+			if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.container.enchantItem(this.minecraft.player, k)) {
+				this.minecraft.playerController.sendEnchantPacket(this.container.windowId, k);
 				return true;
 			}
 		}
@@ -109,36 +109,36 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void drawBackground(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
-		RenderHelper.disableGuiDepthLighting();
+	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+		RenderHelper.setupGuiFlatDiffuseLighting();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.client.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
+		this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
 		int xCenter = (this.width - this.xSize) / 2;
 		int yCenter = (this.height - this.ySize) / 2;
-		this.drawTexture(stack, xCenter, yCenter, 0, 0, this.xSize, this.ySize);
+		this.blit(stack, xCenter, yCenter, 0, 0, this.xSize, this.ySize);
 		RenderSystem.matrixMode(5889);
 		RenderSystem.pushMatrix();
 		RenderSystem.loadIdentity();
-		int k = (int) this.client.getWindow().getGuiScaleFactor();
+		int k = (int) this.minecraft.getMainWindow().getGuiScaleFactor();
 		RenderSystem.viewport((this.width - 320) / 2 * k, (this.height - 240) / 2 * k, 320 * k, 240 * k);
 		RenderSystem.translatef(-0.34F, 0.23F, 0.0F);
 		RenderSystem.multMatrix(Matrix4f.perspective(90.0D, 1.3333334F, 9.0F, 80.0F));
 		RenderSystem.matrixMode(5888);
 		stack.push();
-		MatrixStack.Entry matrixstack$entry = stack.peek();
+		MatrixStack.Entry matrixstack$entry = stack.getLast();
 
-		matrixstack$entry.getModel().loadIdentity();
-		matrixstack$entry.getNormal().loadIdentity();
+		matrixstack$entry.getMatrix().setIdentity();
+		matrixstack$entry.getNormal().setIdentity();
 		stack.translate(0.0D, 5, 1984.0D);
 		stack.scale(5.0F, 5.0F, 5.0F);
-		stack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
-		stack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(20.0F));
+		stack.rotate(Vector3f.ZP.rotationDegrees(180.0F));
+		stack.rotate(Vector3f.XP.rotationDegrees(20.0F));
 		float f1 = MathHelper.lerp(partialTicks, this.oOpen, this.open);
 
 		stack.translate((1.0F - f1) * 0.2F, (1.0F - f1) * 0.1F, (1.0F - f1) * 0.25F);
 		float f2 = -(1.0F - f1) * 90.0F - 90.0F;
-		stack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(f2));
-		stack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180.0F));
+		stack.rotate(Vector3f.YP.rotationDegrees(f2));
+		stack.rotate(Vector3f.XP.rotationDegrees(180.0F));
 
 		float f3 = MathHelper.lerp(partialTicks, this.oFlip, this.flip) + 0.25F;
 		float f4 = MathHelper.lerp(partialTicks, this.oFlip, this.flip) + 0.75F;
@@ -161,18 +161,18 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 		}
 
 		RenderSystem.enableRescaleNormal();
-		MODEL_BOOK.setPageAngles(0.0F, f3, f4, f1);
-		IRenderTypeBuffer.Impl irendertypebuffer$impl = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuffer());
-		IVertexBuilder ivertexbuilder = irendertypebuffer$impl.getBuffer(MODEL_BOOK.getLayer(ENCHANTMENT_TABLE_BOOK_TEXTURE));
-		MODEL_BOOK.render(stack, ivertexbuilder, 15728880, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-		irendertypebuffer$impl.draw();
+		MODEL_BOOK.setBookState(0.0F, f3, f4, f1);
+		IRenderTypeBuffer.Impl irendertypebuffer$impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+		IVertexBuilder ivertexbuilder = irendertypebuffer$impl.getBuffer(MODEL_BOOK.getRenderType(ENCHANTMENT_TABLE_BOOK_TEXTURE));
+		MODEL_BOOK.render(stack, ivertexbuilder, 15728880, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		irendertypebuffer$impl.finish();
 		stack.pop();
 
 		RenderSystem.matrixMode(5889);
-		RenderSystem.viewport(0, 0, this.client.getWindow().getFramebufferWidth(), this.client.getWindow().getFramebufferHeight());
+		RenderSystem.viewport(0, 0, this.minecraft.getMainWindow().getFramebufferWidth(), this.minecraft.getMainWindow().getFramebufferHeight());
 		RenderSystem.popMatrix();
 		RenderSystem.matrixMode(5888);
-		RenderHelper.enableGuiDepthLighting();
+		RenderHelper.setupGui3DDiffuseLighting();
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		EnchantmentNameParts.getInstance().reseedRandomGenerator(this.container.func_217005_f());
 		int lapis = this.container.getLapisAmount();
@@ -180,61 +180,61 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 		for (int slot = 0; slot < 3; ++slot) {
 			int j1 = xCenter + 60;
 			int k1 = j1 + 20;
-			this.setZOffset(0);
-			this.client.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
+			this.setBlitOffset(0);
+			this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
 
 			int level = this.container.enchantLevels[slot];
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 			if (level == 0) {
-				this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
+				this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
 			} else {
 				String s = "" + level;
-				int width = 86 - this.textRenderer.getStringWidth(s);
-				ITextProperties itextproperties = EnchantmentNameParts.getInstance().generatePhrase(this.textRenderer, width);
+				int width = 86 - this.font.getStringWidth(s);
+				ITextProperties itextproperties = EnchantmentNameParts.getInstance().getGalacticEnchantmentName(this.font, width);
 				int color = 6839882;
-				if ((lapis < slot + 1 || this.client.player.experienceLevel < level) && !this.client.player.abilities.isCreativeMode || this.container.enchantClue[slot] == -1) { // Forge: render buttons as disabled when enchantable but enchantability not met on lower levels
-					this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
-					this.drawTexture(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
-					this.textRenderer.drawTrimmed(itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
+				if ((lapis < slot + 1 || this.minecraft.player.experienceLevel < level) && !this.minecraft.player.abilities.isCreativeMode || this.container.enchantClue[slot] == -1) { // Forge: render buttons as disabled when enchantable but enchantability not met on lower levels
+					this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
+					this.blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
+					this.font.func_238418_a_(itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
 					color = 4226832;
 				} else {
 					int k2 = mouseX - (xCenter + 60);
 					int l2 = mouseY - (yCenter + 14 + 19 * slot);
 					if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-						this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 237, 108, 19);
+						this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 237, 108, 19);
 						color = 16777088;
 					} else {
-						this.drawTexture(stack, j1, yCenter + 14 + 19 * slot, 148, 199, 108, 19);
+						this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 199, 108, 19);
 					}
 
-					this.drawTexture(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
-					this.textRenderer.drawTrimmed(itextproperties, k1, yCenter + 16 + 19 * slot, width, color);
+					this.blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
+					this.font.func_238418_a_(itextproperties, k1, yCenter + 16 + 19 * slot, width, color);
 					color = 8453920;
 				}
 
-				this.textRenderer.drawWithShadow(stack, s, k1 + 86 - this.textRenderer.getStringWidth(s), yCenter + 16 + 19 * slot + 7, color);
+				this.font.drawStringWithShadow(stack, s, k1 + 86 - this.font.getStringWidth(s), yCenter + 16 + 19 * slot + 7, color);
 			}
 		}
 
-		this.client.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
+		this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
 		if (eterna > 0) {
-			this.drawTexture(stack, xCenter + 59, yCenter + 75, 0, 197, (int) (eterna / 50 * 110), 5);
+			this.blit(stack, xCenter + 59, yCenter + 75, 0, 197, (int) (eterna / 50 * 110), 5);
 		}
 		if (quanta > 0) {
-			this.drawTexture(stack, xCenter + 59, yCenter + 85, 0, 202, (int) (quanta / 10 * 110), 5);
+			this.blit(stack, xCenter + 59, yCenter + 85, 0, 202, (int) (quanta / 10 * 110), 5);
 		}
 		if (arcana > 0) {
-			this.drawTexture(stack, xCenter + 59, yCenter + 95, 0, 207, (int) (arcana / 10 * 110), 5);
+			this.blit(stack, xCenter + 59, yCenter + 95, 0, 207, (int) (arcana / 10 * 110), 5);
 		}
 	}
 
 	@Override
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
-		partialTicks = this.client.getRenderPartialTicks();
+		partialTicks = this.minecraft.getRenderPartialTicks();
 		this.renderBackground(stack);
 		super.render(stack, mouseX, mouseY, partialTicks);
-		this.drawMouseoverTooltip(stack, mouseX, mouseY);
-		boolean creative = this.client.player.abilities.isCreativeMode;
+		this.renderHoveredTooltip(stack, mouseX, mouseY);
+		boolean creative = this.minecraft.player.abilities.isCreativeMode;
 		int lapis = this.container.getLapisAmount();
 
 		for (int j = 0; j < 3; ++j) {
@@ -244,13 +244,13 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 			int i1 = j + 1;
 			if (this.isPointInRegion(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && level > 0) {
 				List<ITextComponent> list = Lists.newArrayList();
-				list.add(new TranslationTextComponent("container.enchant.clue", enchantment == null ? "" : enchantment.getDisplayName(clue).getString()).formatted(TextFormatting.GRAY, TextFormatting.ITALIC));
+				list.add(new TranslationTextComponent("container.enchant.clue", enchantment == null ? "" : enchantment.getDisplayName(clue).getString()).mergeStyle(TextFormatting.GRAY, TextFormatting.ITALIC));
 				if (enchantment == null) {
-					Collections.addAll(list, new StringTextComponent(""), new TranslationTextComponent("forge.container.enchant.limitedEnchantability").formatted(TextFormatting.RED));
+					Collections.addAll(list, new StringTextComponent(""), new TranslationTextComponent("forge.container.enchant.limitedEnchantability").mergeStyle(TextFormatting.RED));
 				} else if (!creative) {
 					list.add(new StringTextComponent(""));
-					if (this.client.player.experienceLevel < level) {
-						list.add(new TranslationTextComponent("container.enchant.level.requirement", this.container.enchantLevels[j]).formatted(TextFormatting.RED));
+					if (this.minecraft.player.experienceLevel < level) {
+						list.add(new TranslationTextComponent("container.enchant.level.requirement", this.container.enchantLevels[j]).mergeStyle(TextFormatting.RED));
 					} else {
 						String s;
 						if (i1 == 1) {
@@ -260,17 +260,17 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 						}
 
 						TextFormatting textformatting = lapis >= i1 ? TextFormatting.GRAY : TextFormatting.RED;
-						list.add(new StringTextComponent(s).formatted(textformatting));
+						list.add(new StringTextComponent(s).mergeStyle(textformatting));
 						if (i1 == 1) {
 							s = I18n.format("container.enchant.level.one");
 						} else {
 							s = I18n.format("container.enchant.level.many", i1);
 						}
 
-						list.add(new StringTextComponent(s).formatted(TextFormatting.GRAY));
+						list.add(new StringTextComponent(s).mergeStyle(TextFormatting.GRAY));
 					}
 				}
-				this.renderTooltip(stack, list, mouseX, mouseY);
+				this.func_243308_b(stack, list, mouseX, mouseY);
 				break;
 			}
 		}
@@ -282,8 +282,8 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 			list.add(new StringTextComponent(eterna() + I18n.format("gui.apotheosis.enchant.eterna.desc")));
 			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc2")));
 			list.add(new StringTextComponent(""));
-			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 50F)).formatted(TextFormatting.GRAY));
-			this.renderTooltip(stack, list, mouseX, mouseY);
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), 50F)).mergeStyle(TextFormatting.GRAY));
+			this.func_243308_b(stack, list, mouseX, mouseY);
 		}
 
 		if (this.isPointInRegion(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
@@ -292,8 +292,8 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.quanta.desc2")));
 			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.quanta.desc3")));
 			list.add(new StringTextComponent(""));
-			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.quanta.desc4", f(this.container.quanta.get() * 10F))).formatted(TextFormatting.GRAY));
-			this.renderTooltip(stack, list, mouseX, mouseY);
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.quanta.desc4", f(this.container.quanta.get() * 10F))).mergeStyle(TextFormatting.GRAY));
+			this.func_243308_b(stack, list, mouseX, mouseY);
 		}
 
 		if (this.isPointInRegion(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
@@ -302,8 +302,8 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.arcana.desc2")));
 			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.arcana.desc3")));
 			list.add(new StringTextComponent(""));
-			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.arcana.desc4", f(this.container.arcana.get() * 10F))).formatted(TextFormatting.GRAY));
-			this.renderTooltip(stack, list, mouseX, mouseY);
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.arcana.desc4", f(this.container.arcana.get() * 10F))).mergeStyle(TextFormatting.GRAY));
+			this.func_243308_b(stack, list, mouseX, mouseY);
 		}
 
 	}

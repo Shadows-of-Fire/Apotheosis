@@ -4,9 +4,9 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CactusBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
@@ -14,9 +14,14 @@ import net.minecraftforge.common.ForgeHooks;
 
 public class ApothCactusBlock extends CactusBlock {
 
+	CactusBlock old = (CactusBlock) Blocks.CACTUS;
+
 	public ApothCactusBlock() {
-		super(Block.Properties.create(Material.CACTUS).tickRandomly().hardnessAndResistance(0.4F).sound(SoundType.CLOTH));
+		super(Block.Properties.from(Blocks.CACTUS));
 		setRegistryName(new ResourceLocation("cactus"));
+		this.setDefaultState(old.getDefaultState());
+		this.getStateContainer().getValidStates().forEach(b -> b.instance = this);
+		this.getStateContainer().owner = this;
 	}
 
 	@Override
@@ -49,5 +54,10 @@ public class ApothCactusBlock extends CactusBlock {
 				}
 			}
 		}
+	}
+
+	@Override
+	public StateContainer<Block, BlockState> getStateContainer() {
+		return old.getStateContainer();
 	}
 }

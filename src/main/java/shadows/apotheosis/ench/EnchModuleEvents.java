@@ -117,7 +117,7 @@ public class EnchModuleEvents {
 				while (items > 0) {
 					int i = ExperienceOrbEntity.getXPSplit(items);
 					items -= i;
-					p.world.addEntity(new ExperienceOrbEntity(p.world, ded.getX(), ded.getY(), ded.getZ(), i));
+					p.world.addEntity(new ExperienceOrbEntity(p.world, ded.getPosX(), ded.getPosY(), ded.getPosZ(), i));
 				}
 			}
 		}
@@ -186,7 +186,7 @@ public class EnchModuleEvents {
 	public void applyUnbreaking(AnvilRepairEvent e) {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
 			RepairContainer r = (RepairContainer) e.getPlayer().openContainer;
-			TileEntity te = r.context.apply((w, p) -> w.getTileEntity(p)).orElse(null);
+			TileEntity te = r.field_234644_e_.apply((w, p) -> w.getTileEntity(p)).orElse(null);
 			if (te instanceof AnvilTile) e.setBreakChance(e.getBreakChance() / (((AnvilTile) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
 		}
 	}

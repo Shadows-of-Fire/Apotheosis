@@ -58,7 +58,7 @@ public class EnderLeashItem extends Item {
 		if (!tag.isEmpty()) {
 			BlockPos pos = ctx.getPos().offset(ctx.getFace());
 			if (!ctx.getWorld().isRemote) {
-				Entity e = EntityType.func_220335_a(tag, ctx.getWorld(), a -> a);
+				Entity e = EntityType.loadEntityAndExecute(tag, ctx.getWorld(), a -> a);
 				if (e != null) {
 					e.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 					((ServerWorld) ctx.getWorld()).addEntityIfNotDuplicate(e);
@@ -86,7 +86,7 @@ public class EnderLeashItem extends Item {
 	}
 
 	void playSound(PlayerEntity player) {
-		player.world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1, 1);
+		player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1, 1);
 	}
 
 	@Override

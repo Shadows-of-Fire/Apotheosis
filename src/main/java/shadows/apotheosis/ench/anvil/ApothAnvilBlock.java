@@ -87,7 +87,7 @@ public class ApothAnvilBlock extends AnvilBlock {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (!stack.hasEffect()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil").formatted(TextFormatting.GRAY));
+		if (!stack.hasEffect()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil").mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class ApothAnvilBlock extends AnvilBlock {
 		super.onEndFalling(world, pos, fallState, hitState, anvil);
 		List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1)));
 		if (anvil.tileEntityData == null) return;
-		Map<Enchantment, Integer> enchantments = EnchantmentHelper.fromTag(anvil.tileEntityData.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(anvil.tileEntityData.getList("enchantments", Constants.NBT.TAG_COMPOUND));
 		int oblit = enchantments.getOrDefault(ApotheosisObjects.OBLITERATION, 0);
 		int split = enchantments.getOrDefault(ApotheosisObjects.SPLITTING, 0);
 		int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);

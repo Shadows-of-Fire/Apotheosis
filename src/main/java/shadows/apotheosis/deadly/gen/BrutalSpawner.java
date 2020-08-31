@@ -15,7 +15,7 @@ import net.minecraft.util.Direction.Plane;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraftforge.common.util.Constants.NBT;
 import shadows.apotheosis.deadly.DeadlyLoot;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
@@ -35,7 +35,7 @@ public class BrutalSpawner extends WorldFeature {
 	public static final List<SpawnerItem> BRUTAL_SPAWNERS = new ArrayList<>();
 
 	@Override
-	public boolean generate(IWorld world, int chunkX, int chunkZ, Random rand) {
+	public boolean generate(IServerWorld world, int chunkX, int chunkZ, Random rand) {
 		if (DeadlyConfig.brutalSpawnerChance <= rand.nextDouble()) return false;
 		int x = (chunkX << 4) + MathHelper.nextInt(rand, 4, 12);
 		int z = (chunkZ << 4) + MathHelper.nextInt(rand, 4, 12);
@@ -44,7 +44,7 @@ public class BrutalSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.getDimension(), chunkX, chunkZ);
+				WorldGenerator.setSuccess(world.func_230315_m_(), chunkX, chunkZ);
 				return true;
 			}
 		}
@@ -52,7 +52,7 @@ public class BrutalSpawner extends WorldFeature {
 	}
 
 	@Override
-	public boolean canBePlaced(IWorld world, BlockPos pos, Random rand) {
+	public boolean canBePlaced(IServerWorld world, BlockPos pos, Random rand) {
 		BlockState state = world.getBlockState(pos);
 		BlockState downState = world.getBlockState(pos.down());
 		BlockState upState = world.getBlockState(pos.up());
@@ -60,7 +60,7 @@ public class BrutalSpawner extends WorldFeature {
 	}
 
 	@Override
-	public void place(IWorld world, BlockPos pos, Random rand) {
+	public void place(IServerWorld world, BlockPos pos, Random rand) {
 		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
 		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
 		world.setBlockState(pos.up(), Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 2);

@@ -4,6 +4,8 @@ loaderVersion="[28,)" #mandatory
 
 authors="Shadows_of_Fire" #optional
 
+license="MIT License"
+
 [[mods]] #mandatory
 
 modId="apotheosis" #mandatory
@@ -19,20 +21,20 @@ All things that should have been.
 [[dependencies.apotheosis]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[32.0.106,)" #mandatory
+    versionRange="[33.0.23,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.1,)"
+    versionRange="[1.16.2,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="placebo"
     mandatory=true
-    versionRange="[4.1.1,)"
+    versionRange="[4.2.0,)"
     ordering="NONE"
     side="BOTH"

@@ -42,7 +42,7 @@ import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 public class ApothSpawnerBlock extends SpawnerBlock {
 
 	public ApothSpawnerBlock() {
-		super(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).nonOpaque());
+		super(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).notSolid());
 		setRegistryName("minecraft", "spawner");
 	}
 
@@ -58,7 +58,7 @@ public class ApothSpawnerBlock extends SpawnerBlock {
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity te = world.getTileEntity(pos);
 		if (te != null) {
-			te.fromTag(state, stack.getOrCreateChildTag("BlockEntityTag"));
+			te.read(state, stack.getOrCreateChildTag("BlockEntityTag"));
 			te.setPos(pos);
 		}
 	}
@@ -88,7 +88,7 @@ public class ApothSpawnerBlock extends SpawnerBlock {
 	}
 
 	@Override
-	public ActionResultType onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack stack = player.getHeldItem(hand);
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof ApothSpawnerTile) {
@@ -128,7 +128,7 @@ public class ApothSpawnerBlock extends SpawnerBlock {
 	}
 
 	private ITextComponent grayTranslated(String s, Object... args) {
-		return new TranslationTextComponent(s, args).formatted(TextFormatting.GRAY);
+		return new TranslationTextComponent(s, args).mergeStyle(TextFormatting.GRAY);
 	}
 
 	@Override

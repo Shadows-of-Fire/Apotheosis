@@ -20,6 +20,7 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -45,17 +46,17 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundNBT tag) {
+	public void read(BlockState state, CompoundNBT tag) {
 		ignoresPlayers = tag.getBoolean("ignore_players");
 		ignoresConditions = tag.getBoolean("ignore_conditions");
 		ignoresCap = tag.getBoolean("ignore_cap");
 		redstoneEnabled = tag.getBoolean("redstone_control");
-		super.fromTag(state, tag);
+		super.read(state, tag);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		fromTag(Blocks.SPAWNER.getDefaultState(), pkt.getNbtCompound());
+		read(Blocks.SPAWNER.getDefaultState(), pkt.getNbtCompound());
 	}
 
 	public class SpawnerLogicExt extends AbstractSpawner {
@@ -150,8 +151,8 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 						double x = j >= 1 ? listnbt.getDouble(0) : blockpos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
 						double y = j >= 2 ? listnbt.getDouble(1) : (double) (blockpos.getY() + world.rand.nextInt(3) - 1);
 						double z = j >= 3 ? listnbt.getDouble(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
-						if (ignoresConditions || world.doesNotCollide(optional.get().func_220328_a(x, y, z)) && EntitySpawnPlacementRegistry.func_223515_a(optional.get(), world.getWorld(), SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
-							Entity entity = EntityType.func_220335_a(compoundnbt, world, (p_221408_6_) -> {
+						if (ignoresConditions || world.hasNoCollisions(optional.get().getBoundingBoxWithSizeApplied(x, y, z)) && EntitySpawnPlacementRegistry.canSpawnEntity(optional.get(), (IServerWorld) world, SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
+							Entity entity = EntityType.loadEntityAndExecute(compoundnbt, world, (p_221408_6_) -> {
 								p_221408_6_.setLocationAndAngles(x, y, z, p_221408_6_.rotationYaw, p_221408_6_.rotationPitch);
 								return p_221408_6_;
 							});
@@ -168,15 +169,15 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								}
 							}
 
-							entity.setLocationAndAngles(entity.getX(), entity.getY(), entity.getZ(), world.rand.nextFloat() * 360.0F, 0.0F);
+							entity.setLocationAndAngles(entity.getPosX(), entity.getPosY(), entity.getPosZ(), world.rand.nextFloat() * 360.0F, 0.0F);
 							if (entity instanceof MobEntity) {
 								MobEntity mobentity = (MobEntity) entity;
-								if (!ignoresConditions && !ForgeEventFactory.canEntitySpawnSpawner(mobentity, world, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this)) {
+								if (!ignoresConditions && !ForgeEventFactory.canEntitySpawnSpawner(mobentity, world, (float) entity.getPosX(), (float) entity.getPosY(), (float) entity.getPosZ(), this)) {
 									continue;
 								}
 
-								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, getWorld(), (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, SpawnReason.SPAWNER)) {
-									((MobEntity) entity).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
+								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, getWorld(), (float) entity.getPosX(), (float) entity.getPosY(), (float) entity.getPosZ(), this, SpawnReason.SPAWNER)) {
+									((MobEntity) entity).onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
 								}
 							}
 

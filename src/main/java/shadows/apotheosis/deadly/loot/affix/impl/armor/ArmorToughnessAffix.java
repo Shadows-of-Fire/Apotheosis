@@ -11,7 +11,7 @@ import shadows.apotheosis.deadly.loot.affix.impl.AttributeAffix;
 public class ArmorToughnessAffix extends AttributeAffix {
 
 	public ArmorToughnessAffix(int weight) {
-		super(Attributes.field_233827_j_, 0.5F, 2F, Operation.ADDITION, weight);
+		super(Attributes.ARMOR_TOUGHNESS, 0.5F, 2F, Operation.ADDITION, weight);
 	}
 
 	@Override

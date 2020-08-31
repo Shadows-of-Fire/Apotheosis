@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 
 /**
@@ -25,7 +25,7 @@ public class BossFeature extends WorldFeature {
 	public static final List<BossItem> BOSS_ITEMS = new ArrayList<>();
 
 	@Override
-	public boolean generate(IWorld world, int chunkX, int chunkZ, Random rand) {
+	public boolean generate(IServerWorld world, int chunkX, int chunkZ, Random rand) {
 		if (DeadlyConfig.bossChance <= rand.nextDouble()) return false;
 		int x = (chunkX << 4) + MathHelper.nextInt(rand, 4, 12);
 		int z = (chunkZ << 4) + MathHelper.nextInt(rand, 4, 12);
@@ -34,9 +34,9 @@ public class BossFeature extends WorldFeature {
 		BossItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
 		for (; y > 10; y--) {
 			if (Block.hasEnoughSolidSide(world, mPos.setPos(x, y, z), Direction.UP)) {
-				if (world.doesNotCollide(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
+				if (world.hasNoCollisions(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 					item.place(world, mPos, rand);
-					WorldGenerator.setSuccess(world.getDimension(), chunkX, chunkZ);
+					WorldGenerator.setSuccess(world.func_230315_m_(), chunkX, chunkZ);
 					return true;
 				}
 			}
@@ -45,12 +45,12 @@ public class BossFeature extends WorldFeature {
 	}
 
 	@Override
-	public boolean canBePlaced(IWorld world, BlockPos pos, Random rand) {
+	public boolean canBePlaced(IServerWorld world, BlockPos pos, Random rand) {
 		return false;
 	}
 
 	@Override
-	public void place(IWorld world, BlockPos pos, Random rand) {
+	public void place(IServerWorld world, BlockPos pos, Random rand) {
 	}
 
 	public static void init() {

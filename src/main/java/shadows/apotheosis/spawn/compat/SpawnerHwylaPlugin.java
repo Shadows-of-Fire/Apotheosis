@@ -36,7 +36,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 
 	@Override
 	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-		if (Minecraft.getInstance().gameSettings.keySneak.isKeyDown()) {
+		if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
 			int[] stats = accessor.getServerData().getIntArray(STATS);
 			if (stats.length != 10) return;
 			tooltip.add(new TranslationTextComponent("waila.spw.mindelay", stats[0]));

@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.settings.PointOfView;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
@@ -21,10 +22,10 @@ public class SeaAltarRenderer extends TileEntityRenderer<SeaAltarTile> {
 
 	@Override
 	public void render(SeaAltarTile te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buf, int p_225616_5_, int p_225616_6_) {
-		if (this.dispatcher.renderInfo != null && te.getPos().distanceSq(this.dispatcher.renderInfo.getProjectedView().x, this.dispatcher.renderInfo.getProjectedView().y, this.dispatcher.renderInfo.getProjectedView().z, true) < 128d) {
+		if (this.renderDispatcher.renderInfo != null && te.getPos().distanceSq(this.renderDispatcher.renderInfo.getProjectedView().x, this.renderDispatcher.renderInfo.getProjectedView().y, this.renderDispatcher.renderInfo.getProjectedView().z, true) < 128d) {
 
 			matrix.push();
-			boolean thirdPerson = Minecraft.getInstance().getRenderManager().options.thirdPersonView == 2;
+			boolean thirdPerson = Minecraft.getInstance().getRenderManager().options.func_243230_g() == PointOfView.THIRD_PERSON_FRONT;
 			float viewerYaw = Minecraft.getInstance().renderViewEntity.getYaw(partialTicks);
 			float angleRotateItem = !thirdPerson ? -viewerYaw : -viewerYaw % 360 + 180;
 
@@ -35,20 +36,20 @@ public class SeaAltarRenderer extends TileEntityRenderer<SeaAltarTile> {
 			for (int i = 0; i < 4; i++) {
 				matrix.push();
 				matrix.translate(offsets[i][0], yOffset, offsets[i][1]);
-				matrix.multiply(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
+				matrix.rotate(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
 				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(i);
-				if (!s.isEmpty()) Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.DEFAULT_UV, matrix, buf);
+				if (!s.isEmpty()) Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.NO_OVERLAY, matrix, buf);
 				matrix.pop();
 			}
 
 			if (!te.getInv().getStackInSlot(4).isEmpty()) {
 				matrix.push();
 				matrix.translate(0.5, 0.4, 0.5);
-				matrix.multiply(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
+				matrix.rotate(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
 				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(4);
-				Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.DEFAULT_UV, matrix, buf);
+				Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.NO_OVERLAY, matrix, buf);
 				matrix.pop();
 			}
 

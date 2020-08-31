@@ -141,7 +141,7 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 	}
 
 	public void trySpawnParticles(PlayerEntity player, int xpDrain) {
-		Vector3d to = new Vector3d(player.getX() - (pos.getX() + 0.5), player.getY() - pos.getY(), player.getZ() - (pos.getZ() + 0.5));
+		Vector3d to = new Vector3d(player.getPosX() - (pos.getX() + 0.5), player.getPosY() - pos.getY(), player.getPosZ() - (pos.getZ() + 0.5));
 		ParticleMessage msg = new ParticleMessage(ParticleTypes.ENCHANT, pos.getX() + world.rand.nextDouble(), pos.getY() + 1 + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
 		NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerWorld) world, pos);
 	}
@@ -156,8 +156,8 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundNBT tag) {
-		super.fromTag(state, tag);
+	public void read(BlockState state, CompoundNBT tag) {
+		super.read(state, tag);
 		inv.deserializeNBT(tag.getCompound("inv"));
 		xpDrained = tag.getFloat("xp");
 		target = ItemStack.read(tag.getCompound("target"));

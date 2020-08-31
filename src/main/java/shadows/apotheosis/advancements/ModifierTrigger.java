@@ -63,7 +63,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 	}
 
 	@Override
-	public ModifierTrigger.Instance conditionsFromJson(JsonObject json, ConditionArrayParser p_230241_3_) {
+	public ModifierTrigger.Instance deserialize(JsonObject json, ConditionArrayParser p_230241_3_) {
 		MinMaxBounds.IntBound minDelay = MinMaxBounds.IntBound.fromJson(json.get("min_delay"));
 		MinMaxBounds.IntBound maxDelay = MinMaxBounds.IntBound.fromJson(json.get("max_delay"));
 		MinMaxBounds.IntBound spawnCount = MinMaxBounds.IntBound.fromJson(json.get("spawn_count"));
@@ -102,7 +102,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		private final SpawnerModifier modifier;
 
 		public Instance(MinMaxBounds.IntBound minDelay, MinMaxBounds.IntBound maxDelay, MinMaxBounds.IntBound spawnCount, MinMaxBounds.IntBound nearbyEnts, MinMaxBounds.IntBound playerRange, MinMaxBounds.IntBound spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone, SpawnerModifier modifier) {
-			super(ModifierTrigger.ID, EntityPredicate.AndPredicate.EMPTY);
+			super(ModifierTrigger.ID, EntityPredicate.AndPredicate.ANY_AND);
 			this.minDelay = minDelay;
 			this.maxDelay = maxDelay;
 			this.spawnCount = spawnCount;
@@ -117,7 +117,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		}
 
 		@Override
-		public JsonObject toJson(ConditionArraySerializer serializer) {
+		public JsonObject serialize(ConditionArraySerializer serializer) {
 			return new JsonObject();
 		}
 

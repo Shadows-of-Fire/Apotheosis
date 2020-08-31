@@ -36,7 +36,7 @@ import shadows.apotheosis.util.FloatReferenceHolder;
 
 public class ApothEnchantContainer extends EnchantmentContainer {
 
-	protected IWorldPosCallable wPos = super.field_217006_g;
+	protected IWorldPosCallable wPos = super.worldPosCallable;
 
 	protected FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, 50);
 	protected FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 10);

@@ -8,7 +8,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import shadows.apotheosis.deadly.DeadlyLoot;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.config.DeadlyConstants;
@@ -19,7 +19,7 @@ public class SwarmSpawner extends WorldFeature {
 	public static final ArrayList<SpawnerItem> SWARM_SPAWNERS = new ArrayList<>();
 
 	@Override
-	public boolean generate(IWorld world, int chunkX, int chunkZ, Random rand) {
+	public boolean generate(IServerWorld world, int chunkX, int chunkZ, Random rand) {
 		if (DeadlyConfig.swarmSpawnerChance <= rand.nextDouble()) return false;
 		int x = (chunkX << 4) + MathHelper.nextInt(rand, 4, 12);
 		int z = (chunkZ << 4) + MathHelper.nextInt(rand, 4, 12);
@@ -28,7 +28,7 @@ public class SwarmSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.getDimension(), chunkX, chunkZ);
+				WorldGenerator.setSuccess(world.func_230315_m_(), chunkX, chunkZ);
 				return true;
 			}
 		}
@@ -36,7 +36,7 @@ public class SwarmSpawner extends WorldFeature {
 	}
 
 	@Override
-	public boolean canBePlaced(IWorld world, BlockPos pos, Random rand) {
+	public boolean canBePlaced(IServerWorld world, BlockPos pos, Random rand) {
 		BlockState state = world.getBlockState(pos);
 		BlockState downState = world.getBlockState(pos.down());
 		BlockState upState = world.getBlockState(pos.up());
@@ -44,7 +44,7 @@ public class SwarmSpawner extends WorldFeature {
 	}
 
 	@Override
-	public void place(IWorld world, BlockPos pos, Random rand) {
+	public void place(IServerWorld world, BlockPos pos, Random rand) {
 		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(12) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_SWARM);
 		WeightedRandom.getRandomItem(rand, SWARM_SPAWNERS).place(world, pos);
 		world.setBlockState(pos.up(), Blocks.SMOOTH_SANDSTONE.getDefaultState(), 2);

@@ -6,9 +6,6 @@ import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BambooLeaves;
 import net.minecraft.util.ResourceLocation;
@@ -22,10 +19,11 @@ public class ApothBambooBlock extends BambooBlock {
 	BambooBlock old = (BambooBlock) Blocks.BAMBOO;
 
 	public ApothBambooBlock() {
-		super(Block.Properties.create(Material.BAMBOO, MaterialColor.FOLIAGE).tickRandomly().hardnessAndResistance(1.0F).sound(SoundType.BAMBOO));
+		super(Block.Properties.from(Blocks.BAMBOO));
 		setRegistryName(new ResourceLocation("bamboo"));
 		this.setDefaultState(old.getDefaultState());
-		this.getStateContainer().getValidStates().forEach(b -> b.owner = this);
+		this.getStateContainer().getValidStates().forEach(b -> b.instance = this);
+		this.getStateContainer().owner = this;
 	}
 
 	@Override
@@ -33,7 +31,7 @@ public class ApothBambooBlock extends BambooBlock {
 		if (!state.isValidPosition(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true);
 		} else if (state.get(PROPERTY_STAGE) == 0) {
-			if (random.nextInt(3) == 0 && worldIn.isAirBlock(pos.up()) && worldIn.getBaseLightLevel(pos.up(), 0) >= 9) {
+			if (random.nextInt(3) == 0 && worldIn.isAirBlock(pos.up()) && worldIn.getLightSubtracted(pos.up(), 0) >= 9) {
 				int i = this.getNumBambooBlocksBelow(worldIn, pos) + 1;
 				if (i < GardenModule.maxBambooHeight) {
 					this.grow(state, worldIn, pos, random, i);

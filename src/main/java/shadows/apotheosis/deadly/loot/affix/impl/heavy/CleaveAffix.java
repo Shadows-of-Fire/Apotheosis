@@ -43,7 +43,7 @@ public class CleaveAffix extends Affix {
 			int targets = (int) level;
 			if (user.world.rand.nextFloat() < chance) {
 				Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttack(EntityType.PLAYER);
-				List<Entity> nearby = target.world.getEntitiesInAABBexcluding(target, new AxisAlignedBB(target.getBlockPos()).grow(6), pred);
+				List<Entity> nearby = target.world.getEntitiesInAABBexcluding(target, new AxisAlignedBB(target.getPosition()).grow(6), pred);
 				if (!user.world.isRemote) for (Entity e : nearby) {
 					if (targets > 0) {
 						user.ticksSinceLastSwing = 300;

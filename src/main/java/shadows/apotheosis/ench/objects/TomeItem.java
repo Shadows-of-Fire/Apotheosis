@@ -47,7 +47,7 @@ public class TomeItem extends BookItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis." + getRegistryName().getPath()).formatted(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("info.apotheosis." + getRegistryName().getPath()).mergeStyle(TextFormatting.GRAY));
 	}
 
 	@Override

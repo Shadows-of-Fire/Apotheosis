@@ -34,10 +34,10 @@ public class AnvilTile extends TileEntity {
 	}
 
 	@Override
-	public void fromTag(BlockState state, CompoundNBT tag) {
-		super.fromTag(state, tag);
+	public void read(BlockState state, CompoundNBT tag) {
+		super.read(state, tag);
 		ListNBT enchants = tag.getList("enchantments", Constants.NBT.TAG_COMPOUND);
-		Map<Enchantment, Integer> map = EnchantmentHelper.fromTag(enchants);
+		Map<Enchantment, Integer> map = EnchantmentHelper.deserializeEnchantments(enchants);
 		if (tag.getInt("ub") > 0) {
 			map.put(Enchantments.UNBREAKING, tag.getInt("ub"));
 		}

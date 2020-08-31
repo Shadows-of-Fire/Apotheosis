@@ -13,7 +13,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 
@@ -45,7 +45,7 @@ public class HellInfusionEnchantment extends Enchantment {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-		if (user.world.getDimensionRegistryKey() == DimensionType.THE_NETHER_REGISTRY_KEY) {
+		if (user.world.getDimensionKey() == World.THE_NETHER) {
 			if (user instanceof PlayerEntity) {
 				DamageSource source = DamageSource.causePlayerDamage((PlayerEntity) user);
 				source.setMagicDamage().setDamageBypassesArmor();
@@ -56,7 +56,7 @@ public class HellInfusionEnchantment extends Enchantment {
 
 	@Override
 	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).formatted(TextFormatting.DARK_GREEN);
+		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_GREEN);
 	}
 
 	@Override

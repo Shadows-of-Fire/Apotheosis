@@ -4,9 +4,9 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SugarCaneBlock;
-import net.minecraft.block.material.Material;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,9 +15,14 @@ import net.minecraftforge.common.ForgeHooks;
 
 public class ApothSugarcaneBlock extends SugarCaneBlock {
 
+	SugarCaneBlock old = (SugarCaneBlock) Blocks.SUGAR_CANE;
+
 	public ApothSugarcaneBlock() {
-		super(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT));
+		super(Block.Properties.from(Blocks.SUGAR_CANE));
 		setRegistryName(new ResourceLocation("sugar_cane"));
+		this.setDefaultState(old.getDefaultState());
+		this.getStateContainer().getValidStates().forEach(b -> b.instance = this);
+		this.getStateContainer().owner = this;
 	}
 
 	@Override
@@ -51,6 +56,11 @@ public class ApothSugarcaneBlock extends SugarCaneBlock {
 		if (pos.getY() != origin.getY()) {
 			super.neighborChanged(state, world, pos, block, origin, isMoving);
 		}
+	}
+
+	@Override
+	public StateContainer<Block, BlockState> getStateContainer() {
+		return old.getStateContainer();
 	}
 
 }

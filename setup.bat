@@ -1,3 +1,4 @@
+if exist build rd /q /s build
 call gradlew eclipse --no-daemon
 call gradlew eclipse genEclipseRuns --no-daemon
 for %%I in (.) do set PROJNAME=%%~nxI

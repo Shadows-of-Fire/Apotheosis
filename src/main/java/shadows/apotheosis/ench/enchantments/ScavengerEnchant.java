@@ -30,7 +30,7 @@ public class ScavengerEnchant extends Enchantment {
 
 	@Override
 	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).formatted(TextFormatting.DARK_GREEN);
+		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_GREEN);
 	}
 
 }

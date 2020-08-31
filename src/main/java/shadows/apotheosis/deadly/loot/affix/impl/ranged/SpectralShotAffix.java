@@ -40,7 +40,7 @@ public class SpectralShotAffix extends RangedAffix {
 				spectralArrow.setIsCritical(arrow.getIsCritical());
 				spectralArrow.setDamage(arrow.getDamage());
 				spectralArrow.setKnockbackStrength(arrow.knockbackStrength);
-				spectralArrow.setFireTicks(arrow.getFireTimer());
+				spectralArrow.forceFireTicks(arrow.getFireTimer());
 				spectralArrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 				spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
 				arrow.world.addEntity(spectralArrow);
