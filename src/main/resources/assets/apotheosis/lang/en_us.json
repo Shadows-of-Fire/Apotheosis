@@ -551,5 +551,6 @@
 	"death.attack.apotheosis.bleeding": "%s bled out.",
 	
 	"comment_id": "/Misc",
-	"generic.reachDistance": "Reach Distance"
+	"generic.reachDistance": "Reach Distance",
+	"info.apoth.modifier_disabled": "This Modifier is Disabled"
 }

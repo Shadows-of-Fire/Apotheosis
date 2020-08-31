@@ -118,6 +118,9 @@ public class NameHelper {
 		armors.put(ArmorMaterial.GOLD.toString(), new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
 	}
 
+	private static String suffixFormat = "%s the %s";
+	private static String ownershipFormat = "%s's";
+
 	/**
 	 * Makes a name using {@link NameHelper#nameParts}.
 	 * The name is made out of a random value from name parts, combined with up to two more values from the array.
@@ -152,7 +155,7 @@ public class NameHelper {
 		String name = root;
 		if (random.nextInt(5) == 0 && prefixes.length > 0) name = NameHelper.prefixes[random.nextInt(NameHelper.prefixes.length)] + " " + name;
 		if (random.nextBoolean() && suffixes.length > 0) {
-			name += " the " + NameHelper.suffixes[random.nextInt(NameHelper.suffixes.length)];
+			name = String.format(suffixFormat, name, NameHelper.suffixes[random.nextInt(NameHelper.suffixes.length)]);
 		}
 		entity.setCustomName(new StringTextComponent(name));
 		return root;
@@ -168,7 +171,7 @@ public class NameHelper {
 	 * @return The name of the item, without the owning prefix of the boss's name
 	 */
 	public static String setItemName(Random random, ItemStack itemStack, String bossName) {
-		bossName += "'s";
+		bossName = String.format(ownershipFormat, bossName);
 
 		String name = "";
 
@@ -270,6 +273,9 @@ public class NameHelper {
 			String[] read = c.getStringList(mat.toString(), "armors", armors.getOrDefault(mat.toString(), new String[0]), "A list of material-based prefix names for the given armor material. May be empty.");
 			if (read.length > 0) armors.put(mat.toString(), read);
 		}
+
+		suffixFormat = c.getString("Suffix Format", "formatting", suffixFormat, "The format string that will be used when a suffix is applied.");
+		suffixFormat = c.getString("Ownership Format", "formatting", ownershipFormat, "The format string that will be used to indicate ownership.");
 
 		if (c.hasChanged()) c.save();
 	}

@@ -5,8 +5,10 @@ import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.spawn.modifiers.CapModifier;
 import shadows.apotheosis.spawn.modifiers.ConditionModifier;
@@ -50,14 +52,15 @@ public class SpawnerModifiers {
 		register(CAP);
 		register(REDSTONE);
 		register(EGG);
-
 		inverseItem = readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
 	}
 
 	public static Ingredient readStackCfg(String s) {
 		String[] split = s.split(":");
 		Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
-		return Ingredient.fromStacks(new ItemStack(i));
+		ItemStack stack = new ItemStack(i);
+		if (i == Items.BARRIER) stack.setDisplayName(new TranslationTextComponent("info.apoth.modifier_disabled"));
+		return Ingredient.fromStacks(stack);
 	}
 
 	public static void register(SpawnerModifier modif) {
