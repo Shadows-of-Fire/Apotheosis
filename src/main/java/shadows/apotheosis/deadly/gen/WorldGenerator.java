@@ -14,6 +14,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
@@ -62,6 +64,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
 		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
 		ConfiguredFeature<?, ?> gen = new ConfiguredFeature<>(ApotheosisObjects.DEADLY_WORLD_GEN, IFeatureConfig.NO_FEATURE_CONFIG);
+		Registry.register(WorldGenRegistries.field_243653_e, "apotheosis:deadly_module", gen);
 		DeferredWorkQueue.runLater(() -> {
 			for (Biome b : ForgeRegistries.BIOMES)
 				if (!DeadlyConfig.BIOME_BLACKLIST.contains(b.getRegistryName())) BiomeUtil.addFeature(b, Decoration.UNDERGROUND_DECORATION, gen);
