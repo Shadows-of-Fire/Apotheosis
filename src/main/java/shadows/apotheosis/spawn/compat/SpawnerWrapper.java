@@ -15,14 +15,14 @@ import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.modifiers.EggModifier;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.util.PlaceboUtil;
 
 public class SpawnerWrapper {
 
 	public static final List<ItemStack> SPAWNER = Collections.singletonList(new ItemStack(Blocks.SPAWNER));
 	static {
-		new TileSpawnerExt().write(SPAWNER.get(0).getOrCreateChildTag("BlockEntityTag"));
+		new ApothSpawnerTile().write(SPAWNER.get(0).getOrCreateChildTag("BlockEntityTag"));
 	}
 
 	final SpawnerModifier modifier;

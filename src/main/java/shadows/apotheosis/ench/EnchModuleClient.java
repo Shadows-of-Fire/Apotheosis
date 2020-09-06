@@ -22,8 +22,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.ench.altar.RenderPrismaticAltar;
-import shadows.apotheosis.ench.table.EnchantmentScreenExt;
+import shadows.apotheosis.ench.altar.SeaAltarRenderer;
+import shadows.apotheosis.ench.table.ApothEnchantScreen;
 import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
 
 @SuppressWarnings("deprecation")
@@ -67,9 +67,9 @@ public class EnchModuleClient {
 
 	public static void init() {
 		DeferredWorkQueue.runLater(() -> {
-			ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, RenderPrismaticAltar::new);
+			ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, SeaAltarRenderer::new);
 			ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ENCHANTING_TABLE, EnchantmentTableTileEntityRenderer::new);
-			ScreenManager.registerFactory(ApotheosisObjects.ENCHANTING, EnchantmentScreenExt::new);
+			ScreenManager.registerFactory(ApotheosisObjects.ENCHANTING, ApothEnchantScreen::new);
 		});
 	}
 }

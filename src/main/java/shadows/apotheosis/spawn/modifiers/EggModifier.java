@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
 
@@ -27,12 +27,12 @@ public class EggModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		return stack.getItem() instanceof SpawnEggItem;
 	}
 
 	@Override
-	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		String name = ((SpawnEggItem) stack.getItem()).getType(null).getRegistryName().toString();
 		if (!bannedMobs.contains(name) && !name.equals(spawner.spawnerLogic.spawnData.getNbt().getString(SpawnerBuilder.ID))) {
 			spawner.spawnerLogic.potentialSpawns.clear();

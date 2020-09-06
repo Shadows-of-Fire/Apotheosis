@@ -25,7 +25,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.village.fletching.BlockFletchingTable;
+import shadows.apotheosis.village.fletching.ApothFletchingBlock;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.FletchingRecipe;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
@@ -76,7 +76,7 @@ public class VillageModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverrideBlock(new BlockFletchingTable(), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new ApothFletchingBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent

@@ -19,8 +19,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.spawn.spawner.BlockSpawnerExt;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 @WailaPlugin
 public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {
@@ -30,8 +30,8 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 	@Override
 	public void register(IRegistrar reg) {
 		if (!Apotheosis.enableSpawner) return;
-		reg.registerComponentProvider(this, TooltipPosition.BODY, BlockSpawnerExt.class);
-		reg.registerBlockDataProvider(this, BlockSpawnerExt.class);
+		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothSpawnerBlock.class);
+		reg.registerBlockDataProvider(this, ApothSpawnerBlock.class);
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 
 	@Override
 	public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity te) {
-		if (te instanceof TileSpawnerExt) {
-			TileSpawnerExt spw = (TileSpawnerExt) te;
+		if (te instanceof ApothSpawnerTile) {
+			ApothSpawnerTile spw = (ApothSpawnerTile) te;
 			AbstractSpawner logic = spw.getSpawnerBaseLogic();
 			tag.putIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.activatingRangeFromPlayer, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0, spw.ignoresCap ? 1 : 0, spw.redstoneEnabled ? 1 : 0 });
 		}

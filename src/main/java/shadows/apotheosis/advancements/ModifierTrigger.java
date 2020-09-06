@@ -20,8 +20,8 @@ import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt.SpawnerLogicExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile.SpawnerLogicExt;
 
 public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instance> {
 	private static final ResourceLocation ID = new ResourceLocation(Apotheosis.MODID, "spawner_modifier");
@@ -78,7 +78,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, redstone, modifier);
 	}
 
-	public void trigger(ServerPlayerEntity player, TileSpawnerExt tile, SpawnerModifier modif) {
+	public void trigger(ServerPlayerEntity player, ApothSpawnerTile tile, SpawnerModifier modif) {
 		ModifierTrigger.Listeners ModifierTrigger$listeners = this.listeners.get(player.getAdvancements());
 		if (ModifierTrigger$listeners != null) {
 			ModifierTrigger$listeners.trigger(tile, modif);
@@ -119,7 +119,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			return new JsonObject();
 		}
 
-		public boolean test(TileSpawnerExt tile, SpawnerModifier modif) {
+		public boolean test(ApothSpawnerTile tile, SpawnerModifier modif) {
 			SpawnerLogicExt logic = (SpawnerLogicExt) tile.spawnerLogic;
 			if (modifier != null && modif != modifier) return false;
 			if (!minDelay.test(logic.minSpawnDelay)) return false;
@@ -156,7 +156,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			this.listeners.remove(listener);
 		}
 
-		public void trigger(TileSpawnerExt tile, SpawnerModifier modif) {
+		public void trigger(ApothSpawnerTile tile, SpawnerModifier modif) {
 			List<ICriterionTrigger.Listener<ModifierTrigger.Instance>> list = null;
 
 			for (ICriterionTrigger.Listener<ModifierTrigger.Instance> listener : this.listeners) {

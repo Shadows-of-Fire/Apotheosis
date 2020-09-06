@@ -5,8 +5,6 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -16,10 +14,10 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
-import shadows.apotheosis.deadly.gen.BossFeature;
-import shadows.apotheosis.deadly.gen.BrutalSpawner;
-import shadows.apotheosis.deadly.gen.SwarmSpawner;
-import shadows.apotheosis.deadly.gen.WorldGenerator;
+import shadows.apotheosis.deadly.gen.BossGenerator;
+import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
+import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
+import shadows.apotheosis.deadly.gen.DeadlyFeature;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.affix.AffixEvents;
 import shadows.placebo.config.Configuration;
@@ -38,21 +36,16 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void init(ApotheosisSetup e) {
 		DeadlyConfig.init();
-		BrutalSpawner.init();
-		BossFeature.init();
+		BrutalSpawnerGenerator.init();
+		BossGenerator.init();
 		DeadlyLoot.init();
-		SwarmSpawner.init();
-		WorldGenerator.init();
+		SwarmSpawnerGenerator.init();
+		DeadlyFeature.init();
 	}
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
-		e.getRegistry().register(new WorldGenerator().setRegistryName("deadly_world_gen"));
-	}
-
-	@SubscribeEvent
-	public void registerSounds(Register<SoundEvent> e) {
-		e.getRegistry().register(new SoundEvent(new ResourceLocation(Apotheosis.MODID, "chain_zap")).setRegistryName("chain_zap"));
+		e.getRegistry().register(new DeadlyFeature().setRegistryName("deadly_world_gen"));
 	}
 
 	public void reloads(FMLServerAboutToStartEvent e) {

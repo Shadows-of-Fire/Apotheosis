@@ -72,41 +72,41 @@ import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
-import shadows.apotheosis.ench.altar.BlockPrismaticAltar;
-import shadows.apotheosis.ench.altar.TilePrismaticAltar;
-import shadows.apotheosis.ench.anvil.BlockAnvilExt;
-import shadows.apotheosis.ench.anvil.EnchantmentSplitting;
-import shadows.apotheosis.ench.anvil.ItemAnvilExt;
-import shadows.apotheosis.ench.anvil.TileAnvil;
+import shadows.apotheosis.ench.altar.SeaAltarBlock;
+import shadows.apotheosis.ench.altar.SeaAltarTile;
+import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
+import shadows.apotheosis.ench.anvil.SplittingEnchant;
+import shadows.apotheosis.ench.anvil.ApothAnvilItem;
+import shadows.apotheosis.ench.anvil.ObliterationEnchant;
+import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
-import shadows.apotheosis.ench.enchantments.EnchantmentBerserk;
-import shadows.apotheosis.ench.enchantments.EnchantmentDepths;
-import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
-import shadows.apotheosis.ench.enchantments.EnchantmentKnowledge;
-import shadows.apotheosis.ench.enchantments.EnchantmentLifeMend;
-import shadows.apotheosis.ench.enchantments.EnchantmentMagicProt;
-import shadows.apotheosis.ench.enchantments.EnchantmentNatureBless;
-import shadows.apotheosis.ench.enchantments.EnchantmentRebounding;
-import shadows.apotheosis.ench.enchantments.EnchantmentReflective;
-import shadows.apotheosis.ench.enchantments.EnchantmentScavenger;
-import shadows.apotheosis.ench.enchantments.EnchantmentShieldBash;
-import shadows.apotheosis.ench.enchantments.EnchantmentStableFooting;
-import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
+import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
+import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
+import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
+import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
+import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
+import shadows.apotheosis.ench.enchantments.MagicProtEnchant;
+import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
+import shadows.apotheosis.ench.enchantments.ReboundingEnchant;
+import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
+import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
+import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
+import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
+import shadows.apotheosis.ench.enchantments.TemptingEnchant;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
-import shadows.apotheosis.ench.enchantments.ObliterationEnchant;
 import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.HellshelfItem;
-import shadows.apotheosis.ench.objects.ItemScrapTome;
-import shadows.apotheosis.ench.objects.ItemShearsExt;
-import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.objects.ScrappingTomeItem;
+import shadows.apotheosis.ench.objects.ApothShearsItem;
+import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.objects.SeashelfItem;
-import shadows.apotheosis.ench.replacements.BaneEnchantment;
-import shadows.apotheosis.ench.replacements.DefenseEnchantment;
-import shadows.apotheosis.ench.table.EnchantingTableBlockExt;
-import shadows.apotheosis.ench.table.EnchantingTableTileEntityExt;
-import shadows.apotheosis.ench.table.EnchantmentContainerExt;
+import shadows.apotheosis.ench.replacements.BaneEnchant;
+import shadows.apotheosis.ench.replacements.DefenseEnchant;
+import shadows.apotheosis.ench.table.ApothEnchantBlock;
+import shadows.apotheosis.ench.table.ApothEnchantTile;
+import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
@@ -129,7 +129,7 @@ public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
-	public static final List<ItemTypedBook> TYPED_BOOKS = new LinkedList<>();
+	public static final List<TomeItem> TYPED_BOOKS = new LinkedList<>();
 	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").setDamageBypassesArmor().setDamageIsAbsolute();
 	public static final EquipmentSlotType[] ARMOR = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
 	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
@@ -216,24 +216,24 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void tiles(Register<TileEntityType<?>> e) {
-		e.getRegistry().register(new TileEntityType<>(TileAnvil::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
-		e.getRegistry().register(new TileEntityType<>(TilePrismaticAltar::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
-		e.getRegistry().register(new TileEntityType<>(EnchantingTableTileEntityExt::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
+		e.getRegistry().register(new TileEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
+		e.getRegistry().register(new TileEntityType<>(SeaAltarTile::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
+		e.getRegistry().register(new TileEntityType<>(ApothEnchantTile::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
 	}
 
 	@SubscribeEvent
 	public void containers(Register<ContainerType<?>> e) {
-		e.getRegistry().register(new ContainerType<>(EnchantmentContainerExt::new).setRegistryName("enchanting"));
+		e.getRegistry().register(new ContainerType<>(ApothEnchantContainer::new).setRegistryName("enchanting"));
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new BlockPrismaticAltar().setRegistryName(Apotheosis.MODID, "prismatic_altar"),
-				new BlockAnvilExt().setRegistryName("minecraft", "anvil"),
-				new BlockAnvilExt().setRegistryName("minecraft", "chipped_anvil"),
-				new BlockAnvilExt().setRegistryName("minecraft", "damaged_anvil"),
+				new SeaAltarBlock().setRegistryName(Apotheosis.MODID, "prismatic_altar"),
+				new ApothAnvilBlock().setRegistryName("minecraft", "anvil"),
+				new ApothAnvilBlock().setRegistryName("minecraft", "chipped_anvil"),
+				new ApothAnvilBlock().setRegistryName("minecraft", "damaged_anvil"),
 				new HellshelfBlock().setRegistryName("hellshelf"),
 				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
 				new Block(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
@@ -247,7 +247,7 @@ public class EnchModule {
 				new Block(Block.Properties.create(Material.GOURD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
 				);
 		//Formatter::on
-		PlaceboUtil.registerOverrideBlock(new EnchantingTableBlockExt().setRegistryName("minecraft:enchanting_table"), Apotheosis.MODID);
+		PlaceboUtil.registerOverrideBlock(new ApothEnchantBlock().setRegistryName("minecraft:enchanting_table"), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
@@ -256,22 +256,22 @@ public class EnchModule {
 		Item shears;
 		//Formatter::off
 		e.getRegistry().registerAll(
-				shears = new ItemShearsExt(),
+				shears = new ApothShearsItem(),
 				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
-				new ItemAnvilExt(Blocks.ANVIL),
-				new ItemAnvilExt(Blocks.CHIPPED_ANVIL),
-				new ItemAnvilExt(Blocks.DAMAGED_ANVIL),
-				new ItemTypedBook(Items.AIR, null),
-				new ItemTypedBook(Items.DIAMOND_HELMET, EnchantmentType.ARMOR_HEAD),
-				new ItemTypedBook(Items.DIAMOND_CHESTPLATE, EnchantmentType.ARMOR_CHEST),
-				new ItemTypedBook(Items.DIAMOND_LEGGINGS, EnchantmentType.ARMOR_LEGS),
-				new ItemTypedBook(Items.DIAMOND_BOOTS, EnchantmentType.ARMOR_FEET),
-				new ItemTypedBook(Items.DIAMOND_SWORD, EnchantmentType.WEAPON),
-				new ItemTypedBook(Items.DIAMOND_PICKAXE, EnchantmentType.DIGGER),
-				new ItemTypedBook(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
-				new ItemTypedBook(Items.BOW, EnchantmentType.BOW),
+				new ApothAnvilItem(Blocks.ANVIL),
+				new ApothAnvilItem(Blocks.CHIPPED_ANVIL),
+				new ApothAnvilItem(Blocks.DAMAGED_ANVIL),
+				new TomeItem(Items.AIR, null),
+				new TomeItem(Items.DIAMOND_HELMET, EnchantmentType.ARMOR_HEAD),
+				new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentType.ARMOR_CHEST),
+				new TomeItem(Items.DIAMOND_LEGGINGS, EnchantmentType.ARMOR_LEGS),
+				new TomeItem(Items.DIAMOND_BOOTS, EnchantmentType.ARMOR_FEET),
+				new TomeItem(Items.DIAMOND_SWORD, EnchantmentType.WEAPON),
+				new TomeItem(Items.DIAMOND_PICKAXE, EnchantmentType.DIGGER),
+				new TomeItem(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
+				new TomeItem(Items.BOW, EnchantmentType.BOW),
 				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("prismatic_altar"),
-				new ItemScrapTome(),
+				new ScrappingTomeItem(),
 				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
 				new BlockItem(ApotheosisObjects.BLAZING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("blazing_hellshelf"),
 				new BlockItem(ApotheosisObjects.GLOWING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("glowing_hellshelf"),
@@ -293,30 +293,30 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new HellInfusionEnchantment().setRegistryName(Apotheosis.MODID, "hell_infusion"),
-				new EnchantmentDepths().setRegistryName(Apotheosis.MODID, "depth_miner"),
-				new EnchantmentStableFooting().setRegistryName(Apotheosis.MODID, "stable_footing"),
-				new EnchantmentScavenger().setRegistryName(Apotheosis.MODID, "scavenger"),
-				new EnchantmentLifeMend().setRegistryName(Apotheosis.MODID, "life_mending"),
-				new EnchantmentIcyThorns().setRegistryName(Apotheosis.MODID, "icy_thorns"),
-				new EnchantmentTempting().setRegistryName(Apotheosis.MODID, "tempting"),
-				new EnchantmentShieldBash().setRegistryName(Apotheosis.MODID, "shield_bash"),
-				new EnchantmentReflective().setRegistryName(Apotheosis.MODID, "reflective"),
-				new EnchantmentBerserk().setRegistryName(Apotheosis.MODID, "berserk"),
-				new EnchantmentKnowledge().setRegistryName(Apotheosis.MODID, "knowledge"),
-				new EnchantmentSplitting().setRegistryName(Apotheosis.MODID, "splitting"),
-				new EnchantmentNatureBless().setRegistryName(Apotheosis.MODID, "natures_blessing"),
-				new EnchantmentRebounding().setRegistryName(Apotheosis.MODID, "rebounding"),
-				new EnchantmentMagicProt().setRegistryName(Apotheosis.MODID, "magic_protection"),
+				new MinersFervorEnchant().setRegistryName(Apotheosis.MODID, "depth_miner"),
+				new StableFootingEnchant().setRegistryName(Apotheosis.MODID, "stable_footing"),
+				new ScavengerEnchant().setRegistryName(Apotheosis.MODID, "scavenger"),
+				new LifeMendingEnchant().setRegistryName(Apotheosis.MODID, "life_mending"),
+				new IcyThornsEnchant().setRegistryName(Apotheosis.MODID, "icy_thorns"),
+				new TemptingEnchant().setRegistryName(Apotheosis.MODID, "tempting"),
+				new ShieldBashEnchant().setRegistryName(Apotheosis.MODID, "shield_bash"),
+				new ReflectiveEnchant().setRegistryName(Apotheosis.MODID, "reflective"),
+				new BerserkersFuryEnchant().setRegistryName(Apotheosis.MODID, "berserk"),
+				new KnowledgeEnchant().setRegistryName(Apotheosis.MODID, "knowledge"),
+				new SplittingEnchant().setRegistryName(Apotheosis.MODID, "splitting"),
+				new NaturesBlessingEnchant().setRegistryName(Apotheosis.MODID, "natures_blessing"),
+				new ReboundingEnchant().setRegistryName(Apotheosis.MODID, "rebounding"),
+				new MagicProtEnchant().setRegistryName(Apotheosis.MODID, "magic_protection"),
 				new SeaInfusionEnchantment().setRegistryName("sea_infusion"),
-				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.ARTHROPOD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
-				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.UNDEAD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "smite"),
-				new BaneEnchantment(Rarity.COMMON, CreatureAttribute.UNDEFINED, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "sharpness"),
-				new BaneEnchantment(Rarity.UNCOMMON, CreatureAttribute.ILLAGER, EquipmentSlotType.MAINHAND).setRegistryName("bane_of_illagers"),
-				new DefenseEnchantment(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"),
-				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
-				new DefenseEnchantment(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
-				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
-				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
+				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ARTHROPOD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
+				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.UNDEAD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "smite"),
+				new BaneEnchant(Rarity.COMMON, CreatureAttribute.UNDEFINED, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "sharpness"),
+				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ILLAGER, EquipmentSlotType.MAINHAND).setRegistryName("bane_of_illagers"),
+				new DefenseEnchant(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"),
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
+				new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
 				new ObliterationEnchant().setRegistryName("obliteration"),
 				new CrescendoEnchant().setRegistryName("crescendo")
 				);
@@ -372,7 +372,7 @@ public class EnchModule {
 			e.setMaterialCost(1);
 			return;
 		}
-		if (ItemScrapTome.updateAnvil(e)) return;
+		if (ScrappingTomeItem.updateAnvil(e)) return;
 	}
 
 	Method dropLoot;
@@ -474,7 +474,7 @@ public class EnchModule {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
 			RepairContainer r = (RepairContainer) e.getPlayer().openContainer;
 			TileEntity te = r.field_216980_g.apply((w, p) -> w.getTileEntity(p)).orElse(null);
-			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
+			if (te instanceof AnvilTile) e.setBreakChance(e.getBreakChance() / (((AnvilTile) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
 		}
 	}
 

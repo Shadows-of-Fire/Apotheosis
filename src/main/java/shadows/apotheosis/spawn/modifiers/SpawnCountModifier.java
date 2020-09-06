@@ -3,7 +3,7 @@ package shadows.apotheosis.spawn.modifiers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 public class SpawnCountModifier extends SpawnerModifier {
 
@@ -12,12 +12,12 @@ public class SpawnCountModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.spawnCount > min : spawner.spawnerLogic.spawnCount < max);
 	}
 
 	@Override
-	public boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		int modify = inverting ? -value : value;
 		spawner.spawnerLogic.spawnCount = MathHelper.clamp(spawner.spawnerLogic.spawnCount + modify, min, max);
 		return true;

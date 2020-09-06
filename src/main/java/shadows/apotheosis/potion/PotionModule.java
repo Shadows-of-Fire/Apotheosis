@@ -36,7 +36,7 @@ import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.potion.compat.CuriosCompat;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
-import shadows.apotheosis.potion.potions.PotionSundering;
+import shadows.apotheosis.potion.potions.SunderingEffect;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.RecipeHelper;
 
@@ -107,12 +107,12 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
-		e.getRegistry().register(new EnchantmentTrueInfinity().setRegistryName(Apotheosis.MODID, "true_infinity"));
+		e.getRegistry().register(new TrueInfinityEnchant().setRegistryName(Apotheosis.MODID, "true_infinity"));
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().registerAll(new ItemLuckyFoot().setRegistryName(Apotheosis.MODID, "lucky_foot"), new PotionCharmItem().setRegistryName(Apotheosis.MODID, "potion_charm"));
+		e.getRegistry().registerAll(new LuckyFootItem().setRegistryName(Apotheosis.MODID, "lucky_foot"), new PotionCharmItem().setRegistryName(Apotheosis.MODID, "potion_charm"));
 	}
 
 	@SubscribeEvent
@@ -145,7 +145,7 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void potions(Register<Effect> e) {
-		e.getRegistry().register(new PotionSundering().setRegistryName(Apotheosis.MODID, "sundering"));
+		e.getRegistry().register(new SunderingEffect().setRegistryName(Apotheosis.MODID, "sundering"));
 		e.getRegistry().register(new KnowledgeEffect().setRegistryName(Apotheosis.MODID, "knowledge"));
 		ObjectHolderRegistry.applyObjectHolders(r -> r.getNamespace().equals(Apotheosis.MODID) && (r.getPath().equals("sundering") || r.getPath().equals("knowledge")));
 	}

@@ -25,7 +25,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.EnchantmentInfo;
-import shadows.apotheosis.ench.objects.ItemTypedBook;
+import shadows.apotheosis.ench.objects.TomeItem;
 
 /**
  * ASM methods for the enchantment module.
@@ -42,7 +42,7 @@ public class EnchHooks {
 	public static List<EnchantmentData> getEnchantmentDatas(int power, ItemStack stack, boolean allowTreasure) {
 		List<EnchantmentData> list = new ArrayList<>();
 		boolean isBook = stack.getItem() == Items.BOOK;
-		boolean typedBook = stack.getItem() instanceof ItemTypedBook;
+		boolean typedBook = stack.getItem() instanceof TomeItem;
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
 			if (enchantment.canApplyAtEnchantingTable(stack) || isBook && enchantment.isAllowedOnBooks() || typedBook && stack.getItem().canApplyAtEnchantingTable(stack, enchantment)) {

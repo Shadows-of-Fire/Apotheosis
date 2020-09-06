@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import shadows.apotheosis.spawn.SpawnerModifiers;
-import shadows.apotheosis.spawn.spawner.TileSpawnerExt;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 
 /**
@@ -57,7 +57,7 @@ public abstract class SpawnerModifier {
 	 * @param inverting If the player is holding the inverse item in their offhand.
 	 * @return If this modifier can act, given the conditions.
 	 */
-	public boolean canModify(TileSpawnerExt spawner, ItemStack stack, boolean inverting) {
+	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		return item.test(stack);
 	}
 
@@ -68,7 +68,7 @@ public abstract class SpawnerModifier {
 	 * @param inverting If the player is holding the inverse item in their offhand.
 	 * @return The value to be returned to {@link Block#onBlockActivated}
 	 */
-	public abstract boolean modify(TileSpawnerExt spawner, ItemStack stack, boolean inverting);
+	public abstract boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting);
 
 	/**
 	 * Reads this modifier from config.  Should update all relevant values.
