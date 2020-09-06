@@ -29,7 +29,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -94,7 +93,7 @@ public class PotionModule {
 		PotionBrewing.addMix(ApotheosisObjects.T_KNOWLEDGE, Items.REDSTONE, ApotheosisObjects.LONG_KNOWLEDGE);
 		PotionBrewing.addMix(ApotheosisObjects.T_KNOWLEDGE, Items.EXPERIENCE_BOTTLE, ApotheosisObjects.STRONG_KNOWLEDGE);
 
-		PotionBrewing.addMix(Potions.AWKWARD, ApotheosisObjects.LUCKY_FOOT, ForgeRegistries.POTION_TYPES.getValue(new ResourceLocation("luck")));
+		PotionBrewing.addMix(Potions.AWKWARD, ApotheosisObjects.LUCKY_FOOT, Potions.LUCK);
 
 		Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
 		Ingredient abs = Apotheosis.potionIngredient(ApotheosisObjects.STRONG_ABSORPTION);

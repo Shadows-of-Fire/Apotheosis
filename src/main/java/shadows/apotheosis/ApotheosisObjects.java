@@ -1,6 +1,7 @@
 package shadows.apotheosis;
 
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -137,5 +138,7 @@ public class ApotheosisObjects {
 	public static final Block DRACONIC_ENDSHELF = null;
 	public static final Block BEESHELF = null;
 	public static final Block MELONSHELF = null;
+	public static final Enchantment OBLITERATION = null;
+	public static final Enchantment CRESCENDO = null;
 
 }

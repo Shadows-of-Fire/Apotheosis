@@ -17,5 +17,6 @@
   "affixUser": "apothasm/affix-user-hurt.js",
   "stackUUID": "apothasm/stack-modifier-hack.js",
   "itemUseHook": "apothasm/item-use-hook.js",
-  "quarkMatrix": "apothasm/quark-matrix.js"
+  "quarkMatrix": "apothasm/quark-matrix.js",
+  "crossbow": "apothasm/crossbow.js"
 }

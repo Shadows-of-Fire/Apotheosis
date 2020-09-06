@@ -8,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
 
 public class ItemAnvilExt extends BlockItem {
 
@@ -19,7 +18,7 @@ public class ItemAnvilExt extends BlockItem {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment == ApotheosisObjects.SPLITTING);
+		return stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment.type.canEnchantItem(this));
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class ItemAnvilExt extends BlockItem {
 
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
-		return stack.getCount() == 1;
+		return true;
 	}
 
 	@Override

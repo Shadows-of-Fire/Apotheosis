@@ -3,6 +3,7 @@ package shadows.apotheosis.potion;
 import java.util.List;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -49,6 +50,11 @@ public class PotionCharmItem extends Item {
 	@Override
 	public boolean hasEffect(ItemStack stack) {
 		return stack.getOrCreateTag().getBoolean("charm_enabled");
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return false;
 	}
 
 	@Override

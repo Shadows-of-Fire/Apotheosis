@@ -1,6 +1,7 @@
 package shadows.apotheosis.ench.compat;
 
 import java.util.List;
+import java.util.Map;
 
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
@@ -10,13 +11,16 @@ import mcp.mobius.waila.api.IServerDataProvider;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
-import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import shadows.apotheosis.ApotheosisObjects;
+import net.minecraftforge.common.util.Constants;
 import shadows.apotheosis.ench.anvil.BlockAnvilExt;
 import shadows.apotheosis.ench.anvil.TileAnvil;
 
@@ -32,15 +36,18 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 	@Override
 	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
 		CompoundNBT tag = accessor.getServerData();
-		if (tag.getInt("ub") > 0) tooltip.add(Enchantments.UNBREAKING.getDisplayName(tag.getInt("ub")));
-		if (tag.getInt("sp") > 0) tooltip.add(ApotheosisObjects.SPLITTING.getDisplayName(tag.getInt("sp")));
+		Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
+			tooltip.add(e.getKey().getDisplayName(e.getValue()));
+		}
 	}
 
 	@Override
 	public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity te) {
 		if (te instanceof TileAnvil) {
-			tag.putInt("ub", ((TileAnvil) te).getUnbreaking());
-			tag.putInt("sp", ((TileAnvil) te).getSplitting());
+			ItemStack stack = new ItemStack(Items.ANVIL);
+			EnchantmentHelper.setEnchantments(((TileAnvil) te).getEnchantments(), stack);
+			tag.put("enchantments", stack.getEnchantmentTagList());
 		}
 	}
 

@@ -282,6 +282,12 @@
 	
 	"enchantment.apotheosis.bane_of_illagers": "Bane of Illagers",
     "enchantment.apotheosis.bane_of_illagers.desc": "Illagers take increased damage.",
+	
+	"enchantment.apotheosis.obliteration": "Obliteration",
+    "enchantment.apotheosis.obliteration.desc": "Allows anvils to split single enchantments from books they fall upon.",
+	
+	"enchantment.apotheosis.crescendo": "Crescendo of Bolts",
+    "enchantment.apotheosis.crescendo.desc": "Your crossbow may be fired additional times per reload.",
 
     "death.attack.apoth_corrupted": "%1$s was drained by a corrupted enchantment.",
 
@@ -523,7 +529,7 @@
     "item.apotheosis.farmers_leash": "Ender-Farmer's Lead",
     "info.apotheosis.noentity": "Held Entity: Nothing",
     "info.apotheosis.containedentity": "Held Entity: %s",
-    "info.apotheosis.farmleash": "The Farmer's Leash is an item that can be used to move animals around.  Capture an animal with left click, and release it with right click.  The leash will not work on other types of entities.",
+    "info.apotheosis.farmleash": "The Ender-Farmer's Lead is an item that can be used to move animals around.  Punch an animal to capture, and right click to release it.  The leash will not work on other types of entities.",
 
     "comment_id": "/Villager Module",
     "name.apotheosis.merch_sword": "Captive Dreams",
@@ -542,5 +548,8 @@
 	"info.apotheosis.broadhead_arrow": "Bleeding (0:15)",
 	"item.apotheosis.broadhead_arrow": "Broadhead Arrow",
 	"effect.apotheosis.bleeding": "Bleeding",
-	"death.attack.apotheosis.bleeding": "%s bled out."
+	"death.attack.apotheosis.bleeding": "%s bled out.",
+	
+	"comment_id": "/Misc",
+	"info.apoth.modifier_disabled": "This Modifier is Disabled"
 }

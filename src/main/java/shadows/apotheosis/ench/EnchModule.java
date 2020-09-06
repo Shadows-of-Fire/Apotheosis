@@ -78,6 +78,7 @@ import shadows.apotheosis.ench.anvil.BlockAnvilExt;
 import shadows.apotheosis.ench.anvil.EnchantmentSplitting;
 import shadows.apotheosis.ench.anvil.ItemAnvilExt;
 import shadows.apotheosis.ench.anvil.TileAnvil;
+import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
 import shadows.apotheosis.ench.enchantments.EnchantmentBerserk;
 import shadows.apotheosis.ench.enchantments.EnchantmentDepths;
 import shadows.apotheosis.ench.enchantments.EnchantmentIcyThorns;
@@ -92,6 +93,7 @@ import shadows.apotheosis.ench.enchantments.EnchantmentShieldBash;
 import shadows.apotheosis.ench.enchantments.EnchantmentStableFooting;
 import shadows.apotheosis.ench.enchantments.EnchantmentTempting;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
+import shadows.apotheosis.ench.enchantments.ObliterationEnchant;
 import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.HellshelfItem;
@@ -314,7 +316,9 @@ public class EnchModule {
 				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
 				new DefenseEnchantment(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
 				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
-				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling")
+				new DefenseEnchantment(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
+				new ObliterationEnchant().setRegistryName("obliteration"),
+				new CrescendoEnchant().setRegistryName("crescendo")
 				);
 		//Formatter::on
 	}
@@ -368,7 +372,6 @@ public class EnchModule {
 			e.setMaterialCost(1);
 			return;
 		}
-		if (ItemTypedBook.updateAnvil(e)) return;
 		if (ItemScrapTome.updateAnvil(e)) return;
 	}
 
@@ -471,7 +474,7 @@ public class EnchModule {
 		if (e.getPlayer().openContainer instanceof RepairContainer) {
 			RepairContainer r = (RepairContainer) e.getPlayer().openContainer;
 			TileEntity te = r.field_216980_g.apply((w, p) -> w.getTileEntity(p)).orElse(null);
-			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getUnbreaking() + 1));
+			if (te instanceof TileAnvil) e.setBreakChance(e.getBreakChance() / (((TileAnvil) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
 		}
 	}
 
