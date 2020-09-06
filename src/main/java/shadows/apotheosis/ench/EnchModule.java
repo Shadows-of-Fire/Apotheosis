@@ -66,6 +66,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
@@ -74,40 +75,40 @@ import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.apotheosis.ench.altar.SeaAltarBlock;
 import shadows.apotheosis.ench.altar.SeaAltarTile;
+import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
-import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.anvil.ApothAnvilItem;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
-import shadows.apotheosis.ench.anvil.AnvilTile;
-import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
+import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
-import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
+import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
 import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
 import shadows.apotheosis.ench.enchantments.MagicProtEnchant;
+import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
 import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import shadows.apotheosis.ench.enchantments.ReboundingEnchant;
 import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
 import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
+import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
-import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
-import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
+import shadows.apotheosis.ench.objects.ApothShearsItem;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.HellshelfItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
-import shadows.apotheosis.ench.objects.ApothShearsItem;
-import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.objects.SeashelfBlock;
 import shadows.apotheosis.ench.objects.SeashelfItem;
+import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
 import shadows.apotheosis.ench.replacements.DefenseEnchant;
 import shadows.apotheosis.ench.table.ApothEnchantBlock;
-import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
-import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
+import shadows.apotheosis.ench.table.ApothEnchantTile;
+import shadows.apotheosis.ench.table.EnchantingStatManager;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
@@ -205,7 +206,11 @@ public class EnchModule {
 			for (int i = 1; i <= info.getMaxLevel(); i++)
 				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
 		}
-		EnchantmentStatRegistry.init();
+	}
+
+	@SubscribeEvent
+	public void reloads(FMLServerAboutToStartEvent e) {
+		e.getServer().getResourceManager().addReloadListener(EnchantingStatManager.INSTANCE);
 	}
 
 	@SubscribeEvent

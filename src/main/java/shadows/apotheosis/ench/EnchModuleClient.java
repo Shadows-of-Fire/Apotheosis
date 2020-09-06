@@ -24,7 +24,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.altar.SeaAltarRenderer;
 import shadows.apotheosis.ench.table.ApothEnchantScreen;
-import shadows.apotheosis.ench.table.EnchantmentStatRegistry;
+import shadows.apotheosis.ench.table.EnchantingStatManager;
 
 @SuppressWarnings("deprecation")
 public class EnchModuleClient {
@@ -44,10 +44,10 @@ public class EnchModuleClient {
 			};
 			BlockState state = block.getStateForPlacement(ctx);
 			if (state == null) return;
-			float maxEterna = EnchantmentStatRegistry.getMaxEterna(state, world, BlockPos.ZERO);
-			float eterna = EnchantmentStatRegistry.getEterna(state, world, BlockPos.ZERO);
-			float quanta = EnchantmentStatRegistry.getQuanta(state, world, BlockPos.ZERO);
-			float arcana = EnchantmentStatRegistry.getArcana(state, world, BlockPos.ZERO);
+			float maxEterna = EnchantingStatManager.getMaxEterna(state, world, BlockPos.ZERO);
+			float eterna = EnchantingStatManager.getEterna(state, world, BlockPos.ZERO);
+			float quanta = EnchantingStatManager.getQuanta(state, world, BlockPos.ZERO);
+			float arcana = EnchantingStatManager.getArcana(state, world, BlockPos.ZERO);
 			if (eterna != 0 || quanta != 0 || arcana != 0) {
 				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.ench_stats").applyTextStyle(TextFormatting.GOLD));
 			}

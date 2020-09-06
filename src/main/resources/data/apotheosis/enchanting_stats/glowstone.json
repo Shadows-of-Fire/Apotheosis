@@ -1,0 +1,9 @@
+{
+	"block": "minecraft:glowstone",
+	"stats": {
+		"maxEterna": 0,
+		"eterna": -0.33,
+		"quanta": 0,
+		"arcana": 0.25
+	}
+}

@@ -249,12 +249,12 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	public void gatherStats(Float2FloatMap eternaMap, float[] stats, World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		if (state.getBlock().isAir(state, world, pos)) return;
-		float max = EnchantmentStatRegistry.getMaxEterna(state, world, pos);
-		float eterna = EnchantmentStatRegistry.getEterna(state, world, pos);
+		float max = EnchantingStatManager.getMaxEterna(state, world, pos);
+		float eterna = EnchantingStatManager.getEterna(state, world, pos);
 		eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
-		float quanta = EnchantmentStatRegistry.getQuanta(state, world, pos);
+		float quanta = EnchantingStatManager.getQuanta(state, world, pos);
 		stats[1] += quanta;
-		float arcana = EnchantmentStatRegistry.getArcana(state, world, pos);
+		float arcana = EnchantingStatManager.getArcana(state, world, pos);
 		stats[2] += arcana;
 	}
 
