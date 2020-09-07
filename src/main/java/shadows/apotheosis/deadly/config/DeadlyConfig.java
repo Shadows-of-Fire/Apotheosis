@@ -34,27 +34,23 @@ public class DeadlyConfig {
 
 	//Boss Stats
 	public static RandomIntRange bossRegenLevel = new RandomIntRange(0, 2);
-	public static RandomIntRange bossResistLevel = new RandomIntRange(0, 2);
+	public static RandomIntRange bossResistLevel = new RandomIntRange(0, 3);
 	public static float bossFireRes = 1.0F;
 	public static float bossWaterBreathing = 1.0F;
-	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(3F, 6F);
-	public static RandomValueRange bossKnockbackResist = new RandomValueRange(0.6F, 1F);
-	public static RandomValueRange bossSpeedMultiplier = new RandomValueRange(1.05F, 1.5F);
-	public static RandomValueRange bossDamageMult = new RandomValueRange(1.25F, 3F);;
-	public static float bossEnchantChance = .25F;
-	public static float bossPotionChance = .45F;
+	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(4F, 8F);
+	public static RandomValueRange bossKnockbackResist = new RandomValueRange(0.65F, 1F);
+	public static RandomValueRange bossSpeedMultiplier = new RandomValueRange(1.10F, 1.4F);
+	public static RandomValueRange bossDamageMult = new RandomValueRange(2F, 4.5F);
+	public static float bossEnchantChance = .45F;
+	public static float bossPotionChance = .65F;
 	public static int surfaceBossChance = 600;
 	public static int randomAffixItem = 250;
 	public static boolean surfaceBossLightning = true;
 
 	//Generation Chances
-	public static float brutalSpawnerChance = .12F;
-	public static float swarmSpawnerChance = .15F;
-	public static float bossChance = .08F;
-
-	//Dungeons
-	public static float dungeonBrutalChance = .05F;
-	public static float dungeonSwarmChance = .10F;
+	public static float brutalSpawnerChance = .18F;
+	public static float swarmSpawnerChance = .20F;
+	public static float bossChance = .07F;
 
 	public static void init() {
 		Configuration c = config;
@@ -101,9 +97,6 @@ public class DeadlyConfig {
 		brutalSpawnerChance = c.getFloat("Brutal Spawner Chance", DeadlyConstants.FREQUENCY, brutalSpawnerChance, 0, 1, "The chance (per chunk) for a brutal spawner to try spawning.");
 		swarmSpawnerChance = c.getFloat("Swarm Spawner Chance", DeadlyConstants.FREQUENCY, swarmSpawnerChance, 0, 1, "The chance (per chunk) for a swarm spawner to try spawning.");
 		bossChance = c.getFloat("Boss Chance", DeadlyConstants.FREQUENCY, bossChance, 0, 1, "The chance (per chunk) for a boss to try spawning.");
-
-		dungeonBrutalChance = c.getFloat("Dungeon Brutal Chance", DeadlyConstants.DUNGEONS, dungeonBrutalChance, 0, 1, "The chance for a dungeon to have a brutal spawner.");
-		dungeonSwarmChance = c.getFloat("Dungeon Swarm Chance", DeadlyConstants.DUNGEONS, dungeonSwarmChance, 0, 1, "The chance for a dungeon to have a swarm spawner.");
 
 		String[] brutalFromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 

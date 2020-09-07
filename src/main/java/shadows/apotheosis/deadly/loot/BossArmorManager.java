@@ -19,14 +19,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.util.GearSet;
-import shadows.apotheosis.util.GearSet.WeightedItemStack;
 import shadows.apotheosis.util.json.ItemAdapter;
 import shadows.apotheosis.util.json.NBTAdapter;
-import shadows.apotheosis.util.json.WeightedStackAdapter;
 
 public class BossArmorManager extends JsonReloadListener {
 
-	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundNBT.class, NBTAdapter.INSTANCE).registerTypeAdapter(WeightedItemStack.class, WeightedStackAdapter.INSTANCE).create();
+	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundNBT.class, NBTAdapter.INSTANCE).setFieldNamingStrategy(f -> f.getName().equals("itemWeight") ? "weight" : f.getName()).create();
 
 	public static final BossArmorManager INSTANCE = new BossArmorManager();
 
@@ -34,7 +32,7 @@ public class BossArmorManager extends JsonReloadListener {
 	protected final List<GearSet> sets = new ArrayList<>();
 
 	public BossArmorManager() {
-		super(GSON, "boss_armor");
+		super(GSON, "boss_gear");
 	}
 
 	@Override
@@ -50,6 +48,7 @@ public class BossArmorManager extends JsonReloadListener {
 			}
 		});
 		if (registry.isEmpty()) throw new RuntimeException("No Apotheosis Boss armor sets were registered.  At least one is required.");
+		else DeadlyModule.LOGGER.info("Registered {} boss gear sets.", sets.size());
 	}
 
 	public void register(ResourceLocation id, GearSet set) {

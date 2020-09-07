@@ -118,8 +118,8 @@ public class NameHelper {
 		armors.put(ArmorMaterial.GOLD.toString(), new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
 	}
 
-	private static String suffixFormat = "%s the %s";
-	private static String ownershipFormat = "%s's";
+	public static String suffixFormat = "%s the %s";
+	public static String ownershipFormat = "%s's";
 
 	/**
 	 * Makes a name using {@link NameHelper#nameParts}.
@@ -275,7 +275,7 @@ public class NameHelper {
 		}
 
 		suffixFormat = c.getString("Suffix Format", "formatting", suffixFormat, "The format string that will be used when a suffix is applied.");
-		suffixFormat = c.getString("Ownership Format", "formatting", ownershipFormat, "The format string that will be used to indicate ownership.");
+		ownershipFormat = c.getString("Ownership Format", "formatting", ownershipFormat, "The format string that will be used to indicate ownership.");
 
 		if (c.hasChanged()) c.save();
 	}
