@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.potion.Effect;
@@ -52,6 +54,8 @@ public class DeadlyConfig {
 	public static float swarmSpawnerChance = .20F;
 	public static float bossChance = .07F;
 
+	public static Block bossFillerBlock = Blocks.RED_SANDSTONE;
+
 	public static void init() {
 		Configuration c = config;
 		c.load();
@@ -97,6 +101,13 @@ public class DeadlyConfig {
 		brutalSpawnerChance = c.getFloat("Brutal Spawner Chance", DeadlyConstants.FREQUENCY, brutalSpawnerChance, 0, 1, "The chance (per chunk) for a brutal spawner to try spawning.");
 		swarmSpawnerChance = c.getFloat("Swarm Spawner Chance", DeadlyConstants.FREQUENCY, swarmSpawnerChance, 0, 1, "The chance (per chunk) for a swarm spawner to try spawning.");
 		bossChance = c.getFloat("Boss Chance", DeadlyConstants.FREQUENCY, bossChance, 0, 1, "The chance (per chunk) for a boss to try spawning.");
+
+		ResourceLocation blockId = new ResourceLocation(c.getString("Boss Filler Block", DeadlyConstants.BOSSES, bossFillerBlock.getRegistryName().toString(), "The block that spawns in a 5x5 underneath world-generated bosses."));
+		bossFillerBlock = ForgeRegistries.BLOCKS.getValue(blockId);
+		if (bossFillerBlock == Blocks.AIR) {
+			DeadlyModule.LOGGER.error("Boss Filler Block {} was mapped to air, it will be reverted to red sandstone.", blockId);
+			bossFillerBlock = Blocks.RED_SANDSTONE;
+		}
 
 		String[] brutalFromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 

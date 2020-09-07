@@ -89,7 +89,7 @@ public class BossItem extends WorldFeatureItem {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
-			world.setBlockState(p, Blocks.RED_SANDSTONE.getDefaultState(), 2);
+			world.setBlockState(p, DeadlyConfig.bossFillerBlock.getDefaultState(), 2);
 		}
 		DeadlyFeature.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
 	}
