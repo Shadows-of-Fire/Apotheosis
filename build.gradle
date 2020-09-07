@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '3.2.5'
+version = '3.3.0'
 group = 'shadows.apotheosis'
 archivesBaseName = 'Apotheosis-1.15.2'
 
