@@ -17,6 +17,7 @@ import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
+import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.util.GearSet;
 import shadows.apotheosis.util.json.ItemAdapter;
@@ -24,7 +25,7 @@ import shadows.apotheosis.util.json.NBTAdapter;
 
 public class BossArmorManager extends JsonReloadListener {
 
-	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundNBT.class, NBTAdapter.INSTANCE).setFieldNamingStrategy(f -> f.getName().equals("itemWeight") ? "weight" : f.getName()).create();
+	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundNBT.class, NBTAdapter.INSTANCE).setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName()).create();
 
 	public static final BossArmorManager INSTANCE = new BossArmorManager();
 
