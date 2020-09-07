@@ -41,7 +41,6 @@ public class DeadlyConfig {
 	public static RandomValueRange bossKnockbackResist = new RandomValueRange(0.6F, 1F);
 	public static RandomValueRange bossSpeedMultiplier = new RandomValueRange(1.05F, 1.5F);
 	public static RandomValueRange bossDamageMult = new RandomValueRange(1.25F, 3F);;
-	public static float bossLevelUpChance = .4F;
 	public static float bossEnchantChance = .25F;
 	public static float bossPotionChance = .45F;
 	public static int surfaceBossChance = 600;
@@ -90,7 +89,6 @@ public class DeadlyConfig {
 		bossKnockbackResist = getRange(c, "Knockback Resist", DeadlyConstants.BOSSES, bossKnockbackResist, 0, Integer.MAX_VALUE, "The %s amount of knockback resist bosses have.");
 		bossSpeedMultiplier = getRange(c, "Speed Multiplier", DeadlyConstants.BOSSES, bossSpeedMultiplier, 0, Integer.MAX_VALUE, "The %s amount boss speed is multiplied by.  Base speed * factor = final speed.");
 		bossDamageMult = getRange(c, "Damage Bonus", DeadlyConstants.BOSSES, bossDamageMult, 0, Integer.MAX_VALUE, "The %s amount of extra damage bosses do, in half hearts.");
-		bossLevelUpChance = c.getFloat("Level Up Chance", DeadlyConstants.BOSSES, bossLevelUpChance, 0, Integer.MAX_VALUE, "The level up chance, this is rolled once per number of levels.  Levels determine gear.");
 		bossEnchantChance = c.getFloat("Random Enchantment Chance", DeadlyConstants.BOSSES, bossEnchantChance, 0, Integer.MAX_VALUE, "The chance a gear piece will be randomly enchanted.");
 		bossPotionChance = c.getFloat("Random Potion Chance", DeadlyConstants.BOSSES, bossPotionChance, 0, Integer.MAX_VALUE, "The chance a boss will have extra random potion effects.");
 		String[] blacklistPotions = c.getStringList("Blacklisted Potions", DeadlyConstants.BOSSES, new String[] { "forbidden_arcanus:spectral_vision" }, "A list of potions (registry names) that bosses cannot generate with.");

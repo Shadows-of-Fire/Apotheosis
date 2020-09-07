@@ -1,0 +1,52 @@
+{
+	"weight": 1,
+	"mainhands": [{
+			"weight": 4,
+			"stack": {
+				"item": "minecraft:stone_sword"
+			}
+		},
+		{
+			"weight": 2,
+			"stack": {
+				"item": "minecraft:stone_axe"
+			}
+		},
+		{
+			"weight": 1,
+			"stack": {
+				"item": "minecraft:stone_pickaxe"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:chainmail_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:chainmail_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:chainmail_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:chainmail_helmet"
+		}
+	}]
+}
