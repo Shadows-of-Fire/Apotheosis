@@ -51,6 +51,11 @@ public class AnvilTile extends TileEntity {
 	}
 
 	@Override
+	public CompoundNBT getUpdateTag() {
+		return this.write(new CompoundNBT());
+	}
+
+	@Override
 	public TileEntityType<?> getType() {
 		return ApotheosisObjects.ANVIL;
 	}
