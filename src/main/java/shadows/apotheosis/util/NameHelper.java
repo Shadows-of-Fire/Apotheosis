@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 import com.google.common.base.Preconditions;
 
@@ -25,6 +24,7 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.DeadlyModule;
@@ -289,14 +289,14 @@ public class NameHelper {
 		for (Map.Entry<IItemTier, List<Item>> e : itemsByTier.entrySet()) {
 			IItemTier tier = e.getKey();
 			List<Item> items = e.getValue();
-			String[] read = c.getStringList(getID(tier, items), "tools", materials.getOrDefault(tier, new String[0]), computeComment(items, tier.getRepairMaterial()));
+			String[] read = c.getStringList(getID(tier, items), "tools", materials.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairMaterial));
 			if (read.length > 0) materials.put(tier, read);
 		}
 
 		for (Map.Entry<IArmorMaterial, List<Item>> e : armorsByTier.entrySet()) {
 			IArmorMaterial tier = e.getKey();
 			List<Item> items = e.getValue();
-			String[] read = c.getStringList(getID(tier, items), "armors", armors.getOrDefault(tier, new String[0]), computeComment(items, tier.getRepairMaterial()));
+			String[] read = c.getStringList(getID(tier, items), "armors", armors.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairMaterial));
 			if (read.length > 0) armors.put(tier, read);
 		}
 
@@ -306,7 +306,7 @@ public class NameHelper {
 		if (c.hasChanged()) c.save();
 	}
 
-	private static String computeComment(List<Item> items, @Nullable Ingredient repair) {
+	private static String computeComment(List<Item> items, Supplier<Ingredient> repair) {
 		String cmt = "A list of material-based prefix names for this material group. May be empty.\n";
 		cmt += "Items in this group: ";
 		for (Item i : items)
@@ -318,11 +318,13 @@ public class NameHelper {
 
 	private static String getID(Object o, List<Item> items) {
 		if (o instanceof Enum<?>) return ((Enum<?>) o).name();
-		return items.get(0).getRegistryName().getPath();
+		ResourceLocation id = items.get(0).getRegistryName();
+		return id.getNamespace() + "_" + id.getPath();
 	}
 
-	private static String getFirstMatch(Ingredient repair) {
+	private static String getFirstMatch(Supplier<Ingredient> supplier) {
 		try {
+			Ingredient repair = supplier.get();
 			return repair == null || repair.hasNoMatchingItems() ? "null" : repair.getMatchingStacks()[0].getItem().getRegistryName().toString();
 		} catch (Exception e) {
 			return "null";
