@@ -27,6 +27,7 @@ import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
 
 /**
@@ -270,13 +271,18 @@ public class NameHelper {
 		Map<IItemTier, List<Item>> itemsByTier = new HashMap<>();
 		Map<IArmorMaterial, List<Item>> armorsByTier = new HashMap<>();
 		for (Item i : ForgeRegistries.ITEMS) {
-			if (i instanceof TieredItem) {
-				IItemTier mat = ((TieredItem) i).getTier();
-				itemsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
-			}
-			if (i instanceof ArmorItem) {
-				IArmorMaterial mat = ((ArmorItem) i).getArmorMaterial();
-				armorsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
+			try {
+				if (i instanceof TieredItem) {
+					IItemTier mat = ((TieredItem) i).getTier();
+					itemsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
+				}
+				if (i instanceof ArmorItem) {
+					IArmorMaterial mat = ((ArmorItem) i).getArmorMaterial();
+					armorsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
+				}
+			} catch (Exception e) {
+				DeadlyModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", i.getRegistryName());
+				e.printStackTrace();
 			}
 		}
 
@@ -306,13 +312,21 @@ public class NameHelper {
 		for (Item i : items)
 			cmt += i.getRegistryName() + ", ";
 		cmt = cmt.substring(0, cmt.length() - 2);
-		cmt += "\nRepair Material: " + (repair == null || repair.hasNoMatchingItems() ? "null" : repair.getMatchingStacks()[0].getItem().getRegistryName().toString());
+		cmt += "\nRepair Material: " + getFirstMatch(repair);
 		return cmt + "\n";
 	}
 
 	private static String getID(Object o, List<Item> items) {
 		if (o instanceof Enum<?>) return ((Enum<?>) o).name();
 		return items.get(0).getRegistryName().getPath();
+	}
+
+	private static String getFirstMatch(Ingredient repair) {
+		try {
+			return repair == null || repair.hasNoMatchingItems() ? "null" : repair.getMatchingStacks()[0].getItem().getRegistryName().toString();
+		} catch (Exception e) {
+			return "null";
+		}
 	}
 
 }
