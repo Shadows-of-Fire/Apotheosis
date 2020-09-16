@@ -23,7 +23,6 @@ import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BookItem;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -126,34 +125,61 @@ public class ApothAnvilBlock extends AnvilBlock {
 		FallingBlockEntity anvil = world.getEntitiesWithinAABB(FallingBlockEntity.class, new AxisAlignedBB(pos, pos.add(1, 1, 1))).get(0);
 		if (anvil.tileEntityData == null) return;
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(anvil.tileEntityData.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		int oblit = enchantments.getOrDefault(ApotheosisObjects.OBLITERATION, 0);
 		int split = enchantments.getOrDefault(ApotheosisObjects.SPLITTING, 0);
 		int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
-		if (split > 0) for (ItemEntity entity : items) {
+		if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
 			ItemStack stack = entity.getItem();
-			if (stack.getItem() == Items.ENCHANTED_BOOK || stack.getItem() instanceof BookItem) {
-				if (world.rand.nextFloat() < 0.2F * split) {
-					ListNBT enchants = EnchantedBookItem.getEnchantments(stack);
-					if (stack.getItem() instanceof BookItem) enchants = stack.getEnchantmentTagList();
-					if (enchants.size() < 1) continue;
-					entity.remove();
-					for (INBT nbt : enchants) {
-						CompoundNBT tag = (CompoundNBT) nbt;
-						ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(tag.getString("id"))), tag.getInt("lvl")));
-						Block.spawnAsEntity(world, pos.up(), book);
+			if (stack.getItem() == Items.ENCHANTED_BOOK) {
+				ListNBT enchants = EnchantedBookItem.getEnchantments(stack);
+				boolean handled = false;
+				if (enchants.size() == 1 && oblit > 0) {
+					handled = handleObliteration(world, pos, oblit, entity, enchants);
+				} else if (enchants.size() > 1 && split > 0) {
+					handled = handleSplitting(world, pos, split, entity, enchants);
+				}
+				if (handled) {
+					if (world.rand.nextInt(1 + ub) == 0) {
+						BlockState dmg = damage(fallState);
+						if (dmg == null) {
+							world.setBlockState(pos, Blocks.AIR.getDefaultState());
+							world.playEvent(Constants.WorldEvents.ANVIL_DESTROYED_SOUND, pos, 0);
+						} else world.setBlockState(pos, dmg);
 					}
-					world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(pos).grow(5, 5, 5), EntityPredicates.NOT_SPECTATING).forEach(p -> {
-						AdvancementTriggers.SPLIT_BOOK.trigger(p.getAdvancements());
-					});
+					break;
 				}
-				if (world.rand.nextInt(1 + ub) == 0) {
-					BlockState dmg = damage(fallState);
-					if (dmg == null) {
-						world.setBlockState(pos, Blocks.AIR.getDefaultState());
-						world.playEvent(1029, pos, 0);
-					} else world.setBlockState(pos, dmg);
-				}
-				break;
 			}
 		}
+	}
+
+	protected boolean handleSplitting(World world, BlockPos pos, int split, ItemEntity entity, ListNBT enchants) {
+		if (world.rand.nextFloat() < 0.2F * split) {
+			entity.remove();
+			for (INBT nbt : enchants) {
+				CompoundNBT tag = (CompoundNBT) nbt;
+				int level = tag.getInt("lvl");
+				Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(tag.getString("id")));
+				ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(enchant, level));
+				Block.spawnAsEntity(world, pos.up(), book);
+			}
+			world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(pos).grow(5, 5, 5), EntityPredicates.NOT_SPECTATING).forEach(p -> {
+				AdvancementTriggers.SPLIT_BOOK.trigger(p.getAdvancements());
+			});
+		}
+		return true;
+	}
+
+	protected boolean handleObliteration(World world, BlockPos pos, int oblit, ItemEntity entity, ListNBT enchants) {
+		if (world.rand.nextFloat() < 0.2F * oblit) {
+			CompoundNBT nbt = enchants.getCompound(0);
+			int level = nbt.getInt("lvl") - 1;
+			if (level <= 0) return false;
+			Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(nbt.getString("id")));
+			ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(enchant, level));
+			entity.remove();
+			Block.spawnAsEntity(world, pos.up(), book);
+			Block.spawnAsEntity(world, pos.up(), book.copy());
+		}
+		return true;
 	}
 }
