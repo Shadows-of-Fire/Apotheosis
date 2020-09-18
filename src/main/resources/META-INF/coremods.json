@@ -18,5 +18,6 @@
   "stackUUID": "apothasm/stack-modifier-hack.js",
   "itemUseHook": "apothasm/item-use-hook.js",
   "quarkMatrix": "apothasm/quark-matrix.js",
-  "crossbow": "apothasm/crossbow.js"
+  "crossbow": "apothasm/crossbow.js",
+  "crossbowArrow": "apothasm/crossbow-arrows.js"
 }
