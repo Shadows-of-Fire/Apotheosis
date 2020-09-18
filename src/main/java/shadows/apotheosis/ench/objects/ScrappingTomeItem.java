@@ -13,6 +13,7 @@ import net.minecraft.item.BookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -68,7 +69,7 @@ public class ScrappingTomeItem extends BookItem {
 			wepEnch.remove(lost);
 			keys.remove(lost);
 		}
-		ItemStack out = book.copy();
+		ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
 		EnchantmentHelper.setEnchantments(wepEnch, out);
 		out.setCount(1);
 		ev.setMaterialCost(1);
