@@ -15,11 +15,11 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.IModBusEvent;
+import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -103,15 +103,15 @@ public class Apotheosis {
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
-		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup());
-		DeferredWorkQueue.runLater(AdvancementTriggers::init);
+		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup(e));
+		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
 	}
 
 	@SubscribeEvent
 	public void initC(FMLClientSetupEvent e) {
-		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisClientSetup());
+		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisClientSetup(e));
 	}
 
 	public void trackCooldown(AttackEntityEvent e) {
@@ -124,17 +124,32 @@ public class Apotheosis {
 	}
 
 	public static class ApotheosisConstruction extends Event implements IModBusEvent {
+
 		public ApotheosisConstruction() {
 		}
 	}
 
 	public static class ApotheosisSetup extends Event implements IModBusEvent {
-		public ApotheosisSetup() {
+		ParallelDispatchEvent parent;
+
+		public ApotheosisSetup(ParallelDispatchEvent parent) {
+			this.parent = parent;
+		}
+
+		public void enqueueWork(Runnable r) {
+			this.parent.enqueueWork(r);
 		}
 	}
 
 	public static class ApotheosisClientSetup extends Event implements IModBusEvent {
-		public ApotheosisClientSetup() {
+		ParallelDispatchEvent parent;
+
+		public ApotheosisClientSetup(ParallelDispatchEvent parent) {
+			this.parent = parent;
+		}
+
+		public void enqueueWork(Runnable r) {
+			this.parent.enqueueWork(r);
 		}
 	}
 

@@ -19,7 +19,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.altar.SeaAltarRenderer;
@@ -66,10 +65,8 @@ public class EnchModuleClient {
 	}
 
 	public static void init() {
-		DeferredWorkQueue.runLater(() -> {
-			ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, SeaAltarRenderer::new);
-			ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ENCHANTING_TABLE, EnchantmentTableTileEntityRenderer::new);
-			ScreenManager.registerFactory(ApotheosisObjects.ENCHANTING, ApothEnchantScreen::new);
-		});
+		ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, SeaAltarRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ENCHANTING_TABLE, EnchantmentTableTileEntityRenderer::new);
+		ScreenManager.registerFactory(ApotheosisObjects.ENCHANTING, ApothEnchantScreen::new);
 	}
 }

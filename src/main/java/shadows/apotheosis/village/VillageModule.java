@@ -56,7 +56,7 @@ public class VillageModule {
 
 	@SubscribeEvent
 	public void setup(ApotheosisClientSetup e) {
-		VillageModuleClient.init();
+		e.enqueueWork(VillageModuleClient::init);
 	}
 
 	@SubscribeEvent

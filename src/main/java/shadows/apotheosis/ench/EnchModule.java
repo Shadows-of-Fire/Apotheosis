@@ -185,7 +185,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void client(ApotheosisClientSetup e) {
 		MinecraftForge.EVENT_BUS.register(new EnchModuleClient());
-		EnchModuleClient.init();
+		e.enqueueWork(EnchModuleClient::init);
 	}
 
 	@SubscribeEvent
