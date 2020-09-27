@@ -5,10 +5,14 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -31,6 +35,7 @@ public class DeadlyModule {
 		DeadlyConfig.config = new Configuration(new File(Apotheosis.configDir, "deadly.cfg"));
 		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
+		MinecraftForge.EVENT_BUS.addListener(this::onBiomeLoad);
 	}
 
 	@SubscribeEvent
@@ -45,11 +50,16 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
-		e.getRegistry().register(new WorldGenerator().setRegistryName("deadly_world_gen"));
+		e.getRegistry().register(WorldGenerator.INSTANCE.feature.setRegistryName("deadly_world_gen"));
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "apotheosis:deadly_module", WorldGenerator.INSTANCE);
 	}
 
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(LootManager.INSTANCE);
+	}
+
+	public void onBiomeLoad(BiomeLoadingEvent e) {
+		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) e.getGeneration().getFeatures(Decoration.UNDERGROUND_DECORATION).add(() -> WorldGenerator.INSTANCE);
 	}
 
 }

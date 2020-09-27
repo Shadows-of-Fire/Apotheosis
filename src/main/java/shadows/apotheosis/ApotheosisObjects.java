@@ -9,8 +9,6 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.ench.altar.SeaAltarBlock;
 import shadows.apotheosis.ench.altar.SeaAltarTile;
@@ -123,7 +121,6 @@ public class ApotheosisObjects {
 	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
 	public static final PotionCharmItem POTION_CHARM = null;
-	public static final Feature<NoFeatureConfig> DEADLY_WORLD_GEN = null;
 	@ObjectHolder("minecraft:enchanting_table")
 	public static final TileEntityType<ApothEnchantTile> ENCHANTING_TABLE = null;
 	public static final ContainerType<ApothEnchantContainer> ENCHANTING = null;
