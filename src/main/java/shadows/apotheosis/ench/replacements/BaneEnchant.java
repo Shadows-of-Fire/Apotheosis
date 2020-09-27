@@ -52,11 +52,11 @@ public class BaneEnchant extends DamageEnchantment {
 	* Called whenever a mob is damaged with an item that has this enchantment on it.
 	*/
 	@Override
-	public void onEntityDamaged(LivingEntity p_151368_1_, Entity p_151368_2_, int p_151368_3_) {
-		if (p_151368_2_ instanceof LivingEntity) {
-			LivingEntity livingentity = (LivingEntity) p_151368_2_;
+	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+		if (target instanceof LivingEntity) {
+			LivingEntity livingentity = (LivingEntity) target;
 			if (this.attrib != CreatureAttribute.UNDEFINED && livingentity.getCreatureAttribute() == this.attrib) {
-				int i = 20 + p_151368_1_.getRNG().nextInt(10 * p_151368_3_);
+				int i = 20 + user.getRNG().nextInt(10 * level);
 				livingentity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, i, 3));
 			}
 		}

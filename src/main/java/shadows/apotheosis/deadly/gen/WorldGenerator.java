@@ -50,10 +50,10 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 
 	@Override
 	public boolean func_241855_a(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
-		//if (DeadlyConfig.DIM_WHITELIST.contains(world.getDimension().getType().getRegistryName()))
+		//if (DeadlyConfig.DIM_WHITELIST.contains(world.getWorld().getDimensionKey().getRegistryName())) return false;
 		for (WorldFeature feature : FEATURES) {
 			ChunkPos cPos = new ChunkPos(pos);
-			if (wasSuccess(world.func_230315_m_(), cPos.x, cPos.z)) return false;
+			if (wasSuccess(world.getDimensionType(), cPos.x, cPos.z)) return false;
 			if (feature.generate(world, cPos.x, cPos.z, rand)) return true;
 		}
 		return false;
@@ -64,7 +64,7 @@ public class WorldGenerator extends Feature<NoFeatureConfig> {
 		if (SWARM_SPAWNER.isEnabled()) FEATURES.add(SWARM_SPAWNER);
 		if (BOSS_GENERATOR.isEnabled()) FEATURES.add(BOSS_GENERATOR);
 		ConfiguredFeature<?, ?> gen = new ConfiguredFeature<>(ApotheosisObjects.DEADLY_WORLD_GEN, IFeatureConfig.NO_FEATURE_CONFIG);
-		Registry.register(WorldGenRegistries.field_243653_e, "apotheosis:deadly_module", gen);
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "apotheosis:deadly_module", gen);
 		DeferredWorkQueue.runLater(() -> {
 			for (Biome b : ForgeRegistries.BIOMES)
 				if (!DeadlyConfig.BIOME_BLACKLIST.contains(b.getRegistryName())) BiomeUtil.addFeature(b, Decoration.UNDERGROUND_DECORATION, gen);

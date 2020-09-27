@@ -2,7 +2,7 @@ package shadows.apotheosis.spawn.spawner;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
@@ -42,7 +42,7 @@ import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 public class ApothSpawnerBlock extends SpawnerBlock {
 
 	public ApothSpawnerBlock() {
-		super(Block.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).notSolid());
+		super(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).notSolid());
 		setRegistryName("minecraft", "spawner");
 	}
 

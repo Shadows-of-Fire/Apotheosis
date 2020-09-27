@@ -11,14 +11,12 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '4.2.1'
-group = 'shadows.apotheosis'
-archivesBaseName = 'Apotheosis-1.16.2'
+archivesBaseName = name + '-' + mcVersion
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200820-1.16.1'
+    mappings 'snapshot', project.properties.mappingsVersion
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client = {
@@ -52,10 +50,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.2-33.0.22'
-	compile fg.deobf('mezz.jei:jei-1.16.2:+')
-	compile fg.deobf('mcp.mobius.waila:Hwyla:1.10.11-B78_1.16.2')
+    minecraft 'net.minecraftforge:forge:' + project.properties.mcVersion + '-' + forgeVersion
 	compile fileTree(dir: 'libs', include: '*.jar')
+	compile fg.deobf('mezz.jei:jei-' + jeiVersion)
+	compile fg.deobf('mcp.mobius.waila:Hwyla:' + hwylaVersion)
 	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1')
 	//compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168:api")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168")
@@ -63,12 +61,12 @@ dependencies {
 
 jar {
     manifest {
-        attributes(["Specification-Title": "apotheosis",
-                    "Specification-Vendor": "shadows_of_fire",
+        attributes(["Specification-Title": project.name,
+                    "Specification-Vendor": project.author,
                     "Specification-Version": "24.0", // We are version 1 of the modlauncher specification
                     "Implementation-Title": project.name,
-                    "Implementation-Version": "${version}",
-                    "Implementation-Vendor" :"shadows_of_fire",
+                    "Implementation-Version": project.version,
+                    "Implementation-Vendor" : project.author,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }

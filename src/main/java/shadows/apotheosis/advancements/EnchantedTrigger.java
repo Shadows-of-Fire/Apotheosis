@@ -16,7 +16,7 @@ import net.minecraft.loot.ConditionArraySerializer;
 public class EnchantedTrigger extends EnchantedItemTrigger {
 
 	@Override
-	public Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate p_230241_2_, ConditionArrayParser p_230241_3_) {
+	public Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
 		ItemPredicate item = ItemPredicate.deserialize(json.get("item"));
 		IntBound levels = IntBound.fromJson(json.get("levels"));
 		FloatBound eterna = FloatBound.fromJson(json.get("eterna"));

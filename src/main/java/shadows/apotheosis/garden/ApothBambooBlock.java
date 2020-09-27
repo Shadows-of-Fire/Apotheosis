@@ -2,6 +2,7 @@ package shadows.apotheosis.garden;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BambooBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,7 +20,7 @@ public class ApothBambooBlock extends BambooBlock {
 	BambooBlock old = (BambooBlock) Blocks.BAMBOO;
 
 	public ApothBambooBlock() {
-		super(Block.Properties.from(Blocks.BAMBOO));
+		super(AbstractBlock.Properties.from(Blocks.BAMBOO));
 		setRegistryName(new ResourceLocation("bamboo"));
 		this.setDefaultState(old.getDefaultState());
 		this.getStateContainer().getValidStates().forEach(b -> b.instance = this);

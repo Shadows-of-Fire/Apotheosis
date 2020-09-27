@@ -27,7 +27,7 @@ import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
 	@Override
-	public InventoryChangeTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate andPred, ConditionArrayParser p_230241_3_) {
+	public InventoryChangeTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate andPred, ConditionArrayParser conditionsParser) {
 		JsonObject jsonobject = JSONUtils.getJsonObject(json, "slots", new JsonObject());
 		MinMaxBounds.IntBound minmaxbounds$intbound = MinMaxBounds.IntBound.fromJson(jsonobject.get("occupied"));
 		MinMaxBounds.IntBound minmaxbounds$intbound1 = MinMaxBounds.IntBound.fromJson(jsonobject.get("full"));

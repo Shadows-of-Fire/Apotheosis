@@ -94,11 +94,11 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 			}
 		}
 
-		private static NonNullList<Ingredient> readIngredients(JsonArray p_199568_0_) {
+		private static NonNullList<Ingredient> readIngredients(JsonArray ingredientArray) {
 			NonNullList<Ingredient> nonnulllist = NonNullList.create();
 
-			for (int i = 0; i < p_199568_0_.size(); ++i) {
-				Ingredient ingredient = Ingredient.deserialize(p_199568_0_.get(i));
+			for (int i = 0; i < ingredientArray.size(); ++i) {
+				Ingredient ingredient = Ingredient.deserialize(ingredientArray.get(i));
 				if (!ingredient.hasNoMatchingItems()) {
 					nonnulllist.add(ingredient);
 				}

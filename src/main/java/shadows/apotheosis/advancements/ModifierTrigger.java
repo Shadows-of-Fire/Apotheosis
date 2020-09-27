@@ -63,7 +63,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 	}
 
 	@Override
-	public ModifierTrigger.Instance deserialize(JsonObject json, ConditionArrayParser p_230241_3_) {
+	public ModifierTrigger.Instance deserialize(JsonObject json, ConditionArrayParser conditionsParser) {
 		MinMaxBounds.IntBound minDelay = MinMaxBounds.IntBound.fromJson(json.get("min_delay"));
 		MinMaxBounds.IntBound maxDelay = MinMaxBounds.IntBound.fromJson(json.get("max_delay"));
 		MinMaxBounds.IntBound spawnCount = MinMaxBounds.IntBound.fromJson(json.get("spawn_count"));

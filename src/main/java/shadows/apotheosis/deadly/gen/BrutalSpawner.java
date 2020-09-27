@@ -44,7 +44,7 @@ public class BrutalSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.func_230315_m_(), chunkX, chunkZ);
+				WorldGenerator.setSuccess(world.getDimensionType(), chunkX, chunkZ);
 				return true;
 			}
 		}

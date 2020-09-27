@@ -53,7 +53,7 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int p_146979_1_, int p_146979_2_) {
+	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY) {
 		this.font.func_243248_b(stack, this.title, 12.0F, 5.0F, 4210752);
 		this.font.func_243248_b(stack, this.playerInventory.getDisplayName(), 7.0F, this.ySize - 96 + 4F, 4210752);
 		this.font.drawString(stack, I18n.format("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);

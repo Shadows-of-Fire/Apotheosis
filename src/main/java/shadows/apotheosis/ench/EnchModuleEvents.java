@@ -34,10 +34,10 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
-import shadows.placebo.util.ReflectionHelper;
 
 public class EnchModuleEvents {
 
@@ -102,7 +102,7 @@ public class EnchModuleEvents {
 			int scavenger = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SCAVENGER, p.getHeldItemMainhand());
 			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 2.5F) {
 				if (dropLoot == null) {
-					dropLoot = ReflectionHelper.findMethod(LivingEntity.class, "dropLoot", "func_213354_a", DamageSource.class, boolean.class);
+					dropLoot = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213354_a", DamageSource.class, boolean.class);
 				}
 				dropLoot.invoke(e.getEntityLiving(), e.getSource(), true);
 			}

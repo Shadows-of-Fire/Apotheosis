@@ -2,6 +2,7 @@ package shadows.apotheosis.garden;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -17,7 +18,7 @@ public class ApothCactusBlock extends CactusBlock {
 	CactusBlock old = (CactusBlock) Blocks.CACTUS;
 
 	public ApothCactusBlock() {
-		super(Block.Properties.from(Blocks.CACTUS));
+		super(AbstractBlock.Properties.from(Blocks.CACTUS));
 		setRegistryName(new ResourceLocation("cactus"));
 		this.setDefaultState(old.getDefaultState());
 		this.getStateContainer().getValidStates().forEach(b -> b.instance = this);

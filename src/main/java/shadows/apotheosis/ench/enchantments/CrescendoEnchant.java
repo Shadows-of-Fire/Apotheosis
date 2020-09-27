@@ -18,10 +18,12 @@ public class CrescendoEnchant extends Enchantment {
 		return 3;
 	}
 
+	@Override
 	public int getMinEnchantability(int level) {
 		return 45 + (level - 1) * 20;
 	}
 
+	@Override
 	public int getMaxEnchantability(int level) {
 		return getMinEnchantability(level) + 50;
 	}

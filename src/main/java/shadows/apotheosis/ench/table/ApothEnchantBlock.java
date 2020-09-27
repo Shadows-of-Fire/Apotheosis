@@ -2,6 +2,7 @@ package shadows.apotheosis.ench.table;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EnchantingTableBlock;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 public class ApothEnchantBlock extends EnchantingTableBlock {
 
 	public ApothEnchantBlock() {
-		super(Block.Properties.create(Material.ROCK, MaterialColor.RED).hardnessAndResistance(5.0F, 1200.0F));
+		super(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED).hardnessAndResistance(5.0F, 1200.0F));
 	}
 
 	@Override
@@ -29,8 +30,8 @@ public class ApothEnchantBlock extends EnchantingTableBlock {
 		TileEntity tileentity = world.getTileEntity(pos);
 		if (tileentity instanceof ApothEnchantTile) {
 			ITextComponent itextcomponent = ((INameable) tileentity).getDisplayName();
-			return new SimpleNamedContainerProvider((p_220147_2_, p_220147_3_, p_220147_4_) -> {
-				return new ApothEnchantContainer(p_220147_2_, p_220147_3_, IWorldPosCallable.of(world, pos), (ApothEnchantTile) tileentity);
+			return new SimpleNamedContainerProvider((id, inventory, player) -> {
+				return new ApothEnchantContainer(id, inventory, IWorldPosCallable.of(world, pos), (ApothEnchantTile) tileentity);
 			}, itextcomponent);
 		} else {
 			return null;
@@ -38,12 +39,12 @@ public class ApothEnchantBlock extends EnchantingTableBlock {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader p_196283_1_) {
+	public TileEntity createNewTileEntity(IBlockReader worldIn) {
 		return new ApothEnchantTile();
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean p_196243_5_) {
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof ApothEnchantTile) {

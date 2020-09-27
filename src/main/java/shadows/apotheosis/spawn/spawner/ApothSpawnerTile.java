@@ -77,8 +77,8 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 		}
 
 		@Override
-		public void setNextSpawnData(WeightedSpawnerEntity p_184993_1_) {
-			super.setNextSpawnData(p_184993_1_);
+		public void setNextSpawnData(WeightedSpawnerEntity nextSpawnData) {
+			super.setNextSpawnData(nextSpawnData);
 
 			if (getWorld() != null) {
 				BlockState iblockstate = getWorld().getBlockState(getSpawnerPosition());

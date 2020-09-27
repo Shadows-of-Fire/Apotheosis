@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableMap;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -28,7 +29,7 @@ public class HellshelfBlock extends Block implements IEnchantingBlock {
 	public static final IntegerProperty INFUSION = IntegerProperty.create("infusion", 0, 5);
 
 	public HellshelfBlock() {
-		super(Block.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(2, 10).sound(SoundType.STONE));
+		super(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(2, 10).sound(SoundType.STONE));
 	}
 
 	@Override

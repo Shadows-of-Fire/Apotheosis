@@ -75,17 +75,17 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		public static final Serializer INSTANCE = new Serializer();
 
 		@Override
-		public PotionCharmRecipe read(ResourceLocation p_199425_1_, JsonObject p_199425_2_) {
+		public PotionCharmRecipe read(ResourceLocation recipeId, JsonObject json) {
 			return new PotionCharmRecipe();
 		}
 
 		@Override
-		public PotionCharmRecipe read(ResourceLocation p_199426_1_, PacketBuffer p_199426_2_) {
+		public PotionCharmRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
 			return new PotionCharmRecipe();
 		}
 
 		@Override
-		public void write(PacketBuffer p_199427_1_, PotionCharmRecipe p_199427_2_) {
+		public void write(PacketBuffer buffer, PotionCharmRecipe recipe) {
 		}
 
 	}

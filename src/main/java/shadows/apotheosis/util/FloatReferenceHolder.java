@@ -16,8 +16,8 @@ public class FloatReferenceHolder {
 
 	IntArray array = new IntArray(3) {
 		@Override
-		public void set(int p_221477_1_, int p_221477_2_) {
-			super.set(p_221477_1_, p_221477_2_);
+		public void set(int index, int value) {
+			super.set(index, value);
 			if (!updating) FloatReferenceHolder.this.updateFromArray();
 		};
 	};

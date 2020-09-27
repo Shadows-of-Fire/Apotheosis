@@ -2,6 +2,7 @@ package shadows.apotheosis.garden;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,7 +19,7 @@ public class ApothSugarcaneBlock extends SugarCaneBlock {
 	SugarCaneBlock old = (SugarCaneBlock) Blocks.SUGAR_CANE;
 
 	public ApothSugarcaneBlock() {
-		super(Block.Properties.from(Blocks.SUGAR_CANE));
+		super(AbstractBlock.Properties.from(Blocks.SUGAR_CANE));
 		setRegistryName(new ResourceLocation("sugar_cane"));
 		this.setDefaultState(old.getDefaultState());
 		this.getStateContainer().getValidStates().forEach(b -> b.instance = this);

@@ -21,11 +21,11 @@ public class SeaAltarRenderer extends TileEntityRenderer<SeaAltarTile> {
 	}
 
 	@Override
-	public void render(SeaAltarTile te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buf, int p_225616_5_, int p_225616_6_) {
+	public void render(SeaAltarTile te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buf, int combinedLightIn, int combinedOverlayIn) {
 		if (this.renderDispatcher.renderInfo != null && te.getPos().distanceSq(this.renderDispatcher.renderInfo.getProjectedView().x, this.renderDispatcher.renderInfo.getProjectedView().y, this.renderDispatcher.renderInfo.getProjectedView().z, true) < 128d) {
 
 			matrix.push();
-			boolean thirdPerson = Minecraft.getInstance().getRenderManager().options.func_243230_g() == PointOfView.THIRD_PERSON_FRONT;
+			boolean thirdPerson = Minecraft.getInstance().getRenderManager().options.getPointOfView() == PointOfView.THIRD_PERSON_FRONT;
 			float viewerYaw = Minecraft.getInstance().renderViewEntity.getYaw(partialTicks);
 			float angleRotateItem = !thirdPerson ? -viewerYaw : -viewerYaw % 360 + 180;
 
@@ -39,7 +39,7 @@ public class SeaAltarRenderer extends TileEntityRenderer<SeaAltarTile> {
 				matrix.rotate(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
 				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(i);
-				if (!s.isEmpty()) Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.NO_OVERLAY, matrix, buf);
+				if (!s.isEmpty()) Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, combinedLightIn, OverlayTexture.NO_OVERLAY, matrix, buf);
 				matrix.pop();
 			}
 
@@ -49,7 +49,7 @@ public class SeaAltarRenderer extends TileEntityRenderer<SeaAltarTile> {
 				matrix.rotate(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
 				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(4);
-				Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, p_225616_5_, OverlayTexture.NO_OVERLAY, matrix, buf);
+				Minecraft.getInstance().getItemRenderer().renderItem(s, TransformType.FIXED, combinedLightIn, OverlayTexture.NO_OVERLAY, matrix, buf);
 				matrix.pop();
 			}
 
