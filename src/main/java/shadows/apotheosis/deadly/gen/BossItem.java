@@ -41,7 +41,7 @@ import net.minecraft.world.IServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
-import shadows.apotheosis.deadly.gen.WorldFeature.WorldFeatureItem;
+import shadows.apotheosis.deadly.gen.WeightedGenerator.WorldFeatureItem;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -102,7 +102,7 @@ public class BossItem extends WorldFeatureItem {
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
 			world.setBlockState(p, Blocks.RED_SANDSTONE.getDefaultState(), 2);
 		}
-		WorldGenerator.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
+		DeadlyFeature.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
 	}
 
 	public static void initBoss(Random random, MobEntity entity) {

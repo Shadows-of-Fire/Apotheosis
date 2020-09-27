@@ -10,7 +10,7 @@ import net.minecraft.world.IServerWorld;
  * Base class for all worldgen features.
  * @author Shadows
  */
-public abstract class WorldFeature {
+public abstract class WeightedGenerator {
 
 	/**
 	 * Generates this feature.
@@ -19,7 +19,7 @@ public abstract class WorldFeature {
 
 	/**
 	 * Checks if this features can generate.
-	 * @return If {@link WorldFeature#place} can be run here.
+	 * @return If {@link WeightedGenerator#place} can be run here.
 	 */
 	public abstract boolean canBePlaced(IServerWorld world, BlockPos pos, Random rand);
 

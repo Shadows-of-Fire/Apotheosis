@@ -18,10 +18,10 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
-import shadows.apotheosis.deadly.gen.BossFeature;
-import shadows.apotheosis.deadly.gen.BrutalSpawner;
-import shadows.apotheosis.deadly.gen.SwarmSpawner;
-import shadows.apotheosis.deadly.gen.WorldGenerator;
+import shadows.apotheosis.deadly.gen.BossGenerator;
+import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
+import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
+import shadows.apotheosis.deadly.gen.DeadlyFeature;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.affix.AffixEvents;
 import shadows.placebo.config.Configuration;
@@ -41,17 +41,17 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void init(ApotheosisSetup e) {
 		DeadlyConfig.init();
-		BrutalSpawner.init();
-		BossFeature.init();
+		BrutalSpawnerGenerator.init();
+		BossGenerator.init();
 		DeadlyLoot.init();
-		SwarmSpawner.init();
-		WorldGenerator.init();
+		SwarmSpawnerGenerator.init();
+		DeadlyFeature.init();
 	}
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
-		e.getRegistry().register(WorldGenerator.INSTANCE.feature.setRegistryName("deadly_world_gen"));
-		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "apotheosis:deadly_module", WorldGenerator.INSTANCE);
+		e.getRegistry().register(DeadlyFeature.INSTANCE.feature.setRegistryName("deadly_world_gen"));
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "apotheosis:deadly_module", DeadlyFeature.INSTANCE);
 	}
 
 	public void reloads(AddReloadListenerEvent e) {
@@ -59,7 +59,7 @@ public class DeadlyModule {
 	}
 
 	public void onBiomeLoad(BiomeLoadingEvent e) {
-		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) e.getGeneration().getFeatures(Decoration.UNDERGROUND_DECORATION).add(() -> WorldGenerator.INSTANCE);
+		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) e.getGeneration().getFeatures(Decoration.UNDERGROUND_DECORATION).add(() -> DeadlyFeature.INSTANCE);
 	}
 
 }

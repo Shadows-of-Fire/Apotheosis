@@ -14,7 +14,7 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.config.DeadlyConstants;
 import shadows.placebo.util.ChestBuilder;
 
-public class SwarmSpawner extends WorldFeature {
+public class SwarmSpawnerGenerator extends WeightedGenerator {
 
 	public static final ArrayList<SpawnerItem> SWARM_SPAWNERS = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class SwarmSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.getDimensionType(), chunkX, chunkZ);
+				DeadlyFeature.setSuccess(world.getDimensionType(), chunkX, chunkZ);
 				return true;
 			}
 		}
@@ -40,7 +40,7 @@ public class SwarmSpawner extends WorldFeature {
 		BlockState state = world.getBlockState(pos);
 		BlockState downState = world.getBlockState(pos.down());
 		BlockState upState = world.getBlockState(pos.up());
-		return WorldGenerator.STONE_TEST.test(downState) && upState.isAir(world, pos.up()) && (state.isAir(world, pos) || WorldGenerator.STONE_TEST.test(state));
+		return DeadlyFeature.STONE_TEST.test(downState) && upState.isAir(world, pos.up()) && (state.isAir(world, pos) || DeadlyFeature.STONE_TEST.test(state));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SwarmSpawner extends WorldFeature {
 		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(12) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_SWARM);
 		WeightedRandom.getRandomItem(rand, SWARM_SPAWNERS).place(world, pos);
 		world.setBlockState(pos.up(), Blocks.SMOOTH_SANDSTONE.getDefaultState(), 2);
-		WorldGenerator.debugLog(pos, "Swarm Spawner");
+		DeadlyFeature.debugLog(pos, "Swarm Spawner");
 	}
 
 	@Override

@@ -29,7 +29,7 @@ import shadows.placebo.util.SpawnerBuilder;
  * @author Shadows
  *
  */
-public class BrutalSpawner extends WorldFeature {
+public class BrutalSpawnerGenerator extends WeightedGenerator {
 
 	public static final CompoundNBT BASE_TAG = new CompoundNBT();
 	public static final List<SpawnerItem> BRUTAL_SPAWNERS = new ArrayList<>();
@@ -44,7 +44,7 @@ public class BrutalSpawner extends WorldFeature {
 		for (; y > 10; y--) {
 			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
 				place(world, mPos.setPos(x, y, z), rand);
-				WorldGenerator.setSuccess(world.getDimensionType(), chunkX, chunkZ);
+				DeadlyFeature.setSuccess(world.getDimensionType(), chunkX, chunkZ);
 				return true;
 			}
 		}
@@ -56,7 +56,7 @@ public class BrutalSpawner extends WorldFeature {
 		BlockState state = world.getBlockState(pos);
 		BlockState downState = world.getBlockState(pos.down());
 		BlockState upState = world.getBlockState(pos.up());
-		return WorldGenerator.STONE_TEST.test(downState) && upState.isAir(world, pos.up()) && (state.isAir(world, pos) || WorldGenerator.STONE_TEST.test(state));
+		return DeadlyFeature.STONE_TEST.test(downState) && upState.isAir(world, pos.up()) && (state.isAir(world, pos) || DeadlyFeature.STONE_TEST.test(state));
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class BrutalSpawner extends WorldFeature {
 				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().with(side, true), 2);
 			}
 		}
-		WorldGenerator.debugLog(pos, "Brutal Spawner");
+		DeadlyFeature.debugLog(pos, "Brutal Spawner");
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class BrutalSpawner extends WorldFeature {
 
 	public static void init() {
 		for (EffectInstance p : DeadlyConfig.BRUTAL_POTIONS) {
-			TagBuilder.addPotionEffect(BrutalSpawner.BASE_TAG, p.getPotion(), p.getAmplifier());
+			TagBuilder.addPotionEffect(BrutalSpawnerGenerator.BASE_TAG, p.getPotion(), p.getAmplifier());
 		}
 		SpawnerItem.addItems(BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_SPAWNER_STATS, DeadlyConfig.BRUTAL_MOBS);
 		for (SpawnerItem i : BRUTAL_SPAWNERS)

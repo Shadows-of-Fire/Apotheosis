@@ -20,7 +20,7 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
  * @author Shadows
  *
  */
-public class BossFeature extends WorldFeature {
+public class BossGenerator extends WeightedGenerator {
 
 	public static final List<BossItem> BOSS_ITEMS = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class BossFeature extends WorldFeature {
 			if (Block.hasEnoughSolidSide(world, mPos.setPos(x, y, z), Direction.UP)) {
 				if (world.hasNoCollisions(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
 					item.place(world, mPos, rand);
-					WorldGenerator.setSuccess(world.getDimensionType(), chunkX, chunkZ);
+					DeadlyFeature.setSuccess(world.getDimensionType(), chunkX, chunkZ);
 					return true;
 				}
 			}

@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
 import shadows.apotheosis.deadly.config.DeadlyConstants;
-import shadows.apotheosis.deadly.gen.WorldFeature.WorldFeatureItem;
+import shadows.apotheosis.deadly.gen.WeightedGenerator.WorldFeatureItem;
 import shadows.apotheosis.util.SpawnerStats;
 import shadows.apotheosis.util.TagBuilder;
 import shadows.placebo.util.SpawnerBuilder;
