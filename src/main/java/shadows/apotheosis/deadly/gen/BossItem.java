@@ -148,7 +148,7 @@ public class BossItem extends WorldFeatureItem {
 		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> Math.max(a, b))), stack);
 		String itemName = NameHelper.setItemName(random, stack, bossName);
 		stack.setDisplayName(new StringTextComponent(itemName));
-		LootRarity rarity = LootRarity.random(random, 475);
+		LootRarity rarity = LootRarity.random(random, DeadlyConfig.bossRarityOffset);
 		stack = LootManager.genLootItem(stack, random, rarity);
 		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getDisplayName()).mergeStyle(rarity.getColor()));
 		Map<Enchantment, Integer> enchMap = new HashMap<>();

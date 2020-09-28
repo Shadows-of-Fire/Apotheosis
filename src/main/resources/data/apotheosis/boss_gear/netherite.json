@@ -3,19 +3,19 @@
 	"mainhands": [{
 			"weight": 4,
 			"stack": {
-				"item": "minecraft:stone_sword"
+				"item": "minecraft:netherite_sword"
 			}
 		},
 		{
 			"weight": 2,
 			"stack": {
-				"item": "minecraft:stone_axe"
+				"item": "minecraft:netherite_axe"
 			}
 		},
 		{
 			"weight": 1,
 			"stack": {
-				"item": "minecraft:stone_pickaxe"
+				"item": "minecraft:netherite_pickaxe"
 			}
 		}
 	],
@@ -28,25 +28,25 @@
 	"boots": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:chainmail_boots"
+			"item": "minecraft:netherite_boots"
 		}
 	}],
 	"leggings": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:chainmail_leggings"
+			"item": "minecraft:netherite_leggings"
 		}
 	}],
 	"chestplates": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:chainmail_chestplate"
+			"item": "minecraft:netherite_chestplate"
 		}
 	}],
 	"helmets": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:chainmail_helmet"
+			"item": "minecraft:netherite_helmet"
 		}
 	}]
 }
