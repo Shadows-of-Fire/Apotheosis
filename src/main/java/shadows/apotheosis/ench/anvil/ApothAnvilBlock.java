@@ -3,6 +3,8 @@ package shadows.apotheosis.ench.anvil;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.AnvilBlock;
@@ -34,6 +36,7 @@ import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -66,7 +69,9 @@ public class ApothAnvilBlock extends AnvilBlock {
 	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
 		ItemStack anvil = new ItemStack(this);
 		if (te instanceof AnvilTile) {
-			EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), anvil);
+			Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
+			ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+			EnchantmentHelper.setEnchantments(ench, anvil);
 		}
 		spawnAsEntity(world, pos, anvil);
 		super.harvestBlock(world, player, pos, state, te, stack);
@@ -83,6 +88,18 @@ public class ApothAnvilBlock extends AnvilBlock {
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+		ItemStack anvil = new ItemStack(this);
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof AnvilTile) {
+			Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
+			ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+			EnchantmentHelper.setEnchantments(ench, anvil);
+		}
+		return anvil;
 	}
 
 	@Override

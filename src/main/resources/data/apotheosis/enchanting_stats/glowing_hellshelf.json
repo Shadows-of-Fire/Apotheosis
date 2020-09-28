@@ -1,0 +1,9 @@
+{
+	"block": "apotheosis:glowing_hellshelf",
+	"stats": {
+		"maxEterna": 30,
+		"eterna": 1.5,
+		"quanta": 0,
+		"arcana": 0.5
+	}
+}

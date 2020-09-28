@@ -9,7 +9,9 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
@@ -153,6 +155,17 @@ public class EnchHooks {
 		int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.CRESCENDO, crossbow);
 		if (level > 0) {
 			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Constants.NBT.TAG_COMPOUND).copy());
+		}
+	}
+
+	/**
+	 * Arrow fired hook for the Crescendo of Bolts enchantment.
+	 * This is required to mark generated arrows as creative-only so arrows are not duplicated.
+	 * Injected by apothasm/crossbow-arrows.js
+	 */
+	public static void markGeneratedArrows(ProjectileEntity arrow, ItemStack crossbow) {
+		if (crossbow.getTag().getInt("shots") > 0 && arrow instanceof AbstractArrowEntity) {
+			((AbstractArrowEntity) arrow).pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 		}
 	}
 

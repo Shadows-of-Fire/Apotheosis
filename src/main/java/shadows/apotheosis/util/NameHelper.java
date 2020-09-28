@@ -1,8 +1,11 @@
 package shadows.apotheosis.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import com.google.common.base.Preconditions;
 
@@ -11,14 +14,20 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.BowItem;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TieredItem;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
 
 /**
@@ -109,17 +118,17 @@ public class NameHelper {
 	/**
 	 * Array of descriptors for items based on armor material.
 	 */
-	private static Map<String, String[]> armors = new HashMap<>();
+	private static Map<IArmorMaterial, String[]> armors = new HashMap<>();
 	static {
-		armors.put(ArmorMaterial.LEATHER.toString(), new String[] { "Leather", "Rawhide", "Lamellar", "Cow Skin" });
-		armors.put(ArmorMaterial.CHAIN.toString(), new String[] { "Chainmail", "Chain", "Chain Link", "Scale" });
-		armors.put(ArmorMaterial.IRON.toString(), new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
-		armors.put(ArmorMaterial.DIAMOND.toString(), new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
-		armors.put(ArmorMaterial.GOLD.toString(), new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
+		armors.put(ArmorMaterial.LEATHER, new String[] { "Leather", "Rawhide", "Lamellar", "Cow Skin" });
+		armors.put(ArmorMaterial.CHAIN, new String[] { "Chainmail", "Chain", "Chain Link", "Scale" });
+		armors.put(ArmorMaterial.IRON, new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
+		armors.put(ArmorMaterial.DIAMOND, new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
+		armors.put(ArmorMaterial.GOLD, new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
 	}
 
-	private static String suffixFormat = "%s the %s";
-	private static String ownershipFormat = "%s's";
+	public static String suffixFormat = "%s the %s";
+	public static String ownershipFormat = "%s's";
 
 	/**
 	 * Makes a name using {@link NameHelper#nameParts}.
@@ -198,7 +207,7 @@ public class NameHelper {
 			name += type[random.nextInt(type.length)];
 		} else if (itemStack.getItem() instanceof ArmorItem) {
 
-			String amaterial = ((ArmorItem) itemStack.getItem()).getArmorMaterial().toString();
+			IArmorMaterial amaterial = ((ArmorItem) itemStack.getItem()).getArmorMaterial();
 			String[] descriptors = getArmorDescriptors(amaterial);
 			name += descriptors[random.nextInt(descriptors.length)] + " ";
 
@@ -231,7 +240,7 @@ public class NameHelper {
 		return materials.computeIfAbsent(materialName, s -> new String[] { "" });
 	}
 
-	private static String[] getArmorDescriptors(String materialName) {
+	private static String[] getArmorDescriptors(IArmorMaterial materialName) {
 		return armors.computeIfAbsent(materialName, s -> new String[] { "" });
 	}
 
@@ -259,24 +268,67 @@ public class NameHelper {
 
 		Preconditions.checkArgument(swords.length > 0 && axes.length > 0 && pickaxes.length > 0 && shovels.length > 0 && bows.length > 0, "Detected empty lists for weapon root names in apotheosis/names.cfg, this is not allowed.");
 
-		/* TODO: Find a way to map item tiers to names, or force forge to put names on them.
+		Map<IItemTier, List<Item>> itemsByTier = new HashMap<>();
+		Map<IArmorMaterial, List<Item>> armorsByTier = new HashMap<>();
 		for (Item i : ForgeRegistries.ITEMS) {
-			if (i instanceof TieredItem) {
-				IItemTier mat = ((TieredItem) i).getTier();
-				if (mat.getRepairMaterial() == null || mat.getRepairMaterial().hasNoMatchingItems()) continue;
-				String[] read = c.getStringList(mat.getRepairMaterial().getMatchingStacks()[0].getItem().getRegistryName().toString(), "tools", materials.getOrDefault(mat.toString(), new String[0]), "A list of material-based prefix names for the given tool material. May be empty.");
-				if (read.length > 0) materials.put(mat, read);
+			try {
+				if (i instanceof TieredItem) {
+					IItemTier mat = ((TieredItem) i).getTier();
+					itemsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
+				}
+				if (i instanceof ArmorItem) {
+					IArmorMaterial mat = ((ArmorItem) i).getArmorMaterial();
+					armorsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
+				}
+			} catch (Exception e) {
+				DeadlyModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", i.getRegistryName());
+				e.printStackTrace();
 			}
-		}*/
+		}
 
-		for (ArmorMaterial mat : ArmorMaterial.values()) {
-			String[] read = c.getStringList(mat.toString(), "armors", armors.getOrDefault(mat.toString(), new String[0]), "A list of material-based prefix names for the given armor material. May be empty.");
-			if (read.length > 0) armors.put(mat.toString(), read);
+		for (Map.Entry<IItemTier, List<Item>> e : itemsByTier.entrySet()) {
+			IItemTier tier = e.getKey();
+			List<Item> items = e.getValue();
+			String[] read = c.getStringList(getID(tier, items), "tools", materials.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairMaterial));
+			if (read.length > 0) materials.put(tier, read);
+		}
+
+		for (Map.Entry<IArmorMaterial, List<Item>> e : armorsByTier.entrySet()) {
+			IArmorMaterial tier = e.getKey();
+			List<Item> items = e.getValue();
+			String[] read = c.getStringList(getID(tier, items), "armors", armors.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairMaterial));
+			if (read.length > 0) armors.put(tier, read);
 		}
 
 		suffixFormat = c.getString("Suffix Format", "formatting", suffixFormat, "The format string that will be used when a suffix is applied.");
-		suffixFormat = c.getString("Ownership Format", "formatting", ownershipFormat, "The format string that will be used to indicate ownership.");
+		ownershipFormat = c.getString("Ownership Format", "formatting", ownershipFormat, "The format string that will be used to indicate ownership.");
 
 		if (c.hasChanged()) c.save();
 	}
+
+	private static String computeComment(List<Item> items, Supplier<Ingredient> repair) {
+		String cmt = "A list of material-based prefix names for this material group. May be empty.\n";
+		cmt += "Items in this group: ";
+		for (Item i : items)
+			cmt += i.getRegistryName() + ", ";
+		cmt = cmt.substring(0, cmt.length() - 2);
+		cmt += "\nRepair Material: " + getFirstMatch(repair);
+		return cmt + "\n";
+	}
+
+	private static String getID(Object o, List<Item> items) {
+		if (o instanceof Enum<?>) return ((Enum<?>) o).name();
+		ResourceLocation id = items.get(0).getRegistryName();
+		return id.getNamespace() + "_" + id.getPath();
+	}
+
+	private static String getFirstMatch(Supplier<Ingredient> supplier) {
+		try {
+			Ingredient repair = supplier.get();
+			return repair == null || repair.hasNoMatchingItems() ? "null" : repair.getMatchingStacks()[0].getItem().getRegistryName().toString();
+		} catch (Exception e) {
+			return "null";
+		}
+	}
+
 }

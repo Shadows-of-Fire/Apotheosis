@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.RandomValueRange;
@@ -34,28 +36,25 @@ public class DeadlyConfig {
 
 	//Boss Stats
 	public static RandomIntRange bossRegenLevel = new RandomIntRange(0, 2);
-	public static RandomIntRange bossResistLevel = new RandomIntRange(0, 2);
+	public static RandomIntRange bossResistLevel = new RandomIntRange(0, 3);
 	public static float bossFireRes = 1.0F;
 	public static float bossWaterBreathing = 1.0F;
-	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(3F, 6F);
-	public static RandomValueRange bossKnockbackResist = new RandomValueRange(0.6F, 1F);
-	public static RandomValueRange bossSpeedMultiplier = new RandomValueRange(1.05F, 1.5F);
-	public static RandomValueRange bossDamageMult = new RandomValueRange(1.25F, 3F);;
-	public static float bossLevelUpChance = .4F;
-	public static float bossEnchantChance = .25F;
-	public static float bossPotionChance = .45F;
+	public static RandomValueRange bossHealthMultiplier = new RandomValueRange(4F, 8F);
+	public static RandomValueRange bossKnockbackResist = new RandomValueRange(0.65F, 1F);
+	public static RandomValueRange bossSpeedMultiplier = new RandomValueRange(1.10F, 1.4F);
+	public static RandomValueRange bossDamageMult = new RandomValueRange(2F, 4.5F);
+	public static float bossEnchantChance = .45F;
+	public static float bossPotionChance = .65F;
 	public static int surfaceBossChance = 600;
 	public static int randomAffixItem = 250;
 	public static boolean surfaceBossLightning = true;
 
 	//Generation Chances
-	public static float brutalSpawnerChance = .12F;
-	public static float swarmSpawnerChance = .15F;
-	public static float bossChance = .08F;
+	public static float brutalSpawnerChance = .18F;
+	public static float swarmSpawnerChance = .20F;
+	public static float bossChance = .07F;
 
-	//Dungeons
-	public static float dungeonBrutalChance = .05F;
-	public static float dungeonSwarmChance = .10F;
+	public static Block bossFillerBlock = Blocks.RED_SANDSTONE;
 
 	public static void init() {
 		Configuration c = config;
@@ -90,7 +89,6 @@ public class DeadlyConfig {
 		bossKnockbackResist = getRange(c, "Knockback Resist", DeadlyConstants.BOSSES, bossKnockbackResist, 0, Integer.MAX_VALUE, "The %s amount of knockback resist bosses have.");
 		bossSpeedMultiplier = getRange(c, "Speed Multiplier", DeadlyConstants.BOSSES, bossSpeedMultiplier, 0, Integer.MAX_VALUE, "The %s amount boss speed is multiplied by.  Base speed * factor = final speed.");
 		bossDamageMult = getRange(c, "Damage Bonus", DeadlyConstants.BOSSES, bossDamageMult, 0, Integer.MAX_VALUE, "The %s amount of extra damage bosses do, in half hearts.");
-		bossLevelUpChance = c.getFloat("Level Up Chance", DeadlyConstants.BOSSES, bossLevelUpChance, 0, Integer.MAX_VALUE, "The level up chance, this is rolled once per number of levels.  Levels determine gear.");
 		bossEnchantChance = c.getFloat("Random Enchantment Chance", DeadlyConstants.BOSSES, bossEnchantChance, 0, Integer.MAX_VALUE, "The chance a gear piece will be randomly enchanted.");
 		bossPotionChance = c.getFloat("Random Potion Chance", DeadlyConstants.BOSSES, bossPotionChance, 0, Integer.MAX_VALUE, "The chance a boss will have extra random potion effects.");
 		String[] blacklistPotions = c.getStringList("Blacklisted Potions", DeadlyConstants.BOSSES, new String[] { "forbidden_arcanus:spectral_vision" }, "A list of potions (registry names) that bosses cannot generate with.");
@@ -104,8 +102,12 @@ public class DeadlyConfig {
 		swarmSpawnerChance = c.getFloat("Swarm Spawner Chance", DeadlyConstants.FREQUENCY, swarmSpawnerChance, 0, 1, "The chance (per chunk) for a swarm spawner to try spawning.");
 		bossChance = c.getFloat("Boss Chance", DeadlyConstants.FREQUENCY, bossChance, 0, 1, "The chance (per chunk) for a boss to try spawning.");
 
-		dungeonBrutalChance = c.getFloat("Dungeon Brutal Chance", DeadlyConstants.DUNGEONS, dungeonBrutalChance, 0, 1, "The chance for a dungeon to have a brutal spawner.");
-		dungeonSwarmChance = c.getFloat("Dungeon Swarm Chance", DeadlyConstants.DUNGEONS, dungeonSwarmChance, 0, 1, "The chance for a dungeon to have a swarm spawner.");
+		ResourceLocation blockId = new ResourceLocation(c.getString("Boss Filler Block", DeadlyConstants.BOSSES, bossFillerBlock.getRegistryName().toString(), "The block that spawns in a 5x5 underneath world-generated bosses."));
+		bossFillerBlock = ForgeRegistries.BLOCKS.getValue(blockId);
+		if (bossFillerBlock == Blocks.AIR) {
+			DeadlyModule.LOGGER.error("Boss Filler Block {} was mapped to air, it will be reverted to red sandstone.", blockId);
+			bossFillerBlock = Blocks.RED_SANDSTONE;
+		}
 
 		String[] brutalFromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
 

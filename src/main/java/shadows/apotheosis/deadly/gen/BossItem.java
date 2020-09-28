@@ -42,10 +42,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.WeightedGenerator.WorldFeatureItem;
+import shadows.apotheosis.deadly.loot.BossArmorManager;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
-import shadows.apotheosis.util.ArmorSet;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.util.AttributeHelper;
 
@@ -58,17 +58,6 @@ public class BossItem extends WorldFeatureItem {
 
 	//Default lists of boss potions/enchantments.
 	public static final List<Effect> POTIONS = new ArrayList<>();
-
-	//Default gear sets.
-	public static final ArmorSet GOLD_GEAR = new ArmorSet(new ResourceLocation(Apotheosis.MODID, "gold"), 0, Items.GOLDEN_SWORD, Items.SHIELD, Items.GOLDEN_BOOTS, Items.GOLDEN_LEGGINGS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET).addExtraMains(Items.GOLDEN_AXE, Items.GOLDEN_SHOVEL, Items.GOLDEN_PICKAXE);
-	public static final ArmorSet IRON_GEAR = new ArmorSet(new ResourceLocation(Apotheosis.MODID, "iron"), 1, Items.IRON_SWORD, Items.SHIELD, Items.IRON_BOOTS, Items.IRON_LEGGINGS, Items.IRON_CHESTPLATE, Items.IRON_HELMET).addExtraMains(Items.IRON_AXE, Items.IRON_SHOVEL, Items.IRON_PICKAXE);
-	public static final ArmorSet DIAMOND_GEAR = new ArmorSet(new ResourceLocation(Apotheosis.MODID, "diamond"), 2, Items.DIAMOND_SWORD, Items.SHIELD, Items.DIAMOND_BOOTS, Items.DIAMOND_LEGGINGS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET).addExtraMains(Items.DIAMOND_AXE, Items.DIAMOND_SHOVEL, Items.DIAMOND_PICKAXE);
-
-	static {
-		ArmorSet.register(GOLD_GEAR);
-		ArmorSet.register(IRON_GEAR);
-		ArmorSet.register(DIAMOND_GEAR);
-	}
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetClass == VillagerEntity.class;
 	protected final EntityType<?> entityEntry;
@@ -100,7 +89,7 @@ public class BossItem extends WorldFeatureItem {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
-			world.setBlockState(p, Blocks.RED_SANDSTONE.getDefaultState(), 2);
+			world.setBlockState(p, DeadlyConfig.bossFillerBlock.getDefaultState(), 2);
 		}
 		DeadlyFeature.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
 	}
@@ -113,7 +102,7 @@ public class BossItem extends WorldFeatureItem {
 		if (res >= 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration, res));
 		if (random.nextFloat() < DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
 		if (random.nextFloat() < DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
-		AttributeHelper.multiplyFinal(entity, Attributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
+		AttributeHelper.multiplyFinal(entity, Attributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossDamageMult.generateFloat(random) - 1);
 		AttributeHelper.multiplyFinal(entity, Attributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
 		AttributeHelper.addToBase(entity, Attributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
 		AttributeHelper.multiplyFinal(entity, Attributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
@@ -122,10 +111,7 @@ public class BossItem extends WorldFeatureItem {
 		entity.enablePersistence();
 		String name = NameHelper.setEntityName(random, entity);
 
-		int level = 0;
-		while (random.nextDouble() <= DeadlyConfig.bossLevelUpChance && level <= ArmorSet.getMaxLevel())
-			level++;
-		ArmorSet.getSetFor(level, random).apply(entity);
+		BossArmorManager.INSTANCE.getRandomSet(random).apply(entity);
 
 		if (entity instanceof SkeletonEntity) entity.setHeldItem(Hand.MAIN_HAND, new ItemStack(Items.BOW));
 
@@ -162,9 +148,9 @@ public class BossItem extends WorldFeatureItem {
 		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> Math.max(a, b))), stack);
 		String itemName = NameHelper.setItemName(random, stack, bossName);
 		stack.setDisplayName(new StringTextComponent(itemName));
-		LootRarity rarity = LootRarity.random(random, 400);
+		LootRarity rarity = LootRarity.random(random, 475);
 		stack = LootManager.genLootItem(stack, random, rarity);
-		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + bossName + "'s", stack.getDisplayName()).mergeStyle(rarity.getColor()));
+		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getDisplayName()).mergeStyle(rarity.getColor()));
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));

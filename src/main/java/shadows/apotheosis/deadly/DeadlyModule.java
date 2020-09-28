@@ -20,8 +20,9 @@ import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossGenerator;
 import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
-import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
 import shadows.apotheosis.deadly.gen.DeadlyFeature;
+import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
+import shadows.apotheosis.deadly.loot.BossArmorManager;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.affix.AffixEvents;
 import shadows.placebo.config.Configuration;
@@ -56,6 +57,7 @@ public class DeadlyModule {
 
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(LootManager.INSTANCE);
+		e.addListener(BossArmorManager.INSTANCE);
 	}
 
 	public void onBiomeLoad(BiomeLoadingEvent e) {
