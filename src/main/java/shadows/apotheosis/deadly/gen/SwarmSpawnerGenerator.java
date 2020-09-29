@@ -46,7 +46,7 @@ public class SwarmSpawnerGenerator extends WeightedGenerator {
 	@Override
 	public void place(IServerWorld world, BlockPos pos, Random rand) {
 		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(12) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_SWARM);
-		WeightedRandom.getRandomItem(rand, SWARM_SPAWNERS).place(world, pos);
+		WeightedRandom.getRandomItem(rand, SWARM_SPAWNERS).place(world, pos, rand);
 		world.setBlockState(pos.up(), Blocks.SMOOTH_SANDSTONE.getDefaultState(), 2);
 		DeadlyFeature.debugLog(pos, "Swarm Spawner");
 	}

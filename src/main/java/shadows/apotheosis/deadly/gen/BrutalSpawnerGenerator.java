@@ -61,7 +61,7 @@ public class BrutalSpawnerGenerator extends WeightedGenerator {
 
 	@Override
 	public void place(IServerWorld world, BlockPos pos, Random rand) {
-		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos);
+		WeightedRandom.getRandomItem(rand, BRUTAL_SPAWNERS).place(world, pos, rand);
 		ChestBuilder.place(world, rand, pos.down(), rand.nextInt(9) == 0 ? DeadlyLoot.CHEST_VALUABLE : DeadlyLoot.SPAWNER_BRUTAL);
 		world.setBlockState(pos.up(), Blocks.CRACKED_STONE_BRICKS.getDefaultState(), 2);
 		for (Direction f : Plane.HORIZONTAL) {

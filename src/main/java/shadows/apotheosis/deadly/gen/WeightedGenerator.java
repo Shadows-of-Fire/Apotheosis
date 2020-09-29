@@ -39,7 +39,7 @@ public abstract class WeightedGenerator {
 			super(weight);
 		}
 
-		public abstract void place(IServerWorld world, BlockPos pos);
+		public abstract void place(IServerWorld world, BlockPos pos, Random rand);
 	}
 
 }

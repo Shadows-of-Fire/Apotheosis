@@ -76,22 +76,27 @@ public class BossItem extends WorldFeatureItem {
 	}
 
 	@Override
-	public void place(IServerWorld world, BlockPos pos) {
-		place(world, pos, world.getRandom());
+	public void place(IServerWorld world, BlockPos pos, Random rand) {
+		buildPlatform(world, pos, rand);
+		MobEntity entity = spawnBoss(world, pos, rand);
+		DeadlyFeature.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
 	}
 
-	public void place(IServerWorld world, BlockPos pos, Random rand) {
-		MobEntity entity = (MobEntity) entityEntry.create(world.getWorld());
-		initBoss(rand, entity);
-		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
+	public void buildPlatform(IServerWorld world, BlockPos pos, Random rand) {
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
 			world.setBlockState(p, DeadlyConfig.bossFillerBlock.getDefaultState(), 2);
 		}
+	}
+
+	public MobEntity spawnBoss(IServerWorld world, BlockPos pos, Random rand) {
+		MobEntity entity = (MobEntity) entityEntry.create(world.getWorld());
+		initBoss(rand, entity);
+		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		world.addEntity(entity);
-		DeadlyFeature.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
+		return entity;
 	}
 
 	public static void initBoss(Random random, MobEntity entity) {
