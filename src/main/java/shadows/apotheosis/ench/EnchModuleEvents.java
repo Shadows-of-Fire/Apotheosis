@@ -25,6 +25,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
+import shadows.apotheosis.ench.table.EnchantingStatManager;
 
 public class EnchModuleEvents {
 
@@ -214,6 +216,11 @@ public class EnchModuleEvents {
 				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getEnchantmentModifierDamage(src.getArmorInventoryList(), e.getSource())));
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void reloads(AddReloadListenerEvent e) {
+		e.addListener(EnchantingStatManager.INSTANCE);
 	}
 
 }

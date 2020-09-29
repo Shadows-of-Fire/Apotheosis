@@ -39,7 +39,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -83,7 +82,6 @@ import shadows.apotheosis.ench.replacements.DefenseEnchant;
 import shadows.apotheosis.ench.table.ApothEnchantBlock;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.ApothEnchantTile;
-import shadows.apotheosis.ench.table.EnchantingStatManager;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
@@ -180,11 +178,6 @@ public class EnchModule {
 				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
 		}
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
-	}
-
-	@SubscribeEvent
-	public void reloads(AddReloadListenerEvent e) {
-		e.addListener(EnchantingStatManager.INSTANCE);
 	}
 
 	@SubscribeEvent
