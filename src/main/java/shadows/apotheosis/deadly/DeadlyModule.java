@@ -5,6 +5,8 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.GenerationStage.Decoration;
@@ -26,6 +28,7 @@ import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
 import shadows.apotheosis.deadly.loot.BossArmorManager;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.affix.AffixEvents;
+import shadows.apotheosis.deadly.objects.BossSummonerItem;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyModule {
@@ -54,6 +57,11 @@ public class DeadlyModule {
 	public void register(Register<Feature<?>> e) {
 		e.getRegistry().register(DeadlyFeature.INSTANCE.feature.setRegistryName("deadly_world_gen"));
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, "apotheosis:deadly_module", DeadlyFeature.INSTANCE);
+	}
+
+	@SubscribeEvent
+	public void items(Register<Item> e) {
+		e.getRegistry().register(new BossSummonerItem(new Item.Properties().maxStackSize(1).group(ItemGroup.MISC)).setRegistryName("boss_summoner"));
 	}
 
 	public void reloads(AddReloadListenerEvent e) {

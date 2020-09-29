@@ -1,5 +1,5 @@
 {
-	"comment_id": "/Deadly",
+	"comment_id": "/Deadly Module",
 	
 	"affix.apotheosis:draw_speed": "%s of the Quickdraw",
 	"affix.apotheosis:movement_speed": "Energetic %s",
@@ -63,6 +63,8 @@
 	
 	"death.attack.apoth.frozen_solid": "%s was frozen solid.",
 	"death.attack.apoth.execute": "%s was executed.",
+
+	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 
     "comment_id": "/Advancements",
 
