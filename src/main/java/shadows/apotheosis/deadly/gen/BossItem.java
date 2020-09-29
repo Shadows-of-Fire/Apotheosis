@@ -84,13 +84,13 @@ public class BossItem extends WorldFeatureItem {
 		MobEntity entity = (MobEntity) entityEntry.create(world.getWorld());
 		initBoss(rand, entity);
 		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
-		world.addEntity(entity);
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -1, -2), pos.add(2, 1, 2))) {
 			world.setBlockState(p, Blocks.AIR.getDefaultState(), 2);
 		}
 		for (BlockPos p : BlockPos.getAllInBoxMutable(pos.add(-2, -2, -2), pos.add(2, -2, 2))) {
 			world.setBlockState(p, DeadlyConfig.bossFillerBlock.getDefaultState(), 2);
 		}
+		world.addEntity(entity);
 		DeadlyFeature.debugLog(pos, "Boss " + entity.getName().getUnformattedComponentText());
 	}
 

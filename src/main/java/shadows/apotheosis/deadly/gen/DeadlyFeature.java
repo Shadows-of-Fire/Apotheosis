@@ -44,7 +44,7 @@ public class DeadlyFeature extends Feature<NoFeatureConfig> {
 
 	@Override
 	public boolean func_241855_a(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
-		if (!DeadlyConfig.DIM_WHITELIST.contains(world.getWorld().getDimensionKey().getRegistryName())) return false;
+		if (!DeadlyConfig.DIM_WHITELIST.contains(world.getWorld().getDimensionKey().getLocation())) return false;
 		for (WeightedGenerator generator : GENERATORS) {
 			ChunkPos cPos = new ChunkPos(pos);
 			if (wasSuccess(world.getDimensionType(), cPos.x, cPos.z)) return false;
