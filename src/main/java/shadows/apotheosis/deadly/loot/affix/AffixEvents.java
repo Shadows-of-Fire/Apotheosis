@@ -97,7 +97,7 @@ public class AffixEvents {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onDamage(LivingHurtEvent e) {
 		if (e.getSource() instanceof IndirectEntityDamageSource) {
 			IndirectEntityDamageSource src = (IndirectEntityDamageSource) e.getSource();
@@ -111,19 +111,28 @@ public class AffixEvents {
 				}
 			}
 		}
+		if (e.getSource().getTrueSource() instanceof LivingEntity) {
+			LivingEntity src = (LivingEntity) e.getSource().getTrueSource();
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(src.getHeldItemMainhand());
+			if (affixes.containsKey(Affixes.PIERCING)) {
+				e.getSource().setDamageBypassesArmor();
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void afterDamage(LivingHurtEvent e) {
 		if (e.getSource() instanceof EntityDamageSource && e.getSource().getTrueSource() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) e.getSource().getTrueSource();
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(player.getHeldItemMainhand());
 			float lifeSteal = affixes.getOrDefault(Affixes.LIFE_STEAL, 0F);
+			float dmg = Math.min(e.getAmount(), e.getEntityLiving().getHealth());
 			if (lifeSteal > 0 && !e.getSource().isMagicDamage()) {
-				player.heal(e.getAmount() * lifeSteal);
+				player.heal(dmg * lifeSteal);
 			}
 			float overheal = affixes.getOrDefault(Affixes.OVERHEAL, 0F);
 			if (overheal > 0 && !e.getSource().isMagicDamage() && player.getAbsorptionAmount() < 20) {
-				player.setAbsorptionAmount(Math.min(20, player.getAbsorptionAmount() + e.getAmount() * overheal));
-			}
-			if (affixes.containsKey(Affixes.PIERCING)) {
-				e.getSource().setDamageBypassesArmor();
+				player.setAbsorptionAmount(Math.min(20, player.getAbsorptionAmount() + dmg * overheal));
 			}
 		}
 	}

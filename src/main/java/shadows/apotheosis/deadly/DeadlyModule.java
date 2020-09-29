@@ -13,6 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -36,7 +37,7 @@ public class DeadlyModule {
 		DeadlyConfig.config = new Configuration(new File(Apotheosis.configDir, "deadly.cfg"));
 		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
-		MinecraftForge.EVENT_BUS.addListener(this::onBiomeLoad);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::onBiomeLoad);
 	}
 
 	@SubscribeEvent
