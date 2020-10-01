@@ -113,6 +113,7 @@ public class NameHelper {
 		materials.put(ItemTier.IRON, new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
 		materials.put(ItemTier.DIAMOND, new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
 		materials.put(ItemTier.GOLD, new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
+		materials.put(ItemTier.NETHERITE, new String[] { "Burnt", "Embered", "Fiery", "Hellborn", "Flameforged" });
 	}
 
 	/**
@@ -125,6 +126,8 @@ public class NameHelper {
 		armors.put(ArmorMaterial.IRON, new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
 		armors.put(ArmorMaterial.DIAMOND, new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
 		armors.put(ArmorMaterial.GOLD, new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
+		armors.put(ArmorMaterial.NETHERITE, new String[] { "Burnt", "Embered", "Fiery", "Hellborn", "Flameforged" });
+		armors.put(ArmorMaterial.TURTLE, new String[] { "Tortollan", "Very Tragic", "Environmental", "Organic" });
 	}
 
 	public static String suffixFormat = "%s the %s";
