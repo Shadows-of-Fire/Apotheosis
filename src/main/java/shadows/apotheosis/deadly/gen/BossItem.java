@@ -23,10 +23,10 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShootableItem;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -99,47 +99,48 @@ public class BossItem extends WorldFeatureItem {
 		return entity;
 	}
 
-	public static void initBoss(Random random, MobEntity entity) {
+	public static void initBoss(Random rand, MobEntity entity) {
 		int duration = entity instanceof CreeperEntity ? 6000 : Integer.MAX_VALUE;
-		int regen = DeadlyConfig.bossRegenLevel.generateInt(random) - 1;
+		int regen = DeadlyConfig.bossRegenLevel.generateInt(rand) - 1;
 		if (regen >= 0) entity.addPotionEffect(new EffectInstance(Effects.REGENERATION, duration, regen));
-		int res = DeadlyConfig.bossResistLevel.generateInt(random) - 1;
+		int res = DeadlyConfig.bossResistLevel.generateInt(rand) - 1;
 		if (res >= 0) entity.addPotionEffect(new EffectInstance(Effects.RESISTANCE, duration, res));
-		if (random.nextFloat() < DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
-		if (random.nextFloat() < DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
-		AttributeHelper.multiplyFinal(entity, Attributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossDamageMult.generateFloat(random) - 1);
-		AttributeHelper.multiplyFinal(entity, Attributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(random) - 1);
-		AttributeHelper.addToBase(entity, Attributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(random));
-		AttributeHelper.multiplyFinal(entity, Attributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(random) - 1);
+		if (rand.nextFloat() < DeadlyConfig.bossFireRes) entity.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, duration));
+		if (rand.nextFloat() < DeadlyConfig.bossWaterBreathing) entity.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, duration));
+		AttributeHelper.multiplyFinal(entity, Attributes.ATTACK_DAMAGE, "boss_damage_bonus", DeadlyConfig.bossDamageMult.generateFloat(rand) - 1);
+		AttributeHelper.multiplyFinal(entity, Attributes.MAX_HEALTH, "boss_health_mult", DeadlyConfig.bossHealthMultiplier.generateFloat(rand) - 1);
+		AttributeHelper.addToBase(entity, Attributes.KNOCKBACK_RESISTANCE, "boss_knockback_resist", DeadlyConfig.bossKnockbackResist.generateFloat(rand));
+		AttributeHelper.multiplyFinal(entity, Attributes.MOVEMENT_SPEED, "boss_speed_mult", DeadlyConfig.bossSpeedMultiplier.generateFloat(rand) - 1);
 		entity.setHealth(entity.getMaxHealth());
 		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		entity.enablePersistence();
-		String name = NameHelper.setEntityName(random, entity);
+		String name = NameHelper.setEntityName(rand, entity);
 
-		BossArmorManager.INSTANCE.getRandomSet(random).apply(entity);
+		BossArmorManager.INSTANCE.getRandomSet(rand).apply(entity);
 
-		if (entity instanceof SkeletonEntity) entity.setHeldItem(Hand.MAIN_HAND, new ItemStack(Items.BOW));
+		if (entity.func_230280_a_((ShootableItem) Items.BOW) && rand.nextBoolean()) entity.setHeldItem(Hand.MAIN_HAND, new ItemStack(Items.BOW));
+		else if (entity.func_230280_a_((ShootableItem) Items.CROSSBOW) && rand.nextBoolean()) entity.setHeldItem(Hand.MAIN_HAND, new ItemStack(Items.CROSSBOW));
 
-		int guaranteed = random.nextInt(6);
+		int guaranteed = rand.nextInt(6);
 
 		ItemStack stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
 		while (guaranteed == 1 || stack.isEmpty())
-			stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed = random.nextInt(6)]);
+			stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed = rand.nextInt(6)]);
 
 		for (EquipmentSlotType s : EquipmentSlotType.values()) {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
 			if (s.ordinal() == guaranteed) {
-				entity.setItemStackToSlot(s, modifyBossItem(stack, random, name));
-			} else if (random.nextDouble() < DeadlyConfig.bossEnchantChance) {
-				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, 30 + random.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
+				entity.setItemStackToSlot(s, modifyBossItem(stack, rand, name));
+			} else if (rand.nextDouble() < DeadlyConfig.bossEnchantChance) {
+				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, 30 + rand.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
 				EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (v1, v2) -> Math.max(v1, v2), HashMap::new)), stack);
 			}
 		}
 
 		if (POTIONS.isEmpty()) initPotions();
 
-		if (random.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(random.nextInt(POTIONS.size())), duration, random.nextInt(3) + 1));
+		if (rand.nextDouble() < DeadlyConfig.bossPotionChance) entity.addPotionEffect(new EffectInstance(POTIONS.get(rand.nextInt(POTIONS.size())), duration, rand.nextInt(3) + 1));
 	}
 
 	public static void initPotions() {
