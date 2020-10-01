@@ -112,10 +112,7 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void init(ApotheosisSetup e) {
-		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantment_module.cfg"));
-		if (config.hasChanged()) config.save();
-
-		config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
+		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
 			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
