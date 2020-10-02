@@ -134,7 +134,7 @@ public class BossItem extends WorldFeatureItem {
 				entity.setItemStackToSlot(s, modifyBossItem(stack, rand, name));
 			} else if (rand.nextDouble() < DeadlyConfig.bossEnchantChance) {
 				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, 30 + rand.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
-				EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (v1, v2) -> Math.max(v1, v2), HashMap::new)), stack);
+				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (v1, v2) -> Math.max(v1, v2), HashMap::new)), stack);
 			}
 		}
 
@@ -150,8 +150,8 @@ public class BossItem extends WorldFeatureItem {
 	}
 
 	public static ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
-		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 60 : 30, true);
-		EnchantmentHelper.setEnchantments(ench.stream().collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> Math.max(a, b))), stack);
+		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 75 : 30, true);
+		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> Math.max(a, b))), stack);
 		String itemName = NameHelper.setItemName(random, stack, bossName);
 		stack.setDisplayName(new StringTextComponent(itemName));
 		LootRarity rarity = LootRarity.random(random, DeadlyConfig.bossRarityOffset);
