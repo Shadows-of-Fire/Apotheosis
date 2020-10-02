@@ -1,6 +1,18 @@
-Smithing System (Like crafting, but with a Smithing Table)
--Better Gear when made in the table (likely with an extra attribute)
--Specific improvement to tools/armor when combined with their repair material in a smithing table.
+Affix based manipulation system in the smithing table.
+An item similar to a tome can be used to remove a single affix at a time from an affix item.
+-Removed affix is random from the affixes on the item.
+-Has a chance to degrade the affix, but an upgraded version of the item can negate this chance.
+This same item can be used to reapply affixes to other items.
+
+Another item that will upgrade a random affix on the item.
+
+The ability to scrap items for rarity tokens that are used in the crafting of affix-based modification systems.
+
+Another item that will upgrade the tier of the item.
+
+And a final item that will allow for a reroll of the item, including all affix data.
+
+--Maybe make a new table for this (or modify the smithing table, or something).
 
 Advancements for Fletching
 
@@ -24,3 +36,5 @@ Experience Storage System with level precision
  or rare temporary buffs to new table stats
  
  trident had a damage increasing enchant. One that wasn't specific to certain mobs 
+ 
+ Allow enchantment name color to be changed as part of enchantments.cfg
