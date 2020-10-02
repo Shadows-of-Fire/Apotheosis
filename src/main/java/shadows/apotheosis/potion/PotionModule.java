@@ -28,12 +28,13 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
-import shadows.apotheosis.Apotheosis.ApotheosisSetup;
+import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.potion.compat.CuriosCompat;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
@@ -46,21 +47,18 @@ public class PotionModule {
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Potion");
 	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
-	static Configuration config;
 	static int knowledgeMult = 4;
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
-		config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
-		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
-		if (config.hasChanged()) config.save();
+		reload(null);
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			FMLJavaModLoadingContext.get().getModEventBus().register(new PotionModuleClient());
 		});
 	}
 
 	@SubscribeEvent
-	public void init(ApotheosisSetup e) {
+	public void init(FMLCommonSetupEvent e) {
 		PotionBrewing.addMix(Potions.AWKWARD, Items.SHULKER_SHELL, ApotheosisObjects.RESISTANCE);
 		PotionBrewing.addMix(ApotheosisObjects.RESISTANCE, Items.REDSTONE, ApotheosisObjects.LONG_RESISTANCE);
 		PotionBrewing.addMix(ApotheosisObjects.RESISTANCE, Items.GLOWSTONE_DUST, ApotheosisObjects.STRONG_RESISTANCE);
@@ -104,6 +102,7 @@ public class PotionModule {
 		RecipeHelper.addRecipe(new PotionCharmRecipe());
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
 		MinecraftForge.EVENT_BUS.addListener(this::xp);
+		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
 
 	@SubscribeEvent
@@ -178,6 +177,12 @@ public class PotionModule {
 			int newXp = curXp + e.getOriginalExperience() * level * knowledgeMult;
 			e.setDroppedExperience(newXp);
 		}
+	}
+
+	public void reload(ApotheosisReloadEvent e) {
+		Configuration config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
+		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
+		if (e == null && config.hasChanged()) config.save();
 	}
 
 }

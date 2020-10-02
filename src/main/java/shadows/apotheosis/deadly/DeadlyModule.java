@@ -17,9 +17,10 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
-import shadows.apotheosis.Apotheosis.ApotheosisSetup;
+import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossGenerator;
 import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
@@ -29,6 +30,7 @@ import shadows.apotheosis.deadly.loot.BossArmorManager;
 import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.affix.AffixEvents;
 import shadows.apotheosis.deadly.objects.BossSummonerItem;
+import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyModule {
@@ -37,20 +39,16 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
-		DeadlyConfig.config = new Configuration(new File(Apotheosis.configDir, "deadly.cfg"));
 		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::onBiomeLoad);
+		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
 
 	@SubscribeEvent
-	public void init(ApotheosisSetup e) {
-		DeadlyConfig.init();
-		BrutalSpawnerGenerator.init();
-		BossGenerator.init();
+	public void init(FMLCommonSetupEvent e) {
+		reload(null);
 		DeadlyLoot.init();
-		SwarmSpawnerGenerator.init();
-		DeadlyFeature.init();
 	}
 
 	@SubscribeEvent
@@ -71,6 +69,22 @@ public class DeadlyModule {
 
 	public void onBiomeLoad(BiomeLoadingEvent e) {
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) e.getGeneration().getFeatures(Decoration.UNDERGROUND_DECORATION).add(() -> DeadlyFeature.INSTANCE);
+	}
+
+	/**
+	 * Loads all configurable data for the deadly module.
+	 */
+	public void reload(ApotheosisReloadEvent e) {
+		DeadlyConfig.config = new Configuration(new File(Apotheosis.configDir, "deadly.cfg"));
+		Configuration nameConfig = new Configuration(new File(Apotheosis.configDir, "names.cfg"));
+		DeadlyConfig.loadConfigs();
+		NameHelper.load(nameConfig);
+		BrutalSpawnerGenerator.reload();
+		SwarmSpawnerGenerator.init();
+		BossGenerator.rebuildBossItems();
+		DeadlyFeature.enableGenerators();
+		if (e == null && DeadlyConfig.config.hasChanged()) DeadlyConfig.config.save();
+		if (e == null && nameConfig.hasChanged()) nameConfig.save();
 	}
 
 }

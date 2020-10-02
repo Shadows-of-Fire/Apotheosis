@@ -53,7 +53,8 @@ public class DeadlyFeature extends Feature<NoFeatureConfig> {
 		return false;
 	}
 
-	public static void init() {
+	public static void enableGenerators() {
+		GENERATORS.clear();
 		if (BRUTAL_SPAWNER.isEnabled()) GENERATORS.add(BRUTAL_SPAWNER);
 		if (SWARM_SPAWNER.isEnabled()) GENERATORS.add(SWARM_SPAWNER);
 		if (BOSS_GENERATOR.isEnabled()) GENERATORS.add(BOSS_GENERATOR);

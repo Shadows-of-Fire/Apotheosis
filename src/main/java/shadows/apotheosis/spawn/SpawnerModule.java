@@ -29,8 +29,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.Apotheosis.ApotheosisSetup;
+import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -42,21 +43,18 @@ import shadows.placebo.util.PlaceboUtil;
 public class SpawnerModule {
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
-	public static Configuration config;
 	public static int spawnerSilkLevel = 1;
 	public static int spawnerSilkDamage = 100;
 
 	@SubscribeEvent
-	public void setup(ApotheosisSetup e) {
+	public void setup(FMLCommonSetupEvent e) {
 		TileEntityType.MOB_SPAWNER.factory = ApothSpawnerTile::new;
 		TileEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
 		MinecraftForge.EVENT_BUS.addListener(this::handleCapturing);
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
-		config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
-		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
-		spawnerSilkDamage = config.getInt("Spawner Silk Damage", "general", 100, 0, 100000, "The durability damage dealt to an item that silk touches a spawner.");
-		SpawnerModifiers.init();
-		if (config.hasChanged()) config.save();
+		MinecraftForge.EVENT_BUS.addListener(this::reload);
+		SpawnerModifiers.registerModifiers();
+		reload(null);
 		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.MISC, "field_77701_a");
 	}
 
@@ -90,6 +88,14 @@ public class SpawnerModule {
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
 				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}
+	}
+
+	public void reload(ApotheosisReloadEvent e) {
+		Configuration config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
+		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
+		spawnerSilkDamage = config.getInt("Spawner Silk Damage", "general", 100, 0, 100000, "The durability damage dealt to an item that silk touches a spawner.");
+		SpawnerModifiers.reload(config);
+		if (e == null && config.hasChanged()) config.save();
 	}
 
 }

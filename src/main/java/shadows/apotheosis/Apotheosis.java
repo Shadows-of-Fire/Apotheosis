@@ -11,15 +11,14 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.IModBusEvent;
-import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -39,6 +38,7 @@ import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.recipe.RecipeHelper;
 import shadows.placebo.util.NetworkUtils;
+import shadows.placebo.util.RunnableReloader;
 
 @SuppressWarnings("deprecation")
 @Mod(Apotheosis.MODID)
@@ -95,23 +95,20 @@ public class Apotheosis {
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
-		bus.addListener(this::initC);
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
-
+		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 	}
 
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
-		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisSetup(e));
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
 	}
 
-	@SubscribeEvent
-	public void initC(FMLClientSetupEvent e) {
-		FMLJavaModLoadingContext.get().getModEventBus().post(new ApotheosisClientSetup(e));
+	public void reloads(AddReloadListenerEvent e) {
+		e.addListener(RunnableReloader.of(() -> MinecraftForge.EVENT_BUS.post(new ApotheosisReloadEvent())));
 	}
 
 	public void trackCooldown(AttackEntityEvent e) {
@@ -123,34 +120,17 @@ public class Apotheosis {
 		return new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), type));
 	}
 
+	/**
+	 * The apotheosis construction event is fired from {@link Apotheosis}'s constructor.
+	 */
 	public static class ApotheosisConstruction extends Event implements IModBusEvent {
-
-		public ApotheosisConstruction() {
-		}
 	}
 
-	public static class ApotheosisSetup extends Event implements IModBusEvent {
-		ParallelDispatchEvent parent;
-
-		public ApotheosisSetup(ParallelDispatchEvent parent) {
-			this.parent = parent;
-		}
-
-		public void enqueueWork(Runnable r) {
-			this.parent.enqueueWork(r);
-		}
-	}
-
-	public static class ApotheosisClientSetup extends Event implements IModBusEvent {
-		ParallelDispatchEvent parent;
-
-		public ApotheosisClientSetup(ParallelDispatchEvent parent) {
-			this.parent = parent;
-		}
-
-		public void enqueueWork(Runnable r) {
-			this.parent.enqueueWork(r);
-		}
+	/**
+	 * The apotheosis reload event is fired from resource reload.
+	 * It may be fired off the main thread.
+	 */
+	public static class ApotheosisReloadEvent extends Event {
 	}
 
 }

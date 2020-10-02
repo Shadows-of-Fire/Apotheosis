@@ -1,11 +1,10 @@
 package shadows.apotheosis.deadly.config;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
@@ -16,9 +15,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
 import net.minecraftforge.registries.ForgeRegistries;
-import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.DeadlyModule;
-import shadows.apotheosis.util.NameHelper;
 import shadows.apotheosis.util.RandomIntRange;
 import shadows.placebo.config.Configuration;
 
@@ -27,9 +24,9 @@ public class DeadlyConfig {
 	public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
 	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
 	public static final List<EffectInstance> BRUTAL_POTIONS = new ArrayList<>();
-	public static List<Pair<Integer, ResourceLocation>> BRUTAL_MOBS = new ArrayList<>();
-	public static List<Pair<Integer, ResourceLocation>> BOSS_MOBS = new ArrayList<>();
-	public static List<Pair<Integer, ResourceLocation>> SWARM_MOBS = new ArrayList<>();
+	public static Object2IntMap<ResourceLocation> BRUTAL_MOBS = new Object2IntOpenHashMap<>();
+	public static Object2IntMap<ResourceLocation> BOSS_MOBS = new Object2IntOpenHashMap<>();
+	public static Object2IntMap<ResourceLocation> SWARM_MOBS = new Object2IntOpenHashMap<>();
 	public static List<ResourceLocation> BLACKLISTED_POTIONS = new ArrayList<>();
 
 	public static Configuration config;
@@ -57,14 +54,15 @@ public class DeadlyConfig {
 
 	public static Block bossFillerBlock = Blocks.RED_SANDSTONE;
 
-	public static void init() {
+	public static void loadConfigs() {
 		Configuration c = config;
-		c.load();
 
 		DeadlyConstants.BRUTAL_SPAWNER_STATS.load(c);
 		DeadlyConstants.SWARM_SPAWNER_STATS.load(c);
 
 		String[] dims = c.getStringList("Generation Dimension Whitelist", DeadlyConstants.GENERAL, new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");
+
+		DIM_WHITELIST.clear();
 		for (String s : dims) {
 			try {
 				DIM_WHITELIST.add(new ResourceLocation(s.trim()));
@@ -73,6 +71,7 @@ public class DeadlyConfig {
 			}
 		}
 
+		//NOT RELOADABLE
 		String[] biomes = c.getStringList("Generation Biome Blacklist", DeadlyConstants.GENERAL, new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
 		for (String s : biomes) {
 			try {
@@ -93,6 +92,7 @@ public class DeadlyConfig {
 		bossEnchantChance = c.getFloat("Random Enchantment Chance", DeadlyConstants.BOSSES, bossEnchantChance, 0, Integer.MAX_VALUE, "The chance a gear piece will be randomly enchanted.");
 		bossPotionChance = c.getFloat("Random Potion Chance", DeadlyConstants.BOSSES, bossPotionChance, 0, Integer.MAX_VALUE, "The chance a boss will have extra random potion effects.");
 		String[] blacklistPotions = c.getStringList("Blacklisted Potions", DeadlyConstants.BOSSES, new String[] { "forbidden_arcanus:spectral_vision" }, "A list of potions (registry names) that bosses cannot generate with.");
+		BLACKLISTED_POTIONS.clear();
 		for (String s : blacklistPotions)
 			BLACKLISTED_POTIONS.add(new ResourceLocation(s));
 		surfaceBossChance = c.getInt("Surface Boss Chance", DeadlyConstants.BOSSES, surfaceBossChance, 1, 500000, "The 1/n chance that a naturally spawned mob that can see the sky is transformed into a boss.");
@@ -112,52 +112,17 @@ public class DeadlyConfig {
 		}
 
 		String[] brutalFromCfg = c.getStringList("Brutal Spawner Mobs", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_DEFAULT_MOBS, "The possible spawn entries for brutal spawners.  Format is weight@entity, entity is a registry name.  apotheosis:random is a special name, used to generate a spawner that spawns any mob.");
-
-		for (String s : brutalFromCfg) {
-			String[] split = s.split("@");
-			try {
-				int weight = Integer.parseInt(split[0]);
-				ResourceLocation name = new ResourceLocation(split[1]);
-				EntityType<?> e = ForgeRegistries.ENTITIES.getValue(name);
-				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) BRUTAL_MOBS.add(Pair.of(weight, name));
-				else DeadlyModule.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
-			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyModule.LOGGER.error("Invalid brutal spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
-			}
-		}
+		loadEntitiesFromConfig(brutalFromCfg, BRUTAL_MOBS, "Brutal Spawner");
 
 		String[] bossFromCfg = c.getStringList("Boss Spawner Mobs", DeadlyConstants.BOSSES, DeadlyConstants.BOSS_DEFAULT_MOBS, "The possible mob types for bosses.  Format is weight@entity, entity is a registry name.");
-
-		for (String s : bossFromCfg) {
-			String[] split = s.split("@");
-			try {
-				int weight = Integer.parseInt(split[0]);
-				ResourceLocation name = new ResourceLocation(split[1]);
-				EntityType<?> e = ForgeRegistries.ENTITIES.getValue(name);
-				if (weight > 0 && e != null) BOSS_MOBS.add(Pair.of(weight, name));
-				else DeadlyModule.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
-			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyModule.LOGGER.error("Invalid boss entry: " + s + ".  It will be ignored!  (Invalid format)");
-			}
-		}
+		loadEntitiesFromConfig(bossFromCfg, BOSS_MOBS, "Boss");
 
 		String[] swarmFromCfg = c.getStringList("Swarm Spawner Mobs", DeadlyConstants.SWARM_SPAWNERS, DeadlyConstants.SWARM_DEFAULT_MOBS, "The possible spawn entries for swarm spawners.  Format is weight@entity, entity is a registry name.");
-
-		for (String s : swarmFromCfg) {
-			String[] split = s.split("@");
-			try {
-				int weight = Integer.parseInt(split[0]);
-				ResourceLocation name = new ResourceLocation(split[1]);
-				EntityType<?> e = ForgeRegistries.ENTITIES.getValue(name);
-				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) SWARM_MOBS.add(Pair.of(weight, name));
-				else DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored! (Weight <= 0 or Entity does not exist)");
-			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-				DeadlyModule.LOGGER.error("Invalid swarm spawner entry: " + s + ".  It will be ignored!  (Invalid format)");
-			}
-		}
+		loadEntitiesFromConfig(swarmFromCfg, SWARM_MOBS, "Swarm Spawner");
 
 		String[] brutalPotions = c.getStringList("Brutal Potion Effects", DeadlyConstants.BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_POTIONS, "The potion effects applied to all brutal mobs.  Format is potion@level, potion is a registry name.");
 
+		BRUTAL_POTIONS.clear();
 		for (String s : brutalPotions) {
 			String[] split = s.split("@");
 			try {
@@ -172,10 +137,8 @@ public class DeadlyConfig {
 		}
 
 		for (EntityType<?> e : ForgeRegistries.ENTITIES)
-			if (e.getClassification() == EntityClassification.MONSTER) config.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
+			if (e.getClassification() == EntityClassification.MONSTER) c.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 
-		if (c.hasChanged()) c.save();
-		NameHelper.load(new Configuration(new File(Apotheosis.configDir, "names.cfg")));
 	}
 
 	public static int getWeightForEntry(EntityType<?> e) {
@@ -192,6 +155,22 @@ public class DeadlyConfig {
 		int rMin = c.getInt("Min " + name, group, range.getMin(), min, max, String.format(comment, "min"));
 		int rMax = c.getInt("Max " + name, group, range.getMax(), min, max, String.format(comment, "max"));
 		return new RandomIntRange(rMin, rMax);
+	}
+
+	private static void loadEntitiesFromConfig(String[] entities, Object2IntMap<ResourceLocation> map, String type) {
+		map.clear();
+		for (String s : entities) {
+			String[] split = s.split("@");
+			try {
+				int weight = Integer.parseInt(split[0]);
+				ResourceLocation name = new ResourceLocation(split[1]);
+				EntityType<?> e = ForgeRegistries.ENTITIES.getValue(name);
+				if (weight > 0 && (e != null || name.equals(DeadlyConstants.RANDOM))) map.put(name, weight);
+				else DeadlyModule.LOGGER.error("Invalid {} entry: {}.  It will be ignored! (Weight <= 0 or Entity does not exist)", type, s);
+			} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+				DeadlyModule.LOGGER.error("Invalid {} entry: {}.  It will be ignored!  (Invalid format)", type, s);
+			}
+		}
 	}
 
 }

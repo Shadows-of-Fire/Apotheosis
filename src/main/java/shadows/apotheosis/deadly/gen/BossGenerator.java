@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.block.Block;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -53,9 +52,10 @@ public class BossGenerator extends WeightedGenerator {
 	public void place(IServerWorld world, BlockPos pos, Random rand) {
 	}
 
-	public static void init() {
-		for (Pair<Integer, ResourceLocation> pair : DeadlyConfig.BOSS_MOBS) {
-			BossItem i = new BossItem(pair.getLeft(), pair.getRight());
+	public static void rebuildBossItems() {
+		BOSS_ITEMS.clear();
+		for (Object2IntMap.Entry<ResourceLocation> pair : DeadlyConfig.BOSS_MOBS.object2IntEntrySet()) {
+			BossItem i = new BossItem(pair.getIntValue(), pair.getKey());
 			BOSS_ITEMS.add(i);
 		}
 	}

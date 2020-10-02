@@ -18,9 +18,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
-import shadows.apotheosis.Apotheosis.ApotheosisSetup;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.village.fletching.BlockFletchingTable;
 import shadows.apotheosis.village.fletching.FletchingContainer;
@@ -44,7 +44,7 @@ public class VillageModule {
 	public static boolean enableNewTrades = true;
 
 	@SubscribeEvent
-	public void setup(ApotheosisSetup e) {
+	public void setup(FMLCommonSetupEvent e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
 		Map<BlockState, PointOfInterestType> types = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
@@ -55,7 +55,7 @@ public class VillageModule {
 	}
 
 	@SubscribeEvent
-	public void setup(ApotheosisClientSetup e) {
+	public void setup(FMLClientSetupEvent e) {
 		e.enqueueWork(VillageModuleClient::init);
 	}
 

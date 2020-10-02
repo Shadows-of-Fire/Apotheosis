@@ -78,20 +78,20 @@ public class BrutalSpawnerGenerator extends WeightedGenerator {
 		return !BRUTAL_SPAWNERS.isEmpty() && DeadlyConfig.brutalSpawnerChance > 0;
 	}
 
-	public static void init() {
+	public static void reload() {
+		BrutalSpawnerGenerator.BASE_TAG.getList(TagBuilder.EFFECTS, 10).clear();
 		for (EffectInstance p : DeadlyConfig.BRUTAL_POTIONS) {
 			TagBuilder.addPotionEffect(BrutalSpawnerGenerator.BASE_TAG, p.getPotion(), p.getAmplifier());
 		}
-		SpawnerItem.addItems(BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_SPAWNER_STATS, DeadlyConfig.BRUTAL_MOBS);
+		SpawnerItem.rebuildItems(BRUTAL_SPAWNERS, DeadlyConstants.BRUTAL_SPAWNER_STATS, DeadlyConfig.BRUTAL_MOBS);
 		for (SpawnerItem i : BRUTAL_SPAWNERS)
-			initBrutal(i);
-
+			makeBrutal(i);
 	}
 
 	/**
 	 * Sets the spawner item to be brutal.
 	 */
-	public static void initBrutal(SpawnerItem item) {
+	public static void makeBrutal(SpawnerItem item) {
 		applyBrutalStats(item.getSpawner().getSpawnData());
 		for (INBT tag : item.getSpawner().getPotentials()) {
 			applyBrutalStats(getOrCreate((CompoundNBT) tag, SpawnerBuilder.ENTITY));

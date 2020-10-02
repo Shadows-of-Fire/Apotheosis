@@ -41,10 +41,11 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.Apotheosis.ApotheosisClientSetup;
-import shadows.apotheosis.Apotheosis.ApotheosisSetup;
+import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.apotheosis.ench.altar.SeaAltarBlock;
@@ -111,21 +112,8 @@ public class EnchModule {
 	static Configuration enchInfoConfig;
 
 	@SubscribeEvent
-	public void init(ApotheosisSetup e) {
-		Configuration config = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
-		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
-			int max = config.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
-			int min = config.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
-			if (min > max) min = max;
-			EnchantmentInfo info = new EnchantmentInfo(ench, max, min);
-			String maxF = config.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
-			if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
-			String minF = config.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
-			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
-			ENCHANTMENT_INFO.put(ench, info);
-		}
-		if (config.hasChanged()) config.save();
-		enchInfoConfig = config;
+	public void init(FMLCommonSetupEvent e) {
+		reload(null);
 
 		Ingredient pot = Apotheosis.potionIngredient(Potions.REGENERATION);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "forge:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
@@ -169,16 +157,12 @@ public class EnchModule {
 		LootSystem.defaultBlockTable(ApotheosisObjects.DRACONIC_ENDSHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.BEESHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.MELONSHELF);
-		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
-			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
-			for (int i = 1; i <= info.getMaxLevel(); i++)
-				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
-		}
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
+		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
 
 	@SubscribeEvent
-	public void client(ApotheosisClientSetup e) {
+	public void client(FMLClientSetupEvent e) {
 		MinecraftForge.EVENT_BUS.register(new EnchModuleClient());
 		e.enqueueWork(EnchModuleClient::init);
 	}
@@ -309,6 +293,7 @@ public class EnchModule {
 			Thread.dumpStack();
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
 		}
+
 		if (info == null) {
 			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
 			int min = enchInfoConfig.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
@@ -322,6 +307,7 @@ public class EnchModule {
 			if (enchInfoConfig.hasChanged()) enchInfoConfig.save();
 			LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", ench.getRegistryName(), ench.getRegistryName().getNamespace());
 		}
+
 		return info;
 	}
 
@@ -345,6 +331,31 @@ public class EnchModule {
 			lastPower = minPower;
 		}
 		return level;
+	}
+
+	public void reload(ApotheosisReloadEvent e) {
+		enchInfoConfig = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
+		ENCHANTMENT_INFO.clear();
+
+		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
+			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
+			int min = enchInfoConfig.getInt("Min Level", ench.getRegistryName().toString(), ench.getMinLevel(), 1, 127, "The min level of this enchantment.");
+			if (min > max) min = max;
+			EnchantmentInfo info = new EnchantmentInfo(ench, max, min);
+			String maxF = enchInfoConfig.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
+			if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
+			String minF = enchInfoConfig.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
+			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
+			ENCHANTMENT_INFO.put(ench, info);
+		}
+
+		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
+			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
+			for (int i = 1; i <= info.getMaxLevel(); i++)
+				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
+		}
+
+		if (e == null && enchInfoConfig.hasChanged()) enchInfoConfig.save();
 	}
 
 }

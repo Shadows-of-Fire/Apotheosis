@@ -22,6 +22,7 @@ import shadows.apotheosis.spawn.modifiers.RedstoneModifier;
 import shadows.apotheosis.spawn.modifiers.SpawnCountModifier;
 import shadows.apotheosis.spawn.modifiers.SpawnRangeModifier;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
+import shadows.placebo.config.Configuration;
 
 public class SpawnerModifiers {
 
@@ -40,7 +41,7 @@ public class SpawnerModifiers {
 
 	public static Ingredient inverseItem;
 
-	public static void init() {
+	public static void registerModifiers() {
 		register(MIN_DELAY);
 		register(MAX_DELAY);
 		register(SPAWN_COUNT);
@@ -52,7 +53,12 @@ public class SpawnerModifiers {
 		register(CAP);
 		register(REDSTONE);
 		register(EGG);
-		inverseItem = readStackCfg(SpawnerModule.config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
+	}
+
+	public static void reload(Configuration config) {
+		for (SpawnerModifier modif : MODIFIERS)
+			modif.load(config);
+		inverseItem = readStackCfg(config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
 	}
 
 	public static Ingredient readStackCfg(String s) {
@@ -66,7 +72,6 @@ public class SpawnerModifiers {
 	public static void register(SpawnerModifier modif) {
 		if (!MODIFIERS.contains(modif)) {
 			MODIFIERS.add(modif);
-			modif.load(SpawnerModule.config);
 		} else throw new RuntimeException("Tried to register a spawner modifier, but it is already registered!");
 	}
 
