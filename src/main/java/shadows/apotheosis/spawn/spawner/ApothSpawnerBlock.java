@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -69,7 +70,7 @@ public class ApothSpawnerBlock extends SpawnerBlock {
 			ItemStack s = new ItemStack(this);
 			if (te != null) te.write(s.getOrCreateChildTag("BlockEntityTag"));
 			spawnAsEntity(world, pos, s);
-			player.getHeldItemMainhand().attemptDamageItem(SpawnerModule.spawnerSilkDamage, world.rand, (ServerPlayerEntity) player);
+			player.getHeldItemMainhand().damageItem(SpawnerModule.spawnerSilkDamage, player, pl -> pl.sendBreakAnimation(EquipmentSlotType.MAINHAND));
 		}
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
 		super.harvestBlock(world, player, pos, state, te, stack);
