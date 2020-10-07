@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -64,9 +63,7 @@ public class EnderLeashItem extends Item {
 					((ServerWorld) ctx.getWorld()).addEntityIfNotDuplicate(e);
 					ctx.getItem().getTag().remove("entity_data");
 					playSound(ctx.getPlayer());
-					if (!ctx.getPlayer().isCreative() && ctx.getItem().attemptDamageItem(1, ctx.getWorld().rand, (ServerPlayerEntity) ctx.getPlayer())) {
-						ctx.getItem().shrink(1);
-					}
+					ctx.getItem().damageItem(1, ctx.getPlayer(), pl -> pl.sendBreakAnimation(ctx.getHand()));
 					return ActionResultType.SUCCESS;
 				}
 			}
