@@ -38,3 +38,10 @@ All things that should have been.
     versionRange="[4.3.1,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.apotheosis]]
+    modId="quark"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="AFTER" #We need to load before quark, or bad things may happen.
+    side="BOTH"

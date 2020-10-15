@@ -27,6 +27,7 @@ import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
+import shadows.apotheosis.ench.table.EnchantingStatManager.StatSyncMessage;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
@@ -102,6 +103,7 @@ public class Apotheosis {
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
+		NetworkUtils.registerMessage(CHANNEL, 1, new StatSyncMessage());
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
