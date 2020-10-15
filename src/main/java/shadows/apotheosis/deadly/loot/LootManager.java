@@ -9,8 +9,6 @@ import java.util.Random;
 
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonObject;
 
 import net.minecraft.client.resources.JsonReloadListener;
@@ -37,9 +35,7 @@ import shadows.apotheosis.deadly.loot.modifiers.Modifiers;
  */
 public class LootManager extends JsonReloadListener {
 
-	public static final Gson GSON = new GsonBuilder().registerTypeAdapter(LootEntry.class, (JsonDeserializer<LootEntry>) (json, type, ctx) -> {
-		return LootEntry.deserialize(json.getAsJsonObject());
-	}).setPrettyPrinting().create();
+	public static final Gson GSON = BossArmorManager.GSON;
 
 	public static final LootManager INSTANCE = new LootManager();
 

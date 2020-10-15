@@ -63,6 +63,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -505,6 +506,14 @@ public class EnchModule {
 				//TODO: FIXME should only be reducing damage by the value of OA, this will use all active protection enchantments.
 				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getEnchantmentModifierDamage(src.getArmorInventoryList(), e.getSource())));
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void login(PlayerLoggedInEvent e) {
+		PlayerEntity p = e.getPlayer();
+		if (!p.world.isRemote) {
+			EnchantingStatManager.dispatch(p);
 		}
 	}
 
