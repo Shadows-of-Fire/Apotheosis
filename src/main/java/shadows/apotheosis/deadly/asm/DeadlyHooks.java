@@ -19,10 +19,10 @@ import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.loot.affix.Affix;
-import shadows.apotheosis.deadly.loot.affix.AffixEvents;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
-import shadows.apotheosis.deadly.loot.affix.Affixes;
+import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.affix.AffixEvents;
+import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.Affixes;
 
 /**
  * ASM methods for the deadly module.

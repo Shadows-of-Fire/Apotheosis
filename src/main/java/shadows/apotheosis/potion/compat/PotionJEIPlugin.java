@@ -19,7 +19,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Size2i;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.potion.PotionCharmRecipe;
 
 @JeiPlugin

@@ -27,11 +27,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import shadows.apotheosis.deadly.DeadlyModule;
-import shadows.apotheosis.deadly.loot.affix.Affix;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
-import shadows.apotheosis.deadly.loot.affix.Affixes;
-import shadows.apotheosis.deadly.loot.modifiers.AffixModifier;
-import shadows.apotheosis.deadly.loot.modifiers.Modifiers;
+import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.Affixes;
+import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
+import shadows.apotheosis.deadly.affix.modifiers.Modifiers;
 
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.

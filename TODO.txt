@@ -14,6 +14,9 @@ And a final item that will allow for a reroll of the item, including all affix d
 
 --Maybe make a new table for this (or modify the smithing table, or something).
 
+++Implement new subsystem to add additional attribute modifiers without overriding the base ones
+++Non-usage of the vanilla system.
+
 Advancements for Fletching
 
 Glass break faster with pickaxe

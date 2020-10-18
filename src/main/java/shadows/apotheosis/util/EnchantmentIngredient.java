@@ -18,7 +18,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.AffixHelper;
 
 public class EnchantmentIngredient extends Ingredient {
 

@@ -25,7 +25,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.deadly.DeadlyModule;
-import shadows.apotheosis.deadly.loot.affix.Affix;
+import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.EnchantingStatManager.StatSyncMessage;
 import shadows.apotheosis.garden.GardenModule;
