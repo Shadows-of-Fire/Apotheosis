@@ -68,29 +68,27 @@ public class Apotheosis {
 
 	public static float localAtkStrength = 1;
 
-	public Apotheosis() {
-		Affix.classload();
+	static {
 		configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
 		config = new Configuration(new File(configDir, MODID + ".cfg"));
+		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
+		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
+		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
+		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
+		enableVillager = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
+		if (config.hasChanged()) config.save();
+	}
 
+	public Apotheosis() {
+		Affix.classload();
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		if (enableEnch) bus.register(new EnchModule());
-
-		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		if (enableSpawner) bus.register(new SpawnerModule());
-
-		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
 		if (enableGarden) bus.register(new GardenModule());
-
-		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		if (enableDeadly) bus.register(new DeadlyModule());
-
-		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		if (enablePotion) bus.register(new PotionModule());
-
-		enableVillager = config.getBoolean("Enable Village Module", "general", enableVillager, "If the village module is loaded.");
 		if (enableVillager) bus.register(new VillageModule());
 
 		if (config.hasChanged()) config.save();
