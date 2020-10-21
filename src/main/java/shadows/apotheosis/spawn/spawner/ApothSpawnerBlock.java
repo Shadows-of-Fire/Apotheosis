@@ -19,6 +19,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -99,7 +100,7 @@ public class ApothSpawnerBlock extends SpawnerBlock {
 				if (sm.canModify(tile, stack, inverse)) {
 					if (world.isRemote) return ActionResultType.SUCCESS;
 					if (sm.modify(tile, stack, inverse)) {
-						if (!player.isCreative()) stack.shrink(1);
+						if (!player.isCreative() && !(stack.getItem() instanceof SpawnEggItem)) stack.shrink(1);
 						AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
 						return ActionResultType.SUCCESS;
 					}

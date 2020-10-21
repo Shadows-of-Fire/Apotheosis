@@ -88,11 +88,8 @@ public class LootManager extends JsonReloadListener {
 		ITextComponent name = stack.getDisplayName();
 		EquipmentType type = EquipmentType.getTypeFor(stack);
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
-		EquipmentSlotType slot = EquipmentType.getTypeFor(stack).getSlot(stack);
-		Multimap<Attribute, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
 		AffixHelper.setRarity(stack, rarity);
-
-		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
+		recomputeBaseAttributes(stack);
 
 		if (type == EquipmentType.AXE) AffixHelper.applyAffix(stack, Affixes.PIERCING, Affixes.PIERCING.apply(stack, rand, null));
 
@@ -128,6 +125,12 @@ public class LootManager extends JsonReloadListener {
 	 */
 	public static ItemStack genUnique(Random rand) {
 		return ItemStack.EMPTY;
+	}
+
+	public static void recomputeBaseAttributes(ItemStack stack) {
+		EquipmentSlotType slot = EquipmentType.getTypeFor(stack).getSlot(stack);
+		Multimap<Attribute, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
+		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
 	}
 
 }

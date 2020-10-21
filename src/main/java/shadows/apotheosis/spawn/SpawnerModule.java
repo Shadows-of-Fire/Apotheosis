@@ -84,6 +84,14 @@ public class SpawnerModule {
 		TileEntity te;
 		if ((te = e.getWorld().getTileEntity(e.getPos())) instanceof ApothSpawnerTile) {
 			ItemStack s = e.getItemStack();
+
+			if (e.getPlayer().isSneaking() && s.getItem() instanceof SpawnEggItem) {
+				if (SpawnerModifiers.EGG.modify((ApothSpawnerTile) te, s, false)) {
+					e.setCanceled(true);
+					return;
+				}
+			}
+
 			boolean inverse = SpawnerModifiers.inverseItem.test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
 				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
