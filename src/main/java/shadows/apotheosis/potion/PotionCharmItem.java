@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectUtils;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
@@ -26,11 +27,16 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class PotionCharmItem extends Item {
 
 	public PotionCharmItem() {
 		super(new Item.Properties().maxStackSize(1).maxDamage(192).group(ItemGroup.MISC));
+	}
+
+	public ItemStack getDefaultInstance() {
+		return PotionUtils.addPotionToItemStack(super.getDefaultInstance(), Potions.LONG_INVISIBILITY);
 	}
 
 	@Override
@@ -79,9 +85,21 @@ public class PotionCharmItem extends Item {
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotionFromItem(stack);
-			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc", new TranslationTextComponent(p.getEffects().get(0).getEffectName())).mergeStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc2").mergeStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".enabled", stack.getOrCreateTag().getBoolean("charm_enabled")).mergeStyle(TextFormatting.BLUE));
+			EffectInstance effect = p.getEffects().get(0);
+			TranslationTextComponent potionCmp = new TranslationTextComponent(effect.getEffectName());
+			if (effect.getAmplifier() > 0) {
+				potionCmp = new TranslationTextComponent("potion.withAmplifier", potionCmp, new TranslationTextComponent("potion.potency." + effect.getAmplifier()));
+			}
+			potionCmp.mergeStyle(effect.getPotion().getEffectType().getColor());
+			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc", potionCmp).mergeStyle(TextFormatting.GRAY));
+			boolean enabled = stack.getOrCreateTag().getBoolean("charm_enabled");
+			TranslationTextComponent enabledCmp = new TranslationTextComponent(this.getTranslationKey() + (enabled ? ".enabled" : ".disabled"));
+			enabledCmp.mergeStyle(enabled ? TextFormatting.BLUE : TextFormatting.RED);
+			if (effect.getDuration() > 20) {
+				potionCmp = new TranslationTextComponent("potion.withDuration", potionCmp, EffectUtils.getPotionDurationString(effect, 1));
+			}
+			potionCmp.mergeStyle(effect.getPotion().getEffectType().getColor());
+			tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".desc3", potionCmp).mergeStyle(TextFormatting.GRAY));
 		}
 	}
 
@@ -95,20 +113,28 @@ public class PotionCharmItem extends Item {
 	public ITextComponent getDisplayName(ItemStack stack) {
 		if (!hasPotion(stack)) return new TranslationTextComponent("item.apotheosis.potion_charm_broke");
 		Potion p = PotionUtils.getPotionFromItem(stack);
-		return new TranslationTextComponent("item.apotheosis.potion_charm", new TranslationTextComponent(p.getEffects().get(0).getEffectName()));
+		EffectInstance effect = p.getEffects().get(0);
+		TranslationTextComponent potionCmp = new TranslationTextComponent(effect.getEffectName());
+		if (effect.getAmplifier() > 0) {
+			potionCmp = new TranslationTextComponent("potion.withAmplifier", potionCmp, new TranslationTextComponent("potion.potency." + effect.getAmplifier()));
+		}
+		return new TranslationTextComponent("item.apotheosis.potion_charm", potionCmp);
 	}
 
-	protected boolean hasPotion(ItemStack stack) {
+	public static boolean hasPotion(ItemStack stack) {
 		return stack.hasTag() && stack.getTag().contains("Potion");
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> stacks) {
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		if (this.isInGroup(group)) {
-			ItemStack stack = new ItemStack(this);
-			PotionUtils.addPotionToItemStack(stack, Potions.LONG_INVISIBILITY);
-			stacks.add(stack);
+			for (Potion potion : ForgeRegistries.POTION_TYPES) {
+				if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getPotion().isInstant()) {
+					items.add(PotionUtils.addPotionToItemStack(new ItemStack(this), potion));
+				}
+			}
 		}
+
 	}
 
 }

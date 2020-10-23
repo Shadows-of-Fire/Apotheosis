@@ -16,13 +16,11 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.deadly.affix.AffixHelper;
 
 public class PotionCharmRecipe extends ShapedRecipe {
 
@@ -34,10 +32,9 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		Ingredient blaze = Ingredient.fromStacks(new ItemStack(Items.BLAZE_POWDER));
 		List<ItemStack> potionStacks = new ArrayList<>();
 		for (Potion p : ForgeRegistries.POTION_TYPES) {
-			if (p.getEffects() == null || p.getEffects().size() != 1) continue;
+			if (p.getEffects().size() != 1 || p.getEffects().get(0).getPotion().isInstant()) continue;
 			ItemStack potion = new ItemStack(Items.POTION);
 			PotionUtils.addPotionToItemStack(potion, p);
-			AffixHelper.addLore(potion, new TranslationTextComponent("info.apotheosis.any_same_potion"));
 			potionStacks.add(potion);
 		}
 		Ingredient potion = Ingredient.fromStacks(potionStacks.toArray(new ItemStack[0]));

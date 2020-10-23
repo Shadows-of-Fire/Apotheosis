@@ -45,3 +45,10 @@ All things that should have been.
     versionRange="[0,)"
     ordering="AFTER" #We need to load before quark, or bad things may happen.
     side="BOTH"
+
+[[dependencies.apotheosis]]
+    modId="jei"
+    mandatory=false
+    versionRange="[7.6.0,)"
+    ordering="NONE"
+    side="BOTH"
