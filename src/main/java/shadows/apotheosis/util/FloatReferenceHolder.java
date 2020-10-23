@@ -53,4 +53,12 @@ public class FloatReferenceHolder {
 		this.internal = this.array.get(0) + this.array.get(1) / 10F + this.array.get(2) / 100F;
 	}
 
+	public float getMax() {
+		return max;
+	}
+
+	public float getMin() {
+		return min;
+	}
+
 }

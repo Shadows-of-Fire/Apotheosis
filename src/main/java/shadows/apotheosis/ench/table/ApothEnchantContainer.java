@@ -38,7 +38,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 
 	protected IWorldPosCallable wPos = super.worldPosCallable;
 
-	protected FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, 50);
+	protected FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatManager.getAbsoluteMaxEterna());
 	protected FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 10);
 	protected FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 10);
 

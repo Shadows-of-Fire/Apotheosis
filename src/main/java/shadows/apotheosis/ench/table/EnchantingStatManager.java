@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.table;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -86,6 +87,10 @@ public class EnchantingStatManager extends JsonReloadListener {
 		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).arcana;
 		else if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getArcanaBonus(state, world, pos);
 		return 0;
+	}
+
+	public static float getAbsoluteMaxEterna() {
+		return INSTANCE.stats.values().stream().max(Comparator.comparingDouble(s -> s.maxEterna)).get().maxEterna;
 	}
 
 	public static void dispatch(PlayerEntity player) {
