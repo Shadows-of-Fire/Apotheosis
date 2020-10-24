@@ -144,6 +144,7 @@ public class ApotheosisObjects {
 	public static final EntityType<ExplosiveArrowEntity> EX_ARROW_ENTITY = null;
 	public static final ExplosiveArrowItem EXPLOSIVE_ARROW = null;
 	public static final EntityType<MiningArrowEntity> MN_ARROW_ENTITY = null;
-	public static final MiningArrowItem MINING_ARROW = null;
+	public static final MiningArrowItem IRON_MINING_ARROW = null;
+	public static final MiningArrowItem DIAMOND_MINING_ARROW = null;
 
 }

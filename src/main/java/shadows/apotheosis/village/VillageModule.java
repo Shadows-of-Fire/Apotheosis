@@ -81,7 +81,8 @@ public class VillageModule {
 				new ObsidianArrowItem().setRegistryName("obsidian_arrow"), 
 				new BroadheadArrowItem().setRegistryName("broadhead_arrow"),
 				new ExplosiveArrowItem().setRegistryName("explosive_arrow"),
-				new MiningArrowItem(() -> Items.DIAMOND_PICKAXE).setRegistryName("mining_arrow")
+				new MiningArrowItem(() -> Items.IRON_PICKAXE, MiningArrowEntity.Type.IRON).setRegistryName("iron_mining_arrow"),
+				new MiningArrowItem(() -> Items.DIAMOND_PICKAXE, MiningArrowEntity.Type.DIAMOND).setRegistryName("diamond_mining_arrow")
 		);
 	}
 
@@ -121,7 +122,7 @@ public class VillageModule {
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
 				.size(0.5F, 0.5F)
-				.setCustomClientFactory((se, w) -> new MiningArrowEntity(w))
+				.setCustomClientFactory((se, w) -> new MiningArrowEntity(se.getAdditionalData().readByte(), w))
 				.build("mn_arrow")
 				.setRegistryName("mn_arrow_entity"));
 		//Formatter::on

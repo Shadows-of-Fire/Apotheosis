@@ -11,10 +11,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -22,39 +23,42 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.NetworkHooks;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.util.BlockUtil;
 
-public class MiningArrowEntity extends AbstractArrowEntity {
+public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
 
 	protected int blocksBroken = 0;
 	protected UUID playerId = null;
 	protected ItemStack breakerItem = ItemStack.EMPTY;
+	protected Type type = Type.IRON;
 
 	public MiningArrowEntity(EntityType<? extends AbstractArrowEntity> t, World world) {
 		super(t, world);
-		this.noClip = true;
+		this.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 	}
 
-	public MiningArrowEntity(World world) {
-		super(ApotheosisObjects.MN_ARROW_ENTITY, world);
-		this.noClip = true;
+	public MiningArrowEntity(byte type, World world) {
+		this(ApotheosisObjects.MN_ARROW_ENTITY, world);
 	}
 
-	public MiningArrowEntity(LivingEntity shooter, World world, ItemStack breakerItem) {
+	public MiningArrowEntity(LivingEntity shooter, World world, ItemStack breakerItem, Type type) {
 		super(ApotheosisObjects.MN_ARROW_ENTITY, shooter, world);
-		this.breakerItem = new ItemStack(Items.IRON_PICKAXE);
+		this.breakerItem = breakerItem;
+		this.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
+		this.type = type;
 	}
 
 	@Override
 	protected ItemStack getArrowStack() {
-		return new ItemStack(ApotheosisObjects.MINING_ARROW);
+		return ItemStack.EMPTY; //This arrow can never be picked up.
 	}
 
 	@Override
@@ -101,12 +105,14 @@ public class MiningArrowEntity extends AbstractArrowEntity {
 			this.timeInGround = 0;
 			Vector3d pos = this.getPositionVec();
 			Vector3d posNextTick = pos.add(motion);
+			int iterations = 0;
 			while (!world.isRemote && this.isAlive()) {
 				RayTraceResult traceResult = this.world.rayTraceBlocks(new RayTraceContext(pos, posNextTick, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-				if (traceResult.getType() == Type.MISS) break;
-				else if (traceResult.getType() == Type.BLOCK) {
+				if (traceResult.getType() == RayTraceResult.Type.MISS) break;
+				else if (traceResult.getType() == RayTraceResult.Type.BLOCK) {
 					this.onImpact(traceResult);
 				}
+				if (iterations++ > 10) break; //Safeguard in case mods do weird stuff
 			}
 
 			motion = this.getMotion();
@@ -174,6 +180,7 @@ public class MiningArrowEntity extends AbstractArrowEntity {
 		compound.putInt("blocks_broken", blocksBroken);
 		if (playerId != null) compound.putUniqueId("player_id", playerId);
 		compound.put("breaker_item", breakerItem.serializeNBT());
+		compound.putByte("arrow_type", (byte) this.type.ordinal());
 	}
 
 	@Override
@@ -182,6 +189,17 @@ public class MiningArrowEntity extends AbstractArrowEntity {
 		blocksBroken = compound.getInt("blocks_broken");
 		if (compound.contains("player_id")) playerId = compound.getUniqueId("player_id");
 		breakerItem = ItemStack.read(compound.getCompound("breaker_item"));
+		this.type = Type.values()[compound.getByte("arrow_type")];
+	}
+
+	@Override
+	public void writeSpawnData(PacketBuffer buf) {
+		buf.writeByte(this.type.ordinal());
+	}
+
+	@Override
+	public void readSpawnData(PacketBuffer buf) {
+		this.type = Type.values()[buf.readByte()];
 	}
 
 	protected void breakBlock(BlockPos pos) {
@@ -194,6 +212,21 @@ public class MiningArrowEntity extends AbstractArrowEntity {
 				this.playSound(SoundEvents.BLOCK_ANVIL_PLACE, 1.0F, 1.5F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.remove();
 			}
+		}
+	}
+
+	public static enum Type {
+		IRON(new ResourceLocation(Apotheosis.MODID, "textures/entity/iron_mining_arrow.png")),
+		DIAMOND(new ResourceLocation(Apotheosis.MODID, "textures/entity/diamond_mining_arrow.png"));
+
+		private final ResourceLocation texture;
+
+		Type(ResourceLocation texture) {
+			this.texture = texture;
+		}
+
+		public ResourceLocation getTexture() {
+			return texture;
 		}
 	}
 }

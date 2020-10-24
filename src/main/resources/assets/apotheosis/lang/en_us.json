@@ -551,6 +551,10 @@
 	"info.apotheosis.broadhead_arrow": "Bleeding (0:15)",
 	"item.apotheosis.explosive_arrow": "Explosive Arrow",
 	"info.apotheosis.explosive_arrow": "Explosion Radius: 2",
+	"item.apotheosis.iron_mining_arrow": "Iron Mining Arrow",
+	"item.apotheosis.diamond_mining_arrow": "Diamond Mining Arrow",
+	"info.apotheosis.mining_arrow.iron": "Breaks blocks like an iron pickaxe",
+	"info.apotheosis.mining_arrow.diamond": "Breaks blocks like a diamond pickaxe",
 	"effect.apotheosis.bleeding": "Bleeding",
 	"death.attack.apotheosis.bleeding": "%s bled out.",
 	

@@ -4,7 +4,8 @@
     "apotheosis:obsidian_arrow",
 	"apotheosis:broadhead_arrow",
 	"apotheosis:explosive_arrow",
-	"apotheosis:mining_arrow"
+	"apotheosis:iron_mining_arrow",
+	"apotheosis:diamond_mining_arrow"
   ],
   "values": []
 }

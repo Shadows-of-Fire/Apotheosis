@@ -1,6 +1,7 @@
 package shadows.apotheosis.village.fletching.arrows;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,22 +21,24 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MiningArrowItem extends ArrowItem {
 
 	protected final Supplier<Item> breakerItem;
+	protected final MiningArrowEntity.Type arrowType;
 
-	public MiningArrowItem(Supplier<Item> breakerItem) {
+	public MiningArrowItem(Supplier<Item> breakerItem, MiningArrowEntity.Type arrowType) {
 		super(new Item.Properties().group(ItemGroup.COMBAT));
 		this.breakerItem = breakerItem;
+		this.arrowType = arrowType;
 	}
 
 	@Override
 	public AbstractArrowEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
-		MiningArrowEntity e = new MiningArrowEntity(shooter, world, new ItemStack(breakerItem.get()));
+		MiningArrowEntity e = new MiningArrowEntity(shooter, world, new ItemStack(breakerItem.get()), arrowType);
 		return e;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow").mergeStyle(TextFormatting.GOLD));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow." + arrowType.name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GOLD));
 	}
 
 }
