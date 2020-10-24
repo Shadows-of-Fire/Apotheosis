@@ -1,0 +1,74 @@
+package shadows.apotheosis.village.fletching.arrows;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion.Mode;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
+import shadows.apotheosis.ApotheosisObjects;
+
+public class ExplosiveArrowEntity extends ArrowEntity {
+
+	public ExplosiveArrowEntity(EntityType<? extends ArrowEntity> t, World world) {
+		super(t, world);
+	}
+
+	public ExplosiveArrowEntity(World world) {
+		super(ApotheosisObjects.EX_ARROW_ENTITY, world);
+	}
+
+	public ExplosiveArrowEntity(LivingEntity shooter, World world) {
+		super(world, shooter);
+	}
+
+	@Override
+	protected ItemStack getArrowStack() {
+		return new ItemStack(ApotheosisObjects.EXPLOSIVE_ARROW);
+	}
+
+	@Override
+	public IPacket<?> createSpawnPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
+	}
+
+	@Override
+	public EntityType<?> getType() {
+		return ApotheosisObjects.EX_ARROW_ENTITY;
+	}
+
+	@Override
+	public int getColor() {
+		return -1;
+	}
+
+	@Override
+	protected void arrowHit(LivingEntity living) {
+		if (!world.isRemote) {
+			Entity shooter = this.func_234616_v_();
+			LivingEntity explosionSource = null;
+			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
+			world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, living.getPosX(), living.getPosY(), living.getPosZ(), 2, false, Mode.DESTROY);
+			this.remove();
+		}
+	}
+
+	@Override //onBlockHit
+	protected void func_230299_a_(BlockRayTraceResult res) {
+		super.func_230299_a_(res);
+		Vector3d vec = res.getHitVec();
+		if (!world.isRemote) {
+			Entity shooter = this.func_234616_v_();
+			LivingEntity explosionSource = null;
+			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
+			world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, vec.getX(), vec.getY(), vec.getZ(), 2, false, Mode.DESTROY);
+			this.remove();
+		}
+	}
+}

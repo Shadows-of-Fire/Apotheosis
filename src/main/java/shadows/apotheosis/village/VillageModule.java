@@ -27,6 +27,8 @@ import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.FletchingRecipe;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
+import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowEntity;
+import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import shadows.apotheosis.village.fletching.effects.BleedingEffect;
@@ -71,7 +73,12 @@ public class VillageModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().registerAll(new ObsidianArrowItem().setRegistryName("obsidian_arrow"), new BroadheadArrowItem().setRegistryName("broadhead_arrow"));
+		//Formatter::off
+		e.getRegistry().registerAll(
+				new ObsidianArrowItem().setRegistryName("obsidian_arrow"), 
+				new BroadheadArrowItem().setRegistryName("broadhead_arrow"),
+				new ExplosiveArrowItem().setRegistryName("explosive_arrow")
+		);
 	}
 
 	@SubscribeEvent
@@ -95,6 +102,15 @@ public class VillageModule {
 				.setCustomClientFactory((se, w) -> new BroadheadArrowEntity(w))
 				.build("bh_arrow")
 				.setRegistryName("bh_arrow_entity"));
+		e.getRegistry().register(EntityType.Builder
+				.<ExplosiveArrowEntity>create(ExplosiveArrowEntity::new, EntityClassification.MISC)
+				.setShouldReceiveVelocityUpdates(true)
+				.setTrackingRange(4)
+				.setUpdateInterval(20)
+				.size(0.5F, 0.5F)
+				.setCustomClientFactory((se, w) -> new ExplosiveArrowEntity(w))
+				.build("ex_arrow")
+				.setRegistryName("ex_arrow_entity"));
 		//Formatter::on
 	}
 

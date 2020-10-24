@@ -45,6 +45,8 @@ import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
+import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowEntity;
+import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 
@@ -137,5 +139,7 @@ public class ApotheosisObjects {
 	public static final Block MELONSHELF = null;
 	public static final Enchantment OBLITERATION = null;
 	public static final Enchantment CRESCENDO = null;
+	public static final EntityType<ExplosiveArrowEntity> EX_ARROW_ENTITY = null;
+	public static final ExplosiveArrowItem EXPLOSIVE_ARROW = null;
 
 }

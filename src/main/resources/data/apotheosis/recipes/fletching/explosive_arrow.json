@@ -1,0 +1,21 @@
+{
+	"type": "apotheosis:fletching",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "villager"
+	}],
+	"ingredients": [{
+			"item": "minecraft:fire_charge"
+		},
+		{
+			"item": "minecraft:gunpowder"
+		},
+		{
+			"item": "minecraft:arrow"
+		}
+	],
+	"result": {
+		"item": "apotheosis:explosive_arrow",
+		"count": 1
+	}
+}

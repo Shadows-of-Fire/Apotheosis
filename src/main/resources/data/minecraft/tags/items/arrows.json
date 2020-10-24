@@ -2,7 +2,8 @@
   "replace": false,
   "optional": [
     "apotheosis:obsidian_arrow",
-	"apotheosis:broadhead_arrow"
+	"apotheosis:broadhead_arrow",
+	"apotheosis:explosive_arrow"
   ],
   "values": []
 }
