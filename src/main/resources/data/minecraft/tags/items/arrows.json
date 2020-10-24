@@ -3,7 +3,8 @@
   "optional": [
     "apotheosis:obsidian_arrow",
 	"apotheosis:broadhead_arrow",
-	"apotheosis:explosive_arrow"
+	"apotheosis:explosive_arrow",
+	"apotheosis:mining_arrow"
   ],
   "values": []
 }

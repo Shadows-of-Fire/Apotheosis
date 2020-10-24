@@ -3,7 +3,7 @@ package shadows.apotheosis.village.fletching.arrows;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import shadows.apotheosis.ApotheosisObjects;
 
-public class ExplosiveArrowEntity extends ArrowEntity {
+public class ExplosiveArrowEntity extends AbstractArrowEntity {
 
-	public ExplosiveArrowEntity(EntityType<? extends ArrowEntity> t, World world) {
+	public ExplosiveArrowEntity(EntityType<? extends AbstractArrowEntity> t, World world) {
 		super(t, world);
 	}
 
@@ -25,7 +25,7 @@ public class ExplosiveArrowEntity extends ArrowEntity {
 	}
 
 	public ExplosiveArrowEntity(LivingEntity shooter, World world) {
-		super(world, shooter);
+		super(ApotheosisObjects.EX_ARROW_ENTITY, shooter, world);
 	}
 
 	@Override
@@ -36,16 +36,6 @@ public class ExplosiveArrowEntity extends ArrowEntity {
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
-	@Override
-	public EntityType<?> getType() {
-		return ApotheosisObjects.EX_ARROW_ENTITY;
-	}
-
-	@Override
-	public int getColor() {
-		return -1;
 	}
 
 	@Override

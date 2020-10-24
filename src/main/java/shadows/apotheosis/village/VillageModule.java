@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.potion.Effect;
@@ -29,6 +30,8 @@ import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowItem;
+import shadows.apotheosis.village.fletching.arrows.MiningArrowEntity;
+import shadows.apotheosis.village.fletching.arrows.MiningArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import shadows.apotheosis.village.fletching.effects.BleedingEffect;
@@ -77,7 +80,8 @@ public class VillageModule {
 		e.getRegistry().registerAll(
 				new ObsidianArrowItem().setRegistryName("obsidian_arrow"), 
 				new BroadheadArrowItem().setRegistryName("broadhead_arrow"),
-				new ExplosiveArrowItem().setRegistryName("explosive_arrow")
+				new ExplosiveArrowItem().setRegistryName("explosive_arrow"),
+				new MiningArrowItem(() -> Items.DIAMOND_PICKAXE).setRegistryName("mining_arrow")
 		);
 	}
 
@@ -111,6 +115,15 @@ public class VillageModule {
 				.setCustomClientFactory((se, w) -> new ExplosiveArrowEntity(w))
 				.build("ex_arrow")
 				.setRegistryName("ex_arrow_entity"));
+		e.getRegistry().register(EntityType.Builder
+				.<MiningArrowEntity>create(MiningArrowEntity::new, EntityClassification.MISC)
+				.setShouldReceiveVelocityUpdates(true)
+				.setTrackingRange(4)
+				.setUpdateInterval(20)
+				.size(0.5F, 0.5F)
+				.setCustomClientFactory((se, w) -> new MiningArrowEntity(w))
+				.build("mn_arrow")
+				.setRegistryName("mn_arrow_entity"));
 		//Formatter::on
 	}
 

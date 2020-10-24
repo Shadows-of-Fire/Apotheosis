@@ -47,6 +47,8 @@ import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowItem;
+import shadows.apotheosis.village.fletching.arrows.MiningArrowEntity;
+import shadows.apotheosis.village.fletching.arrows.MiningArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 
@@ -141,5 +143,7 @@ public class ApotheosisObjects {
 	public static final Enchantment CRESCENDO = null;
 	public static final EntityType<ExplosiveArrowEntity> EX_ARROW_ENTITY = null;
 	public static final ExplosiveArrowItem EXPLOSIVE_ARROW = null;
+	public static final EntityType<MiningArrowEntity> MN_ARROW_ENTITY = null;
+	public static final MiningArrowItem MINING_ARROW = null;
 
 }
