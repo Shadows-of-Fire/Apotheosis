@@ -45,7 +45,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		this.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 	}
 
-	public MiningArrowEntity(byte type, World world) {
+	public MiningArrowEntity(World world) {
 		this(ApotheosisObjects.MN_ARROW_ENTITY, world);
 	}
 

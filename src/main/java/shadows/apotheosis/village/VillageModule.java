@@ -122,7 +122,7 @@ public class VillageModule {
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
 				.size(0.5F, 0.5F)
-				.setCustomClientFactory((se, w) -> new MiningArrowEntity(se.getAdditionalData().readByte(), w))
+				.setCustomClientFactory((se, w) -> new MiningArrowEntity(w))
 				.build("mn_arrow")
 				.setRegistryName("mn_arrow_entity"));
 		//Formatter::on
