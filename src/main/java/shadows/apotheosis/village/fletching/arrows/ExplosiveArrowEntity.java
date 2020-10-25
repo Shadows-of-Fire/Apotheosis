@@ -57,7 +57,7 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
 			Entity shooter = this.func_234616_v_();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, vec.getX(), vec.getY(), vec.getZ(), 2, false, Mode.DESTROY);
+			world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, vec.getX(), vec.getY(), vec.getZ(), 3, false, Mode.DESTROY);
 			this.remove();
 		}
 	}
