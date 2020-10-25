@@ -1,3 +1,7 @@
+Review anvil level math at higher levels, as well as repair costs.
+
+Add additional tomes to account for new enchantment types, and clarify usage in tooltips.
+
 Affix based manipulation system in the smithing table.
 An item similar to a tome can be used to remove a single affix at a time from an affix item.
 -Removed affix is random from the affixes on the item.
