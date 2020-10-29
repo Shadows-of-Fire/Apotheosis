@@ -2,13 +2,9 @@ package shadows.apotheosis.village.fletching.arrows;
 
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -54,6 +50,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		this.breakerItem = breakerItem;
 		this.pickupStatus = AbstractArrowEntity.PickupStatus.DISALLOWED;
 		this.type = type;
+		this.playerId = shooter.getUniqueID();
 	}
 
 	@Override
@@ -165,13 +162,6 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 	@Override
 	public boolean hasNoGravity() {
 		return false;
-	}
-
-	@Override
-	public void setShooter(@Nullable Entity entity) {
-		super.setShooter(entity);
-		if (entity instanceof PlayerEntity) playerId = entity.getUniqueID();
-		else playerId = null;
 	}
 
 	@Override
