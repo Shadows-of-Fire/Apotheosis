@@ -89,7 +89,8 @@ public class DeadlyHooks {
 			for (ItemStack s : user.getEquipmentAndArmor()) {
 				Map<Affix, Float> affixes = AffixHelper.getAffixes(s);
 				for (Map.Entry<Affix, Float> e : affixes.entrySet()) {
-					int old = target.hurtResistantTime = 0;
+					int old = target.hurtResistantTime;
+					target.hurtResistantTime = 0;
 					e.getKey().onEntityDamaged(user, target, e.getValue());
 					target.hurtResistantTime = old;
 				}
