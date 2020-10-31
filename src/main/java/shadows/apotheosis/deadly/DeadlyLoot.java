@@ -14,8 +14,8 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.loot.LootManager;
 import shadows.apotheosis.deadly.loot.LootRarity;
+import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.loot.PoolBuilder;
 import shadows.placebo.loot.StackLootEntry;
@@ -144,9 +144,9 @@ public class DeadlyLoot {
 		@Override
 		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
 			LootRarity rarity = LootRarity.random(ctx.getRandom());
-			ItemStack stack = LootManager.getRandomEntry(ctx.getRandom(), rarity);
+			ItemStack stack = AffixLootManager.getRandomEntry(ctx.getRandom(), rarity);
 			stack.getTag().putBoolean("apoth_rchest", true);
-			list.accept(LootManager.genLootItem(stack, ctx.getRandom(), rarity));
+			list.accept(AffixLootManager.genLootItem(stack, ctx.getRandom(), rarity));
 		}
 	}
 

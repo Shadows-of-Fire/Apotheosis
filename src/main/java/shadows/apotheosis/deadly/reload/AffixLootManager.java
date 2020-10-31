@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly.loot;
+package shadows.apotheosis.deadly.reload;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,19 +32,22 @@ import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.affix.Affixes;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 import shadows.apotheosis.deadly.affix.modifiers.Modifiers;
+import shadows.apotheosis.deadly.loot.EquipmentType;
+import shadows.apotheosis.deadly.loot.AffixLootEntry;
+import shadows.apotheosis.deadly.loot.LootRarity;
 
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
  */
-public class LootManager extends JsonReloadListener {
+public class AffixLootManager extends JsonReloadListener {
 
 	public static final Gson GSON = BossArmorManager.GSON;
 
-	public static final LootManager INSTANCE = new LootManager();
+	public static final AffixLootManager INSTANCE = new AffixLootManager();
 
-	private static final List<LootEntry> ENTRIES = new ArrayList<>();
+	private static final List<AffixLootEntry> ENTRIES = new ArrayList<>();
 
-	private LootManager() {
+	private AffixLootManager() {
 		super(GSON, "affix_loot_entries");
 	}
 
@@ -53,7 +56,7 @@ public class LootManager extends JsonReloadListener {
 		ENTRIES.clear();
 		for (Entry<ResourceLocation, JsonElement> obj : objects.entrySet()) {
 			try {
-				LootEntry ent = GSON.fromJson(obj.getValue(), LootEntry.class);
+				AffixLootEntry ent = GSON.fromJson(obj.getValue(), AffixLootEntry.class);
 				ENTRIES.add(ent);
 			} catch (Exception e) {
 				DeadlyModule.LOGGER.error("Failed to load affix loot entry {}.", obj.getKey());
@@ -63,7 +66,7 @@ public class LootManager extends JsonReloadListener {
 		DeadlyModule.LOGGER.info("Loaded {} affix loot entries from resources.", ENTRIES.size());
 	}
 
-	public static List<LootEntry> getEntries() {
+	public static List<AffixLootEntry> getEntries() {
 		return ENTRIES;
 	}
 
@@ -74,7 +77,7 @@ public class LootManager extends JsonReloadListener {
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
 	public static ItemStack getRandomEntry(Random rand, LootRarity rarity) {
-		LootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES);
+		AffixLootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES);
 		ItemStack stack = rarity == LootRarity.ANCIENT ? genUnique(rand) : entry.getStack().copy();
 		return stack;
 	}

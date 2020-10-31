@@ -7,12 +7,12 @@ import net.minecraft.util.WeightedRandom;
  * A loot entry represents a possible item that can come out of a loot roll.
  * It is classified into a type, which is used to determine possible affixes.
  */
-public class LootEntry extends WeightedRandom.Item {
+public class AffixLootEntry extends WeightedRandom.Item {
 
 	protected final ItemStack stack;
 	protected final EquipmentType type;
 
-	public LootEntry(ItemStack stack, EquipmentType type, int weight) {
+	public AffixLootEntry(ItemStack stack, EquipmentType type, int weight) {
 		super(weight);
 		this.stack = stack;
 		this.type = type;

@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly.loot;
+package shadows.apotheosis.deadly.reload;
 
 import java.util.ArrayList;
 import java.util.HashMap;
