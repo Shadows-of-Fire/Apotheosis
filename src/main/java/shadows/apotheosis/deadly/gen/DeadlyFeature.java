@@ -71,7 +71,7 @@ public class DeadlyFeature extends Feature<NoFeatureConfig> {
 	public static final boolean DEBUG = false;
 
 	public static void debugLog(BlockPos pos, String name) {
-		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
+		if (true) DeadlyModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
 	}
 
 	public static void setSuccess(DimensionType dim, int x, int z) {

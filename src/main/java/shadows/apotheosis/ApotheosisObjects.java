@@ -10,6 +10,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
+import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.ench.altar.SeaAltarBlock;
 import shadows.apotheosis.ench.altar.SeaAltarTile;
 import shadows.apotheosis.ench.anvil.AnvilTile;
@@ -146,5 +148,7 @@ public class ApotheosisObjects {
 	public static final EntityType<MiningArrowEntity> MN_ARROW_ENTITY = null;
 	public static final MiningArrowItem IRON_MINING_ARROW = null;
 	public static final MiningArrowItem DIAMOND_MINING_ARROW = null;
+	public static final BossSpawnerBlock BOSS_SPAWNER = null;
+	public static final TileEntityType<BossSpawnerTile> BOSS_SPAWN_TILE = null;
 
 }

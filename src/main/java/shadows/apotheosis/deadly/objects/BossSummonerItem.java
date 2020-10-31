@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import shadows.apotheosis.deadly.gen.BossGenerator;
-import shadows.apotheosis.deadly.gen.BossItem;
+import shadows.apotheosis.deadly.gen.BossFeatureItem;
 
 public class BossSummonerItem extends Item {
 
@@ -20,7 +20,7 @@ public class BossSummonerItem extends Item {
 	public ActionResultType onItemUse(ItemUseContext ctx) {
 		World world = ctx.getWorld();
 		if (world.isRemote) return ActionResultType.SUCCESS;
-		BossItem item = WeightedRandom.getRandomItem(world.getRandom(), BossGenerator.BOSS_ITEMS);
+		BossFeatureItem item = WeightedRandom.getRandomItem(world.getRandom(), BossGenerator.BOSS_ITEMS);
 		BlockPos pos = ctx.getPos().offset(ctx.getFace());
 		if (!world.hasNoCollisions(item.getAABB((ServerWorld) world).offset(pos))) {
 			pos = pos.up();

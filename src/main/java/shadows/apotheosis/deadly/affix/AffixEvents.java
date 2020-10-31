@@ -62,10 +62,10 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
-import shadows.apotheosis.deadly.gen.BossItem;
-import shadows.apotheosis.deadly.loot.LootEntry;
-import shadows.apotheosis.deadly.loot.LootManager;
+import shadows.apotheosis.deadly.gen.BossFeatureItem;
+import shadows.apotheosis.deadly.loot.AffixLootEntry;
 import shadows.apotheosis.deadly.loot.LootRarity;
+import shadows.apotheosis.deadly.reload.AffixLootManager;
 
 public class AffixEvents {
 
@@ -214,7 +214,7 @@ public class AffixEvents {
 			return ISuggestionProvider.suggest(Arrays.stream(LootRarity.values()).map(r -> r.toString()).collect(Collectors.toList()), b);
 		}).executes(c -> {
 			PlayerEntity p = c.getSource().asPlayer();
-			p.addItemStackToInventory(LootManager.genLootItem(LootManager.getRandomEntry(p.world.rand, null), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
+			p.addItemStackToInventory(AffixLootManager.genLootItem(AffixLootManager.getRandomEntry(p.world.rand, null), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
 			return 0;
 		})));
 	}
@@ -308,9 +308,9 @@ public class AffixEvents {
 			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity) {
 				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(DeadlyConfig.randomAffixItem) == 0) {
 					LootRarity rarity = LootRarity.random(rand);
-					LootEntry entry = WeightedRandom.getRandomItem(rand, LootManager.getEntries());
+					AffixLootEntry entry = WeightedRandom.getRandomItem(rand, AffixLootManager.getEntries());
 					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());
-					ItemStack loot = LootManager.genLootItem(entry.getStack().copy(), rand, rarity);
+					ItemStack loot = AffixLootManager.genLootItem(entry.getStack().copy(), rand, rarity);
 					loot.getTag().putBoolean("apoth_rspawn", true);
 					entity.setItemStackToSlot(slot, loot);
 					((MobEntity) entity).setDropChance(slot, 2);
@@ -318,7 +318,7 @@ public class AffixEvents {
 				}
 				if (!e.getWorld().canBlockSeeSky(new BlockPos((int) e.getX(), (int) e.getY() + 1, (int) e.getZ()))) return;
 				if (rand.nextInt(DeadlyConfig.surfaceBossChance) == 0) {
-					BossItem.initBoss(rand, (MobEntity) entity);
+					BossFeatureItem.initBoss(rand, (MobEntity) entity);
 					Vector3d pos = e.getEntity().getPositionVec();
 					if (DeadlyConfig.surfaceBossLightning) {
 						LightningBoltEntity bolt = EntityType.LIGHTNING_BOLT.create((World) e.getWorld());

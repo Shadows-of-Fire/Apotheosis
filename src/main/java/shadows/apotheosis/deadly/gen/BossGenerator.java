@@ -21,7 +21,7 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
  */
 public class BossGenerator extends WeightedGenerator {
 
-	public static final List<BossItem> BOSS_ITEMS = new ArrayList<>();
+	public static final List<BossFeatureItem> BOSS_ITEMS = new ArrayList<>();
 
 	@Override
 	public boolean generate(IServerWorld world, int chunkX, int chunkZ, Random rand) {
@@ -30,7 +30,7 @@ public class BossGenerator extends WeightedGenerator {
 		int z = (chunkZ << 4) + MathHelper.nextInt(rand, 4, 12);
 		int y = 15 + rand.nextInt(35);
 		BlockPos.Mutable mPos = new BlockPos.Mutable(x, y, z);
-		BossItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
+		BossFeatureItem item = WeightedRandom.getRandomItem(rand, BOSS_ITEMS);
 		for (; y > 10; y--) {
 			if (Block.hasEnoughSolidSide(world, mPos.setPos(x, y, z), Direction.UP)) {
 				if (world.hasNoCollisions(item.getAABB(world).offset(mPos.setPos(x, y + 1, z)))) {
@@ -55,7 +55,7 @@ public class BossGenerator extends WeightedGenerator {
 	public static void rebuildBossItems() {
 		BOSS_ITEMS.clear();
 		for (Object2IntMap.Entry<ResourceLocation> pair : DeadlyConfig.BOSS_MOBS.object2IntEntrySet()) {
-			BossItem i = new BossItem(pair.getIntValue(), pair.getKey());
+			BossFeatureItem i = new BossFeatureItem(pair.getIntValue(), pair.getKey());
 			BOSS_ITEMS.add(i);
 		}
 	}
