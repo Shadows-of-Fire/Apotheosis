@@ -1,9 +1,9 @@
 package shadows.apotheosis.deadly.affix.impl.heavy;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Excess damage is converted into absorption hearts.  A max of 10 hearts can be stored this way.

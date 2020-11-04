@@ -7,6 +7,13 @@ import java.util.Random;
  */
 public class RandomIntRange {
 
+	public static final RandomIntRange ZERO = new RandomIntRange(0, 1) {
+		@Override
+		public int generateInt(Random rand) {
+			return 0;
+		}
+	};
+
 	private final int min;
 	private final int max;
 

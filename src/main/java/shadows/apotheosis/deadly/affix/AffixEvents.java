@@ -16,11 +16,9 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,8 +42,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -62,9 +58,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
-import shadows.apotheosis.deadly.gen.BossFeatureItem;
-import shadows.apotheosis.deadly.loot.AffixLootEntry;
-import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 
 public class AffixEvents {
@@ -314,18 +307,6 @@ public class AffixEvents {
 					loot.getTag().putBoolean("apoth_rspawn", true);
 					entity.setItemStackToSlot(slot, loot);
 					((MobEntity) entity).setDropChance(slot, 2);
-					return;
-				}
-				if (!e.getWorld().canBlockSeeSky(new BlockPos((int) e.getX(), (int) e.getY() + 1, (int) e.getZ()))) return;
-				if (rand.nextInt(DeadlyConfig.surfaceBossChance) == 0) {
-					BossFeatureItem.initBoss(rand, (MobEntity) entity);
-					Vector3d pos = e.getEntity().getPositionVec();
-					if (DeadlyConfig.surfaceBossLightning) {
-						LightningBoltEntity bolt = EntityType.LIGHTNING_BOLT.create((World) e.getWorld());
-						bolt.setPosition(pos.getX(), pos.getY(), pos.getZ());
-						bolt.setEffectOnly(true);
-						e.getWorld().addEntity(bolt);
-					}
 					return;
 				}
 			}

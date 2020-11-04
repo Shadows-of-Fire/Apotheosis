@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,6 +34,7 @@ public class BossArmorManager extends JsonReloadListener {
 
 	protected final Map<ResourceLocation, GearSet> registry = new HashMap<>();
 	protected final List<GearSet> sets = new ArrayList<>();
+	private int weight = 0;
 
 	public BossArmorManager() {
 		super(GSON, "boss_gear");
@@ -49,18 +53,23 @@ public class BossArmorManager extends JsonReloadListener {
 			}
 		});
 		if (registry.isEmpty()) throw new RuntimeException("No Apotheosis Boss armor sets were registered.  At least one is required.");
-		else DeadlyModule.LOGGER.info("Registered {} boss gear sets.", sets.size());
+		DeadlyModule.LOGGER.info("Registered {} boss gear sets.", sets.size());
+		weight = WeightedRandom.getTotalWeight(sets);
 	}
 
 	protected void register(ResourceLocation id, GearSet set) {
 		if (!registry.containsKey(id)) {
+			set.setId(id);
 			registry.put(id, set);
 			sets.add(set);
 		} else DeadlyModule.LOGGER.error("Attempted to register a boss gear set with name {}, but it already exists!", id);
 	}
 
-	public GearSet getRandomSet(Random random) {
-		return WeightedRandom.getRandomItem(random, sets);
+	public GearSet getRandomSet(Random rand, @Nullable List<ResourceLocation> permitted) {
+		if (permitted == null || permitted.isEmpty()) return WeightedRandom.getRandomItem(rand, sets, weight);
+		List<GearSet> valid = sets.stream().filter(e -> permitted.contains(e.getId())).collect(Collectors.toList());
+		if (valid.isEmpty()) return WeightedRandom.getRandomItem(rand, sets, weight);
+		return WeightedRandom.getRandomItem(rand, valid);
 	}
 
 }

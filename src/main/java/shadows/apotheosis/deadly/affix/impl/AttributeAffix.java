@@ -12,8 +12,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.RandomValueRange;
 import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Helper class for affixes that modify attributes, as the apply method is the same for most of those.

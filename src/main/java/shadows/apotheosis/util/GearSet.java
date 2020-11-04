@@ -3,9 +3,12 @@ package shadows.apotheosis.util;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.annotations.Expose;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 
 /**
@@ -15,6 +18,8 @@ import net.minecraft.util.WeightedRandom;
  */
 public class GearSet extends WeightedRandom.Item {
 
+	@Expose(deserialize = false)
+	protected ResourceLocation id;
 	protected final List<WeightedItemStack> mainhands;
 	protected final List<WeightedItemStack> offhands;
 	protected final List<WeightedItemStack> boots;
@@ -30,6 +35,16 @@ public class GearSet extends WeightedRandom.Item {
 		this.leggings = leggings;
 		this.chestplates = chestplates;
 		this.helmets = helmets;
+	}
+
+	public void setId(ResourceLocation id) {
+		if (this.id == null) {
+			this.id = id;
+		} else throw new IllegalStateException("Cannot set the id of this boss item, it is already set!");
+	}
+
+	public ResourceLocation getId() {
+		return id;
 	}
 
 	/**

@@ -8,8 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.MerchantOffer;
 import net.minecraft.util.WeightedRandom;
-import shadows.apotheosis.deadly.loot.AffixLootEntry;
-import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 
 public class AffixTrade implements ITrade {

@@ -7,9 +7,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Adds cold damage, and slows hit enemies.

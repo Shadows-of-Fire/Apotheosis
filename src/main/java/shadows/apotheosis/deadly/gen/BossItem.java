@@ -1,137 +1,159 @@
 package shadows.apotheosis.deadly.gen;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.potion.Effect;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
-import shadows.apotheosis.util.RandomIntRange;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IServerWorld;
+import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.deadly.affix.LootRarity;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
+import shadows.apotheosis.deadly.reload.AffixLootManager;
+import shadows.apotheosis.deadly.reload.BossArmorManager;
+import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.apotheosis.util.ChancedEffectInstance;
+import shadows.apotheosis.util.NameHelper;
+import shadows.apotheosis.util.RandomAttributeModifier;
 
-public class BossItem {
+public class BossItem extends WeightedRandom.Item {
 
-	protected final ResourceLocation id;
+	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetClass == VillagerEntity.class;
+
+	@Expose(deserialize = false)
+	protected ResourceLocation id;
 	protected final EntityType<?> entity;
 	protected final AxisAlignedBB size;
-	protected final RandomValueRange health;
-	protected final RandomValueRange kbResist;
-	protected final RandomValueRange speed;
-	protected final RandomValueRange dmg;
+	@SerializedName("enchant_chance")
 	protected final float enchantChance;
 	protected final List<ChancedEffectInstance> effects;
+	@SerializedName("valid_gear_sets")
+	protected final List<ResourceLocation> armorSets;
+	@SerializedName("attribute_modifiers")
+	protected final List<RandomAttributeModifier> modifiers;
 
-	public BossItem(ResourceLocation id, EntityType<?> entity, AxisAlignedBB size, RandomValueRange health, RandomValueRange kbResist, RandomValueRange speed, RandomValueRange dmg, float enchantChance, List<ChancedEffectInstance> effects) {
-		this.id = id;
+	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, List<ChancedEffectInstance> effects, List<ResourceLocation> armorSets, List<RandomAttributeModifier> modifiers) {
+		super(weight);
 		this.entity = entity;
 		this.size = size;
-		this.health = health;
-		this.kbResist = kbResist;
-		this.speed = speed;
-		this.dmg = dmg;
 		this.enchantChance = enchantChance;
 		this.effects = effects;
+		this.armorSets = armorSets;
+		this.modifiers = modifiers;
 	}
 
-	public static class Builder {
-		protected final EntityType<?> entity;
-		protected AxisAlignedBB size = new AxisAlignedBB(0, 0, 0, 1, 2, 1);
-		protected RandomValueRange health = new RandomValueRange(4F, 8F);
-		protected RandomValueRange kbResist = new RandomValueRange(0.65F, 1F);
-		protected RandomValueRange speed = new RandomValueRange(1.10F, 1.4F);
-		protected RandomValueRange dmg = new RandomValueRange(2F, 4.5F);
-		protected float enchantChance = 0.45F;
-		protected List<ChancedEffectInstance> effects;
+	public void setId(ResourceLocation id) {
+		if (this.id == null) {
+			this.id = id;
+		} else throw new IllegalStateException("Cannot set the id of this boss item, it is already set!");
+	}
 
-		/**
-		 * Creates a BossItem builder for this entity.
-		 */
-		public Builder(EntityType<?> entity) {
-			this.entity = entity;
-		}
+	public ResourceLocation getId() {
+		return id;
+	}
 
-		/**
-		 * Specifies the size of the contained entity. <br>
-		 * Used for worldgen space checks.
-		 */
-		public Builder withSize(AxisAlignedBB size) {
-			this.size = size;
-			return this;
-		}
-
-		/**
-		 * Specifies min/max values for max hp multipliers.
-		 */
-		public Builder withHealth(float min, float max) {
-			this.health = new RandomValueRange(min, max);
-			return this;
-		}
-
-		/**
-		 * Specifies min/max values for knockback resist.
-		 */
-		public Builder withKbResist(float min, float max) {
-			this.kbResist = new RandomValueRange(min, max);
-			return this;
-		}
-
-		/**
-		 * Specifies min/max values for speed multipliers.
-		 */
-		public Builder withSpeed(float min, float max) {
-			this.speed = new RandomValueRange(min, max);
-			return this;
-		}
-
-		/**
-		 * Specifies min/max values for bonus attack damage.
-		 */
-		public Builder withDamage(float min, float max) {
-			this.dmg = new RandomValueRange(min, max);
-			return this;
-		}
-
-		/**
-		 * Specifies the chance that a piece of gear is enchanted.
-		 */
-		public Builder withEnchantChance(float chance) {
-			this.enchantChance = chance;
-			return this;
-		}
-
-		/**
-		 * Specifies possible obtainable enchantments.
-		 */
-		public Builder withEffects(ChancedEffectInstance... effects) {
-			for (ChancedEffectInstance e : effects) {
-				this.effects.add(e);
-			}
-			return this;
-		}
-
-		public BossItem build(ResourceLocation id) {
-			return new BossItem(id, entity, size, health, kbResist, speed, dmg, enchantChance, effects);
-		}
+	public AxisAlignedBB getSize() {
+		return size;
 	}
 
 	/**
-	 * Represents a potion with a chance to receive this potion.
+	 * Spawns the result of this BossItem.
+	 * @param world The world to create the entity in.
+	 * @param pos The location to place the entity.  Will be centered (+0.5, +0.5).
+	 * @param rand A random, used for selection of boss stats.
+	 * @return The newly created boss.
 	 */
-	public static class ChancedEffectInstance {
-		protected final float chance;
-		protected final Effect effect;
-		protected final RandomIntRange amp;
-
-		/**
-		 * Creates a Chanced Effect Instance.
-		 * @param chance The chance this potion is received.
-		 * @param effect The effect.
-		 * @param amp A random range of possible amplifiers.
-		 */
-		public ChancedEffectInstance(float chance, Effect effect, RandomIntRange amp) {
-			this.chance = chance;
-			this.effect = effect;
-			this.amp = amp;
-		}
+	public MobEntity spawnBoss(IServerWorld world, BlockPos pos, Random rand) {
+		MobEntity entity = (MobEntity) this.entity.create(world.getWorld());
+		initBoss(rand, entity);
+		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
+		world.addEntity(entity);
+		return entity;
 	}
+
+	/**
+	 * Initializes an entity as a boss, based on the stats of this BossItem.
+	 * @param rand
+	 * @param entity
+	 */
+	public void initBoss(Random rand, MobEntity entity) {
+		int duration = entity instanceof CreeperEntity ? 6000 : Integer.MAX_VALUE;
+
+		for (ChancedEffectInstance inst : this.effects) {
+			if (rand.nextFloat() <= inst.getChance()) {
+				entity.addPotionEffect(inst.createInstance(rand, duration));
+			}
+		}
+
+		for (RandomAttributeModifier modif : this.modifiers) {
+			modif.apply(rand, entity);
+		}
+
+		entity.setHealth(entity.getMaxHealth());
+		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
+		String name = NameHelper.setEntityName(rand, entity);
+
+		BossArmorManager.INSTANCE.getRandomSet(rand, armorSets).apply(entity);
+
+		int guaranteed = rand.nextInt(6);
+
+		ItemStack stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
+		while (stack.isEmpty())
+			stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed = rand.nextInt(6)]);
+
+		for (EquipmentSlotType s : EquipmentSlotType.values()) {
+			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
+			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
+			if (s.ordinal() == guaranteed) {
+				entity.setItemStackToSlot(s, modifyBossItem(stack, rand, name));
+			} else if (rand.nextFloat() < enchantChance) {
+				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, 30 + rand.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
+				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (v1, v2) -> Math.max(v1, v2), HashMap::new)), stack);
+			}
+		}
+
+	}
+
+	public static ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
+		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 80 : 40, true);
+		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> Math.max(a, b))), stack);
+		String itemName = NameHelper.setItemName(random, stack, bossName);
+		stack.setDisplayName(new StringTextComponent(itemName));
+		LootRarity rarity = LootRarity.random(random, DeadlyConfig.bossRarityOffset);
+		stack = AffixLootManager.genLootItem(stack, random, rarity);
+		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getDisplayName()).mergeStyle(rarity.getColor()));
+		Map<Enchantment, Integer> enchMap = new HashMap<>();
+		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
+			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
+		}
+		EnchantmentHelper.setEnchantments(enchMap, stack);
+		stack.getTag().putBoolean("apoth_boss", true);
+		return stack;
+	}
+
 }

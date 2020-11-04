@@ -8,10 +8,10 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Decreases how long it takes to fully charge a bow.

@@ -14,7 +14,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.loot.LootRarity;
+import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.loot.PoolBuilder;

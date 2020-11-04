@@ -9,7 +9,6 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -19,6 +18,7 @@ import net.minecraft.world.gen.feature.structure.StructurePiece;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
+import shadows.apotheosis.deadly.reload.BossItemManager;
 
 public class BossFeature extends Feature<NoFeatureConfig> {
 
@@ -27,9 +27,9 @@ public class BossFeature extends Feature<NoFeatureConfig> {
 	private static final BlockState MOSSY_BRICK = Blocks.MOSSY_STONE_BRICKS.getDefaultState();
 	private static final BlockState CRACKED_BRICK = Blocks.CRACKED_STONE_BRICKS.getDefaultState();
 	private static final BlockState[] BRICKS = { BRICK, MOSSY_BRICK, CRACKED_BRICK };
-	private static final BlockState WALL = Blocks.STONE_BRICK_WALL.getDefaultState();
-	private static final BlockState MOSSY_WALL = Blocks.MOSSY_STONE_BRICK_WALL.getDefaultState();
-	private static final BlockState[] WALLS = { WALL, MOSSY_WALL };
+	//private static final BlockState WALL = Blocks.STONE_BRICK_WALL.getDefaultState();
+	//private static final BlockState MOSSY_WALL = Blocks.MOSSY_STONE_BRICK_WALL.getDefaultState();
+	//private static final BlockState[] WALLS = { WALL, MOSSY_WALL };
 
 	public static final BossFeature INSTANCE = new BossFeature();
 
@@ -118,7 +118,7 @@ public class BossFeature extends Feature<NoFeatureConfig> {
 			world.setBlockState(pos, ApotheosisObjects.BOSS_SPAWNER.getDefaultState(), 2);
 			TileEntity tileentity = world.getTileEntity(pos);
 			if (tileentity instanceof BossSpawnerTile) {
-				((BossSpawnerTile) tileentity).setBossItem(WeightedRandom.getRandomItem(world.getRandom(), BossGenerator.BOSS_ITEMS));
+				((BossSpawnerTile) tileentity).setBossItem(BossItemManager.INSTANCE.getRandomItem(rand));
 			} else {
 				DeadlyModule.LOGGER.error("Failed to fetch boss spawner entity at ({}, {}, {})", pos.getX(), pos.getY(), pos.getZ());
 			}

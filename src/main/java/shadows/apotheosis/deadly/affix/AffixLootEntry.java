@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly.loot;
+package shadows.apotheosis.deadly.affix;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;

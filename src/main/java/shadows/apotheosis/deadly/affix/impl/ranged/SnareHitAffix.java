@@ -14,8 +14,8 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Targets hit with an arrow are snared (by application of slowness 11)

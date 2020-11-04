@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly.loot;
+package shadows.apotheosis.deadly.affix;
 
 import java.util.Random;
 

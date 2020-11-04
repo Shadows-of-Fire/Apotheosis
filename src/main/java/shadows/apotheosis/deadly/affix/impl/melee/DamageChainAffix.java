@@ -16,9 +16,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Full strength attacks will zap nearby enemies.

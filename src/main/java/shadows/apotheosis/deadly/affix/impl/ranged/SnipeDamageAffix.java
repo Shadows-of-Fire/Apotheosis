@@ -6,9 +6,9 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Targets more than 30 blocks away take additional damage.

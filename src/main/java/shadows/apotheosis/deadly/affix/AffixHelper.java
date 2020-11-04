@@ -16,8 +16,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import shadows.apotheosis.deadly.loot.EquipmentType;
-import shadows.apotheosis.deadly.loot.LootRarity;
 
 public class AffixHelper {
 

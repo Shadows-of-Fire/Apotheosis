@@ -22,7 +22,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.affix.AffixHelper;
-import shadows.apotheosis.deadly.loot.LootRarity;
+import shadows.apotheosis.deadly.affix.LootRarity;
 
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 

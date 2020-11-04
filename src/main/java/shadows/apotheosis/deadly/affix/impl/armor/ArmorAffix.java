@@ -2,8 +2,8 @@ package shadows.apotheosis.deadly.affix.impl.armor;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.ai.attributes.Attributes;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Increases armor.

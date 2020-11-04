@@ -2,8 +2,8 @@ package shadows.apotheosis.deadly.affix.impl.ranged;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.entity.ai.attributes.Attributes;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
-import shadows.apotheosis.deadly.loot.EquipmentType;
 
 /**
  * Ranged Movement Speed Affix.  Provies 50% - 150% additional movement speed while holding the weapon.

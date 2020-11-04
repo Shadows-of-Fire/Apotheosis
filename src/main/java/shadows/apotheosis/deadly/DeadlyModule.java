@@ -31,15 +31,15 @@ import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.affix.AffixEvents;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossFeature;
-import shadows.apotheosis.deadly.gen.BossGenerator;
 import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
 import shadows.apotheosis.deadly.gen.DeadlyFeature;
 import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
-import shadows.apotheosis.deadly.reload.BossArmorManager;
-import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.objects.BossSummonerItem;
+import shadows.apotheosis.deadly.reload.AffixLootManager;
+import shadows.apotheosis.deadly.reload.BossArmorManager;
+import shadows.apotheosis.deadly.reload.BossItemManager;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
 
@@ -89,6 +89,7 @@ public class DeadlyModule {
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(AffixLootManager.INSTANCE);
 		e.addListener(BossArmorManager.INSTANCE);
+		e.addListener(BossItemManager.INSTANCE);
 	}
 
 	public void onBiomeLoad(BiomeLoadingEvent e) {
@@ -108,7 +109,6 @@ public class DeadlyModule {
 		NameHelper.load(nameConfig);
 		BrutalSpawnerGenerator.reload();
 		SwarmSpawnerGenerator.init();
-		BossGenerator.rebuildBossItems();
 		DeadlyFeature.enableGenerators();
 		if (e == null && DeadlyConfig.config.hasChanged()) DeadlyConfig.config.save();
 		if (e == null && nameConfig.hasChanged()) nameConfig.save();

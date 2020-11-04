@@ -8,12 +8,14 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.server.ServerWorld;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.deadly.gen.BossFeatureItem;
+import shadows.apotheosis.deadly.gen.BossItem;
+import shadows.apotheosis.deadly.reload.BossItemManager;
 
 public class BossSpawnerBlock extends Block {
 
@@ -33,7 +35,7 @@ public class BossSpawnerBlock extends Block {
 
 	public static class BossSpawnerTile extends TileEntity implements ITickableTileEntity {
 
-		protected BossFeatureItem item;
+		protected BossItem item;
 		protected int ticks = 0;
 
 		public BossSpawnerTile() {
@@ -50,19 +52,19 @@ public class BossSpawnerBlock extends Block {
 			}
 		}
 
-		public void setBossItem(BossFeatureItem item) {
+		public void setBossItem(BossItem item) {
 			this.item = item;
 		}
 
 		@Override
 		public CompoundNBT write(CompoundNBT tag) {
-			tag.put("boss_item", item.write());
+			tag.putString("boss_item", item.getId().toString());
 			return super.write(tag);
 		}
 
 		@Override
 		public void read(BlockState state, CompoundNBT tag) {
-			item = BossFeatureItem.read(tag.getCompound("boss_item"));
+			item = BossItemManager.INSTANCE.getById(new ResourceLocation(tag.getString("boss_item")));
 			super.read(state, tag);
 		}
 

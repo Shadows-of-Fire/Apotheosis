@@ -31,7 +31,6 @@ public class DeadlyFeature extends Feature<NoFeatureConfig> {
 
 	public static final List<WeightedGenerator> GENERATORS = new ArrayList<>();
 	public static final BrutalSpawnerGenerator BRUTAL_SPAWNER = new BrutalSpawnerGenerator();
-	public static final BossGenerator BOSS_GENERATOR = new BossGenerator();
 	public static final SwarmSpawnerGenerator SWARM_SPAWNER = new SwarmSpawnerGenerator();
 	private static final Map<DimensionType, LongSet> SUCCESSES = new HashMap<>();
 	public static final Predicate<BlockState> STONE_TEST = b -> FillerBlockType.field_241882_a.test(b, ThreadLocalRandom.current());
@@ -57,7 +56,6 @@ public class DeadlyFeature extends Feature<NoFeatureConfig> {
 		GENERATORS.clear();
 		if (BRUTAL_SPAWNER.isEnabled()) GENERATORS.add(BRUTAL_SPAWNER);
 		if (SWARM_SPAWNER.isEnabled()) GENERATORS.add(SWARM_SPAWNER);
-		if (BOSS_GENERATOR.isEnabled()) GENERATORS.add(BOSS_GENERATOR);
 	}
 
 	public static void debugPillar(World world, BlockPos pos) {
