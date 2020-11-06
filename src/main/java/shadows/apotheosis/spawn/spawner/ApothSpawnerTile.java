@@ -2,6 +2,8 @@ package shadows.apotheosis.spawn.spawner;
 
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -24,6 +26,7 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraftforge.event.ForgeEventFactory;
+import shadows.apotheosis.spawn.SpawnerModule;
 
 public class ApothSpawnerTile extends MobSpawnerTileEntity {
 
@@ -74,6 +77,23 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 		@Override
 		public BlockPos getSpawnerPosition() {
 			return ApothSpawnerTile.this.pos;
+		}
+
+		@Nullable
+		@Override //Fix MC-189565 https://bugs.mojang.com/browse/MC-189565
+		public Entity getCachedEntity() {
+			if (this.cachedEntity == null) {
+				CompoundNBT tag = this.spawnData.getNbt();
+				EntityType.readEntityType(tag).ifPresent(e -> {
+					this.cachedEntity = e.create(this.getWorld());
+					try {
+						this.cachedEntity.read(tag);
+					} catch (Exception ex) {
+						SpawnerModule.LOG.error("Exception occurred reading entity nbt for client cache - likely MC-189565");
+					}
+				});
+			}
+			return this.cachedEntity;
 		}
 
 		@Override
