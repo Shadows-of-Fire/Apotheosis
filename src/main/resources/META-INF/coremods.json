@@ -19,5 +19,6 @@
   "itemUseHook": "apothasm/item-use-hook.js",
   "quarkMatrix": "apothasm/quark-matrix.js",
   "crossbow": "apothasm/crossbow.js",
-  "crossbowArrow": "apothasm/crossbow-arrows.js"
+  "crossbowArrow": "apothasm/crossbow-arrows.js",
+  "maxLevelRedirect": "apothasm/max-level-redirects.js"
 }
