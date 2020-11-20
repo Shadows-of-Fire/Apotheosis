@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import com.google.common.base.Preconditions;
@@ -12,20 +13,18 @@ import com.google.common.base.Preconditions;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.AxeItem;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
@@ -102,6 +101,11 @@ public class NameHelper {
 	 * Possible primary names for bows.
 	 */
 	private static String[] bows = { "Bow", "Shortbow", "Longbow", "Flatbow", "Recurve Bow", "Reflex Bow", "Self Bow", "Composite Bow", "Arrow-Flinger" };
+
+	/**
+	 * Possible primary names for shields.
+	 */
+	private static String[] shields = { "Shield", "Defender", "Ardent Defender", "Greatshield", "Blockade", "Bulwark", "Tower Shield", "Protector", "Aegis" };
 
 	/**
 	 * Array of descriptors for items based on tool material.
@@ -187,29 +191,30 @@ public class NameHelper {
 
 		String name = "";
 
-		IItemTier material = null;
-		if (itemStack.getItem() instanceof TieredItem) material = ((TieredItem) itemStack.getItem()).getTier();
-
-		if (material != null) {
+		if (itemStack.getItem() instanceof TieredItem) {
+			IItemTier material = ((TieredItem) itemStack.getItem()).getTier();
 			String[] descriptors = getMaterialDescriptors(material);
 			name += descriptors[random.nextInt(descriptors.length)] + " ";
 
 			String[] type = { "Tool" };
+			Set<ToolType> types = itemStack.getToolTypes();
+
 			if (itemStack.getItem() instanceof SwordItem) {
 				type = swords;
-			} else if (itemStack.getItem() instanceof AxeItem) {
+			} else if (types.contains(ToolType.AXE)) {
 				type = axes;
-			} else if (itemStack.getItem() instanceof PickaxeItem) {
+			} else if (types.contains(ToolType.PICKAXE)) {
 				type = pickaxes;
-			} else if (itemStack.getItem() instanceof ShovelItem) {
+			} else if (types.contains(ToolType.SHOVEL)) {
 				type = shovels;
 			}
 			name += type[random.nextInt(type.length)];
+
 		} else if (itemStack.getItem() instanceof BowItem) {
 			String[] type = bows;
 			name += type[random.nextInt(type.length)];
-		} else if (itemStack.getItem() instanceof ArmorItem) {
 
+		} else if (itemStack.getItem() instanceof ArmorItem) {
 			IArmorMaterial amaterial = ((ArmorItem) itemStack.getItem()).getArmorMaterial();
 			String[] descriptors = getArmorDescriptors(amaterial);
 			name += descriptors[random.nextInt(descriptors.length)] + " ";
@@ -231,8 +236,11 @@ public class NameHelper {
 			default:
 			}
 			name += type[random.nextInt(type.length)];
+		} else if (itemStack.isShield(null)) {
+			String[] type = shields;
+			name += type[random.nextInt(type.length)];
 		} else {
-			name += itemStack.getItem().getDisplayName(itemStack);
+			name += itemStack.getItem().getDisplayName(itemStack).getString();
 		}
 
 		itemStack.setDisplayName(new StringTextComponent(bossName + " " + name));
@@ -268,6 +276,7 @@ public class NameHelper {
 		pickaxes = c.getStringList("pickaxes", "items", pickaxes, "A list of root names for pickaxes, used in the generation of item names. May not be empty.");
 		shovels = c.getStringList("shovels", "items", shovels, "A list of root names for shovels, used in the generation of item names. May not be empty.");
 		bows = c.getStringList("bows", "items", bows, "A list of root names for bows, used in the generation of item names. May not be empty.");
+		shields = c.getStringList("shields", "items", shields, "A list of root names for shields, used in the generation of item names. May not be empty.");
 
 		Preconditions.checkArgument(swords.length > 0 && axes.length > 0 && pickaxes.length > 0 && shovels.length > 0 && bows.length > 0, "Detected empty lists for weapon root names in apotheosis/names.cfg, this is not allowed.");
 
