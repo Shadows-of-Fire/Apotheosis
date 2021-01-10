@@ -30,8 +30,12 @@ function initializeCoreMod() {
                     }
                 }
 
-                instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
-                print('[ApotheosisCore]: Successfully removed the anvil level cap.');
+                if(levelRestriction != null) {
+					instr.set(levelRestriction, new LdcInsnNode(0x7fffffff));
+					print('[ApotheosisCore]: Successfully removed the anvil level cap.');
+				} else {
+					print('[ApotheosisCore]: Failed to remove the anvil level cap, it may have already been changed!');
+				}
 
                 return method;
             }
