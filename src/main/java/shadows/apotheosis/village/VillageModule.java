@@ -1,8 +1,11 @@
 package shadows.apotheosis.village;
 
 import java.io.File;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,6 +17,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.potion.Effect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -52,8 +56,6 @@ public class VillageModule {
 	public void setup(FMLCommonSetupEvent e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
-		Map<BlockState, PointOfInterestType> types = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
-		types.put(Blocks.FLETCHING_TABLE.getDefaultState(), PointOfInterestType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		enableNewTrades = config.getBoolean("Enable New Trades", "Wanderer", true, "If new trades are added to the wandering merchant.");
 		if (config.hasChanged()) config.save();
@@ -62,6 +64,19 @@ public class VillageModule {
 	@SubscribeEvent
 	public void setup(FMLClientSetupEvent e) {
 		e.enqueueWork(VillageModuleClient::init);
+	}
+
+	@SubscribeEvent
+	public void poi(Register<PointOfInterestType> e) {
+		PointOfInterestType f = e.getRegistry().getValue(new ResourceLocation("fletcher"));
+		Field blockStates = ObfuscationReflectionHelper.findField(PointOfInterestType.class, "field_221075_w");
+		Set<BlockState> states = new HashSet<>();
+		states.add(Blocks.FLETCHING_TABLE.getDefaultState());
+		try {
+			blockStates.set(f, ImmutableSet.copyOf(states));
+		} catch (IllegalAccessException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@SubscribeEvent
