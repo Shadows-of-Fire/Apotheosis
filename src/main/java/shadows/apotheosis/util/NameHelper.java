@@ -24,6 +24,7 @@ import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.DeadlyModule;
@@ -136,6 +137,7 @@ public class NameHelper {
 
 	public static String suffixFormat = "%s the %s";
 	public static String ownershipFormat = "%s's";
+	public static String chainFormat = "%s %s";
 
 	/**
 	 * Makes a name using {@link NameHelper#nameParts}.
@@ -186,15 +188,13 @@ public class NameHelper {
 	 * @param name The name of the owning entity, usually created by {@link NameHelper#setEntityName(Random, EntityLiving)}
 	 * @return The name of the item, without the owning prefix of the boss's name
 	 */
-	public static String setItemName(Random random, ItemStack itemStack, String bossName) {
-		bossName = String.format(ownershipFormat, bossName);
-
-		String name = "";
+	public static TextComponent setItemName(Random random, ItemStack itemStack, String bossName) {
+		TextComponent name = (TextComponent) itemStack.getDisplayName();
 
 		if (itemStack.getItem() instanceof TieredItem) {
 			IItemTier material = ((TieredItem) itemStack.getItem()).getTier();
 			String[] descriptors = getMaterialDescriptors(material);
-			name += descriptors[random.nextInt(descriptors.length)] + " ";
+			name = new StringTextComponent(descriptors[random.nextInt(descriptors.length)] + " ");
 
 			String[] type = { "Tool" };
 			Set<ToolType> types = itemStack.getToolTypes();
@@ -208,16 +208,14 @@ public class NameHelper {
 			} else if (types.contains(ToolType.SHOVEL)) {
 				type = shovels;
 			}
-			name += type[random.nextInt(type.length)];
-
+			name.appendString(type[random.nextInt(type.length)]);
 		} else if (itemStack.getItem() instanceof BowItem) {
 			String[] type = bows;
-			name += type[random.nextInt(type.length)];
-
+			name = new StringTextComponent(type[random.nextInt(type.length)]);
 		} else if (itemStack.getItem() instanceof ArmorItem) {
 			IArmorMaterial amaterial = ((ArmorItem) itemStack.getItem()).getArmorMaterial();
 			String[] descriptors = getArmorDescriptors(amaterial);
-			name += descriptors[random.nextInt(descriptors.length)] + " ";
+			name = new StringTextComponent(descriptors[random.nextInt(descriptors.length)] + " ");
 
 			String[] type = { "Armor" };
 			switch (((ArmorItem) itemStack.getItem()).getEquipmentSlot()) {
@@ -235,15 +233,13 @@ public class NameHelper {
 				break;
 			default:
 			}
-			name += type[random.nextInt(type.length)];
+			name.appendString(type[random.nextInt(type.length)]);
 		} else if (itemStack.isShield(null)) {
 			String[] type = shields;
-			name += type[random.nextInt(type.length)];
-		} else {
-			name += itemStack.getItem().getDisplayName(itemStack).getString();
+			name = new StringTextComponent(type[random.nextInt(type.length)]);
 		}
 
-		itemStack.setDisplayName(new StringTextComponent(bossName + " " + name));
+		itemStack.setDisplayName(name);
 		return name;
 	}
 
