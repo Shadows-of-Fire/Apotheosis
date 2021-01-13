@@ -39,7 +39,7 @@ public class BossFeature extends Feature<NoFeatureConfig> {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean func_241855_a(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean generate(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
 		int xRadius = 3 + rand.nextInt(3);
 		int floor = -1;
 		int roof = 4;

@@ -93,7 +93,7 @@ public class DeadlyModule {
 	}
 
 	public void onBiomeLoad(BiomeLoadingEvent e) {
-		ConfiguredFeature<?, ?> cFeat = BossFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).func_242733_d(128).func_242728_a().func_242731_b(8);
+		ConfiguredFeature<?, ?> cFeat = BossFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(8);
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, cFeat);
 		}

@@ -41,7 +41,13 @@ public class EnchModuleClient {
 			if (world == null || Minecraft.getInstance().player == null) return;
 			BlockItemUseContext ctx = new BlockItemUseContext(world, Minecraft.getInstance().player, Hand.MAIN_HAND, e.getItemStack(), res) {
 			};
-			BlockState state = block.getStateForPlacement(ctx);
+			BlockState state = null;
+			try {
+				state = block.getStateForPlacement(ctx);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
 			if (state == null) return;
 			float maxEterna = EnchantingStatManager.getMaxEterna(state, world, BlockPos.ZERO);
 			float eterna = EnchantingStatManager.getEterna(state, world, BlockPos.ZERO);

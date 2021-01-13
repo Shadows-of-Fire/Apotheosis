@@ -33,7 +33,7 @@ public class DeadlyFeature extends Feature<NoFeatureConfig> {
 	public static final BrutalSpawnerGenerator BRUTAL_SPAWNER = new BrutalSpawnerGenerator();
 	public static final SwarmSpawnerGenerator SWARM_SPAWNER = new SwarmSpawnerGenerator();
 	private static final Map<DimensionType, LongSet> SUCCESSES = new HashMap<>();
-	public static final Predicate<BlockState> STONE_TEST = b -> FillerBlockType.field_241882_a.test(b, ThreadLocalRandom.current());
+	public static final Predicate<BlockState> STONE_TEST = b -> FillerBlockType.BASE_STONE_OVERWORLD.test(b, ThreadLocalRandom.current());
 
 	public static final ConfiguredFeature<?, ?> INSTANCE = new ConfiguredFeature<>(new DeadlyFeature(), IFeatureConfig.NO_FEATURE_CONFIG);
 
@@ -42,7 +42,7 @@ public class DeadlyFeature extends Feature<NoFeatureConfig> {
 	}
 
 	@Override
-	public boolean func_241855_a(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
+	public boolean generate(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig config) {
 		if (!DeadlyConfig.DIM_WHITELIST.contains(world.getWorld().getDimensionKey().getLocation())) return false;
 		for (WeightedGenerator generator : GENERATORS) {
 			ChunkPos cPos = new ChunkPos(pos);
