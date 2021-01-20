@@ -23,7 +23,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
-import shadows.apotheosis.village.fletching.BlockFletchingTable;
+import shadows.apotheosis.village.fletching.ApothFletchingBlock;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.FletchingRecipe;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
@@ -71,7 +71,7 @@ public class VillageModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverrideBlock(new BlockFletchingTable(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(new ApothFletchingBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent

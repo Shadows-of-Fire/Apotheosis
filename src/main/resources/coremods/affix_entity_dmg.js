@@ -1,15 +1,13 @@
 function initializeCoreMod() {
     return {
-        'apothaffixdmg': {
+        'apothlure': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.enchantment.EnchantmentHelper',
-                'methodName': 'func_152377_a',
-                'methodDesc': '(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/CreatureAttribute;)F'
+                'methodName': 'func_151385_b',
+                'methodDesc': '(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/Entity;)V'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching EnchantmentHelper#getModifierForCreature');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getTicksCaughtDelay";
                 var desc = "(Lnet/minecraft/entity/projectile/EnchantmentHelper;)I";
@@ -22,16 +20,16 @@ function initializeCoreMod() {
                 var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				ASMAPI.log('INFO', 'Patching EnchantmentHelper#applyArthropodEnchantments');
 
                 var i;
                 for (i = 0; i < instr.size(); i++) {
                     var n = instr.get(i);
-                    if (n.getOpcode() == Opcodes.FRETURN) {
+                    if (n.getOpcode() == Opcodes.RETURN) {
                         var insn = new InsnList();
                         insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
-                        insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "getExtraDamageFor", "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/CreatureAttribute;)F", false));
-                        insn.add(new InsnNode(Opcodes.FADD));
+                        insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "onEntityDamaged", "(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/Entity;)V", false));
                         instr.insertBefore(n, insn);
                         break;
                     }

@@ -63,6 +63,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void tick() {
 		if (!this.world.isRemote) {
 			this.setFlag(6, this.isGlowing());
@@ -192,6 +193,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		this.type = Type.values()[buf.readByte()];
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void breakBlock(BlockPos pos) {
 		if (!world.isRemote && !world.getBlockState(pos).isAir(world, pos)) {
 			if (BlockUtil.breakExtraBlock((ServerWorld) world, pos, breakerItem, playerId)) {

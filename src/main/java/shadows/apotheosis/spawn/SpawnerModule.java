@@ -60,7 +60,7 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverrideBlock(new ApothSpawnerBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(new ApothSpawnerBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
@@ -92,7 +92,7 @@ public class SpawnerModule {
 				}
 			}
 
-			boolean inverse = SpawnerModifiers.inverseItem.test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			boolean inverse = SpawnerModifiers.inverseItem.getValue().test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
 				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}

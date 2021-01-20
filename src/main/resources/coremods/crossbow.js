@@ -8,8 +8,6 @@ function initializeCoreMod() {
                 'methodDesc': '(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching CrossbowItem#onItemRightClick');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "onArrowFired";
                 var desc = "(Lnet/minecraft/item/ItemStack;)V";
@@ -19,6 +17,7 @@ function initializeCoreMod() {
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				ASMAPI.log('INFO', 'Patching CrossbowItem#onItemRightClick');
 
                 var fireProjCall = null;
                 var firstReturn = null;

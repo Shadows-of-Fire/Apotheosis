@@ -8,8 +8,6 @@ function initializeCoreMod() {
                 'methodDesc': '(Ljava/lang/Iterable;Lnet/minecraft/util/DamageSource;)I'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching EnchantmentHelper#getEnchantmentModifierDamage ');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getTicksCaughtDelay";
                 var desc = "(Lnet/minecraft/entity/projectile/EnchantmentHelper;)I";
@@ -22,6 +20,7 @@ function initializeCoreMod() {
                 var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				ASMAPI.log('INFO', 'Patching EnchantmentHelper#getEnchantmentModifierDamage');
 
                 var i;
                 for (i = 0; i < instr.size(); i++) {

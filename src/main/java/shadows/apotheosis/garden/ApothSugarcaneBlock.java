@@ -13,17 +13,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
+import shadows.placebo.util.IReplacementBlock;
 
-public class ApothSugarcaneBlock extends SugarCaneBlock {
-
-	SugarCaneBlock old = (SugarCaneBlock) Blocks.SUGAR_CANE;
+public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementBlock {
 
 	public ApothSugarcaneBlock() {
 		super(AbstractBlock.Properties.from(Blocks.SUGAR_CANE));
 		setRegistryName(new ResourceLocation("sugar_cane"));
-		this.setDefaultState(old.getDefaultState());
-		this.getStateContainer().getValidStates().forEach(b -> b.instance = this);
-		this.getStateContainer().owner = this;
 	}
 
 	@Override
@@ -60,8 +56,20 @@ public class ApothSugarcaneBlock extends SugarCaneBlock {
 	}
 
 	@Override
+	public void _setDefaultState(BlockState state) {
+		this.setDefaultState(state);
+	}
+
+	protected StateContainer<Block, BlockState> container;
+
+	@Override
+	public void setStateContainer(StateContainer<Block, BlockState> container) {
+		this.container = container;
+	}
+
+	@Override
 	public StateContainer<Block, BlockState> getStateContainer() {
-		return old.getStateContainer();
+		return container == null ? super.getStateContainer() : container;
 	}
 
 }

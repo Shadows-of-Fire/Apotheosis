@@ -8,8 +8,6 @@ function initializeCoreMod() {
                 'methodDesc': '(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/Entity;)V'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching EnchantmentHelper#applyThornEnchantments');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getTicksCaughtDelay";
                 var desc = "(Lnet/minecraft/entity/projectile/EnchantmentHelper;)I";
@@ -22,6 +20,7 @@ function initializeCoreMod() {
                 var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				ASMAPI.log('INFO', 'Patching EnchantmentHelper#applyThornEnchantments');
 
                 var i;
                 for (i = 0; i < instr.size(); i++) {

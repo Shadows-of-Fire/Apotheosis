@@ -1,34 +1,31 @@
 function initializeCoreMod() {
     return {
-        'apothstackenchcalc': {
+        'apothenchaffix': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.enchantment.EnchantmentHelper',
-                'methodName': 'func_77514_a',
-                'methodDesc': '(Ljava/util/Random;IILnet/minecraft/item/ItemStack;)I;'
+                'methodName': 'func_77513_b',
+                'methodDesc': '(Ljava/util/Random;Lnet/minecraft/item/ItemStack;IZ)Ljava/util/List;'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching EnchantmentHelper#calcItemStackEnchantability');
-
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
-                var JumpInsnNode = Java.type('org.objectweb.asm.tree.JumpInsnNode');
-                var IntInsnNode = Java.type('org.objectweb.asm.tree.IntInsnNode');
+                var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
+                var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
                 var instr = method.instructions;
-
-                var jumpNode = null;
+				ASMAPI.log('INFO', 'Patching buildEnchantmentList for the Enchantability affix.');
+				
                 var i;
                 for (i = 0; i < instr.size(); i++) {
                     var n = instr.get(i);
-                    if (n.getOpcode() == Opcodes.BIPUSH && n.operand == 15) {
-                        jumpNode = n.getNext();
-                        break;
+                    if (n.getOpcode() == Opcodes.INVOKEVIRTUAL) {
+                        if (n.name.equals("getItemEnchantability")) {
+                            instr.set(n, new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "getEnchantability", "(Lnet/minecraft/item/ItemStack;)I", false));
+                        }
                     }
                 }
-                instr.insert(jumpNode, new JumpInsnNode(Opcodes.GOTO, jumpNode.label));
-
                 return method;
             }
         }

@@ -8,8 +8,6 @@ function initializeCoreMod() {
                 'methodDesc': '(FF)F'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching CombatRules#getDamageAfterMagicAbsorb');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getDamageAfterMagicAbsorb";
                 var desc = "(FF)F";
@@ -20,6 +18,7 @@ function initializeCoreMod() {
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+                ASMAPI.log('INFO', 'Patching CombatRules#getDamageAfterMagicAbsorb');
 
                 var insn = new InsnList();
                 insn.add(new VarInsnNode(Opcodes.FLOAD, 0));

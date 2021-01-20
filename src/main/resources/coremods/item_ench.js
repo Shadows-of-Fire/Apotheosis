@@ -8,13 +8,13 @@ function initializeCoreMod() {
                 'methodDesc': '()I'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching Item#getItemEnchantability');
-
+				var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
                 var instr = method.instructions;
+				ASMAPI.log('INFO', 'Patching Item#getItemEnchantability');
 
                 var insn = new InsnList();
                 insn.add(new LdcInsnNode(10));

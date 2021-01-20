@@ -8,8 +8,6 @@ function initializeCoreMod() {
                 'methodDesc': '(Lnet/minecraft/util/math/BlockPos;)V'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching FishingBobberEntity#catchingFish');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getTicksCaughtDelay";
                 var desc = "(Lnet/minecraft/entity/projectile/FishingBobberEntity;)I";
@@ -20,6 +18,7 @@ function initializeCoreMod() {
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				ASMAPI.log('INFO', 'Patching FishingBobberEntity#catchingFish');
 
                 var insertion = null;
                 var i;

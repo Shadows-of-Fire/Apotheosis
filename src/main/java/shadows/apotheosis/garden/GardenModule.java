@@ -32,9 +32,9 @@ public class GardenModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverrideBlock(new ApothCactusBlock(), Apotheosis.MODID);
-		PlaceboUtil.registerOverrideBlock(new ApothSugarcaneBlock(), Apotheosis.MODID);
-		PlaceboUtil.registerOverrideBlock(new ApothBambooBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(new ApothCactusBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(new ApothSugarcaneBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(new ApothBambooBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent

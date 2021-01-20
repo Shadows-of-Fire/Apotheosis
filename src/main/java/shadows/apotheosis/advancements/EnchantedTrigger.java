@@ -53,6 +53,11 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 		}
 
 		@Override
+		public boolean test(ItemStack stack, int level) {
+			return this.test(stack, level, 0, 0, 0);
+		}
+
+		@Override
 		public JsonObject serialize(ConditionArraySerializer serializer) {
 			JsonObject jsonobject = super.serialize(serializer);
 			jsonobject.add("eterna", this.eterna.serialize());

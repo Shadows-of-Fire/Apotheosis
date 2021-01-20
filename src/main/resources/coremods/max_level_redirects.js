@@ -15,8 +15,6 @@ function initializeCoreMod() {
 				}
             },
             'transformer': function(classNode) {
-                print('[ApotheosisCore]: Patching ' + classNode.name);
-
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
@@ -24,6 +22,7 @@ function initializeCoreMod() {
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
                 var methods = classNode.methods;
+				ASMAPI.log('INFO', 'Patching ' + classNode.name);
 				for(var i = 0; i < methods.size(); i++){
 					var instr = methods.get(i).instructions;
 					for(var ix = 0; ix < instr.size(); ix++){

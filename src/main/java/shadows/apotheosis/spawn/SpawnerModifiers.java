@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,7 +41,7 @@ public class SpawnerModifiers {
 	public static final SpawnerModifier REDSTONE = new RedstoneModifier();
 	public static final SpawnerModifier EGG = new EggModifier();
 
-	public static Ingredient inverseItem;
+	public static LazyValue<Ingredient> inverseItem;
 
 	public static void registerModifiers() {
 		register(MIN_DELAY);
@@ -58,15 +60,20 @@ public class SpawnerModifiers {
 	public static void reload(Configuration config) {
 		for (SpawnerModifier modif : MODIFIERS)
 			modif.load(config);
-		inverseItem = readStackCfg(config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
+		inverseItem = readIngredient(config.getString("Inverse Item", "general", "minecraft:quartz", "When held in the off-hand, this item makes modifiers change stats in the opposite direction."));
 	}
 
-	public static Ingredient readStackCfg(String s) {
-		String[] split = s.split(":");
-		Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
-		ItemStack stack = new ItemStack(i);
-		if (i == Items.BARRIER) stack.setDisplayName(new TranslationTextComponent("info.apoth.modifier_disabled"));
-		return Ingredient.fromStacks(stack);
+	public static LazyValue<Ingredient> readIngredient(String s) {
+		if (s.startsWith("#")) {
+			String tag = s.substring(1);
+			return new LazyValue<>(() -> Ingredient.fromTag(ItemTags.makeWrapperTag(tag)));
+		} else {
+			String[] split = s.split(":");
+			Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
+			ItemStack stack = new ItemStack(i);
+			if (i == Items.BARRIER) stack.setDisplayName(new TranslationTextComponent("info.apoth.modifier_disabled"));
+			return new LazyValue<>(() -> Ingredient.fromStacks(stack));
+		}
 	}
 
 	public static void register(SpawnerModifier modif) {

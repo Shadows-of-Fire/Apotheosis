@@ -3,6 +3,7 @@ package shadows.apotheosis.spawn.spawner;
 import java.util.List;
 
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -40,8 +42,9 @@ import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
+import shadows.placebo.util.IReplacementBlock;
 
-public class ApothSpawnerBlock extends SpawnerBlock {
+public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock {
 
 	public ApothSpawnerBlock() {
 		super(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).notSolid());
@@ -95,7 +98,7 @@ public class ApothSpawnerBlock extends SpawnerBlock {
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof ApothSpawnerTile) {
 			ApothSpawnerTile tile = (ApothSpawnerTile) te;
-			boolean inverse = SpawnerModifiers.inverseItem.test(player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			boolean inverse = SpawnerModifiers.inverseItem.getValue().test(player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
 				if (sm.canModify(tile, stack, inverse)) {
 					if (world.isRemote) return ActionResultType.SUCCESS;
@@ -141,6 +144,23 @@ public class ApothSpawnerBlock extends SpawnerBlock {
 	@Override
 	public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silktouch) {
 		return silktouch == 0 ? super.getExpDrop(state, world, pos, fortune, silktouch) : 0;
+	}
+
+	@Override
+	public void _setDefaultState(BlockState state) {
+		this.setDefaultState(state);
+	}
+
+	protected StateContainer<Block, BlockState> container;
+
+	@Override
+	public void setStateContainer(StateContainer<Block, BlockState> container) {
+		this.container = container;
+	}
+
+	@Override
+	public StateContainer<Block, BlockState> getStateContainer() {
+		return container == null ? super.getStateContainer() : container;
 	}
 
 }

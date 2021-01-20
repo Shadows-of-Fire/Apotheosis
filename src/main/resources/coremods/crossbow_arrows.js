@@ -8,8 +8,6 @@ function initializeCoreMod() {
                 'methodDesc': '(Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;FZFFF)V'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching CrossbowItem#fireProjectile');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "markGeneratedArrows";
                 var desc = "(Lnet/minecraft/entity/projectile/ProjectileEntity;Lnet/minecraft/item/ItemStack;)V";
@@ -19,6 +17,7 @@ function initializeCoreMod() {
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				ASMAPI.log('INFO', 'Patching CrossbowItem#fireProjectile');
 
 				var firstInstanceOf = null;
                 var i;

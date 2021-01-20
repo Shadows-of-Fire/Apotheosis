@@ -8,12 +8,11 @@ function initializeCoreMod() {
                 'methodDesc': '(Lcom/mojang/blaze3d/matrix/MatrixStack;II)V'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching AnvilScreen#drawGuiContainerForegroundLayer');
-
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var instr = method.instructions;
+				ASMAPI.log('INFO', 'Patching AnvilScreen#drawGuiContainerForegroundLayer');
 
                 var levelRestriction = null;
                 var i;

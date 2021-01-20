@@ -73,7 +73,7 @@ public class SpawnerWrapper {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.inverseItem.getMatchingStacks())));
+			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.inverseItem.getValue().getMatchingStacks())));
 		}
 
 		@Override

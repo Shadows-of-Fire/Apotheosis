@@ -8,8 +8,6 @@ function initializeCoreMod() {
                 'methodDesc': '(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/entity/ai/attributes/AttributeModifier;'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching SharedMonsterAttributes#readAttributeModifier');
-
                 var owner = "shadows/apotheosis/deadly/asm/DeadlyHooks";
                 var name = "getRealUUID";
                 var desc = "(Ljava/util/UUID;)Ljava/util/UUID;";
@@ -18,6 +16,7 @@ function initializeCoreMod() {
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
                 var AbstractInsnNode = Java.type('org.objectweb.asm.tree.AbstractInsnNode');
+				ASMAPI.log('INFO', 'Patching SharedMonsterAttributes#readAttributeModifier');
 
                 var n = null;
                 var i;

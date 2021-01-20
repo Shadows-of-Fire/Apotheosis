@@ -1,15 +1,13 @@
 function initializeCoreMod() {
     return {
-        'apothlure': {
+        'apothaffixdmg': {
             'target': {
                 'type': 'METHOD',
                 'class': 'net.minecraft.enchantment.EnchantmentHelper',
-                'methodName': 'func_151385_b',
-                'methodDesc': '(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/Entity;)V'
+                'methodName': 'func_152377_a',
+                'methodDesc': '(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/CreatureAttribute;)F'
             },
             'transformer': function(method) {
-                print('[ApotheosisCore]: Patching EnchantmentHelper#applyArthropodEnchantments');
-
                 var owner = "shadows/apotheosis/ench/asm/EnchHooks";
                 var name = "getTicksCaughtDelay";
                 var desc = "(Lnet/minecraft/entity/projectile/EnchantmentHelper;)I";
@@ -22,15 +20,17 @@ function initializeCoreMod() {
                 var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
                 var InsnNode = Java.type('org.objectweb.asm.tree.InsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
+				ASMAPI.log('INFO', 'Patching EnchantmentHelper#getModifierForCreature');
 
                 var i;
                 for (i = 0; i < instr.size(); i++) {
                     var n = instr.get(i);
-                    if (n.getOpcode() == Opcodes.RETURN) {
+                    if (n.getOpcode() == Opcodes.FRETURN) {
                         var insn = new InsnList();
                         insn.add(new VarInsnNode(Opcodes.ALOAD, 0));
                         insn.add(new VarInsnNode(Opcodes.ALOAD, 1));
-                        insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "onEntityDamaged", "(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/Entity;)V", false));
+                        insn.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "shadows/apotheosis/deadly/asm/DeadlyHooks", "getExtraDamageFor", "(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/CreatureAttribute;)F", false));
+                        insn.add(new InsnNode(Opcodes.FADD));
                         instr.insertBefore(n, insn);
                         break;
                     }

@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 public class SpawnRangeModifier extends SpawnerModifier {
 
 	public SpawnRangeModifier() {
-		super(new ItemStack(Items.BLAZE_ROD), 1, 0, 32);
+		super(new ItemStack(Items.BLAZE_ROD), 1, 1, 32);
 	}
 
 	@Override

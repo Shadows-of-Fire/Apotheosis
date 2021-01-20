@@ -109,6 +109,13 @@ public class ApothAnvilBlock extends AnvilBlock {
 	}
 
 	@Override
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (!ApotheosisObjects.ANVIL.isValidBlock(newState.getBlock())) {
+			world.removeTileEntity(pos);
+		}
+	}
+
+	@Override
 	protected void onStartFalling(FallingBlockEntity e) {
 		super.onStartFalling(e);
 		TileEntity te = e.world.getTileEntity(new BlockPos(e.getPositionVec()));

@@ -200,7 +200,7 @@ public class EnchModule {
 				new Block(AbstractBlock.Properties.create(Material.GOURD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
 				);
 		//Formatter::on
-		PlaceboUtil.registerOverrideBlock(new ApothEnchantBlock().setRegistryName("minecraft:enchanting_table"), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(new ApothEnchantBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
@@ -289,8 +289,8 @@ public class EnchModule {
 		}
 
 		if (enchInfoConfig == null) {
-			LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
-			Thread.dumpStack();
+			//LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
+			//Thread.dumpStack();
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());
 		}
 
