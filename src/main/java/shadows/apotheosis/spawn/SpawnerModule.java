@@ -19,6 +19,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Hand;
@@ -34,6 +35,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
+import shadows.apotheosis.spawn.modifiers.ModifierSync;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
@@ -61,6 +63,11 @@ public class SpawnerModule {
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		PlaceboUtil.registerOverride(new ApothSpawnerBlock(), Apotheosis.MODID);
+	}
+
+	@SubscribeEvent
+	public void serializers(Register<IRecipeSerializer<?>> e) {
+		e.getRegistry().register(ModifierSync.SERIALIZER.setRegistryName("modifiers"));
 	}
 
 	@SubscribeEvent
@@ -92,8 +99,8 @@ public class SpawnerModule {
 				}
 			}
 
-			boolean inverse = SpawnerModifiers.inverseItem.getValue().test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
-			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS)
+			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values())
 				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}
 	}

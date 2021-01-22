@@ -98,8 +98,8 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof ApothSpawnerTile) {
 			ApothSpawnerTile tile = (ApothSpawnerTile) te;
-			boolean inverse = SpawnerModifiers.inverseItem.getValue().test(player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
-			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS) {
+			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values()) {
 				if (sm.canModify(tile, stack, inverse)) {
 					if (world.isRemote) return ActionResultType.SUCCESS;
 					if (sm.modify(tile, stack, inverse)) {

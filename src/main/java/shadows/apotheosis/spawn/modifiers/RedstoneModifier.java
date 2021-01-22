@@ -7,10 +7,6 @@ import shadows.placebo.recipe.VanillaPacketDispatcher;
 
 public class RedstoneModifier extends SpawnerModifier {
 
-	public RedstoneModifier() {
-		super(new ItemStack(Items.COMPARATOR), -1, -1, -1);
-	}
-
 	@Override
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		return super.canModify(spawner, stack, inverting) && spawner.redstoneEnabled == inverting;
@@ -24,7 +20,7 @@ public class RedstoneModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "redstone_control";
 	}
 

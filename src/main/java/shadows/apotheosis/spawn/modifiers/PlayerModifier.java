@@ -7,10 +7,6 @@ import shadows.placebo.recipe.VanillaPacketDispatcher;
 
 public class PlayerModifier extends SpawnerModifier {
 
-	public PlayerModifier() {
-		super(new ItemStack(Items.NETHER_STAR), -1, -1, -1);
-	}
-
 	@Override
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		return super.canModify(spawner, stack, inverting) && spawner.ignoresPlayers == inverting;
@@ -24,7 +20,7 @@ public class PlayerModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "require_players";
 	}
 

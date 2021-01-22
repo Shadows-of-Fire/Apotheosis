@@ -11,7 +11,6 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SpawnEggItem;
@@ -32,7 +31,6 @@ public class SpawnerJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enableSpawner) return;
-		ItemStack egg = new ItemStack(SpawnEggItem.getEgg(EntityType.WITCH));
 		//Formatter::off
 		reg.addRecipes(ImmutableSet.of(
 				new SpawnerWrapper(SpawnerModifiers.MIN_DELAY, "MinSpawnDelay", "jei.spw.editmindelay"),
@@ -45,7 +43,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerWrapper(SpawnerModifiers.PLAYERS, "ignore_players", true, "jei.spw.ignoreplayers"),
 				new SpawnerWrapper(SpawnerModifiers.CAP, "ignore_cap", true, "jei.spw.ignorecap"),
 				new SpawnerWrapper(SpawnerModifiers.REDSTONE, "redstone_control", true, "jei.spw.redstone"),
-				new SpawnerWrapper(egg, new ResourceLocation("witch"), "jei.spw.changeentity"),
+				new SpawnerWrapper(new ResourceLocation("witch"), "jei.spw.changeentity"),
 				new SpawnerInverseWrapper()
 				), getPluginUid());
 		//Formatter::on

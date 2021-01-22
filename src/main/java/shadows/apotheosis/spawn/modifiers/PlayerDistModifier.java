@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 public class PlayerDistModifier extends SpawnerModifier {
 
 	public PlayerDistModifier() {
-		super(new ItemStack(Items.PRISMARINE_CRYSTALS), 2, 0, 50);
+		super(2, 0, 50);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class PlayerDistModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "player_activation_range";
 	}
 

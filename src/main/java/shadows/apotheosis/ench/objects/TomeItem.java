@@ -5,12 +5,17 @@ import java.util.Locale;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -53,6 +58,17 @@ public class TomeItem extends BookItem {
 	@Override
 	public Rarity getRarity(ItemStack stack) {
 		return !stack.isEnchanted() ? super.getRarity(stack) : Rarity.UNCOMMON;
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+		if (stack.isEnchanted()) {
+			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), book);
+			return ActionResult.resultConsume(book);
+		}
+		return ActionResult.resultPass(stack);
 	}
 
 }

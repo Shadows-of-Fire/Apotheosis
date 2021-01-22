@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 public class SpawnCountModifier extends SpawnerModifier {
 
 	public SpawnCountModifier() {
-		super(new ItemStack(Items.FERMENTED_SPIDER_EYE), 1, 1, 20);
+		super(1, 1, 20);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class SpawnCountModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "spawn_count";
 	}
 

@@ -1,15 +1,10 @@
 package shadows.apotheosis.spawn.modifiers;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 public class CapModifier extends SpawnerModifier {
-
-	public CapModifier() {
-		super(new ItemStack(Blocks.DRAGON_EGG), -1, -1, -1);
-	}
 
 	@Override
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
@@ -23,7 +18,7 @@ public class CapModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "ignore_spawn_cap";
 	}
 

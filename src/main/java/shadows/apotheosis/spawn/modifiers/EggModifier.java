@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.LazyValue;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
@@ -18,12 +21,8 @@ public class EggModifier extends SpawnerModifier {
 
 	List<String> bannedMobs = new ArrayList<>();
 
-	public EggModifier(ItemStack item) {
-		super(item, -1, -1, -1);
-	}
-
 	public EggModifier() {
-		this(ItemStack.EMPTY);
+		this.item = new LazyValue<>(() -> Ingredient.fromItems(Items.WITCH_SPAWN_EGG));
 	}
 
 	@Override
@@ -43,13 +42,13 @@ public class EggModifier extends SpawnerModifier {
 
 	@Override
 	public void load(Configuration cfg) {
-		String[] bans = cfg.getStringList("Banned Mobs", getCategory(), new String[0], "A list of entity registry names that cannot be applied to spawners via egg.");
+		String[] bans = cfg.getStringList("Banned Mobs", getId(), new String[0], "A list of entity registry names that cannot be applied to spawners via egg.");
 		for (String s : bans)
 			bannedMobs.add(s);
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "spawn_eggs";
 	}
 

@@ -76,7 +76,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		Boolean redstone = json.has("redstone") ? json.get("redstone").getAsBoolean() : null;
 		JsonElement modif = json.get("modifier");
 		SpawnerModifier modifier = null;
-		if (modif != null) modifier = SpawnerModifiers.MODIFIERS.stream().filter(m -> m.getCategory().equals(modif.getAsString())).findAny().orElse(null);
+		if (modif != null) modifier = SpawnerModifiers.MODIFIERS.values().stream().filter(m -> m.getId().equals(modif.getAsString())).findAny().orElse(null);
 		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, redstone, modifier);
 	}
 

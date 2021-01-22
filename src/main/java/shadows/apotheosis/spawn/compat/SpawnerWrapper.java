@@ -47,8 +47,8 @@ public class SpawnerWrapper {
 		this.tooltip = tooltip;
 	}
 
-	public SpawnerWrapper(ItemStack catalyst, ResourceLocation entityOut, String tooltip) {
-		modifier = new EggModifier(catalyst);
+	public SpawnerWrapper(ResourceLocation entityOut, String tooltip) {
+		modifier = new EggModifier();
 		output = SPAWNER.get(0).copy();
 		CompoundNBT tag = output.getOrCreateChildTag("BlockEntityTag");
 		tag.getCompound("SpawnData").putString("id", entityOut.toString());
@@ -73,7 +73,7 @@ public class SpawnerWrapper {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.inverseItem.getValue().getMatchingStacks())));
+			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.INVERSE.getIngredient().getMatchingStacks())));
 		}
 
 		@Override

@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 public class NearbyEntityModifier extends SpawnerModifier {
 
 	public NearbyEntityModifier() {
-		super(new ItemStack(Items.GHAST_TEAR), 2, 0, 40);
+		super(2, 0, 40);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class NearbyEntityModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "max_nearby_entities";
 	}
 

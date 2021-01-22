@@ -8,7 +8,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 public class MinDelayModifier extends SpawnerModifier {
 
 	public MinDelayModifier() {
-		super(new ItemStack(Items.SUGAR), -5, 5, 99999);
+		super(-5, 5, 10000);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class MinDelayModifier extends SpawnerModifier {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getId() {
 		return "min_delay";
 	}
 
