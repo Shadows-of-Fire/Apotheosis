@@ -1,0 +1,15 @@
+{
+  "minVersion": "0.8",
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "apotheosis.mixins.refmap.json",
+  "package": "shadows.apotheosis.mixin",
+  "mixins": [
+    "MixinBambooBlock",
+    "MixinCactusBlock",
+    "MixinSugarCaneBlock"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

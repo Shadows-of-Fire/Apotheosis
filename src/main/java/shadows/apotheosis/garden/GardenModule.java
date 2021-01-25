@@ -2,7 +2,6 @@ package shadows.apotheosis.garden;
 
 import java.io.File;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.Item;
@@ -15,7 +14,6 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.placebo.config.Configuration;
-import shadows.placebo.util.PlaceboUtil;
 
 public class GardenModule {
 
@@ -28,13 +26,6 @@ public class GardenModule {
 		reload(null);
 		Apotheosis.HELPER.addShapeless(ApotheosisObjects.FARMERS_LEASH, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
-	}
-
-	@SubscribeEvent
-	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverride(new ApothCactusBlock(), Apotheosis.MODID);
-		PlaceboUtil.registerOverride(new ApothSugarcaneBlock(), Apotheosis.MODID);
-		PlaceboUtil.registerOverride(new ApothBambooBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
