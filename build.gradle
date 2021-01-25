@@ -33,7 +33,7 @@ minecraft {
             properties 'forge.logging.console.level': 'debug'
             properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run').canonicalPath
-            arg "-mixin.config=apotheosis.mixins.json"
+            arg '-mixin.config=apotheosis.mixins.json'
             source sourceSets.main
         }
         server = {
@@ -41,7 +41,7 @@ minecraft {
             properties 'forge.logging.console.level': 'debug'
             properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run').canonicalPath
-            arg "-mixin.config=apotheosis.mixins.json"
+            arg '-mixin.config=apotheosis.mixins.json'
             source sourceSets.main
         }
     }
@@ -81,6 +81,6 @@ jar {
                     "Implementation-Version": project.version,
                     "Implementation-Vendor" : project.author,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-		    "MixinConfigs": "apotheosis.mixins.json",])
+                    "MixinConfigs": "apotheosis.mixins.json",])
     }
 }
