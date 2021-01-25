@@ -1,19 +1,28 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://dist.creeper.host/Sponge/maven' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 
 archivesBaseName = name + '-' + mcVersion
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+mixin {
+    add sourceSets.main, 'apotheosis.mixins.refmap.json'
+}
+
+compileJava.options.compilerArgs << "-Xlint:all,-classfile,-processing,-deprecation" << "-Werror"
 
 minecraft {
     mappings 'snapshot', project.properties.mappingsVersion
@@ -22,13 +31,17 @@ minecraft {
         client = {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
+            properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run').canonicalPath
+            arg "-mixin.config=apotheosis.mixins.json"
             source sourceSets.main
         }
         server = {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
+            properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run').canonicalPath
+            arg "-mixin.config=apotheosis.mixins.json"
             source sourceSets.main
         }
     }
@@ -67,6 +80,7 @@ jar {
                     "Implementation-Title": project.name,
                     "Implementation-Version": project.version,
                     "Implementation-Vendor" : project.author,
-                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+		    "MixinConfigs": "apotheosis.mixins.json",])
     }
 }
