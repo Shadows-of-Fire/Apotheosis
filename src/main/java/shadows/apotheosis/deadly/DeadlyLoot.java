@@ -2,16 +2,24 @@ package shadows.apotheosis.deadly;
 
 import java.util.function.Consumer;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootPoolEntryType;
+import net.minecraft.loot.StandaloneLootEntry;
+import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.functions.ILootFunction;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.LootRarity;
@@ -137,6 +145,9 @@ public class DeadlyLoot {
 
 	public static class AffixEntry extends StackLootEntry {
 
+		public static final Serializer SERIALIZER = new Serializer();
+		public static final LootPoolEntryType AFFIX_TYPE = Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "affix_entry"), new LootPoolEntryType(SERIALIZER));
+
 		public AffixEntry(int weight, int quality) {
 			super(ItemStack.EMPTY, 1, 1, weight, quality);
 		}
@@ -147,6 +158,15 @@ public class DeadlyLoot {
 			ItemStack stack = AffixLootManager.getRandomEntry(ctx.getRandom(), rarity);
 			stack.getTag().putBoolean("apoth_rchest", true);
 			list.accept(AffixLootManager.genLootItem(stack, ctx.getRandom(), rarity));
+		}
+
+		public static class Serializer extends StandaloneLootEntry.Serializer<AffixEntry> {
+
+			@Override
+			protected AffixEntry deserialize(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, ILootCondition[] lootConditions, ILootFunction[] lootFunctions) {
+				return new AffixEntry(weight, quality);
+			}
+
 		}
 	}
 
