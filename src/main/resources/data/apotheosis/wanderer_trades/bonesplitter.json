@@ -1,0 +1,20 @@
+{
+  "rare": "",
+  "input_1": {
+    "item": "minecraft:diamond_axe",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "input_2": {
+    "item": "minecraft:emerald",
+    "count": 45
+  },
+  "output": {
+    "item": "minecraft:diamond_axe",
+    "count": 1,
+    "nbt": "{Enchantments:[{lvl:10s,id:\"minecraft:sharpness\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:5s,id:\"apotheosis:hell_infusion\"},{lvl:2s,id:\"apotheosis:capturing\"},{lvl:5s,id:\"minecraft:looting\"},{lvl:3s,id:\"minecraft:unbreaking\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_axe2\"}\u0027},Damage:0}"
+  },
+  "max_trades": 1,
+  "xp": 20,
+  "price_mult": 1.0
+}

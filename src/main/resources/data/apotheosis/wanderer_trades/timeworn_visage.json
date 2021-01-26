@@ -1,0 +1,20 @@
+{
+  "rare": "",
+  "input_1": {
+    "item": "minecraft:diamond_helmet",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "input_2": {
+    "item": "minecraft:emerald",
+    "count": 45
+  },
+  "output": {
+    "item": "minecraft:diamond_helmet",
+    "count": 1,
+    "nbt": "{Enchantments:[{lvl:5s,id:\"minecraft:protection\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:5s,id:\"minecraft:unbreaking\"},{lvl:3s,id:\"minecraft:respiration\"},{lvl:3s,id:\"minecraft:aqua_affinity\"},{lvl:3s,id:\"apotheosis:rebounding\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_helm\"}\u0027},Damage:0}"
+  },
+  "max_trades": 1,
+  "xp": 20,
+  "price_mult": 1.0
+}

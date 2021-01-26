@@ -1,0 +1,18 @@
+{
+  "rare": "",
+  "input_1": {
+    "item": "minecraft:emerald",
+    "count": 10
+  },
+  "input_2": {
+    "item": "minecraft:air",
+    "count": 0
+  },
+  "output": {
+    "item": "minecraft:totem_of_undying",
+    "count": 1
+  },
+  "max_trades": 1,
+  "xp": 10,
+  "price_mult": 1.0
+}

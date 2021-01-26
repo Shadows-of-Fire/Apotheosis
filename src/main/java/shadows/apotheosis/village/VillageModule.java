@@ -16,6 +16,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.potion.Effect;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -36,6 +37,7 @@ import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import shadows.apotheosis.village.fletching.effects.BleedingEffect;
 import shadows.apotheosis.village.wanderer.WandererReplacements;
+import shadows.apotheosis.village.wanderer.WandererTradeManager;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
 
@@ -46,16 +48,15 @@ public class VillageModule {
 
 	public static Configuration config;
 
-	public static boolean enableNewTrades = true;
-
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
+		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
 		Map<BlockState, PointOfInterestType> types = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
 		types.put(Blocks.FLETCHING_TABLE.getDefaultState(), PointOfInterestType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
-		enableNewTrades = config.getBoolean("Enable New Trades", "Wanderer", true, "If new trades are added to the wandering merchant.");
+		WandererReplacements.load(config);
 		if (config.hasChanged()) config.save();
 	}
 
@@ -136,5 +137,9 @@ public class VillageModule {
 	@SubscribeEvent
 	public void effects(Register<Effect> e) {
 		e.getRegistry().register(new BleedingEffect().setRegistryName("bleeding"));
+	}
+
+	public void reloads(AddReloadListenerEvent e) {
+		e.addListener(WandererTradeManager.INSTANCE);
 	}
 }

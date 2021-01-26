@@ -1,0 +1,17 @@
+{
+  "input_1": {
+    "item": "minecraft:emerald",
+    "count": 4
+  },
+  "input_2": {
+    "item": "minecraft:air",
+    "count": 0
+  },
+  "output": {
+    "item": "minecraft:prismarine_shard",
+    "count": 5
+  },
+  "max_trades": 5,
+  "xp": 5,
+  "price_mult": 1.0
+}

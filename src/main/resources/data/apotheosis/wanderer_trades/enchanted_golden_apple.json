@@ -1,0 +1,18 @@
+{
+  "rare": "",
+  "input_1": {
+    "item": "minecraft:emerald",
+    "count": 15
+  },
+  "input_2": {
+    "item": "minecraft:air",
+    "count": 0
+  },
+  "output": {
+    "item": "minecraft:enchanted_golden_apple",
+    "count": 1
+  },
+  "max_trades": 1,
+  "xp": 15,
+  "price_mult": 1.0
+}

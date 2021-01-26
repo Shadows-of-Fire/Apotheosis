@@ -1,0 +1,20 @@
+{
+  "rare": "",
+  "input_1": {
+    "item": "minecraft:diamond_sword",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "input_2": {
+    "item": "minecraft:emerald",
+    "count": 45
+  },
+  "output": {
+    "item": "minecraft:diamond_sword",
+    "count": 1,
+    "nbt": "{Enchantments:[{lvl:5s,id:\"minecraft:sharpness\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:4s,id:\"minecraft:looting\"},{lvl:5s,id:\"minecraft:unbreaking\"},{lvl:3s,id:\"apotheosis:capturing\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_sword\"}\u0027},Damage:0}"
+  },
+  "max_trades": 1,
+  "xp": 20,
+  "price_mult": 1.0
+}

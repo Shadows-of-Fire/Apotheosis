@@ -1,0 +1,19 @@
+{
+  "rare": "",
+  "input_1": {
+    "item": "minecraft:diamond",
+    "count": 64
+  },
+  "input_2": {
+    "item": "minecraft:phantom_membrane",
+    "count": 32
+  },
+  "output": {
+    "item": "minecraft:diamond_sword",
+    "count": 1,
+    "nbt": "{Enchantments:[{lvl:10s,id:\"minecraft:sharpness\"},{lvl:3s,id:\"apotheosis:life_mending\"},{lvl:3s,id:\"minecraft:looting\"},{lvl:5s,id:\"minecraft:unbreaking\"},{lvl:3s,id:\"apotheosis:scavenger\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.vigilance\"}\u0027},Damage:0}"
+  },
+  "max_trades": 1,
+  "xp": 20,
+  "price_mult": 0.0
+}
