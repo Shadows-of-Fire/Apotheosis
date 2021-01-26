@@ -7,7 +7,6 @@ import net.minecraft.entity.merchant.villager.VillagerTrades.ITrade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.MerchantOffer;
-import net.minecraft.util.WeightedRandom;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 
 public class AffixTrade implements ITrade {
@@ -15,11 +14,10 @@ public class AffixTrade implements ITrade {
 	@Override
 	public MerchantOffer getOffer(Entity merchant, Random rand) {
 		LootRarity rarity = LootRarity.random(rand);
-		AffixLootEntry entry = WeightedRandom.getRandomItem(rand, AffixLootManager.getEntries());
-		ItemStack loot = AffixLootManager.genLootItem(entry.getStack().copy(), rand, rarity);
-		loot.getTag().putBoolean("apoth_merchant", true);
-		ItemStack price1 = new ItemStack(Items.EMERALD, 4 + rarity.ordinal() * 12);
-		return new MerchantOffer(price1, ItemStack.EMPTY, loot, 1, 30, 1);
+		ItemStack stack = AffixLootManager.getRandomEntry(rand, rarity);
+		stack = AffixLootManager.genLootItem(stack, rand, rarity);
+		stack.getTag().putBoolean("apoth_merchant", true);
+		return new MerchantOffer(new ItemStack(stack.getItem()), new ItemStack(Items.EMERALD, rarity.ordinal() * 10), 1, 100, 1);
 	}
 
 }

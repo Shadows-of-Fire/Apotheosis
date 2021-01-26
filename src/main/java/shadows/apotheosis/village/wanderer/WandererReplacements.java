@@ -21,6 +21,7 @@ public class WandererReplacements {
 
 	public static boolean clearNormTrades = false;
 	public static boolean clearRareTrades = false;
+	public static boolean affixTrades = true;
 
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(BasicTrade.class, BasicTradeAdapter.INSTANCE).registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundNBT.class, NBTAdapter.INSTANCE).create();
 

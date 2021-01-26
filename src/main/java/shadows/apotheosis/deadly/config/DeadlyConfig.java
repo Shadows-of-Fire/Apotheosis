@@ -54,6 +54,8 @@ public class DeadlyConfig {
 
 	public static Block bossFillerBlock = Blocks.RED_SANDSTONE;
 
+	public static boolean affixTrades = true;
+
 	public static void loadConfigs() {
 		Configuration c = config;
 
@@ -139,6 +141,7 @@ public class DeadlyConfig {
 		for (EntityType<?> e : ForgeRegistries.ENTITIES)
 			if (e.getClassification() == EntityClassification.MONSTER) c.getInt(e.getRegistryName().toString(), DeadlyConstants.RANDOM_SPAWNERS, e.getRegistryName().getNamespace().equals("minecraft") ? 8 : 1, 0, 50, "");
 
+		affixTrades = c.getBoolean("Affix Trades", "wanderer", true, "If the wandering trader may sell affix loot items as a rare trade.");
 	}
 
 	public static int getWeightForEntry(EntityType<?> e) {

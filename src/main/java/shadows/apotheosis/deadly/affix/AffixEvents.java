@@ -313,8 +313,8 @@ public class AffixEvents {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void trades(WandererTradesEvent e) {
-		e.getRareTrades().add(new AffixTrade());
+		if (DeadlyConfig.affixTrades) e.getRareTrades().add(new AffixTrade());
 	}
 }
