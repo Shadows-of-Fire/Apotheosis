@@ -32,6 +32,7 @@ import shadows.placebo.util.SpawnerBuilder;
  * Util class to manipulate entities before they are spawned.
  * @author Shadows
  *
+ * TODO: Review.  NBT Names might've changed.
  */
 public class TagBuilder {
 

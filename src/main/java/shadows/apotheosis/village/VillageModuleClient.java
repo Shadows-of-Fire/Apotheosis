@@ -10,7 +10,6 @@ import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowRenderer;
 import shadows.apotheosis.village.fletching.arrows.MiningArrowRenderer;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowRenderer;
 
-@SuppressWarnings("deprecation")
 public class VillageModuleClient {
 
 	public static void init() {
