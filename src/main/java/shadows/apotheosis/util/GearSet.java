@@ -1,8 +1,18 @@
 package shadows.apotheosis.util;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 
 import net.minecraft.entity.LivingEntity;
@@ -26,6 +36,7 @@ public class GearSet extends WeightedRandom.Item {
 	protected final List<WeightedItemStack> leggings;
 	protected final List<WeightedItemStack> chestplates;
 	protected final List<WeightedItemStack> helmets;
+	protected final List<String> tags = new ArrayList<>();
 
 	public GearSet(int weight, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets) {
 		super(weight);
@@ -85,5 +96,42 @@ public class GearSet extends WeightedRandom.Item {
 		public String toString() {
 			return "Stack: " + stack.toString() + " @ Weight: " + itemWeight;
 		}
+	}
+
+	public static class SetPredicate implements Predicate<GearSet> {
+
+		protected final String key;
+		protected final Predicate<GearSet> internal;
+
+		public SetPredicate(String key) {
+			this.key = key;
+			if (key.startsWith("#")) {
+				String tag = key.substring(1);
+				internal = t -> t.tags.contains(tag);
+			} else {
+				ResourceLocation id = new ResourceLocation(key);
+				internal = t -> t.id.equals(id);
+			}
+		}
+
+		@Override
+		public boolean test(GearSet t) {
+			return internal.test(t);
+		}
+
+	}
+
+	public static class SetPredicateAdapter implements JsonDeserializer<SetPredicate>, JsonSerializer<SetPredicate> {
+
+		@Override
+		public JsonElement serialize(SetPredicate src, Type typeOfSrc, JsonSerializationContext context) {
+			return new JsonPrimitive(src.key);
+		}
+
+		@Override
+		public SetPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			return new SetPredicate(json.getAsString());
+		}
+
 	}
 }

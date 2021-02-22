@@ -37,6 +37,7 @@ import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.util.ChancedEffectInstance;
+import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.NameHelper;
 import shadows.apotheosis.util.RandomAttributeModifier;
 
@@ -52,11 +53,11 @@ public class BossItem extends WeightedRandom.Item {
 	protected final float enchantChance;
 	protected final List<ChancedEffectInstance> effects;
 	@SerializedName("valid_gear_sets")
-	protected final List<ResourceLocation> armorSets;
+	protected final List<SetPredicate> armorSets;
 	@SerializedName("attribute_modifiers")
 	protected final List<RandomAttributeModifier> modifiers;
 
-	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, List<ChancedEffectInstance> effects, List<ResourceLocation> armorSets, List<RandomAttributeModifier> modifiers) {
+	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers) {
 		super(weight);
 		this.entity = entity;
 		this.size = size;

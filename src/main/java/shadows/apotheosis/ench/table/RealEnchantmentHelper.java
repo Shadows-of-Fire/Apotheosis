@@ -30,8 +30,8 @@ public class RealEnchantmentHelper {
 		if (ench <= 0) return 0;
 		int level = (int) (power * 2);
 		if (num == 2) return level;
-		float lowBound = 0.6F - 0.4F * (1 - num) + ench / 200F;
-		float highBound = 0.8F - 0.4F * (1 - num) + ench / 200F;
+		float lowBound = Math.min(0.85F, 0.6F - 0.4F * (1 - num) + ench / 200F);
+		float highBound = Math.min(0.95F, 0.8F - 0.4F * (1 - num) + ench / 200F);
 		return (int) (level * MathHelper.nextFloat(rand, lowBound, highBound));
 	}
 

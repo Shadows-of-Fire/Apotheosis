@@ -1,21 +1,15 @@
 {
-	"weight": 15,
+	"weight": 8,
 	"mainhands": [{
-			"weight": 4,
-			"stack": {
-				"item": "minecraft:iron_sword"
-			}
-		},
-		{
-			"weight": 2,
-			"stack": {
-				"item": "minecraft:iron_axe"
-			}
-		},
-		{
 			"weight": 1,
 			"stack": {
-				"item": "minecraft:iron_pickaxe"
+				"item": "minecraft:diamond_sword"
+			}
+		},
+		{
+			"weight": 4,
+			"stack": {
+				"item": "minecraft:bow"
 			}
 		}
 	],
@@ -28,28 +22,28 @@
 	"boots": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:iron_boots"
+			"item": "minecraft:diamond_boots"
 		}
 	}],
 	"leggings": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:iron_leggings"
+			"item": "minecraft:diamond_leggings"
 		}
 	}],
 	"chestplates": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:iron_chestplate"
+			"item": "minecraft:diamond_chestplate"
 		}
 	}],
 	"helmets": [{
 		"weight": 3,
 		"stack": {
-			"item": "minecraft:iron_helmet"
+			"item": "minecraft:diamond_helmet"
 		}
 	}],
 	"tags": [
-		"standard"
+		"skeleton"
 	]
 }

@@ -43,7 +43,7 @@ public class WandererTradeManager extends JsonReloadListener {
 			try {
 				register(id, GSON.fromJson(obj, BasicTrade.class), obj.getAsJsonObject().has("rare"));
 			} catch (Exception e) {
-				DeadlyModule.LOGGER.error("Failed to load boss armor set {}.", id.toString());
+				DeadlyModule.LOGGER.error("Failed to load Wandering Trader trade {}.", id.toString());
 				e.printStackTrace();
 			}
 		});

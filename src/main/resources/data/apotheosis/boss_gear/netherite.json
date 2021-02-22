@@ -48,5 +48,8 @@
 		"stack": {
 			"item": "minecraft:netherite_helmet"
 		}
-	}]
+	}],
+	"tags": [
+		"standard"
+	]
 }

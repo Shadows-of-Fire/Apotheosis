@@ -42,5 +42,8 @@
 				"max": 1
 			}
 		}
+	],
+	"valid_gear_sets": [
+		"#standard"
 	]
 }

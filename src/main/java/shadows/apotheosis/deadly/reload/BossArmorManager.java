@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
@@ -65,9 +66,16 @@ public class BossArmorManager extends JsonReloadListener {
 		} else DeadlyModule.LOGGER.error("Attempted to register a boss gear set with name {}, but it already exists!", id);
 	}
 
-	public GearSet getRandomSet(Random rand, @Nullable List<ResourceLocation> permitted) {
-		if (permitted == null || permitted.isEmpty()) return WeightedRandom.getRandomItem(rand, sets, weight);
-		List<GearSet> valid = sets.stream().filter(e -> permitted.contains(e.getId())).collect(Collectors.toList());
+	/**
+	 * Returns a random weighted armor set based on the given random (and predicate, if applicable).
+	 */
+	public <T extends Predicate<GearSet>> GearSet getRandomSet(Random rand, @Nullable List<T> filter) {
+		if (filter == null || filter.isEmpty()) return WeightedRandom.getRandomItem(rand, sets, weight);
+		List<GearSet> valid = sets.stream().filter(e -> {
+			for (Predicate<GearSet> f : filter)
+				if (f.test(e)) return true;
+			return false;
+		}).collect(Collectors.toList());
 		if (valid.isEmpty()) return WeightedRandom.getRandomItem(rand, sets, weight);
 		return WeightedRandom.getRandomItem(rand, valid);
 	}

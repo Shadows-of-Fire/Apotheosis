@@ -27,6 +27,8 @@ import shadows.apotheosis.deadly.gen.BossItem;
 import shadows.apotheosis.util.AxisAlignedBBDeserializer;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.EntityTypeDeserializer;
+import shadows.apotheosis.util.GearSet.SetPredicate;
+import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
 import shadows.apotheosis.util.RandomAttributeModifier;
 
 public class BossItemManager extends JsonReloadListener {
@@ -36,6 +38,7 @@ public class BossItemManager extends JsonReloadListener {
 			.setPrettyPrinting()
 			.registerTypeAdapter(EntityType.class, new EntityTypeDeserializer())
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
+			.registerTypeAdapter(SetPredicate.class, new SetPredicateAdapter())
 			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
 			.registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
 			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
