@@ -1,6 +1,7 @@
 package shadows.apotheosis.deadly.affix.impl.ranged;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -11,9 +12,9 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
-import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 
@@ -27,11 +28,15 @@ public class SnareHitAffix extends Affix {
 	}
 
 	@Override
-	public float apply(ItemStack stack, Random rand, AffixModifier modifier) {
+	public float generateLevel(ItemStack stack, Random rand, AffixModifier modifier) {
 		int lvl = 2 + rand.nextInt(5);
 		if (modifier != null) lvl = (int) modifier.editLevel(this, lvl);
-		AffixHelper.addLore(stack, new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", lvl));
 		return lvl;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", level));
 	}
 
 	@Override

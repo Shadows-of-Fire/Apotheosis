@@ -1,13 +1,19 @@
 package shadows.apotheosis.deadly.affix;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
+
+import com.google.common.collect.Multimap;
 
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -25,6 +31,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
+import shadows.apotheosis.ench.asm.EnchHooks;
 
 public abstract class Affix extends WeightedRandom.Item implements IForgeRegistryEntry<Affix> {
 
@@ -53,12 +60,32 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	}
 
 	/**
-	 * Apply the modifiers of this affix to the given stack.
-	 * @param stack The stack to be modified.
-	 * @param AffixModifier A modifier to be applied to this affix, or null, if no modifier is applied.  The values applied should reflect the modifier.
-	 * @return The level of this affix.  May return 0 if the level is not applicable.
+	 * Generates a level for this affix.
+	 * @param stack The stack the affix will be applied to.
+	 * @param modifier A modifier to be applied to this affix, or null, if no modifier is applied.  The values applied should reflect the modifier.
+	 * @return The level of this affix, what the level means is determined by the affix.
 	 */
-	public abstract float apply(ItemStack stack, Random rand, @Nullable AffixModifier modifier);
+	public abstract float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier);
+
+	/**
+	 * Retrieve the modifiers from this affix to be applied to the itemstack.
+	 * @param stack The stack the affix is on.
+	 * @param level The level of this affix.
+	 * @param type The slot type for modifiers being gathered.
+	 * @param map The destination for generated attribute modifiers.
+	 */
+	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, Multimap<Attribute, AttributeModifier> map) {
+	}
+
+	/**
+	 * Adds all tooltip data from this affix to the given stack's tooltip list.
+	 * This consumer will insert tooltips immediately after enchantment tooltips, or after the name if none are present.
+	 * @param stack The stack the affix is on.
+	 * @param level The level of this affix.
+	 * @param tooltips The destination for tooltips.
+	 */
+	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+	}
 
 	/**
 	 * Chain the name of this affix to the existing name.  If this is a prefix, it should be applied to the front.
@@ -71,11 +98,12 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	}
 
 	/**
-	 * Calculates the protection value of this affix, with respect to the given damage source.
-	 * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}
-	 * @param level The level of this affix, if applicable.
-	 * @param source The damage source to compare against.
-	 * @return How many protection points this affix is worth against this source.
+	 * Calculates the protection value of this affix, with respect to the given damage source.<br>
+	 * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
+	 * Ench module overrides with {@link EnchHooks#getDamageAfterMagicAbsorb}<br>
+	 * @param level The level of this affix, if applicable.<br>
+	 * @param source The damage source to compare against.<br>
+	 * @return How many protection points this affix is worth against this source.<br>
 	 */
 	public int getProtectionLevel(float level, DamageSource source) {
 		return 0;
@@ -110,7 +138,6 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
 	 */
 	public void onArrowFired(LivingEntity user, AbstractArrowEntity arrow, ItemStack bow, float level) {
-
 	}
 
 	/**
@@ -126,7 +153,6 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
 	public void onArrowImpact(AbstractArrowEntity arrow, RayTraceResult res, RayTraceResult.Type type, float level) {
-
 	}
 
 	@Override

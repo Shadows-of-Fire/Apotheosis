@@ -63,6 +63,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public void tick() {
 		if (!this.world.isRemote) {
@@ -75,8 +76,8 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		Vector3d motion = this.getMotion();
 		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
 			float f = MathHelper.sqrt(horizontalMag(motion));
-			this.rotationYaw = (float) (MathHelper.atan2(motion.x, motion.z) * (double) (180F / (float) Math.PI));
-			this.rotationPitch = (float) (MathHelper.atan2(motion.y, (double) f) * (double) (180F / (float) Math.PI));
+			this.rotationYaw = (float) (MathHelper.atan2(motion.x, motion.z) * (180F / (float) Math.PI));
+			this.rotationPitch = (float) (MathHelper.atan2(motion.y, f) * (180F / (float) Math.PI));
 			this.prevRotationYaw = this.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch;
 		}
@@ -119,7 +120,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 			double velZ = motion.z;
 			if (this.getIsCritical()) {
 				for (int i = 0; i < 4; ++i) {
-					this.world.addParticle(ParticleTypes.CRIT, this.getPosX() + velX * (double) i / 4.0D, this.getPosY() + velY * (double) i / 4.0D, this.getPosZ() + velZ * (double) i / 4.0D, -velX, -velY + 0.2D, -velZ);
+					this.world.addParticle(ParticleTypes.CRIT, this.getPosX() + velX * i / 4.0D, this.getPosY() + velY * i / 4.0D, this.getPosZ() + velZ * i / 4.0D, -velX, -velY + 0.2D, -velZ);
 				}
 			}
 
@@ -128,12 +129,12 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 			double nextTickZ = this.getPosZ() + velZ;
 			float f1 = MathHelper.sqrt(horizontalMag(motion));
 			if (noClip) {
-				this.rotationYaw = (float) (MathHelper.atan2(-velX, -velZ) * (double) (180F / (float) Math.PI));
+				this.rotationYaw = (float) (MathHelper.atan2(-velX, -velZ) * (180F / (float) Math.PI));
 			} else {
-				this.rotationYaw = (float) (MathHelper.atan2(velX, velZ) * (double) (180F / (float) Math.PI));
+				this.rotationYaw = (float) (MathHelper.atan2(velX, velZ) * (180F / (float) Math.PI));
 			}
 
-			this.rotationPitch = (float) (MathHelper.atan2(velY, (double) f1) * (double) (180F / (float) Math.PI));
+			this.rotationPitch = (float) (MathHelper.atan2(velY, f1) * (180F / (float) Math.PI));
 			this.rotationPitch = func_234614_e_(this.prevRotationPitch, this.rotationPitch);
 			this.rotationYaw = func_234614_e_(this.prevRotationYaw, this.rotationYaw);
 			float f2 = 0.99F;
@@ -145,10 +146,10 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 				f2 = this.getWaterDrag();
 			}
 
-			this.setMotion(motion.scale((double) f2));
+			this.setMotion(motion.scale(f2));
 			if (!this.hasNoGravity() && !noClip) {
 				Vector3d vector3d4 = this.getMotion();
-				this.setMotion(vector3d4.x, vector3d4.y - (double) 0.05F, vector3d4.z);
+				this.setMotion(vector3d4.x, vector3d4.y - 0.05F, vector3d4.z);
 			}
 
 			this.setPosition(nextTickX, nextTickY, nextTickZ);

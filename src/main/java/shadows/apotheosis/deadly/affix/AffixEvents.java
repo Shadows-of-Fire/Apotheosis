@@ -26,7 +26,6 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -42,7 +41,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -50,6 +53,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.village.WandererTradesEvent;
@@ -59,6 +63,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
+import shadows.placebo.events.ItemUseEvent;
 
 public class AffixEvents {
 
@@ -212,12 +217,13 @@ public class AffixEvents {
 		})));
 	}
 
-	public static ActionResultType onItemUse(ItemUseContext ctx) {
-		ItemStack s = ctx.getItem();
+	@SubscribeEvent
+	public ActionResultType onItemUse(ItemUseEvent e) {
+		ItemStack s = e.getItemStack();
 		if (!s.isEmpty()) {
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(s);
 			for (Map.Entry<Affix, Float> ent : affixes.entrySet()) {
-				ActionResultType type = ent.getKey().onItemUse(ctx, ent.getValue());
+				ActionResultType type = ent.getKey().onItemUse(e.getContext(), ent.getValue());
 				if (type != null) return type;
 			}
 		}
@@ -316,5 +322,26 @@ public class AffixEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void trades(WandererTradesEvent e) {
 		if (DeadlyConfig.affixTrades) e.getRareTrades().add(new AffixTrade());
+	}
+
+	@SubscribeEvent
+	public void affixModifiers(ItemAttributeModifierEvent e) {
+		ItemStack stack = e.getItemStack();
+		if (stack.hasTag()) {
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+			affixes.forEach((afx, lvl) -> afx.addModifiers(stack, lvl, e.getSlotType(), e.getModifiers()));
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void affixTooltips(ItemTooltipEvent e) {
+		ItemStack stack = e.getItemStack();
+		if (stack.hasTag()) {
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+			List<ITextComponent> components = new ArrayList<>();
+			affixes.forEach((afx, lvl) -> afx.addInformation(stack, lvl, components::add));
+			e.getToolTip().addAll(1, components);
+		}
 	}
 }

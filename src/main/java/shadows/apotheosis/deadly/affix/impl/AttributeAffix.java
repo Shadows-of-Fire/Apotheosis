@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.Multimap;
+
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
@@ -44,13 +46,19 @@ public abstract class AttributeAffix extends Affix {
 	}
 
 	@Override
-	public float apply(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		EquipmentSlotType type = EquipmentType.getTypeFor(stack).getSlot(stack);
+	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
 		float lvl = range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
-		AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.get().getRegistryName(), lvl, op);
-		stack.addAttributeModifier(attr.get(), modif, type);
 		return lvl;
+	}
+
+	@Override
+	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, Multimap<Attribute, AttributeModifier> map) {
+		EquipmentSlotType ourType = EquipmentType.getTypeFor(stack).getSlot(stack);
+		if (ourType == type) {
+			AttributeModifier modif = new AttributeModifier(this.getRegistryName() + "_" + attr.get().getRegistryName(), level, op);
+			map.put(attr.get(), modif);
+		}
 	}
 
 	@Override

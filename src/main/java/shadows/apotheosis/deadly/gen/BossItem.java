@@ -81,6 +81,10 @@ public class BossItem extends WeightedRandom.Item {
 		return size;
 	}
 
+	public EntityType<?> getEntity() {
+		return entity;
+	}
+
 	/**
 	 * Spawns the result of this BossItem.
 	 * @param world The world to create the entity in.

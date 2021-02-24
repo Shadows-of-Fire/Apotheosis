@@ -62,7 +62,9 @@
     "rarity.apoth.ancient": "Ancient",
 	
 	"death.attack.apoth.frozen_solid": "%s was frozen solid.",
+	"death.attack.apoth.frozen_solid.player": "%s was frozen solid by %s.",
 	"death.attack.apoth.execute": "%s was executed.",
+	"death.attack.apoth.execute.player": "%s was executed by %s.",
 
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 

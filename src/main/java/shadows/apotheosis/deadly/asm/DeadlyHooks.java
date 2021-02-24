@@ -2,25 +2,17 @@ package shadows.apotheosis.deadly.asm;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Function;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.Affix;
-import shadows.apotheosis.deadly.affix.AffixEvents;
 import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.affix.Affixes;
 
@@ -109,36 +101,6 @@ public class DeadlyHooks {
 					e.getKey().onUserHurt(user, attacker, e.getValue());
 				}
 			}
-		}
-	}
-
-	/**
-	 * ASM Hook: Called from {@link ItemStack#onItemUse(ItemUseContext)}
-	 */
-	public static ActionResultType onItemUse(ItemStack stack, ItemUseContext ctx) {
-		ActionResultType type = AffixEvents.onItemUse(ctx);
-		if (type != null) return type;
-		if (!ctx.getWorld().isRemote) return net.minecraftforge.common.ForgeHooks.onPlaceItemIntoWorld(ctx);
-		return onItemUse(stack, ctx, c -> stack.getItem().onItemUse(ctx));
-	}
-
-	/**
-	 * Vanilla (Patch) Copy :: {@link ItemStack#onItemUse(ItemUseContext, Function)}
-	 */
-	public static ActionResultType onItemUse(ItemStack stack, ItemUseContext ctx, Function<ItemUseContext, ActionResultType> callback) {
-		PlayerEntity playerentity = ctx.getPlayer();
-		BlockPos blockpos = ctx.getPos();
-		CachedBlockInfo cachedblockinfo = new CachedBlockInfo(ctx.getWorld(), blockpos, false);
-		if (playerentity != null && !playerentity.abilities.allowEdit && !stack.canPlaceOn(ctx.getWorld().getTags(), cachedblockinfo)) {
-			return ActionResultType.PASS;
-		} else {
-			Item item = stack.getItem();
-			ActionResultType actionresulttype = callback.apply(ctx);
-			if (playerentity != null && actionresulttype == ActionResultType.SUCCESS) {
-				playerentity.addStat(Stats.ITEM_USED.get(item));
-			}
-
-			return actionresulttype;
 		}
 	}
 

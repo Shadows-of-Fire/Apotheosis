@@ -94,7 +94,7 @@ public class AffixLootManager extends JsonReloadListener {
 		AffixHelper.setRarity(stack, rarity);
 		recomputeBaseAttributes(stack);
 
-		if (type == EquipmentType.AXE) AffixHelper.applyAffix(stack, Affixes.PIERCING, Affixes.PIERCING.apply(stack, rand, null));
+		if (type == EquipmentType.AXE) AffixHelper.applyAffix(stack, Affixes.PIERCING, Affixes.PIERCING.generateLevel(stack, rand, null));
 
 		List<Affix> afxList = AffixHelper.getAffixesFor(type);
 		int affixCount = rarity.getAffixes();
@@ -111,7 +111,7 @@ public class AffixLootManager extends JsonReloadListener {
 
 		for (Affix a : affixes.keySet()) {
 			name = a.chainName(name, affixes.get(a));
-			AffixHelper.applyAffix(stack, a, a.apply(stack, rand, affixes.get(a)));
+			AffixHelper.applyAffix(stack, a, a.generateLevel(stack, rand, affixes.get(a)));
 		}
 
 		if (rarity.ordinal() >= LootRarity.MYTHIC.ordinal()) {

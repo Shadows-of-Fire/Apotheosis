@@ -1,6 +1,7 @@
 package shadows.apotheosis.deadly.affix.impl.ranged;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
@@ -9,8 +10,8 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -49,11 +50,15 @@ public class SpectralShotAffix extends RangedAffix {
 	}
 
 	@Override
-	public float apply(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
+	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
 		float lvl = range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
-		AffixHelper.addLore(stack, new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", String.format("%.2f", lvl * 100)));
 		return lvl;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", String.format("%.2f", level * 100)));
 	}
 
 	private void cloneMotion(AbstractArrowEntity src, AbstractArrowEntity dest) {

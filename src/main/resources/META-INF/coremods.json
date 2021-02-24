@@ -16,7 +16,6 @@
   "affix_prot_level": "coremods/affix_prot_level.js",
   "affix_user_hurt": "coremods/affix_user_hurt.js",
   "stack_modifier_hack": "coremods/stack_modifier_hack.js",
-  "item_use_hook": "coremods/item_use_hook.js",
   "crossbow": "coremods/crossbow.js",
   "crossbow_arrows": "coremods/crossbow_arrows.js",
   "max_level_redirects": "coremods/max_level_redirects.js"

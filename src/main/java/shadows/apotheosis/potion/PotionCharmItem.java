@@ -35,6 +35,7 @@ public class PotionCharmItem extends Item {
 		super(new Item.Properties().maxStackSize(1).maxDamage(192).group(ItemGroup.MISC));
 	}
 
+	@Override
 	public ItemStack getDefaultInstance() {
 		return PotionUtils.addPotionToItemStack(super.getDefaultInstance(), Potions.LONG_INVISIBILITY);
 	}
@@ -47,7 +48,7 @@ public class PotionCharmItem extends Item {
 			EffectInstance contained = p.getEffects().get(0);
 			EffectInstance active = ((ServerPlayerEntity) entity).getActivePotionEffect(contained.getPotion());
 			if (active == null || active.getDuration() < (active.getPotion() == Effects.NIGHT_VISION ? 210 : 5)) {
-				int durationOffset = (contained.getPotion() == Effects.NIGHT_VISION ? 210 : 5);
+				int durationOffset = contained.getPotion() == Effects.NIGHT_VISION ? 210 : 5;
 				if (contained.getPotion() == Effects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
 				EffectInstance newEffect = new EffectInstance(contained.getPotion(), (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
 				((ServerPlayerEntity) entity).addPotionEffect(newEffect);

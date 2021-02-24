@@ -79,7 +79,7 @@ public class VillageModule {
 	public void items(Register<Item> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new ObsidianArrowItem().setRegistryName("obsidian_arrow"), 
+				new ObsidianArrowItem().setRegistryName("obsidian_arrow"),
 				new BroadheadArrowItem().setRegistryName("broadhead_arrow"),
 				new ExplosiveArrowItem().setRegistryName("explosive_arrow"),
 				new MiningArrowItem(() -> Items.IRON_PICKAXE, MiningArrowEntity.Type.IRON).setRegistryName("iron_mining_arrow"),

@@ -24,6 +24,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraftforge.event.ForgeEventFactory;
 import shadows.apotheosis.spawn.SpawnerModule;
@@ -201,7 +202,11 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								}
 							}
 
-							this.spawnEntity(entity);
+							if (!((ServerWorld) world).func_242106_g(entity)) {
+								this.resetTimer();
+								return;
+							}
+
 							world.playEvent(2004, blockpos, 0);
 							if (entity instanceof MobEntity) {
 								((MobEntity) entity).spawnExplosionParticle();
@@ -214,15 +219,6 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 					if (flag) {
 						this.resetTimer();
 					}
-				}
-
-			}
-		}
-
-		protected void spawnEntity(Entity entity) {
-			if (this.getWorld().addEntity(entity)) {
-				for (Entity e : entity.getPassengers()) {
-					this.spawnEntity(e);
 				}
 
 			}
