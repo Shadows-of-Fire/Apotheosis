@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -19,6 +21,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,6 +68,8 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.placebo.events.ItemUseEvent;
+import shadows.placebo.events.ShieldBlockEvent;
+import shadows.placebo.util.ReflectionHelper;
 
 public class AffixEvents {
 
@@ -218,16 +224,18 @@ public class AffixEvents {
 	}
 
 	@SubscribeEvent
-	public ActionResultType onItemUse(ItemUseEvent e) {
+	public void onItemUse(ItemUseEvent e) {
 		ItemStack s = e.getItemStack();
 		if (!s.isEmpty()) {
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(s);
 			for (Map.Entry<Affix, Float> ent : affixes.entrySet()) {
 				ActionResultType type = ent.getKey().onItemUse(e.getContext(), ent.getValue());
-				if (type != null) return type;
+				if (type != null) {
+					e.setCanceled(true);
+					e.setCancellationResult(type);
+				}
 			}
 		}
-		return null;
 	}
 
 	@SubscribeEvent
@@ -324,12 +332,24 @@ public class AffixEvents {
 		if (DeadlyConfig.affixTrades) e.getRareTrades().add(new AffixTrade());
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void sortModifiers(ItemAttributeModifierEvent e) {
+		if (e.getModifiers().isEmpty()) return;
+		Multimap<Attribute, AttributeModifier> map = TreeMultimap.create((k1, k2) -> k1.getRegistryName().compareTo(k2.getRegistryName()), (v1, v2) -> {
+			int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
+			int compValue = Double.compare(v2.getAmount(), v1.getAmount());
+			return compOp == 0 ? compValue : compOp;
+		});
+		map.putAll(e.getModifiers());
+		ReflectionHelper.setPrivateValue(ItemAttributeModifierEvent.class, e, map, "unmodifiableModifiers");
+	}
+
 	@SubscribeEvent
 	public void affixModifiers(ItemAttributeModifierEvent e) {
 		ItemStack stack = e.getItemStack();
 		if (stack.hasTag()) {
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
-			affixes.forEach((afx, lvl) -> afx.addModifiers(stack, lvl, e.getSlotType(), e.getModifiers()));
+			affixes.forEach((afx, lvl) -> afx.addModifiers(stack, lvl, e.getSlotType(), e::addModifier));
 		}
 	}
 
@@ -342,6 +362,19 @@ public class AffixEvents {
 			List<ITextComponent> components = new ArrayList<>();
 			affixes.forEach((afx, lvl) -> afx.addInformation(stack, lvl, components::add));
 			e.getToolTip().addAll(1, components);
+		}
+	}
+
+	@SubscribeEvent
+	public void shieldBlock(ShieldBlockEvent e) {
+		ItemStack stack = e.getEntity().getActiveItemStack();
+		if (stack.isShield(e.getEntity()) && stack.hasTag()) {
+			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+			float blocked = e.getBlocked();
+			for (Map.Entry<Affix, Float> ent : affixes.entrySet()) {
+				blocked = ent.getKey().onShieldBlock(e.getEntity(), stack, e.getSource(), blocked, ent.getValue());
+			}
+			if (blocked != e.getOriginalBlocked()) e.setBlocked(blocked);
 		}
 	}
 }

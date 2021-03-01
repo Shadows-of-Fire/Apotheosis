@@ -1,11 +1,10 @@
 package shadows.apotheosis.deadly.affix;
 
 import java.util.Random;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
-
-import com.google.common.collect.Multimap;
 
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
@@ -74,7 +73,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param type The slot type for modifiers being gathered.
 	 * @param map The destination for generated attribute modifiers.
 	 */
-	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, Multimap<Attribute, AttributeModifier> map) {
+	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, BiConsumer<Attribute, AttributeModifier> map) {
 	}
 
 	/**
@@ -85,6 +84,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", level));
 	}
 
 	/**
@@ -153,6 +153,19 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
 	public void onArrowImpact(AbstractArrowEntity arrow, RayTraceResult res, RayTraceResult.Type type, float level) {
+	}
+
+	/**
+	 * Called when a shield with this affix blocks some amount of damage.
+	 * @param entity The blocking entity.
+	 * @param stack  The shield itemstack the affix is on .
+	 * @param source The damage source being blocked.
+	 * @param amount The amount of damage blocked.
+	 * @param level  The level of this affix.
+	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
+	 */
+	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
+		return amount;
 	}
 
 	@Override

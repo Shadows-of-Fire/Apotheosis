@@ -99,7 +99,7 @@ public class AffixLootManager extends JsonReloadListener {
 		List<Affix> afxList = AffixHelper.getAffixesFor(type);
 		int affixCount = rarity.getAffixes();
 		while (affixes.size() < Math.min(affixCount, afxList.size())) {
-			affixes.put(WeightedRandom.getRandomItem(rand, afxList), rarity == LootRarity.COMMON ? rand.nextBoolean() ? Modifiers.MIN : Modifiers.HALF : null);
+			affixes.put(WeightedRandom.getRandomItem(rand, afxList), rarity == LootRarity.COMMON ? Modifiers.getBadModifier() : null);
 		}
 
 		if (rarity.ordinal() >= LootRarity.EPIC.ordinal()) {

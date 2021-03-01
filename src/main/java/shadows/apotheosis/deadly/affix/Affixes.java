@@ -62,11 +62,9 @@ public class Affixes {
 	public static final Affix CURRENT_HP_DAMAGE = null;
 	public static final Affix EXECUTE = null;
 	public static final Affix OVERHEAL = null;
-	//public static final Affix AUTO_SMELT = null; Requires a harvest drops event
 	public static final Affix TORCH_PLACEMENT = null;
 	public static final Affix OMNITOOL = null;
-	//public static final Affix FOOD_SOURCE = null;
-	//public static final Affix RADIUS_MINING = null;
+	public static final Affix RADIUS_MINING = null;
 	//public static final Affix SIFTING = null;
 	public static final Affix ARMOR = null;
 	public static final Affix ARMOR_TOUGHNESS = null;

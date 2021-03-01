@@ -28,7 +28,7 @@ public class TeleportDropsAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", level));
+		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", (int) level));
 	}
 
 	@Override

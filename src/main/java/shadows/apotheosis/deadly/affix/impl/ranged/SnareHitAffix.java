@@ -35,13 +35,13 @@ public class SnareHitAffix extends Affix {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", level));
+	public boolean canApply(EquipmentType type) {
+		return type == EquipmentType.RANGED;
 	}
 
 	@Override
-	public boolean canApply(EquipmentType type) {
-		return type == EquipmentType.RANGED;
+	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", (int) level));
 	}
 
 	@Override

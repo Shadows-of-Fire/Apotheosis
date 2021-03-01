@@ -1,20 +1,20 @@
 package shadows.apotheosis.deadly.affix.impl.tool;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 
-/**
- * Allows this tool to mine anything that a diamond shovel/axe/pickaxe could.
- */
-public class OmniToolAffix extends Affix {
+public class RadialBreakAffix extends Affix {
 
-	public OmniToolAffix(int weight) {
+	public RadialBreakAffix(int weight) {
 		super(weight);
 	}
 
@@ -24,13 +24,18 @@ public class OmniToolAffix extends Affix {
 	}
 
 	@Override
+	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc" + (int) level));
+	}
+
+	@Override
 	public float getMin() {
 		return 1;
 	}
 
 	@Override
 	public float getMax() {
-		return 1;
+		return 3;
 	}
 
 	@Override
