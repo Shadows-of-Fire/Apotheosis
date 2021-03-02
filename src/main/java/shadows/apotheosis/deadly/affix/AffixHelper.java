@@ -40,6 +40,14 @@ public class AffixHelper {
 		return map;
 	}
 
+	public static float getAffixLevel(ItemStack stack, Affix afx) {
+		if (stack.hasTag() && stack.getTag().contains(AFFIXES)) {
+			CompoundNBT tag = stack.getTag().getCompound(AFFIXES);
+			return tag.getFloat(afx.getRegistryName().toString());
+		}
+		return 0;
+	}
+
 	public static void addLore(ItemStack stack, ITextComponent lore) {
 		CompoundNBT display = stack.getOrCreateChildTag("display");
 		ListNBT tag = display.getList("Lore", 8);

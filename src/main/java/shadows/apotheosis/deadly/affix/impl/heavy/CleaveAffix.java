@@ -14,7 +14,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
@@ -69,7 +68,7 @@ public class CleaveAffix extends Affix {
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
 		float chance = level % 1;
 		int targets = (int) level;
-		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", String.format("%.2f", chance * 100), targets));
+		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", String.format("%.2f", chance * 100), targets));
 	}
 
 	@Override

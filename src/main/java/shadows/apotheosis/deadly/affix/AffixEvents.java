@@ -26,6 +26,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -46,6 +47,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -61,6 +63,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.village.WandererTradesEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -216,11 +219,13 @@ public class AffixEvents {
 	public void starting(FMLServerStartingEvent e) {
 		e.getServer().getCommandManager().getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("affixloot").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests((a, b) -> {
 			return ISuggestionProvider.suggest(Arrays.stream(LootRarity.values()).map(r -> r.toString()).collect(Collectors.toList()), b);
+		}).then(Commands.argument("type", StringArgumentType.word()).suggests((a, b) -> {
+			return ISuggestionProvider.suggest(Arrays.stream(EquipmentType.values()).map(r -> r.toString()).collect(Collectors.toList()), b);
 		}).executes(c -> {
 			PlayerEntity p = c.getSource().asPlayer();
-			p.addItemStackToInventory(AffixLootManager.genLootItem(AffixLootManager.getRandomEntry(p.world.rand, null), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
+			p.addItemStackToInventory(AffixLootManager.genLootItem(AffixLootManager.getRandomEntry(p.world.rand, null, EquipmentType.valueOf(c.getArgument("type", String.class))), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
 			return 0;
-		})));
+		}))));
 	}
 
 	@SubscribeEvent
@@ -375,6 +380,20 @@ public class AffixEvents {
 				blocked = ent.getKey().onShieldBlock(e.getEntity(), stack, e.getSource(), blocked, ent.getValue());
 			}
 			if (blocked != e.getOriginalBlocked()) e.setBlocked(blocked);
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void onBreak(BlockEvent.BreakEvent e) {
+		PlayerEntity player = e.getPlayer();
+		ItemStack tool = player.getHeldItemMainhand();
+		World world = player.world;
+		if (!world.isRemote && tool.hasTag()) {
+			int level = (int) AffixHelper.getAffixLevel(tool, Affixes.RADIUS_MINING);
+			if (level > 0) {
+				float hardness = e.getState().getBlockHardness(e.getWorld(), e.getPos());
+				Affixes.RADIUS_MINING.breakExtraBlocks((ServerPlayerEntity) player, e.getPos(), tool, level, hardness);
+			}
 		}
 	}
 }

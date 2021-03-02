@@ -6,17 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.spongepowered.asm.mixin.Unique;
 
-import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.profiler.IProfiler;
@@ -83,6 +80,18 @@ public class AffixLootManager extends JsonReloadListener {
 	}
 
 	/**
+	 * Selects a random loot entry itemstack from the list of entries, filtered by type.
+	 * @param rand A random.
+	 * @param rarity If this is {@link LootRarity#ANCIENT}, then the item returned will be an {@link Unique}
+	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
+	 */
+	public static ItemStack getRandomEntry(Random rand, LootRarity rarity, EquipmentType type) {
+		AffixLootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList()));
+		ItemStack stack = rarity == LootRarity.ANCIENT ? genUnique(rand) : entry.getStack().copy();
+		return stack;
+	}
+
+	/**
 	 * Applies loot modifiers to the passed in itemstack.
 	 * Note that this will be unusual if the passed in itemstack does not meet the qualities of any equipment type.
 	 * The default equipment type is {@link EquipmentType#TOOL}, so items that do not match will be treated as tools.
@@ -92,7 +101,6 @@ public class AffixLootManager extends JsonReloadListener {
 		EquipmentType type = EquipmentType.getTypeFor(stack);
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
 		AffixHelper.setRarity(stack, rarity);
-		recomputeBaseAttributes(stack);
 
 		if (type == EquipmentType.AXE) AffixHelper.applyAffix(stack, Affixes.PIERCING, Affixes.PIERCING.generateLevel(stack, rand, null));
 
@@ -128,12 +136,6 @@ public class AffixLootManager extends JsonReloadListener {
 	 */
 	public static ItemStack genUnique(Random rand) {
 		return ItemStack.EMPTY;
-	}
-
-	public static void recomputeBaseAttributes(ItemStack stack) {
-		EquipmentSlotType slot = EquipmentType.getTypeFor(stack).getSlot(stack);
-		Multimap<Attribute, AttributeModifier> modifs = stack.getAttributeModifiers(slot);
-		modifs.forEach((s, a) -> stack.addAttributeModifier(s, a, slot));
 	}
 
 }

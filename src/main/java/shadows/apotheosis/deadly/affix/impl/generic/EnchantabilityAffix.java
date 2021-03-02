@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -27,7 +26,7 @@ public class EnchantabilityAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", (int) level));
+		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", (int) level));
 	}
 
 	@Override

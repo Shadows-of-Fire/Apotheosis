@@ -13,7 +13,6 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -41,7 +40,7 @@ public class SnareHitAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", (int) level));
+		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", (int) level));
 	}
 
 	@Override

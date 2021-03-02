@@ -22,7 +22,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
@@ -84,7 +86,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(new TranslationTextComponent("affix." + this.getRegistryName() + ".desc", level));
+		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", level));
 	}
 
 	/**
@@ -207,5 +209,9 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * The maximum possible value for this affix, after modifiers.
 	 */
 	public abstract float getMax();
+
+	public static IFormattableTextComponent loreComponent(String text, Object... args) {
+		return new TranslationTextComponent(text, args).mergeStyle(TextFormatting.ITALIC, TextFormatting.DARK_PURPLE);
+	}
 
 }

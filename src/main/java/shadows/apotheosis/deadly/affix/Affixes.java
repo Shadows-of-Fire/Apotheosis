@@ -34,6 +34,7 @@ import shadows.apotheosis.deadly.affix.impl.ranged.SnipeDamageAffix;
 import shadows.apotheosis.deadly.affix.impl.ranged.SpectralShotAffix;
 import shadows.apotheosis.deadly.affix.impl.ranged.TeleportDropsAffix;
 import shadows.apotheosis.deadly.affix.impl.tool.OmniToolAffix;
+import shadows.apotheosis.deadly.affix.impl.tool.RadiusMiningAffix;
 import shadows.apotheosis.deadly.affix.impl.tool.TorchPlacementAffix;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, bus = Bus.MOD)
@@ -64,7 +65,7 @@ public class Affixes {
 	public static final Affix OVERHEAL = null;
 	public static final Affix TORCH_PLACEMENT = null;
 	public static final Affix OMNITOOL = null;
-	public static final Affix RADIUS_MINING = null;
+	public static final RadiusMiningAffix RADIUS_MINING = null;
 	//public static final Affix SIFTING = null;
 	public static final Affix ARMOR = null;
 	public static final Affix ARMOR_TOUGHNESS = null;
@@ -102,6 +103,7 @@ public class Affixes {
 		reg.register(new ArmorToughnessAffix(2).setRegistryName("armor_toughness"));
 		reg.register(new MaxHealthAffix(1).setRegistryName("max_health"));
 		reg.register(new EnchantabilityAffix(3).setRegistryName("enchantability"));
+		reg.register(new RadiusMiningAffix(2).setRegistryName("radius_mining"));
 	}
 
 }
