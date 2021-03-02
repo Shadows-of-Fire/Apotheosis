@@ -1,0 +1,34 @@
+{
+	"type": "apotheosis:potion_charm",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "potion"
+	}],
+	"recipe": [
+		[{
+				"item": "minecraft:blaze_powder"
+			},
+			{
+				"item": "minecraft:blaze_powder"
+			},
+			{
+				"item": "minecraft:blaze_powder"
+			}
+		],
+		[
+			"potion",
+			"potion",
+			"potion"
+		],
+		[{
+				"item": "minecraft:blaze_powder"
+			},
+			{
+				"item": "minecraft:blaze_powder"
+			},
+			{
+				"item": "minecraft:blaze_powder"
+			}
+		]
+	]
+}

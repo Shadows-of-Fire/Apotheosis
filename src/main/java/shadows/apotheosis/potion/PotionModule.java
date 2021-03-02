@@ -40,7 +40,6 @@ import shadows.apotheosis.potion.compat.CuriosCompat;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.PotionSundering;
 import shadows.placebo.config.Configuration;
-import shadows.placebo.recipe.RecipeHelper;
 
 public class PotionModule {
 
@@ -99,7 +98,6 @@ public class PotionModule {
 		Ingredient res = Apotheosis.potionIngredient(ApotheosisObjects.RESISTANCE);
 		Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
 		Apotheosis.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
-		RecipeHelper.addRecipe(new PotionCharmRecipe());
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
 		MinecraftForge.EVENT_BUS.addListener(this::xp);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
