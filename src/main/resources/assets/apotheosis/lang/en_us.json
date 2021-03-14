@@ -1,6 +1,9 @@
 {
 	"comment_id": "/Deadly Module",
 	
+    "affix.apotheosis:reach_distance": "%s of Great Lengths",
+	"affix.apotheosis:enchantability": "%s of Latent Magic",
+	
 	"affix.apotheosis:draw_speed": "%s of the Quickdraw",
 	"affix.apotheosis:movement_speed": "Energetic %s",
 	"affix.apotheosis:snipe_damage": "Sniper's %s",
@@ -13,22 +16,31 @@
 	"affix.apotheosis:cold_damage": "Iceborne %s",
 	"affix.apotheosis:crit_chance": "Lethal %s",
 	"affix.apotheosis:crit_damage": "Bloodseeking %s",
+	"affix.apotheosis:damage_chain": "%s of Electrocution",
 	"affix.apotheosis:fire_damage": "Molten %s",
 	"affix.apotheosis:life_steal": "Vampiric %s",
 	"affix.apotheosis:loot_pinata": "%s of Explosive Fortune",
-	"affix.apotheosis:reach_distance": "%s of Great Lengths",
-	"affix.apotheosis:damage_chain": "%s of Electrocution",
-	"affix.apotheosis:cleave": "Berserker's %s",
+	
 	"affix.apotheosis:max_crit": "%s of Violence",
+	"affix.apotheosis:cleave": "Berserker's %s",
 	"affix.apotheosis:current_hp_damage": "%s, the God-Slayer",
 	"affix.apotheosis:execute": "Culling %s",
 	"affix.apotheosis:overheal": "%s of Divinity",
-	"affix.apotheosis:omnitool": "Omnetic %s",
+	
 	"affix.apotheosis:torch_placement": "%s of Lights",
+	"affix.apotheosis:omnitool": "Omnetic %s",
+	"affix.apotheosis:radius_mining": "Radial %s",
+	
 	"affix.apotheosis:armor": "Ironclad %s",
 	"affix.apotheosis:armor_toughness": "Reinforced %s",
 	"affix.apotheosis:max_health": "%s of Tenacity",
-	"affix.apotheosis:enchantability": "%s of Latent Magic",
+	
+	"affix.apotheosis:arrow_catcher": "%s of Lightning Reflexes",
+	"affix.apotheosis:shield_speed": "Nimble %s",
+	"affix.apotheosis:disengage": "Retreating %s",
+	"affix.apotheosis:spiked_shield": "Spiked %s",
+	"affix.apotheosis:eldritch_block": "Horrifying %s",
+	"affix.apotheosis:shield_damage": "%s of Strength",
 	
 	"apoth.draw_speed": "Draw Speed",
 	"apoth.snipe_damage": "Sniper Damage",
@@ -40,6 +52,7 @@
 	"apoth.crit_chance": "Critical Hit Chance",
 	"apoth.crit_damage": "Critical Hit Damage",
 	"apoth.overhealing": "Overhealing",
+	"apoth.reflection": "Damage Reflected",
 
 	"affix.apotheosis:snare_hit.desc": "Snares targets for %d seconds on hit.",
 	"affix.apotheosis:spectral_shot.desc": "Your shots have a %s%% chance to fire a spectral arrow.",
@@ -53,6 +66,13 @@
 	"affix.apotheosis:omnitool.desc": "This tool has diamond effectiveness against all blocks.",
 	"affix.apotheosis:torch_placement.desc": "Right clicking will place a torch at a cost of %d durability.",
 	"affix.apotheosis:enchantability.desc": "This item's enchantability is increased by %d.",
+	"affix.apotheosis:arrow_catcher.desc1": "Receive 1 copy of an arrow you block.",
+	"affix.apotheosis:arrow_catcher.desc": "Receive %s copies of an arrow you block.",
+	"affix.apotheosis:disengage.desc": "You will leap back when blocking in melee.",
+	"affix.apotheosis:eldritch_block.desc": "Blocked enemies are weakened.",
+	"affix.apotheosis:radius_mining.desc1": "This tool breaks in a 1x2.",
+	"affix.apotheosis:radius_mining.desc2": "This tool breaks in a 3x2.",
+	"affix.apotheosis:radius_mining.desc3": "This tool breaks in a 3x3.",
 
     "rarity.apoth.common": "Common",
     "rarity.apoth.uncommon": "Uncommon",

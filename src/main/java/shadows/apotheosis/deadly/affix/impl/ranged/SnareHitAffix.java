@@ -1,7 +1,6 @@
 package shadows.apotheosis.deadly.affix.impl.ranged;
 
 import java.util.Random;
-import java.util.function.Consumer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -12,7 +11,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.text.ITextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -36,11 +34,6 @@ public class SnareHitAffix extends Affix {
 	@Override
 	public boolean canApply(EquipmentType type) {
 		return type == EquipmentType.RANGED;
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", (int) level));
 	}
 
 	@Override

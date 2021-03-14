@@ -34,7 +34,7 @@ public class LootPinataAffix extends RangedAffix {
 
 	@Override
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", String.format("%.2f", level * 100)));
+		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level * 100)));
 	}
 
 	@Override

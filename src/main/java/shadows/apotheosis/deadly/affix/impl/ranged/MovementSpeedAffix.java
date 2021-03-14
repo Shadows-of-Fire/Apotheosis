@@ -6,12 +6,12 @@ import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
 
 /**
- * Ranged Movement Speed Affix.  Provies 50% - 150% additional movement speed while holding the weapon.
+ * Ranged Movement Speed Affix.  Provies 25% - 150% additional movement speed while holding the weapon.
  */
 public class MovementSpeedAffix extends AttributeAffix {
 
 	public MovementSpeedAffix(int weight) {
-		super(Attributes.MOVEMENT_SPEED, 0.05F, 0.75F, Operation.MULTIPLY_TOTAL, weight);
+		super(Attributes.MOVEMENT_SPEED, 0.25F, 0.75F, Operation.MULTIPLY_TOTAL, weight);
 	}
 
 	@Override

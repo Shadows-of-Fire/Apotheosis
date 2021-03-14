@@ -76,7 +76,7 @@ public class RadiusMiningAffix extends Affix {
 	 * @param tool The tool being used (which has this affix on it)
 	 * @param level The level of this affix, in this case, the mode of operation.
 	 */
-	public void breakExtraBlocks(ServerPlayerEntity player, BlockPos pos, ItemStack tool, int level, float hardness) {
+	public static void breakExtraBlocks(ServerPlayerEntity player, BlockPos pos, ItemStack tool, int level, float hardness) {
 		if (!breakers.add(player.getUniqueID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.ew
 		if (!player.isSneaking()) try {
 			if (level == 1) {
@@ -93,7 +93,7 @@ public class RadiusMiningAffix extends Affix {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void breakBlockRadius(ServerPlayerEntity player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
+	public static void breakBlockRadius(ServerPlayerEntity player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
 		World world = player.world;
 		if (x < 2 && y < 2) return;
 		int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);

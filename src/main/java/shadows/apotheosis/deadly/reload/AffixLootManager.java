@@ -86,6 +86,7 @@ public class AffixLootManager extends JsonReloadListener {
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
 	public static ItemStack getRandomEntry(Random rand, LootRarity rarity, EquipmentType type) {
+		if (type == null) return getRandomEntry(rand, rarity);
 		AffixLootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList()));
 		ItemStack stack = rarity == LootRarity.ANCIENT ? genUnique(rand) : entry.getStack().copy();
 		return stack;

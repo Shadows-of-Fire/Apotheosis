@@ -16,7 +16,7 @@ public class ArmorToughnessAffix extends AttributeAffix {
 
 	@Override
 	public boolean canApply(EquipmentType type) {
-		return type == EquipmentType.ARMOR;
+		return type == EquipmentType.ARMOR || type == EquipmentType.SHIELD;
 	}
 
 	@Override

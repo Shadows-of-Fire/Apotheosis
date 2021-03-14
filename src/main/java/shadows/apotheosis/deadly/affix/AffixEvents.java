@@ -68,6 +68,7 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import shadows.apotheosis.deadly.affix.impl.tool.RadiusMiningAffix;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.placebo.events.ItemUseEvent;
@@ -223,7 +224,13 @@ public class AffixEvents {
 			return ISuggestionProvider.suggest(Arrays.stream(EquipmentType.values()).map(r -> r.toString()).collect(Collectors.toList()), b);
 		}).executes(c -> {
 			PlayerEntity p = c.getSource().asPlayer();
-			p.addItemStackToInventory(AffixLootManager.genLootItem(AffixLootManager.getRandomEntry(p.world.rand, null, EquipmentType.valueOf(c.getArgument("type", String.class))), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
+			String type = c.getArgument("type", String.class);
+			EquipmentType eType = null;
+			try {
+				eType = EquipmentType.valueOf(type);
+			} catch (Exception ex) {
+			}
+			p.addItemStackToInventory(AffixLootManager.genLootItem(AffixLootManager.getRandomEntry(p.world.rand, null, eType), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
 			return 0;
 		}))));
 	}
@@ -392,7 +399,7 @@ public class AffixEvents {
 			int level = (int) AffixHelper.getAffixLevel(tool, Affixes.RADIUS_MINING);
 			if (level > 0) {
 				float hardness = e.getState().getBlockHardness(e.getWorld(), e.getPos());
-				Affixes.RADIUS_MINING.breakExtraBlocks((ServerPlayerEntity) player, e.getPos(), tool, level, hardness);
+				RadiusMiningAffix.breakExtraBlocks((ServerPlayerEntity) player, e.getPos(), tool, level, hardness);
 			}
 		}
 	}

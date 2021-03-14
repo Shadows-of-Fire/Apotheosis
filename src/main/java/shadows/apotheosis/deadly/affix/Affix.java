@@ -86,7 +86,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", level));
+		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level)));
 	}
 
 	/**
@@ -212,6 +212,11 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 
 	public static IFormattableTextComponent loreComponent(String text, Object... args) {
 		return new TranslationTextComponent(text, args).mergeStyle(TextFormatting.ITALIC, TextFormatting.DARK_PURPLE);
+	}
+
+	public static String fmt(float f) {
+		if (f == (long) f) return String.format("%d", (long) f);
+		else return String.format("%.2f", f);
 	}
 
 }

@@ -26,9 +26,10 @@ public class CustomAttributes {
 	public static final Attribute CRIT_CHANCE = new RangedAttribute("apoth.crit_chance", 0, 0, 1024).setRegistryName(Apotheosis.MODID, "crit_chance");
 	public static final Attribute CRIT_DAMAGE = new RangedAttribute("apoth.crit_damage", 0, 0, 1024).setRegistryName(Apotheosis.MODID, "crit_damage");
 	public static final Attribute OVERHEALING = new RangedAttribute("apoth.overhealing", 0, 0, 1024).setRegistryName(Apotheosis.MODID, "overhealing");
+	public static final Attribute REFLECTION = new RangedAttribute("apoth.reflection", 0, 0, 1024).setRegistryName(Apotheosis.MODID, "reflection");
 
 	@SubscribeEvent
 	public static void register(Register<Attribute> e) {
-		e.getRegistry().registerAll(DRAW_SPEED, SNIPE_DAMAGE, FIRE_DAMAGE, COLD_DAMAGE, LIFE_STEAL, PIERCING_DAMAGE, CURRENT_HP_DAMAGE, CRIT_CHANCE, CRIT_DAMAGE, OVERHEALING);
+		e.getRegistry().registerAll(DRAW_SPEED, SNIPE_DAMAGE, FIRE_DAMAGE, COLD_DAMAGE, LIFE_STEAL, PIERCING_DAMAGE, CURRENT_HP_DAMAGE, CRIT_CHANCE, CRIT_DAMAGE, OVERHEALING, REFLECTION);
 	}
 }
