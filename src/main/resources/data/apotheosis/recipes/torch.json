@@ -1,0 +1,13 @@
+{
+	"type": "campfire_cooking",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "village"
+	}],  
+	"ingredient": {
+		"item": "minecraft:stick"
+	},
+	"result": "minecraft:torch",
+	"experience": 0,
+	"cookingtime": 40
+}

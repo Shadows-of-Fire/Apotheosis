@@ -1,5 +1,6 @@
 package shadows.apotheosis.deadly.asm;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
 
@@ -8,8 +9,11 @@ import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.CampfireTileEntity;
 import net.minecraft.util.DamageSource;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.Affix;
@@ -114,6 +118,29 @@ public class DeadlyHooks {
 			ench += affixes.getOrDefault(Affixes.ENCHANTABILITY, 0F).intValue();
 		}
 		return ench;
+	}
+
+	/**
+	 * ASM Hook: Called from {@link CampfireTileEntity#findMatchingRecipe}<br>
+	 * Replaces the standard {@link Inventory} with a context-aware {@link CampfireInventory}.
+	 */
+	public static IInventory getCampfireInv(IInventory src, CampfireTileEntity tile) {
+		return new CampfireInventory(tile, src.getStackInSlot(0));
+	}
+
+	public static class CampfireInventory extends Inventory {
+
+		private final WeakReference<CampfireTileEntity> tile;
+
+		public CampfireInventory(CampfireTileEntity tile, ItemStack stack) {
+			super(stack);
+			this.tile = new WeakReference<>(tile);
+		}
+
+		public CampfireTileEntity getTile() {
+			return tile.get();
+		}
+
 	}
 
 }

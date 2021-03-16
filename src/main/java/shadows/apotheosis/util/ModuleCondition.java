@@ -23,7 +23,7 @@ public class ModuleCondition implements ICondition {
 		types.put("deadly", () -> Apotheosis.enableDeadly);
 		types.put("enchantment", () -> Apotheosis.enableEnch);
 		types.put("potion", () -> Apotheosis.enablePotion);
-		types.put("villager", () -> Apotheosis.enableVillager);
+		types.put("village", () -> Apotheosis.enableVillage);
 	}
 
 	final String name;

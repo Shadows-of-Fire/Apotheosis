@@ -1,6 +1,8 @@
 package shadows.apotheosis.deadly;
 
 import java.io.File;
+import java.util.EnumMap;
+import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +13,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -29,6 +34,8 @@ import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.affix.AffixEvents;
+import shadows.apotheosis.deadly.affix.LootRarity;
+import shadows.apotheosis.deadly.affix.recipe.AffixShardingRecipe;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossFeature;
 import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
@@ -37,15 +44,19 @@ import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.deadly.objects.BossSummonerItem;
+import shadows.apotheosis.deadly.objects.RarityShardItem;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.deadly.reload.BossItemManager;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.recipe.RecipeHelper;
 
 public class DeadlyModule {
 
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Deadly");
+
+	public static final EnumMap<LootRarity, RarityShardItem> RARITY_SHARDS = new EnumMap<>(LootRarity.class);
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
@@ -59,6 +70,11 @@ public class DeadlyModule {
 	public void init(FMLCommonSetupEvent e) {
 		reload(null);
 		DeadlyLoot.init();
+		RecipeHelper.addRecipe(new AffixShardingRecipe(null));
+		LootRarity[] vals = LootRarity.values();
+		for (int i = 0; i < vals.length - 1; i++) {
+			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 4), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
+		}
 	}
 
 	@SubscribeEvent
@@ -69,6 +85,12 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void items(Register<Item> e) {
 		e.getRegistry().register(new BossSummonerItem(new Item.Properties().maxStackSize(1).group(ItemGroup.MISC)).setRegistryName("boss_summoner"));
+		for (LootRarity r : LootRarity.values()) {
+			RarityShardItem shard = new RarityShardItem(r, new Item.Properties().group(ItemGroup.MISC));
+			shard.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_shard");
+			e.getRegistry().register(shard);
+			RARITY_SHARDS.put(r, shard);
+		}
 	}
 
 	@SubscribeEvent
@@ -79,6 +101,11 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void tiles(Register<TileEntityType<?>> e) {
 		e.getRegistry().register(new TileEntityType<>(BossSpawnerTile::new, ImmutableSet.of(ApotheosisObjects.BOSS_SPAWNER), null).setRegistryName("boss_spawn_tile"));
+	}
+
+	@SubscribeEvent
+	public void serializers(Register<IRecipeSerializer<?>> e) {
+		e.getRegistry().register(AffixShardingRecipe.SERIALIZER.setRegistryName(new ResourceLocation(Apotheosis.MODID, "affix_sharding")));
 	}
 
 	@SubscribeEvent

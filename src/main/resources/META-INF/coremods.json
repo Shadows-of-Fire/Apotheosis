@@ -18,5 +18,6 @@
   "stack_modifier_hack": "coremods/stack_modifier_hack.js",
   "crossbow": "coremods/crossbow.js",
   "crossbow_arrows": "coremods/crossbow_arrows.js",
-  "max_level_redirects": "coremods/max_level_redirects.js"
+  "max_level_redirects": "coremods/max_level_redirects.js",
+  "soulfire_recipes": "coremods/campfire.js"
 }

@@ -2,7 +2,7 @@
 	"type": "apotheosis:fletching",
 	"conditions": [{
 		"type": "apotheosis:module",
-		"module": "villager"
+		"module": "village"
 	}],
 	"ingredients": [{
 			"item": "minecraft:iron_pickaxe"

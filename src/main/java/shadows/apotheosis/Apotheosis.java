@@ -64,7 +64,7 @@ public class Apotheosis {
 	public static boolean enableDeadly = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
-	public static boolean enableVillager = true;
+	public static boolean enableVillage = true;
 
 	public static float localAtkStrength = 1;
 
@@ -76,7 +76,7 @@ public class Apotheosis {
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
 		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
-		enableVillager = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
+		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		if (config.hasChanged()) config.save();
 	}
 
@@ -89,7 +89,7 @@ public class Apotheosis {
 		if (enableGarden) bus.register(new GardenModule());
 		if (enableDeadly) bus.register(new DeadlyModule());
 		if (enablePotion) bus.register(new PotionModule());
-		if (enableVillager) bus.register(new VillageModule());
+		if (enableVillage) bus.register(new VillageModule());
 
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
