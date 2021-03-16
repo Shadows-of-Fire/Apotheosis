@@ -123,7 +123,7 @@ public class PotionCharmItem extends Item {
 	}
 
 	public static boolean hasPotion(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("Potion");
+		return PotionUtils.getPotionFromItem(stack) != Potions.EMPTY;
 	}
 
 	@Override
