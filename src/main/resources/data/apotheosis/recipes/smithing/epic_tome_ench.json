@@ -1,0 +1,24 @@
+{
+	"type": "smithing",
+	"conditions": [{
+		"type": "forge:and",
+		"values": [{
+				"type": "apotheosis:module",
+				"module": "deadly"
+			},
+			{
+				"type": "apotheosis:module",
+				"module": "enchantment"
+			}
+		]
+	}],
+	"base": {
+		"item": "apotheosis:scrap_tome"
+	},
+	"addition": {
+		"item": "apotheosis:epic_shard"
+	},
+	"result": {
+		"item": "apotheosis:epic_tome"
+	}
+}

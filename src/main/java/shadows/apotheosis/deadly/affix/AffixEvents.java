@@ -51,6 +51,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -70,6 +71,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import shadows.apotheosis.deadly.affix.impl.tool.RadiusMiningAffix;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
+import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.placebo.events.ItemUseEvent;
 import shadows.placebo.events.ShieldBlockEvent;
@@ -359,6 +361,7 @@ public class AffixEvents {
 	@SubscribeEvent
 	public void affixModifiers(ItemAttributeModifierEvent e) {
 		ItemStack stack = e.getItemStack();
+		if (stack.getItem() instanceof IAffixSensitiveItem && !((IAffixSensitiveItem) stack.getItem()).receivesAttributes(stack)) return;
 		if (stack.hasTag()) {
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
 			affixes.forEach((afx, lvl) -> afx.addModifiers(stack, lvl, e.getSlotType(), e::addModifier));
@@ -369,6 +372,7 @@ public class AffixEvents {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void affixTooltips(ItemTooltipEvent e) {
 		ItemStack stack = e.getItemStack();
+		if (stack.getItem() instanceof IAffixSensitiveItem && !((IAffixSensitiveItem) stack.getItem()).receivesTooltips(stack)) return;
 		if (stack.hasTag()) {
 			Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
 			List<ITextComponent> components = new ArrayList<>();
@@ -402,5 +406,10 @@ public class AffixEvents {
 				RadiusMiningAffix.breakExtraBlocks((ServerPlayerEntity) player, e.getPos(), tool, level, hardness);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void anvilEvent(AnvilUpdateEvent e) {
+		if (AffixTomeItem.updateAnvil(e)) return;
 	}
 }

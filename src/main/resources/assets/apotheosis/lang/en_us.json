@@ -1,6 +1,50 @@
 {
 	"comment_id": "/Deadly Module",
 	
+	"affix.apotheosis:reach_distance.name": "Reach Distance - (%s)",
+	"affix.apotheosis:enchantability.name": "Enchantability - (%s)",
+	
+	"affix.apotheosis:draw_speed.name": "Draw Speed - (%s%%)",
+	"affix.apotheosis:movement_speed.name": "Movement Speed - (%s%%)",
+	"affix.apotheosis:snipe_damage.name": "Sniper Damage - (%s)",
+	"affix.apotheosis:spectral_shot.name": "Spectral Shot - (%s%%)",
+	"affix.apotheosis:snare_hit.name": "Ensnaring - (%s)",
+	"affix.apotheosis:magic_arrow.name": "Magic Arrow",
+	"affix.apotheosis:teleport_drops.name": "Drop Teleportation - (%s)",
+	
+	"affix.apotheosis:attack_speed.name": "Attack Speed - (%s)",
+	"affix.apotheosis:cold_damage.name": "Cold Damage - (%s)",
+	"affix.apotheosis:crit_chance.name": "Crit Chance - (%s%%)",
+	"affix.apotheosis:crit_damage.name": "Crit Damage - (%s%%)",
+	"affix.apotheosis:damage_chain.name": "Damage Chain - (%s)",
+	"affix.apotheosis:fire_damage.name": "Fire Damage - (%s)",
+	"affix.apotheosis:life_steal.name": "Life Steal - (%s%%)",
+	"affix.apotheosis:loot_pinata.name": "Loot Piñata - (%s%%)",
+	
+	"affix.apotheosis:piercing.name": "Piercing",
+	"affix.apotheosis:max_crit.name": "Max Crit Chance",
+	"affix.apotheosis:cleave.name": "Cleave - (%s%%, %s)",
+	"affix.apotheosis:current_hp_damage.name": "Current HP Damage - (%s%%)",
+	"affix.apotheosis:execute.name": "Execute Damage - (%s%%)",
+	"affix.apotheosis:overheal.name": "Overheal - (%s%%)",
+	
+	"affix.apotheosis:torch_placement.name": "Torch Placement - (%s)",
+	"affix.apotheosis:omnitool.name": "Omnitool",
+	"affix.apotheosis:radius_mining.name1": "Radial Mining (1x2)",
+	"affix.apotheosis:radius_mining.name2": "Radial Mining (3x2)",
+	"affix.apotheosis:radius_mining.name3": "Radial Mining (3x3)",
+	
+	"affix.apotheosis:armor.name": "Armor - (%s)",
+	"affix.apotheosis:armor_toughness.name": "Armor Toughness - (%s)",
+	"affix.apotheosis:max_health.name": "Max Health - (%s)",
+	
+	"affix.apotheosis:arrow_catcher.name": "Arrow Catcher - (%s)",
+	"affix.apotheosis:shield_speed.name": "Movement Speed - (%s%%)",
+	"affix.apotheosis:disengage.name": "Disengage",
+	"affix.apotheosis:spiked_shield.name": "Spiked - (%s%%)",
+	"affix.apotheosis:eldritch_block.name": "Eldritch Block - (%s)",
+	"affix.apotheosis:shield_damage.name": "Attack Damage - (%s)",
+	
     "affix.apotheosis:reach_distance": "%s of Great Lengths",
 	"affix.apotheosis:enchantability": "%s of Latent Magic",
 	
@@ -87,6 +131,25 @@
 	"death.attack.apoth.execute.player": "%s was executed by %s.",
 
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
+	"item.apotheosis.common_shard": "Common Rarity Shard",
+	"item.apotheosis.uncommon_shard": "Uncommon Rarity Shard",
+	"item.apotheosis.rare_shard": "Rare Rarity Shard",
+	"item.apotheosis.epic_shard": "Epic Rarity Shard",
+	"item.apotheosis.mythic_shard": "Mythic Rarity Shard",
+	"item.apotheosis.ancient_shard": "Ancient Rarity Shard",
+	
+	"item.apotheosis.common_tome": "Common Affix Tome",
+	"item.apotheosis.uncommon_tome": "Uncommon Affix Tome",
+	"item.apotheosis.rare_tome": "Rare Affix Tome",
+	"item.apotheosis.epic_tome": "Epic Affix Tome",
+	"item.apotheosis.mythic_tome": "Mythic Affix Tome",
+	"item.apotheosis.ancient_tome": "Ancient Affix Tome",
+	
+	"info.apotheosis.affix_tome": "Can remove affixes, taking some of them as its own.",
+    "info.apotheosis.affix_tome2": "The item must be %s or weaker.  It will be destroyed.",
+	"info.apotheosis.any_of_rarity": "Accepts any %s item",
+	"gui.apotheosis.category.soulfire": "Soulfire Cooking",
+	"info.apotheosis.one_per_affix": "One shard is produced per affix destroyed",
 
     "comment_id": "/Advancements",
 
@@ -331,7 +394,7 @@
     "info.apotheosis.digger_book": "Accepts mining enchantments.",
     "info.apotheosis.fishing_rod_book": "Accepts fishing pole enchantments.",
     "info.apotheosis.bow_book": "Accepts bow enchantments.",
-    "info.apotheosis.scrap_tome": "Can remove enchantments, taking some of them as it's own.",
+    "info.apotheosis.scrap_tome": "Can remove enchantments, taking some of them as its own.",
     "info.apotheosis.scrap_tome2": "Will consume the item in the process.",
     "info.apotheosis.table": "Max Normal Level: %s",
     "info.apotheosis.table2": "Max Hellshelf Level: %s",

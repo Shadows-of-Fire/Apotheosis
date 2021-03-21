@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "apotheosis:items/tome",
+		"layer1": "apotheosis:items/rarity_tome_1"
+    }
+}

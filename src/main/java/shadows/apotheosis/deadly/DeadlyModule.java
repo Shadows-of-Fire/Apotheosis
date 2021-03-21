@@ -41,6 +41,7 @@ import shadows.apotheosis.deadly.gen.BossFeature;
 import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
 import shadows.apotheosis.deadly.gen.DeadlyFeature;
 import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
+import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.deadly.objects.BossSummonerItem;
@@ -57,6 +58,7 @@ public class DeadlyModule {
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Deadly");
 
 	public static final EnumMap<LootRarity, RarityShardItem> RARITY_SHARDS = new EnumMap<>(LootRarity.class);
+	public static final EnumMap<LootRarity, AffixTomeItem> RARITY_TOMES = new EnumMap<>(LootRarity.class);
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
@@ -70,11 +72,12 @@ public class DeadlyModule {
 	public void init(FMLCommonSetupEvent e) {
 		reload(null);
 		DeadlyLoot.init();
-		RecipeHelper.addRecipe(new AffixShardingRecipe(null));
 		LootRarity[] vals = LootRarity.values();
 		for (int i = 0; i < vals.length - 1; i++) {
-			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 4), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
+			RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + vals[i].name().toLowerCase(Locale.ROOT)), vals[i]));
+			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 2), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
 		}
+		RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + LootRarity.ANCIENT.name().toLowerCase(Locale.ROOT)), LootRarity.ANCIENT));
 	}
 
 	@SubscribeEvent
@@ -90,6 +93,11 @@ public class DeadlyModule {
 			shard.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_shard");
 			e.getRegistry().register(shard);
 			RARITY_SHARDS.put(r, shard);
+
+			AffixTomeItem tome = new AffixTomeItem(r, new Item.Properties().group(ItemGroup.MISC));
+			tome.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_tome");
+			e.getRegistry().register(tome);
+			RARITY_TOMES.put(r, tome);
 		}
 	}
 

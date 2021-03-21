@@ -34,4 +34,17 @@ public class SoulfireCookingRecipe extends CampfireCookingRecipe {
 		return this.ingredient.test(stack);
 	}
 
+	@Override
+	public ItemStack getRecipeOutput() {
+		return ItemStack.EMPTY;
+	}
+	
+	/**
+	 * Returns the actual output of this recipe.
+	 * Used to trick JEI into hiding it.
+	 */
+	public ItemStack getSecretOutput() {
+		return super.getRecipeOutput();
+	}
+
 }

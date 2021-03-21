@@ -2,6 +2,8 @@ package shadows.apotheosis.deadly.affix;
 
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
@@ -32,6 +34,7 @@ public enum EquipmentType {
 		return this.type.apply(stack);
 	}
 
+	@Nullable
 	public static EquipmentType getTypeFor(ItemStack stack) {
 		Item i = stack.getItem();
 		if (i instanceof SwordItem) return SWORD;
@@ -41,6 +44,6 @@ public enum EquipmentType {
 		if (i instanceof AxeItem) return AXE;
 		if (i instanceof PickaxeItem) return PICKAXE;
 		if (i instanceof ShovelItem) return SHOVEL;
-		return SWORD;
+		return null;
 	}
 }

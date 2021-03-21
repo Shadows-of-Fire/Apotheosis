@@ -25,6 +25,8 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
 import shadows.apotheosis.deadly.affix.Affix;
@@ -52,6 +54,10 @@ public class RadiusMiningAffix extends Affix {
 	@Override
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc" + (int) level));
+	}
+
+	public ITextComponent getDisplayName(float level) {
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name" + (int) level).mergeStyle(TextFormatting.GRAY);
 	}
 
 	@Override

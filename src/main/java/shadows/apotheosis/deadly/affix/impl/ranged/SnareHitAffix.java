@@ -41,7 +41,7 @@ public class SnareHitAffix extends Affix {
 		if (type == Type.ENTITY) {
 			Entity hit = ((EntityRayTraceResult) res).getEntity();
 			if (hit instanceof LivingEntity) {
-				((LivingEntity) hit).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 10));
+				((LivingEntity) hit).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 20 * (int) level, 10));
 			}
 		}
 	}

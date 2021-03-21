@@ -17,6 +17,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.RandomValueRange;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -60,6 +62,11 @@ public abstract class AttributeAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+	}
+
+	public ITextComponent getDisplayName(float level) {
+		if (op == Operation.ADDITION) return super.getDisplayName(level);
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).mergeStyle(TextFormatting.GRAY);
 	}
 
 	@Override

@@ -210,6 +210,10 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 */
 	public abstract float getMax();
 
+	public int getApplicationCost(float level) {
+		return (int) Math.ceil(level / itemWeight);
+	}
+
 	public static IFormattableTextComponent loreComponent(String text, Object... args) {
 		return new TranslationTextComponent(text, args).mergeStyle(TextFormatting.ITALIC, TextFormatting.DARK_PURPLE);
 	}
@@ -217,6 +221,10 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	public static String fmt(float f) {
 		if (f == (long) f) return String.format("%d", (long) f);
 		else return String.format("%.2f", f);
+	}
+
+	public ITextComponent getDisplayName(float level) {
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level)).mergeStyle(TextFormatting.GRAY);
 	}
 
 }

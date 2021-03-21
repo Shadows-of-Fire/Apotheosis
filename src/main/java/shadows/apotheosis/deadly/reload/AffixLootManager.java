@@ -100,6 +100,10 @@ public class AffixLootManager extends JsonReloadListener {
 	public static ItemStack genLootItem(ItemStack stack, Random rand, LootRarity rarity) {
 		ITextComponent name = stack.getDisplayName();
 		EquipmentType type = EquipmentType.getTypeFor(stack);
+		if (type == null) {
+			AffixHelper.addLore(stack, new StringTextComponent("ERROR - ATTEMPTED TO GENERATE LOOT ITEM WITH INVALID EQUIPMENT TYPE."));
+			return stack;
+		}
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
 		AffixHelper.setRarity(stack, rarity);
 

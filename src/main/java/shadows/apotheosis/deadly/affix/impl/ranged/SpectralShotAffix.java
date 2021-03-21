@@ -11,6 +11,8 @@ import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -58,6 +60,10 @@ public class SpectralShotAffix extends RangedAffix {
 	@Override
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level * 100)));
+	}
+	
+	public ITextComponent getDisplayName(float level) {
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).mergeStyle(TextFormatting.GRAY);
 	}
 
 	private void cloneMotion(AbstractArrowEntity src, AbstractArrowEntity dest) {

@@ -1,7 +1,6 @@
 package shadows.apotheosis.deadly.affix.impl.tool;
 
 import java.util.Random;
-import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
@@ -11,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.text.ITextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -30,11 +28,6 @@ public class TorchPlacementAffix extends Affix {
 		int duraCost = 4 + rand.nextInt(5);
 		if (modifier != null) duraCost = (int) modifier.editLevel(this, duraCost);
 		return 9 - duraCost;
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
-		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", (int) level));
 	}
 
 	@Override
