@@ -22,7 +22,7 @@ public class CapturingEnchant extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level) + 15;
+		return this.getMinEnchantability(level) + 15;
 	}
 
 }

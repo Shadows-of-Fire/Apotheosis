@@ -48,7 +48,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	public ApothSpawnerBlock() {
 		super(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).notSolid());
-		setRegistryName("minecraft", "spawner");
+		this.setRegistryName("minecraft", "spawner");
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
-		onBlockHarvested(world, pos, state, player);
+		this.onBlockHarvested(world, pos, state, player);
 		if (player.isCreative()) return world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
 		return willHarvest;
 	}
@@ -118,17 +118,17 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
 			CompoundNBT tag = stack.getTag().getCompound("BlockEntityTag");
-			if (tag.contains("SpawnData")) tooltip.add(grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getString("id")));
-			if (tag.contains("MinSpawnDelay")) tooltip.add(grayTranslated("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
-			if (tag.contains("MaxSpawnDelay")) tooltip.add(grayTranslated("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
-			if (tag.contains("SpawnCount")) tooltip.add(grayTranslated("waila.spw.spawncount", tag.getShort("SpawnCount")));
-			if (tag.contains("MaxNearbyEntities")) tooltip.add(grayTranslated("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
-			if (tag.contains("RequiredPlayerRange")) tooltip.add(grayTranslated("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
-			if (tag.contains("SpawnRange")) tooltip.add(grayTranslated("waila.spw.spawnrange", tag.getShort("SpawnRange")));
-			if (tag.getBoolean("ignore_players")) tooltip.add(grayTranslated("waila.spw.ignoreplayers"));
-			if (tag.getBoolean("ignore_conditions")) tooltip.add(grayTranslated("waila.spw.ignoreconditions"));
-			if (tag.getBoolean("ignore_cap")) tooltip.add(grayTranslated("waila.spw.ignorecap"));
-			if (tag.getBoolean("redstone_control")) tooltip.add(grayTranslated("waila.spw.redstone"));
+			if (tag.contains("SpawnData")) tooltip.add(this.grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getString("id")));
+			if (tag.contains("MinSpawnDelay")) tooltip.add(this.grayTranslated("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
+			if (tag.contains("MaxSpawnDelay")) tooltip.add(this.grayTranslated("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
+			if (tag.contains("SpawnCount")) tooltip.add(this.grayTranslated("waila.spw.spawncount", tag.getShort("SpawnCount")));
+			if (tag.contains("MaxNearbyEntities")) tooltip.add(this.grayTranslated("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
+			if (tag.contains("RequiredPlayerRange")) tooltip.add(this.grayTranslated("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
+			if (tag.contains("SpawnRange")) tooltip.add(this.grayTranslated("waila.spw.spawnrange", tag.getShort("SpawnRange")));
+			if (tag.getBoolean("ignore_players")) tooltip.add(this.grayTranslated("waila.spw.ignoreplayers"));
+			if (tag.getBoolean("ignore_conditions")) tooltip.add(this.grayTranslated("waila.spw.ignoreconditions"));
+			if (tag.getBoolean("ignore_cap")) tooltip.add(this.grayTranslated("waila.spw.ignorecap"));
+			if (tag.getBoolean("redstone_control")) tooltip.add(this.grayTranslated("waila.spw.redstone"));
 		}
 	}
 
@@ -160,7 +160,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	@Override
 	public StateContainer<Block, BlockState> getStateContainer() {
-		return container == null ? super.getStateContainer() : container;
+		return this.container == null ? super.getStateContainer() : this.container;
 	}
 
 }

@@ -62,7 +62,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
 			}
 		});
-		initCommon(inv);
+		this.initCommon(inv);
 	}
 
 	public ApothEnchantContainer(int id, PlayerInventory inv, IWorldPosCallable wPos, ApothEnchantTile te) {
@@ -85,7 +85,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
 			}
 		});
-		initCommon(inv);
+		this.initCommon(inv);
 	}
 
 	private void initCommon(PlayerInventory inv) {
@@ -97,14 +97,14 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 		for (int k = 0; k < 9; ++k) {
 			this.addSlot(new Slot(inv, k, 8 + k * 18, 142 + 31));
 		}
-		this.trackIntArray(eterna.getArray());
-		this.trackIntArray(quanta.getArray());
-		this.trackIntArray(arcana.getArray());
+		this.trackIntArray(this.eterna.getArray());
+		this.trackIntArray(this.quanta.getArray());
+		this.trackIntArray(this.arcana.getArray());
 	}
 
 	@Override
 	public boolean enchantItem(PlayerEntity player, int id) {
-		int level = enchantLevels[id];
+		int level = this.enchantLevels[id];
 		ItemStack toEnchant = this.tableInventory.getStackInSlot(0);
 		ItemStack lapis = this.getSlot(1).getStack();
 		int i = id + 1;
@@ -161,11 +161,11 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCraftMatrixChanged(IInventory inventoryIn) {
-		wPos.apply((world, pos) -> {
+		this.wPos.apply((world, pos) -> {
 			if (inventoryIn == this.tableInventory) {
 				ItemStack itemstack = inventoryIn.getStackInSlot(0);
 				if (itemstack.getCount() == 1 && itemstack.isEnchantable()) {
-					gatherStats();
+					this.gatherStats();
 					float power = this.eterna.get();
 					if (power < 1.5) power = 1.5F;
 					this.rand.setSeed(this.xpSeed.get());
@@ -178,7 +178,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 						if (this.enchantLevels[num] < num + 1) {
 							this.enchantLevels[num] = 0;
 						}
-						this.enchantLevels[num] = ForgeEventFactory.onEnchantmentLevelSet(world, pos, num, (int) power, itemstack, enchantLevels[num]);
+						this.enchantLevels[num] = ForgeEventFactory.onEnchantmentLevelSet(world, pos, num, (int) power, itemstack, this.enchantLevels[num]);
 					}
 
 					for (int j1 = 0; j1 < 3; ++j1) {
@@ -216,19 +216,19 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	}
 
 	public void gatherStats() {
-		wPos.apply((world, pos) -> {
+		this.wPos.apply((world, pos) -> {
 			Float2FloatMap eternaMap = new Float2FloatOpenHashMap();
 			float[] stats = { 0, 1, 0 };
 			for (int j = -1; j <= 1; ++j) {
 				for (int k = -1; k <= 1; ++k) {
 					if ((j != 0 || k != 0) && world.isAirBlock(pos.add(k, 0, j)) && world.isAirBlock(pos.add(k, 1, j))) {
-						gatherStats(eternaMap, stats, world, pos.add(k * 2, 0, j * 2));
-						gatherStats(eternaMap, stats, world, pos.add(k * 2, 1, j * 2));
+						this.gatherStats(eternaMap, stats, world, pos.add(k * 2, 0, j * 2));
+						this.gatherStats(eternaMap, stats, world, pos.add(k * 2, 1, j * 2));
 						if (k != 0 && j != 0) {
-							gatherStats(eternaMap, stats, world, pos.add(k * 2, 0, j));
-							gatherStats(eternaMap, stats, world, pos.add(k * 2, 1, j));
-							gatherStats(eternaMap, stats, world, pos.add(k, 0, j * 2));
-							gatherStats(eternaMap, stats, world, pos.add(k, 1, j * 2));
+							this.gatherStats(eternaMap, stats, world, pos.add(k * 2, 0, j));
+							this.gatherStats(eternaMap, stats, world, pos.add(k * 2, 1, j));
+							this.gatherStats(eternaMap, stats, world, pos.add(k, 0, j * 2));
+							this.gatherStats(eternaMap, stats, world, pos.add(k, 1, j * 2));
 						}
 					}
 				}

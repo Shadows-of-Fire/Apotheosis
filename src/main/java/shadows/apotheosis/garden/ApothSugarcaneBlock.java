@@ -19,7 +19,7 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 
 	public ApothSugarcaneBlock() {
 		super(AbstractBlock.Properties.from(Blocks.SUGAR_CANE));
-		setRegistryName(new ResourceLocation("sugar_cane"));
+		this.setRegistryName(new ResourceLocation("sugar_cane"));
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 
 	@Override
 	public StateContainer<Block, BlockState> getStateContainer() {
-		return container == null ? super.getStateContainer() : container;
+		return this.container == null ? super.getStateContainer() : this.container;
 	}
 
 }

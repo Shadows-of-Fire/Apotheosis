@@ -33,7 +33,7 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 		MinMaxBounds.IntBound minmaxbounds$intbound1 = MinMaxBounds.IntBound.fromJson(jsonobject.get("full"));
 		MinMaxBounds.IntBound minmaxbounds$intbound2 = MinMaxBounds.IntBound.fromJson(jsonobject.get("empty"));
 		ItemPredicate[] aitempredicate = ItemPredicate.deserializeArray(json.get("items"));
-		if (json.has("apoth")) aitempredicate = deserializeApoth(json.getAsJsonObject("apoth"));
+		if (json.has("apoth")) aitempredicate = this.deserializeApoth(json.getAsJsonObject("apoth"));
 		return new InventoryChangeTrigger.Instance(andPred, minmaxbounds$intbound, minmaxbounds$intbound1, minmaxbounds$intbound2, aitempredicate);
 	}
 
@@ -85,7 +85,7 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
 		@Override
 		public boolean test(ItemStack item) {
-			return predicate.test(item);
+			return this.predicate.test(item);
 		}
 	}
 

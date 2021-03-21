@@ -50,7 +50,7 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
-		reload(null);
+		this.reload(null);
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			FMLJavaModLoadingContext.get().getModEventBus().register(new PotionModuleClient());
 		});

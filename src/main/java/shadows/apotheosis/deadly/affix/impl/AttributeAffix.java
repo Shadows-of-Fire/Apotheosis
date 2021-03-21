@@ -55,7 +55,7 @@ public abstract class AttributeAffix extends Affix {
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = range.generateFloat(rand);
+		float lvl = this.range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}
@@ -64,8 +64,9 @@ public abstract class AttributeAffix extends Affix {
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
 	}
 
+	@Override
 	public ITextComponent getDisplayName(float level) {
-		if (op == Operation.ADDITION) return super.getDisplayName(level);
+		if (this.op == Operation.ADDITION) return super.getDisplayName(level);
 		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).mergeStyle(TextFormatting.GRAY);
 	}
 
@@ -73,19 +74,19 @@ public abstract class AttributeAffix extends Affix {
 	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, BiConsumer<Attribute, AttributeModifier> map) {
 		EquipmentSlotType ourType = EquipmentType.getTypeFor(stack).getSlot(stack);
 		if (ourType == type) {
-			AttributeModifier modif = new AttributeModifier(uuidCache.computeIfAbsent(type, k -> UUID.randomUUID()), "Apotheosis affix bonus: " + this.getRegistryName(), level, op);
-			map.accept(attr.get(), modif);
+			AttributeModifier modif = new AttributeModifier(this.uuidCache.computeIfAbsent(type, k -> UUID.randomUUID()), "Apotheosis affix bonus: " + this.getRegistryName(), level, this.op);
+			map.accept(this.attr.get(), modif);
 		}
 	}
 
 	@Override
 	public float getMin() {
-		return range.getMin();
+		return this.range.getMin();
 	}
 
 	@Override
 	public float getMax() {
-		return range.getMax();
+		return this.range.getMax();
 	}
 
 }

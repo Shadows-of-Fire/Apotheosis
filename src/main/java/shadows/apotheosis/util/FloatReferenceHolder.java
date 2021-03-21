@@ -18,7 +18,7 @@ public class FloatReferenceHolder {
 		@Override
 		public void set(int index, int value) {
 			super.set(index, value);
-			if (!updating) FloatReferenceHolder.this.updateFromArray();
+			if (!FloatReferenceHolder.this.updating) FloatReferenceHolder.this.updateFromArray();
 		};
 	};
 
@@ -32,21 +32,21 @@ public class FloatReferenceHolder {
 	 * Returns the internal array object so the container may register it for tracking.
 	 */
 	public IntArray getArray() {
-		return array;
+		return this.array;
 	}
 
 	public float get() {
-		return internal;
+		return this.internal;
 	}
 
 	public void set(float f) {
-		f = MathHelper.clamp(f, min, max);
+		f = MathHelper.clamp(f, this.min, this.max);
 		this.internal = f;
-		updating = true;
+		this.updating = true;
 		this.array.set(0, (int) f);
 		this.array.set(1, (int) (f * 10) % 10);
 		this.array.set(2, (int) (f * 100) % 10);
-		updating = false;
+		this.updating = false;
 	}
 
 	private void updateFromArray() {
@@ -54,11 +54,11 @@ public class FloatReferenceHolder {
 	}
 
 	public float getMax() {
-		return max;
+		return this.max;
 	}
 
 	public float getMin() {
-		return min;
+		return this.min;
 	}
 
 }

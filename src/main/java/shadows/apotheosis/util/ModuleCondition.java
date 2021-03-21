@@ -39,7 +39,7 @@ public class ModuleCondition implements ICondition {
 
 	@Override
 	public boolean test() {
-		return types.get(name).get();
+		return types.get(this.name).get();
 	}
 
 	public static class Serializer implements IConditionSerializer<ModuleCondition> {

@@ -74,15 +74,15 @@ public class BossItem extends WeightedRandom.Item {
 	}
 
 	public ResourceLocation getId() {
-		return id;
+		return this.id;
 	}
 
 	public AxisAlignedBB getSize() {
-		return size;
+		return this.size;
 	}
 
 	public EntityType<?> getEntity() {
-		return entity;
+		return this.entity;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class BossItem extends WeightedRandom.Item {
 	 */
 	public MobEntity spawnBoss(IServerWorld world, BlockPos pos, Random rand) {
 		MobEntity entity = (MobEntity) this.entity.create(world.getWorld());
-		initBoss(rand, entity);
+		this.initBoss(rand, entity);
 		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		world.addEntity(entity);
 		return entity;
@@ -122,7 +122,7 @@ public class BossItem extends WeightedRandom.Item {
 		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		String name = NameHelper.setEntityName(rand, entity);
 
-		BossArmorManager.INSTANCE.getRandomSet(rand, armorSets).apply(entity);
+		BossArmorManager.INSTANCE.getRandomSet(rand, this.armorSets).apply(entity);
 
 		int guaranteed = rand.nextInt(6);
 
@@ -135,9 +135,9 @@ public class BossItem extends WeightedRandom.Item {
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemStackToSlot(s, modifyBossItem(stack, rand, name));
-			} else if (rand.nextFloat() < enchantChance) {
+			} else if (rand.nextFloat() < this.enchantChance) {
 				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, 30 + rand.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
-				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (v1, v2) -> Math.max(v1, v2), HashMap::new)), stack);
+				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max, HashMap::new)), stack);
 			}
 		}
 
@@ -145,7 +145,7 @@ public class BossItem extends WeightedRandom.Item {
 
 	public static ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
 		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 80 : 40, true);
-		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, (a, b) -> Math.max(a, b))), stack);
+		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max)), stack);
 		LootRarity rarity = LootRarity.random(random, DeadlyConfig.bossRarityOffset);
 		NameHelper.setItemName(random, stack, bossName);
 		stack = AffixLootManager.genLootItem(stack, random, rarity);

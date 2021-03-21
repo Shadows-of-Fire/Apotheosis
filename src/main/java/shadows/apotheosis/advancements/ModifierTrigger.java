@@ -123,17 +123,17 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 
 		public boolean test(ApothSpawnerTile tile, SpawnerModifier modif) {
 			SpawnerLogicExt logic = (SpawnerLogicExt) tile.spawnerLogic;
-			if (modifier != null && modif != modifier) return false;
-			if (!minDelay.test(logic.minSpawnDelay)) return false;
-			if (!maxDelay.test(logic.maxSpawnDelay)) return false;
-			if (!spawnCount.test(logic.spawnCount)) return false;
-			if (!nearbyEnts.test(logic.maxNearbyEntities)) return false;
-			if (!playerRange.test(logic.activatingRangeFromPlayer)) return false;
-			if (!spawnRange.test(logic.spawnRange)) return false;
-			if (ignorePlayers != null && tile.ignoresPlayers != ignorePlayers) return false;
-			if (ignoreConditions != null && tile.ignoresConditions != ignoreConditions) return false;
-			if (ignoreCap != null && tile.ignoresCap != ignoreCap) return false;
-			if (redstone != null && tile.redstoneEnabled != redstone) return false;
+			if (this.modifier != null && modif != this.modifier) return false;
+			if (!this.minDelay.test(logic.minSpawnDelay)) return false;
+			if (!this.maxDelay.test(logic.maxSpawnDelay)) return false;
+			if (!this.spawnCount.test(logic.spawnCount)) return false;
+			if (!this.nearbyEnts.test(logic.maxNearbyEntities)) return false;
+			if (!this.playerRange.test(logic.activatingRangeFromPlayer)) return false;
+			if (!this.spawnRange.test(logic.spawnRange)) return false;
+			if (this.ignorePlayers != null && tile.ignoresPlayers != this.ignorePlayers) return false;
+			if (this.ignoreConditions != null && tile.ignoresConditions != this.ignoreConditions) return false;
+			if (this.ignoreCap != null && tile.ignoresCap != this.ignoreCap) return false;
+			if (this.redstone != null && tile.redstoneEnabled != this.redstone) return false;
 			return true;
 		}
 	}

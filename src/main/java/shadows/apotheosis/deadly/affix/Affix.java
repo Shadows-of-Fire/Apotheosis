@@ -177,12 +177,12 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	}
 
 	public Affix setRegistryName(String name) {
-		return setRegistryName(GameData.checkPrefix(name, false));
+		return this.setRegistryName(GameData.checkPrefix(name, false));
 	}
 
 	@Override
 	public ResourceLocation getRegistryName() {
-		return name;
+		return this.name;
 	}
 
 	@Override
@@ -211,7 +211,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	public abstract float getMax();
 
 	public int getApplicationCost(float level) {
-		return (int) Math.ceil(level / itemWeight);
+		return (int) Math.ceil(level / this.itemWeight);
 	}
 
 	public static IFormattableTextComponent loreComponent(String text, Object... args) {

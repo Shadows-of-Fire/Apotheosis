@@ -46,7 +46,7 @@ public class EnchantingStatManager extends JsonReloadListener {
 
 	@Override
 	protected void apply(Map<ResourceLocation, JsonElement> objects, IResourceManager mgr, IProfiler profile) {
-		stats.clear();
+		this.stats.clear();
 		objects.forEach((key, ele) -> {
 			try {
 				JsonObject obj = (JsonObject) ele;
@@ -58,7 +58,7 @@ public class EnchantingStatManager extends JsonReloadListener {
 				e.printStackTrace();
 			}
 		});
-		EnchModule.LOGGER.info("Registered {} blocks with enchanting stats.", stats.size());
+		EnchModule.LOGGER.info("Registered {} blocks with enchanting stats.", this.stats.size());
 		if (ServerLifecycleHooks.getCurrentServer() != null) Apotheosis.CHANNEL.send(PacketDistributor.ALL.noArg(), new StatSyncMessage(this.stats));
 	}
 

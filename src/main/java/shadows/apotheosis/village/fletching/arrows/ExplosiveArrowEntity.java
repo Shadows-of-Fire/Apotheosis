@@ -40,11 +40,11 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
 
 	@Override
 	protected void arrowHit(LivingEntity living) {
-		if (!world.isRemote) {
+		if (!this.world.isRemote) {
 			Entity shooter = this.func_234616_v_();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, living.getPosX(), living.getPosY(), living.getPosZ(), 2, false, Mode.DESTROY);
+			this.world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, living.getPosX(), living.getPosY(), living.getPosZ(), 2, false, Mode.DESTROY);
 			this.remove();
 		}
 	}
@@ -53,11 +53,11 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
 	protected void func_230299_a_(BlockRayTraceResult res) {
 		super.func_230299_a_(res);
 		Vector3d vec = res.getHitVec();
-		if (!world.isRemote) {
+		if (!this.world.isRemote) {
 			Entity shooter = this.func_234616_v_();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, vec.getX(), vec.getY(), vec.getZ(), 3, false, Mode.DESTROY);
+			this.world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, vec.getX(), vec.getY(), vec.getZ(), 3, false, Mode.DESTROY);
 			this.remove();
 		}
 	}

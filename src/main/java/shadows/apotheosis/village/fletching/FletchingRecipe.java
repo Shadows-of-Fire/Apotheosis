@@ -39,14 +39,14 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		for (int i = 0; i < 3; i++) {
-			if (!inputs.get(i).test(inv.getStackInSlot(i))) return false;
+			if (!this.inputs.get(i).test(inv.getStackInSlot(i))) return false;
 		}
 		return true;
 	}
 
 	@Override
 	public ItemStack getCraftingResult(CraftingInventory inv) {
-		return output.copy();
+		return this.output.copy();
 	}
 
 	@Override
@@ -56,12 +56,12 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return output;
+		return this.output;
 	}
 
 	@Override
 	public ResourceLocation getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 	}
 
 	public List<Ingredient> getInputs() {
-		return inputs;
+		return this.inputs;
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<FletchingRecipe> {

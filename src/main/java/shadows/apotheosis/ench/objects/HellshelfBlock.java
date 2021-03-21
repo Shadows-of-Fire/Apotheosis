@@ -55,7 +55,7 @@ public class HellshelfBlock extends Block implements IEnchantingBlock {
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
 		ItemStack stack = ctx.getItem();
-		return getDefaultState().with(INFUSION, Math.min(5, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)));
+		return this.getDefaultState().with(INFUSION, Math.min(5, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)));
 	}
 
 	@Override

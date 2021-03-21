@@ -23,7 +23,7 @@ public class ShieldBashEnchant extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 40;
+		return this.getMinEnchantability(enchantmentLevel) + 40;
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class ShieldBashEnchant extends Enchantment {
 		if (target instanceof LivingEntity) {
 			ItemStack stack = user.getHeldItemMainhand();
 			if (stack.getItem().isShield(stack, user)) {
-				stack.damageItem(35, user, (e) -> {
+				stack.damageItem(35, user, e -> {
 					e.sendBreakAnimation(EquipmentSlotType.OFFHAND);
 				});
 				DamageSource src = user instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity) user) : DamageSource.GENERIC;

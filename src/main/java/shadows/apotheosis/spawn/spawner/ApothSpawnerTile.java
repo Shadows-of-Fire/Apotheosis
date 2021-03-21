@@ -37,30 +37,30 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 	public boolean redstoneEnabled = false;
 
 	public ApothSpawnerTile() {
-		spawnerLogic = new SpawnerLogicExt();
+		this.spawnerLogic = new SpawnerLogicExt();
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT tag) {
-		tag.putBoolean("ignore_players", ignoresPlayers);
-		tag.putBoolean("ignore_conditions", ignoresConditions);
-		tag.putBoolean("ignore_cap", ignoresCap);
-		tag.putBoolean("redstone_control", redstoneEnabled);
+		tag.putBoolean("ignore_players", this.ignoresPlayers);
+		tag.putBoolean("ignore_conditions", this.ignoresConditions);
+		tag.putBoolean("ignore_cap", this.ignoresCap);
+		tag.putBoolean("redstone_control", this.redstoneEnabled);
 		return super.write(tag);
 	}
 
 	@Override
 	public void read(BlockState state, CompoundNBT tag) {
-		ignoresPlayers = tag.getBoolean("ignore_players");
-		ignoresConditions = tag.getBoolean("ignore_conditions");
-		ignoresCap = tag.getBoolean("ignore_cap");
-		redstoneEnabled = tag.getBoolean("redstone_control");
+		this.ignoresPlayers = tag.getBoolean("ignore_players");
+		this.ignoresConditions = tag.getBoolean("ignore_conditions");
+		this.ignoresCap = tag.getBoolean("ignore_cap");
+		this.redstoneEnabled = tag.getBoolean("redstone_control");
 		super.read(state, tag);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		read(Blocks.SPAWNER.getDefaultState(), pkt.getNbtCompound());
+		this.read(Blocks.SPAWNER.getDefaultState(), pkt.getNbtCompound());
 	}
 
 	public class SpawnerLogicExt extends AbstractSpawner {
@@ -101,16 +101,16 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 		public void setNextSpawnData(WeightedSpawnerEntity nextSpawnData) {
 			super.setNextSpawnData(nextSpawnData);
 
-			if (getWorld() != null) {
-				BlockState iblockstate = getWorld().getBlockState(getSpawnerPosition());
-				getWorld().notifyBlockUpdate(ApothSpawnerTile.this.pos, iblockstate, iblockstate, 4);
+			if (this.getWorld() != null) {
+				BlockState iblockstate = this.getWorld().getBlockState(this.getSpawnerPosition());
+				this.getWorld().notifyBlockUpdate(ApothSpawnerTile.this.pos, iblockstate, iblockstate, 4);
 			}
 		}
 
 		private boolean isActivated() {
 			BlockPos blockpos = this.getSpawnerPosition();
-			boolean flag = ignoresPlayers || this.getWorld().isPlayerWithin(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, this.activatingRangeFromPlayer);
-			return flag && (!redstoneEnabled || world.isBlockPowered(blockpos));
+			boolean flag = ApothSpawnerTile.this.ignoresPlayers || this.getWorld().isPlayerWithin(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, this.activatingRangeFromPlayer);
+			return flag && (!ApothSpawnerTile.this.redstoneEnabled || ApothSpawnerTile.this.world.isBlockPowered(blockpos));
 		}
 
 		private void resetTimer() {
@@ -172,8 +172,8 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 						double x = j >= 1 ? listnbt.getDouble(0) : blockpos.getX() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
 						double y = j >= 2 ? listnbt.getDouble(1) : (double) (blockpos.getY() + world.rand.nextInt(3) - 1);
 						double z = j >= 3 ? listnbt.getDouble(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
-						if (ignoresConditions || world.hasNoCollisions(optional.get().getBoundingBoxWithSizeApplied(x, y, z)) && EntitySpawnPlacementRegistry.canSpawnEntity(optional.get(), (IServerWorld) world, SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
-							Entity entity = EntityType.loadEntityAndExecute(compoundnbt, world, (p_221408_6_) -> {
+						if (ApothSpawnerTile.this.ignoresConditions || world.hasNoCollisions(optional.get().getBoundingBoxWithSizeApplied(x, y, z)) && EntitySpawnPlacementRegistry.canSpawnEntity(optional.get(), (IServerWorld) world, SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
+							Entity entity = EntityType.loadEntityAndExecute(compoundnbt, world, p_221408_6_ -> {
 								p_221408_6_.setLocationAndAngles(x, y, z, p_221408_6_.rotationYaw, p_221408_6_.rotationPitch);
 								return p_221408_6_;
 							});
@@ -182,7 +182,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								return;
 							}
 
-							if (!ignoresCap) {
+							if (!ApothSpawnerTile.this.ignoresCap) {
 								int k = world.getEntitiesWithinAABB(entity.getClass(), new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1).grow(this.spawnRange)).size();
 								if (k >= this.maxNearbyEntities) {
 									this.resetTimer();
@@ -193,11 +193,11 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 							entity.setLocationAndAngles(entity.getPosX(), entity.getPosY(), entity.getPosZ(), world.rand.nextFloat() * 360.0F, 0.0F);
 							if (entity instanceof MobEntity) {
 								MobEntity mobentity = (MobEntity) entity;
-								if (!ignoresConditions && !ForgeEventFactory.canEntitySpawnSpawner(mobentity, world, (float) entity.getPosX(), (float) entity.getPosY(), (float) entity.getPosZ(), this)) {
+								if (!ApothSpawnerTile.this.ignoresConditions && !ForgeEventFactory.canEntitySpawnSpawner(mobentity, world, (float) entity.getPosX(), (float) entity.getPosY(), (float) entity.getPosZ(), this)) {
 									continue;
 								}
 
-								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, getWorld(), (float) entity.getPosX(), (float) entity.getPosY(), (float) entity.getPosZ(), this, SpawnReason.SPAWNER)) {
+								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, this.getWorld(), (float) entity.getPosX(), (float) entity.getPosY(), (float) entity.getPosZ(), this, SpawnReason.SPAWNER)) {
 									((MobEntity) entity).onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
 								}
 							}

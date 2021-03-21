@@ -30,11 +30,11 @@ public enum LootRarity {
 	}
 
 	public TextFormatting getColor() {
-		return color;
+		return this.color;
 	}
 
 	public int getAffixes() {
-		return affixes;
+		return this.affixes;
 	}
 
 	/**

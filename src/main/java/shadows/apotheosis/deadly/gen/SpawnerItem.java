@@ -27,11 +27,11 @@ public class SpawnerItem extends WorldFeatureItem {
 	@Override
 	public void place(IServerWorld world, BlockPos pos, Random rand) {
 		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
-		spawner.build(world, pos);
+		this.spawner.build(world, pos);
 	}
 
 	public SpawnerBuilder getSpawner() {
-		return spawner;
+		return this.spawner;
 	}
 
 	/**

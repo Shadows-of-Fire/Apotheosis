@@ -19,11 +19,11 @@ public class AffixLootEntry extends WeightedRandom.Item {
 	}
 
 	public ItemStack getStack() {
-		return stack;
+		return this.stack;
 	}
 
 	public EquipmentType getType() {
-		return type;
+		return this.type;
 	}
 
 }

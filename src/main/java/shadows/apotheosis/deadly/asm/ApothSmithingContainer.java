@@ -27,15 +27,15 @@ public class ApothSmithingContainer extends SmithingTableContainer {
 
 	public ApothSmithingContainer(int id, PlayerInventory inv, IWorldPosCallable wPos) {
 		super(id, inv, wPos);
-		world = wPos.apply((w, p) -> w).get();
-		recipes = world.getRecipeManager().getRecipesForType(IRecipeType.SMITHING);
+		this.world = wPos.apply((w, p) -> w).get();
+		this.recipes = this.world.getRecipeManager().getRecipesForType(IRecipeType.SMITHING);
 	}
 
 	@Override
 	protected ItemStack func_230301_a_(PlayerEntity p_230301_1_, ItemStack p_230301_2_) {
 		p_230301_2_.onCrafting(p_230301_1_.world, p_230301_1_, p_230301_2_.getCount());
 		this.field_234642_c_.onCrafting(p_230301_1_);
-		SmithingRecipe recipe = recipes.stream().filter(r -> r.matches(this.field_234643_d_, world)).findFirst().orElse(null);
+		SmithingRecipe recipe = this.recipes.stream().filter(r -> r.matches(this.field_234643_d_, this.world)).findFirst().orElse(null);
 		if (recipe == null) {
 			this.func_234654_d_(0);
 			this.func_234654_d_(1);
@@ -45,9 +45,9 @@ public class ApothSmithingContainer extends SmithingTableContainer {
 				ItemStack r = remainder.get(i);
 				if (!r.isEmpty()) {
 					this.field_234643_d_.setInventorySlotContents(i, r);
-					if (!world.isRemote) {
+					if (!this.world.isRemote) {
 						ServerPlayerEntity player = (ServerPlayerEntity) this.field_234645_f_;
-						player.connection.sendPacket(new SSetSlotPacket(windowId, i, r));
+						player.connection.sendPacket(new SSetSlotPacket(this.windowId, i, r));
 					}
 				} else this.field_234643_d_.getStackInSlot(i).shrink(1);
 			}

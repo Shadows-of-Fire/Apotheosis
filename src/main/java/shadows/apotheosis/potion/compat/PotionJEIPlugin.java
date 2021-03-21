@@ -35,7 +35,7 @@ public class PotionJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enablePotion) return;
-		gridHelper = reg.getJeiHelpers().getGuiHelper().createCraftingGridHelper(1);
+		this.gridHelper = reg.getJeiHelpers().getGuiHelper().createCraftingGridHelper(1);
 	}
 
 	@Override
@@ -65,13 +65,13 @@ public class PotionJEIPlugin implements IModPlugin {
 
 		@Override
 		public void setIngredients(IIngredients ingredients) {
-			ingredients.setInputIngredients(recipe.getIngredients());
-			ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+			ingredients.setInputIngredients(this.recipe.getIngredients());
+			ingredients.setOutput(VanillaTypes.ITEM, this.recipe.getRecipeOutput());
 		}
 
 		@Override
 		public ResourceLocation getRegistryName() {
-			return recipe.getId();
+			return this.recipe.getId();
 		}
 
 		@Override
@@ -88,13 +88,13 @@ public class PotionJEIPlugin implements IModPlugin {
 			List<List<ItemStack>> clones = new ArrayList<>();
 			recipeInputs.forEach(l -> {
 				List<ItemStack> cloneList = new ArrayList<>();
-				l.stream().map(s -> s.copy()).map(s -> PotionUtils.addPotionToItemStack(s, potion)).forEach(cloneList::add);
+				l.stream().map(ItemStack::copy).map(s -> PotionUtils.addPotionToItemStack(s, potion)).forEach(cloneList::add);
 				clones.add(cloneList);
 			});
 			ItemStack output = new ItemStack(ApotheosisObjects.POTION_CHARM);
 			PotionUtils.addPotionToItemStack(output, potion);
 			Size2i size = this.getSize();
-			gridHelper.setInputs(guiItemStacks, clones, size.width, size.height);
+			PotionJEIPlugin.this.gridHelper.setInputs(guiItemStacks, clones, size.width, size.height);
 			guiItemStacks.set(0, output);
 		}
 

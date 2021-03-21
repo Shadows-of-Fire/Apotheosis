@@ -64,7 +64,7 @@ public abstract class SpawnerModifier {
 	 * @return If this modifier can act, given the conditions.
 	 */
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		return item.getValue().test(stack);
+		return this.item.getValue().test(stack);
 	}
 
 	/**
@@ -80,27 +80,27 @@ public abstract class SpawnerModifier {
 	 * Reads this modifier from config.  Should update all relevant values.
 	 */
 	public void load(Configuration cfg) {
-		String s = cfg.getString(ITEM, getId(), getDefaultItem(), "The item that applies this modifier.");
-		item = SpawnerModifiers.readIngredient(s);
-		if (value != -1) value = cfg.getInt(VALUE, getId(), value, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
-		if (min != -1) min = cfg.getInt(MIN, getId(), min, Integer.MIN_VALUE, Integer.MAX_VALUE, "The min value of this stat.");
-		if (max != -1) max = cfg.getInt(MAX, getId(), max, Integer.MIN_VALUE, Integer.MAX_VALUE, "The max value of this stat.");
+		String s = cfg.getString(ITEM, this.getId(), this.getDefaultItem(), "The item that applies this modifier.");
+		this.item = SpawnerModifiers.readIngredient(s);
+		if (this.value != -1) this.value = cfg.getInt(VALUE, this.getId(), this.value, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
+		if (this.min != -1) this.min = cfg.getInt(MIN, this.getId(), this.min, Integer.MIN_VALUE, Integer.MAX_VALUE, "The min value of this stat.");
+		if (this.max != -1) this.max = cfg.getInt(MAX, this.getId(), this.max, Integer.MIN_VALUE, Integer.MAX_VALUE, "The max value of this stat.");
 	}
 
 	public Ingredient getIngredient() {
-		return item.getValue();
+		return this.item.getValue();
 	}
 
 	public int getValue() {
-		return value;
+		return this.value;
 	}
 
 	public int getMin() {
-		return min;
+		return this.min;
 	}
 
 	public int getMax() {
-		return max;
+		return this.max;
 	}
 
 	public abstract String getId();

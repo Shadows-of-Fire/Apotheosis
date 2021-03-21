@@ -20,9 +20,9 @@ public class SoulfireCookingRecipe extends CampfireCookingRecipe {
 		if (inv instanceof CampfireInventory) {
 			CampfireInventory cInv = (CampfireInventory) inv;
 			if (world == null || cInv.getTile() == null) return false;
-			return cInv.getTile().getBlockState().getBlock() == Blocks.SOUL_CAMPFIRE && matches(inv.getStackInSlot(0));
+			return cInv.getTile().getBlockState().getBlock() == Blocks.SOUL_CAMPFIRE && this.matches(inv.getStackInSlot(0));
 		}
-		return matches(inv.getStackInSlot(0));
+		return this.matches(inv.getStackInSlot(0));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SoulfireCookingRecipe extends CampfireCookingRecipe {
 	public ItemStack getRecipeOutput() {
 		return ItemStack.EMPTY;
 	}
-	
+
 	/**
 	 * Returns the actual output of this recipe.
 	 * Used to trick JEI into hiding it.

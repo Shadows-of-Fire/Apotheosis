@@ -35,15 +35,15 @@ public class ChancedEffectInstance {
 	}
 
 	public float getChance() {
-		return chance;
+		return this.chance;
 	}
 
 	public Effect getEffect() {
-		return effect;
+		return this.effect;
 	}
 
 	public EffectInstance createInstance(Random rand, int duration) {
-		return new EffectInstance(effect, duration, amp.generateInt(rand), true, false);
+		return new EffectInstance(this.effect, duration, this.amp.generateInt(rand), true, false);
 	}
 
 	public static class Deserializer implements JsonDeserializer<ChancedEffectInstance> {

@@ -61,29 +61,29 @@ public class FletchingContainer extends Container {
 
 	@Override
 	public void onCraftMatrixChanged(IInventory inventory) {
-		if (!world.isRemote) {
-			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) player;
+		if (!this.world.isRemote) {
+			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) this.player;
 			ItemStack itemstack = ItemStack.EMPTY;
-			Optional<FletchingRecipe> optional = player.getServer().getRecipeManager().getRecipe(VillageModule.FLETCHING, craftMatrix, world);
+			Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipe(VillageModule.FLETCHING, this.craftMatrix, this.world);
 			if (optional.isPresent()) {
 				FletchingRecipe icraftingrecipe = optional.get();
-				itemstack = icraftingrecipe.getCraftingResult(craftMatrix);
+				itemstack = icraftingrecipe.getCraftingResult(this.craftMatrix);
 			}
 
-			craftResult.setInventorySlotContents(0, itemstack);
-			serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowId, 0, itemstack));
+			this.craftResult.setInventorySlotContents(0, itemstack);
+			serverplayerentity.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, itemstack));
 		}
 	}
 
 	@Override
 	public void onContainerClosed(PlayerEntity playerIn) {
 		super.onContainerClosed(playerIn);
-		this.clearContainer(playerIn, world, this.craftMatrix);
+		this.clearContainer(playerIn, this.world, this.craftMatrix);
 	}
 
 	@Override
 	public boolean canInteractWith(PlayerEntity player) {
-		return world.getBlockState(pos).getBlock() == Blocks.FLETCHING_TABLE && player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) < 64;
+		return this.world.getBlockState(this.pos).getBlock() == Blocks.FLETCHING_TABLE && player.getDistanceSq(this.pos.getX(), this.pos.getY(), this.pos.getZ()) < 64;
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class FletchingContainer extends Container {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (index == 0) {
-				itemstack1.getItem().onCreated(itemstack1, world, playerIn);
+				itemstack1.getItem().onCreated(itemstack1, this.world, playerIn);
 				if (!this.mergeItemStack(itemstack1, 4, 40, true)) { return ItemStack.EMPTY; }
 				slot.onSlotChange(itemstack1, itemstack);
 			} else if (index >= 4 && index < 31) {

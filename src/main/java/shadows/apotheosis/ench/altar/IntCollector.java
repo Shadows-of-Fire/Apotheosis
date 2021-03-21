@@ -47,8 +47,8 @@ public class IntCollector implements Collector<Integer, Counter, Integer> {
 		}
 
 		Counter(Counter a, Counter b) {
-			count += a.count;
-			count += b.count;
+			this.count += a.count;
+			this.count += b.count;
 		}
 	}
 }

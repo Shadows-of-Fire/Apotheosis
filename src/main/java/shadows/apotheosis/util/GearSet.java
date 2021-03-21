@@ -55,19 +55,19 @@ public class GearSet extends WeightedRandom.Item {
 	}
 
 	public ResourceLocation getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
 	 * Makes the entity wear this armor set.  Returns the entity for convenience.
 	 */
 	public LivingEntity apply(LivingEntity entity) {
-		entity.setItemStackToSlot(EquipmentSlotType.MAINHAND, getRandomStack(mainhands, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.OFFHAND, getRandomStack(offhands, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.FEET, getRandomStack(boots, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.LEGS, getRandomStack(leggings, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.CHEST, getRandomStack(chestplates, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.HEAD, getRandomStack(helmets, entity.rand));
+		entity.setItemStackToSlot(EquipmentSlotType.MAINHAND, getRandomStack(this.mainhands, entity.rand));
+		entity.setItemStackToSlot(EquipmentSlotType.OFFHAND, getRandomStack(this.offhands, entity.rand));
+		entity.setItemStackToSlot(EquipmentSlotType.FEET, getRandomStack(this.boots, entity.rand));
+		entity.setItemStackToSlot(EquipmentSlotType.LEGS, getRandomStack(this.leggings, entity.rand));
+		entity.setItemStackToSlot(EquipmentSlotType.CHEST, getRandomStack(this.chestplates, entity.rand));
+		entity.setItemStackToSlot(EquipmentSlotType.HEAD, getRandomStack(this.helmets, entity.rand));
 		return entity;
 	}
 
@@ -89,12 +89,12 @@ public class GearSet extends WeightedRandom.Item {
 		}
 
 		public ItemStack getStack() {
-			return stack;
+			return this.stack;
 		}
 
 		@Override
 		public String toString() {
-			return "Stack: " + stack.toString() + " @ Weight: " + itemWeight;
+			return "Stack: " + this.stack.toString() + " @ Weight: " + this.itemWeight;
 		}
 	}
 
@@ -107,16 +107,16 @@ public class GearSet extends WeightedRandom.Item {
 			this.key = key;
 			if (key.startsWith("#")) {
 				String tag = key.substring(1);
-				internal = t -> t.tags.contains(tag);
+				this.internal = t -> t.tags.contains(tag);
 			} else {
 				ResourceLocation id = new ResourceLocation(key);
-				internal = t -> t.id.equals(id);
+				this.internal = t -> t.id.equals(id);
 			}
 		}
 
 		@Override
 		public boolean test(GearSet t) {
-			return internal.test(t);
+			return this.internal.test(t);
 		}
 
 	}

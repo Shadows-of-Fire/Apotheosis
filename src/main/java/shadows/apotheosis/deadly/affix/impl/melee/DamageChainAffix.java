@@ -45,7 +45,7 @@ public class DamageChainAffix extends RangedAffix {
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = range.generateFloat(rand);
+		float lvl = this.range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}

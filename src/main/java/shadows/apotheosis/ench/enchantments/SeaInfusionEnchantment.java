@@ -29,7 +29,7 @@ public class SeaInfusionEnchantment extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level + 1);
+		return this.getMinEnchantability(level + 1);
 	}
 
 	@Override

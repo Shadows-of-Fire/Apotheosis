@@ -31,7 +31,7 @@ public class AffixModifier extends WeightedRandom.Item {
 	}
 
 	public AffixModifier dontEditName() {
-		editName = false;
+		this.editName = false;
 		return this;
 	}
 
@@ -39,7 +39,7 @@ public class AffixModifier extends WeightedRandom.Item {
 	 * Adjusts the passed level, according to the operation of this modifier.
 	 */
 	public float editLevel(Affix affix, float level) {
-		float newLevel = op == AffixOp.ADD ? level + value : op == AffixOp.MULTIPLY ? level * value : value;
+		float newLevel = this.op == AffixOp.ADD ? level + this.value : this.op == AffixOp.MULTIPLY ? level * this.value : this.value;
 		return MathHelper.clamp(newLevel, affix.getMin(), affix.getMax());
 	}
 
@@ -47,14 +47,14 @@ public class AffixModifier extends WeightedRandom.Item {
 	 * Get the translation key of this modifier.
 	 */
 	public String getKey() {
-		return key;
+		return this.key;
 	}
 
 	/**
 	 * If this modifier should edit the name of the affix.
 	 */
 	public boolean editName() {
-		return editName;
+		return this.editName;
 	}
 
 	public static enum AffixOp {

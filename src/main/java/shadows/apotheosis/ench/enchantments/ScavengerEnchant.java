@@ -20,7 +20,7 @@ public class ScavengerEnchant extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level) + 50;
+		return this.getMinEnchantability(level) + 50;
 	}
 
 	@Override

@@ -42,8 +42,8 @@ public class BrutalSpawnerGenerator extends WeightedGenerator {
 		int y = 15 + rand.nextInt(35);
 		BlockPos.Mutable mPos = new BlockPos.Mutable(x, y, z);
 		for (; y > 10; y--) {
-			if (canBePlaced(world, mPos.setPos(x, y, z), rand)) {
-				place(world, mPos.setPos(x, y, z), rand);
+			if (this.canBePlaced(world, mPos.setPos(x, y, z), rand)) {
+				this.place(world, mPos.setPos(x, y, z), rand);
 				DeadlyFeature.setSuccess(world.getDimensionType(), chunkX, chunkZ);
 				return true;
 			}

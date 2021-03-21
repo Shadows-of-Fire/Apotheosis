@@ -18,24 +18,24 @@ public class EnchantmentInfo {
 		this.ench = ench;
 		this.maxLevel = maxLevel;
 		this.minLevel = minLevel;
-		maxPower = defaultMax(ench);
-		minPower = defaultMin(ench);
+		this.maxPower = defaultMax(ench);
+		this.minPower = defaultMin(ench);
 	}
 
 	public int getMaxLevel() {
-		return maxLevel;
+		return this.maxLevel;
 	}
 
 	public int getMinLevel() {
-		return minLevel;
+		return this.minLevel;
 	}
 
 	public int getMinPower(int level) {
-		return minPower.getPower(level);
+		return this.minPower.getPower(level);
 	}
 
 	public int getMaxPower(int level) {
-		return maxPower.getPower(level);
+		return this.maxPower.getPower(level);
 	}
 
 	public void setMaxPower(PowerFunc maxPower) {
@@ -58,20 +58,18 @@ public class EnchantmentInfo {
 		Expression ex;
 
 		public ExpressionPowerFunc(String func) {
-			ex = new Expression(func);
+			this.ex = new Expression(func);
 		}
 
 		@Override
 		public int getPower(int level) {
-			return ex.setVariable("x", new BigDecimal(level)).eval().intValue();
+			return this.ex.setVariable("x", new BigDecimal(level)).eval().intValue();
 		}
 
 	}
 
 	private static PowerFunc defaultMax(Enchantment ench) {
-		return level -> {
-			return 200;
-		};
+		return level -> 200;
 	}
 
 	private static PowerFunc defaultMin(Enchantment ench) {

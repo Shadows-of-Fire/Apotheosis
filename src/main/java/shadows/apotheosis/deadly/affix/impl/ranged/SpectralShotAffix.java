@@ -38,7 +38,7 @@ public class SpectralShotAffix extends RangedAffix {
 				ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
 				AbstractArrowEntity spectralArrow = arrowitem.createArrow(user.world, ItemStack.EMPTY, user);
 				spectralArrow.shoot(user.rotationPitch, user.rotationYaw, 0.0F, 1 * 3.0F, 1.0F);
-				cloneMotion(arrow, spectralArrow);
+				this.cloneMotion(arrow, spectralArrow);
 				spectralArrow.setIsCritical(arrow.getIsCritical());
 				spectralArrow.setDamage(arrow.getDamage());
 				spectralArrow.setKnockbackStrength(arrow.knockbackStrength);
@@ -52,7 +52,7 @@ public class SpectralShotAffix extends RangedAffix {
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = range.generateFloat(rand);
+		float lvl = this.range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}
@@ -61,7 +61,8 @@ public class SpectralShotAffix extends RangedAffix {
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level * 100)));
 	}
-	
+
+	@Override
 	public ITextComponent getDisplayName(float level) {
 		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).mergeStyle(TextFormatting.GRAY);
 	}

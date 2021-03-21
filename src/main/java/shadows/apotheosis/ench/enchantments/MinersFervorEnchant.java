@@ -21,7 +21,7 @@ public class MinersFervorEnchant extends EfficiencyEnchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 50;
+		return this.getMinEnchantability(enchantmentLevel) + 50;
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 				new SpawnerWrapper(SpawnerModifiers.REDSTONE, "redstone_control", true, "jei.spw.redstone"),
 				new SpawnerWrapper(new ResourceLocation("witch"), "jei.spw.changeentity"),
 				new SpawnerInverseWrapper()
-				), getPluginUid());
+				), this.getPluginUid());
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, I18n.format("jei.spw.instructions", ((IFormattableTextComponent) Enchantments.SILK_TOUCH.getDisplayName(SpawnerModule.spawnerSilkLevel)).mergeStyle(TextFormatting.DARK_BLUE).getString()));
 		for (Item i : ForgeRegistries.ITEMS) {
@@ -56,7 +56,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
 		if (!Apotheosis.enableSpawner) return;
-		reg.addRecipeCatalyst(new ItemStack(Blocks.SPAWNER), getPluginUid());
+		reg.addRecipeCatalyst(new ItemStack(Blocks.SPAWNER), this.getPluginUid());
 	}
 
 	@Override

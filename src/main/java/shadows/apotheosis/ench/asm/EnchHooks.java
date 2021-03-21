@@ -81,7 +81,7 @@ public class EnchHooks {
 			if (user.world.rand.nextInt(Math.max(2, 7 - level)) == 0) {
 				DamageSource src = user instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity) user).setMagicDamage().setDamageBypassesArmor() : DamageSource.MAGIC;
 				attacker.attackEntityFrom(src, level * 1.6F);
-				user.getActiveItemStack().damageItem(10, attacker, (e) -> {
+				user.getActiveItemStack().damageItem(10, attacker, e -> {
 					e.sendBreakAnimation(EquipmentSlotType.OFFHAND);
 				});
 			}

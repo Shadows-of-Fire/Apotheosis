@@ -140,9 +140,9 @@ public class ApothAnvilBlock extends AnvilBlock {
 				ListNBT enchants = EnchantedBookItem.getEnchantments(stack);
 				boolean handled = false;
 				if (enchants.size() == 1 && oblit > 0) {
-					handled = handleObliteration(world, pos, oblit, entity, enchants);
+					handled = this.handleObliteration(world, pos, oblit, entity, enchants);
 				} else if (enchants.size() > 1 && split > 0) {
-					handled = handleSplitting(world, pos, split, entity, enchants);
+					handled = this.handleSplitting(world, pos, split, entity, enchants);
 				}
 				if (handled) {
 					if (world.rand.nextInt(1 + ub) == 0) {

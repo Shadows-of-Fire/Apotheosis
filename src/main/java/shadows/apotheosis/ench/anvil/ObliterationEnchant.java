@@ -17,7 +17,7 @@ public class ObliterationEnchant extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 40;
+		return this.getMinEnchantability(enchantmentLevel) + 40;
 	}
 
 	@Override

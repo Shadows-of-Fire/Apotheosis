@@ -12,7 +12,7 @@ public class ApothShearsItem extends ShearsItem {
 
 	public ApothShearsItem() {
 		super(new Item.Properties().maxDamage(238).group(ItemGroup.TOOLS));
-		setRegistryName("minecraft", "shears");
+		this.setRegistryName("minecraft", "shears");
 	}
 
 	@Override

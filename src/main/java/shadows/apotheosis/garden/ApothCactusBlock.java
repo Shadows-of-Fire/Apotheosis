@@ -18,7 +18,7 @@ public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 
 	public ApothCactusBlock() {
 		super(AbstractBlock.Properties.from(Blocks.CACTUS));
-		setRegistryName(new ResourceLocation("cactus"));
+		this.setRegistryName(new ResourceLocation("cactus"));
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 
 					if (ForgeHooks.onCropsGrowPre(world, blockpos, state, true)) {
 						if (j == 15) {
-							world.setBlockState(blockpos, getDefaultState());
+							world.setBlockState(blockpos, this.getDefaultState());
 							BlockState iblockstate = state.with(AGE, Integer.valueOf(0));
 							world.setBlockState(pos, iblockstate, 4);
 							iblockstate.neighborChanged(world, blockpos, this, pos, false);
@@ -67,6 +67,6 @@ public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 
 	@Override
 	public StateContainer<Block, BlockState> getStateContainer() {
-		return container == null ? super.getStateContainer() : container;
+		return this.container == null ? super.getStateContainer() : this.container;
 	}
 }

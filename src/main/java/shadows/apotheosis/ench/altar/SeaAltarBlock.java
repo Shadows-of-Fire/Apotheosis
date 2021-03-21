@@ -63,14 +63,14 @@ public class SeaAltarBlock extends Block {
 		Vector3d block = eyes.add(look.x * reach, look.y * reach, look.z * reach);
 
 		for (int i = 0; i < 4; i++) {
-			if (this.rayTrace(pos, eyes, block, PILLARS.get(i)) != null) return attemptSwap(altar, i, player, hand);
+			if (this.rayTrace(pos, eyes, block, PILLARS.get(i)) != null) return this.attemptSwap(altar, i, player, hand);
 		}
 
 		double hitX = hit.getHitVec().x - pos.getX();
 		double hitZ = hit.getHitVec().z - pos.getZ();
 
 		if (hitX >= 5.5 / 16 && hitX <= 1 - 5.5 / 16 || hitZ >= 5.5 / 16 && hitZ <= 1 - 5.5 / 16) {
-			attemptSwap(altar, 4, player, hand);
+			this.attemptSwap(altar, 4, player, hand);
 		}
 
 		return ActionResultType.SUCCESS;

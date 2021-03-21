@@ -13,13 +13,13 @@ public class PlayerDistModifier extends SpawnerModifier {
 
 	@Override
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.activatingRangeFromPlayer > min : spawner.spawnerLogic.activatingRangeFromPlayer < max);
+		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.activatingRangeFromPlayer > this.min : spawner.spawnerLogic.activatingRangeFromPlayer < this.max);
 	}
 
 	@Override
 	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		int modify = inverting ? -value : value;
-		spawner.spawnerLogic.activatingRangeFromPlayer = MathHelper.clamp(spawner.spawnerLogic.activatingRangeFromPlayer + modify, min, max);
+		int modify = inverting ? -this.value : this.value;
+		spawner.spawnerLogic.activatingRangeFromPlayer = MathHelper.clamp(spawner.spawnerLogic.activatingRangeFromPlayer + modify, this.min, this.max);
 		return true;
 	}
 

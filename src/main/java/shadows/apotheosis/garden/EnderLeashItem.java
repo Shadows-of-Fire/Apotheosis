@@ -42,7 +42,7 @@ public class EnderLeashItem extends Item {
 				entity.remove();
 				stack.getTag().put("entity_data", tag);
 				stack.getTag().putString("name", entity.getDisplayName().getString());
-				playSound(player);
+				this.playSound(player);
 			}
 			return true;
 
@@ -62,7 +62,7 @@ public class EnderLeashItem extends Item {
 					e.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 					((ServerWorld) ctx.getWorld()).addEntityIfNotDuplicate(e);
 					ctx.getItem().getTag().remove("entity_data");
-					playSound(ctx.getPlayer());
+					this.playSound(ctx.getPlayer());
 					ctx.getItem().damageItem(1, ctx.getPlayer(), pl -> pl.sendBreakAnimation(ctx.getHand()));
 					return ActionResultType.SUCCESS;
 				}

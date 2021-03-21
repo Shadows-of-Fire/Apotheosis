@@ -13,7 +13,7 @@ public class ApothAnvilItem extends BlockItem {
 
 	public ApothAnvilItem(Block block) {
 		super(block, new Item.Properties().group(ItemGroup.DECORATIONS));
-		setRegistryName(block.getRegistryName());
+		this.setRegistryName(block.getRegistryName());
 	}
 
 	@Override

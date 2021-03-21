@@ -11,9 +11,7 @@ public class PotionModuleClient {
 	@SubscribeEvent
 	public void colors(FMLClientSetupEvent e) {
 		e.enqueueWork(() -> {
-			Minecraft.getInstance().getItemColors().register((stack, tint) -> {
-				return PotionUtils.getColor(stack);
-			}, ApotheosisObjects.POTION_CHARM);
+			Minecraft.getInstance().getItemColors().register((stack, tint) -> PotionUtils.getColor(stack), ApotheosisObjects.POTION_CHARM);
 		});
 	}
 

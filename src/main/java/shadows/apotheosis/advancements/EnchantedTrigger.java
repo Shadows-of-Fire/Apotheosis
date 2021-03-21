@@ -27,7 +27,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 	}
 
 	public void trigger(ServerPlayerEntity player, ItemStack stack, int level, float eterna, float quanta, float arcana) {
-		this.triggerListeners(player, (inst) -> {
+		this.triggerListeners(player, inst -> {
 			if (inst instanceof Instance) return ((Instance) inst).test(stack, level, eterna, quanta, arcana);
 			return inst.test(stack, level);
 		});

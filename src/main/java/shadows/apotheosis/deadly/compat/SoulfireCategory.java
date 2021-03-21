@@ -24,7 +24,7 @@ public class SoulfireCategory extends AbstractCookingCategory<SoulfireCookingRec
 
 	public SoulfireCategory(IGuiHelper guiHelper) {
 		super(guiHelper, Blocks.SOUL_CAMPFIRE, "gui.apotheosis.category.soulfire", 400);
-		background = guiHelper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 186, 82, 34).addPadding(0, 10, 0, 0).build();
+		this.background = guiHelper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 186, 82, 34).addPadding(0, 10, 0, 0).build();
 	}
 
 	@Override
@@ -39,15 +39,15 @@ public class SoulfireCategory extends AbstractCookingCategory<SoulfireCookingRec
 
 	@Override
 	public IDrawable getBackground() {
-		return background;
+		return this.background;
 	}
 
 	@Override
 	public void draw(SoulfireCookingRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-		animatedFlame.draw(matrixStack, 1, 20);
-		IDrawableAnimated arrow = getArrow(recipe);
+		this.animatedFlame.draw(matrixStack, 1, 20);
+		IDrawableAnimated arrow = this.getArrow(recipe);
 		arrow.draw(matrixStack, 24, 8);
-		drawCookTime(recipe, matrixStack, 35);
+		this.drawCookTime(recipe, matrixStack, 35);
 	}
 
 	@Override

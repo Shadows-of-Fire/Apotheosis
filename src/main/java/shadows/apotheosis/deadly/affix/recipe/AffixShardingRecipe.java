@@ -40,21 +40,24 @@ public class AffixShardingRecipe extends SoulfireCookingRecipe {
 
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
-		return NonNullList.from(Ingredient.EMPTY, ing);
+		return NonNullList.from(Ingredient.EMPTY, this.ing);
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AffixShardingRecipe> {
 
+		@Override
 		public AffixShardingRecipe read(ResourceLocation recipeId, JsonObject json) {
 			LootRarity rarity = LootRarity.valueOf(JSONUtils.getString(json, "rarity"));
 			return new AffixShardingRecipe(recipeId, rarity);
 		}
 
+		@Override
 		public AffixShardingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
 			LootRarity rarity = LootRarity.values()[buffer.readByte()];
 			return new AffixShardingRecipe(recipeId, rarity);
 		}
 
+		@Override
 		public void write(PacketBuffer buffer, AffixShardingRecipe recipe) {
 			buffer.writeByte(recipe.rarity.ordinal());
 		}

@@ -20,7 +20,7 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 
 	public ApothBambooBlock() {
 		super(AbstractBlock.Properties.from(Blocks.BAMBOO));
-		setRegistryName(new ResourceLocation("bamboo"));
+		this.setRegistryName(new ResourceLocation("bamboo"));
 	}
 
 	@Override
@@ -120,6 +120,6 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 
 	@Override
 	public StateContainer<Block, BlockState> getStateContainer() {
-		return container == null ? super.getStateContainer() : container;
+		return this.container == null ? super.getStateContainer() : this.container;
 	}
 }

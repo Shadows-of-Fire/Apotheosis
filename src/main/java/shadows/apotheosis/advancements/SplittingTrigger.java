@@ -27,17 +27,17 @@ public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
 
 	@Override
 	public void addListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
-		listeners.computeIfAbsent(adv, a -> new HashSet<>()).add(listener);
+		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).add(listener);
 	}
 
 	@Override
 	public void removeListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
-		listeners.computeIfAbsent(adv, a -> new HashSet<>()).remove(listener);
+		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).remove(listener);
 	}
 
 	@Override
 	public void removeAllListeners(PlayerAdvancements adv) {
-		listeners.remove(adv);
+		this.listeners.remove(adv);
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
 	}
 
 	public void trigger(PlayerAdvancements adv) {
-		if (listeners.containsKey(adv)) {
-			new HashSet<>(listeners.get(adv)).forEach(t -> t.grantCriterion(adv));
+		if (this.listeners.containsKey(adv)) {
+			new HashSet<>(this.listeners.get(adv)).forEach(t -> t.grantCriterion(adv));
 		}
 	}
 

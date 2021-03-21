@@ -30,14 +30,14 @@ public class ApothEnchantTile extends EnchantingTableTileEntity {
 	@Override
 	public CompoundNBT write(CompoundNBT tag) {
 		super.write(tag);
-		tag.put("inventory", inv.serializeNBT());
+		tag.put("inventory", this.inv.serializeNBT());
 		return tag;
 	}
 
 	@Override
 	public void read(BlockState state, CompoundNBT tag) {
 		super.read(state, tag);
-		inv.deserializeNBT(tag.getCompound("inventory"));
+		this.inv.deserializeNBT(tag.getCompound("inventory"));
 	}
 
 	@Override
@@ -45,11 +45,11 @@ public class ApothEnchantTile extends EnchantingTableTileEntity {
 		return ApotheosisObjects.ENCHANTING_TABLE;
 	}
 
-	LazyOptional<IItemHandler> invCap = LazyOptional.of(() -> inv);
+	LazyOptional<IItemHandler> invCap = LazyOptional.of(() -> this.inv);
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return invCap.cast();
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return this.invCap.cast();
 		return super.getCapability(cap, side);
 	}
 

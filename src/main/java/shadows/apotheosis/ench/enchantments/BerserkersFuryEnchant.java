@@ -20,7 +20,7 @@ public class BerserkersFuryEnchant extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level) + 40;
+		return this.getMinEnchantability(level) + 40;
 	}
 
 	@Override

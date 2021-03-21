@@ -113,7 +113,7 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
-		reload(null);
+		this.reload(null);
 
 		Ingredient pot = Apotheosis.potionIngredient(Potions.REGENERATION);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "forge:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);

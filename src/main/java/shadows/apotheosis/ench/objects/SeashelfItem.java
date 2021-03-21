@@ -35,7 +35,7 @@ public class SeashelfItem extends BlockItem {
 	@Override
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		super.fillItemGroup(group, items);
-		if (isInGroup(group)) {
+		if (this.isInGroup(group)) {
 			ItemStack s = new ItemStack(this);
 			ListNBT list = new ListNBT();
 			CompoundNBT tag = new CompoundNBT();

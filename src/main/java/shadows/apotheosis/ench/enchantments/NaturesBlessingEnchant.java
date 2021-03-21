@@ -29,7 +29,7 @@ public class NaturesBlessingEnchant extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level) + 30;
+		return this.getMinEnchantability(level) + 30;
 	}
 
 }

@@ -56,7 +56,7 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		SpawnerModifiers.registerModifiers();
-		reload(null);
+		this.reload(null);
 		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.MISC, "field_77701_a");
 	}
 

@@ -33,9 +33,7 @@ public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacem
 		TileEntity tileentity = world.getTileEntity(pos);
 		if (tileentity instanceof ApothEnchantTile) {
 			ITextComponent itextcomponent = ((INameable) tileentity).getDisplayName();
-			return new SimpleNamedContainerProvider((id, inventory, player) -> {
-				return new ApothEnchantContainer(id, inventory, IWorldPosCallable.of(world, pos), (ApothEnchantTile) tileentity);
-			}, itextcomponent);
+			return new SimpleNamedContainerProvider((id, inventory, player) -> new ApothEnchantContainer(id, inventory, IWorldPosCallable.of(world, pos), (ApothEnchantTile) tileentity), itextcomponent);
 		} else {
 			return null;
 		}
@@ -71,7 +69,7 @@ public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacem
 
 	@Override
 	public StateContainer<Block, BlockState> getStateContainer() {
-		return container == null ? super.getStateContainer() : container;
+		return this.container == null ? super.getStateContainer() : this.container;
 	}
 
 }

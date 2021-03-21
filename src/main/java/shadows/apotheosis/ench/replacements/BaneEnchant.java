@@ -27,7 +27,7 @@ public class BaneEnchant extends DamageEnchantment {
 
 	@Override
 	public int getMaxEnchantability(int level) {
-		return getMinEnchantability(level) + 20;
+		return this.getMinEnchantability(level) + 20;
 	}
 
 	@Override

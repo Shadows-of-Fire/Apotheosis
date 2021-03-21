@@ -56,6 +56,7 @@ public class RadiusMiningAffix extends Affix {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc" + (int) level));
 	}
 
+	@Override
 	public ITextComponent getDisplayName(float level) {
 		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name" + (int) level).mergeStyle(TextFormatting.GRAY);
 	}
@@ -76,7 +77,7 @@ public class RadiusMiningAffix extends Affix {
 	}
 
 	/**
-	 * Performs the actual extra breaking of blocks 
+	 * Performs the actual extra breaking of blocks
 	 * @param player The player breaking the block
 	 * @param pos The position of the originally broken block
 	 * @param tool The tool being used (which has this affix on it)
@@ -121,7 +122,7 @@ public class RadiusMiningAffix extends Affix {
 				BlockPos genPos = new BlockPos(pos.getX() + ix + xOff, pos.getY() + iy + yOff, pos.getZ());
 
 				if (player.getHorizontalFacing().getAxis() == Axis.X) {
-					genPos = new BlockPos(genPos.getX() - (ix + xOff), genPos.getY(), genPos.getZ() + (ix + xOff));
+					genPos = new BlockPos(genPos.getX() - (ix + xOff), genPos.getY(), genPos.getZ() + ix + xOff);
 				}
 
 				if (face.getAxis().isVertical()) {
@@ -143,7 +144,7 @@ public class RadiusMiningAffix extends Affix {
 
 	static boolean isEffective(BlockState state, PlayerEntity player) {
 		if (player.getHeldItemMainhand().getToolTypes().stream().anyMatch(state::isToolEffective)) return true;
-		if (AffixHelper.getAffixLevel(player.getHeldItemMainhand(), Affixes.OMNITOOL) > 0) return (Items.DIAMOND_PICKAXE.canHarvestBlock(state) || Items.DIAMOND_SHOVEL.canHarvestBlock(state) || Items.DIAMOND_AXE.canHarvestBlock(state));
+		if (AffixHelper.getAffixLevel(player.getHeldItemMainhand(), Affixes.OMNITOOL) > 0) return Items.DIAMOND_PICKAXE.canHarvestBlock(state) || Items.DIAMOND_SHOVEL.canHarvestBlock(state) || Items.DIAMOND_AXE.canHarvestBlock(state);
 		return false;
 	}
 

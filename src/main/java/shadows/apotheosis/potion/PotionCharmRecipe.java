@@ -35,7 +35,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	public PotionCharmRecipe(List<Object> ingredients, int width, int height) {
 		super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", width, height, makeIngredients(ingredients), new ItemStack(ApotheosisObjects.POTION_CHARM));
 		for (int i = 0; i < ingredients.size(); i++) {
-			if (ingredients.get(i).equals("potion")) potionSlots.add(i);
+			if (ingredients.get(i).equals("potion")) this.potionSlots.add(i);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		if (super.matches(inv, world)) {
-			List<Potion> potions = potionSlots.stream().map(s -> inv.getStackInSlot(s)).map(PotionUtils::getPotionFromItem).collect(Collectors.toList());
+			List<Potion> potions = this.potionSlots.stream().map(s -> inv.getStackInSlot(s)).map(PotionUtils::getPotionFromItem).collect(Collectors.toList());
 			if (potions.size() > 0 && potions.stream().allMatch(p -> p != null && p.getEffects().size() == 1 && !p.getEffects().get(0).getPotion().isInstant())) {
 				return potions.stream().distinct().count() == 1;
 			}
@@ -85,6 +85,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 
 		public static final Serializer INSTANCE = new Serializer();
 
+		@Override
 		public PotionCharmRecipe read(ResourceLocation recipeId, JsonObject json) {
 			JsonArray inputs = json.get("recipe").getAsJsonArray();
 			int width = 0, height = inputs.size();
@@ -100,6 +101,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 			return new PotionCharmRecipe(ingredients, width, height);
 		}
 
+		@Override
 		public PotionCharmRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
 			int width = buffer.readByte();
 			int height = buffer.readByte();
@@ -119,6 +121,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 			return new PotionCharmRecipe(inputs, width, height);
 		}
 
+		@Override
 		public void write(PacketBuffer buffer, PotionCharmRecipe recipe) {
 			buffer.writeByte(recipe.getRecipeWidth());
 			buffer.writeByte(recipe.getRecipeHeight());

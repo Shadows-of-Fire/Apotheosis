@@ -105,7 +105,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 			Vector3d pos = this.getPositionVec();
 			Vector3d posNextTick = pos.add(motion);
 			int iterations = 0;
-			while (!world.isRemote && this.isAlive()) {
+			while (!this.world.isRemote && this.isAlive()) {
 				RayTraceResult traceResult = this.world.rayTraceBlocks(new RayTraceContext(pos, posNextTick, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
 				if (traceResult.getType() == RayTraceResult.Type.MISS) break;
 				else if (traceResult.getType() == RayTraceResult.Type.BLOCK) {
@@ -158,7 +158,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 
 	@Override
 	protected void func_230299_a_(BlockRayTraceResult res) {
-		breakBlock(res.getPos());
+		this.breakBlock(res.getPos());
 	}
 
 	@Override
@@ -169,18 +169,18 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 	@Override
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
-		compound.putInt("blocks_broken", blocksBroken);
-		if (playerId != null) compound.putUniqueId("player_id", playerId);
-		compound.put("breaker_item", breakerItem.serializeNBT());
+		compound.putInt("blocks_broken", this.blocksBroken);
+		if (this.playerId != null) compound.putUniqueId("player_id", this.playerId);
+		compound.put("breaker_item", this.breakerItem.serializeNBT());
 		compound.putByte("arrow_type", (byte) this.type.ordinal());
 	}
 
 	@Override
 	public void readAdditional(CompoundNBT compound) {
 		super.readAdditional(compound);
-		blocksBroken = compound.getInt("blocks_broken");
-		if (compound.contains("player_id")) playerId = compound.getUniqueId("player_id");
-		breakerItem = ItemStack.read(compound.getCompound("breaker_item"));
+		this.blocksBroken = compound.getInt("blocks_broken");
+		if (compound.contains("player_id")) this.playerId = compound.getUniqueId("player_id");
+		this.breakerItem = ItemStack.read(compound.getCompound("breaker_item"));
 		this.type = Type.values()[compound.getByte("arrow_type")];
 	}
 
@@ -196,9 +196,9 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 
 	@SuppressWarnings("deprecation")
 	protected void breakBlock(BlockPos pos) {
-		if (!world.isRemote && !world.getBlockState(pos).isAir(world, pos)) {
-			if (BlockUtil.breakExtraBlock((ServerWorld) world, pos, breakerItem, playerId)) {
-				if (++blocksBroken >= 12) {
+		if (!this.world.isRemote && !this.world.getBlockState(pos).isAir(this.world, pos)) {
+			if (BlockUtil.breakExtraBlock((ServerWorld) this.world, pos, this.breakerItem, this.playerId)) {
+				if (++this.blocksBroken >= 12) {
 					this.remove();
 				}
 			} else {
@@ -219,7 +219,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		}
 
 		public ResourceLocation getTexture() {
-			return texture;
+			return this.texture;
 		}
 	}
 }

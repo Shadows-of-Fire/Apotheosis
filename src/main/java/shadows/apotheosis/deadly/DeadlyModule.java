@@ -70,7 +70,7 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
-		reload(null);
+		this.reload(null);
 		DeadlyLoot.init();
 		LootRarity[] vals = LootRarity.values();
 		for (int i = 0; i < vals.length - 1; i++) {

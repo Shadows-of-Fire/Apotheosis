@@ -28,7 +28,7 @@ public class AnvilTile extends TileEntity {
 	@Override
 	public CompoundNBT write(CompoundNBT tag) {
 		ItemStack stack = new ItemStack(Items.ANVIL);
-		EnchantmentHelper.setEnchantments(enchantments, stack);
+		EnchantmentHelper.setEnchantments(this.enchantments, stack);
 		tag.put("enchantments", stack.getEnchantmentTagList());
 		return super.write(tag);
 	}
@@ -44,8 +44,8 @@ public class AnvilTile extends TileEntity {
 		if (tag.getInt("splitting") > 0) {
 			map.put(ApotheosisObjects.SPLITTING, tag.getInt("splitting"));
 		}
-		enchantments.clear();
-		enchantments.putAll(map);
+		this.enchantments.clear();
+		this.enchantments.putAll(map);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class AnvilTile extends TileEntity {
 	}
 
 	public Object2IntMap<Enchantment> getEnchantments() {
-		return enchantments;
+		return this.enchantments;
 	}
 
 }

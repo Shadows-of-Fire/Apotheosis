@@ -36,9 +36,7 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 
 	@Override
 	public INamedContainerProvider getContainer(BlockState state, World world, BlockPos pos) {
-		return new SimpleNamedContainerProvider((id, inv, player) -> {
-			return new FletchingContainer(id, inv, world, pos);
-		}, NAME);
+		return new SimpleNamedContainerProvider((id, inv, player) -> new FletchingContainer(id, inv, world, pos), NAME);
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 
 	@Override
 	public StateContainer<Block, BlockState> getStateContainer() {
-		return container == null ? super.getStateContainer() : container;
+		return this.container == null ? super.getStateContainer() : this.container;
 	}
 
 }

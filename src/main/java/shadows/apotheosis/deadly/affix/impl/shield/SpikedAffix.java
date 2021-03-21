@@ -36,7 +36,7 @@ public class SpikedAffix extends AttributeAffix {
 	}
 
 	public static DamageSource causeSpikeDamage(Entity source) {
-		return (new EntityDamageSource("apoth_spiked", source)).setIsThornsDamage().setMagicDamage();
+		return new EntityDamageSource("apoth_spiked", source).setIsThornsDamage().setMagicDamage();
 	}
 
 }

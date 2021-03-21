@@ -66,25 +66,25 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 		super.tick();
 		this.tickBook();
 		float current = this.container.eterna.get();
-		if (current != eterna) {
-			if (current > eterna) eterna += Math.min(current - eterna, Math.max(0.16F, (current - eterna) * 0.1F));
-			else eterna = Math.max(eterna - lastEterna * 0.075F, current);
+		if (current != this.eterna) {
+			if (current > this.eterna) this.eterna += Math.min(current - this.eterna, Math.max(0.16F, (current - this.eterna) * 0.1F));
+			else this.eterna = Math.max(this.eterna - this.lastEterna * 0.075F, current);
 		}
-		if (current > 0) lastEterna = current;
+		if (current > 0) this.lastEterna = current;
 
 		current = this.container.quanta.get();
-		if (current != quanta) {
-			if (current > quanta) quanta += Math.min(current - quanta, Math.max(0.04F, (current - quanta) * 0.1F));
-			else quanta = Math.max(quanta - lastQuanta * 0.075F, current);
+		if (current != this.quanta) {
+			if (current > this.quanta) this.quanta += Math.min(current - this.quanta, Math.max(0.04F, (current - this.quanta) * 0.1F));
+			else this.quanta = Math.max(this.quanta - this.lastQuanta * 0.075F, current);
 		}
-		if (current > 0) lastQuanta = current;
+		if (current > 0) this.lastQuanta = current;
 
 		current = this.container.arcana.get();
-		if (current != arcana) {
-			if (current > arcana) arcana += Math.min(current - arcana, Math.max(0.04F, (current - arcana) * 0.1F));
-			else arcana = Math.max(arcana - lastArcana * 0.075F, current);
+		if (current != this.arcana) {
+			if (current > this.arcana) this.arcana += Math.min(current - this.arcana, Math.max(0.04F, (current - this.arcana) * 0.1F));
+			else this.arcana = Math.max(this.arcana - this.lastArcana * 0.075F, current);
 		}
-		if (current > 0) lastArcana = current;
+		if (current > 0) this.lastArcana = current;
 	}
 
 	@Override
@@ -217,14 +217,14 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 		}
 
 		this.minecraft.getTextureManager().bindTexture(ENCHANTMENT_TABLE_GUI_TEXTURE);
-		if (eterna > 0) {
-			this.blit(stack, xCenter + 59, yCenter + 75, 0, 197, (int) (eterna / container.eterna.getMax() * 110), 5);
+		if (this.eterna > 0) {
+			this.blit(stack, xCenter + 59, yCenter + 75, 0, 197, (int) (this.eterna / this.container.eterna.getMax() * 110), 5);
 		}
-		if (quanta > 0) {
-			this.blit(stack, xCenter + 59, yCenter + 85, 0, 202, (int) (quanta / 10 * 110), 5);
+		if (this.quanta > 0) {
+			this.blit(stack, xCenter + 59, yCenter + 85, 0, 202, (int) (this.quanta / 10 * 110), 5);
 		}
-		if (arcana > 0) {
-			this.blit(stack, xCenter + 59, yCenter + 95, 0, 207, (int) (arcana / 10 * 110), 5);
+		if (this.arcana > 0) {
+			this.blit(stack, xCenter + 59, yCenter + 95, 0, 207, (int) (this.arcana / 10 * 110), 5);
 		}
 	}
 
@@ -282,7 +282,7 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 			list.add(new StringTextComponent(eterna() + I18n.format("gui.apotheosis.enchant.eterna.desc")));
 			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc2")));
 			list.add(new StringTextComponent(""));
-			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), container.eterna.getMax())).mergeStyle(TextFormatting.GRAY));
+			list.add(new StringTextComponent(I18n.format("gui.apotheosis.enchant.eterna.desc3", f(this.container.eterna.get()), this.container.eterna.getMax())).mergeStyle(TextFormatting.GRAY));
 			this.func_243308_b(stack, list, mouseX, mouseY);
 		}
 

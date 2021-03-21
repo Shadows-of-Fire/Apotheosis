@@ -138,7 +138,7 @@ public class DeadlyHooks {
 		}
 
 		public CampfireTileEntity getTile() {
-			return tile.get();
+			return this.tile.get();
 		}
 
 	}

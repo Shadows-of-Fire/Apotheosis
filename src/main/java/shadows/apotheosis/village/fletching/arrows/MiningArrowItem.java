@@ -31,14 +31,14 @@ public class MiningArrowItem extends ArrowItem {
 
 	@Override
 	public AbstractArrowEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
-		MiningArrowEntity e = new MiningArrowEntity(shooter, world, new ItemStack(breakerItem.get()), arrowType);
+		MiningArrowEntity e = new MiningArrowEntity(shooter, world, new ItemStack(this.breakerItem.get()), this.arrowType);
 		return e;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow." + arrowType.name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GOLD));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GOLD));
 	}
 
 }

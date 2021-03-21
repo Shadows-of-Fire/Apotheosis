@@ -22,8 +22,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	IDrawable icon;
 
 	public SpawnerCategory(IGuiHelper helper) {
-		bg = helper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 24, 24, 24).build();
-		icon = helper.createDrawableIngredient(new ItemStack(Items.SPAWNER));
+		this.bg = helper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 24, 24, 24).build();
+		this.icon = helper.createDrawableIngredient(new ItemStack(Items.SPAWNER));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 
 	@Override
 	public IDrawable getBackground() {
-		return bg;
+		return this.bg;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 
 	@Override
 	public IDrawable getIcon() {
-		return icon;
+		return this.icon;
 	}
 
 	@Override

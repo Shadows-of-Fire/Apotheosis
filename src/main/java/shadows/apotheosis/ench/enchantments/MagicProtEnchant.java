@@ -22,7 +22,7 @@ public class MagicProtEnchant extends Enchantment {
 
 	@Override
 	public int getMaxEnchantability(int lvl) {
-		return getMinEnchantability(lvl + 1);
+		return this.getMinEnchantability(lvl + 1);
 	}
 
 	@Override

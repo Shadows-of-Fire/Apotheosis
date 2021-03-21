@@ -36,8 +36,8 @@ public class RandomAttributeModifier {
 	}
 
 	public void apply(Random rand, MobEntity entity) {
-		AttributeModifier modif = new AttributeModifier("apoth_boss_" + attribute.getAttributeName(), value.generateFloat(rand), op);
-		entity.getAttribute(attribute).applyPersistentModifier(modif);
+		AttributeModifier modif = new AttributeModifier("apoth_boss_" + this.attribute.getAttributeName(), this.value.generateFloat(rand), this.op);
+		entity.getAttribute(this.attribute).applyPersistentModifier(modif);
 	}
 
 	public static class Deserializer implements JsonDeserializer<RandomAttributeModifier> {

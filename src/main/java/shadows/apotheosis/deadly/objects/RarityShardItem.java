@@ -13,7 +13,7 @@ public class RarityShardItem extends Item {
 	}
 
 	public LootRarity getRarity() {
-		return rarity;
+		return this.rarity;
 	}
 
 }

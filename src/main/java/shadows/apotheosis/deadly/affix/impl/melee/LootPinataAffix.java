@@ -29,7 +29,7 @@ public class LootPinataAffix extends RangedAffix {
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = range.generateFloat(rand);
+		float lvl = this.range.generateFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}
@@ -38,7 +38,8 @@ public class LootPinataAffix extends RangedAffix {
 	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level * 100)));
 	}
-	
+
+	@Override
 	public ITextComponent getDisplayName(float level) {
 		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).mergeStyle(TextFormatting.GRAY);
 	}

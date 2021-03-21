@@ -42,7 +42,7 @@ public class EnchantmentIngredient extends Ingredient {
 
 	@Override
 	public boolean test(ItemStack stack) {
-		return super.test(stack) && EnchantmentHelper.getEnchantmentLevel(enchantment, stack) >= minLevel;
+		return super.test(stack) && EnchantmentHelper.getEnchantmentLevel(this.enchantment, stack) >= this.minLevel;
 	}
 
 	@Override

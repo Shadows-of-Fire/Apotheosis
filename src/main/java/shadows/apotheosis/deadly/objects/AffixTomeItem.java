@@ -45,9 +45,9 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (!hasEffect(stack)) {
+		if (!this.hasEffect(stack)) {
 			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome"));
-			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome2", new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT))));
+			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome2", new TranslationTextComponent("rarity.apoth." + this.rarity.name().toLowerCase(Locale.ROOT))));
 		} else {
 			Map<Affix, Float> afx = AffixHelper.getAffixes(stack);
 			afx.forEach((a, l) -> {
@@ -58,12 +58,12 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 
 	@Override
 	public ITextComponent getName() {
-		return ((IFormattableTextComponent) super.getName()).mergeStyle(rarity.getColor());
+		return ((IFormattableTextComponent) super.getName()).mergeStyle(this.rarity.getColor());
 	}
 
 	@Override
 	public ITextComponent getDisplayName(ItemStack stack) {
-		return new TranslationTextComponent(this.getTranslationKey(stack)).mergeStyle(rarity.getColor());
+		return new TranslationTextComponent(this.getTranslationKey(stack)).mergeStyle(this.rarity.getColor());
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 	}
 
 	public LootRarity getRarity() {
-		return rarity;
+		return this.rarity;
 	}
 
 	public static boolean updateAnvil(AnvilUpdateEvent ev) {

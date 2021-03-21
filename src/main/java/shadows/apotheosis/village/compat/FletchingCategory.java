@@ -25,19 +25,19 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 
 	public FletchingCategory(IGuiHelper guiHelper) {
 		ResourceLocation location = FletchingScreen.TEXTURES;
-		background = guiHelper.createDrawable(location, 6, 16, 139, 54);
-		icon = guiHelper.createDrawableIngredient(new ItemStack(Blocks.FLETCHING_TABLE));
-		localizedName = Translator.translateToLocal("apotheosis.recipes.fletching");
+		this.background = guiHelper.createDrawable(location, 6, 16, 139, 54);
+		this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blocks.FLETCHING_TABLE));
+		this.localizedName = Translator.translateToLocal("apotheosis.recipes.fletching");
 	}
 
 	@Override
 	public IDrawable getBackground() {
-		return background;
+		return this.background;
 	}
 
 	@Override
 	public IDrawable getIcon() {
-		return icon;
+		return this.icon;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 
 	@Override
 	public String getTitle() {
-		return localizedName;
+		return this.localizedName;
 	}
 
 	@Override
