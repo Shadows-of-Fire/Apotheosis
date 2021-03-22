@@ -2,25 +2,6 @@ Review anvil level math at higher levels, as well as repair costs.
 
 Add additional tomes to account for new enchantment types, and clarify usage in tooltips.
 
-Affix based manipulation system in the smithing table.
-An item similar to a tome can be used to remove a single affix at a time from an affix item.
--Removed affix is random from the affixes on the item.
--Has a chance to degrade the affix, but an upgraded version of the item can negate this chance.
-This same item can be used to reapply affixes to other items.
-
-Another item that will upgrade a random affix on the item.
-
-The ability to scrap items for rarity tokens that are used in the crafting of affix-based modification systems.
-
-Another item that will upgrade the tier of the item.
-
-And a final item that will allow for a reroll of the item, including all affix data.
-
---Maybe make a new table for this (or modify the smithing table, or something).
-
-++Implement new subsystem to add additional attribute modifiers without overriding the base ones
-++Non-usage of the vanilla system.
-
 Advancements for Fletching
 
 Glass break faster with pickaxe

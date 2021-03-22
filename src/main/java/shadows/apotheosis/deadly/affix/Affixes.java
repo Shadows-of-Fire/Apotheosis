@@ -1,5 +1,8 @@
 package shadows.apotheosis.deadly.affix;
 
+import java.io.File;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectFunction;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -42,6 +45,7 @@ import shadows.apotheosis.deadly.affix.impl.shield.SpikedAffix;
 import shadows.apotheosis.deadly.affix.impl.tool.OmniToolAffix;
 import shadows.apotheosis.deadly.affix.impl.tool.RadiusMiningAffix;
 import shadows.apotheosis.deadly.affix.impl.tool.TorchPlacementAffix;
+import shadows.placebo.config.Configuration;
 
 @EventBusSubscriber(modid = Apotheosis.MODID, bus = Bus.MOD)
 @ObjectHolder(Apotheosis.MODID)
@@ -99,65 +103,72 @@ public class Affixes {
 	@SubscribeEvent
 	public static void register(Register<Affix> e) {
 		IForgeRegistry<Affix> reg = e.getRegistry();
-		reg.register(new ReachDistanceAffix(5).setRegistryName("reach_distance"));
-		reg.register(new EnchantabilityAffix(5).setRegistryName("enchantability"));
+		Affix.config = new Configuration(new File(Apotheosis.configDir, "affixes.cfg"));
+		register(reg, ReachDistanceAffix::new, "reach_distance", 5);
+		register(reg, EnchantabilityAffix::new, "enchantability", 5);
 		registerBowAffixes(reg);
 		registerSwordAffixes(reg);
 		registerAxeAffixes(reg);
 		registerToolAffixes(reg);
 		registerArmorAffixes(reg);
 		registerShieldAffixes(reg);
+		if (Affix.config.hasChanged()) Affix.config.save();
 	}
 
 	static void registerBowAffixes(IForgeRegistry<Affix> reg) {
-		reg.register(new DrawSpeedAffix(5).setRegistryName("draw_speed"));
-		reg.register(new MovementSpeedAffix(5).setRegistryName("movement_speed"));
-		reg.register(new SnipeDamageAffix(3).setRegistryName("snipe_damage"));
-		reg.register(new SpectralShotAffix(2).setRegistryName("spectral_shot"));
-		reg.register(new SnareHitAffix(1).setRegistryName("snare_hit"));
-		reg.register(new MagicArrowAffix(1).setRegistryName("magic_arrow"));
-		reg.register(new TeleportDropsAffix(2).setRegistryName("teleport_drops"));
+		register(reg, DrawSpeedAffix::new, "draw_speed", 5);
+		register(reg, MovementSpeedAffix::new, "movement_speed", 5);
+		register(reg, SnipeDamageAffix::new, "snipe_damage", 3);
+		register(reg, SpectralShotAffix::new, "spectral_shot", 2);
+		register(reg, SnareHitAffix::new, "snare_hit", 1);
+		register(reg, MagicArrowAffix::new, "magic_arrow", 1);
+		register(reg, TeleportDropsAffix::new, "teleport_drops", 2);
 	}
 
 	static void registerSwordAffixes(IForgeRegistry<Affix> reg) {
-		reg.register(new AttackSpeedAffix(5).setRegistryName("attack_speed"));
-		reg.register(new ColdDamageAffix(5).setRegistryName("cold_damage"));
-		reg.register(new CritChanceAffix(2).setRegistryName("crit_chance"));
-		reg.register(new CritDamageAffix(3).setRegistryName("crit_damage"));
-		reg.register(new DamageChainAffix(1).setRegistryName("damage_chain"));
-		reg.register(new FireDamageAffix(5).setRegistryName("fire_damage"));
-		reg.register(new LifeStealAffix(3).setRegistryName("life_steal"));
-		reg.register(new LootPinataAffix(2).setRegistryName("loot_pinata"));
+		register(reg, AttackSpeedAffix::new, "attack_speed", 5);
+		register(reg, ColdDamageAffix::new, "cold_damage", 5);
+		register(reg, CritChanceAffix::new, "crit_chance", 2);
+		register(reg, CritDamageAffix::new, "crit_damage", 3);
+		register(reg, DamageChainAffix::new, "damage_chain", 1);
+		register(reg, FireDamageAffix::new, "fire_damage", 5);
+		register(reg, LifeStealAffix::new, "life_steal", 3);
+		register(reg, LootPinataAffix::new, "loot_pinata", 2);
 	}
 
 	static void registerAxeAffixes(IForgeRegistry<Affix> reg) {
-		reg.register(new PiercingAffix(0).setRegistryName("piercing"));
-		reg.register(new MaxCritAffix(1).setRegistryName("max_crit"));
-		reg.register(new CleaveAffix(3).setRegistryName("cleave"));
-		reg.register(new CurrentHPAffix(2).setRegistryName("current_hp_damage"));
-		reg.register(new ExecuteAffix(5).setRegistryName("execute"));
-		reg.register(new OverhealAffix(4).setRegistryName("overheal"));
+		register(reg, PiercingAffix::new, "piercing", 0);
+		register(reg, MaxCritAffix::new, "max_crit", 1);
+		register(reg, CleaveAffix::new, "cleave", 3);
+		register(reg, CurrentHPAffix::new, "current_hp_damage", 2);
+		register(reg, ExecuteAffix::new, "execute", 5);
+		register(reg, OverhealAffix::new, "overheal", 4);
 	}
 
 	static void registerToolAffixes(IForgeRegistry<Affix> reg) {
-		reg.register(new TorchPlacementAffix(4).setRegistryName("torch_placement"));
-		reg.register(new OmniToolAffix(2).setRegistryName("omnitool"));
-		reg.register(new RadiusMiningAffix(2).setRegistryName("radius_mining"));
+		register(reg, TorchPlacementAffix::new, "torch_placement", 4);
+		register(reg, OmniToolAffix::new, "omnitool", 2);
+		register(reg, RadiusMiningAffix::new, "radius_mining", 2);
 	}
 
 	static void registerArmorAffixes(IForgeRegistry<Affix> reg) {
-		reg.register(new ArmorAffix(5).setRegistryName("armor"));
-		reg.register(new ArmorToughnessAffix(5).setRegistryName("armor_toughness"));
-		reg.register(new MaxHealthAffix(5).setRegistryName("max_health"));
+		register(reg, ArmorAffix::new, "armor", 5);
+		register(reg, ArmorToughnessAffix::new, "armor_toughness", 5);
+		register(reg, MaxHealthAffix::new, "max_health", 5);
 	}
 
 	static void registerShieldAffixes(IForgeRegistry<Affix> reg) {
-		reg.register(new ArrowCatcherAffix(1).setRegistryName("arrow_catcher"));
-		reg.register(new ShieldSpeedAffix(5).setRegistryName("shield_speed"));
-		reg.register(new DisengageAffix(3).setRegistryName("disengage"));
-		reg.register(new SpikedAffix(2).setRegistryName("spiked_shield"));
-		reg.register(new EldritchBlockAffix(1).setRegistryName("eldritch_block"));
-		reg.register(new ShieldDamageAffix(3).setRegistryName("shield_damage"));
+		register(reg, ArrowCatcherAffix::new, "arrow_catcher", 1);
+		register(reg, ShieldSpeedAffix::new, "shield_speed", 5);
+		register(reg, DisengageAffix::new, "disengage", 3);
+		register(reg, SpikedAffix::new, "spiked_shield", 2);
+		register(reg, EldritchBlockAffix::new, "eldritch_block", 1);
+		register(reg, ShieldDamageAffix::new, "shield_damage", 3);
+	}
+
+	static void register(IForgeRegistry<Affix> reg, Int2ObjectFunction<Affix> factory, String name, int weight) {
+		weight = Affix.config.getInt("Weight", name, weight, 0, Integer.MAX_VALUE, "The weight of this affix, relative to others that may apply to the same item.");
+		reg.register(factory.apply(weight).setRegistryName(name));
 	}
 
 }

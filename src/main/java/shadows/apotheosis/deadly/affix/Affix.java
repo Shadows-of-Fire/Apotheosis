@@ -33,6 +33,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.placebo.config.Configuration;
 
 public abstract class Affix extends WeightedRandom.Item implements IForgeRegistryEntry<Affix> {
 
@@ -47,6 +48,11 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * The affix registry.
 	 */
 	public static final ForgeRegistry<Affix> REGISTRY;
+
+	/**
+	 * Config for affixes.
+	 */
+	public static Configuration config;
 
 	/**
 	 * The registry name of this item.
