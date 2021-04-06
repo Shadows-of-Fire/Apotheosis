@@ -3,11 +3,9 @@ package shadows.apotheosis.deadly.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.ISeedReader;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
 
@@ -26,9 +24,8 @@ public class DeadlyConfig {
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
+	public static int bossDungeon2Attempts = 10;
 	public static int rogueSpawnerAttempts = 12;
-
-	public static Block bossFillerBlock = Blocks.RED_SANDSTONE;
 
 	public static boolean affixTrades = true;
 
@@ -47,7 +44,7 @@ public class DeadlyConfig {
 			}
 		}
 
-		//NOT RELOADABLE
+		//NOT RELOADABLE (why?)
 		String[] biomes = c.getStringList("Generation Biome Blacklist", "general", new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
 		for (String s : biomes) {
 			try {
@@ -62,18 +59,15 @@ public class DeadlyConfig {
 		bossRarityOffset = c.getInt("Boss Rarity Offset", "bosses", bossRarityOffset, 0, 999, "The rarity offset for boss item generation.  400 guarantees uncommon, 700 guarantees rare, 800 guarantees epic, 950 guarantees mythic.");
 
 		bossDungeonAttempts = c.getInt("Boss Dungeon", "frequency", bossDungeonAttempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeons.");
+		bossDungeon2Attempts = c.getInt("Boss Dungeon Variant 2", "frequency", bossDungeon2Attempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeon variant 2.");
 		rogueSpawnerAttempts = c.getInt("Rogue Spawners", "frequency", rogueSpawnerAttempts, 0, 50000, "The number of generation attempts (per chunk) for rogue spawners.");
-
-		ResourceLocation blockId = new ResourceLocation(c.getString("Boss Filler Block", "bosses", bossFillerBlock.getRegistryName().toString(), "The block that spawns in a 5x5 underneath world-generated bosses."));
-		bossFillerBlock = ForgeRegistries.BLOCKS.getValue(blockId);
-		if (bossFillerBlock == Blocks.AIR) {
-			DeadlyModule.LOGGER.error("Boss Filler Block {} was mapped to air, it will be reverted to red sandstone.", blockId);
-			bossFillerBlock = Blocks.RED_SANDSTONE;
-		}
 
 		affixTrades = c.getBoolean("Affix Trades", "wanderer", true, "If the wandering trader may sell affix loot items as a rare trade.");
 
 		spawnerValueChance = c.getInt("Spawner Rare Loot Chance", "general", spawnerValueChance, 0, 80000, "The 1/n chance that a rogue spawner will generate with a CHEST_VALUABLE instead of it's default chest.  0 to disable.");
+	}
 
+	public static boolean canGenerateIn(ISeedReader world) {
+		return false; //TODO: FIXME
 	}
 }

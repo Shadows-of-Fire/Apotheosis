@@ -17,6 +17,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.deadly.reload.BossItemManager;
 
@@ -27,9 +28,6 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 	private static final BlockState MOSSY_BRICK = Blocks.MOSSY_STONE_BRICKS.getDefaultState();
 	private static final BlockState CRACKED_BRICK = Blocks.CRACKED_STONE_BRICKS.getDefaultState();
 	private static final BlockState[] BRICKS = { BRICK, MOSSY_BRICK, CRACKED_BRICK };
-	//private static final BlockState WALL = Blocks.STONE_BRICK_WALL.getDefaultState();
-	//private static final BlockState MOSSY_WALL = Blocks.MOSSY_STONE_BRICK_WALL.getDefaultState();
-	//private static final BlockState[] WALLS = { WALL, MOSSY_WALL };
 
 	public static final BossDungeonFeature INSTANCE = new BossDungeonFeature();
 
@@ -40,6 +38,7 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean generate(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		int xRadius = 3 + rand.nextInt(3);
 		int floor = -1;
 		int roof = 4;
@@ -55,9 +54,9 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 					BlockState state = world.getBlockState(blockpos);
 					Material material = state.getMaterial();
 					boolean flag = material.isSolid();
-					if (y == -1 && !flag) { return false; } //Exit if the floor is not fully solid.
+					if (y == floor && !flag) { return false; } //Exit if the floor is not fully solid.
 
-					if (y == 4 && !flag) { return false; } //Exit if the roof is not fully solid.
+					if (y == roof && !flag) { return false; } //Exit if the roof is not fully solid.
 
 					if ((x == -xRadius || x == xRadius || z == -zRadius || z == zRadius) && y == 1 && state.isAir() && states[x + xRadius][y - 1 + 1][z + zRadius].isAir()) {
 						++doors; //Count number of 2x1 holes at y=0.

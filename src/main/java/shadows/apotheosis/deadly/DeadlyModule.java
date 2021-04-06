@@ -39,6 +39,7 @@ import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.affix.recipe.AffixShardingRecipe;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossDungeonFeature;
+import shadows.apotheosis.deadly.gen.BossDungeonFeature2;
 import shadows.apotheosis.deadly.gen.RogueSpawnerFeature;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
@@ -138,9 +139,10 @@ public class DeadlyModule {
 	 */
 	public void onBiomeLoad(BiomeLoadingEvent e) {
 		ConfiguredFeature<?, ?> bossFeat = BossDungeonFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(192).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
+		ConfiguredFeature<?, ?> bossFeat2 = BossDungeonFeature2.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(192).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
 		ConfiguredFeature<?, ?> spwFeat = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
-			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
+			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat2).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
 		}
 	}
 

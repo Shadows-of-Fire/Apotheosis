@@ -11,6 +11,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
 import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.reload.RandomSpawnerManager;
 
 public class RogueSpawnerFeature extends Feature<NoFeatureConfig> {
@@ -25,6 +26,7 @@ public class RogueSpawnerFeature extends Feature<NoFeatureConfig> {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean generate(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		BlockState state = world.getBlockState(pos);
 		BlockState downState = world.getBlockState(pos.down());
 		BlockState upState = world.getBlockState(pos.up());
