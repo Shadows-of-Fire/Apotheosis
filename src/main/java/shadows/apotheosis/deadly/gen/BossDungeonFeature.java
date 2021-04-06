@@ -20,7 +20,7 @@ import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.deadly.reload.BossItemManager;
 
-public class BossFeature extends Feature<NoFeatureConfig> {
+public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
 	private static final BlockState BRICK = Blocks.STONE_BRICKS.getDefaultState();
@@ -31,9 +31,9 @@ public class BossFeature extends Feature<NoFeatureConfig> {
 	//private static final BlockState MOSSY_WALL = Blocks.MOSSY_STONE_BRICK_WALL.getDefaultState();
 	//private static final BlockState[] WALLS = { WALL, MOSSY_WALL };
 
-	public static final BossFeature INSTANCE = new BossFeature();
+	public static final BossDungeonFeature INSTANCE = new BossDungeonFeature();
 
-	public BossFeature() {
+	public BossDungeonFeature() {
 		super(NoFeatureConfig.field_236558_a_);
 	}
 
@@ -123,7 +123,7 @@ public class BossFeature extends Feature<NoFeatureConfig> {
 				DeadlyModule.LOGGER.error("Failed to fetch boss spawner entity at ({}, {}, {})", pos.getX(), pos.getY(), pos.getZ());
 			}
 
-			DeadlyFeature.debugLog(pos, "Boss Dungeon");
+			DeadlyModule.debugLog(pos, "Boss Dungeon");
 
 			return true;
 		} else {

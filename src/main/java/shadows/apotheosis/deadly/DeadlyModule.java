@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -37,10 +38,8 @@ import shadows.apotheosis.deadly.affix.AffixEvents;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.affix.recipe.AffixShardingRecipe;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
-import shadows.apotheosis.deadly.gen.BossFeature;
-import shadows.apotheosis.deadly.gen.BrutalSpawnerGenerator;
-import shadows.apotheosis.deadly.gen.DeadlyFeature;
-import shadows.apotheosis.deadly.gen.SwarmSpawnerGenerator;
+import shadows.apotheosis.deadly.gen.BossDungeonFeature;
+import shadows.apotheosis.deadly.gen.RogueSpawnerFeature;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
@@ -49,6 +48,7 @@ import shadows.apotheosis.deadly.objects.RarityShardItem;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.deadly.reload.BossItemManager;
+import shadows.apotheosis.deadly.reload.RandomSpawnerManager;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.RecipeHelper;
@@ -82,7 +82,7 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
-		e.getRegistry().register(BossFeature.INSTANCE.setRegistryName("deadly_world_gen"));
+		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("deadly_world_gen"));
 	}
 
 	@SubscribeEvent
@@ -125,12 +125,22 @@ public class DeadlyModule {
 		e.addListener(AffixLootManager.INSTANCE);
 		e.addListener(BossArmorManager.INSTANCE);
 		e.addListener(BossItemManager.INSTANCE);
+		e.addListener(RandomSpawnerManager.INSTANCE);
 	}
 
+	/**
+	 * Self notes on World Generation:
+	 * -Placement configs operate right-to-left, which means the last call operates first.
+	 * -Everything else operates on the entire stream produced by the outermost config.
+	 * -Thus feat.range(x).square().count(y) provides y copies that get randomized in the chunk, with a y level between 0 and x.
+	 * -However, feat.count(y).range(x).square() would just produce y copies of the exact same randomized blockpos.
+	 * -With no configs you just get the chunk's corner and y=0
+	 */
 	public void onBiomeLoad(BiomeLoadingEvent e) {
-		ConfiguredFeature<?, ?> cFeat = BossFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(8);
+		ConfiguredFeature<?, ?> bossFeat = BossDungeonFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(192).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
+		ConfiguredFeature<?, ?> spwFeat = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
-			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, cFeat);
+			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
 		}
 	}
 
@@ -142,11 +152,14 @@ public class DeadlyModule {
 		Configuration nameConfig = new Configuration(new File(Apotheosis.configDir, "names.cfg"));
 		DeadlyConfig.loadConfigs();
 		NameHelper.load(nameConfig);
-		BrutalSpawnerGenerator.reload();
-		SwarmSpawnerGenerator.init();
-		DeadlyFeature.enableGenerators();
 		if (e == null && DeadlyConfig.config.hasChanged()) DeadlyConfig.config.save();
 		if (e == null && nameConfig.hasChanged()) nameConfig.save();
+	}
+
+	public static final boolean DEBUG = true;
+
+	public static void debugLog(BlockPos pos, String name) {
+		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
 	}
 
 }

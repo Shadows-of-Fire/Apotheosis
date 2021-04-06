@@ -3,52 +3,55 @@ package shadows.apotheosis.deadly.gen;
 import java.util.List;
 import java.util.Random;
 
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
+import com.google.gson.annotations.SerializedName;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Direction.Plane;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IServerWorld;
-import shadows.apotheosis.deadly.config.DeadlyConstants;
-import shadows.apotheosis.deadly.gen.WeightedGenerator.WorldFeatureItem;
+import shadows.apotheosis.deadly.DeadlyLoot;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.util.SpawnerStats;
-import shadows.apotheosis.util.TagBuilder;
-import shadows.placebo.util.SpawnerBuilder;
+import shadows.placebo.util.ChestBuilder;
+import shadows.placebo.util.SpawnerEditor;
 
-public class SpawnerItem extends WorldFeatureItem {
+public class SpawnerItem extends WeightedRandom.Item {
 
-	protected final SpawnerBuilder spawner;
+	public static final Block[] FILLER_BLOCKS = new Block[] { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
-	public SpawnerItem(SpawnerBuilder spawner, int weight) {
+	protected final SpawnerStats stats;
+	@SerializedName("spawn_potentials")
+	protected final List<WeightedSpawnerEntity> spawnPotentials;
+	@SerializedName("loot_table")
+	protected final ResourceLocation lootTable;
+
+	public SpawnerItem(SpawnerStats stats, ResourceLocation lootTable, List<WeightedSpawnerEntity> potentials, int weight) {
 		super(weight);
-		this.spawner = spawner;
+		this.stats = stats;
+		this.lootTable = lootTable;
+		this.spawnPotentials = potentials;
 	}
 
-	@Override
+	@SuppressWarnings("deprecation")
 	public void place(IServerWorld world, BlockPos pos, Random rand) {
 		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
-		this.spawner.build(world, pos);
-	}
-
-	public SpawnerBuilder getSpawner() {
-		return this.spawner;
-	}
-
-	/**
-	 * Parses SpawnerItems with the provided stats and mob pairs.
-	 * @param items The destination list for the created items.
-	 * @param stats The spawner stats for these spawners.
-	 * @param weightMobPairs The weight-entity pairs to use for each spawner item.
-	 */
-	public static void rebuildItems(List<SpawnerItem> items, SpawnerStats stats, Object2IntMap<ResourceLocation> weightMobPairs) {
-		items.clear();
-		for (Entry<ResourceLocation> pair : weightMobPairs.object2IntEntrySet()) {
-			SpawnerBuilder builder = new SpawnerBuilder();
-			builder.setType(pair.getKey());
-			if (pair.getKey().equals(DeadlyConstants.RANDOM)) builder = TagBuilder.createMobSpawnerRandom();
-			stats.apply(builder);
-			TagBuilder.checkForSkeleton(builder.getSpawnData());
-			items.add(new SpawnerItem(builder, pair.getIntValue()));
+		SpawnerEditor editor = new SpawnerEditor(world, pos);
+		stats.apply(editor).setSpawnData(spawnPotentials.get(rand.nextInt(spawnPotentials.size()))).setPotentials(spawnPotentials.toArray(new WeightedSpawnerEntity[0]));
+		int chance = DeadlyConfig.spawnerValueChance;
+		ChestBuilder.place(world, rand, pos.down(), chance > 0 && rand.nextInt(chance) == 0 ? DeadlyLoot.VALUABLE : lootTable);
+		world.setBlockState(pos.up(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].getDefaultState(), 2);
+		for (Direction f : Plane.HORIZONTAL) {
+			if (world.getBlockState(pos.offset(f)).isAir(world, pos.offset(f))) {
+				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateContainer().getProperty(f.getOpposite().getName2());
+				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().with(side, true), 2);
+			}
 		}
 	}
+
 }

@@ -1,0 +1,18 @@
+{
+	"stats": {
+		"spawn_delay": 20,
+		"min_delay": 50,
+		"max_delay": 125,
+		"spawn_count": 2,
+		"max_nearby_entities": 10,
+		"spawn_range": 7,
+		"player_activation_range": 14
+	},
+	"spawn_potentials": [{
+		"entity": "cave_spider",
+		"nbt": "{ActiveEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:10000000,Id:1b,Amplifier:0b}]}",
+		"weight": 1
+	}],
+	"loot_table": "apotheosis:spawner_swarm",
+	"weight": 2
+}

@@ -38,9 +38,10 @@ import shadows.placebo.util.ChestBuilder.EnchantedEntry;
  */
 public class DeadlyLoot {
 
-	public static final ResourceLocation SPAWNER_BRUTAL = new ResourceLocation(Apotheosis.MODID, "spawner_brutal");
-	public static final ResourceLocation SPAWNER_SWARM = new ResourceLocation(Apotheosis.MODID, "spawner_swarm");
-	public static final ResourceLocation CHEST_VALUABLE = new ResourceLocation(Apotheosis.MODID, "chest_valuable");
+	public static final ResourceLocation BRUTAL = new ResourceLocation(Apotheosis.MODID, "spawner_brutal");
+	public static final ResourceLocation BRUTAL_ROTATE = new ResourceLocation(Apotheosis.MODID, "spawner_brutal_rotate");
+	public static final ResourceLocation SWARM = new ResourceLocation(Apotheosis.MODID, "spawner_swarm");
+	public static final ResourceLocation VALUABLE = new ResourceLocation(Apotheosis.MODID, "chest_valuable");
 
 	public static void init() {
 		PoolBuilder build = new PoolBuilder(5, 8);
@@ -66,8 +67,35 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.ENCHANTING_TABLE, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 1, 1, 3, 0));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
-		build.addEntries(new AffixEntry(4, 5));
-		LootSystem.registerLootTable(SPAWNER_BRUTAL, LootSystem.tableBuilder().addLootPool(build).build());
+		build.addEntries(new AffixEntry(8, 5));
+		LootSystem.registerLootTable(BRUTAL, LootSystem.tableBuilder().addLootPool(build).build());
+
+		build = new PoolBuilder(5, 8);
+		build.bonusRolls(1, 3);
+		build.addEntries(ChestBuilder.loot(Items.SKELETON_SKULL, 1, 2, 1, 2));
+		build.addEntries(ChestBuilder.loot(Items.WITHER_SKELETON_SKULL, 1, 2, 1, 2));
+		build.addEntries(ChestBuilder.loot(Items.CREEPER_HEAD, 1, 2, 1, 2));
+		build.addEntries(ChestBuilder.loot(Items.ZOMBIE_HEAD, 1, 2, 1, 2));
+		build.addEntries(ChestBuilder.loot(Items.PLAYER_HEAD, 1, 2, 1, 2));
+		build.addEntries(ChestBuilder.loot(Blocks.TNT, 1, 2, 2, 0));
+		build.addEntries(ChestBuilder.loot(Items.DIAMOND, 1, 4, 3, 5));
+		build.addEntries(ChestBuilder.loot(Items.EMERALD, 1, 4, 3, 6));
+		build.addEntries(ChestBuilder.loot(Items.IRON_INGOT, 1, 7, 10, 3));
+		build.addEntries(ChestBuilder.loot(Items.GOLD_INGOT, 1, 7, 10, 4));
+		build.addEntries(ChestBuilder.loot(Items.GOLDEN_APPLE, 1, 2, 1, 3));
+		build.addEntries(ChestBuilder.loot(Items.NAME_TAG, 1, 2, 5, 0));
+		build.addEntries(ChestBuilder.loot(Items.LEAD, 1, 2, 5, 0));
+		build.addEntries(ChestBuilder.loot(Items.SADDLE, 1, 2, 3, 0));
+		build.addEntries(ChestBuilder.loot(Items.DIAMOND_HORSE_ARMOR, 1, 2, 1, 5));
+		build.addEntries(ChestBuilder.loot(Items.SLIME_BALL, 1, 5, 3, 1));
+		build.addEntries(ChestBuilder.loot(Items.BUCKET, 1, 1, 3, 0));
+		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 1, 1, 3, 0));
+		build.addEntries(ChestBuilder.loot(Blocks.ENCHANTING_TABLE, 1, 1, 3, 0));
+		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 1, 3, 3, 0));
+		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
+		build.addEntries(new AffixEntry(8, 5));
+		build.addEntries(new AffixEntry(8, 8));
+		LootSystem.registerLootTable(BRUTAL_ROTATE, LootSystem.tableBuilder().addLootPool(build).build());
 
 		build = new PoolBuilder(5, 6);
 		build.bonusRolls(1, 4);
@@ -93,8 +121,8 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.OBSIDIAN, 3, 8, 3, 0));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
-		build.addEntries(new AffixEntry(4, 5));
-		LootSystem.registerLootTable(SPAWNER_SWARM, LootSystem.tableBuilder().addLootPool(build).build());
+		build.addEntries(new AffixEntry(8, 5));
+		LootSystem.registerLootTable(SWARM, LootSystem.tableBuilder().addLootPool(build).build());
 
 		build = new PoolBuilder(6, 12);
 		build.bonusRolls(2, 5);
@@ -126,7 +154,7 @@ public class DeadlyLoot {
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_CHESTPLATE, 20));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 40));
 		build.addEntries(new AffixEntry(20, 15));
-		LootSystem.registerLootTable(CHEST_VALUABLE, LootSystem.tableBuilder().addLootPool(build).build());
+		LootSystem.registerLootTable(VALUABLE, LootSystem.tableBuilder().addLootPool(build).build());
 	}
 
 	private static ItemStack egg(String mob) {
