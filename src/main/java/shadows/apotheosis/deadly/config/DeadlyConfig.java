@@ -3,9 +3,11 @@ package shadows.apotheosis.deadly.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
 import net.minecraft.world.ISeedReader;
+import net.minecraft.world.World;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
 
@@ -24,8 +26,9 @@ public class DeadlyConfig {
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
-	public static int bossDungeon2Attempts = 10;
-	public static int rogueSpawnerAttempts = 12;
+	public static int bossDungeon2Attempts = 8;
+	public static int rogueSpawnerAttempts = 4;
+	public static int troveAttempts = 8;
 
 	public static boolean affixTrades = true;
 
@@ -61,6 +64,7 @@ public class DeadlyConfig {
 		bossDungeonAttempts = c.getInt("Boss Dungeon", "frequency", bossDungeonAttempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeons.");
 		bossDungeon2Attempts = c.getInt("Boss Dungeon Variant 2", "frequency", bossDungeon2Attempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeon variant 2.");
 		rogueSpawnerAttempts = c.getInt("Rogue Spawners", "frequency", rogueSpawnerAttempts, 0, 50000, "The number of generation attempts (per chunk) for rogue spawners.");
+		troveAttempts = c.getInt("Ore Troves", "frequency", troveAttempts, 0, 50000, "The number of generation attempts (per chunk) for ore troves.");
 
 		affixTrades = c.getBoolean("Affix Trades", "wanderer", true, "If the wandering trader may sell affix loot items as a rare trade.");
 
@@ -68,6 +72,7 @@ public class DeadlyConfig {
 	}
 
 	public static boolean canGenerateIn(ISeedReader world) {
-		return false; //TODO: FIXME
+		RegistryKey<World> key = world.getWorld().getDimensionKey();
+		return DIM_WHITELIST.contains(key.getLocation());
 	}
 }

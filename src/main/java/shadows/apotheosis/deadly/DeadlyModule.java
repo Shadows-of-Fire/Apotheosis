@@ -41,6 +41,7 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossDungeonFeature;
 import shadows.apotheosis.deadly.gen.BossDungeonFeature2;
 import shadows.apotheosis.deadly.gen.RogueSpawnerFeature;
+import shadows.apotheosis.deadly.gen.TroveFeature;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
@@ -83,7 +84,10 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
-		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("deadly_world_gen"));
+		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("boss_dungeon"));
+		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dungeon_2"));
+		e.getRegistry().register(RogueSpawnerFeature.INSTANCE.setRegistryName("rogue_spawner"));
+		e.getRegistry().register(TroveFeature.INSTANCE.setRegistryName("trove"));
 	}
 
 	@SubscribeEvent
@@ -94,7 +98,8 @@ public class DeadlyModule {
 			shard.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_shard");
 			e.getRegistry().register(shard);
 			RARITY_SHARDS.put(r, shard);
-
+		}
+		for (LootRarity r : LootRarity.values()) {
 			AffixTomeItem tome = new AffixTomeItem(r, new Item.Properties().group(ItemGroup.MISC));
 			tome.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_tome");
 			e.getRegistry().register(tome);
@@ -138,11 +143,13 @@ public class DeadlyModule {
 	 * -With no configs you just get the chunk's corner and y=0
 	 */
 	public void onBiomeLoad(BiomeLoadingEvent e) {
-		ConfiguredFeature<?, ?> bossFeat = BossDungeonFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(192).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
-		ConfiguredFeature<?, ?> bossFeat2 = BossDungeonFeature2.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(192).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
+		ConfiguredFeature<?, ?> bossFeat = BossDungeonFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
+		ConfiguredFeature<?, ?> bossFeat2 = BossDungeonFeature2.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
 		ConfiguredFeature<?, ?> spwFeat = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
+		ConfiguredFeature<?, ?> troveFeat = TroveFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(64).square().func_242731_b(3);
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat2).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
+			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, troveFeat);
 		}
 	}
 
