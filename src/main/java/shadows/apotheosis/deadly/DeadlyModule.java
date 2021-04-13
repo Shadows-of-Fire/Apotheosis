@@ -169,7 +169,7 @@ public class DeadlyModule {
 		if (e == null && nameConfig.hasChanged()) nameConfig.save();
 	}
 
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	public static void debugLog(BlockPos pos, String name) {
 		if (DEBUG) DeadlyModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());

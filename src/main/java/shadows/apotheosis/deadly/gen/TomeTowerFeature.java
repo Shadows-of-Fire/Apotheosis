@@ -3,6 +3,7 @@ package shadows.apotheosis.deadly.gen;
 import java.util.Random;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -33,6 +34,8 @@ public class TomeTowerFeature extends Feature<NoFeatureConfig> {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 
 		pos = pos.add(rand.nextInt(5), -1, rand.nextInt(5));
+
+		if (world.getBlockState(pos).getBlock() == Blocks.SNOW) pos = pos.down();
 
 		for (int x = 0; x < 9; x++) {
 			for (int z = 0; z < 9; z++) {
