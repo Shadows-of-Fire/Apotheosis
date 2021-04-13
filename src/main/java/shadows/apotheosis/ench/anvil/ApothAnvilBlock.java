@@ -165,6 +165,7 @@ public class ApothAnvilBlock extends AnvilBlock {
 				CompoundNBT tag = (CompoundNBT) nbt;
 				int level = tag.getInt("lvl");
 				Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(tag.getString("id")));
+				if (enchant == null) continue;
 				ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(enchant, level));
 				Block.spawnAsEntity(world, pos.up(), book);
 			}
@@ -181,6 +182,7 @@ public class ApothAnvilBlock extends AnvilBlock {
 			int level = nbt.getInt("lvl") - 1;
 			if (level <= 0) return false;
 			Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(nbt.getString("id")));
+			if (enchant == null) return false;
 			ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(enchant, level));
 			entity.remove();
 			Block.spawnAsEntity(world, pos.up(), book);
