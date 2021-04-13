@@ -146,7 +146,7 @@
 	"item.apotheosis.ancient_tome": "Ancient Affix Tome",
 	
 	"info.apotheosis.affix_tome": "Can remove affixes, taking some of them as its own.",
-    "info.apotheosis.affix_tome2": "The item must be %s or weaker.  It will be destroyed.",
+    "info.apotheosis.affix_tome2": "The item must be %s or weaker and will be destroyed.",
 	"info.apotheosis.any_of_rarity": "Accepts any %s item",
 	"gui.apotheosis.category.soulfire": "Soulfire Cooking",
 	"info.apotheosis.one_per_affix": "One shard is produced per affix destroyed",

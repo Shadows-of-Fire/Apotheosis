@@ -3,6 +3,7 @@ package shadows.apotheosis;
 import java.io.File;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
@@ -56,6 +57,14 @@ public class Apotheosis {
     //Formatter::on
 
 	public static final RecipeHelper HELPER = new RecipeHelper(Apotheosis.MODID);
+
+	public static final ItemGroup APOTH_GROUP = new ItemGroup(MODID) {
+
+		@Override
+		public ItemStack createIcon() {
+			return new ItemStack(Items.ENCHANTING_TABLE);
+		}
+	};
 
 	public static File configDir;
 	public static Configuration config;

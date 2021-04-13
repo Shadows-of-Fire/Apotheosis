@@ -1,8 +1,8 @@
 package shadows.apotheosis.ench;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +28,6 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
@@ -103,7 +102,7 @@ public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
-	public static final List<TomeItem> TYPED_BOOKS = new LinkedList<>();
+	public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
 	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").setDamageBypassesArmor().setDamageIsAbsolute();
 	public static final EquipmentSlotType[] ARMOR = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
 	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
@@ -210,7 +209,7 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				shears = new ApothShearsItem(),
-				new Item(new Item.Properties().group(ItemGroup.MISC)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
+				new Item(new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ApothAnvilItem(Blocks.ANVIL),
 				new ApothAnvilItem(Blocks.CHIPPED_ANVIL),
 				new ApothAnvilItem(Blocks.DAMAGED_ANVIL),
@@ -223,19 +222,19 @@ public class EnchModule {
 				new TomeItem(Items.DIAMOND_PICKAXE, EnchantmentType.DIGGER),
 				new TomeItem(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
 				new TomeItem(Items.BOW, EnchantmentType.BOW),
-				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("prismatic_altar"),
+				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("prismatic_altar"),
 				new ScrappingTomeItem(),
 				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
-				new BlockItem(ApotheosisObjects.BLAZING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("blazing_hellshelf"),
-				new BlockItem(ApotheosisObjects.GLOWING_HELLSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("glowing_hellshelf"),
+				new BlockItem(ApotheosisObjects.BLAZING_HELLSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("blazing_hellshelf"),
+				new BlockItem(ApotheosisObjects.GLOWING_HELLSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("glowing_hellshelf"),
 				new SeashelfItem(ApotheosisObjects.SEASHELF).setRegistryName(ApotheosisObjects.SEASHELF.getRegistryName()),
-				new BlockItem(ApotheosisObjects.CRYSTAL_SEASHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("crystal_seashelf"),
-				new BlockItem(ApotheosisObjects.HEART_SEASHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("heart_seashelf"),
-				new BlockItem(ApotheosisObjects.ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("endshelf"),
-				new BlockItem(ApotheosisObjects.DRACONIC_ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("draconic_endshelf"),
-				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("pearl_endshelf"),
-				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("beeshelf"),
-				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName("melonshelf")
+				new BlockItem(ApotheosisObjects.CRYSTAL_SEASHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("crystal_seashelf"),
+				new BlockItem(ApotheosisObjects.HEART_SEASHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("heart_seashelf"),
+				new BlockItem(ApotheosisObjects.ENDSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("endshelf"),
+				new BlockItem(ApotheosisObjects.DRACONIC_ENDSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("draconic_endshelf"),
+				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
+				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
+				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf")
 				);
 		//Formatter::on
 		DispenserBlock.registerDispenseBehavior(shears, DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(oldShears));

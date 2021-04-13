@@ -12,7 +12,6 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
@@ -21,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.Features.Placements;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -41,6 +41,7 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossDungeonFeature;
 import shadows.apotheosis.deadly.gen.BossDungeonFeature2;
 import shadows.apotheosis.deadly.gen.RogueSpawnerFeature;
+import shadows.apotheosis.deadly.gen.TomeTowerFeature;
 import shadows.apotheosis.deadly.gen.TroveFeature;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
@@ -88,19 +89,20 @@ public class DeadlyModule {
 		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dungeon_2"));
 		e.getRegistry().register(RogueSpawnerFeature.INSTANCE.setRegistryName("rogue_spawner"));
 		e.getRegistry().register(TroveFeature.INSTANCE.setRegistryName("trove"));
+		e.getRegistry().register(TomeTowerFeature.INSTANCE.setRegistryName("tome_tower"));
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new BossSummonerItem(new Item.Properties().maxStackSize(1).group(ItemGroup.MISC)).setRegistryName("boss_summoner"));
+		e.getRegistry().register(new BossSummonerItem(new Item.Properties().maxStackSize(1).group(Apotheosis.APOTH_GROUP)).setRegistryName("boss_summoner"));
 		for (LootRarity r : LootRarity.values()) {
-			RarityShardItem shard = new RarityShardItem(r, new Item.Properties().group(ItemGroup.MISC));
+			RarityShardItem shard = new RarityShardItem(r, new Item.Properties().group(Apotheosis.APOTH_GROUP));
 			shard.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_shard");
 			e.getRegistry().register(shard);
 			RARITY_SHARDS.put(r, shard);
 		}
 		for (LootRarity r : LootRarity.values()) {
-			AffixTomeItem tome = new AffixTomeItem(r, new Item.Properties().group(ItemGroup.MISC));
+			AffixTomeItem tome = new AffixTomeItem(r, new Item.Properties().group(Apotheosis.APOTH_GROUP));
 			tome.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_tome");
 			e.getRegistry().register(tome);
 			RARITY_TOMES.put(r, tome);
@@ -146,10 +148,12 @@ public class DeadlyModule {
 		ConfiguredFeature<?, ?> bossFeat = BossDungeonFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
 		ConfiguredFeature<?, ?> bossFeat2 = BossDungeonFeature2.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
 		ConfiguredFeature<?, ?> spwFeat = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
-		ConfiguredFeature<?, ?> troveFeat = TroveFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(64).square().func_242731_b(3);
+		ConfiguredFeature<?, ?> troveFeat = TroveFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(64).square().func_242731_b(DeadlyConfig.troveAttempts);
+		ConfiguredFeature<?, ?> ttFeat = TomeTowerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placements.BAMBOO_PLACEMENT).chance(DeadlyConfig.tomeTowerChance);
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat2).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, troveFeat);
+			if (Apotheosis.enableEnch && DeadlyConfig.tomeTowerChance > 0) e.getGeneration().withFeature(Decoration.SURFACE_STRUCTURES, ttFeat);
 		}
 	}
 

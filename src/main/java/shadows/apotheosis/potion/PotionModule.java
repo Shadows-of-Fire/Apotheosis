@@ -161,7 +161,7 @@ public class PotionModule {
 	public void drops(LivingDropsEvent e) {
 		if (e.getEntityLiving() instanceof RabbitEntity) {
 			RabbitEntity rabbit = (RabbitEntity) e.getEntityLiving();
-			if (rabbit.world.rand.nextFloat() < 0.02F) {
+			if (rabbit.world.rand.nextFloat() < 0.03F + 0.03F * e.getLootingLevel()) {
 				e.getDrops().clear();
 				e.getDrops().add(new ItemEntity(rabbit.world, rabbit.getPosX(), rabbit.getPosY(), rabbit.getPosZ(), new ItemStack(ApotheosisObjects.LUCKY_FOOT)));
 			}

@@ -9,12 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.NonNullList;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 
 public class HellshelfItem extends BlockItem {
 
 	public HellshelfItem(Block block) {
-		super(block, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS));
+		super(block, new Item.Properties().group(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override

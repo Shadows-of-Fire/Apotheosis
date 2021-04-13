@@ -6,6 +6,9 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -24,6 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
+import shadows.apotheosis.ench.EnchModule;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.loot.PoolBuilder;
 import shadows.placebo.loot.StackLootEntry;
@@ -42,6 +46,7 @@ public class DeadlyLoot {
 	public static final ResourceLocation BRUTAL_ROTATE = new ResourceLocation(Apotheosis.MODID, "spawner_brutal_rotate");
 	public static final ResourceLocation SWARM = new ResourceLocation(Apotheosis.MODID, "spawner_swarm");
 	public static final ResourceLocation VALUABLE = new ResourceLocation(Apotheosis.MODID, "chest_valuable");
+	public static final ResourceLocation TOME_TOWER = new ResourceLocation(Apotheosis.MODID, "tome_tower");
 
 	public static void init() {
 		PoolBuilder build = new PoolBuilder(5, 8);
@@ -66,7 +71,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.ANVIL, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.ENCHANTING_TABLE, 1, 1, 3, 0));
 		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 1, 1, 3, 0));
-		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
+		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 3));
 		build.addEntries(new AffixEntry(8, 5));
 		LootSystem.registerLootTable(BRUTAL, LootSystem.tableBuilder().addLootPool(build).build());
 
@@ -152,9 +157,21 @@ public class DeadlyLoot {
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_LEGGINGS, 20));
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_HELMET, 20));
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_CHESTPLATE, 20));
-		build.addEntries(new EnchantedEntry(Items.BOOK, 40));
+		build.addEntries(new EnchantedEntry(Items.BOOK, 20));
 		build.addEntries(new AffixEntry(20, 15));
 		LootSystem.registerLootTable(VALUABLE, LootSystem.tableBuilder().addLootPool(build).build());
+
+		if (Apotheosis.enableEnch) {
+			build = new PoolBuilder(3, 5);
+			build.bonusRolls(0, 3);
+			for (Item i : EnchModule.TYPED_BOOKS)
+				build.addEntries(new TomeEntry(i, 5));
+			build.addEntries(new EnchantedEntry(Items.BOOK, 5));
+			for (int i = 0; i < 5; i++)
+				build.addEntries(ChestBuilder.loot(DeadlyModule.RARITY_TOMES.get(LootRarity.values()[i]), 1, 1, 16 - 3 * i, 10));
+			build.addEntries(new AffixEntry(20, 35));
+			LootSystem.registerLootTable(TOME_TOWER, LootSystem.tableBuilder().addLootPool(build).build());
+		}
 	}
 
 	private static ItemStack egg(String mob) {
@@ -196,6 +213,22 @@ public class DeadlyLoot {
 			}
 
 		}
+	}
+
+	public static class TomeEntry extends EnchantedEntry {
+
+		public TomeEntry(Item i, int weight) {
+			super(i, weight);
+		}
+
+		@Override
+		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
+			ItemStack enchTome = func.apply(new ItemStack(i), ctx);
+			ItemStack ench = new ItemStack(Items.ENCHANTED_BOOK);
+			EnchantmentHelper.getEnchantments(enchTome).entrySet().stream().map(e -> new EnchantmentData(e.getKey(), e.getValue())).forEach(d -> EnchantedBookItem.addEnchantment(ench, d));
+			list.accept(ench);
+		}
+
 	}
 
 }

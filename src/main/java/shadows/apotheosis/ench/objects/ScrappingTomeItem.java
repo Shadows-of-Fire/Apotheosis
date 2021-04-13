@@ -11,7 +11,6 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
@@ -29,7 +28,7 @@ public class ScrappingTomeItem extends BookItem {
 	static Random rand = new Random();
 
 	public ScrappingTomeItem() {
-		super(new Item.Properties().group(ItemGroup.MISC));
+		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
 		this.setRegistryName(Apotheosis.MODID, "scrap_tome");
 	}
 

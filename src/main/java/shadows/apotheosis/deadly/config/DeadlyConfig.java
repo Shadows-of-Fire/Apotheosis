@@ -29,6 +29,7 @@ public class DeadlyConfig {
 	public static int bossDungeon2Attempts = 8;
 	public static int rogueSpawnerAttempts = 4;
 	public static int troveAttempts = 8;
+	public static int tomeTowerChance = 10;
 
 	public static boolean affixTrades = true;
 
@@ -65,6 +66,7 @@ public class DeadlyConfig {
 		bossDungeon2Attempts = c.getInt("Boss Dungeon Variant 2", "frequency", bossDungeon2Attempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeon variant 2.");
 		rogueSpawnerAttempts = c.getInt("Rogue Spawners", "frequency", rogueSpawnerAttempts, 0, 50000, "The number of generation attempts (per chunk) for rogue spawners.");
 		troveAttempts = c.getInt("Ore Troves", "frequency", troveAttempts, 0, 50000, "The number of generation attempts (per chunk) for ore troves.");
+		tomeTowerChance = c.getInt("Tome Tower", "frequency", tomeTowerChance, 0, 50000, "The 1/n chance (per chunk) that a tome tower may attempt generation. 0 = disabled, lower = more chances.");
 
 		affixTrades = c.getBoolean("Affix Trades", "wanderer", true, "If the wandering trader may sell affix loot items as a rare trade.");
 

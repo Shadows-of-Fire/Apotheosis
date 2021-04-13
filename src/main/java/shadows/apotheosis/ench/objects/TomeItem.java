@@ -10,7 +10,6 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
@@ -31,7 +30,7 @@ public class TomeItem extends BookItem {
 	final EnchantmentType type;
 
 	public TomeItem(Item rep, EnchantmentType type) {
-		super(new Item.Properties().group(ItemGroup.MISC));
+		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
 		this.type = type;
 		this.rep = new ItemStack(rep);
 		this.setRegistryName(Apotheosis.MODID, (type == null ? "null" : type.name().toLowerCase(Locale.ROOT)) + "_book");

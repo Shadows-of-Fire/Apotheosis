@@ -9,7 +9,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -17,6 +16,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import shadows.apotheosis.Apotheosis;
 
 public class MiningArrowItem extends ArrowItem {
 
@@ -24,7 +24,7 @@ public class MiningArrowItem extends ArrowItem {
 	protected final MiningArrowEntity.Type arrowType;
 
 	public MiningArrowItem(Supplier<Item> breakerItem, MiningArrowEntity.Type arrowType) {
-		super(new Item.Properties().group(ItemGroup.COMBAT));
+		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
 		this.breakerItem = breakerItem;
 		this.arrowType = arrowType;
 	}

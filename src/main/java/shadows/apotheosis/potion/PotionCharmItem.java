@@ -28,11 +28,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.Apotheosis;
 
 public class PotionCharmItem extends Item {
 
 	public PotionCharmItem() {
-		super(new Item.Properties().maxStackSize(1).maxDamage(192).group(ItemGroup.MISC));
+		super(new Item.Properties().maxStackSize(1).maxDamage(192).group(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override

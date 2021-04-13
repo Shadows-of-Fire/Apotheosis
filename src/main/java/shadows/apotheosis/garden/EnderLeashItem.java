@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,11 +21,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import shadows.apotheosis.Apotheosis;
 
 public class EnderLeashItem extends Item {
 
 	public EnderLeashItem() {
-		super(new Item.Properties().maxStackSize(1).maxDamage(15).group(ItemGroup.MISC));
+		super(new Item.Properties().maxStackSize(1).maxDamage(15).group(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override

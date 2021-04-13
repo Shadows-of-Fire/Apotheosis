@@ -205,6 +205,7 @@ public class EnchModuleEvents {
 		if (e.getSource().getTrueSource() instanceof Entity && user.getActivePotionEffect(Effects.RESISTANCE) == null) {
 			int level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user);
 			if (level > 0) {
+				user.hurtResistantTime = 0;
 				user.attackEntityFrom(EnchModule.CORRUPTED, level * level);
 				user.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 200 * level, level - 1));
 				user.addPotionEffect(new EffectInstance(Effects.STRENGTH, 200 * level, level - 1));
