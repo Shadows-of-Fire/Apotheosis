@@ -25,6 +25,9 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.deadly.reload.BossItemManager;
 
+/**
+ * Boss Dungeon Feature (Variant 2) - Credit to BigAl607 on discord for the structure.
+ */
 public class BossDungeonFeature2 extends Feature<NoFeatureConfig> {
 
 	public static final ResourceLocation TEMPLATE_ID = new ResourceLocation(Apotheosis.MODID, "boss_1");

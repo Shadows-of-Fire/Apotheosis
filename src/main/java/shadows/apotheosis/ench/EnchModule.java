@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
@@ -20,6 +22,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.CreatureAttribute;
@@ -42,6 +45,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
@@ -101,6 +105,8 @@ import shadows.placebo.util.PlaceboUtil;
 public class EnchModule {
 
 	public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
+	public static final Object2IntMap<Enchantment> ENCH_HARD_CAPS = new Object2IntOpenHashMap<>();
+	public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
 	public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
 	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").setDamageBypassesArmor().setDamageIsAbsolute();
@@ -176,6 +182,26 @@ public class EnchModule {
 	@SubscribeEvent
 	public void containers(Register<ContainerType<?>> e) {
 		e.getRegistry().register(new ContainerType<>(ApothEnchantContainer::new).setRegistryName("enchanting"));
+	}
+
+	/**
+	 * This handles IMC events for the enchantment module. <br>
+	 * Currently only one type is supported.  A mod may pass a single {@link EnchantmentData} indicating the hard capped max level for an enchantment. <br>
+	 * That pair must use the method {@link ENCH_HARD_CAP_IMC}.
+	 */
+	@SubscribeEvent
+	public void handleIMC(InterModProcessEvent e) {
+		e.getIMCStream(ENCH_HARD_CAP_IMC::equals).forEach(msg -> {
+			try {
+				EnchantmentData data = msg.<EnchantmentData>getMessageSupplier().get();
+				if (data != null && data.enchantment != null && data.enchantmentLevel > 0) {
+					ENCH_HARD_CAPS.put(data.enchantment, data.enchantmentLevel);
+				} else LOGGER.error("Failed to process IMC message with method {} from {} (invalid values passed).", msg.getMethod(), msg.getSenderModId());
+			} catch (Exception ex) {
+				LOGGER.error("Exception thrown during IMC message with method {} from {}.", msg.getMethod(), msg.getSenderModId());
+				ex.printStackTrace();
+			}
+		});
 	}
 
 	@SubscribeEvent
