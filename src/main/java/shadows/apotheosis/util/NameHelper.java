@@ -320,7 +320,6 @@ public class NameHelper {
 		for (Item i : items)
 			cmt += i.getRegistryName() + ", ";
 		cmt = cmt.substring(0, cmt.length() - 2);
-		cmt += "\nRepair Material: " + getFirstMatch(repair);
 		return cmt + "\n";
 	}
 
@@ -328,15 +327,6 @@ public class NameHelper {
 		if (o instanceof Enum<?>) return ((Enum<?>) o).name();
 		ResourceLocation id = items.get(0).getRegistryName();
 		return id.getNamespace() + "_" + id.getPath();
-	}
-
-	private static String getFirstMatch(Supplier<Ingredient> supplier) {
-		try {
-			Ingredient repair = supplier.get();
-			return repair == null || repair.hasNoMatchingItems() ? "null" : repair.getMatchingStacks()[0].getItem().getRegistryName().toString();
-		} catch (Exception e) {
-			return "null";
-		}
 	}
 
 }
