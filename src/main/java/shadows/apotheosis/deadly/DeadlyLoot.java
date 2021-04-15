@@ -162,7 +162,7 @@ public class DeadlyLoot {
 		LootSystem.registerLootTable(VALUABLE, LootSystem.tableBuilder().addLootPool(build).build());
 
 		if (Apotheosis.enableEnch) {
-			build = new PoolBuilder(3, 5);
+			build = new PoolBuilder(6, 9);
 			build.bonusRolls(0, 3);
 			for (Item i : EnchModule.TYPED_BOOKS)
 				build.addEntries(new TomeEntry(i, 5));
