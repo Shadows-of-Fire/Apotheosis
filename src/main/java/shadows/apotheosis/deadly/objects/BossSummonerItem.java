@@ -25,7 +25,7 @@ public class BossSummonerItem extends Item {
 			pos = pos.up();
 			if (!world.hasNoCollisions(item.getSize().offset(pos))) return ActionResultType.FAIL;
 		}
-		item.spawnBoss((ServerWorld) world, pos, world.getRandom());
+		world.addEntity(item.createBoss((ServerWorld) world, pos, world.getRandom()));
 		ctx.getItem().shrink(1);
 		return ActionResultType.SUCCESS;
 	}

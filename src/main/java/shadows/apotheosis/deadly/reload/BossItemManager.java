@@ -1,6 +1,7 @@
 package shadows.apotheosis.deadly.reload;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,7 @@ public class BossItemManager extends JsonReloadListener {
 			}
 		}
 		if (this.entries.size() == 0) throw new RuntimeException("No Bosses were registered.  This is not supported.");
+		Collections.shuffle(entries);
 		this.weight = WeightedRandom.getTotalWeight(this.entries);
 		DeadlyModule.LOGGER.info("Loaded {} boss items from resources.", this.entries.size());
 	}

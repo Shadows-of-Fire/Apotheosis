@@ -104,8 +104,8 @@ public class Affixes {
 	public static void register(Register<Affix> e) {
 		IForgeRegistry<Affix> reg = e.getRegistry();
 		Affix.config = new Configuration(new File(Apotheosis.configDir, "affixes.cfg"));
-		register(reg, ReachDistanceAffix::new, "reach_distance", 5);
-		register(reg, EnchantabilityAffix::new, "enchantability", 5);
+		register(reg, ReachDistanceAffix::new, "reach_distance", 3);
+		register(reg, EnchantabilityAffix::new, "enchantability", 3);
 		registerBowAffixes(reg);
 		registerSwordAffixes(reg);
 		registerAxeAffixes(reg);

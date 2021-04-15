@@ -32,7 +32,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IServerWorld;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.LootRarity;
-import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -47,21 +46,38 @@ public class BossItem extends WeightedRandom.Item {
 
 	@Expose(deserialize = false)
 	protected ResourceLocation id;
+
 	protected final EntityType<?> entity;
+
 	protected final AxisAlignedBB size;
+
 	@SerializedName("enchant_chance")
 	protected final float enchantChance;
+
+	@SerializedName("rarity_offset")
+	protected final int rarityOffset;
+
+	/**
+	 * The enchantment levels for a specific boss.  Order is {<Generic with EnchModule>, <Generic without>, <Affix with>, <Affix without>}.
+	 */
+	@SerializedName("enchantment_levels")
+	protected final int[] enchLevels;
+
 	protected final List<ChancedEffectInstance> effects;
+
 	@SerializedName("valid_gear_sets")
 	protected final List<SetPredicate> armorSets;
+
 	@SerializedName("attribute_modifiers")
 	protected final List<RandomAttributeModifier> modifiers;
 
-	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers) {
+	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers) {
 		super(weight);
 		this.entity = entity;
 		this.size = size;
 		this.enchantChance = enchantChance;
+		this.rarityOffset = rarityOffset;
+		this.enchLevels = enchLevels;
 		this.effects = effects;
 		this.armorSets = armorSets;
 		this.modifiers = modifiers;
@@ -86,17 +102,16 @@ public class BossItem extends WeightedRandom.Item {
 	}
 
 	/**
-	 * Spawns the result of this BossItem.
+	 * Generates (but does not spawn) the result of this BossItem.
 	 * @param world The world to create the entity in.
 	 * @param pos The location to place the entity.  Will be centered (+0.5, +0.5).
 	 * @param rand A random, used for selection of boss stats.
 	 * @return The newly created boss.
 	 */
-	public MobEntity spawnBoss(IServerWorld world, BlockPos pos, Random rand) {
+	public MobEntity createBoss(IServerWorld world, BlockPos pos, Random rand) {
 		MobEntity entity = (MobEntity) this.entity.create(world.getWorld());
 		this.initBoss(rand, entity);
 		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
-		world.addEntity(entity);
 		return entity;
 	}
 
@@ -126,27 +141,28 @@ public class BossItem extends WeightedRandom.Item {
 
 		int guaranteed = rand.nextInt(6);
 
-		ItemStack stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
-		while (stack.isEmpty())
-			stack = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed = rand.nextInt(6)]);
+		while (entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]).isEmpty())
+			guaranteed = rand.nextInt(6);
 
 		for (EquipmentSlotType s : EquipmentSlotType.values()) {
+			ItemStack stack = entity.getItemStackFromSlot(s);
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemStackToSlot(s, modifyBossItem(stack, rand, name));
 			} else if (rand.nextFloat() < this.enchantChance) {
-				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, 30 + rand.nextInt(Apotheosis.enableEnch ? 20 : 10), true);
+				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, Apotheosis.enableEnch ? enchLevels[0] : enchLevels[1], true);
 				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max, HashMap::new)), stack);
+				entity.setItemStackToSlot(s, stack);
 			}
 		}
 
 	}
 
-	public static ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
-		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? 80 : 40, true);
+	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
+		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? enchLevels[2] : enchLevels[3], true);
 		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max)), stack);
-		LootRarity rarity = LootRarity.random(random, DeadlyConfig.bossRarityOffset);
+		LootRarity rarity = LootRarity.random(random, rarityOffset);
 		NameHelper.setItemName(random, stack, bossName);
 		stack = AffixLootManager.genLootItem(stack, random, rarity);
 		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getDisplayName()).mergeStyle(rarity.getColor()));

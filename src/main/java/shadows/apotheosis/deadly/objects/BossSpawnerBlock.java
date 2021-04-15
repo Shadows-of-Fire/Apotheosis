@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -48,7 +49,11 @@ public class BossSpawnerBlock extends Block {
 			if (this.ticks++ % 40 == 0 && this.world.getEntitiesWithinAABB(EntityType.PLAYER, new AxisAlignedBB(this.pos).grow(8, 8, 8), EntityPredicates.NOT_SPECTATING).stream().anyMatch(p -> !p.isCreative())) {
 				this.world.setBlockState(this.pos, Blocks.AIR.getDefaultState());
 				BlockPos pos = this.pos;
-				if (this.item != null) this.item.spawnBoss((ServerWorld) this.world, pos, this.world.getRandom());
+				if (this.item != null) {
+					MobEntity entity = this.item.createBoss((ServerWorld) this.world, pos, this.world.getRandom());
+					entity.enablePersistence();
+					world.addEntity(entity);
+				}
 			}
 		}
 

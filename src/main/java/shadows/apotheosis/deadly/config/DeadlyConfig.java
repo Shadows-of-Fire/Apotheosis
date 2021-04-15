@@ -19,10 +19,9 @@ public class DeadlyConfig {
 	public static Configuration config;
 
 	//Boss Stats
-	public static int surfaceBossChance = 600;
-	public static int randomAffixItem = 250;
+	public static int surfaceBossChance = 85;
+	public static int randomAffixItem = 125;
 	public static boolean surfaceBossLightning = true;
-	public static int bossRarityOffset = 475;
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
@@ -60,7 +59,7 @@ public class DeadlyConfig {
 		surfaceBossChance = c.getInt("Surface Boss Chance", "bosses", surfaceBossChance, 1, 500000, "The 1/n chance that a naturally spawned mob that can see the sky is transformed into a boss.");
 		randomAffixItem = c.getInt("Random Affix Chance", "affixes", randomAffixItem, 1, 500000, "The 1/n chance that a naturally spawned mob will be granted an affix item.");
 		surfaceBossLightning = c.getBoolean("Surface Boss Lightning", "bosses", true, "If a lightning bolt strikes when a surface boss spawn occurs.");
-		bossRarityOffset = c.getInt("Boss Rarity Offset", "bosses", bossRarityOffset, 0, 999, "The rarity offset for boss item generation.  400 guarantees uncommon, 700 guarantees rare, 800 guarantees epic, 950 guarantees mythic.");
+
 
 		bossDungeonAttempts = c.getInt("Boss Dungeon", "frequency", bossDungeonAttempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeons.");
 		bossDungeon2Attempts = c.getInt("Boss Dungeon Variant 2", "frequency", bossDungeon2Attempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeon variant 2.");

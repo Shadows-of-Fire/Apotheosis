@@ -1,11 +1,13 @@
 {
 	"entity": "minecraft:zombie",
-	"weight": 5,
+	"weight": 3,
 	"size": {
 		"width": 1,
 		"height": 2
 	},
-	"enchant_chance": 0.45,
+	"enchant_chance": 0.35,
+	"rarity_offset": 275,
+	"enchantment_levels": [20, 15, 50, 30],
 	"effects": [{
 		"effect": "minecraft:fire_resistance",
 		"chance": 1.0
@@ -14,7 +16,7 @@
 			"attribute": "minecraft:generic.max_health",
 			"operation": "MULTIPLY_BASE",
 			"value": {
-				"min": 3,
+				"min": 2.5,
 				"max": 6
 			}
 		},
@@ -23,22 +25,22 @@
 			"operation": "MULTIPLY_BASE",
 			"value": {
 				"min": 0.05,
-				"max": 0.12
+				"max": 0.10
 			}
 		},
 		{
 			"attribute": "minecraft:generic.attack_damage",
 			"operation": "MULTIPLY_BASE",
 			"value": {
-				"min": 2,
-				"max": 4.5
+				"min": 3.8,
+				"max": 5.3
 			}
 		},
 		{
 			"attribute": "minecraft:generic.knockback_resistance",
 			"operation": "ADDITION",
 			"value": {
-				"min": 0.65,
+				"min": 0.35,
 				"max": 1
 			}
 		}

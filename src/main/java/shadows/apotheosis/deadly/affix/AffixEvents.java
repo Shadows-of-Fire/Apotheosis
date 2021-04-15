@@ -47,6 +47,8 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -69,10 +71,13 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.impl.tool.RadiusMiningAffix;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
+import shadows.apotheosis.deadly.gen.BossItem;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
+import shadows.apotheosis.deadly.reload.BossItemManager;
 import shadows.placebo.events.ItemUseEvent;
 import shadows.placebo.events.ShieldBlockEvent;
 import shadows.placebo.util.ReflectionHelper;
@@ -318,7 +323,7 @@ public class AffixEvents {
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
-	public void spawns(LivingSpawnEvent.SpecialSpawn e) {
+	public void addAffixGear(LivingSpawnEvent.SpecialSpawn e) {
 		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION) {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
@@ -334,6 +339,35 @@ public class AffixEvents {
 					return;
 				}
 			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void surfaceBosses(LivingSpawnEvent.CheckSpawn e) {
+		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION) {
+			LivingEntity entity = e.getEntityLiving();
+			Random rand = e.getWorld().getRandom();
+			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity && e.getResult() == Result.DEFAULT) {
+				if (rand.nextInt(DeadlyConfig.surfaceBossChance) == 0 && e.getWorld().canSeeSky(new BlockPos(e.getX(), e.getY(), e.getZ()))) {
+					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand);
+					PlayerEntity player = e.getWorld().getClosestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
+					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
+					MobEntity boss = item.createBoss((IServerWorld) e.getWorld(), new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand);
+					if (canSpawn(e.getWorld(), boss, player.getDistanceSq(boss))) {
+						e.getWorld().addEntity(boss);
+						e.setResult(Result.DENY);
+						DeadlyModule.debugLog(boss.getPosition(), "Surface Boss - " + boss.getName().getString());
+					}
+				}
+			}
+		}
+	}
+
+	private static boolean canSpawn(IWorld world, MobEntity entity, double playerDist) {
+		if (playerDist > (double) (entity.getType().getClassification().getInstantDespawnDistance() * entity.getType().getClassification().getInstantDespawnDistance()) && entity.canDespawn(playerDist)) {
+			return false;
+		} else {
+			return entity.canSpawn(world, SpawnReason.NATURAL) && entity.isNotColliding(world);
 		}
 	}
 

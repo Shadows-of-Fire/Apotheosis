@@ -1,13 +1,13 @@
 {
-	"entity": "minecraft:skeleton",
-	"weight": 3,
+	"entity": "minecraft:enderman",
+	"weight": 99,
 	"size": {
 		"width": 1,
-		"height": 2
+		"height": 3
 	},
-	"enchant_chance": 0.35,
-	"rarity_offset": 400,
-	"enchantment_levels": [40, 30, 60, 30],
+	"enchant_chance": 0.95,
+	"rarity_offset": 880,
+	"enchantment_levels": [50, 30, 120, 40],
 	"effects": [{
 		"effect": "minecraft:fire_resistance",
 		"chance": 1.0
@@ -16,36 +16,36 @@
 			"attribute": "minecraft:generic.max_health",
 			"operation": "MULTIPLY_BASE",
 			"value": {
-				"min": 2,
-				"max": 4.5
+				"min": 3,
+				"max": 8
 			}
 		},
 		{
 			"attribute": "minecraft:generic.movement_speed",
 			"operation": "MULTIPLY_BASE",
 			"value": {
-				"min": 0.08,
-				"max": 0.17
+				"min": 0.10,
+				"max": 0.20
 			}
 		},
 		{
 			"attribute": "minecraft:generic.attack_damage",
 			"operation": "MULTIPLY_BASE",
 			"value": {
-				"min": 2,
-				"max": 4
+				"min": 4,
+				"max": 7.5
 			}
 		},
 		{
 			"attribute": "minecraft:generic.knockback_resistance",
 			"operation": "ADDITION",
 			"value": {
-				"min": 0.35,
-				"max": 0.75
+				"min": 0.75,
+				"max": 1
 			}
 		}
 	],
 	"valid_gear_sets": [
-		"#skeleton"
+		"#enderman"
 	]
 }
