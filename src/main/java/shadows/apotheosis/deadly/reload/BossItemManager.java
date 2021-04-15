@@ -70,7 +70,7 @@ public class BossItemManager extends JsonReloadListener {
 			}
 		}
 		if (this.entries.size() == 0) throw new RuntimeException("No Bosses were registered.  This is not supported.");
-		Collections.shuffle(entries);
+		Collections.shuffle(this.entries);
 		this.weight = WeightedRandom.getTotalWeight(this.entries);
 		DeadlyModule.LOGGER.info("Loaded {} boss items from resources.", this.entries.size());
 	}

@@ -56,10 +56,10 @@ public class DeadlyConfig {
 				DeadlyModule.LOGGER.error("Invalid biome blacklist entry: " + s + " will be ignored!");
 			}
 		}
+
 		surfaceBossChance = c.getInt("Surface Boss Chance", "bosses", surfaceBossChance, 1, 500000, "The 1/n chance that a naturally spawned mob that can see the sky is transformed into a boss.");
 		randomAffixItem = c.getInt("Random Affix Chance", "affixes", randomAffixItem, 1, 500000, "The 1/n chance that a naturally spawned mob will be granted an affix item.");
 		surfaceBossLightning = c.getBoolean("Surface Boss Lightning", "bosses", true, "If a lightning bolt strikes when a surface boss spawn occurs.");
-
 
 		bossDungeonAttempts = c.getInt("Boss Dungeon", "frequency", bossDungeonAttempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeons.");
 		bossDungeon2Attempts = c.getInt("Boss Dungeon Variant 2", "frequency", bossDungeon2Attempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeon variant 2.");

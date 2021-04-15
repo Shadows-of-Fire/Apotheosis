@@ -149,9 +149,9 @@ public class BossItem extends WeightedRandom.Item {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
 			if (s.ordinal() == guaranteed) {
-				entity.setItemStackToSlot(s, modifyBossItem(stack, rand, name));
+				entity.setItemStackToSlot(s, this.modifyBossItem(stack, rand, name));
 			} else if (rand.nextFloat() < this.enchantChance) {
-				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, Apotheosis.enableEnch ? enchLevels[0] : enchLevels[1], true);
+				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, Apotheosis.enableEnch ? this.enchLevels[0] : this.enchLevels[1], true);
 				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max, HashMap::new)), stack);
 				entity.setItemStackToSlot(s, stack);
 			}
@@ -160,9 +160,9 @@ public class BossItem extends WeightedRandom.Item {
 	}
 
 	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
-		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? enchLevels[2] : enchLevels[3], true);
+		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? this.enchLevels[2] : this.enchLevels[3], true);
 		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max)), stack);
-		LootRarity rarity = LootRarity.random(random, rarityOffset);
+		LootRarity rarity = LootRarity.random(random, this.rarityOffset);
 		NameHelper.setItemName(random, stack, bossName);
 		stack = AffixLootManager.genLootItem(stack, random, rarity);
 		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getDisplayName()).mergeStyle(rarity.getColor()));

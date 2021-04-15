@@ -223,7 +223,7 @@ public class DeadlyLoot {
 
 		@Override
 		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
-			ItemStack enchTome = func.apply(new ItemStack(i), ctx);
+			ItemStack enchTome = this.func.apply(new ItemStack(this.i), ctx);
 			ItemStack ench = new ItemStack(Items.ENCHANTED_BOOK);
 			EnchantmentHelper.getEnchantments(enchTome).entrySet().stream().map(e -> new EnchantmentData(e.getKey(), e.getValue())).forEach(d -> EnchantedBookItem.addEnchantment(ench, d));
 			list.accept(ench);

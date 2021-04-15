@@ -53,7 +53,7 @@ public class TroveFeature extends Feature<NoFeatureConfig> {
 
 					if (y == roof && !flag) { return false; } //Exit if the roof is not fully solid.
 
-					if (((Math.abs(x) == xRadius && Math.abs(z) != zRadius) || (Math.abs(z) == zRadius && Math.abs(x) != xRadius)) && y == 1 && state.isAir() && states[x + xRadius][y - 1 + 3][z + zRadius].isAir()) {
+					if ((Math.abs(x) == xRadius && Math.abs(z) != zRadius || Math.abs(z) == zRadius && Math.abs(x) != xRadius) && y == 1 && state.isAir() && states[x + xRadius][y - 1 + 3][z + zRadius].isAir()) {
 						++doors; //Count number of 2x1 holes at y=0 in non-corners
 					}
 					states[x + xRadius][y + 3][z + zRadius] = state;
@@ -69,7 +69,7 @@ public class TroveFeature extends Feature<NoFeatureConfig> {
 						BlockState state = states[x + xRadius][y + 3][z + zRadius];
 						if (y == tntLevel && Math.abs(x) <= 1 && Math.abs(z) <= 1) { //Spawn a 3x3x1 of TNT in the center
 							if (!state.isIn(Blocks.CHEST)) world.setBlockState(blockpos, Blocks.TNT.getDefaultState(), 2);
-						} else if ((Math.abs(x) == xRadius || Math.abs(z) == zRadius)) { //In the walls
+						} else if (Math.abs(x) == xRadius || Math.abs(z) == zRadius) { //In the walls
 							if (y == 0 && state.isAir(world, blockpos) && states[x + xRadius][y + 1 + 3][z + zRadius].isAir(world, blockpos.up())) { //Replace the doors with cobwebs
 								world.setBlockState(blockpos, Blocks.COBWEB.getDefaultState(), 2);
 								states[x + xRadius][y + 3][z + zRadius] = Blocks.COBWEB.getDefaultState();
@@ -81,7 +81,7 @@ public class TroveFeature extends Feature<NoFeatureConfig> {
 								world.setBlockState(inward, Blocks.STONE_PRESSURE_PLATE.getDefaultState(), 2);
 								states[x + xModif + xRadius][y + 3][z + zModif + zRadius] = Blocks.STONE_PRESSURE_PLATE.getDefaultState();
 								if (x > 2 || z > 2) world.setBlockState(inward.down(2), Blocks.TNT.getDefaultState(), 2);
-							} else if ((STONE_TEST.test(state) || state.isAir(world, blockpos))) {
+							} else if (STONE_TEST.test(state) || state.isAir(world, blockpos)) {
 								if (rand.nextFloat() < 0.75F) world.setBlockState(blockpos, ORES[rand.nextInt(ORES.length)].getDefaultState(), 2);
 								else world.setBlockState(blockpos, Blocks.STONE.getDefaultState(), 2);
 							}

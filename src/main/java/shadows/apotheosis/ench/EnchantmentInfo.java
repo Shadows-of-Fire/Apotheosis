@@ -23,7 +23,7 @@ public class EnchantmentInfo {
 	}
 
 	public int getMaxLevel() {
-		return Math.min(EnchModule.ENCH_HARD_CAPS.getOrDefault(ench, Integer.MAX_VALUE), this.maxLevel);
+		return Math.min(EnchModule.ENCH_HARD_CAPS.getOrDefault(this.ench, Integer.MAX_VALUE), this.maxLevel);
 	}
 
 	public int getMinLevel() {

@@ -42,9 +42,9 @@ public class SpawnerItem extends WeightedRandom.Item {
 	public void place(IServerWorld world, BlockPos pos, Random rand) {
 		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
 		SpawnerEditor editor = new SpawnerEditor(world, pos);
-		stats.apply(editor).setSpawnData(spawnPotentials.get(rand.nextInt(spawnPotentials.size()))).setPotentials(spawnPotentials.toArray(new WeightedSpawnerEntity[0]));
+		this.stats.apply(editor).setSpawnData(this.spawnPotentials.get(rand.nextInt(this.spawnPotentials.size()))).setPotentials(this.spawnPotentials.toArray(new WeightedSpawnerEntity[0]));
 		int chance = DeadlyConfig.spawnerValueChance;
-		ChestBuilder.place(world, rand, pos.down(), chance > 0 && rand.nextInt(chance) == 0 ? DeadlyLoot.VALUABLE : lootTable);
+		ChestBuilder.place(world, rand, pos.down(), chance > 0 && rand.nextInt(chance) == 0 ? DeadlyLoot.VALUABLE : this.lootTable);
 		world.setBlockState(pos.up(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].getDefaultState(), 2);
 		for (Direction f : Plane.HORIZONTAL) {
 			if (world.getBlockState(pos.offset(f)).isAir(world, pos.offset(f))) {

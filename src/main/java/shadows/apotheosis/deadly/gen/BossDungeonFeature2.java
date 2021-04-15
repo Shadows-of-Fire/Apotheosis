@@ -103,7 +103,7 @@ public class BossDungeonFeature2 extends Feature<NoFeatureConfig> {
 	}
 
 	static boolean isDoorSpace(int x, int z) {
-		return (Math.abs(z) == zRadius && (x >= -1 && x <= 1)) || (Math.abs(x) == xRadius && (z >= -1 && z <= 1));
+		return Math.abs(z) == zRadius && x >= -1 && x <= 1 || Math.abs(x) == xRadius && z >= -1 && z <= 1;
 	}
 
 }

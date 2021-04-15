@@ -225,7 +225,7 @@ public class AffixEvents {
 
 	@SubscribeEvent
 	public void starting(FMLServerStartingEvent e) {
-		e.getServer().getCommandManager().getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("affixloot").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(LootRarity.values()).map(r -> r.toString()).collect(Collectors.toList()), b)).then(Commands.argument("type", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(EquipmentType.values()).map(r -> r.toString()).collect(Collectors.toList()), b)).executes(c -> {
+		e.getServer().getCommandManager().getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("affixloot").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(LootRarity.values()).map(LootRarity::toString).collect(Collectors.toList()), b)).then(Commands.argument("type", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(EquipmentType.values()).map(EquipmentType::toString).collect(Collectors.toList()), b)).executes(c -> {
 			PlayerEntity p = c.getSource().asPlayer();
 			String type = c.getArgument("type", String.class);
 			EquipmentType eType = null;
@@ -364,7 +364,7 @@ public class AffixEvents {
 	}
 
 	private static boolean canSpawn(IWorld world, MobEntity entity, double playerDist) {
-		if (playerDist > (double) (entity.getType().getClassification().getInstantDespawnDistance() * entity.getType().getClassification().getInstantDespawnDistance()) && entity.canDespawn(playerDist)) {
+		if (playerDist > entity.getType().getClassification().getInstantDespawnDistance() * entity.getType().getClassification().getInstantDespawnDistance() && entity.canDespawn(playerDist)) {
 			return false;
 		} else {
 			return entity.canSpawn(world, SpawnReason.NATURAL) && entity.isNotColliding(world);

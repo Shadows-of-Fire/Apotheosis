@@ -52,7 +52,7 @@ public class BossSpawnerBlock extends Block {
 				if (this.item != null) {
 					MobEntity entity = this.item.createBoss((ServerWorld) this.world, pos, this.world.getRandom());
 					entity.enablePersistence();
-					world.addEntity(entity);
+					this.world.addEntity(entity);
 				}
 			}
 		}
