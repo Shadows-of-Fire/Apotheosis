@@ -17,6 +17,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -150,10 +151,17 @@ public class DeadlyModule {
 		ConfiguredFeature<?, ?> spwFeat = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
 		ConfiguredFeature<?, ?> troveFeat = TroveFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(64).square().func_242731_b(DeadlyConfig.troveAttempts);
 		ConfiguredFeature<?, ?> ttFeat = TomeTowerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placements.BAMBOO_PLACEMENT).chance(DeadlyConfig.tomeTowerChance);
+		registerAll(bossFeat, bossFeat2, spwFeat, troveFeat, ttFeat);
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat2).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, troveFeat);
 			if (Apotheosis.enableEnch && DeadlyConfig.tomeTowerChance > 0) e.getGeneration().withFeature(Decoration.SURFACE_STRUCTURES, ttFeat);
+		}
+	}
+
+	void registerAll(ConfiguredFeature<?, ?>... feats) {
+		for (ConfiguredFeature<?, ?> f : feats) {
+			WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_FEATURE, f.feature.getRegistryName(), f);
 		}
 	}
 
