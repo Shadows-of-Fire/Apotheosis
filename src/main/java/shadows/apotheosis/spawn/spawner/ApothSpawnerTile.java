@@ -9,7 +9,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;
@@ -173,9 +172,9 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 						double y = j >= 2 ? listnbt.getDouble(1) : (double) (blockpos.getY() + world.rand.nextInt(3) - 1);
 						double z = j >= 3 ? listnbt.getDouble(2) : blockpos.getZ() + (world.rand.nextDouble() - world.rand.nextDouble()) * this.spawnRange + 0.5D;
 						if (ApothSpawnerTile.this.ignoresConditions || world.hasNoCollisions(optional.get().getBoundingBoxWithSizeApplied(x, y, z)) && EntitySpawnPlacementRegistry.canSpawnEntity(optional.get(), (IServerWorld) world, SpawnReason.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
-							Entity entity = EntityType.loadEntityAndExecute(compoundnbt, world, p_221408_6_ -> {
-								p_221408_6_.setLocationAndAngles(x, y, z, p_221408_6_.rotationYaw, p_221408_6_.rotationPitch);
-								return p_221408_6_;
+							Entity entity = EntityType.loadEntityAndExecute(compoundnbt, world, newEntity -> {
+								newEntity.setLocationAndAngles(x, y, z, newEntity.rotationYaw, newEntity.rotationPitch);
+								return newEntity;
 							});
 							if (entity == null) {
 								this.resetTimer();
@@ -183,8 +182,8 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 							}
 
 							if (!ApothSpawnerTile.this.ignoresCap) {
-								int k = world.getEntitiesWithinAABB(entity.getClass(), new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1).grow(this.spawnRange)).size();
-								if (k >= this.maxNearbyEntities) {
+								int nearby = world.getEntitiesWithinAABB(entity.getClass(), new AxisAlignedBB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1).grow(this.spawnRange)).size();
+								if (nearby >= this.maxNearbyEntities) {
 									this.resetTimer();
 									return;
 								}
@@ -198,7 +197,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								}
 
 								if (this.spawnData.getNbt().size() == 1 && this.spawnData.getNbt().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((MobEntity) entity, this.getWorld(), (float) entity.getPosX(), (float) entity.getPosY(), (float) entity.getPosZ(), this, SpawnReason.SPAWNER)) {
-									((MobEntity) entity).onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.SPAWNER, (ILivingEntityData) null, (CompoundNBT) null);
+									((MobEntity) entity).onInitialSpawn((IServerWorld) world, world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.SPAWNER, null, null);
 								}
 							}
 
