@@ -9,7 +9,9 @@ import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -164,7 +166,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 		this.wPos.apply((world, pos) -> {
 			if (inventoryIn == this.tableInventory) {
 				ItemStack itemstack = inventoryIn.getStackInSlot(0);
-				if (itemstack.getCount() == 1 && itemstack.isEnchantable()) {
+				if (itemstack.getCount() == 1 && itemstack.getItem().isEnchantable(itemstack) && isEnchantableEnough(itemstack)) {
 					this.gatherStats();
 					float power = this.eterna.get();
 					if (power < 1.5) power = 1.5F;
@@ -261,6 +263,11 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	@Override
 	public ContainerType<?> getType() {
 		return ApotheosisObjects.ENCHANTING;
+	}
+
+	public boolean isEnchantableEnough(ItemStack stack) {
+		if (!stack.isEnchanted()) return true;
+		else return EnchantmentHelper.getEnchantments(stack).keySet().stream().allMatch(Enchantment::isCurse);
 	}
 
 	/**

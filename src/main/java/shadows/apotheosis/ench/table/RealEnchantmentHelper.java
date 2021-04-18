@@ -2,12 +2,15 @@ package shadows.apotheosis.ench.table;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Util;
 import net.minecraft.util.WeightedRandom;
@@ -56,6 +59,8 @@ public class RealEnchantmentHelper {
 			power = MathHelper.clamp(Math.round(power + power * factor), 1, 200);
 			Arcana arcana = Arcana.getForThreshold(arcanaLevel);
 			List<EnchantmentData> allEnchants = getEnchantmentDatas(power, stack, treasure);
+			Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment));
 			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
 			if (!possibleEnchants.isEmpty()) {
 				chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
