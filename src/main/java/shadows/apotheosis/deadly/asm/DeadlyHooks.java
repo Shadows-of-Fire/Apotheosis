@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.CampfireTileEntity;
@@ -141,6 +142,15 @@ public class DeadlyHooks {
 			return this.tile.get();
 		}
 
+	}
+
+	/**
+	 * ASM Hook: Replaces all calls to {@link ItemStack#isDamageable()} in {@link RepairContainer}<br>
+	 * This allows for items with the "Unbreakable" tag to be used in an anvil.<br>
+	 * Applied by mythics_anvil.js
+	 */
+	public static boolean isTrulyDamageable(ItemStack stack) {
+		return stack.getItem().isDamageable(stack);
 	}
 
 }

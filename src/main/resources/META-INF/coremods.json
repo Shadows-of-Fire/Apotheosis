@@ -19,5 +19,6 @@
   "crossbow": "coremods/crossbow.js",
   "crossbow_arrows": "coremods/crossbow_arrows.js",
   "max_level_redirects": "coremods/max_level_redirects.js",
-  "soulfire_recipes": "coremods/campfire.js"
+  "soulfire_recipes": "coremods/campfire.js",
+  "mythics_anvil": "coremods/mythics_anvil.js"
 }
