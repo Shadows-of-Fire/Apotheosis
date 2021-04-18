@@ -8,6 +8,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
+import net.minecraft.util.WeightedSpawnerEntity;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
@@ -35,6 +36,7 @@ public class EggModifier extends SpawnerModifier {
 		String name = ((SpawnEggItem) stack.getItem()).getType(null).getRegistryName().toString();
 		if (!this.bannedMobs.contains(name) && !name.equals(spawner.spawnerLogic.spawnData.getNbt().getString(SpawnerBuilder.ID))) {
 			spawner.spawnerLogic.potentialSpawns.clear();
+			spawner.spawnerLogic.spawnData = new WeightedSpawnerEntity();
 			return false;
 		}
 		return true;
