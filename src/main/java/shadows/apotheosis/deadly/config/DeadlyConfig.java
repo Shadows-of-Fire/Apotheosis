@@ -28,7 +28,7 @@ public class DeadlyConfig {
 	public static int bossDungeon2Attempts = 8;
 	public static int rogueSpawnerAttempts = 4;
 	public static int troveAttempts = 8;
-	public static int tomeTowerChance = 50;
+	public static int tomeTowerChance = 125;
 
 	public static boolean affixTrades = true;
 
