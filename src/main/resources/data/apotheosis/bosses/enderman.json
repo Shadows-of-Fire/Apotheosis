@@ -32,8 +32,8 @@
 			"attribute": "minecraft:generic.attack_damage",
 			"operation": "MULTIPLY_BASE",
 			"value": {
-				"min": 4,
-				"max": 7.5
+				"min": 2,
+				"max": 4.6
 			}
 		},
 		{
