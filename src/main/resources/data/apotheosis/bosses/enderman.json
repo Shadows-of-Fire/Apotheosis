@@ -1,6 +1,6 @@
 {
 	"entity": "minecraft:enderman",
-	"weight": 99,
+	"weight": 1,
 	"size": {
 		"width": 1,
 		"height": 3
