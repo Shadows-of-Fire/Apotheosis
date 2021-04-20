@@ -313,7 +313,7 @@ public class EnchModule {
 			return ENCHANTMENT_INFO.computeIfAbsent(ench, e -> new EnchantmentInfo(e, e.getMaxLevel(), e.getMinLevel()));
 		}
 
-		if (enchInfoConfig == null) {
+		if (enchInfoConfig == null) { //Legitimate occurances can now happen, such as when vanilla calls fillItemGroup
 			//LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
 			//Thread.dumpStack();
 			return new EnchantmentInfo(ench, ench.getMaxLevel(), ench.getMinLevel());

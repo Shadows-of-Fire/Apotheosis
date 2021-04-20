@@ -5,7 +5,8 @@ function initializeCoreMod() {
                 'type': 'CLASS',
 				'names': function(listofclasses) {
 					return [
-						'vazkii.quark.tools.module.AncientTomesModule',
+						'vazkii.quark.content.tools.module.AncientTomesModule',
+						'vazkii.quark.content.tools.item.AncientTomeItem',
 						'net.minecraft.command.impl.EnchantCommand',
 						'net.minecraft.item.EnchantedBookItem',
 						'net.minecraft.loot.functions.EnchantRandomly',
