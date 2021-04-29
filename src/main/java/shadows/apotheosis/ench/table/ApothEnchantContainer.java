@@ -38,8 +38,6 @@ import shadows.apotheosis.util.FloatReferenceHolder;
 
 public class ApothEnchantContainer extends EnchantmentContainer {
 
-	protected IWorldPosCallable wPos = super.worldPosCallable;
-
 	protected FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatManager.getAbsoluteMaxEterna());
 	protected FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 10);
 	protected FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 10);
@@ -114,7 +112,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 
 		if (this.enchantLevels[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.enchantLevels[id]) && !player.abilities.isCreativeMode) return false;
 
-		this.wPos.consume((world, pos) -> {
+		this.worldPosCallable.consume((world, pos) -> {
 			ItemStack enchanted = toEnchant;
 			List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.enchantLevels[id]);
 			if (!list.isEmpty()) {
@@ -163,7 +161,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCraftMatrixChanged(IInventory inventoryIn) {
-		this.wPos.apply((world, pos) -> {
+		this.worldPosCallable.apply((world, pos) -> {
 			if (inventoryIn == this.tableInventory) {
 				ItemStack itemstack = inventoryIn.getStackInSlot(0);
 				if (itemstack.getCount() == 1 && itemstack.getItem().isEnchantable(itemstack) && isEnchantableEnough(itemstack)) {
@@ -218,7 +216,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	}
 
 	public void gatherStats() {
-		this.wPos.apply((world, pos) -> {
+		this.worldPosCallable.apply((world, pos) -> {
 			Float2FloatMap eternaMap = new Float2FloatOpenHashMap();
 			float[] stats = { 0, 1, 0 };
 			for (int j = -1; j <= 1; ++j) {
