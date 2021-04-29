@@ -131,7 +131,8 @@ public class RadiusMiningAffix extends Affix {
 
 				if (genPos.equals(pos)) continue;
 				BlockState state = world.getBlockState(genPos);
-				if (!state.isAir() && state.getBlockHardness(world, genPos) <= hardness * 3F && isEffective(state, player)) PlaceboUtil.tryHarvestBlock(player, genPos);
+				float stateHardness = state.getBlockHardness(world, genPos);
+				if (!state.isAir() && stateHardness != -1 && stateHardness <= hardness * 3F && isEffective(state, player)) PlaceboUtil.tryHarvestBlock(player, genPos);
 			}
 		}
 
