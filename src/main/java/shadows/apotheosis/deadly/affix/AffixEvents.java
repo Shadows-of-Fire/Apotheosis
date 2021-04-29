@@ -18,11 +18,13 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -357,6 +359,10 @@ public class AffixEvents {
 						e.getWorld().addEntity(boss);
 						e.setResult(Result.DENY);
 						DeadlyModule.debugLog(boss.getPosition(), "Surface Boss - " + boss.getName().getString());
+						LightningBoltEntity le = EntityType.LIGHTNING_BOLT.create(((IServerWorld) e.getWorld()).getWorld());
+						le.setPosition(boss.getPosX(), boss.getPosY(), boss.getPosZ());
+						le.setEffectOnly(true);
+						e.getWorld().addEntity(le);
 					}
 				}
 			}
