@@ -151,7 +151,7 @@ public class DeadlyModule {
 		ConfiguredFeature<?, ?> spwFeat = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
 		ConfiguredFeature<?, ?> troveFeat = TroveFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(64).square().func_242731_b(DeadlyConfig.troveAttempts);
 		ConfiguredFeature<?, ?> ttFeat = TomeTowerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placements.BAMBOO_PLACEMENT).chance(DeadlyConfig.tomeTowerChance);
-		registerAll(bossFeat, bossFeat2, spwFeat, troveFeat, ttFeat);
+		this.registerAll(bossFeat, bossFeat2, spwFeat, troveFeat, ttFeat);
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat2).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
 			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, troveFeat);

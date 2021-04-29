@@ -164,7 +164,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 		this.worldPosCallable.apply((world, pos) -> {
 			if (inventoryIn == this.tableInventory) {
 				ItemStack itemstack = inventoryIn.getStackInSlot(0);
-				if (itemstack.getCount() == 1 && itemstack.getItem().isEnchantable(itemstack) && isEnchantableEnough(itemstack)) {
+				if (itemstack.getCount() == 1 && itemstack.getItem().isEnchantable(itemstack) && this.isEnchantableEnough(itemstack)) {
 					this.gatherStats();
 					float power = this.eterna.get();
 					if (power < 1.5) power = 1.5F;
