@@ -344,7 +344,7 @@ public class AffixEvents {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void surfaceBosses(LivingSpawnEvent.CheckSpawn e) {
 		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION) {
 			LivingEntity entity = e.getEntityLiving();
