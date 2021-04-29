@@ -62,6 +62,7 @@ public class ScrappingTomeItem extends BookItem {
 		for (Enchantment e : keys) {
 			seed ^= e.getRegistryName().hashCode();
 		}
+		seed ^= ev.getPlayer().getXPSeed();
 		rand.setSeed(seed);
 		while (wepEnch.keySet().size() > size) {
 			Enchantment lost = keys.get(rand.nextInt(keys.size()));

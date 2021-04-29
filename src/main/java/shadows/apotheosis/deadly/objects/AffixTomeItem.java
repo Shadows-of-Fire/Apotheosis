@@ -85,12 +85,13 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			if (rarity == null) return false;
 			if (rarity.ordinal() > ((AffixTomeItem) book.getItem()).rarity.ordinal()) return false; //Can only scrap items of <= rarity.
 			Map<Affix, Float> wepAfx = AffixHelper.getAffixes(weapon);
-			int size = Math.max(1, MathHelper.floor(wepAfx.size() / 2D));
+			int size = Math.max(1, MathHelper.ceil(wepAfx.size() / 2D));
 			List<Affix> keys = new ArrayList<>(wepAfx.keySet());
 			long seed = 1831;
 			for (Affix e : keys) {
 				seed ^= e.getRegistryName().hashCode();
 			}
+			seed ^= ev.getPlayer().getXPSeed();
 			rand.setSeed(seed);
 			while (keys.size() > size) {
 				Affix lost = keys.get(rand.nextInt(keys.size()));
