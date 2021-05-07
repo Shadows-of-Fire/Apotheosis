@@ -33,7 +33,7 @@ function initializeCoreMod() {
                     var n = instr.get(i);
                     if (n.getOpcode() == Opcodes.INVOKEVIRTUAL && n.name.equals(ASMAPI.mapMethod('func_77984_f'))) {
                         ix++;
-						instr.set(n, hook);
+                        instr.set(n, hook.clone({}));
                     }
                 }
 
