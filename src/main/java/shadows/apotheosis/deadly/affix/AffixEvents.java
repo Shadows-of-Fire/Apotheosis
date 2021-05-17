@@ -12,10 +12,13 @@ import com.google.common.collect.TreeMultimap;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
+import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
+import net.minecraft.command.arguments.BlockPosArgument;
+import net.minecraft.command.arguments.LocationInput;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -49,6 +52,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -57,10 +61,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -72,7 +78,6 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.impl.tool.RadiusMiningAffix;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
@@ -226,8 +231,8 @@ public class AffixEvents {
 	}
 
 	@SubscribeEvent
-	public void starting(FMLServerStartingEvent e) {
-		e.getServer().getCommandManager().getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("affixloot").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(LootRarity.values()).map(LootRarity::toString).collect(Collectors.toList()), b)).then(Commands.argument("type", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(EquipmentType.values()).map(EquipmentType::toString).collect(Collectors.toList()), b)).executes(c -> {
+	public void cmds(RegisterCommandsEvent e) {
+		e.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("affixloot").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(LootRarity.values()).map(LootRarity::toString).collect(Collectors.toList()), b)).then(Commands.argument("type", StringArgumentType.word()).suggests((a, b) -> ISuggestionProvider.suggest(Arrays.stream(EquipmentType.values()).map(EquipmentType::toString).collect(Collectors.toList()), b)).executes(c -> {
 			PlayerEntity p = c.getSource().asPlayer();
 			String type = c.getArgument("type", String.class);
 			EquipmentType eType = null;
@@ -238,6 +243,15 @@ public class AffixEvents {
 			p.addItemStackToInventory(AffixLootManager.genLootItem(AffixLootManager.getRandomEntry(p.world.rand, null, eType), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
 			return 0;
 		}))));
+		e.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("apothboss").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("pos", BlockPosArgument.blockPos()).executes(c -> {
+			BlockPos pos = c.getArgument("pos", LocationInput.class).getBlockPos(c.getSource());
+			BossItem item = BossItemManager.INSTANCE.getRandomItem(ThreadLocalRandom.current());
+			ServerWorld world = c.getSource().getWorld();
+			MobEntity ent = item.createBoss(world, pos, ThreadLocalRandom.current());
+			world.addEntity(ent);
+			c.getSource().sendFeedback(new StringTextComponent(ent.getName().getString() + " has been summoned."), false);
+			return 0;
+		})));
 	}
 
 	@SubscribeEvent
@@ -359,10 +373,12 @@ public class AffixEvents {
 						e.getWorld().addEntity(boss);
 						e.setResult(Result.DENY);
 						DeadlyModule.debugLog(boss.getPosition(), "Surface Boss - " + boss.getName().getString());
-						LightningBoltEntity le = EntityType.LIGHTNING_BOLT.create(((IServerWorld) e.getWorld()).getWorld());
-						le.setPosition(boss.getPosX(), boss.getPosY(), boss.getPosZ());
-						le.setEffectOnly(true);
-						e.getWorld().addEntity(le);
+						if (DeadlyConfig.surfaceBossLightning) {
+							LightningBoltEntity le = EntityType.LIGHTNING_BOLT.create(((IServerWorld) e.getWorld()).getWorld());
+							le.setPosition(boss.getPosX(), boss.getPosY(), boss.getPosZ());
+							le.setEffectOnly(true);
+							e.getWorld().addEntity(le);
+						}
 					}
 				}
 			}
@@ -447,5 +463,15 @@ public class AffixEvents {
 	@SubscribeEvent
 	public void anvilEvent(AnvilUpdateEvent e) {
 		if (AffixTomeItem.updateAnvil(e)) return;
+	}
+
+	@SubscribeEvent
+	public void test(LivingUpdateEvent e) {
+		if (e.getEntity() instanceof PlayerEntity && e.getEntity().ticksExisted * 3 % 2 == 0) {
+			World world = e.getEntity().getEntityWorld();
+			PlayerEntity player = (PlayerEntity) e.getEntity();
+			Random rand = world.rand;
+			world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getPosX() + rand.nextDouble() * 0.4 - 0.2, player.getPosY(), player.getPosZ() + rand.nextDouble() * 0.4 - 0.2, 0, 0, 0);
+		}
 	}
 }
