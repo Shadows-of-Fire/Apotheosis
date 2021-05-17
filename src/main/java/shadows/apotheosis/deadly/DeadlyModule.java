@@ -17,16 +17,10 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.Features.Placements;
-import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -68,7 +62,7 @@ public class DeadlyModule {
 	public void preInit(ApotheosisConstruction e) {
 		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::onBiomeLoad);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, DeadlyWorldGen::onBiomeLoad);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
 
@@ -82,6 +76,7 @@ public class DeadlyModule {
 			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 2), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
 		}
 		RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + LootRarity.ANCIENT.name().toLowerCase(Locale.ROOT)), LootRarity.ANCIENT));
+		e.enqueueWork(DeadlyWorldGen::init);
 	}
 
 	@SubscribeEvent
@@ -135,34 +130,6 @@ public class DeadlyModule {
 		e.addListener(BossArmorManager.INSTANCE);
 		e.addListener(BossItemManager.INSTANCE);
 		e.addListener(RandomSpawnerManager.INSTANCE);
-	}
-
-	/**
-	 * Self notes on World Generation:
-	 * -Placement configs operate right-to-left, which means the last call operates first.
-	 * -Everything else operates on the entire stream produced by the outermost config.
-	 * -Thus feat.range(x).square().count(y) provides y copies that get randomized in the chunk, with a y level between 0 and x.
-	 * -However, feat.count(y).range(x).square() would just produce y copies of the exact same randomized blockpos.
-	 * -With no configs you just get the chunk's corner and y=0
-	 */
-	public void onBiomeLoad(BiomeLoadingEvent e) {
-		ConfiguredFeature<?, ?> bossFeat = BossDungeonFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
-		ConfiguredFeature<?, ?> bossFeat2 = BossDungeonFeature2.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
-		ConfiguredFeature<?, ?> spwFeat = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
-		ConfiguredFeature<?, ?> troveFeat = TroveFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(64).square().func_242731_b(DeadlyConfig.troveAttempts);
-		ConfiguredFeature<?, ?> ttFeat = TomeTowerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placements.BAMBOO_PLACEMENT).chance(DeadlyConfig.tomeTowerChance);
-		this.registerAll(bossFeat, bossFeat2, spwFeat, troveFeat, ttFeat);
-		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
-			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat).withFeature(Decoration.UNDERGROUND_STRUCTURES, bossFeat2).withFeature(Decoration.UNDERGROUND_STRUCTURES, spwFeat);
-			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, troveFeat);
-			if (Apotheosis.enableEnch && DeadlyConfig.tomeTowerChance > 0) e.getGeneration().withFeature(Decoration.SURFACE_STRUCTURES, ttFeat);
-		}
-	}
-
-	void registerAll(ConfiguredFeature<?, ?>... feats) {
-		for (ConfiguredFeature<?, ?> f : feats) {
-			WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_FEATURE, f.feature.getRegistryName(), f);
-		}
 	}
 
 	/**
