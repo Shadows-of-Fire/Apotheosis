@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.SpawnerBlock;
 import net.minecraft.block.material.Material;
@@ -23,6 +22,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -75,16 +75,14 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 			if (te != null) te.write(s.getOrCreateChildTag("BlockEntityTag"));
 			spawnAsEntity(world, pos, s);
 			player.getHeldItemMainhand().damageItem(SpawnerModule.spawnerSilkDamage, player, pl -> pl.sendBreakAnimation(EquipmentSlotType.MAINHAND));
-		}
-		world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
-		super.harvestBlock(world, player, pos, state, te, stack);
+			player.addStat(Stats.BLOCK_MINED.get(this));
+			player.addExhaustion(0.005F);
+		} else super.harvestBlock(world, player, pos, state, te, stack);
 	}
 
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
-		this.onBlockHarvested(world, pos, state, player);
-		if (player.isCreative()) return world.setBlockState(pos, Blocks.AIR.getDefaultState(), world.isRemote ? 11 : 3);
-		return willHarvest;
+		return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
 	}
 
 	@Override
