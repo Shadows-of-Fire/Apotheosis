@@ -14,8 +14,9 @@ public class AffixTrade implements ITrade {
 	@Override
 	public MerchantOffer getOffer(Entity merchant, Random rand) {
 		LootRarity rarity = LootRarity.random(rand);
-		ItemStack stack = AffixLootManager.getRandomEntry(rand, rarity);
-		stack = AffixLootManager.genLootItem(stack, rand, rarity);
+		AffixLootEntry entry = AffixLootManager.getRandomEntry(rand);
+		ItemStack stack = entry.getStack().copy();
+		stack = AffixLootManager.genLootItem(stack, rand, entry.getType(), rarity);
 		stack.getTag().putBoolean("apoth_merchant", true);
 		return new MerchantOffer(new ItemStack(stack.getItem()), new ItemStack(Items.EMERALD, rarity.ordinal() * 10), 1, 100, 1);
 	}

@@ -49,7 +49,6 @@ import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -240,7 +239,9 @@ public class AffixEvents {
 				eType = EquipmentType.valueOf(type);
 			} catch (Exception ex) {
 			}
-			p.addItemStackToInventory(AffixLootManager.genLootItem(AffixLootManager.getRandomEntry(p.world.rand, null, eType), p.world.rand, LootRarity.valueOf(c.getArgument("rarity", String.class))));
+			AffixLootEntry entry = AffixLootManager.getRandomEntry(p.world.rand, eType);
+			ItemStack stack = entry.getStack().copy();
+			p.addItemStackToInventory(AffixLootManager.genLootItem(stack, p.world.rand, entry.getType(), LootRarity.valueOf(c.getArgument("rarity", String.class))));
 			return 0;
 		}))));
 		e.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("apothboss").requires(c -> c.hasPermissionLevel(2)).then(Commands.argument("pos", BlockPosArgument.blockPos()).executes(c -> {
@@ -346,9 +347,9 @@ public class AffixEvents {
 			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity) {
 				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(DeadlyConfig.randomAffixItem) == 0) {
 					LootRarity rarity = LootRarity.random(rand);
-					AffixLootEntry entry = WeightedRandom.getRandomItem(rand, AffixLootManager.getEntries());
+					AffixLootEntry entry = AffixLootManager.getRandomEntry(rand);
 					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());
-					ItemStack loot = AffixLootManager.genLootItem(entry.getStack().copy(), rand, rarity);
+					ItemStack loot = AffixLootManager.genLootItem(entry.getStack().copy(), rand, entry.getType(), rarity);
 					loot.getTag().putBoolean("apoth_rspawn", true);
 					entity.setItemStackToSlot(slot, loot);
 					((MobEntity) entity).setDropChance(slot, 2);

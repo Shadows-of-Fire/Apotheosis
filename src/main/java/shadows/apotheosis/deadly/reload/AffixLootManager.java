@@ -45,6 +45,8 @@ public class AffixLootManager extends JsonReloadListener {
 
 	private static final List<AffixLootEntry> ENTRIES = new ArrayList<>();
 
+	private int weight = 0;
+
 	private AffixLootManager() {
 		super(GSON, "affix_loot_entries");
 	}
@@ -62,6 +64,7 @@ public class AffixLootManager extends JsonReloadListener {
 			}
 		}
 		Collections.shuffle(ENTRIES);
+		weight = WeightedRandom.getTotalWeight(ENTRIES);
 		DeadlyModule.LOGGER.info("Loaded {} affix loot entries from resources.", ENTRIES.size());
 	}
 
@@ -72,13 +75,10 @@ public class AffixLootManager extends JsonReloadListener {
 	/**
 	 * Selects a random loot entry itemstack from the list of entries.
 	 * @param rand A random.
-	 * @param rarity If this is {@link LootRarity#ANCIENT}, then the item returned will be an {@link Unique}
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
-	public static ItemStack getRandomEntry(Random rand, LootRarity rarity) {
-		AffixLootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES);
-		ItemStack stack = rarity == LootRarity.ANCIENT ? genUnique(rand) : entry.getStack().copy();
-		return stack;
+	public static AffixLootEntry getRandomEntry(Random rand) {
+		return WeightedRandom.getRandomItem(rand, ENTRIES, INSTANCE.weight);
 	}
 
 	/**
@@ -87,11 +87,9 @@ public class AffixLootManager extends JsonReloadListener {
 	 * @param rarity If this is {@link LootRarity#ANCIENT}, then the item returned will be an {@link Unique}
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
-	public static ItemStack getRandomEntry(Random rand, LootRarity rarity, EquipmentType type) {
-		if (type == null) return getRandomEntry(rand, rarity);
-		AffixLootEntry entry = WeightedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList()));
-		ItemStack stack = rarity == LootRarity.ANCIENT ? genUnique(rand) : entry.getStack().copy();
-		return stack;
+	public static AffixLootEntry getRandomEntry(Random rand, EquipmentType type) {
+		if (type == null) return getRandomEntry(rand);
+		return WeightedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList()));
 	}
 
 	/**
@@ -99,9 +97,8 @@ public class AffixLootManager extends JsonReloadListener {
 	 * Note that this will be unusual if the passed in itemstack does not meet the qualities of any equipment type.
 	 * The default equipment type is {@link EquipmentType#TOOL}, so items that do not match will be treated as tools.
 	 */
-	public static ItemStack genLootItem(ItemStack stack, Random rand, LootRarity rarity) {
+	public static ItemStack genLootItem(ItemStack stack, Random rand, EquipmentType type, LootRarity rarity) {
 		ITextComponent name = stack.getDisplayName();
-		EquipmentType type = EquipmentType.getTypeFor(stack);
 		if (type == null) {
 			AffixHelper.addLore(stack, new StringTextComponent("ERROR - ATTEMPTED TO GENERATE LOOT ITEM WITH INVALID EQUIPMENT TYPE."));
 			return stack;

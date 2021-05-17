@@ -25,6 +25,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.deadly.affix.AffixLootEntry;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.ench.EnchModule;
@@ -200,9 +201,10 @@ public class DeadlyLoot {
 		@Override
 		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
 			LootRarity rarity = LootRarity.random(ctx.getRandom());
-			ItemStack stack = AffixLootManager.getRandomEntry(ctx.getRandom(), rarity);
+			AffixLootEntry entry = AffixLootManager.getRandomEntry(ctx.getRandom());
+			ItemStack stack = entry.getStack().copy();
 			stack.getTag().putBoolean("apoth_rchest", true);
-			list.accept(AffixLootManager.genLootItem(stack, ctx.getRandom(), rarity));
+			list.accept(AffixLootManager.genLootItem(stack, ctx.getRandom(), entry.getType(), rarity));
 		}
 
 		public static class Serializer extends StandaloneLootEntry.Serializer<AffixEntry> {

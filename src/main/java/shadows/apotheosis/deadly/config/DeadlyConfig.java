@@ -1,7 +1,9 @@
 package shadows.apotheosis.deadly.config;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -9,12 +11,14 @@ import net.minecraft.util.ResourceLocationException;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyConfig {
 
 	public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
 	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
+	public static final Map<ResourceLocation, EquipmentType> TYPE_OVERRIDES = new HashMap<>();
 
 	public static Configuration config;
 
@@ -47,7 +51,7 @@ public class DeadlyConfig {
 			}
 		}
 
-		//NOT RELOADABLE (why?)
+		BIOME_BLACKLIST.clear();
 		String[] biomes = c.getStringList("Generation Biome Blacklist", "general", new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
 		for (String s : biomes) {
 			try {
@@ -70,6 +74,20 @@ public class DeadlyConfig {
 		affixTrades = c.getBoolean("Affix Trades", "wanderer", true, "If the wandering trader may sell affix loot items as a rare trade.");
 
 		spawnerValueChance = c.getInt("Spawner Rare Loot Chance", "general", spawnerValueChance, 0, 80000, "The 1/n chance that a rogue spawner will generate with a CHEST_VALUABLE instead of it's default chest.  0 to disable.");
+
+		TYPE_OVERRIDES.clear();
+		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:stick|SWORD" }, "A list of type overrides for the affix loot system.  Format is <itemname>|<type>.  Types are SWORD, RANGED, PICKAXE, SHOVEL, AXE, SHIELD");
+		for (String s : overrides) {
+			String[] split = s.split("\\|");
+			try {
+				EquipmentType type = EquipmentType.valueOf(split[1]);
+				if (type == EquipmentType.ARMOR) throw new UnsupportedOperationException("Cannot override an item to type ARMOR!");
+				TYPE_OVERRIDES.put(new ResourceLocation(split[0]), type);
+			} catch (Exception e) {
+				DeadlyModule.LOGGER.error("Invalid type override entry: " + s + " will be ignored!");
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static boolean canGenerateIn(ISeedReader world) {
