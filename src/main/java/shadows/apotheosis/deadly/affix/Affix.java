@@ -216,8 +216,19 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 */
 	public abstract float getMax();
 
-	public int getApplicationCost(float level) {
-		return (int) Math.ceil(level / this.itemWeight);
+	/**
+	 * Handles the upgrading of this affix's level, given two levels.
+	 * Default logic is (highest level + lowest level / 2)
+	 */
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return Math.min(getMax(), newLvl > curLvl ? newLvl + curLvl / 2 : newLvl / 2 + curLvl);
+	}
+
+	/**
+	 * Generates a new level, as if the passed level were to be split in two.
+	 */
+	public float obliterateLevel(float level) {
+		return Math.max(getMin(), level / 2);
 	}
 
 	public static IFormattableTextComponent loreComponent(String text, Object... args) {

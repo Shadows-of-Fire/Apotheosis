@@ -32,4 +32,27 @@ public class DrawSpeedAffix extends AttributeAffix {
 		float lvl = values[rand.nextInt(values.length)];
 		return lvl;
 	}
+
+	public float upgradeLevel(float curLvl, float newLvl) {
+		int curIdx = 0, newIdx = 0;
+		for (int i = 0; i < values.length; i++) {
+			if (values[i] == curLvl) curIdx = i;
+			if (values[i] == newLvl) newIdx = i;
+		}
+		return values[Math.min(values.length, curIdx > newIdx ? curIdx + newIdx / 2 : curIdx / 2 + newIdx)];
+	}
+
+	/**
+	 * Generates a new level, as if the passed level were to be split in two.
+	 */
+	public float obliterateLevel(float level) {
+		int idx = 0;
+		for (int i = 0; i < values.length; i++) {
+			if (values[i] == level) {
+				idx = i;
+				break;
+			}
+		}
+		return values[Math.max(0, idx / 2)];
+	}
 }

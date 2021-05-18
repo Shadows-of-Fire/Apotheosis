@@ -44,6 +44,16 @@ public class EldritchBlockAffix extends Affix {
 	}
 
 	@Override
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return (int) super.upgradeLevel(curLvl, newLvl);
+	}
+
+	@Override
+	public float obliterateLevel(float level) {
+		return (int) super.obliterateLevel(level);
+	}
+
+	@Override
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
 		if (source.getTrueSource() instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) source.getTrueSource();

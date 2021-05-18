@@ -48,6 +48,11 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.LootRarity;
+import shadows.apotheosis.deadly.objects.AffixTomeItem;
 
 public class ApothAnvilBlock extends AnvilBlock {
 
@@ -154,6 +159,24 @@ public class ApothAnvilBlock extends AnvilBlock {
 					}
 					break;
 				}
+			} else if (stack.getItem() instanceof AffixTomeItem) {
+				Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
+				boolean handled = false;
+				if (affixes.size() == 1 && oblit > 0) {
+					handled = this.handleObliteration(world, pos, oblit, entity, affixes);
+				} else if (affixes.size() > 1 && split > 0) {
+					handled = this.handleSplitting(world, pos, split, entity, affixes);
+				}
+				if (handled) {
+					if (world.rand.nextInt(1 + ub) == 0) {
+						BlockState dmg = damage(fallState);
+						if (dmg == null) {
+							world.setBlockState(pos, Blocks.AIR.getDefaultState());
+							world.playEvent(Constants.WorldEvents.ANVIL_DESTROYED_SOUND, pos, 0);
+						} else world.setBlockState(pos, dmg);
+					}
+					break;
+				}
 			}
 		}
 	}
@@ -176,6 +199,21 @@ public class ApothAnvilBlock extends AnvilBlock {
 		return true;
 	}
 
+	protected boolean handleSplitting(World world, BlockPos pos, int split, ItemEntity entity, Map<Affix, Float> affixes) {
+		if (world.rand.nextFloat() < 0.2F * split) {
+			entity.remove();
+			for (Map.Entry<Affix, Float> e : affixes.entrySet()) {
+				ItemStack book = new ItemStack(DeadlyModule.RARITY_TOMES.get(LootRarity.COMMON));
+				AffixHelper.applyAffix(book, e.getKey(), e.getValue());
+				Block.spawnAsEntity(world, pos.up(), book);
+			}
+			world.getEntitiesWithinAABB(ServerPlayerEntity.class, new AxisAlignedBB(pos).grow(5, 5, 5), EntityPredicates.NOT_SPECTATING).forEach(p -> {
+				AdvancementTriggers.SPLIT_BOOK.trigger(p.getAdvancements());
+			});
+		}
+		return true;
+	}
+
 	protected boolean handleObliteration(World world, BlockPos pos, int oblit, ItemEntity entity, ListNBT enchants) {
 		if (world.rand.nextFloat() < 0.2F * oblit) {
 			CompoundNBT nbt = enchants.getCompound(0);
@@ -184,6 +222,20 @@ public class ApothAnvilBlock extends AnvilBlock {
 			Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(nbt.getString("id")));
 			if (enchant == null) return false;
 			ItemStack book = EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(enchant, level));
+			entity.remove();
+			Block.spawnAsEntity(world, pos.up(), book);
+			Block.spawnAsEntity(world, pos.up(), book.copy());
+		}
+		return true;
+	}
+
+	protected boolean handleObliteration(World world, BlockPos pos, int oblit, ItemEntity entity, Map<Affix, Float> affixes) {
+		if (world.rand.nextFloat() < 0.2F * oblit) {
+			Map.Entry<Affix, Float> affix = affixes.entrySet().stream().findFirst().get();
+			ItemStack book = new ItemStack(DeadlyModule.RARITY_TOMES.get(LootRarity.COMMON));
+			float oblitLvl = affix.getKey().obliterateLevel(affix.getValue());
+			if (oblitLvl == affix.getValue()) return false; //Let's not generate free books
+			AffixHelper.applyAffix(book, affix.getKey(), oblitLvl);
 			entity.remove();
 			Block.spawnAsEntity(world, pos.up(), book);
 			Block.spawnAsEntity(world, pos.up(), book.copy());

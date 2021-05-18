@@ -90,4 +90,27 @@ public class CleaveAffix extends Affix {
 		return 0.9999F;
 	}
 
+	/**
+	 * Handles the upgrading of this affix's level, given two levels.
+	 * Default logic is (highest level + lowest level / 2)
+	 */
+	public float upgradeLevel(float curLvl, float newLvl) {
+		float curChance = curLvl % 1;
+		int curTargets = (int) curLvl;
+		float newChance = newLvl % 1;
+		int newTargets = (int) newLvl;
+		float chance = super.upgradeLevel(curChance, newChance);
+		int targets = Math.min(10, curTargets > newTargets ? curTargets + newTargets / 2 : curTargets / 2 + newTargets);
+		return targets + chance;
+	}
+
+	/**
+	 * Generates a new level, as if the passed level were to be split in two.
+	 */
+	public float obliterateLevel(float level) {
+		float chance = level % 1;
+		int targets = (int) level;
+		return Math.max(2, (targets / 2)) + Math.max(getMin(), (chance / 2));
+	}
+
 }

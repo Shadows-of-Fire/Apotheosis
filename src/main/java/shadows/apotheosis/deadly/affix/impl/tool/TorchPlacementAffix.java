@@ -41,6 +41,16 @@ public class TorchPlacementAffix extends Affix {
 	}
 
 	@Override
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return Math.min(curLvl, newLvl);
+	}
+
+	@Override
+	public float obliterateLevel(float level) {
+		return Math.min(9, level * 2);
+	}
+
+	@Override
 	public boolean canApply(EquipmentType type) {
 		return type == EquipmentType.PICKAXE || type == EquipmentType.SHOVEL;
 	}

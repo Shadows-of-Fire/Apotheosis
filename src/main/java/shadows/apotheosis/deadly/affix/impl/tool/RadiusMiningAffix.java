@@ -72,6 +72,16 @@ public class RadiusMiningAffix extends Affix {
 	}
 
 	@Override
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return (int) super.upgradeLevel(curLvl, newLvl);
+	}
+
+	@Override
+	public float obliterateLevel(float level) {
+		return (int) super.obliterateLevel(level);
+	}
+
+	@Override
 	public boolean canApply(EquipmentType type) {
 		return type == EquipmentType.PICKAXE || type == EquipmentType.SHOVEL;
 	}

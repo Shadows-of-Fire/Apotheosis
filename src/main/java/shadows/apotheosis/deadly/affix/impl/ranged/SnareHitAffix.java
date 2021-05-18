@@ -47,6 +47,16 @@ public class SnareHitAffix extends Affix {
 	}
 
 	@Override
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return (int) super.upgradeLevel(curLvl, newLvl);
+	}
+
+	@Override
+	public float obliterateLevel(float level) {
+		return (int) super.obliterateLevel(level);
+	}
+
+	@Override
 	public float getMin() {
 		return 1;
 	}

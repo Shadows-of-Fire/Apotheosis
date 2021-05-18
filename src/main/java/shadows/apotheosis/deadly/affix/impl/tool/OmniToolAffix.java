@@ -32,6 +32,16 @@ public class OmniToolAffix extends Affix {
 	public float getMax() {
 		return 1;
 	}
+	
+	@Override
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return 1;
+	}
+
+	@Override
+	public float obliterateLevel(float level) {
+		return 1;
+	}
 
 	@Override
 	public boolean canApply(EquipmentType type) {

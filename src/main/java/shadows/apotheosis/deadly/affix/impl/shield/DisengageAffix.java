@@ -38,6 +38,16 @@ public class DisengageAffix extends Affix {
 	}
 
 	@Override
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return 1;
+	}
+
+	@Override
+	public float obliterateLevel(float level) {
+		return 1;
+	}
+
+	@Override
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
 		Entity tSource = source.getTrueSource();
 		if (tSource != null && tSource.getDistanceSq(entity) <= 9) {

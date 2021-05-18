@@ -38,4 +38,14 @@ public class TeleportDropsAffix extends Affix {
 		return 64;
 	}
 
+	@Override
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return (int) super.upgradeLevel(curLvl, newLvl);
+	}
+
+	@Override
+	public float obliterateLevel(float level) {
+		return (int) super.obliterateLevel(level);
+	}
+
 }

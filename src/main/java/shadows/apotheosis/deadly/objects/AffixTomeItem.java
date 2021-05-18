@@ -6,8 +6,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.ItemStack;
@@ -106,44 +104,36 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 		} else if (AffixHelper.hasAffixes(book)) { //Application Mode
 			Map<Affix, Float> bookAfx = AffixHelper.getAffixes(book);
 			Map<Affix, Float> wepAfx = AffixHelper.getAffixes(weapon);
+			boolean wepTome = weapon.getItem() instanceof AffixTomeItem;
 			EquipmentType type = EquipmentType.getTypeFor(weapon);
-			if (type == null) return false;
+			if (type == null && !wepTome) return false;
 			ITextComponent name = weapon.getDisplayName();
 			ItemStack out = weapon.copy();
 			int baseCost = wepAfx.size() * 4;
 			int cost = 0;
 			for (Map.Entry<Affix, Float> e : bookAfx.entrySet()) {
 				Affix afx = e.getKey();
-				if (!afx.canApply(type)) continue;
+				if (!afx.canApply(type) && !wepTome) continue;
 				float curLvl = wepAfx.getOrDefault(afx, 0F);
 				if (curLvl == 0) {
 					name = afx.chainName(name, null);
-					AffixHelper.applyAffix(out, afx, e.getValue());
+					wepAfx.put(afx, e.getValue());
+					cost += 12;
+				} else {
+					wepAfx.put(afx, afx.upgradeLevel(curLvl, e.getValue()));
 					cost += 18;
-				} else if (curLvl < e.getValue()) {
-					AffixHelper.applyAffix(out, afx, e.getValue());
-					cost += 9;
 				}
 			}
 			if (cost == 0) return false;
 			cost += baseCost;
-			out.setDisplayName(((IFormattableTextComponent) name).mergeStyle(((AffixTomeItem) book.getItem()).rarity.getColor()));
+			if (!wepTome) out.setDisplayName(((IFormattableTextComponent) name).mergeStyle(((AffixTomeItem) book.getItem()).rarity.getColor()));
+			AffixHelper.setAffixes(out, wepAfx);
 			out.setCount(1);
-			setTypeConsumed(out, type);
 			ev.setMaterialCost(1);
 			ev.setCost(cost);
 			ev.setOutput(out);
 		}
 		return true;
-	}
-
-	public static void setTypeConsumed(ItemStack stack, EquipmentType type) {
-		stack.getOrCreateTag().putInt("equipment_type", type.ordinal());
-	}
-
-	@Nullable
-	public static EquipmentType getTypeConsumed(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("equipment_type") ? EquipmentType.values()[stack.getTag().getInt("equipment_type")] : null;
 	}
 
 	@Override
