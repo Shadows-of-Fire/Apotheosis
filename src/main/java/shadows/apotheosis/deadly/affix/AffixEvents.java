@@ -65,7 +65,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -464,15 +463,5 @@ public class AffixEvents {
 	@SubscribeEvent
 	public void anvilEvent(AnvilUpdateEvent e) {
 		if (AffixTomeItem.updateAnvil(e)) return;
-	}
-
-	@SubscribeEvent
-	public void test(LivingUpdateEvent e) {
-		if (e.getEntity() instanceof PlayerEntity && e.getEntity().ticksExisted * 3 % 2 == 0) {
-			World world = e.getEntity().getEntityWorld();
-			PlayerEntity player = (PlayerEntity) e.getEntity();
-			Random rand = world.rand;
-			world.addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getPosX() + rand.nextDouble() * 0.4 - 0.2, player.getPosY(), player.getPosZ() + rand.nextDouble() * 0.4 - 0.2, 0, 0, 0);
-		}
 	}
 }
