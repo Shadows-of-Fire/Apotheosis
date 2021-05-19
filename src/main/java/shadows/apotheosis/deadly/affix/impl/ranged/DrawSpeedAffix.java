@@ -39,7 +39,7 @@ public class DrawSpeedAffix extends AttributeAffix {
 			if (values[i] == curLvl) curIdx = i;
 			if (values[i] == newLvl) newIdx = i;
 		}
-		return values[Math.min(values.length, curIdx > newIdx ? curIdx + newIdx / 2 : curIdx / 2 + newIdx)];
+		return values[Math.min(values.length - 1, curIdx > newIdx ? curIdx + newIdx / 2 : curIdx / 2 + newIdx)];
 	}
 
 	/**
