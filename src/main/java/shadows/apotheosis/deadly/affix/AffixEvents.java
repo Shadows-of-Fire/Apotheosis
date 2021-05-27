@@ -344,7 +344,7 @@ public class AffixEvents {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
 			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity) {
-				if (entity.getHeldItemMainhand().isEmpty() && rand.nextInt(DeadlyConfig.randomAffixItem) == 0) {
+				if (entity.getHeldItemMainhand().isEmpty() && DeadlyConfig.randomAffixItem > 0 && rand.nextInt(DeadlyConfig.randomAffixItem) == 0) {
 					LootRarity rarity = LootRarity.random(rand);
 					AffixLootEntry entry = AffixLootManager.getRandomEntry(rand);
 					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());
@@ -364,7 +364,7 @@ public class AffixEvents {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
 			if (!e.getWorld().isRemote() && entity instanceof MonsterEntity && e.getResult() == Result.DEFAULT) {
-				if (rand.nextInt(DeadlyConfig.surfaceBossChance) == 0 && e.getWorld().canSeeSky(new BlockPos(e.getX(), e.getY(), e.getZ()))) {
+				if (DeadlyConfig.surfaceBossChance > 0 && rand.nextInt(DeadlyConfig.surfaceBossChance) == 0 && e.getWorld().canSeeSky(new BlockPos(e.getX(), e.getY(), e.getZ()))) {
 					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand);
 					PlayerEntity player = e.getWorld().getClosestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
 					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.

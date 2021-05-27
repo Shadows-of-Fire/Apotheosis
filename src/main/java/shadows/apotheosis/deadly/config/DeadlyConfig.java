@@ -61,8 +61,8 @@ public class DeadlyConfig {
 			}
 		}
 
-		surfaceBossChance = c.getInt("Surface Boss Chance", "bosses", surfaceBossChance, 1, 500000, "The 1/n chance that a naturally spawned mob that can see the sky is transformed into a boss.");
-		randomAffixItem = c.getInt("Random Affix Chance", "affixes", randomAffixItem, 1, 500000, "The 1/n chance that a naturally spawned mob will be granted an affix item.");
+		surfaceBossChance = c.getInt("Surface Boss Chance", "bosses", surfaceBossChance, 0, 500000, "The 1/n chance that a naturally spawned mob that can see the sky is transformed into a boss.  0 to disable.");
+		randomAffixItem = c.getInt("Random Affix Chance", "affixes", randomAffixItem, 0, 500000, "The 1/n chance that a naturally spawned mob will be granted an affix item. 0 to disable.");
 		surfaceBossLightning = c.getBoolean("Surface Boss Lightning", "bosses", true, "If a lightning bolt strikes when a surface boss spawn occurs.");
 
 		bossDungeonAttempts = c.getInt("Boss Dungeon", "frequency", bossDungeonAttempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeons.");
