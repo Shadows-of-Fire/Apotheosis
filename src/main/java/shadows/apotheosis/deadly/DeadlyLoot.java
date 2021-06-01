@@ -31,7 +31,6 @@ import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.loot.PoolBuilder;
-import shadows.placebo.loot.StackLootEntry;
 import shadows.placebo.util.ChestBuilder;
 import shadows.placebo.util.ChestBuilder.EnchantedEntry;
 
@@ -189,13 +188,17 @@ public class DeadlyLoot {
 		return s;
 	}
 
-	public static class AffixEntry extends StackLootEntry {
+	public static class AffixEntry extends StandaloneLootEntry {
 
 		public static final Serializer SERIALIZER = new Serializer();
 		public static final LootPoolEntryType AFFIX_TYPE = Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "affix_entry"), new LootPoolEntryType(SERIALIZER));
 
 		public AffixEntry(int weight, int quality) {
-			super(ItemStack.EMPTY, 1, 1, weight, quality);
+			this(weight, quality, new ILootCondition[0], new ILootFunction[0]);
+		}
+
+		public AffixEntry(int weight, int quality, ILootCondition[] cond, ILootFunction[] fun) {
+			super(weight, quality, cond, fun);
 		}
 
 		@Override
@@ -207,11 +210,16 @@ public class DeadlyLoot {
 			list.accept(AffixLootManager.genLootItem(stack, ctx.getRandom(), entry.getType(), rarity));
 		}
 
+		@Override
+		public LootPoolEntryType func_230420_a_() {
+			return AFFIX_TYPE;
+		}
+
 		public static class Serializer extends StandaloneLootEntry.Serializer<AffixEntry> {
 
 			@Override
-			protected AffixEntry deserialize(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, ILootCondition[] lootConditions, ILootFunction[] lootFunctions) {
-				return new AffixEntry(weight, quality);
+			protected AffixEntry deserialize(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, ILootCondition[] conditions, ILootFunction[] functions) {
+				return new AffixEntry(weight, quality, conditions, functions);
 			}
 
 		}
