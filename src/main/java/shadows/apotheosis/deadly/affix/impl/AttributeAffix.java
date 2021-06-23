@@ -19,6 +19,7 @@ import net.minecraft.loot.RandomValueRange;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -72,7 +73,11 @@ public abstract class AttributeAffix extends Affix {
 
 	@Override
 	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, BiConsumer<Attribute, AttributeModifier> map) {
-		EquipmentSlotType ourType = EquipmentType.getTypeFor(stack).getSlot(stack);
+		EquipmentType eType = EquipmentType.getTypeFor(stack);
+		if (eType == null) {
+			DeadlyModule.LOGGER.info("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getDisplayName());
+		}
+		EquipmentSlotType ourType = eType.getSlot(stack);
 		if (ourType == type) {
 			AttributeModifier modif = new AttributeModifier(this.uuidCache.computeIfAbsent(type, k -> UUID.randomUUID()), "Apotheosis affix bonus: " + this.getRegistryName(), level, this.op);
 			map.accept(this.attr.get(), modif);
