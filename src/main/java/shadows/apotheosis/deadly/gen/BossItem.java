@@ -37,6 +37,7 @@ import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.util.ChancedEffectInstance;
+import shadows.apotheosis.util.GearSet;
 import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.NameHelper;
 import shadows.apotheosis.util.RandomAttributeModifier;
@@ -138,12 +139,28 @@ public class BossItem extends WeightedRandom.Item {
 		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
 		String name = NameHelper.setEntityName(rand, entity);
 
-		BossArmorManager.INSTANCE.getRandomSet(rand, this.armorSets).apply(entity);
+		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, this.armorSets);
+		set.apply(entity);
+
+		boolean anyValid = false;
+
+		for (EquipmentSlotType t : EquipmentSlotType.values()) {
+			ItemStack s = entity.getItemStackFromSlot(t);
+			if (!s.isEmpty() && EquipmentType.getTypeFor(s) != null) {
+				anyValid = true;
+				break;
+			}
+		}
+
+		if (!anyValid) throw new RuntimeException("Attempted to apply boss gear set " + set.getId() + " but it had no valid affix loot items generated.");
 
 		int guaranteed = rand.nextInt(6);
 
-		while (entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]).isEmpty())
+		ItemStack temp = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
+		while (temp.isEmpty() || EquipmentType.getTypeFor(temp) == null) {
 			guaranteed = rand.nextInt(6);
+			temp = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
+		}
 
 		for (EquipmentSlotType s : EquipmentSlotType.values()) {
 			ItemStack stack = entity.getItemStackFromSlot(s);
