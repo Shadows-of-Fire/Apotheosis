@@ -36,6 +36,7 @@ public class RandomAttributeModifier {
 	}
 
 	public void apply(Random rand, MobEntity entity) {
+		if (entity == null) throw new RuntimeException("Attempted to apply a random attribute modifier to a null entity!");
 		AttributeModifier modif = new AttributeModifier("apoth_boss_" + this.attribute.getAttributeName(), this.value.generateFloat(rand), this.op);
 		entity.getAttribute(this.attribute).applyPersistentModifier(modif);
 	}
