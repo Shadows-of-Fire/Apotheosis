@@ -2,6 +2,7 @@ package shadows.apotheosis.ench.objects;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -20,7 +21,7 @@ public class SeashelfItem extends BlockItem {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return !stack.isEnchanted() && stack.getCount() == 1 && enchantment == ApotheosisObjects.SEA_INFUSION;
+		return !stack.isEnchanted() && stack.getCount() == 1 && enchantment == (ApotheosisObjects.SEA_INFUSION != null ? ApotheosisObjects.SEA_INFUSION : Enchantments.AQUA_AFFINITY);
 	}
 
 	@Override

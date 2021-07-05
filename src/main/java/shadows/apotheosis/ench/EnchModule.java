@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.enchantment.*;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,11 +22,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantment.Rarity;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
@@ -117,6 +115,11 @@ public class EnchModule {
 	static Configuration enchInfoConfig;
 
 	@SubscribeEvent
+	public void preInit(FMLConstructModEvent e) {
+		enchInfoConfig = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
+	}
+
+	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		this.reload(null);
 
@@ -138,11 +141,21 @@ public class EnchModule {
 		ItemStack msBrick = new ItemStack(Blocks.MOSSY_STONE_BRICKS);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.PRISMATIC_ALTAR, 3, 3, msBrick, null, msBrick, msBrick, Items.SEA_LANTERN, msBrick, msBrick, Blocks.ENCHANTING_TABLE, msBrick);
 		Apotheosis.HELPER.addShaped(new ItemStack(ApotheosisObjects.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
-		Ingredient maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, ApotheosisObjects.HELL_INFUSION, Math.min(3, getEnchInfo(ApotheosisObjects.HELL_INFUSION).getMaxLevel()));
+		Ingredient maxHellshelf;
+		if (ApotheosisObjects.HELL_INFUSION != null) {
+			maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, ApotheosisObjects.HELL_INFUSION, Math.min(3, getEnchInfo(ApotheosisObjects.HELL_INFUSION).getMaxLevel()));
+		} else {
+			maxHellshelf = new EnchantmentIngredient(ApotheosisObjects.HELLSHELF, Enchantments.FIRE_ASPECT, Enchantments.FIRE_ASPECT.getMaxLevel());
+		}
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
-		Ingredient maxSeashelf = new EnchantmentIngredient(ApotheosisObjects.SEASHELF, ApotheosisObjects.SEA_INFUSION, Math.min(3, getEnchInfo(ApotheosisObjects.SEA_INFUSION).getMaxLevel()));
+		Ingredient maxSeashelf;
+		if (ApotheosisObjects.SEA_INFUSION != null) {
+			maxSeashelf = new EnchantmentIngredient(ApotheosisObjects.SEASHELF, ApotheosisObjects.SEA_INFUSION, Math.min(3, getEnchInfo(ApotheosisObjects.SEA_INFUSION).getMaxLevel()));
+		} else {
+			maxSeashelf = new EnchantmentIngredient(ApotheosisObjects.SEASHELF, Enchantments.AQUA_AFFINITY, Enchantments.AQUA_AFFINITY.getMaxLevel());
+		}
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.ENDSHELF, 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
@@ -223,7 +236,7 @@ public class EnchModule {
 				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
 				new Block(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
 				new Block(AbstractBlock.Properties.create(Material.GOURD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
-				);
+		);
 		//Formatter::on
 		PlaceboUtil.registerOverride(new ApothEnchantBlock(), Apotheosis.MODID);
 	}
@@ -261,7 +274,7 @@ public class EnchModule {
 				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
 				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
 				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf")
-				);
+		);
 		//Formatter::on
 		DispenserBlock.registerDispenseBehavior(shears, DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(oldShears));
 	}
@@ -269,35 +282,33 @@ public class EnchModule {
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
 		//Formatter::off
-		e.getRegistry().registerAll(
-				new HellInfusionEnchantment().setRegistryName(Apotheosis.MODID, "hell_infusion"),
-				new MinersFervorEnchant().setRegistryName(Apotheosis.MODID, "depth_miner"),
-				new StableFootingEnchant().setRegistryName(Apotheosis.MODID, "stable_footing"),
-				new ScavengerEnchant().setRegistryName(Apotheosis.MODID, "scavenger"),
-				new LifeMendingEnchant().setRegistryName(Apotheosis.MODID, "life_mending"),
-				new IcyThornsEnchant().setRegistryName(Apotheosis.MODID, "icy_thorns"),
-				new TemptingEnchant().setRegistryName(Apotheosis.MODID, "tempting"),
-				new ShieldBashEnchant().setRegistryName(Apotheosis.MODID, "shield_bash"),
-				new ReflectiveEnchant().setRegistryName(Apotheosis.MODID, "reflective"),
-				new BerserkersFuryEnchant().setRegistryName(Apotheosis.MODID, "berserk"),
-				new KnowledgeEnchant().setRegistryName(Apotheosis.MODID, "knowledge"),
-				new SplittingEnchant().setRegistryName(Apotheosis.MODID, "splitting"),
-				new NaturesBlessingEnchant().setRegistryName(Apotheosis.MODID, "natures_blessing"),
-				new ReboundingEnchant().setRegistryName(Apotheosis.MODID, "rebounding"),
-				new MagicProtEnchant().setRegistryName(Apotheosis.MODID, "magic_protection"),
-				new SeaInfusionEnchantment().setRegistryName("sea_infusion"),
-				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ARTHROPOD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
-				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.UNDEAD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "smite"),
-				new BaneEnchant(Rarity.COMMON, CreatureAttribute.UNDEFINED, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "sharpness"),
-				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ILLAGER, EquipmentSlotType.MAINHAND).setRegistryName("bane_of_illagers"),
-				new DefenseEnchant(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"),
-				new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
-				new ObliterationEnchant().setRegistryName("obliteration"),
-				new CrescendoEnchant().setRegistryName("crescendo")
-				);
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "hell_infusion").toString(), true, "Enable this enchantment")) e.getRegistry().register(new HellInfusionEnchantment().setRegistryName(Apotheosis.MODID, "hell_infusion"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "depth_miner").toString(), true, "Enable this enchantment")) e.getRegistry().register(new MinersFervorEnchant().setRegistryName(Apotheosis.MODID, "depth_miner"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "stable_footing").toString(), true, "Enable this enchantment")) e.getRegistry().register(new StableFootingEnchant().setRegistryName(Apotheosis.MODID, "stable_footing"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "scavenger").toString(), true, "Enable this enchantment")) e.getRegistry().register(new ScavengerEnchant().setRegistryName(Apotheosis.MODID, "scavenger"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "life_mending").toString(), true, "Enable this enchantment")) e.getRegistry().register(new LifeMendingEnchant().setRegistryName(Apotheosis.MODID, "life_mending"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "icy_thorns").toString(), true, "Enable this enchantment")) e.getRegistry().register(new IcyThornsEnchant().setRegistryName(Apotheosis.MODID, "icy_thorns"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "tempting").toString(), true, "Enable this enchantment")) e.getRegistry().register(new TemptingEnchant().setRegistryName(Apotheosis.MODID, "tempting"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "shield_bash").toString(), true, "Enable this enchantment")) e.getRegistry().register(new ShieldBashEnchant().setRegistryName(Apotheosis.MODID, "shield_bash"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "reflective").toString(), true, "Enable this enchantment")) e.getRegistry().register(new ReflectiveEnchant().setRegistryName(Apotheosis.MODID, "reflective"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "berserk").toString(), true, "Enable this enchantment")) e.getRegistry().register(new BerserkersFuryEnchant().setRegistryName(Apotheosis.MODID, "berserk"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "knowledge").toString(), true, "Enable this enchantment")) e.getRegistry().register(new KnowledgeEnchant().setRegistryName(Apotheosis.MODID, "knowledge"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "splitting").toString(), true, "Enable this enchantment")) e.getRegistry().register(new SplittingEnchant().setRegistryName(Apotheosis.MODID, "splitting"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "natures_blessing").toString(), true, "Enable this enchantment")) e.getRegistry().register(new NaturesBlessingEnchant().setRegistryName(Apotheosis.MODID, "natures_blessing"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "rebounding").toString(), true, "Enable this enchantment")) e.getRegistry().register(new ReboundingEnchant().setRegistryName(Apotheosis.MODID, "rebounding"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "magic_protection").toString(), true, "Enable this enchantment")) e.getRegistry().register(new MagicProtEnchant().setRegistryName(Apotheosis.MODID, "magic_protection"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "sea_infusion").toString(), true, "Enable this enchantment")) e.getRegistry().register(new SeaInfusionEnchantment().setRegistryName("sea_infusion"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "obliteration").toString(), true, "Enable this enchantment")) e.getRegistry().register(new ObliterationEnchant().setRegistryName("obliteration"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "crescendo").toString(), true, "Enable this enchantment")) e.getRegistry().register(new CrescendoEnchant().setRegistryName("crescendo"));
+		if (enchInfoConfig.getBoolean("Enabled", new ResourceLocation(Apotheosis.MODID, "bane_of_illagers").toString(), true, "Enable this enchantment")) e.getRegistry().register(new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ILLAGER, EquipmentSlotType.MAINHAND).setRegistryName("bane_of_illagers"));
+		e.getRegistry().register(new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ARTHROPOD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"));
+		e.getRegistry().register(new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.UNDEAD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "smite"));
+		e.getRegistry().register(new BaneEnchant(Rarity.COMMON, CreatureAttribute.UNDEFINED, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "sharpness"));
+		e.getRegistry().register(new DefenseEnchant(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"));
+		e.getRegistry().register(new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "fire_protection"));
+		e.getRegistry().register(new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "blast_protection"));
+		e.getRegistry().register(new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "projectile_protection"));
+		e.getRegistry().register(new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.ALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"));
 		//Formatter::on
 	}
 

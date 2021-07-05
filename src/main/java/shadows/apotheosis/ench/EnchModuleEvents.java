@@ -39,6 +39,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
@@ -77,7 +78,7 @@ public class EnchModuleEvents {
 		}
 		if (e.getLeft().getItem() == ApotheosisObjects.HELLSHELF.asItem() || e.getLeft().getItem() == ApotheosisObjects.SEASHELF.asItem()) {
 			if (e.getLeft().getItem() != e.getRight().getItem() || e.getLeft().getCount() != 1) return;
-			Enchantment ench = e.getLeft().getItem() == ApotheosisObjects.HELLSHELF.asItem() ? ApotheosisObjects.HELL_INFUSION : ApotheosisObjects.SEA_INFUSION;
+			Enchantment ench = e.getLeft().getItem() == ApotheosisObjects.HELLSHELF.asItem() ? (ApotheosisObjects.HELL_INFUSION != null ? ApotheosisObjects.HELL_INFUSION : Enchantments.FIRE_ASPECT) : (ApotheosisObjects.SEA_INFUSION != null ? ApotheosisObjects.SEA_INFUSION : Enchantments.AQUA_AFFINITY);
 			int leftLvl = EnchantmentHelper.getEnchantmentLevel(ench, e.getLeft());
 			int rightLvl = EnchantmentHelper.getEnchantmentLevel(ench, e.getRight());
 			if (leftLvl == 0 || rightLvl != leftLvl) return;
@@ -104,14 +105,14 @@ public class EnchModuleEvents {
 		if (attacker instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) attacker;
 			if (p.world.isRemote) return;
-			int scavenger = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SCAVENGER, p.getHeldItemMainhand());
+			int scavenger = ApotheosisObjects.SCAVENGER != null ? EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.SCAVENGER, p.getHeldItemMainhand()) : 0;
 			if (scavenger > 0 && p.world.rand.nextInt(100) < scavenger * 2.5F) {
 				if (this.dropLoot == null) {
 					this.dropLoot = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213354_a", DamageSource.class, boolean.class);
 				}
 				this.dropLoot.invoke(e.getEntityLiving(), e.getSource(), true);
 			}
-			int knowledge = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.KNOWLEDGE, p.getHeldItemMainhand());
+			int knowledge = ApotheosisObjects.KNOWLEDGE != null ? EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.KNOWLEDGE, p.getHeldItemMainhand()) : 0;
 			if (knowledge > 0 && !(e.getEntity() instanceof PlayerEntity)) {
 				int items = 0;
 				for (ItemEntity i : e.getDrops())
@@ -139,7 +140,7 @@ public class EnchModuleEvents {
 		for (EquipmentSlotType slot : this.slots) {
 			ItemStack stack = e.getEntityLiving().getItemStackFromSlot(slot);
 			if (!stack.isEmpty() && stack.isDamaged()) {
-				int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.LIFE_MENDING, stack);
+				int level = ApotheosisObjects.LIFE_MENDING != null ? EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.LIFE_MENDING, stack) : 0;
 				if (level > 0) {
 					int i = Math.min(level, stack.getDamage());
 					e.getEntityLiving().attackEntityFrom(EnchModule.CORRUPTED, i * 0.7F);
@@ -156,12 +157,12 @@ public class EnchModuleEvents {
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		PlayerEntity p = e.getPlayer();
-		if (!p.isOnGround() && EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.STABLE_FOOTING, p) > 0) {
+		if (!p.isOnGround() && ApotheosisObjects.STABLE_FOOTING != null && EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.STABLE_FOOTING, p) > 0) {
 			if (e.getOriginalSpeed() < e.getNewSpeed() * 5) e.setNewSpeed(e.getNewSpeed() * 5F);
 		}
 		ItemStack stack = p.getHeldItemMainhand();
 		if (stack.isEmpty()) return;
-		int depth = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.DEPTH_MINER, stack);
+		int depth = ApotheosisObjects.DEPTH_MINER != null ? EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.DEPTH_MINER, stack) : 0;
 		if (depth > 0) {
 			if (stack.getDestroySpeed(e.getState()) > 1.0F) {
 				float hardness = e.getState().getBlockHardness(e.getPlayer().world, e.getPos());
@@ -176,7 +177,7 @@ public class EnchModuleEvents {
 	@SubscribeEvent
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
 		ItemStack s = e.getItemStack();
-		int nbLevel = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.NATURES_BLESSING, s);
+		int nbLevel = ApotheosisObjects.NATURES_BLESSING != null ? EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.NATURES_BLESSING, s) : 0;
 		if (!e.getEntity().isSneaking() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getPlayer())) {
 			s.damageItem(6 - nbLevel, e.getPlayer(), ent -> ent.sendBreakAnimation(e.getHand()));
 			e.setCanceled(true);
@@ -203,7 +204,7 @@ public class EnchModuleEvents {
 	public void livingHurt(LivingHurtEvent e) {
 		LivingEntity user = e.getEntityLiving();
 		if (e.getSource().getTrueSource() instanceof Entity && user.getActivePotionEffect(Effects.RESISTANCE) == null) {
-			int level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user);
+			int level = ApotheosisObjects.BERSERK != null ? EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.BERSERK, user) : 0;
 			if (level > 0) {
 				user.hurtResistantTime = 0;
 				user.attackEntityFrom(EnchModule.CORRUPTED, level * level);
@@ -214,7 +215,7 @@ public class EnchModuleEvents {
 		}
 		if (e.getSource().isMagicDamage() && e.getSource().getTrueSource() instanceof LivingEntity) {
 			LivingEntity src = (LivingEntity) e.getSource().getTrueSource();
-			int lvl = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.MAGIC_PROTECTION, src);
+			int lvl = ApotheosisObjects.MAGIC_PROTECTION != null ? EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.MAGIC_PROTECTION, src) : 0;
 			if (lvl > 0) {
 				//TODO: FIXME should only be reducing damage by the value of OA, this will use all active protection enchantments.
 				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getEnchantmentModifierDamage(src.getArmorInventoryList(), e.getSource())));
