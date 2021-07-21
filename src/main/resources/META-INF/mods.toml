@@ -21,27 +21,27 @@ All things that should have been.
 [[dependencies.apotheosis]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[35.1.36,)" #mandatory
+    versionRange="[36.1.65,)" #mandatory
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.4,)"
+    versionRange="[1.16.5,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="placebo"
     mandatory=true
-    versionRange="[4.5.0,)"
+    versionRange="[4.6.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.apotheosis]]
     modId="jei"
     mandatory=false
-    versionRange="[7.6.0,)"
+    versionRange="[7.7.1,)"
     ordering="NONE"
     side="BOTH"
