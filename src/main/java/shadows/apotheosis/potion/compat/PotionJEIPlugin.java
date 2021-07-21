@@ -88,7 +88,7 @@ public class PotionJEIPlugin implements IModPlugin {
 			List<List<ItemStack>> clones = new ArrayList<>();
 			recipeInputs.forEach(l -> {
 				List<ItemStack> cloneList = new ArrayList<>();
-				l.stream().map(ItemStack::copy).map(s -> PotionUtils.setPotion(s, potion)).forEach(cloneList::add);
+				l.stream().map(ItemStack::copy).map(s -> s.hasTag() && s.getTag().contains("Potion") ? PotionUtils.setPotion(s, potion) : s).forEach(cloneList::add);
 				clones.add(cloneList);
 			});
 			ItemStack output = new ItemStack(ApotheosisObjects.POTION_CHARM);
