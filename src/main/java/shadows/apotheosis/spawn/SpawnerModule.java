@@ -57,7 +57,7 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		SpawnerModifiers.registerModifiers();
 		this.reload(null);
-		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.MISC, "field_77701_a");
+		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.TAB_MISC, "field_77701_a");
 	}
 
 	@SubscribeEvent
@@ -76,30 +76,30 @@ public class SpawnerModule {
 	}
 
 	public void handleCapturing(LivingDropsEvent e) {
-		Entity killer = e.getSource().getTrueSource();
+		Entity killer = e.getSource().getEntity();
 		if (killer instanceof LivingEntity) {
-			int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.CAPTURING, ((LivingEntity) killer).getHeldItemMainhand());
-			if (e.getEntityLiving().world.rand.nextFloat() < level / 250F) {
+			int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.CAPTURING, ((LivingEntity) killer).getMainHandItem());
+			if (e.getEntityLiving().level.random.nextFloat() < level / 250F) {
 				LivingEntity killed = e.getEntityLiving();
-				ItemStack egg = new ItemStack(SpawnEggItem.EGGS.get(killed.getType()));
-				e.getDrops().add(new ItemEntity(killed.world, killed.getPosX(), killed.getPosY(), killed.getPosZ(), egg));
+				ItemStack egg = new ItemStack(SpawnEggItem.BY_ID.get(killed.getType()));
+				e.getDrops().add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));
 			}
 		}
 	}
 
 	public void handleUseItem(RightClickBlock e) {
 		TileEntity te;
-		if ((te = e.getWorld().getTileEntity(e.getPos())) instanceof ApothSpawnerTile) {
+		if ((te = e.getWorld().getBlockEntity(e.getPos())) instanceof ApothSpawnerTile) {
 			ItemStack s = e.getItemStack();
 
-			if (e.getPlayer().isSneaking() && s.getItem() instanceof SpawnEggItem) {
+			if (e.getPlayer().isShiftKeyDown() && s.getItem() instanceof SpawnEggItem) {
 				if (SpawnerModifiers.EGG.modify((ApothSpawnerTile) te, s, false)) {
 					e.setCanceled(true);
 					return;
 				}
 			}
 
-			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(e.getPlayer().getHeldItem(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(e.getPlayer().getItemInHand(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values())
 				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}

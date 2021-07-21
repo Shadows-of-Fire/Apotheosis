@@ -26,16 +26,16 @@ public class AnvilTile extends TileEntity {
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
+	public CompoundNBT save(CompoundNBT tag) {
 		ItemStack stack = new ItemStack(Items.ANVIL);
 		EnchantmentHelper.setEnchantments(this.enchantments, stack);
-		tag.put("enchantments", stack.getEnchantmentTagList());
-		return super.write(tag);
+		tag.put("enchantments", stack.getEnchantmentTags());
+		return super.save(tag);
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT tag) {
-		super.read(state, tag);
+	public void load(BlockState state, CompoundNBT tag) {
+		super.load(state, tag);
 		ListNBT enchants = tag.getList("enchantments", Constants.NBT.TAG_COMPOUND);
 		Map<Enchantment, Integer> map = EnchantmentHelper.deserializeEnchantments(enchants);
 		if (tag.getInt("ub") > 0) {

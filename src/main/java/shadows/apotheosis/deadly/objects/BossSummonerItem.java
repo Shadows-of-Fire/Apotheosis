@@ -16,17 +16,17 @@ public class BossSummonerItem extends Item {
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext ctx) {
-		World world = ctx.getWorld();
-		if (world.isRemote) return ActionResultType.SUCCESS;
+	public ActionResultType useOn(ItemUseContext ctx) {
+		World world = ctx.getLevel();
+		if (world.isClientSide) return ActionResultType.SUCCESS;
 		BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom());
-		BlockPos pos = ctx.getPos().offset(ctx.getFace());
-		if (!world.hasNoCollisions(item.getSize().offset(pos))) {
-			pos = pos.up();
-			if (!world.hasNoCollisions(item.getSize().offset(pos))) return ActionResultType.FAIL;
+		BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
+		if (!world.noCollision(item.getSize().move(pos))) {
+			pos = pos.above();
+			if (!world.noCollision(item.getSize().move(pos))) return ActionResultType.FAIL;
 		}
-		world.addEntity(item.createBoss((ServerWorld) world, pos, world.getRandom()));
-		ctx.getItem().shrink(1);
+		world.addFreshEntity(item.createBoss((ServerWorld) world, pos, world.getRandom()));
+		ctx.getItemInHand().shrink(1);
 		return ActionResultType.SUCCESS;
 	}
 

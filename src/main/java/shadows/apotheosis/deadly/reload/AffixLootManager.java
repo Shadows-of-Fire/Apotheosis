@@ -64,7 +64,7 @@ public class AffixLootManager extends JsonReloadListener {
 			}
 		}
 		Collections.shuffle(ENTRIES);
-		weight = WeightedRandom.getTotalWeight(ENTRIES);
+		this.weight = WeightedRandom.getTotalWeight(ENTRIES);
 		DeadlyModule.LOGGER.info("Loaded {} affix loot entries from resources.", ENTRIES.size());
 	}
 
@@ -98,7 +98,7 @@ public class AffixLootManager extends JsonReloadListener {
 	 * The default equipment type is {@link EquipmentType#TOOL}, so items that do not match will be treated as tools.
 	 */
 	public static ItemStack genLootItem(ItemStack stack, Random rand, EquipmentType type, LootRarity rarity) {
-		ITextComponent name = stack.getDisplayName();
+		ITextComponent name = stack.getHoverName();
 		if (type == null) {
 			AffixHelper.addLore(stack, new StringTextComponent("ERROR - ATTEMPTED TO GENERATE LOOT ITEM WITH INVALID EQUIPMENT TYPE."));
 			return stack;
@@ -131,7 +131,7 @@ public class AffixLootManager extends JsonReloadListener {
 			tag.putBoolean("Unbreakable", true);
 		}
 
-		stack.setDisplayName(new StringTextComponent(TextFormatting.RESET + rarity.getColor().toString() + name.getString().replace(TextFormatting.RESET.toString(), "")));
+		stack.setHoverName(new StringTextComponent(TextFormatting.RESET + rarity.getColor().toString() + name.getString().replace(TextFormatting.RESET.toString(), "")));
 		return stack;
 	}
 

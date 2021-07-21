@@ -18,9 +18,9 @@ public class WeightedSpawnerEntityAdapter implements JsonDeserializer<WeightedSp
 
 	@Override
 	public JsonElement serialize(WeightedSpawnerEntity src, Type typeOfSrc, JsonSerializationContext context) {
-		String id = src.getNbt().getString("id");
-		int weight = src.itemWeight;
-		CompoundNBT nbt = src.getNbt();
+		String id = src.getTag().getString("id");
+		int weight = src.weight;
+		CompoundNBT nbt = src.getTag();
 		JsonObject obj = new JsonObject();
 		obj.addProperty("entity", id);
 		obj.addProperty("weight", weight);

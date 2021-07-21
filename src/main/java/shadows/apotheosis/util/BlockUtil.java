@@ -43,42 +43,42 @@ public class BlockUtil {
 		if (source != null) player = FakePlayerFactory.get(world, new GameProfile(source, UsernameCache.getLastKnownUsername(source)));
 		else player = FakePlayerFactory.getMinecraft(world);
 		if (player.connection == null) player.connection = new NetHandlerSpaghettiServer(player);
-		player.inventory.mainInventory.set(player.inventory.currentItem, mainhand);
-		player.setPosition(pos.getX(), pos.getY(), pos.getZ());
+		player.inventory.items.set(player.inventory.selected, mainhand);
+		player.setPos(pos.getX(), pos.getY(), pos.getZ());
 
-		if (blockstate.getBlockHardness(world, pos) < 0 || !ForgeHooks.canHarvestBlock(blockstate, player, world, pos)) return false;
+		if (blockstate.getDestroySpeed(world, pos) < 0 || !ForgeHooks.canHarvestBlock(blockstate, player, world, pos)) return false;
 
-		GameType type = player.abilities.isCreativeMode ? GameType.CREATIVE : GameType.SURVIVAL;
+		GameType type = player.abilities.instabuild ? GameType.CREATIVE : GameType.SURVIVAL;
 		int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, type, player, pos);
 		if (exp == -1) {
 			return false;
 		} else {
-			TileEntity tileentity = world.getTileEntity(pos);
+			TileEntity tileentity = world.getBlockEntity(pos);
 			Block block = blockstate.getBlock();
-			if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !player.canUseCommandBlock()) {
-				world.notifyBlockUpdate(pos, blockstate, blockstate, 3);
+			if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !player.canUseGameMasterBlocks()) {
+				world.sendBlockUpdated(pos, blockstate, blockstate, 3);
 				return false;
-			} else if (player.getHeldItemMainhand().onBlockStartBreak(pos, player)) {
+			} else if (player.getMainHandItem().onBlockStartBreak(pos, player)) {
 				return false;
 			} else if (player.blockActionRestricted(world, pos, type)) {
 				return false;
 			} else {
-				if (player.abilities.isCreativeMode) {
+				if (player.abilities.instabuild) {
 					removeBlock(world, player, pos, false);
 					return true;
 				} else {
-					ItemStack itemstack = player.getHeldItemMainhand();
+					ItemStack itemstack = player.getMainHandItem();
 					ItemStack itemstack1 = itemstack.copy();
-					boolean canHarvest = blockstate.canHarvestBlock(world, pos, player); // previously player.func_234569_d_(blockstate)
-					itemstack.onBlockDestroyed(world, blockstate, pos, player);
+					boolean canHarvest = blockstate.canHarvestBlock(world, pos, player); // previously player.hasCorrectToolForDrops(blockstate)
+					itemstack.mineBlock(world, blockstate, pos, player);
 					if (itemstack.isEmpty() && !itemstack1.isEmpty()) net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, Hand.MAIN_HAND);
 					boolean removed = removeBlock(world, player, pos, canHarvest);
 
 					if (removed && canHarvest) {
-						block.harvestBlock(world, player, pos, blockstate, tileentity, itemstack1);
+						block.playerDestroy(world, player, pos, blockstate, tileentity, itemstack1);
 					}
 
-					if (removed && exp > 0) blockstate.getBlock().dropXpOnBlockBreak(world, pos, exp);
+					if (removed && exp > 0) blockstate.getBlock().popExperience(world, pos, exp);
 
 					return true;
 				}
@@ -97,7 +97,7 @@ public class BlockUtil {
 	public static boolean removeBlock(ServerWorld world, ServerPlayerEntity player, BlockPos pos, boolean canHarvest) {
 		BlockState state = world.getBlockState(pos);
 		boolean removed = state.removedByPlayer(world, pos, player, canHarvest, world.getFluidState(pos));
-		if (removed) state.getBlock().onPlayerDestroy(world, pos, state);
+		if (removed) state.getBlock().destroy(world, pos, state);
 		return removed;
 	}
 

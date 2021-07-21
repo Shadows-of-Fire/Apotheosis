@@ -33,32 +33,32 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class SeaAltarBlock extends Block {
 
-	public static final VoxelShape DISPLAY = Block.makeCuboidShape(0, 0, 0, 1, 10, 1);
+	public static final VoxelShape DISPLAY = Block.box(0, 0, 0, 1, 10, 1);
 	//Formatter::off
 	public static final List<VoxelShape> BOXES = ImmutableList.of(
-			Block.makeCuboidShape(0, 0, 0, 16, 1, 16),
-			Block.makeCuboidShape(1, 1, 1, 15, 4, 15),
-			Block.makeCuboidShape(2, 4, 2, 4, 10, 4),
-			Block.makeCuboidShape(2, 4, 12, 4, 10, 14),
-			Block.makeCuboidShape(12, 4, 2, 14, 10, 4),
-			Block.makeCuboidShape(12, 4, 12, 14, 10, 14)
+			Block.box(0, 0, 0, 16, 1, 16),
+			Block.box(1, 1, 1, 15, 4, 15),
+			Block.box(2, 4, 2, 4, 10, 4),
+			Block.box(2, 4, 12, 4, 10, 14),
+			Block.box(12, 4, 2, 14, 10, 4),
+			Block.box(12, 4, 12, 14, 10, 14)
 			);
 	//Formatter::on
 	public static final List<VoxelShape> PILLARS = ImmutableList.of(BOXES.get(2), BOXES.get(3), BOXES.get(4), BOXES.get(5));
 	public static final VoxelShape SHAPE = merge(BOXES);
 
 	public SeaAltarBlock() {
-		super(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.LIGHT_GRAY).hardnessAndResistance(1.5F, 10).sound(SoundType.STONE));
+		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).strength(1.5F, 10).sound(SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (world.isRemote) return ActionResultType.SUCCESS;
-		TileEntity te = world.getTileEntity(pos);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (world.isClientSide) return ActionResultType.SUCCESS;
+		TileEntity te = world.getBlockEntity(pos);
 		if (!(te instanceof SeaAltarTile)) return ActionResultType.FAIL;
 		SeaAltarTile altar = (SeaAltarTile) te;
 		Vector3d eyes = player.getEyePosition(1);
-		Vector3d look = player.getLook(1);
+		Vector3d look = player.getViewVector(1);
 		double reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
 		Vector3d block = eyes.add(look.x * reach, look.y * reach, look.z * reach);
 
@@ -66,8 +66,8 @@ public class SeaAltarBlock extends Block {
 			if (this.rayTrace(pos, eyes, block, PILLARS.get(i)) != null) return this.attemptSwap(altar, i, player, hand);
 		}
 
-		double hitX = hit.getHitVec().x - pos.getX();
-		double hitZ = hit.getHitVec().z - pos.getZ();
+		double hitX = hit.getLocation().x - pos.getX();
+		double hitZ = hit.getLocation().z - pos.getZ();
 
 		if (hitX >= 5.5 / 16 && hitX <= 1 - 5.5 / 16 || hitZ >= 5.5 / 16 && hitZ <= 1 - 5.5 / 16) {
 			this.attemptSwap(altar, 4, player, hand);
@@ -78,14 +78,14 @@ public class SeaAltarBlock extends Block {
 
 	@Nullable
 	protected RayTraceResult rayTrace(BlockPos pos, Vector3d start, Vector3d end, VoxelShape boundingBox) {
-		BlockRayTraceResult result = boundingBox.rayTrace(start, end, pos);
-		return result == null ? null : new BlockRayTraceResult(result.getHitVec().add(pos.getX(), pos.getY(), pos.getZ()), result.getFace(), pos, result.isInside());
+		BlockRayTraceResult result = boundingBox.clip(start, end, pos);
+		return result == null ? null : new BlockRayTraceResult(result.getLocation().add(pos.getX(), pos.getY(), pos.getZ()), result.getDirection(), pos, result.isInside());
 	}
 
 	protected ActionResultType attemptSwap(SeaAltarTile altar, int slot, PlayerEntity player, Hand hand) {
 		ItemStackHandler inv = altar.getInv();
 		ItemStack inAltar = inv.getStackInSlot(slot);
-		ItemStack inHand = player.getHeldItem(hand);
+		ItemStack inHand = player.getItemInHand(hand);
 		if (slot == 4 && !inHand.isEmpty()) return ActionResultType.FAIL;
 		if (inAltar.isEmpty() && (inHand.isEnchanted() || inHand.getItem() == Items.ENCHANTED_BOOK)) {
 			ItemStack toAltar = inHand.copy();
@@ -95,7 +95,7 @@ public class SeaAltarBlock extends Block {
 			altar.markAndNotify();
 			return ActionResultType.SUCCESS;
 		} else if (!inAltar.isEmpty() && inHand.isEmpty()) {
-			player.setHeldItem(hand, inAltar.copy());
+			player.setItemInHand(hand, inAltar.copy());
 			inAltar.setCount(0);
 			altar.markAndNotify();
 			return ActionResultType.SUCCESS;
@@ -109,7 +109,7 @@ public class SeaAltarBlock extends Block {
 	}
 
 	@Override
-	public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public VoxelShape getInteractionShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return SHAPE;
 	}
 
@@ -135,21 +135,21 @@ public class SeaAltarBlock extends Block {
 
 	@Override
 	@Deprecated
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-		TileEntity te = world.getTileEntity(pos);
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		TileEntity te = world.getBlockEntity(pos);
 		if (te instanceof SeaAltarTile) {
 			ItemStackHandler inv = ((SeaAltarTile) te).inv;
 			for (int i = 0; i < inv.getSlots(); i++) {
-				Block.spawnAsEntity(world, pos, inv.getStackInSlot(i));
+				Block.popResource(world, pos, inv.getStackInSlot(i));
 			}
 		}
-		super.onReplaced(state, world, pos, newState, isMoving);
+		super.onRemove(state, world, pos, newState, isMoving);
 	}
 
 	private static VoxelShape merge(List<VoxelShape> shapes) {
 		VoxelShape shape = shapes.get(0);
 		for (VoxelShape s : shapes) {
-			shape = VoxelShapes.combine(shape, s, IBooleanFunction.OR);
+			shape = VoxelShapes.joinUnoptimized(shape, s, IBooleanFunction.OR);
 		}
 		return shape;
 	}

@@ -46,7 +46,7 @@ public class EnchHooks {
 		boolean isBook = stack.getItem() == Items.BOOK;
 		boolean typedBook = stack.getItem() instanceof TomeItem;
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
-			if (enchantment.isTreasureEnchantment() && !allowTreasure) continue;
+			if (enchantment.isTreasureOnly() && !allowTreasure) continue;
 			if (enchantment.canApplyAtEnchantingTable(stack) || isBook && enchantment.isAllowedOnBooks() || typedBook && stack.getItem().canApplyAtEnchantingTable(stack, enchantment)) {
 				EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
 				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {
@@ -66,7 +66,7 @@ public class EnchHooks {
 	 * Injected by apothasm/tempting.js
 	 */
 	public static boolean isTempting(boolean was, ItemStack stack) {
-		if (EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.TEMPTING, stack) > 0) return true;
+		if (EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.TEMPTING, stack) > 0) return true;
 		return was;
 	}
 
@@ -77,12 +77,12 @@ public class EnchHooks {
 	 */
 	public static void reflectiveHook(LivingEntity user, LivingEntity attacker) {
 		int level;
-		if ((level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.REFLECTIVE, user.getActiveItemStack())) > 0) {
-			if (user.world.rand.nextInt(Math.max(2, 7 - level)) == 0) {
-				DamageSource src = user instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity) user).setMagicDamage().setDamageBypassesArmor() : DamageSource.MAGIC;
-				attacker.attackEntityFrom(src, level * 1.6F);
-				user.getActiveItemStack().damageItem(10, attacker, e -> {
-					e.sendBreakAnimation(EquipmentSlotType.OFFHAND);
+		if ((level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.REFLECTIVE, user.getUseItem())) > 0) {
+			if (user.level.random.nextInt(Math.max(2, 7 - level)) == 0) {
+				DamageSource src = user instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity) user).setMagic().bypassArmor() : DamageSource.MAGIC;
+				attacker.hurt(src, level * 1.6F);
+				user.getUseItem().hurtAndBreak(10, attacker, e -> {
+					e.broadcastBreakEvent(EquipmentSlotType.OFFHAND);
 				});
 			}
 		}
@@ -120,7 +120,7 @@ public class EnchHooks {
 	public static int getTicksCaughtDelay(FishingBobberEntity bobber) {
 		int lowBound = Math.max(1, 100 - bobber.lureSpeed * 10);
 		int highBound = Math.max(lowBound, 600 - bobber.lureSpeed * 60);
-		return MathHelper.nextInt(bobber.rand, lowBound, highBound);
+		return MathHelper.nextInt(bobber.random, lowBound, highBound);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class EnchHooks {
 	 * Injected by apothasm/crossbow.js
 	 */
 	public static void onArrowFired(ItemStack crossbow) {
-		int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.CRESCENDO, crossbow);
+		int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.CRESCENDO, crossbow);
 		if (level > 0 && nbt.get() != null) {
 			int shots = crossbow.getTag().getInt("shots");
 			if (shots < level) {
@@ -152,7 +152,7 @@ public class EnchHooks {
 	 * Injected by apothasm/crossbow.js
 	 */
 	public static void preArrowFired(ItemStack crossbow) {
-		int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.CRESCENDO, crossbow);
+		int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.CRESCENDO, crossbow);
 		if (level > 0) {
 			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Constants.NBT.TAG_COMPOUND).copy());
 		}
@@ -165,7 +165,7 @@ public class EnchHooks {
 	 */
 	public static void markGeneratedArrows(ProjectileEntity arrow, ItemStack crossbow) {
 		if (crossbow.getTag().getInt("shots") > 0 && arrow instanceof AbstractArrowEntity) {
-			((AbstractArrowEntity) arrow).pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+			((AbstractArrowEntity) arrow).pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 		}
 	}
 

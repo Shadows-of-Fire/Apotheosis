@@ -55,10 +55,10 @@ public class EldritchBlockAffix extends Affix {
 
 	@Override
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
-		if (source.getTrueSource() instanceof LivingEntity) {
-			LivingEntity attacker = (LivingEntity) source.getTrueSource();
-			attacker.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 200, (int) level - 1));
-			if (ApotheosisObjects.SUNDERING != null) attacker.addPotionEffect(new EffectInstance(ApotheosisObjects.SUNDERING, 200, (int) level - 1));
+		if (source.getEntity() instanceof LivingEntity) {
+			LivingEntity attacker = (LivingEntity) source.getEntity();
+			attacker.addEffect(new EffectInstance(Effects.WEAKNESS, 200, (int) level - 1));
+			if (ApotheosisObjects.SUNDERING != null) attacker.addEffect(new EffectInstance(ApotheosisObjects.SUNDERING, 200, (int) level - 1));
 		}
 		return amount;
 	}

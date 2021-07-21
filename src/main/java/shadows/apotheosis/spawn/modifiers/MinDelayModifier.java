@@ -13,13 +13,13 @@ public class MinDelayModifier extends SpawnerModifier {
 
 	@Override
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.minSpawnDelay < this.max : spawner.spawnerLogic.minSpawnDelay > this.min);
+		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawner.minSpawnDelay < this.max : spawner.spawner.minSpawnDelay > this.min);
 	}
 
 	@Override
 	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		int modify = inverting ? -this.value : this.value;
-		spawner.spawnerLogic.minSpawnDelay = MathHelper.clamp(spawner.spawnerLogic.minSpawnDelay + modify, this.min, this.max);
+		spawner.spawner.minSpawnDelay = MathHelper.clamp(spawner.spawner.minSpawnDelay + modify, this.min, this.max);
 		return true;
 	}
 

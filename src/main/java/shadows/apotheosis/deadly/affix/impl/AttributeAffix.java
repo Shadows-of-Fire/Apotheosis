@@ -56,7 +56,7 @@ public abstract class AttributeAffix extends Affix {
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = this.range.generateFloat(rand);
+		float lvl = this.range.getFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}
@@ -68,14 +68,14 @@ public abstract class AttributeAffix extends Affix {
 	@Override
 	public ITextComponent getDisplayName(float level) {
 		if (this.op == Operation.ADDITION) return super.getDisplayName(level);
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).mergeStyle(TextFormatting.GRAY);
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).withStyle(TextFormatting.GRAY);
 	}
 
 	@Override
 	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, BiConsumer<Attribute, AttributeModifier> map) {
 		EquipmentType eType = EquipmentType.getTypeFor(stack);
 		if (eType == null) {
-			DeadlyModule.LOGGER.info("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getDisplayName());
+			DeadlyModule.LOGGER.info("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName());
 		}
 		EquipmentSlotType ourType = eType.getSlot(stack);
 		if (ourType == type) {

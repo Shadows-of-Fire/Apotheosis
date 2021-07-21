@@ -58,7 +58,7 @@ public class RadiusMiningAffix extends Affix {
 
 	@Override
 	public ITextComponent getDisplayName(float level) {
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name" + (int) level).mergeStyle(TextFormatting.GRAY);
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name" + (int) level).withStyle(TextFormatting.GRAY);
 	}
 
 	@Override
@@ -94,8 +94,8 @@ public class RadiusMiningAffix extends Affix {
 	 * @param level The level of this affix, in this case, the mode of operation.
 	 */
 	public static void breakExtraBlocks(ServerPlayerEntity player, BlockPos pos, ItemStack tool, int level, float hardness) {
-		if (!breakers.add(player.getUniqueID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.ew
-		if (!player.isSneaking()) try {
+		if (!breakers.add(player.getUUID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.ew
+		if (!player.isShiftKeyDown()) try {
 			if (level == 1) {
 				breakBlockRadius(player, pos, 1, 2, 0, 1, hardness);
 			} else if (level == 2) {
@@ -106,42 +106,42 @@ public class RadiusMiningAffix extends Affix {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		breakers.remove(player.getUniqueID());
+		breakers.remove(player.getUUID());
 	}
 
 	@SuppressWarnings("deprecation")
 	public static void breakBlockRadius(ServerPlayerEntity player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
-		World world = player.world;
+		World world = player.level;
 		if (x < 2 && y < 2) return;
 		int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
 		int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
 
 		Vector3d base = player.getEyePosition(0);
-		Vector3d look = player.getLookVec();
+		Vector3d look = player.getLookAngle();
 		double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
 		Vector3d target = base.add(look.x * reach, look.y * reach, look.z * reach);
-		RayTraceResult trace = world.rayTraceBlocks(new RayTraceContext(base, target, BlockMode.OUTLINE, FluidMode.NONE, player));
+		RayTraceResult trace = world.clip(new RayTraceContext(base, target, BlockMode.OUTLINE, FluidMode.NONE, player));
 
 		if (trace == null || trace.getType() != Type.BLOCK) return;
 		BlockRayTraceResult res = (BlockRayTraceResult) trace;
 
-		Direction face = res.getFace(); //Face of the block currently being looked at by the player.
+		Direction face = res.getDirection(); //Face of the block currently being looked at by the player.
 
 		for (int iy = lowerY; iy < upperY; iy++) {
 			for (int ix = lowerX; ix < upperX; ix++) {
 				BlockPos genPos = new BlockPos(pos.getX() + ix + xOff, pos.getY() + iy + yOff, pos.getZ());
 
-				if (player.getHorizontalFacing().getAxis() == Axis.X) {
+				if (player.getDirection().getAxis() == Axis.X) {
 					genPos = new BlockPos(genPos.getX() - (ix + xOff), genPos.getY(), genPos.getZ() + ix + xOff);
 				}
 
 				if (face.getAxis().isVertical()) {
-					genPos = rotateDown(genPos, iy + yOff, player.getHorizontalFacing());
+					genPos = rotateDown(genPos, iy + yOff, player.getDirection());
 				}
 
 				if (genPos.equals(pos)) continue;
 				BlockState state = world.getBlockState(genPos);
-				float stateHardness = state.getBlockHardness(world, genPos);
+				float stateHardness = state.getDestroySpeed(world, genPos);
 				if (!state.isAir() && stateHardness != -1 && stateHardness <= hardness * 3F && isEffective(state, player)) PlaceboUtil.tryHarvestBlock(player, genPos);
 			}
 		}
@@ -149,13 +149,13 @@ public class RadiusMiningAffix extends Affix {
 	}
 
 	static BlockPos rotateDown(BlockPos pos, int y, Direction horizontal) {
-		Vector3i vec = horizontal.getDirectionVec();
+		Vector3i vec = horizontal.getNormal();
 		return new BlockPos(pos.getX() + vec.getX() * y, pos.getY() - y, pos.getZ() + vec.getZ() * y);
 	}
 
 	static boolean isEffective(BlockState state, PlayerEntity player) {
-		if (player.getHeldItemMainhand().getToolTypes().stream().anyMatch(state::isToolEffective)) return true;
-		if (AffixHelper.getAffixLevel(player.getHeldItemMainhand(), Affixes.OMNITOOL) > 0) return Items.DIAMOND_PICKAXE.canHarvestBlock(state) || Items.DIAMOND_SHOVEL.canHarvestBlock(state) || Items.DIAMOND_AXE.canHarvestBlock(state);
+		if (player.getMainHandItem().getToolTypes().stream().anyMatch(state::isToolEffective)) return true;
+		if (AffixHelper.getAffixLevel(player.getMainHandItem(), Affixes.OMNITOOL) > 0) return Items.DIAMOND_PICKAXE.isCorrectToolForDrops(state) || Items.DIAMOND_SHOVEL.isCorrectToolForDrops(state) || Items.DIAMOND_AXE.isCorrectToolForDrops(state);
 		return false;
 	}
 

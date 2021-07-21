@@ -24,7 +24,7 @@ public class SpawnerWrapper {
 
 	public static final List<ItemStack> SPAWNER = Collections.singletonList(new ItemStack(Blocks.SPAWNER));
 	static {
-		new ApothSpawnerTile().write(SPAWNER.get(0).getOrCreateChildTag("BlockEntityTag"));
+		new ApothSpawnerTile().save(SPAWNER.get(0).getOrCreateTagElement("BlockEntityTag"));
 	}
 
 	final SpawnerModifier modifier;
@@ -34,7 +34,7 @@ public class SpawnerWrapper {
 	public SpawnerWrapper(SpawnerModifier modifier, String nbt, String tooltip) {
 		this.modifier = modifier;
 		this.output = SPAWNER.get(0).copy();
-		CompoundNBT tag = this.output.getOrCreateChildTag("BlockEntityTag");
+		CompoundNBT tag = this.output.getOrCreateTagElement("BlockEntityTag");
 		tag.putInt(nbt, tag.getInt(nbt) + modifier.getValue());
 		this.tooltip = tooltip;
 	}
@@ -42,7 +42,7 @@ public class SpawnerWrapper {
 	public SpawnerWrapper(SpawnerModifier modifier, String nbt, boolean change, String tooltip) {
 		this.modifier = modifier;
 		this.output = SPAWNER.get(0).copy();
-		CompoundNBT tag = this.output.getOrCreateChildTag("BlockEntityTag");
+		CompoundNBT tag = this.output.getOrCreateTagElement("BlockEntityTag");
 		tag.putBoolean(nbt, change);
 		this.tooltip = tooltip;
 	}
@@ -50,19 +50,19 @@ public class SpawnerWrapper {
 	public SpawnerWrapper(ResourceLocation entityOut, String tooltip) {
 		this.modifier = new EggModifier();
 		this.output = SPAWNER.get(0).copy();
-		CompoundNBT tag = this.output.getOrCreateChildTag("BlockEntityTag");
+		CompoundNBT tag = this.output.getOrCreateTagElement("BlockEntityTag");
 		tag.getCompound("SpawnData").putString("id", entityOut.toString());
 		this.tooltip = tooltip;
 	}
 
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(SPAWNER, PlaceboUtil.asList(this.modifier.getIngredient().getMatchingStacks())));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(SPAWNER, PlaceboUtil.asList(this.modifier.getIngredient().getItems())));
 		ingredients.setOutput(VanillaTypes.ITEM, this.output);
 	}
 
 	public void drawInfo(Minecraft mc, MatrixStack stack, int width, int height, double mouseX, double mouseY) {
-		mc.fontRenderer.drawString(stack, I18n.format(this.tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
-		if (this.modifier.getMin() != -1) mc.fontRenderer.drawString(stack, I18n.format("jei.spw.minmax", this.modifier.getMin(), this.modifier.getMax()), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
+		mc.font.draw(stack, I18n.get(this.tooltip), 0, height - mc.font.lineHeight * 2, 0);
+		if (this.modifier.getMin() != -1) mc.font.draw(stack, I18n.get("jei.spw.minmax", this.modifier.getMin(), this.modifier.getMax()), 0, height - mc.font.lineHeight + 3, 0);
 	}
 
 	public static class SpawnerInverseWrapper extends SpawnerWrapper {
@@ -73,13 +73,13 @@ public class SpawnerWrapper {
 
 		@Override
 		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.INVERSE.getIngredient().getMatchingStacks())));
+			ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(Collections.emptyList(), PlaceboUtil.asList(SpawnerModifiers.INVERSE.getIngredient().getItems())));
 		}
 
 		@Override
 		public void drawInfo(Minecraft mc, MatrixStack stack, int width, int height, double mouseX, double mouseY) {
-			mc.fontRenderer.drawString(stack, I18n.format(this.tooltip), 0, height - mc.fontRenderer.FONT_HEIGHT * 2, 0);
-			mc.fontRenderer.drawString(stack, I18n.format("jei.spw.invert2"), 0, height - mc.fontRenderer.FONT_HEIGHT + 3, 0);
+			mc.font.draw(stack, I18n.get(this.tooltip), 0, height - mc.font.lineHeight * 2, 0);
+			mc.font.draw(stack, I18n.get("jei.spw.invert2"), 0, height - mc.font.lineHeight + 3, 0);
 		}
 
 	}

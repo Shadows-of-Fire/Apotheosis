@@ -61,7 +61,7 @@ public class Apotheosis {
 	public static final ItemGroup APOTH_GROUP = new ItemGroup(MODID) {
 
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(Items.ENCHANTING_TABLE);
 		}
 	};
@@ -122,11 +122,11 @@ public class Apotheosis {
 
 	public void trackCooldown(AttackEntityEvent e) {
 		PlayerEntity p = e.getPlayer();
-		localAtkStrength = p.getCooledAttackStrength(0.5F);
+		localAtkStrength = p.getAttackStrengthScale(0.5F);
 	}
 
 	public static Ingredient potionIngredient(Potion type) {
-		return new NBTIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), type));
+		return new NBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), type));
 	}
 
 	/**

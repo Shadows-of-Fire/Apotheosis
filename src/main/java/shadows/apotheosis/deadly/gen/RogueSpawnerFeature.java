@@ -17,20 +17,20 @@ import shadows.apotheosis.deadly.reload.RandomSpawnerManager;
 public class RogueSpawnerFeature extends Feature<NoFeatureConfig> {
 
 	public static final RogueSpawnerFeature INSTANCE = new RogueSpawnerFeature();
-	public static final Predicate<BlockState> STONE_TEST = b -> FillerBlockType.BASE_STONE_OVERWORLD.test(b, null);
+	public static final Predicate<BlockState> STONE_TEST = b -> FillerBlockType.NATURAL_STONE.test(b, null);
 
 	public RogueSpawnerFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		BlockState state = world.getBlockState(pos);
-		BlockState downState = world.getBlockState(pos.down());
-		BlockState upState = world.getBlockState(pos.up());
-		if (STONE_TEST.test(downState) && upState.isAir(world, pos.up()) && (state.isAir(world, pos) || STONE_TEST.test(state))) {
+		BlockState downState = world.getBlockState(pos.below());
+		BlockState upState = world.getBlockState(pos.above());
+		if (STONE_TEST.test(downState) && upState.isAir(world, pos.above()) && (state.isAir(world, pos) || STONE_TEST.test(state))) {
 			RandomSpawnerManager.INSTANCE.getRandomItem(rand).place(world, pos, rand);
 			DeadlyModule.debugLog(pos, "Rogue Spawner");
 			return true;

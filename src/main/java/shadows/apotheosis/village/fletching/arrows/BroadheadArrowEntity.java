@@ -25,12 +25,12 @@ public class BroadheadArrowEntity extends ArrowEntity {
 	}
 
 	@Override
-	protected ItemStack getArrowStack() {
+	protected ItemStack getPickupItem() {
 		return new ItemStack(ApotheosisObjects.BROADHEAD_ARROW);
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -45,12 +45,12 @@ public class BroadheadArrowEntity extends ArrowEntity {
 	}
 
 	@Override
-	protected void arrowHit(LivingEntity living) {
-		EffectInstance bleed = living.getActivePotionEffect(ApotheosisObjects.BLEEDING);
+	protected void doPostHurtEffects(LivingEntity living) {
+		EffectInstance bleed = living.getEffect(ApotheosisObjects.BLEEDING);
 		if (bleed != null) {
-			living.addPotionEffect(new EffectInstance(ApotheosisObjects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+			living.addEffect(new EffectInstance(ApotheosisObjects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
 		} else {
-			living.addPotionEffect(new EffectInstance(ApotheosisObjects.BLEEDING, 300));
+			living.addEffect(new EffectInstance(ApotheosisObjects.BLEEDING, 300));
 		}
 	}
 }

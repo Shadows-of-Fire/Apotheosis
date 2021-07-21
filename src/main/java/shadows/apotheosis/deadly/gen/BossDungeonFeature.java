@@ -23,21 +23,21 @@ import shadows.apotheosis.deadly.reload.BossItemManager;
 
 public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 
-	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
-	private static final BlockState BRICK = Blocks.STONE_BRICKS.getDefaultState();
-	private static final BlockState MOSSY_BRICK = Blocks.MOSSY_STONE_BRICKS.getDefaultState();
-	private static final BlockState CRACKED_BRICK = Blocks.CRACKED_STONE_BRICKS.getDefaultState();
+	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
+	private static final BlockState BRICK = Blocks.STONE_BRICKS.defaultBlockState();
+	private static final BlockState MOSSY_BRICK = Blocks.MOSSY_STONE_BRICKS.defaultBlockState();
+	private static final BlockState CRACKED_BRICK = Blocks.CRACKED_STONE_BRICKS.defaultBlockState();
 	private static final BlockState[] BRICKS = { BRICK, MOSSY_BRICK, CRACKED_BRICK };
 
 	public static final BossDungeonFeature INSTANCE = new BossDungeonFeature();
 
 	public BossDungeonFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		int xRadius = 3 + rand.nextInt(3);
 		int floor = -1;
@@ -50,7 +50,7 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 		for (int x = -xRadius; x <= xRadius; ++x) {
 			for (int y = floor; y <= roof; ++y) {
 				for (int z = -zRadius; z <= zRadius; ++z) {
-					BlockPos blockpos = pos.add(x, y, z);
+					BlockPos blockpos = pos.offset(x, y, z);
 					BlockState state = world.getBlockState(blockpos);
 					Material material = state.getMaterial();
 					boolean flag = material.isSolid();
@@ -70,17 +70,17 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 			for (int x = -xRadius; x <= xRadius; ++x) {
 				for (int y = roof - 1; y >= floor; --y) {
 					for (int z = -zRadius; z <= zRadius; ++z) {
-						BlockPos blockpos = pos.add(x, y, z);
+						BlockPos blockpos = pos.offset(x, y, z);
 						BlockState state = states[x + xRadius][y + 1][z + zRadius];
 						if (x != -xRadius && y != floor && z != -zRadius && x != xRadius && y != roof && z != zRadius) {
-							if (!state.isIn(Blocks.CHEST)) world.setBlockState(blockpos, CAVE_AIR, 2);
+							if (!state.is(Blocks.CHEST)) world.setBlock(blockpos, CAVE_AIR, 2);
 						} else if (y > floor && !states[x + xRadius][y - 1 + 1][z + zRadius].getMaterial().isSolid()) {
-							world.setBlockState(blockpos, CAVE_AIR, 2);
-						} else if (state.getMaterial().isSolid() && !state.isIn(Blocks.CHEST)) {
+							world.setBlock(blockpos, CAVE_AIR, 2);
+						} else if (state.getMaterial().isSolid() && !state.is(Blocks.CHEST)) {
 							if (y == floor) {
-								world.setBlockState(blockpos, BRICKS[rand.nextInt(3)], 2);
+								world.setBlock(blockpos, BRICKS[rand.nextInt(3)], 2);
 							} else {
-								world.setBlockState(blockpos, rand.nextBoolean() ? BRICK : BRICKS[rand.nextInt(3)], 2);
+								world.setBlock(blockpos, rand.nextBoolean() ? BRICK : BRICKS[rand.nextInt(3)], 2);
 							}
 						}
 					}
@@ -95,27 +95,27 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 					int x = wall ? rand.nextBoolean() ? -xChestRadius : xChestRadius : rand.nextInt(xChestRadius * 2 + 1) - xChestRadius;
 					int y = 0;
 					int z = !wall ? rand.nextBoolean() ? -zChestRadius : zChestRadius : rand.nextInt(zChestRadius * 2 + 1) - zChestRadius;
-					BlockPos blockpos2 = pos.add(x, y, z);
+					BlockPos blockpos2 = pos.offset(x, y, z);
 					if (world.getBlockState(blockpos2).isAir()) {
 						int nearbySolids = 0;
 
 						for (Direction dir : Direction.Plane.HORIZONTAL) {
-							if (world.getBlockState(blockpos2.offset(dir)).getMaterial().isSolid()) {
+							if (world.getBlockState(blockpos2.relative(dir)).getMaterial().isSolid()) {
 								++nearbySolids;
 							}
 						}
 
 						if (nearbySolids == 1) {
-							world.setBlockState(blockpos2, StructurePiece.correctFacing(world, blockpos2, Blocks.CHEST.getDefaultState()), 2);
-							LockableLootTileEntity.setLootTable(world, rand, blockpos2, LootTables.CHESTS_SIMPLE_DUNGEON);
+							world.setBlock(blockpos2, StructurePiece.reorient(world, blockpos2, Blocks.CHEST.defaultBlockState()), 2);
+							LockableLootTileEntity.setLootTable(world, rand, blockpos2, LootTables.SIMPLE_DUNGEON);
 							break;
 						}
 					}
 				}
 			}
 
-			world.setBlockState(pos, ApotheosisObjects.BOSS_SPAWNER.getDefaultState(), 2);
-			TileEntity tileentity = world.getTileEntity(pos);
+			world.setBlock(pos, ApotheosisObjects.BOSS_SPAWNER.defaultBlockState(), 2);
+			TileEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof BossSpawnerTile) {
 				((BossSpawnerTile) tileentity).setBossItem(BossItemManager.INSTANCE.getRandomItem(rand));
 			} else {

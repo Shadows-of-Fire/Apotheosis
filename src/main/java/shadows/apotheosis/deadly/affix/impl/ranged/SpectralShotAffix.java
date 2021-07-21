@@ -33,26 +33,26 @@ public class SpectralShotAffix extends RangedAffix {
 
 	@Override
 	public void onArrowFired(LivingEntity user, AbstractArrowEntity arrow, ItemStack bow, float level) {
-		if (user.world.rand.nextFloat() <= level) {
-			if (!user.world.isRemote) {
+		if (user.level.random.nextFloat() <= level) {
+			if (!user.level.isClientSide) {
 				ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
-				AbstractArrowEntity spectralArrow = arrowitem.createArrow(user.world, ItemStack.EMPTY, user);
-				spectralArrow.shoot(user.rotationPitch, user.rotationYaw, 0.0F, 1 * 3.0F, 1.0F);
+				AbstractArrowEntity spectralArrow = arrowitem.createArrow(user.level, ItemStack.EMPTY, user);
+				spectralArrow.shoot(user.xRot, user.yRot, 0.0F, 1 * 3.0F, 1.0F);
 				this.cloneMotion(arrow, spectralArrow);
-				spectralArrow.setIsCritical(arrow.getIsCritical());
-				spectralArrow.setDamage(arrow.getDamage());
-				spectralArrow.setKnockbackStrength(arrow.knockbackStrength);
-				spectralArrow.forceFireTicks(arrow.getFireTimer());
-				spectralArrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+				spectralArrow.setCritArrow(arrow.isCritArrow());
+				spectralArrow.setBaseDamage(arrow.getBaseDamage());
+				spectralArrow.setKnockback(arrow.knockback);
+				spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
+				spectralArrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 				spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
-				arrow.world.addEntity(spectralArrow);
+				arrow.level.addFreshEntity(spectralArrow);
 			}
 		}
 	}
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = this.range.generateFloat(rand);
+		float lvl = this.range.getFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}
@@ -64,15 +64,15 @@ public class SpectralShotAffix extends RangedAffix {
 
 	@Override
 	public ITextComponent getDisplayName(float level) {
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).mergeStyle(TextFormatting.GRAY);
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).withStyle(TextFormatting.GRAY);
 	}
 
 	private void cloneMotion(AbstractArrowEntity src, AbstractArrowEntity dest) {
-		dest.setMotion(src.getMotion().scale(1));
-		dest.rotationYaw = src.rotationYaw;
-		dest.rotationPitch = src.rotationPitch;
-		dest.prevRotationYaw = dest.rotationYaw;
-		dest.prevRotationPitch = dest.rotationPitch;
+		dest.setDeltaMovement(src.getDeltaMovement().scale(1));
+		dest.yRot = src.yRot;
+		dest.xRot = src.xRot;
+		dest.yRotO = dest.yRot;
+		dest.xRotO = dest.xRot;
 	}
 
 }

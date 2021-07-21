@@ -91,7 +91,7 @@ public class DeadlyConfig {
 	}
 
 	public static boolean canGenerateIn(ISeedReader world) {
-		RegistryKey<World> key = world.getWorld().getDimensionKey();
-		return DIM_WHITELIST.contains(key.getLocation());
+		RegistryKey<World> key = world.getLevel().dimension();
+		return DIM_WHITELIST.contains(key.location());
 	}
 }

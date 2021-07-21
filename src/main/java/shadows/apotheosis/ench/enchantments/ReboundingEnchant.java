@@ -21,21 +21,21 @@ public class ReboundingEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 30 + level * 13;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 30;
+	public int getMaxCost(int level) {
+		return this.getMinCost(level) + 30;
 	}
 
 	@Override
-	public void onUserHurt(LivingEntity user, Entity attacker, int level) {
-		if (attacker != null && user.getDistanceSq(attacker) <= 4D && attacker.isNonBoss()) {
-			level = EnchantmentHelper.getMaxEnchantmentLevel(ApotheosisObjects.REBOUNDING, user);
-			Vector3d vec = new Vector3d(attacker.getPosX() - user.getPosX(), attacker.getPosY() - user.getPosY(), attacker.getPosZ() - user.getPosZ());
-			attacker.addVelocity(vec.x * 2 * level, vec.y * 3 * level, vec.z * 2 * level);
+	public void doPostHurt(LivingEntity user, Entity attacker, int level) {
+		if (attacker != null && user.distanceToSqr(attacker) <= 4D && attacker.canChangeDimensions()) {
+			level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.REBOUNDING, user);
+			Vector3d vec = new Vector3d(attacker.getX() - user.getX(), attacker.getY() - user.getY(), attacker.getZ() - user.getZ());
+			attacker.push(vec.x * 2 * level, vec.y * 3 * level, vec.z * 2 * level);
 		}
 	}
 

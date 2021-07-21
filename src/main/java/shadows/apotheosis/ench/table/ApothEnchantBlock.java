@@ -23,41 +23,41 @@ import shadows.placebo.util.IReplacementBlock;
 public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacementBlock {
 
 	public ApothEnchantBlock() {
-		super(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED).hardnessAndResistance(5.0F, 1200.0F));
+		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
 		this.setRegistryName("minecraft:enchanting_table");
 	}
 
 	@Override
 	@Nullable
-	public INamedContainerProvider getContainer(BlockState state, World world, BlockPos pos) {
-		TileEntity tileentity = world.getTileEntity(pos);
+	public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
+		TileEntity tileentity = world.getBlockEntity(pos);
 		if (tileentity instanceof ApothEnchantTile) {
 			ITextComponent itextcomponent = ((INameable) tileentity).getDisplayName();
-			return new SimpleNamedContainerProvider((id, inventory, player) -> new ApothEnchantContainer(id, inventory, IWorldPosCallable.of(world, pos), (ApothEnchantTile) tileentity), itextcomponent);
+			return new SimpleNamedContainerProvider((id, inventory, player) -> new ApothEnchantContainer(id, inventory, IWorldPosCallable.create(world, pos), (ApothEnchantTile) tileentity), itextcomponent);
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new ApothEnchantTile();
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = world.getTileEntity(pos);
+			TileEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof ApothEnchantTile) {
-				Block.spawnAsEntity(world, pos, ((ApothEnchantTile) tileentity).inv.getStackInSlot(0));
-				world.removeTileEntity(pos);
+				Block.popResource(world, pos, ((ApothEnchantTile) tileentity).inv.getStackInSlot(0));
+				world.removeBlockEntity(pos);
 			}
 		}
 	}
 
 	@Override
 	public void _setDefaultState(BlockState state) {
-		this.setDefaultState(state);
+		this.registerDefaultState(state);
 	}
 
 	protected StateContainer<Block, BlockState> container;
@@ -68,8 +68,8 @@ public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacem
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateContainer() {
-		return this.container == null ? super.getStateContainer() : this.container;
+	public StateContainer<Block, BlockState> getStateDefinition() {
+		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 
 }

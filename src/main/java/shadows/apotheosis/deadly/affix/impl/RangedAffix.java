@@ -25,7 +25,7 @@ public abstract class RangedAffix extends Affix {
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = this.range.generateFloat(rand);
+		float lvl = this.range.getFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		AffixHelper.addLore(stack, loreComponent("affix." + this.getRegistryName() + ".desc", String.format("%.2f", lvl)));
 		return lvl;

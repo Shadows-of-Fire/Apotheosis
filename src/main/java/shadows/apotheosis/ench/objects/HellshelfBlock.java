@@ -29,46 +29,46 @@ public class HellshelfBlock extends Block implements IEnchantingBlock {
 	public static final IntegerProperty INFUSION = IntegerProperty.create("infusion", 0, 5);
 
 	public HellshelfBlock() {
-		super(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BLACK).hardnessAndResistance(2, 10).sound(SoundType.STONE));
+		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(2, 10).sound(SoundType.STONE));
 	}
 
 	@Override
 	public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
-		return 1.5F + state.get(INFUSION) * 0.1F;
+		return 1.5F + state.getValue(INFUSION) * 0.1F;
 	}
 
 	@Override
 	public float getQuantaBonus(BlockState state, IWorldReader world, BlockPos pos) {
-		return 0.15F + state.get(INFUSION) * 0.01F;
+		return 0.15F + state.getValue(INFUSION) * 0.01F;
 	}
 
 	@Override
 	public float getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
-		return 22.5F + state.get(INFUSION) * 1.5F;
+		return 22.5F + state.getValue(INFUSION) * 1.5F;
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(INFUSION);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		ItemStack stack = ctx.getItem();
-		return this.getDefaultState().with(INFUSION, Math.min(5, EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)));
+		ItemStack stack = ctx.getItemInHand();
+		return this.defaultBlockState().setValue(INFUSION, Math.min(5, EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.HELL_INFUSION, stack)));
 	}
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		ItemStack stack = new ItemStack(this);
-		if (state.get(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.get(INFUSION)), stack);
+		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.getValue(INFUSION)), stack);
 		return Arrays.asList(stack);
 	}
 
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
 		ItemStack stack = new ItemStack(this);
-		if (state.get(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.get(INFUSION)), stack);
+		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.HELL_INFUSION, state.getValue(INFUSION)), stack);
 		return stack;
 	}
 

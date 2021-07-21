@@ -18,27 +18,27 @@ import shadows.placebo.util.IReplacementBlock;
 public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementBlock {
 
 	public ApothSugarcaneBlock() {
-		super(AbstractBlock.Properties.from(Blocks.SUGAR_CANE));
+		super(AbstractBlock.Properties.copy(Blocks.SUGAR_CANE));
 		this.setRegistryName(new ResourceLocation("sugar_cane"));
 	}
 
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-		if (!state.isValidPosition(worldIn, pos)) {
+		if (!state.canSurvive(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true);
-		} else if (worldIn.isAirBlock(pos.up())) {
+		} else if (worldIn.isEmptyBlock(pos.above())) {
 			int i = 0;
-			if (GardenModule.maxReedHeight != 255) for (i = 1; worldIn.getBlockState(pos.down(i)).getBlock() == this; ++i)
+			if (GardenModule.maxReedHeight != 255) for (i = 1; worldIn.getBlockState(pos.below(i)).getBlock() == this; ++i)
 				;
 
 			if (i < GardenModule.maxReedHeight) {
-				int j = state.get(AGE);
+				int j = state.getValue(AGE);
 				if (ForgeHooks.onCropsGrowPre(worldIn, pos, state, true)) {
 					if (j == 15) {
-						worldIn.setBlockState(pos.up(), this.getDefaultState());
-						worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(0)), 4);
+						worldIn.setBlockAndUpdate(pos.above(), this.defaultBlockState());
+						worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(0)), 4);
 					} else {
-						worldIn.setBlockState(pos, state.with(AGE, Integer.valueOf(j + 1)), 4);
+						worldIn.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}
 					ForgeHooks.onCropsGrowPost(worldIn, pos, state);
 				}
@@ -57,7 +57,7 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 
 	@Override
 	public void _setDefaultState(BlockState state) {
-		this.setDefaultState(state);
+		this.registerDefaultState(state);
 	}
 
 	protected StateContainer<Block, BlockState> container;
@@ -68,8 +68,8 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateContainer() {
-		return this.container == null ? super.getStateContainer() : this.container;
+	public StateContainer<Block, BlockState> getStateDefinition() {
+		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 
 }

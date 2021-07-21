@@ -26,10 +26,10 @@ public class SnipeDamageAffix extends AttributeAffix {
 
 	@Override
 	public void onArrowImpact(AbstractArrowEntity arrow, RayTraceResult res, Type type, float level) {
-		Entity shooter = arrow.func_234616_v_();
+		Entity shooter = arrow.getOwner();
 		if (shooter != null && type == Type.ENTITY) {
-			if (shooter.getDistanceSq(((EntityRayTraceResult) res).getEntity()) > 30 * 30) {
-				arrow.setDamage(arrow.getDamage() + level);
+			if (shooter.distanceToSqr(((EntityRayTraceResult) res).getEntity()) > 30 * 30) {
+				arrow.setBaseDamage(arrow.getBaseDamage() + level);
 			}
 		}
 	}

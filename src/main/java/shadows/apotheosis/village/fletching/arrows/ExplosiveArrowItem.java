@@ -19,7 +19,7 @@ import shadows.apotheosis.Apotheosis;
 public class ExplosiveArrowItem extends ArrowItem {
 
 	public ExplosiveArrowItem() {
-		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
+		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class ExplosiveArrowItem extends ArrowItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.explosive_arrow").mergeStyle(TextFormatting.RED));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("info.apotheosis.explosive_arrow").withStyle(TextFormatting.RED));
 	}
 
 }

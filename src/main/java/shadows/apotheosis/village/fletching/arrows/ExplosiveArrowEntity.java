@@ -29,35 +29,35 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	protected ItemStack getArrowStack() {
+	protected ItemStack getPickupItem() {
 		return new ItemStack(ApotheosisObjects.EXPLOSIVE_ARROW);
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	protected void arrowHit(LivingEntity living) {
-		if (!this.world.isRemote) {
-			Entity shooter = this.func_234616_v_();
+	protected void doPostHurtEffects(LivingEntity living) {
+		if (!this.level.isClientSide) {
+			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, living.getPosX(), living.getPosY(), living.getPosZ(), 2, false, Mode.DESTROY);
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, Mode.DESTROY);
 			this.remove();
 		}
 	}
 
 	@Override //onBlockHit
-	protected void func_230299_a_(BlockRayTraceResult res) {
-		super.func_230299_a_(res);
-		Vector3d vec = res.getHitVec();
-		if (!this.world.isRemote) {
-			Entity shooter = this.func_234616_v_();
+	protected void onHitBlock(BlockRayTraceResult res) {
+		super.onHitBlock(res);
+		Vector3d vec = res.getLocation();
+		if (!this.level.isClientSide) {
+			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.world.createExplosion(null, DamageSource.causeExplosionDamage(explosionSource), null, vec.getX(), vec.getY(), vec.getZ(), 3, false, Mode.DESTROY);
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, Mode.DESTROY);
 			this.remove();
 		}
 	}

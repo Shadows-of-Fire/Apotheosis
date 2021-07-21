@@ -189,7 +189,7 @@ public class NameHelper {
 	 * @return The name of the item, without the owning prefix of the boss's name
 	 */
 	public static TextComponent setItemName(Random random, ItemStack itemStack, String bossName) {
-		TextComponent name = (TextComponent) itemStack.getDisplayName();
+		TextComponent name = (TextComponent) itemStack.getHoverName();
 
 		if (itemStack.getItem() instanceof TieredItem) {
 			IItemTier material = ((TieredItem) itemStack.getItem()).getTier();
@@ -208,17 +208,17 @@ public class NameHelper {
 			} else if (types.contains(ToolType.SHOVEL)) {
 				type = shovels;
 			}
-			name.appendString(type[random.nextInt(type.length)]);
+			name.append(type[random.nextInt(type.length)]);
 		} else if (itemStack.getItem() instanceof BowItem) {
 			String[] type = bows;
 			name = new StringTextComponent(type[random.nextInt(type.length)]);
 		} else if (itemStack.getItem() instanceof ArmorItem) {
-			IArmorMaterial amaterial = ((ArmorItem) itemStack.getItem()).getArmorMaterial();
+			IArmorMaterial amaterial = ((ArmorItem) itemStack.getItem()).getMaterial();
 			String[] descriptors = getArmorDescriptors(amaterial);
 			name = new StringTextComponent(descriptors[random.nextInt(descriptors.length)] + " ");
 
 			String[] type = { "Armor" };
-			switch (((ArmorItem) itemStack.getItem()).getEquipmentSlot()) {
+			switch (((ArmorItem) itemStack.getItem()).getSlot()) {
 			case HEAD:
 				type = helms;
 				break;
@@ -233,13 +233,13 @@ public class NameHelper {
 				break;
 			default:
 			}
-			name.appendString(type[random.nextInt(type.length)]);
+			name.append(type[random.nextInt(type.length)]);
 		} else if (itemStack.isShield(null)) {
 			String[] type = shields;
 			name = new StringTextComponent(type[random.nextInt(type.length)]);
 		}
 
-		itemStack.setDisplayName(name);
+		itemStack.setHoverName(name);
 		return name;
 	}
 
@@ -285,7 +285,7 @@ public class NameHelper {
 					itemsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
 				}
 				if (i instanceof ArmorItem) {
-					IArmorMaterial mat = ((ArmorItem) i).getArmorMaterial();
+					IArmorMaterial mat = ((ArmorItem) i).getMaterial();
 					armorsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
 				}
 			} catch (Exception e) {
@@ -297,14 +297,14 @@ public class NameHelper {
 		for (Map.Entry<IItemTier, List<Item>> e : itemsByTier.entrySet()) {
 			IItemTier tier = e.getKey();
 			List<Item> items = e.getValue();
-			String[] read = c.getStringList(getID(tier, items), "tools", materials.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairMaterial));
+			String[] read = c.getStringList(getID(tier, items), "tools", materials.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairIngredient));
 			if (read.length > 0) materials.put(tier, read);
 		}
 
 		for (Map.Entry<IArmorMaterial, List<Item>> e : armorsByTier.entrySet()) {
 			IArmorMaterial tier = e.getKey();
 			List<Item> items = e.getValue();
-			String[] read = c.getStringList(getID(tier, items), "armors", armors.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairMaterial));
+			String[] read = c.getStringList(getID(tier, items), "armors", armors.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairIngredient));
 			if (read.length > 0) armors.put(tier, read);
 		}
 

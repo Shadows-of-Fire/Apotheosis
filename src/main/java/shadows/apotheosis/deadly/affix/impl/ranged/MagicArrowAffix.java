@@ -30,7 +30,7 @@ public class MagicArrowAffix extends Affix {
 	public float getMin() {
 		return 1;
 	}
-	
+
 	@Override
 	public float upgradeLevel(float curLvl, float newLvl) {
 		return 1;

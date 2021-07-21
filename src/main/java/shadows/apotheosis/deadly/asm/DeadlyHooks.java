@@ -44,11 +44,11 @@ public class DeadlyHooks {
 		}
 
 		public static UUID getADM() {
-			return Item.ATTACK_DAMAGE_MODIFIER;
+			return Item.BASE_ATTACK_DAMAGE_UUID;
 		}
 
 		public static UUID getASM() {
-			return Item.ATTACK_SPEED_MODIFIER;
+			return Item.BASE_ATTACK_SPEED_UUID;
 		}
 	}
 
@@ -83,13 +83,13 @@ public class DeadlyHooks {
 	 */
 	public static void onEntityDamaged(LivingEntity user, Entity target) {
 		if (user != null) {
-			for (ItemStack s : user.getEquipmentAndArmor()) {
+			for (ItemStack s : user.getAllSlots()) {
 				Map<Affix, Float> affixes = AffixHelper.getAffixes(s);
 				for (Map.Entry<Affix, Float> e : affixes.entrySet()) {
-					int old = target.hurtResistantTime;
-					target.hurtResistantTime = 0;
+					int old = target.invulnerableTime;
+					target.invulnerableTime = 0;
 					e.getKey().onEntityDamaged(user, target, e.getValue());
-					target.hurtResistantTime = old;
+					target.invulnerableTime = old;
 				}
 			}
 		}
@@ -100,7 +100,7 @@ public class DeadlyHooks {
 	 */
 	public static void onUserHurt(LivingEntity user, Entity attacker) {
 		if (user != null) {
-			for (ItemStack s : user.getEquipmentAndArmor()) {
+			for (ItemStack s : user.getAllSlots()) {
 				Map<Affix, Float> affixes = AffixHelper.getAffixes(s);
 				for (Map.Entry<Affix, Float> e : affixes.entrySet()) {
 					e.getKey().onUserHurt(user, attacker, e.getValue());
@@ -126,7 +126,7 @@ public class DeadlyHooks {
 	 * Replaces the standard {@link Inventory} with a context-aware {@link CampfireInventory}.
 	 */
 	public static IInventory getCampfireInv(IInventory src, CampfireTileEntity tile) {
-		return new CampfireInventory(tile, src.getStackInSlot(0));
+		return new CampfireInventory(tile, src.getItem(0));
 	}
 
 	public static class CampfireInventory extends Inventory {

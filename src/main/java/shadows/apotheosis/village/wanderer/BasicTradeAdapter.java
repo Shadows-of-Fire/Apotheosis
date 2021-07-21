@@ -34,11 +34,11 @@ public class BasicTradeAdapter implements JsonDeserializer<BasicTrade>, JsonSeri
 	public JsonElement serialize(BasicTrade src, Type typeOfSrc, JsonSerializationContext ctx) {
 		JsonObject obj = new JsonObject();
 		MerchantOffer offer = src.getOffer(null, null);
-		obj.add("input_1", ctx.serialize(offer.getBuyingStackFirst()));
-		obj.add("input_2", ctx.serialize(offer.getBuyingStackSecond()));
-		obj.add("output", ctx.serialize(offer.getSellingStack()));
+		obj.add("input_1", ctx.serialize(offer.getBaseCostA()));
+		obj.add("input_2", ctx.serialize(offer.getCostB()));
+		obj.add("output", ctx.serialize(offer.getResult()));
 		obj.addProperty("max_trades", offer.getMaxUses());
-		obj.addProperty("xp", offer.getGivenExp());
+		obj.addProperty("xp", offer.getXp());
 		obj.addProperty("price_mult", offer.getPriceMultiplier());
 		return obj;
 	}

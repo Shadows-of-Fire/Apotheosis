@@ -37,23 +37,23 @@ public class ModifierSync {
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ModifierRecipe> {
 		@Override
-		public ModifierRecipe read(ResourceLocation recipeId, JsonObject json) {
+		public ModifierRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return null;
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, ModifierRecipe recipe) {
-			buffer.writeString(recipe.modif.getId());
-			recipe.modif.getIngredient().write(buffer);
+		public void toNetwork(PacketBuffer buffer, ModifierRecipe recipe) {
+			buffer.writeUtf(recipe.modif.getId());
+			recipe.modif.getIngredient().toNetwork(buffer);
 			buffer.writeInt(recipe.modif.value);
 			buffer.writeInt(recipe.modif.min);
 			buffer.writeInt(recipe.modif.max);
 		}
 
 		@Override
-		public ModifierRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			SpawnerModifier modif = SpawnerModifiers.MODIFIERS.get(buffer.readString(50));
-			modif.sync(Ingredient.read(buffer), buffer.readInt(), buffer.readInt(), buffer.readInt());
+		public ModifierRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			SpawnerModifier modif = SpawnerModifiers.MODIFIERS.get(buffer.readUtf(50));
+			modif.sync(Ingredient.fromNetwork(buffer), buffer.readInt(), buffer.readInt(), buffer.readInt());
 			return new ModifierRecipe(modif);
 		}
 

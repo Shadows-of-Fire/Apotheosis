@@ -28,7 +28,7 @@ public class ScrappingTomeItem extends BookItem {
 	static Random rand = new Random();
 
 	public ScrappingTomeItem() {
-		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
+		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 		this.setRegistryName(Apotheosis.MODID, "scrap_tome");
 	}
 
@@ -39,7 +39,7 @@ public class ScrappingTomeItem extends BookItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.isEnchanted()) return;
 		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome"));
 		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome2"));
@@ -62,7 +62,7 @@ public class ScrappingTomeItem extends BookItem {
 		for (Enchantment e : keys) {
 			seed ^= e.getRegistryName().hashCode();
 		}
-		seed ^= ev.getPlayer().getXPSeed();
+		seed ^= ev.getPlayer().getEnchantmentSeed();
 		rand.setSeed(seed);
 		while (wepEnch.keySet().size() > size) {
 			Enchantment lost = keys.get(rand.nextInt(keys.size()));

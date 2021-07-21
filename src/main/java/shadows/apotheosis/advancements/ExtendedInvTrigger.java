@@ -27,12 +27,12 @@ import shadows.apotheosis.deadly.affix.LootRarity;
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
 	@Override
-	public InventoryChangeTrigger.Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate andPred, ConditionArrayParser conditionsParser) {
-		JsonObject jsonobject = JSONUtils.getJsonObject(json, "slots", new JsonObject());
+	public InventoryChangeTrigger.Instance createInstance(JsonObject json, EntityPredicate.AndPredicate andPred, ConditionArrayParser conditionsParser) {
+		JsonObject jsonobject = JSONUtils.getAsJsonObject(json, "slots", new JsonObject());
 		MinMaxBounds.IntBound minmaxbounds$intbound = MinMaxBounds.IntBound.fromJson(jsonobject.get("occupied"));
 		MinMaxBounds.IntBound minmaxbounds$intbound1 = MinMaxBounds.IntBound.fromJson(jsonobject.get("full"));
 		MinMaxBounds.IntBound minmaxbounds$intbound2 = MinMaxBounds.IntBound.fromJson(jsonobject.get("empty"));
-		ItemPredicate[] aitempredicate = ItemPredicate.deserializeArray(json.get("items"));
+		ItemPredicate[] aitempredicate = ItemPredicate.fromJsonArray(json.get("items"));
 		if (json.has("apoth")) aitempredicate = this.deserializeApoth(json.getAsJsonObject("apoth"));
 		return new InventoryChangeTrigger.Instance(andPred, minmaxbounds$intbound, minmaxbounds$intbound1, minmaxbounds$intbound2, aitempredicate);
 	}
@@ -45,8 +45,8 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 			IntBound bound = IntBound.fromJson(json.get("level"));
 			return new ItemPredicate[] { new TrueItemPredicate(s -> {
 				Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(s);
-				if (ench != null) return bound.test(enchMap.getOrDefault(ench, 0));
-				return enchMap.values().stream().anyMatch(bound::test);
+				if (ench != null) return bound.matches(enchMap.getOrDefault(ench, 0));
+				return enchMap.values().stream().anyMatch(bound::matches);
 			}) };
 		}
 		if (type.equals("affix")) {
@@ -59,13 +59,13 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 		if (type.equals("nbt")) {
 			CompoundNBT tag;
 			try {
-				tag = JsonToNBT.getTagFromJson(JSONUtils.getString(json.get("nbt"), "nbt"));
+				tag = JsonToNBT.parseTag(JSONUtils.convertToString(json.get("nbt"), "nbt"));
 			} catch (CommandSyntaxException e) {
 				throw new RuntimeException(e);
 			}
 			return new ItemPredicate[] { new TrueItemPredicate(s -> {
 				if (!s.hasTag()) return false;
-				for (String key : tag.keySet()) {
+				for (String key : tag.getAllKeys()) {
 					if (!tag.get(key).equals(s.getTag().get(key))) return false;
 				}
 				return true;
@@ -84,7 +84,7 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 		}
 
 		@Override
-		public boolean test(ItemStack item) {
+		public boolean matches(ItemStack item) {
 			return this.predicate.test(item);
 		}
 	}

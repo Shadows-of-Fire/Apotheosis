@@ -45,14 +45,14 @@ public class BossSpawnerBlock extends Block {
 
 		@Override
 		public void tick() {
-			if (this.world.isRemote) return;
-			if (this.ticks++ % 40 == 0 && this.world.getEntitiesWithinAABB(EntityType.PLAYER, new AxisAlignedBB(this.pos).grow(8, 8, 8), EntityPredicates.NOT_SPECTATING).stream().anyMatch(p -> !p.isCreative())) {
-				this.world.setBlockState(this.pos, Blocks.AIR.getDefaultState());
-				BlockPos pos = this.pos;
+			if (this.level.isClientSide) return;
+			if (this.ticks++ % 40 == 0 && this.level.getEntities(EntityType.PLAYER, new AxisAlignedBB(this.worldPosition).inflate(8, 8, 8), EntityPredicates.NO_SPECTATORS).stream().anyMatch(p -> !p.isCreative())) {
+				this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
+				BlockPos pos = this.worldPosition;
 				if (this.item != null) {
-					MobEntity entity = this.item.createBoss((ServerWorld) this.world, pos, this.world.getRandom());
-					entity.enablePersistence();
-					this.world.addEntity(entity);
+					MobEntity entity = this.item.createBoss((ServerWorld) this.level, pos, this.level.getRandom());
+					entity.setPersistenceRequired();
+					this.level.addFreshEntity(entity);
 				}
 			}
 		}
@@ -62,15 +62,15 @@ public class BossSpawnerBlock extends Block {
 		}
 
 		@Override
-		public CompoundNBT write(CompoundNBT tag) {
+		public CompoundNBT save(CompoundNBT tag) {
 			tag.putString("boss_item", this.item.getId().toString());
-			return super.write(tag);
+			return super.save(tag);
 		}
 
 		@Override
-		public void read(BlockState state, CompoundNBT tag) {
+		public void load(BlockState state, CompoundNBT tag) {
 			this.item = BossItemManager.INSTANCE.getById(new ResourceLocation(tag.getString("boss_item")));
-			super.read(state, tag);
+			super.load(state, tag);
 		}
 
 	}

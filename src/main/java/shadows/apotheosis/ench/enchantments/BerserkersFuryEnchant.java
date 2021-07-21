@@ -14,13 +14,13 @@ public class BerserkersFuryEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 40 + level * 30;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 40;
+	public int getMaxCost(int level) {
+		return this.getMinCost(level) + 40;
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class BerserkersFuryEnchant extends Enchantment {
 	}
 
 	@Override
-	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_RED);
+	public ITextComponent getFullname(int level) {
+		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_RED);
 	}
 
 }

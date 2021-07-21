@@ -73,7 +73,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.IRON_BLOCK, 1, 1, 3, 0));
 		build.addEntries(new EnchantedEntry(Items.ENCHANTED_BOOK, 3));
 		build.addEntries(new AffixEntry(8, 5));
-		LootSystem.registerLootTable(BRUTAL, LootSystem.tableBuilder().addLootPool(build).build());
+		LootSystem.registerLootTable(BRUTAL, LootSystem.tableBuilder().withPool(build).build());
 
 		build = new PoolBuilder(5, 8);
 		build.bonusRolls(1, 3);
@@ -100,7 +100,7 @@ public class DeadlyLoot {
 		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
 		build.addEntries(new AffixEntry(8, 5));
 		build.addEntries(new AffixEntry(8, 8));
-		LootSystem.registerLootTable(BRUTAL_ROTATE, LootSystem.tableBuilder().addLootPool(build).build());
+		LootSystem.registerLootTable(BRUTAL_ROTATE, LootSystem.tableBuilder().withPool(build).build());
 
 		build = new PoolBuilder(5, 6);
 		build.bonusRolls(1, 4);
@@ -127,7 +127,7 @@ public class DeadlyLoot {
 		build.addEntries(ChestBuilder.loot(Blocks.OBSIDIAN, 3, 8, 3, 0));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 3));
 		build.addEntries(new AffixEntry(8, 5));
-		LootSystem.registerLootTable(SWARM, LootSystem.tableBuilder().addLootPool(build).build());
+		LootSystem.registerLootTable(SWARM, LootSystem.tableBuilder().withPool(build).build());
 
 		build = new PoolBuilder(6, 12);
 		build.bonusRolls(2, 5);
@@ -159,7 +159,7 @@ public class DeadlyLoot {
 		build.addEntries(new EnchantedEntry(Items.DIAMOND_CHESTPLATE, 20));
 		build.addEntries(new EnchantedEntry(Items.BOOK, 20));
 		build.addEntries(new AffixEntry(20, 15));
-		LootSystem.registerLootTable(VALUABLE, LootSystem.tableBuilder().addLootPool(build).build());
+		LootSystem.registerLootTable(VALUABLE, LootSystem.tableBuilder().withPool(build).build());
 
 		if (Apotheosis.enableEnch) {
 			build = new PoolBuilder(6, 9);
@@ -170,12 +170,12 @@ public class DeadlyLoot {
 			for (int i = 0; i < 5; i++)
 				build.addEntries(ChestBuilder.loot(DeadlyModule.RARITY_TOMES.get(LootRarity.values()[i]), 1, 1, 16 - 3 * i, 10));
 			build.addEntries(new AffixEntry(20, 35));
-			LootSystem.registerLootTable(TOME_TOWER, LootSystem.tableBuilder().addLootPool(build).build());
+			LootSystem.registerLootTable(TOME_TOWER, LootSystem.tableBuilder().withPool(build).build());
 		}
 	}
 
 	private static ItemStack egg(String mob) {
-		return new ItemStack(SpawnEggItem.EGGS.get(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob))));
+		return new ItemStack(SpawnEggItem.BY_ID.get(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob))));
 	}
 
 	private static ItemStack potion(Potion type) {
@@ -184,7 +184,7 @@ public class DeadlyLoot {
 
 	private static ItemStack potion(Item pot, Potion type) {
 		ItemStack s = new ItemStack(pot);
-		PotionUtils.addPotionToItemStack(s, type);
+		PotionUtils.setPotion(s, type);
 		return s;
 	}
 
@@ -202,7 +202,7 @@ public class DeadlyLoot {
 		}
 
 		@Override
-		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
+		protected void createItemStack(Consumer<ItemStack> list, LootContext ctx) {
 			LootRarity rarity = LootRarity.random(ctx.getRandom());
 			AffixLootEntry entry = AffixLootManager.getRandomEntry(ctx.getRandom());
 			ItemStack stack = entry.getStack().copy();
@@ -211,7 +211,7 @@ public class DeadlyLoot {
 		}
 
 		@Override
-		public LootPoolEntryType func_230420_a_() {
+		public LootPoolEntryType getType() {
 			return AFFIX_TYPE;
 		}
 
@@ -232,7 +232,7 @@ public class DeadlyLoot {
 		}
 
 		@Override
-		protected void func_216154_a(Consumer<ItemStack> list, LootContext ctx) {
+		protected void createItemStack(Consumer<ItemStack> list, LootContext ctx) {
 			ItemStack enchTome = this.func.apply(new ItemStack(this.i), ctx);
 			ItemStack ench = new ItemStack(Items.ENCHANTED_BOOK);
 			EnchantmentHelper.getEnchantments(enchTome).entrySet().stream().map(e -> new EnchantmentData(e.getKey(), e.getValue())).forEach(d -> EnchantedBookItem.addEnchantment(ench, d));

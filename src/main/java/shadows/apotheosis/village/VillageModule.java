@@ -54,7 +54,7 @@ public class VillageModule {
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
 		Map<BlockState, PointOfInterestType> types = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
-		types.put(Blocks.FLETCHING_TABLE.getDefaultState(), PointOfInterestType.FLETCHER);
+		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PointOfInterestType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		WandererReplacements.load(config);
 		if (config.hasChanged()) config.save();
@@ -91,38 +91,38 @@ public class VillageModule {
 	public void entities(Register<EntityType<?>> e) {
 		//Formatter::off
 		e.getRegistry().register(EntityType.Builder
-				.<ObsidianArrowEntity>create(ObsidianArrowEntity::new, EntityClassification.MISC)
+				.<ObsidianArrowEntity>of(ObsidianArrowEntity::new, EntityClassification.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
-				.size(0.5F, 0.5F)
+				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new ObsidianArrowEntity(w))
 				.build("ob_arrow")
 				.setRegistryName("ob_arrow_entity"));
 		e.getRegistry().register(EntityType.Builder
-				.<BroadheadArrowEntity>create(BroadheadArrowEntity::new, EntityClassification.MISC)
+				.<BroadheadArrowEntity>of(BroadheadArrowEntity::new, EntityClassification.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
-				.size(0.5F, 0.5F)
+				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new BroadheadArrowEntity(w))
 				.build("bh_arrow")
 				.setRegistryName("bh_arrow_entity"));
 		e.getRegistry().register(EntityType.Builder
-				.<ExplosiveArrowEntity>create(ExplosiveArrowEntity::new, EntityClassification.MISC)
+				.<ExplosiveArrowEntity>of(ExplosiveArrowEntity::new, EntityClassification.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
-				.size(0.5F, 0.5F)
+				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new ExplosiveArrowEntity(w))
 				.build("ex_arrow")
 				.setRegistryName("ex_arrow_entity"));
 		e.getRegistry().register(EntityType.Builder
-				.<MiningArrowEntity>create(MiningArrowEntity::new, EntityClassification.MISC)
+				.<MiningArrowEntity>of(MiningArrowEntity::new, EntityClassification.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
-				.size(0.5F, 0.5F)
+				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new MiningArrowEntity(w))
 				.build("mn_arrow")
 				.setRegistryName("mn_arrow_entity"));

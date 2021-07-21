@@ -40,8 +40,8 @@ public class GardenModule {
 	@SubscribeEvent
 	public void items(Register<Item> e) {
 		e.getRegistry().register(new EnderLeashItem().setRegistryName("farmers_leash"));
-		ComposterBlock.CHANCES.put(Blocks.CACTUS.asItem(), 0.5F);
-		ComposterBlock.CHANCES.put(Blocks.SUGAR_CANE.asItem(), 0.5F);
+		ComposterBlock.COMPOSTABLES.put(Blocks.CACTUS.asItem(), 0.5F);
+		ComposterBlock.COMPOSTABLES.put(Blocks.SUGAR_CANE.asItem(), 0.5F);
 	}
 
 	public void reload(ApotheosisReloadEvent e) {

@@ -49,11 +49,11 @@ public class DisengageAffix extends Affix {
 
 	@Override
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
-		Entity tSource = source.getTrueSource();
-		if (tSource != null && tSource.getDistanceSq(entity) <= 9) {
-			Vector3d look = entity.getLookVec();
-			entity.setMotion(new Vector3d(1 * -look.x, 0.25, 1 * -look.z));
-			entity.velocityChanged = true;
+		Entity tSource = source.getEntity();
+		if (tSource != null && tSource.distanceToSqr(entity) <= 9) {
+			Vector3d look = entity.getLookAngle();
+			entity.setDeltaMovement(new Vector3d(1 * -look.x, 0.25, 1 * -look.z));
+			entity.hurtMarked = true;
 			entity.setOnGround(false);
 		}
 		return amount;

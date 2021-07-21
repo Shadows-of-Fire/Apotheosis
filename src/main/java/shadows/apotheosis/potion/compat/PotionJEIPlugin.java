@@ -10,7 +10,7 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
+import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICustomCraftingCategoryExtension;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -66,7 +66,7 @@ public class PotionJEIPlugin implements IModPlugin {
 		@Override
 		public void setIngredients(IIngredients ingredients) {
 			ingredients.setInputIngredients(this.recipe.getIngredients());
-			ingredients.setOutput(VanillaTypes.ITEM, this.recipe.getRecipeOutput());
+			ingredients.setOutput(VanillaTypes.ITEM, this.recipe.getResultItem());
 		}
 
 		@Override
@@ -83,16 +83,16 @@ public class PotionJEIPlugin implements IModPlugin {
 		public void setRecipe(IRecipeLayout recipeLayout, IIngredients ingredients) {
 			IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 			ItemStack focus = recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
-			Potion potion = PotionUtils.getPotionFromItem(focus);
+			Potion potion = PotionUtils.getPotion(focus);
 			List<List<ItemStack>> recipeInputs = ingredients.getInputs(VanillaTypes.ITEM);
 			List<List<ItemStack>> clones = new ArrayList<>();
 			recipeInputs.forEach(l -> {
 				List<ItemStack> cloneList = new ArrayList<>();
-				l.stream().map(ItemStack::copy).map(s -> PotionUtils.addPotionToItemStack(s, potion)).forEach(cloneList::add);
+				l.stream().map(ItemStack::copy).map(s -> PotionUtils.setPotion(s, potion)).forEach(cloneList::add);
 				clones.add(cloneList);
 			});
 			ItemStack output = new ItemStack(ApotheosisObjects.POTION_CHARM);
-			PotionUtils.addPotionToItemStack(output, potion);
+			PotionUtils.setPotion(output, potion);
 			Size2i size = this.getSize();
 			PotionJEIPlugin.this.gridHelper.setInputs(guiItemStacks, clones, size.width, size.height);
 			guiItemStacks.set(0, output);
@@ -100,22 +100,17 @@ public class PotionJEIPlugin implements IModPlugin {
 
 	}
 
-	private class PotionCharmSubtypes implements ISubtypeInterpreter {
-
-		@Override
-		public String apply(ItemStack stack) {
-			return ISubtypeInterpreter.NONE;
-		}
+	private class PotionCharmSubtypes implements IIngredientSubtypeInterpreter<ItemStack> {
 
 		@Override
 		public String apply(ItemStack stack, UidContext context) {
 			if (context != UidContext.Recipe) {
-				if (!PotionCharmItem.hasPotion(stack)) return ISubtypeInterpreter.NONE;
-				Potion p = PotionUtils.getPotionFromItem(stack);
+				if (!PotionCharmItem.hasPotion(stack)) return NONE;
+				Potion p = PotionUtils.getPotion(stack);
 				EffectInstance contained = p.getEffects().get(0);
-				return contained.getPotion().getRegistryName() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
+				return contained.getEffect().getRegistryName() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
 			}
-			return ISubtypeInterpreter.NONE;
+			return NONE;
 		}
 
 	}

@@ -75,10 +75,10 @@ public class EnchantmentInfo {
 	private static PowerFunc defaultMin(Enchantment ench) {
 		return level -> {
 			if (level > 1) {
-				int diff = ench.getMinEnchantability(ench.getMaxLevel()) - ench.getMinEnchantability(ench.getMaxLevel() - 1);
-				return level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow(level - ench.getMaxLevel(), 1.6) : ench.getMinEnchantability(level);
+				int diff = ench.getMinCost(ench.getMaxLevel()) - ench.getMinCost(ench.getMaxLevel() - 1);
+				return level > ench.getMaxLevel() ? ench.getMinCost(level) + diff * (int) Math.pow(level - ench.getMaxLevel(), 1.6) : ench.getMinCost(level);
 			}
-			return ench.getMinEnchantability(level);
+			return ench.getMinCost(level);
 		};
 	}
 

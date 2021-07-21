@@ -36,13 +36,13 @@ public class EnchantmentIngredient extends Ingredient {
 	private static ItemStack format(IItemProvider item, Enchantment enchantment, int minLevel) {
 		ItemStack stack = new ItemStack(item);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, minLevel), stack);
-		AffixHelper.addLore(stack, new TranslationTextComponent("ingredient.apotheosis.ench", ((IFormattableTextComponent) enchantment.getDisplayName(minLevel)).mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC)));
+		AffixHelper.addLore(stack, new TranslationTextComponent("ingredient.apotheosis.ench", ((IFormattableTextComponent) enchantment.getFullname(minLevel)).withStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC)));
 		return stack;
 	}
 
 	@Override
 	public boolean test(ItemStack stack) {
-		return super.test(stack) && EnchantmentHelper.getEnchantmentLevel(this.enchantment, stack) >= this.minLevel;
+		return super.test(stack) && EnchantmentHelper.getItemEnchantmentLevel(this.enchantment, stack) >= this.minLevel;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class EnchantmentIngredient extends Ingredient {
 	}
 
 	@Override
-	public JsonElement serialize() {
+	public JsonElement toJson() {
 		return new JsonObject();
 	}
 
@@ -65,7 +65,7 @@ public class EnchantmentIngredient extends Ingredient {
 
 		@Override
 		public EnchantmentIngredient parse(PacketBuffer buffer) {
-			ItemStack stack = buffer.readItemStack();
+			ItemStack stack = buffer.readItem();
 			Enchantment ench = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getValue(buffer.readVarInt());
 			int level = buffer.readShort();
 			return new EnchantmentIngredient(stack.getItem(), ench, level);
@@ -78,7 +78,7 @@ public class EnchantmentIngredient extends Ingredient {
 
 		@Override
 		public void write(PacketBuffer buffer, EnchantmentIngredient ingredient) {
-			buffer.writeItemStack(new ItemStack(ingredient.item));
+			buffer.writeItem(new ItemStack(ingredient.item));
 			buffer.writeVarInt(((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getID(ingredient.enchantment));
 			buffer.writeShort(ingredient.minLevel);
 		}

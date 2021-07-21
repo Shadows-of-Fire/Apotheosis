@@ -16,7 +16,7 @@ import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
  */
 public class ColdDamageAffix extends AttributeAffix {
 
-	public static final DamageSource COLD = new DamageSource("apoth.frozen_solid").setMagicDamage().setDamageIsAbsolute();
+	public static final DamageSource COLD = new DamageSource("apoth.frozen_solid").setMagic().bypassMagic();
 
 	public ColdDamageAffix(int weight) {
 		super(CustomAttributes.COLD_DAMAGE, 3, 7, Operation.ADDITION, weight);
@@ -29,8 +29,8 @@ public class ColdDamageAffix extends AttributeAffix {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
-		if (target instanceof LivingEntity) ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 20 * Math.max(3, (int) (level / 1.5F)), 1));
-		target.attackEntityFrom(COLD, Apotheosis.localAtkStrength * level);
+		if (target instanceof LivingEntity) ((LivingEntity) target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 20 * Math.max(3, (int) (level / 1.5F)), 1));
+		target.hurt(COLD, Apotheosis.localAtkStrength * level);
 	}
 
 	@Override

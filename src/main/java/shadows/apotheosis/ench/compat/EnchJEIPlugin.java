@@ -15,6 +15,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 
@@ -51,8 +52,8 @@ public class EnchJEIPlugin implements IModPlugin {
 				ImmutableList.of(new ItemStack(Blocks.ANVIL)))),
 			VanillaRecipeCategoryUid.ANVIL);
 		//Formatter::on
-		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, "info.apotheosis.enchanting");
-		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.PRISMATIC_ALTAR), VanillaTypes.ITEM, "info.apotheosis.altar");
+		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.enchanting"));
+		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.PRISMATIC_ALTAR), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.altar"));
 	}
 
 	@Override

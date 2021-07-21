@@ -19,7 +19,7 @@ public enum EquipmentType {
 	PICKAXE(s -> EquipmentSlotType.MAINHAND),
 	SHOVEL(s -> EquipmentSlotType.MAINHAND),
 	AXE(s -> EquipmentSlotType.MAINHAND),
-	ARMOR(s -> ((ArmorItem) s.getItem()).getEquipmentSlot()),
+	ARMOR(s -> ((ArmorItem) s.getItem()).getSlot()),
 	SHIELD(s -> EquipmentSlotType.OFFHAND);
 
 	final Function<ItemStack, EquipmentSlotType> type;

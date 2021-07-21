@@ -30,7 +30,7 @@ public class TomeItem extends BookItem {
 	final EnchantmentType type;
 
 	public TomeItem(Item rep, EnchantmentType type) {
-		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
+		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 		this.type = type;
 		this.rep = new ItemStack(rep);
 		this.setRegistryName(Apotheosis.MODID, (type == null ? "null" : type.name().toLowerCase(Locale.ROOT)) + "_book");
@@ -44,14 +44,14 @@ public class TomeItem extends BookItem {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if (this.type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canApply(new ItemStack(b)));
-		return enchantment.type == this.type || enchantment.canApplyAtEnchantingTable(this.rep);
+		if (this.type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canEnchant(new ItemStack(b)));
+		return enchantment.category == this.type || enchantment.canApplyAtEnchantingTable(this.rep);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis." + this.getRegistryName().getPath()).mergeStyle(TextFormatting.GRAY));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("info.apotheosis." + this.getRegistryName().getPath()).withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
@@ -60,14 +60,14 @@ public class TomeItem extends BookItem {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 		if (stack.isEnchanted()) {
 			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
 			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), book);
-			return ActionResult.resultConsume(book);
+			return ActionResult.consume(book);
 		}
-		return ActionResult.resultPass(stack);
+		return ActionResult.pass(stack);
 	}
 
 }

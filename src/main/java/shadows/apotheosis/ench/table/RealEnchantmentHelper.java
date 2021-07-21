@@ -64,11 +64,11 @@ public class RealEnchantmentHelper {
 			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
 			if (!possibleEnchants.isEmpty()) {
 				chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
-				removeIncompatible(possibleEnchants, Util.getLast(chosenEnchants));
+				removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 
 				if (arcanaLevel >= 2.5F && !possibleEnchants.isEmpty()) {
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
-					removeIncompatible(possibleEnchants, Util.getLast(chosenEnchants));
+					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 				}
 
 				if (arcanaLevel >= 7.5F && !possibleEnchants.isEmpty()) {
@@ -76,7 +76,7 @@ public class RealEnchantmentHelper {
 				}
 
 				while (arcanaLevel + rand.nextInt(50) <= power) {
-					removeIncompatible(possibleEnchants, Util.getLast(chosenEnchants));
+					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 					if (possibleEnchants.isEmpty()) {
 						break;
 					}

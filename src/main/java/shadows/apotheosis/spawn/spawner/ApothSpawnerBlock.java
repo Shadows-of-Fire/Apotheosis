@@ -47,37 +47,37 @@ import shadows.placebo.util.IReplacementBlock;
 public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock {
 
 	public ApothSpawnerBlock() {
-		super(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(5.0F).sound(SoundType.METAL).notSolid());
+		super(AbstractBlock.Properties.of(Material.STONE).strength(5.0F).sound(SoundType.METAL).noOcclusion());
 		this.setRegistryName("minecraft", "spawner");
 	}
 
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
 		ItemStack s = new ItemStack(this);
-		TileEntity te = world.getTileEntity(pos);
-		if (te != null) te.write(s.getOrCreateChildTag("BlockEntityTag"));
+		TileEntity te = world.getBlockEntity(pos);
+		if (te != null) te.save(s.getOrCreateTagElement("BlockEntityTag"));
 		return s;
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		TileEntity te = world.getTileEntity(pos);
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		TileEntity te = world.getBlockEntity(pos);
 		if (te != null) {
-			te.read(state, stack.getOrCreateChildTag("BlockEntityTag"));
-			te.setPos(pos);
+			te.load(state, stack.getOrCreateTagElement("BlockEntityTag"));
+			te.setPosition(pos);
 		}
 	}
 
 	@Override
-	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
-		if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
+	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
+		if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
 			ItemStack s = new ItemStack(this);
-			if (te != null) te.write(s.getOrCreateChildTag("BlockEntityTag"));
-			spawnAsEntity(world, pos, s);
-			player.getHeldItemMainhand().damageItem(SpawnerModule.spawnerSilkDamage, player, pl -> pl.sendBreakAnimation(EquipmentSlotType.MAINHAND));
-			player.addStat(Stats.BLOCK_MINED.get(this));
-			player.addExhaustion(0.005F);
-		} else super.harvestBlock(world, player, pos, state, te, stack);
+			if (te != null) te.save(s.getOrCreateTagElement("BlockEntityTag"));
+			popResource(world, pos, s);
+			player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage, player, pl -> pl.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+			player.awardStat(Stats.BLOCK_MINED.get(this));
+			player.causeFoodExhaustion(0.005F);
+		} else super.playerDestroy(world, player, pos, state, te, stack);
 	}
 
 	@Override
@@ -86,20 +86,20 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new ApothSpawnerTile();
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack stack = player.getHeldItem(hand);
-		TileEntity te = world.getTileEntity(pos);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack stack = player.getItemInHand(hand);
+		TileEntity te = world.getBlockEntity(pos);
 		if (te instanceof ApothSpawnerTile) {
 			ApothSpawnerTile tile = (ApothSpawnerTile) te;
-			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(player.getItemInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values()) {
 				if (sm.canModify(tile, stack, inverse)) {
-					if (world.isRemote) return ActionResultType.SUCCESS;
+					if (world.isClientSide) return ActionResultType.SUCCESS;
 					if (sm.modify(tile, stack, inverse)) {
 						if (!player.isCreative() && !(stack.getItem() instanceof SpawnEggItem)) stack.shrink(1);
 						AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayerEntity) player, tile, sm);
@@ -113,7 +113,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
 			CompoundNBT tag = stack.getTag().getCompound("BlockEntityTag");
 			if (tag.contains("SpawnData")) tooltip.add(this.grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getString("id")));
@@ -131,7 +131,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	private ITextComponent grayTranslated(String s, Object... args) {
-		return new TranslationTextComponent(s, args).mergeStyle(TextFormatting.GRAY);
+		return new TranslationTextComponent(s, args).withStyle(TextFormatting.GRAY);
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	@Override
 	public void _setDefaultState(BlockState state) {
-		this.setDefaultState(state);
+		this.registerDefaultState(state);
 	}
 
 	protected StateContainer<Block, BlockState> container;
@@ -157,8 +157,8 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateContainer() {
-		return this.container == null ? super.getStateContainer() : this.container;
+	public StateContainer<Block, BlockState> getStateDefinition() {
+		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 
 }

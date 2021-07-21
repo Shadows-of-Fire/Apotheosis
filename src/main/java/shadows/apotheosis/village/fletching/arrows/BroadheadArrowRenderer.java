@@ -14,7 +14,7 @@ public class BroadheadArrowRenderer extends ArrowRenderer<BroadheadArrowEntity> 
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(BroadheadArrowEntity entity) {
+	public ResourceLocation getTextureLocation(BroadheadArrowEntity entity) {
 		return TEXTURES;
 	}
 

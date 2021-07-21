@@ -21,22 +21,22 @@ public class TrueInfinityEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return Apotheosis.enableEnch ? 65 : 31;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
+	public int getMaxCost(int enchantmentLevel) {
 		return 200;
 	}
 
 	@Override
-	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_GREEN);
+	public ITextComponent getFullname(int level) {
+		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_GREEN);
 	}
 
 	@Override
-	protected boolean canApplyTogether(Enchantment ench) {
-		return super.canApplyTogether(ench) && ench != Enchantments.INFINITY;
+	protected boolean checkCompatibility(Enchantment ench) {
+		return super.checkCompatibility(ench) && ench != Enchantments.INFINITY_ARROWS;
 	}
 }

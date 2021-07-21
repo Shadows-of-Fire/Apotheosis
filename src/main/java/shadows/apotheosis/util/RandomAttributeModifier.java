@@ -37,8 +37,8 @@ public class RandomAttributeModifier {
 
 	public void apply(Random rand, MobEntity entity) {
 		if (entity == null) throw new RuntimeException("Attempted to apply a random attribute modifier to a null entity!");
-		AttributeModifier modif = new AttributeModifier("apoth_boss_" + this.attribute.getAttributeName(), this.value.generateFloat(rand), this.op);
-		entity.getAttribute(this.attribute).applyPersistentModifier(modif);
+		AttributeModifier modif = new AttributeModifier("apoth_boss_" + this.attribute.getDescriptionId(), this.value.getFloat(rand), this.op);
+		entity.getAttribute(this.attribute).addPermanentModifier(modif);
 	}
 
 	public static class Deserializer implements JsonDeserializer<RandomAttributeModifier> {

@@ -16,8 +16,8 @@ import net.minecraft.loot.ConditionArraySerializer;
 public class EnchantedTrigger extends EnchantedItemTrigger {
 
 	@Override
-	public Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-		ItemPredicate item = ItemPredicate.deserialize(json.get("item"));
+	public Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+		ItemPredicate item = ItemPredicate.fromJson(json.get("item"));
 		IntBound levels = IntBound.fromJson(json.get("levels"));
 		FloatBound eterna = FloatBound.fromJson(json.get("eterna"));
 		FloatBound quanta = FloatBound.fromJson(json.get("quanta"));
@@ -27,9 +27,9 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 	}
 
 	public void trigger(ServerPlayerEntity player, ItemStack stack, int level, float eterna, float quanta, float arcana) {
-		this.triggerListeners(player, inst -> {
+		this.trigger(player, inst -> {
 			if (inst instanceof Instance) return ((Instance) inst).test(stack, level, eterna, quanta, arcana);
-			return inst.test(stack, level);
+			return inst.matches(stack, level);
 		});
 	}
 
@@ -38,31 +38,31 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 		protected final FloatBound eterna, quanta, arcana;
 
 		public Instance(ItemPredicate item, IntBound levels, FloatBound eterna, FloatBound quanta, FloatBound arcana) {
-			super(EntityPredicate.AndPredicate.ANY_AND, item, levels);
+			super(EntityPredicate.AndPredicate.ANY, item, levels);
 			this.eterna = eterna;
 			this.quanta = quanta;
 			this.arcana = arcana;
 		}
 
 		public static EnchantedItemTrigger.Instance any() {
-			return new EnchantedItemTrigger.Instance(EntityPredicate.AndPredicate.ANY_AND, ItemPredicate.ANY, MinMaxBounds.IntBound.UNBOUNDED);
+			return new EnchantedItemTrigger.Instance(EntityPredicate.AndPredicate.ANY, ItemPredicate.ANY, MinMaxBounds.IntBound.ANY);
 		}
 
 		public boolean test(ItemStack stack, int level, float eterna, float quanta, float arcana) {
-			return super.test(stack, level) && this.eterna.test(eterna) && this.quanta.test(quanta) && this.arcana.test(arcana);
+			return super.matches(stack, level) && this.eterna.matches(eterna) && this.quanta.matches(quanta) && this.arcana.matches(arcana);
 		}
 
 		@Override
-		public boolean test(ItemStack stack, int level) {
+		public boolean matches(ItemStack stack, int level) {
 			return this.test(stack, level, 0, 0, 0);
 		}
 
 		@Override
-		public JsonObject serialize(ConditionArraySerializer serializer) {
-			JsonObject jsonobject = super.serialize(serializer);
-			jsonobject.add("eterna", this.eterna.serialize());
-			jsonobject.add("quanta", this.quanta.serialize());
-			jsonobject.add("arcana", this.arcana.serialize());
+		public JsonObject serializeToJson(ConditionArraySerializer serializer) {
+			JsonObject jsonobject = super.serializeToJson(serializer);
+			jsonobject.add("eterna", this.eterna.serializeToJson());
+			jsonobject.add("quanta", this.quanta.serializeToJson());
+			jsonobject.add("arcana", this.arcana.serializeToJson());
 			return jsonobject;
 		}
 	}

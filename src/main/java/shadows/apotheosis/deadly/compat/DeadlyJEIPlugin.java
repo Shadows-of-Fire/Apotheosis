@@ -24,7 +24,7 @@ public class DeadlyJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
-		reg.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(r -> r instanceof SoulfireCookingRecipe).collect(Collectors.toList()), SoulfireCategory.UID);
+		reg.addRecipes(Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r instanceof SoulfireCookingRecipe).collect(Collectors.toList()), SoulfireCategory.UID);
 	}
 
 	@Override

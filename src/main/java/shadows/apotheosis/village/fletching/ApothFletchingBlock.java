@@ -24,24 +24,24 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 	public static final ITextComponent NAME = new TranslationTextComponent("apotheosis.recipes.fletching");
 
 	public ApothFletchingBlock() {
-		super(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(2.5F).sound(SoundType.WOOD));
+		super(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD));
 		this.setRegistryName("minecraft", "fletching_table");
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		player.openContainer(state.getContainer(worldIn, pos));
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		player.openMenu(state.getMenuProvider(worldIn, pos));
 		return ActionResultType.SUCCESS;
 	}
 
 	@Override
-	public INamedContainerProvider getContainer(BlockState state, World world, BlockPos pos) {
+	public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
 		return new SimpleNamedContainerProvider((id, inv, player) -> new FletchingContainer(id, inv, world, pos), NAME);
 	}
 
 	@Override
 	public void _setDefaultState(BlockState state) {
-		this.setDefaultState(state);
+		this.registerDefaultState(state);
 	}
 
 	protected StateContainer<Block, BlockState> container;
@@ -52,8 +52,8 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateContainer() {
-		return this.container == null ? super.getStateContainer() : this.container;
+	public StateContainer<Block, BlockState> getStateDefinition() {
+		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 
 }

@@ -42,8 +42,8 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (!this.hasEffect(stack)) {
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		if (!this.isFoil(stack)) {
 			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome"));
 			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome2", new TranslationTextComponent("rarity.apoth." + this.rarity.name().toLowerCase(Locale.ROOT))));
 		} else {
@@ -55,17 +55,17 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 	}
 
 	@Override
-	public ITextComponent getName() {
-		return ((IFormattableTextComponent) super.getName()).mergeStyle(this.rarity.getColor());
+	public ITextComponent getDescription() {
+		return ((IFormattableTextComponent) super.getDescription()).withStyle(this.rarity.getColor());
 	}
 
 	@Override
-	public ITextComponent getDisplayName(ItemStack stack) {
-		return new TranslationTextComponent(this.getTranslationKey(stack)).mergeStyle(this.rarity.getColor());
+	public ITextComponent getName(ItemStack stack) {
+		return new TranslationTextComponent(this.getDescriptionId(stack)).withStyle(this.rarity.getColor());
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return AffixHelper.hasAffixes(stack);
 	}
 
@@ -89,7 +89,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			for (Affix e : keys) {
 				seed ^= e.getRegistryName().hashCode();
 			}
-			seed ^= ev.getPlayer().getXPSeed();
+			seed ^= ev.getPlayer().getEnchantmentSeed();
 			rand.setSeed(seed);
 			while (keys.size() > size) {
 				Affix lost = keys.get(rand.nextInt(keys.size()));
@@ -107,7 +107,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			boolean wepTome = weapon.getItem() instanceof AffixTomeItem;
 			EquipmentType type = EquipmentType.getTypeFor(weapon);
 			if (type == null && !wepTome) return false;
-			ITextComponent name = weapon.getDisplayName();
+			ITextComponent name = weapon.getHoverName();
 			ItemStack out = weapon.copy();
 			int baseCost = wepAfx.size() * 4;
 			int cost = 0;
@@ -126,7 +126,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			}
 			if (cost == 0) return false;
 			cost += baseCost;
-			if (!wepTome) out.setDisplayName(((IFormattableTextComponent) name).mergeStyle(((AffixTomeItem) book.getItem()).rarity.getColor()));
+			if (!wepTome) out.setHoverName(((IFormattableTextComponent) name).withStyle(((AffixTomeItem) book.getItem()).rarity.getColor()));
 			AffixHelper.setAffixes(out, wepAfx);
 			out.setCount(1);
 			ev.setMaterialCost(1);

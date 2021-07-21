@@ -25,8 +25,8 @@ public class FireDamageAffix extends AttributeAffix {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
-		target.setFire(Math.max(3, (int) (level / 1.5F)));
-		target.attackEntityFrom(DamageSource.ON_FIRE, Apotheosis.localAtkStrength * level);
+		target.setSecondsOnFire(Math.max(3, (int) (level / 1.5F)));
+		target.hurt(DamageSource.ON_FIRE, Apotheosis.localAtkStrength * level);
 	}
 
 	@Override

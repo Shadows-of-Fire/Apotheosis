@@ -12,13 +12,13 @@ import shadows.apotheosis.Apotheosis;
 public class ApothAnvilItem extends BlockItem {
 
 	public ApothAnvilItem(Block block) {
-		super(block, new Item.Properties().group(ItemGroup.DECORATIONS));
+		super(block, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS));
 		this.setRegistryName(block.getRegistryName());
 	}
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment.type.canEnchantItem(this));
+		return stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment.category.canEnchant(this));
 	}
 
 	@Override

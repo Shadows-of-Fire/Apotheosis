@@ -31,7 +31,7 @@ public class EnchantabilityAffix extends Affix {
 	public float getMax() {
 		return 30;
 	}
-	
+
 	@Override
 	public float upgradeLevel(float curLvl, float newLvl) {
 		return (int) super.upgradeLevel(curLvl, newLvl);

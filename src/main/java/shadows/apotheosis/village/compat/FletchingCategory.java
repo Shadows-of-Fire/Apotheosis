@@ -57,7 +57,7 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 
 	@Override
 	public void setIngredients(FletchingRecipe recipe, IIngredients ing) {
-		ing.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ing.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 		ing.setInputIngredients(recipe.getInputs());
 	}
 

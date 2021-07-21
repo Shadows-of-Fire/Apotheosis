@@ -21,7 +21,7 @@ import shadows.apotheosis.ApotheosisObjects;
 public class BroadheadArrowItem extends ArrowItem {
 
 	public BroadheadArrowItem() {
-		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
+		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override
@@ -33,8 +33,8 @@ public class BroadheadArrowItem extends ArrowItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.broadhead_arrow").mergeStyle(TextFormatting.RED));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("info.apotheosis.broadhead_arrow").withStyle(TextFormatting.RED));
 	}
 
 }

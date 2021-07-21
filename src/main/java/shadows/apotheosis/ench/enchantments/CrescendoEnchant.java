@@ -19,17 +19,17 @@ public class CrescendoEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 45 + (level - 1) * 20;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 50;
+	public int getMaxCost(int level) {
+		return this.getMinCost(level) + 50;
 	}
 
 	@Override
-	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_GREEN);
+	public ITextComponent getFullname(int level) {
+		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_GREEN);
 	}
 }

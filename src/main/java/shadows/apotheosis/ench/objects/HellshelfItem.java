@@ -15,7 +15,7 @@ import shadows.apotheosis.ApotheosisObjects;
 public class HellshelfItem extends BlockItem {
 
 	public HellshelfItem(Block block) {
-		super(block, new Item.Properties().group(Apotheosis.APOTH_GROUP));
+		super(block, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override
@@ -34,16 +34,16 @@ public class HellshelfItem extends BlockItem {
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		super.fillItemGroup(group, items);
-		if (this.isInGroup(group)) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+		super.fillItemCategory(group, items);
+		if (this.allowdedIn(group)) {
 			ItemStack s = new ItemStack(this);
 			ListNBT list = new ListNBT();
 			CompoundNBT tag = new CompoundNBT();
 			tag.putString("id", "apotheosis:hell_infusion");
 			tag.putShort("lvl", (short) 5);
 			list.add(tag);
-			s.setTagInfo("Enchantments", list);
+			s.addTagElement("Enchantments", list);
 			items.add(s);
 		}
 	}

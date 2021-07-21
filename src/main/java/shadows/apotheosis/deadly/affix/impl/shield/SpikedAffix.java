@@ -28,15 +28,15 @@ public class SpikedAffix extends AttributeAffix {
 
 	@Override
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
-		Entity tSource = source.getTrueSource();
-		if (tSource != null && tSource.getDistanceSq(entity) <= 9) {
-			tSource.attackEntityFrom(causeSpikeDamage(entity), level * amount);
+		Entity tSource = source.getEntity();
+		if (tSource != null && tSource.distanceToSqr(entity) <= 9) {
+			tSource.hurt(causeSpikeDamage(entity), level * amount);
 		}
 		return super.onShieldBlock(entity, stack, source, amount, level);
 	}
 
 	public static DamageSource causeSpikeDamage(Entity source) {
-		return new EntityDamageSource("apoth_spiked", source).setIsThornsDamage().setMagicDamage();
+		return new EntityDamageSource("apoth_spiked", source).setThorns().setMagic();
 	}
 
 }

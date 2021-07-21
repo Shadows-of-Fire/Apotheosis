@@ -15,13 +15,13 @@ public class MinersFervorEnchant extends EfficiencyEnchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 30 + (enchantmentLevel - 1) * 30;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel) + 50;
+	public int getMaxCost(int enchantmentLevel) {
+		return this.getMinCost(enchantmentLevel) + 50;
 	}
 
 	@Override
@@ -30,13 +30,13 @@ public class MinersFervorEnchant extends EfficiencyEnchantment {
 	}
 
 	@Override
-	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_PURPLE);
+	public ITextComponent getFullname(int level) {
+		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_PURPLE);
 	}
 
 	@Override
-	protected boolean canApplyTogether(Enchantment e) {
-		return super.canApplyTogether(e) && e != Enchantments.EFFICIENCY;
+	protected boolean checkCompatibility(Enchantment e) {
+		return super.checkCompatibility(e) && e != Enchantments.BLOCK_EFFICIENCY;
 	}
 
 }

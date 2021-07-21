@@ -11,12 +11,12 @@ public class StableFootingEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 40;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
+	public int getMaxCost(int level) {
 		return 100;
 	}
 

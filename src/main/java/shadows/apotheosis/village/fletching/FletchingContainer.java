@@ -56,64 +56,64 @@ public class FletchingContainer extends Container {
 
 	@SuppressWarnings("deprecation")
 	public FletchingContainer(int id, PlayerInventory inv) {
-		this(id, inv, DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().world), BlockPos.ZERO);
+		this(id, inv, DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level), BlockPos.ZERO);
 	}
 
 	@Override
-	public void onCraftMatrixChanged(IInventory inventory) {
-		if (!this.world.isRemote) {
+	public void slotsChanged(IInventory inventory) {
+		if (!this.world.isClientSide) {
 			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) this.player;
 			ItemStack itemstack = ItemStack.EMPTY;
-			Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipe(VillageModule.FLETCHING, this.craftMatrix, this.world);
+			Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(VillageModule.FLETCHING, this.craftMatrix, this.world);
 			if (optional.isPresent()) {
 				FletchingRecipe icraftingrecipe = optional.get();
-				itemstack = icraftingrecipe.getCraftingResult(this.craftMatrix);
+				itemstack = icraftingrecipe.assemble(this.craftMatrix);
 			}
 
-			this.craftResult.setInventorySlotContents(0, itemstack);
-			serverplayerentity.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, itemstack));
+			this.craftResult.setItem(0, itemstack);
+			serverplayerentity.connection.send(new SSetSlotPacket(this.containerId, 0, itemstack));
 		}
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity playerIn) {
-		super.onContainerClosed(playerIn);
+	public void removed(PlayerEntity playerIn) {
+		super.removed(playerIn);
 		this.clearContainer(playerIn, this.world, this.craftMatrix);
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
-		return this.world.getBlockState(this.pos).getBlock() == Blocks.FLETCHING_TABLE && player.getDistanceSq(this.pos.getX(), this.pos.getY(), this.pos.getZ()) < 64;
+	public boolean stillValid(PlayerEntity player) {
+		return this.world.getBlockState(this.pos).getBlock() == Blocks.FLETCHING_TABLE && player.distanceToSqr(this.pos.getX(), this.pos.getY(), this.pos.getZ()) < 64;
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index == 0) {
-				itemstack1.getItem().onCreated(itemstack1, this.world, playerIn);
-				if (!this.mergeItemStack(itemstack1, 4, 40, true)) { return ItemStack.EMPTY; }
-				slot.onSlotChange(itemstack1, itemstack);
+				itemstack1.getItem().onCraftedBy(itemstack1, this.world, playerIn);
+				if (!this.moveItemStackTo(itemstack1, 4, 40, true)) { return ItemStack.EMPTY; }
+				slot.onQuickCraft(itemstack1, itemstack);
 			} else if (index >= 4 && index < 31) {
-				if (!this.mergeItemStack(itemstack1, 31, 40, false)) { return ItemStack.EMPTY; }
+				if (!this.moveItemStackTo(itemstack1, 31, 40, false)) { return ItemStack.EMPTY; }
 			} else if (index >= 31 && index < 40) {
-				if (!this.mergeItemStack(itemstack1, 4, 31, false)) { return ItemStack.EMPTY; }
-			} else if (!this.mergeItemStack(itemstack1, 4, 40, false)) { return ItemStack.EMPTY; }
+				if (!this.moveItemStackTo(itemstack1, 4, 31, false)) { return ItemStack.EMPTY; }
+			} else if (!this.moveItemStackTo(itemstack1, 4, 40, false)) { return ItemStack.EMPTY; }
 
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
 
 			ItemStack itemstack2 = slot.onTake(playerIn, itemstack1);
 			if (index == 0) {
-				playerIn.dropItem(itemstack2, false);
+				playerIn.drop(itemstack2, false);
 			}
 		}
 
@@ -121,8 +121,8 @@ public class FletchingContainer extends Container {
 	}
 
 	@Override
-	public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-		return slotIn.inventory != this.craftResult && super.canMergeSlot(stack, slotIn);
+	public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+		return slotIn.container != this.craftResult && super.canTakeItemForPickAll(stack, slotIn);
 	}
 
 	protected class FletchingResultSlot extends CraftingResultSlot {
@@ -133,26 +133,26 @@ public class FletchingContainer extends Container {
 
 		@Override
 		public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
-			this.onCrafting(stack);
+			this.checkTakeAchievements(stack);
 			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
-			NonNullList<ItemStack> nonnulllist = thePlayer.world.getRecipeManager().getRecipeNonNull(VillageModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.world);
+			NonNullList<ItemStack> nonnulllist = thePlayer.level.getRecipeManager().getRemainingItemsFor(VillageModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level);
 			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 			for (int i = 0; i < nonnulllist.size(); ++i) {
-				ItemStack itemstack = FletchingContainer.this.craftMatrix.getStackInSlot(i);
+				ItemStack itemstack = FletchingContainer.this.craftMatrix.getItem(i);
 				ItemStack itemstack1 = nonnulllist.get(i);
 				if (!itemstack.isEmpty()) {
-					FletchingContainer.this.craftMatrix.decrStackSize(i, 1);
-					itemstack = FletchingContainer.this.craftMatrix.getStackInSlot(i);
+					FletchingContainer.this.craftMatrix.removeItem(i, 1);
+					itemstack = FletchingContainer.this.craftMatrix.getItem(i);
 				}
 
 				if (!itemstack1.isEmpty()) {
 					if (itemstack.isEmpty()) {
-						FletchingContainer.this.craftMatrix.setInventorySlotContents(i, itemstack1);
-					} else if (ItemStack.areItemsEqual(itemstack, itemstack1) && ItemStack.areItemStackTagsEqual(itemstack, itemstack1)) {
+						FletchingContainer.this.craftMatrix.setItem(i, itemstack1);
+					} else if (ItemStack.isSame(itemstack, itemstack1) && ItemStack.tagMatches(itemstack, itemstack1)) {
 						itemstack1.grow(itemstack.getCount());
-						FletchingContainer.this.craftMatrix.setInventorySlotContents(i, itemstack1);
-					} else if (!FletchingContainer.this.player.inventory.addItemStackToInventory(itemstack1)) {
-						FletchingContainer.this.player.dropItem(itemstack1, false);
+						FletchingContainer.this.craftMatrix.setItem(i, itemstack1);
+					} else if (!FletchingContainer.this.player.inventory.add(itemstack1)) {
+						FletchingContainer.this.player.drop(itemstack1, false);
 					}
 				}
 			}

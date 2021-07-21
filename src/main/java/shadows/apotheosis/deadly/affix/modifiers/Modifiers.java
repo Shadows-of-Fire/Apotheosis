@@ -33,6 +33,6 @@ public class Modifiers {
 	}
 
 	public static AffixModifier getBadModifier() {
-		return MODIFIERS.stream().filter(m -> m.itemWeight == 0).findAny().get();
+		return MODIFIERS.stream().filter(m -> m.weight == 0).findAny().get();
 	}
 }

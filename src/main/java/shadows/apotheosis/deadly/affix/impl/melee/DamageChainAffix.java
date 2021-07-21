@@ -35,17 +35,17 @@ public class DamageChainAffix extends RangedAffix {
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
 		if (Apotheosis.localAtkStrength >= 0.98) {
-			Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttack(EntityType.PLAYER);
-			List<Entity> nearby = target.world.getEntitiesInAABBexcluding(target, new AxisAlignedBB(target.getPosition()).grow(6), pred);
-			if (!user.world.isRemote) for (Entity e : nearby) {
-				e.attackEntityFrom(DamageSource.LIGHTNING_BOLT, level);
+			Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttackType(EntityType.PLAYER);
+			List<Entity> nearby = target.level.getEntities(target, new AxisAlignedBB(target.blockPosition()).inflate(6), pred);
+			if (!user.level.isClientSide) for (Entity e : nearby) {
+				e.hurt(DamageSource.LIGHTNING_BOLT, level);
 			}
 		}
 	}
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = this.range.generateFloat(rand);
+		float lvl = this.range.getFloat(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}

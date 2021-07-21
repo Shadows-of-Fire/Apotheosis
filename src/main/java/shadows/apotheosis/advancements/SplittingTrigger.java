@@ -26,29 +26,29 @@ public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
 	}
 
 	@Override
-	public void addListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
+	public void addPlayerListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
 		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).add(listener);
 	}
 
 	@Override
-	public void removeListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
+	public void removePlayerListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
 		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).remove(listener);
 	}
 
 	@Override
-	public void removeAllListeners(PlayerAdvancements adv) {
+	public void removePlayerListeners(PlayerAdvancements adv) {
 		this.listeners.remove(adv);
 	}
 
 	@Override
-	public CriterionInstance deserialize(JsonObject json, ConditionArrayParser parser) {
-		return new CriterionInstance(ID, AndPredicate.ANY_AND) {
+	public CriterionInstance createInstance(JsonObject json, ConditionArrayParser parser) {
+		return new CriterionInstance(ID, AndPredicate.ANY) {
 		};
 	}
 
 	public void trigger(PlayerAdvancements adv) {
 		if (this.listeners.containsKey(adv)) {
-			new HashSet<>(this.listeners.get(adv)).forEach(t -> t.grantCriterion(adv));
+			new HashSet<>(this.listeners.get(adv)).forEach(t -> t.run(adv));
 		}
 	}
 

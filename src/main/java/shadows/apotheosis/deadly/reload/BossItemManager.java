@@ -40,7 +40,7 @@ public class BossItemManager extends JsonReloadListener {
 			.registerTypeAdapter(EntityType.class, new EntityTypeDeserializer())
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
 			.registerTypeAdapter(SetPredicate.class, new SetPredicateAdapter())
-			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
+			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("weight")) ? "weight" : f.getName())
 			.registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
 			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
 			.registerTypeAdapter(RandomAttributeModifier.class, new RandomAttributeModifier.Deserializer())

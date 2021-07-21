@@ -24,7 +24,7 @@ public class MiningArrowItem extends ArrowItem {
 	protected final MiningArrowEntity.Type arrowType;
 
 	public MiningArrowItem(Supplier<Item> breakerItem, MiningArrowEntity.Type arrowType) {
-		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
+		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 		this.breakerItem = breakerItem;
 		this.arrowType = arrowType;
 	}
@@ -37,8 +37,8 @@ public class MiningArrowItem extends ArrowItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).mergeStyle(TextFormatting.GOLD));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GOLD));
 	}
 
 }

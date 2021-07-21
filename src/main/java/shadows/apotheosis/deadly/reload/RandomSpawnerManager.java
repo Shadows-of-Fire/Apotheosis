@@ -33,7 +33,7 @@ public class RandomSpawnerManager extends JsonReloadListener {
 			.setPrettyPrinting()
 			.registerTypeAdapter(WeightedSpawnerEntity.class, new WeightedSpawnerEntityAdapter())
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
+			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("weight")) ? "weight" : f.getName())
 			.registerTypeAdapter(CompoundNBT.class, NBTAdapter.INSTANCE)
 			.create();
 	//Formatter::on

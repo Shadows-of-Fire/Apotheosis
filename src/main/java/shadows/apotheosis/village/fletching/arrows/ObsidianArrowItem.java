@@ -21,7 +21,7 @@ import shadows.apotheosis.Apotheosis;
 public class ObsidianArrowItem extends ArrowItem {
 
 	public ObsidianArrowItem() {
-		super(new Item.Properties().group(Apotheosis.APOTH_GROUP));
+		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override
@@ -33,16 +33,16 @@ public class ObsidianArrowItem extends ArrowItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.obsidian_arrow").mergeStyle(TextFormatting.BLUE));
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(new TranslationTextComponent("info.apotheosis.obsidian_arrow").withStyle(TextFormatting.BLUE));
 	}
 
 	@SubscribeEvent
 	public void handleArrowJoin(EntityJoinWorldEvent e) {
-		if (!e.getWorld().isRemote && e.getEntity() instanceof AbstractArrowEntity) {
+		if (!e.getWorld().isClientSide && e.getEntity() instanceof AbstractArrowEntity) {
 			AbstractArrowEntity ent = (AbstractArrowEntity) e.getEntity();
 			if (ent.getPersistentData().getBoolean("apoth_obsidian_arrow")) {
-				ent.setDamage(ent.getDamage() * 1.2F);
+				ent.setBaseDamage(ent.getBaseDamage() * 1.2F);
 				ent.getPersistentData().remove("apoth_obsidian_arrow");
 			}
 		}

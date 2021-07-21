@@ -24,13 +24,13 @@ public class HellInfusionEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 50 + (level - 1) * 13;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level + 1);
+	public int getMaxCost(int level) {
+		return this.getMinCost(level + 1);
 	}
 
 	@Override
@@ -39,29 +39,29 @@ public class HellInfusionEnchantment extends Enchantment {
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
-		return stack.getItem() instanceof AxeItem ? true : super.canApply(stack);
+	public boolean canEnchant(ItemStack stack) {
+		return stack.getItem() instanceof AxeItem ? true : super.canEnchant(stack);
 	}
 
 	@Override
-	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-		if (user.world.getDimensionKey() == World.THE_NETHER) {
+	public void doPostAttack(LivingEntity user, Entity target, int level) {
+		if (user.level.dimension() == World.NETHER) {
 			if (user instanceof PlayerEntity) {
-				DamageSource source = DamageSource.causePlayerDamage((PlayerEntity) user);
-				source.setMagicDamage().setDamageBypassesArmor();
-				target.attackEntityFrom(source, level * level * 1.3F * Apotheosis.localAtkStrength);
-			} else target.attackEntityFrom(DamageSource.MAGIC, level * level * 1.3F * Apotheosis.localAtkStrength);
+				DamageSource source = DamageSource.playerAttack((PlayerEntity) user);
+				source.setMagic().bypassArmor();
+				target.hurt(source, level * level * 1.3F * Apotheosis.localAtkStrength);
+			} else target.hurt(DamageSource.MAGIC, level * level * 1.3F * Apotheosis.localAtkStrength);
 		}
 	}
 
 	@Override
-	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_GREEN);
+	public ITextComponent getFullname(int level) {
+		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_GREEN);
 	}
 
 	@Override
-	protected boolean canApplyTogether(Enchantment ench) {
-		return super.canApplyTogether(ench) && ench != ApotheosisObjects.SEA_INFUSION;
+	protected boolean checkCompatibility(Enchantment ench) {
+		return super.checkCompatibility(ench) && ench != ApotheosisObjects.SEA_INFUSION;
 	}
 
 	@Override

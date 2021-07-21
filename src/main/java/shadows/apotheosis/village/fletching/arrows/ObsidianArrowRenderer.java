@@ -14,7 +14,7 @@ public class ObsidianArrowRenderer extends ArrowRenderer<ObsidianArrowEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ObsidianArrowEntity entity) {
+	public ResourceLocation getTextureLocation(ObsidianArrowEntity entity) {
 		return TEXTURES;
 	}
 

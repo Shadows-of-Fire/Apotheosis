@@ -221,18 +221,18 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * Default logic is (highest level + lowest level / 2)
 	 */
 	public float upgradeLevel(float curLvl, float newLvl) {
-		return Math.min(getMax(), newLvl > curLvl ? newLvl + curLvl / 2 : newLvl / 2 + curLvl);
+		return Math.min(this.getMax(), newLvl > curLvl ? newLvl + curLvl / 2 : newLvl / 2 + curLvl);
 	}
 
 	/**
 	 * Generates a new level, as if the passed level were to be split in two.
 	 */
 	public float obliterateLevel(float level) {
-		return Math.max(getMin(), level / 2);
+		return Math.max(this.getMin(), level / 2);
 	}
 
 	public static IFormattableTextComponent loreComponent(String text, Object... args) {
-		return new TranslationTextComponent(text, args).mergeStyle(TextFormatting.ITALIC, TextFormatting.DARK_PURPLE);
+		return new TranslationTextComponent(text, args).withStyle(TextFormatting.ITALIC, TextFormatting.DARK_PURPLE);
 	}
 
 	public static String fmt(float f) {
@@ -241,7 +241,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	}
 
 	public ITextComponent getDisplayName(float level) {
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level)).mergeStyle(TextFormatting.GRAY);
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level)).withStyle(TextFormatting.GRAY);
 	}
 
 }

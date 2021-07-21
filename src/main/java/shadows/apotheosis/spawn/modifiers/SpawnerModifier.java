@@ -64,7 +64,7 @@ public abstract class SpawnerModifier {
 	 * @return If this modifier can act, given the conditions.
 	 */
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		return this.item.getValue().test(stack);
+		return this.item.get().test(stack);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public abstract class SpawnerModifier {
 	}
 
 	public Ingredient getIngredient() {
-		return this.item.getValue();
+		return this.item.get();
 	}
 
 	public int getValue() {
@@ -113,7 +113,7 @@ public abstract class SpawnerModifier {
 	 */
 	public void sync(Ingredient ing, int value, int min, int max) {
 		this.item = new LazyValue<>(() -> ing);
-		this.item.getValue();
+		this.item.get();
 		this.value = value;
 		this.min = min;
 		this.max = max;

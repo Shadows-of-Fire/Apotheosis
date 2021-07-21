@@ -39,23 +39,23 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		for (int i = 0; i < 3; i++) {
-			if (!this.inputs.get(i).test(inv.getStackInSlot(i))) return false;
+			if (!this.inputs.get(i).test(inv.getItem(i))) return false;
 		}
 		return true;
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
+	public ItemStack assemble(CraftingInventory inv) {
 		return this.output.copy();
 	}
 
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width == 1 && height == 3;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return this.output;
 	}
 
@@ -82,14 +82,14 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 		public static final ResourceLocation NAME = new ResourceLocation(Apotheosis.MODID, "fletching");
 
 		@Override
-		public FletchingRecipe read(ResourceLocation recipeId, JsonObject json) {
-			NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
+		public FletchingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getAsJsonArray(json, "ingredients"));
 			if (nonnulllist.isEmpty()) {
 				throw new JsonParseException("No ingredients for fletching recipe");
 			} else if (nonnulllist.size() > 3) {
 				throw new JsonParseException("Too many ingredients for fletching recipe, max 3");
 			} else {
-				ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+				ItemStack itemstack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
 				return new FletchingRecipe(recipeId, itemstack, nonnulllist);
 			}
 		}
@@ -98,8 +98,8 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 			NonNullList<Ingredient> nonnulllist = NonNullList.create();
 
 			for (int i = 0; i < ingredientArray.size(); ++i) {
-				Ingredient ingredient = Ingredient.deserialize(ingredientArray.get(i));
-				if (!ingredient.hasNoMatchingItems()) {
+				Ingredient ingredient = Ingredient.fromJson(ingredientArray.get(i));
+				if (!ingredient.isEmpty()) {
 					nonnulllist.add(ingredient);
 				}
 			}
@@ -108,21 +108,21 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 		}
 
 		@Override
-		public FletchingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public FletchingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			NonNullList<Ingredient> nonnulllist = NonNullList.withSize(3, Ingredient.EMPTY);
 			for (int j = 0; j < nonnulllist.size(); ++j) {
-				nonnulllist.set(j, Ingredient.read(buffer));
+				nonnulllist.set(j, Ingredient.fromNetwork(buffer));
 			}
-			ItemStack itemstack = buffer.readItemStack();
+			ItemStack itemstack = buffer.readItem();
 			return new FletchingRecipe(recipeId, itemstack, nonnulllist);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, FletchingRecipe recipe) {
+		public void toNetwork(PacketBuffer buffer, FletchingRecipe recipe) {
 			for (Ingredient ingredient : recipe.inputs) {
-				ingredient.write(buffer);
+				ingredient.toNetwork(buffer);
 			}
-			buffer.writeItemStack(recipe.output);
+			buffer.writeItem(recipe.output);
 		}
 
 	}

@@ -16,13 +16,13 @@ public class CapturingEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 35 + (level - 1) * 15;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 15;
+	public int getMaxCost(int level) {
+		return this.getMinCost(level) + 15;
 	}
 
 }

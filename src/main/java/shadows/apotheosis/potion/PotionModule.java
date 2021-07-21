@@ -117,18 +117,18 @@ public class PotionModule {
 	public void types(Register<Potion> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new Potion("resistance", new EffectInstance(Effects.RESISTANCE, 3600)).setRegistryName(Apotheosis.MODID, "resistance"),
-				new Potion("resistance", new EffectInstance(Effects.RESISTANCE, 9600)).setRegistryName(Apotheosis.MODID, "long_resistance"),
-				new Potion("resistance", new EffectInstance(Effects.RESISTANCE, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_resistance"),
+				new Potion("resistance", new EffectInstance(Effects.DAMAGE_RESISTANCE, 3600)).setRegistryName(Apotheosis.MODID, "resistance"),
+				new Potion("resistance", new EffectInstance(Effects.DAMAGE_RESISTANCE, 9600)).setRegistryName(Apotheosis.MODID, "long_resistance"),
+				new Potion("resistance", new EffectInstance(Effects.DAMAGE_RESISTANCE, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_resistance"),
 				new Potion("absorption", new EffectInstance(Effects.ABSORPTION, 1200, 1)).setRegistryName(Apotheosis.MODID, "absorption"),
 				new Potion("absorption", new EffectInstance(Effects.ABSORPTION, 3600, 1)).setRegistryName(Apotheosis.MODID, "long_absorption"),
 				new Potion("absorption", new EffectInstance(Effects.ABSORPTION, 600, 3)).setRegistryName(Apotheosis.MODID, "strong_absorption"),
-				new Potion("haste", new EffectInstance(Effects.HASTE, 3600)).setRegistryName(Apotheosis.MODID, "haste"),
-				new Potion("haste", new EffectInstance(Effects.HASTE, 9600)).setRegistryName(Apotheosis.MODID, "long_haste"),
-				new Potion("haste", new EffectInstance(Effects.HASTE, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_haste"),
-				new Potion("fatigue", new EffectInstance(Effects.MINING_FATIGUE, 3600)).setRegistryName(Apotheosis.MODID, "fatigue"),
-				new Potion("fatigue", new EffectInstance(Effects.MINING_FATIGUE, 9600)).setRegistryName(Apotheosis.MODID, "long_fatigue"),
-				new Potion("fatigue", new EffectInstance(Effects.MINING_FATIGUE, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_fatigue"),
+				new Potion("haste", new EffectInstance(Effects.DIG_SPEED, 3600)).setRegistryName(Apotheosis.MODID, "haste"),
+				new Potion("haste", new EffectInstance(Effects.DIG_SPEED, 9600)).setRegistryName(Apotheosis.MODID, "long_haste"),
+				new Potion("haste", new EffectInstance(Effects.DIG_SPEED, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_haste"),
+				new Potion("fatigue", new EffectInstance(Effects.DIG_SLOWDOWN, 3600)).setRegistryName(Apotheosis.MODID, "fatigue"),
+				new Potion("fatigue", new EffectInstance(Effects.DIG_SLOWDOWN, 9600)).setRegistryName(Apotheosis.MODID, "long_fatigue"),
+				new Potion("fatigue", new EffectInstance(Effects.DIG_SLOWDOWN, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_fatigue"),
 				new Potion("wither", new EffectInstance(Effects.WITHER, 3600)).setRegistryName(Apotheosis.MODID, "wither"),
 				new Potion("wither", new EffectInstance(Effects.WITHER, 9600)).setRegistryName(Apotheosis.MODID, "long_wither"),
 				new Potion("wither", new EffectInstance(Effects.WITHER, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_wither"),
@@ -161,16 +161,16 @@ public class PotionModule {
 	public void drops(LivingDropsEvent e) {
 		if (e.getEntityLiving() instanceof RabbitEntity) {
 			RabbitEntity rabbit = (RabbitEntity) e.getEntityLiving();
-			if (rabbit.world.rand.nextFloat() < 0.03F + 0.03F * e.getLootingLevel()) {
+			if (rabbit.level.random.nextFloat() < 0.03F + 0.03F * e.getLootingLevel()) {
 				e.getDrops().clear();
-				e.getDrops().add(new ItemEntity(rabbit.world, rabbit.getPosX(), rabbit.getPosY(), rabbit.getPosZ(), new ItemStack(ApotheosisObjects.LUCKY_FOOT)));
+				e.getDrops().add(new ItemEntity(rabbit.level, rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(ApotheosisObjects.LUCKY_FOOT)));
 			}
 		}
 	}
 
 	public void xp(LivingExperienceDropEvent e) {
-		if (e.getAttackingPlayer() != null && e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE) != null) {
-			int level = e.getAttackingPlayer().getActivePotionEffect(ApotheosisObjects.P_KNOWLEDGE).getAmplifier() + 1;
+		if (e.getAttackingPlayer() != null && e.getAttackingPlayer().getEffect(ApotheosisObjects.P_KNOWLEDGE) != null) {
+			int level = e.getAttackingPlayer().getEffect(ApotheosisObjects.P_KNOWLEDGE).getAmplifier() + 1;
 			int curXp = e.getDroppedExperience();
 			int newXp = curXp + e.getOriginalExperience() * level * knowledgeMult;
 			e.setDroppedExperience(newXp);

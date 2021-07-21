@@ -13,13 +13,13 @@ public class SpawnRangeModifier extends SpawnerModifier {
 
 	@Override
 	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawnerLogic.spawnRange > this.min : spawner.spawnerLogic.spawnRange < this.max);
+		return super.canModify(spawner, stack, inverting) && (inverting ? spawner.spawner.spawnRange > this.min : spawner.spawner.spawnRange < this.max);
 	}
 
 	@Override
 	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		int modify = inverting ? -this.value : this.value;
-		spawner.spawnerLogic.spawnRange = MathHelper.clamp(spawner.spawnerLogic.spawnRange + modify, this.min, this.max);
+		spawner.spawner.spawnRange = MathHelper.clamp(spawner.spawner.spawnRange + modify, this.min, this.max);
 		return true;
 	}
 

@@ -26,7 +26,7 @@ import shadows.apotheosis.Apotheosis;
 public class EnderLeashItem extends Item {
 
 	public EnderLeashItem() {
-		super(new Item.Properties().maxStackSize(1).maxDamage(15).group(Apotheosis.APOTH_GROUP));
+		super(new Item.Properties().stacksTo(1).durability(15).tab(Apotheosis.APOTH_GROUP));
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class EnderLeashItem extends Item {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
-		if (stack.getOrCreateChildTag("entity_data").isEmpty() && entity instanceof AnimalEntity) {
+		if (stack.getOrCreateTagElement("entity_data").isEmpty() && entity instanceof AnimalEntity) {
 			CompoundNBT tag = entity.serializeNBT();
-			if (!player.world.isRemote) {
+			if (!player.level.isClientSide) {
 				entity.remove();
 				stack.getTag().put("entity_data", tag);
 				stack.getTag().putString("name", entity.getDisplayName().getString());
@@ -52,18 +52,18 @@ public class EnderLeashItem extends Item {
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext ctx) {
-		CompoundNBT tag = ctx.getItem().getOrCreateChildTag("entity_data");
+	public ActionResultType useOn(ItemUseContext ctx) {
+		CompoundNBT tag = ctx.getItemInHand().getOrCreateTagElement("entity_data");
 		if (!tag.isEmpty()) {
-			BlockPos pos = ctx.getPos().offset(ctx.getFace());
-			if (!ctx.getWorld().isRemote) {
-				Entity e = EntityType.loadEntityAndExecute(tag, ctx.getWorld(), a -> a);
+			BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
+			if (!ctx.getLevel().isClientSide) {
+				Entity e = EntityType.loadEntityRecursive(tag, ctx.getLevel(), a -> a);
 				if (e != null) {
-					e.setPosition(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-					((ServerWorld) ctx.getWorld()).addEntityIfNotDuplicate(e);
-					ctx.getItem().getTag().remove("entity_data");
+					e.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+					((ServerWorld) ctx.getLevel()).loadFromChunk(e);
+					ctx.getItemInHand().getTag().remove("entity_data");
 					this.playSound(ctx.getPlayer());
-					ctx.getItem().damageItem(1, ctx.getPlayer(), pl -> pl.sendBreakAnimation(ctx.getHand()));
+					ctx.getItemInHand().hurtAndBreak(1, ctx.getPlayer(), pl -> pl.broadcastBreakEvent(ctx.getHand()));
 					return ActionResultType.SUCCESS;
 				}
 			}
@@ -83,14 +83,14 @@ public class EnderLeashItem extends Item {
 	}
 
 	void playSound(PlayerEntity player) {
-		player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1, 1);
+		player.level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.AMBIENT, 1, 1);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.hasTag()) {
-			CompoundNBT tag = stack.getOrCreateChildTag("entity_data");
+			CompoundNBT tag = stack.getOrCreateTagElement("entity_data");
 			if (tag.isEmpty()) tooltip.add(new TranslationTextComponent("info.apotheosis.noentity"));
 			else {
 				tooltip.add(new TranslationTextComponent("info.apotheosis.containedentity", stack.getTag().getString("name")));
@@ -99,8 +99,8 @@ public class EnderLeashItem extends Item {
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
-		return stack.hasTag() && !stack.getOrCreateChildTag("entity_data").isEmpty();
+	public boolean isFoil(ItemStack stack) {
+		return stack.hasTag() && !stack.getOrCreateTagElement("entity_data").isEmpty();
 	}
 
 }

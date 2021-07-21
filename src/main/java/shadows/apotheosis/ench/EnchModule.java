@@ -109,7 +109,7 @@ public class EnchModule {
 	public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
 	public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
-	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").setDamageBypassesArmor().setDamageIsAbsolute();
+	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").bypassArmor().bypassMagic();
 	public static final EquipmentSlotType[] ARMOR = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
 	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
 	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
@@ -194,8 +194,8 @@ public class EnchModule {
 		e.getIMCStream(ENCH_HARD_CAP_IMC::equals).forEach(msg -> {
 			try {
 				EnchantmentData data = msg.<EnchantmentData>getMessageSupplier().get();
-				if (data != null && data.enchantment != null && data.enchantmentLevel > 0) {
-					ENCH_HARD_CAPS.put(data.enchantment, data.enchantmentLevel);
+				if (data != null && data.enchantment != null && data.level > 0) {
+					ENCH_HARD_CAPS.put(data.enchantment, data.level);
 				} else LOGGER.error("Failed to process IMC message with method {} from {} (invalid values passed).", msg.getMethod(), msg.getSenderModId());
 			} catch (Exception ex) {
 				LOGGER.error("Exception thrown during IMC message with method {} from {}.", msg.getMethod(), msg.getSenderModId());
@@ -213,16 +213,16 @@ public class EnchModule {
 				new ApothAnvilBlock().setRegistryName("minecraft", "chipped_anvil"),
 				new ApothAnvilBlock().setRegistryName("minecraft", "damaged_anvil"),
 				new HellshelfBlock().setRegistryName("hellshelf"),
-				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
-				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
 				new SeashelfBlock().setRegistryName("seashelf"),
-				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("crystal_seashelf"),
-				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("heart_seashelf"),
-				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("endshelf"),
-				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
-				new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
-				new Block(AbstractBlock.Properties.create(Material.WOOD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
-				new Block(AbstractBlock.Properties.create(Material.GOURD).hardnessAndResistance(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("crystal_seashelf"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("heart_seashelf"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("endshelf"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
+				new Block(AbstractBlock.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
+				new Block(AbstractBlock.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
 				);
 		//Formatter::on
 		PlaceboUtil.registerOverride(new ApothEnchantBlock(), Apotheosis.MODID);
@@ -235,7 +235,7 @@ public class EnchModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				shears = new ApothShearsItem(),
-				new Item(new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
+				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ApothAnvilItem(Blocks.ANVIL),
 				new ApothAnvilItem(Blocks.CHIPPED_ANVIL),
 				new ApothAnvilItem(Blocks.DAMAGED_ANVIL),
@@ -248,22 +248,22 @@ public class EnchModule {
 				new TomeItem(Items.DIAMOND_PICKAXE, EnchantmentType.DIGGER),
 				new TomeItem(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
 				new TomeItem(Items.BOW, EnchantmentType.BOW),
-				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("prismatic_altar"),
+				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("prismatic_altar"),
 				new ScrappingTomeItem(),
 				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
-				new BlockItem(ApotheosisObjects.BLAZING_HELLSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("blazing_hellshelf"),
-				new BlockItem(ApotheosisObjects.GLOWING_HELLSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("glowing_hellshelf"),
+				new BlockItem(ApotheosisObjects.BLAZING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("blazing_hellshelf"),
+				new BlockItem(ApotheosisObjects.GLOWING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("glowing_hellshelf"),
 				new SeashelfItem(ApotheosisObjects.SEASHELF).setRegistryName(ApotheosisObjects.SEASHELF.getRegistryName()),
-				new BlockItem(ApotheosisObjects.CRYSTAL_SEASHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("crystal_seashelf"),
-				new BlockItem(ApotheosisObjects.HEART_SEASHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("heart_seashelf"),
-				new BlockItem(ApotheosisObjects.ENDSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("endshelf"),
-				new BlockItem(ApotheosisObjects.DRACONIC_ENDSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("draconic_endshelf"),
-				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
-				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
-				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().group(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf")
+				new BlockItem(ApotheosisObjects.CRYSTAL_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("crystal_seashelf"),
+				new BlockItem(ApotheosisObjects.HEART_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("heart_seashelf"),
+				new BlockItem(ApotheosisObjects.ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("endshelf"),
+				new BlockItem(ApotheosisObjects.DRACONIC_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("draconic_endshelf"),
+				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
+				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
+				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf")
 				);
 		//Formatter::on
-		DispenserBlock.registerDispenseBehavior(shears, DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.get(oldShears));
+		DispenserBlock.registerBehavior(shears, DispenserBlock.DISPENSER_REGISTRY.get(oldShears));
 	}
 
 	@SubscribeEvent
@@ -342,13 +342,13 @@ public class EnchModule {
 	public static int getDefaultMax(Enchantment ench) {
 		int level = ench.getMaxLevel();
 		if (level == 1) return 1;
-		int minPower = ench.getMinEnchantability(level);
+		int minPower = ench.getMinCost(level);
 		if (minPower >= 150) return level;
 		int lastPower = minPower; //Need this to check that we don't get locked up on static-power enchantments.
 		while (minPower < 150) {
 			++level;
-			int diff = ench.getMinEnchantability(level) - ench.getMinEnchantability(level - 1);
-			minPower = level > ench.getMaxLevel() ? ench.getMinEnchantability(level) + diff * (int) Math.pow(level - ench.getMaxLevel(), 1.6) : ench.getMinEnchantability(level);
+			int diff = ench.getMinCost(level) - ench.getMinCost(level - 1);
+			minPower = level > ench.getMaxLevel() ? ench.getMinCost(level) + diff * (int) Math.pow(level - ench.getMaxLevel(), 1.6) : ench.getMinCost(level);
 			if (lastPower == minPower) {
 				level--;
 				break;

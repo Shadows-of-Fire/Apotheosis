@@ -25,22 +25,22 @@ public class TomeTowerFeature extends Feature<NoFeatureConfig> {
 	public static final TomeTowerFeature INSTANCE = new TomeTowerFeature();
 
 	public TomeTowerFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 
-		pos = pos.add(rand.nextInt(5), -1, rand.nextInt(5));
+		pos = pos.offset(rand.nextInt(5), -1, rand.nextInt(5));
 
-		if (world.getBlockState(pos).getBlock() == Blocks.SNOW) pos = pos.down();
+		if (world.getBlockState(pos).getBlock() == Blocks.SNOW) pos = pos.below();
 
 		for (int x = 0; x < 9; x++) {
 			for (int z = 0; z < 9; z++) {
 				for (int y = 0; y < 4; y++) {
-					BlockPos blockpos = pos.add(x, y, z);
+					BlockPos blockpos = pos.offset(x, y, z);
 					BlockState state = world.getBlockState(blockpos);
 					Material material = state.getMaterial();
 					boolean flag = material.isSolid();
@@ -50,11 +50,11 @@ public class TomeTowerFeature extends Feature<NoFeatureConfig> {
 			}
 		}
 
-		Template template = ServerLifecycleHooks.getCurrentServer().getTemplateManager().getTemplate(TEMPLATE_ID);
-		Rotation rot = Rotation.randomRotation(rand);
+		Template template = ServerLifecycleHooks.getCurrentServer().getStructureManager().get(TEMPLATE_ID);
+		Rotation rot = Rotation.getRandom(rand);
 		int rotOrd = rot.ordinal();
-		pos = pos.add(rotOrd > 0 && rotOrd < 3 ? 8 : 0, 0, rotOrd > 1 ? 8 : 0);
-		template.func_237152_b_(world, pos, new PlacementSettings().setRotation(rot), rand);
+		pos = pos.offset(rotOrd > 0 && rotOrd < 3 ? 8 : 0, 0, rotOrd > 1 ? 8 : 0);
+		template.placeInWorld(world, pos, new PlacementSettings().setRotation(rot), rand);
 		DeadlyModule.debugLog(pos, "Tome Tower");
 		return true;
 	}

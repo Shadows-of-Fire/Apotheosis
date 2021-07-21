@@ -11,7 +11,7 @@ public class MiningArrowRenderer extends ArrowRenderer<MiningArrowEntity> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MiningArrowEntity entity) {
+	public ResourceLocation getTextureLocation(MiningArrowEntity entity) {
 		return entity.type.getTexture();
 	}
 

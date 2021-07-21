@@ -14,19 +14,19 @@ public class DefenseEnchant extends ProtectionEnchantment {
 	}
 
 	@Override
-	public int calcModifierDamage(int level, DamageSource source) {
-		if (source.canHarmInCreative()) {
+	public int getDamageProtection(int level, DamageSource source) {
+		if (source.isBypassInvul()) {
 			return 0;
-		} else if (this.protectionType == ProtectionEnchantment.Type.ALL) {
+		} else if (this.type == ProtectionEnchantment.Type.ALL) {
 			return level;
-		} else if (this.protectionType == ProtectionEnchantment.Type.FIRE && source.isFireDamage()) {
+		} else if (this.type == ProtectionEnchantment.Type.FIRE && source.isFire()) {
 			return level;
-		} else if (this.protectionType == ProtectionEnchantment.Type.FALL && source == DamageSource.FALL) {
+		} else if (this.type == ProtectionEnchantment.Type.FALL && source == DamageSource.FALL) {
 			return level * 3;
-		} else if (this.protectionType == ProtectionEnchantment.Type.EXPLOSION && source.isExplosion()) {
+		} else if (this.type == ProtectionEnchantment.Type.EXPLOSION && source.isExplosion()) {
 			return level * 2;
 		} else {
-			return this.protectionType == ProtectionEnchantment.Type.PROJECTILE && source.isProjectile() ? level : 0;
+			return this.type == ProtectionEnchantment.Type.PROJECTILE && source.isProjectile() ? level : 0;
 		}
 	}
 
@@ -34,13 +34,13 @@ public class DefenseEnchant extends ProtectionEnchantment {
 	 * Determines if the enchantment passed can be applyied together with this enchantment.
 	 */
 	@Override
-	public boolean canApplyTogether(Enchantment ench) {
-		if (this == Enchantments.FEATHER_FALLING) return ench != this;
-		if (this == Enchantments.PROTECTION) return ench != this;
+	public boolean checkCompatibility(Enchantment ench) {
+		if (this == Enchantments.FALL_PROTECTION) return ench != this;
+		if (this == Enchantments.ALL_DAMAGE_PROTECTION) return ench != this;
 		if (ench instanceof ProtectionEnchantment) {
 			ProtectionEnchantment pEnch = (ProtectionEnchantment) ench;
 			if (ench == this) return false;
-			return pEnch.protectionType == Type.ALL || pEnch.protectionType == Type.FALL;
+			return pEnch.type == Type.ALL || pEnch.type == Type.FALL;
 		}
 		if (ench == ApotheosisObjects.MAGIC_PROTECTION) return false;
 		return ench != this;

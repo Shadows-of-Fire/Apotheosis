@@ -33,6 +33,7 @@ public class DrawSpeedAffix extends AttributeAffix {
 		return lvl;
 	}
 
+	@Override
 	public float upgradeLevel(float curLvl, float newLvl) {
 		int curIdx = 0, newIdx = 0;
 		for (int i = 0; i < values.length; i++) {
@@ -45,6 +46,7 @@ public class DrawSpeedAffix extends AttributeAffix {
 	/**
 	 * Generates a new level, as if the passed level were to be split in two.
 	 */
+	@Override
 	public float obliterateLevel(float level) {
 		int idx = 0;
 		for (int i = 0; i < values.length; i++) {

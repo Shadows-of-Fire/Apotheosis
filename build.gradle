@@ -16,7 +16,7 @@ archivesBaseName = name + '-' + mcVersion
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings 'snapshot', project.properties.mappingsVersion
+    mappings 'official', project.properties.mcVersion
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client = {
@@ -39,24 +39,19 @@ repositories {
         url "https://dvs1.progwml6.com/files/maven"
     }
 	maven {
+        url "https://www.cursemaven.com"
+    }
+	maven {
 	 	url 'https://maven.theillusivec4.top/'
 	}
-	maven {
-		url 'https://maven.tehnut.info'
-	}
-	maven {
-        url 'https://www.dogforce-games.com/maven/'
-    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + project.properties.mcVersion + '-' + forgeVersion
 	compile fileTree(dir: 'libs', include: '*.jar')
 	compile fg.deobf('mezz.jei:jei-' + jeiVersion)
-	compile fg.deobf('mcp.mobius.waila:Hwyla:' + hwylaVersion)
-	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1')
-	//compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168:api")
-    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.15.2-1.2-32.168")
+	compile fg.deobf('curse.maven:jade-324717:' + jadeFileId)
+	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2')
 }
 
 jar {

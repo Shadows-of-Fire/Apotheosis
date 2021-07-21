@@ -11,17 +11,17 @@ import shadows.apotheosis.Apotheosis;
 public class ApothShearsItem extends ShearsItem {
 
 	public ApothShearsItem() {
-		super(new Item.Properties().maxDamage(238).group(ItemGroup.TOOLS));
+		super(new Item.Properties().durability(238).tab(ItemGroup.TAB_TOOLS));
 		this.setRegistryName("minecraft", "shears");
 	}
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment ench) {
-		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.EFFICIENCY;
+		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.BLOCK_EFFICIENCY;
 	}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 15;
 	}
 

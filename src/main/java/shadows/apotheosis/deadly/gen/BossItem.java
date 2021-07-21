@@ -44,7 +44,7 @@ import shadows.apotheosis.util.RandomAttributeModifier;
 
 public class BossItem extends WeightedRandom.Item {
 
-	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetClass == VillagerEntity.class;
+	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == VillagerEntity.class;
 
 	@Expose(deserialize = false)
 	protected ResourceLocation id;
@@ -111,9 +111,9 @@ public class BossItem extends WeightedRandom.Item {
 	 * @return The newly created boss.
 	 */
 	public MobEntity createBoss(IServerWorld world, BlockPos pos, Random rand) {
-		MobEntity entity = (MobEntity) this.entity.create(world.getWorld());
+		MobEntity entity = (MobEntity) this.entity.create(world.getLevel());
 		this.initBoss(rand, entity);
-		entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
+		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		return entity;
 	}
 
@@ -127,7 +127,7 @@ public class BossItem extends WeightedRandom.Item {
 
 		for (ChancedEffectInstance inst : this.effects) {
 			if (rand.nextFloat() <= inst.getChance()) {
-				entity.addPotionEffect(inst.createInstance(rand, duration));
+				entity.addEffect(inst.createInstance(rand, duration));
 			}
 		}
 
@@ -136,7 +136,7 @@ public class BossItem extends WeightedRandom.Item {
 		}
 
 		entity.setHealth(entity.getMaxHealth());
-		entity.goalSelector.goals.removeIf(IS_VILLAGER_ATTACK);
+		entity.goalSelector.availableGoals.removeIf(IS_VILLAGER_ATTACK);
 		String name = NameHelper.setEntityName(rand, entity);
 
 		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, this.armorSets);
@@ -145,7 +145,7 @@ public class BossItem extends WeightedRandom.Item {
 		boolean anyValid = false;
 
 		for (EquipmentSlotType t : EquipmentSlotType.values()) {
-			ItemStack s = entity.getItemStackFromSlot(t);
+			ItemStack s = entity.getItemBySlot(t);
 			if (!s.isEmpty() && EquipmentType.getTypeFor(s) != null) {
 				anyValid = true;
 				break;
@@ -156,34 +156,34 @@ public class BossItem extends WeightedRandom.Item {
 
 		int guaranteed = rand.nextInt(6);
 
-		ItemStack temp = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
+		ItemStack temp = entity.getItemBySlot(EquipmentSlotType.values()[guaranteed]);
 		while (temp.isEmpty() || EquipmentType.getTypeFor(temp) == null) {
 			guaranteed = rand.nextInt(6);
-			temp = entity.getItemStackFromSlot(EquipmentSlotType.values()[guaranteed]);
+			temp = entity.getItemBySlot(EquipmentSlotType.values()[guaranteed]);
 		}
 
 		for (EquipmentSlotType s : EquipmentSlotType.values()) {
-			ItemStack stack = entity.getItemStackFromSlot(s);
+			ItemStack stack = entity.getItemBySlot(s);
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
 			if (s.ordinal() == guaranteed) {
-				entity.setItemStackToSlot(s, this.modifyBossItem(stack, rand, name));
+				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name));
 			} else if (rand.nextFloat() < this.enchantChance) {
-				List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(rand, stack, Apotheosis.enableEnch ? this.enchLevels[0] : this.enchLevels[1], true);
-				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max, HashMap::new)), stack);
-				entity.setItemStackToSlot(s, stack);
+				List<EnchantmentData> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? this.enchLevels[0] : this.enchLevels[1], true);
+				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max, HashMap::new)), stack);
+				entity.setItemSlot(s, stack);
 			}
 		}
 
 	}
 
 	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
-		List<EnchantmentData> ench = EnchantmentHelper.buildEnchantmentList(random, stack, Apotheosis.enableEnch ? this.enchLevels[2] : this.enchLevels[3], true);
-		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.enchantmentLevel, Math::max)), stack);
+		List<EnchantmentData> ench = EnchantmentHelper.selectEnchantment(random, stack, Apotheosis.enableEnch ? this.enchLevels[2] : this.enchLevels[3], true);
+		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max)), stack);
 		LootRarity rarity = LootRarity.random(random, this.rarityOffset);
 		NameHelper.setItemName(random, stack, bossName);
 		stack = AffixLootManager.genLootItem(stack, random, EquipmentType.getTypeFor(stack), rarity);
-		stack.setDisplayName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getDisplayName()).mergeStyle(rarity.getColor()));
+		stack.setHoverName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getHoverName()).withStyle(rarity.getColor()));
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));

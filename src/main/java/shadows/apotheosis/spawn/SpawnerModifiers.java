@@ -71,13 +71,13 @@ public class SpawnerModifiers {
 	public static LazyValue<Ingredient> readIngredient(String s) {
 		if (s.startsWith("#")) {
 			String tag = s.substring(1);
-			return new LazyValue<>(() -> Ingredient.fromTag(TagCollectionManager.getManager().getItemTags().get(new ResourceLocation(tag))));
+			return new LazyValue<>(() -> Ingredient.of(TagCollectionManager.getInstance().getItems().getTag(new ResourceLocation(tag))));
 		} else {
 			String[] split = s.split(":");
 			Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
 			ItemStack stack = new ItemStack(i);
-			if (i == Items.BARRIER) stack.setDisplayName(new TranslationTextComponent("info.apoth.modifier_disabled"));
-			return new LazyValue<>(() -> Ingredient.fromStacks(stack));
+			if (i == Items.BARRIER) stack.setHoverName(new TranslationTextComponent("info.apoth.modifier_disabled"));
+			return new LazyValue<>(() -> Ingredient.of(stack));
 		}
 	}
 

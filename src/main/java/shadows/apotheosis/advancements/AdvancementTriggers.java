@@ -9,9 +9,9 @@ public class AdvancementTriggers {
 	public static final ModifierTrigger SPAWNER_MODIFIER = new ModifierTrigger();
 
 	public static void init() {
-		CriteriaTriggers.REGISTRY.remove(new ResourceLocation("inventory_changed"));
+		CriteriaTriggers.CRITERIA.remove(new ResourceLocation("inventory_changed"));
 		CriteriaTriggers.INVENTORY_CHANGED = CriteriaTriggers.register(new ExtendedInvTrigger());
-		CriteriaTriggers.REGISTRY.remove(new ResourceLocation("enchanted_item"));
+		CriteriaTriggers.CRITERIA.remove(new ResourceLocation("enchanted_item"));
 		CriteriaTriggers.ENCHANTED_ITEM = CriteriaTriggers.register(new EnchantedTrigger());
 		CriteriaTriggers.register(AdvancementTriggers.SPAWNER_MODIFIER);
 		CriteriaTriggers.register(AdvancementTriggers.SPLIT_BOOK);

@@ -36,7 +36,7 @@ public class VillageJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
-		reg.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == VillageModule.FLETCHING).collect(Collectors.toList()), FletchingCategory.UID);
+		reg.addRecipes(Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == VillageModule.FLETCHING).collect(Collectors.toList()), FletchingCategory.UID);
 	}
 
 	@Override

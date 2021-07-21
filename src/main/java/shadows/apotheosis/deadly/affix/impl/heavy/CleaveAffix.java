@@ -43,13 +43,13 @@ public class CleaveAffix extends Affix {
 			cleaving = true;
 			float chance = level % 1;
 			int targets = (int) level;
-			if (user.world.rand.nextFloat() < chance) {
-				Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttack(EntityType.PLAYER);
-				List<Entity> nearby = target.world.getEntitiesInAABBexcluding(target, new AxisAlignedBB(target.getPosition()).grow(6), pred);
-				if (!user.world.isRemote) for (Entity e : nearby) {
+			if (user.level.random.nextFloat() < chance) {
+				Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttackType(EntityType.PLAYER);
+				List<Entity> nearby = target.level.getEntities(target, new AxisAlignedBB(target.blockPosition()).inflate(6), pred);
+				if (!user.level.isClientSide) for (Entity e : nearby) {
 					if (targets > 0) {
-						user.ticksSinceLastSwing = 300;
-						((PlayerEntity) user).attackTargetEntityWithCurrentItem(e);
+						user.attackStrengthTicker = 300;
+						((PlayerEntity) user).attack(e);
 						targets--;
 					}
 				}
@@ -77,7 +77,7 @@ public class CleaveAffix extends Affix {
 	public ITextComponent getDisplayName(float level) {
 		float chance = level % 1;
 		int targets = (int) level;
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", String.format("%.2f", chance * 100), targets).mergeStyle(TextFormatting.GRAY);
+		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", String.format("%.2f", chance * 100), targets).withStyle(TextFormatting.GRAY);
 	}
 
 	@Override
@@ -94,6 +94,7 @@ public class CleaveAffix extends Affix {
 	 * Handles the upgrading of this affix's level, given two levels.
 	 * Default logic is (highest level + lowest level / 2)
 	 */
+	@Override
 	public float upgradeLevel(float curLvl, float newLvl) {
 		float curChance = curLvl % 1;
 		int curTargets = (int) curLvl;
@@ -107,10 +108,11 @@ public class CleaveAffix extends Affix {
 	/**
 	 * Generates a new level, as if the passed level were to be split in two.
 	 */
+	@Override
 	public float obliterateLevel(float level) {
 		float chance = level % 1;
 		int targets = (int) level;
-		return Math.max(2, (targets / 2)) + Math.max(getMin(), (chance / 2));
+		return Math.max(2, targets / 2) + Math.max(this.getMin(), chance / 2);
 	}
 
 }

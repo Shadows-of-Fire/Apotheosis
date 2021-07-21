@@ -40,16 +40,16 @@ public class SpawnerItem extends WeightedRandom.Item {
 
 	@SuppressWarnings("deprecation")
 	public void place(IServerWorld world, BlockPos pos, Random rand) {
-		world.setBlockState(pos, Blocks.SPAWNER.getDefaultState(), 2);
+		world.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
 		SpawnerEditor editor = new SpawnerEditor(world, pos);
 		this.stats.apply(editor).setSpawnData(this.spawnPotentials.get(rand.nextInt(this.spawnPotentials.size()))).setPotentials(this.spawnPotentials.toArray(new WeightedSpawnerEntity[0]));
 		int chance = DeadlyConfig.spawnerValueChance;
-		ChestBuilder.place(world, rand, pos.down(), chance > 0 && rand.nextInt(chance) == 0 ? DeadlyLoot.VALUABLE : this.lootTable);
-		world.setBlockState(pos.up(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].getDefaultState(), 2);
+		ChestBuilder.place(world, rand, pos.below(), chance > 0 && rand.nextInt(chance) == 0 ? DeadlyLoot.VALUABLE : this.lootTable);
+		world.setBlock(pos.above(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].defaultBlockState(), 2);
 		for (Direction f : Plane.HORIZONTAL) {
-			if (world.getBlockState(pos.offset(f)).isAir(world, pos.offset(f))) {
-				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateContainer().getProperty(f.getOpposite().getName2());
-				world.setBlockState(pos.offset(f), Blocks.VINE.getDefaultState().with(side, true), 2);
+			if (world.getBlockState(pos.relative(f)).isAir(world, pos.relative(f))) {
+				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateDefinition().getProperty(f.getOpposite().getName());
+				world.setBlock(pos.relative(f), Blocks.VINE.defaultBlockState().setValue(side, true), 2);
 			}
 		}
 	}

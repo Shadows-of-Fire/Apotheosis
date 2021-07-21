@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -90,15 +91,15 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new BossSummonerItem(new Item.Properties().maxStackSize(1).group(Apotheosis.APOTH_GROUP)).setRegistryName("boss_summoner"));
+		e.getRegistry().register(new BossSummonerItem(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)).setRegistryName("boss_summoner"));
 		for (LootRarity r : LootRarity.values()) {
-			RarityShardItem shard = new RarityShardItem(r, new Item.Properties().group(Apotheosis.APOTH_GROUP));
+			RarityShardItem shard = new RarityShardItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 			shard.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_shard");
 			e.getRegistry().register(shard);
 			RARITY_SHARDS.put(r, shard);
 		}
 		for (LootRarity r : LootRarity.values()) {
-			AffixTomeItem tome = new AffixTomeItem(r, new Item.Properties().group(Apotheosis.APOTH_GROUP));
+			AffixTomeItem tome = new AffixTomeItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 			tome.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_tome");
 			e.getRegistry().register(tome);
 			RARITY_TOMES.put(r, tome);
@@ -107,7 +108,7 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		e.getRegistry().register(new BossSpawnerBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(-1).noDrops().notSolid()).setRegistryName("boss_spawner"));
+		e.getRegistry().register(new BossSpawnerBlock(AbstractBlock.Properties.of(Material.STONE).strength(-1).noDrops().noOcclusion()).setRegistryName("boss_spawner"));
 	}
 
 	@SubscribeEvent

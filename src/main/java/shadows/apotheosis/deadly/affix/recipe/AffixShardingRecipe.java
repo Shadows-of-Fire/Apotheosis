@@ -30,7 +30,7 @@ public class AffixShardingRecipe extends SoulfireCookingRecipe {
 		this.rarity = rarity;
 		ItemStack stack = new ItemStack(Items.DIAMOND_SWORD);
 		AffixHelper.addLore(stack, new TranslationTextComponent("info.apotheosis.any_of_rarity", new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT))));
-		this.ing = Ingredient.fromStacks(stack);
+		this.ing = Ingredient.of(stack);
 	}
 
 	@Override
@@ -40,25 +40,25 @@ public class AffixShardingRecipe extends SoulfireCookingRecipe {
 
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
-		return NonNullList.from(Ingredient.EMPTY, this.ing);
+		return NonNullList.of(Ingredient.EMPTY, this.ing);
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AffixShardingRecipe> {
 
 		@Override
-		public AffixShardingRecipe read(ResourceLocation recipeId, JsonObject json) {
-			LootRarity rarity = LootRarity.valueOf(JSONUtils.getString(json, "rarity"));
+		public AffixShardingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			LootRarity rarity = LootRarity.valueOf(JSONUtils.getAsString(json, "rarity"));
 			return new AffixShardingRecipe(recipeId, rarity);
 		}
 
 		@Override
-		public AffixShardingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public AffixShardingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			LootRarity rarity = LootRarity.values()[buffer.readByte()];
 			return new AffixShardingRecipe(recipeId, rarity);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, AffixShardingRecipe recipe) {
+		public void toNetwork(PacketBuffer buffer, AffixShardingRecipe recipe) {
 			buffer.writeByte(recipe.rarity.ordinal());
 		}
 	}

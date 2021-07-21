@@ -13,7 +13,7 @@ public class NaturesBlessingEnchant extends Enchantment {
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		return stack.getItem() instanceof HoeItem;
 	}
 
@@ -23,13 +23,13 @@ public class NaturesBlessingEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 30 + level * 10;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 30;
+	public int getMaxCost(int level) {
+		return this.getMinCost(level) + 30;
 	}
 
 }

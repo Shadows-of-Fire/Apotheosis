@@ -20,12 +20,12 @@ public class IcyThornsEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 40 + (level - 1) * 35;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
+	public int getMaxCost(int level) {
 		return 90 + level * 15;
 	}
 
@@ -35,17 +35,17 @@ public class IcyThornsEnchant extends Enchantment {
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
-		return stack.getItem() instanceof ArmorItem ? true : super.canApply(stack);
+	public boolean canEnchant(ItemStack stack) {
+		return stack.getItem() instanceof ArmorItem ? true : super.canEnchant(stack);
 	}
 
 	@Override
-	public void onUserHurt(LivingEntity user, Entity attacker, int level) {
+	public void doPostHurt(LivingEntity user, Entity attacker, int level) {
 		if (user == null) return;
-		Random rand = user.getRNG();
+		Random rand = user.getRandom();
 		if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
 			LivingEntity ent = (LivingEntity) attacker;
-			ent.addPotionEffect(new EffectInstance(Effects.SLOWNESS, (100 + rand.nextInt(100)) * level, level));
+			ent.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
 		}
 	}
 

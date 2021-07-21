@@ -27,7 +27,7 @@ public class CurrentHPAffix extends AttributeAffix {
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
 		if (user instanceof PlayerEntity && target instanceof LivingEntity) {
-			target.attackEntityFrom(DamageSource.causePlayerDamage((PlayerEntity) user), ((LivingEntity) target).getHealth() * Apotheosis.localAtkStrength * level);
+			target.hurt(DamageSource.playerAttack((PlayerEntity) user), ((LivingEntity) target).getHealth() * Apotheosis.localAtkStrength * level);
 		}
 	}
 

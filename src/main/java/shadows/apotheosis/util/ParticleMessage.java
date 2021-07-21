@@ -62,7 +62,7 @@ public class ParticleMessage extends MessageProvider<ParticleMessage> {
 	public void handle(ParticleMessage msg, Supplier<Context> ctx) {
 		NetworkUtils.handlePacket(() -> () -> {
 			for (int i = 0; i < msg.count; i++)
-				Minecraft.getInstance().world.addParticle((IParticleData) msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
+				Minecraft.getInstance().level.addParticle((IParticleData) msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
 		}, ctx.get());
 	}
 

@@ -38,7 +38,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 		CompoundNBT tag = accessor.getServerData();
 		Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
 		for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
-			tooltip.add(e.getKey().getDisplayName(e.getValue()));
+			tooltip.add(e.getKey().getFullname(e.getValue()));
 		}
 	}
 
@@ -47,7 +47,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 		if (te instanceof AnvilTile) {
 			ItemStack stack = new ItemStack(Items.ANVIL);
 			EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), stack);
-			tag.put("enchantments", stack.getEnchantmentTagList());
+			tag.put("enchantments", stack.getEnchantmentTags());
 		}
 	}
 

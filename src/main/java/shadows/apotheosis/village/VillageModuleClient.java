@@ -13,8 +13,8 @@ import shadows.apotheosis.village.fletching.arrows.ObsidianArrowRenderer;
 public class VillageModuleClient {
 
 	public static void init() {
-		ScreenManager.registerFactory(ApotheosisObjects.FLETCHING, FletchingScreen::new);
-		EntityRendererManager mgr = Minecraft.getInstance().getRenderManager();
+		ScreenManager.register(ApotheosisObjects.FLETCHING, FletchingScreen::new);
+		EntityRendererManager mgr = Minecraft.getInstance().getEntityRenderDispatcher();
 		mgr.register(ApotheosisObjects.OB_ARROW_ENTITY, new ObsidianArrowRenderer(mgr));
 		mgr.register(ApotheosisObjects.BH_ARROW_ENTITY, new BroadheadArrowRenderer(mgr));
 		mgr.register(ApotheosisObjects.EX_ARROW_ENTITY, new ExplosiveArrowRenderer(mgr));

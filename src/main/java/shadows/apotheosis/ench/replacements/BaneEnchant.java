@@ -20,14 +20,14 @@ public class BaneEnchant extends DamageEnchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		if (this.attrib == CreatureAttribute.UNDEFINED) return 1 + (level - 1) * 11;
 		return 5 + (level - 1) * 8;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 20;
+	public int getMaxCost(int level) {
+		return this.getMinCost(level) + 20;
 	}
 
 	@Override
@@ -36,14 +36,14 @@ public class BaneEnchant extends DamageEnchantment {
 	}
 
 	@Override
-	public float calcDamageByCreature(int level, CreatureAttribute attrib) {
+	public float getDamageBonus(int level, CreatureAttribute attrib) {
 		if (this.attrib == CreatureAttribute.UNDEFINED) return 1 + level * 0.5F;
 		if (this.attrib == attrib) return level * 1.5F;
 		return 0;
 	}
 
 	@Override
-	public boolean canApplyTogether(Enchantment ench) {
+	public boolean checkCompatibility(Enchantment ench) {
 		if (this.attrib == CreatureAttribute.UNDEFINED) return ench != this;
 		return ench == Enchantments.SHARPNESS ? ench != this : !(ench instanceof BaneEnchant);
 	}
@@ -52,12 +52,12 @@ public class BaneEnchant extends DamageEnchantment {
 	* Called whenever a mob is damaged with an item that has this enchantment on it.
 	*/
 	@Override
-	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+	public void doPostAttack(LivingEntity user, Entity target, int level) {
 		if (target instanceof LivingEntity) {
 			LivingEntity livingentity = (LivingEntity) target;
-			if (this.attrib != CreatureAttribute.UNDEFINED && livingentity.getCreatureAttribute() == this.attrib) {
-				int i = 20 + user.getRNG().nextInt(10 * level);
-				livingentity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, i, 3));
+			if (this.attrib != CreatureAttribute.UNDEFINED && livingentity.getMobType() == this.attrib) {
+				int i = 20 + user.getRandom().nextInt(10 * level);
+				livingentity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, i, 3));
 			}
 		}
 

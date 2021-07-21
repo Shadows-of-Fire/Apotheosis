@@ -62,12 +62,12 @@ public class GearSet extends WeightedRandom.Item {
 	 * Makes the entity wear this armor set.  Returns the entity for convenience.
 	 */
 	public LivingEntity apply(LivingEntity entity) {
-		entity.setItemStackToSlot(EquipmentSlotType.MAINHAND, getRandomStack(this.mainhands, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.OFFHAND, getRandomStack(this.offhands, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.FEET, getRandomStack(this.boots, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.LEGS, getRandomStack(this.leggings, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.CHEST, getRandomStack(this.chestplates, entity.rand));
-		entity.setItemStackToSlot(EquipmentSlotType.HEAD, getRandomStack(this.helmets, entity.rand));
+		entity.setItemSlot(EquipmentSlotType.MAINHAND, getRandomStack(this.mainhands, entity.random));
+		entity.setItemSlot(EquipmentSlotType.OFFHAND, getRandomStack(this.offhands, entity.random));
+		entity.setItemSlot(EquipmentSlotType.FEET, getRandomStack(this.boots, entity.random));
+		entity.setItemSlot(EquipmentSlotType.LEGS, getRandomStack(this.leggings, entity.random));
+		entity.setItemSlot(EquipmentSlotType.CHEST, getRandomStack(this.chestplates, entity.random));
+		entity.setItemSlot(EquipmentSlotType.HEAD, getRandomStack(this.helmets, entity.random));
 		return entity;
 	}
 
@@ -94,7 +94,7 @@ public class GearSet extends WeightedRandom.Item {
 
 		@Override
 		public String toString() {
-			return "Stack: " + this.stack.toString() + " @ Weight: " + this.itemWeight;
+			return "Stack: " + this.stack.toString() + " @ Weight: " + this.weight;
 		}
 	}
 

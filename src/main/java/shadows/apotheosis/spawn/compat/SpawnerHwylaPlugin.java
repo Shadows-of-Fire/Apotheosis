@@ -36,7 +36,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 
 	@Override
 	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-		if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown()) {
+		if (Minecraft.getInstance().options.keyShift.isDown()) {
 			int[] stats = accessor.getServerData().getIntArray(STATS);
 			if (stats.length != 10) return;
 			tooltip.add(new TranslationTextComponent("waila.spw.mindelay", stats[0]));
@@ -56,8 +56,8 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 	public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity te) {
 		if (te instanceof ApothSpawnerTile) {
 			ApothSpawnerTile spw = (ApothSpawnerTile) te;
-			AbstractSpawner logic = spw.getSpawnerBaseLogic();
-			tag.putIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.activatingRangeFromPlayer, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0, spw.ignoresCap ? 1 : 0, spw.redstoneEnabled ? 1 : 0 });
+			AbstractSpawner logic = spw.getSpawner();
+			tag.putIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.requiredPlayerRange, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0, spw.ignoresCap ? 1 : 0, spw.redstoneEnabled ? 1 : 0 });
 		}
 	}
 

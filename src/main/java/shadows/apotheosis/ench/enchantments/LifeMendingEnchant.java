@@ -15,13 +15,13 @@ public class LifeMendingEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int level) {
+	public int getMinCost(int level) {
 		return 60 + level * 20;
 	}
 
 	@Override
-	public int getMaxEnchantability(int level) {
-		return this.getMinEnchantability(level) + 50;
+	public int getMaxCost(int level) {
+		return this.getMinCost(level) + 50;
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class LifeMendingEnchant extends Enchantment {
 	}
 
 	@Override
-	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_RED);
+	public ITextComponent getFullname(int level) {
+		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_RED);
 	}
 
 }

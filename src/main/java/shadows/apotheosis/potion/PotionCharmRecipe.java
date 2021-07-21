@@ -43,12 +43,12 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		List<ItemStack> potionStacks = new ArrayList<>();
 		List<Object> realIngredients = new ArrayList<>();
 		for (Potion p : ForgeRegistries.POTION_TYPES) {
-			if (p.getEffects().size() != 1 || p.getEffects().get(0).getPotion().isInstant()) continue;
+			if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
 			ItemStack potion = new ItemStack(Items.POTION);
-			PotionUtils.addPotionToItemStack(potion, p);
+			PotionUtils.setPotion(potion, p);
 			potionStacks.add(potion);
 		}
-		Ingredient potion = Ingredient.fromStacks(potionStacks.toArray(new ItemStack[0]));
+		Ingredient potion = Ingredient.of(potionStacks.toArray(new ItemStack[0]));
 
 		for (Object o : ingredients) {
 			if (o.equals("potion")) realIngredients.add(potion);
@@ -59,17 +59,17 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
-		ItemStack out = super.getCraftingResult(inv);
-		PotionUtils.addPotionToItemStack(out, PotionUtils.getPotionFromItem(inv.getStackInSlot(4)));
+	public ItemStack assemble(CraftingInventory inv) {
+		ItemStack out = super.assemble(inv);
+		PotionUtils.setPotion(out, PotionUtils.getPotion(inv.getItem(4)));
 		return out;
 	}
 
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		if (super.matches(inv, world)) {
-			List<Potion> potions = this.potionSlots.stream().map(s -> inv.getStackInSlot(s)).map(PotionUtils::getPotionFromItem).collect(Collectors.toList());
-			if (potions.size() > 0 && potions.stream().allMatch(p -> p != null && p.getEffects().size() == 1 && !p.getEffects().get(0).getPotion().isInstant())) {
+			List<Potion> potions = this.potionSlots.stream().map(s -> inv.getItem(s)).map(PotionUtils::getPotion).collect(Collectors.toList());
+			if (potions.size() > 0 && potions.stream().allMatch(p -> p != null && p.getEffects().size() == 1 && !p.getEffects().get(0).getEffect().isInstantenous())) {
 				return potions.stream().distinct().count() == 1;
 			}
 		}
@@ -86,7 +86,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		public static final Serializer INSTANCE = new Serializer();
 
 		@Override
-		public PotionCharmRecipe read(ResourceLocation recipeId, JsonObject json) {
+		public PotionCharmRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			JsonArray inputs = json.get("recipe").getAsJsonArray();
 			int width = 0, height = inputs.size();
 			List<Object> ingredients = new ArrayList<>();
@@ -102,7 +102,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		}
 
 		@Override
-		public PotionCharmRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public PotionCharmRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			int width = buffer.readByte();
 			int height = buffer.readByte();
 			int potions = buffer.readByte();
@@ -114,7 +114,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 			List<Object> inputs = new ArrayList<>(width * height);
 
 			for (int i = 0; i < width * height; i++) {
-				if (!potionSlots.contains(i)) inputs.add(i, Ingredient.read(buffer));
+				if (!potionSlots.contains(i)) inputs.add(i, Ingredient.fromNetwork(buffer));
 				else inputs.add("potion");
 			}
 
@@ -122,7 +122,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, PotionCharmRecipe recipe) {
+		public void toNetwork(PacketBuffer buffer, PotionCharmRecipe recipe) {
 			buffer.writeByte(recipe.getRecipeWidth());
 			buffer.writeByte(recipe.getRecipeHeight());
 			buffer.writeByte(recipe.potionSlots.size());
@@ -132,7 +132,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 
 			List<Ingredient> inputs = recipe.getIngredients();
 			for (int i = 0; i < inputs.size(); i++) {
-				if (!recipe.potionSlots.contains(i)) inputs.get(i).write(buffer);
+				if (!recipe.potionSlots.contains(i)) inputs.get(i).toNetwork(buffer);
 			}
 		}
 

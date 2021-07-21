@@ -14,26 +14,26 @@ public class FletchingScreen extends ContainerScreen<FletchingContainer> {
 
 	public FletchingScreen(FletchingContainer container, PlayerInventory player, ITextComponent title) {
 		super(container, player, title);
-		this.titleX = 47;
-		this.titleY = 6;
-		this.playerInventoryTitleX = 8;
-		this.playerInventoryTitleY = this.ySize - 96 + 2;
+		this.titleLabelX = 47;
+		this.titleLabelY = 6;
+		this.inventoryLabelX = 8;
+		this.inventoryLabelY = this.imageHeight - 96 + 2;
 	}
 
 	@Override
 	public void render(MatrixStack stack, int x, int y, float partialTicks) {
 		this.renderBackground(stack);
 		super.render(stack, x, y, partialTicks);
-		this.renderHoveredTooltip(stack, x, y);
+		this.renderTooltip(stack, x, y);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(TEXTURES);
-		int i = this.guiLeft;
-		int j = (this.height - this.ySize) / 2;
-		this.blit(stack, i, j, 0, 0, this.xSize, this.ySize);
+		this.minecraft.getTextureManager().bind(TEXTURES);
+		int i = this.leftPos;
+		int j = (this.height - this.imageHeight) / 2;
+		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 	}
 }

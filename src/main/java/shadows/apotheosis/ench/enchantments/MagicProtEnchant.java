@@ -16,13 +16,13 @@ public class MagicProtEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int lvl) {
+	public int getMinCost(int lvl) {
 		return 40 + (lvl - 1) * 25;
 	}
 
 	@Override
-	public int getMaxEnchantability(int lvl) {
-		return this.getMinEnchantability(lvl + 1);
+	public int getMaxCost(int lvl) {
+		return this.getMinCost(lvl + 1);
 	}
 
 	@Override
@@ -31,17 +31,17 @@ public class MagicProtEnchant extends Enchantment {
 	}
 
 	@Override
-	public int calcModifierDamage(int level, DamageSource source) {
-		return source.isMagicDamage() && !source.isDamageAbsolute() ? level * 2 : 0;
+	public int getDamageProtection(int level, DamageSource source) {
+		return source.isMagic() && !source.isBypassMagic() ? level * 2 : 0;
 	}
 
 	@Override
-	public ITextComponent getDisplayName(int level) {
-		return ((IFormattableTextComponent) super.getDisplayName(level)).mergeStyle(TextFormatting.DARK_PURPLE);
+	public ITextComponent getFullname(int level) {
+		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_PURPLE);
 	}
 
 	@Override
-	protected boolean canApplyTogether(Enchantment ench) {
+	protected boolean checkCompatibility(Enchantment ench) {
 		return ench != this && ench != Enchantments.FIRE_PROTECTION && ench != Enchantments.BLAST_PROTECTION && ench != Enchantments.PROJECTILE_PROTECTION;
 	}
 

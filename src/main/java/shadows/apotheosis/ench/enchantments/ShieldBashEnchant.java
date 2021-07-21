@@ -17,13 +17,13 @@ public class ShieldBashEnchant extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 1 + (enchantmentLevel - 1) * 17;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel) + 40;
+	public int getMaxCost(int enchantmentLevel) {
+		return this.getMinCost(enchantmentLevel) + 40;
 	}
 
 	@Override
@@ -37,15 +37,15 @@ public class ShieldBashEnchant extends Enchantment {
 	}
 
 	@Override
-	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
+	public void doPostAttack(LivingEntity user, Entity target, int level) {
 		if (target instanceof LivingEntity) {
-			ItemStack stack = user.getHeldItemMainhand();
+			ItemStack stack = user.getMainHandItem();
 			if (stack.getItem().isShield(stack, user)) {
-				stack.damageItem(35, user, e -> {
-					e.sendBreakAnimation(EquipmentSlotType.OFFHAND);
+				stack.hurtAndBreak(35, user, e -> {
+					e.broadcastBreakEvent(EquipmentSlotType.OFFHAND);
 				});
-				DamageSource src = user instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity) user) : DamageSource.GENERIC;
-				((LivingEntity) target).attackEntityFrom(src, Apotheosis.localAtkStrength * 2.35F * level);
+				DamageSource src = user instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity) user) : DamageSource.GENERIC;
+				((LivingEntity) target).hurt(src, Apotheosis.localAtkStrength * 2.35F * level);
 			}
 		}
 	}

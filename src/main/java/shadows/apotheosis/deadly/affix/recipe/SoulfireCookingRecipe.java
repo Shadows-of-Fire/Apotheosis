@@ -20,13 +20,13 @@ public class SoulfireCookingRecipe extends CampfireCookingRecipe {
 		if (inv instanceof CampfireInventory) {
 			CampfireInventory cInv = (CampfireInventory) inv;
 			if (world == null || cInv.getTile() == null) return false;
-			return cInv.getTile().getBlockState().getBlock() == Blocks.SOUL_CAMPFIRE && this.matches(inv.getStackInSlot(0));
+			return cInv.getTile().getBlockState().getBlock() == Blocks.SOUL_CAMPFIRE && this.matches(inv.getItem(0));
 		}
-		return this.matches(inv.getStackInSlot(0));
+		return this.matches(inv.getItem(0));
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(Blocks.SOUL_CAMPFIRE);
 	}
 
@@ -35,7 +35,7 @@ public class SoulfireCookingRecipe extends CampfireCookingRecipe {
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return ItemStack.EMPTY;
 	}
 
@@ -44,7 +44,7 @@ public class SoulfireCookingRecipe extends CampfireCookingRecipe {
 	 * Used to trick JEI into hiding it.
 	 */
 	public ItemStack getSecretOutput() {
-		return super.getRecipeOutput();
+		return super.getResultItem();
 	}
 
 }

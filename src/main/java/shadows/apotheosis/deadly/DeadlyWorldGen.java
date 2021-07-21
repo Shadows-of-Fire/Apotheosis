@@ -15,11 +15,11 @@ import shadows.apotheosis.deadly.gen.TomeTowerFeature;
 import shadows.apotheosis.deadly.gen.TroveFeature;
 
 public class DeadlyWorldGen {
-	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON = BossDungeonFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
-	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2 = BossDungeonFeature2.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(128).square().func_242731_b(DeadlyConfig.bossDungeonAttempts);
-	public static final ConfiguredFeature<?, ?> ROGUE_SPAWNER = RogueSpawnerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(256).square().func_242731_b(DeadlyConfig.rogueSpawnerAttempts);
-	public static final ConfiguredFeature<?, ?> ORE_TROVE = TroveFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).range(64).square().func_242731_b(DeadlyConfig.troveAttempts);
-	public static final ConfiguredFeature<?, ?> TOME_TOWER = TomeTowerFeature.INSTANCE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placements.BAMBOO_PLACEMENT).chance(DeadlyConfig.tomeTowerChance);
+	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON = BossDungeonFeature.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts);
+	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2 = BossDungeonFeature2.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts);
+	public static final ConfiguredFeature<?, ?> ROGUE_SPAWNER = RogueSpawnerFeature.INSTANCE.configured(IFeatureConfig.NONE).range(256).squared().count(DeadlyConfig.rogueSpawnerAttempts);
+	public static final ConfiguredFeature<?, ?> ORE_TROVE = TroveFeature.INSTANCE.configured(IFeatureConfig.NONE).range(64).squared().count(DeadlyConfig.troveAttempts);
+	public static final ConfiguredFeature<?, ?> TOME_TOWER = TomeTowerFeature.INSTANCE.configured(IFeatureConfig.NONE).decorated(Placements.HEIGHTMAP_WORLD_SURFACE).chance(DeadlyConfig.tomeTowerChance);
 
 	public static void init() {
 		registerAll(BOSS_DUNGEON, BOSS_DUNGEON_2, ROGUE_SPAWNER, ORE_TROVE, TOME_TOWER);
@@ -41,9 +41,9 @@ public class DeadlyWorldGen {
 	 */
 	public static void onBiomeLoad(BiomeLoadingEvent e) {
 		if (!DeadlyConfig.BIOME_BLACKLIST.contains(e.getName())) {
-			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, BOSS_DUNGEON).withFeature(Decoration.UNDERGROUND_STRUCTURES, BOSS_DUNGEON_2).withFeature(Decoration.UNDERGROUND_STRUCTURES, ROGUE_SPAWNER);
-			e.getGeneration().withFeature(Decoration.UNDERGROUND_STRUCTURES, ORE_TROVE);
-			if (Apotheosis.enableEnch && DeadlyConfig.tomeTowerChance > 0) e.getGeneration().withFeature(Decoration.SURFACE_STRUCTURES, TOME_TOWER);
+			e.getGeneration().addFeature(Decoration.UNDERGROUND_STRUCTURES, BOSS_DUNGEON).addFeature(Decoration.UNDERGROUND_STRUCTURES, BOSS_DUNGEON_2).addFeature(Decoration.UNDERGROUND_STRUCTURES, ROGUE_SPAWNER);
+			e.getGeneration().addFeature(Decoration.UNDERGROUND_STRUCTURES, ORE_TROVE);
+			if (Apotheosis.enableEnch && DeadlyConfig.tomeTowerChance > 0) e.getGeneration().addFeature(Decoration.SURFACE_STRUCTURES, TOME_TOWER);
 		}
 	}
 

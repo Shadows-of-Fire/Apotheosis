@@ -26,12 +26,12 @@ public class AffixHelper {
 	 * Does not edit the item name or perform other changes.
 	 */
 	public static void applyAffix(ItemStack stack, Affix affix, float level) {
-		CompoundNBT tag = stack.getOrCreateChildTag(AFFIXES);
+		CompoundNBT tag = stack.getOrCreateTagElement(AFFIXES);
 		tag.putFloat(affix.getRegistryName().toString(), level);
 	}
 
 	public static void setAffixes(ItemStack stack, Map<Affix, Float> affixes) {
-		stack.removeChildTag(AFFIXES);
+		stack.removeTagKey(AFFIXES);
 		affixes.forEach((a, l) -> applyAffix(stack, a, l));
 	}
 
@@ -39,7 +39,7 @@ public class AffixHelper {
 		Map<Affix, Float> map = new HashMap<>();
 		if (stack.hasTag() && stack.getTag().contains(AFFIXES)) {
 			CompoundNBT tag = stack.getTag().getCompound(AFFIXES);
-			for (String key : tag.keySet()) {
+			for (String key : tag.getAllKeys()) {
 				Affix affix = Affix.REGISTRY.getValue(new ResourceLocation(key));
 				if (affix == null) continue;
 				float lvl = tag.getFloat(key);
@@ -62,7 +62,7 @@ public class AffixHelper {
 	}
 
 	public static void addLore(ItemStack stack, ITextComponent lore) {
-		CompoundNBT display = stack.getOrCreateChildTag("display");
+		CompoundNBT display = stack.getOrCreateTagElement("display");
 		ListNBT tag = display.getList("Lore", 8);
 		tag.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(lore)));
 		display.put("Lore", tag);
@@ -75,7 +75,7 @@ public class AffixHelper {
 	}
 
 	public static void setRarity(ItemStack stack, LootRarity rarity) {
-		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).mergeStyle(rarity.getColor(), TextFormatting.ITALIC));
+		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).withStyle(rarity.getColor(), TextFormatting.ITALIC));
 		stack.getOrCreateTag().putString("apoth.rarity", rarity.name());
 	}
 

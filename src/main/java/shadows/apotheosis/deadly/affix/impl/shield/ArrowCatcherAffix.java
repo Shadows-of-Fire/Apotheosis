@@ -76,14 +76,14 @@ public class ArrowCatcherAffix extends Affix {
 
 	@Override
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
-		Entity iSource = source.getImmediateSource();
+		Entity iSource = source.getDirectEntity();
 		if (iSource instanceof AbstractArrowEntity) {
 			AbstractArrowEntity arrow = (AbstractArrowEntity) iSource;
 			arrow.remove();
 			try {
 				ItemStack arrowStack = (ItemStack) getArrowStack.invoke(arrow);
 				arrowStack.setCount((int) level);
-				entity.world.addEntity(new ItemEntity(entity.world, entity.getPosX(), entity.getPosY(), entity.getPosZ(), arrowStack));
+				entity.level.addFreshEntity(new ItemEntity(entity.level, entity.getX(), entity.getY(), entity.getZ(), arrowStack));
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}
