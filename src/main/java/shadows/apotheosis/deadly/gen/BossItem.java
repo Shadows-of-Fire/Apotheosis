@@ -27,12 +27,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IServerWorld;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.LootRarity;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -188,6 +191,16 @@ public class BossItem extends WeightedRandom.Item {
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
 		}
+
+		if (DeadlyConfig.curseBossItems) {
+			final ItemStack stk = stack; //Lambda rules require this instead of a direct reference to stack
+			List<Enchantment> curses = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter(e -> e.canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
+			if (!curses.isEmpty()) {
+				Enchantment curse = curses.get(random.nextInt(curses.size()));
+				enchMap.put(curse, MathHelper.nextInt(random, 1, EnchHooks.getMaxLevel(curse)));
+			}
+		}
+
 		EnchantmentHelper.setEnchantments(enchMap, stack);
 		stack.getTag().putBoolean("apoth_boss", true);
 		return stack;

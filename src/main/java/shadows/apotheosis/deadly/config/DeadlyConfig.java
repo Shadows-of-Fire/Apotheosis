@@ -26,6 +26,7 @@ public class DeadlyConfig {
 	public static int surfaceBossChance = 85;
 	public static int randomAffixItem = 125;
 	public static boolean surfaceBossLightning = true;
+	public static boolean curseBossItems = false;
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
@@ -64,6 +65,7 @@ public class DeadlyConfig {
 		surfaceBossChance = c.getInt("Surface Boss Chance", "bosses", surfaceBossChance, 0, 500000, "The 1/n chance that a naturally spawned mob that can see the sky is transformed into a boss.  0 to disable.");
 		randomAffixItem = c.getInt("Random Affix Chance", "affixes", randomAffixItem, 0, 500000, "The 1/n chance that a naturally spawned mob will be granted an affix item. 0 to disable.");
 		surfaceBossLightning = c.getBoolean("Surface Boss Lightning", "bosses", true, "If a lightning bolt strikes when a surface boss spawn occurs.");
+		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", false, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
 
 		bossDungeonAttempts = c.getInt("Boss Dungeon", "frequency", bossDungeonAttempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeons.");
 		bossDungeon2Attempts = c.getInt("Boss Dungeon Variant 2", "frequency", bossDungeon2Attempts, 0, 50000, "The number of generation attempts (per chunk) for boss dungeon variant 2.");
