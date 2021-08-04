@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -36,5 +37,10 @@ public class PiercingAffix extends Affix {
 	@Override
 	public float getMax() {
 		return 0;
+	}
+
+	@Override
+	public ITextComponent chainName(ITextComponent name, AffixModifier modifier) {
+		return name;
 	}
 }
