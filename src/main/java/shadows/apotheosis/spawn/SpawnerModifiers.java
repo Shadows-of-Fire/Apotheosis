@@ -42,7 +42,7 @@ public class SpawnerModifiers {
 	public static final SpawnerModifier PLAYERS = new PlayerModifier();
 	public static final SpawnerModifier CAP = new CapModifier();
 	public static final SpawnerModifier REDSTONE = new RedstoneModifier();
-	public static final SpawnerModifier EGG = new EggModifier();
+	public static final EggModifier EGG = new EggModifier();
 	public static final SpawnerModifier INVERSE = new InverseModifier();
 
 	public static void registerModifiers() {

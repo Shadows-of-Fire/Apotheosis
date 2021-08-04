@@ -20,7 +20,7 @@ import shadows.placebo.util.SpawnerBuilder;
  */
 public class EggModifier extends SpawnerModifier {
 
-	List<String> bannedMobs = new ArrayList<>();
+	public final List<String> bannedMobs = new ArrayList<>();
 
 	public EggModifier() {
 		this.item = new LazyValue<>(() -> Ingredient.of(Items.WITCH_SPAWN_EGG));
@@ -33,7 +33,7 @@ public class EggModifier extends SpawnerModifier {
 
 	@Override
 	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		String name = ((SpawnEggItem) stack.getItem()).getType(null).getRegistryName().toString();
+		String name = ((SpawnEggItem) stack.getItem()).getType(stack.getTag()).getRegistryName().toString();
 		if (!this.bannedMobs.contains(name) && !name.equals(spawner.spawner.nextSpawnData.getTag().getString(SpawnerBuilder.ID))) {
 			spawner.spawner.spawnPotentials.clear();
 			spawner.spawner.nextSpawnData = new WeightedSpawnerEntity();

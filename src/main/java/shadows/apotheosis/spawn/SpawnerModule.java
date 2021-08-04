@@ -79,8 +79,9 @@ public class SpawnerModule {
 		Entity killer = e.getSource().getEntity();
 		if (killer instanceof LivingEntity) {
 			int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.CAPTURING, ((LivingEntity) killer).getMainHandItem());
-			if (e.getEntityLiving().level.random.nextFloat() < level / 250F) {
-				LivingEntity killed = e.getEntityLiving();
+			LivingEntity killed = e.getEntityLiving();
+			if (SpawnerModifiers.EGG.bannedMobs.contains(killed.getType().getRegistryName().toString())) return;
+			if (killed.level.random.nextFloat() < level / 250F) {
 				ItemStack egg = new ItemStack(SpawnEggItem.BY_ID.get(killed.getType()));
 				e.getDrops().add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));
 			}
