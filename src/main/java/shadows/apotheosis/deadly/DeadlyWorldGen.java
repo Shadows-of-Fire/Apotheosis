@@ -1,5 +1,6 @@
 package shadows.apotheosis.deadly;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -15,20 +16,14 @@ import shadows.apotheosis.deadly.gen.TomeTowerFeature;
 import shadows.apotheosis.deadly.gen.TroveFeature;
 
 public class DeadlyWorldGen {
-	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON = BossDungeonFeature.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts);
-	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2 = BossDungeonFeature2.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts);
-	public static final ConfiguredFeature<?, ?> ROGUE_SPAWNER = RogueSpawnerFeature.INSTANCE.configured(IFeatureConfig.NONE).range(256).squared().count(DeadlyConfig.rogueSpawnerAttempts);
-	public static final ConfiguredFeature<?, ?> ORE_TROVE = TroveFeature.INSTANCE.configured(IFeatureConfig.NONE).range(64).squared().count(DeadlyConfig.troveAttempts);
-	public static final ConfiguredFeature<?, ?> TOME_TOWER = TomeTowerFeature.INSTANCE.configured(IFeatureConfig.NONE).decorated(Placements.HEIGHTMAP_WORLD_SURFACE).chance(DeadlyConfig.tomeTowerChance);
+	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON = register(BossDungeonFeature.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon");
+	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2 = register(BossDungeonFeature2.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon_2");
+	public static final ConfiguredFeature<?, ?> ROGUE_SPAWNER = register(RogueSpawnerFeature.INSTANCE.configured(IFeatureConfig.NONE).range(256).squared().count(DeadlyConfig.rogueSpawnerAttempts), "rogue_spawner");
+	public static final ConfiguredFeature<?, ?> ORE_TROVE = register(TroveFeature.INSTANCE.configured(IFeatureConfig.NONE).range(64).squared().count(DeadlyConfig.troveAttempts), "ore_trove");
+	public static final ConfiguredFeature<?, ?> TOME_TOWER = register(TomeTowerFeature.INSTANCE.configured(IFeatureConfig.NONE).decorated(Placements.HEIGHTMAP_WORLD_SURFACE).chance(DeadlyConfig.tomeTowerChance), "tome_tower");
 
-	public static void init() {
-		registerAll(BOSS_DUNGEON, BOSS_DUNGEON_2, ROGUE_SPAWNER, ORE_TROVE, TOME_TOWER);
-	}
-
-	private static void registerAll(ConfiguredFeature<?, ?>... feats) {
-		for (ConfiguredFeature<?, ?> f : feats) {
-			WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_FEATURE, f.feature.getRegistryName(), f);
-		}
+	static ConfiguredFeature<?, ?> register(ConfiguredFeature<?, ?> feat, String id) {
+		return WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(Apotheosis.MODID, id), feat);
 	}
 
 	/**

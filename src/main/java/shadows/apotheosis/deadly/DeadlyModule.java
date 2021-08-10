@@ -77,7 +77,6 @@ public class DeadlyModule {
 			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 2), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
 		}
 		RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + LootRarity.ANCIENT.name().toLowerCase(Locale.ROOT)), LootRarity.ANCIENT));
-		e.enqueueWork(DeadlyWorldGen::init);
 	}
 
 	@SubscribeEvent
