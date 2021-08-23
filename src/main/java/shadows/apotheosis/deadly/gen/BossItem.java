@@ -23,6 +23,7 @@ import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -76,7 +77,10 @@ public class BossItem extends WeightedRandom.Item {
 	@SerializedName("attribute_modifiers")
 	protected final List<RandomAttributeModifier> modifiers;
 
-	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers) {
+	@SerializedName("custom_nbt")
+	protected final CompoundNBT customNbt;
+
+	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundNBT customNbt) {
 		super(weight);
 		this.entity = entity;
 		this.size = size;
@@ -86,6 +90,7 @@ public class BossItem extends WeightedRandom.Item {
 		this.effects = effects;
 		this.armorSets = armorSets;
 		this.modifiers = modifiers;
+		this.customNbt = customNbt;
 	}
 
 	public void setId(ResourceLocation id) {
@@ -115,6 +120,7 @@ public class BossItem extends WeightedRandom.Item {
 	 */
 	public MobEntity createBoss(IServerWorld world, BlockPos pos, Random rand) {
 		MobEntity entity = (MobEntity) this.entity.create(world.getLevel());
+		entity.readAdditionalSaveData(this.customNbt == null ? new CompoundNBT() : this.customNbt);
 		this.initBoss(rand, entity);
 		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		return entity;

@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.RandomValueRange;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
@@ -31,6 +32,7 @@ import shadows.apotheosis.util.EntityTypeDeserializer;
 import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
 import shadows.apotheosis.util.RandomAttributeModifier;
+import shadows.placebo.util.json.NBTAdapter;
 
 public class BossItemManager extends JsonReloadListener {
 
@@ -44,7 +46,8 @@ public class BossItemManager extends JsonReloadListener {
 			.registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
 			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
 			.registerTypeAdapter(RandomAttributeModifier.class, new RandomAttributeModifier.Deserializer())
-			.registerTypeAdapter(AxisAlignedBB.class, new AxisAlignedBBDeserializer()).create();
+			.registerTypeAdapter(AxisAlignedBB.class, new AxisAlignedBBDeserializer())
+			.registerTypeAdapter(CompoundNBT.class, new NBTAdapter()).create();
 	//Formatter::on
 
 	public static final BossItemManager INSTANCE = new BossItemManager();
