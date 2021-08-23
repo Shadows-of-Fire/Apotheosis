@@ -404,7 +404,7 @@ public class AffixEvents {
 		Multimap<Attribute, AttributeModifier> map = TreeMultimap.create((k1, k2) -> k1.getRegistryName().compareTo(k2.getRegistryName()), (v1, v2) -> {
 			int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
 			int compValue = Double.compare(v2.getAmount(), v1.getAmount());
-			return compOp == 0 ? compValue : compOp;
+			return compOp == 0 ? compValue == 0 ? v1.getName().compareTo(v2.getName()) : compValue : compOp;
 		});
 		map.putAll(e.getModifiers());
 		ReflectionHelper.setPrivateValue(ItemAttributeModifierEvent.class, e, map, "unmodifiableModifiers");
