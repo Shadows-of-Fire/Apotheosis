@@ -76,6 +76,7 @@ public abstract class AttributeAffix extends Affix {
 		EquipmentType eType = EquipmentType.getTypeFor(stack);
 		if (eType == null) {
 			DeadlyModule.LOGGER.info("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName());
+			return;
 		}
 		EquipmentSlotType ourType = eType.getSlot(stack);
 		if (ourType == type) {
