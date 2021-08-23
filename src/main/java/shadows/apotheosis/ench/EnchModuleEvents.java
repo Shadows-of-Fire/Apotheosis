@@ -25,6 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -39,6 +40,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
@@ -212,12 +215,11 @@ public class EnchModuleEvents {
 				user.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 200 * level, level - 1));
 			}
 		}
-		if (e.getSource().isMagic() && e.getSource().getEntity() instanceof LivingEntity) {
+		if (e.getSource().isMagic() && !e.getSource().isBypassMagic() && e.getSource().getEntity() instanceof LivingEntity) {
 			LivingEntity src = (LivingEntity) e.getSource().getEntity();
 			int lvl = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.MAGIC_PROTECTION, src);
 			if (lvl > 0) {
-				//TODO: FIXME should only be reducing damage by the value of OA, this will use all active protection enchantments.
-				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), EnchantmentHelper.getDamageProtection(src.getArmorSlots(), e.getSource())));
+				e.setAmount(CombatRules.getDamageAfterMagicAbsorb(e.getAmount(), lvl * 2));
 			}
 		}
 	}
@@ -233,6 +235,16 @@ public class EnchModuleEvents {
 		if (!p.level.isClientSide) {
 			EnchantingStatManager.dispatch(p);
 		}
+	}
+/*
+	@SuppressWarnings("deprecation")
+	@SubscribeEvent
+	public void started(FMLServerStartedEvent ev) {
+		int id = 0;
+		for (Enchantment e : ForgeRegistries.ENCHANTMENTS.getValues()) {
+			id = Math.max(id, Registry.ENCHANTMENT.getId(e));
+		}
+		EnchModule.maxEnchId = id;
 	}
 
 	/*
