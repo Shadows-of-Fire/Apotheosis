@@ -21,6 +21,8 @@ public class ChancedEffectInstance {
 	protected final float chance;
 	protected final Effect effect;
 	protected final RandomIntRange amp;
+	protected final boolean ambient;
+	protected final boolean visible;
 
 	/**
 	 * Creates a Chanced Effect Instance.
@@ -28,10 +30,12 @@ public class ChancedEffectInstance {
 	 * @param effect The effect.
 	 * @param amp A random range of possible amplifiers.
 	 */
-	public ChancedEffectInstance(float chance, Effect effect, RandomIntRange amp) {
+	public ChancedEffectInstance(float chance, Effect effect, RandomIntRange amp, boolean ambient, boolean visible) {
 		this.chance = chance;
 		this.effect = effect;
 		this.amp = amp;
+		this.ambient = ambient;
+		this.visible = visible;
 	}
 
 	public float getChance() {
@@ -43,7 +47,7 @@ public class ChancedEffectInstance {
 	}
 
 	public EffectInstance createInstance(Random rand, int duration) {
-		return new EffectInstance(this.effect, duration, this.amp.generateInt(rand), true, false);
+		return new EffectInstance(this.effect, duration, this.amp.generateInt(rand), this.ambient, this.visible);
 	}
 
 	public static class Deserializer implements JsonDeserializer<ChancedEffectInstance> {
@@ -54,13 +58,15 @@ public class ChancedEffectInstance {
 			float chance = obj.get("chance").getAsFloat();
 			String _effect = obj.get("effect").getAsString();
 			Effect effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(_effect));
+			boolean ambient = obj.has("ambient") ? obj.get("ambient").getAsBoolean() : true;
+			boolean visible = obj.has("visible") ? obj.get("visible").getAsBoolean() : false;
 			if (obj.has("amplifier")) {
 				JsonObject range = obj.get("amplifier").getAsJsonObject();
 				int min = range.get("min").getAsInt();
 				int max = range.get("max").getAsInt();
-				return new ChancedEffectInstance(chance, effect, new RandomIntRange(min, max));
+				return new ChancedEffectInstance(chance, effect, new RandomIntRange(min, max), ambient, visible);
 			}
-			return new ChancedEffectInstance(chance, effect, RandomIntRange.ZERO);
+			return new ChancedEffectInstance(chance, effect, RandomIntRange.ZERO, ambient, visible);
 		}
 	}
 }
