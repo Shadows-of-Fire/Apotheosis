@@ -3,6 +3,7 @@ package shadows.apotheosis.deadly.affix;
 import java.util.Random;
 
 import net.minecraft.util.text.TextFormatting;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
 
 /**
  * Represents a tier of loot.  Each tier is stronger than the last.
@@ -50,15 +51,15 @@ public enum LootRarity {
 	 */
 	public static LootRarity random(Random rand, int min) {
 		int range = min + rand.nextInt(1000 - min);
-		if (range < 400) {
+		if (range < DeadlyConfig.rarityThresholds[0]) {
 			return COMMON;
-		} else if (range < 700) {
+		} else if (range < DeadlyConfig.rarityThresholds[1]) {
 			return UNCOMMON;
-		} else if (range < 880) {
+		} else if (range < DeadlyConfig.rarityThresholds[2]) {
 			return RARE;
-		} else if (range < 950) {
+		} else if (range < DeadlyConfig.rarityThresholds[3]) {
 			return EPIC;
-		} else if (range < 1000) {
+		} else if (range < DeadlyConfig.rarityThresholds[4]) {
 			return MYTHIC;
 		} else {
 			return ANCIENT; //Temporarily disabled, so currently Mythic is 5%

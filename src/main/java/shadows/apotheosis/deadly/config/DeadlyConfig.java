@@ -3,6 +3,7 @@ package shadows.apotheosis.deadly.config;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.minecraft.util.RegistryKey;
@@ -12,6 +13,7 @@ import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.EquipmentType;
+import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.placebo.config.Configuration;
 
 public class DeadlyConfig {
@@ -38,6 +40,8 @@ public class DeadlyConfig {
 	public static boolean affixTrades = true;
 
 	public static int spawnerValueChance = 9;
+
+	public static int[] rarityThresholds = new int[] { 400, 700, 880, 950, 1000 };
 
 	public static void loadConfigs() {
 		Configuration c = config;
@@ -88,6 +92,14 @@ public class DeadlyConfig {
 			} catch (Exception e) {
 				DeadlyModule.LOGGER.error("Invalid type override entry: " + s + " will be ignored!");
 				e.printStackTrace();
+			}
+		}
+
+		int i = 0;
+		for (LootRarity r : LootRarity.values()) {
+			if (r != LootRarity.ANCIENT) {
+				int threshold = c.getInt(r.name().toLowerCase(Locale.ROOT), "rarity", rarityThresholds[i], 0, 1000, "The threshold for this rarity.  The percentage chance of this rarity appearing is equal to (previous threshold - this threshold) / 10.");
+				rarityThresholds[i++] = threshold;
 			}
 		}
 	}
