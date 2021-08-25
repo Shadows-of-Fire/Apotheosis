@@ -33,7 +33,7 @@ public class RandomSpawnerManager extends JsonReloadListener {
 			.setPrettyPrinting()
 			.registerTypeAdapter(WeightedSpawnerEntity.class, new WeightedSpawnerEntityAdapter())
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("weight")) ? "weight" : f.getName())
+			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
 			.registerTypeAdapter(CompoundNBT.class, NBTAdapter.INSTANCE)
 			.create();
 	//Formatter::on
@@ -42,7 +42,7 @@ public class RandomSpawnerManager extends JsonReloadListener {
 
 	private final List<SpawnerItem> entries = new ArrayList<>();
 	private final Map<ResourceLocation, SpawnerItem> registry = new HashMap<>();
-	private int weight = 0;
+	private volatile int weight = 0;
 
 	public RandomSpawnerManager() {
 		super(GSON, "random_spawners");
@@ -62,6 +62,7 @@ public class RandomSpawnerManager extends JsonReloadListener {
 		}
 		if (this.entries.size() == 0) throw new RuntimeException("No Random Spawners were registered.  This is not supported.");
 		this.weight = WeightedRandom.getTotalWeight(this.entries);
+		if (this.weight == 0) throw new RuntimeException("The total spawner weight is zero.  This is not supported.");
 		DeadlyModule.LOGGER.info("Loaded {} spawner items from resources.", this.entries.size());
 	}
 

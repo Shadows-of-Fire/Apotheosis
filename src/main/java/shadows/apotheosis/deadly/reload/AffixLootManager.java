@@ -45,7 +45,7 @@ public class AffixLootManager extends JsonReloadListener {
 
 	private static final List<AffixLootEntry> ENTRIES = new ArrayList<>();
 
-	private int weight = 0;
+	private volatile int weight = 0;
 
 	private AffixLootManager() {
 		super(GSON, "affix_loot_entries");
@@ -65,6 +65,7 @@ public class AffixLootManager extends JsonReloadListener {
 		}
 		Collections.shuffle(ENTRIES);
 		this.weight = WeightedRandom.getTotalWeight(ENTRIES);
+		if (this.weight == 0) throw new RuntimeException("The total affix item weight is zero.  This is not supported.");
 		DeadlyModule.LOGGER.info("Loaded {} affix loot entries from resources.", ENTRIES.size());
 	}
 

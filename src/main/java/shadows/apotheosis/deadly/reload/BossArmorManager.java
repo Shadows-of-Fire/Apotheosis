@@ -35,7 +35,7 @@ public class BossArmorManager extends JsonReloadListener {
 
 	protected final Map<ResourceLocation, GearSet> registry = new HashMap<>();
 	protected final List<GearSet> sets = new ArrayList<>();
-	private int weight = 0;
+	private volatile int weight = 0;
 
 	public BossArmorManager() {
 		super(GSON, "boss_gear");
@@ -56,6 +56,7 @@ public class BossArmorManager extends JsonReloadListener {
 		if (this.registry.isEmpty()) throw new RuntimeException("No Apotheosis Boss armor sets were registered.  At least one is required.");
 		DeadlyModule.LOGGER.info("Registered {} boss gear sets.", this.sets.size());
 		this.weight = WeightedRandom.getTotalWeight(this.sets);
+		if (this.weight == 0) throw new RuntimeException("The total boss armor weight is zero.  This is not supported.");
 	}
 
 	protected void register(ResourceLocation id, GearSet set) {

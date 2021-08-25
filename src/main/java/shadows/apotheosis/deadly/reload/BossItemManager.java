@@ -42,7 +42,7 @@ public class BossItemManager extends JsonReloadListener {
 			.registerTypeAdapter(EntityType.class, new EntityTypeDeserializer())
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
 			.registerTypeAdapter(SetPredicate.class, new SetPredicateAdapter())
-			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("weight")) ? "weight" : f.getName())
+			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
 			.registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
 			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
 			.registerTypeAdapter(RandomAttributeModifier.class, new RandomAttributeModifier.Deserializer())
@@ -54,7 +54,7 @@ public class BossItemManager extends JsonReloadListener {
 
 	private final List<BossItem> entries = new ArrayList<>();
 	private final Map<ResourceLocation, BossItem> registry = new HashMap<>();
-	private int weight = 0;
+	private volatile int weight = 0;
 
 	public BossItemManager() {
 		super(GSON, "bosses");
@@ -75,6 +75,7 @@ public class BossItemManager extends JsonReloadListener {
 		if (this.entries.size() == 0) throw new RuntimeException("No Bosses were registered.  This is not supported.");
 		Collections.shuffle(this.entries);
 		this.weight = WeightedRandom.getTotalWeight(this.entries);
+		if (this.weight == 0) throw new RuntimeException("The total boss weight is zero.  This is not supported.");
 		DeadlyModule.LOGGER.info("Loaded {} boss items from resources.", this.entries.size());
 	}
 
