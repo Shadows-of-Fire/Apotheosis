@@ -21,3 +21,6 @@
 * Allowed for the specification of custom NBT to be fed to generated bosses.
 * Made rarity thresholds configurable.
 * Fixed certain attribute modifiers being removed when they were a copy of existing ones.
+
+## 4.7.1
+* Fixed an issue where datapack-loaded worldgen entries were not reading their weights, and crashing as a result.
