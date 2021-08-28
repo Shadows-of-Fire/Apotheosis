@@ -30,8 +30,9 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 
 	@Override
 	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if (worldIn.isClientSide) return ActionResultType.SUCCESS;
 		player.openMenu(state.getMenuProvider(worldIn, pos));
-		return ActionResultType.SUCCESS;
+		return ActionResultType.CONSUME;
 	}
 
 	@Override
