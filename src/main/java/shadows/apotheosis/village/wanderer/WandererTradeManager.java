@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MerchantOffer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
@@ -51,6 +52,8 @@ public class WandererTradeManager extends JsonReloadListener {
 	}
 
 	protected void register(ResourceLocation id, BasicTrade trade, boolean rare) {
+		MerchantOffer offer = trade.getOffer(null, null);
+		if (offer.getResult() == null || offer.getResult().isEmpty() || offer.getMaxUses() == 0) return;
 		if (!this.registry.containsKey(id)) {
 			this.registry.put(id, trade);
 			if (rare) this.rareTrades.add(trade);
