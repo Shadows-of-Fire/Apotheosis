@@ -44,6 +44,7 @@ public class EnchModuleClient {
 			BlockState state = null;
 			try {
 				state = block.getStateForPlacement(ctx);
+				if (state == null) state = block.defaultBlockState();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
