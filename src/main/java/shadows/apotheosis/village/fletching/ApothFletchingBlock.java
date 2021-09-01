@@ -31,13 +31,13 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 	@Override
 	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if (worldIn.isClientSide) return ActionResultType.SUCCESS;
-		player.openMenu(state.getMenuProvider(worldIn, pos));
+		player.openMenu(this.getMenuProvider(state, worldIn, pos));
 		return ActionResultType.CONSUME;
 	}
 
 	@Override
 	public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
-		return new SimpleNamedContainerProvider((id, inv, player) -> new FletchingContainer(id, inv, world, pos), NAME);
+		return What.getMenuProvider(state, world, pos);
 	}
 
 	@Override
@@ -57,4 +57,11 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 
+	//I literally cannot fathom why this is necessary https://github.com/Shadows-of-Fire/Apotheosis/issues/441
+	private static class What {
+
+		static INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
+			return new SimpleNamedContainerProvider((id, inv, player) -> new FletchingContainer(id, inv, world, pos), NAME);
+		}
+	}
 }
