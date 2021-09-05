@@ -568,6 +568,7 @@
 	"tooltip.enchlib.5": "Next Level Unavailable",
 	"tooltip.enchlib.6": "Max Level Cost: %d",
 	"tooltip.enchlib.item": "Storing %d enchantments.",
+	"info.apotheosis.library": "The enchantment library is a block that stores enchantments.  Inserting an enchanted book will deposit it.  Left-clicking on a stored enchantment will extract one level of it.  Shift-clicking will extract the max level available.",
 
     "comment_id": "/Potion Module",
     "enchantment.apotheosis.true_infinity": "Endless Quiver",

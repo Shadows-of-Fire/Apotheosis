@@ -74,7 +74,7 @@ public class EnchLibraryContainer extends Container implements IButtonContainer 
 				if (!EnchLibraryContainer.this.world.isClientSide && !this.getItem().isEmpty()) {
 					EnchLibraryContainer.this.tile.depositBook(this.getItem());
 				}
-				if (!this.getItem().isEmpty()) inv.player.level.playSound(inv.player, EnchLibraryContainer.this.pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.NEUTRAL, 0.5F, 0.8F);
+				if (!this.getItem().isEmpty() && EnchLibraryContainer.this.world.isClientSide) inv.player.level.playSound(inv.player, EnchLibraryContainer.this.pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.NEUTRAL, 0.5F, 0.7F);
 				EnchLibraryContainer.this.ioInv.setItem(0, ItemStack.EMPTY);
 			}
 		});

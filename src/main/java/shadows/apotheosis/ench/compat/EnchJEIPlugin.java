@@ -54,6 +54,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.enchanting"));
 		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.PRISMATIC_ALTAR), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.altar"));
+		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.ENCHANTMENT_LIBRARY), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.library"));
 	}
 
 	@Override
