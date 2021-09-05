@@ -173,7 +173,7 @@ public class AffixEvents {
 				}
 			}
 		}
-		if (e.getSource().getEntity() instanceof PlayerEntity && !e.getDrops().isEmpty() && e.getEntityLiving().canChangeDimensions()) {
+		if (e.getSource().getEntity() instanceof PlayerEntity && !e.getDrops().isEmpty() && e.getEntityLiving().canChangeDimensions() && !(e.getEntityLiving() instanceof PlayerEntity)) {
 			LivingEntity dead = e.getEntityLiving();
 			PlayerEntity player = (PlayerEntity) e.getSource().getEntity();
 			float chance = AffixHelper.getAffixes(player.getMainHandItem()).getOrDefault(Affixes.LOOT_PINATA, 0F);
