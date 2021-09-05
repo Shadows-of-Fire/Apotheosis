@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.library;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.AbstractBlock;
@@ -12,14 +13,14 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -92,13 +94,11 @@ public class EnchLibraryBlock extends HorizontalBlock {
 	}
 
 	@Override
-	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder ctx) {
 		ItemStack s = new ItemStack(this);
+		TileEntity te = ctx.getParameter(LootParameters.BLOCK_ENTITY);
 		if (te != null) te.save(s.getOrCreateTagElement("BlockEntityTag"));
-		popResource(world, pos, s);
-		player.getMainHandItem().hurtAndBreak(1, player, pl -> pl.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
-		player.awardStat(Stats.BLOCK_MINED.get(this));
-		player.causeFoodExhaustion(0.005F);
+		return Arrays.asList(s);
 	}
 
 	@Override
@@ -106,7 +106,14 @@ public class EnchLibraryBlock extends HorizontalBlock {
 	public void appendHoverText(ItemStack stack, IBlockReader world, List<ITextComponent> list, ITooltipFlag advanced) {
 		CompoundNBT tag = stack.getTagElement("BlockEntityTag");
 		if (tag != null && tag.contains("Points")) {
-			list.add(new TranslationTextComponent("tooltip.enchlib.item", tag.getCompound("Points").size()));
+			list.add(new TranslationTextComponent("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(TextFormatting.GOLD));
+		}
+	}
+
+	@Override
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (newState.getBlock() != this) {
+			world.removeBlockEntity(pos);
 		}
 	}
 

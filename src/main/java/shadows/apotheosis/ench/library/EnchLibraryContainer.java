@@ -24,8 +24,9 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import shadows.apotheosis.ApotheosisObjects;
+import shadows.placebo.net.MessageButtonClick.IButtonContainer;
 
-public class EnchLibraryContainer extends Container {
+public class EnchLibraryContainer extends Container implements IButtonContainer {
 
 	protected World world;
 	protected BlockPos pos;
@@ -156,20 +157,16 @@ public class EnchLibraryContainer extends Container {
 	}
 
 	@Override
-	public boolean clickMenuButton(PlayerEntity player, int id) {
-		if (player.containerMenu == this) {
-			boolean shift = (id & 0x80000000) == 0x80000000;
-			if (shift) id = id & 0x7FFFFFFF; //Look, if this ever breaks, it's not my fault someone has 2 billion enchantments.
-			Enchantment ench = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getValue(id);
-			ItemStack outSlot = this.ioInv.getItem(1);
-			int curLvl = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(ench, 0);
-			int desired = shift ? this.tile.getMax(ench) : curLvl + 1;
-			if (!this.tile.canExtract(ench, desired, curLvl)) return false;
-			if (outSlot.isEmpty()) outSlot = new ItemStack(Items.ENCHANTED_BOOK);
-			this.tile.extractEnchant(outSlot, ench, desired);
-			this.ioInv.setItem(1, outSlot);
-			return true;
-		}
-		return false;
+	public void onButtonClick(int id) {
+		boolean shift = (id & 0x80000000) == 0x80000000;
+		if (shift) id = id & 0x7FFFFFFF; //Look, if this ever breaks, it's not my fault someone has 2 billion enchantments.
+		Enchantment ench = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getValue(id);
+		ItemStack outSlot = this.ioInv.getItem(1);
+		int curLvl = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(ench, 0);
+		int desired = shift ? this.tile.getMax(ench) : curLvl + 1;
+		if (!this.tile.canExtract(ench, desired, curLvl)) return;
+		if (outSlot.isEmpty()) outSlot = new ItemStack(Items.ENCHANTED_BOOK);
+		this.tile.extractEnchant(outSlot, ench, desired);
+		this.ioInv.setItem(1, outSlot);
 	}
 }

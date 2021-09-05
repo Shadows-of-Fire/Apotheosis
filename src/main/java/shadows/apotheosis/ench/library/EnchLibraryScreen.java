@@ -28,6 +28,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import shadows.apotheosis.Apotheosis;
+import shadows.placebo.Placebo;
+import shadows.placebo.net.MessageButtonClick;
 import shadows.placebo.util.ClientUtil;
 
 public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
@@ -69,15 +71,17 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 			list.add(new TranslationTextComponent("tooltip.enchlib.2", libSlot.points));
 			ItemStack outSlot = this.menu.ioInv.getItem(1);
 			int current = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(libSlot.ench, 0);
-			if (outSlot.isEmpty() || current == 0) list.add(new TranslationTextComponent("tooltip.enchlib.4", 1).setStyle(Style.EMPTY.withColor(TextFormatting.GOLD)));
-			else {
+			boolean shift = ClientUtil.isHoldingShift();
+			if (!shift && (outSlot.isEmpty() || current == 0)) list.add(new TranslationTextComponent("tooltip.enchlib.4", 1).setStyle(Style.EMPTY.withColor(TextFormatting.GOLD)));
+			else if (!shift) {
 				int cost = EnchLibraryTile.levelToPoints(current + 1) - EnchLibraryTile.levelToPoints(current);
 				if (current + 1 > libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
 				else list.add(new TranslationTextComponent("tooltip.enchlib.4", cost).setStyle(Style.EMPTY.withColor(cost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD)));
+			} else {
+				int maxCost = EnchLibraryTile.levelToPoints(libSlot.maxLvl) - EnchLibraryTile.levelToPoints(current);
+				if (current < libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.6", maxCost).setStyle(Style.EMPTY.withColor(maxCost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD)));
+				else list.add(new TranslationTextComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
 			}
-
-			int maxCost = EnchLibraryTile.levelToPoints(libSlot.maxLvl) - EnchLibraryTile.levelToPoints(current);
-			if (current < libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.6", maxCost).setStyle(Style.EMPTY.withColor(maxCost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD)));
 
 			this.renderWrappedToolTip(stack, list, mouseX, mouseY, this.font);
 		}
@@ -127,8 +131,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 		if (libSlot != null) {
 			int id = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getID(libSlot.ench);
 			if (ClientUtil.isHoldingShift()) id |= 0x80000000;
-			//TODO -- REPLACE WITH PLACEBO VARIANT THAT DOESNT USE BYTE ENCODING
-			this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, id);
+			Placebo.CHANNEL.sendToServer(new MessageButtonClick(id));
 			this.minecraft.getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
 		}
 
