@@ -46,6 +46,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.network.IContainerFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
@@ -74,6 +75,9 @@ import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
+import shadows.apotheosis.ench.library.EnchLibraryBlock;
+import shadows.apotheosis.ench.library.EnchLibraryContainer;
+import shadows.apotheosis.ench.library.EnchLibraryTile;
 import shadows.apotheosis.ench.objects.ApothShearsItem;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.HellshelfItem;
@@ -151,7 +155,7 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
 		Apotheosis.HELPER.addShaped(Items.EXPERIENCE_BOTTLE, 3, 3, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE, Items.ENCHANTED_BOOK, Items.HONEY_BOTTLE, Items.ENCHANTED_BOOK, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE);
-
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.ENCHANTMENT_LIBRARY, 3, 3, Blocks.ENDER_CHEST, ApotheosisObjects.HELLSHELF, Blocks.ENDER_CHEST, ApotheosisObjects.HELLSHELF, Blocks.ENCHANTING_TABLE, ApotheosisObjects.HELLSHELF, Blocks.ENDER_CHEST, ApotheosisObjects.HELLSHELF, Blocks.ENDER_CHEST);
 		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
 		LootSystem.defaultBlockTable(ApotheosisObjects.BLAZING_HELLSHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.GLOWING_HELLSHELF);
@@ -162,6 +166,7 @@ public class EnchModule {
 		LootSystem.defaultBlockTable(ApotheosisObjects.DRACONIC_ENDSHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.BEESHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.MELONSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.ENCHANTMENT_LIBRARY);
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
@@ -177,11 +182,13 @@ public class EnchModule {
 		e.getRegistry().register(new TileEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
 		e.getRegistry().register(new TileEntityType<>(SeaAltarTile::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
 		e.getRegistry().register(new TileEntityType<>(ApothEnchantTile::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
+		e.getRegistry().register(new TileEntityType<>(EnchLibraryTile::new, ImmutableSet.of(ApotheosisObjects.ENCHANTMENT_LIBRARY), null).setRegistryName("ench_lib_tile"));
 	}
 
 	@SubscribeEvent
 	public void containers(Register<ContainerType<?>> e) {
 		e.getRegistry().register(new ContainerType<>(ApothEnchantContainer::new).setRegistryName("enchanting"));
+		e.getRegistry().register(new ContainerType<>((IContainerFactory<EnchLibraryContainer>) (id, inv, buf) -> new EnchLibraryContainer(id, inv, buf.readBlockPos())).setRegistryName("ench_lib_con"));
 	}
 
 	/**
@@ -222,7 +229,8 @@ public class EnchModule {
 				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
 				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
 				new Block(AbstractBlock.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
-				new Block(AbstractBlock.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf")
+				new Block(AbstractBlock.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf"),
+				new EnchLibraryBlock().setRegistryName("enchantment_library")
 				);
 		//Formatter::on
 		PlaceboUtil.registerOverride(new ApothEnchantBlock(), Apotheosis.MODID);
@@ -260,7 +268,8 @@ public class EnchModule {
 				new BlockItem(ApotheosisObjects.DRACONIC_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("draconic_endshelf"),
 				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
 				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
-				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf")
+				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf"),
+				new BlockItem(ApotheosisObjects.ENCHANTMENT_LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("enchantment_library")
 				);
 		//Formatter::on
 		DispenserBlock.registerBehavior(shears, DispenserBlock.DISPENSER_REGISTRY.get(oldShears));

@@ -31,6 +31,8 @@ import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
+import shadows.apotheosis.ench.library.EnchLibraryContainer;
+import shadows.apotheosis.ench.library.EnchLibraryTile;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.SeashelfBlock;
@@ -150,5 +152,8 @@ public class ApotheosisObjects {
 	public static final MiningArrowItem DIAMOND_MINING_ARROW = null;
 	public static final BossSpawnerBlock BOSS_SPAWNER = null;
 	public static final TileEntityType<BossSpawnerTile> BOSS_SPAWN_TILE = null;
+	public static final Block ENCHANTMENT_LIBRARY = null;
+	public static final TileEntityType<EnchLibraryTile> ENCH_LIB_TILE = null;
+	public static final ContainerType<EnchLibraryContainer> ENCH_LIB_CON = null;
 
 }

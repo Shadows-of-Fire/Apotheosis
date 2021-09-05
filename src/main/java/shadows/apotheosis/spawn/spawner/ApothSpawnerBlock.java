@@ -14,7 +14,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -78,11 +77,6 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 			player.awardStat(Stats.BLOCK_MINED.get(this));
 			player.causeFoodExhaustion(0.005F);
 		} else super.playerDestroy(world, player, pos, state, te, stack);
-	}
-
-	@Override
-	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
-		return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
 	}
 
 	@Override

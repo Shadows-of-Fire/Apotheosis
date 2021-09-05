@@ -58,6 +58,7 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 	}
 
 	//I literally cannot fathom why this is necessary https://github.com/Shadows-of-Fire/Apotheosis/issues/441
+	//TODO: Remove after update to FG 5 - appears to have been bug in SpecialSource.
 	private static class What {
 
 		static INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {

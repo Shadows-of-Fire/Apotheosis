@@ -22,6 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.altar.SeaAltarRenderer;
+import shadows.apotheosis.ench.library.EnchLibraryScreen;
 import shadows.apotheosis.ench.table.ApothEnchantScreen;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
 
@@ -75,5 +76,6 @@ public class EnchModuleClient {
 		ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, SeaAltarRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ENCHANTING_TABLE, EnchantmentTableTileEntityRenderer::new);
 		ScreenManager.register(ApotheosisObjects.ENCHANTING, ApothEnchantScreen::new);
+		ScreenManager.register(ApotheosisObjects.ENCH_LIB_CON, EnchLibraryScreen::new);
 	}
 }
