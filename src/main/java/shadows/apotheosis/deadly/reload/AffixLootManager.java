@@ -21,9 +21,12 @@ import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.text.Color;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TranslationTextComponent;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.AffixHelper;
@@ -132,7 +135,8 @@ public class AffixLootManager extends JsonReloadListener {
 			tag.putBoolean("Unbreakable", true);
 		}
 
-		stack.setHoverName(new StringTextComponent(TextFormatting.RESET + rarity.getColor().toString() + name.getString().replace(TextFormatting.RESET.toString(), "")));
+		Color color = rarity.getColor();
+		stack.setHoverName(new TranslationTextComponent("%s", (((IFormattableTextComponent) name).withStyle(Style.EMPTY)).withStyle(Style.EMPTY.withColor(color))));
 		return stack;
 	}
 

@@ -16,6 +16,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -41,8 +42,8 @@ public class ScrappingTomeItem extends BookItem {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.isEnchanted()) return;
-		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome"));
-		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome2"));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome2").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override

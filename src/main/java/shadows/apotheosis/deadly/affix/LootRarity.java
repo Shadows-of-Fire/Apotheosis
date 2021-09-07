@@ -2,7 +2,8 @@ package shadows.apotheosis.deadly.affix;
 
 import java.util.Random;
 
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.Color;
+import shadows.apotheosis.deadly.DeadlyModuleClient.RainbowColor;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 
 /**
@@ -15,23 +16,27 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
  * Ancient Items are special rare items that have their own properties.  They may also roll affixes and modifiers, depending on the unique.
  */
 public enum LootRarity {
-	COMMON(TextFormatting.GRAY, 1),
-	UNCOMMON(TextFormatting.YELLOW, 1),
-	RARE(TextFormatting.BLUE, 2),
-	EPIC(TextFormatting.RED, 3),
-	MYTHIC(TextFormatting.DARK_GREEN, 3),
-	ANCIENT(TextFormatting.AQUA, 3);
+	COMMON(0x808080, 1),
+	UNCOMMON(0x33FF33, 1),
+	RARE(0x5555FF, 2),
+	EPIC(0xBB00BB, 3),
+	MYTHIC(0xED7014, 3),
+	ANCIENT(new RainbowColor(), 3);
 
-	final TextFormatting color;
+	final Color color;
 	final int affixes;
 
-	private LootRarity(TextFormatting color, int affixes) {
+	private LootRarity(int color, int affixes) {
+		this(Color.fromRgb(color), affixes);
+	}
+
+	private LootRarity(Color color, int affixes) {
 		this.color = color;
 		this.affixes = affixes;
 	}
 
-	public TextFormatting getColor() {
-		return this.color;
+	public Color getColor() {
+		return color;
 	}
 
 	public int getAffixes() {

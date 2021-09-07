@@ -29,7 +29,9 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.Color;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -192,7 +194,8 @@ public class BossItem extends WeightedRandom.Item {
 		LootRarity rarity = LootRarity.random(random, this.rarityOffset);
 		NameHelper.setItemName(random, stack, bossName);
 		stack = AffixLootManager.genLootItem(stack, random, EquipmentType.getTypeFor(stack), rarity);
-		stack.setHoverName(new TranslationTextComponent("%s %s", TextFormatting.RESET + rarity.getColor().toString() + String.format(NameHelper.ownershipFormat, bossName), stack.getHoverName()).withStyle(rarity.getColor()));
+		Color color = rarity.getColor();
+		stack.setHoverName(new TranslationTextComponent("%s %s", new StringTextComponent(String.format(NameHelper.ownershipFormat, bossName)).withStyle(Style.EMPTY), stack.getHoverName()).withStyle(Style.EMPTY).withStyle(Style.EMPTY.withColor(color)));
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));

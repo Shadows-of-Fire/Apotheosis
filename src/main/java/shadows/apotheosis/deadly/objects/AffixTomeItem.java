@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -44,8 +46,8 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (!this.isFoil(stack)) {
-			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome"));
-			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome2", new TranslationTextComponent("rarity.apoth." + this.rarity.name().toLowerCase(Locale.ROOT))));
+			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome").withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome2", new TranslationTextComponent("rarity.apoth." + this.rarity.name().toLowerCase(Locale.ROOT)).withStyle(Style.EMPTY.withColor(this.rarity.getColor()))).withStyle(TextFormatting.GRAY));
 		} else {
 			Map<Affix, Float> afx = AffixHelper.getAffixes(stack);
 			afx.forEach((a, l) -> {
@@ -56,12 +58,12 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 
 	@Override
 	public ITextComponent getDescription() {
-		return ((IFormattableTextComponent) super.getDescription()).withStyle(this.rarity.getColor());
+		return ((IFormattableTextComponent) super.getDescription()).setStyle(Style.EMPTY.withColor(this.rarity.getColor()));
 	}
 
 	@Override
 	public ITextComponent getName(ItemStack stack) {
-		return new TranslationTextComponent(this.getDescriptionId(stack)).withStyle(this.rarity.getColor());
+		return new TranslationTextComponent(this.getDescriptionId(stack)).setStyle(Style.EMPTY.withColor(this.rarity.getColor()));
 	}
 
 	@Override
@@ -126,7 +128,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			}
 			if (cost == 0) return false;
 			cost += baseCost;
-			if (!wepTome) out.setHoverName(((IFormattableTextComponent) name).withStyle(((AffixTomeItem) book.getItem()).rarity.getColor()));
+			if (!wepTome) out.setHoverName(((IFormattableTextComponent) name).withStyle(Style.EMPTY.withColor(((AffixTomeItem) book.getItem()).rarity.getColor())));
 			AffixHelper.setAffixes(out, wepAfx);
 			out.setCount(1);
 			ev.setMaterialCost(1);
