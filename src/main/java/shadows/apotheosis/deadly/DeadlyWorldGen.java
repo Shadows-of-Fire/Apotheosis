@@ -16,9 +16,9 @@ import shadows.apotheosis.deadly.gen.TomeTowerFeature;
 import shadows.apotheosis.deadly.gen.TroveFeature;
 
 public class DeadlyWorldGen {
-	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON = register(BossDungeonFeature.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon");
-	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2 = register(BossDungeonFeature2.INSTANCE.configured(IFeatureConfig.NONE).range(128).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon_2");
-	public static final ConfiguredFeature<?, ?> ROGUE_SPAWNER = register(RogueSpawnerFeature.INSTANCE.configured(IFeatureConfig.NONE).range(256).squared().count(DeadlyConfig.rogueSpawnerAttempts), "rogue_spawner");
+	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON = register(BossDungeonFeature.INSTANCE.configured(IFeatureConfig.NONE).range(80).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon");
+	public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2 = register(BossDungeonFeature2.INSTANCE.configured(IFeatureConfig.NONE).range(80).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon_2");
+	public static final ConfiguredFeature<?, ?> ROGUE_SPAWNER = register(RogueSpawnerFeature.INSTANCE.configured(IFeatureConfig.NONE).range(70).squared().count(DeadlyConfig.rogueSpawnerAttempts), "rogue_spawner");
 	public static final ConfiguredFeature<?, ?> ORE_TROVE = register(TroveFeature.INSTANCE.configured(IFeatureConfig.NONE).range(64).squared().count(DeadlyConfig.troveAttempts), "ore_trove");
 	public static final ConfiguredFeature<?, ?> TOME_TOWER = register(TomeTowerFeature.INSTANCE.configured(IFeatureConfig.NONE).decorated(Placements.HEIGHTMAP_WORLD_SURFACE).chance(DeadlyConfig.tomeTowerChance), "tome_tower");
 
