@@ -1,8 +1,5 @@
 package shadows.apotheosis.deadly;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -11,7 +8,6 @@ import net.minecraft.util.text.Color;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.objects.RarityShardItem;
@@ -32,10 +28,6 @@ public class DeadlyModuleClient {
 			return ((AffixTomeItem) stack.getItem()).getRarity().getColor().getValue();
 		}, DeadlyModule.RARITY_TOMES.values().toArray(new Item[6]));
 		MinecraftForge.EVENT_BUS.addListener(DeadlyModuleClient::tick);
-		Map<String, Color> map = ObfuscationReflectionHelper.getPrivateValue(Color.class, null, "field_240739_b_");
-		map = new HashMap<>(map);
-		ObfuscationReflectionHelper.setPrivateValue(Color.class, null, map, "field_240739_b_");
-		map.put("rainbow", new RainbowColor());
 	}
 
 	public static int ticks = 0;

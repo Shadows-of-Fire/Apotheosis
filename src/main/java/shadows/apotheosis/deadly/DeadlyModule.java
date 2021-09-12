@@ -2,6 +2,7 @@ package shadows.apotheosis.deadly;
 
 import java.io.File;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Color;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -30,6 +32,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.deadly.DeadlyModuleClient.RainbowColor;
 import shadows.apotheosis.deadly.affix.AffixEvents;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.affix.recipe.AffixShardingRecipe;
@@ -77,6 +80,8 @@ public class DeadlyModule {
 			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 2), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
 		}
 		RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + LootRarity.ANCIENT.name().toLowerCase(Locale.ROOT)), LootRarity.ANCIENT));
+		Color.NAMED_COLORS = new HashMap<>(Color.NAMED_COLORS);
+		Color.NAMED_COLORS.put("rainbow", new RainbowColor());
 	}
 
 	@SubscribeEvent
