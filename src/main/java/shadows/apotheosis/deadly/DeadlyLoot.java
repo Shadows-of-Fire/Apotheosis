@@ -206,7 +206,7 @@ public class DeadlyLoot {
 			LootRarity rarity = LootRarity.random(ctx.getRandom());
 			AffixLootEntry entry = AffixLootManager.getRandomEntry(ctx.getRandom());
 			ItemStack stack = entry.getStack().copy();
-			stack.getTag().putBoolean("apoth_rchest", true);
+			stack.getOrCreateTag().putBoolean("apoth_rchest", true);
 			list.accept(AffixLootManager.genLootItem(stack, ctx.getRandom(), entry.getType(), rarity));
 		}
 
