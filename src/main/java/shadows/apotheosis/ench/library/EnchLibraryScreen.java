@@ -1,6 +1,7 @@
 package shadows.apotheosis.ench.library;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -11,6 +12,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import it.unimi.dsi.fastutil.objects.Object2ShortMap.Entry;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerInventory;
@@ -186,6 +188,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 			this.scrollOffs = 0.0F;
 			this.startIndex = 0;
 		}
+		Collections.sort(data, (a, b) -> I18n.get(a.ench.getDescriptionId()).compareTo(I18n.get(b.ench.getDescriptionId())));
 	}
 
 	@Nullable
