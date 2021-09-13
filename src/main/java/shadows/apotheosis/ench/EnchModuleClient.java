@@ -45,12 +45,14 @@ public class EnchModuleClient {
 			BlockState state = null;
 			try {
 				state = block.getStateForPlacement(ctx);
-				if (state == null) state = block.defaultBlockState();
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				EnchModule.LOGGER.debug(ex.getMessage());
+				StackTraceElement[] trace = ex.getStackTrace();
+				for (StackTraceElement traceElement : trace)
+					EnchModule.LOGGER.debug("\tat " + traceElement);
 			}
 
-			if (state == null) return;
+			if (state == null) state = block.defaultBlockState();
 			float maxEterna = EnchantingStatManager.getMaxEterna(state, world, BlockPos.ZERO);
 			float eterna = EnchantingStatManager.getEterna(state, world, BlockPos.ZERO);
 			float quanta = EnchantingStatManager.getQuanta(state, world, BlockPos.ZERO);
