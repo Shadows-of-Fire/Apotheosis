@@ -1,5 +1,5 @@
 {
-	"comment_id": "/Deadly Module",
+	"comment_id": "/致命模块",
 	
 	"affix.apotheosis:reach_distance.name": "攻击距离 - (%s)",
 	"affix.apotheosis:enchantability.name": "附魔能力 - (%s)",
@@ -151,7 +151,7 @@
 	"gui.apotheosis.category.soulfire": "灵魂营火烧炼",
 	"info.apotheosis.one_per_affix": "每一个词缀物品被烧毁后都会留下一枚珍宝碎片",
 
-    "comment_id": "/Advancements",
+    "comment_id": "/进度",
 
     "advancements.apotheosis.enchantment": "神秘的附魔台",
     "advancements.apotheosis.enchantment.desc": "获得一张附魔台, 现在的附魔台能够突破30级的附魔等级限制",
@@ -264,7 +264,7 @@
     "advancements.apotheosis.ultimate_spawner": "究极刷怪笼",
     "advancements.apotheosis.ultimate_spawner.desc": "创造一个没有延迟、具有红石控制、禁用刷怪区域限制、忽略附近玩家的刷怪笼",
 
-    "comment_id": "/Spawner Module",
+    "comment_id": "/刷怪笼模块",
     "enchantment.apotheosis.capturing": "捕捉",
 
     "enchantment.apotheosis.capturing.desc": "使生物有一定概率在死亡时掉落它们的刷怪蛋。",
@@ -300,7 +300,7 @@
     "jei.spw.capturing": "捕捉附魔可以使生物有概率在死亡时掉落它们的刷怪蛋。\\n每个附魔等级增加 0.4% 的几率。",
 	"jei.spw.minmax": "最小值：%s    最大值：%s",
 
-    "comment_id": "/Enchantment Module",
+    "comment_id": "/附魔模块",
     "block.apotheosis.hellshelf": "地狱书架",
 	"block.apotheosis.blazing_hellshelf": "炽热的地狱书架",
 	"block.apotheosis.glowing_hellshelf": "发光的地狱书架",
@@ -435,7 +435,7 @@
 
     "block.apotheosis.prismatic_altar": "海之祭坛",
 
-    "comment_id": "/Vanilla",
+    "comment_id": "/原版调整",
 	"generic.reachDistance": "攻击距离",
 	"forge.swimSpeed": "游泳速度",
 	"forge.entity_gravity": "重力",
@@ -559,7 +559,7 @@
     "enchantment.level.126": "CXXVI",
     "enchantment.level.127": "CXXVII",
 
-    "comment_id": "/Potion Module",
+    "comment_id": "/药水模块",
     "enchantment.apotheosis.true_infinity": "无限箭袋",
     "enchantment.apotheosis.true_infinity.desc": "射击将不再需要消耗箭（附魔在弓上，无需箭）。",
 
@@ -610,16 +610,16 @@
 	"item.apotheosis.potion_charm.enabled": "已启用",
 	"item.apotheosis.potion_charm.disabled": "已禁用",
 
-    "comment_id": "/Anvil Module",
+    "comment_id": "/铁砧模块",
     "info.apotheosis.anvil": "可以被附魔。",
 
-    "comment_id": "/Garden Module",
+    "comment_id": "/花园模块",
     "item.apotheosis.farmers_leash": "末影栓绳",
     "info.apotheosis.noentity": "持有实体：没有",
     "info.apotheosis.containedentity": "持有实体：%s",
     "info.apotheosis.farmleash": "末影栓绳是一种可以用来移动动物的物品。鼠标左键捕捉动物，鼠标右键释放动物。这种捕捉仅适用于动物。",
 
-    "comment_id": "/Villager Module",
+    "comment_id": "/村民模块",
     "name.apotheosis.merch_sword": "奴役狂梦",
     "name.apotheosis.merch_pick": "碎石机",
     "name.apotheosis.merch_axe": "伐木者",
@@ -644,7 +644,7 @@
 	"effect.apotheosis.bleeding": "流血",
     "death.attack.apotheosis.bleeding.player": "%s 失血过多而死",
     	
-	"comment_id": "/Misc",
+	"comment_id": "/杂项",
     "generic.reachDistance": "攻击距离",
     "info.apoth.modifier_disabled": "这个调节器已被禁用",
     "itemGroup.apotheosis": "神化"
