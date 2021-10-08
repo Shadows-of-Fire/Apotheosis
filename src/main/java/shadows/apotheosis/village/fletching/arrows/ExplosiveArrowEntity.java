@@ -28,6 +28,10 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
 		super(ApotheosisObjects.EX_ARROW_ENTITY, shooter, world);
 	}
 
+	public ExplosiveArrowEntity(World world, double x, double y, double z) {
+		super(ApotheosisObjects.EX_ARROW_ENTITY, x, y, z, world);
+	}
+
 	@Override
 	protected ItemStack getPickupItem() {
 		return new ItemStack(ApotheosisObjects.EXPLOSIVE_ARROW);

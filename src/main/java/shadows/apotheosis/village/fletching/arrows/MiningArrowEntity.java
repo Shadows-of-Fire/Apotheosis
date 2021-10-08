@@ -53,6 +53,13 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 		this.playerId = shooter.getUUID();
 	}
 
+	public MiningArrowEntity(World world, double x, double y, double z, ItemStack breakerItem, Type type) {
+		super(ApotheosisObjects.MN_ARROW_ENTITY, x, y, z, world);
+		this.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+		this.breakerItem = breakerItem;
+		this.type = type;
+	}
+
 	@Override
 	protected ItemStack getPickupItem() {
 		return ItemStack.EMPTY; //This arrow can never be picked up.

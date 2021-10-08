@@ -24,6 +24,10 @@ public class BroadheadArrowEntity extends ArrowEntity {
 		super(world, shooter);
 	}
 
+	public BroadheadArrowEntity(World world, double x, double y, double z) {
+		super(world, x, y, z);
+	}
+
 	@Override
 	protected ItemStack getPickupItem() {
 		return new ItemStack(ApotheosisObjects.BROADHEAD_ARROW);
@@ -52,5 +56,10 @@ public class BroadheadArrowEntity extends ArrowEntity {
 		} else {
 			living.addEffect(new EffectInstance(ApotheosisObjects.BLEEDING, 300));
 		}
+	}
+
+	public BroadheadArrowEntity bleed() {
+		this.addEffect(new EffectInstance(ApotheosisObjects.BLEEDING, 300));
+		return this;
 	}
 }

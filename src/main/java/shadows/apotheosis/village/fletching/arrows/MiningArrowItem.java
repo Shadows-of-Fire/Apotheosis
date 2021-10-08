@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.apotheosis.Apotheosis;
 
-public class MiningArrowItem extends ArrowItem {
+public class MiningArrowItem extends ArrowItem implements IApothArrowItem {
 
 	protected final Supplier<Item> breakerItem;
 	protected final MiningArrowEntity.Type arrowType;
@@ -31,14 +31,18 @@ public class MiningArrowItem extends ArrowItem {
 
 	@Override
 	public AbstractArrowEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
-		MiningArrowEntity e = new MiningArrowEntity(shooter, world, new ItemStack(this.breakerItem.get()), this.arrowType);
-		return e;
+		return new MiningArrowEntity(shooter, world, new ItemStack(this.breakerItem.get()), this.arrowType);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GOLD));
+	}
+
+	@Override
+	public AbstractArrowEntity fromDispenser(World world, double x, double y, double z) {
+		return new MiningArrowEntity(world, x, y, z, new ItemStack(this.breakerItem.get()), this.arrowType);
 	}
 
 }

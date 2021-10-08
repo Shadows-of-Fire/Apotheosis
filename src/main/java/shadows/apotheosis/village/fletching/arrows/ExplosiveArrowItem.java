@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.apotheosis.Apotheosis;
 
-public class ExplosiveArrowItem extends ArrowItem {
+public class ExplosiveArrowItem extends ArrowItem implements IApothArrowItem {
 
 	public ExplosiveArrowItem() {
 		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
@@ -24,14 +24,18 @@ public class ExplosiveArrowItem extends ArrowItem {
 
 	@Override
 	public AbstractArrowEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
-		ExplosiveArrowEntity e = new ExplosiveArrowEntity(shooter, world);
-		return e;
+		return new ExplosiveArrowEntity(shooter, world);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent("info.apotheosis.explosive_arrow").withStyle(TextFormatting.RED));
+	}
+
+	@Override
+	public AbstractArrowEntity fromDispenser(World world, double x, double y, double z) {
+		return new ExplosiveArrowEntity(world, x, y, z);
 	}
 
 }

@@ -14,11 +14,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 
-public class ObsidianArrowItem extends ArrowItem {
+public class ObsidianArrowItem extends ArrowItem implements IApothArrowItem {
 
 	public ObsidianArrowItem() {
 		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
@@ -26,9 +24,7 @@ public class ObsidianArrowItem extends ArrowItem {
 
 	@Override
 	public AbstractArrowEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
-		AbstractArrowEntity e = new ObsidianArrowEntity(shooter, world);
-		e.getPersistentData().putBoolean("apoth_obsidian_arrow", true);
-		return e;
+		return new ObsidianArrowEntity(shooter, world);
 	}
 
 	@Override
@@ -37,15 +33,11 @@ public class ObsidianArrowItem extends ArrowItem {
 		tooltip.add(new TranslationTextComponent("info.apotheosis.obsidian_arrow").withStyle(TextFormatting.BLUE));
 	}
 
-	@SubscribeEvent
-	public void handleArrowJoin(EntityJoinWorldEvent e) {
-		if (!e.getWorld().isClientSide && e.getEntity() instanceof AbstractArrowEntity) {
-			AbstractArrowEntity ent = (AbstractArrowEntity) e.getEntity();
-			if (ent.getPersistentData().getBoolean("apoth_obsidian_arrow")) {
-				ent.setBaseDamage(ent.getBaseDamage() * 1.2F);
-				ent.getPersistentData().remove("apoth_obsidian_arrow");
-			}
-		}
+	@Override
+	public AbstractArrowEntity fromDispenser(World world, double x, double y, double z) {
+		AbstractArrowEntity e = new ObsidianArrowEntity(world, x, y, z);
+		e.pickup = AbstractArrowEntity.PickupStatus.ALLOWED;
+		return e;
 	}
 
 }

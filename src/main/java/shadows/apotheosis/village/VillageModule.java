@@ -6,15 +6,21 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.dispenser.IPosition;
+import net.minecraft.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.potion.Effect;
 import net.minecraft.village.PointOfInterestType;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -22,8 +28,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.village.fletching.ApothFletchingBlock;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.FletchingRecipe;
@@ -31,6 +37,7 @@ import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowItem;
+import shadows.apotheosis.village.fletching.arrows.IApothArrowItem;
 import shadows.apotheosis.village.fletching.arrows.MiningArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.MiningArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
@@ -52,12 +59,23 @@ public class VillageModule {
 	public void setup(FMLCommonSetupEvent e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
-		MinecraftForge.EVENT_BUS.addListener(ApotheosisObjects.OBSIDIAN_ARROW::handleArrowJoin);
 		Map<BlockState, PointOfInterestType> types = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
 		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PointOfInterestType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		WandererReplacements.load(config);
 		if (config.hasChanged()) config.save();
+
+		e.enqueueWork(() -> {
+			for (Item i : ForgeRegistries.ITEMS) {
+				if (i instanceof IApothArrowItem) {
+					DispenserBlock.registerBehavior(i, new ProjectileDispenseBehavior() {
+						protected ProjectileEntity getProjectile(World world, IPosition pos, ItemStack stack) {
+							return ((IApothArrowItem) i).fromDispenser(world, pos.x(), pos.y(), pos.z());
+						}
+					});
+				}
+			}
+		});
 	}
 
 	@SubscribeEvent
