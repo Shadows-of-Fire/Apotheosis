@@ -85,7 +85,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 				else list.add(new TranslationTextComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
 			}
 
-			this.renderWrappedToolTip(stack, list, mouseX, mouseY, this.font);
+			this.renderWrappedToolTip(stack, list, this.getGuiLeft() - 16 - this.font.width(list.get(3)), mouseY, this.font);
 		}
 	}
 
