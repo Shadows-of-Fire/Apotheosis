@@ -52,6 +52,9 @@ public class TomeItem extends BookItem {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new TranslationTextComponent("info.apotheosis." + this.getRegistryName().getPath()).withStyle(TextFormatting.GRAY));
+		if (stack.isEnchanted()) {
+			tooltip.add(new TranslationTextComponent("info.apotheosis.tome_error").withStyle(TextFormatting.RED));
+		}
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class TomeItem extends BookItem {
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.isEnchanted()) {
-			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, stack.getCount());
 			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), book);
 			return ActionResult.consume(book);
 		}

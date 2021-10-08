@@ -386,6 +386,7 @@
     "item.apotheosis.fishing_rod_book": "Tome of the Fishers",
     "item.apotheosis.bow_book": "Tome of the Archers",
     "item.apotheosis.scrap_tome": "Tome of Scrapping",
+	"info.apotheosis.tome_error": "Bugged Item - Right click in the air to turn into an enchanted book.",
     "info.apotheosis.null_book": "Accepts miscellaneous enchantments.",
     "info.apotheosis.armor_head_book": "Accepts helmet enchantments.",
     "info.apotheosis.armor_chest_book": "Accepts chestplate enchantments.",
