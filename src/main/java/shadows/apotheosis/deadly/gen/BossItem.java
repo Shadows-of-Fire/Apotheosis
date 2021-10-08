@@ -1,5 +1,6 @@
 package shadows.apotheosis.deadly.gen;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Preconditions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -213,6 +215,18 @@ public class BossItem extends WeightedRandom.Item {
 		EnchantmentHelper.setEnchantments(enchMap, stack);
 		stack.getTag().putBoolean("apoth_boss", true);
 		return stack;
+	}
+
+	/**
+	 * Ensures that this boss item does not have null or empty fields that would cause a crash.
+	 * @return this
+	 */
+	public BossItem validate() {
+		Preconditions.checkNotNull(entity, "Boss Item " + id + " has null entity type!");
+		Preconditions.checkNotNull(size, "Boss Item " + id + " has no size!");
+		Preconditions.checkArgument(rarityOffset >= 0 && rarityOffset < 1000, "Boss Item " + id + " has an invalid rarity offset: " + rarityOffset);
+		Preconditions.checkArgument(enchLevels != null && enchLevels.length == 4 && Arrays.stream(enchLevels).allMatch(i -> i >= 0), "Boss Item " + id + " has invalid ench levels: " + enchLevels);
+		return this;
 	}
 
 }

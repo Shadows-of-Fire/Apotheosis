@@ -58,6 +58,7 @@ public class ChancedEffectInstance {
 			float chance = obj.get("chance").getAsFloat();
 			String _effect = obj.get("effect").getAsString();
 			Effect effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(_effect));
+			if (effect == null) throw new JsonParseException("Attempted to construct a ChancedEffectInstance with invalid effect: " + _effect);
 			boolean ambient = obj.has("ambient") ? obj.get("ambient").getAsBoolean() : true;
 			boolean visible = obj.has("visible") ? obj.get("visible").getAsBoolean() : false;
 			if (obj.has("amplifier")) {

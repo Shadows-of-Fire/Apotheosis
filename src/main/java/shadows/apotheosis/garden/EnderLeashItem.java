@@ -45,7 +45,6 @@ public class EnderLeashItem extends Item {
 				this.playSound(player);
 			}
 			return true;
-
 		}
 		return super.onLeftClickEntity(stack, player, entity);
 

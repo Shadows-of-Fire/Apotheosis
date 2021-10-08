@@ -50,6 +50,7 @@ public class RandomAttributeModifier {
 			Operation op = ctx.deserialize(obj.get("operation"), Operation.class);
 			RandomValueRange value = ctx.deserialize(obj.get("value"), RandomValueRange.class);
 			Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(_attribute));
+			if (attribute == null || value == null || op == null) throw new JsonParseException("Attempted to deserialize invalid RandomAttributeModifier: " + json.toString());
 			return new RandomAttributeModifier(attribute, op, value);
 		}
 	}
