@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -82,6 +83,7 @@ public class ArrowCatcherAffix extends Affix {
 			arrow.remove();
 			try {
 				ItemStack arrowStack = (ItemStack) getArrowStack.invoke(arrow);
+				if (!ItemTags.ARROWS.contains(arrowStack.getItem())) return amount;
 				arrowStack.setCount((int) level);
 				entity.level.addFreshEntity(new ItemEntity(entity.level, entity.getX(), entity.getY(), entity.getZ(), arrowStack));
 			} catch (Throwable e) {
