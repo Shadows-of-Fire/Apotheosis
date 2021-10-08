@@ -18,7 +18,7 @@ public class AffixTrade implements ITrade {
 		ItemStack stack = entry.getStack().copy();
 		stack = AffixLootManager.genLootItem(stack, rand, entry.getType(), rarity);
 		stack.getTag().putBoolean("apoth_merchant", true);
-		return new MerchantOffer(new ItemStack(stack.getItem()), new ItemStack(Items.EMERALD, rarity.ordinal() * 10), 1, 100, 1);
+		return new MerchantOffer(new ItemStack(stack.getItem()), new ItemStack(Items.EMERALD, rarity.ordinal() * 10), stack, 1, 100, 1);
 	}
 
 }

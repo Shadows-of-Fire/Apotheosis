@@ -395,7 +395,8 @@ public class AffixEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void trades(WandererTradesEvent e) {
-		if (DeadlyConfig.affixTrades) e.getRareTrades().add(new AffixTrade());
+		if (DeadlyConfig.affixTrades) for (int i = 0; i < 3; i++)
+			e.getGenericTrades().add(new AffixTrade());
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
