@@ -13,6 +13,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.loot.RandomValueRange;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -38,7 +39,9 @@ public class RandomAttributeModifier {
 	public void apply(Random rand, MobEntity entity) {
 		if (entity == null) throw new RuntimeException("Attempted to apply a random attribute modifier to a null entity!");
 		AttributeModifier modif = new AttributeModifier("apoth_boss_" + this.attribute.getDescriptionId(), this.value.getFloat(rand), this.op);
-		entity.getAttribute(this.attribute).addPermanentModifier(modif);
+		ModifiableAttributeInstance inst = entity.getAttribute(this.attribute);
+		if (inst == null) throw new RuntimeException(String.format("Attempted to apply a random attribute modifier to an entity (%s) that does not have that attribute (%s)!", entity.getType().getRegistryName(), this.attribute.getRegistryName()));
+		inst.addPermanentModifier(modif);
 	}
 
 	public static class Deserializer implements JsonDeserializer<RandomAttributeModifier> {
