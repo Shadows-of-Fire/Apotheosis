@@ -20,6 +20,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.dispenser.BeehiveDispenseBehavior;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.enchantment.EnchantmentData;
@@ -169,6 +170,9 @@ public class EnchModule {
 		LootSystem.defaultBlockTable(ApotheosisObjects.ENCHANTMENT_LIBRARY);
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
+		e.enqueueWork(() -> {
+			DispenserBlock.registerBehavior(Items.SHEARS, new BeehiveDispenseBehavior());
+		});
 	}
 
 	@SubscribeEvent
@@ -238,11 +242,9 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		Item oldShears = Items.SHEARS;
-		Item shears;
 		//Formatter::off
 		e.getRegistry().registerAll(
-				shears = new ApothShearsItem(),
+				new ApothShearsItem(),
 				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ApothAnvilItem(Blocks.ANVIL),
 				new ApothAnvilItem(Blocks.CHIPPED_ANVIL),
@@ -272,7 +274,6 @@ public class EnchModule {
 				new BlockItem(ApotheosisObjects.ENCHANTMENT_LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("enchantment_library")
 				);
 		//Formatter::on
-		DispenserBlock.registerBehavior(shears, DispenserBlock.DISPENSER_REGISTRY.get(oldShears));
 	}
 
 	@SubscribeEvent
