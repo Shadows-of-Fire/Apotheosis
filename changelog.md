@@ -1,3 +1,21 @@
+## 4.8.1
+* Affix Colors have been revamped!  The new color scheme should hopefully provide a smoother transition, and really give that "specialty" to ancient items (which will arrive in 4.9.0)
+* Tomes have received new textures, and no longer use the enchanted book texture.
+* Fixed scrapping tome tooltips not being gray
+* Brutal Pillager spawners will now spawn pillagers with crossbows.
+* Reduced the height range on deadly module worldgen
+* Add a lot more error handling regarding the deadly module.
+* Bytegm: Updated russian translation
+* Aikini: Updated chinese translation
+* The Enchantment Module tooltip error logger is now at the debug level.
+* The Enchantment Library is now sorted alphabetically.
+* Shields with the "arrow duplication" affix now actually only work on arrows (and not tridents).
+* The enchantment library tooltip is now on the left of the gui.
+* Added a tooltip to an enchanted tome so that users know they need to convert it to a book.
+* Fixed all apoth arrows not working in dispensers.
+* Fixed affix loot item trades from wandering traders being broken.
+
+
 ## 4.8.0
 * Added the Enchantment Library - a brand new storage system for enchanted books!
 * Fixed an issue where fletching tables were crashing when opened.
