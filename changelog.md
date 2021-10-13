@@ -1,5 +1,7 @@
 ## 4.8.2
 * Fixed the affix shard recipe showing as no-input on dedicated servers.
+* Prevented a crash if some mod puts an invalid value in the itemstack attribute modifier map.
+* Moved the books on top of the enchantment library so it does not z-clip if a block is placed above it.
 
 ## 4.8.1
 * Affix Colors have been revamped!  The new color scheme should hopefully provide a smoother transition, and really give that "specialty" to ancient items (which will arrive in 4.9.0)
