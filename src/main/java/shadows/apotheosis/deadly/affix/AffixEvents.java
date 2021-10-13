@@ -76,6 +76,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.impl.tool.RadiusMiningAffix;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
@@ -401,7 +402,7 @@ public class AffixEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void sortModifiers(ItemAttributeModifierEvent e) {
-		if (e.getModifiers() == null || e.getModifiers().isEmpty()) return;
+		if (e.getModifiers() == null || e.getModifiers().isEmpty() || FMLEnvironment.dist == Dist.DEDICATED_SERVER) return;
 		Multimap<Attribute, AttributeModifier> map = TreeMultimap.create((k1, k2) -> k1.getRegistryName().compareTo(k2.getRegistryName()), (v1, v2) -> {
 			int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
 			int compValue = Double.compare(v2.getAmount(), v1.getAmount());
