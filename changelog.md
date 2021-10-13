@@ -1,3 +1,6 @@
+## 4.8.2
+* Fixed the affix shard recipe showing as no-input on dedicated servers.
+
 ## 4.8.1
 * Affix Colors have been revamped!  The new color scheme should hopefully provide a smoother transition, and really give that "specialty" to ancient items (which will arrive in 4.9.0)
 * Tomes have received new textures, and no longer use the enchanted book texture.

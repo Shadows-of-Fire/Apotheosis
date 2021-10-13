@@ -36,6 +36,7 @@ import shadows.apotheosis.deadly.DeadlyModuleClient.RainbowColor;
 import shadows.apotheosis.deadly.affix.AffixEvents;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.affix.recipe.AffixShardingRecipe;
+import shadows.apotheosis.deadly.affix.recipe.SoulfireCookingRecipe;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.BossDungeonFeature;
 import shadows.apotheosis.deadly.gen.BossDungeonFeature2;
@@ -123,6 +124,7 @@ public class DeadlyModule {
 	@SubscribeEvent
 	public void serializers(Register<IRecipeSerializer<?>> e) {
 		e.getRegistry().register(AffixShardingRecipe.SERIALIZER.setRegistryName(new ResourceLocation(Apotheosis.MODID, "affix_sharding")));
+		e.getRegistry().register(SoulfireCookingRecipe.SERIALIZER.setRegistryName(new ResourceLocation(Apotheosis.MODID, "soulfire_cooking")));
 	}
 
 	@SubscribeEvent

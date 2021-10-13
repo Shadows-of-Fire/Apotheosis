@@ -4,12 +4,16 @@ import net.minecraft.block.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CampfireCookingRecipe;
+import net.minecraft.item.crafting.CookingRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import shadows.apotheosis.deadly.asm.DeadlyHooks.CampfireInventory;
 
 public class SoulfireCookingRecipe extends CampfireCookingRecipe {
+
+	public static final IRecipeSerializer<?> SERIALIZER = new CookingRecipeSerializer<>(SoulfireCookingRecipe::new, 100);
 
 	public SoulfireCookingRecipe(ResourceLocation id, String group, Ingredient input, ItemStack output, float exp, int time) {
 		super(id, group, input, output, exp, time);
@@ -45,6 +49,11 @@ public class SoulfireCookingRecipe extends CampfireCookingRecipe {
 	 */
 	public ItemStack getSecretOutput() {
 		return super.getResultItem();
+	}
+
+	@Override
+	public IRecipeSerializer<?> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

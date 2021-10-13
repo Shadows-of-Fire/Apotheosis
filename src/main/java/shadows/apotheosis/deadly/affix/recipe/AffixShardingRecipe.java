@@ -12,6 +12,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.deadly.DeadlyModule;
@@ -29,7 +30,7 @@ public class AffixShardingRecipe extends SoulfireCookingRecipe {
 		super(id, "", Ingredient.EMPTY, new ItemStack(DeadlyModule.RARITY_SHARDS.get(rarity)), 0, 200);
 		this.rarity = rarity;
 		ItemStack stack = new ItemStack(Items.DIAMOND_SWORD);
-		AffixHelper.addLore(stack, new TranslationTextComponent("info.apotheosis.any_of_rarity", new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT))));
+		AffixHelper.addLore(stack, new TranslationTextComponent("info.apotheosis.any_of_rarity", new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).withStyle(Style.EMPTY.withColor(rarity.getColor()))));
 		this.ing = Ingredient.of(stack);
 	}
 
@@ -41,6 +42,11 @@ public class AffixShardingRecipe extends SoulfireCookingRecipe {
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		return NonNullList.of(Ingredient.EMPTY, this.ing);
+	}
+
+	@Override
+	public IRecipeSerializer<?> getSerializer() {
+		return SERIALIZER;
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AffixShardingRecipe> {
