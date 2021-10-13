@@ -401,13 +401,16 @@ public class AffixEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void sortModifiers(ItemAttributeModifierEvent e) {
-		if (e.getModifiers().isEmpty()) return;
+		if (e.getModifiers() == null || e.getModifiers().isEmpty()) return;
 		Multimap<Attribute, AttributeModifier> map = TreeMultimap.create((k1, k2) -> k1.getRegistryName().compareTo(k2.getRegistryName()), (v1, v2) -> {
 			int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
 			int compValue = Double.compare(v2.getAmount(), v1.getAmount());
 			return compOp == 0 ? compValue == 0 ? v1.getName().compareTo(v2.getName()) : compValue : compOp;
 		});
-		map.putAll(e.getModifiers());
+		for (Map.Entry<Attribute, AttributeModifier> ent : e.getModifiers().entries()) {
+			if (ent.getKey() != null && ent.getValue() != null) map.put(ent.getKey(), ent.getValue());
+			else DeadlyModule.LOGGER.error("Detected broken attribute modifier entry on item {}.  Attr={}, Modif={}", e.getItemStack(), ent.getKey(), ent.getValue());
+		}
 		ReflectionHelper.setPrivateValue(ItemAttributeModifierEvent.class, e, map, "unmodifiableModifiers");
 	}
 
