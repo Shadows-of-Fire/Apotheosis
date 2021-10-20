@@ -3,6 +3,9 @@ package shadows.apotheosis.village;
 import java.io.File;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -52,6 +55,7 @@ public class VillageModule {
 
 	public static final IRecipeType<FletchingRecipe> FLETCHING = IRecipeType.register(Apotheosis.MODID + ":fletching");
 	public static final IRecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
+	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Village");
 
 	public static Configuration config;
 

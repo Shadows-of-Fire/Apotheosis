@@ -29,6 +29,7 @@ import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.objects.IEnchantingBlock;
+import shadows.apotheosis.util.JsonUtil;
 import shadows.placebo.util.NetworkUtils;
 import shadows.placebo.util.NetworkUtils.MessageProvider;
 
@@ -49,10 +50,12 @@ public class EnchantingStatManager extends JsonReloadListener {
 		this.stats.clear();
 		objects.forEach((key, ele) -> {
 			try {
-				JsonObject obj = (JsonObject) ele;
-				Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
-				Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
-				this.stats.put(b.delegate, stats);
+				if (!JsonUtil.checkAndLogEmpty(ele, key, "Enchanting Stats", EnchModule.LOGGER)) {
+					JsonObject obj = (JsonObject) ele;
+					Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
+					Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
+					this.stats.put(b.delegate, stats);
+				}
 			} catch (Exception e) {
 				EnchModule.LOGGER.error("Failed to read enchantment stat file {}.", key);
 				e.printStackTrace();

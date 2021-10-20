@@ -17,7 +17,8 @@ import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.BasicTrade;
-import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.util.JsonUtil;
+import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.util.json.ItemAdapter;
 import shadows.placebo.util.json.NBTAdapter;
 
@@ -42,13 +43,13 @@ public class WandererTradeManager extends JsonReloadListener {
 		this.registry.clear();
 		objects.forEach((id, obj) -> {
 			try {
-				this.register(id, GSON.fromJson(obj, BasicTrade.class), obj.getAsJsonObject().has("rare"));
+				if (!JsonUtil.checkAndLogEmpty(obj, id, "Wanderer Trade", VillageModule.LOGGER)) this.register(id, GSON.fromJson(obj, BasicTrade.class), obj.getAsJsonObject().has("rare"));
 			} catch (Exception e) {
-				DeadlyModule.LOGGER.error("Failed to load Wandering Trader trade {}.", id.toString());
+				VillageModule.LOGGER.error("Failed to load Wandering Trader trade {}.", id.toString());
 				e.printStackTrace();
 			}
 		});
-		DeadlyModule.LOGGER.info("Loaded {} normal and {} rare Wandering Trader trade options.", this.normTrades.size(), this.rareTrades.size());
+		VillageModule.LOGGER.info("Loaded {} normal and {} rare Wandering Trader trade options.", this.normTrades.size(), this.rareTrades.size());
 	}
 
 	protected void register(ResourceLocation id, BasicTrade trade, boolean rare) {
@@ -58,7 +59,7 @@ public class WandererTradeManager extends JsonReloadListener {
 			this.registry.put(id, trade);
 			if (rare) this.rareTrades.add(trade);
 			else this.normTrades.add(trade);
-		} else DeadlyModule.LOGGER.error("Attempted to register a wanderer trade with name {}, but it already exists!", id);
+		} else VillageModule.LOGGER.error("Attempted to register a wanderer trade with name {}, but it already exists!", id);
 	}
 
 	public List<BasicTrade> getNormalTrades() {
