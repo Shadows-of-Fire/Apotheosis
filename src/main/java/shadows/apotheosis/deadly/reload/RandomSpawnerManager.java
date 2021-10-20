@@ -23,6 +23,7 @@ import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.gen.SpawnerItem;
+import shadows.apotheosis.util.JsonUtil;
 import shadows.apotheosis.util.WeightedSpawnerEntityAdapter;
 import shadows.placebo.util.json.NBTAdapter;
 
@@ -54,6 +55,7 @@ public class RandomSpawnerManager extends JsonReloadListener {
 		this.registry.clear();
 		for (Entry<ResourceLocation, JsonElement> obj : objects.entrySet()) {
 			try {
+				if (JsonUtil.checkAndLogEmpty(obj.getValue(), obj.getKey(), "Random Spawner", DeadlyModule.LOGGER)) continue;
 				this.register(obj.getKey(), GSON.fromJson(obj.getValue(), SpawnerItem.class));
 			} catch (Exception e) {
 				DeadlyModule.LOGGER.error("Failed to load spawner item {}.", obj.getKey());

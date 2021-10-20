@@ -29,6 +29,7 @@ import shadows.apotheosis.deadly.gen.BossItem;
 import shadows.apotheosis.util.AxisAlignedBBDeserializer;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.EntityTypeDeserializer;
+import shadows.apotheosis.util.JsonUtil;
 import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
 import shadows.apotheosis.util.RandomAttributeModifier;
@@ -66,6 +67,7 @@ public class BossItemManager extends JsonReloadListener {
 		this.registry.clear();
 		for (Entry<ResourceLocation, JsonElement> obj : objects.entrySet()) {
 			try {
+				if (JsonUtil.checkAndLogEmpty(obj.getValue(), obj.getKey(), "Boss", DeadlyModule.LOGGER)) continue;
 				this.register(obj.getKey(), GSON.fromJson(obj.getValue(), BossItem.class));
 			} catch (Exception e) {
 				DeadlyModule.LOGGER.error("Failed to load boss item {}.", obj.getKey());

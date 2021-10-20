@@ -24,6 +24,7 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.util.GearSet;
+import shadows.apotheosis.util.JsonUtil;
 import shadows.placebo.util.json.ItemAdapter;
 import shadows.placebo.util.json.NBTAdapter;
 
@@ -47,7 +48,7 @@ public class BossArmorManager extends JsonReloadListener {
 		this.registry.clear();
 		objects.forEach((id, obj) -> {
 			try {
-				this.register(id, GSON.fromJson(obj, GearSet.class));
+				if (!JsonUtil.checkAndLogEmpty(obj, id, "Boss Gear Set", DeadlyModule.LOGGER)) this.register(id, GSON.fromJson(obj, GearSet.class));
 			} catch (Exception e) {
 				DeadlyModule.LOGGER.error("Failed to load boss armor set {}.", id.toString());
 				e.printStackTrace();

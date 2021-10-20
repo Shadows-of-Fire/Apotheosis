@@ -36,6 +36,7 @@ import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 import shadows.apotheosis.deadly.affix.modifiers.Modifiers;
+import shadows.apotheosis.util.JsonUtil;
 
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
@@ -59,6 +60,7 @@ public class AffixLootManager extends JsonReloadListener {
 		ENTRIES.clear();
 		for (Entry<ResourceLocation, JsonElement> obj : objects.entrySet()) {
 			try {
+				if (JsonUtil.checkAndLogEmpty(obj.getValue(), obj.getKey(), "Affix Loot Entry", DeadlyModule.LOGGER)) continue;
 				AffixLootEntry ent = GSON.fromJson(obj.getValue(), AffixLootEntry.class);
 				ENTRIES.add(ent);
 			} catch (Exception e) {
