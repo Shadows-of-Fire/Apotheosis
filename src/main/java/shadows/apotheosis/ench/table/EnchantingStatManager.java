@@ -36,10 +36,10 @@ import shadows.placebo.util.NetworkUtils.MessageProvider;
 public class EnchantingStatManager extends JsonReloadListener {
 
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
 	public static final EnchantingStatManager INSTANCE = new EnchantingStatManager();
-
 	private final Map<IRegistryDelegate<Block>, Stats> stats = new HashMap<>();
+
+	private float absoluteMaxEterna = 50;
 
 	protected EnchantingStatManager() {
 		super(GSON, "enchanting_stats");
@@ -63,6 +63,7 @@ public class EnchantingStatManager extends JsonReloadListener {
 		});
 		EnchModule.LOGGER.info("Registered {} blocks with enchanting stats.", this.stats.size());
 		if (ServerLifecycleHooks.getCurrentServer() != null) Apotheosis.CHANNEL.send(PacketDistributor.ALL.noArg(), new StatSyncMessage(this.stats));
+		this.absoluteMaxEterna = this.computeAbsoluteMaxEterna();
 	}
 
 	public static float getEterna(BlockState state, World world, BlockPos pos) {
@@ -93,7 +94,11 @@ public class EnchantingStatManager extends JsonReloadListener {
 	}
 
 	public static float getAbsoluteMaxEterna() {
-		return INSTANCE.stats.values().stream().max(Comparator.comparingDouble(s -> s.maxEterna)).get().maxEterna;
+		return INSTANCE.absoluteMaxEterna;
+	}
+
+	private float computeAbsoluteMaxEterna() {
+		return stats.values().stream().max(Comparator.comparingDouble(s -> s.maxEterna)).get().maxEterna;
 	}
 
 	public static void dispatch(PlayerEntity player) {

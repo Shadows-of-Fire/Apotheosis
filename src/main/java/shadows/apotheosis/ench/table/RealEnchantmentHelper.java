@@ -56,7 +56,7 @@ public class RealEnchantmentHelper {
 		} else {
 			power = power + rand.nextInt(Math.max(enchantability / 2, 1));
 			float factor = MathHelper.nextFloat(rand, -1F, 1F) * quanta / 10;
-			power = MathHelper.clamp(Math.round(power + power * factor), 1, 200);
+			power = MathHelper.clamp(Math.round(power + power * factor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
 			Arcana arcana = Arcana.getForThreshold(arcanaLevel);
 			List<EnchantmentData> allEnchants = getEnchantmentDatas(power, stack, treasure);
 			Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
