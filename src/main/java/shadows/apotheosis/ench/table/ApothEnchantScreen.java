@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.table;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +30,9 @@ import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import shadows.apotheosis.Apotheosis;
+import shadows.placebo.util.EnchantmentUtils;
 
 public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 
@@ -306,6 +309,41 @@ public class ApothEnchantScreen extends ContainerScreen<ApothEnchantContainer> {
 			this.renderComponentTooltip(stack, list, mouseX, mouseY);
 		}
 
+		ItemStack enchanting = this.menu.getSlot(0).getItem();
+		if (!enchanting.isEmpty() && this.menu.costs[2] > 0) {
+			for (int j = 0; j < 3; j++) {
+				if (this.isHovering(60, 14 + 19 * j, 108, 17, mouseX, mouseY)) {
+					List<ITextComponent> list = new ArrayList<>();
+					int level = this.menu.costs[j];
+					list.add(new StringTextComponent(I18n.get("Enchanting at Level %d", level)).withStyle(TextFormatting.UNDERLINE, TextFormatting.GREEN));
+					list.add(new StringTextComponent(""));
+					int cost = 0;
+					for (int i = 0; i <= j; i++) {
+						cost += (EnchantmentUtils.getExperienceForLevel(level - i) -  EnchantmentUtils.getExperienceForLevel(level - i - 1));
+					}
+					list.add(new TranslationTextComponent("Raw XP Cost: %s (%s Levels)", new StringTextComponent("" + cost).withStyle(TextFormatting.GREEN), new StringTextComponent("" + EnchantmentUtils.getLevelForExperience(cost)).withStyle(TextFormatting.GREEN)));
+					int minPow = (int) MathHelper.clamp(level + -level * this.menu.quanta.get() / 10, 1, 200);
+					int maxPow = level + Math.max(enchanting.getItemEnchantability() / 2, 1) - 1;
+					maxPow = (int) MathHelper.clamp(maxPow + maxPow * this.menu.quanta.get() / 10, 1, 200);
+					list.add(new TranslationTextComponent("Power Range: %s to %s", new StringTextComponent("" + minPow).withStyle(TextFormatting.RED), new StringTextComponent("" + maxPow).withStyle(TextFormatting.DARK_PURPLE)));
+					list.add(new TranslationTextComponent("Item Enchantability: %s", new StringTextComponent("" + enchanting.getItemEnchantability()).withStyle(TextFormatting.GREEN)));
+					this.drawOnLeft(stack, list, this.getGuiTop() + 29);
+					break;
+				}
+			}
+		}
+	}
+
+	public void drawOnLeft(MatrixStack stack, List<ITextComponent> list, int y) {
+		if (list.isEmpty()) return;
+		int xPos = this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get();
+		int maxWidth = -1;
+		if (xPos < 0) {
+			maxWidth = this.getGuiLeft() - 6;
+			xPos = -8;
+		}
+
+		GuiUtils.drawHoveringText(stack, list, xPos, y, width, height, maxWidth, this.font);
 	}
 
 	public void tickBook() {

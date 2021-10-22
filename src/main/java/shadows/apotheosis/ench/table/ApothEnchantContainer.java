@@ -38,9 +38,9 @@ import shadows.apotheosis.util.FloatReferenceHolder;
 
 public class ApothEnchantContainer extends EnchantmentContainer {
 
-	protected FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatManager.getAbsoluteMaxEterna());
-	protected FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 10);
-	protected FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 10);
+	protected final FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatManager.getAbsoluteMaxEterna());
+	protected final FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 10);
+	protected final FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 10);
 
 	public ApothEnchantContainer(int id, PlayerInventory inv) {
 		super(id, inv, IWorldPosCallable.NULL);
