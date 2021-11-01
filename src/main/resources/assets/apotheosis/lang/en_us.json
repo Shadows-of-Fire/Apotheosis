@@ -150,6 +150,15 @@
 	"info.apotheosis.any_of_rarity": "Accepts any %s item",
 	"gui.apotheosis.category.soulfire": "Soulfire Cooking",
 	"info.apotheosis.one_per_affix": "One shard is produced per affix destroyed",
+	"info.apotheosis.retrieved_from": "Extracted From: %s",
+	
+	"type.apotheosis.sword": "Sword",
+	"type.apotheosis.ranged": "Ranged",
+	"type.apotheosis.pickaxe": "Pickaxe",
+	"type.apotheosis.shovel": "Shovel",
+	"type.apotheosis.axe": "Axe",
+	"type.apotheosis.armor": "Armor",
+	"type.apotheosis.shield": "Shield",
 
     "comment_id": "/Advancements",
 

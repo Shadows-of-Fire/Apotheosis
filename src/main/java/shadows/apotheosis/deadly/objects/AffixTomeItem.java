@@ -28,6 +28,8 @@ import shadows.apotheosis.deadly.affix.LootRarity;
 
 public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 
+	public static final String TYPE = "apoth.booktype";
+
 	static Random rand = new Random();
 
 	protected final LootRarity rarity;
@@ -49,6 +51,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome").withStyle(TextFormatting.GRAY));
 			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome2", new TranslationTextComponent("rarity.apoth." + this.rarity.name().toLowerCase(Locale.ROOT)).withStyle(Style.EMPTY.withColor(this.rarity.getColor()))).withStyle(TextFormatting.GRAY));
 		} else {
+			if (stack.getTag().contains(TYPE)) tooltip.add(new TranslationTextComponent("info.apotheosis.retrieved_from", new TranslationTextComponent("type.apotheosis." + EquipmentType.values()[stack.getTag().getInt(TYPE)].name().toLowerCase(Locale.ROOT))).withStyle(TextFormatting.BLUE));
 			Map<Affix, Float> afx = AffixHelper.getAffixes(stack);
 			afx.forEach((a, l) -> {
 				tooltip.add(a.getDisplayName(l));
@@ -102,6 +105,8 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			AffixHelper.setAffixes(out, wepAfx);
 			ev.setMaterialCost(1);
 			ev.setCost(wepAfx.size() * 18);
+			EquipmentType wType = EquipmentType.getTypeFor(weapon);
+			if (wType != null) out.getTag().putInt(TYPE, wType.ordinal());
 			ev.setOutput(out);
 		} else if (AffixHelper.hasAffixes(book)) { //Application Mode
 			Map<Affix, Float> bookAfx = AffixHelper.getAffixes(book);
