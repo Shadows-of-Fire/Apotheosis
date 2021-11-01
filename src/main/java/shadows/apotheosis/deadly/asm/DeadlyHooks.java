@@ -113,7 +113,7 @@ public class DeadlyHooks {
 	 * Allows for the enchantability affix to work properly.
 	 */
 	public static int getEnchantability(ItemStack stack) {
-		int ench = stack.getItemEnchantability();
+		int ench = stack.getItem().getItemEnchantability(stack);
 		Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
 		if (!affixes.isEmpty()) {
 			ench += affixes.getOrDefault(Affixes.ENCHANTABILITY, 0F).intValue();

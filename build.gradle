@@ -1,38 +1,55 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
+		maven { url = 'https://maven.parchmentmc.org' }
+		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+		classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+		classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 
-archivesBaseName = name + '-' + mcVersion
+archivesBaseName = "${fileName}-${mcVersion}"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    mappings 'official', project.properties.mcVersion
+    mappings channel: 'parchment', version: project.properties.parchmentVersion
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         client = {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
-            source sourceSets.main
+			arg project.mixin.toBoolean() ? "-mixin.config=${modid}.mixins.json" : ""
+            workingDirectory project.file('run')
+            mods { "${modid}" { source sourceSets.main } }
         }
         server = {
             properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
-            workingDirectory project.file('run').canonicalPath
-            source sourceSets.main
+			arg project.mixin.toBoolean() ? "-mixin.config=${modid}.mixins.json" : ""
+            workingDirectory project.file('run')
+            mods { "${modid}" { source sourceSets.main } }
         }
+		data = {
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', modid, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+			workingDirectory project.file('run')
+			mods { "${modid}" { source sourceSets.main } }
+		}
     }
 }
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
@@ -47,21 +64,63 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:' + project.properties.mcVersion + '-' + forgeVersion
-	compile fileTree(dir: 'libs', include: '*.jar')
-	compile fg.deobf('mezz.jei:jei-' + jeiVersion)
-	compile fg.deobf('curse.maven:jade-324717:' + jadeFileId)
-	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.2')
+    minecraft "net.minecraftforge:forge:${mcVersion}-${forgeVersion}"
+	if(project.mixin.toBoolean()) annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
+	implementation fg.deobf("mezz.jei:jei-${jeiVersion}")
+	implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
+	implementation fileTree(dir: 'libs', include: '*.jar')
+	implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.3')
+}
+
+mixin {
+    if(project.mixin.toBoolean()) add sourceSets.main, "${modid}.refmap.json"
+}
+
+def resourceTargets = ['META-INF/mods.toml', 'pack.mcmeta', "${modid}.mixins.json".toString()]
+def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/bin/main/"]
+def replaceProperties = [modid: modid, 
+						 version: version,
+						 displayName: spacedName, 
+						 author: author, 
+						 desc: desc,
+						 mcVersion: mcVersion, 
+						 forgeVersion: forgeVersion,
+						 mixins: mixins,
+						 clientMixins: clientMixins
+						]
+processResources {
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+
+    intoTargets.each { target ->
+        if (file(target).exists()) {
+            copy {
+                from(sourceSets.main.resources) {
+                    include resourceTargets
+                    expand replaceProperties
+                }
+                into target
+            }
+        }
+    }
 }
 
 jar {
     manifest {
-        attributes(["Specification-Title": project.name,
+        attributes(["Specification-Title": project.fileName,
                     "Specification-Vendor": project.author,
-                    "Specification-Version": "24.0", // We are version 1 of the modlauncher specification
-                    "Implementation-Title": project.name,
+                    "Specification-Version": "1.0", // We are version 1 of ourselves
+                    "Implementation-Title": project.fileName,
                     "Implementation-Version": project.version,
                     "Implementation-Vendor" : project.author,
-                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+					"MixinConfigs": project.mixin.toBoolean() ? "${modid}.mixins.json" : ""
+					])
     }
 }
+
+jar.finalizedBy('reobfJar')

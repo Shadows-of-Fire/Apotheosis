@@ -1,38 +1,36 @@
 modLoader="javafml" #mandatory
 
-loaderVersion="[28,)" #mandatory
+loaderVersion="[32,)" #mandatory
 
-authors="Shadows_of_Fire" #optional
+authors="${author}" #optional
 
-license="MIT License"
+license="MIT License" #mandatory
 
 [[mods]] #mandatory
 
-modId="apotheosis" #mandatory
+modId="${modid}" #mandatory
 
-version="${file.jarVersion}" #mandatory
+version="${version}" #mandatory
 
-displayName="Apotheosis" #mandatory
+displayName="${displayName}" #mandatory
 
-description='''
-All things that should have been.
-'''
+description='''${desc}'''
 
-[[dependencies.apotheosis]] #optional
+[[dependencies.${modid}]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[36.1.65,)" #mandatory
+    versionRange="[${forgeVersion},)" #mandatory
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.apotheosis]]
+[[dependencies.${modid}]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.5,)"
+    versionRange="[${mcVersion},)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.apotheosis]]
+[[dependencies.${modid}]]
     modId="placebo"
     mandatory=true
     versionRange="[4.6.0,)"

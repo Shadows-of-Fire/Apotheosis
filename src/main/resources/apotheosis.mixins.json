@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "package": "shadows.${modid}.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "refmap": "${modid}.refmap.json",
+    "mixins": [
+        ${mixins}
+    ],
+    "client": [
+        ${clientMixins}
+    ],
+    "minVersion": "0.8"
+}
