@@ -53,8 +53,9 @@ import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
+import shadows.apotheosis.util.INBTSensitiveFallingBlock;
 
-public class ApothAnvilBlock extends AnvilBlock {
+public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingBlock {
 
 	public ApothAnvilBlock() {
 		super(AbstractBlock.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
@@ -241,5 +242,14 @@ public class ApothAnvilBlock extends AnvilBlock {
 			Block.popResource(world, pos.above(), book.copy());
 		}
 		return true;
+	}
+
+	@Override
+	public ItemStack toStack(BlockState state, CompoundNBT tag) {
+		ItemStack anvil = new ItemStack(this);
+		Map<Enchantment, Integer> ench = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+		EnchantmentHelper.setEnchantments(ench, anvil);
+		return anvil;
 	}
 }
