@@ -1,3 +1,12 @@
+## 4.8.3
+* Added an extra tooltip tab to the Enchanting Table, which shows power range, xp cost, and item enchantability.
+* PixVoxel: Add ko_kr.json (Korean Translation)
+* Added better handling on the loading of certain apotheosis jsons.
+* Made particles spawn for all valid apotheosis bookshelves.
+* Fixed enchanting power having a hard cap of 200.
+* Made it so anvils that fall on torches retain their enchantments.
+* Potion charms are now marked as non-repairable.
+
 ## 4.8.2
 * Fixed the affix shard recipe showing as no-input on dedicated servers.
 * Prevented a crash if some mod puts an invalid value in the itemstack attribute modifier map.
