@@ -150,6 +150,15 @@
 	"info.apotheosis.any_of_rarity": "아무 %s 등급 아이템을 받아들일 수 있습니다.",
 	"gui.apotheosis.category.soulfire": "영혼불 요리",
 	"info.apotheosis.one_per_affix": "접사 아이템 하나를 파괴하여 조각을 얻습니다.",
+	"info.apotheosis.retrieved_from": "추출 위치: %s",
+	
+	"type.apotheosis.sword": "검",
+	"type.apotheosis.ranged": "범위",
+	"type.apotheosis.pickaxe": "곡괭이",
+	"type.apotheosis.shovel": "삽",
+	"type.apotheosis.axe": "도끼",
+	"type.apotheosis.armor": "갑옷",
+	"type.apotheosis.shield": "방패",
 
     "comment_id": "/Advancements",
 
@@ -365,7 +374,7 @@
     "enchantment.apotheosis.life_mending.desc": "체력을 내구도로 바꿉니다.",
 
     "enchantment.apotheosis.icy_thorns": "얼음 가시",
-    "enchantment.apotheosis.icy_thorns.desc": "공격한 적을 느리게합니다.",
+    "enchantment.apotheosis.icy_thorns.desc": "공격한 적을 느리게 합니다.",
 	
 	"enchantment.apotheosis.bane_of_illagers": "우민 강타",
     "enchantment.apotheosis.bane_of_illagers.desc": "우민에게 추가 피해를 가합니다.",
@@ -386,6 +395,7 @@
     "item.apotheosis.fishing_rod_book": "낚시꾼의 서적",
     "item.apotheosis.bow_book": "궁수의 서적",
     "item.apotheosis.scrap_tome": "회수의 서적",
+	"info.apotheosis.tome_error": "버그된 아이템 - 공중에서 마우스 오른쪽 버튼으로 클릭하면 마법의 책으로 바뀝니다.",
     "info.apotheosis.null_book": "기타 마법 부여를 받아들입니다.",
     "info.apotheosis.armor_head_book": "투구 마법 부여를 받아들입니다.",
     "info.apotheosis.armor_chest_book": "흉갑 마법 부여를 받아들입니다.",
@@ -558,7 +568,18 @@
     "enchantment.level.125": "CXXV",
     "enchantment.level.126": "CXXVI",
     "enchantment.level.127": "CXXVII",
-
+	
+	
+	"block.apotheosis.enchantment_library": "마법 라이브러리",
+	"apotheosis.ench.library": "마법 라이브러리",
+	"tooltip.enchlib.1": "사용 가능한 최대 레벨: %s",
+	"tooltip.enchlib.2": "저장된 지점: %s/32767",
+	"tooltip.enchlib.4": "다음 레벨 비용: %d",
+	"tooltip.enchlib.5": "다음 레벨 사용 불가",
+	"tooltip.enchlib.6": "최대 레벨 비용: %d",
+	"tooltip.enchlib.item": "%d개의 마법을 저장하고 있습니다.",
+	"info.apotheosis.library": "마법 라이브러리는 마법을 저장하는 블록입니다.  마법이 부여된 책을 넣으면 됩니다.  저장된 마법에서 마우스 왼쪽 버튼을 클릭하면 마법이 한 레벨 추출됩니다.  Shift를 누르면 사용 가능한 최대 레벨이 추출됩니다.",
+	
     "comment_id": "/Potion Module",
     "enchantment.apotheosis.true_infinity": "무한의 화살통",
     "enchantment.apotheosis.true_infinity.desc": "모든 화살을 무한으로 만듭니다.",
