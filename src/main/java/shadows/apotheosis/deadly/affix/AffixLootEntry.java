@@ -1,13 +1,13 @@
 package shadows.apotheosis.deadly.affix;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * A loot entry represents a possible item that can come out of a loot roll.
  * It is classified into a type, which is used to determine possible affixes.
  */
-public class AffixLootEntry extends WeightedRandom.Item {
+public class AffixLootEntry extends WeighedRandom.WeighedRandomItem {
 
 	protected final ItemStack stack;
 	protected final EquipmentType type;

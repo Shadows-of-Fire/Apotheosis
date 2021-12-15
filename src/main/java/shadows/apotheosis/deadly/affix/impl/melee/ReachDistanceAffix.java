@@ -1,6 +1,6 @@
 package shadows.apotheosis.deadly.affix.impl.melee;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraftforge.common.ForgeMod;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;

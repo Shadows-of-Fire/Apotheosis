@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.udojava.evalex.Expression;
 
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 public class EnchantmentInfo {
 

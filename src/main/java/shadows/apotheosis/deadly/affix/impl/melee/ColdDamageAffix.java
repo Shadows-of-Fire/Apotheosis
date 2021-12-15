@@ -1,11 +1,11 @@
 package shadows.apotheosis.deadly.affix.impl.melee;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
@@ -29,7 +29,7 @@ public class ColdDamageAffix extends AttributeAffix {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
-		if (target instanceof LivingEntity) ((LivingEntity) target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 20 * Math.max(3, (int) (level / 1.5F)), 1));
+		if (target instanceof LivingEntity) ((LivingEntity) target).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * Math.max(3, (int) (level / 1.5F)), 1));
 		target.hurt(COLD, Apotheosis.localAtkStrength * level);
 	}
 

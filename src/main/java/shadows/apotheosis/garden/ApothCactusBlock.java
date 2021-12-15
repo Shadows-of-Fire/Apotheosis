@@ -2,27 +2,27 @@ package shadows.apotheosis.garden;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CactusBlock;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CactusBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraftforge.common.ForgeHooks;
 import shadows.placebo.util.IReplacementBlock;
 
 public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 
 	public ApothCactusBlock() {
-		super(AbstractBlock.Properties.copy(Blocks.CACTUS));
+		super(BlockBehaviour.Properties.copy(Blocks.CACTUS));
 		this.setRegistryName(new ResourceLocation("cactus"));
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (!world.isAreaLoaded(pos, 1)) return; // Forge: prevent growing cactus from loading unloaded chunks with block update
 		if (!state.canSurvive(world, pos)) {
 			world.destroyBlock(pos, true);
@@ -58,15 +58,15 @@ public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 		this.registerDefaultState(state);
 	}
 
-	protected StateContainer<Block, BlockState> container;
+	protected StateDefinition<Block, BlockState> container;
 
 	@Override
-	public void setStateContainer(StateContainer<Block, BlockState> container) {
+	public void setStateContainer(StateDefinition<Block, BlockState> container) {
 		this.container = container;
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateDefinition() {
+	public StateDefinition<Block, BlockState> getStateDefinition() {
 		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 }

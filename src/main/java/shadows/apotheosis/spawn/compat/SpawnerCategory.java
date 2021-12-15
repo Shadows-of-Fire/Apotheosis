@@ -1,6 +1,6 @@
 package shadows.apotheosis.spawn.compat;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -10,10 +10,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.config.Constants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import shadows.apotheosis.Apotheosis;
 
 public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
@@ -66,7 +66,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	}
 
 	@Override
-	public void draw(SpawnerWrapper recipe, MatrixStack stack, double mouseX, double mouseY) {
+	public void draw(SpawnerWrapper recipe, PoseStack stack, double mouseX, double mouseY) {
 		IRecipeCategory.super.draw(recipe, stack, mouseX, mouseY);
 		recipe.drawInfo(Minecraft.getInstance(), stack, 0, 40, mouseX, mouseY);
 	}

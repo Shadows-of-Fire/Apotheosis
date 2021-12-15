@@ -1,9 +1,9 @@
 package shadows.apotheosis.deadly.affix.impl.melee;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;

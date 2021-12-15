@@ -3,7 +3,7 @@ package shadows.apotheosis.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.extensions.IForgeItemStack;
 import shadows.apotheosis.deadly.asm.DeadlyHooks;
 

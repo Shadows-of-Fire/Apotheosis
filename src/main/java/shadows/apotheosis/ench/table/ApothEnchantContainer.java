@@ -8,27 +8,27 @@ import java.util.List;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.EnchantmentContainer;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.EnchantmentMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.SlotItemHandler;
 import shadows.apotheosis.ApotheosisObjects;
@@ -36,14 +36,14 @@ import shadows.apotheosis.advancements.EnchantedTrigger;
 import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.util.FloatReferenceHolder;
 
-public class ApothEnchantContainer extends EnchantmentContainer {
+public class ApothEnchantContainer extends EnchantmentMenu {
 
 	protected final FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatManager.getAbsoluteMaxEterna());
 	protected final FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 10);
 	protected final FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 10);
 
-	public ApothEnchantContainer(int id, PlayerInventory inv) {
-		super(id, inv, IWorldPosCallable.NULL);
+	public ApothEnchantContainer(int id, Inventory inv) {
+		super(id, inv, ContainerLevelAccess.NULL);
 		this.slots.clear();
 		this.addSlot(new Slot(this.enchantSlots, 0, 15, 47) {
 			@Override
@@ -65,7 +65,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 		this.initCommon(inv);
 	}
 
-	public ApothEnchantContainer(int id, PlayerInventory inv, IWorldPosCallable wPos, ApothEnchantTile te) {
+	public ApothEnchantContainer(int id, Inventory inv, ContainerLevelAccess wPos, ApothEnchantTile te) {
 		super(id, inv, wPos);
 		this.slots.clear();
 		this.addSlot(new Slot(this.enchantSlots, 0, 15, 47) {
@@ -88,7 +88,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 		this.initCommon(inv);
 	}
 
-	private void initCommon(PlayerInventory inv) {
+	private void initCommon(Inventory inv) {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
 				this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18 + 31));
@@ -103,7 +103,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	}
 
 	@Override
-	public boolean clickMenuButton(PlayerEntity player, int id) {
+	public boolean clickMenuButton(Player player, int id) {
 		int level = this.costs[id];
 		ItemStack toEnchant = this.enchantSlots.getItem(0);
 		ItemStack lapis = this.getSlot(1).getItem();
@@ -114,7 +114,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 
 		this.access.execute((world, pos) -> {
 			ItemStack enchanted = toEnchant;
-			List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
+			List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 			if (!list.isEmpty()) {
 				player.onEnchantmentPerformed(toEnchant, i);
 				boolean flag = toEnchant.getItem() == Items.BOOK || toEnchant.getItem() instanceof TomeItem;
@@ -124,7 +124,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 				}
 
 				for (int j = 0; j < list.size(); ++j) {
-					EnchantmentData enchantmentdata = list.get(j);
+					EnchantmentInstance enchantmentdata = list.get(j);
 					if (flag) {
 						EnchantedBookItem.addEnchantment(enchanted, enchantmentdata);
 					} else {
@@ -140,14 +140,14 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 				}
 
 				player.awardStat(Stats.ENCHANT_ITEM);
-				if (player instanceof ServerPlayerEntity) {
-					((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayerEntity) player, enchanted, level, this.eterna.get(), this.quanta.get(), this.arcana.get());
+				if (player instanceof ServerPlayer) {
+					((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayer) player, enchanted, level, this.eterna.get(), this.quanta.get(), this.arcana.get());
 				}
 
 				this.enchantSlots.setChanged();
 				this.enchantmentSeed.set(player.getEnchantmentSeed());
 				this.slotsChanged(this.enchantSlots);
-				world.playSound((PlayerEntity) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
+				world.playSound((Player) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 			}
 
 		});
@@ -160,7 +160,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void slotsChanged(IInventory inventoryIn) {
+	public void slotsChanged(Container inventoryIn) {
 		this.access.evaluate((world, pos) -> {
 			if (inventoryIn == this.enchantSlots) {
 				ItemStack itemstack = inventoryIn.getItem(0);
@@ -183,10 +183,10 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 
 					for (int j1 = 0; j1 < 3; ++j1) {
 						if (this.costs[j1] > 0) {
-							List<EnchantmentData> list = this.getEnchantmentList(itemstack, j1, this.costs[j1]);
+							List<EnchantmentInstance> list = this.getEnchantmentList(itemstack, j1, this.costs[j1]);
 
 							if (list != null && !list.isEmpty()) {
-								EnchantmentData enchantmentdata = list.get(this.random.nextInt(list.size()));
+								EnchantmentInstance enchantmentdata = list.get(this.random.nextInt(list.size()));
 								this.enchantClue[j1] = Registry.ENCHANTMENT.getId(enchantmentdata.enchantment);
 								this.levelClue[j1] = enchantmentdata.level;
 							}
@@ -209,9 +209,9 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 		});
 	}
 
-	private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
+	private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
 		this.random.setSeed(this.enchantmentSeed.get() + enchantSlot);
-		List<EnchantmentData> list = RealEnchantmentHelper.buildEnchantmentList(this.random, stack, level, this.quanta.get(), this.arcana.get(), false);
+		List<EnchantmentInstance> list = RealEnchantmentHelper.buildEnchantmentList(this.random, stack, level, this.quanta.get(), this.arcana.get(), false);
 		return list;
 	}
 
@@ -246,7 +246,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 		}).orElse(this);
 	}
 
-	public void gatherStats(Float2FloatMap eternaMap, float[] stats, World world, BlockPos pos) {
+	public void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		if (state.getBlock().isAir(state, world, pos)) return;
 		float max = EnchantingStatManager.getMaxEterna(state, world, pos);
@@ -259,7 +259,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	}
 
 	@Override
-	public ContainerType<?> getType() {
+	public MenuType<?> getType() {
 		return ApotheosisObjects.ENCHANTING;
 	}
 

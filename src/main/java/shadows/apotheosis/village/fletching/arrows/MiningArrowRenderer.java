@@ -1,12 +1,12 @@
 package shadows.apotheosis.village.fletching.arrows;
 
 import net.minecraft.client.renderer.entity.ArrowRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.resources.ResourceLocation;
 
 public class MiningArrowRenderer extends ArrowRenderer<MiningArrowEntity> {
 
-	public MiningArrowRenderer(EntityRendererManager renderManagerIn) {
+	public MiningArrowRenderer(Context renderManagerIn) {
 		super(renderManagerIn);
 	}
 

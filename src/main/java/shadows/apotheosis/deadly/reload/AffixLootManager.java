@@ -14,19 +14,19 @@ import org.spongepowered.asm.mixin.Unique;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.AffixHelper;
@@ -42,7 +42,7 @@ import shadows.apotheosis.util.JsonUtil;
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
  */
-public class AffixLootManager extends JsonReloadListener {
+public class AffixLootManager extends SimpleJsonResourceReloadListener {
 
 	public static final Gson GSON = BossArmorManager.GSON;
 
@@ -57,7 +57,7 @@ public class AffixLootManager extends JsonReloadListener {
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> objects, IResourceManager mgr, IProfiler profiler) {
+	protected void apply(Map<ResourceLocation, JsonElement> objects, ResourceManager mgr, ProfilerFiller profiler) {
 		ENTRIES.clear();
 		for (Entry<ResourceLocation, JsonElement> obj : objects.entrySet()) {
 			try {
@@ -70,7 +70,7 @@ public class AffixLootManager extends JsonReloadListener {
 			}
 		}
 		Collections.shuffle(ENTRIES);
-		this.weight = WeightedRandom.getTotalWeight(ENTRIES);
+		this.weight = WeighedRandom.getTotalWeight(ENTRIES);
 		if (this.weight == 0) throw new RuntimeException("The total affix item weight is zero.  This is not supported.");
 		DeadlyModule.LOGGER.info("Loaded {} affix loot entries from resources.", ENTRIES.size());
 	}
@@ -85,7 +85,7 @@ public class AffixLootManager extends JsonReloadListener {
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
 	public static AffixLootEntry getRandomEntry(Random rand) {
-		return WeightedRandom.getRandomItem(rand, ENTRIES, INSTANCE.weight);
+		return WeighedRandom.getRandomItem(rand, ENTRIES, INSTANCE.weight);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class AffixLootManager extends JsonReloadListener {
 	 */
 	public static AffixLootEntry getRandomEntry(Random rand, EquipmentType type) {
 		if (type == null) return getRandomEntry(rand);
-		return WeightedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList()));
+		return WeighedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList()));
 	}
 
 	/**
@@ -105,9 +105,9 @@ public class AffixLootManager extends JsonReloadListener {
 	 * The default equipment type is {@link EquipmentType#TOOL}, so items that do not match will be treated as tools.
 	 */
 	public static ItemStack genLootItem(ItemStack stack, Random rand, EquipmentType type, LootRarity rarity) {
-		ITextComponent name = stack.getHoverName();
+		Component name = stack.getHoverName();
 		if (type == null) {
-			AffixHelper.addLore(stack, new StringTextComponent("ERROR - ATTEMPTED TO GENERATE LOOT ITEM WITH INVALID EQUIPMENT TYPE."));
+			AffixHelper.addLore(stack, new TextComponent("ERROR - ATTEMPTED TO GENERATE LOOT ITEM WITH INVALID EQUIPMENT TYPE."));
 			return stack;
 		}
 		Map<Affix, AffixModifier> affixes = new HashMap<>();
@@ -118,7 +118,7 @@ public class AffixLootManager extends JsonReloadListener {
 		List<Affix> afxList = AffixHelper.getAffixesFor(type);
 		int affixCount = rarity.getAffixes();
 		while (affixes.size() < Math.min(affixCount, afxList.size())) {
-			affixes.put(WeightedRandom.getRandomItem(rand, afxList), rarity == LootRarity.COMMON ? Modifiers.getBadModifier() : null);
+			affixes.put(WeighedRandom.getRandomItem(rand, afxList), rarity == LootRarity.COMMON ? Modifiers.getBadModifier() : null);
 		}
 
 		if (rarity.ordinal() >= LootRarity.EPIC.ordinal()) {
@@ -134,12 +134,12 @@ public class AffixLootManager extends JsonReloadListener {
 		}
 
 		if (rarity.ordinal() >= LootRarity.MYTHIC.ordinal() && DeadlyConfig.mythicUnbreakable) {
-			CompoundNBT tag = stack.getOrCreateTag();
+			CompoundTag tag = stack.getOrCreateTag();
 			tag.putBoolean("Unbreakable", true);
 		}
 
-		Color color = rarity.getColor();
-		stack.setHoverName(new TranslationTextComponent("%s", (((IFormattableTextComponent) name).withStyle(Style.EMPTY)).withStyle(Style.EMPTY.withColor(color))));
+		TextColor color = rarity.getColor();
+		stack.setHoverName(new TranslatableComponent("%s", (((MutableComponent) name).withStyle(Style.EMPTY)).withStyle(Style.EMPTY.withColor(color))));
 		return stack;
 	}
 

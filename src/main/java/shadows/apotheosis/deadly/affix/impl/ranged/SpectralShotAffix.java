@@ -5,14 +5,14 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.RangedAffix;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -32,18 +32,18 @@ public class SpectralShotAffix extends RangedAffix {
 	}
 
 	@Override
-	public void onArrowFired(LivingEntity user, AbstractArrowEntity arrow, ItemStack bow, float level) {
+	public void onArrowFired(LivingEntity user, AbstractArrow arrow, ItemStack bow, float level) {
 		if (user.level.random.nextFloat() <= level) {
 			if (!user.level.isClientSide) {
 				ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
-				AbstractArrowEntity spectralArrow = arrowitem.createArrow(user.level, ItemStack.EMPTY, user);
+				AbstractArrow spectralArrow = arrowitem.createArrow(user.level, ItemStack.EMPTY, user);
 				spectralArrow.shoot(user.xRot, user.yRot, 0.0F, 1 * 3.0F, 1.0F);
 				this.cloneMotion(arrow, spectralArrow);
 				spectralArrow.setCritArrow(arrow.isCritArrow());
 				spectralArrow.setBaseDamage(arrow.getBaseDamage());
 				spectralArrow.setKnockback(arrow.knockback);
 				spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
-				spectralArrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+				spectralArrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 				spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
 				arrow.level.addFreshEntity(spectralArrow);
 			}
@@ -58,16 +58,16 @@ public class SpectralShotAffix extends RangedAffix {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+	public void addInformation(ItemStack stack, float level, Consumer<Component> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level * 100)));
 	}
 
 	@Override
-	public ITextComponent getDisplayName(float level) {
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).withStyle(TextFormatting.GRAY);
+	public Component getDisplayName(float level) {
+		return new TranslatableComponent("affix." + this.getRegistryName() + ".name", fmt(level * 100)).withStyle(ChatFormatting.GRAY);
 	}
 
-	private void cloneMotion(AbstractArrowEntity src, AbstractArrowEntity dest) {
+	private void cloneMotion(AbstractArrow src, AbstractArrow dest) {
 		dest.setDeltaMovement(src.getDeltaMovement().scale(1));
 		dest.yRot = src.yRot;
 		dest.xRot = src.xRot;

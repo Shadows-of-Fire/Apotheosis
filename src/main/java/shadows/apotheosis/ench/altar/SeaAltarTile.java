@@ -4,25 +4,25 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemStackHandler;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
@@ -33,7 +33,7 @@ import shadows.placebo.recipe.VanillaPacketDispatcher;
 import shadows.placebo.util.EnchantmentUtils;
 import shadows.placebo.util.NetworkUtils;
 
-public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
+public class SeaAltarTile extends BlockEntity implements TickableBlockEntity {
 
 	private Random rand = new Random();
 
@@ -67,7 +67,7 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 				for (int i = 0; i < 4; i++)
 					this.inv.setStackInSlot(i, ItemStack.EMPTY);
 				this.markAndNotify();
-				this.level.playSound(null, this.worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1, 1);
+				this.level.playSound(null, this.worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1, 1);
 			}
 		} else {
 			this.findTarget(this.calcProvidedEnchValue());
@@ -92,9 +92,9 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 	}
 
 	public void drainXP() {
-		List<PlayerEntity> nearby = this.level.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(this.worldPosition).inflate(5, 5, 5));
+		List<Player> nearby = this.level.getEntitiesOfClass(Player.class, new AABB(this.worldPosition).inflate(5, 5, 5));
 		boolean removed = false;
-		for (PlayerEntity p : nearby) {
+		for (Player p : nearby) {
 			int maxDrain = (int) Math.ceil(this.targetXP / 200);
 			int removable = Math.min(1 + maxDrain, p.totalExperience);
 			EnchantmentUtils.addPlayerXP(p, -removable);
@@ -104,11 +104,11 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 				removed = true;
 			}
 		}
-		if (this.soundTick++ % 50 == 0) this.level.playSound(null, this.worldPosition, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 1);
+		if (this.soundTick++ % 50 == 0) this.level.playSound(null, this.worldPosition, ApotheosisObjects.ALTAR_SOUND, SoundSource.BLOCKS, 0.5F, 1);
 		if (!removed && this.soundTick % 10 == 0) {
 			for (int i = 0; i < 4; i++) {
 				ParticleMessage msg = new ParticleMessage(ParticleTypes.WITCH, this.worldPosition.getX() + this.offsets[i][0], this.worldPosition.getY() + 0.8, this.worldPosition.getZ() + this.offsets[i][1], 0, 0.1, 0, 1);
-				NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerWorld) this.level, this.worldPosition);
+				NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerLevel) this.level, this.worldPosition);
 			}
 		}
 	}
@@ -125,14 +125,14 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 			}
 		this.rand.setSeed(seed);
 		int half = value / 2;
-		List<EnchantmentData> datas = EnchantmentHelper.selectEnchantment(this.rand, book, value, true);
+		List<EnchantmentInstance> datas = EnchantmentHelper.selectEnchantment(this.rand, book, value, true);
 		while (datas.isEmpty() && value >= half) {
 			datas = EnchantmentHelper.selectEnchantment(this.rand, book, value -= 5, true);
 		}
 		if (!datas.isEmpty()) {
-			for (EnchantmentData d : datas)
+			for (EnchantmentInstance d : datas)
 				EnchantedBookItem.addEnchantment(this.target, d);
-			this.level.playSound(null, this.worldPosition, ApotheosisObjects.ALTAR_SOUND, SoundCategory.BLOCKS, 0.5F, 1);
+			this.level.playSound(null, this.worldPosition, ApotheosisObjects.ALTAR_SOUND, SoundSource.BLOCKS, 0.5F, 1);
 			this.soundTick = 0;
 		} else {
 			this.target = ItemStack.EMPTY;
@@ -140,14 +140,14 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 		}
 	}
 
-	public void trySpawnParticles(PlayerEntity player, int xpDrain) {
-		Vector3d to = new Vector3d(player.getX() - (this.worldPosition.getX() + 0.5), player.getY() - this.worldPosition.getY(), player.getZ() - (this.worldPosition.getZ() + 0.5));
+	public void trySpawnParticles(Player player, int xpDrain) {
+		Vec3 to = new Vec3(player.getX() - (this.worldPosition.getX() + 0.5), player.getY() - this.worldPosition.getY(), player.getZ() - (this.worldPosition.getZ() + 0.5));
 		ParticleMessage msg = new ParticleMessage(ParticleTypes.ENCHANT, this.worldPosition.getX() + this.level.random.nextDouble(), this.worldPosition.getY() + 1 + this.level.random.nextDouble(), this.worldPosition.getZ() + this.level.random.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
-		NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerWorld) this.level, this.worldPosition);
+		NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerLevel) this.level, this.worldPosition);
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT tag) {
+	public CompoundTag save(CompoundTag tag) {
 		tag.put("inv", this.inv.serializeNBT());
 		tag.putFloat("xp", this.xpDrained);
 		tag.put("target", this.target.serializeNBT());
@@ -156,7 +156,7 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT tag) {
+	public void load(BlockState state, CompoundTag tag) {
 		super.load(state, tag);
 		this.inv.deserializeNBT(tag.getCompound("inv"));
 		this.xpDrained = tag.getFloat("xp");
@@ -165,25 +165,25 @@ public class SeaAltarTile extends TileEntity implements ITickableTileEntity {
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT tag = super.getUpdateTag();
+	public CompoundTag getUpdateTag() {
+		CompoundTag tag = super.getUpdateTag();
 		tag.put("inv", this.inv.serializeNBT());
 		return tag;
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+	public void handleUpdateTag(BlockState state, CompoundTag tag) {
 		super.handleUpdateTag(state, tag);
 		this.inv.deserializeNBT(tag.getCompound("inv"));
 	}
 
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.worldPosition, -1, this.getUpdateTag());
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return new ClientboundBlockEntityDataPacket(this.worldPosition, -1, this.getUpdateTag());
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		this.handleUpdateTag(this.getBlockState(), pkt.getTag());
 	}
 

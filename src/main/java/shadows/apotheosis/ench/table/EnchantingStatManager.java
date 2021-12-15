@@ -10,30 +10,31 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.NetworkEvent.Context;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.IRegistryDelegate;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.objects.IEnchantingBlock;
 import shadows.apotheosis.util.JsonUtil;
-import shadows.placebo.util.NetworkUtils;
-import shadows.placebo.util.NetworkUtils.MessageProvider;
+import shadows.placebo.network.MessageHelper;
+import shadows.placebo.network.MessageProvider;
+import shadows.placebo.network.PacketDistro;
 
-public class EnchantingStatManager extends JsonReloadListener {
+public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	public static final EnchantingStatManager INSTANCE = new EnchantingStatManager();
@@ -46,7 +47,7 @@ public class EnchantingStatManager extends JsonReloadListener {
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> objects, IResourceManager mgr, IProfiler profile) {
+	protected void apply(Map<ResourceLocation, JsonElement> objects, ResourceManager mgr, ProfilerFiller profile) {
 		this.stats.clear();
 		objects.forEach((key, ele) -> {
 			try {
@@ -66,27 +67,27 @@ public class EnchantingStatManager extends JsonReloadListener {
 		this.absoluteMaxEterna = this.computeAbsoluteMaxEterna();
 	}
 
-	public static float getEterna(BlockState state, World world, BlockPos pos) {
+	public static float getEterna(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
 		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).eterna;
 		return state.getEnchantPowerBonus(world, pos);
 	}
 
-	public static float getMaxEterna(BlockState state, World world, BlockPos pos) {
+	public static float getMaxEterna(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
 		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).maxEterna;
 		if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getMaxEnchantingPower(state, world, pos);
 		return 15;
 	}
 
-	public static float getQuanta(BlockState state, World world, BlockPos pos) {
+	public static float getQuanta(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
 		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).quanta;
 		else if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getQuantaBonus(state, world, pos);
 		return 0;
 	}
 
-	public static float getArcana(BlockState state, World world, BlockPos pos) {
+	public static float getArcana(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
 		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).arcana;
 		else if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getArcanaBonus(state, world, pos);
@@ -101,8 +102,8 @@ public class EnchantingStatManager extends JsonReloadListener {
 		return stats.values().stream().max(Comparator.comparingDouble(s -> s.maxEterna)).get().maxEterna;
 	}
 
-	public static void dispatch(PlayerEntity player) {
-		NetworkUtils.sendTo(Apotheosis.CHANNEL, new StatSyncMessage(INSTANCE.stats), player);
+	public static void dispatch(Player player) {
+		PacketDistro.sendTo(Apotheosis.CHANNEL, new StatSyncMessage(INSTANCE.stats), player);
 	}
 
 	public static class Stats {
@@ -116,7 +117,7 @@ public class EnchantingStatManager extends JsonReloadListener {
 		}
 	}
 
-	public static class StatSyncMessage extends MessageProvider<StatSyncMessage> {
+	public static class StatSyncMessage implements MessageProvider<StatSyncMessage> {
 
 		final Map<IRegistryDelegate<Block>, Stats> stats;
 
@@ -129,7 +130,7 @@ public class EnchantingStatManager extends JsonReloadListener {
 		}
 
 		@Override
-		public void write(StatSyncMessage msg, PacketBuffer buf) {
+		public void write(StatSyncMessage msg, FriendlyByteBuf buf) {
 			buf.writeShort(msg.stats.size());
 			for (Map.Entry<IRegistryDelegate<Block>, Stats> e : msg.stats.entrySet()) {
 				buf.writeInt(((ForgeRegistry<Block>) ForgeRegistries.BLOCKS).getID(e.getKey().get()));
@@ -142,7 +143,7 @@ public class EnchantingStatManager extends JsonReloadListener {
 		}
 
 		@Override
-		public StatSyncMessage read(PacketBuffer buf) {
+		public StatSyncMessage read(FriendlyByteBuf buf) {
 			int size = buf.readShort();
 			StatSyncMessage pkt = new StatSyncMessage();
 			for (int i = 0; i < size; i++) {
@@ -155,10 +156,10 @@ public class EnchantingStatManager extends JsonReloadListener {
 
 		@Override
 		public void handle(StatSyncMessage msg, Supplier<Context> ctx) {
-			NetworkUtils.handlePacket(() -> () -> {
+			MessageHelper.handlePacket(() -> () -> {
 				INSTANCE.stats.clear();
 				INSTANCE.stats.putAll(msg.stats);
-			}, ctx.get());
+			}, ctx);
 		}
 
 	}

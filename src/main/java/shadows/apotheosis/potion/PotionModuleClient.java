@@ -1,7 +1,7 @@
 package shadows.apotheosis.potion;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import shadows.apotheosis.ApotheosisObjects;

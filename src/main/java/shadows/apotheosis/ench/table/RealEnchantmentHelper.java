@@ -8,13 +8,13 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Util;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.Util;
+import net.minecraft.util.Mth;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.ench.table.ApothEnchantContainer.Arcana;
 
@@ -35,7 +35,7 @@ public class RealEnchantmentHelper {
 		if (num == 2) return level;
 		float lowBound = Math.min(0.85F, 0.6F - 0.4F * (1 - num) + ench / 200F);
 		float highBound = Math.min(0.95F, 0.8F - 0.4F * (1 - num) + ench / 200F);
-		return (int) (level * MathHelper.nextFloat(rand, lowBound, highBound));
+		return (int) (level * Mth.nextFloat(rand, lowBound, highBound));
 	}
 
 	/**
@@ -48,31 +48,31 @@ public class RealEnchantmentHelper {
 	 * @param treasure If treasure enchantments can show up.
 	 * @return A list of enchantments based on the seed, item, and eterna/quanta/arcana levels.
 	 */
-	public static List<EnchantmentData> buildEnchantmentList(Random rand, ItemStack stack, int power, float quanta, float arcanaLevel, boolean treasure) {
-		List<EnchantmentData> chosenEnchants = Lists.newArrayList();
+	public static List<EnchantmentInstance> buildEnchantmentList(Random rand, ItemStack stack, int power, float quanta, float arcanaLevel, boolean treasure) {
+		List<EnchantmentInstance> chosenEnchants = Lists.newArrayList();
 		int enchantability = stack.getItemEnchantability();
 		if (enchantability <= 0) {
 			return chosenEnchants;
 		} else {
 			power = power + rand.nextInt(Math.max(enchantability / 2, 1));
-			float factor = MathHelper.nextFloat(rand, -1F, 1F) * quanta / 10;
-			power = MathHelper.clamp(Math.round(power + power * factor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
+			float factor = Mth.nextFloat(rand, -1F, 1F) * quanta / 10;
+			power = Mth.clamp(Math.round(power + power * factor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
 			Arcana arcana = Arcana.getForThreshold(arcanaLevel);
-			List<EnchantmentData> allEnchants = getEnchantmentDatas(power, stack, treasure);
+			List<EnchantmentInstance> allEnchants = getEnchantmentDatas(power, stack, treasure);
 			Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
 			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment));
 			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
 			if (!possibleEnchants.isEmpty()) {
-				chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
+				chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
 				removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 
 				if (arcanaLevel >= 2.5F && !possibleEnchants.isEmpty()) {
-					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
+					chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
 					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 				}
 
 				if (arcanaLevel >= 7.5F && !possibleEnchants.isEmpty()) {
-					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
+					chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
 				}
 
 				while (arcanaLevel + rand.nextInt(50) <= power) {
@@ -81,7 +81,7 @@ public class RealEnchantmentHelper {
 						break;
 					}
 
-					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
+					chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
 					power /= 2;
 				}
 			}
@@ -93,7 +93,7 @@ public class RealEnchantmentHelper {
 	/**
 	 * Removes all enchantments from the list that are incompatible with the passed enchantment.
 	 */
-	public static void removeIncompatible(List<ArcanaEnchantmentData> list, EnchantmentData data) {
+	public static void removeIncompatible(List<ArcanaEnchantmentData> list, EnchantmentInstance data) {
 		Iterator<ArcanaEnchantmentData> iterator = list.iterator();
 
 		while (iterator.hasNext()) {
@@ -107,14 +107,14 @@ public class RealEnchantmentHelper {
 	/**
 	 * Gets all enchantments that can be applied to the given item at the respective power level.
 	 */
-	public static List<EnchantmentData> getEnchantmentDatas(int power, ItemStack stack, boolean treasure) {
+	public static List<EnchantmentInstance> getEnchantmentDatas(int power, ItemStack stack, boolean treasure) {
 		return EnchHooks.getEnchantmentDatas(power, stack, treasure);
 	}
 
-	private static class ArcanaEnchantmentData extends WeightedRandom.Item {
-		EnchantmentData data;
+	private static class ArcanaEnchantmentData extends WeighedRandom.WeighedRandomItem {
+		EnchantmentInstance data;
 
-		private ArcanaEnchantmentData(Arcana arcana, EnchantmentData data) {
+		private ArcanaEnchantmentData(Arcana arcana, EnchantmentInstance data) {
 			super(arcana.getRarities()[data.enchantment.getRarity().ordinal()]);
 			this.data = data;
 		}

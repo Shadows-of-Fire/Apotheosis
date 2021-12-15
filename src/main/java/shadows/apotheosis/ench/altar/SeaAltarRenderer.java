@@ -1,31 +1,31 @@
 package shadows.apotheosis.ench.altar;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.settings.PointOfView;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.item.ItemStack;
 
 @SuppressWarnings("deprecation")
-public class SeaAltarRenderer extends TileEntityRenderer<SeaAltarTile> {
+public class SeaAltarRenderer extends BlockEntityRenderer<SeaAltarTile> {
 
-	public SeaAltarRenderer(TileEntityRendererDispatcher terd) {
+	public SeaAltarRenderer(BlockEntityRenderDispatcher terd) {
 		super(terd);
 	}
 
 	@Override
-	public void render(SeaAltarTile te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buf, int combinedLightIn, int combinedOverlayIn) {
+	public void render(SeaAltarTile te, float partialTicks, PoseStack matrix, MultiBufferSource buf, int combinedLightIn, int combinedOverlayIn) {
 		if (this.renderer.camera != null && te.getBlockPos().distSqr(this.renderer.camera.getPosition().x, this.renderer.camera.getPosition().y, this.renderer.camera.getPosition().z, true) < 128d) {
 
 			matrix.pushPose();
-			boolean thirdPerson = Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() == PointOfView.THIRD_PERSON_FRONT;
+			boolean thirdPerson = Minecraft.getInstance().getEntityRenderDispatcher().options.getCameraType() == CameraType.THIRD_PERSON_FRONT;
 			float viewerYaw = Minecraft.getInstance().cameraEntity.getViewYRot(partialTicks);
 			float angleRotateItem = !thirdPerson ? -viewerYaw : -viewerYaw % 360 + 180;
 

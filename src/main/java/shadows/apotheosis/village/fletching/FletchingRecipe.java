@@ -6,23 +6,23 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.village.VillageModule;
 
-public class FletchingRecipe implements IRecipe<CraftingInventory> {
+public class FletchingRecipe implements Recipe<CraftingContainer> {
 
 	protected final ResourceLocation id;
 	protected final ItemStack output;
@@ -37,7 +37,7 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World world) {
+	public boolean matches(CraftingContainer inv, Level world) {
 		for (int i = 0; i < 3; i++) {
 			if (!this.inputs.get(i).test(inv.getItem(i))) return false;
 		}
@@ -45,7 +45,7 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv) {
+	public ItemStack assemble(CraftingContainer inv) {
 		return this.output.copy();
 	}
 
@@ -65,12 +65,12 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return VillageModule.FLETCHING_SERIALIZER;
 	}
 
 	@Override
-	public IRecipeType<?> getType() {
+	public RecipeType<?> getType() {
 		return VillageModule.FLETCHING;
 	}
 
@@ -78,18 +78,18 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 		return this.inputs;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<FletchingRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<FletchingRecipe> {
 		public static final ResourceLocation NAME = new ResourceLocation(Apotheosis.MODID, "fletching");
 
 		@Override
 		public FletchingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getAsJsonArray(json, "ingredients"));
+			NonNullList<Ingredient> nonnulllist = readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
 			if (nonnulllist.isEmpty()) {
 				throw new JsonParseException("No ingredients for fletching recipe");
 			} else if (nonnulllist.size() > 3) {
 				throw new JsonParseException("Too many ingredients for fletching recipe, max 3");
 			} else {
-				ItemStack itemstack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
+				ItemStack itemstack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
 				return new FletchingRecipe(recipeId, itemstack, nonnulllist);
 			}
 		}
@@ -108,7 +108,7 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 		}
 
 		@Override
-		public FletchingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public FletchingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			NonNullList<Ingredient> nonnulllist = NonNullList.withSize(3, Ingredient.EMPTY);
 			for (int j = 0; j < nonnulllist.size(); ++j) {
 				nonnulllist.set(j, Ingredient.fromNetwork(buffer));
@@ -118,7 +118,7 @@ public class FletchingRecipe implements IRecipe<CraftingInventory> {
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, FletchingRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, FletchingRecipe recipe) {
 			for (Ingredient ingredient : recipe.inputs) {
 				ingredient.toNetwork(buffer);
 			}

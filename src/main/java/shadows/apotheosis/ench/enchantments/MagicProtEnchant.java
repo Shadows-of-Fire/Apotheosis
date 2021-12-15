@@ -1,18 +1,18 @@
 package shadows.apotheosis.ench.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
 import shadows.apotheosis.ench.EnchModule;
 
 public class MagicProtEnchant extends Enchantment {
 
 	public MagicProtEnchant() {
-		super(Rarity.UNCOMMON, EnchantmentType.ARMOR, EnchModule.ARMOR);
+		super(Rarity.UNCOMMON, EnchantmentCategory.ARMOR, EnchModule.ARMOR);
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class MagicProtEnchant extends Enchantment {
 	}
 
 	@Override
-	public ITextComponent getFullname(int level) {
-		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_PURPLE);
+	public Component getFullname(int level) {
+		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_PURPLE);
 	}
 
 	@Override

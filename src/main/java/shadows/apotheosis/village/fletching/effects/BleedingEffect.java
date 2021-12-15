@@ -1,17 +1,17 @@
 package shadows.apotheosis.village.fletching.effects;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 import shadows.apotheosis.Apotheosis;
 
-public class BleedingEffect extends Effect {
+public class BleedingEffect extends MobEffect {
 
 	public static final DamageSource BLEEDING = new DamageSource(Apotheosis.MODID + ".bleeding").bypassArmor();
 
 	public BleedingEffect() {
-		super(EffectType.HARMFUL, 0x8B0000);
+		super(MobEffectCategory.HARMFUL, 0x8B0000);
 	}
 
 	@Override

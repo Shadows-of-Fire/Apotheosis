@@ -1,8 +1,8 @@
 package shadows.apotheosis.spawn.modifiers;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 public class MaxDelayModifier extends SpawnerModifier {
@@ -19,7 +19,7 @@ public class MaxDelayModifier extends SpawnerModifier {
 	@Override
 	public boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
 		int modify = inverting ? -this.value : this.value;
-		spawner.spawner.maxSpawnDelay = MathHelper.clamp(spawner.spawner.maxSpawnDelay + modify, this.min, this.max);
+		spawner.spawner.maxSpawnDelay = Mth.clamp(spawner.spawner.maxSpawnDelay + modify, this.min, this.max);
 		return true;
 	}
 

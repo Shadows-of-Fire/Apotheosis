@@ -2,15 +2,15 @@ package shadows.apotheosis.deadly.affix.impl.ranged;
 
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.HitResult.Type;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -37,11 +37,11 @@ public class SnareHitAffix extends Affix {
 	}
 
 	@Override
-	public void onArrowImpact(AbstractArrowEntity arrow, RayTraceResult res, Type type, float level) {
+	public void onArrowImpact(AbstractArrow arrow, HitResult res, Type type, float level) {
 		if (type == Type.ENTITY) {
-			Entity hit = ((EntityRayTraceResult) res).getEntity();
+			Entity hit = ((EntityHitResult) res).getEntity();
 			if (hit instanceof LivingEntity) {
-				((LivingEntity) hit).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 20 * (int) level, 10));
+				((LivingEntity) hit).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * (int) level, 10));
 			}
 		}
 	}

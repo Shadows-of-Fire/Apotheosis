@@ -2,11 +2,11 @@ package shadows.apotheosis.deadly.affix.impl.shield;
 
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -51,8 +51,8 @@ public class DisengageAffix extends Affix {
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
 		Entity tSource = source.getEntity();
 		if (tSource != null && tSource.distanceToSqr(entity) <= 9) {
-			Vector3d look = entity.getLookAngle();
-			entity.setDeltaMovement(new Vector3d(1 * -look.x, 0.25, 1 * -look.z));
+			Vec3 look = entity.getLookAngle();
+			entity.setDeltaMovement(new Vec3(1 * -look.x, 0.25, 1 * -look.z));
 			entity.hurtMarked = true;
 			entity.setOnGround(false);
 		}

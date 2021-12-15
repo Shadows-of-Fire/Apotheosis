@@ -4,25 +4,24 @@ import javax.annotation.Nullable;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.FallingBlockEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import shadows.apotheosis.util.INBTSensitiveFallingBlock;
 
 @Mixin(FallingBlockEntity.class)
 public abstract class MixinFallingBlockEntity extends Entity {
 
-	public MixinFallingBlockEntity(EntityType<?> pType, World pLevel) {
+	public MixinFallingBlockEntity(EntityType<?> pType, Level pLevel) {
 		super(pType, pLevel);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Nullable
 	@Override
-	public ItemEntity spawnAtLocation(IItemProvider pItem) {
+	public ItemEntity spawnAtLocation(ItemLike pItem) {
 		if (pItem instanceof INBTSensitiveFallingBlock) {
 			return ths().spawnAtLocation(((INBTSensitiveFallingBlock) pItem).toStack(ths().getBlockState(), ths().blockData), 0F);
 		}

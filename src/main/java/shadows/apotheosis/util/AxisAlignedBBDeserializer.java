@@ -8,16 +8,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.phys.AABB;
 
-public class AxisAlignedBBDeserializer implements JsonDeserializer<AxisAlignedBB> {
+public class AxisAlignedBBDeserializer implements JsonDeserializer<AABB> {
 
 	@Override
-	public AxisAlignedBB deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+	public AABB deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		JsonObject obj = json.getAsJsonObject();
 		float width = obj.get("width").getAsFloat();
 		float height = obj.get("height").getAsFloat();
-		return new AxisAlignedBB(0, 0, 0, width, height, width);
+		return new AABB(0, 0, 0, width, height, width);
 	}
 
 }

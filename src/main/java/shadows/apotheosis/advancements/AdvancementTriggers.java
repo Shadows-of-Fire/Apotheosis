@@ -1,7 +1,7 @@
 package shadows.apotheosis.advancements;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class AdvancementTriggers {
 

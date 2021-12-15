@@ -5,21 +5,21 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.RabbitEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionBrewing;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -117,39 +117,39 @@ public class PotionModule {
 	public void types(Register<Potion> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new Potion("resistance", new EffectInstance(Effects.DAMAGE_RESISTANCE, 3600)).setRegistryName(Apotheosis.MODID, "resistance"),
-				new Potion("resistance", new EffectInstance(Effects.DAMAGE_RESISTANCE, 9600)).setRegistryName(Apotheosis.MODID, "long_resistance"),
-				new Potion("resistance", new EffectInstance(Effects.DAMAGE_RESISTANCE, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_resistance"),
-				new Potion("absorption", new EffectInstance(Effects.ABSORPTION, 1200, 1)).setRegistryName(Apotheosis.MODID, "absorption"),
-				new Potion("absorption", new EffectInstance(Effects.ABSORPTION, 3600, 1)).setRegistryName(Apotheosis.MODID, "long_absorption"),
-				new Potion("absorption", new EffectInstance(Effects.ABSORPTION, 600, 3)).setRegistryName(Apotheosis.MODID, "strong_absorption"),
-				new Potion("haste", new EffectInstance(Effects.DIG_SPEED, 3600)).setRegistryName(Apotheosis.MODID, "haste"),
-				new Potion("haste", new EffectInstance(Effects.DIG_SPEED, 9600)).setRegistryName(Apotheosis.MODID, "long_haste"),
-				new Potion("haste", new EffectInstance(Effects.DIG_SPEED, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_haste"),
-				new Potion("fatigue", new EffectInstance(Effects.DIG_SLOWDOWN, 3600)).setRegistryName(Apotheosis.MODID, "fatigue"),
-				new Potion("fatigue", new EffectInstance(Effects.DIG_SLOWDOWN, 9600)).setRegistryName(Apotheosis.MODID, "long_fatigue"),
-				new Potion("fatigue", new EffectInstance(Effects.DIG_SLOWDOWN, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_fatigue"),
-				new Potion("wither", new EffectInstance(Effects.WITHER, 3600)).setRegistryName(Apotheosis.MODID, "wither"),
-				new Potion("wither", new EffectInstance(Effects.WITHER, 9600)).setRegistryName(Apotheosis.MODID, "long_wither"),
-				new Potion("wither", new EffectInstance(Effects.WITHER, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_wither"),
-				new Potion("sundering", new EffectInstance(ApotheosisObjects.SUNDERING, 3600)).setRegistryName(Apotheosis.MODID, "sundering"),
-				new Potion("sundering", new EffectInstance(ApotheosisObjects.SUNDERING, 9600)).setRegistryName(Apotheosis.MODID, "long_sundering"),
-				new Potion("sundering", new EffectInstance(ApotheosisObjects.SUNDERING, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_sundering"),
-				new Potion("knowledge", new EffectInstance(ApotheosisObjects.P_KNOWLEDGE, 2400)).setRegistryName(Apotheosis.MODID, "knowledge"),
-				new Potion("knowledge", new EffectInstance(ApotheosisObjects.P_KNOWLEDGE, 4800)).setRegistryName(Apotheosis.MODID, "long_knowledge"),
-				new Potion("knowledge", new EffectInstance(ApotheosisObjects.P_KNOWLEDGE, 1200, 1)).setRegistryName(Apotheosis.MODID, "strong_knowledge"));
+				new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3600)).setRegistryName(Apotheosis.MODID, "resistance"),
+				new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 9600)).setRegistryName(Apotheosis.MODID, "long_resistance"),
+				new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_resistance"),
+				new Potion("absorption", new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1)).setRegistryName(Apotheosis.MODID, "absorption"),
+				new Potion("absorption", new MobEffectInstance(MobEffects.ABSORPTION, 3600, 1)).setRegistryName(Apotheosis.MODID, "long_absorption"),
+				new Potion("absorption", new MobEffectInstance(MobEffects.ABSORPTION, 600, 3)).setRegistryName(Apotheosis.MODID, "strong_absorption"),
+				new Potion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600)).setRegistryName(Apotheosis.MODID, "haste"),
+				new Potion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600)).setRegistryName(Apotheosis.MODID, "long_haste"),
+				new Potion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_haste"),
+				new Potion("fatigue", new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 3600)).setRegistryName(Apotheosis.MODID, "fatigue"),
+				new Potion("fatigue", new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 9600)).setRegistryName(Apotheosis.MODID, "long_fatigue"),
+				new Potion("fatigue", new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_fatigue"),
+				new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 3600)).setRegistryName(Apotheosis.MODID, "wither"),
+				new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 9600)).setRegistryName(Apotheosis.MODID, "long_wither"),
+				new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_wither"),
+				new Potion("sundering", new MobEffectInstance(ApotheosisObjects.SUNDERING, 3600)).setRegistryName(Apotheosis.MODID, "sundering"),
+				new Potion("sundering", new MobEffectInstance(ApotheosisObjects.SUNDERING, 9600)).setRegistryName(Apotheosis.MODID, "long_sundering"),
+				new Potion("sundering", new MobEffectInstance(ApotheosisObjects.SUNDERING, 1800, 1)).setRegistryName(Apotheosis.MODID, "strong_sundering"),
+				new Potion("knowledge", new MobEffectInstance(ApotheosisObjects.P_KNOWLEDGE, 2400)).setRegistryName(Apotheosis.MODID, "knowledge"),
+				new Potion("knowledge", new MobEffectInstance(ApotheosisObjects.P_KNOWLEDGE, 4800)).setRegistryName(Apotheosis.MODID, "long_knowledge"),
+				new Potion("knowledge", new MobEffectInstance(ApotheosisObjects.P_KNOWLEDGE, 1200, 1)).setRegistryName(Apotheosis.MODID, "strong_knowledge"));
 		//Formatter::on
 	}
 
 	@SubscribeEvent
-	public void potions(Register<Effect> e) {
+	public void potions(Register<MobEffect> e) {
 		e.getRegistry().register(new PotionSundering().setRegistryName(Apotheosis.MODID, "sundering"));
 		e.getRegistry().register(new KnowledgeEffect().setRegistryName(Apotheosis.MODID, "knowledge"));
 		ObjectHolderRegistry.applyObjectHolders(r -> r.getNamespace().equals(Apotheosis.MODID) && (r.getPath().equals("sundering") || r.getPath().equals("knowledge")));
 	}
 
 	@SubscribeEvent
-	public void serializers(Register<IRecipeSerializer<?>> e) {
+	public void serializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(PotionCharmRecipe.Serializer.INSTANCE.setRegistryName(ApotheosisObjects.POTION_CHARM.getRegistryName()));
 	}
 
@@ -159,8 +159,8 @@ public class PotionModule {
 	}
 
 	public void drops(LivingDropsEvent e) {
-		if (e.getEntityLiving() instanceof RabbitEntity) {
-			RabbitEntity rabbit = (RabbitEntity) e.getEntityLiving();
+		if (e.getEntityLiving() instanceof Rabbit) {
+			Rabbit rabbit = (Rabbit) e.getEntityLiving();
 			if (rabbit.level.random.nextFloat() < 0.03F + 0.03F * e.getLootingLevel()) {
 				e.getDrops().clear();
 				e.getDrops().add(new ItemEntity(rabbit.level, rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(ApotheosisObjects.LUCKY_FOOT)));

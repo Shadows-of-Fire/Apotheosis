@@ -6,45 +6,44 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.FallingBlockEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.advancements.AdvancementTriggers;
@@ -58,7 +57,7 @@ import shadows.apotheosis.util.INBTSensitiveFallingBlock;
 public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingBlock {
 
 	public ApothAnvilBlock() {
-		super(AbstractBlock.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
+		super(BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
 	}
 
 	@Override
@@ -67,12 +66,12 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 		return new AnvilTile();
 	}
 
 	@Override
-	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
 		ItemStack anvil = new ItemStack(this);
 		if (te instanceof AnvilTile) {
 			Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
@@ -84,8 +83,8 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	}
 
 	@Override
-	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		TileEntity te = world.getBlockEntity(pos);
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		BlockEntity te = world.getBlockEntity(pos);
 		if (te instanceof AnvilTile) {
 			((AnvilTile) te).getEnchantments().putAll(EnchantmentHelper.getEnchantments(stack));
 		}
@@ -97,9 +96,9 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		ItemStack anvil = new ItemStack(this);
-		TileEntity te = world.getBlockEntity(pos);
+		BlockEntity te = world.getBlockEntity(pos);
 		if (te instanceof AnvilTile) {
 			Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
 			ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
@@ -110,12 +109,12 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, IBlockReader world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		if (!stack.hasFoil()) tooltip.add(new TranslationTextComponent("info.apotheosis.anvil").withStyle(TextFormatting.GRAY));
+	public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
+		if (!stack.hasFoil()) tooltip.add(new TranslatableComponent("info.apotheosis.anvil").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
-	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!ApotheosisObjects.ANVIL.isValid(newState.getBlock())) {
 			world.removeBlockEntity(pos);
 		}
@@ -124,17 +123,17 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	@Override
 	protected void falling(FallingBlockEntity e) {
 		super.falling(e);
-		TileEntity te = e.level.getBlockEntity(new BlockPos(e.position()));
-		e.blockData = new CompoundNBT();
+		BlockEntity te = e.level.getBlockEntity(new BlockPos(e.position()));
+		e.blockData = new CompoundTag();
 		if (te instanceof AnvilTile) {
 			te.save(e.blockData);
 		}
 	}
 
 	@Override
-	public void onLand(World world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil) {
+	public void onLand(Level world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil) {
 		super.onLand(world, pos, fallState, hitState, anvil);
-		List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pos, pos.offset(1, 1, 1)));
+		List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
 		if (anvil.blockData == null) return;
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(anvil.blockData.getList("enchantments", Constants.NBT.TAG_COMPOUND));
 		int oblit = enchantments.getOrDefault(ApotheosisObjects.OBLITERATION, 0);
@@ -143,7 +142,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 		if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
 			ItemStack stack = entity.getItem();
 			if (stack.getItem() == Items.ENCHANTED_BOOK) {
-				ListNBT enchants = EnchantedBookItem.getEnchantments(stack);
+				ListTag enchants = EnchantedBookItem.getEnchantments(stack);
 				boolean handled = false;
 				if (enchants.size() == 1 && oblit > 0) {
 					handled = this.handleObliteration(world, pos, oblit, entity, enchants);
@@ -182,25 +181,25 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 		}
 	}
 
-	protected boolean handleSplitting(World world, BlockPos pos, int split, ItemEntity entity, ListNBT enchants) {
+	protected boolean handleSplitting(Level world, BlockPos pos, int split, ItemEntity entity, ListTag enchants) {
 		if (world.random.nextFloat() < 0.2F * split) {
 			entity.remove();
-			for (INBT nbt : enchants) {
-				CompoundNBT tag = (CompoundNBT) nbt;
+			for (Tag nbt : enchants) {
+				CompoundTag tag = (CompoundTag) nbt;
 				int level = tag.getInt("lvl");
 				Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(tag.getString("id")));
 				if (enchant == null) continue;
-				ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentData(enchant, level));
+				ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
 				Block.popResource(world, pos.above(), book);
 			}
-			world.getEntitiesOfClass(ServerPlayerEntity.class, new AxisAlignedBB(pos).inflate(5, 5, 5), EntityPredicates.NO_SPECTATORS).forEach(p -> {
+			world.getEntitiesOfClass(ServerPlayer.class, new AABB(pos).inflate(5, 5, 5), EntitySelector.NO_SPECTATORS).forEach(p -> {
 				AdvancementTriggers.SPLIT_BOOK.trigger(p.getAdvancements());
 			});
 		}
 		return true;
 	}
 
-	protected boolean handleSplitting(World world, BlockPos pos, int split, ItemEntity entity, Map<Affix, Float> affixes) {
+	protected boolean handleSplitting(Level world, BlockPos pos, int split, ItemEntity entity, Map<Affix, Float> affixes) {
 		if (world.random.nextFloat() < 0.2F * split) {
 			entity.remove();
 			for (Map.Entry<Affix, Float> e : affixes.entrySet()) {
@@ -208,21 +207,21 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 				AffixHelper.applyAffix(book, e.getKey(), e.getValue());
 				Block.popResource(world, pos.above(), book);
 			}
-			world.getEntitiesOfClass(ServerPlayerEntity.class, new AxisAlignedBB(pos).inflate(5, 5, 5), EntityPredicates.NO_SPECTATORS).forEach(p -> {
+			world.getEntitiesOfClass(ServerPlayer.class, new AABB(pos).inflate(5, 5, 5), EntitySelector.NO_SPECTATORS).forEach(p -> {
 				AdvancementTriggers.SPLIT_BOOK.trigger(p.getAdvancements());
 			});
 		}
 		return true;
 	}
 
-	protected boolean handleObliteration(World world, BlockPos pos, int oblit, ItemEntity entity, ListNBT enchants) {
+	protected boolean handleObliteration(Level world, BlockPos pos, int oblit, ItemEntity entity, ListTag enchants) {
 		if (world.random.nextFloat() < 0.2F * oblit) {
-			CompoundNBT nbt = enchants.getCompound(0);
+			CompoundTag nbt = enchants.getCompound(0);
 			int level = nbt.getInt("lvl") - 1;
 			if (level <= 0) return false;
 			Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(nbt.getString("id")));
 			if (enchant == null) return false;
-			ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentData(enchant, level));
+			ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
 			entity.remove();
 			Block.popResource(world, pos.above(), book);
 			Block.popResource(world, pos.above(), book.copy());
@@ -230,7 +229,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 		return true;
 	}
 
-	protected boolean handleObliteration(World world, BlockPos pos, int oblit, ItemEntity entity, Map<Affix, Float> affixes) {
+	protected boolean handleObliteration(Level world, BlockPos pos, int oblit, ItemEntity entity, Map<Affix, Float> affixes) {
 		if (world.random.nextFloat() < 0.2F * oblit) {
 			Map.Entry<Affix, Float> affix = affixes.entrySet().stream().findFirst().get();
 			ItemStack book = new ItemStack(DeadlyModule.RARITY_TOMES.get(LootRarity.COMMON));
@@ -245,7 +244,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	}
 
 	@Override
-	public ItemStack toStack(BlockState state, CompoundNBT tag) {
+	public ItemStack toStack(BlockState state, CompoundTag tag) {
 		ItemStack anvil = new ItemStack(this);
 		Map<Enchantment, Integer> ench = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
 		ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));

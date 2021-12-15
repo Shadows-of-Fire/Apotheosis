@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.apotheosis.Apotheosis;
@@ -30,18 +30,18 @@ public class MiningArrowItem extends ArrowItem implements IApothArrowItem {
 	}
 
 	@Override
-	public AbstractArrowEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
+	public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
 		return new MiningArrowEntity(shooter, world, new ItemStack(this.breakerItem.get()), this.arrowType);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new TranslationTextComponent("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(TextFormatting.GOLD));
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+		tooltip.add(new TranslatableComponent("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
 	}
 
 	@Override
-	public AbstractArrowEntity fromDispenser(World world, double x, double y, double z) {
+	public AbstractArrow fromDispenser(Level world, double x, double y, double z) {
 		return new MiningArrowEntity(world, x, y, z, new ItemStack(this.breakerItem.get()), this.arrowType);
 	}
 

@@ -10,18 +10,18 @@ import com.google.gson.JsonObject;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -42,7 +42,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	private static NonNullList<Ingredient> makeIngredients(List<Object> ingredients) {
 		List<ItemStack> potionStacks = new ArrayList<>();
 		List<Object> realIngredients = new ArrayList<>();
-		for (Potion p : ForgeRegistries.POTION_TYPES) {
+		for (Potion p : ForgeRegistries.POTIONS) {
 			if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
 			ItemStack potion = new ItemStack(Items.POTION);
 			PotionUtils.setPotion(potion, p);
@@ -59,16 +59,16 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv) {
+	public ItemStack assemble(CraftingContainer inv) {
 		ItemStack out = super.assemble(inv);
 		PotionUtils.setPotion(out, PotionUtils.getPotion(inv.getItem(4)));
 		return out;
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World world) {
+	public boolean matches(CraftingContainer inv, Level world) {
 		if (super.matches(inv, world)) {
-			List<Potion> potions = this.potionSlots.stream().map(s -> inv.getItem(s)).map(PotionUtils::getPotion).collect(Collectors.toList());
+			List<Potion> potions = this.potionSlots.intStream().mapToObj(s -> inv.getItem(s)).map(PotionUtils::getPotion).collect(Collectors.toList());
 			if (potions.size() > 0 && potions.stream().allMatch(p -> p != null && p.getEffects().size() == 1 && !p.getEffects().get(0).getEffect().isInstantenous())) {
 				return potions.stream().distinct().count() == 1;
 			}
@@ -77,11 +77,11 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return Serializer.INSTANCE;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<PotionCharmRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<PotionCharmRecipe> {
 
 		public static final Serializer INSTANCE = new Serializer();
 
@@ -102,7 +102,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		}
 
 		@Override
-		public PotionCharmRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public PotionCharmRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			int width = buffer.readByte();
 			int height = buffer.readByte();
 			int potions = buffer.readByte();
@@ -122,7 +122,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, PotionCharmRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, PotionCharmRecipe recipe) {
 			buffer.writeByte(recipe.getRecipeWidth());
 			buffer.writeByte(recipe.getRecipeHeight());
 			buffer.writeByte(recipe.potionSlots.size());

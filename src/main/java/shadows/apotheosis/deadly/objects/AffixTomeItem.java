@@ -6,16 +6,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.BookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.BookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -46,12 +46,12 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
 		if (!this.isFoil(stack)) {
-			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome").withStyle(TextFormatting.GRAY));
-			tooltip.add(new TranslationTextComponent("info.apotheosis.affix_tome2", new TranslationTextComponent("rarity.apoth." + this.rarity.name().toLowerCase(Locale.ROOT)).withStyle(Style.EMPTY.withColor(this.rarity.getColor()))).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("info.apotheosis.affix_tome").withStyle(ChatFormatting.GRAY));
+			tooltip.add(new TranslatableComponent("info.apotheosis.affix_tome2", new TranslatableComponent("rarity.apoth." + this.rarity.name().toLowerCase(Locale.ROOT)).withStyle(Style.EMPTY.withColor(this.rarity.getColor()))).withStyle(ChatFormatting.GRAY));
 		} else {
-			if (stack.getTag().contains(TYPE)) tooltip.add(new TranslationTextComponent("info.apotheosis.retrieved_from", new TranslationTextComponent("type.apotheosis." + EquipmentType.values()[stack.getTag().getInt(TYPE)].name().toLowerCase(Locale.ROOT))).withStyle(TextFormatting.BLUE));
+			if (stack.getTag().contains(TYPE)) tooltip.add(new TranslatableComponent("info.apotheosis.retrieved_from", new TranslatableComponent("type.apotheosis." + EquipmentType.values()[stack.getTag().getInt(TYPE)].name().toLowerCase(Locale.ROOT))).withStyle(ChatFormatting.BLUE));
 			Map<Affix, Float> afx = AffixHelper.getAffixes(stack);
 			afx.forEach((a, l) -> {
 				tooltip.add(a.getDisplayName(l));
@@ -60,13 +60,13 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 	}
 
 	@Override
-	public ITextComponent getDescription() {
-		return ((IFormattableTextComponent) super.getDescription()).setStyle(Style.EMPTY.withColor(this.rarity.getColor()));
+	public Component getDescription() {
+		return ((MutableComponent) super.getDescription()).setStyle(Style.EMPTY.withColor(this.rarity.getColor()));
 	}
 
 	@Override
-	public ITextComponent getName(ItemStack stack) {
-		return new TranslationTextComponent(this.getDescriptionId(stack)).setStyle(Style.EMPTY.withColor(this.rarity.getColor()));
+	public Component getName(ItemStack stack) {
+		return new TranslatableComponent(this.getDescriptionId(stack)).setStyle(Style.EMPTY.withColor(this.rarity.getColor()));
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			if (rarity == null) return false;
 			if (rarity.ordinal() > ((AffixTomeItem) book.getItem()).rarity.ordinal()) return false; //Can only scrap items of <= rarity.
 			Map<Affix, Float> wepAfx = AffixHelper.getAffixes(weapon);
-			int size = Math.max(1, MathHelper.ceil(wepAfx.size() / 2D));
+			int size = Math.max(1, Mth.ceil(wepAfx.size() / 2D));
 			List<Affix> keys = new ArrayList<>(wepAfx.keySet());
 			long seed = 1831;
 			for (Affix e : keys) {
@@ -114,7 +114,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			boolean wepTome = weapon.getItem() instanceof AffixTomeItem;
 			EquipmentType type = EquipmentType.getTypeFor(weapon);
 			if (type == null && !wepTome) return false;
-			ITextComponent name = weapon.getHoverName();
+			Component name = weapon.getHoverName();
 			ItemStack out = weapon.copy();
 			int baseCost = wepAfx.size() * 4;
 			int cost = 0;
@@ -133,7 +133,7 @@ public class AffixTomeItem extends BookItem implements IAffixSensitiveItem {
 			}
 			if (cost == 0) return false;
 			cost += baseCost;
-			if (!wepTome) out.setHoverName(((IFormattableTextComponent) name).withStyle(Style.EMPTY.withColor(((AffixTomeItem) book.getItem()).rarity.getColor())));
+			if (!wepTome) out.setHoverName(((MutableComponent) name).withStyle(Style.EMPTY.withColor(((AffixTomeItem) book.getItem()).rarity.getColor())));
 			AffixHelper.setAffixes(out, wepAfx);
 			out.setCount(1);
 			ev.setMaterialCost(1);

@@ -1,6 +1,6 @@
 package shadows.apotheosis.deadly.affix;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Allows an item to deny certain impacts of affix application.

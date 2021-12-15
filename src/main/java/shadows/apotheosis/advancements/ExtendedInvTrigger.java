@@ -6,20 +6,20 @@ import java.util.function.Predicate;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.advancements.criterion.MinMaxBounds.IntBound;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.MinMaxBounds.Ints;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.affix.LootRarity;
@@ -27,14 +27,14 @@ import shadows.apotheosis.deadly.affix.LootRarity;
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
 	@Override
-	public InventoryChangeTrigger.Instance createInstance(JsonObject json, EntityPredicate.AndPredicate andPred, ConditionArrayParser conditionsParser) {
-		JsonObject jsonobject = JSONUtils.getAsJsonObject(json, "slots", new JsonObject());
-		MinMaxBounds.IntBound minmaxbounds$intbound = MinMaxBounds.IntBound.fromJson(jsonobject.get("occupied"));
-		MinMaxBounds.IntBound minmaxbounds$intbound1 = MinMaxBounds.IntBound.fromJson(jsonobject.get("full"));
-		MinMaxBounds.IntBound minmaxbounds$intbound2 = MinMaxBounds.IntBound.fromJson(jsonobject.get("empty"));
+	public InventoryChangeTrigger.TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite andPred, DeserializationContext conditionsParser) {
+		JsonObject jsonobject = GsonHelper.getAsJsonObject(json, "slots", new JsonObject());
+		MinMaxBounds.Ints minmaxbounds$intbound = MinMaxBounds.Ints.fromJson(jsonobject.get("occupied"));
+		MinMaxBounds.Ints minmaxbounds$intbound1 = MinMaxBounds.Ints.fromJson(jsonobject.get("full"));
+		MinMaxBounds.Ints minmaxbounds$intbound2 = MinMaxBounds.Ints.fromJson(jsonobject.get("empty"));
 		ItemPredicate[] aitempredicate = ItemPredicate.fromJsonArray(json.get("items"));
 		if (json.has("apoth")) aitempredicate = this.deserializeApoth(json.getAsJsonObject("apoth"));
-		return new InventoryChangeTrigger.Instance(andPred, minmaxbounds$intbound, minmaxbounds$intbound1, minmaxbounds$intbound2, aitempredicate);
+		return new InventoryChangeTrigger.TriggerInstance(andPred, minmaxbounds$intbound, minmaxbounds$intbound1, minmaxbounds$intbound2, aitempredicate);
 	}
 
 	ItemPredicate[] deserializeApoth(JsonObject json) {
@@ -42,7 +42,7 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 		if (type.equals("spawn_egg")) return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SpawnEggItem) };
 		if (type.equals("enchanted")) {
 			Enchantment ench = json.has("enchantment") ? ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(json.get("enchantment").getAsString())) : null;
-			IntBound bound = IntBound.fromJson(json.get("level"));
+			Ints bound = Ints.fromJson(json.get("level"));
 			return new ItemPredicate[] { new TrueItemPredicate(s -> {
 				Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(s);
 				if (ench != null) return bound.matches(enchMap.getOrDefault(ench, 0));
@@ -57,9 +57,9 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 			return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
 		}
 		if (type.equals("nbt")) {
-			CompoundNBT tag;
+			CompoundTag tag;
 			try {
-				tag = JsonToNBT.parseTag(JSONUtils.convertToString(json.get("nbt"), "nbt"));
+				tag = TagParser.parseTag(GsonHelper.convertToString(json.get("nbt"), "nbt"));
 			} catch (CommandSyntaxException e) {
 				throw new RuntimeException(e);
 			}

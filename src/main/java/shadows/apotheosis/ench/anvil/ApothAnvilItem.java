@@ -1,18 +1,18 @@
 package shadows.apotheosis.ench.anvil;
 
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Block;
 import shadows.apotheosis.Apotheosis;
 
 public class ApothAnvilItem extends BlockItem {
 
 	public ApothAnvilItem(Block block) {
-		super(block, new Item.Properties().tab(ItemGroup.TAB_DECORATIONS));
+		super(block, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS));
 		this.setRegistryName(block.getRegistryName());
 	}
 

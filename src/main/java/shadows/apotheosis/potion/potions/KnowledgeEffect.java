@@ -1,12 +1,12 @@
 package shadows.apotheosis.potion.potions;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
-public class KnowledgeEffect extends Effect {
+public class KnowledgeEffect extends MobEffect {
 
 	public KnowledgeEffect() {
-		super(EffectType.BENEFICIAL, 0xF4EE42);
+		super(MobEffectCategory.BENEFICIAL, 0xF4EE42);
 	}
 
 }

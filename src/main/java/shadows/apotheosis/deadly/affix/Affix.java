@@ -6,26 +6,25 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.CombatRules;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -35,7 +34,7 @@ import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.config.Configuration;
 
-public abstract class Affix extends WeightedRandom.Item implements IForgeRegistryEntry<Affix> {
+public abstract class Affix extends WeighedRandom.WeighedRandomItem implements IForgeRegistryEntry<Affix> {
 
 	static {
 		RegistryBuilder<Affix> build = new RegistryBuilder<>();
@@ -81,7 +80,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param type The slot type for modifiers being gathered.
 	 * @param map The destination for generated attribute modifiers.
 	 */
-	public void addModifiers(ItemStack stack, float level, EquipmentSlotType type, BiConsumer<Attribute, AttributeModifier> map) {
+	public void addModifiers(ItemStack stack, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 	}
 
 	/**
@@ -91,7 +90,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param level The level of this affix.
 	 * @param tooltips The destination for tooltips.
 	 */
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+	public void addInformation(ItemStack stack, float level, Consumer<Component> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level)));
 	}
 
@@ -101,8 +100,8 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * @param name The current name, which may have been modified by other affixes.
 	 * @return The new name, consuming the old name in the process.
 	 */
-	public ITextComponent chainName(ITextComponent name, @Nullable AffixModifier modifier) {
-		return new TranslationTextComponent("affix." + this.name + (modifier != null && modifier.editName() ? "." + modifier.getKey() : ""), name);
+	public Component chainName(Component name, @Nullable AffixModifier modifier) {
+		return new TranslatableComponent("affix." + this.name + (modifier != null && modifier.editName() ? "." + modifier.getKey() : ""), name);
 	}
 
 	/**
@@ -121,7 +120,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * Calculates the additional damage this affix deals.
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
-	public float getExtraDamageFor(float level, CreatureAttribute creatureType) {
+	public float getExtraDamageFor(float level, MobType creatureType) {
 		return 0.0F;
 	}
 
@@ -145,7 +144,7 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	/**
 	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
 	 */
-	public void onArrowFired(LivingEntity user, AbstractArrowEntity arrow, ItemStack bow, float level) {
+	public void onArrowFired(LivingEntity user, AbstractArrow arrow, ItemStack bow, float level) {
 	}
 
 	/**
@@ -153,14 +152,14 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 	 * Return null to not impact the original result type.
 	 */
 	@Nullable
-	public ActionResultType onItemUse(ItemUseContext ctx, float level) {
+	public InteractionResult onItemUse(UseOnContext ctx, float level) {
 		return null;
 	}
 
 	/**
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
-	public void onArrowImpact(AbstractArrowEntity arrow, RayTraceResult res, RayTraceResult.Type type, float level) {
+	public void onArrowImpact(AbstractArrow arrow, HitResult res, HitResult.Type type, float level) {
 	}
 
 	/**
@@ -231,8 +230,8 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 		return Math.max(this.getMin(), level / 2);
 	}
 
-	public static IFormattableTextComponent loreComponent(String text, Object... args) {
-		return new TranslationTextComponent(text, args).withStyle(TextFormatting.ITALIC, TextFormatting.DARK_PURPLE);
+	public static MutableComponent loreComponent(String text, Object... args) {
+		return new TranslatableComponent(text, args).withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_PURPLE);
 	}
 
 	public static String fmt(float f) {
@@ -240,8 +239,8 @@ public abstract class Affix extends WeightedRandom.Item implements IForgeRegistr
 		else return String.format("%.2f", f);
 	}
 
-	public ITextComponent getDisplayName(float level) {
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", fmt(level)).withStyle(TextFormatting.GRAY);
+	public Component getDisplayName(float level) {
+		return new TranslatableComponent("affix." + this.getRegistryName() + ".name", fmt(level)).withStyle(ChatFormatting.GRAY);
 	}
 
 }

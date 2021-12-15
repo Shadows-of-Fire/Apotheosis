@@ -1,6 +1,6 @@
 package shadows.apotheosis.spawn.modifiers;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;

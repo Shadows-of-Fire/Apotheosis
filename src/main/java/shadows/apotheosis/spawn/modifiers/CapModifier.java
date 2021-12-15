@@ -1,7 +1,7 @@
 package shadows.apotheosis.spawn.modifiers;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 public class CapModifier extends SpawnerModifier {

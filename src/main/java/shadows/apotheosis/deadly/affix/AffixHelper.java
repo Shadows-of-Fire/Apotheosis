@@ -8,14 +8,14 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 public class AffixHelper {
 
@@ -26,7 +26,7 @@ public class AffixHelper {
 	 * Does not edit the item name or perform other changes.
 	 */
 	public static void applyAffix(ItemStack stack, Affix affix, float level) {
-		CompoundNBT tag = stack.getOrCreateTagElement(AFFIXES);
+		CompoundTag tag = stack.getOrCreateTagElement(AFFIXES);
 		tag.putFloat(affix.getRegistryName().toString(), level);
 	}
 
@@ -38,7 +38,7 @@ public class AffixHelper {
 	public static Map<Affix, Float> getAffixes(ItemStack stack) {
 		Map<Affix, Float> map = new HashMap<>();
 		if (stack.hasTag() && stack.getTag().contains(AFFIXES)) {
-			CompoundNBT tag = stack.getTag().getCompound(AFFIXES);
+			CompoundTag tag = stack.getTag().getCompound(AFFIXES);
 			for (String key : tag.getAllKeys()) {
 				Affix affix = Affix.REGISTRY.getValue(new ResourceLocation(key));
 				if (affix == null) continue;
@@ -55,16 +55,16 @@ public class AffixHelper {
 
 	public static float getAffixLevel(ItemStack stack, Affix afx) {
 		if (stack.hasTag() && stack.getTag().contains(AFFIXES)) {
-			CompoundNBT tag = stack.getTag().getCompound(AFFIXES);
+			CompoundTag tag = stack.getTag().getCompound(AFFIXES);
 			return tag.getFloat(afx.getRegistryName().toString());
 		}
 		return 0;
 	}
 
-	public static void addLore(ItemStack stack, ITextComponent lore) {
-		CompoundNBT display = stack.getOrCreateTagElement("display");
-		ListNBT tag = display.getList("Lore", 8);
-		tag.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(lore)));
+	public static void addLore(ItemStack stack, Component lore) {
+		CompoundTag display = stack.getOrCreateTagElement("display");
+		ListTag tag = display.getList("Lore", 8);
+		tag.add(StringTag.valueOf(Component.Serializer.toJson(lore)));
 		display.put("Lore", tag);
 	}
 
@@ -75,7 +75,7 @@ public class AffixHelper {
 	}
 
 	public static void setRarity(ItemStack stack, LootRarity rarity) {
-		AffixHelper.addLore(stack, new TranslationTextComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(Style.EMPTY.withColor(rarity.getColor()).withItalic(true)));
+		AffixHelper.addLore(stack, new TranslatableComponent("rarity.apoth." + rarity.name().toLowerCase(Locale.ROOT)).setStyle(Style.EMPTY.withColor(rarity.getColor()).withItalic(true)));
 		stack.getOrCreateTag().putString("apoth.rarity", rarity.name());
 	}
 

@@ -1,14 +1,14 @@
 package shadows.apotheosis;
 
-import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Item;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.Potion;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
@@ -119,19 +119,19 @@ public class ApotheosisObjects {
 	public static final MagicProtEnchant MAGIC_PROTECTION = null;
 	public static final ScrappingTomeItem SCRAP_TOME = null;
 	public static final EnderLeashItem FARMERS_LEASH = null;
-	public static final TileEntityType<AnvilTile> ANVIL = null;
+	public static final BlockEntityType<AnvilTile> ANVIL = null;
 	@ObjectHolder("apotheosis:prismatic_altar")
-	public static final TileEntityType<SeaAltarTile> ALTAR_TYPE = null;
-	public static final ContainerType<FletchingContainer> FLETCHING = null;
+	public static final BlockEntityType<SeaAltarTile> ALTAR_TYPE = null;
+	public static final MenuType<FletchingContainer> FLETCHING = null;
 	public static final ObsidianArrowItem OBSIDIAN_ARROW = null;
 	public static final EntityType<ObsidianArrowEntity> OB_ARROW_ENTITY = null;
-	public static final Effect BLEEDING = null;
+	public static final MobEffect BLEEDING = null;
 	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
 	public static final PotionCharmItem POTION_CHARM = null;
 	@ObjectHolder("minecraft:enchanting_table")
-	public static final TileEntityType<ApothEnchantTile> ENCHANTING_TABLE = null;
-	public static final ContainerType<ApothEnchantContainer> ENCHANTING = null;
+	public static final BlockEntityType<ApothEnchantTile> ENCHANTING_TABLE = null;
+	public static final MenuType<ApothEnchantContainer> ENCHANTING = null;
 	public static final SeaInfusionEnchantment SEA_INFUSION = null;
 	public static final SeashelfBlock SEASHELF = null;
 	public static final Block BLAZING_HELLSHELF = null;
@@ -151,9 +151,9 @@ public class ApotheosisObjects {
 	public static final MiningArrowItem IRON_MINING_ARROW = null;
 	public static final MiningArrowItem DIAMOND_MINING_ARROW = null;
 	public static final BossSpawnerBlock BOSS_SPAWNER = null;
-	public static final TileEntityType<BossSpawnerTile> BOSS_SPAWN_TILE = null;
+	public static final BlockEntityType<BossSpawnerTile> BOSS_SPAWN_TILE = null;
 	public static final Block ENCHANTMENT_LIBRARY = null;
-	public static final TileEntityType<EnchLibraryTile> ENCH_LIB_TILE = null;
-	public static final ContainerType<EnchLibraryContainer> ENCH_LIB_CON = null;
+	public static final BlockEntityType<EnchLibraryTile> ENCH_LIB_TILE = null;
+	public static final MenuType<EnchLibraryContainer> ENCH_LIB_CON = null;
 
 }

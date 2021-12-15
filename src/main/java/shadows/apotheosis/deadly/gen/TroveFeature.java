@@ -3,34 +3,35 @@ package shadows.apotheosis.deadly.gen;
 import java.util.Random;
 import java.util.function.Predicate;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
+import com.google.common.base.Predicates;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.material.Material;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 
-public class TroveFeature extends Feature<NoFeatureConfig> {
+public class TroveFeature extends Feature<NoneFeatureConfiguration> {
 
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 	private static final Block[] ORES = new Block[] { Blocks.IRON_ORE, Blocks.COAL_ORE, Blocks.GOLD_ORE, Blocks.DIAMOND_ORE, Blocks.EMERALD_ORE, Blocks.REDSTONE_ORE, Blocks.LAPIS_ORE };
-	public static final Predicate<BlockState> STONE_TEST = s -> FillerBlockType.NATURAL_STONE.test(s, null);
+	public static final Predicate<BlockState> STONE_TEST = s -> Predicates.NATURAL_STONE.test(s, null);
 
 	public static final TroveFeature INSTANCE = new TroveFeature();
 
 	public TroveFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(WorldGenLevel world, ChunkGenerator gen, Random rand, BlockPos pos, NoneFeatureConfiguration cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		int xRadius = 2 + rand.nextInt(2);
 		int floor = -1;

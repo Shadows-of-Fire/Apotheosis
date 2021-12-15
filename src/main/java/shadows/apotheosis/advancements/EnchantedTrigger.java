@@ -2,50 +2,50 @@ package shadows.apotheosis.advancements;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.advancements.criterion.EnchantedItemTrigger;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.advancements.criterion.MinMaxBounds.FloatBound;
-import net.minecraft.advancements.criterion.MinMaxBounds.IntBound;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EnchantedItemTrigger;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.MinMaxBounds.Doubles;
+import net.minecraft.advancements.critereon.MinMaxBounds.Ints;
+import net.minecraft.advancements.critereon.SerializationContext;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 public class EnchantedTrigger extends EnchantedItemTrigger {
 
 	@Override
-	public Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+	public Instance createInstance(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
 		ItemPredicate item = ItemPredicate.fromJson(json.get("item"));
-		IntBound levels = IntBound.fromJson(json.get("levels"));
-		FloatBound eterna = FloatBound.fromJson(json.get("eterna"));
-		FloatBound quanta = FloatBound.fromJson(json.get("quanta"));
-		FloatBound arcana = FloatBound.fromJson(json.get("arcana"));
+		Ints levels = Ints.fromJson(json.get("levels"));
+		Doubles eterna = Doubles.fromJson(json.get("eterna"));
+		Doubles quanta = Doubles.fromJson(json.get("quanta"));
+		Doubles arcana = Doubles.fromJson(json.get("arcana"));
 		Instance inst = new Instance(item, levels, eterna, quanta, arcana);
 		return inst;
 	}
 
-	public void trigger(ServerPlayerEntity player, ItemStack stack, int level, float eterna, float quanta, float arcana) {
+	public void trigger(ServerPlayer player, ItemStack stack, int level, float eterna, float quanta, float arcana) {
 		this.trigger(player, inst -> {
 			if (inst instanceof Instance) return ((Instance) inst).test(stack, level, eterna, quanta, arcana);
 			return inst.matches(stack, level);
 		});
 	}
 
-	public static class Instance extends EnchantedItemTrigger.Instance {
+	public static class Instance extends EnchantedItemTrigger.TriggerInstance {
 
-		protected final FloatBound eterna, quanta, arcana;
+		protected final Doubles eterna, quanta, arcana;
 
-		public Instance(ItemPredicate item, IntBound levels, FloatBound eterna, FloatBound quanta, FloatBound arcana) {
-			super(EntityPredicate.AndPredicate.ANY, item, levels);
+		public Instance(ItemPredicate item, Ints levels, Doubles eterna, Doubles quanta, Doubles arcana) {
+			super(EntityPredicate.Composite.ANY, item, levels);
 			this.eterna = eterna;
 			this.quanta = quanta;
 			this.arcana = arcana;
 		}
 
-		public static EnchantedItemTrigger.Instance any() {
-			return new EnchantedItemTrigger.Instance(EntityPredicate.AndPredicate.ANY, ItemPredicate.ANY, MinMaxBounds.IntBound.ANY);
+		public static EnchantedItemTrigger.TriggerInstance any() {
+			return new EnchantedItemTrigger.TriggerInstance(EntityPredicate.Composite.ANY, ItemPredicate.ANY, MinMaxBounds.Ints.ANY);
 		}
 
 		public boolean test(ItemStack stack, int level, float eterna, float quanta, float arcana) {
@@ -58,7 +58,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 		}
 
 		@Override
-		public JsonObject serializeToJson(ConditionArraySerializer serializer) {
+		public JsonObject serializeToJson(SerializationContext serializer) {
 			JsonObject jsonobject = super.serializeToJson(serializer);
 			jsonobject.add("eterna", this.eterna.serializeToJson());
 			jsonobject.add("quanta", this.quanta.serializeToJson());

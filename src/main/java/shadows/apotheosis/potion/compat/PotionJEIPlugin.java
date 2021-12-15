@@ -16,11 +16,11 @@ import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICustomCraftingC
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.util.Size2i;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
@@ -107,7 +107,7 @@ public class PotionJEIPlugin implements IModPlugin {
 			if (context != UidContext.Recipe) {
 				if (!PotionCharmItem.hasPotion(stack)) return NONE;
 				Potion p = PotionUtils.getPotion(stack);
-				EffectInstance contained = p.getEffects().get(0);
+				MobEffectInstance contained = p.getEffects().get(0);
 				return contained.getEffect().getRegistryName() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
 			}
 			return NONE;

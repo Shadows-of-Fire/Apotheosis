@@ -2,29 +2,29 @@ package shadows.apotheosis.potion;
 
 import java.util.List;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectUtils;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,18 +42,18 @@ public class PotionCharmItem extends Item {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
 		if (!hasPotion(stack)) return;
-		if (stack.getOrCreateTag().getBoolean("charm_enabled") && entity instanceof ServerPlayerEntity) {
+		if (stack.getOrCreateTag().getBoolean("charm_enabled") && entity instanceof ServerPlayer) {
 			Potion p = PotionUtils.getPotion(stack);
-			EffectInstance contained = p.getEffects().get(0);
-			EffectInstance active = ((ServerPlayerEntity) entity).getEffect(contained.getEffect());
-			if (active == null || active.getDuration() < (active.getEffect() == Effects.NIGHT_VISION ? 210 : 5)) {
-				int durationOffset = contained.getEffect() == Effects.NIGHT_VISION ? 210 : 5;
-				if (contained.getEffect() == Effects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
-				EffectInstance newEffect = new EffectInstance(contained.getEffect(), (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
-				((ServerPlayerEntity) entity).addEffect(newEffect);
-				if (stack.hurt(contained.getEffect() == Effects.REGENERATION ? 2 : 1, world.random, (ServerPlayerEntity) entity)) stack.shrink(1);
+			MobEffectInstance contained = p.getEffects().get(0);
+			MobEffectInstance active = ((ServerPlayer) entity).getEffect(contained.getEffect());
+			if (active == null || active.getDuration() < (active.getEffect() == MobEffects.NIGHT_VISION ? 210 : 5)) {
+				int durationOffset = contained.getEffect() == MobEffects.NIGHT_VISION ? 210 : 5;
+				if (contained.getEffect() == MobEffects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
+				MobEffectInstance newEffect = new MobEffectInstance(contained.getEffect(), (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
+				((ServerPlayer) entity).addEffect(newEffect);
+				if (stack.hurt(contained.getEffect() == MobEffects.REGENERATION ? 2 : 1, world.random, (ServerPlayer) entity)) stack.shrink(1);
 			}
 		}
 	}
@@ -64,12 +64,12 @@ public class PotionCharmItem extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (!world.isClientSide) {
 			stack.getOrCreateTag().putBoolean("charm_enabled", !stack.getTag().getBoolean("charm_enabled"));
-		} else if (!stack.getTag().getBoolean("charm_enabled")) world.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1, 0.3F);
-		return ActionResult.success(stack);
+		} else if (!stack.getTag().getBoolean("charm_enabled")) world.playSound(player, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1, 0.3F);
+		return InteractionResultHolder.success(stack);
 	}
 
 	@Override
@@ -84,24 +84,24 @@ public class PotionCharmItem extends Item {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotion(stack);
-			EffectInstance effect = p.getEffects().get(0);
-			TranslationTextComponent potionCmp = new TranslationTextComponent(effect.getDescriptionId());
+			MobEffectInstance effect = p.getEffects().get(0);
+			TranslatableComponent potionCmp = new TranslatableComponent(effect.getDescriptionId());
 			if (effect.getAmplifier() > 0) {
-				potionCmp = new TranslationTextComponent("potion.withAmplifier", potionCmp, new TranslationTextComponent("potion.potency." + effect.getAmplifier()));
+				potionCmp = new TranslatableComponent("potion.withAmplifier", potionCmp, new TranslatableComponent("potion.potency." + effect.getAmplifier()));
 			}
 			potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
-			tooltip.add(new TranslationTextComponent(this.getDescriptionId() + ".desc", potionCmp).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".desc", potionCmp).withStyle(ChatFormatting.GRAY));
 			boolean enabled = stack.getOrCreateTag().getBoolean("charm_enabled");
-			TranslationTextComponent enabledCmp = new TranslationTextComponent(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
-			enabledCmp.withStyle(enabled ? TextFormatting.BLUE : TextFormatting.RED);
+			TranslatableComponent enabledCmp = new TranslatableComponent(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
+			enabledCmp.withStyle(enabled ? ChatFormatting.BLUE : ChatFormatting.RED);
 			if (effect.getDuration() > 20) {
-				potionCmp = new TranslationTextComponent("potion.withDuration", potionCmp, EffectUtils.formatDuration(effect, 1));
+				potionCmp = new TranslatableComponent("potion.withDuration", potionCmp, MobEffectUtil.formatDuration(effect, 1));
 			}
 			potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
-			tooltip.add(new TranslationTextComponent(this.getDescriptionId() + ".desc3", potionCmp).withStyle(TextFormatting.GRAY));
+			tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".desc3", potionCmp).withStyle(ChatFormatting.GRAY));
 		}
 	}
 
@@ -112,15 +112,15 @@ public class PotionCharmItem extends Item {
 	}
 
 	@Override
-	public ITextComponent getName(ItemStack stack) {
-		if (!hasPotion(stack)) return new TranslationTextComponent("item.apotheosis.potion_charm_broke");
+	public Component getName(ItemStack stack) {
+		if (!hasPotion(stack)) return new TranslatableComponent("item.apotheosis.potion_charm_broke");
 		Potion p = PotionUtils.getPotion(stack);
-		EffectInstance effect = p.getEffects().get(0);
-		TranslationTextComponent potionCmp = new TranslationTextComponent(effect.getDescriptionId());
+		MobEffectInstance effect = p.getEffects().get(0);
+		TranslatableComponent potionCmp = new TranslatableComponent(effect.getDescriptionId());
 		if (effect.getAmplifier() > 0) {
-			potionCmp = new TranslationTextComponent("potion.withAmplifier", potionCmp, new TranslationTextComponent("potion.potency." + effect.getAmplifier()));
+			potionCmp = new TranslatableComponent("potion.withAmplifier", potionCmp, new TranslatableComponent("potion.potency." + effect.getAmplifier()));
 		}
-		return new TranslationTextComponent("item.apotheosis.potion_charm", potionCmp);
+		return new TranslatableComponent("item.apotheosis.potion_charm", potionCmp);
 	}
 
 	public static boolean hasPotion(ItemStack stack) {
@@ -128,9 +128,9 @@ public class PotionCharmItem extends Item {
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 		if (this.allowdedIn(group)) {
-			for (Potion potion : ForgeRegistries.POTION_TYPES) {
+			for (Potion potion : ForgeRegistries.POTIONS) {
 				if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
 					items.add(PotionUtils.setPotion(new ItemStack(this), potion));
 				}

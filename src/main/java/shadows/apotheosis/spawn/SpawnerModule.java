@@ -7,30 +7,30 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ApotheosisObjects;
@@ -50,14 +50,14 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
-		TileEntityType.MOB_SPAWNER.factory = ApothSpawnerTile::new;
-		TileEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
+		BlockEntityType.MOB_SPAWNER.factory = ApothSpawnerTile::new;
+		BlockEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
 		MinecraftForge.EVENT_BUS.addListener(this::handleCapturing);
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		SpawnerModifiers.registerModifiers();
 		this.reload(null);
-		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.TAB_MISC, "field_77701_a");
+		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, CreativeModeTab.TAB_MISC, "field_77701_a");
 	}
 
 	@SubscribeEvent
@@ -66,7 +66,7 @@ public class SpawnerModule {
 	}
 
 	@SubscribeEvent
-	public void serializers(Register<IRecipeSerializer<?>> e) {
+	public void serializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(ModifierSync.SERIALIZER.setRegistryName("modifiers"));
 	}
 
@@ -89,7 +89,7 @@ public class SpawnerModule {
 	}
 
 	public void handleUseItem(RightClickBlock e) {
-		TileEntity te;
+		BlockEntity te;
 		if ((te = e.getWorld().getBlockEntity(e.getPos())) instanceof ApothSpawnerTile) {
 			ItemStack s = e.getItemStack();
 
@@ -100,7 +100,7 @@ public class SpawnerModule {
 				}
 			}
 
-			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(e.getPlayer().getItemInHand(e.getHand() == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND));
+			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(e.getPlayer().getItemInHand(e.getHand() == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values())
 				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}

@@ -3,12 +3,12 @@ package shadows.apotheosis.spawn.modifiers;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
-import net.minecraft.util.WeightedSpawnerEntity;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.SpawnData;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.SpawnerBuilder;
@@ -23,7 +23,7 @@ public class EggModifier extends SpawnerModifier {
 	public final List<String> bannedMobs = new ArrayList<>();
 
 	public EggModifier() {
-		this.item = new LazyValue<>(() -> Ingredient.of(Items.WITCH_SPAWN_EGG));
+		this.item = new LazyLoadedValue<>(() -> Ingredient.of(Items.WITCH_SPAWN_EGG));
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class EggModifier extends SpawnerModifier {
 		String name = ((SpawnEggItem) stack.getItem()).getType(stack.getTag()).getRegistryName().toString();
 		if (!this.bannedMobs.contains(name) && !name.equals(spawner.spawner.nextSpawnData.getTag().getString(SpawnerBuilder.ID))) {
 			spawner.spawner.spawnPotentials.clear();
-			spawner.spawner.nextSpawnData = new WeightedSpawnerEntity();
+			spawner.spawner.nextSpawnData = new SpawnData();
 			return false;
 		}
 		return true;

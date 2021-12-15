@@ -1,11 +1,11 @@
 package shadows.apotheosis.deadly.affix.impl.ranged;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.HitResult.Type;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;
@@ -25,10 +25,10 @@ public class SnipeDamageAffix extends AttributeAffix {
 	}
 
 	@Override
-	public void onArrowImpact(AbstractArrowEntity arrow, RayTraceResult res, Type type, float level) {
+	public void onArrowImpact(AbstractArrow arrow, HitResult res, Type type, float level) {
 		Entity shooter = arrow.getOwner();
 		if (shooter != null && type == Type.ENTITY) {
-			if (shooter.distanceToSqr(((EntityRayTraceResult) res).getEntity()) > 30 * 30) {
+			if (shooter.distanceToSqr(((EntityHitResult) res).getEntity()) > 30 * 30) {
 				arrow.setBaseDamage(arrow.getBaseDamage() + level);
 			}
 		}

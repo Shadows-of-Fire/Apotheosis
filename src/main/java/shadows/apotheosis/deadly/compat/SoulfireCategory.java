@@ -1,6 +1,6 @@
 package shadows.apotheosis.deadly.compat;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -11,8 +11,8 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.config.Constants;
 import mezz.jei.plugins.vanilla.cooking.AbstractCookingCategory;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.recipe.SoulfireCookingRecipe;
 
@@ -43,7 +43,7 @@ public class SoulfireCategory extends AbstractCookingCategory<SoulfireCookingRec
 	}
 
 	@Override
-	public void draw(SoulfireCookingRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+	public void draw(SoulfireCookingRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) {
 		this.animatedFlame.draw(matrixStack, 1, 20);
 		IDrawableAnimated arrow = this.getArrow(recipe);
 		arrow.draw(matrixStack, 24, 8);

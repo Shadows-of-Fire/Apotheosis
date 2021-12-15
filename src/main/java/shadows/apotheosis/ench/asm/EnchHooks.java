@@ -3,25 +3,24 @@ package shadows.apotheosis.ench.asm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.FishingBobberEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.CombatRules;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
@@ -41,8 +40,8 @@ public class EnchHooks {
 	 * Called from {@link EnchantmentHelper#getEnchantmentDatas(int, ItemStack, boolean)}
 	 * Injected by apothasm/enchantment-datas.js
 	 */
-	public static List<EnchantmentData> getEnchantmentDatas(int power, ItemStack stack, boolean allowTreasure) {
-		List<EnchantmentData> list = new ArrayList<>();
+	public static List<EnchantmentInstance> getEnchantmentDatas(int power, ItemStack stack, boolean allowTreasure) {
+		List<EnchantmentInstance> list = new ArrayList<>();
 		boolean isBook = stack.getItem() == Items.BOOK;
 		boolean typedBook = stack.getItem() instanceof TomeItem;
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
@@ -51,7 +50,7 @@ public class EnchHooks {
 				EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
 				for (int i = info.getMaxLevel(); i > info.getMinLevel() - 1; --i) {
 					if (power >= info.getMinPower(i) && power <= info.getMaxPower(i)) {
-						list.add(new EnchantmentData(enchantment, i));
+						list.add(new EnchantmentInstance(enchantment, i));
 						break;
 					}
 				}
@@ -79,10 +78,10 @@ public class EnchHooks {
 		int level;
 		if ((level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.REFLECTIVE, user.getUseItem())) > 0) {
 			if (user.level.random.nextInt(Math.max(2, 7 - level)) == 0) {
-				DamageSource src = user instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity) user).setMagic().bypassArmor() : DamageSource.MAGIC;
+				DamageSource src = user instanceof Player ? DamageSource.playerAttack((Player) user).setMagic().bypassArmor() : DamageSource.MAGIC;
 				attacker.hurt(src, level * 1.6F);
 				user.getUseItem().hurtAndBreak(10, attacker, e -> {
-					e.broadcastBreakEvent(EquipmentSlotType.OFFHAND);
+					e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
 				});
 			}
 		}
@@ -103,8 +102,8 @@ public class EnchHooks {
 	 * Injected by apothasm/combat-rules.js
 	 */
 	public static float getDamageAfterMagicAbsorb(float damage, float enchantModifiers) {
-		float clamped = MathHelper.clamp(enchantModifiers, 0, 20);
-		float remaining = MathHelper.clamp(enchantModifiers - 20, 0, 44);
+		float clamped = Mth.clamp(enchantModifiers, 0, 20);
+		float remaining = Mth.clamp(enchantModifiers - 20, 0, 44);
 		float factor = 1 - clamped / 25;
 		if (remaining > 0) {
 			factor -= 0.2F * remaining / 60;
@@ -117,10 +116,10 @@ public class EnchHooks {
 	 * Called at the end of {@link FishingBobberEntity#catchingFish(BlockPos)}
 	 * Injected by apothasm/fishing-bobber.js
 	 */
-	public static int getTicksCaughtDelay(FishingBobberEntity bobber) {
+	public static int getTicksCaughtDelay(FishingHook bobber) {
 		int lowBound = Math.max(1, 100 - bobber.lureSpeed * 10);
 		int highBound = Math.max(lowBound, 600 - bobber.lureSpeed * 60);
-		return MathHelper.nextInt(bobber.random, lowBound, highBound);
+		return Mth.nextInt(bobber.random, lowBound, highBound);
 	}
 
 	/**
@@ -144,7 +143,7 @@ public class EnchHooks {
 		}
 	}
 
-	private static ThreadLocal<ListNBT> nbt = new ThreadLocal<>();
+	private static ThreadLocal<ListTag> nbt = new ThreadLocal<>();
 
 	/**
 	 * Early hook for the Crescendo of Bolts enchantment.
@@ -163,9 +162,9 @@ public class EnchHooks {
 	 * This is required to mark generated arrows as creative-only so arrows are not duplicated.
 	 * Injected by apothasm/crossbow-arrows.js
 	 */
-	public static void markGeneratedArrows(ProjectileEntity arrow, ItemStack crossbow) {
-		if (crossbow.getTag().getInt("shots") > 0 && arrow instanceof AbstractArrowEntity) {
-			((AbstractArrowEntity) arrow).pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+	public static void markGeneratedArrows(Projectile arrow, ItemStack crossbow) {
+		if (crossbow.getTag().getInt("shots") > 0 && arrow instanceof AbstractArrow) {
+			((AbstractArrow) arrow).pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 		}
 	}
 

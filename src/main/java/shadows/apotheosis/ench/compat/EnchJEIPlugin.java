@@ -9,13 +9,13 @@ import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 
@@ -52,9 +52,9 @@ public class EnchJEIPlugin implements IModPlugin {
 				ImmutableList.of(new ItemStack(Blocks.ANVIL)))),
 			VanillaRecipeCategoryUid.ANVIL);
 		//Formatter::on
-		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.enchanting"));
-		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.PRISMATIC_ALTAR), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.altar"));
-		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.ENCHANTMENT_LIBRARY), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.library"));
+		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.enchanting"));
+		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.PRISMATIC_ALTAR), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.altar"));
+		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.ENCHANTMENT_LIBRARY), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.library"));
 	}
 
 	@Override

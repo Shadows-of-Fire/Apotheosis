@@ -9,9 +9,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -19,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 */
 public class ChancedEffectInstance {
 	protected final float chance;
-	protected final Effect effect;
+	protected final MobEffect effect;
 	protected final RandomIntRange amp;
 	protected final boolean ambient;
 	protected final boolean visible;
@@ -30,7 +30,7 @@ public class ChancedEffectInstance {
 	 * @param effect The effect.
 	 * @param amp A random range of possible amplifiers.
 	 */
-	public ChancedEffectInstance(float chance, Effect effect, RandomIntRange amp, boolean ambient, boolean visible) {
+	public ChancedEffectInstance(float chance, MobEffect effect, RandomIntRange amp, boolean ambient, boolean visible) {
 		this.chance = chance;
 		this.effect = effect;
 		this.amp = amp;
@@ -42,12 +42,12 @@ public class ChancedEffectInstance {
 		return this.chance;
 	}
 
-	public Effect getEffect() {
+	public MobEffect getEffect() {
 		return this.effect;
 	}
 
-	public EffectInstance createInstance(Random rand, int duration) {
-		return new EffectInstance(this.effect, duration, this.amp.generateInt(rand), this.ambient, this.visible);
+	public MobEffectInstance createInstance(Random rand, int duration) {
+		return new MobEffectInstance(this.effect, duration, this.amp.generateInt(rand), this.ambient, this.visible);
 	}
 
 	public static class Deserializer implements JsonDeserializer<ChancedEffectInstance> {
@@ -57,7 +57,7 @@ public class ChancedEffectInstance {
 			JsonObject obj = json.getAsJsonObject();
 			float chance = obj.get("chance").getAsFloat();
 			String _effect = obj.get("effect").getAsString();
-			Effect effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(_effect));
+			MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(_effect));
 			if (effect == null) throw new JsonParseException("Attempted to construct a ChancedEffectInstance with invalid effect: " + _effect);
 			boolean ambient = obj.has("ambient") ? obj.get("ambient").getAsBoolean() : true;
 			boolean visible = obj.has("visible") ? obj.get("visible").getAsBoolean() : false;

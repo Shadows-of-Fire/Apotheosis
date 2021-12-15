@@ -2,35 +2,35 @@ package shadows.apotheosis.deadly.gen;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.material.Material;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 
-public class TomeTowerFeature extends Feature<NoFeatureConfig> {
+public class TomeTowerFeature extends Feature<NoneFeatureConfiguration> {
 
 	public static final ResourceLocation TEMPLATE_ID = new ResourceLocation(Apotheosis.MODID, "tome_tower");
 	public static final TomeTowerFeature INSTANCE = new TomeTowerFeature();
 
 	public TomeTowerFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(WorldGenLevel world, ChunkGenerator gen, Random rand, BlockPos pos, NoneFeatureConfiguration cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 
 		pos = pos.offset(rand.nextInt(5), -1, rand.nextInt(5));
@@ -50,11 +50,11 @@ public class TomeTowerFeature extends Feature<NoFeatureConfig> {
 			}
 		}
 
-		Template template = ServerLifecycleHooks.getCurrentServer().getStructureManager().get(TEMPLATE_ID);
+		StructureTemplate template = ServerLifecycleHooks.getCurrentServer().getStructureManager().get(TEMPLATE_ID);
 		Rotation rot = Rotation.getRandom(rand);
 		int rotOrd = rot.ordinal();
 		pos = pos.offset(rotOrd > 0 && rotOrd < 3 ? 8 : 0, 0, rotOrd > 1 ? 8 : 0);
-		template.placeInWorld(world, pos, new PlacementSettings().setRotation(rot), rand);
+		template.placeInWorld(world, pos, new StructurePlaceSettings().setRotation(rot), rand);
 		DeadlyModule.debugLog(pos, "Tome Tower");
 		return true;
 	}

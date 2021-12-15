@@ -1,9 +1,8 @@
 package shadows.apotheosis.spawn.modifiers;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
@@ -23,7 +22,7 @@ public abstract class SpawnerModifier {
 	/**
 	 * The matching item for this modifier.
 	 */
-	protected LazyValue<Ingredient> item;
+	protected LazyLoadedValue<Ingredient> item;
 
 	/**
 	 * The amount this modifier changes it's respective stat.
@@ -112,7 +111,7 @@ public abstract class SpawnerModifier {
 	 * Used on the client during the receipt of modifiers from the server.
 	 */
 	public void sync(Ingredient ing, int value, int min, int max) {
-		this.item = new LazyValue<>(() -> ing);
+		this.item = new LazyLoadedValue<>(() -> ing);
 		this.item.get();
 		this.value = value;
 		this.min = min;

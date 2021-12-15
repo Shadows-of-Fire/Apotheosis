@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;

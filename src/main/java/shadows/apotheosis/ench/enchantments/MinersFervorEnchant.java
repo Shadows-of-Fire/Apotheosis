@@ -1,17 +1,17 @@
 package shadows.apotheosis.ench.enchantments;
 
-import net.minecraft.enchantment.EfficiencyEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.DiggingEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 
-public class MinersFervorEnchant extends EfficiencyEnchantment {
+public class MinersFervorEnchant extends DiggingEnchantment {
 
 	public MinersFervorEnchant() {
-		super(Rarity.RARE, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
+		super(Rarity.RARE, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class MinersFervorEnchant extends EfficiencyEnchantment {
 	}
 
 	@Override
-	public ITextComponent getFullname(int level) {
-		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_PURPLE);
+	public Component getFullname(int level) {
+		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_PURPLE);
 	}
 
 	@Override

@@ -1,10 +1,10 @@
 package shadows.apotheosis.deadly.objects;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.deadly.affix.LootRarity;
 
 public class RarityShardItem extends Item {
@@ -21,8 +21,8 @@ public class RarityShardItem extends Item {
 	}
 
 	@Override
-	public ITextComponent getName(ItemStack stack) {
-		return new TranslationTextComponent(getDescriptionId()).withStyle(Style.EMPTY.withColor(rarity.getColor()));
+	public Component getName(ItemStack stack) {
+		return new TranslatableComponent(getDescriptionId()).withStyle(Style.EMPTY.withColor(rarity.getColor()));
 	}
 
 }

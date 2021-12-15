@@ -4,8 +4,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
 import shadows.apotheosis.deadly.affix.impl.AttributeAffix;

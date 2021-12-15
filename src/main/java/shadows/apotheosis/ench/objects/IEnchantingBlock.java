@@ -1,8 +1,8 @@
 package shadows.apotheosis.ench.objects;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 /**
@@ -22,7 +22,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 	 * @return The amount of enchanting power this block produces.
 	 */
 	@Override
-	float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos);
+	float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos);
 
 	/**
 	 * Determines the maximum enchanting power (Eterna) that this block may contribute up to.
@@ -30,7 +30,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 	 * @param pos Block position in world
 	 * @return The max Eterna this block may contribute towards.  Once past this value, this block has no effect.
 	 */
-	default float getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
+	default float getMaxEnchantingPower(BlockState state, LevelReader world, BlockPos pos) {
 		return 15F;
 	}
 
@@ -40,7 +40,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 	 * @param pos Block position in world
 	 * @return The change in Quanta caused by this block.
 	 */
-	default float getQuantaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+	default float getQuantaBonus(BlockState state, LevelReader world, BlockPos pos) {
 		return 0;
 	}
 
@@ -50,7 +50,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 	 * @param pos Block position in world
 	 * @return The change in Arcana caused by this block.
 	 */
-	default float getArcanaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+	default float getArcanaBonus(BlockState state, LevelReader world, BlockPos pos) {
 		return 0;
 	}
 

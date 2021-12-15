@@ -1,7 +1,7 @@
 package shadows.apotheosis.spawn.modifiers;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 public class ConditionModifier extends SpawnerModifier {

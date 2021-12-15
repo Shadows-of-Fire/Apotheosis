@@ -15,18 +15,18 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Util class to contain the full equipment for an entity.
  * @author Shadows
  *
  */
-public class GearSet extends WeightedRandom.Item {
+public class GearSet extends Weighted {
 
 	@Expose(deserialize = false)
 	protected ResourceLocation id;
@@ -62,12 +62,12 @@ public class GearSet extends WeightedRandom.Item {
 	 * Makes the entity wear this armor set.  Returns the entity for convenience.
 	 */
 	public LivingEntity apply(LivingEntity entity) {
-		entity.setItemSlot(EquipmentSlotType.MAINHAND, getRandomStack(this.mainhands, entity.random));
-		entity.setItemSlot(EquipmentSlotType.OFFHAND, getRandomStack(this.offhands, entity.random));
-		entity.setItemSlot(EquipmentSlotType.FEET, getRandomStack(this.boots, entity.random));
-		entity.setItemSlot(EquipmentSlotType.LEGS, getRandomStack(this.leggings, entity.random));
-		entity.setItemSlot(EquipmentSlotType.CHEST, getRandomStack(this.chestplates, entity.random));
-		entity.setItemSlot(EquipmentSlotType.HEAD, getRandomStack(this.helmets, entity.random));
+		entity.setItemSlot(EquipmentSlot.MAINHAND, getRandomStack(this.mainhands, entity.random));
+		entity.setItemSlot(EquipmentSlot.OFFHAND, getRandomStack(this.offhands, entity.random));
+		entity.setItemSlot(EquipmentSlot.FEET, getRandomStack(this.boots, entity.random));
+		entity.setItemSlot(EquipmentSlot.LEGS, getRandomStack(this.leggings, entity.random));
+		entity.setItemSlot(EquipmentSlot.CHEST, getRandomStack(this.chestplates, entity.random));
+		entity.setItemSlot(EquipmentSlot.HEAD, getRandomStack(this.helmets, entity.random));
 		return entity;
 	}
 
@@ -76,10 +76,10 @@ public class GearSet extends WeightedRandom.Item {
 	 */
 	public static ItemStack getRandomStack(List<WeightedItemStack> stacks, Random random) {
 		if (stacks.isEmpty()) return ItemStack.EMPTY;
-		return WeightedRandom.getRandomItem(random, stacks).getStack().copy();
+		return WeightedRandom.getRandomItem(random, stacks).get().getStack().copy();
 	}
 
-	public static class WeightedItemStack extends WeightedRandom.Item {
+	public static class WeightedItemStack extends Weighted {
 
 		final ItemStack stack;
 

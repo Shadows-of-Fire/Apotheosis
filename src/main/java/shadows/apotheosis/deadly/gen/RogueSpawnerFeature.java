@@ -3,29 +3,30 @@ package shadows.apotheosis.deadly.gen;
 import java.util.Random;
 import java.util.function.Predicate;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig.FillerBlockType;
+import com.google.common.base.Predicates;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.reload.RandomSpawnerManager;
 
-public class RogueSpawnerFeature extends Feature<NoFeatureConfig> {
+public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
 
 	public static final RogueSpawnerFeature INSTANCE = new RogueSpawnerFeature();
-	public static final Predicate<BlockState> STONE_TEST = b -> FillerBlockType.NATURAL_STONE.test(b, null);
+	public static final Predicate<BlockState> STONE_TEST = b -> Predicates.NATURAL_STONE.test(b, null);
 
 	public RogueSpawnerFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(WorldGenLevel world, ChunkGenerator gen, Random rand, BlockPos pos, NoneFeatureConfiguration cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		BlockState state = world.getBlockState(pos);
 		BlockState downState = world.getBlockState(pos.below());

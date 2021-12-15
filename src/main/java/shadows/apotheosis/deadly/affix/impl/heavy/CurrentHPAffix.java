@@ -1,10 +1,10 @@
 package shadows.apotheosis.deadly.affix.impl.heavy;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.player.Player;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
@@ -26,8 +26,8 @@ public class CurrentHPAffix extends AttributeAffix {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
-		if (user instanceof PlayerEntity && target instanceof LivingEntity) {
-			target.hurt(DamageSource.playerAttack((PlayerEntity) user), ((LivingEntity) target).getHealth() * Apotheosis.localAtkStrength * level);
+		if (user instanceof Player && target instanceof LivingEntity) {
+			target.hurt(DamageSource.playerAttack((Player) user), ((LivingEntity) target).getHealth() * Apotheosis.localAtkStrength * level);
 		}
 	}
 

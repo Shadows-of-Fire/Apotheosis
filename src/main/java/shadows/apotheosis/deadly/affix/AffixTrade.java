@@ -2,14 +2,14 @@ package shadows.apotheosis.deadly.affix;
 
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.merchant.villager.VillagerTrades.ITrade;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.MerchantOffer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 
-public class AffixTrade implements ITrade {
+public class AffixTrade implements ItemListing {
 
 	@Override
 	public MerchantOffer getOffer(Entity merchant, Random rand) {

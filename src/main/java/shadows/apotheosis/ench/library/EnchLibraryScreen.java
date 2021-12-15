@@ -6,27 +6,27 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import it.unimi.dsi.fastutil.objects.Object2ShortMap.Entry;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import shadows.apotheosis.Apotheosis;
@@ -34,7 +34,7 @@ import shadows.placebo.Placebo;
 import shadows.placebo.net.MessageButtonClick;
 import shadows.placebo.util.ClientUtil;
 
-public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
+public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContainer> {
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/library.png");
 
 	protected float scrollOffs;
@@ -43,7 +43,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 
 	protected List<LibrarySlot> data = new ArrayList<>();
 
-	public EnchLibraryScreen(EnchLibraryContainer container, PlayerInventory inv, ITextComponent title) {
+	public EnchLibraryScreen(EnchLibraryContainer container, Inventory inv, Component title) {
 		super(container, inv, title);
 		this.width = this.imageWidth = 176;
 		this.height = this.imageHeight = 241;
@@ -55,34 +55,34 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 	}
 
 	@Override
-	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(stack);
 		super.render(stack, mouseX, mouseY, partialTicks);
 		this.renderTooltip(stack, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderTooltip(MatrixStack stack, int mouseX, int mouseY) {
+	protected void renderTooltip(PoseStack stack, int mouseX, int mouseY) {
 		super.renderTooltip(stack, mouseX, mouseY);
 		LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
 		if (libSlot != null) {
-			List<IFormattableTextComponent> list = new ArrayList<>();
-			list.add(new TranslationTextComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(Color.fromRgb(0xFFFF80))));
-			list.add(new StringTextComponent(""));
-			list.add(new TranslationTextComponent("tooltip.enchlib.1", new TranslationTextComponent("enchantment.level." + libSlot.maxLvl)));
-			list.add(new TranslationTextComponent("tooltip.enchlib.2", libSlot.points));
+			List<MutableComponent> list = new ArrayList<>();
+			list.add(new TranslatableComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80))));
+			list.add(new TextComponent(""));
+			list.add(new TranslatableComponent("tooltip.enchlib.1", new TranslatableComponent("enchantment.level." + libSlot.maxLvl)));
+			list.add(new TranslatableComponent("tooltip.enchlib.2", libSlot.points));
 			ItemStack outSlot = this.menu.ioInv.getItem(1);
 			int current = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(libSlot.ench, 0);
 			boolean shift = ClientUtil.isHoldingShift();
-			if (!shift && (outSlot.isEmpty() || current == 0)) list.add(new TranslationTextComponent("tooltip.enchlib.4", 1).setStyle(Style.EMPTY.withColor(TextFormatting.GOLD)));
+			if (!shift && (outSlot.isEmpty() || current == 0)) list.add(new TranslatableComponent("tooltip.enchlib.4", 1).setStyle(Style.EMPTY.withColor(ChatFormatting.GOLD)));
 			else if (!shift) {
 				int cost = EnchLibraryTile.levelToPoints(current + 1) - EnchLibraryTile.levelToPoints(current);
-				if (current + 1 > libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
-				else list.add(new TranslationTextComponent("tooltip.enchlib.4", cost).setStyle(Style.EMPTY.withColor(cost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD)));
+				if (current + 1 > libSlot.maxLvl) list.add(new TranslatableComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+				else list.add(new TranslatableComponent("tooltip.enchlib.4", cost).setStyle(Style.EMPTY.withColor(cost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD)));
 			} else {
 				int maxCost = EnchLibraryTile.levelToPoints(libSlot.maxLvl) - EnchLibraryTile.levelToPoints(current);
-				if (current < libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.6", maxCost).setStyle(Style.EMPTY.withColor(maxCost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD)));
-				else list.add(new TranslationTextComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
+				if (current < libSlot.maxLvl) list.add(new TranslatableComponent("tooltip.enchlib.6", maxCost).setStyle(Style.EMPTY.withColor(maxCost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD)));
+				else list.add(new TranslatableComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
 			}
 
 			this.renderWrappedToolTip(stack, list, this.getGuiLeft() - 16 - this.font.width(list.get(3)), mouseY, this.font);
@@ -91,7 +91,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	protected void renderBg(MatrixStack stack, float partial, int mouseX, int mouseY) {
+	protected void renderBg(PoseStack stack, float partial, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bind(TEXTURES);
 		int left = this.leftPos;
@@ -106,14 +106,14 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 		}
 	}
 
-	private void renderEntry(MatrixStack stack, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
+	private void renderEntry(PoseStack stack, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
 		this.minecraft.getTextureManager().bind(TEXTURES);
 		boolean hover = this.isHovering(x - this.leftPos, y - this.topPos, 64, 17, mouseX, mouseY);
 		this.blit(stack, x, y, 178, hover ? 19 : 0, 64, 19);
 		int progress = (int) Math.round(62 * Math.sqrt(data.points) / (float) Math.sqrt(32767));
 		this.blit(stack, x + 1, y + 12, 179, 38, progress, 5);
 		stack.pushPose();
-		ITextComponent txt = new TranslationTextComponent(data.ench.getDescriptionId());
+		Component txt = new TranslatableComponent(data.ench.getDescriptionId());
 		float scale = 1;
 		if (this.font.width(txt) > 60) {
 			scale = 60F / this.font.width(txt);
@@ -134,7 +134,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 			int id = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getID(libSlot.ench);
 			if (ClientUtil.isHoldingShift()) id |= 0x80000000;
 			Placebo.CHANNEL.sendToServer(new MessageButtonClick(id));
-			this.minecraft.getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
+			this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
 		}
 
 		left = this.leftPos + 75;
@@ -151,7 +151,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 			int i = this.topPos + 14;
 			int j = i + 131;
 			this.scrollOffs = ((float) pMouseY - i - 7.5F) / (j - i - 15.0F);
-			this.scrollOffs = MathHelper.clamp(this.scrollOffs, 0.0F, 1.0F);
+			this.scrollOffs = Mth.clamp(this.scrollOffs, 0.0F, 1.0F);
 			this.startIndex = (int) (this.scrollOffs * this.getOffscreenRows() + 0.5D);
 			return true;
 		} else {
@@ -164,7 +164,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 		if (this.isScrollBarActive()) {
 			int i = this.getOffscreenRows();
 			this.scrollOffs = (float) (this.scrollOffs - pDelta / i);
-			this.scrollOffs = MathHelper.clamp(this.scrollOffs, 0.0F, 1.0F);
+			this.scrollOffs = Mth.clamp(this.scrollOffs, 0.0F, 1.0F);
 			this.startIndex = (int) (this.scrollOffs * i + 0.5D);
 		}
 		return true;

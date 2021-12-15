@@ -2,28 +2,28 @@ package shadows.apotheosis.garden;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SugarCaneBlock;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SugarCaneBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraftforge.common.ForgeHooks;
 import shadows.placebo.util.IReplacementBlock;
 
 public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementBlock {
 
 	public ApothSugarcaneBlock() {
-		super(AbstractBlock.Properties.copy(Blocks.SUGAR_CANE));
+		super(BlockBehaviour.Properties.copy(Blocks.SUGAR_CANE));
 		this.setRegistryName(new ResourceLocation("sugar_cane"));
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
 		if (!state.canSurvive(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true);
 		} else if (worldIn.isEmptyBlock(pos.above())) {
@@ -49,7 +49,7 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 
 	@Override
 	@Deprecated
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos origin, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos origin, boolean isMoving) {
 		if (pos.getY() != origin.getY()) {
 			super.neighborChanged(state, world, pos, block, origin, isMoving);
 		}
@@ -60,15 +60,15 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 		this.registerDefaultState(state);
 	}
 
-	protected StateContainer<Block, BlockState> container;
+	protected StateDefinition<Block, BlockState> container;
 
 	@Override
-	public void setStateContainer(StateContainer<Block, BlockState> container) {
+	public void setStateContainer(StateDefinition<Block, BlockState> container) {
 		this.container = container;
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateDefinition() {
+	public StateDefinition<Block, BlockState> getStateDefinition() {
 		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 

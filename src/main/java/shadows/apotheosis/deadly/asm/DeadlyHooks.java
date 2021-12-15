@@ -4,18 +4,19 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.CampfireTileEntity;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.entity.CampfireBlockEntity;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.AffixHelper;
@@ -69,7 +70,7 @@ public class DeadlyHooks {
 	/**
 	 * ASM Hook: Called from {@link EnchantmentHelper#getModifierForCreature}
 	 */
-	public static float getExtraDamageFor(ItemStack stack, CreatureAttribute type) {
+	public static float getExtraDamageFor(ItemStack stack, MobType type) {
 		float dmg = 0;
 		Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
 		for (Map.Entry<Affix, Float> e : affixes.entrySet()) {
@@ -125,20 +126,20 @@ public class DeadlyHooks {
 	 * ASM Hook: Called from {@link CampfireTileEntity#findMatchingRecipe}<br>
 	 * Replaces the standard {@link Inventory} with a context-aware {@link CampfireInventory}.
 	 */
-	public static IInventory getCampfireInv(IInventory src, CampfireTileEntity tile) {
+	public static Container getCampfireInv(Container src, CampfireBlockEntity tile) {
 		return new CampfireInventory(tile, src.getItem(0));
 	}
 
-	public static class CampfireInventory extends Inventory {
+	public static class CampfireInventory extends SimpleContainer {
 
-		private final WeakReference<CampfireTileEntity> tile;
+		private final WeakReference<CampfireBlockEntity> tile;
 
-		public CampfireInventory(CampfireTileEntity tile, ItemStack stack) {
+		public CampfireInventory(CampfireBlockEntity tile, ItemStack stack) {
 			super(stack);
 			this.tile = new WeakReference<>(tile);
 		}
 
-		public CampfireTileEntity getTile() {
+		public CampfireBlockEntity getTile() {
 			return this.tile.get();
 		}
 

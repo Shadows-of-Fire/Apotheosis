@@ -10,17 +10,17 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.Color;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -81,8 +81,8 @@ public class DeadlyModule {
 			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 2), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
 		}
 		RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + LootRarity.ANCIENT.name().toLowerCase(Locale.ROOT)), LootRarity.ANCIENT));
-		Color.NAMED_COLORS = new HashMap<>(Color.NAMED_COLORS);
-		Color.NAMED_COLORS.put("rainbow", new RainbowColor());
+		TextColor.NAMED_COLORS = new HashMap<>(TextColor.NAMED_COLORS);
+		TextColor.NAMED_COLORS.put("rainbow", new RainbowColor());
 	}
 
 	@SubscribeEvent
@@ -113,16 +113,16 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		e.getRegistry().register(new BossSpawnerBlock(AbstractBlock.Properties.of(Material.STONE).strength(-1).noDrops().noOcclusion()).setRegistryName("boss_spawner"));
+		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1).noDrops().noOcclusion()).setRegistryName("boss_spawner"));
 	}
 
 	@SubscribeEvent
-	public void tiles(Register<TileEntityType<?>> e) {
-		e.getRegistry().register(new TileEntityType<>(BossSpawnerTile::new, ImmutableSet.of(ApotheosisObjects.BOSS_SPAWNER), null).setRegistryName("boss_spawn_tile"));
+	public void tiles(Register<BlockEntityType<?>> e) {
+		e.getRegistry().register(new BlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(ApotheosisObjects.BOSS_SPAWNER), null).setRegistryName("boss_spawn_tile"));
 	}
 
 	@SubscribeEvent
-	public void serializers(Register<IRecipeSerializer<?>> e) {
+	public void serializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(AffixShardingRecipe.SERIALIZER.setRegistryName(new ResourceLocation(Apotheosis.MODID, "affix_sharding")));
 		e.getRegistry().register(SoulfireCookingRecipe.SERIALIZER.setRegistryName(new ResourceLocation(Apotheosis.MODID, "soulfire_cooking")));
 	}

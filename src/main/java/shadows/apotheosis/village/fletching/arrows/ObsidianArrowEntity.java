@@ -1,30 +1,30 @@
 package shadows.apotheosis.village.fletching.arrows;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.network.NetworkHooks;
 import shadows.apotheosis.ApotheosisObjects;
 
-public class ObsidianArrowEntity extends AbstractArrowEntity {
+public class ObsidianArrowEntity extends AbstractArrow {
 
-	public ObsidianArrowEntity(EntityType<? extends AbstractArrowEntity> t, World world) {
+	public ObsidianArrowEntity(EntityType<? extends AbstractArrow> t, Level world) {
 		super(t, world);
 	}
 
-	public ObsidianArrowEntity(World world) {
+	public ObsidianArrowEntity(Level world) {
 		super(ApotheosisObjects.OB_ARROW_ENTITY, world);
 	}
 
-	public ObsidianArrowEntity(LivingEntity shooter, World world) {
+	public ObsidianArrowEntity(LivingEntity shooter, Level world) {
 		super(ApotheosisObjects.OB_ARROW_ENTITY, shooter, world);
 	}
 
-	public ObsidianArrowEntity(World world, double x, double y, double z) {
+	public ObsidianArrowEntity(Level world, double x, double y, double z) {
 		super(ApotheosisObjects.OB_ARROW_ENTITY, x, y, z, world);
 	}
 
@@ -34,12 +34,12 @@ public class ObsidianArrowEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+	protected void onHitEntity(EntityHitResult p_213868_1_) {
 		this.setBaseDamage(this.getBaseDamage() * 1.2F);
 		super.onHitEntity(p_213868_1_);
 	}

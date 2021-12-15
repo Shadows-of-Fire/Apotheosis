@@ -2,14 +2,14 @@ package shadows.apotheosis;
 
 import java.io.File;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -18,12 +18,12 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.IModBusEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.IModBusEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
@@ -37,9 +37,9 @@ import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
 import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.network.MessageHelper;
 import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.recipe.RecipeHelper;
-import shadows.placebo.util.NetworkUtils;
 import shadows.placebo.util.RunnableReloader;
 
 @SuppressWarnings("deprecation")
@@ -58,7 +58,7 @@ public class Apotheosis {
 
 	public static final RecipeHelper HELPER = new RecipeHelper(Apotheosis.MODID);
 
-	public static final ItemGroup APOTH_GROUP = new ItemGroup(MODID) {
+	public static final CreativeModeTab APOTH_GROUP = new CreativeModeTab(MODID) {
 
 		@Override
 		public ItemStack makeIcon() {
@@ -109,8 +109,8 @@ public class Apotheosis {
 
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
-		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
-		NetworkUtils.registerMessage(CHANNEL, 1, new StatSyncMessage());
+		MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
+		MessageHelper.registerMessage(CHANNEL, 1, new StatSyncMessage());
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
@@ -121,7 +121,7 @@ public class Apotheosis {
 	}
 
 	public void trackCooldown(AttackEntityEvent e) {
-		PlayerEntity p = e.getPlayer();
+		Player p = e.getPlayer();
 		localAtkStrength = p.getAttackStrengthScale(0.5F);
 	}
 

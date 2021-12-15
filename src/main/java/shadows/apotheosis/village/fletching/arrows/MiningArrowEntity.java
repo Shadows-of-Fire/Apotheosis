@@ -2,60 +2,61 @@ package shadows.apotheosis.village.fletching.arrows;
 
 import java.util.UUID;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.util.BlockUtil;
 
-public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdditionalSpawnData {
+public class MiningArrowEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
 
 	protected int blocksBroken = 0;
 	protected UUID playerId = null;
 	protected ItemStack breakerItem = ItemStack.EMPTY;
 	protected Type type = Type.IRON;
 
-	public MiningArrowEntity(EntityType<? extends AbstractArrowEntity> t, World world) {
+	public MiningArrowEntity(EntityType<? extends AbstractArrow> t, Level world) {
 		super(t, world);
-		this.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+		this.pickup = AbstractArrow.Pickup.DISALLOWED;
 	}
 
-	public MiningArrowEntity(World world) {
+	public MiningArrowEntity(Level world) {
 		this(ApotheosisObjects.MN_ARROW_ENTITY, world);
 	}
 
-	public MiningArrowEntity(LivingEntity shooter, World world, ItemStack breakerItem, Type type) {
+	public MiningArrowEntity(LivingEntity shooter, Level world, ItemStack breakerItem, Type type) {
 		super(ApotheosisObjects.MN_ARROW_ENTITY, shooter, world);
 		this.breakerItem = breakerItem;
-		this.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+		this.pickup = AbstractArrow.Pickup.DISALLOWED;
 		this.type = type;
 		this.playerId = shooter.getUUID();
 	}
 
-	public MiningArrowEntity(World world, double x, double y, double z, ItemStack breakerItem, Type type) {
+	public MiningArrowEntity(Level world, double x, double y, double z, ItemStack breakerItem, Type type) {
 		super(ApotheosisObjects.MN_ARROW_ENTITY, x, y, z, world);
-		this.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
+		this.pickup = AbstractArrow.Pickup.DISALLOWED;
 		this.breakerItem = breakerItem;
 		this.type = type;
 	}
@@ -66,7 +67,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -74,30 +75,30 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 	@SuppressWarnings("deprecation")
 	public void tick() {
 		if (!this.level.isClientSide) {
-			this.setSharedFlag(6, this.isGlowing());
+			this.setSharedFlag(6, this.isCurrentlyGlowing());
 		}
 
 		this.baseTick();
 
 		boolean noClip = this.isNoPhysics();
-		Vector3d motion = this.getDeltaMovement();
+		Vec3 motion = this.getDeltaMovement();
 		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
-			float f = MathHelper.sqrt(getHorizontalDistanceSqr(motion));
-			this.yRot = (float) (MathHelper.atan2(motion.x, motion.z) * (180F / (float) Math.PI));
-			this.xRot = (float) (MathHelper.atan2(motion.y, f) * (180F / (float) Math.PI));
-			this.yRotO = this.yRot;
-			this.xRotO = this.xRot;
+			double d0 = motion.horizontalDistance();
+			this.setYRot((float) (Mth.atan2(motion.x, motion.z) * (double) (180F / (float) Math.PI)));
+			this.setXRot((float) (Mth.atan2(motion.y, d0) * (double) (180F / (float) Math.PI)));
+			this.yRotO = this.getYRot();
+			this.xRotO = this.getXRot();
 		}
 
 		BlockPos blockpos = this.blockPosition();
 		BlockState blockstate = this.level.getBlockState(blockpos);
-		if (!blockstate.isAir(this.level, blockpos) && !noClip) {
+		if (!blockstate.isAir() && !noClip) {
 			VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
 			if (!voxelshape.isEmpty()) {
-				Vector3d vector3d1 = this.position();
+				Vec3 vec31 = this.position();
 
-				for (AxisAlignedBB axisalignedbb : voxelshape.toAabbs()) {
-					if (axisalignedbb.move(blockpos).contains(vector3d1)) {
+				for (AABB aabb : voxelshape.toAabbs()) {
+					if (aabb.move(blockpos).contains(vec31)) {
 						this.inGround = true;
 						break;
 					}
@@ -105,66 +106,74 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 			}
 		}
 
+		if (this.shakeTime > 0) {
+			--this.shakeTime;
+		}
+
+		if (this.isInWaterOrRain() || blockstate.is(Blocks.POWDER_SNOW)) {
+			this.clearFire();
+		}
+
 		if (this.inGround) {
-			this.remove();
+			this.discard();
 		} else {
 			this.inGroundTime = 0;
-			Vector3d pos = this.position();
-			Vector3d posNextTick = pos.add(motion);
+			Vec3 pos = this.position();
+			Vec3 posNextTick = pos.add(motion);
 			int iterations = 0;
 			while (!this.level.isClientSide && this.isAlive()) {
-				RayTraceResult traceResult = this.level.clip(new RayTraceContext(pos, posNextTick, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this));
-				if (traceResult.getType() == RayTraceResult.Type.MISS) break;
-				else if (traceResult.getType() == RayTraceResult.Type.BLOCK) {
+				HitResult traceResult = this.level.clip(new ClipContext(pos, posNextTick, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+				if (traceResult.getType() == HitResult.Type.MISS) break;
+				else if (traceResult.getType() == HitResult.Type.BLOCK) {
 					this.onHit(traceResult);
 				}
 				if (iterations++ > 10) break; //Safeguard in case mods do weird stuff
 			}
 
 			motion = this.getDeltaMovement();
-			double velX = motion.x;
-			double velY = motion.y;
-			double velZ = motion.z;
+			double dX = motion.x;
+			double dY = motion.y;
+			double dZ = motion.z;
 			if (this.isCritArrow()) {
 				for (int i = 0; i < 4; ++i) {
-					this.level.addParticle(ParticleTypes.CRIT, this.getX() + velX * i / 4.0D, this.getY() + velY * i / 4.0D, this.getZ() + velZ * i / 4.0D, -velX, -velY + 0.2D, -velZ);
+					this.level.addParticle(ParticleTypes.CRIT, this.getX() + dX * (double) i / 4.0D, this.getY() + dY * (double) i / 4.0D, this.getZ() + dZ * (double) i / 4.0D, -dX, -dY + 0.2D, -dZ);
 				}
 			}
 
-			double nextTickX = this.getX() + velX;
-			double nextTickY = this.getY() + velY;
-			double nextTickZ = this.getZ() + velZ;
-			float f1 = MathHelper.sqrt(getHorizontalDistanceSqr(motion));
+			double nextX = this.getX() + dX;
+			double nextY = this.getY() + dY;
+			double nextZ = this.getZ() + dZ;
+			double hDist = motion.horizontalDistance();
 			if (noClip) {
-				this.yRot = (float) (MathHelper.atan2(-velX, -velZ) * (180F / (float) Math.PI));
+				this.setYRot((float) (Mth.atan2(-dX, -dZ) * (double) (180F / (float) Math.PI)));
 			} else {
-				this.yRot = (float) (MathHelper.atan2(velX, velZ) * (180F / (float) Math.PI));
+				this.setYRot((float) (Mth.atan2(dX, dZ) * (double) (180F / (float) Math.PI)));
 			}
 
-			this.xRot = (float) (MathHelper.atan2(velY, f1) * (180F / (float) Math.PI));
-			this.xRot = lerpRotation(this.xRotO, this.xRot);
-			this.yRot = lerpRotation(this.yRotO, this.yRot);
-			float f2 = 0.99F;
+			this.setXRot((float) (Mth.atan2(dY, hDist) * (double) (180F / (float) Math.PI)));
+			this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
+			this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
+			float f = 0.99F;
 			if (this.isInWater()) {
 				for (int j = 0; j < 4; ++j) {
-					this.level.addParticle(ParticleTypes.BUBBLE, nextTickX - velX * 0.25D, nextTickY - velY * 0.25D, nextTickZ - velZ * 0.25D, velX, velY, velZ);
+					this.level.addParticle(ParticleTypes.BUBBLE, nextX - dX * 0.25D, nextY - dY * 0.25D, nextZ - dZ * 0.25D, dX, dY, dZ);
 				}
 
-				f2 = this.getWaterInertia();
+				f = this.getWaterInertia();
 			}
 
-			this.setDeltaMovement(motion.scale(f2));
+			this.setDeltaMovement(motion.scale((double) f));
 			if (!this.isNoGravity() && !noClip) {
-				Vector3d vector3d4 = this.getDeltaMovement();
-				this.setDeltaMovement(vector3d4.x, vector3d4.y - 0.05F, vector3d4.z);
+				Vec3 vec34 = this.getDeltaMovement();
+				this.setDeltaMovement(vec34.x, vec34.y - (double) 0.05F, vec34.z);
 			}
 
-			this.setPos(nextTickX, nextTickY, nextTickZ);
+			this.setPos(nextX, nextY, nextZ);
 		}
 	}
 
 	@Override
-	protected void onHitBlock(BlockRayTraceResult res) {
+	protected void onHitBlock(BlockHitResult res) {
 		this.breakBlock(res.getBlockPos());
 	}
 
@@ -174,7 +183,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putInt("blocks_broken", this.blocksBroken);
 		if (this.playerId != null) compound.putUUID("player_id", this.playerId);
@@ -183,7 +192,7 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.blocksBroken = compound.getInt("blocks_broken");
 		if (compound.contains("player_id")) this.playerId = compound.getUUID("player_id");
@@ -192,25 +201,25 @@ public class MiningArrowEntity extends AbstractArrowEntity implements IEntityAdd
 	}
 
 	@Override
-	public void writeSpawnData(PacketBuffer buf) {
+	public void writeSpawnData(FriendlyByteBuf buf) {
 		buf.writeByte(this.type.ordinal());
 	}
 
 	@Override
-	public void readSpawnData(PacketBuffer buf) {
+	public void readSpawnData(FriendlyByteBuf buf) {
 		this.type = Type.values()[buf.readByte()];
 	}
 
 	@SuppressWarnings("deprecation")
 	protected void breakBlock(BlockPos pos) {
-		if (!this.level.isClientSide && !this.level.getBlockState(pos).isAir(this.level, pos)) {
-			if (BlockUtil.breakExtraBlock((ServerWorld) this.level, pos, this.breakerItem, this.playerId)) {
+		if (!this.level.isClientSide && !this.level.getBlockState(pos).isAir()) {
+			if (BlockUtil.breakExtraBlock((ServerLevel) this.level, pos, this.breakerItem, this.playerId)) {
 				if (++this.blocksBroken >= 12) {
-					this.remove();
+					this.discard();
 				}
 			} else {
 				this.playSound(SoundEvents.ANVIL_PLACE, 1.0F, 1.5F / (this.random.nextFloat() * 0.2F + 0.9F));
-				this.remove();
+				this.discard();
 			}
 		}
 	}

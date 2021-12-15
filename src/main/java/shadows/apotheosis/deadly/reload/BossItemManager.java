@@ -14,28 +14,28 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.entity.EntityType;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.storage.loot.RandomValueBounds;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.gen.BossItem;
 import shadows.apotheosis.util.AxisAlignedBBDeserializer;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.EntityTypeDeserializer;
-import shadows.apotheosis.util.JsonUtil;
 import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
+import shadows.apotheosis.util.JsonUtil;
 import shadows.apotheosis.util.RandomAttributeModifier;
-import shadows.placebo.util.json.NBTAdapter;
+import shadows.placebo.json.NBTAdapter;
 
-public class BossItemManager extends JsonReloadListener {
+public class BossItemManager extends SimpleJsonResourceReloadListener {
 
 	//Formatter::off
 	public static final Gson GSON = new GsonBuilder()
@@ -44,11 +44,11 @@ public class BossItemManager extends JsonReloadListener {
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
 			.registerTypeAdapter(SetPredicate.class, new SetPredicateAdapter())
 			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
-			.registerTypeAdapter(RandomValueRange.class, new RandomValueRange.Serializer())
+			.registerTypeAdapter(RandomValueBounds.class, new RandomValueBounds.Serializer())
 			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
 			.registerTypeAdapter(RandomAttributeModifier.class, new RandomAttributeModifier.Deserializer())
-			.registerTypeAdapter(AxisAlignedBB.class, new AxisAlignedBBDeserializer())
-			.registerTypeAdapter(CompoundNBT.class, new NBTAdapter()).create();
+			.registerTypeAdapter(AABB.class, new AxisAlignedBBDeserializer())
+			.registerTypeAdapter(CompoundTag.class, new NBTAdapter()).create();
 	//Formatter::on
 
 	public static final BossItemManager INSTANCE = new BossItemManager();
@@ -62,7 +62,7 @@ public class BossItemManager extends JsonReloadListener {
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> objects, IResourceManager resourceManagerIn, IProfiler profilerIn) {
+	protected void apply(Map<ResourceLocation, JsonElement> objects, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
 		this.entries.clear();
 		this.registry.clear();
 		for (Entry<ResourceLocation, JsonElement> obj : objects.entrySet()) {
@@ -76,7 +76,7 @@ public class BossItemManager extends JsonReloadListener {
 		}
 		if (this.entries.size() == 0) throw new RuntimeException("No Bosses were registered.  This is not supported.");
 		Collections.shuffle(this.entries);
-		this.weight = WeightedRandom.getTotalWeight(this.entries);
+		this.weight = WeighedRandom.getTotalWeight(this.entries);
 		if (this.weight == 0) throw new RuntimeException("The total boss weight is zero.  This is not supported.");
 		DeadlyModule.LOGGER.info("Loaded {} boss items from resources.", this.entries.size());
 	}
@@ -90,7 +90,7 @@ public class BossItemManager extends JsonReloadListener {
 	}
 
 	public BossItem getRandomItem(Random rand) {
-		return WeightedRandom.getRandomItem(rand, this.entries, this.weight);
+		return WeighedRandom.getRandomItem(rand, this.entries, this.weight);
 	}
 
 	@Nullable

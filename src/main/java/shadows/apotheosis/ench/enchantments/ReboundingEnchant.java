@@ -1,18 +1,18 @@
 package shadows.apotheosis.ench.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.phys.Vec3;
 import shadows.apotheosis.ApotheosisObjects;
 
 public class ReboundingEnchant extends Enchantment {
 
 	public ReboundingEnchant() {
-		super(Rarity.RARE, EnchantmentType.ARMOR, new EquipmentSlotType[] { EquipmentSlotType.CHEST, EquipmentSlotType.LEGS });
+		super(Rarity.RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class ReboundingEnchant extends Enchantment {
 	public void doPostHurt(LivingEntity user, Entity attacker, int level) {
 		if (attacker != null && user.distanceToSqr(attacker) <= 4D && attacker.canChangeDimensions()) {
 			level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.REBOUNDING, user);
-			Vector3d vec = new Vector3d(attacker.getX() - user.getX(), attacker.getY() - user.getY(), attacker.getZ() - user.getZ());
+			Vec3 vec = new Vec3(attacker.getX() - user.getX(), attacker.getY() - user.getY(), attacker.getZ() - user.getZ());
 			attacker.push(vec.x * 2 * level, vec.y * 3 * level, vec.z * 2 * level);
 		}
 	}

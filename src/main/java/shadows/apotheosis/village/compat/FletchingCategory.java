@@ -7,10 +7,11 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.util.Translator;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.village.fletching.FletchingRecipe;
 import shadows.apotheosis.village.fletching.FletchingScreen;
@@ -21,13 +22,13 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 
 	private final IDrawable background;
 	private final IDrawable icon;
-	private final String localizedName;
+	private final Component localizedName;
 
 	public FletchingCategory(IGuiHelper guiHelper) {
 		ResourceLocation location = FletchingScreen.TEXTURES;
 		this.background = guiHelper.createDrawable(location, 6, 16, 139, 54);
 		this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blocks.FLETCHING_TABLE));
-		this.localizedName = Translator.translateToLocal("apotheosis.recipes.fletching");
+		this.localizedName = new TranslatableComponent("apotheosis.recipes.fletching");
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 	}
 
 	@Override
-	public String getTitle() {
+	public Component getTitle() {
 		return this.localizedName;
 	}
 

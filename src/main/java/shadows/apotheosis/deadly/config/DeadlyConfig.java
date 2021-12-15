@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.ResourceLocationException;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.ResourceLocationException;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.WorldGenLevel;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.LootRarity;
@@ -106,8 +106,8 @@ public class DeadlyConfig {
 		}
 	}
 
-	public static boolean canGenerateIn(ISeedReader world) {
-		RegistryKey<World> key = world.getLevel().dimension();
+	public static boolean canGenerateIn(WorldGenLevel world) {
+		ResourceKey<Level> key = world.getLevel().dimension();
 		return DIM_WHITELIST.contains(key.location());
 	}
 }

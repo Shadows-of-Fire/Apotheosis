@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.JsonElement;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class JsonUtil {
 

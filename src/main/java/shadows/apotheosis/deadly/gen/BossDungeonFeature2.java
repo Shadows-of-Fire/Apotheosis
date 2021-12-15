@@ -2,22 +2,22 @@ package shadows.apotheosis.deadly.gen;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.loot.LootTables;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.DeadlyModule;
@@ -28,7 +28,7 @@ import shadows.apotheosis.deadly.reload.BossItemManager;
 /**
  * Boss Dungeon Feature (Variant 2) - Credit to BigAl607 on discord for the structure.
  */
-public class BossDungeonFeature2 extends Feature<NoFeatureConfig> {
+public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
 
 	public static final ResourceLocation TEMPLATE_ID = new ResourceLocation(Apotheosis.MODID, "boss_1");
 	public static final BossDungeonFeature2 INSTANCE = new BossDungeonFeature2();
@@ -40,12 +40,12 @@ public class BossDungeonFeature2 extends Feature<NoFeatureConfig> {
 	protected static int zRadius = 4;
 
 	public BossDungeonFeature2() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(WorldGenLevel world, ChunkGenerator gen, Random rand, BlockPos pos, NoneFeatureConfiguration cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		BlockState[][][] states = new BlockState[9][8][9];
 
@@ -74,8 +74,8 @@ public class BossDungeonFeature2 extends Feature<NoFeatureConfig> {
 
 		if (doors >= 3) { //3 Doors, a floor, and a roof.  Good enough for me!
 
-			Template template = ServerLifecycleHooks.getCurrentServer().getStructureManager().get(TEMPLATE_ID);
-			template.placeInWorld(world, pos.offset(-4, -1, -4), new PlacementSettings(), rand);
+			StructureTemplate template = ServerLifecycleHooks.getCurrentServer().getStructureManager().get(TEMPLATE_ID);
+			template.placeInWorld(world, pos.offset(-4, -1, -4), new StructurePlaceSettings(), rand);
 
 			boolean rand1 = rand.nextBoolean();
 			boolean rand2 = rand.nextBoolean();
@@ -84,12 +84,12 @@ public class BossDungeonFeature2 extends Feature<NoFeatureConfig> {
 			BlockPos chest2 = pos.offset(!rand1 ? xRadius - 1 : -xRadius + 1, 0, !rand2 ? zRadius - 1 : -zRadius + 1);
 
 			world.setBlock(chest1, StructurePiece.reorient(world, chest1, Blocks.CHEST.defaultBlockState()), 2);
-			LockableLootTileEntity.setLootTable(world, rand, chest1, LootTables.SIMPLE_DUNGEON);
+			RandomizableContainerBlockEntity.setLootTable(world, rand, chest1, BuiltInLootTables.SIMPLE_DUNGEON);
 			world.setBlock(chest2, StructurePiece.reorient(world, chest2, Blocks.CHEST.defaultBlockState()), 2);
-			LockableLootTileEntity.setLootTable(world, rand, chest2, LootTables.SIMPLE_DUNGEON);
+			RandomizableContainerBlockEntity.setLootTable(world, rand, chest2, BuiltInLootTables.SIMPLE_DUNGEON);
 
 			world.setBlock(pos, ApotheosisObjects.BOSS_SPAWNER.defaultBlockState(), 2);
-			TileEntity tileentity = world.getBlockEntity(pos);
+			BlockEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof BossSpawnerTile) {
 				((BossSpawnerTile) tileentity).setBossItem(BossItemManager.INSTANCE.getRandomItem(rand));
 			} else {

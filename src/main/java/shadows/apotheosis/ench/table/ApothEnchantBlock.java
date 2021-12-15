@@ -4,55 +4,55 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.EnchantingTableBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.INameable;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EnchantmentTableBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.placebo.util.IReplacementBlock;
 
-public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacementBlock {
+public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplacementBlock {
 
 	public ApothEnchantBlock() {
-		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
+		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
 		this.setRegistryName("minecraft:enchanting_table");
 	}
 
 	@Override
 	@Nullable
-	public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
-		TileEntity tileentity = world.getBlockEntity(pos);
+	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+		BlockEntity tileentity = world.getBlockEntity(pos);
 		if (tileentity instanceof ApothEnchantTile) {
-			ITextComponent itextcomponent = ((INameable) tileentity).getDisplayName();
-			return new SimpleNamedContainerProvider((id, inventory, player) -> new ApothEnchantContainer(id, inventory, IWorldPosCallable.create(world, pos), (ApothEnchantTile) tileentity), itextcomponent);
+			Component itextcomponent = ((Nameable) tileentity).getDisplayName();
+			return new SimpleMenuProvider((id, inventory, player) -> new ApothEnchantContainer(id, inventory, ContainerLevelAccess.create(world, pos), (ApothEnchantTile) tileentity), itextcomponent);
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public TileEntity newBlockEntity(IBlockReader worldIn) {
+	public BlockEntity newBlockEntity(BlockGetter worldIn) {
 		return new ApothEnchantTile();
 	}
 
 	@Override
-	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			TileEntity tileentity = world.getBlockEntity(pos);
+			BlockEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof ApothEnchantTile) {
 				Block.popResource(world, pos, ((ApothEnchantTile) tileentity).inv.getStackInSlot(0));
 				world.removeBlockEntity(pos);
@@ -65,21 +65,21 @@ public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacem
 		this.registerDefaultState(state);
 	}
 
-	protected StateContainer<Block, BlockState> container;
+	protected StateDefinition<Block, BlockState> container;
 
 	@Override
-	public void setStateContainer(StateContainer<Block, BlockState> container) {
+	public void setStateContainer(StateDefinition<Block, BlockState> container) {
 		this.container = container;
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateDefinition() {
+	public StateDefinition<Block, BlockState> getStateDefinition() {
 		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState state, World level, BlockPos pos, Random rand) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, Random rand) {
 		for (int i = -2; i <= 2; ++i) {
 			for (int j = -2; j <= 2; ++j) {
 				if (i > -2 && i < 2 && j == -1) {

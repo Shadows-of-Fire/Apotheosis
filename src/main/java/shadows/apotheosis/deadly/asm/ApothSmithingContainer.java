@@ -2,17 +2,17 @@ package shadows.apotheosis.deadly.asm;
 
 import java.util.List;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.SmithingTableContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.SmithingRecipe;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SmithingMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.UpgradeRecipe;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -20,22 +20,22 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import shadows.apotheosis.Apotheosis;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = Apotheosis.MODID)
-public class ApothSmithingContainer extends SmithingTableContainer {
+public class ApothSmithingContainer extends SmithingMenu {
 
-	protected final World world;
-	protected final List<SmithingRecipe> recipes;
+	protected final Level world;
+	protected final List<UpgradeRecipe> recipes;
 
-	public ApothSmithingContainer(int id, PlayerInventory inv, IWorldPosCallable wPos) {
+	public ApothSmithingContainer(int id, Inventory inv, ContainerLevelAccess wPos) {
 		super(id, inv, wPos);
 		this.world = wPos.evaluate((w, p) -> w).get();
-		this.recipes = this.world.getRecipeManager().getAllRecipesFor(IRecipeType.SMITHING);
+		this.recipes = this.world.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING);
 	}
 
 	@Override
-	protected ItemStack onTake(PlayerEntity p_230301_1_, ItemStack p_230301_2_) {
+	protected ItemStack onTake(Player p_230301_1_, ItemStack p_230301_2_) {
 		p_230301_2_.onCraftedBy(p_230301_1_.level, p_230301_1_, p_230301_2_.getCount());
 		this.resultSlots.awardUsedRecipes(p_230301_1_);
-		SmithingRecipe recipe = this.recipes.stream().filter(r -> r.matches(this.inputSlots, this.world)).findFirst().orElse(null);
+		UpgradeRecipe recipe = this.recipes.stream().filter(r -> r.matches(this.inputSlots, this.world)).findFirst().orElse(null);
 		if (recipe == null) {
 			this.shrinkStackInSlot(0);
 			this.shrinkStackInSlot(1);
@@ -46,8 +46,8 @@ public class ApothSmithingContainer extends SmithingTableContainer {
 				if (!r.isEmpty()) {
 					this.inputSlots.setItem(i, r);
 					if (!this.world.isClientSide) {
-						ServerPlayerEntity player = (ServerPlayerEntity) this.player;
-						player.connection.send(new SSetSlotPacket(this.containerId, i, r));
+						ServerPlayer player = (ServerPlayer) this.player;
+						player.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, i, r));
 					}
 				} else this.inputSlots.getItem(i).shrink(1);
 			}
@@ -66,9 +66,9 @@ public class ApothSmithingContainer extends SmithingTableContainer {
 
 	@SubscribeEvent
 	public static void containers(PlayerContainerEvent.Open e) {
-		if (e.getPlayer() instanceof ServerPlayerEntity && e.getContainer().getClass() == SmithingTableContainer.class) {
-			ServerPlayerEntity player = (ServerPlayerEntity) e.getPlayer();
-			SmithingTableContainer container = (SmithingTableContainer) e.getContainer();
+		if (e.getPlayer() instanceof ServerPlayer && e.getContainer().getClass() == SmithingMenu.class) {
+			ServerPlayer player = (ServerPlayer) e.getPlayer();
+			SmithingMenu container = (SmithingMenu) e.getContainer();
 			player.containerMenu = new ApothSmithingContainer(container.containerId, player.inventory, container.access);
 		}
 	}

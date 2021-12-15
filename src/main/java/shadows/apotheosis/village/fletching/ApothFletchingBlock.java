@@ -1,42 +1,42 @@
 package shadows.apotheosis.village.fletching;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FletchingTableBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FletchingTableBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 import shadows.placebo.util.IReplacementBlock;
 
 public class ApothFletchingBlock extends FletchingTableBlock implements IReplacementBlock {
 
-	public static final ITextComponent NAME = new TranslationTextComponent("apotheosis.recipes.fletching");
+	public static final Component NAME = new TranslatableComponent("apotheosis.recipes.fletching");
 
 	public ApothFletchingBlock() {
-		super(AbstractBlock.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD));
+		super(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD));
 		this.setRegistryName("minecraft", "fletching_table");
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (worldIn.isClientSide) return ActionResultType.SUCCESS;
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+		if (worldIn.isClientSide) return InteractionResult.SUCCESS;
 		player.openMenu(this.getMenuProvider(state, worldIn, pos));
-		return ActionResultType.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
 	@Override
-	public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
+	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
 		return What.getMenuProvider(state, world, pos);
 	}
 
@@ -45,15 +45,15 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 		this.registerDefaultState(state);
 	}
 
-	protected StateContainer<Block, BlockState> container;
+	protected StateDefinition<Block, BlockState> container;
 
 	@Override
-	public void setStateContainer(StateContainer<Block, BlockState> container) {
+	public void setStateContainer(StateDefinition<Block, BlockState> container) {
 		this.container = container;
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateDefinition() {
+	public StateDefinition<Block, BlockState> getStateDefinition() {
 		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 
@@ -61,8 +61,8 @@ public class ApothFletchingBlock extends FletchingTableBlock implements IReplace
 	//TODO: Remove after update to FG 5 - appears to have been bug in SpecialSource.
 	private static class What {
 
-		static INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
-			return new SimpleNamedContainerProvider((id, inv, player) -> new FletchingContainer(id, inv, world, pos), NAME);
+		static MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+			return new SimpleMenuProvider((id, inv, player) -> new FletchingContainer(id, inv, world, pos), NAME);
 		}
 	}
 }

@@ -13,41 +13,41 @@ import com.google.common.collect.ImmutableSet;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.dispenser.BeehiveDispenseBehavior;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantment.Rarity;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.ProtectionEnchantment;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Potions;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.core.dispenser.ShearsDispenseItemBehavior;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.network.IContainerFactory;
+import net.minecraftforge.network.IContainerFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
@@ -115,10 +115,10 @@ public class EnchModule {
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
 	public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
 	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").bypassArmor().bypassMagic();
-	public static final EquipmentSlotType[] ARMOR = { EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET };
-	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
-	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
-	public static final EnchantmentType ANVIL = EnchantmentType.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
+	public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
+	public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", i -> i instanceof HoeItem);
+	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create("SHIELD", i -> i instanceof ShieldItem);
+	public static final EnchantmentCategory ANVIL = EnchantmentCategory.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
 	static Configuration enchInfoConfig;
 
 	@SubscribeEvent
@@ -171,7 +171,7 @@ public class EnchModule {
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		e.enqueueWork(() -> {
-			DispenserBlock.registerBehavior(Items.SHEARS, new BeehiveDispenseBehavior());
+			DispenserBlock.registerBehavior(Items.SHEARS, new ShearsDispenseItemBehavior());
 		});
 	}
 
@@ -182,17 +182,17 @@ public class EnchModule {
 	}
 
 	@SubscribeEvent
-	public void tiles(Register<TileEntityType<?>> e) {
-		e.getRegistry().register(new TileEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
-		e.getRegistry().register(new TileEntityType<>(SeaAltarTile::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
-		e.getRegistry().register(new TileEntityType<>(ApothEnchantTile::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
-		e.getRegistry().register(new TileEntityType<>(EnchLibraryTile::new, ImmutableSet.of(ApotheosisObjects.ENCHANTMENT_LIBRARY), null).setRegistryName("ench_lib_tile"));
+	public void tiles(Register<BlockEntityType<?>> e) {
+		e.getRegistry().register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
+		e.getRegistry().register(new BlockEntityType<>(SeaAltarTile::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
+		e.getRegistry().register(new BlockEntityType<>(ApothEnchantTile::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
+		e.getRegistry().register(new BlockEntityType<>(EnchLibraryTile::new, ImmutableSet.of(ApotheosisObjects.ENCHANTMENT_LIBRARY), null).setRegistryName("ench_lib_tile"));
 	}
 
 	@SubscribeEvent
-	public void containers(Register<ContainerType<?>> e) {
-		e.getRegistry().register(new ContainerType<>(ApothEnchantContainer::new).setRegistryName("enchanting"));
-		e.getRegistry().register(new ContainerType<>((IContainerFactory<EnchLibraryContainer>) (id, inv, buf) -> new EnchLibraryContainer(id, inv, buf.readBlockPos())).setRegistryName("ench_lib_con"));
+	public void containers(Register<MenuType<?>> e) {
+		e.getRegistry().register(new MenuType<>(ApothEnchantContainer::new).setRegistryName("enchanting"));
+		e.getRegistry().register(new MenuType<>((IContainerFactory<EnchLibraryContainer>) (id, inv, buf) -> new EnchLibraryContainer(id, inv, buf.readBlockPos())).setRegistryName("ench_lib_con"));
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class EnchModule {
 	public void handleIMC(InterModProcessEvent e) {
 		e.getIMCStream(ENCH_HARD_CAP_IMC::equals).forEach(msg -> {
 			try {
-				EnchantmentData data = msg.<EnchantmentData>getMessageSupplier().get();
+				EnchantmentInstance data = msg.<EnchantmentInstance>getMessageSupplier().get();
 				if (data != null && data.enchantment != null && data.level > 0) {
 					ENCH_HARD_CAPS.put(data.enchantment, data.level);
 				} else LOGGER.error("Failed to process IMC message with method {} from {} (invalid values passed).", msg.getMethod(), msg.getSenderModId());
@@ -224,16 +224,16 @@ public class EnchModule {
 				new ApothAnvilBlock().setRegistryName("minecraft", "chipped_anvil"),
 				new ApothAnvilBlock().setRegistryName("minecraft", "damaged_anvil"),
 				new HellshelfBlock().setRegistryName("hellshelf"),
-				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
-				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
 				new SeashelfBlock().setRegistryName("seashelf"),
-				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("crystal_seashelf"),
-				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("heart_seashelf"),
-				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("endshelf"),
-				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
-				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
-				new Block(AbstractBlock.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
-				new Block(AbstractBlock.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("crystal_seashelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("heart_seashelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("endshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf"),
 				new EnchLibraryBlock().setRegistryName("enchantment_library")
 				);
 		//Formatter::on
@@ -250,14 +250,14 @@ public class EnchModule {
 				new ApothAnvilItem(Blocks.CHIPPED_ANVIL),
 				new ApothAnvilItem(Blocks.DAMAGED_ANVIL),
 				new TomeItem(Items.AIR, null),
-				new TomeItem(Items.DIAMOND_HELMET, EnchantmentType.ARMOR_HEAD),
-				new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentType.ARMOR_CHEST),
-				new TomeItem(Items.DIAMOND_LEGGINGS, EnchantmentType.ARMOR_LEGS),
-				new TomeItem(Items.DIAMOND_BOOTS, EnchantmentType.ARMOR_FEET),
-				new TomeItem(Items.DIAMOND_SWORD, EnchantmentType.WEAPON),
-				new TomeItem(Items.DIAMOND_PICKAXE, EnchantmentType.DIGGER),
-				new TomeItem(Items.FISHING_ROD, EnchantmentType.FISHING_ROD),
-				new TomeItem(Items.BOW, EnchantmentType.BOW),
+				new TomeItem(Items.DIAMOND_HELMET, EnchantmentCategory.ARMOR_HEAD),
+				new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentCategory.ARMOR_CHEST),
+				new TomeItem(Items.DIAMOND_LEGGINGS, EnchantmentCategory.ARMOR_LEGS),
+				new TomeItem(Items.DIAMOND_BOOTS, EnchantmentCategory.ARMOR_FEET),
+				new TomeItem(Items.DIAMOND_SWORD, EnchantmentCategory.WEAPON),
+				new TomeItem(Items.DIAMOND_PICKAXE, EnchantmentCategory.DIGGER),
+				new TomeItem(Items.FISHING_ROD, EnchantmentCategory.FISHING_ROD),
+				new TomeItem(Items.BOW, EnchantmentCategory.BOW),
 				new BlockItem(ApotheosisObjects.PRISMATIC_ALTAR, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("prismatic_altar"),
 				new ScrappingTomeItem(),
 				new HellshelfItem(ApotheosisObjects.HELLSHELF).setRegistryName(ApotheosisObjects.HELLSHELF.getRegistryName()),
@@ -296,15 +296,15 @@ public class EnchModule {
 				new ReboundingEnchant().setRegistryName(Apotheosis.MODID, "rebounding"),
 				new MagicProtEnchant().setRegistryName(Apotheosis.MODID, "magic_protection"),
 				new SeaInfusionEnchantment().setRegistryName("sea_infusion"),
-				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ARTHROPOD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
-				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.UNDEAD, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "smite"),
-				new BaneEnchant(Rarity.COMMON, CreatureAttribute.UNDEFINED, EquipmentSlotType.MAINHAND).setRegistryName("minecraft", "sharpness"),
-				new BaneEnchant(Rarity.UNCOMMON, CreatureAttribute.ILLAGER, EquipmentSlotType.MAINHAND).setRegistryName("bane_of_illagers"),
+				new BaneEnchant(Rarity.UNCOMMON, MobType.ARTHROPOD, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
+				new BaneEnchant(Rarity.UNCOMMON, MobType.UNDEAD, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "smite"),
+				new BaneEnchant(Rarity.COMMON, MobType.UNDEFINED, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "sharpness"),
+				new BaneEnchant(Rarity.UNCOMMON, MobType.ILLAGER, EquipmentSlot.MAINHAND).setRegistryName("bane_of_illagers"),
 				new DefenseEnchant(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"),
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FIRE, ARMOR).setRegistryName("minecraft", "fire_protection"),
 				new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.EXPLOSION, ARMOR).setRegistryName("minecraft", "blast_protection"),
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.PROJECTILE, ARMOR).setRegistryName("minecraft", "projectile_protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlot.FEET).setRegistryName("minecraft", "feather_falling"),
 				new ObliterationEnchant().setRegistryName("obliteration"),
 				new CrescendoEnchant().setRegistryName("crescendo")
 				);

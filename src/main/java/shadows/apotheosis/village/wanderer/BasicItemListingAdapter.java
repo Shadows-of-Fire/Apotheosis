@@ -10,16 +10,16 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.MerchantOffer;
-import net.minecraftforge.common.BasicTrade;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraftforge.common.BasicItemListing;
 
-public class BasicTradeAdapter implements JsonDeserializer<BasicTrade>, JsonSerializer<BasicTrade> {
+public class BasicItemListingAdapter implements JsonDeserializer<BasicItemListing>, JsonSerializer<BasicItemListing> {
 
-	public static final BasicTradeAdapter INSTANCE = new BasicTradeAdapter();
+	public static final BasicItemListingAdapter INSTANCE = new BasicItemListingAdapter();
 
 	@Override
-	public BasicTrade deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx) throws JsonParseException {
+	public BasicItemListing deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext ctx) throws JsonParseException {
 		JsonObject obj = json.getAsJsonObject();
 		ItemStack price1 = ctx.deserialize(obj.get("input_1"), ItemStack.class);
 		ItemStack price2 = obj.has("input_2") ? ctx.deserialize(obj.get("input_2"), ItemStack.class) : ItemStack.EMPTY;
@@ -27,11 +27,11 @@ public class BasicTradeAdapter implements JsonDeserializer<BasicTrade>, JsonSeri
 		int maxTrades = obj.has("max_trades") ? obj.get("max_trades").getAsInt() : 1;
 		int xp = obj.has("xp") ? obj.get("xp").getAsInt() : 0;
 		float priceMult = obj.has("price_mult") ? obj.get("price_mult").getAsFloat() : 1;
-		return new BasicTrade(price1, price2, output, maxTrades, xp, priceMult);
+		return new BasicItemListing(price1, price2, output, maxTrades, xp, priceMult);
 	}
 
 	@Override
-	public JsonElement serialize(BasicTrade src, Type typeOfSrc, JsonSerializationContext ctx) {
+	public JsonElement serialize(BasicItemListing src, Type typeOfSrc, JsonSerializationContext ctx) {
 		JsonObject obj = new JsonObject();
 		MerchantOffer offer = src.getOffer(null, null);
 		obj.add("input_1", ctx.serialize(offer.getBaseCostA()));

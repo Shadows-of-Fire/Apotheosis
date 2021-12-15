@@ -4,23 +4,23 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.RandomValueRange;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.RandomValueBounds;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 
 public abstract class RangedAffix extends Affix {
 
-	protected final RandomValueRange range;
+	protected final RandomValueBounds range;
 
-	public RangedAffix(RandomValueRange range, int weight) {
+	public RangedAffix(RandomValueBounds range, int weight) {
 		super(weight);
 		this.range = range;
 	}
 
 	public RangedAffix(float min, float max, int weight) {
-		this(new RandomValueRange(min, max), weight);
+		this(new RandomValueBounds(min, max), weight);
 	}
 
 	@Override

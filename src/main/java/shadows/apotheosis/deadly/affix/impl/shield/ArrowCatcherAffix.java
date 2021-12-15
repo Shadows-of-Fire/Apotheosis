@@ -6,15 +6,15 @@ import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -24,7 +24,7 @@ public class ArrowCatcherAffix extends Affix {
 	public static final MethodHandle getArrowStack;
 
 	static {
-		Method getAS = ObfuscationReflectionHelper.findMethod(AbstractArrowEntity.class, "func_184550_j");
+		Method getAS = ObfuscationReflectionHelper.findMethod(AbstractArrow.class, "func_184550_j");
 		getAS.setAccessible(true);
 		try {
 			getArrowStack = MethodHandles.lookup().unreflect(getAS);
@@ -45,7 +45,7 @@ public class ArrowCatcherAffix extends Affix {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+	public void addInformation(ItemStack stack, float level, Consumer<Component> list) {
 		if (level == 1) list.accept(loreComponent("affix." + this.getRegistryName() + ".desc1"));
 		else list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level)));
 	}
@@ -78,8 +78,8 @@ public class ArrowCatcherAffix extends Affix {
 	@Override
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
 		Entity iSource = source.getDirectEntity();
-		if (iSource instanceof AbstractArrowEntity) {
-			AbstractArrowEntity arrow = (AbstractArrowEntity) iSource;
+		if (iSource instanceof AbstractArrow) {
+			AbstractArrow arrow = (AbstractArrow) iSource;
 			arrow.remove();
 			try {
 				ItemStack arrowStack = (ItemStack) getArrowStack.invoke(arrow);

@@ -2,21 +2,21 @@ package shadows.apotheosis.ench.enchantments;
 
 import java.util.Random;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.util.FakePlayer;
 
 public class IcyThornsEnchant extends Enchantment {
 
 	public IcyThornsEnchant() {
-		super(Rarity.RARE, EnchantmentType.ARMOR_CHEST, new EquipmentSlotType[] { EquipmentSlotType.CHEST });
+		super(Rarity.RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[] { EquipmentSlot.CHEST });
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class IcyThornsEnchant extends Enchantment {
 		Random rand = user.getRandom();
 		if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
 			LivingEntity ent = (LivingEntity) attacker;
-			ent.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
+			ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
 		}
 	}
 

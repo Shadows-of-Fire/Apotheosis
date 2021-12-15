@@ -6,15 +6,15 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
@@ -22,21 +22,21 @@ import shadows.apotheosis.deadly.affix.AffixHelper;
 
 public class EnchantmentIngredient extends Ingredient {
 
-	protected final IItemProvider item;
+	protected final ItemLike item;
 	protected final Enchantment enchantment;
 	protected final int minLevel;
 
-	public EnchantmentIngredient(IItemProvider item, Enchantment enchantment, int minLevel) {
-		super(Stream.of(new Ingredient.SingleItemList(format(item, enchantment, minLevel))));
+	public EnchantmentIngredient(ItemLike item, Enchantment enchantment, int minLevel) {
+		super(Stream.of(new Ingredient.ItemValue(format(item, enchantment, minLevel))));
 		this.item = item;
 		this.enchantment = enchantment;
 		this.minLevel = minLevel;
 	}
 
-	private static ItemStack format(IItemProvider item, Enchantment enchantment, int minLevel) {
+	private static ItemStack format(ItemLike item, Enchantment enchantment, int minLevel) {
 		ItemStack stack = new ItemStack(item);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, minLevel), stack);
-		AffixHelper.addLore(stack, new TranslationTextComponent("ingredient.apotheosis.ench", ((IFormattableTextComponent) enchantment.getFullname(minLevel)).withStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC)));
+		AffixHelper.addLore(stack, new TranslatableComponent("ingredient.apotheosis.ench", ((MutableComponent) enchantment.getFullname(minLevel)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC)));
 		return stack;
 	}
 
@@ -64,7 +64,7 @@ public class EnchantmentIngredient extends Ingredient {
 		public static final Serializer INSTANCE = new Serializer();
 
 		@Override
-		public EnchantmentIngredient parse(PacketBuffer buffer) {
+		public EnchantmentIngredient parse(FriendlyByteBuf buffer) {
 			ItemStack stack = buffer.readItem();
 			Enchantment ench = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getValue(buffer.readVarInt());
 			int level = buffer.readShort();
@@ -77,7 +77,7 @@ public class EnchantmentIngredient extends Ingredient {
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, EnchantmentIngredient ingredient) {
+		public void write(FriendlyByteBuf buffer, EnchantmentIngredient ingredient) {
 			buffer.writeItem(new ItemStack(ingredient.item));
 			buffer.writeVarInt(((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getID(ingredient.enchantment));
 			buffer.writeShort(ingredient.minLevel);

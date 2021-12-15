@@ -10,22 +10,22 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.SerializationContext;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.PlayerAdvancements;
+import net.minecraft.server.level.ServerPlayer;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile.SpawnerLogicExt;
 
-public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instance> {
+public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instance> {
 	private static final ResourceLocation ID = new ResourceLocation(Apotheosis.MODID, "spawner_modifier");
 	private final Map<PlayerAdvancements, ModifierTrigger.Listeners> listeners = Maps.newHashMap();
 
@@ -35,7 +35,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 	}
 
 	@Override
-	public void addPlayerListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
+	public void addPlayerListener(PlayerAdvancements playerAdvancementsIn, CriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
 		ModifierTrigger.Listeners ModifierTrigger$listeners = this.listeners.get(playerAdvancementsIn);
 		if (ModifierTrigger$listeners == null) {
 			ModifierTrigger$listeners = new ModifierTrigger.Listeners(playerAdvancementsIn);
@@ -46,7 +46,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 	}
 
 	@Override
-	public void removePlayerListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
+	public void removePlayerListener(PlayerAdvancements playerAdvancementsIn, CriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
 		ModifierTrigger.Listeners ModifierTrigger$listeners = this.listeners.get(playerAdvancementsIn);
 		if (ModifierTrigger$listeners != null) {
 			ModifierTrigger$listeners.remove(listener);
@@ -63,13 +63,13 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 	}
 
 	@Override
-	public ModifierTrigger.Instance createInstance(JsonObject json, ConditionArrayParser conditionsParser) {
-		MinMaxBounds.IntBound minDelay = MinMaxBounds.IntBound.fromJson(json.get("min_delay"));
-		MinMaxBounds.IntBound maxDelay = MinMaxBounds.IntBound.fromJson(json.get("max_delay"));
-		MinMaxBounds.IntBound spawnCount = MinMaxBounds.IntBound.fromJson(json.get("spawn_count"));
-		MinMaxBounds.IntBound nearbyEnts = MinMaxBounds.IntBound.fromJson(json.get("max_nearby_entities"));
-		MinMaxBounds.IntBound playerRange = MinMaxBounds.IntBound.fromJson(json.get("player_activation_range"));
-		MinMaxBounds.IntBound spawnRange = MinMaxBounds.IntBound.fromJson(json.get("spawn_range"));
+	public ModifierTrigger.Instance createInstance(JsonObject json, DeserializationContext conditionsParser) {
+		MinMaxBounds.Ints minDelay = MinMaxBounds.Ints.fromJson(json.get("min_delay"));
+		MinMaxBounds.Ints maxDelay = MinMaxBounds.Ints.fromJson(json.get("max_delay"));
+		MinMaxBounds.Ints spawnCount = MinMaxBounds.Ints.fromJson(json.get("spawn_count"));
+		MinMaxBounds.Ints nearbyEnts = MinMaxBounds.Ints.fromJson(json.get("max_nearby_entities"));
+		MinMaxBounds.Ints playerRange = MinMaxBounds.Ints.fromJson(json.get("player_activation_range"));
+		MinMaxBounds.Ints spawnRange = MinMaxBounds.Ints.fromJson(json.get("spawn_range"));
 		Boolean ignorePlayers = json.has("ignore_players") ? json.get("ignore_players").getAsBoolean() : null;
 		Boolean ignoreConditions = json.has("ignore_conditions") ? json.get("ignore_conditions").getAsBoolean() : null;
 		Boolean ignoreCap = json.has("ignore_cap") ? json.get("ignore_cap").getAsBoolean() : null;
@@ -80,7 +80,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, redstone, modifier);
 	}
 
-	public void trigger(ServerPlayerEntity player, ApothSpawnerTile tile, SpawnerModifier modif) {
+	public void trigger(ServerPlayer player, ApothSpawnerTile tile, SpawnerModifier modif) {
 		ModifierTrigger.Listeners ModifierTrigger$listeners = this.listeners.get(player.getAdvancements());
 		if (ModifierTrigger$listeners != null) {
 			ModifierTrigger$listeners.trigger(tile, modif);
@@ -88,21 +88,21 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 
 	}
 
-	public static class Instance extends CriterionInstance {
-		private final MinMaxBounds.IntBound minDelay;
-		private final MinMaxBounds.IntBound maxDelay;
-		private final MinMaxBounds.IntBound spawnCount;
-		private final MinMaxBounds.IntBound nearbyEnts;
-		private final MinMaxBounds.IntBound playerRange;
-		private final MinMaxBounds.IntBound spawnRange;
+	public static class Instance extends AbstractCriterionTriggerInstance {
+		private final MinMaxBounds.Ints minDelay;
+		private final MinMaxBounds.Ints maxDelay;
+		private final MinMaxBounds.Ints spawnCount;
+		private final MinMaxBounds.Ints nearbyEnts;
+		private final MinMaxBounds.Ints playerRange;
+		private final MinMaxBounds.Ints spawnRange;
 		private final Boolean ignorePlayers;
 		private final Boolean ignoreConditions;
 		private final Boolean ignoreCap;
 		private final Boolean redstone;
 		private final SpawnerModifier modifier;
 
-		public Instance(MinMaxBounds.IntBound minDelay, MinMaxBounds.IntBound maxDelay, MinMaxBounds.IntBound spawnCount, MinMaxBounds.IntBound nearbyEnts, MinMaxBounds.IntBound playerRange, MinMaxBounds.IntBound spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone, SpawnerModifier modifier) {
-			super(ModifierTrigger.ID, EntityPredicate.AndPredicate.ANY);
+		public Instance(MinMaxBounds.Ints minDelay, MinMaxBounds.Ints maxDelay, MinMaxBounds.Ints spawnCount, MinMaxBounds.Ints nearbyEnts, MinMaxBounds.Ints playerRange, MinMaxBounds.Ints spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone, SpawnerModifier modifier) {
+			super(ModifierTrigger.ID, EntityPredicate.Composite.ANY);
 			this.minDelay = minDelay;
 			this.maxDelay = maxDelay;
 			this.spawnCount = spawnCount;
@@ -117,7 +117,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		}
 
 		@Override
-		public JsonObject serializeToJson(ConditionArraySerializer serializer) {
+		public JsonObject serializeToJson(SerializationContext serializer) {
 			return new JsonObject();
 		}
 
@@ -140,7 +140,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 
 	static class Listeners {
 		private final PlayerAdvancements playerAdvancements;
-		private final Set<ICriterionTrigger.Listener<ModifierTrigger.Instance>> listeners = Sets.newHashSet();
+		private final Set<CriterionTrigger.Listener<ModifierTrigger.Instance>> listeners = Sets.newHashSet();
 
 		public Listeners(PlayerAdvancements playerAdvancementsIn) {
 			this.playerAdvancements = playerAdvancementsIn;
@@ -150,18 +150,18 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			return this.listeners.isEmpty();
 		}
 
-		public void add(ICriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
+		public void add(CriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
 			this.listeners.add(listener);
 		}
 
-		public void remove(ICriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
+		public void remove(CriterionTrigger.Listener<ModifierTrigger.Instance> listener) {
 			this.listeners.remove(listener);
 		}
 
 		public void trigger(ApothSpawnerTile tile, SpawnerModifier modif) {
-			List<ICriterionTrigger.Listener<ModifierTrigger.Instance>> list = null;
+			List<CriterionTrigger.Listener<ModifierTrigger.Instance>> list = null;
 
-			for (ICriterionTrigger.Listener<ModifierTrigger.Instance> listener : this.listeners) {
+			for (CriterionTrigger.Listener<ModifierTrigger.Instance> listener : this.listeners) {
 				if (listener.getTriggerInstance().test(tile, modif)) {
 					if (list == null) {
 						list = Lists.newArrayList();
@@ -172,7 +172,7 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			}
 
 			if (list != null) {
-				for (ICriterionTrigger.Listener<ModifierTrigger.Instance> listener1 : list) {
+				for (CriterionTrigger.Listener<ModifierTrigger.Instance> listener1 : list) {
 					listener1.run(this.playerAdvancements);
 				}
 			}

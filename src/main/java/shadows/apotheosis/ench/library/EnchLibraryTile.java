@@ -8,17 +8,17 @@ import it.unimi.dsi.fastutil.objects.Object2ByteMap;
 import it.unimi.dsi.fastutil.objects.Object2ByteOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ShortMap;
 import it.unimi.dsi.fastutil.objects.Object2ShortOpenHashMap;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -27,7 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.placebo.recipe.VanillaPacketDispatcher;
 
-public class EnchLibraryTile extends TileEntity {
+public class EnchLibraryTile extends BlockEntity {
 
 	protected final Object2ShortMap<Enchantment> points = new Object2ShortOpenHashMap<>();
 	protected final Object2ByteMap<Enchantment> maxLevels = new Object2ByteOpenHashMap<>();
@@ -93,13 +93,13 @@ public class EnchLibraryTile extends TileEntity {
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT tag) {
-		CompoundNBT points = new CompoundNBT();
+	public CompoundTag save(CompoundTag tag) {
+		CompoundTag points = new CompoundTag();
 		for (Object2ShortMap.Entry<Enchantment> e : this.points.object2ShortEntrySet()) {
 			points.putShort(e.getKey().getRegistryName().toString(), e.getShortValue());
 		}
 		tag.put("Points", points);
-		CompoundNBT levels = new CompoundNBT();
+		CompoundTag levels = new CompoundTag();
 		for (Object2ByteMap.Entry<Enchantment> e : this.maxLevels.object2ByteEntrySet()) {
 			levels.putByte(e.getKey().getRegistryName().toString(), e.getByteValue());
 		}
@@ -108,15 +108,15 @@ public class EnchLibraryTile extends TileEntity {
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT tag) {
+	public void load(BlockState state, CompoundTag tag) {
 		super.load(state, tag);
-		CompoundNBT points = tag.getCompound("Points");
+		CompoundTag points = tag.getCompound("Points");
 		for (String s : points.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
 			this.points.put(ench, points.getShort(s));
 		}
-		CompoundNBT levels = tag.getCompound("Levels");
+		CompoundTag levels = tag.getCompound("Levels");
 		for (String s : levels.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
@@ -125,15 +125,15 @@ public class EnchLibraryTile extends TileEntity {
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		CompoundNBT tag = pkt.getTag();
-		CompoundNBT points = tag.getCompound("Points");
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		CompoundTag tag = pkt.getTag();
+		CompoundTag points = tag.getCompound("Points");
 		for (String s : points.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
 			this.points.put(ench, points.getShort(s));
 		}
-		CompoundNBT levels = tag.getCompound("Levels");
+		CompoundTag levels = tag.getCompound("Levels");
 		for (String s : levels.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
@@ -143,19 +143,19 @@ public class EnchLibraryTile extends TileEntity {
 	}
 
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.worldPosition, -12, this.getUpdateTag());
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return new ClientboundBlockEntityDataPacket(this.worldPosition, -12, this.getUpdateTag());
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT tag = super.getUpdateTag();
-		CompoundNBT points = new CompoundNBT();
+	public CompoundTag getUpdateTag() {
+		CompoundTag tag = super.getUpdateTag();
+		CompoundTag points = new CompoundTag();
 		for (Object2ShortMap.Entry<Enchantment> e : this.points.object2ShortEntrySet()) {
 			points.putShort(e.getKey().getRegistryName().toString(), e.getShortValue());
 		}
 		tag.put("Points", points);
-		CompoundNBT levels = new CompoundNBT();
+		CompoundTag levels = new CompoundTag();
 		for (Object2ByteMap.Entry<Enchantment> e : this.maxLevels.object2ByteEntrySet()) {
 			levels.putByte(e.getKey().getRegistryName().toString(), e.getByteValue());
 		}

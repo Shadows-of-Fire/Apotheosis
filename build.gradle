@@ -19,7 +19,7 @@ apply plugin: 'eclipse'
 
 archivesBaseName = "${fileName}-${mcVersion}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'parchment', version: project.properties.parchmentVersion
@@ -69,7 +69,7 @@ dependencies {
 	implementation fg.deobf("mezz.jei:jei-${jeiVersion}")
 	implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
 	implementation fileTree(dir: 'libs', include: '*.jar')
-	implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.3')
+	implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.18-5.0.2.4')
 }
 
 mixin {

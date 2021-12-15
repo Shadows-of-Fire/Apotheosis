@@ -6,24 +6,22 @@ import javax.annotation.Nullable;
 
 import com.mojang.authlib.GameProfile;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CommandBlockBlock;
-import net.minecraft.block.JigsawBlock;
-import net.minecraft.block.StructureBlock;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.management.PlayerInteractionManager;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.GameType;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ForgeHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CommandBlock;
+import net.minecraft.world.level.block.JigsawBlock;
+import net.minecraft.world.level.block.StructureBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import shadows.placebo.util.NetHandlerSpaghettiServer;
+import shadows.placebo.util.DeadPacketListenerImpl;
 
 public class BlockUtil {
 
@@ -37,25 +35,25 @@ public class BlockUtil {
 	 * @param source The UUID of the breaking player.
 	 * @return If the block was successfully broken.
 	 */
-	public static boolean breakExtraBlock(ServerWorld world, BlockPos pos, ItemStack mainhand, @Nullable UUID source) {
+	public static boolean breakExtraBlock(ServerLevel world, BlockPos pos, ItemStack mainhand, @Nullable UUID source) {
 		BlockState blockstate = world.getBlockState(pos);
 		FakePlayer player;
 		if (source != null) player = FakePlayerFactory.get(world, new GameProfile(source, UsernameCache.getLastKnownUsername(source)));
 		else player = FakePlayerFactory.getMinecraft(world);
-		if (player.connection == null) player.connection = new NetHandlerSpaghettiServer(player);
-		player.inventory.items.set(player.inventory.selected, mainhand);
+		if (player.connection == null) player.connection = new DeadPacketListenerImpl(player);
+		player.getInventory().items.set(player.getInventory().selected, mainhand);
 		player.setPos(pos.getX(), pos.getY(), pos.getZ());
 
-		if (blockstate.getDestroySpeed(world, pos) < 0 || !ForgeHooks.canHarvestBlock(blockstate, player, world, pos)) return false;
+		if (blockstate.getDestroySpeed(world, pos) < 0 || !blockstate.canHarvestBlock(world, pos, player)) return false;
 
-		GameType type = player.abilities.instabuild ? GameType.CREATIVE : GameType.SURVIVAL;
+		GameType type = player.getAbilities().instabuild ? GameType.CREATIVE : GameType.SURVIVAL;
 		int exp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, type, player, pos);
 		if (exp == -1) {
 			return false;
 		} else {
-			TileEntity tileentity = world.getBlockEntity(pos);
+			BlockEntity tileentity = world.getBlockEntity(pos);
 			Block block = blockstate.getBlock();
-			if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !player.canUseGameMasterBlocks()) {
+			if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !player.canUseGameMasterBlocks()) {
 				world.sendBlockUpdated(pos, blockstate, blockstate, 3);
 				return false;
 			} else if (player.getMainHandItem().onBlockStartBreak(pos, player)) {
@@ -63,7 +61,7 @@ public class BlockUtil {
 			} else if (player.blockActionRestricted(world, pos, type)) {
 				return false;
 			} else {
-				if (player.abilities.instabuild) {
+				if (player.getAbilities().instabuild) {
 					removeBlock(world, player, pos, false);
 					return true;
 				} else {
@@ -71,7 +69,7 @@ public class BlockUtil {
 					ItemStack itemstack1 = itemstack.copy();
 					boolean canHarvest = blockstate.canHarvestBlock(world, pos, player); // previously player.hasCorrectToolForDrops(blockstate)
 					itemstack.mineBlock(world, blockstate, pos, player);
-					if (itemstack.isEmpty() && !itemstack1.isEmpty()) net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, Hand.MAIN_HAND);
+					if (itemstack.isEmpty() && !itemstack1.isEmpty()) net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, InteractionHand.MAIN_HAND);
 					boolean removed = removeBlock(world, player, pos, canHarvest);
 
 					if (removed && canHarvest) {
@@ -94,9 +92,9 @@ public class BlockUtil {
 	 * @param canHarvest If the player can actually harvest this block.
 	 * @return If the block was actually removed.
 	 */
-	public static boolean removeBlock(ServerWorld world, ServerPlayerEntity player, BlockPos pos, boolean canHarvest) {
+	public static boolean removeBlock(ServerLevel world, ServerPlayer player, BlockPos pos, boolean canHarvest) {
 		BlockState state = world.getBlockState(pos);
-		boolean removed = state.removedByPlayer(world, pos, player, canHarvest, world.getFluidState(pos));
+		boolean removed = state.onDestroyedByPlayer(world, pos, player, canHarvest, world.getFluidState(pos));
 		if (removed) state.getBlock().destroy(world, pos, state);
 		return removed;
 	}

@@ -2,29 +2,29 @@ package shadows.apotheosis.garden;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BambooBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BambooLeaves;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BambooBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BambooLeaves;
 import shadows.placebo.util.IReplacementBlock;
 
 public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 
 	public ApothBambooBlock() {
-		super(AbstractBlock.Properties.copy(Blocks.BAMBOO));
+		super(BlockBehaviour.Properties.copy(Blocks.BAMBOO));
 		this.setRegistryName(new ResourceLocation("bamboo"));
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
 		if (!state.canSurvive(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true);
 		} else if (state.getValue(STAGE) == 0) {
@@ -38,14 +38,14 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		int i = this.getHeightAboveUpToMax(worldIn, pos);
 		int j = this.getHeightBelowUpToMax(worldIn, pos);
 		return i + j + 1 < GardenModule.maxBambooHeight && worldIn.getBlockState(pos.above(i)).getValue(STAGE) != 1;
 	}
 
 	@Override
-	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
+	public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
 		int bambooAbove = this.getHeightAboveUpToMax(worldIn, pos);
 		int bambooBelow = this.getHeightBelowUpToMax(worldIn, pos);
 		int bambooSize = bambooAbove + bambooBelow + 1;
@@ -64,7 +64,7 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 	}
 
 	@Override
-	protected int getHeightAboveUpToMax(IBlockReader worldIn, BlockPos pos) {
+	protected int getHeightAboveUpToMax(BlockGetter worldIn, BlockPos pos) {
 		int i;
 		for (i = 0; i < GardenModule.maxBambooHeight && worldIn.getBlockState(pos.above(i + 1)).getBlock() == Blocks.BAMBOO; ++i) {
 			;
@@ -73,7 +73,7 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 	}
 
 	@Override
-	protected int getHeightBelowUpToMax(IBlockReader worldIn, BlockPos pos) {
+	protected int getHeightBelowUpToMax(BlockGetter worldIn, BlockPos pos) {
 		int i;
 		for (i = 0; i < GardenModule.maxBambooHeight && worldIn.getBlockState(pos.below(i + 1)).getBlock() == Blocks.BAMBOO; ++i) {
 			;
@@ -82,7 +82,7 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 	}
 
 	@Override
-	protected void growBamboo(BlockState blockStateIn, World worldIn, BlockPos posIn, Random rand, int size) {
+	protected void growBamboo(BlockState blockStateIn, Level worldIn, BlockPos posIn, Random rand, int size) {
 		BlockState blockstate = worldIn.getBlockState(posIn.below());
 		BlockPos blockpos = posIn.below(2);
 		BlockState blockstate1 = worldIn.getBlockState(blockpos);
@@ -111,15 +111,15 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 		this.registerDefaultState(state);
 	}
 
-	protected StateContainer<Block, BlockState> container;
+	protected StateDefinition<Block, BlockState> container;
 
 	@Override
-	public void setStateContainer(StateContainer<Block, BlockState> container) {
+	public void setStateContainer(StateDefinition<Block, BlockState> container) {
 		this.container = container;
 	}
 
 	@Override
-	public StateContainer<Block, BlockState> getStateDefinition() {
+	public StateDefinition<Block, BlockState> getStateDefinition() {
 		return this.container == null ? super.getStateDefinition() : this.container;
 	}
 }

@@ -4,12 +4,12 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
@@ -56,12 +56,12 @@ public class TorchPlacementAffix extends Affix {
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext ctx, float level) {
-		PlayerEntity player = ctx.getPlayer();
+	public InteractionResult onItemUse(UseOnContext ctx, float level) {
+		Player player = ctx.getPlayer();
 		if (Items.TORCH.useOn(ctx).consumesAction()) {
 			ctx.getItemInHand().grow(1);
-			player.getItemInHand(ctx.getHand()).hurtAndBreak((int) level, player, p -> p.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
-			return ActionResultType.SUCCESS;
+			player.getItemInHand(ctx.getHand()).hurtAndBreak((int) level, player, p -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+			return InteractionResult.SUCCESS;
 		}
 		return null;
 	}

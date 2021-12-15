@@ -2,11 +2,11 @@ package shadows.apotheosis.deadly.affix.impl.shield;
 
 import java.util.Random;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
@@ -57,8 +57,8 @@ public class EldritchBlockAffix extends Affix {
 	public float onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource source, float amount, float level) {
 		if (source.getEntity() instanceof LivingEntity) {
 			LivingEntity attacker = (LivingEntity) source.getEntity();
-			attacker.addEffect(new EffectInstance(Effects.WEAKNESS, 200, (int) level - 1));
-			if (ApotheosisObjects.SUNDERING != null) attacker.addEffect(new EffectInstance(ApotheosisObjects.SUNDERING, 200, (int) level - 1));
+			attacker.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, (int) level - 1));
+			if (ApotheosisObjects.SUNDERING != null) attacker.addEffect(new MobEffectInstance(ApotheosisObjects.SUNDERING, 200, (int) level - 1));
 		}
 		return amount;
 	}

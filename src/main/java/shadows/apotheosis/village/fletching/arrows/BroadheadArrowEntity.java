@@ -1,30 +1,30 @@
 package shadows.apotheosis.village.fletching.arrows;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import shadows.apotheosis.ApotheosisObjects;
 
-public class BroadheadArrowEntity extends ArrowEntity {
+public class BroadheadArrowEntity extends Arrow {
 
-	public BroadheadArrowEntity(EntityType<? extends ArrowEntity> t, World world) {
+	public BroadheadArrowEntity(EntityType<? extends Arrow> t, Level world) {
 		super(t, world);
 	}
 
-	public BroadheadArrowEntity(World world) {
+	public BroadheadArrowEntity(Level world) {
 		super(ApotheosisObjects.BH_ARROW_ENTITY, world);
 	}
 
-	public BroadheadArrowEntity(LivingEntity shooter, World world) {
+	public BroadheadArrowEntity(LivingEntity shooter, Level world) {
 		super(world, shooter);
 	}
 
-	public BroadheadArrowEntity(World world, double x, double y, double z) {
+	public BroadheadArrowEntity(Level world, double x, double y, double z) {
 		super(world, x, y, z);
 	}
 
@@ -34,7 +34,7 @@ public class BroadheadArrowEntity extends ArrowEntity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -50,16 +50,16 @@ public class BroadheadArrowEntity extends ArrowEntity {
 
 	@Override
 	protected void doPostHurtEffects(LivingEntity living) {
-		EffectInstance bleed = living.getEffect(ApotheosisObjects.BLEEDING);
+		MobEffectInstance bleed = living.getEffect(ApotheosisObjects.BLEEDING);
 		if (bleed != null) {
-			living.addEffect(new EffectInstance(ApotheosisObjects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+			living.addEffect(new MobEffectInstance(ApotheosisObjects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
 		} else {
-			living.addEffect(new EffectInstance(ApotheosisObjects.BLEEDING, 300));
+			living.addEffect(new MobEffectInstance(ApotheosisObjects.BLEEDING, 300));
 		}
 	}
 
 	public BroadheadArrowEntity bleed() {
-		this.addEffect(new EffectInstance(ApotheosisObjects.BLEEDING, 300));
+		this.addEffect(new MobEffectInstance(ApotheosisObjects.BLEEDING, 300));
 		return this;
 	}
 }

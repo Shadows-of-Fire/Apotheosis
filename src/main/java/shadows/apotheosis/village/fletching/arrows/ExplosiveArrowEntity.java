@@ -1,34 +1,34 @@
 package shadows.apotheosis.village.fletching.arrows;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion.Mode;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
 import shadows.apotheosis.ApotheosisObjects;
 
-public class ExplosiveArrowEntity extends AbstractArrowEntity {
+public class ExplosiveArrowEntity extends AbstractArrow {
 
-	public ExplosiveArrowEntity(EntityType<? extends AbstractArrowEntity> t, World world) {
+	public ExplosiveArrowEntity(EntityType<? extends AbstractArrow> t, Level world) {
 		super(t, world);
 	}
 
-	public ExplosiveArrowEntity(World world) {
+	public ExplosiveArrowEntity(Level world) {
 		super(ApotheosisObjects.EX_ARROW_ENTITY, world);
 	}
 
-	public ExplosiveArrowEntity(LivingEntity shooter, World world) {
+	public ExplosiveArrowEntity(LivingEntity shooter, Level world) {
 		super(ApotheosisObjects.EX_ARROW_ENTITY, shooter, world);
 	}
 
-	public ExplosiveArrowEntity(World world, double x, double y, double z) {
+	public ExplosiveArrowEntity(Level world, double x, double y, double z) {
 		super(ApotheosisObjects.EX_ARROW_ENTITY, x, y, z, world);
 	}
 
@@ -38,7 +38,7 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -48,21 +48,21 @@ public class ExplosiveArrowEntity extends AbstractArrowEntity {
 			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, Mode.DESTROY);
-			this.remove();
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, BlockInteraction.DESTROY);
+			this.discard();
 		}
 	}
 
-	@Override //onBlockHit
-	protected void onHitBlock(BlockRayTraceResult res) {
+	@Override
+	protected void onHitBlock(BlockHitResult res) {
 		super.onHitBlock(res);
-		Vector3d vec = res.getLocation();
+		Vec3 vec = res.getLocation();
 		if (!this.level.isClientSide) {
 			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, Mode.DESTROY);
-			this.remove();
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, BlockInteraction.DESTROY);
+			this.discard();
 		}
 	}
 }

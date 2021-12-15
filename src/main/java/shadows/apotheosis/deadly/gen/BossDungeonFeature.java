@@ -2,26 +2,26 @@ package shadows.apotheosis.deadly.gen;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.loot.LootTables;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.objects.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.deadly.reload.BossItemManager;
 
-public class BossDungeonFeature extends Feature<NoFeatureConfig> {
+public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
 
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 	private static final BlockState BRICK = Blocks.STONE_BRICKS.defaultBlockState();
@@ -32,12 +32,12 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 	public static final BossDungeonFeature INSTANCE = new BossDungeonFeature();
 
 	public BossDungeonFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator gen, Random rand, BlockPos pos, NoFeatureConfig cfg) {
+	public boolean place(WorldGenLevel world, ChunkGenerator gen, Random rand, BlockPos pos, NoneFeatureConfiguration cfg) {
 		if (!DeadlyConfig.canGenerateIn(world)) return false;
 		int xRadius = 3 + rand.nextInt(3);
 		int floor = -1;
@@ -107,7 +107,7 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 
 						if (nearbySolids == 1) {
 							world.setBlock(blockpos2, StructurePiece.reorient(world, blockpos2, Blocks.CHEST.defaultBlockState()), 2);
-							LockableLootTileEntity.setLootTable(world, rand, blockpos2, LootTables.SIMPLE_DUNGEON);
+							RandomizableContainerBlockEntity.setLootTable(world, rand, blockpos2, BuiltInLootTables.SIMPLE_DUNGEON);
 							break;
 						}
 					}
@@ -115,7 +115,7 @@ public class BossDungeonFeature extends Feature<NoFeatureConfig> {
 			}
 
 			world.setBlock(pos, ApotheosisObjects.BOSS_SPAWNER.defaultBlockState(), 2);
-			TileEntity tileentity = world.getBlockEntity(pos);
+			BlockEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof BossSpawnerTile) {
 				((BossSpawnerTile) tileentity).setBossItem(BossItemManager.INSTANCE.getRandomItem(rand));
 			} else {

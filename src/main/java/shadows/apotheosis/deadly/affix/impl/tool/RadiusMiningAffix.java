@@ -8,26 +8,26 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceContext.BlockMode;
-import net.minecraft.util.math.RayTraceContext.FluidMode;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Vec3i;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.ClipContext.Block;
+import net.minecraft.world.level.ClipContext.Fluid;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.AffixHelper;
@@ -52,13 +52,13 @@ public class RadiusMiningAffix extends Affix {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+	public void addInformation(ItemStack stack, float level, Consumer<Component> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc" + (int) level));
 	}
 
 	@Override
-	public ITextComponent getDisplayName(float level) {
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name" + (int) level).withStyle(TextFormatting.GRAY);
+	public Component getDisplayName(float level) {
+		return new TranslatableComponent("affix." + this.getRegistryName() + ".name" + (int) level).withStyle(ChatFormatting.GRAY);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class RadiusMiningAffix extends Affix {
 	 * @param tool The tool being used (which has this affix on it)
 	 * @param level The level of this affix, in this case, the mode of operation.
 	 */
-	public static void breakExtraBlocks(ServerPlayerEntity player, BlockPos pos, ItemStack tool, int level, float hardness) {
+	public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, int level, float hardness) {
 		if (!breakers.add(player.getUUID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.ew
 		if (!player.isShiftKeyDown()) try {
 			if (level == 1) {
@@ -110,20 +110,20 @@ public class RadiusMiningAffix extends Affix {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void breakBlockRadius(ServerPlayerEntity player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
-		World world = player.level;
+	public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
+		Level world = player.level;
 		if (x < 2 && y < 2) return;
 		int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
 		int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
 
-		Vector3d base = player.getEyePosition(0);
-		Vector3d look = player.getLookAngle();
+		Vec3 base = player.getEyePosition(0);
+		Vec3 look = player.getLookAngle();
 		double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-		Vector3d target = base.add(look.x * reach, look.y * reach, look.z * reach);
-		RayTraceResult trace = world.clip(new RayTraceContext(base, target, BlockMode.OUTLINE, FluidMode.NONE, player));
+		Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
+		HitResult trace = world.clip(new ClipContext(base, target, Block.OUTLINE, Fluid.NONE, player));
 
 		if (trace == null || trace.getType() != Type.BLOCK) return;
-		BlockRayTraceResult res = (BlockRayTraceResult) trace;
+		BlockHitResult res = (BlockHitResult) trace;
 
 		Direction face = res.getDirection(); //Face of the block currently being looked at by the player.
 
@@ -149,11 +149,11 @@ public class RadiusMiningAffix extends Affix {
 	}
 
 	static BlockPos rotateDown(BlockPos pos, int y, Direction horizontal) {
-		Vector3i vec = horizontal.getNormal();
+		Vec3i vec = horizontal.getNormal();
 		return new BlockPos(pos.getX() + vec.getX() * y, pos.getY() - y, pos.getZ() + vec.getZ() * y);
 	}
 
-	static boolean isEffective(BlockState state, PlayerEntity player) {
+	static boolean isEffective(BlockState state, Player player) {
 		if (player.getMainHandItem().getToolTypes().stream().anyMatch(state::isToolEffective)) return true;
 		if (AffixHelper.getAffixLevel(player.getMainHandItem(), Affixes.OMNITOOL) > 0) return Items.DIAMOND_PICKAXE.isCorrectToolForDrops(state) || Items.DIAMOND_SHOVEL.isCorrectToolForDrops(state) || Items.DIAMOND_AXE.isCorrectToolForDrops(state);
 		return false;

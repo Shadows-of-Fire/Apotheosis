@@ -5,24 +5,24 @@ import java.util.function.Consumer;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootPoolEntryType;
-import net.minecraft.loot.StandaloneLootEntry;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.functions.ILootFunction;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.AffixLootEntry;
@@ -188,16 +188,16 @@ public class DeadlyLoot {
 		return s;
 	}
 
-	public static class AffixEntry extends StandaloneLootEntry {
+	public static class AffixEntry extends LootPoolSingletonContainer {
 
 		public static final Serializer SERIALIZER = new Serializer();
 		public static final LootPoolEntryType AFFIX_TYPE = Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "affix_entry"), new LootPoolEntryType(SERIALIZER));
 
 		public AffixEntry(int weight, int quality) {
-			this(weight, quality, new ILootCondition[0], new ILootFunction[0]);
+			this(weight, quality, new LootItemCondition[0], new LootItemFunction[0]);
 		}
 
-		public AffixEntry(int weight, int quality, ILootCondition[] cond, ILootFunction[] fun) {
+		public AffixEntry(int weight, int quality, LootItemCondition[] cond, LootItemFunction[] fun) {
 			super(weight, quality, cond, fun);
 		}
 
@@ -215,10 +215,10 @@ public class DeadlyLoot {
 			return AFFIX_TYPE;
 		}
 
-		public static class Serializer extends StandaloneLootEntry.Serializer<AffixEntry> {
+		public static class Serializer extends LootPoolSingletonContainer.Serializer<AffixEntry> {
 
 			@Override
-			protected AffixEntry deserialize(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, ILootCondition[] conditions, ILootFunction[] functions) {
+			protected AffixEntry deserialize(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions) {
 				return new AffixEntry(weight, quality, conditions, functions);
 			}
 
@@ -235,7 +235,7 @@ public class DeadlyLoot {
 		protected void createItemStack(Consumer<ItemStack> list, LootContext ctx) {
 			ItemStack enchTome = this.func.apply(new ItemStack(this.i), ctx);
 			ItemStack ench = new ItemStack(Items.ENCHANTED_BOOK);
-			EnchantmentHelper.getEnchantments(enchTome).entrySet().stream().map(e -> new EnchantmentData(e.getKey(), e.getValue())).forEach(d -> EnchantedBookItem.addEnchantment(ench, d));
+			EnchantmentHelper.getEnchantments(enchTome).entrySet().stream().map(e -> new EnchantmentInstance(e.getKey(), e.getValue())).forEach(d -> EnchantedBookItem.addEnchantment(ench, d));
 			list.accept(ench);
 		}
 

@@ -6,19 +6,19 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.BookItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.BookItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -40,10 +40,10 @@ public class ScrappingTomeItem extends BookItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.isEnchanted()) return;
-		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome").withStyle(TextFormatting.GRAY));
-		tooltip.add(new TranslationTextComponent("info.apotheosis.scrap_tome2").withStyle(TextFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("info.apotheosis.scrap_tome").withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("info.apotheosis.scrap_tome2").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class ScrappingTomeItem extends BookItem {
 		if (!(book.getItem() instanceof ScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
 
 		Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
-		int size = MathHelper.ceil(wepEnch.size() / 2D);
+		int size = Mth.ceil(wepEnch.size() / 2D);
 		List<Enchantment> keys = Lists.newArrayList(wepEnch.keySet());
 		long seed = 1831;
 		for (Enchantment e : keys) {

@@ -1,14 +1,14 @@
 package shadows.apotheosis.potion.asm;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.CombatRules;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import shadows.apotheosis.ApotheosisObjects;
 
 /**
@@ -23,7 +23,7 @@ public class PotionHooks {
 	 * Called from {@link ArrowItem#isInfinite(ItemStack, ItemStack, PlayerEntity)}
 	 * Injected by javascript/true-infinity.js
 	 */
-	public static boolean isInfinite(ItemStack stack, ItemStack bow, PlayerEntity player) {
+	public static boolean isInfinite(ItemStack stack, ItemStack bow, Player player) {
 		int enchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
 		if (enchant <= 0 ? false : stack.getItem().getClass() == ArrowItem.class) return true;
 		return EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ArrowItem;
@@ -39,8 +39,8 @@ public class PotionHooks {
 			return damage;
 		} else {
 			float mult = 1;
-			if (entity.hasEffect(Effects.DAMAGE_RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
-				int level = entity.getEffect(Effects.DAMAGE_RESISTANCE).getAmplifier() + 1;
+			if (entity.hasEffect(MobEffects.DAMAGE_RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
+				int level = entity.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier() + 1;
 				mult -= 0.2 * level;
 			}
 			if (ApotheosisObjects.SUNDERING != null && entity.hasEffect(ApotheosisObjects.SUNDERING) && source != DamageSource.OUT_OF_WORLD) {

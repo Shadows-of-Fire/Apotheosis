@@ -6,31 +6,31 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.ProjectileDispenseBehavior;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.potion.Effect;
-import net.minecraft.village.PointOfInterestType;
-import net.minecraft.world.World;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.village.fletching.ApothFletchingBlock;
@@ -53,8 +53,8 @@ import shadows.placebo.util.PlaceboUtil;
 
 public class VillageModule {
 
-	public static final IRecipeType<FletchingRecipe> FLETCHING = IRecipeType.register(Apotheosis.MODID + ":fletching");
-	public static final IRecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
+	public static final RecipeType<FletchingRecipe> FLETCHING = RecipeType.register(Apotheosis.MODID + ":fletching");
+	public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Village");
 
 	public static Configuration config;
@@ -63,8 +63,8 @@ public class VillageModule {
 	public void setup(FMLCommonSetupEvent e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
-		Map<BlockState, PointOfInterestType> types = ObfuscationReflectionHelper.getPrivateValue(PointOfInterestType.class, null, "field_221073_u");
-		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PointOfInterestType.FLETCHER);
+		Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "field_221073_u");
+		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PoiType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		WandererReplacements.load(config);
 		if (config.hasChanged()) config.save();
@@ -72,8 +72,8 @@ public class VillageModule {
 		e.enqueueWork(() -> {
 			for (Item i : ForgeRegistries.ITEMS) {
 				if (i instanceof IApothArrowItem) {
-					DispenserBlock.registerBehavior(i, new ProjectileDispenseBehavior() {
-						protected ProjectileEntity getProjectile(World world, IPosition pos, ItemStack stack) {
+					DispenserBlock.registerBehavior(i, new AbstractProjectileDispenseBehavior() {
+						protected Projectile getProjectile(Level world, Position pos, ItemStack stack) {
 							return ((IApothArrowItem) i).fromDispenser(world, pos.x(), pos.y(), pos.z());
 						}
 					});
@@ -88,7 +88,7 @@ public class VillageModule {
 	}
 
 	@SubscribeEvent
-	public void serializers(Register<IRecipeSerializer<?>> e) {
+	public void serializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(FLETCHING_SERIALIZER.setRegistryName(FletchingRecipe.Serializer.NAME));
 	}
 
@@ -113,7 +113,7 @@ public class VillageModule {
 	public void entities(Register<EntityType<?>> e) {
 		//Formatter::off
 		e.getRegistry().register(EntityType.Builder
-				.<ObsidianArrowEntity>of(ObsidianArrowEntity::new, EntityClassification.MISC)
+				.<ObsidianArrowEntity>of(ObsidianArrowEntity::new, MobCategory.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
@@ -122,7 +122,7 @@ public class VillageModule {
 				.build("ob_arrow")
 				.setRegistryName("ob_arrow_entity"));
 		e.getRegistry().register(EntityType.Builder
-				.<BroadheadArrowEntity>of(BroadheadArrowEntity::new, EntityClassification.MISC)
+				.<BroadheadArrowEntity>of(BroadheadArrowEntity::new, MobCategory.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
@@ -131,7 +131,7 @@ public class VillageModule {
 				.build("bh_arrow")
 				.setRegistryName("bh_arrow_entity"));
 		e.getRegistry().register(EntityType.Builder
-				.<ExplosiveArrowEntity>of(ExplosiveArrowEntity::new, EntityClassification.MISC)
+				.<ExplosiveArrowEntity>of(ExplosiveArrowEntity::new, MobCategory.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
@@ -140,7 +140,7 @@ public class VillageModule {
 				.build("ex_arrow")
 				.setRegistryName("ex_arrow_entity"));
 		e.getRegistry().register(EntityType.Builder
-				.<MiningArrowEntity>of(MiningArrowEntity::new, EntityClassification.MISC)
+				.<MiningArrowEntity>of(MiningArrowEntity::new, MobCategory.MISC)
 				.setShouldReceiveVelocityUpdates(true)
 				.setTrackingRange(4)
 				.setUpdateInterval(20)
@@ -152,12 +152,12 @@ public class VillageModule {
 	}
 
 	@SubscribeEvent
-	public void containers(Register<ContainerType<?>> e) {
-		e.getRegistry().register(new ContainerType<>(FletchingContainer::new).setRegistryName("fletching"));
+	public void containers(Register<MenuType<?>> e) {
+		e.getRegistry().register(new MenuType<>(FletchingContainer::new).setRegistryName("fletching"));
 	}
 
 	@SubscribeEvent
-	public void effects(Register<Effect> e) {
+	public void effects(Register<MobEffect> e) {
 		e.getRegistry().register(new BleedingEffect().setRegistryName("bleeding"));
 	}
 

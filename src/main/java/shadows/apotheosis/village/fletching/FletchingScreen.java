@@ -1,18 +1,19 @@
 package shadows.apotheosis.village.fletching;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import shadows.apotheosis.Apotheosis;
 
-public class FletchingScreen extends ContainerScreen<FletchingContainer> {
+public class FletchingScreen extends AbstractContainerScreen<FletchingContainer> {
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/fletching_table.png");
 
-	public FletchingScreen(FletchingContainer container, PlayerInventory player, ITextComponent title) {
+	public FletchingScreen(FletchingContainer container, Inventory player, Component title) {
 		super(container, player, title);
 		this.titleLabelX = 47;
 		this.titleLabelY = 6;
@@ -21,7 +22,7 @@ public class FletchingScreen extends ContainerScreen<FletchingContainer> {
 	}
 
 	@Override
-	public void render(MatrixStack stack, int x, int y, float partialTicks) {
+	public void render(PoseStack stack, int x, int y, float partialTicks) {
 		this.renderBackground(stack);
 		super.render(stack, x, y, partialTicks);
 		this.renderTooltip(stack, x, y);
@@ -29,9 +30,10 @@ public class FletchingScreen extends ContainerScreen<FletchingContainer> {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void renderBg(MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(TEXTURES);
+	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		RenderSystem.setShaderTexture(0, TEXTURES);
 		int i = this.leftPos;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(stack, i, j, 0, 0, this.imageWidth, this.imageHeight);

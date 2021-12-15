@@ -5,23 +5,23 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.HitResult;
 import shadows.apotheosis.ApotheosisObjects;
 
 public class SeashelfBlock extends Block implements IEnchantingBlock {
@@ -29,21 +29,21 @@ public class SeashelfBlock extends Block implements IEnchantingBlock {
 	public static final IntegerProperty INFUSION = IntegerProperty.create("infusion", 0, 5);
 
 	public SeashelfBlock() {
-		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(2, 10).sound(SoundType.STONE));
+		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(2, 10).sound(SoundType.STONE));
 	}
 
 	@Override
-	public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {
+	public float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos) {
 		return 1.5F + state.getValue(INFUSION) * 0.1F;
 	}
 
 	@Override
-	public float getArcanaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+	public float getArcanaBonus(BlockState state, LevelReader world, BlockPos pos) {
 		return 0.15F + state.getValue(INFUSION) * 0.01F;
 	}
 
 	@Override
-	public float getMaxEnchantingPower(BlockState state, IWorldReader world, BlockPos pos) {
+	public float getMaxEnchantingPower(BlockState state, LevelReader world, BlockPos pos) {
 		return 22.5F + state.getValue(INFUSION) * 1.5F;
 	}
 
@@ -53,7 +53,7 @@ public class SeashelfBlock extends Block implements IEnchantingBlock {
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		ItemStack stack = ctx.getItemInHand();
 		return this.defaultBlockState().setValue(INFUSION, Math.min(5, EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.SEA_INFUSION, stack)));
 	}
@@ -66,7 +66,7 @@ public class SeashelfBlock extends Block implements IEnchantingBlock {
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		ItemStack stack = new ItemStack(this);
 		if (state.getValue(INFUSION) > 0) EnchantmentHelper.setEnchantments(ImmutableMap.of(ApotheosisObjects.SEA_INFUSION, state.getValue(INFUSION)), stack);
 		return stack;

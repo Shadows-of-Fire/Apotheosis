@@ -1,12 +1,12 @@
 package shadows.apotheosis.potion.potions;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
-public class PotionSundering extends Effect {
+public class PotionSundering extends MobEffect {
 
 	public PotionSundering() {
-		super(EffectType.HARMFUL, 0x989898);
+		super(MobEffectCategory.HARMFUL, 0x989898);
 	}
 
 }

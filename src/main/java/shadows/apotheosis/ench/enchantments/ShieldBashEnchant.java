@@ -1,19 +1,19 @@
 package shadows.apotheosis.ench.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
 
 public class ShieldBashEnchant extends Enchantment {
 
 	public ShieldBashEnchant() {
-		super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlotType[] { EquipmentSlotType.MAINHAND });
+		super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
 	}
 
 	@Override
@@ -42,9 +42,9 @@ public class ShieldBashEnchant extends Enchantment {
 			ItemStack stack = user.getMainHandItem();
 			if (stack.getItem().isShield(stack, user)) {
 				stack.hurtAndBreak(35, user, e -> {
-					e.broadcastBreakEvent(EquipmentSlotType.OFFHAND);
+					e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
 				});
-				DamageSource src = user instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity) user) : DamageSource.GENERIC;
+				DamageSource src = user instanceof Player ? DamageSource.playerAttack((Player) user) : DamageSource.GENERIC;
 				((LivingEntity) target).hurt(src, Apotheosis.localAtkStrength * 2.35F * level);
 			}
 		}

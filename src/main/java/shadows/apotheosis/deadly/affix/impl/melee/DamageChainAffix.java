@@ -6,13 +6,13 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.impl.RangedAffix;
@@ -35,8 +35,8 @@ public class DamageChainAffix extends RangedAffix {
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
 		if (Apotheosis.localAtkStrength >= 0.98) {
-			Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttackType(EntityType.PLAYER);
-			List<Entity> nearby = target.level.getEntities(target, new AxisAlignedBB(target.blockPosition()).inflate(6), pred);
+			Predicate<Entity> pred = e -> !(e instanceof Player) && e instanceof LivingEntity && ((LivingEntity) e).canAttackType(EntityType.PLAYER);
+			List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), pred);
 			if (!user.level.isClientSide) for (Entity e : nearby) {
 				e.hurt(DamageSource.LIGHTNING_BOLT, level);
 			}

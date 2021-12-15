@@ -14,28 +14,28 @@ import com.google.common.base.Preconditions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.util.WeighedRandom;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.EquipmentType;
@@ -50,16 +50,16 @@ import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.NameHelper;
 import shadows.apotheosis.util.RandomAttributeModifier;
 
-public class BossItem extends WeightedRandom.Item {
+public class BossItem extends WeighedRandom.WeighedRandomItem {
 
-	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == VillagerEntity.class;
+	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
 	@Expose(deserialize = false)
 	protected ResourceLocation id;
 
 	protected final EntityType<?> entity;
 
-	protected final AxisAlignedBB size;
+	protected final AABB size;
 
 	@SerializedName("enchant_chance")
 	protected final float enchantChance;
@@ -82,9 +82,9 @@ public class BossItem extends WeightedRandom.Item {
 	protected final List<RandomAttributeModifier> modifiers;
 
 	@SerializedName("custom_nbt")
-	protected final CompoundNBT customNbt;
+	protected final CompoundTag customNbt;
 
-	public BossItem(int weight, EntityType<?> entity, AxisAlignedBB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundNBT customNbt) {
+	public BossItem(int weight, EntityType<?> entity, AABB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundTag customNbt) {
 		super(weight);
 		this.entity = entity;
 		this.size = size;
@@ -107,7 +107,7 @@ public class BossItem extends WeightedRandom.Item {
 		return this.id;
 	}
 
-	public AxisAlignedBB getSize() {
+	public AABB getSize() {
 		return this.size;
 	}
 
@@ -122,9 +122,9 @@ public class BossItem extends WeightedRandom.Item {
 	 * @param rand A random, used for selection of boss stats.
 	 * @return The newly created boss.
 	 */
-	public MobEntity createBoss(IServerWorld world, BlockPos pos, Random rand) {
-		MobEntity entity = (MobEntity) this.entity.create(world.getLevel());
-		entity.readAdditionalSaveData(this.customNbt == null ? new CompoundNBT() : this.customNbt);
+	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, Random rand) {
+		Mob entity = (Mob) this.entity.create(world.getLevel());
+		entity.readAdditionalSaveData(this.customNbt == null ? new CompoundTag() : this.customNbt);
 		this.initBoss(rand, entity);
 		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		return entity;
@@ -135,8 +135,8 @@ public class BossItem extends WeightedRandom.Item {
 	 * @param rand
 	 * @param entity
 	 */
-	public void initBoss(Random rand, MobEntity entity) {
-		int duration = entity instanceof CreeperEntity ? 6000 : Integer.MAX_VALUE;
+	public void initBoss(Random rand, Mob entity) {
+		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
 		for (ChancedEffectInstance inst : this.effects) {
 			if (rand.nextFloat() <= inst.getChance()) {
@@ -157,7 +157,7 @@ public class BossItem extends WeightedRandom.Item {
 
 		boolean anyValid = false;
 
-		for (EquipmentSlotType t : EquipmentSlotType.values()) {
+		for (EquipmentSlot t : EquipmentSlot.values()) {
 			ItemStack s = entity.getItemBySlot(t);
 			if (!s.isEmpty() && EquipmentType.getTypeFor(s) != null) {
 				anyValid = true;
@@ -169,20 +169,20 @@ public class BossItem extends WeightedRandom.Item {
 
 		int guaranteed = rand.nextInt(6);
 
-		ItemStack temp = entity.getItemBySlot(EquipmentSlotType.values()[guaranteed]);
+		ItemStack temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
 		while (temp.isEmpty() || EquipmentType.getTypeFor(temp) == null) {
 			guaranteed = rand.nextInt(6);
-			temp = entity.getItemBySlot(EquipmentSlotType.values()[guaranteed]);
+			temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
 		}
 
-		for (EquipmentSlotType s : EquipmentSlotType.values()) {
+		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(s);
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name));
 			} else if (rand.nextFloat() < this.enchantChance) {
-				List<EnchantmentData> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? this.enchLevels[0] : this.enchLevels[1], true);
+				List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? this.enchLevels[0] : this.enchLevels[1], true);
 				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max, HashMap::new)), stack);
 				entity.setItemSlot(s, stack);
 			}
@@ -191,13 +191,13 @@ public class BossItem extends WeightedRandom.Item {
 	}
 
 	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
-		List<EnchantmentData> ench = EnchantmentHelper.selectEnchantment(random, stack, Apotheosis.enableEnch ? this.enchLevels[2] : this.enchLevels[3], true);
+		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(random, stack, Apotheosis.enableEnch ? this.enchLevels[2] : this.enchLevels[3], true);
 		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max)), stack);
 		LootRarity rarity = LootRarity.random(random, this.rarityOffset);
 		NameHelper.setItemName(random, stack, bossName);
 		stack = AffixLootManager.genLootItem(stack, random, EquipmentType.getTypeFor(stack), rarity);
-		Color color = rarity.getColor();
-		stack.setHoverName(new TranslationTextComponent("%s %s", new StringTextComponent(String.format(NameHelper.ownershipFormat, bossName)).withStyle(Style.EMPTY), stack.getHoverName()).withStyle(Style.EMPTY).withStyle(Style.EMPTY.withColor(color)));
+		TextColor color = rarity.getColor();
+		stack.setHoverName(new TranslatableComponent("%s %s", new TextComponent(String.format(NameHelper.ownershipFormat, bossName)).withStyle(Style.EMPTY), stack.getHoverName()).withStyle(Style.EMPTY).withStyle(Style.EMPTY.withColor(color)));
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
 			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
@@ -208,7 +208,7 @@ public class BossItem extends WeightedRandom.Item {
 			List<Enchantment> curses = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter(e -> e.canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
 			if (!curses.isEmpty()) {
 				Enchantment curse = curses.get(random.nextInt(curses.size()));
-				enchMap.put(curse, MathHelper.nextInt(random, 1, EnchHooks.getMaxLevel(curse)));
+				enchMap.put(curse, Mth.nextInt(random, 1, EnchHooks.getMaxLevel(curse)));
 			}
 		}
 

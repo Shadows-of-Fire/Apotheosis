@@ -1,16 +1,16 @@
 package shadows.apotheosis.ench.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class BerserkersFuryEnchant extends Enchantment {
 
 	public BerserkersFuryEnchant() {
-		super(Rarity.VERY_RARE, EnchantmentType.ARMOR, new EquipmentSlotType[] { EquipmentSlotType.CHEST, EquipmentSlotType.LEGS });
+		super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class BerserkersFuryEnchant extends Enchantment {
 	}
 
 	@Override
-	public ITextComponent getFullname(int level) {
-		return ((IFormattableTextComponent) super.getFullname(level)).withStyle(TextFormatting.DARK_RED);
+	public Component getFullname(int level) {
+		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_RED);
 	}
 
 }

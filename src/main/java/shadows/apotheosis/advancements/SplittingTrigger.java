@@ -7,18 +7,18 @@ import java.util.Set;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate.AndPredicate;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate.Composite;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.PlayerAdvancements;
 import shadows.apotheosis.Apotheosis;
 
-public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
+public class SplittingTrigger implements CriterionTrigger<AbstractCriterionTriggerInstance> {
 
 	private static final ResourceLocation ID = new ResourceLocation(Apotheosis.MODID, "splitting");
-	Map<PlayerAdvancements, Set<Listener<CriterionInstance>>> listeners = new HashMap<>();
+	Map<PlayerAdvancements, Set<Listener<AbstractCriterionTriggerInstance>>> listeners = new HashMap<>();
 
 	@Override
 	public ResourceLocation getId() {
@@ -26,12 +26,12 @@ public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
 	}
 
 	@Override
-	public void addPlayerListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
+	public void addPlayerListener(PlayerAdvancements adv, Listener<AbstractCriterionTriggerInstance> listener) {
 		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).add(listener);
 	}
 
 	@Override
-	public void removePlayerListener(PlayerAdvancements adv, Listener<CriterionInstance> listener) {
+	public void removePlayerListener(PlayerAdvancements adv, Listener<AbstractCriterionTriggerInstance> listener) {
 		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).remove(listener);
 	}
 
@@ -41,8 +41,8 @@ public class SplittingTrigger implements ICriterionTrigger<CriterionInstance> {
 	}
 
 	@Override
-	public CriterionInstance createInstance(JsonObject json, ConditionArrayParser parser) {
-		return new CriterionInstance(ID, AndPredicate.ANY) {
+	public AbstractCriterionTriggerInstance createInstance(JsonObject json, DeserializationContext parser) {
+		return new AbstractCriterionTriggerInstance(ID, Composite.ANY) {
 		};
 	}
 

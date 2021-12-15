@@ -1,15 +1,15 @@
 package shadows.apotheosis.ench.replacements;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.ProtectionEnchantment;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import shadows.apotheosis.ApotheosisObjects;
 
 public class DefenseEnchant extends ProtectionEnchantment {
 
-	public DefenseEnchant(Rarity rarity, Type type, EquipmentSlotType... slots) {
+	public DefenseEnchant(Rarity rarity, Type type, EquipmentSlot... slots) {
 		super(rarity, type, slots);
 	}
 

@@ -6,26 +6,26 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.item.BoneMealItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.CombatRules;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -38,7 +38,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
@@ -101,8 +101,8 @@ public class EnchModuleEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) throws Exception {
 		Entity attacker = e.getSource().getEntity();
-		if (attacker instanceof PlayerEntity) {
-			PlayerEntity p = (PlayerEntity) attacker;
+		if (attacker instanceof Player) {
+			Player p = (Player) attacker;
 			if (p.level.isClientSide) return;
 			int scavenger = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.SCAVENGER, p.getMainHandItem());
 			if (scavenger > 0 && p.level.random.nextInt(100) < scavenger * 2.5F) {
@@ -112,7 +112,7 @@ public class EnchModuleEvents {
 				this.dropLoot.invoke(e.getEntityLiving(), e.getSource(), true);
 			}
 			int knowledge = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.KNOWLEDGE, p.getMainHandItem());
-			if (knowledge > 0 && !(e.getEntity() instanceof PlayerEntity)) {
+			if (knowledge > 0 && !(e.getEntity() instanceof Player)) {
 				int items = 0;
 				for (ItemEntity i : e.getDrops())
 					items += i.getItem().getCount();
@@ -120,15 +120,15 @@ public class EnchModuleEvents {
 				items *= knowledge * 25;
 				Entity ded = e.getEntityLiving();
 				while (items > 0) {
-					int i = ExperienceOrbEntity.getExperienceValue(items);
+					int i = ExperienceOrb.getExperienceValue(items);
 					items -= i;
-					p.level.addFreshEntity(new ExperienceOrbEntity(p.level, ded.getX(), ded.getY(), ded.getZ(), i));
+					p.level.addFreshEntity(new ExperienceOrb(p.level, ded.getX(), ded.getY(), ded.getZ(), i));
 				}
 			}
 		}
 	}
 
-	final EquipmentSlotType[] slots = EquipmentSlotType.values();
+	final EquipmentSlot[] slots = EquipmentSlot.values();
 
 	/**
 	 * Event handler for the Life Mending enchantment
@@ -136,7 +136,7 @@ public class EnchModuleEvents {
 	@SubscribeEvent
 	public void lifeMend(LivingUpdateEvent e) {
 		if (e.getEntity().level.isClientSide || e.getEntity().tickCount % 20 != 0) return;
-		for (EquipmentSlotType slot : this.slots) {
+		for (EquipmentSlot slot : this.slots) {
 			ItemStack stack = e.getEntityLiving().getItemBySlot(slot);
 			if (!stack.isEmpty() && stack.isDamaged()) {
 				int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.LIFE_MENDING, stack);
@@ -155,7 +155,7 @@ public class EnchModuleEvents {
 	 */
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
-		PlayerEntity p = e.getPlayer();
+		Player p = e.getPlayer();
 		if (!p.isOnGround() && EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.STABLE_FOOTING, p) > 0) {
 			if (e.getOriginalSpeed() < e.getNewSpeed() * 5) e.setNewSpeed(e.getNewSpeed() * 5F);
 		}
@@ -180,7 +180,7 @@ public class EnchModuleEvents {
 		if (!e.getEntity().isShiftKeyDown() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getPlayer())) {
 			s.hurtAndBreak(6 - nbLevel, e.getPlayer(), ent -> ent.broadcastBreakEvent(e.getHand()));
 			e.setCanceled(true);
-			e.setCancellationResult(ActionResultType.SUCCESS);
+			e.setCancellationResult(InteractionResult.SUCCESS);
 		}
 	}
 
@@ -189,9 +189,9 @@ public class EnchModuleEvents {
 	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void applyUnbreaking(AnvilRepairEvent e) {
-		if (e.getPlayer().containerMenu instanceof RepairContainer) {
-			RepairContainer r = (RepairContainer) e.getPlayer().containerMenu;
-			TileEntity te = r.access.evaluate(World::getBlockEntity).orElse(null);
+		if (e.getPlayer().containerMenu instanceof AnvilMenu) {
+			AnvilMenu r = (AnvilMenu) e.getPlayer().containerMenu;
+			BlockEntity te = r.access.evaluate(Level::getBlockEntity).orElse(null);
 			if (te instanceof AnvilTile) e.setBreakChance(e.getBreakChance() / (((AnvilTile) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
 		}
 	}
@@ -202,14 +202,14 @@ public class EnchModuleEvents {
 	@SubscribeEvent
 	public void livingHurt(LivingHurtEvent e) {
 		LivingEntity user = e.getEntityLiving();
-		if (e.getSource().getEntity() instanceof Entity && user.getEffect(Effects.DAMAGE_RESISTANCE) == null) {
+		if (e.getSource().getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
 			int level = EnchantmentHelper.getEnchantmentLevel(ApotheosisObjects.BERSERK, user);
 			if (level > 0) {
 				user.invulnerableTime = 0;
 				user.hurt(EnchModule.CORRUPTED, level * level);
-				user.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 200 * level, level - 1));
-				user.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 200 * level, level - 1));
-				user.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 200 * level, level - 1));
+				user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200 * level, level - 1));
+				user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200 * level, level - 1));
+				user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200 * level, level - 1));
 			}
 		}
 		if (e.getSource().isMagic() && !e.getSource().isBypassMagic() && e.getSource().getEntity() instanceof LivingEntity) {
@@ -228,7 +228,7 @@ public class EnchModuleEvents {
 
 	@SubscribeEvent
 	public void login(PlayerLoggedInEvent e) {
-		PlayerEntity p = e.getPlayer();
+		Player p = e.getPlayer();
 		if (!p.level.isClientSide) {
 			EnchantingStatManager.dispatch(p);
 		}

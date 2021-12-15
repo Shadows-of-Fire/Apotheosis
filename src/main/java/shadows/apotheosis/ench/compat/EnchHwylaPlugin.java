@@ -5,27 +5,26 @@ import java.util.Map;
 
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
-import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.IServerDataProvider;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
+import mcp.mobius.waila.api.config.IPluginConfig;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
 
 @WailaPlugin
-public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<TileEntity> {
+public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<BlockEntity> {
 
 	@Override
 	public void register(IRegistrar reg) {
@@ -34,8 +33,8 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 	}
 
 	@Override
-	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-		CompoundNBT tag = accessor.getServerData();
+	public void appendBody(List<Component> tooltip, IDataAccessor accessor, IPluginConfig config) {
+		CompoundTag tag = accessor.getServerData();
 		Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
 		for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
 			tooltip.add(e.getKey().getFullname(e.getValue()));
@@ -43,7 +42,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 	}
 
 	@Override
-	public void appendServerData(CompoundNBT tag, ServerPlayerEntity player, World world, TileEntity te) {
+	public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te) {
 		if (te instanceof AnvilTile) {
 			ItemStack stack = new ItemStack(Items.ANVIL);
 			EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), stack);

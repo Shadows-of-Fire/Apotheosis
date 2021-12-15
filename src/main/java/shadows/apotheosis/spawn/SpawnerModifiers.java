@@ -3,14 +3,14 @@ package shadows.apotheosis.spawn;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.TagCollectionManager;
-import net.minecraft.util.LazyValue;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.spawn.modifiers.CapModifier;
 import shadows.apotheosis.spawn.modifiers.ConditionModifier;
@@ -68,16 +68,16 @@ public class SpawnerModifiers {
 			modif.load(config);
 	}
 
-	public static LazyValue<Ingredient> readIngredient(String s) {
+	public static LazyLoadedValue<Ingredient> readIngredient(String s) {
 		if (s.startsWith("#")) {
 			String tag = s.substring(1);
-			return new LazyValue<>(() -> Ingredient.of(TagCollectionManager.getInstance().getItems().getTag(new ResourceLocation(tag))));
+			return new LazyLoadedValue<>(() -> Ingredient.of(SerializationTags.getInstance().getItems().getTag(new ResourceLocation(tag))));
 		} else {
 			String[] split = s.split(":");
 			Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
 			ItemStack stack = new ItemStack(i);
-			if (i == Items.BARRIER) stack.setHoverName(new TranslationTextComponent("info.apoth.modifier_disabled"));
-			return new LazyValue<>(() -> Ingredient.of(stack));
+			if (i == Items.BARRIER) stack.setHoverName(new TranslatableComponent("info.apoth.modifier_disabled"));
+			return new LazyLoadedValue<>(() -> Ingredient.of(stack));
 		}
 	}
 

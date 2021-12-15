@@ -2,36 +2,36 @@ package shadows.apotheosis.village.fletching;
 
 import java.util.Optional;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.CraftingResultSlot;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.village.VillageModule;
 
-public class FletchingContainer extends Container {
+public class FletchingContainer extends AbstractContainerMenu {
 
-	protected final CraftingInventory craftMatrix = new CraftingInventory(this, 1, 3);
-	protected final CraftResultInventory craftResult = new CraftResultInventory();
-	protected final World world;
+	protected final CraftingContainer craftMatrix = new CraftingContainer(this, 1, 3);
+	protected final ResultContainer craftResult = new ResultContainer();
+	protected final Level world;
 	protected final BlockPos pos;
-	protected final PlayerEntity player;
+	protected final Player player;
 
-	public FletchingContainer(int id, PlayerInventory inv, World world, BlockPos pos) {
+	public FletchingContainer(int id, Inventory inv, Level world, BlockPos pos) {
 		super(ApotheosisObjects.FLETCHING, id);
 		this.world = world;
 		this.pos = pos;
@@ -55,14 +55,14 @@ public class FletchingContainer extends Container {
 	}
 
 	@SuppressWarnings("deprecation")
-	public FletchingContainer(int id, PlayerInventory inv) {
+	public FletchingContainer(int id, Inventory inv) {
 		this(id, inv, DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level), BlockPos.ZERO);
 	}
 
 	@Override
-	public void slotsChanged(IInventory inventory) {
+	public void slotsChanged(Container inventory) {
 		if (!this.world.isClientSide) {
-			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity) this.player;
+			ServerPlayer serverplayerentity = (ServerPlayer) this.player;
 			ItemStack itemstack = ItemStack.EMPTY;
 			Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(VillageModule.FLETCHING, this.craftMatrix, this.world);
 			if (optional.isPresent()) {
@@ -71,23 +71,23 @@ public class FletchingContainer extends Container {
 			}
 
 			this.craftResult.setItem(0, itemstack);
-			serverplayerentity.connection.send(new SSetSlotPacket(this.containerId, 0, itemstack));
+			serverplayerentity.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, 0, 0, itemstack));
 		}
 	}
 
 	@Override
-	public void removed(PlayerEntity playerIn) {
+	public void removed(Player playerIn) {
 		super.removed(playerIn);
-		this.clearContainer(playerIn, this.world, this.craftMatrix);
+		this.clearContainer(playerIn, this.craftMatrix);
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return this.world.getBlockState(this.pos).getBlock() == Blocks.FLETCHING_TABLE && player.distanceToSqr(this.pos.getX(), this.pos.getY(), this.pos.getZ()) < 64;
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -111,9 +111,9 @@ public class FletchingContainer extends Container {
 
 			if (itemstack1.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
 
-			ItemStack itemstack2 = slot.onTake(playerIn, itemstack1);
+			slot.onTake(playerIn, itemstack1);
 			if (index == 0) {
-				playerIn.drop(itemstack2, false);
+				playerIn.drop(itemstack1, false);
 			}
 		}
 
@@ -125,14 +125,14 @@ public class FletchingContainer extends Container {
 		return slotIn.container != this.craftResult && super.canTakeItemForPickAll(stack, slotIn);
 	}
 
-	protected class FletchingResultSlot extends CraftingResultSlot {
+	protected class FletchingResultSlot extends ResultSlot {
 
-		protected FletchingResultSlot(PlayerEntity player, CraftingInventory inv, IInventory result, int slot, int x, int y) {
+		protected FletchingResultSlot(Player player, CraftingContainer inv, Container result, int slot, int x, int y) {
 			super(player, inv, result, slot, x, y);
 		}
 
 		@Override
-		public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
+		public void onTake(Player thePlayer, ItemStack stack) {
 			this.checkTakeAchievements(stack);
 			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
 			NonNullList<ItemStack> nonnulllist = thePlayer.level.getRecipeManager().getRemainingItemsFor(VillageModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level);
@@ -151,13 +151,12 @@ public class FletchingContainer extends Container {
 					} else if (ItemStack.isSame(itemstack, itemstack1) && ItemStack.tagMatches(itemstack, itemstack1)) {
 						itemstack1.grow(itemstack.getCount());
 						FletchingContainer.this.craftMatrix.setItem(i, itemstack1);
-					} else if (!FletchingContainer.this.player.inventory.add(itemstack1)) {
+					} else if (!FletchingContainer.this.player.getInventory().add(itemstack1)) {
 						FletchingContainer.this.player.drop(itemstack1, false);
 					}
 				}
 			}
 
-			return stack;
 		}
 
 	}

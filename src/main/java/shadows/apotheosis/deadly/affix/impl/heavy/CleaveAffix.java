@@ -7,15 +7,15 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
@@ -39,17 +39,17 @@ public class CleaveAffix extends Affix {
 
 	@Override
 	public void onEntityDamaged(LivingEntity user, Entity target, float level) {
-		if (Apotheosis.localAtkStrength >= 0.98 && !cleaving && user instanceof PlayerEntity) {
+		if (Apotheosis.localAtkStrength >= 0.98 && !cleaving && user instanceof Player) {
 			cleaving = true;
 			float chance = level % 1;
 			int targets = (int) level;
 			if (user.level.random.nextFloat() < chance) {
-				Predicate<Entity> pred = e -> !(e instanceof PlayerEntity) && e instanceof LivingEntity && ((LivingEntity) e).canAttackType(EntityType.PLAYER);
-				List<Entity> nearby = target.level.getEntities(target, new AxisAlignedBB(target.blockPosition()).inflate(6), pred);
+				Predicate<Entity> pred = e -> !(e instanceof Player) && e instanceof LivingEntity && ((LivingEntity) e).canAttackType(EntityType.PLAYER);
+				List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), pred);
 				if (!user.level.isClientSide) for (Entity e : nearby) {
 					if (targets > 0) {
 						user.attackStrengthTicker = 300;
-						((PlayerEntity) user).attack(e);
+						((Player) user).attack(e);
 						targets--;
 					}
 				}
@@ -67,17 +67,17 @@ public class CleaveAffix extends Affix {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, float level, Consumer<ITextComponent> list) {
+	public void addInformation(ItemStack stack, float level, Consumer<Component> list) {
 		float chance = level % 1;
 		int targets = (int) level;
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", String.format("%.2f", chance * 100), targets));
 	}
 
 	@Override
-	public ITextComponent getDisplayName(float level) {
+	public Component getDisplayName(float level) {
 		float chance = level % 1;
 		int targets = (int) level;
-		return new TranslationTextComponent("affix." + this.getRegistryName() + ".name", String.format("%.2f", chance * 100), targets).withStyle(TextFormatting.GRAY);
+		return new TranslatableComponent("affix." + this.getRegistryName() + ".name", String.format("%.2f", chance * 100), targets).withStyle(ChatFormatting.GRAY);
 	}
 
 	@Override

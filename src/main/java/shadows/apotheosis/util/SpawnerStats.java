@@ -2,9 +2,6 @@ package shadows.apotheosis.util;
 
 import com.google.gson.annotations.SerializedName;
 
-import shadows.placebo.util.SpawnerBuilder;
-import shadows.placebo.util.SpawnerEditor;
-
 public class SpawnerStats {
 
 	@SerializedName("spawn_delay")
@@ -34,20 +31,6 @@ public class SpawnerStats {
 		this.maxNearbyEntities = nearby;
 		this.spawnRange = range;
 		this.playerRange = playerRange;
-	}
-
-	public SpawnerBuilder apply(SpawnerBuilder builder) {
-		builder.setDelay(this.spawnDelay).setMinAndMaxDelay(this.minDelay, this.maxDelay);
-		builder.setSpawnCount(this.spawnCount).setMaxNearbyEntities(this.maxNearbyEntities);
-		builder.setSpawnRange(this.spawnRange).setPlayerRange(this.playerRange);
-		return builder;
-	}
-
-	public SpawnerEditor apply(SpawnerEditor editor) {
-		editor.setDelay(this.spawnDelay).setMinAndMaxDelay(this.minDelay, this.maxDelay);
-		editor.setSpawnCount(this.spawnCount).setMaxNearbyEntities(this.maxNearbyEntities);
-		editor.setSpawnRange(this.spawnRange).setPlayerRange(this.playerRange);
-		return editor;
 	}
 
 }

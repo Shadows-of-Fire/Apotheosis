@@ -1,7 +1,7 @@
 package shadows.apotheosis.util;
 
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
+import net.minecraft.world.inventory.SimpleContainerData;
 
 /**
  * A thing that allows floats to be synced over the container system.
@@ -14,7 +14,7 @@ public class FloatReferenceHolder {
 	float internal = 0;
 	final float min, max;
 
-	IntArray array = new IntArray(3) {
+	SimpleContainerData array = new SimpleContainerData(3) {
 		@Override
 		public void set(int index, int value) {
 			super.set(index, value);
@@ -31,7 +31,7 @@ public class FloatReferenceHolder {
 	/**
 	 * Returns the internal array object so the container may register it for tracking.
 	 */
-	public IntArray getArray() {
+	public SimpleContainerData getArray() {
 		return this.array;
 	}
 
@@ -40,7 +40,7 @@ public class FloatReferenceHolder {
 	}
 
 	public void set(float f) {
-		f = MathHelper.clamp(f, this.min, this.max);
+		f = Mth.clamp(f, this.min, this.max);
 		this.internal = f;
 		this.updating = true;
 		this.array.set(0, (int) f);
