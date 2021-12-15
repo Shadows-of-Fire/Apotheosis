@@ -1,3 +1,7 @@
+## 4.8.4
+* E.Kim: Updated ko_kr.json (Korean Translation)
+* Added the ability turn off mythic items being unbreakable.
+
 ## 4.8.3
 * Added an extra tooltip tab to the Enchanting Table, which shows power range, xp cost, and item enchantability.
 * PixVoxel: Add ko_kr.json (Korean Translation)
