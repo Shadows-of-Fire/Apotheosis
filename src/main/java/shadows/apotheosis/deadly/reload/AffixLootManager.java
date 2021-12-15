@@ -36,6 +36,7 @@ import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 import shadows.apotheosis.deadly.affix.modifiers.Modifiers;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.util.JsonUtil;
 
 /**
@@ -132,7 +133,7 @@ public class AffixLootManager extends JsonReloadListener {
 			AffixHelper.applyAffix(stack, a, a.generateLevel(stack, rand, affixes.get(a)));
 		}
 
-		if (rarity.ordinal() >= LootRarity.MYTHIC.ordinal()) {
+		if (rarity.ordinal() >= LootRarity.MYTHIC.ordinal() && DeadlyConfig.mythicUnbreakable) {
 			CompoundNBT tag = stack.getOrCreateTag();
 			tag.putBoolean("Unbreakable", true);
 		}
