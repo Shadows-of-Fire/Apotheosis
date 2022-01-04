@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.objects.Object2ByteMap;
 import it.unimi.dsi.fastutil.objects.Object2ByteOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ShortMap;
 import it.unimi.dsi.fastutil.objects.Object2ShortOpenHashMap;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -34,8 +35,8 @@ public class EnchLibraryTile extends BlockEntity {
 	protected final Set<EnchLibraryContainer> activeContainers = new HashSet<>();
 	protected final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> new EnchLibItemHandler());
 
-	public EnchLibraryTile() {
-		super(ApotheosisObjects.ENCH_LIB_TILE);
+	public EnchLibraryTile(BlockPos pos, BlockState state) {
+		super(ApotheosisObjects.ENCH_LIB_TILE, pos, state);
 	}
 
 	/**
@@ -108,8 +109,8 @@ public class EnchLibraryTile extends BlockEntity {
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
+	public void load(CompoundTag tag) {
+		super.load(tag);
 		CompoundTag points = tag.getCompound("Points");
 		for (String s : points.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
@@ -144,7 +145,7 @@ public class EnchLibraryTile extends BlockEntity {
 
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, -12, this.getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
