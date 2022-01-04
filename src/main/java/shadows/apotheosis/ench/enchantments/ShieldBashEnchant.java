@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.common.ToolActions;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
 
@@ -33,14 +34,14 @@ public class ShieldBashEnchant extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return super.canApplyAtEnchantingTable(stack) || stack.getItem().isShield(stack, null);
+		return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
 	}
 
 	@Override
 	public void doPostAttack(LivingEntity user, Entity target, int level) {
 		if (target instanceof LivingEntity) {
 			ItemStack stack = user.getMainHandItem();
-			if (stack.getItem().isShield(stack, user)) {
+			if (stack.canPerformAction(ToolActions.SHIELD_BLOCK)) {
 				stack.hurtAndBreak(35, user, e -> {
 					e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
 				});
