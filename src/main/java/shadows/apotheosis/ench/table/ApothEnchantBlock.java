@@ -11,7 +11,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
@@ -45,8 +44,8 @@ public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplace
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter worldIn) {
-		return new ApothEnchantTile();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new ApothEnchantTile(pos, state);
 	}
 
 	@Override
