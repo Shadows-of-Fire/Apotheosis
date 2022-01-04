@@ -108,9 +108,9 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 		ItemStack toEnchant = this.enchantSlots.getItem(0);
 		ItemStack lapis = this.getSlot(1).getItem();
 		int i = id + 1;
-		if ((lapis.isEmpty() || lapis.getCount() < i) && !player.abilities.instabuild) return false;
+		if ((lapis.isEmpty() || lapis.getCount() < i) && !player.getAbilities().instabuild) return false;
 
-		if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[id]) && !player.abilities.instabuild) return false;
+		if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) return false;
 
 		this.access.execute((world, pos) -> {
 			ItemStack enchanted = toEnchant;
@@ -132,7 +132,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 					}
 				}
 
-				if (!player.abilities.instabuild) {
+				if (!player.getAbilities().instabuild) {
 					lapis.shrink(i);
 					if (lapis.isEmpty()) {
 						this.enchantSlots.setItem(1, ItemStack.EMPTY);
@@ -248,7 +248,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 
 	public void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
-		if (state.getBlock().isAir(state, world, pos)) return;
+		if (state.isAir()) return;
 		float max = EnchantingStatManager.getMaxEterna(state, world, pos);
 		float eterna = EnchantingStatManager.getEterna(state, world, pos);
 		eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
