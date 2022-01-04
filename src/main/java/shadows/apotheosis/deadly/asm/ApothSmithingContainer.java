@@ -32,7 +32,7 @@ public class ApothSmithingContainer extends SmithingMenu {
 	}
 
 	@Override
-	protected ItemStack onTake(Player p_230301_1_, ItemStack p_230301_2_) {
+	protected void onTake(Player p_230301_1_, ItemStack p_230301_2_) {
 		p_230301_2_.onCraftedBy(p_230301_1_.level, p_230301_1_, p_230301_2_.getCount());
 		this.resultSlots.awardUsedRecipes(p_230301_1_);
 		UpgradeRecipe recipe = this.recipes.stream().filter(r -> r.matches(this.inputSlots, this.world)).findFirst().orElse(null);
@@ -47,7 +47,7 @@ public class ApothSmithingContainer extends SmithingMenu {
 					this.inputSlots.setItem(i, r);
 					if (!this.world.isClientSide) {
 						ServerPlayer player = (ServerPlayer) this.player;
-						player.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, i, r));
+						player.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.getStateId(), i, r));
 					}
 				} else this.inputSlots.getItem(i).shrink(1);
 			}
@@ -55,7 +55,6 @@ public class ApothSmithingContainer extends SmithingMenu {
 		this.access.execute((p_234653_0_, p_234653_1_) -> {
 			p_234653_0_.levelEvent(1044, p_234653_1_, 0);
 		});
-		return p_230301_2_;
 	}
 
 	private void shrinkStackInSlot(int p_234654_1_) {
@@ -69,7 +68,7 @@ public class ApothSmithingContainer extends SmithingMenu {
 		if (e.getPlayer() instanceof ServerPlayer && e.getContainer().getClass() == SmithingMenu.class) {
 			ServerPlayer player = (ServerPlayer) e.getPlayer();
 			SmithingMenu container = (SmithingMenu) e.getContainer();
-			player.containerMenu = new ApothSmithingContainer(container.containerId, player.inventory, container.access);
+			player.containerMenu = new ApothSmithingContainer(container.containerId, player.getInventory(), container.access);
 		}
 	}
 
