@@ -4,7 +4,6 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.UUID;
 
-import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
