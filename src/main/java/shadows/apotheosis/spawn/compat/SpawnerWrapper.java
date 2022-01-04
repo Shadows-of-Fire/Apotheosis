@@ -10,10 +10,12 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.util.Lazy;
 import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.modifiers.EggModifier;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -22,10 +24,11 @@ import shadows.placebo.util.PlaceboUtil;
 
 public class SpawnerWrapper {
 
-	public static final List<ItemStack> SPAWNER = Collections.singletonList(new ItemStack(Blocks.SPAWNER));
-	static {
-		new ApothSpawnerTile().save(SPAWNER.get(0).getOrCreateTagElement("BlockEntityTag"));
-	}
+	public static final Lazy<List<ItemStack>> SPAWNER = Lazy.of(() -> {
+		ItemStack stack = new ItemStack(Blocks.SPAWNER);
+		new ApothSpawnerTile(BlockPos.ZERO, Blocks.SPAWNER.defaultBlockState()).save(stack.getOrCreateTagElement("BlockEntityTag"));
+		return Collections.singletonList(stack);
+	});
 
 	final SpawnerModifier modifier;
 	final ItemStack output;
@@ -33,7 +36,7 @@ public class SpawnerWrapper {
 
 	public SpawnerWrapper(SpawnerModifier modifier, String nbt, String tooltip) {
 		this.modifier = modifier;
-		this.output = SPAWNER.get(0).copy();
+		this.output = SPAWNER.get().get(0).copy();
 		CompoundTag tag = this.output.getOrCreateTagElement("BlockEntityTag");
 		tag.putInt(nbt, tag.getInt(nbt) + modifier.getValue());
 		this.tooltip = tooltip;
@@ -41,7 +44,7 @@ public class SpawnerWrapper {
 
 	public SpawnerWrapper(SpawnerModifier modifier, String nbt, boolean change, String tooltip) {
 		this.modifier = modifier;
-		this.output = SPAWNER.get(0).copy();
+		this.output = SPAWNER.get().get(0).copy();
 		CompoundTag tag = this.output.getOrCreateTagElement("BlockEntityTag");
 		tag.putBoolean(nbt, change);
 		this.tooltip = tooltip;
@@ -49,14 +52,14 @@ public class SpawnerWrapper {
 
 	public SpawnerWrapper(ResourceLocation entityOut, String tooltip) {
 		this.modifier = new EggModifier();
-		this.output = SPAWNER.get(0).copy();
+		this.output = SPAWNER.get().get(0).copy();
 		CompoundTag tag = this.output.getOrCreateTagElement("BlockEntityTag");
 		tag.getCompound("SpawnData").putString("id", entityOut.toString());
 		this.tooltip = tooltip;
 	}
 
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(SPAWNER, PlaceboUtil.asList(this.modifier.getIngredient().getItems())));
+		ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(SPAWNER.get(), PlaceboUtil.asList(this.modifier.getIngredient().getItems())));
 		ingredients.setOutput(VanillaTypes.ITEM, this.output);
 	}
 
