@@ -17,8 +17,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.WeighedRandom;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.level.SpawnData;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.deadly.DeadlyModule;
@@ -63,7 +63,7 @@ public class RandomSpawnerManager extends SimpleJsonResourceReloadListener {
 			}
 		}
 		if (this.entries.size() == 0) throw new RuntimeException("No Random Spawners were registered.  This is not supported.");
-		this.weight = WeighedRandom.getTotalWeight(this.entries);
+		this.weight = WeightedRandom.getTotalWeight(this.entries);
 		if (this.weight == 0) throw new RuntimeException("The total spawner weight is zero.  This is not supported.");
 		DeadlyModule.LOGGER.info("Loaded {} spawner items from resources.", this.entries.size());
 	}
@@ -76,7 +76,7 @@ public class RandomSpawnerManager extends SimpleJsonResourceReloadListener {
 	}
 
 	public SpawnerItem getRandomItem(Random rand) {
-		return WeighedRandom.getRandomItem(rand, this.entries, this.weight);
+		return WeightedRandom.getRandomItem(rand, this.entries, this.weight).get();
 	}
 
 	@Nullable
