@@ -20,12 +20,11 @@ import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.placebo.config.Configuration;
@@ -197,15 +196,13 @@ public class NameHelper {
 			name = new TextComponent(descriptors[random.nextInt(descriptors.length)] + " ");
 
 			String[] type = { "Tool" };
-			Set<ToolType> types = itemStack.getToolTypes();
-
-			if (itemStack.getItem() instanceof SwordItem) {
+			if (ToolActions.DEFAULT_SWORD_ACTIONS.stream().anyMatch(a -> itemStack.canPerformAction(a))) {
 				type = swords;
-			} else if (types.contains(ToolType.AXE)) {
+			} else if (ToolActions.DEFAULT_AXE_ACTIONS.stream().anyMatch(a -> itemStack.canPerformAction(a))) {
 				type = axes;
-			} else if (types.contains(ToolType.PICKAXE)) {
+			} else if (ToolActions.DEFAULT_PICKAXE_ACTIONS.stream().anyMatch(a -> itemStack.canPerformAction(a))) {
 				type = pickaxes;
-			} else if (types.contains(ToolType.SHOVEL)) {
+			} else if (ToolActions.DEFAULT_SHOVEL_ACTIONS.stream().anyMatch(a -> itemStack.canPerformAction(a))) {
 				type = shovels;
 			}
 			name.append(type[random.nextInt(type.length)]);
@@ -234,7 +231,7 @@ public class NameHelper {
 			default:
 			}
 			name.append(type[random.nextInt(type.length)]);
-		} else if (itemStack.isShield(null)) {
+		} else if (itemStack.canPerformAction(ToolActions.SHIELD_BLOCK)) {
 			String[] type = shields;
 			name = new TextComponent(type[random.nextInt(type.length)]);
 		}
