@@ -37,7 +37,7 @@ public class SpectralShotAffix extends RangedAffix {
 			if (!user.level.isClientSide) {
 				ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
 				AbstractArrow spectralArrow = arrowitem.createArrow(user.level, ItemStack.EMPTY, user);
-				spectralArrow.shoot(user.xRot, user.yRot, 0.0F, 1 * 3.0F, 1.0F);
+				spectralArrow.shoot(user.getXRot(), user.getYRot(), 0.0F, 1 * 3.0F, 1.0F);
 				this.cloneMotion(arrow, spectralArrow);
 				spectralArrow.setCritArrow(arrow.isCritArrow());
 				spectralArrow.setBaseDamage(arrow.getBaseDamage());
@@ -52,7 +52,7 @@ public class SpectralShotAffix extends RangedAffix {
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = this.range.getFloat(rand);
+		float lvl = this.range.sample(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}
@@ -69,10 +69,10 @@ public class SpectralShotAffix extends RangedAffix {
 
 	private void cloneMotion(AbstractArrow src, AbstractArrow dest) {
 		dest.setDeltaMovement(src.getDeltaMovement().scale(1));
-		dest.yRot = src.yRot;
-		dest.xRot = src.xRot;
-		dest.yRotO = dest.yRot;
-		dest.xRotO = dest.xRot;
+		dest.setYRot(src.getYRot());
+		dest.setXRot(src.getXRot());
+		dest.yRotO = dest.getYRot();
+		dest.xRotO = dest.getXRot();
 	}
 
 }
