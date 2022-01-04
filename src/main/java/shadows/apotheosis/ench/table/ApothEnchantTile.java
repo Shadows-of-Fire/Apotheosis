@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.table;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -19,12 +20,12 @@ public class ApothEnchantTile extends EnchantmentTableBlockEntity {
 	protected ItemStackHandler inv = new ItemStackHandler(1) {
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
-			return Tags.Items.GEMS_LAPIS.contains(stack.getItem());
-		};
+			return stack.is(Tags.Items.ENCHANTING_FUELS);
+		}
 	};
 
-	public ApothEnchantTile() {
-
+	public ApothEnchantTile(BlockPos pos, BlockState state) {
+		super(pos, state);
 	}
 
 	@Override
@@ -35,8 +36,8 @@ public class ApothEnchantTile extends EnchantmentTableBlockEntity {
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
+	public void load(CompoundTag tag) {
+		super.load(tag);
 		this.inv.deserializeNBT(tag.getCompound("inventory"));
 	}
 
