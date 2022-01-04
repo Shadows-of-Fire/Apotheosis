@@ -10,7 +10,8 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.Util;
 import net.minecraft.util.Mth;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -63,16 +64,16 @@ public class RealEnchantmentHelper {
 			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment));
 			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
 			if (!possibleEnchants.isEmpty()) {
-				chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
+				chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).get().data);
 				removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 
 				if (arcanaLevel >= 2.5F && !possibleEnchants.isEmpty()) {
-					chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
+					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).get().data);
 					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 				}
 
 				if (arcanaLevel >= 7.5F && !possibleEnchants.isEmpty()) {
-					chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
+					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).get().data);
 				}
 
 				while (arcanaLevel + rand.nextInt(50) <= power) {
@@ -81,7 +82,7 @@ public class RealEnchantmentHelper {
 						break;
 					}
 
-					chosenEnchants.add(WeighedRandom.getRandomItem(rand, possibleEnchants).data);
+					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).get().data);
 					power /= 2;
 				}
 			}
@@ -111,7 +112,7 @@ public class RealEnchantmentHelper {
 		return EnchHooks.getEnchantmentDatas(power, stack, treasure);
 	}
 
-	private static class ArcanaEnchantmentData extends WeighedRandom.WeighedRandomItem {
+	private static class ArcanaEnchantmentData extends WeightedEntry.IntrusiveBase {
 		EnchantmentInstance data;
 
 		private ArcanaEnchantmentData(Arcana arcana, EnchantmentInstance data) {
