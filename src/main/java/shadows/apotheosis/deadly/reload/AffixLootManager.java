@@ -24,8 +24,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.WeighedRandom;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
@@ -70,7 +70,7 @@ public class AffixLootManager extends SimpleJsonResourceReloadListener {
 			}
 		}
 		Collections.shuffle(ENTRIES);
-		this.weight = WeighedRandom.getTotalWeight(ENTRIES);
+		this.weight = WeightedRandom.getTotalWeight(ENTRIES);
 		if (this.weight == 0) throw new RuntimeException("The total affix item weight is zero.  This is not supported.");
 		DeadlyModule.LOGGER.info("Loaded {} affix loot entries from resources.", ENTRIES.size());
 	}
@@ -85,7 +85,7 @@ public class AffixLootManager extends SimpleJsonResourceReloadListener {
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
 	public static AffixLootEntry getRandomEntry(Random rand) {
-		return WeighedRandom.getRandomItem(rand, ENTRIES, INSTANCE.weight);
+		return WeightedRandom.getRandomItem(rand, ENTRIES, INSTANCE.weight).get();
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class AffixLootManager extends SimpleJsonResourceReloadListener {
 	 */
 	public static AffixLootEntry getRandomEntry(Random rand, EquipmentType type) {
 		if (type == null) return getRandomEntry(rand);
-		return WeighedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList()));
+		return WeightedRandom.getRandomItem(rand, ENTRIES.stream().filter(p -> p.getType() == type).collect(Collectors.toList())).get();
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class AffixLootManager extends SimpleJsonResourceReloadListener {
 		List<Affix> afxList = AffixHelper.getAffixesFor(type);
 		int affixCount = rarity.getAffixes();
 		while (affixes.size() < Math.min(affixCount, afxList.size())) {
-			affixes.put(WeighedRandom.getRandomItem(rand, afxList), rarity == LootRarity.COMMON ? Modifiers.getBadModifier() : null);
+			affixes.put(WeightedRandom.getRandomItem(rand, afxList).get(), rarity == LootRarity.COMMON ? Modifiers.getBadModifier() : null);
 		}
 
 		if (rarity.ordinal() >= LootRarity.EPIC.ordinal()) {
