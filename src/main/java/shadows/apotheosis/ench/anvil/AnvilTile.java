@@ -4,8 +4,10 @@ import java.util.Map;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -20,8 +22,8 @@ public class AnvilTile extends BlockEntity {
 
 	protected final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
 
-	public AnvilTile() {
-		super(ApotheosisObjects.ANVIL);
+	public AnvilTile(BlockPos pos, BlockState state) {
+		super(ApotheosisObjects.ANVIL, pos, state);
 	}
 
 	@Override
@@ -33,9 +35,9 @@ public class AnvilTile extends BlockEntity {
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
-		ListTag enchants = tag.getList("enchantments", Constants.NBT.TAG_COMPOUND);
+	public void load(CompoundTag tag) {
+		super.load(tag);
+		ListTag enchants = tag.getList("enchantments", Tag.TAG_COMPOUND);
 		Map<Enchantment, Integer> map = EnchantmentHelper.deserializeEnchantments(enchants);
 		if (tag.getInt("ub") > 0) {
 			map.put(Enchantments.UNBREAKING, tag.getInt("ub"));
