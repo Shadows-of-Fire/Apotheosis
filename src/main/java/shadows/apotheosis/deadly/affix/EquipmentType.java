@@ -10,7 +10,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolActions;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 
 public enum EquipmentType {
@@ -38,10 +38,10 @@ public enum EquipmentType {
 		if (DeadlyConfig.TYPE_OVERRIDES.containsKey(i.getRegistryName())) return DeadlyConfig.TYPE_OVERRIDES.get(i.getRegistryName());
 		if (i instanceof ProjectileWeaponItem) return RANGED;
 		if (i instanceof ArmorItem) return ARMOR;
-		if (i.isShield(stack, null)) return SHIELD;
-		if (i.getToolTypes(stack).contains(ToolType.PICKAXE)) return PICKAXE;
-		if (i.getToolTypes(stack).contains(ToolType.AXE)) return AXE;
-		if (i.getToolTypes(stack).contains(ToolType.SHOVEL)) return SHOVEL;
+		if (stack.canPerformAction(ToolActions.SHIELD_BLOCK)) return SHIELD;
+		if (ToolActions.DEFAULT_PICKAXE_ACTIONS.stream().anyMatch(a -> stack.canPerformAction(a))) return PICKAXE;
+		if (ToolActions.DEFAULT_AXE_ACTIONS.stream().anyMatch(a -> stack.canPerformAction(a))) return AXE;
+		if (ToolActions.DEFAULT_SHOVEL_ACTIONS.stream().anyMatch(a -> stack.canPerformAction(a))) return SHOVEL;
 		if (i.getAttributeModifiers(EquipmentSlot.MAINHAND, stack).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0)) return SWORD;
 		return null;
 	}
