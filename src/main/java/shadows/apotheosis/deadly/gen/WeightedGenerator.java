@@ -3,7 +3,7 @@ package shadows.apotheosis.deadly.gen;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 /**
@@ -33,7 +33,7 @@ public abstract class WeightedGenerator {
 	 */
 	public abstract boolean isEnabled();
 
-	public static abstract class WorldFeatureItem extends WeighedRandom.WeighedRandomItem {
+	public static abstract class WorldFeatureItem extends WeightedEntry.IntrusiveBase {
 
 		public WorldFeatureItem(int weight) {
 			super(weight);
