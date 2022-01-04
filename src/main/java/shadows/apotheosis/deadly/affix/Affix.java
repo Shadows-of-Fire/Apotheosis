@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -34,7 +34,7 @@ import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.config.Configuration;
 
-public abstract class Affix extends WeighedRandom.WeighedRandomItem implements IForgeRegistryEntry<Affix> {
+public abstract class Affix extends WeightedEntry.IntrusiveBase implements IForgeRegistryEntry<Affix> {
 
 	static {
 		RegistryBuilder<Affix> build = new RegistryBuilder<>();
