@@ -13,11 +13,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemStack;
 
-@SuppressWarnings("deprecation")
-public class SeaAltarRenderer extends BlockEntityRenderer<SeaAltarTile> {
+public class SeaAltarRenderer implements BlockEntityRenderer<SeaAltarTile> {
+	private final BlockEntityRenderDispatcher renderer;
 
 	public SeaAltarRenderer(BlockEntityRenderDispatcher terd) {
-		super(terd);
+		this.renderer = terd;
 	}
 
 	@Override
@@ -32,14 +32,18 @@ public class SeaAltarRenderer extends BlockEntityRenderer<SeaAltarTile> {
 			double[][] offsets = { { 3 / 16D, 3 / 16D }, { 3 / 16D, 13 / 16D }, { 13 / 16D, 3 / 16D }, { 13 / 16D, 13 / 16D } };
 			float scale = 0.2F;
 			double yOffset = 0.75;
-
+			
+			int pSeed = 0;
+			
 			for (int i = 0; i < 4; i++) {
 				matrix.pushPose();
 				matrix.translate(offsets[i][0], yOffset, offsets[i][1]);
 				matrix.mulPose(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
 				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(i);
-				if (!s.isEmpty()) Minecraft.getInstance().getItemRenderer().renderStatic(s, TransformType.FIXED, combinedLightIn, OverlayTexture.NO_OVERLAY, matrix, buf);
+				if (!s.isEmpty()) {
+					Minecraft.getInstance().getItemRenderer().renderStatic(s, TransformType.FIXED, combinedLightIn, OverlayTexture.NO_OVERLAY, matrix, buf, pSeed);
+				}
 				matrix.popPose();
 			}
 
@@ -49,7 +53,7 @@ public class SeaAltarRenderer extends BlockEntityRenderer<SeaAltarTile> {
 				matrix.mulPose(new Quaternion(new Vector3f(0, 1, 0), angleRotateItem, true));
 				matrix.scale(scale, scale, scale);
 				ItemStack s = te.getInv().getStackInSlot(4);
-				Minecraft.getInstance().getItemRenderer().renderStatic(s, TransformType.FIXED, combinedLightIn, OverlayTexture.NO_OVERLAY, matrix, buf);
+				Minecraft.getInstance().getItemRenderer().renderStatic(s, TransformType.FIXED, combinedLightIn, OverlayTexture.NO_OVERLAY, matrix, buf, pSeed);
 				matrix.popPose();
 			}
 
