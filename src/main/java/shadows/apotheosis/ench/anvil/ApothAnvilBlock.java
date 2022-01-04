@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -33,6 +34,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -54,20 +57,15 @@ import shadows.apotheosis.deadly.affix.LootRarity;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.util.INBTSensitiveFallingBlock;
 
-public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingBlock {
+public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingBlock, EntityBlock {
 
 	public ApothAnvilBlock() {
 		super(BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-
-	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-		return new AnvilTile();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new AnvilTile(pos, state);
 	}
 
 	@Override
@@ -96,7 +94,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		ItemStack anvil = new ItemStack(this);
 		BlockEntity te = world.getBlockEntity(pos);
 		if (te instanceof AnvilTile) {
@@ -115,7 +113,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!ApotheosisObjects.ANVIL.isValid(newState.getBlock())) {
+		if (!ApotheosisObjects.ANVIL.isValid(newState)) {
 			world.removeBlockEntity(pos);
 		}
 	}
@@ -135,7 +133,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 		super.onLand(world, pos, fallState, hitState, anvil);
 		List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
 		if (anvil.blockData == null) return;
-		Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(anvil.blockData.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(anvil.blockData.getList("enchantments", Tag.TAG_COMPOUND));
 		int oblit = enchantments.getOrDefault(ApotheosisObjects.OBLITERATION, 0);
 		int split = enchantments.getOrDefault(ApotheosisObjects.SPLITTING, 0);
 		int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
@@ -154,7 +152,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 						BlockState dmg = damage(fallState);
 						if (dmg == null) {
 							world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-							world.levelEvent(Constants.WorldEvents.ANVIL_DESTROYED_SOUND, pos, 0);
+							world.levelEvent(LevelEvent.SOUND_ANVIL_BROKEN, pos, 0);
 						} else world.setBlockAndUpdate(pos, dmg);
 					}
 					break;
@@ -172,7 +170,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 						BlockState dmg = damage(fallState);
 						if (dmg == null) {
 							world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-							world.levelEvent(Constants.WorldEvents.ANVIL_DESTROYED_SOUND, pos, 0);
+							world.levelEvent(LevelEvent.SOUND_ANVIL_BROKEN, pos, 0);
 						} else world.setBlockAndUpdate(pos, dmg);
 					}
 					break;
@@ -183,7 +181,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 
 	protected boolean handleSplitting(Level world, BlockPos pos, int split, ItemEntity entity, ListTag enchants) {
 		if (world.random.nextFloat() < 0.2F * split) {
-			entity.remove();
+			entity.remove(RemovalReason.DISCARDED);
 			for (Tag nbt : enchants) {
 				CompoundTag tag = (CompoundTag) nbt;
 				int level = tag.getInt("lvl");
@@ -201,7 +199,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 
 	protected boolean handleSplitting(Level world, BlockPos pos, int split, ItemEntity entity, Map<Affix, Float> affixes) {
 		if (world.random.nextFloat() < 0.2F * split) {
-			entity.remove();
+			entity.remove(RemovalReason.DISCARDED);
 			for (Map.Entry<Affix, Float> e : affixes.entrySet()) {
 				ItemStack book = new ItemStack(DeadlyModule.RARITY_TOMES.get(LootRarity.COMMON));
 				AffixHelper.applyAffix(book, e.getKey(), e.getValue());
@@ -222,7 +220,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 			Enchantment enchant = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(nbt.getString("id")));
 			if (enchant == null) return false;
 			ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
-			entity.remove();
+			entity.remove(RemovalReason.DISCARDED);
 			Block.popResource(world, pos.above(), book);
 			Block.popResource(world, pos.above(), book.copy());
 		}
@@ -236,7 +234,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 			float oblitLvl = affix.getKey().obliterateLevel(affix.getValue());
 			if (oblitLvl == affix.getValue()) return false; //Let's not generate free books
 			AffixHelper.applyAffix(book, affix.getKey(), oblitLvl);
-			entity.remove();
+			entity.remove(RemovalReason.DISCARDED);
 			Block.popResource(world, pos.above(), book);
 			Block.popResource(world, pos.above(), book.copy());
 		}
@@ -246,7 +244,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	@Override
 	public ItemStack toStack(BlockState state, CompoundTag tag) {
 		ItemStack anvil = new ItemStack(this);
-		Map<Enchantment, Integer> ench = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+		Map<Enchantment, Integer> ench = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
 		ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
 		EnchantmentHelper.setEnchantments(ench, anvil);
 		return anvil;
