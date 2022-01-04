@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -153,7 +154,7 @@ public class EnchHooks {
 	public static void preArrowFired(ItemStack crossbow) {
 		int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.CRESCENDO, crossbow);
 		if (level > 0) {
-			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Constants.NBT.TAG_COMPOUND).copy());
+			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Tag.TAG_COMPOUND).copy());
 		}
 	}
 
