@@ -53,7 +53,7 @@ public class EnchLibraryContainer extends AbstractContainerMenu implements IButt
 	public void removed(Player player) {
 		super.removed(player);
 		if (!this.world.isClientSide) this.tile.removeListener(this);
-		this.clearContainer(player, this.world, this.ioInv);
+		this.clearContainer(player, this.ioInv);
 	}
 
 	void initCommon(Inventory inv) {
