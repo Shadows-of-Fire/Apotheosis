@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,7 +51,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		ItemStack s = new ItemStack(this);
 		BlockEntity te = world.getBlockEntity(pos);
 		if (te != null) te.save(s.getOrCreateTagElement("BlockEntityTag"));
@@ -61,8 +62,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		BlockEntity te = world.getBlockEntity(pos);
 		if (te != null) {
-			te.load(state, stack.getOrCreateTagElement("BlockEntityTag"));
-			te.setPosition(pos);
+			te.load(stack.getOrCreateTagElement("BlockEntityTag"));
 		}
 	}
 
@@ -79,8 +79,8 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter worldIn) {
-		return new ApothSpawnerTile();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new ApothSpawnerTile(pos, state);
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
+		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
 			CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
 			if (tag.contains("SpawnData")) tooltip.add(this.grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getString("id")));
 			if (tag.contains("MinSpawnDelay")) tooltip.add(this.grayTranslated("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
