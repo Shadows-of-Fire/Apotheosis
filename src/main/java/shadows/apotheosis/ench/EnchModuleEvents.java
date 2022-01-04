@@ -64,7 +64,7 @@ public class EnchModuleEvents {
 				return;
 			}
 		}
-		if ((e.getLeft().getItem() == Items.CHIPPED_ANVIL || e.getLeft().getItem() == Items.DAMAGED_ANVIL) && e.getRight().getItem().is(Tags.Items.STORAGE_BLOCKS_IRON)) {
+		if ((e.getLeft().getItem() == Items.CHIPPED_ANVIL || e.getLeft().getItem() == Items.DAMAGED_ANVIL) && e.getRight().is(Tags.Items.STORAGE_BLOCKS_IRON)) {
 			if (e.getLeft().getCount() != 1) return;
 			int dmg = e.getLeft().getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
 			ItemStack out = new ItemStack(dmg == 1 ? Items.ANVIL : Items.CHIPPED_ANVIL);
