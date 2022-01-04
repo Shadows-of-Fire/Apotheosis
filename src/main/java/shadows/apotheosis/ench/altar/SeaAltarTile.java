@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -18,8 +19,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -29,16 +30,17 @@ import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.EnchantmentInfo;
 import shadows.apotheosis.util.ParticleMessage;
+import shadows.placebo.block_entity.TickingBlockEntity;
+import shadows.placebo.network.PacketDistro;
 import shadows.placebo.recipe.VanillaPacketDispatcher;
 import shadows.placebo.util.EnchantmentUtils;
-import shadows.placebo.util.NetworkUtils;
 
-public class SeaAltarTile extends BlockEntity implements TickableBlockEntity {
+public class SeaAltarTile extends BlockEntity implements TickingBlockEntity {
 
 	private Random rand = new Random();
 
-	public SeaAltarTile() {
-		super(ApotheosisObjects.ALTAR_TYPE);
+	public SeaAltarTile(BlockPos pos, BlockState state) {
+		super(ApotheosisObjects.ALTAR_TYPE, pos, state);
 	}
 
 	protected ItemStackHandler inv = new ItemStackHandler(5);
@@ -48,7 +50,7 @@ public class SeaAltarTile extends BlockEntity implements TickableBlockEntity {
 	int soundTick = 0;
 
 	@Override
-	public void tick() {
+	public void serverTick(Level level, BlockPos pos, BlockState state) {
 		if (this.level.isClientSide) return;
 		if (!this.inv.getStackInSlot(4).isEmpty()) return;
 		for (int i = 0; i < 4; i++) {
@@ -108,7 +110,7 @@ public class SeaAltarTile extends BlockEntity implements TickableBlockEntity {
 		if (!removed && this.soundTick % 10 == 0) {
 			for (int i = 0; i < 4; i++) {
 				ParticleMessage msg = new ParticleMessage(ParticleTypes.WITCH, this.worldPosition.getX() + this.offsets[i][0], this.worldPosition.getY() + 0.8, this.worldPosition.getZ() + this.offsets[i][1], 0, 0.1, 0, 1);
-				NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerLevel) this.level, this.worldPosition);
+				PacketDistro.sendToTracking(Apotheosis.CHANNEL, msg, (ServerLevel) this.level, this.worldPosition);
 			}
 		}
 	}
@@ -143,7 +145,7 @@ public class SeaAltarTile extends BlockEntity implements TickableBlockEntity {
 	public void trySpawnParticles(Player player, int xpDrain) {
 		Vec3 to = new Vec3(player.getX() - (this.worldPosition.getX() + 0.5), player.getY() - this.worldPosition.getY(), player.getZ() - (this.worldPosition.getZ() + 0.5));
 		ParticleMessage msg = new ParticleMessage(ParticleTypes.ENCHANT, this.worldPosition.getX() + this.level.random.nextDouble(), this.worldPosition.getY() + 1 + this.level.random.nextDouble(), this.worldPosition.getZ() + this.level.random.nextDouble(), to.x, to.y, to.z, Math.min(5, xpDrain));
-		NetworkUtils.sendToTracking(Apotheosis.CHANNEL, msg, (ServerLevel) this.level, this.worldPosition);
+		PacketDistro.sendToTracking(Apotheosis.CHANNEL, msg, (ServerLevel) this.level, this.worldPosition);
 	}
 
 	@Override
@@ -156,8 +158,8 @@ public class SeaAltarTile extends BlockEntity implements TickableBlockEntity {
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
+	public void load(CompoundTag tag) {
+		super.load(tag);
 		this.inv.deserializeNBT(tag.getCompound("inv"));
 		this.xpDrained = tag.getFloat("xp");
 		this.target = ItemStack.of(tag.getCompound("target"));
@@ -172,19 +174,19 @@ public class SeaAltarTile extends BlockEntity implements TickableBlockEntity {
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag tag) {
-		super.handleUpdateTag(state, tag);
+	public void handleUpdateTag(CompoundTag tag) {
+		super.handleUpdateTag(tag);
 		this.inv.deserializeNBT(tag.getCompound("inv"));
 	}
 
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, -1, this.getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		this.handleUpdateTag(this.getBlockState(), pkt.getTag());
+		this.handleUpdateTag(pkt.getTag());
 	}
 
 	public ItemStackHandler getInv() {
