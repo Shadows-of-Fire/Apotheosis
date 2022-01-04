@@ -21,6 +21,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -36,7 +37,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 
-public class EnchLibraryBlock extends HorizontalDirectionalBlock {
+public class EnchLibraryBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
 	public static final Component NAME = new TranslatableComponent("apotheosis.ench.library");
 
@@ -57,11 +58,6 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock {
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-
-	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
@@ -72,12 +68,12 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock {
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-		return new EnchLibraryTile();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new EnchLibraryTile(pos, state);
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		ItemStack s = new ItemStack(this);
 		BlockEntity te = world.getBlockEntity(pos);
 		if (te != null) te.save(s.getOrCreateTagElement("BlockEntityTag"));
@@ -88,8 +84,7 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock {
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		BlockEntity te = world.getBlockEntity(pos);
 		if (te != null) {
-			te.load(state, stack.getOrCreateTagElement("BlockEntityTag"));
-			te.setPosition(pos);
+			te.load(stack.getOrCreateTagElement("BlockEntityTag"));
 		}
 	}
 
