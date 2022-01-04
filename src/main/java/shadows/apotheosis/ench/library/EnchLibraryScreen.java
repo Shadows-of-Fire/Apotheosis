@@ -31,7 +31,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import shadows.apotheosis.Apotheosis;
 import shadows.placebo.Placebo;
-import shadows.placebo.net.MessageButtonClick;
+import shadows.placebo.packets.ButtonClickMessage;
 import shadows.placebo.util.ClientUtil;
 
 public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContainer> {
@@ -85,15 +85,15 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 				else list.add(new TranslatableComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
 			}
 
-			this.renderWrappedToolTip(stack, list, this.getGuiLeft() - 16 - this.font.width(list.get(3)), mouseY, this.font);
+			this.renderComponentTooltip(stack, list, this.getGuiLeft() - 16 - this.font.width(list.get(3)), mouseY, this.font);
 		}
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	protected void renderBg(PoseStack stack, float partial, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(TEXTURES);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		//this.minecraft.getTextureManager().bind(TEXTURES);
+		RenderSystem.setShaderTexture(0, TEXTURES);
 		int left = this.leftPos;
 		int top = this.topPos;
 		this.blit(stack, left, top, 0, 0, this.imageWidth, this.imageHeight);
@@ -107,7 +107,8 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 	}
 
 	private void renderEntry(PoseStack stack, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
-		this.minecraft.getTextureManager().bind(TEXTURES);
+		//this.minecraft.getTextureManager().bind(TEXTURES);
+		RenderSystem.setShaderTexture(0, TEXTURES);
 		boolean hover = this.isHovering(x - this.leftPos, y - this.topPos, 64, 17, mouseX, mouseY);
 		this.blit(stack, x, y, 178, hover ? 19 : 0, 64, 19);
 		int progress = (int) Math.round(62 * Math.sqrt(data.points) / (float) Math.sqrt(32767));
@@ -133,7 +134,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		if (libSlot != null) {
 			int id = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getID(libSlot.ench);
 			if (ClientUtil.isHoldingShift()) id |= 0x80000000;
-			Placebo.CHANNEL.sendToServer(new MessageButtonClick(id));
+			Placebo.CHANNEL.sendToServer(new ButtonClickMessage(id));
 			this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
 		}
 
