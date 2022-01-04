@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedRandom;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier.AffixOp;
 
 public class Modifiers {
@@ -29,10 +29,10 @@ public class Modifiers {
 	}
 
 	public static AffixModifier getRandomModifier(Random rand) {
-		return WeighedRandom.getRandomItem(rand, MODIFIERS);
+		return WeightedRandom.getRandomItem(rand, MODIFIERS).get();
 	}
 
 	public static AffixModifier getBadModifier() {
-		return MODIFIERS.stream().filter(m -> m.weight == 0).findAny().get();
+		return MODIFIERS.stream().filter(m -> m.getWeight().asInt() == 0).findAny().get();
 	}
 }
