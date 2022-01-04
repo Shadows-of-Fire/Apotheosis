@@ -9,7 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.Block;
@@ -21,7 +21,7 @@ import shadows.apotheosis.util.SpawnerStats;
 import shadows.placebo.util.ChestBuilder;
 import shadows.placebo.util.SpawnerEditor;
 
-public class SpawnerItem extends WeighedRandom.WeighedRandomItem {
+public class SpawnerItem extends WeightedEntry.IntrusiveBase {
 
 	public static final Block[] FILLER_BLOCKS = new Block[] { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
