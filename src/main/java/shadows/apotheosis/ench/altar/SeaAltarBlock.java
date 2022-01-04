@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -31,7 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class SeaAltarBlock extends Block {
+public class SeaAltarBlock extends BaseEntityBlock {
 
 	public static final VoxelShape DISPLAY = Block.box(0, 0, 0, 1, 10, 1);
 	//Formatter::off
@@ -48,7 +49,7 @@ public class SeaAltarBlock extends Block {
 	public static final VoxelShape SHAPE = merge(BOXES);
 
 	public SeaAltarBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).strength(1.5F, 10).sound(SoundType.STONE));
+		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).strength(1.5F, 10).sound(SoundType.STONE).lightLevel(s -> 8));
 	}
 
 	@Override
@@ -119,18 +120,8 @@ public class SeaAltarBlock extends Block {
 	}
 
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-		return new SeaAltarTile();
-	}
-
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-
-	@Override
-	public int getLightValue(BlockState state, BlockGetter world, BlockPos pos) {
-		return 8;
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new SeaAltarTile(pos, state);
 	}
 
 	@Override
