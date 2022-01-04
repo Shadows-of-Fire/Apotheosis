@@ -1,10 +1,10 @@
 package shadows.apotheosis.deadly.affix.modifiers;
 
 import net.minecraft.util.Mth;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.util.random.WeightedEntry;
 import shadows.apotheosis.deadly.affix.Affix;
 
-public class AffixModifier extends WeighedRandom.WeighedRandomItem {
+public class AffixModifier extends WeightedEntry.IntrusiveBase {
 
 	/**
 	 * The language key for this modifier.
