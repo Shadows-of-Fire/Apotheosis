@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -80,7 +81,7 @@ public class ArrowCatcherAffix extends Affix {
 		Entity iSource = source.getDirectEntity();
 		if (iSource instanceof AbstractArrow) {
 			AbstractArrow arrow = (AbstractArrow) iSource;
-			arrow.remove();
+			arrow.remove(RemovalReason.DISCARDED);
 			try {
 				ItemStack arrowStack = (ItemStack) getArrowStack.invoke(arrow);
 				if (!ItemTags.ARROWS.contains(arrowStack.getItem())) return amount;
