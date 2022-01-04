@@ -3,6 +3,7 @@ package shadows.apotheosis.ench;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -75,8 +76,8 @@ public class EnchModuleClient {
 	}
 
 	public static void init() {
-		ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ALTAR_TYPE, SeaAltarRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ApotheosisObjects.ENCHANTING_TABLE, EnchantTableRenderer::new);
+		BlockEntityRenderers.register(ApotheosisObjects.ALTAR_TYPE, SeaAltarRenderer::new);
+		BlockEntityRenderers.register(ApotheosisObjects.ENCHANTING_TABLE, EnchantTableRenderer::new);
 		MenuScreens.register(ApotheosisObjects.ENCHANTING, ApothEnchantScreen::new);
 		MenuScreens.register(ApotheosisObjects.ENCH_LIB_CON, EnchLibraryScreen::new);
 	}
