@@ -13,12 +13,13 @@ import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.valueproviders.FloatProvider;
+import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.RandomValueBounds;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
@@ -30,11 +31,11 @@ import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
 public abstract class AttributeAffix extends Affix {
 
 	protected final Supplier<Attribute> attr;
-	protected final RandomValueBounds range;
+	protected final FloatProvider range;
 	protected final Operation op;
 	protected final Map<EquipmentSlot, UUID> uuidCache;
 
-	public AttributeAffix(Supplier<Attribute> attr, RandomValueBounds range, Operation op, int weight) {
+	public AttributeAffix(Supplier<Attribute> attr, FloatProvider range, Operation op, int weight) {
 		super(weight);
 		this.attr = attr;
 		this.range = range;
@@ -43,20 +44,20 @@ public abstract class AttributeAffix extends Affix {
 	}
 
 	public AttributeAffix(Supplier<Attribute> attr, float min, float max, Operation op, int weight) {
-		this(attr, new RandomValueBounds(min, max), op, weight);
+		this(attr, UniformFloat.of(min, max), op, weight);
 	}
 
-	public AttributeAffix(Attribute attr, RandomValueBounds range, Operation op, int weight) {
+	public AttributeAffix(Attribute attr, FloatProvider range, Operation op, int weight) {
 		this(() -> attr, range, op, weight);
 	}
 
 	public AttributeAffix(Attribute attr, float min, float max, Operation op, int weight) {
-		this(() -> attr, new RandomValueBounds(min, max), op, weight);
+		this(() -> attr, UniformFloat.of(min, max), op, weight);
 	}
 
 	@Override
 	public float generateLevel(ItemStack stack, Random rand, @Nullable AffixModifier modifier) {
-		float lvl = this.range.getFloat(rand);
+		float lvl = this.range.sample(rand);
 		if (modifier != null) lvl = modifier.editLevel(this, lvl);
 		return lvl;
 	}
@@ -87,12 +88,12 @@ public abstract class AttributeAffix extends Affix {
 
 	@Override
 	public float getMin() {
-		return this.range.getMin();
+		return this.range.getMinValue();
 	}
 
 	@Override
 	public float getMax() {
-		return this.range.getMax();
+		return this.range.getMaxValue();
 	}
 
 }
