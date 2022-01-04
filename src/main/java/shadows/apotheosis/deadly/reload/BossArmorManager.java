@@ -18,8 +18,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.util.WeighedRandom;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.deadly.DeadlyModule;
@@ -56,7 +56,7 @@ public class BossArmorManager extends SimpleJsonResourceReloadListener {
 		});
 		if (this.registry.isEmpty()) throw new RuntimeException("No Apotheosis Boss armor sets were registered.  At least one is required.");
 		DeadlyModule.LOGGER.info("Registered {} boss gear sets.", this.sets.size());
-		this.weight = WeighedRandom.getTotalWeight(this.sets);
+		this.weight = WeightedRandom.getTotalWeight(this.sets);
 		if (this.weight == 0) throw new RuntimeException("The total boss armor weight is zero.  This is not supported.");
 	}
 
@@ -72,14 +72,14 @@ public class BossArmorManager extends SimpleJsonResourceReloadListener {
 	 * Returns a random weighted armor set based on the given random (and predicate, if applicable).
 	 */
 	public <T extends Predicate<GearSet>> GearSet getRandomSet(Random rand, @Nullable List<T> filter) {
-		if (filter == null || filter.isEmpty()) return WeighedRandom.getRandomItem(rand, this.sets, this.weight);
+		if (filter == null || filter.isEmpty()) return WeightedRandom.getRandomItem(rand, this.sets, this.weight).get();
 		List<GearSet> valid = this.sets.stream().filter(e -> {
 			for (Predicate<GearSet> f : filter)
 				if (f.test(e)) return true;
 			return false;
 		}).collect(Collectors.toList());
-		if (valid.isEmpty()) return WeighedRandom.getRandomItem(rand, this.sets, this.weight);
-		return WeighedRandom.getRandomItem(rand, valid);
+		if (valid.isEmpty()) return WeightedRandom.getRandomItem(rand, this.sets, this.weight).get();
+		return WeightedRandom.getRandomItem(rand, valid).get();
 	}
 
 }
