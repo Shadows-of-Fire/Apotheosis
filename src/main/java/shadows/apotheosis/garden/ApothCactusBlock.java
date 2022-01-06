@@ -23,34 +23,30 @@ public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 
 	@Override
 	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
-		if (!world.isAreaLoaded(pos, 1)) return; // Forge: prevent growing cactus from loading unloaded chunks with block update
-		if (!state.canSurvive(world, pos)) {
-			world.destroyBlock(pos, true);
-		} else {
-			BlockPos blockpos = pos.above();
-			if (pos.getY() != 255 && world.isEmptyBlock(blockpos)) {
-				int i = 1;
+		BlockPos blockpos = pos.above();
+		if (!world.isOutsideBuildHeight(blockpos) && world.isEmptyBlock(blockpos)) {
+			int i = 1;
 
-				if (GardenModule.maxCactusHeight != 255) for (; world.getBlockState(pos.below(i)).getBlock() == this; ++i)
-					;
+			if (GardenModule.maxCactusHeight <= 32) for (; world.getBlockState(pos.below(i)).getBlock() == this; ++i)
+				;
 
-				if (i < GardenModule.maxCactusHeight) {
-					int j = state.getValue(AGE);
+			if (i < GardenModule.maxCactusHeight) {
+				int j = state.getValue(AGE);
 
-					if (ForgeHooks.onCropsGrowPre(world, blockpos, state, true)) {
-						if (j == 15) {
-							world.setBlockAndUpdate(blockpos, this.defaultBlockState());
-							BlockState iblockstate = state.setValue(AGE, Integer.valueOf(0));
-							world.setBlock(pos, iblockstate, 4);
-							iblockstate.neighborChanged(world, blockpos, this, pos, false);
-						} else {
-							world.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
-						}
-						ForgeHooks.onCropsGrowPost(world, pos, state);
+				if (ForgeHooks.onCropsGrowPre(world, blockpos, state, true)) {
+					if (j == 15) {
+						world.setBlockAndUpdate(blockpos, this.defaultBlockState());
+						BlockState iblockstate = state.setValue(AGE, Integer.valueOf(0));
+						world.setBlock(pos, iblockstate, 4);
+						iblockstate.neighborChanged(world, blockpos, this, pos, false);
+					} else {
+						world.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}
+					ForgeHooks.onCropsGrowPost(world, pos, state);
 				}
 			}
 		}
+
 	}
 
 	@Override

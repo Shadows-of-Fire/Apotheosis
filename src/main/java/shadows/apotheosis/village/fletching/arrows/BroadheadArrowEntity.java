@@ -8,7 +8,7 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.Apoth;
 
 public class BroadheadArrowEntity extends Arrow {
 
@@ -17,7 +17,7 @@ public class BroadheadArrowEntity extends Arrow {
 	}
 
 	public BroadheadArrowEntity(Level world) {
-		super(ApotheosisObjects.BH_ARROW_ENTITY, world);
+		super(Apoth.Entities.BROADHEAD_ARROW, world);
 	}
 
 	public BroadheadArrowEntity(LivingEntity shooter, Level world) {
@@ -30,7 +30,7 @@ public class BroadheadArrowEntity extends Arrow {
 
 	@Override
 	protected ItemStack getPickupItem() {
-		return new ItemStack(ApotheosisObjects.BROADHEAD_ARROW);
+		return new ItemStack(Apoth.Items.BROADHEAD_ARROW);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class BroadheadArrowEntity extends Arrow {
 
 	@Override
 	public EntityType<?> getType() {
-		return ApotheosisObjects.BH_ARROW_ENTITY;
+		return Apoth.Entities.BROADHEAD_ARROW;
 	}
 
 	@Override
@@ -50,16 +50,16 @@ public class BroadheadArrowEntity extends Arrow {
 
 	@Override
 	protected void doPostHurtEffects(LivingEntity living) {
-		MobEffectInstance bleed = living.getEffect(ApotheosisObjects.BLEEDING);
+		MobEffectInstance bleed = living.getEffect(Apoth.Effects.BLEEDING);
 		if (bleed != null) {
-			living.addEffect(new MobEffectInstance(ApotheosisObjects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
 		} else {
-			living.addEffect(new MobEffectInstance(ApotheosisObjects.BLEEDING, 300));
+			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING, 300));
 		}
 	}
 
 	public BroadheadArrowEntity bleed() {
-		this.addEffect(new MobEffectInstance(ApotheosisObjects.BLEEDING, 300));
+		this.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING, 300));
 		return this;
 	}
 }

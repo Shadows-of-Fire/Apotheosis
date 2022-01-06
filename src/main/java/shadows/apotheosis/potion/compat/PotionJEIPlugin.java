@@ -22,8 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.util.Size2i;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.potion.PotionCharmItem;
 import shadows.apotheosis.potion.PotionCharmRecipe;
 
@@ -47,7 +47,7 @@ public class PotionJEIPlugin implements IModPlugin {
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration reg) {
 		if (!Apotheosis.enablePotion) return;
-		reg.registerSubtypeInterpreter(ApotheosisObjects.POTION_CHARM, new PotionCharmSubtypes());
+		reg.registerSubtypeInterpreter(Apoth.Items.POTION_CHARM, new PotionCharmSubtypes());
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class PotionJEIPlugin implements IModPlugin {
 				l.stream().map(ItemStack::copy).map(s -> s.hasTag() && s.getTag().contains("Potion") ? PotionUtils.setPotion(s, potion) : s).forEach(cloneList::add);
 				clones.add(cloneList);
 			});
-			ItemStack output = new ItemStack(ApotheosisObjects.POTION_CHARM);
+			ItemStack output = new ItemStack(Apoth.Items.POTION_CHARM);
 			PotionUtils.setPotion(output, potion);
 			Size2i size = this.getSize();
 			PotionJEIPlugin.this.gridHelper.setInputs(guiItemStacks, clones, size.width, size.height);

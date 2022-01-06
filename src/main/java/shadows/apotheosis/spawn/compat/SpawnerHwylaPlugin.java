@@ -1,18 +1,16 @@
 package shadows.apotheosis.spawn.compat;
 
-import java.util.List;
-
+import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.IServerDataProvider;
+import mcp.mobius.waila.api.ITooltip;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
 import mcp.mobius.waila.api.config.IPluginConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BaseSpawner;
@@ -31,11 +29,11 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 	public void register(IRegistrar reg) {
 		if (!Apotheosis.enableSpawner) return;
 		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothSpawnerBlock.class);
-		reg.registerBlockDataProvider(this, ApothSpawnerBlock.class);
+		reg.registerBlockDataProvider(this, ApothSpawnerTile.class);
 	}
 
 	@Override
-	public void appendBody(List<Component> tooltip, IDataAccessor accessor, IPluginConfig config) {
+	public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
 		if (Minecraft.getInstance().options.keyShift.isDown()) {
 			int[] stats = accessor.getServerData().getIntArray(STATS);
 			if (stats.length != 10) return;
@@ -53,7 +51,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 	}
 
 	@Override
-	public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te) {
+	public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean arg4) {
 		if (te instanceof ApothSpawnerTile) {
 			ApothSpawnerTile spw = (ApothSpawnerTile) te;
 			BaseSpawner logic = spw.getSpawner();

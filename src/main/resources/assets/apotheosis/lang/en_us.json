@@ -635,10 +635,10 @@
     "info.apotheosis.anvil": "Can be enchanted.",
 
     "comment_id": "/Garden Module",
-    "item.apotheosis.farmers_leash": "Ender-Farmer's Lead",
+    "item.apotheosis.ender_lead": "Ender Lead",
     "info.apotheosis.noentity": "Held Entity: Nothing",
     "info.apotheosis.containedentity": "Held Entity: %s",
-    "info.apotheosis.farmleash": "The Ender-Farmer's Lead is an item that can be used to move animals around.  Punch an animal to capture, and right click to release it.  The leash will not work on other types of entities.",
+    "info.apotheosis.ender_lead": "The Ender Lead is an item that can be used to move animals around.  Punch an animal to capture, and right click to release it.  The leash will not work on other types of entities.",
 
     "comment_id": "/Villager Module",
     "name.apotheosis.merch_sword": "Captive Dreams",

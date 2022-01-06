@@ -11,9 +11,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
-import shadows.apotheosis.ApotheosisObjects;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
 
@@ -26,7 +26,7 @@ public class GardenModule {
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
 		this.reload(null);
-		Apotheosis.HELPER.addShapeless(ApotheosisObjects.FARMERS_LEASH, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
+		Apotheosis.HELPER.addShapeless(Apoth.Items.ENDER_LEAD, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
 
@@ -39,16 +39,16 @@ public class GardenModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new EnderLeashItem().setRegistryName("farmers_leash"));
+		e.getRegistry().register(new EnderLeadItem().setRegistryName("ender_lead"));
 		ComposterBlock.COMPOSTABLES.put(Blocks.CACTUS.asItem(), 0.5F);
 		ComposterBlock.COMPOSTABLES.put(Blocks.SUGAR_CANE.asItem(), 0.5F);
 	}
 
 	public void reload(ApotheosisReloadEvent e) {
 		Configuration c = new Configuration(new File(Apotheosis.configDir, "garden.cfg"));
-		maxCactusHeight = c.getInt("Cactus Height", "general", maxCactusHeight, 1, 255, "The max height a stack of cacti may grow to.  Vanilla is 3.");
-		maxReedHeight = c.getInt("Reed Height", "general", maxReedHeight, 1, 255, "The max height a stack of reeds may grow to.  Vanilla is 3.");
-		maxBambooHeight = c.getInt("Bamboo Height", "general", maxBambooHeight, 1, 255, "The max height a stack of bamboo may grow to.  Vanilla is 16.");
+		maxCactusHeight = c.getInt("Cactus Height", "general", maxCactusHeight, 1, 512, "The max height a stack of cacti may grow to.  Vanilla is 3.  Values greater than 32 are uncapped growth.");
+		maxReedHeight = c.getInt("Reed Height", "general", maxReedHeight, 1, 512, "The max height a stack of reeds may grow to.  Vanilla is 3.  Values greater than 32 are uncapped growth.");
+		maxBambooHeight = c.getInt("Bamboo Height", "general", maxBambooHeight, 1, 64, "The max height a stack of bamboo may grow to.  Vanilla is 16.");
 		if (e == null && c.hasChanged()) c.save();
 	}
 }

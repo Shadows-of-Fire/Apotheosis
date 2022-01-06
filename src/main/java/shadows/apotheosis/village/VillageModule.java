@@ -63,7 +63,7 @@ public class VillageModule {
 	public void setup(FMLCommonSetupEvent e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
-		Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "field_221073_u");
+		Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "f_27323_");
 		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PoiType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		WandererReplacements.load(config);
@@ -119,8 +119,8 @@ public class VillageModule {
 				.setUpdateInterval(20)
 				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new ObsidianArrowEntity(w))
-				.build("ob_arrow")
-				.setRegistryName("ob_arrow_entity"));
+				.build("obsidian_arrow")
+				.setRegistryName("obsidian_arrow"));
 		e.getRegistry().register(EntityType.Builder
 				.<BroadheadArrowEntity>of(BroadheadArrowEntity::new, MobCategory.MISC)
 				.setShouldReceiveVelocityUpdates(true)
@@ -128,8 +128,8 @@ public class VillageModule {
 				.setUpdateInterval(20)
 				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new BroadheadArrowEntity(w))
-				.build("bh_arrow")
-				.setRegistryName("bh_arrow_entity"));
+				.build("broadhead_arrow")
+				.setRegistryName("broadhead_arrow"));
 		e.getRegistry().register(EntityType.Builder
 				.<ExplosiveArrowEntity>of(ExplosiveArrowEntity::new, MobCategory.MISC)
 				.setShouldReceiveVelocityUpdates(true)
@@ -137,8 +137,8 @@ public class VillageModule {
 				.setUpdateInterval(20)
 				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new ExplosiveArrowEntity(w))
-				.build("ex_arrow")
-				.setRegistryName("ex_arrow_entity"));
+				.build("explosive_arrow")
+				.setRegistryName("explosive_arrow"));
 		e.getRegistry().register(EntityType.Builder
 				.<MiningArrowEntity>of(MiningArrowEntity::new, MobCategory.MISC)
 				.setShouldReceiveVelocityUpdates(true)
@@ -146,8 +146,8 @@ public class VillageModule {
 				.setUpdateInterval(20)
 				.sized(0.5F, 0.5F)
 				.setCustomClientFactory((se, w) -> new MiningArrowEntity(w))
-				.build("mn_arrow")
-				.setRegistryName("mn_arrow_entity"));
+				.build("mining_arrow")
+				.setRegistryName("mining_arrow"));
 		//Formatter::on
 	}
 

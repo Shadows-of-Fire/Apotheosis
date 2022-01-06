@@ -33,13 +33,6 @@ description='''${desc}'''
 [[dependencies.${modid}]]
     modId="placebo"
     mandatory=true
-    versionRange="[4.6.0,)"
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.apotheosis]]
-    modId="jei"
-    mandatory=false
-    versionRange="[7.7.1,)"
+    versionRange="[6.0.3,)"
     ordering="NONE"
     side="BOTH"

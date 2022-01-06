@@ -625,10 +625,10 @@
     "info.apotheosis.anvil": "可以被附魔。",
 
     "comment_id": "/花园模块",
-    "item.apotheosis.farmers_leash": "末影栓绳",
+    "item.apotheosis.ender_lead": "末影栓绳",
     "info.apotheosis.noentity": "持有实体：没有",
     "info.apotheosis.containedentity": "持有实体：%s",
-    "info.apotheosis.farmleash": "末影栓绳是一种可以用来移动动物的物品。鼠标左击捕捉动物，鼠标右击释放动物。这种捕捉仅适用于动物。",
+    "info.apotheosis.ender_lead": "末影栓绳是一种可以用来移动动物的物品。鼠标左击捕捉动物，鼠标右击释放动物。这种捕捉仅适用于动物。",
 
     "comment_id": "/村民模块",
     "name.apotheosis.merch_sword": "奴役狂梦",

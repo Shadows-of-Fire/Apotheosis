@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.village.VillageModule;
 
 public class FletchingContainer extends AbstractContainerMenu {
@@ -32,7 +32,7 @@ public class FletchingContainer extends AbstractContainerMenu {
 	protected final Player player;
 
 	public FletchingContainer(int id, Inventory inv, Level world, BlockPos pos) {
-		super(ApotheosisObjects.FLETCHING, id);
+		super(Apoth.Menus.FLETCHING, id);
 		this.world = world;
 		this.pos = pos;
 		this.player = inv.player;

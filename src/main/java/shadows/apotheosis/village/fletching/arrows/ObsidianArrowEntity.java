@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.Apoth;
 
 public class ObsidianArrowEntity extends AbstractArrow {
 
@@ -17,20 +17,20 @@ public class ObsidianArrowEntity extends AbstractArrow {
 	}
 
 	public ObsidianArrowEntity(Level world) {
-		super(ApotheosisObjects.OB_ARROW_ENTITY, world);
+		super(Apoth.Entities.OBSIDIAN_ARROW, world);
 	}
 
 	public ObsidianArrowEntity(LivingEntity shooter, Level world) {
-		super(ApotheosisObjects.OB_ARROW_ENTITY, shooter, world);
+		super(Apoth.Entities.OBSIDIAN_ARROW, shooter, world);
 	}
 
 	public ObsidianArrowEntity(Level world, double x, double y, double z) {
-		super(ApotheosisObjects.OB_ARROW_ENTITY, x, y, z, world);
+		super(Apoth.Entities.OBSIDIAN_ARROW, x, y, z, world);
 	}
 
 	@Override
 	protected ItemStack getPickupItem() {
-		return new ItemStack(ApotheosisObjects.OBSIDIAN_ARROW);
+		return new ItemStack(Apoth.Items.OBSIDIAN_ARROW);
 	}
 
 	@Override

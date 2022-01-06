@@ -25,14 +25,9 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
-import shadows.apotheosis.deadly.DeadlyModule;
-import shadows.apotheosis.deadly.affix.Affix;
-import shadows.apotheosis.ench.EnchModule;
-import shadows.apotheosis.ench.table.EnchantingStatManager.StatSyncMessage;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
-import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
 import shadows.apotheosis.village.VillageModule;
@@ -42,7 +37,6 @@ import shadows.placebo.recipe.NBTIngredient;
 import shadows.placebo.recipe.RecipeHelper;
 import shadows.placebo.util.RunnableReloader;
 
-@SuppressWarnings("deprecation")
 @Mod(Apotheosis.MODID)
 public class Apotheosis {
 
@@ -70,8 +64,8 @@ public class Apotheosis {
 	public static Configuration config;
 	public static boolean enableSpawner = true;
 	public static boolean enableGarden = true;
-	public static boolean enableDeadly = true;
-	public static boolean enableEnch = true;
+	public static boolean enableDeadly = false;
+	public static boolean enableEnch = false;
 	public static boolean enablePotion = true;
 	public static boolean enableVillage = true;
 
@@ -80,23 +74,23 @@ public class Apotheosis {
 	static {
 		configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
 		config = new Configuration(new File(configDir, MODID + ".cfg"));
-		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
+		//enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		//enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		if (config.hasChanged()) config.save();
 	}
 
 	public Apotheosis() {
-		Affix.classload();
+		//Affix.classload();
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		if (enableEnch) bus.register(new EnchModule());
+		//if (enableEnch) bus.register(new EnchModule());
 		if (enableSpawner) bus.register(new SpawnerModule());
 		if (enableGarden) bus.register(new GardenModule());
-		if (enableDeadly) bus.register(new DeadlyModule());
+		//if (enableDeadly) bus.register(new DeadlyModule());
 		if (enablePotion) bus.register(new PotionModule());
 		if (enableVillage) bus.register(new VillageModule());
 
@@ -110,10 +104,10 @@ public class Apotheosis {
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
-		MessageHelper.registerMessage(CHANNEL, 1, new StatSyncMessage());
+		//	MessageHelper.registerMessage(CHANNEL, 1, new StatSyncMessage());
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
-		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
+		//	CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
 	}
 
 	public void reloads(AddReloadListenerEvent e) {

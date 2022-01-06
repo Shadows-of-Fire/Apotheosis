@@ -21,8 +21,6 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
-import shadows.apotheosis.deadly.affix.AffixHelper;
-import shadows.apotheosis.deadly.affix.LootRarity;
 
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
@@ -49,13 +47,13 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 				return enchMap.values().stream().anyMatch(bound::matches);
 			}) };
 		}
-		if (type.equals("affix")) {
-			return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
-		}
-		if (type.equals("rarity")) {
-			LootRarity rarity = LootRarity.valueOf(json.get("rarity").getAsString());
-			return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
-		}
+		//if (type.equals("affix")) {
+		//	return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
+		//}
+		//if (type.equals("rarity")) {
+		//	LootRarity rarity = LootRarity.valueOf(json.get("rarity").getAsString());
+		//	return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
+		//}
 		if (type.equals("nbt")) {
 			CompoundTag tag;
 			try {

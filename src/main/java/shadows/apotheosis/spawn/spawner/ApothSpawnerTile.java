@@ -11,22 +11,22 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.WeighedRandom;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.ForgeEventFactory;
-import shadows.apotheosis.spawn.SpawnerModule;
 
 public class ApothSpawnerTile extends SpawnerBlockEntity {
 
@@ -35,178 +35,174 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 	public boolean ignoresCap = false;
 	public boolean redstoneEnabled = false;
 
-	public ApothSpawnerTile() {
+	public ApothSpawnerTile(BlockPos pos, BlockState state) {
+		super(pos, state);
 		this.spawner = new SpawnerLogicExt();
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag tag) {
+	public void saveAdditional(CompoundTag tag) {
 		tag.putBoolean("ignore_players", this.ignoresPlayers);
 		tag.putBoolean("ignore_conditions", this.ignoresConditions);
 		tag.putBoolean("ignore_cap", this.ignoresCap);
 		tag.putBoolean("redstone_control", this.redstoneEnabled);
-		return super.save(tag);
+		super.saveAdditional(tag);
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
+	public void load(CompoundTag tag) {
 		this.ignoresPlayers = tag.getBoolean("ignore_players");
 		this.ignoresConditions = tag.getBoolean("ignore_conditions");
 		this.ignoresCap = tag.getBoolean("ignore_cap");
 		this.redstoneEnabled = tag.getBoolean("redstone_control");
-		super.load(state, tag);
+		super.load(tag);
 	}
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		this.load(Blocks.SPAWNER.defaultBlockState(), pkt.getTag());
+		this.load(pkt.getTag());
 	}
 
 	public class SpawnerLogicExt extends BaseSpawner {
 
 		@Override
-		public void broadcastEvent(int id) {
-			ApothSpawnerTile.this.level.blockEvent(ApothSpawnerTile.this.worldPosition, Blocks.SPAWNER, id, 0);
+		public void broadcastEvent(Level level, BlockPos pos, int id) {
+			level.blockEvent(pos, Blocks.SPAWNER, id, 0);
 		}
 
 		@Override
-		public Level getLevel() {
-			return ApothSpawnerTile.this.level;
-		}
+		public void setNextSpawnData(Level level, BlockPos pos, SpawnData nextSpawnData) {
+			super.setNextSpawnData(level, pos, nextSpawnData);
 
-		@Override
-		public BlockPos getPos() {
-			return ApothSpawnerTile.this.worldPosition;
+			if (level != null) {
+				BlockState state = level.getBlockState(pos);
+				level.sendBlockUpdated(pos, state, state, 4);
+			}
 		}
 
 		@Nullable
-		@Override //Fix MC-189565 https://bugs.mojang.com/browse/MC-189565
-		public Entity getOrCreateDisplayEntity() {
-			if (this.displayEntity == null) {
-				CompoundTag tag = this.nextSpawnData.getTag();
-				EntityType.by(tag).ifPresent(e -> {
-					this.displayEntity = e.create(this.getLevel());
-					try {
-						this.displayEntity.load(tag);
-					} catch (Exception ex) {
-						SpawnerModule.LOG.error("Exception occurred reading entity nbt for client cache - likely MC-189565");
-					}
-				});
-			}
-			return this.displayEntity;
-		}
-
 		@Override
-		public void setNextSpawnData(SpawnData nextSpawnData) {
-			super.setNextSpawnData(nextSpawnData);
-
-			if (this.getLevel() != null) {
-				BlockState iblockstate = this.getLevel().getBlockState(this.getPos());
-				this.getLevel().sendBlockUpdated(ApothSpawnerTile.this.worldPosition, iblockstate, iblockstate, 4);
-			}
+		public BlockEntity getSpawnerBlockEntity() {
+			return ApothSpawnerTile.this;
 		}
 
-		private boolean isActivated() {
-			BlockPos blockpos = this.getPos();
-			boolean flag = ApothSpawnerTile.this.ignoresPlayers || this.getLevel().hasNearbyAlivePlayer(blockpos.getX() + 0.5D, blockpos.getY() + 0.5D, blockpos.getZ() + 0.5D, this.requiredPlayerRange);
-			return flag && (!ApothSpawnerTile.this.redstoneEnabled || ApothSpawnerTile.this.level.hasNeighborSignal(blockpos));
+		private boolean isActivated(Level level, BlockPos pos) {
+			boolean flag = ApothSpawnerTile.this.ignoresPlayers || level.hasNearbyAlivePlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, this.requiredPlayerRange);
+			return flag && (!ApothSpawnerTile.this.redstoneEnabled || ApothSpawnerTile.this.level.hasNeighborSignal(pos));
 		}
 
-		private void resetTimer() {
+		private void delay(Level pLevel, BlockPos pPos) {
 			if (this.maxSpawnDelay <= this.minSpawnDelay) {
 				this.spawnDelay = this.minSpawnDelay;
 			} else {
-				int i = this.maxSpawnDelay - this.minSpawnDelay;
-				this.spawnDelay = this.minSpawnDelay + this.getLevel().random.nextInt(i);
+				this.spawnDelay = this.minSpawnDelay + pLevel.random.nextInt(this.maxSpawnDelay - this.minSpawnDelay);
 			}
 
-			if (!this.spawnPotentials.isEmpty()) {
-				this.setNextSpawnData(WeighedRandom.getRandomItem(this.getLevel().random, this.spawnPotentials));
-			}
-
-			this.broadcastEvent(1);
+			this.spawnPotentials.getRandom(pLevel.random).ifPresent((potential) -> {
+				this.setNextSpawnData(pLevel, pPos, potential.getData());
+			});
+			this.broadcastEvent(pLevel, pPos, 1);
 		}
 
 		@Override
-		public void tick() {
-			if (!this.isActivated()) {
+		public void clientTick(Level pLevel, BlockPos pPos) {
+			if (!this.isActivated(pLevel, pPos)) {
 				this.oSpin = this.spin;
 			} else {
-				Level world = this.getLevel();
-				BlockPos blockpos = this.getPos();
-				if (world.isClientSide) {
-					double d3 = blockpos.getX() + world.random.nextFloat();
-					double d4 = blockpos.getY() + world.random.nextFloat();
-					double d5 = blockpos.getZ() + world.random.nextFloat();
-					world.addParticle(ParticleTypes.SMOKE, d3, d4, d5, 0.0D, 0.0D, 0.0D);
-					world.addParticle(ParticleTypes.FLAME, d3, d4, d5, 0.0D, 0.0D, 0.0D);
-					if (this.spawnDelay > 0) {
-						--this.spawnDelay;
-					}
+				double d0 = (double) pPos.getX() + pLevel.random.nextDouble();
+				double d1 = (double) pPos.getY() + pLevel.random.nextDouble();
+				double d2 = (double) pPos.getZ() + pLevel.random.nextDouble();
+				pLevel.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+				pLevel.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+				if (this.spawnDelay > 0) {
+					--this.spawnDelay;
+				}
 
-					this.oSpin = this.spin;
-					this.spin = (this.spin + 1000.0F / (this.spawnDelay + 200.0F)) % 360.0D;
+				this.oSpin = this.spin;
+				this.spin = (this.spin + (double) (1000.0F / ((float) this.spawnDelay + 200.0F))) % 360.0D;
+			}
+
+		}
+
+		public void serverTick(ServerLevel pServerLevel, BlockPos pPos) {
+			if (this.isActivated(pServerLevel, pPos)) {
+				if (this.spawnDelay == -1) {
+					this.delay(pServerLevel, pPos);
+				}
+
+				if (this.spawnDelay > 0) {
+					--this.spawnDelay;
 				} else {
-					if (this.spawnDelay == -1) {
-						this.resetTimer();
-					}
-
-					if (this.spawnDelay > 0) {
-						--this.spawnDelay;
-						return;
-					}
-
 					boolean flag = false;
 
 					for (int i = 0; i < this.spawnCount; ++i) {
-						CompoundTag compoundnbt = this.nextSpawnData.getTag();
-						Optional<EntityType<?>> optional = EntityType.by(compoundnbt);
-						if (!optional.isPresent()) {
-							this.resetTimer();
+						CompoundTag compoundtag = this.nextSpawnData.getEntityToSpawn();
+						Optional<EntityType<?>> optional = EntityType.by(compoundtag);
+						if (optional.isEmpty()) {
+							this.delay(pServerLevel, pPos);
 							return;
 						}
 
-						ListTag listnbt = compoundnbt.getList("Pos", 6);
-						int j = listnbt.size();
-						double x = j >= 1 ? listnbt.getDouble(0) : blockpos.getX() + (world.random.nextDouble() - world.random.nextDouble()) * this.spawnRange + 0.5D;
-						double y = j >= 2 ? listnbt.getDouble(1) : (double) (blockpos.getY() + world.random.nextInt(3) - 1);
-						double z = j >= 3 ? listnbt.getDouble(2) : blockpos.getZ() + (world.random.nextDouble() - world.random.nextDouble()) * this.spawnRange + 0.5D;
-						if (ApothSpawnerTile.this.ignoresConditions || world.noCollision(optional.get().getAABB(x, y, z)) && SpawnPlacements.checkSpawnRules(optional.get(), (ServerLevelAccessor) world, MobSpawnType.SPAWNER, new BlockPos(x, y, z), world.getRandom())) {
-							Entity entity = EntityType.loadEntityRecursive(compoundnbt, world, newEntity -> {
-								newEntity.moveTo(x, y, z, newEntity.yRot, newEntity.xRot);
-								return newEntity;
+						ListTag listtag = compoundtag.getList("Pos", 6);
+						int j = listtag.size();
+						double d0 = j >= 1 ? listtag.getDouble(0) : (double) pPos.getX() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * (double) this.spawnRange + 0.5D;
+						double d1 = j >= 2 ? listtag.getDouble(1) : (double) (pPos.getY() + pServerLevel.random.nextInt(3) - 1);
+						double d2 = j >= 3 ? listtag.getDouble(2) : (double) pPos.getZ() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * (double) this.spawnRange + 0.5D;
+						if (pServerLevel.noCollision(optional.get().getAABB(d0, d1, d2))) {
+							BlockPos blockpos = new BlockPos(d0, d1, d2);
+
+							//LOGIC CHANGE : Ability to ignore conditions set in the spawner and by the entity.
+							if (!ApothSpawnerTile.this.ignoresConditions) {
+								if (this.nextSpawnData.getCustomSpawnRules().isPresent()) {
+									if (!optional.get().getCategory().isFriendly() && pServerLevel.getDifficulty() == Difficulty.PEACEFUL) {
+										continue;
+									}
+
+									SpawnData.CustomSpawnRules spawndata$customspawnrules = this.nextSpawnData.getCustomSpawnRules().get();
+									if (!spawndata$customspawnrules.blockLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.BLOCK, blockpos)) || !spawndata$customspawnrules.skyLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.SKY, blockpos))) {
+										continue;
+									}
+								} else if (!SpawnPlacements.checkSpawnRules(optional.get(), pServerLevel, MobSpawnType.SPAWNER, blockpos, pServerLevel.getRandom())) {
+									continue;
+								}
+							}
+
+							Entity entity = EntityType.loadEntityRecursive(compoundtag, pServerLevel, (p_151310_) -> {
+								p_151310_.moveTo(d0, d1, d2, p_151310_.getYRot(), p_151310_.getXRot());
+								return p_151310_;
 							});
 							if (entity == null) {
-								this.resetTimer();
+								this.delay(pServerLevel, pPos);
 								return;
 							}
 
+							//LOGIC CHANGE : Ability to ignore the spawned entity cap - infinite spawning potential!
 							if (!ApothSpawnerTile.this.ignoresCap) {
-								int nearby = world.getEntitiesOfClass(entity.getClass(), new AABB(blockpos.getX(), blockpos.getY(), blockpos.getZ(), blockpos.getX() + 1, blockpos.getY() + 1, blockpos.getZ() + 1).inflate(this.spawnRange)).size();
-								if (nearby >= this.maxNearbyEntities) {
-									this.resetTimer();
+								int k = pServerLevel.getEntitiesOfClass(entity.getClass(), (new AABB((double) pPos.getX(), (double) pPos.getY(), (double) pPos.getZ(), (double) (pPos.getX() + 1), (double) (pPos.getY() + 1), (double) (pPos.getZ() + 1))).inflate((double) this.spawnRange)).size();
+								if (k >= this.maxNearbyEntities) {
+									this.delay(pServerLevel, pPos);
 									return;
 								}
 							}
 
-							entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), world.random.nextFloat() * 360.0F, 0.0F);
+							entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), pServerLevel.random.nextFloat() * 360.0F, 0.0F);
 							if (entity instanceof Mob) {
-								Mob mobentity = (Mob) entity;
-								if (!ApothSpawnerTile.this.ignoresConditions && !ForgeEventFactory.canEntitySpawnSpawner(mobentity, world, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this)) {
+								Mob mob = (Mob) entity;
+								if (!net.minecraftforge.event.ForgeEventFactory.canEntitySpawnSpawner(mob, pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this)) {
 									continue;
 								}
 
-								if (this.nextSpawnData.getTag().size() == 1 && this.nextSpawnData.getTag().contains("id", 8) && !ForgeEventFactory.doSpecialSpawn((Mob) entity, this.getLevel(), (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER)) {
-									((Mob) entity).finalizeSpawn((ServerLevelAccessor) world, world.getCurrentDifficultyAt(new BlockPos(entity.position())), MobSpawnType.SPAWNER, null, null);
+								if (this.nextSpawnData.getEntityToSpawn().size() == 1 && this.nextSpawnData.getEntityToSpawn().contains("id", 8)) {
+									if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(mob, pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER)) ((Mob) entity).finalizeSpawn(pServerLevel, pServerLevel.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
 								}
 							}
 
-							if (!((ServerLevel) world).tryAddFreshEntityWithPassengers(entity)) {
-								this.resetTimer();
+							if (!pServerLevel.tryAddFreshEntityWithPassengers(entity)) {
+								this.delay(pServerLevel, pPos);
 								return;
 							}
 
-							world.levelEvent(2004, blockpos, 0);
+							pServerLevel.levelEvent(2004, pPos, 0);
 							if (entity instanceof Mob) {
 								((Mob) entity).spawnAnim();
 							}
@@ -216,10 +212,10 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 					}
 
 					if (flag) {
-						this.resetTimer();
+						this.delay(pServerLevel, pPos);
 					}
-				}
 
+				}
 			}
 		}
 	}

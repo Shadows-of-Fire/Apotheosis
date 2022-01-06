@@ -528,10 +528,10 @@
     "info.apotheosis.anvil": "Może być zaklinany.",
 
     "comment_id": "/Garden Module",
-    "item.apotheosis.farmers_leash": "Smycz Endera",
+    "item.apotheosis.ender_lead": "Smycz Endera",
     "info.apotheosis.noentity": "Posiadany Byt: Brak",
     "info.apotheosis.containedentity": "Posiadany Byt: %s",
-    "info.apotheosis.farmleash": "Smycz Endera to przedmiot, którego można używać do przemieszczania zwierząt. Uderz zwierzę, aby je schwytać, i kliknij prawym przyciskiem, aby je uwolnić. Smycz nie będzie działać na innych typach bytów.",
+    "info.apotheosis.ender_lead": "Smycz Endera to przedmiot, którego można używać do przemieszczania zwierząt. Uderz zwierzę, aby je schwytać, i kliknij prawym przyciskiem, aby je uwolnić. Smycz nie będzie działać na innych typach bytów.",
 
     "comment_id": "/Villager Module",
     "name.apotheosis.merch_sword": "Zwolnione Sny",

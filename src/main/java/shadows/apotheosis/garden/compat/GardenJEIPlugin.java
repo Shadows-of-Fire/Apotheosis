@@ -7,8 +7,8 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
 
 @JeiPlugin
 public class GardenJEIPlugin implements IModPlugin {
@@ -16,7 +16,7 @@ public class GardenJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enableGarden) return;
-		reg.addIngredientInfo(new ItemStack(ApotheosisObjects.FARMERS_LEASH), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.farmleash"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.ENDER_LEAD), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.ender_lead"));
 	}
 
 	@Override

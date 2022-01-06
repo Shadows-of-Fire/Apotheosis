@@ -2,11 +2,14 @@ package shadows.apotheosis.spawn;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
+import com.google.common.base.Suppliers;
+
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.SerializationTags;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -68,16 +71,16 @@ public class SpawnerModifiers {
 			modif.load(config);
 	}
 
-	public static LazyLoadedValue<Ingredient> readIngredient(String s) {
+	public static Supplier<Ingredient> readIngredient(String s) {
 		if (s.startsWith("#")) {
 			String tag = s.substring(1);
-			return new LazyLoadedValue<>(() -> Ingredient.of(SerializationTags.getInstance().getItems().getTag(new ResourceLocation(tag))));
+			return Suppliers.memoize(() -> Ingredient.of(SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTag(new ResourceLocation(tag))));
 		} else {
 			String[] split = s.split(":");
 			Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0], split[1]));
 			ItemStack stack = new ItemStack(i);
 			if (i == Items.BARRIER) stack.setHoverName(new TranslatableComponent("info.apoth.modifier_disabled"));
-			return new LazyLoadedValue<>(() -> Ingredient.of(stack));
+			return Suppliers.memoize(() -> Ingredient.of(stack));
 		}
 	}
 

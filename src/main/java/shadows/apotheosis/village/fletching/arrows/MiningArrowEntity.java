@@ -27,7 +27,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.util.BlockUtil;
 
 public class MiningArrowEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
@@ -43,11 +43,11 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 	}
 
 	public MiningArrowEntity(Level world) {
-		this(ApotheosisObjects.MN_ARROW_ENTITY, world);
+		this(Apoth.Entities.MINING_ARROW, world);
 	}
 
 	public MiningArrowEntity(LivingEntity shooter, Level world, ItemStack breakerItem, Type type) {
-		super(ApotheosisObjects.MN_ARROW_ENTITY, shooter, world);
+		super(Apoth.Entities.MINING_ARROW, shooter, world);
 		this.breakerItem = breakerItem;
 		this.pickup = AbstractArrow.Pickup.DISALLOWED;
 		this.type = type;
@@ -55,7 +55,7 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 	}
 
 	public MiningArrowEntity(Level world, double x, double y, double z, ItemStack breakerItem, Type type) {
-		super(ApotheosisObjects.MN_ARROW_ENTITY, x, y, z, world);
+		super(Apoth.Entities.MINING_ARROW, x, y, z, world);
 		this.pickup = AbstractArrow.Pickup.DISALLOWED;
 		this.breakerItem = breakerItem;
 		this.type = type;

@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
-import shadows.apotheosis.ApotheosisObjects;
+import shadows.apotheosis.Apoth;
 
 public class ExplosiveArrowEntity extends AbstractArrow {
 
@@ -21,20 +21,20 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 	}
 
 	public ExplosiveArrowEntity(Level world) {
-		super(ApotheosisObjects.EX_ARROW_ENTITY, world);
+		super(Apoth.Entities.EXPLOSIVE_ARROW, world);
 	}
 
 	public ExplosiveArrowEntity(LivingEntity shooter, Level world) {
-		super(ApotheosisObjects.EX_ARROW_ENTITY, shooter, world);
+		super(Apoth.Entities.EXPLOSIVE_ARROW, shooter, world);
 	}
 
 	public ExplosiveArrowEntity(Level world, double x, double y, double z) {
-		super(ApotheosisObjects.EX_ARROW_ENTITY, x, y, z, world);
+		super(Apoth.Entities.EXPLOSIVE_ARROW, x, y, z, world);
 	}
 
 	@Override
 	protected ItemStack getPickupItem() {
-		return new ItemStack(ApotheosisObjects.EXPLOSIVE_ARROW);
+		return new ItemStack(Apoth.Items.EXPLOSIVE_ARROW);
 	}
 
 	@Override

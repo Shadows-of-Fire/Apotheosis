@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,45 +51,41 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		ItemStack s = new ItemStack(this);
 		BlockEntity te = world.getBlockEntity(pos);
-		if (te != null) te.save(s.getOrCreateTagElement("BlockEntityTag"));
+		if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
 		return s;
 	}
 
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		BlockEntity te = world.getBlockEntity(pos);
-		if (te != null) {
-			te.load(state, stack.getOrCreateTagElement("BlockEntityTag"));
-			te.setPosition(pos);
-		}
+		if (te != null) te.load(stack.getOrCreateTagElement("BlockEntityTag"));
+	}
+
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+		return new ApothSpawnerTile(pPos, pState);
 	}
 
 	@Override
 	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
 		if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
 			ItemStack s = new ItemStack(this);
-			if (te != null) te.save(s.getOrCreateTagElement("BlockEntityTag"));
+			if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
 			popResource(world, pos, s);
 			player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 			player.awardStat(Stats.BLOCK_MINED.get(this));
-			player.causeFoodExhaustion(0.005F);
+			player.causeFoodExhaustion(0.035F);
 		} else super.playerDestroy(world, player, pos, state, te, stack);
-	}
-
-	@Override
-	public BlockEntity newBlockEntity(BlockGetter worldIn) {
-		return new ApothSpawnerTile();
 	}
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack stack = player.getItemInHand(hand);
 		BlockEntity te = world.getBlockEntity(pos);
-		if (te instanceof ApothSpawnerTile) {
-			ApothSpawnerTile tile = (ApothSpawnerTile) te;
+		if (te instanceof ApothSpawnerTile tile) {
 			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND));
 			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values()) {
 				if (sm.canModify(tile, stack, inverse)) {
@@ -96,6 +93,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 					if (sm.modify(tile, stack, inverse)) {
 						if (!player.isCreative() && !(stack.getItem() instanceof SpawnEggItem)) stack.shrink(1);
 						AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayer) player, tile, sm);
+						world.sendBlockUpdated(pos, state, state, 3);
 						return InteractionResult.SUCCESS;
 					}
 				}
@@ -107,9 +105,9 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
+		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
 			CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
-			if (tag.contains("SpawnData")) tooltip.add(this.grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getString("id")));
+			if (tag.contains("SpawnData")) tooltip.add(this.grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getCompound("entity").getString("id")));
 			if (tag.contains("MinSpawnDelay")) tooltip.add(this.grayTranslated("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
 			if (tag.contains("MaxSpawnDelay")) tooltip.add(this.grayTranslated("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
 			if (tag.contains("SpawnCount")) tooltip.add(this.grayTranslated("waila.spw.spawncount", tag.getShort("SpawnCount")));

@@ -24,11 +24,9 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 
 	@Override
 	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-		if (!state.canSurvive(worldIn, pos)) {
-			worldIn.destroyBlock(pos, true);
-		} else if (worldIn.isEmptyBlock(pos.above())) {
+		if (worldIn.isEmptyBlock(pos.above())) {
 			int i = 0;
-			if (GardenModule.maxReedHeight != 255) for (i = 1; worldIn.getBlockState(pos.below(i)).getBlock() == this; ++i)
+			if (GardenModule.maxReedHeight <= 32) for (i = 1; worldIn.getBlockState(pos.below(i)).getBlock() == this; ++i)
 				;
 
 			if (i < GardenModule.maxReedHeight) {

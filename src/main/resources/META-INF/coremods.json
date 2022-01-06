@@ -1,24 +1,3 @@
 {
-  "true_infinity": "coremods/true_infinity.js",
-  "sundering": "coremods/sundering.js",
-  "enchantment_datas": "coremods/enchantment_datas.js",
-  "tempting": "coremods/tempting.js",
-  "reflective": "coremods/reflective.js",
-  "item_ench": "coremods/item_ench.js",
-  "calc_stack_ench": "coremods/calc_stack_ench.js",
-  "container_repair": "coremods/container_repair.js",
-  "enchantability": "coremods/enchantability.js",
-  "gui_repair": "coremods/gui_repair.js",
-  "combat_rules": "coremods/combat_rules.js",
-  "fishing_bobber": "coremods/fishing_bobber.js",
-  "affix_entity_dmg": "coremods/affix_entity_dmg.js",
-  "affix_extra_dmg": "coremods/affix_extra_dmg.js",
-  "affix_prot_level": "coremods/affix_prot_level.js",
-  "affix_user_hurt": "coremods/affix_user_hurt.js",
-  "stack_modifier_hack": "coremods/stack_modifier_hack.js",
-  "crossbow": "coremods/crossbow.js",
-  "crossbow_arrows": "coremods/crossbow_arrows.js",
-  "max_level_redirects": "coremods/max_level_redirects.js",
-  "soulfire_recipes": "coremods/campfire.js",
-  "mythics_anvil": "coremods/mythics_anvil.js"
+
 }

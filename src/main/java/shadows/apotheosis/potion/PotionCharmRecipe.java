@@ -25,15 +25,15 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ApotheosisObjects;
 
 public class PotionCharmRecipe extends ShapedRecipe {
 
 	protected final IntList potionSlots = new IntArrayList();
 
 	public PotionCharmRecipe(List<Object> ingredients, int width, int height) {
-		super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", width, height, makeIngredients(ingredients), new ItemStack(ApotheosisObjects.POTION_CHARM));
+		super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", width, height, makeIngredients(ingredients), new ItemStack(Apoth.Items.POTION_CHARM));
 		for (int i = 0; i < ingredients.size(); i++) {
 			if (ingredients.get(i).equals("potion")) this.potionSlots.add(i);
 		}

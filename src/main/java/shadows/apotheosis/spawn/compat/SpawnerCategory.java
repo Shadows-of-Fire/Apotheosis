@@ -10,7 +10,8 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.config.Constants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -20,10 +21,12 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 
 	IDrawable bg;
 	IDrawable icon;
+	Component title;
 
 	public SpawnerCategory(IGuiHelper helper) {
 		this.bg = helper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 24, 24, 24).build();
 		this.icon = helper.createDrawableIngredient(new ItemStack(Items.SPAWNER));
+		this.title = new TranslatableComponent("jei.spw.title");
 	}
 
 	@Override
@@ -32,8 +35,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 	}
 
 	@Override
-	public String getTitle() {
-		return I18n.get("jei.spw.title");
+	public Component getTitle() {
+		return title;
 	}
 
 	@Override

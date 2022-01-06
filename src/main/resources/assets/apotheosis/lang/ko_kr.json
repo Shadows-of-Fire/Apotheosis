@@ -635,10 +635,10 @@
     "info.apotheosis.anvil": "마법 부여 가능",
 
     "comment_id": "/Garden Module",
-    "item.apotheosis.farmers_leash": "엔더 농사꾼의 끈",
+    "item.apotheosis.ender_lead": "엔더 농사꾼의 끈",
     "info.apotheosis.noentity": "들어있는 개체: 없음",
     "info.apotheosis.containedentity": "들어있는 개체: %s",
-    "info.apotheosis.farmleash": "엔더 농사꾼의 끈은 동물을 들고 다닐 수 있는 아이템입니다. 들고 동물을 좌클릭하여 잡아들이고, 우클릭으로 풀어줍니다. 다른 종류의 개체에게는 통하지 않습니다.",
+    "info.apotheosis.ender_lead": "엔더 농사꾼의 끈은 동물을 들고 다닐 수 있는 아이템입니다. 들고 동물을 좌클릭하여 잡아들이고, 우클릭으로 풀어줍니다. 다른 종류의 개체에게는 통하지 않습니다.",
 
     "comment_id": "/Villager Module",
     "name.apotheosis.merch_sword": "꿈의 포로",

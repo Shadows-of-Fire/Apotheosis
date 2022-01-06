@@ -1,3 +1,7 @@
+## 5.0.0
+* Initial 1.18.1 port.  Does not contain the Enchantment or Deadly Modules.
+* The Garden, Potion, Spawner, and Village modules are all present in a direct-port fashion.
+
 ## 4.8.4
 * E.Kim: Updated ko_kr.json (Korean Translation)
 * Added the ability turn off mythic items being unbreakable.

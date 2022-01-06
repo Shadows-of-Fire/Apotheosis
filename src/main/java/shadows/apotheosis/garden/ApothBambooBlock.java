@@ -25,9 +25,7 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
 
 	@Override
 	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
-		if (!state.canSurvive(worldIn, pos)) {
-			worldIn.destroyBlock(pos, true);
-		} else if (state.getValue(STAGE) == 0) {
+		if (state.getValue(STAGE) == 0) {
 			if (random.nextInt(3) == 0 && worldIn.isEmptyBlock(pos.above()) && worldIn.getRawBrightness(pos.above(), 0) >= 9) {
 				int i = this.getHeightBelowUpToMax(worldIn, pos) + 1;
 				if (i < GardenModule.maxBambooHeight) {

@@ -1,5 +1,5 @@
 package shadows.apotheosis.util;
-
+/*
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableMap;
@@ -84,4 +84,4 @@ public class EnchantmentIngredient extends Ingredient {
 		}
 	}
 
-}
+}*/

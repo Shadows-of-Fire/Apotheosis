@@ -31,9 +31,9 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
-import shadows.apotheosis.ApotheosisObjects;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
 import shadows.apotheosis.spawn.modifiers.ModifierSync;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -57,7 +57,7 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		SpawnerModifiers.registerModifiers();
 		this.reload(null);
-		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, CreativeModeTab.TAB_MISC, "field_77701_a");
+		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, CreativeModeTab.TAB_MISC, "f_41377_");
 	}
 
 	@SubscribeEvent
@@ -78,7 +78,7 @@ public class SpawnerModule {
 	public void handleCapturing(LivingDropsEvent e) {
 		Entity killer = e.getSource().getEntity();
 		if (killer instanceof LivingEntity) {
-			int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.CAPTURING, ((LivingEntity) killer).getMainHandItem());
+			int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CAPTURING, ((LivingEntity) killer).getMainHandItem());
 			LivingEntity killed = e.getEntityLiving();
 			if (SpawnerModifiers.EGG.bannedMobs.contains(killed.getType().getRegistryName().toString())) return;
 			if (killed.level.random.nextFloat() < level / 250F) {
