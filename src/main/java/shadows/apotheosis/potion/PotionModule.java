@@ -58,41 +58,42 @@ public class PotionModule {
 
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
-		PotionBrewing.addMix(Potions.AWKWARD, Items.SHULKER_SHELL, Apoth.Potions.RESISTANCE);
-		PotionBrewing.addMix(Apoth.Potions.RESISTANCE, Items.REDSTONE, Apoth.Potions.LONG_RESISTANCE);
-		PotionBrewing.addMix(Apoth.Potions.RESISTANCE, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_RESISTANCE);
+		e.enqueueWork(() -> {
+			PotionBrewing.addMix(Potions.AWKWARD, Items.SHULKER_SHELL, Apoth.Potions.RESISTANCE);
+			PotionBrewing.addMix(Apoth.Potions.RESISTANCE, Items.REDSTONE, Apoth.Potions.LONG_RESISTANCE);
+			PotionBrewing.addMix(Apoth.Potions.RESISTANCE, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_RESISTANCE);
 
-		PotionBrewing.addMix(Apoth.Potions.RESISTANCE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.SUNDERING);
-		PotionBrewing.addMix(Apoth.Potions.LONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LONG_SUNDERING);
-		PotionBrewing.addMix(Apoth.Potions.STRONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_SUNDERING);
-		PotionBrewing.addMix(Apoth.Potions.SUNDERING, Items.REDSTONE, Apoth.Potions.LONG_SUNDERING);
-		PotionBrewing.addMix(Apoth.Potions.SUNDERING, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_SUNDERING);
+			PotionBrewing.addMix(Apoth.Potions.RESISTANCE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.SUNDERING);
+			PotionBrewing.addMix(Apoth.Potions.LONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LONG_SUNDERING);
+			PotionBrewing.addMix(Apoth.Potions.STRONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_SUNDERING);
+			PotionBrewing.addMix(Apoth.Potions.SUNDERING, Items.REDSTONE, Apoth.Potions.LONG_SUNDERING);
+			PotionBrewing.addMix(Apoth.Potions.SUNDERING, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_SUNDERING);
 
-		PotionBrewing.addMix(Potions.AWKWARD, Items.GOLDEN_APPLE, Apoth.Potions.ABSORPTION);
-		PotionBrewing.addMix(Apoth.Potions.ABSORPTION, Items.REDSTONE, Apoth.Potions.LONG_ABSORPTION);
-		PotionBrewing.addMix(Apoth.Potions.ABSORPTION, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_ABSORPTION);
+			PotionBrewing.addMix(Potions.AWKWARD, Items.GOLDEN_APPLE, Apoth.Potions.ABSORPTION);
+			PotionBrewing.addMix(Apoth.Potions.ABSORPTION, Items.REDSTONE, Apoth.Potions.LONG_ABSORPTION);
+			PotionBrewing.addMix(Apoth.Potions.ABSORPTION, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_ABSORPTION);
 
-		PotionBrewing.addMix(Potions.AWKWARD, Items.MUSHROOM_STEW, Apoth.Potions.HASTE);
-		PotionBrewing.addMix(Apoth.Potions.HASTE, Items.REDSTONE, Apoth.Potions.LONG_HASTE);
-		PotionBrewing.addMix(Apoth.Potions.HASTE, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_HASTE);
+			PotionBrewing.addMix(Potions.AWKWARD, Items.MUSHROOM_STEW, Apoth.Potions.HASTE);
+			PotionBrewing.addMix(Apoth.Potions.HASTE, Items.REDSTONE, Apoth.Potions.LONG_HASTE);
+			PotionBrewing.addMix(Apoth.Potions.HASTE, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_HASTE);
 
-		PotionBrewing.addMix(Apoth.Potions.HASTE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.FATIGUE);
-		PotionBrewing.addMix(Apoth.Potions.LONG_HASTE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LONG_FATIGUE);
-		PotionBrewing.addMix(Apoth.Potions.STRONG_HASTE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_FATIGUE);
-		PotionBrewing.addMix(Apoth.Potions.FATIGUE, Items.REDSTONE, Apoth.Potions.LONG_FATIGUE);
-		PotionBrewing.addMix(Apoth.Potions.FATIGUE, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_FATIGUE);
+			PotionBrewing.addMix(Apoth.Potions.HASTE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.FATIGUE);
+			PotionBrewing.addMix(Apoth.Potions.LONG_HASTE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LONG_FATIGUE);
+			PotionBrewing.addMix(Apoth.Potions.STRONG_HASTE, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_FATIGUE);
+			PotionBrewing.addMix(Apoth.Potions.FATIGUE, Items.REDSTONE, Apoth.Potions.LONG_FATIGUE);
+			PotionBrewing.addMix(Apoth.Potions.FATIGUE, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_FATIGUE);
 
-		if (Apoth.Items.SKULL_FRAGMENT != null) PotionBrewing.addMix(Potions.AWKWARD, Apoth.Items.SKULL_FRAGMENT, Apoth.Potions.WITHER);
-		else PotionBrewing.addMix(Potions.AWKWARD, Items.WITHER_SKELETON_SKULL, Apoth.Potions.WITHER);
-		PotionBrewing.addMix(Apoth.Potions.WITHER, Items.REDSTONE, Apoth.Potions.LONG_WITHER);
-		PotionBrewing.addMix(Apoth.Potions.WITHER, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_WITHER);
+			if (Apoth.Items.SKULL_FRAGMENT != null) PotionBrewing.addMix(Potions.AWKWARD, Apoth.Items.SKULL_FRAGMENT, Apoth.Potions.WITHER);
+			else PotionBrewing.addMix(Potions.AWKWARD, Items.WITHER_SKELETON_SKULL, Apoth.Potions.WITHER);
+			PotionBrewing.addMix(Apoth.Potions.WITHER, Items.REDSTONE, Apoth.Potions.LONG_WITHER);
+			PotionBrewing.addMix(Apoth.Potions.WITHER, Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_WITHER);
 
-		PotionBrewing.addMix(Potions.AWKWARD, Items.EXPERIENCE_BOTTLE, Apoth.Potions.KNOWLEDGE);
-		PotionBrewing.addMix(Apoth.Potions.KNOWLEDGE, Items.REDSTONE, Apoth.Potions.LONG_KNOWLEDGE);
-		PotionBrewing.addMix(Apoth.Potions.KNOWLEDGE, Items.EXPERIENCE_BOTTLE, Apoth.Potions.STRONG_KNOWLEDGE);
+			PotionBrewing.addMix(Potions.AWKWARD, Items.EXPERIENCE_BOTTLE, Apoth.Potions.KNOWLEDGE);
+			PotionBrewing.addMix(Apoth.Potions.KNOWLEDGE, Items.REDSTONE, Apoth.Potions.LONG_KNOWLEDGE);
+			PotionBrewing.addMix(Apoth.Potions.KNOWLEDGE, Items.EXPERIENCE_BOTTLE, Apoth.Potions.STRONG_KNOWLEDGE);
 
-		PotionBrewing.addMix(Potions.AWKWARD, Apoth.Items.LUCKY_FOOT, Potions.LUCK);
-
+			PotionBrewing.addMix(Potions.AWKWARD, Apoth.Items.LUCKY_FOOT, Potions.LUCK);
+		});
 		Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
 		Ingredient abs = Apotheosis.potionIngredient(Apoth.Potions.STRONG_ABSORPTION);
 		Ingredient res = Apotheosis.potionIngredient(Apoth.Potions.RESISTANCE);

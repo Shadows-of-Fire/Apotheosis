@@ -1,5 +1,5 @@
 package shadows.apotheosis.util;
-/*
+
 import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableMap;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
-import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.placebo.util.PlaceboUtil;
 
 public class EnchantmentIngredient extends Ingredient {
 
@@ -36,7 +36,7 @@ public class EnchantmentIngredient extends Ingredient {
 	private static ItemStack format(ItemLike item, Enchantment enchantment, int minLevel) {
 		ItemStack stack = new ItemStack(item);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, minLevel), stack);
-		AffixHelper.addLore(stack, new TranslatableComponent("ingredient.apotheosis.ench", ((MutableComponent) enchantment.getFullname(minLevel)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC)));
+		PlaceboUtil.addLore(stack, new TranslatableComponent("ingredient.apotheosis.ench", ((MutableComponent) enchantment.getFullname(minLevel)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC)));
 		return stack;
 	}
 
@@ -84,4 +84,4 @@ public class EnchantmentIngredient extends Ingredient {
 		}
 	}
 
-}*/
+}

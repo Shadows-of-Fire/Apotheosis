@@ -15,7 +15,7 @@ import shadows.apotheosis.Apoth;
 public class ArrowItemMixin {
 
 	@Inject(method = "isInfinite", at = @At(value = "RETURN"), remap = false, cancellable = true)
-	public void isInfinite(ItemStack stack, ItemStack bow, Player player, CallbackInfoReturnable<Boolean> ci) {
+	public void apoth_isInfinite(ItemStack stack, ItemStack bow, Player player, CallbackInfoReturnable<Boolean> ci) {
 		if (!ci.getReturnValueZ()) {
 			ci.setReturnValue(EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.TRUE_INFINITY, bow) > 0 && stack.getItem() instanceof ArrowItem);
 		}

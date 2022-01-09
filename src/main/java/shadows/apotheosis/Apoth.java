@@ -5,7 +5,27 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.ench.anvil.AnvilTile;
+import shadows.apotheosis.ench.anvil.ObliterationEnchant;
+import shadows.apotheosis.ench.anvil.SplittingEnchant;
+import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
+import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.InertEnchantment;
+import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
+import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
+import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
+import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
+import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
+import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
+import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
+import shadows.apotheosis.ench.enchantments.TemptingEnchant;
+import shadows.apotheosis.ench.library.EnchLibraryBlock;
+import shadows.apotheosis.ench.library.EnchLibraryContainer;
+import shadows.apotheosis.ench.library.EnchLibraryTile;
+import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.garden.EnderLeadItem;
 import shadows.apotheosis.potion.LuckyFootItem;
 import shadows.apotheosis.potion.PotionCharmItem;
@@ -30,7 +50,25 @@ public class Apoth {
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Blocks {
-
+		public static final EnchLibraryBlock LIBRARY = null;
+		public static final Block HELLSHELF = null;
+		public static final Block INFUSED_HELLSHELF = null;
+		public static final Block BLAZING_HELLSHELF = null;
+		public static final Block GLOWING_HELLSHELF = null;
+		public static final Block SEASHELF = null;
+		public static final Block INFUSED_SEASHELF = null;
+		public static final Block CRYSTAL_SEASHELF = null;
+		public static final Block HEART_SEASHELF = null;
+		public static final Block ENDSHELF = null;
+		public static final Block PEARL_ENDSHELF = null;
+		public static final Block DRACONIC_ENDSHELF = null;
+		public static final Block BEESHELF = null;
+		public static final Block MELONSHELF = null;
+		public static final Block WEAK_RECTIFIER = null;
+		public static final Block RECTIFIER = null;
+		public static final Block STRONG_RECTIFIER = null;
+		public static final Block REVEALER = null;
+		public static final Block STRONG_REVEALER = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -43,6 +81,17 @@ public class Apoth {
 		public static final MiningArrowItem IRON_MINING_ARROW = null;
 		public static final MiningArrowItem DIAMOND_MINING_ARROW = null;
 		public static final EnderLeadItem ENDER_LEAD = null;
+		public static final Item PRISMATIC_WEB = null;
+		public static final Item SCRAP_TOME = null;
+		public static final Item OTHER_TOME = null;
+		public static final Item HELMET_TOME = null;
+		public static final Item CHESTPLATE_TOME = null;
+		public static final Item LEGGINGS_TOME = null;
+		public static final Item BOOTS_TOME = null;
+		public static final Item WEAPON_TOME = null;
+		public static final Item PICKAXE_TOME = null;
+		public static final Item FISHING_TOME = null;
+		public static final Item BOW_TOME = null;
 
 		@ObjectHolder("witherskelefix:fragment")
 		public static final Item SKULL_FRAGMENT = null;
@@ -52,6 +101,20 @@ public class Apoth {
 	public static final class Enchantments {
 		public static final TrueInfinityEnchant TRUE_INFINITY = null;
 		public static final CapturingEnchant CAPTURING = null;
+		public static final BerserkersFuryEnchant BERSERKERS_FURY = null;
+		public static final CrescendoEnchant CRESCENDO = null;
+		public static final KnowledgeEnchant KNOWLEDGE = null;
+		public static final LifeMendingEnchant LIFE_MENDING = null;
+		public static final MinersFervorEnchant MINERS_FERVOR = null;
+		public static final NaturesBlessingEnchant NATURES_BLESSING = null;
+		public static final ReflectiveEnchant REFLECTIVE = null;
+		public static final ScavengerEnchant SCAVENGER = null;
+		public static final StableFootingEnchant STABLE_FOOTING = null;
+		public static final TemptingEnchant TEMPTING = null;
+		public static final ObliterationEnchant OBLITERATION = null;
+		public static final SplittingEnchant SPLITTING = null;
+		public static final InertEnchantment HELL_INFUSION = null;
+		public static final InertEnchantment SEA_INFUSION = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -97,6 +160,14 @@ public class Apoth {
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Menus {
 		public static final MenuType<FletchingContainer> FLETCHING = null;
+		public static final MenuType<EnchLibraryContainer> LIBRARY = null;
+		public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE = null;
+	}
+
+	@ObjectHolder(Apotheosis.MODID)
+	public static final class Tiles {
+		public static final BlockEntityType<EnchLibraryTile> LIBRARY = null;
+		public static final BlockEntityType<AnvilTile> ANVIL = null;
 	}
 
 	/*	public static final HellshelfBlock HELLSHELF = null;

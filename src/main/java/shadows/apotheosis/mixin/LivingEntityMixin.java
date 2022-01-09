@@ -3,6 +3,9 @@ package shadows.apotheosis.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -79,4 +82,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract MobEffectInstance getEffect(MobEffect ef);
 
+	@Inject(method = "blockUsingShield", at = @At(value = "HEAD"))
+	public void apoth_reflective(LivingEntity attacker, CallbackInfo ci) {
+		Apoth.Enchantments.REFLECTIVE.reflectiveHook((LivingEntity) (Object) this, attacker);
+	}
 }
