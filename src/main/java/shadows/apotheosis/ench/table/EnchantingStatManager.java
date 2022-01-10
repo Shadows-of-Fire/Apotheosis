@@ -9,12 +9,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.tags.SerializationTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -53,9 +57,16 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 			try {
 				if (!JsonUtil.checkAndLogEmpty(ele, key, "Enchanting Stats", EnchModule.LOGGER)) {
 					JsonObject obj = (JsonObject) ele;
-					Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
 					Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
-					this.stats.put(b.delegate, stats);
+					if (obj.has("tag")) {
+						Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, new ResourceLocation(obj.get("tag").getAsString()), (p_151262_) -> {
+							return new JsonSyntaxException("Unknown block tag '" + p_151262_ + "'");
+						});
+						tag.getValues().forEach(b -> this.stats.put(b.delegate, stats));
+					} else {
+						Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
+						this.stats.put(b.delegate, stats);
+					}
 				}
 			} catch (Exception e) {
 				EnchModule.LOGGER.error("Failed to read enchantment stat file {}.", key);
@@ -170,6 +181,19 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 			this.rectification = rectification;
 			this.clues = clues;
 		}
+
+		public void write(FriendlyByteBuf buf) {
+			buf.writeFloat(this.maxEterna);
+			buf.writeFloat(this.eterna);
+			buf.writeFloat(this.quanta);
+			buf.writeFloat(this.arcana);
+			buf.writeFloat(this.rectification);
+			buf.writeByte(this.clues);
+		}
+
+		public static Stats read(FriendlyByteBuf buf) {
+			return new Stats(buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readByte());
+		}
 	}
 
 	public static class StatSyncMessage implements MessageProvider<StatSyncMessage> {
@@ -189,13 +213,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 			buf.writeShort(msg.stats.size());
 			for (Map.Entry<IRegistryDelegate<Block>, Stats> e : msg.stats.entrySet()) {
 				buf.writeInt(((ForgeRegistry<Block>) ForgeRegistries.BLOCKS).getID(e.getKey().get()));
-				Stats stat = e.getValue();
-				buf.writeFloat(stat.maxEterna);
-				buf.writeFloat(stat.eterna);
-				buf.writeFloat(stat.quanta);
-				buf.writeFloat(stat.arcana);
-				buf.writeFloat(stat.rectification);
-				buf.writeByte(stat.clues);
+				e.getValue().write(buf);
 			}
 		}
 
@@ -205,8 +223,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 			StatSyncMessage pkt = new StatSyncMessage();
 			for (int i = 0; i < size; i++) {
 				Block b = ((ForgeRegistry<Block>) ForgeRegistries.BLOCKS).getValue(buf.readInt());
-				Stats stats = new Stats(buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readByte());
-				pkt.stats.put(b.delegate, stats);
+				pkt.stats.put(b.delegate, Stats.read(buf));
 			}
 			return pkt;
 		}

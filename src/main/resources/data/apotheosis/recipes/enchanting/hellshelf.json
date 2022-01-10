@@ -1,0 +1,20 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "apotheosis:hellshelf"
+	},
+	"requirements": {
+		"eterna": 22.5,
+		"quanta": 30,
+		"arcana": 0
+	},
+	"display_level": 5,
+	"result": {
+		"item": "apotheosis:infused_hellshelf",
+		"count": 1
+	}
+}

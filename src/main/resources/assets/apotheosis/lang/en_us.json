@@ -354,7 +354,7 @@
 	"gui.apotheosis.enchant.arcana.desc3": "and increases the number of enchantments.",
 	"gui.apotheosis.enchant.arcana.desc4": "Current Value: %s%%",
 	"ingredient.apotheosis.ench": "Requires at least %s",
-	"info.apotheosis.rectification": "Rectification: %s%%",
+	"info.apotheosis.gui_rectification": "Rectification: %s%%",
 	"info.apotheosis.quanta_buff": "Quantic Warping",
 	"info.apotheosis.quanta_reduc": "Reduction Potential: %s%%",
 	"info.apotheosis.quanta_growth": "Growth Potential: %s%%",
@@ -366,12 +366,9 @@
 	"rarity.enchantment.very_rare": "Very Rare",
 	"info.apotheosis.weight": "%s: %s",
 
-    "enchantment.apotheosis.hell_infusion": "Hell Infusion",
-    "enchantment.apotheosis.hell_infusion.desc": "Deals extra magic damage in the Nether.",
+    "enchantment.apotheosis.infusion": "Infusion",
+    "enchantment.apotheosis.infusion.desc": "Placeholder for Enchantment Crafting",
 	
-	"enchantment.apotheosis.sea_infusion": "Sea Infusion",
-    "enchantment.apotheosis.sea_infusion.desc": "Deals extra magic damage when wet.",
-
     "enchantment.apotheosis.mounted_strike": "Mounted Strike",
     "enchantment.apotheosis.mounted_strike.desc": "Deals extra damage when on a horse.",
 
@@ -599,6 +596,11 @@
 	"info.apotheosis.arcana_bonus": "Arcane Empowerments",
 	"info.apotheosis.weights_changed": "Rarity Weights Changed",
 	"info.apotheosis.min_enchants": "Minimum %s Enchantments",
+	"info.apotheosis.ench_at": "Enchanting at Level %s",
+	"info.apotheosis.xp_cost": "Raw XP Cost: %s (%s Levels)",
+	"info.apotheosis.power_range": "Power Range: %s to %s",
+	"info.apotheosis.item_ench": "Item Enchantability: %s",
+	"info.apotheosis.num_clues": "Enchanting Clues: %s",
 
     "comment_id": "/Potion Module",
     "enchantment.apotheosis.true_infinity": "Endless Quiver",

@@ -113,8 +113,7 @@ public class Apoth {
 		public static final TemptingEnchant TEMPTING = null;
 		public static final ObliterationEnchant OBLITERATION = null;
 		public static final SplittingEnchant SPLITTING = null;
-		public static final InertEnchantment HELL_INFUSION = null;
-		public static final InertEnchantment SEA_INFUSION = null;
+		public static final InertEnchantment INFUSION = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)

@@ -1,0 +1,11 @@
+{
+	"replace": false,
+	"values": [
+		"minecraft:skeleton_skull",
+		"minecraft:skeleton_wall_skull",
+		"minecraft:creeper_head",
+		"minecraft:creeper_wall_head",
+		"minecraft:zombie_head",
+		"minecraft:zombie_wall_head"
+	]
+}

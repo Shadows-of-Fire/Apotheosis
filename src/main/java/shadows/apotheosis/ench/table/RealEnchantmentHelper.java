@@ -40,7 +40,7 @@ public class RealEnchantmentHelper {
 		if (num == 2) return level;
 		float lowBound = 0.6F - 0.4F * (1 - num);
 		float highBound = 0.8F - 0.4F * (1 - num);
-		return (int) (level * Mth.nextFloat(rand, lowBound, highBound));
+		return Math.max(1, (int) (level * Mth.nextFloat(rand, lowBound, highBound)));
 	}
 
 	/**
@@ -49,37 +49,43 @@ public class RealEnchantmentHelper {
 	 * @param stack Itemstack to be enchanted.
 	 * @param level Enchanting Slot XP Level
 	 * @param quanta Quanta Level
-	 * @param arcanaLevel Arcana Level
+	 * @param arcana Arcana Level
 	 * @param treasure If treasure enchantments can show up.
 	 * @return A list of enchantments based on the seed, item, and eterna/quanta/arcana levels.
 	 */
-	public static List<EnchantmentInstance> buildEnchantmentList(Random rand, ItemStack stack, int level, float quanta, float arcanaLevel, boolean treasure) {
+	public static List<EnchantmentInstance> buildEnchantmentList(Random rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure) {
 		List<EnchantmentInstance> chosenEnchants = Lists.newArrayList();
 		int enchantability = stack.getItemEnchantability();
 		int srcLevel = level;
 		if (enchantability > 0) {
-			float quantaFactor = 1 + Mth.nextFloat(rand, -1F, 1F) * quanta / 10;
-			level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 2));
-			Arcana arcana = Arcana.getForThreshold(arcanaLevel);
+			float quantaFactor = 1 + Mth.nextFloat(rand, -1F + rectification / 100F, 1F) * quanta / 100F; //The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
+			level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
+			Arcana arcanaVals = Arcana.getForThreshold(arcana);
 			List<EnchantmentInstance> allEnchants = getEnchantmentDatas(level, stack, treasure);
 			Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
-			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment));
-			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
+			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment)); //Remove duplicates.
+			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcanaVals, d)).collect(Collectors.toList());
 			if (!possibleEnchants.isEmpty()) {
 				chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).get().data);
 				removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 
-				if (arcanaLevel >= 2.5F && !possibleEnchants.isEmpty()) {
+				if (arcana >= 25F && !possibleEnchants.isEmpty()) {
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).get().data);
 					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 				}
 
-				if (arcanaLevel >= 7.5F && !possibleEnchants.isEmpty()) {
+				if (arcana >= 75F && !possibleEnchants.isEmpty()) {
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).get().data);
 				}
 
-				while (arcanaLevel + rand.nextInt(50) <= level) {
-					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
+				int randomBound = 50;
+				if (level > 45) {
+					level = (int) (srcLevel * 1.15F);
+				}
+
+				while (rand.nextInt(randomBound) <= level) {
+					if (!chosenEnchants.isEmpty()) removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
+
 					if (possibleEnchants.isEmpty()) {
 						break;
 					}
@@ -89,7 +95,7 @@ public class RealEnchantmentHelper {
 				}
 			}
 		}
-		return ((IEnchantableItem) stack.getItem()).selectEnchantments(chosenEnchants, rand, stack, srcLevel, quanta, arcanaLevel, treasure);
+		return ((IEnchantableItem) stack.getItem()).selectEnchantments(chosenEnchants, rand, stack, srcLevel, quanta, arcana, treasure);
 	}
 
 	/**

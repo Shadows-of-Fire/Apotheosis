@@ -255,15 +255,16 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 			int cost = slot + 1;
 			if (this.isHovering(60, 14 + 19 * slot, 108, 17, mouseX, mouseY) && level > 0) {
 				List<Component> list = Lists.newArrayList();
-				if (!this.clues.get(slot).isEmpty()) {
-					list.add(new TranslatableComponent("info.apotheosis.runes" + (this.hasAllClues[slot] ? "_all" : "")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
-					for (EnchantmentInstance i : this.clues.get(slot)) {
-						list.add(new TranslatableComponent(i.enchantment.getFullname(i.level).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+				if (enchantment != null) {
+					if (!this.clues.get(slot).isEmpty()) {
+						list.add(new TranslatableComponent("info.apotheosis.runes" + (this.hasAllClues[slot] ? "_all" : "")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+						for (EnchantmentInstance i : this.clues.get(slot)) {
+							list.add(new TranslatableComponent(i.enchantment.getFullname(i.level).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+						}
+					} else {
+						list.add(new TranslatableComponent("info.apotheosis.no_clue").withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));
 					}
-				} else {
-					list.add(new TranslatableComponent("info.apotheosis.no_clue").withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));
-				}
-				//else list.add(new TranslatableComponent("container.enchant.clue", enchantment == null ? "" : enchantment.getFullname(clue).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+				} else list.add(new TranslatableComponent("container.enchant.clue", "").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 				if (enchantment == null) {
 					Collections.addAll(list, new TextComponent(""), new TranslatableComponent("forge.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
 				} else if (!creative) {
@@ -313,7 +314,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 			if (this.menu.quanta.get() > 0) {
 				list.add(new TextComponent(""));
 				list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc4", f(this.menu.quanta.get()))).withStyle(ChatFormatting.GRAY));
-				list.add(new TextComponent(I18n.get("info.apotheosis.rectification", f(this.menu.rectification.get()))).withStyle(ChatFormatting.YELLOW));
+				list.add(new TextComponent(I18n.get("info.apotheosis.gui_rectification", f(this.menu.rectification.get()))).withStyle(ChatFormatting.YELLOW));
 			}
 			this.renderComponentTooltip(stack, list, mouseX, mouseY);
 			float quanta = this.menu.quanta.get();
@@ -330,16 +331,19 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 
 		if (this.isHovering(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
 			List<Component> list = Lists.newArrayList();
+			stack.pushPose();
+			stack.translate(0, 0, 4);
 			list.add(new TextComponent(arcana() + I18n.get("gui.apotheosis.enchant.arcana.desc")));
 			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc2")));
 			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc3")));
 			if (this.menu.arcana.get() > 0) {
 				list.add(new TextComponent(""));
-				int ench = this.menu.getSlot(0).getItem().getItemEnchantability();
+				float ench = this.menu.getSlot(0).getItem().getItemEnchantability() / 2F;
 				list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc4", f(this.menu.arcana.get() - ench))).withStyle(ChatFormatting.GRAY));
-				list.add(new TranslatableComponent("info.apotheosis.ench_bonus", f(this.menu.getSlot(0).getItem().getItemEnchantability())).withStyle(ChatFormatting.YELLOW));
+				list.add(new TranslatableComponent("info.apotheosis.ench_bonus", f(ench)).withStyle(ChatFormatting.YELLOW));
 			}
 			this.renderComponentTooltip(stack, list, mouseX, mouseY);
+			stack.popPose();
 			if (this.menu.arcana.get() > 0) {
 				list.clear();
 				Arcana a = Arcana.getForThreshold(this.menu.arcana.get());
@@ -366,20 +370,20 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 				if (this.isHovering(60, 14 + 19 * j, 108, 17, mouseX, mouseY)) {
 					List<Component> list = new ArrayList<>();
 					int level = this.menu.costs[j];
-					list.add(new TextComponent(I18n.get("Enchanting at Level %d", level)).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GREEN));
+					list.add(new TextComponent(I18n.get("info.apotheosis.ench_at", level)).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GREEN));
 					list.add(new TextComponent(""));
 					int cost = 0;
 					for (int i = 0; i <= j; i++) {
 						cost += (EnchantmentUtils.getExperienceForLevel(level - i) - EnchantmentUtils.getExperienceForLevel(level - i - 1));
 					}
-					list.add(new TranslatableComponent("Raw XP Cost: %s (%s Levels)", new TextComponent("" + cost).withStyle(ChatFormatting.GREEN), new TextComponent("" + EnchantmentUtils.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
-					float quanta = this.menu.quanta.get();
-					float rectification = this.menu.rectification.get();
-					int minPow = Math.round(Mth.clamp(level - level * (quanta + quanta * rectification / 100F) / 100F, 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
-					int maxPow = Math.round(Mth.clamp(level + level * this.menu.quanta.get() / 100F, 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
-					list.add(new TranslatableComponent("Power Range: %s to %s", new TextComponent("" + minPow).withStyle(ChatFormatting.DARK_RED), new TextComponent("" + maxPow).withStyle(ChatFormatting.BLUE)));
-					list.add(new TranslatableComponent("Item Enchantability: %s", new TextComponent("" + enchanting.getItemEnchantability()).withStyle(ChatFormatting.GREEN)));
-					list.add(new TranslatableComponent("Enchanting Clues: %s", new TextComponent("" + (1 + this.menu.clues.get())).withStyle(ChatFormatting.DARK_AQUA)));
+					list.add(new TranslatableComponent("info.apotheosis.xp_cost", new TextComponent("" + cost).withStyle(ChatFormatting.GREEN), new TextComponent("" + EnchantmentUtils.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
+					float quanta = this.menu.quanta.get() / 100F;
+					float rectification = this.menu.rectification.get() / 100F;
+					int minPow = Math.round(Mth.clamp(level - level * (quanta - quanta * rectification), 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
+					int maxPow = Math.round(Mth.clamp(level + level * quanta, 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
+					list.add(new TranslatableComponent("info.apotheosis.power_range", new TextComponent("" + minPow).withStyle(ChatFormatting.DARK_RED), new TextComponent("" + maxPow).withStyle(ChatFormatting.BLUE)));
+					list.add(new TranslatableComponent("info.apotheosis.item_ench", new TextComponent("" + enchanting.getItemEnchantability()).withStyle(ChatFormatting.GREEN)));
+					list.add(new TranslatableComponent("info.apotheosis.num_clues", new TextComponent("" + (1 + this.menu.clues.get())).withStyle(ChatFormatting.DARK_AQUA)));
 					this.drawOnLeft(stack, list, this.getGuiTop() + 29);
 					break;
 				}

@@ -28,6 +28,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -77,7 +78,6 @@ import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
 import shadows.apotheosis.ench.objects.ApothShearsItem;
-import shadows.apotheosis.ench.objects.InfusableItem;
 import shadows.apotheosis.ench.objects.RectifierBlock;
 import shadows.apotheosis.ench.objects.RevealerBlock;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
@@ -87,6 +87,7 @@ import shadows.apotheosis.ench.replacements.DefenseEnchant;
 import shadows.apotheosis.ench.table.ApothEnchantBlock;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.ApothEnchantTile;
+import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.util.PlaceboUtil;
@@ -192,6 +193,11 @@ public class EnchModule {
 		e.getRegistry().register(new MenuType<>((IContainerFactory<EnchLibraryContainer>) (id, inv, buf) -> new EnchLibraryContainer(id, inv, buf.readBlockPos())).setRegistryName("library"));
 	}
 
+	@SubscribeEvent
+	public void recipeSerializers(Register<RecipeSerializer<?>> e) {
+		e.getRegistry().register(EnchantingRecipe.SERIALIZER.setRegistryName("enchanting"));
+	}
+
 	/**
 	 * This handles IMC events for the enchantment module. <br>
 	 * Currently only one type is supported. A mod may pass a single {@link EnchantmentInstance} indicating the hard capped max level for an enchantment. <br>
@@ -262,11 +268,11 @@ public class EnchModule {
 				new TomeItem(Items.FISHING_ROD, EnchantmentCategory.FISHING_ROD).setRegistryName("fishing_tome"),
 				new TomeItem(Items.BOW, EnchantmentCategory.BOW).setRegistryName("bow_tome"),
 				new ScrappingTomeItem(),
-				new InfusableItem(Apoth.Blocks.HELLSHELF, () -> new ItemStack(Apoth.Blocks.INFUSED_HELLSHELF), () -> new EnchantmentInstance(Apoth.Enchantments.HELL_INFUSION, 10), 45).setRegistryName(Apoth.Blocks.HELLSHELF.getRegistryName()),
+				new BlockItem(Apoth.Blocks.HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("hellshelf"),
 				new BlockItem(Apoth.Blocks.INFUSED_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_hellshelf"),
 				new BlockItem(Apoth.Blocks.BLAZING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("blazing_hellshelf"),
 				new BlockItem(Apoth.Blocks.GLOWING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("glowing_hellshelf"),
-				new InfusableItem(Apoth.Blocks.SEASHELF, () -> new ItemStack(Apoth.Blocks.INFUSED_SEASHELF), () -> new EnchantmentInstance(Apoth.Enchantments.SEA_INFUSION, 10), 45).setRegistryName(Apoth.Blocks.SEASHELF.getRegistryName()),
+				new BlockItem(Apoth.Blocks.SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("seashelf"),
 				new BlockItem(Apoth.Blocks.INFUSED_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_seashelf"),
 				new BlockItem(Apoth.Blocks.CRYSTAL_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("crystal_seashelf"),
 				new BlockItem(Apoth.Blocks.HEART_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("heart_seashelf"),
@@ -289,7 +295,7 @@ public class EnchModule {
 	public void enchants(Register<Enchantment> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new MinersFervorEnchant().setRegistryName(Apotheosis.MODID, "depth_miner"),
+				new MinersFervorEnchant().setRegistryName(Apotheosis.MODID, "miners_fervor"),
 				new StableFootingEnchant().setRegistryName(Apotheosis.MODID, "stable_footing"),
 				new ScavengerEnchant().setRegistryName(Apotheosis.MODID, "scavenger"),
 				new LifeMendingEnchant().setRegistryName(Apotheosis.MODID, "life_mending"),
@@ -313,8 +319,7 @@ public class EnchModule {
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlot.FEET).setRegistryName("minecraft", "feather_falling"),
 				new ObliterationEnchant().setRegistryName("obliteration"),
 				new CrescendoEnchant().setRegistryName("crescendo"),
-				new InertEnchantment().setRegistryName("hell_infusion"),
-				new InertEnchantment().setRegistryName("sea_infusion")
+				new InertEnchantment().setRegistryName("infusion")
 				);
 		//Formatter::on
 	}

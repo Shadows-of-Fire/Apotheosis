@@ -59,7 +59,7 @@ public class EnchModuleClient {
 			float arcana = EnchantingStatManager.getArcana(state, world, BlockPos.ZERO);
 			float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
 			int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
-			if (eterna != 0 || quanta != 0 || arcana != 0) {
+			if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
 				e.getToolTip().add(new TranslatableComponent("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
 			}
 			if (eterna != 0) {

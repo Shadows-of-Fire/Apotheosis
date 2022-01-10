@@ -15,4 +15,24 @@ public class InertEnchantment extends Enchantment {
 		return false;
 	}
 
+	@Override
+	public boolean isDiscoverable() {
+		return false;
+	}
+
+	@Override
+	public boolean isAllowedOnBooks() {
+		return false;
+	}
+
+	@Override
+	public boolean isTradeable() {
+		return false;
+	}
+
+	@Override
+	public boolean isTreasureOnly() {
+		return true;
+	}
+
 }
