@@ -170,8 +170,8 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	 * Arcana is the arcana provided (1F == 1%)
 	 */
 	public static class Stats {
-		final float maxEterna, eterna, quanta, arcana, rectification;
-		final int clues;
+		public final float maxEterna, eterna, quanta, arcana, rectification;
+		public final int clues;
 
 		public Stats(float maxEterna, float eterna, float quanta, float arcana, float rectification, int clues) {
 			this.maxEterna = maxEterna;

@@ -1,5 +1,7 @@
 package shadows.apotheosis.ench.compat;
 
+import java.util.stream.Collectors;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
@@ -8,7 +10,11 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -18,9 +24,15 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.ench.table.EnchantingRecipe;
 
 @JeiPlugin
 public class EnchJEIPlugin implements IModPlugin {
+
+	@Override
+	public ResourceLocation getPluginUid() {
+		return new ResourceLocation(Apotheosis.MODID, "enchantment");
+	}
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
@@ -54,11 +66,22 @@ public class EnchJEIPlugin implements IModPlugin {
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.enchanting"));
 		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.library"));
+		reg.addRecipes(Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == EnchantingRecipe.TYPE).collect(Collectors.toList()), EnchantingCategory.UID);
 	}
 
 	@Override
-	public ResourceLocation getPluginUid() {
-		return new ResourceLocation(Apotheosis.MODID, "enchantment");
+	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
+		reg.addRecipeCatalyst(new ItemStack(Blocks.ENCHANTING_TABLE), EnchantingCategory.UID);
+	}
+
+	@Override
+	public void registerCategories(IRecipeCategoryRegistration reg) {
+		reg.addRecipeCategories(new EnchantingCategory(reg.getJeiHelpers().getGuiHelper()));
+	}
+
+	@Override
+	public void registerRecipeTransferHandlers(IRecipeTransferRegistration reg) {
+		//reg.addRecipeTransferHandler(ApothEnchantContainer.class, EnchantingCategory.UID, 0, 1, 2, 9 * 4);
 	}
 
 }
