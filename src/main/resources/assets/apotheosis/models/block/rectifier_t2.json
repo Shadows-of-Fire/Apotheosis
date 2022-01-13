@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "apotheosis:blocks/rectifier_t2_top",
+        "side": "apotheosis:blocks/rectifier_t2"
+    }
+}

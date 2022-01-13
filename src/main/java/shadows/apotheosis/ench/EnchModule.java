@@ -62,6 +62,7 @@ import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
 import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.EndlessQuiverEnchant;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.InertEnchantment;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
@@ -78,8 +79,7 @@ import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
 import shadows.apotheosis.ench.objects.ApothShearsItem;
-import shadows.apotheosis.ench.objects.RectifierBlock;
-import shadows.apotheosis.ench.objects.RevealerBlock;
+import shadows.apotheosis.ench.objects.GlowyItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
@@ -137,11 +137,11 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(new ItemStack(Apoth.Items.BOW_TOME, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
 		Apotheosis.HELPER.addShapeless(new ItemStack(Apoth.Items.OTHER_TOME, 6), book, book, book, book, book, book, blaze);
 		Apotheosis.HELPER.addShaped(new ItemStack(Apoth.Items.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
-		Ingredient maxHellshelf = Ingredient.of(Apoth.Blocks.HELLSHELF);//new EnchantmentIngredient(Apoth.HELLSHELF, Apoth.HELL_INFUSION, Math.min(3, getEnchInfo(Apoth.HELL_INFUSION).getMaxLevel()));
+		Ingredient maxHellshelf = Ingredient.of(Apoth.Blocks.INFUSED_HELLSHELF);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
-		Ingredient maxSeashelf = Ingredient.of(Apoth.Blocks.SEASHELF);//new EnchantmentIngredient(Apoth.Blocks.SEASHELF, Apoth.SEA_INFUSION, Math.min(3, getEnchInfo(Apoth.SEA_INFUSION).getMaxLevel()));
+		Ingredient maxSeashelf = Ingredient.of(Apoth.Blocks.INFUSED_SEASHELF);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.ENDSHELF, 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
@@ -161,11 +161,11 @@ public class EnchModule {
 		LootSystem.defaultBlockTable(Apoth.Blocks.BEESHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.MELONSHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.LIBRARY);
-		LootSystem.defaultBlockTable(Apoth.Blocks.WEAK_RECTIFIER);
 		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER);
-		LootSystem.defaultBlockTable(Apoth.Blocks.STRONG_RECTIFIER);
-		LootSystem.defaultBlockTable(Apoth.Blocks.REVEALER);
-		LootSystem.defaultBlockTable(Apoth.Blocks.STRONG_REVEALER);
+		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T2);
+		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T3);
+		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF);
+		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF_T2);
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		e.enqueueWork(() -> {
@@ -239,11 +239,11 @@ public class EnchModule {
 				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
 				new Block(BlockBehaviour.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf"),
 				new EnchLibraryBlock().setRegistryName("library"),
-				new RectifierBlock(5, BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("weak_rectifier"),
-				new RectifierBlock(10, BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier"),
-				new RectifierBlock(20, BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("strong_rectifier"),
-				new RevealerBlock(1, BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("revealer"),
-				new RevealerBlock(2, BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("strong_revealer")
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t2"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t3"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("sightshelf"),
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("sightshelf_t2")
 				);
 		//Formatter::on
 		PlaceboUtil.registerOverride(new ApothEnchantBlock(), Apotheosis.MODID);
@@ -269,11 +269,11 @@ public class EnchModule {
 				new TomeItem(Items.BOW, EnchantmentCategory.BOW).setRegistryName("bow_tome"),
 				new ScrappingTomeItem(),
 				new BlockItem(Apoth.Blocks.HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("hellshelf"),
-				new BlockItem(Apoth.Blocks.INFUSED_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_hellshelf"),
+				new GlowyItem(Apoth.Blocks.INFUSED_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_hellshelf"),
 				new BlockItem(Apoth.Blocks.BLAZING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("blazing_hellshelf"),
 				new BlockItem(Apoth.Blocks.GLOWING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("glowing_hellshelf"),
 				new BlockItem(Apoth.Blocks.SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("seashelf"),
-				new BlockItem(Apoth.Blocks.INFUSED_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_seashelf"),
+				new GlowyItem(Apoth.Blocks.INFUSED_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_seashelf"),
 				new BlockItem(Apoth.Blocks.CRYSTAL_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("crystal_seashelf"),
 				new BlockItem(Apoth.Blocks.HEART_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("heart_seashelf"),
 				new BlockItem(Apoth.Blocks.ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("endshelf"),
@@ -281,12 +281,12 @@ public class EnchModule {
 				new BlockItem(Apoth.Blocks.PEARL_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
 				new BlockItem(Apoth.Blocks.BEESHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
 				new BlockItem(Apoth.Blocks.MELONSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf"),
-				new BlockItem(Apoth.Blocks.LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("enchantment_library"),
-				new BlockItem(Apoth.Blocks.WEAK_RECTIFIER, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("weak_rectifier"),
+				new BlockItem(Apoth.Blocks.LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("library"),
 				new BlockItem(Apoth.Blocks.RECTIFIER, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier"),
-				new BlockItem(Apoth.Blocks.STRONG_RECTIFIER, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("strong_rectifier"),
-				new BlockItem(Apoth.Blocks.REVEALER, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("revealer"),
-				new BlockItem(Apoth.Blocks.STRONG_REVEALER, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("strong_revealer")
+				new BlockItem(Apoth.Blocks.RECTIFIER_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t2"),
+				new BlockItem(Apoth.Blocks.RECTIFIER_T3, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t3"),
+				new BlockItem(Apoth.Blocks.SIGHTSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf"),
+				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf_t2")
 				);
 		//Formatter::on
 	}
@@ -319,7 +319,8 @@ public class EnchModule {
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlot.FEET).setRegistryName("minecraft", "feather_falling"),
 				new ObliterationEnchant().setRegistryName("obliteration"),
 				new CrescendoEnchant().setRegistryName("crescendo"),
-				new InertEnchantment().setRegistryName("infusion")
+				new InertEnchantment().setRegistryName("infusion"),
+				new EndlessQuiverEnchant().setRegistryName(Apotheosis.MODID, "endless_quiver")
 				);
 		//Formatter::on
 	}

@@ -13,6 +13,7 @@ import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
 import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.EndlessQuiverEnchant;
 import shadows.apotheosis.ench.enchantments.InertEnchantment;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
 import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
@@ -29,7 +30,6 @@ import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.garden.EnderLeadItem;
 import shadows.apotheosis.potion.LuckyFootItem;
 import shadows.apotheosis.potion.PotionCharmItem;
-import shadows.apotheosis.potion.TrueInfinityEnchant;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.SunderingEffect;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
@@ -64,11 +64,11 @@ public class Apoth {
 		public static final Block DRACONIC_ENDSHELF = null;
 		public static final Block BEESHELF = null;
 		public static final Block MELONSHELF = null;
-		public static final Block WEAK_RECTIFIER = null;
 		public static final Block RECTIFIER = null;
-		public static final Block STRONG_RECTIFIER = null;
-		public static final Block REVEALER = null;
-		public static final Block STRONG_REVEALER = null;
+		public static final Block RECTIFIER_T2 = null;
+		public static final Block RECTIFIER_T3 = null;
+		public static final Block SIGHTSHELF = null;
+		public static final Block SIGHTSHELF_T2 = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -99,7 +99,7 @@ public class Apoth {
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Enchantments {
-		public static final TrueInfinityEnchant TRUE_INFINITY = null;
+		public static final EndlessQuiverEnchant ENDLESS_QUIVER = null;
 		public static final CapturingEnchant CAPTURING = null;
 		public static final BerserkersFuryEnchant BERSERKERS_FURY = null;
 		public static final CrescendoEnchant CRESCENDO = null;

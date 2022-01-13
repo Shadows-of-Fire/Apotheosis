@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_door",
+  "pattern": [
+    "AHA",
+    "HSH",
+    "AHA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_block"
+    },
+	"H": {
+      "item": "minecraft:purpur_block"
+    },
+	"S": {
+      "item": "apotheosis:rectifier_t2"
+    }
+  },
+  "result": {
+    "item": "apotheosis:rectifier_t3",
+    "count": 1
+  }
+}

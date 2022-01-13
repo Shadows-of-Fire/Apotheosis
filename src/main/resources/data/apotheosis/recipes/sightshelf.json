@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_door",
+  "pattern": [
+    "GHG",
+    "PES",
+    "GHG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+	"H": {
+      "item": "apotheosis:infused_hellshelf"
+    },
+	"S": {
+      "item": "minecraft:spyglass"
+    },
+	"P": {
+	  "type": "forge:nbt",
+      "item": "minecraft:potion",
+	  "nbt": "{\"Potion\": \"minecraft:night_vision\"}"
+    },
+	"E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "apotheosis:sightshelf",
+    "count": 1
+  }
+}

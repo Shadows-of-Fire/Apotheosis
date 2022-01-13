@@ -81,7 +81,7 @@ public class EnchJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration reg) {
-		//reg.addRecipeTransferHandler(ApothEnchantContainer.class, EnchantingCategory.UID, 0, 1, 2, 9 * 4);
+		//reg.addRecipeTransferHandler(ApothEnchantContainer.class, EnchantingCategory.UID, 0, 1, 2, 9 * 4); Button doesn't fit in jei :(
 	}
 
 }

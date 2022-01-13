@@ -19,7 +19,6 @@ import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -102,11 +101,6 @@ public class PotionModule {
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
 		MinecraftForge.EVENT_BUS.addListener(this::xp);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
-	}
-
-	@SubscribeEvent
-	public void enchants(Register<Enchantment> e) {
-		e.getRegistry().register(new TrueInfinityEnchant().setRegistryName(Apotheosis.MODID, "true_infinity"));
 	}
 
 	@SubscribeEvent

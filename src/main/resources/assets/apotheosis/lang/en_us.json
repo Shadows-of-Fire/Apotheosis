@@ -584,7 +584,7 @@
     "enchantment.level.127": "CXXVII",
 	
 	
-	"block.apotheosis.enchantment_library": "Enchantment Library",
+	"block.apotheosis.library": "Enchantment Library",
 	"apotheosis.ench.library": "Enchantment Library",
 	"tooltip.enchlib.1": "Max Level Available: %s",
 	"tooltip.enchlib.2": "Points Stored: %s/32767",
@@ -604,6 +604,14 @@
 	"info.apotheosis.power_range": "Power Range: %s to %s",
 	"info.apotheosis.item_ench": "Item Enchantability: %s",
 	"info.apotheosis.num_clues": "Enchanting Clues: %s",
+	"block.apotheosis.sightshelf": "Shelf of Sight",
+	"block.apotheosis.sightshelf_t2": "Shelf of Masterful Sight",
+	"block.apotheosis.rectifier": "Shelf of Seabound Rectification",
+	"block.apotheosis.rectifier_t2": "Shelf of Hellbound Rectification",
+	"block.apotheosis.rectifier_t3": "Shelf of End-Fused Rectification",
+	"block.apotheosis.infused_seashelf": "Infused Seashelf",
+	"block.apotheosis.infused_hellshelf": "Infused Hellshelf",
+	
 
     "comment_id": "/Potion Module",
     "enchantment.apotheosis.true_infinity": "Endless Quiver",

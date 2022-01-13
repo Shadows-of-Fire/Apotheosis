@@ -1,17 +1,22 @@
-package shadows.apotheosis.potion;
+package shadows.apotheosis.ench.enchantments;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 
-public class TrueInfinityEnchant extends Enchantment {
+public class EndlessQuiverEnchant extends Enchantment {
 
-	protected TrueInfinityEnchant() {
+	public EndlessQuiverEnchant() {
 		super(Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
 	}
 
@@ -38,5 +43,9 @@ public class TrueInfinityEnchant extends Enchantment {
 	@Override
 	protected boolean checkCompatibility(Enchantment ench) {
 		return super.checkCompatibility(ench) && ench != Enchantments.INFINITY_ARROWS;
+	}
+
+	public boolean isTrulyInfinite(ItemStack stack, ItemStack bow, Player player) {
+		return EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.ENDLESS_QUIVER, bow) > 0 && stack.getItem() instanceof ArrowItem;
 	}
 }
