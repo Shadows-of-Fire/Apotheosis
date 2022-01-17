@@ -11,14 +11,22 @@ public class EnchantmentInfo {
 
 	protected final Enchantment ench;
 	protected final int maxLevel;
-	protected PowerFunc maxPower;
-	protected PowerFunc minPower;
+	protected final boolean treasure, discoverable, tradeable;
+	protected final PowerFunc maxPower, minPower;
 
-	public EnchantmentInfo(Enchantment ench, int maxLevel) {
+	public EnchantmentInfo(Enchantment ench, int maxLevel, PowerFunc max, PowerFunc min, boolean treasure, boolean discoverable, boolean tradeable) {
 		this.ench = ench;
 		this.maxLevel = maxLevel;
-		this.maxPower = defaultMax(ench);
-		this.minPower = defaultMin(ench);
+		this.maxPower = max;
+		this.minPower = min;
+		this.treasure = treasure;
+		this.discoverable = discoverable;
+		this.tradeable = tradeable;
+	}
+
+	@Deprecated
+	public EnchantmentInfo(Enchantment ench) {
+		this(ench, ench.getMaxLevel(), defaultMax(ench), defaultMin(ench), ench.isTreasureOnly(), ench.isDiscoverable(), ench.isTradeable());
 	}
 
 	public int getMaxLevel() {
@@ -33,21 +41,29 @@ public class EnchantmentInfo {
 		return this.maxPower.getPower(level);
 	}
 
-	public void setMaxPower(PowerFunc maxPower) {
-		this.maxPower = maxPower;
+	public boolean isDiscoverable() {
+		return this.discoverable;
 	}
 
-	public void setMinPower(PowerFunc minPower) {
-		this.minPower = minPower;
+	public boolean isTreasure() {
+		return this.treasure;
+	}
+
+	public boolean isTradeable() {
+		return this.tradeable;
 	}
 
 	public static EnchantmentInfo load(Enchantment ench, Configuration cfg) {
-		int max = cfg.getInt("Max Level", ench.getRegistryName().toString(), EnchModule.getDefaultMax(ench), 1, 127, "The max level of this enchantment - originally " + ench.getMaxLevel() + ".");
-		EnchantmentInfo info = new EnchantmentInfo(ench, max);
-		String maxF = cfg.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
-		if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
-		String minF = cfg.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
-		if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
+		String category = ench.getRegistryName().toString();
+		int max = cfg.getInt("Max Level", category, EnchModule.getDefaultMax(ench), 1, 127, "The max level of this enchantment - originally " + ench.getMaxLevel() + ".");
+		String maxF = cfg.getString("Max Power Function", category, "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
+		String minF = cfg.getString("Min Power Function", category, "", "A function to determine the min enchanting power.");
+		PowerFunc maxPower = maxF.isEmpty() ? defaultMax(ench) : new ExpressionPowerFunc(maxF);
+		PowerFunc minPower = minF.isEmpty() ? defaultMin(ench) : new ExpressionPowerFunc(minF);
+		boolean treasure = cfg.getBoolean("Treasure", category, ench.isTreasureOnly(), "If this enchantment is available via treasure (loot) sources. Ignored if not discoverable.");
+		boolean discoverable = cfg.getBoolean("Discoverable", category, ench.isDiscoverable(), "If this enchantment is obtainable via loot and enchanting.");
+		boolean tradeable = cfg.getBoolean("Tradeable", category, ench.isDiscoverable(), "If this enchantment is obtainable via villager trades.");
+		EnchantmentInfo info = new EnchantmentInfo(ench, max, maxPower, minPower, treasure, discoverable, tradeable);
 		String rarity = cfg.getString("Rarity", ench.getRegistryName().toString(), ench.getRarity().name(), "The rarity of this enchantment.  Valid values are COMMON, UNCOMMON, RARE, and VERY_RARE.");
 		try {
 			Enchantment.Rarity r = Enchantment.Rarity.valueOf(rarity);

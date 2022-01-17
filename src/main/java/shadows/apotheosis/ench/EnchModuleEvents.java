@@ -17,7 +17,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -96,7 +96,7 @@ public class EnchModuleEvents {
 	}
 
 	@SubscribeEvent
-	public void livingUpdate(LivingUpdateEvent e) {
+	public void healing(LivingHealEvent e) {
 		Apoth.Enchantments.LIFE_MENDING.lifeMend(e);
 	}
 

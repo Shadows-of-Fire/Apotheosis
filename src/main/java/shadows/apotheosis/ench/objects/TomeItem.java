@@ -83,4 +83,9 @@ public class TomeItem extends BookItem implements IEnchantableItem {
 		return stack;
 	}
 
+	@Override
+	public boolean forciblyAllowsTableEnchantment(ItemStack stack, Enchantment enchantment) {
+		return this.canApplyAtEnchantingTable(stack, enchantment);
+	}
+
 }

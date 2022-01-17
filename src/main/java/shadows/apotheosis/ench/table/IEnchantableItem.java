@@ -6,6 +6,7 @@ import java.util.Random;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 public interface IEnchantableItem {
@@ -47,6 +48,27 @@ public interface IEnchantableItem {
 	 */
 	default List<EnchantmentInstance> selectEnchantments(List<EnchantmentInstance> builtList, Random rand, ItemStack stack, int level, float quanta, float arcana, boolean treasure) {
 		return builtList;
+	}
+
+	/**
+	 * Normally, the {@link Enchantment} has final say in if it can be applied to an item.
+	 * This allows an item to opt-in to always being able to receive specific enchantments.
+	 * @param stack The item being enchanted.
+	 * @param enchantment The enchantment being queried against.
+	 * @return If the enchantment is allowed on this itemstack, overriding standard rules.
+	 */
+	default boolean forciblyAllowsTableEnchantment(ItemStack stack, Enchantment enchantment) {
+		return stack.is(Items.BOOK) && enchantment.isAllowedOnBooks();
+	}
+
+	/**
+	 * Normally, allowance of treasure enchantments is determined externally. This can change that.
+	 * @param stack The stack being enchanted.
+	 * @param wasTreasureAllowed If treasure was previously allowed.
+	 * @return If treasure enchantments are allowed.
+	 */
+	default boolean isTreasureAllowed(ItemStack stack, boolean wasTreasureAllowed) {
+		return wasTreasureAllowed;
 	}
 
 }

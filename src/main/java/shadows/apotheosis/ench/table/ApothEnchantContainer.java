@@ -179,7 +179,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 					this.random.setSeed(this.enchantmentSeed.get());
 
 					for (int slot = 0; slot < 3; ++slot) {
-						this.costs[slot] = RealEnchantmentHelper.calcSlotLevel(this.random, slot, eterna, toEnchant);
+						this.costs[slot] = RealEnchantmentHelper.getEnchantmentCost(this.random, slot, eterna, toEnchant);
 						this.enchantClue[slot] = -1;
 						this.levelClue[slot] = -1;
 
@@ -226,7 +226,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 
 	private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
 		this.random.setSeed(this.enchantmentSeed.get() + enchantSlot);
-		List<EnchantmentInstance> list = RealEnchantmentHelper.buildEnchantmentList(this.random, stack, level, this.quanta.get(), this.arcana.get(), this.rectification.get(), false);
+		List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.quanta.get(), this.arcana.get(), this.rectification.get(), false);
 		EnchantingRecipe match = this.access.evaluate((world, pos) -> {
 			List<EnchantingRecipe> recipes = world.getServer().getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
 			return recipes.stream().filter(r -> r.matches(stack, this.eterna.get(), this.quanta.get(), this.arcana.get())).findFirst();

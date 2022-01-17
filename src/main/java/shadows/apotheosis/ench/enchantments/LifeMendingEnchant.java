@@ -3,14 +3,14 @@ package shadows.apotheosis.ench.enchantments;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import shadows.apotheosis.ench.EnchModule;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 
 public class LifeMendingEnchant extends Enchantment {
 
@@ -50,18 +50,19 @@ public class LifeMendingEnchant extends Enchantment {
 
 	private static final EquipmentSlot[] SLOTS = EquipmentSlot.values();
 
-	public void lifeMend(LivingUpdateEvent e) {
-		if (e.getEntity().level.isClientSide || e.getEntity().tickCount % 20 != 0) return;
+	public void lifeMend(LivingHealEvent e) {
+		if (e.getEntity().level.isClientSide) return;
+		float amt = e.getAmount();
+		if (amt <= 0F) return;
 		for (EquipmentSlot slot : SLOTS) {
 			ItemStack stack = e.getEntityLiving().getItemBySlot(slot);
 			if (!stack.isEmpty() && stack.isDamaged()) {
 				int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
-				if (level > 0) {
-					int i = Math.min(level, stack.getDamageValue());
-					e.getEntityLiving().hurt(EnchModule.CORRUPTED, i * 0.7F);
-					stack.setDamageValue(stack.getDamageValue() - i);
-					return;
-				}
+				float cost = 0.5F / (1 << (level - 1));
+				int maxRestore = Math.min(Mth.floor(amt / cost), stack.getDamageValue());
+				e.setAmount(e.getAmount() - maxRestore * cost);
+				stack.setDamageValue(stack.getDamageValue() - maxRestore);
+				return;
 			}
 		}
 	}

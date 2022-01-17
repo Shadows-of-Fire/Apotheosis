@@ -53,7 +53,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
-import shadows.apotheosis.ench.EnchantmentInfo.ExpressionPowerFunc;
 import shadows.apotheosis.ench.EnchantmentInfo.PowerFunc;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
@@ -330,27 +329,20 @@ public class EnchModule {
 		e.getRegistry().register(new SoundEvent(new ResourceLocation(Apotheosis.MODID, "altar")).setRegistryName(Apotheosis.MODID, "altar_sound"));
 	}
 
+	@SuppressWarnings("deprecation")
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
-		EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
+		if (!Apotheosis.enableEnch) return ENCHANTMENT_INFO.computeIfAbsent(ench, EnchantmentInfo::new);
 
-		if (!Apotheosis.enableEnch) {
-			return ENCHANTMENT_INFO.computeIfAbsent(ench, e -> new EnchantmentInfo(e, e.getMaxLevel()));
-		}
+		EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 
 		if (enchInfoConfig == null) { //Legitimate occurances can now happen, such as when vanilla calls fillItemGroup
 			//LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
 			//Thread.dumpStack();
-			return new EnchantmentInfo(ench, ench.getMaxLevel());
+			return new EnchantmentInfo(ench);
 		}
 
 		if (info == null) {
-			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
-
-			info = new EnchantmentInfo(ench, max);
-			String maxF = enchInfoConfig.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
-			if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
-			String minF = enchInfoConfig.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
-			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
+			info = EnchantmentInfo.load(ench, enchInfoConfig);
 			ENCHANTMENT_INFO.put(ench, info);
 			if (enchInfoConfig.hasChanged()) enchInfoConfig.save();
 			LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", ench.getRegistryName(), ench.getRegistryName().getNamespace());
@@ -384,13 +376,7 @@ public class EnchModule {
 		ENCHANTMENT_INFO.clear();
 
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
-			int max = enchInfoConfig.getInt("Max Level", ench.getRegistryName().toString(), getDefaultMax(ench), 1, 127, "The max level of this enchantment - normally " + ench.getMaxLevel() + ".");
-			EnchantmentInfo info = new EnchantmentInfo(ench, max);
-			String maxF = enchInfoConfig.getString("Max Power Function", ench.getRegistryName().toString(), "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
-			if (!maxF.isEmpty()) info.setMaxPower(new ExpressionPowerFunc(maxF));
-			String minF = enchInfoConfig.getString("Min Power Function", ench.getRegistryName().toString(), "", "A function to determine the min enchanting power.");
-			if (!minF.isEmpty()) info.setMinPower(new ExpressionPowerFunc(minF));
-			ENCHANTMENT_INFO.put(ench, info);
+			ENCHANTMENT_INFO.put(ench, EnchantmentInfo.load(ench, enchInfoConfig));
 		}
 
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {

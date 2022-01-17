@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.table;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import shadows.apotheosis.ench.asm.EnchHooks;
+import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.ench.EnchModule;
+import shadows.apotheosis.ench.EnchantmentInfo;
 import shadows.apotheosis.ench.table.ApothEnchantContainer.Arcana;
 
 public class RealEnchantmentHelper {
@@ -33,7 +36,7 @@ public class RealEnchantmentHelper {
 	 * @param stack Itemstack to be enchanted.
 	 * @return The level that the table will use for this specific slot.
 	 */
-	public static int calcSlotLevel(Random rand, int num, float eterna, ItemStack stack) {
+	public static int getEnchantmentCost(Random rand, int num, float eterna, ItemStack stack) {
 		int ench = stack.getItemEnchantability();
 		if (ench <= 0) return 0;
 		int level = (int) (eterna * 2);
@@ -53,7 +56,7 @@ public class RealEnchantmentHelper {
 	 * @param treasure If treasure enchantments can show up.
 	 * @return A list of enchantments based on the seed, item, and eterna/quanta/arcana levels.
 	 */
-	public static List<EnchantmentInstance> buildEnchantmentList(Random rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure) {
+	public static List<EnchantmentInstance> selectEnchantment(Random rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure) {
 		List<EnchantmentInstance> chosenEnchants = Lists.newArrayList();
 		int enchantability = stack.getItemEnchantability();
 		int srcLevel = level;
@@ -61,7 +64,7 @@ public class RealEnchantmentHelper {
 			float quantaFactor = 1 + Mth.nextFloat(rand, -1F + rectification / 100F, 1F) * quanta / 100F; //The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
 			level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
 			Arcana arcanaVals = Arcana.getForThreshold(arcana);
-			List<EnchantmentInstance> allEnchants = getEnchantmentDatas(level, stack, treasure);
+			List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure);
 			Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
 			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment)); //Remove duplicates.
 			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcanaVals, d)).collect(Collectors.toList());
@@ -113,10 +116,29 @@ public class RealEnchantmentHelper {
 	}
 
 	/**
-	 * Gets all enchantments that can be applied to the given item at the respective power level.
+	 * @param power The current enchanting power.
+	 * @param stack The ItemStack being enchanted.
+	 * @param allowTreasure If treasure enchantments are allowed.
+	 * @return All possible enchantments that are eligible to be placed on this item at a specific power level.
 	 */
-	public static List<EnchantmentInstance> getEnchantmentDatas(int power, ItemStack stack, boolean treasure) {
-		return EnchHooks.getEnchantmentDatas(power, stack, treasure);
+	public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure) {
+		List<EnchantmentInstance> list = new ArrayList<>();
+		IEnchantableItem enchi = ((IEnchantableItem) stack.getItem());
+		allowTreasure = enchi.isTreasureAllowed(stack, allowTreasure);
+		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
+			EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
+			if (info.isTreasure() && !allowTreasure) continue;
+			if (!info.isDiscoverable()) continue;
+			if (enchantment.canApplyAtEnchantingTable(stack) || enchi.forciblyAllowsTableEnchantment(stack, enchantment)) {
+				for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
+					if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
+						list.add(new EnchantmentInstance(enchantment, level));
+						break;
+					}
+				}
+			}
+		}
+		return list;
 	}
 
 	private static class ArcanaEnchantmentData extends IntrusiveBase {
