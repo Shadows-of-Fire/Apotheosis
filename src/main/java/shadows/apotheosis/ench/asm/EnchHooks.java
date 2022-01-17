@@ -2,7 +2,6 @@ package shadows.apotheosis.ench.asm;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.enchantment.Enchantment;
 import shadows.apotheosis.Apotheosis;
@@ -41,7 +40,7 @@ public class EnchHooks {
 		if (!Apotheosis.enableEnch) return ench.isDiscoverable();
 		return EnchModule.getEnchInfo(ench).isDiscoverable();
 	}
-	
+
 	/**
 	 * Replaces the call to {@link Enchantment#isTradeable()} in various classes.
 	 * Injected by coremods/ench/tradeable_redirects.js
@@ -53,12 +52,12 @@ public class EnchHooks {
 
 	/**
 	 * Override for protection calculations.  Removes the hard cap of total level 20.  Effectiveness is reduced past 20.
-	 * Called from {@link CombatRules#getDamageAfterMagicAbsorb(float, float)}
-	 * Injected by apothasm/combat-rules.js
+	 * New max protection value is 65.
+	 * 80% Reduction at 20, 95% at 65.
 	 */
 	public static float getDamageAfterMagicAbsorb(float damage, float enchantModifiers) {
 		float clamped = Mth.clamp(enchantModifiers, 0, 20);
-		float remaining = Mth.clamp(enchantModifiers - 20, 0, 44);
+		float remaining = Mth.clamp(enchantModifiers - 20, 0, 45);
 		float factor = 1 - clamped / 25;
 		if (remaining > 0) {
 			factor -= 0.2F * remaining / 60;
