@@ -149,7 +149,16 @@
     "info.apotheosis.affix_tome2": "物品必须是%s品质或更低品质的，使用后物品将被消耗。",
 	"info.apotheosis.any_of_rarity": "可以放上任意一种%s品质的物品",
 	"gui.apotheosis.category.soulfire": "灵魂营火烧炼",
-	"info.apotheosis.one_per_affix": "每一个词缀物品经过烧炼后都会产出一枚珍宝碎片",
+	"info.apotheosis.one_per_affix": "每一个词缀物品经过烧炼后都会提炼出一枚珍宝碎片",
+    "info.apotheosis.retrieved_from": "提炼于： %s",
+
+	"type.apotheosis.sword": "剑",
+	"type.apotheosis.ranged": "远程武器",
+	"type.apotheosis.pickaxe": "镐",
+	"type.apotheosis.shovel": "锹",
+	"type.apotheosis.axe": "斧",
+	"type.apotheosis.armor": "盔甲",
+	"type.apotheosis.shield": "盾牌",
 
     "comment_id": "/进度",
 
@@ -208,7 +217,7 @@
 	"advancements.apotheosis.max_stats": "出类拔萃",
     "advancements.apotheosis.max_stats.desc": "在同时拥有三种满属性的附魔台上附魔一个物品",
 	"advancements.apotheosis.max_stable": "稳扎稳打",
-    "advancements.apotheosis.max_stable.desc": "在同时拥有满位阶和阿卡那属性，但量子化为0的附魔台上附魔一个物品",
+    "advancements.apotheosis.max_stable.desc": "在同时拥有满位阶和阿卡那属性，但量子化为 0 的附魔台上附魔一个物品",
     
     "advancements.apotheosis.affix": "惊人词缀",
     "advancements.apotheosis.affix.desc": "找到一个带有神化词缀的物品",
@@ -386,6 +395,7 @@
     "item.apotheosis.fishing_rod_book": "渔夫宝典",
     "item.apotheosis.bow_book": "弓宝典",
     "item.apotheosis.scrap_tome": "分解宝典",
+    "info.apotheosis.tome_error": "物品出错 - 对着空气右击可以使其转化为附魔书。",
     "info.apotheosis.null_book": "只接受其他类型的附魔。",
     "info.apotheosis.armor_head_book": "只接受头盔类型的附魔。",
     "info.apotheosis.armor_chest_book": "只接受胸甲类型的附魔。",
@@ -653,7 +663,7 @@
 	"info.apotheosis.mining_arrow.iron": "射出的箭会像铁镐一样挖掘方块",
 	"info.apotheosis.mining_arrow.diamond": "射出的箭会像钻石镐一样挖掘方块",
 	"effect.apotheosis.bleeding": "流血",
-    "death.attack.apotheosis.bleeding.player": "%s 失血过多而死",
+    "death.attack.apotheosis.bleeding": "%s 失血过多而死",
     	
 	"comment_id": "/杂项",
     "generic.reachDistance": "触及距离",
