@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -49,7 +50,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 	}
 
 	public boolean matches(ItemStack input, float eterna, float quanta, float arcana) {
-		if ((maxRequirements.eterna > -1 && eterna > maxRequirements.eterna) && (maxRequirements.quanta > -1 && quanta > maxRequirements.quanta) && (maxRequirements.arcana > -1 && arcana > maxRequirements.arcana)) return false;
+		if ((maxRequirements.eterna > -1 && eterna > maxRequirements.eterna) || (maxRequirements.quanta > -1 && quanta > maxRequirements.quanta) || (maxRequirements.arcana > -1 && arcana > maxRequirements.arcana)) return false;
 		return this.input.test(input) && eterna >= requirements.eterna && quanta >= requirements.quanta && arcana >= requirements.arcana;
 	}
 
@@ -110,6 +111,9 @@ public class EnchantingRecipe implements Recipe<Container> {
 			Ingredient input = Ingredient.fromJson(obj.get("input"));
 			Stats stats = GSON.fromJson(obj.get("requirements"), Stats.class);
 			Stats maxStats = obj.has("max_requirements") ? GSON.fromJson(obj.get("max_requirements"), Stats.class) : NO_MAX;
+			if (maxStats.eterna != -1 && stats.eterna > maxStats.eterna) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max eterna bounds (min > max).");
+			if (maxStats.quanta != -1 && stats.quanta > maxStats.quanta) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max quanta bounds (min > max).");
+			if (maxStats.arcana != -1 && stats.arcana > maxStats.arcana) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max arcana bounds (min > max).");
 			return new EnchantingRecipe(id, output, input, stats, maxStats);
 		}
 
@@ -137,11 +141,15 @@ public class EnchantingRecipe implements Recipe<Container> {
 
 	@Nullable
 	public static EnchantingRecipe findMatch(Level level, ItemStack input, float eterna, float quanta, float arcana) {
-		List<EnchantingRecipe> recipes = level.getServer().getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
+		List<EnchantingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
 		recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna, r2.requirements.eterna));
 		for (EnchantingRecipe r : recipes)
 			if (r.matches(input, eterna, quanta, arcana)) return r;
 		return null;
+	}
+
+	public static EnchantingRecipe findItemMatch(Level level, ItemStack toEnchant) {
+		return level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE).stream().filter(r -> r.getInput().test(toEnchant)).findFirst().orElse(null);
 	}
 
 }

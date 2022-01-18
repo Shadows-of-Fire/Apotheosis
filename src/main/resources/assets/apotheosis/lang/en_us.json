@@ -369,6 +369,8 @@
 	"info.apotheosis.percent_at_least": "Requires at least: %s%%",
 	"info.apotheosis.eterna_at_most": "But no more than: %s/%s",
 	"info.apotheosis.percent_at_most": "But no more than: %s%%",
+	"info.apotheosis.eterna_exact": "Requires exactly: %s/%s",
+	"info.apotheosis.percent_exact": "Requires exactly: %s%%",
 	"apotheosis.recipes.enchanting": "Infusion Enchanting",
 
     "enchantment.apotheosis.infusion": "Infusion",

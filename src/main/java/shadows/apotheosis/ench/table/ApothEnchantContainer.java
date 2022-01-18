@@ -172,7 +172,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 			if (inventoryIn == this.enchantSlots) {
 				ItemStack toEnchant = inventoryIn.getItem(0);
 				this.gatherStats();
-				EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, this.eterna.get(), this.quanta.get(), this.arcana.get());
+				EnchantingRecipe match = EnchantingRecipe.findItemMatch(world, toEnchant);
 				if (toEnchant.getCount() == 1 && (match != null || (toEnchant.getItem().isEnchantable(toEnchant) && isEnchantableEnough(toEnchant)))) {
 					float eterna = this.eterna.get();
 					if (eterna < 1.5) eterna = 1.5F; // Allow for enchanting with no bookshelves as vanilla does
