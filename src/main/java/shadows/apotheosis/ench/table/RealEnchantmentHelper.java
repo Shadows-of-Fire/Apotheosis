@@ -141,10 +141,10 @@ public class RealEnchantmentHelper {
 		return list;
 	}
 
-	private static class ArcanaEnchantmentData extends IntrusiveBase {
+	public static class ArcanaEnchantmentData extends IntrusiveBase {
 		EnchantmentInstance data;
 
-		private ArcanaEnchantmentData(Arcana arcana, EnchantmentInstance data) {
+		public ArcanaEnchantmentData(Arcana arcana, EnchantmentInstance data) {
 			super(arcana.getRarities()[data.enchantment.getRarity().ordinal()]);
 			this.data = data;
 		}

@@ -1,10 +1,12 @@
 package shadows.apotheosis.ench.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -17,6 +19,7 @@ import com.mojang.math.Vector3f;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.model.BookModel;
@@ -104,20 +107,24 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 	}
 
 	@Override
-	public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+	public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 
 		for (int k = 0; k < 3; ++k) {
-			double d0 = p_mouseClicked_1_ - (i + 60);
-			double d1 = p_mouseClicked_3_ - (j + 14 + 19 * k);
+			double d0 = pMouseX - (i + 60);
+			double d1 = pMouseY - (j + 14 + 19 * k);
 			if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.menu.clickMenuButton(this.minecraft.player, k)) {
 				this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, k);
 				return true;
 			}
 		}
 
-		return super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
+		if (this.menu.getSlot(0).hasItem() && this.isHovering(145, -15, 27, 15, pMouseX, pMouseY) && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
+			Minecraft.getInstance().pushGuiLayer(new EnchantingInfoScreen(this));
+		}
+
+		return super.mouseClicked(pMouseX, pMouseY, pButton);
 	}
 
 	/**
@@ -238,6 +245,11 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 		if (this.arcana > 0) {
 			this.blit(stack, xCenter + 59, yCenter + 95, 0, 207, (int) (this.arcana / 100 * 110), 5);
 		}
+
+		if (this.menu.getSlot(0).hasItem() && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
+			int u = this.isHovering(145, -15, 27, 15, mouseX, mouseY) ? 15 : 0;
+			this.blit(stack, xCenter + 145, yCenter - 15, this.imageWidth, u, 27, 15);
+		}
 	}
 
 	@Override
@@ -304,9 +316,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 				list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.eterna.desc3", f(this.menu.eterna.get()), this.menu.eterna.getMax())).withStyle(ChatFormatting.GRAY));
 			}
 			this.renderComponentTooltip(stack, list, mouseX, mouseY);
-		}
-
-		if (this.isHovering(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
+		} else if (this.isHovering(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
 			List<Component> list = Lists.newArrayList();
 			list.add(new TextComponent(quanta() + I18n.get("gui.apotheosis.enchant.quanta.desc")));
 			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc2")));
@@ -326,10 +336,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 				list.add(new TranslatableComponent("info.apotheosis.quanta_growth", f(quanta)).withStyle(ChatFormatting.BLUE));
 				this.drawOnLeft(stack, list, this.getGuiTop() + 29);
 			}
-
-		}
-
-		if (this.isHovering(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
+		} else if (this.isHovering(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
 			List<Component> list = Lists.newArrayList();
 			stack.pushPose();
 			stack.translate(0, 0, 4);
@@ -362,6 +369,10 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 				list.add(new TranslatableComponent("info.apotheosis.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
 				this.drawOnLeft(stack, list, this.getGuiTop() + 29 + offset);
 			}
+		} else if (this.menu.getSlot(0).hasItem() && this.isHovering(145, -15, 27, 15, mouseX, mouseY) && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
+			List<Component> list = Lists.newArrayList();
+			list.add(new TranslatableComponent("info.apotheosis.all_available").withStyle(ChatFormatting.BLUE));
+			this.renderComponentTooltip(stack, list, mouseX, mouseY);
 		}
 
 		ItemStack enchanting = this.menu.getSlot(0).getItem();

@@ -375,8 +375,8 @@
     "enchantment.apotheosis.mounted_strike": "Mounted Strike",
     "enchantment.apotheosis.mounted_strike.desc": "Deals extra damage when on a horse.",
 
-    "enchantment.apotheosis.depth_miner": "Miner's Fervor",
-    "enchantment.apotheosis.depth_miner.desc": "You will mine very fast, but never instantly.",
+    "enchantment.apotheosis.miners_fervor": "Miner's Fervor",
+    "enchantment.apotheosis.miners_fervor.desc": "You will mine very fast, but never instantly.",
 
     "enchantment.apotheosis.stable_footing": "Stable Footing",
     "enchantment.apotheosis.stable_footing.desc": "Negates the mining speed penalty for flying.",
@@ -612,7 +612,17 @@
 	"block.apotheosis.infused_seashelf": "Infused Seashelf",
 	"block.apotheosis.infused_hellshelf": "Infused Hellshelf",
 	
-
+	"info.apotheosis.slider_power": "Power: %s",
+	"info.apotheosis.enchinfo_level": "Level: %s",
+	"info.apotheosis.enchinfo_rarity": "Rarity: %s",
+	"info.apotheosis.enchinfo_chance": "Chance: %s",
+	"info.apotheosis.enchinfo_slot": "Enchantment Slot %s",
+	"info.apotheosis.enchinfo_minpow": "Min Power: %s",
+	"info.apotheosis.enchinfo_maxpow": "Max Power: %s",
+	"info.apotheosis.enchinfo_title": "Available Enchantments",
+	"info.apotheosis.weights": "Weights",
+	"info.apotheosis.all_available": "View all available enchantments",
+	
     "comment_id": "/Potion Module",
     "enchantment.apotheosis.true_infinity": "Endless Quiver",
     "enchantment.apotheosis.true_infinity.desc": "Makes all arrows infinite.",

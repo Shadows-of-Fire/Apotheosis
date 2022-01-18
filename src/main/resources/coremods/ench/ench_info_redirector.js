@@ -47,10 +47,10 @@ function search(name, replacements){
 }
 
 function initializeCoreMod() {
-    return {
-        'ench_info_redirects': {
-            'target': {
-                'type': 'CLASS',
+	return {
+		'ench_info_redirects': {
+			'target': {
+				'type': 'CLASS',
 				'names': function(listofclasses) {
 					return [
 						//'vazkii.quark.content.tools.module.AncientTomesModule',
@@ -62,22 +62,22 @@ function initializeCoreMod() {
 						'net.minecraft.world.inventory.AnvilMenu'
 					]
 				}
-            },
-            'transformer': function(classNode) {
+			},
+			'transformer': function(classNode) {
 				var replacements = [
 					{'name': ASMAPI.mapMethod("m_6586_"), 'factory': maxLevelNode, 'count': 0, 'logName': 'Enchantment#getMaxLevel()'},
 					{'name': ASMAPI.mapMethod("m_6592_"), 'factory': discoverableNode, 'count': 0, 'logName': 'Enchantment#isDiscoverable()'},
 					{'name': ASMAPI.mapMethod("m_6591_"), 'factory': treasureNode, 'count': 0, 'logName': 'Enchantment#isTreasureOnly()'},
 					{'name': ASMAPI.mapMethod("m_6594_"), 'factory': tradeableNode, 'count': 0, 'logName': 'Enchantment#isTradeable()'}
 				];
-                var methods = classNode.methods;
+				var methods = classNode.methods;
 				var count = 0;
 				for(var i = 0; i < methods.size(); i++){
 					var instr = methods.get(i).instructions;
 					for(var ix = 0; ix < instr.size(); ix++){
 						var node = instr.get(ix);
 						var temp = search(node.name, replacements);
-                        if (node.getOpcode() == Opcodes.INVOKEVIRTUAL && temp != null) {
+						if (node.getOpcode() == Opcodes.INVOKEVIRTUAL && temp != null) {
 							instr.set(node, temp.factory());
 							temp.count++;
 						} else if (node.getOpcode() == Opcodes.INVOKEDYNAMIC){
@@ -99,8 +99,8 @@ function initializeCoreMod() {
 				for(var i = 0; i < replacements.length; i++){
 					if(replacements[i].count > 0) ASMAPI.log('INFO', 'Replaced ' + replacements[i].count + ' calls to ' + replacements[i].logName +  ' in ' + classNode.name);
 				}
-                return classNode;
-            }
-        }
-    }
+				return classNode;
+			}
+		}
+	}
 }

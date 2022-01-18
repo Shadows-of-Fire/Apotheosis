@@ -58,7 +58,7 @@ public class LifeMendingEnchant extends Enchantment {
 			ItemStack stack = e.getEntityLiving().getItemBySlot(slot);
 			if (!stack.isEmpty() && stack.isDamaged()) {
 				int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
-				float cost = 0.5F / (1 << (level - 1));
+				float cost = 1.0F / (1 << (level - 1));
 				int maxRestore = Math.min(Mth.floor(amt / cost), stack.getDamageValue());
 				e.setAmount(e.getAmount() - maxRestore * cost);
 				stack.setDamageValue(stack.getDamageValue() - maxRestore);
