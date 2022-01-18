@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
@@ -133,8 +134,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 			if (!list.isEmpty()) {
 				player.onEnchantmentPerformed(toEnchant, cost);
 				if (list.get(0).enchantment == Apoth.Enchantments.INFUSION) {
-					List<EnchantingRecipe> recipes = world.getServer().getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
-					EnchantingRecipe match = recipes.stream().filter(r -> r.matches(toEnchant, this.eterna.get(), this.quanta.get(), this.arcana.get())).findFirst().orElse(null);
+					EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, this.eterna.get(), this.quanta.get(), this.arcana.get());
 					if (match != null) this.enchantSlots.setItem(0, match.getResultItem().copy());
 					else return;
 				} else this.enchantSlots.setItem(0, ((IEnchantableItem) toEnchant.getItem()).onEnchantment(toEnchant, list));
@@ -172,7 +172,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 			if (inventoryIn == this.enchantSlots) {
 				ItemStack toEnchant = inventoryIn.getItem(0);
 				this.gatherStats();
-				EnchantingRecipe match = world.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE).stream().filter(r -> r.matches(toEnchant, this.eterna.get(), this.quanta.get(), this.arcana.get())).findFirst().orElse(null);
+				EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, this.eterna.get(), this.quanta.get(), this.arcana.get());
 				if (toEnchant.getCount() == 1 && (match != null || (toEnchant.getItem().isEnchantable(toEnchant) && isEnchantableEnough(toEnchant)))) {
 					float eterna = this.eterna.get();
 					if (eterna < 1.5) eterna = 1.5F; // Allow for enchanting with no bookshelves as vanilla does
@@ -227,13 +227,10 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 	private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
 		this.random.setSeed(this.enchantmentSeed.get() + enchantSlot);
 		List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.quanta.get(), this.arcana.get(), this.rectification.get(), false);
-		EnchantingRecipe match = this.access.evaluate((world, pos) -> {
-			List<EnchantingRecipe> recipes = world.getServer().getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
-			return recipes.stream().filter(r -> r.matches(stack, this.eterna.get(), this.quanta.get(), this.arcana.get())).findFirst();
-		}).get().orElse(null);
+		EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.eterna.get(), this.quanta.get(), this.arcana.get()))).get().orElse(null);
 		if (enchantSlot == 2 && match != null) {
 			list.clear();
-			list.add(new EnchantmentInstance(Apoth.Enchantments.INFUSION, match.displayLevel));
+			list.add(new EnchantmentInstance(Apoth.Enchantments.INFUSION, 1));
 		}
 		return list;
 	}

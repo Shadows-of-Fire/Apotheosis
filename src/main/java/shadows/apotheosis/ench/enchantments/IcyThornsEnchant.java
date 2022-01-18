@@ -21,12 +21,12 @@ public class IcyThornsEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 40 + (level - 1) * 35;
+		return 35 + (level - 1) * 20;
 	}
 
 	@Override
 	public int getMaxCost(int level) {
-		return 90 + level * 15;
+		return 200;
 	}
 
 	@Override

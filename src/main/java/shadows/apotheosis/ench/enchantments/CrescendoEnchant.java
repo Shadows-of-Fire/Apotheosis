@@ -20,22 +20,22 @@ import shadows.apotheosis.mixin.CrossbowItemMixin;
 public class CrescendoEnchant extends Enchantment {
 
 	public CrescendoEnchant() {
-		super(Rarity.RARE, EnchantmentCategory.CROSSBOW, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+		super(Rarity.VERY_RARE, EnchantmentCategory.CROSSBOW, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
 	}
 
 	@Override
 	public int getMaxLevel() {
-		return 3;
+		return 5;
 	}
 
 	@Override
 	public int getMinCost(int level) {
-		return 45 + (level - 1) * 20;
+		return 50 + (level - 1) * 30; // 50/80/110/140/170
 	}
 
 	@Override
 	public int getMaxCost(int level) {
-		return this.getMinCost(level) + 50;
+		return 200;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class CrescendoEnchant extends Enchantment {
 	/**
 	 * Early hook for the Crescendo of Bolts enchantment.
 	 * This is required to retain the ammunition's nbt data, as it is thrown away before {@link EnchHooks#onArrowFired}.
-	 * Injected by apothasm/crossbow.js
+	 * Injected by {@link CrossbowItemMixin}
 	 */
 	public static void preArrowFired(ItemStack crossbow) {
 		int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CRESCENDO, crossbow);
@@ -81,7 +81,7 @@ public class CrescendoEnchant extends Enchantment {
 	/**
 	 * Arrow fired hook for the Crescendo of Bolts enchantment.
 	 * This is required to mark generated arrows as creative-only so arrows are not duplicated.
-	 * Injected by apothasm/crossbow-arrows.js
+	 * Injected by {@link CrossbowItemMixin}
 	 */
 	public static void markGeneratedArrows(Projectile arrow, ItemStack crossbow) {
 		if (crossbow.getTag().getInt("shots") > 0 && arrow instanceof AbstractArrow arr) {

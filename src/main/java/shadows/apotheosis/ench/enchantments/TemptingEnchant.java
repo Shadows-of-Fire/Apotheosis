@@ -22,7 +22,7 @@ public class TemptingEnchant extends Enchantment {
 
 	@Override
 	public int getMaxCost(int enchantmentLevel) {
-		return 80;
+		return 200;
 	}
 
 	/**

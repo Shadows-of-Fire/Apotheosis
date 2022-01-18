@@ -20,7 +20,7 @@ public class LifeMendingEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 60 + level * 20;
+		return 65 + level * 35;
 	}
 
 	@Override

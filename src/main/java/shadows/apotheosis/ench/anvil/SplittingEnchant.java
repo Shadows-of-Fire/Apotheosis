@@ -12,7 +12,7 @@ public class SplittingEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int enchantmentLevel) {
-		return 15;
+		return 20;
 	}
 
 	@Override

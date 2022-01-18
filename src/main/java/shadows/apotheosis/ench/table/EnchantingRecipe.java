@@ -1,5 +1,9 @@
 package shadows.apotheosis.ench.table;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -21,12 +25,12 @@ public class EnchantingRecipe implements Recipe<Container> {
 
 	public static final RecipeType<EnchantingRecipe> TYPE = RecipeType.register("apotheosis:enchanting");
 	public static final Serializer SERIALIZER = new Serializer();
+	public static final Stats NO_MAX = new Stats(-1, -1, -1, -1, -1, -1);
 
 	protected final ResourceLocation id;
 	protected final ItemStack output;
 	protected final Ingredient input;
-	protected final Stats requirements;
-	protected final int displayLevel;
+	protected final Stats requirements, maxRequirements;
 
 	/**
 	 * Defines an Enchanting Recipe.
@@ -36,15 +40,16 @@ public class EnchantingRecipe implements Recipe<Container> {
 	 * @param requirements The Level, Quanta, and Arcana requirements respectively.
 	 * @param displayLevel The level to show on the fake "Infusion" Enchantment that will show up.
 	 */
-	public EnchantingRecipe(ResourceLocation id, ItemStack output, Ingredient input, Stats requirements, int displayLevel) {
+	public EnchantingRecipe(ResourceLocation id, ItemStack output, Ingredient input, Stats requirements, Stats maxRequirements) {
 		this.id = id;
 		this.output = output;
 		this.input = input;
 		this.requirements = requirements;
-		this.displayLevel = displayLevel;
+		this.maxRequirements = maxRequirements;
 	}
 
 	public boolean matches(ItemStack input, float eterna, float quanta, float arcana) {
+		if ((maxRequirements.eterna > -1 && eterna > maxRequirements.eterna) && (maxRequirements.quanta > -1 && quanta > maxRequirements.quanta) && (maxRequirements.arcana > -1 && arcana > maxRequirements.arcana)) return false;
 		return this.input.test(input) && eterna >= requirements.eterna && quanta >= requirements.quanta && arcana >= requirements.arcana;
 	}
 
@@ -52,12 +57,12 @@ public class EnchantingRecipe implements Recipe<Container> {
 		return this.requirements;
 	}
 
-	public Ingredient getInput() {
-		return this.input;
+	public Stats getMaxRequirements() {
+		return this.maxRequirements;
 	}
 
-	public int getDisplayLevel() {
-		return this.displayLevel;
+	public Ingredient getInput() {
+		return this.input;
 	}
 
 	@Override
@@ -104,8 +109,8 @@ public class EnchantingRecipe implements Recipe<Container> {
 			ItemStack output = CraftingHelper.getItemStack(obj.get("result").getAsJsonObject(), true, true);
 			Ingredient input = Ingredient.fromJson(obj.get("input"));
 			Stats stats = GSON.fromJson(obj.get("requirements"), Stats.class);
-			int displayLevel = obj.get("display_level").getAsInt();
-			return new EnchantingRecipe(id, output, input, stats, displayLevel);
+			Stats maxStats = obj.has("max_requirements") ? GSON.fromJson(obj.get("max_requirements"), Stats.class) : NO_MAX;
+			return new EnchantingRecipe(id, output, input, stats, maxStats);
 		}
 
 		@Override
@@ -113,8 +118,8 @@ public class EnchantingRecipe implements Recipe<Container> {
 			ItemStack output = buf.readItem();
 			Ingredient input = Ingredient.fromNetwork(buf);
 			Stats stats = Stats.read(buf);
-			int displayLevel = buf.readByte();
-			return new EnchantingRecipe(id, output, input, stats, displayLevel);
+			Stats maxStats = buf.readBoolean() ? Stats.read(buf) : NO_MAX;
+			return new EnchantingRecipe(id, output, input, stats, maxStats);
 		}
 
 		@Override
@@ -122,9 +127,21 @@ public class EnchantingRecipe implements Recipe<Container> {
 			buf.writeItem(recipe.output);
 			recipe.input.toNetwork(buf);
 			recipe.requirements.write(buf);
-			buf.writeByte(recipe.displayLevel);
+			buf.writeBoolean(recipe.maxRequirements != NO_MAX);
+			if (recipe.maxRequirements != NO_MAX) {
+				recipe.maxRequirements.write(buf);
+			}
 		}
 
+	}
+
+	@Nullable
+	public static EnchantingRecipe findMatch(Level level, ItemStack input, float eterna, float quanta, float arcana) {
+		List<EnchantingRecipe> recipes = level.getServer().getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
+		recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna, r2.requirements.eterna));
+		for (EnchantingRecipe r : recipes)
+			if (r.matches(input, eterna, quanta, arcana)) return r;
+		return null;
 	}
 
 }

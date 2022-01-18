@@ -16,7 +16,7 @@ public class EnchHooks {
 
 	/**
 	 * Replaces the call to {@link Enchantment#getMaxLevel()} in various classes.
-	 * Injected by coremods/ench/max_level_redirects.js
+	 * Injected by coremods/ench/ench_info_redirector.js
 	 */
 	public static int getMaxLevel(Enchantment ench) {
 		if (!Apotheosis.enableEnch) return ench.getMaxLevel();
@@ -25,7 +25,7 @@ public class EnchHooks {
 
 	/**
 	 * Replaces the call to {@link Enchantment#isTreasureOnly()} in various classes.
-	 * Injected by coremods/ench/treasure_redirects.js
+	 * Injected by coremods/ench/ench_info_redirector.js
 	 */
 	public static boolean isTreasureOnly(Enchantment ench) {
 		if (!Apotheosis.enableEnch) return ench.isTreasureOnly();
@@ -34,7 +34,7 @@ public class EnchHooks {
 
 	/**
 	 * Replaces the call to {@link Enchantment#isDiscoverable()} in various classes.
-	 * Injected by coremods/ench/discoverable_redirects.js
+	 * Injected by coremods/ench/ench_info_redirector.js
 	 */
 	public static boolean isDiscoverable(Enchantment ench) {
 		if (!Apotheosis.enableEnch) return ench.isDiscoverable();
@@ -43,7 +43,7 @@ public class EnchHooks {
 
 	/**
 	 * Replaces the call to {@link Enchantment#isTradeable()} in various classes.
-	 * Injected by coremods/ench/tradeable_redirects.js
+	 * Injected by coremods/ench/ench_info_redirector.js
 	 */
 	public static boolean isTradeable(Enchantment ench) {
 		if (!Apotheosis.enableEnch) return ench.isTradeable();
@@ -68,7 +68,7 @@ public class EnchHooks {
 	/**
 	 * Calculates the delay for catching a fish.  Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
 	 * Called at the end of {@link FishingBobberEntity#catchingFish(BlockPos)}
-	 * Injected by coremods/fishing_hook.js
+	 * Injected by coremods/ench/fishing_hook.js
 	 */
 	public static int getTicksCaughtDelay(FishingHook bobber) {
 		int lowBound = Math.max(1, 100 - bobber.lureSpeed * 10);

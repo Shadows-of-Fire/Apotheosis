@@ -22,12 +22,12 @@ public class BerserkersFuryEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 40 + level * 30;
+		return 50 + level * 40;
 	}
 
 	@Override
 	public int getMaxCost(int level) {
-		return this.getMinCost(level) + 40;
+		return 200;
 	}
 
 	@Override

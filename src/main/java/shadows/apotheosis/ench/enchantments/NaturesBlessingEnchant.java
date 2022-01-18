@@ -28,19 +28,19 @@ public class NaturesBlessingEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 30 + level * 10;
+		return 25 + level * 10;
 	}
 
 	@Override
 	public int getMaxCost(int level) {
-		return this.getMinCost(level) + 30;
+		return 200;
 	}
 
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
 		ItemStack s = e.getItemStack();
 		int nbLevel = EnchantmentHelper.getItemEnchantmentLevel(this, s);
 		if (!e.getEntity().isShiftKeyDown() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getPlayer())) {
-			s.hurtAndBreak(6 - nbLevel, e.getPlayer(), ent -> ent.broadcastBreakEvent(e.getHand()));
+			s.hurtAndBreak(Math.max(1, 6 - nbLevel), e.getPlayer(), ent -> ent.broadcastBreakEvent(e.getHand()));
 			e.setCanceled(true);
 			e.setCancellationResult(InteractionResult.SUCCESS);
 		}

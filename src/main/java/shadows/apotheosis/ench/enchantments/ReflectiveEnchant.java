@@ -18,12 +18,12 @@ public class ReflectiveEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int enchantmentLevel) {
-		return 1 + enchantmentLevel * 18;
+		return enchantmentLevel * 18;
 	}
 
 	@Override
 	public int getMaxCost(int enchantmentLevel) {
-		return this.getMinCost(enchantmentLevel) + 40;
+		return 200;
 	}
 
 	@Override

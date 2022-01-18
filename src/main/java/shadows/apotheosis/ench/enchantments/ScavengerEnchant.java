@@ -25,12 +25,12 @@ public class ScavengerEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 50 + level * level * 12;
+		return 55 + level * level * 12; // 57 / 103 / 163
 	}
 
 	@Override
 	public int getMaxCost(int level) {
-		return this.getMinCost(level) + 50;
+		return 200;
 	}
 
 	@Override

@@ -20,12 +20,7 @@ public class StableFootingEnchant extends Enchantment {
 
 	@Override
 	public int getMaxCost(int level) {
-		return 100;
-	}
-
-	@Override
-	public int getMaxLevel() {
-		return 1;
+		return 200;
 	}
 
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {

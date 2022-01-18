@@ -20,7 +20,7 @@ public class MinersFervorEnchant extends DiggingEnchantment {
 
 	@Override
 	public int getMinCost(int enchantmentLevel) {
-		return 30 + (enchantmentLevel - 1) * 30;
+		return 45 + (enchantmentLevel - 1) * 30;
 	}
 
 	@Override

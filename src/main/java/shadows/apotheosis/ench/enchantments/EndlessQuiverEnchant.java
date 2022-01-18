@@ -12,7 +12,6 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.Apotheosis;
 
 public class EndlessQuiverEnchant extends Enchantment {
 
@@ -27,7 +26,7 @@ public class EndlessQuiverEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int enchantmentLevel) {
-		return Apotheosis.enableEnch ? 65 : 31;
+		return 60;
 	}
 
 	@Override
