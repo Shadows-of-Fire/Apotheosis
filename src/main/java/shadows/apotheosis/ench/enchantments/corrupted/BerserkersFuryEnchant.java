@@ -1,4 +1,4 @@
-package shadows.apotheosis.ench.enchantments;
+package shadows.apotheosis.ench.enchantments.corrupted;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -17,7 +17,7 @@ import shadows.apotheosis.ench.EnchModule;
 public class BerserkersFuryEnchant extends Enchantment {
 
 	public BerserkersFuryEnchant() {
-		super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
+		super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
 	}
 
 	@Override

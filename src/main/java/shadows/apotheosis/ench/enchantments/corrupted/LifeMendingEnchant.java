@@ -1,4 +1,4 @@
-package shadows.apotheosis.ench.enchantments;
+package shadows.apotheosis.ench.enchantments.corrupted;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -20,7 +20,7 @@ public class LifeMendingEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 65 + level * 35;
+		return 65 + (level - 1) * 35;
 	}
 
 	@Override

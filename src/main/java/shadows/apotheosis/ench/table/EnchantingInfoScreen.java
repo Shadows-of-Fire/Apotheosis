@@ -2,8 +2,10 @@ package shadows.apotheosis.ench.table;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -49,6 +51,7 @@ public class EnchantingInfoScreen extends Screen {
 	protected boolean scrolling;
 	protected int startIndex;
 	List<ArcanaEnchantmentData> enchantments = Collections.emptyList();
+	Map<Enchantment, List<Enchantment>> exclusions = new HashMap<>();
 
 	public EnchantingInfoScreen(ApothEnchantScreen parent) {
 		super(new TranslatableComponent("info.apotheosis.enchinfo_title"));
@@ -154,6 +157,15 @@ public class EnchantingInfoScreen extends Screen {
 			if (I18n.exists(hover.data.enchantment.getDescriptionId() + ".desc")) {
 				list.add(new TranslatableComponent(hover.data.enchantment.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_AQUA));
 			}
+			List<Enchantment> excls = this.exclusions.get(hover.data.enchantment);
+			if (!excls.isEmpty()) {
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < excls.size(); i++) {
+					sb.append(I18n.get(excls.get(i).getDescriptionId()));
+					if (i != excls.size() - 1) sb.append(", ");
+				}
+				list.add(new TranslatableComponent("Exclusive With: %s", sb.toString()).withStyle(ChatFormatting.RED));
+			}
 			this.renderComponentTooltip(pPoseStack, list, pMouseX, pMouseY);
 		}
 
@@ -241,6 +253,14 @@ public class EnchantingInfoScreen extends Screen {
 		if (this.startIndex + 11 >= enchantments.size()) {
 			this.startIndex = 0;
 			this.scrollOffs = 0;
+		}
+		this.exclusions.clear();
+		for (ArcanaEnchantmentData d : this.enchantments) {
+			List<Enchantment> excls = new ArrayList<>();
+			for (ArcanaEnchantmentData d2 : this.enchantments) {
+				if (d != d2 && !d.data.enchantment.isCompatibleWith(d2.data.enchantment)) excls.add(d2.data.enchantment);
+			}
+			this.exclusions.put(d.data.enchantment, excls);
 		}
 	}
 

@@ -11,18 +11,21 @@ import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
-import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
-import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
-import shadows.apotheosis.ench.enchantments.EndlessQuiverEnchant;
+import shadows.apotheosis.ench.enchantments.ChromaticEnchant;
 import shadows.apotheosis.ench.enchantments.InertEnchantment;
-import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
-import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
-import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
 import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
-import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
+import shadows.apotheosis.ench.enchantments.corrupted.BerserkersFuryEnchant;
+import shadows.apotheosis.ench.enchantments.corrupted.LifeMendingEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.EndlessQuiverEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.GrowthSerumEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.KnowledgeEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.ScavengerEnchant;
+import shadows.apotheosis.ench.enchantments.twisted.ExploitationEnchant;
+import shadows.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
@@ -114,6 +117,9 @@ public class Apoth {
 		public static final ObliterationEnchant OBLITERATION = null;
 		public static final SplittingEnchant SPLITTING = null;
 		public static final InertEnchantment INFUSION = null;
+		public static final ChromaticEnchant CHROMATIC = null;
+		public static final ExploitationEnchant EXPLOITATION = null;
+		public static final GrowthSerumEnchant GROWTH_SERUM = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)

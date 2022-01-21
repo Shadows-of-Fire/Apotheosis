@@ -1,4 +1,4 @@
-package shadows.apotheosis.ench.enchantments;
+package shadows.apotheosis.ench.enchantments.twisted;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

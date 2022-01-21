@@ -15,7 +15,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
 
 @Mixin(CrossbowItem.class)
 public class CrossbowItemMixin {

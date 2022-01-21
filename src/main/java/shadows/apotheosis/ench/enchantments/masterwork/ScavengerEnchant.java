@@ -1,4 +1,4 @@
-package shadows.apotheosis.ench.enchantments;
+package shadows.apotheosis.ench.enchantments.masterwork;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

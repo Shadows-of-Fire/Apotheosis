@@ -25,6 +25,7 @@ import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -59,21 +60,24 @@ import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
 import shadows.apotheosis.ench.anvil.ApothAnvilItem;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
-import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
-import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
-import shadows.apotheosis.ench.enchantments.EndlessQuiverEnchant;
+import shadows.apotheosis.ench.enchantments.ChromaticEnchant;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.InertEnchantment;
-import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
-import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
-import shadows.apotheosis.ench.enchantments.MinersFervorEnchant;
 import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import shadows.apotheosis.ench.enchantments.ReboundingEnchant;
 import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
-import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
+import shadows.apotheosis.ench.enchantments.corrupted.BerserkersFuryEnchant;
+import shadows.apotheosis.ench.enchantments.corrupted.LifeMendingEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.EndlessQuiverEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.GrowthSerumEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.KnowledgeEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.ScavengerEnchant;
+import shadows.apotheosis.ench.enchantments.twisted.ExploitationEnchant;
+import shadows.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
@@ -114,6 +118,7 @@ public class EnchModule {
 	public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", i -> i instanceof HoeItem);
 	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create("SHIELD", i -> i instanceof ShieldItem);
 	public static final EnchantmentCategory ANVIL = EnchantmentCategory.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
+	public static final EnchantmentCategory SHEARS = EnchantmentCategory.create("SHEARS", i -> i instanceof ShearsItem);
 	static Configuration enchInfoConfig;
 
 	@SubscribeEvent
@@ -294,19 +299,19 @@ public class EnchModule {
 	public void enchants(Register<Enchantment> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new MinersFervorEnchant().setRegistryName(Apotheosis.MODID, "miners_fervor"),
-				new StableFootingEnchant().setRegistryName(Apotheosis.MODID, "stable_footing"),
-				new ScavengerEnchant().setRegistryName(Apotheosis.MODID, "scavenger"),
-				new LifeMendingEnchant().setRegistryName(Apotheosis.MODID, "life_mending"),
-				new IcyThornsEnchant().setRegistryName(Apotheosis.MODID, "icy_thorns"),
-				new TemptingEnchant().setRegistryName(Apotheosis.MODID, "tempting"),
-				new ShieldBashEnchant().setRegistryName(Apotheosis.MODID, "shield_bash"),
-				new ReflectiveEnchant().setRegistryName(Apotheosis.MODID, "reflective"),
-				new BerserkersFuryEnchant().setRegistryName(Apotheosis.MODID, "berserkers_fury"),
-				new KnowledgeEnchant().setRegistryName(Apotheosis.MODID, "knowledge"),
-				new SplittingEnchant().setRegistryName(Apotheosis.MODID, "splitting"),
-				new NaturesBlessingEnchant().setRegistryName(Apotheosis.MODID, "natures_blessing"),
-				new ReboundingEnchant().setRegistryName(Apotheosis.MODID, "rebounding"),
+				new MinersFervorEnchant().setRegistryName("miners_fervor"),
+				new StableFootingEnchant().setRegistryName("stable_footing"),
+				new ScavengerEnchant().setRegistryName("scavenger"),
+				new LifeMendingEnchant().setRegistryName("life_mending"),
+				new IcyThornsEnchant().setRegistryName("icy_thorns"),
+				new TemptingEnchant().setRegistryName("tempting"),
+				new ShieldBashEnchant().setRegistryName("shield_bash"),
+				new ReflectiveEnchant().setRegistryName("reflective"),
+				new BerserkersFuryEnchant().setRegistryName("berserkers_fury"),
+				new KnowledgeEnchant().setRegistryName("knowledge"),
+				new SplittingEnchant().setRegistryName("splitting"),
+				new NaturesBlessingEnchant().setRegistryName("natures_blessing"),
+				new ReboundingEnchant().setRegistryName("rebounding"),
 				new BaneEnchant(Rarity.UNCOMMON, MobType.ARTHROPOD, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
 				new BaneEnchant(Rarity.UNCOMMON, MobType.UNDEAD, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "smite"),
 				new BaneEnchant(Rarity.COMMON, MobType.UNDEFINED, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "sharpness"),
@@ -319,7 +324,10 @@ public class EnchModule {
 				new ObliterationEnchant().setRegistryName("obliteration"),
 				new CrescendoEnchant().setRegistryName("crescendo"),
 				new InertEnchantment().setRegistryName("infusion"),
-				new EndlessQuiverEnchant().setRegistryName(Apotheosis.MODID, "endless_quiver")
+				new EndlessQuiverEnchant().setRegistryName("endless_quiver"),
+				new ChromaticEnchant().setRegistryName("chromatic"),
+				new ExploitationEnchant().setRegistryName("exploitation"),
+				new GrowthSerumEnchant().setRegistryName("growth_serum")
 				);
 		//Formatter::on
 	}

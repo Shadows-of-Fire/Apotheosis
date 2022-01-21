@@ -17,7 +17,7 @@ public class ApothShearsItem extends ShearsItem {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment ench) {
-		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.BLOCK_EFFICIENCY;
+		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.BLOCK_EFFICIENCY | ench == Enchantments.BLOCK_FORTUNE;
 	}
 
 	@Override
