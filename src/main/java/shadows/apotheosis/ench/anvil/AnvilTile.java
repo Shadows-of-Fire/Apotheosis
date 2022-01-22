@@ -29,7 +29,6 @@ public class AnvilTile extends BlockEntity {
 		ItemStack stack = new ItemStack(Items.ANVIL);
 		EnchantmentHelper.setEnchantments(this.enchantments, stack);
 		tag.put("enchantments", stack.getEnchantmentTags());
-		super.save(tag);
 	}
 
 	@Override
