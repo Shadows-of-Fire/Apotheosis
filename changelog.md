@@ -1,3 +1,21 @@
+## 5.1.0
+* The Enchantment Module lands on 1.18.1!
+* I'll try my best to list everything, but there's a LOT of changes, so expect some misses!
+* Obliteration and Splitting now have a max level of I, and have a 100% success rate.
+* Many more control flags have been added to the enchantment info config.
+* Life Mending has been changed to use receied healing, rather than your current health bar.
+* The Chainsaw enchant has been added (Axe Enchantment to cut down entire trees).
+* The Earth's Boon enchant has been added (Pickaxe Enchantment to find ores in stone).
+* There are new Shear Enchantments (Chromatic Aberration, Growth Serum, and Worker Exploitation).
+* Fortune can now be applied to shears.
+* Tridents can now receive Sharpness, Looting, and Piercing.
+* The Spearfishing enchant has been added (Drops fish on thrown trident kill, 3.5%/level).
+* Hell Infusion, Sea Infusion, and Occult Aversion have been removed.
+* Added the Infusion Enchanting crafting system, which is how Infused Hell/Seashelves will be created.
+* Added two new Enchanting Stats - Rectification and Clues
+* Item Enchantability now no longer impacts power, but provides a direct Arcana boost.
+* Endless Quiver has been moved from the Potion Module to the Enchanting Module.
+
 ## 5.0.0
 * Initial 1.18.1 port.  Does not contain the Enchantment or Deadly Modules.
 * The Garden, Potion, Spawner, and Village modules are all present in a direct-port fashion.

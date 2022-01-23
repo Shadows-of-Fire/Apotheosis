@@ -393,7 +393,7 @@
     "enchantment.apotheosis.scavenger.desc": "Mobs killed may roll their loot tables twice.",
 
     "enchantment.apotheosis.life_mending": "Life-Mending",
-    "enchantment.apotheosis.life_mending.desc": "Converts health into durability.",
+    "enchantment.apotheosis.life_mending.desc": "Consumes received healing to repair items.",
 
     "enchantment.apotheosis.icy_thorns": "Icy Thorns",
     "enchantment.apotheosis.icy_thorns.desc": "Slows attackers.",
