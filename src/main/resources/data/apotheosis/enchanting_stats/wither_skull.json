@@ -1,0 +1,11 @@
+{
+	"block": "minecraft:wither_skeleton_skull",
+	"stats": {
+		"maxEterna": 0,
+		"eterna": 0,
+		"quanta": 10,
+		"arcana": 0,
+		"rectification": 0,
+		"clues": 0
+	}
+}
