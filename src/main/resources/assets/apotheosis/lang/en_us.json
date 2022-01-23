@@ -470,6 +470,15 @@
 	"enchantment.apotheosis.growth_serum": "Growth Serum",
     "enchantment.apotheosis.growth_serum.desc": "Sheep have a 50% chance to instantly regrow their wool.",
 
+	"enchantment.apotheosis.earths_boon": "Boon of the Earth",
+    "enchantment.apotheosis.earths_boon.desc": "Ores may be found when mining stone.",
+
+	"enchantment.apotheosis.chainsaw": "Chainsaw",
+    "enchantment.apotheosis.chainsaw.desc": "Trees will be annihilated.",
+
+	"enchantment.apotheosis.spearfishing": "Spearfishing",
+    "enchantment.apotheosis.spearfishing.desc": "Kills with a thrown trident may catch a fish.",
+
 
     "block.apotheosis.prismatic_altar": "Altar of the Sea",
 

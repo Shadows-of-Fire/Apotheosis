@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,10 +20,12 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apoth;
@@ -92,12 +95,25 @@ public class EnchModuleEvents {
 		if (attacker instanceof Player p) {
 			Apoth.Enchantments.SCAVENGER.drops(p, e);
 			Apoth.Enchantments.KNOWLEDGE.drops(p, e);
+			Apoth.Enchantments.SPEARFISHING.addFishes(e);
 		}
 	}
 
 	@SubscribeEvent
 	public void healing(LivingHealEvent e) {
 		Apoth.Enchantments.LIFE_MENDING.lifeMend(e);
+	}
+
+	@SubscribeEvent
+	public void looting(LootingLevelEvent e) {
+		if (e.getDamageSource().getDirectEntity() instanceof ThrownTrident trident) {
+			ItemStack triStack = ((TridentGetter) trident).getTridentItem();
+			e.setLootingLevel(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, triStack));
+		}
+	}
+
+	public static interface TridentGetter {
+		ItemStack getTridentItem();
 	}
 
 	/**
@@ -107,6 +123,15 @@ public class EnchModuleEvents {
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		Apoth.Enchantments.STABLE_FOOTING.breakSpeed(e);
 		Apoth.Enchantments.MINERS_FERVOR.breakSpeed(e);
+	}
+
+	/**
+	 * Event handler for the Boon of the Earth enchant.
+	 */
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void breakSpeed(BlockEvent.BreakEvent e) {
+		Apoth.Enchantments.EARTHS_BOON.provideBenefits(e);
+		Apoth.Enchantments.CHAINSAW.chainsaw(e);
 	}
 
 	/**

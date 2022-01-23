@@ -1,5 +1,7 @@
 package shadows.apotheosis;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
@@ -7,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
@@ -15,11 +18,14 @@ import shadows.apotheosis.ench.enchantments.ChromaticEnchant;
 import shadows.apotheosis.ench.enchantments.InertEnchantment;
 import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
+import shadows.apotheosis.ench.enchantments.SpearfishingEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
 import shadows.apotheosis.ench.enchantments.corrupted.BerserkersFuryEnchant;
 import shadows.apotheosis.ench.enchantments.corrupted.LifeMendingEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.ChainsawEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.EarthsBoonEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.EndlessQuiverEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.GrowthSerumEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.KnowledgeEnchant;
@@ -120,6 +126,9 @@ public class Apoth {
 		public static final ChromaticEnchant CHROMATIC = null;
 		public static final ExploitationEnchant EXPLOITATION = null;
 		public static final GrowthSerumEnchant GROWTH_SERUM = null;
+		public static final EarthsBoonEnchant EARTHS_BOON = null;
+		public static final ChainsawEnchant CHAINSAW = null;
+		public static final SpearfishingEnchant SPEARFISHING = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -173,6 +182,11 @@ public class Apoth {
 	public static final class Tiles {
 		public static final BlockEntityType<EnchLibraryTile> LIBRARY = null;
 		public static final BlockEntityType<AnvilTile> ANVIL = null;
+	}
+
+	public static final class Tags {
+		public static final IOptionalNamedTag<Item> BOON_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "boon_drops"), null);
+		public static final IOptionalNamedTag<Item> SPEARFISHING_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"), null);
 	}
 
 	/*	public static final HellshelfBlock HELLSHELF = null;

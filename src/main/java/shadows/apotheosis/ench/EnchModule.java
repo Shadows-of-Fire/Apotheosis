@@ -44,6 +44,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -67,11 +68,14 @@ import shadows.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import shadows.apotheosis.ench.enchantments.ReboundingEnchant;
 import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
+import shadows.apotheosis.ench.enchantments.SpearfishingEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
 import shadows.apotheosis.ench.enchantments.corrupted.BerserkersFuryEnchant;
 import shadows.apotheosis.ench.enchantments.corrupted.LifeMendingEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.ChainsawEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.masterwork.EarthsBoonEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.EndlessQuiverEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.GrowthSerumEnchant;
 import shadows.apotheosis.ench.enchantments.masterwork.KnowledgeEnchant;
@@ -81,7 +85,6 @@ import shadows.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
-import shadows.apotheosis.ench.objects.ApothShearsItem;
 import shadows.apotheosis.ench.objects.GlowyItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.TomeItem;
@@ -119,6 +122,9 @@ public class EnchModule {
 	public static final EnchantmentCategory SHIELD = EnchantmentCategory.create("SHIELD", i -> i instanceof ShieldItem);
 	public static final EnchantmentCategory ANVIL = EnchantmentCategory.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
 	public static final EnchantmentCategory SHEARS = EnchantmentCategory.create("SHEARS", i -> i instanceof ShearsItem);
+	public static final EnchantmentCategory PICKAXE = EnchantmentCategory.create("PICKAXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.PICKAXE_DIG));
+	public static final EnchantmentCategory AXE = EnchantmentCategory.create("AXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.AXE_DIG));
+
 	static Configuration enchInfoConfig;
 
 	@SubscribeEvent
@@ -257,7 +263,6 @@ public class EnchModule {
 	public void items(Register<Item> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new ApothShearsItem(),
 				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
 				new ApothAnvilItem(Blocks.ANVIL),
 				new ApothAnvilItem(Blocks.CHIPPED_ANVIL),
@@ -327,7 +332,10 @@ public class EnchModule {
 				new EndlessQuiverEnchant().setRegistryName("endless_quiver"),
 				new ChromaticEnchant().setRegistryName("chromatic"),
 				new ExploitationEnchant().setRegistryName("exploitation"),
-				new GrowthSerumEnchant().setRegistryName("growth_serum")
+				new GrowthSerumEnchant().setRegistryName("growth_serum"),
+				new EarthsBoonEnchant().setRegistryName("earths_boon"),
+				new ChainsawEnchant().setRegistryName("chainsaw"),
+				new SpearfishingEnchant().setRegistryName("spearfishing")
 				);
 		//Formatter::on
 	}
