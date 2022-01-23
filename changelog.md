@@ -15,6 +15,7 @@
 * Added two new Enchanting Stats - Rectification and Clues
 * Item Enchantability now no longer impacts power, but provides a direct Arcana boost.
 * Endless Quiver has been moved from the Potion Module to the Enchanting Module.
+* Added the "Available Enchantments" screen, which can be used while enchanting to see everything you might roll.
 
 ## 5.0.0
 * Initial 1.18.1 port.  Does not contain the Enchantment or Deadly Modules.
