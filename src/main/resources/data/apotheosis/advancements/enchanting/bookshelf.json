@@ -21,7 +21,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "minecraft:bookshelf"
+					"items": ["minecraft:bookshelf"]
 				}]
 			}
 		}

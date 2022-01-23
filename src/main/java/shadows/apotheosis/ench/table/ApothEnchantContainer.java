@@ -130,11 +130,12 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 
 		this.access.execute((world, pos) -> {
 			ItemStack enchanted = toEnchant;
+			float eterna = this.eterna.get(), quanta = this.quanta.get(), arcana = this.arcana.get(), rectification = this.rectification.get();
 			List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 			if (!list.isEmpty()) {
 				player.onEnchantmentPerformed(toEnchant, cost);
 				if (list.get(0).enchantment == Apoth.Enchantments.INFUSION) {
-					EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, this.eterna.get(), this.quanta.get(), this.arcana.get());
+					EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
 					if (match != null) this.enchantSlots.setItem(0, match.getResultItem().copy());
 					else return;
 				} else this.enchantSlots.setItem(0, ((IEnchantableItem) toEnchant.getItem()).onEnchantment(toEnchant, list));
@@ -148,7 +149,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 
 				player.awardStat(Stats.ENCHANT_ITEM);
 				if (player instanceof ServerPlayer) {
-					((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayer) player, enchanted, level, this.eterna.get(), this.quanta.get(), this.arcana.get());
+					((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
 				}
 
 				this.enchantSlots.setChanged();

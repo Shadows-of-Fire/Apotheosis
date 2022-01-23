@@ -20,16 +20,16 @@
 		"enchanted_item": {
 			"trigger": "minecraft:enchanted_item",
 			"conditions": {
-				"arcana": {
-					"min": 10,
-					"max": 1000
-				},
 				"eterna": {
 					"min": 50,
 					"max": 1000
 				},
+				"arcana": {
+					"min": 100,
+					"max": 1000
+				},
 				"quanta": {
-					"min": 10,
+					"min": 100,
 					"max": 1000
 				}
 			}

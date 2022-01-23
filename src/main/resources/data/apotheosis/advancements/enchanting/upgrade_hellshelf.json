@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:enchanting/hellshelf",
+	"parent": "apotheosis:enchanting/infuse_hellshelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
@@ -21,7 +21,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:blazing_hellshelf"
+					"items": ["apotheosis:blazing_hellshelf"]
 				}]
 			}
 		},
@@ -29,7 +29,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:glowing_hellshelf"
+					"items": ["apotheosis:glowing_hellshelf"]
 				}]
 			}
 		}

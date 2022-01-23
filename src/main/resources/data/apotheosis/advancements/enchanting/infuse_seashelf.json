@@ -1,18 +1,18 @@
 {
-	"parent": "apotheosis:enchanting/arcana50",
+	"parent": "apotheosis:enchanting/seashelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:experience_bottle"
+			"item": "apotheosis:infused_seashelf"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.arcana100"
+			"translate": "advancements.apotheosis.infuse_seashelf"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.arcana100.desc"
+			"translate": "advancements.apotheosis.infuse_seashelf.desc"
 		},
 		"frame": "task"
 	},
@@ -20,9 +20,8 @@
 		"enchanted_item": {
 			"trigger": "minecraft:enchanted_item",
 			"conditions": {
-				"arcana": {
-					"min": 100,
-					"max": 1000
+				"item": {
+					"item": "apotheosis:seashelf"
 				}
 			}
 		}

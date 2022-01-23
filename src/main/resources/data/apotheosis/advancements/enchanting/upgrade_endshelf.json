@@ -21,7 +21,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:draconic_endshelf"
+					"items": ["apotheosis:draconic_endshelf"]
 				}]
 			}
 		},
@@ -29,7 +29,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:pearl_endshelf"
+					"items": ["apotheosis:pearl_endshelf"]
 				}]
 			}
 		}

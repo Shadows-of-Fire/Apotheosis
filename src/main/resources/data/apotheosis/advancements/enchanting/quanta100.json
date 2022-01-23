@@ -21,7 +21,7 @@
 			"trigger": "minecraft:enchanted_item",
 			"conditions": {
 				"quanta": {
-					"min": 10,
+					"min": 100,
 					"max": 1000
 				}
 			}

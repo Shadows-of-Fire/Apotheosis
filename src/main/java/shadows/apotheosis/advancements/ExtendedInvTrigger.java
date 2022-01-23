@@ -26,13 +26,13 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
 	@Override
 	public InventoryChangeTrigger.TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite andPred, DeserializationContext conditionsParser) {
-		JsonObject jsonobject = GsonHelper.getAsJsonObject(json, "slots", new JsonObject());
-		MinMaxBounds.Ints minmaxbounds$intbound = MinMaxBounds.Ints.fromJson(jsonobject.get("occupied"));
-		MinMaxBounds.Ints minmaxbounds$intbound1 = MinMaxBounds.Ints.fromJson(jsonobject.get("full"));
-		MinMaxBounds.Ints minmaxbounds$intbound2 = MinMaxBounds.Ints.fromJson(jsonobject.get("empty"));
-		ItemPredicate[] aitempredicate = ItemPredicate.fromJsonArray(json.get("items"));
-		if (json.has("apoth")) aitempredicate = this.deserializeApoth(json.getAsJsonObject("apoth"));
-		return new InventoryChangeTrigger.TriggerInstance(andPred, minmaxbounds$intbound, minmaxbounds$intbound1, minmaxbounds$intbound2, aitempredicate);
+		JsonObject slots = GsonHelper.getAsJsonObject(json, "slots", new JsonObject());
+		MinMaxBounds.Ints occupied = MinMaxBounds.Ints.fromJson(slots.get("occupied"));
+		MinMaxBounds.Ints full = MinMaxBounds.Ints.fromJson(slots.get("full"));
+		MinMaxBounds.Ints empty = MinMaxBounds.Ints.fromJson(slots.get("empty"));
+		ItemPredicate[] predicate = ItemPredicate.fromJsonArray(json.get("items"));
+		if (json.has("apoth")) predicate = this.deserializeApoth(json.getAsJsonObject("apoth"));
+		return new InventoryChangeTrigger.TriggerInstance(andPred, occupied, full, empty, predicate);
 	}
 
 	ItemPredicate[] deserializeApoth(JsonObject json) {

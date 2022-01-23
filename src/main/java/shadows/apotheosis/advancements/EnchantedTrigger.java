@@ -22,39 +22,41 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 		Doubles eterna = Doubles.fromJson(json.get("eterna"));
 		Doubles quanta = Doubles.fromJson(json.get("quanta"));
 		Doubles arcana = Doubles.fromJson(json.get("arcana"));
-		Instance inst = new Instance(item, levels, eterna, quanta, arcana);
+		Doubles rectification = Doubles.fromJson(json.get("rectification"));
+		Instance inst = new Instance(item, levels, eterna, quanta, arcana, rectification);
 		return inst;
 	}
 
-	public void trigger(ServerPlayer player, ItemStack stack, int level, float eterna, float quanta, float arcana) {
+	public void trigger(ServerPlayer player, ItemStack stack, int level, float eterna, float quanta, float arcana, float rectification) {
 		this.trigger(player, inst -> {
-			if (inst instanceof Instance) return ((Instance) inst).test(stack, level, eterna, quanta, arcana);
+			if (inst instanceof Instance) return ((Instance) inst).test(stack, level, eterna, quanta, arcana, rectification);
 			return inst.matches(stack, level);
 		});
 	}
 
 	public static class Instance extends EnchantedItemTrigger.TriggerInstance {
 
-		protected final Doubles eterna, quanta, arcana;
+		protected final Doubles eterna, quanta, arcana, rectification;
 
-		public Instance(ItemPredicate item, Ints levels, Doubles eterna, Doubles quanta, Doubles arcana) {
+		public Instance(ItemPredicate item, Ints levels, Doubles eterna, Doubles quanta, Doubles arcana, Doubles rectification) {
 			super(EntityPredicate.Composite.ANY, item, levels);
 			this.eterna = eterna;
 			this.quanta = quanta;
 			this.arcana = arcana;
+			this.rectification = rectification;
 		}
 
 		public static EnchantedItemTrigger.TriggerInstance any() {
 			return new EnchantedItemTrigger.TriggerInstance(EntityPredicate.Composite.ANY, ItemPredicate.ANY, MinMaxBounds.Ints.ANY);
 		}
 
-		public boolean test(ItemStack stack, int level, float eterna, float quanta, float arcana) {
-			return super.matches(stack, level) && this.eterna.matches(eterna) && this.quanta.matches(quanta) && this.arcana.matches(arcana);
+		public boolean test(ItemStack stack, int level, float eterna, float quanta, float arcana, float rectification) {
+			return super.matches(stack, level) && this.eterna.matches(eterna) && this.quanta.matches(quanta) && this.arcana.matches(arcana) && this.rectification.matches(rectification);
 		}
 
 		@Override
 		public boolean matches(ItemStack stack, int level) {
-			return this.test(stack, level, 0, 0, 0);
+			return this.test(stack, level, 0, 0, 0, 0);
 		}
 
 		@Override
@@ -63,6 +65,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
 			jsonobject.add("eterna", this.eterna.serializeToJson());
 			jsonobject.add("quanta", this.quanta.serializeToJson());
 			jsonobject.add("arcana", this.arcana.serializeToJson());
+			jsonobject.add("rectification", this.rectification.serializeToJson());
 			return jsonobject;
 		}
 	}

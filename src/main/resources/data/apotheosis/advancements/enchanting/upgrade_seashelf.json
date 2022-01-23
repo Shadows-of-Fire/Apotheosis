@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:enchanting/seashelf",
+	"parent": "apotheosis:enchanting/infuse_seashelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
@@ -21,7 +21,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:heart_seashelf"
+					"items": ["apotheosis:heart_seashelf"]
 				}]
 			}
 		},
@@ -29,7 +29,7 @@
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"item": "apotheosis:crystal_seashelf"
+					"items": ["apotheosis:crystal_seashelf"]
 				}]
 			}
 		}
