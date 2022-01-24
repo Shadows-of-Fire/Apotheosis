@@ -407,6 +407,7 @@
     "item.apotheosis.prismatic_web": "Prismatic Cobweb",
     "info.apotheosis.prismatic_cobweb": "Can be used to remove curses.",
 
+	"item.apotheosis.inert_trident": "Inert Trident",
     "item.apotheosis.other_tome": "Tome of the Others",
     "item.apotheosis.helmet_tome": "Tome of Helmets",
     "item.apotheosis.chestplate_tome": "Tome of Chestplates",
@@ -429,8 +430,6 @@
     "info.apotheosis.bow_tome": "Accepts bow enchantments.",
     "info.apotheosis.scrap_tome": "Can remove enchantments, taking some of them as its own.",
     "info.apotheosis.scrap_tome2": "Will consume the item in the process.",
-    "info.apotheosis.table": "Max Normal Level: %s",
-    "info.apotheosis.table2": "Max Hellshelf Level: %s",
 
     "enchantment.apotheosis.tempting": "Temptation",
     "enchantment.apotheosis.tempting.desc": "Entices nearby farm animals.",
@@ -482,9 +481,6 @@
 
 	"enchantment.apotheosis.spearfishing": "Spearfishing",
     "enchantment.apotheosis.spearfishing.desc": "Kills with a thrown trident may catch a fish.",
-
-
-    "block.apotheosis.prismatic_altar": "Altar of the Sea",
 
     "comment_id": "/Vanilla",
 	"generic.reachDistance": "Reach Distance",

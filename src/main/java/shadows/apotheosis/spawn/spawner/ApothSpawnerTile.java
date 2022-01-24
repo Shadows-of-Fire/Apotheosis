@@ -98,7 +98,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 				this.spawnDelay = this.minSpawnDelay + pLevel.random.nextInt(this.maxSpawnDelay - this.minSpawnDelay);
 			}
 
-			this.spawnPotentials.getRandom(pLevel.random).ifPresent((potential) -> {
+			this.spawnPotentials.getRandom(pLevel.random).ifPresent(potential -> {
 				this.setNextSpawnData(pLevel, pPos, potential.getData());
 			});
 			this.broadcastEvent(pLevel, pPos, 1);
@@ -109,9 +109,9 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 			if (!this.isActivated(pLevel, pPos)) {
 				this.oSpin = this.spin;
 			} else {
-				double d0 = (double) pPos.getX() + pLevel.random.nextDouble();
-				double d1 = (double) pPos.getY() + pLevel.random.nextDouble();
-				double d2 = (double) pPos.getZ() + pLevel.random.nextDouble();
+				double d0 = pPos.getX() + pLevel.random.nextDouble();
+				double d1 = pPos.getY() + pLevel.random.nextDouble();
+				double d2 = pPos.getZ() + pLevel.random.nextDouble();
 				pLevel.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
 				pLevel.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
 				if (this.spawnDelay > 0) {
@@ -119,11 +119,12 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 				}
 
 				this.oSpin = this.spin;
-				this.spin = (this.spin + (double) (1000.0F / ((float) this.spawnDelay + 200.0F))) % 360.0D;
+				this.spin = (this.spin + 1000.0F / (this.spawnDelay + 200.0F)) % 360.0D;
 			}
 
 		}
 
+		@Override
 		public void serverTick(ServerLevel pServerLevel, BlockPos pPos) {
 			if (this.isActivated(pServerLevel, pPos)) {
 				if (this.spawnDelay == -1) {
@@ -145,9 +146,9 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 						ListTag listtag = compoundtag.getList("Pos", 6);
 						int j = listtag.size();
-						double d0 = j >= 1 ? listtag.getDouble(0) : (double) pPos.getX() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * (double) this.spawnRange + 0.5D;
+						double d0 = j >= 1 ? listtag.getDouble(0) : pPos.getX() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * this.spawnRange + 0.5D;
 						double d1 = j >= 2 ? listtag.getDouble(1) : (double) (pPos.getY() + pServerLevel.random.nextInt(3) - 1);
-						double d2 = j >= 3 ? listtag.getDouble(2) : (double) pPos.getZ() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * (double) this.spawnRange + 0.5D;
+						double d2 = j >= 3 ? listtag.getDouble(2) : pPos.getZ() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * this.spawnRange + 0.5D;
 						if (pServerLevel.noCollision(optional.get().getAABB(d0, d1, d2))) {
 							BlockPos blockpos = new BlockPos(d0, d1, d2);
 
@@ -167,7 +168,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 								}
 							}
 
-							Entity entity = EntityType.loadEntityRecursive(compoundtag, pServerLevel, (p_151310_) -> {
+							Entity entity = EntityType.loadEntityRecursive(compoundtag, pServerLevel, p_151310_ -> {
 								p_151310_.moveTo(d0, d1, d2, p_151310_.getYRot(), p_151310_.getXRot());
 								return p_151310_;
 							});
@@ -178,7 +179,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 							//LOGIC CHANGE : Ability to ignore the spawned entity cap - infinite spawning potential!
 							if (!ApothSpawnerTile.this.ignoresCap) {
-								int k = pServerLevel.getEntitiesOfClass(entity.getClass(), (new AABB((double) pPos.getX(), (double) pPos.getY(), (double) pPos.getZ(), (double) (pPos.getX() + 1), (double) (pPos.getY() + 1), (double) (pPos.getZ() + 1))).inflate((double) this.spawnRange)).size();
+								int k = pServerLevel.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
 								if (k >= this.maxNearbyEntities) {
 									this.delay(pServerLevel, pPos);
 									return;

@@ -123,12 +123,11 @@ public class RealEnchantmentHelper {
 	 */
 	public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure) {
 		List<EnchantmentInstance> list = new ArrayList<>();
-		IEnchantableItem enchi = ((IEnchantableItem) stack.getItem());
+		IEnchantableItem enchi = (IEnchantableItem) stack.getItem();
 		allowTreasure = enchi.isTreasureAllowed(stack, allowTreasure);
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
-			if (info.isTreasure() && !allowTreasure) continue;
-			if (!info.isDiscoverable()) continue;
+			if ((info.isTreasure() && !allowTreasure) || !info.isDiscoverable()) continue;
 			if (enchantment.canApplyAtEnchantingTable(stack) || enchi.forciblyAllowsTableEnchantment(stack, enchantment)) {
 				for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
 					if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {

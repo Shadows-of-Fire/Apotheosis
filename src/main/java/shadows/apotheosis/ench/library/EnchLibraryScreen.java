@@ -192,7 +192,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 			this.scrollOffs = 0.0F;
 			this.startIndex = 0;
 		}
-		Collections.sort(data, (a, b) -> I18n.get(a.ench.getDescriptionId()).compareTo(I18n.get(b.ench.getDescriptionId())));
+		Collections.sort(this.data, (a, b) -> I18n.get(a.ench.getDescriptionId()).compareTo(I18n.get(b.ench.getDescriptionId())));
 	}
 
 	@Nullable

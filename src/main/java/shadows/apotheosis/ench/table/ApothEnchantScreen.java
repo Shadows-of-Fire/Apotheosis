@@ -150,7 +150,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 		PoseStack.Pose posestack$pose = stack.last();
 		posestack$pose.pose().setIdentity();
 		posestack$pose.normal().setIdentity();
-		stack.translate(0.0D, (double) 5.3F, 1984.0D);
+		stack.translate(0.0D, 5.3F, 1984.0D);
 		stack.scale(5.0F, 5.0F, 5.0F);
 		stack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
 		stack.mulPose(Vector3f.XP.rotationDegrees(20.0F));
@@ -191,7 +191,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 		RenderSystem.restoreProjectionMatrix();
 		Lighting.setupFor3DItems();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		EnchantmentNames.getInstance().initSeed((long) this.menu.getEnchantmentSeed());
+		EnchantmentNames.getInstance().initSeed(this.menu.getEnchantmentSeed());
 		int lapis = this.menu.getGoldCount();
 
 		for (int slot = 0; slot < 3; ++slot) {
@@ -385,7 +385,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 					list.add(new TextComponent(""));
 					int cost = 0;
 					for (int i = 0; i <= j; i++) {
-						cost += (EnchantmentUtils.getExperienceForLevel(level - i) - EnchantmentUtils.getExperienceForLevel(level - i - 1));
+						cost += EnchantmentUtils.getExperienceForLevel(level - i) - EnchantmentUtils.getExperienceForLevel(level - i - 1);
 					}
 					list.add(new TranslatableComponent("info.apotheosis.xp_cost", new TextComponent("" + cost).withStyle(ChatFormatting.GREEN), new TextComponent("" + EnchantmentUtils.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
 					float quanta = this.menu.quanta.get() / 100F;
@@ -415,7 +415,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 		int lambdastupid = maxWidth;
 		list.forEach(comp -> split.addAll(this.font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
 
-		this.renderComponentTooltip(stack, split, xPos, y, font);
+		this.renderComponentTooltip(stack, split, xPos, y, this.font);
 
 		//GuiUtils.drawHoveringText(stack, list, xPos, y, width, height, maxWidth, this.font);
 	}
@@ -426,7 +426,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 			this.last = itemstack;
 
 			do {
-				this.flipT += (float) (this.random.nextInt(4) - this.random.nextInt(4));
+				this.flipT += this.random.nextInt(4) - this.random.nextInt(4);
 			} while (this.flip <= this.flipT + 1.0F && this.flip >= this.flipT - 1.0F);
 		}
 
@@ -435,7 +435,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 		boolean flag = false;
 
 		for (int i = 0; i < 3; ++i) {
-			if ((this.menu).costs[i] != 0) {
+			if (this.menu.costs[i] != 0) {
 				flag = true;
 			}
 		}

@@ -57,7 +57,7 @@ public class ChainsawEnchant extends Enchantment {
 		Level level = player.level;
 		ItemStack stack = player.getMainHandItem();
 		int enchLevel = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
-		if (player.getClass() == ServerPlayer.class && enchLevel > 0 && !level.isClientSide && isTree(level, e.getPos(), e.getState())) {
+		if (player.getClass() == ServerPlayer.class && enchLevel > 0 && !level.isClientSide && this.isTree(level, e.getPos(), e.getState())) {
 			if (!player.getAbilities().instabuild) PlaceboTaskQueue.submitTask("apotheosis:chainsaw_task", new ChainsawTask(player.getUUID(), stack, level, e.getPos()));
 		}
 	}
@@ -85,26 +85,26 @@ public class ChainsawEnchant extends Enchantment {
 			this.owner = owner;
 			this.axe = axe;
 			this.level = (ServerLevel) level;
-			hits.computeIfAbsent(pos.getY(), i -> new ArrayDeque<>()).add(pos);
+			this.hits.computeIfAbsent(pos.getY(), i -> new ArrayDeque<>()).add(pos);
 		}
 
 		@Override
 		public boolean getAsBoolean() {
-			if (++ticks % 2 != 0) return false;
-			if (axe.isEmpty()) return true;
-			int minY = hits.keySet().intStream().min().getAsInt();
-			Queue<BlockPos> queue = hits.remove(minY);
+			if (++this.ticks % 2 != 0) return false;
+			if (this.axe.isEmpty()) return true;
+			int minY = this.hits.keySet().intStream().min().getAsInt();
+			Queue<BlockPos> queue = this.hits.remove(minY);
 			while (!queue.isEmpty()) {
 				BlockPos pos = queue.poll();
 				for (BlockPos p : BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 1, 1))) {
-					BlockState state = level.getBlockState(p);
+					BlockState state = this.level.getBlockState(p);
 					if (state.is(BlockTags.LOGS)) {
-						BlockUtil.breakExtraBlock(level, p, axe, owner);
-						hits.computeIfAbsent(p.getY(), i -> new ArrayDeque<>()).add(p.immutable());
+						BlockUtil.breakExtraBlock(this.level, p, this.axe, this.owner);
+						this.hits.computeIfAbsent(p.getY(), i -> new ArrayDeque<>()).add(p.immutable());
 					}
 				}
 			}
-			return hits.isEmpty();
+			return this.hits.isEmpty();
 		}
 
 	}

@@ -50,8 +50,8 @@ public class EnchantingRecipe implements Recipe<Container> {
 	}
 
 	public boolean matches(ItemStack input, float eterna, float quanta, float arcana) {
-		if ((maxRequirements.eterna > -1 && eterna > maxRequirements.eterna) || (maxRequirements.quanta > -1 && quanta > maxRequirements.quanta) || (maxRequirements.arcana > -1 && arcana > maxRequirements.arcana)) return false;
-		return this.input.test(input) && eterna >= requirements.eterna && quanta >= requirements.quanta && arcana >= requirements.arcana;
+		if (this.maxRequirements.eterna > -1 && eterna > this.maxRequirements.eterna || this.maxRequirements.quanta > -1 && quanta > this.maxRequirements.quanta || this.maxRequirements.arcana > -1 && arcana > this.maxRequirements.arcana) return false;
+		return this.input.test(input) && eterna >= this.requirements.eterna && quanta >= this.requirements.quanta && arcana >= this.requirements.arcana;
 	}
 
 	public Stats getRequirements() {
@@ -83,12 +83,12 @@ public class EnchantingRecipe implements Recipe<Container> {
 
 	@Override
 	public ItemStack getResultItem() {
-		return output;
+		return this.output;
 	}
 
 	@Override
 	public ResourceLocation getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override

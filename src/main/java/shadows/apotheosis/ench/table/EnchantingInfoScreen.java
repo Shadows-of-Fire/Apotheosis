@@ -62,15 +62,15 @@ public class EnchantingInfoScreen extends Screen {
 		this.costs = parent.getMenu().costs;
 		this.clues = parent.getMenu().enchantClue;
 		for (int i = 0; i < 3; i++) {
-			Enchantment clue = Enchantment.byId(clues[i]);
+			Enchantment clue = Enchantment.byId(this.clues[i]);
 			if (clue != null) {
 				int level = this.costs[i];
 				float quanta = parent.getMenu().quanta.get() / 100F;
 				float rectification = parent.getMenu().rectification.get() / 100F;
 				int minPow = Math.round(Mth.clamp(level - level * (quanta - quanta * rectification), 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
 				int maxPow = Math.round(Mth.clamp(level + level * quanta, 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
-				powers[i] = new int[] { minPow, maxPow };
-				selectedSlot = i;
+				this.powers[i] = new int[] { minPow, maxPow };
+				this.selectedSlot = i;
 			}
 		}
 	}
@@ -92,9 +92,9 @@ public class EnchantingInfoScreen extends Screen {
 
 		pPoseStack.pushPose();
 		pPoseStack.translate(this.leftPos, this.topPos, 0);
-		this.blit(pPoseStack, 0, 0, 0, 0, imageWidth, imageHeight);
+		this.blit(pPoseStack, 0, 0, 0, 0, this.imageWidth, this.imageHeight);
 		for (int i = 0; i < 3; i++) {
-			Enchantment clue = Enchantment.byId(clues[i]);
+			Enchantment clue = Enchantment.byId(this.clues[i]);
 			int u = 199, v = 225;
 			if (clue == null) {
 				u += 19;
@@ -111,15 +111,15 @@ public class EnchantingInfoScreen extends Screen {
 
 		ArcanaEnchantmentData hover = this.getHovered(pMouseX, pMouseY);
 		for (int i = 0; i < 11; i++) {
-			if (enchantments.size() - 1 < i) break;
+			if (this.enchantments.size() - 1 < i) break;
 			int v = 173;
-			if (hover == enchantments.get(this.startIndex + i)) v += 13;
+			if (hover == this.enchantments.get(this.startIndex + i)) v += 13;
 			this.blit(pPoseStack, 89, 18 + 13 * i, 114, v, 128, 13);
 		}
 
 		for (int i = 0; i < 11; i++) {
-			if (enchantments.size() - 1 < i) break;
-			ArcanaEnchantmentData data = enchantments.get(this.startIndex + i);
+			if (this.enchantments.size() - 1 < i) break;
+			ArcanaEnchantmentData data = this.enchantments.get(this.startIndex + i);
 			this.font.draw(pPoseStack, I18n.get(data.data.enchantment.getDescriptionId()), 91, 21 + 13 * i, 0xFFFF80);
 		}
 
@@ -132,7 +132,7 @@ public class EnchantingInfoScreen extends Screen {
 		list.add(new TranslatableComponent("info.apotheosis.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
 		this.renderComponentTooltip(pPoseStack, list, a == Arcana.MAX ? -2 : 1, 120);
 
-		this.font.draw(pPoseStack, title, 7, 4, 4210752);
+		this.font.draw(pPoseStack, this.title, 7, 4, 4210752);
 		pPoseStack.popPose();
 		pPoseStack.translate(0, 0, 10);
 
@@ -153,7 +153,7 @@ public class EnchantingInfoScreen extends Screen {
 			list.add(new TranslatableComponent("info.apotheosis.enchinfo_level", new TranslatableComponent("enchantment.level." + hover.data.level)).withStyle(ChatFormatting.DARK_AQUA));
 			Component rarity = new TranslatableComponent("rarity.enchantment." + hover.data.enchantment.getRarity().name().toLowerCase(Locale.ROOT)).withStyle(colors[hover.data.enchantment.getRarity().ordinal()]);
 			list.add(new TranslatableComponent("info.apotheosis.enchinfo_rarity", rarity).withStyle(ChatFormatting.DARK_AQUA));
-			list.add(new TranslatableComponent("info.apotheosis.enchinfo_chance", String.format("%.2f", 100F * hover.getWeight().asInt() / WeightedRandom.getTotalWeight(enchantments)) + "%").withStyle(ChatFormatting.DARK_AQUA));
+			list.add(new TranslatableComponent("info.apotheosis.enchinfo_chance", String.format("%.2f", 100F * hover.getWeight().asInt() / WeightedRandom.getTotalWeight(this.enchantments)) + "%").withStyle(ChatFormatting.DARK_AQUA));
 			if (I18n.exists(hover.data.enchantment.getDescriptionId() + ".desc")) {
 				list.add(new TranslatableComponent(hover.data.enchantment.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_AQUA));
 			}
@@ -172,8 +172,8 @@ public class EnchantingInfoScreen extends Screen {
 		this.setBlitOffset(2001);
 		this.itemRenderer.blitOffset = 2001;
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(toEnchant, this.leftPos + 49, this.topPos + 39);
-		Minecraft.getInstance().getItemRenderer().renderGuiItemDecorations(this.font, toEnchant, this.leftPos + 49, this.topPos + 39);
+		Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(this.toEnchant, this.leftPos + 49, this.topPos + 39);
+		Minecraft.getInstance().getItemRenderer().renderGuiItemDecorations(this.font, this.toEnchant, this.leftPos + 49, this.topPos + 39);
 		this.itemRenderer.blitOffset = 0;
 		this.setBlitOffset(0);
 
@@ -195,7 +195,7 @@ public class EnchantingInfoScreen extends Screen {
 		}
 
 		for (int i = 0; i < 3; i++) {
-			Enchantment clue = Enchantment.byId(clues[i]);
+			Enchantment clue = Enchantment.byId(this.clues[i]);
 			if (this.selectedSlot != i && clue != null && this.isHovering(8, 18 + 19 * i, 18, 18, pMouseX, pMouseY)) {
 				this.selectedSlot = i;
 				this.slider.setValue((this.slider.min() + this.slider.max()) / 2);
@@ -242,15 +242,15 @@ public class EnchantingInfoScreen extends Screen {
 	protected boolean isHovering(int pX, int pY, int pWidth, int pHeight, double pMouseX, double pMouseY) {
 		int i = this.leftPos;
 		int j = this.topPos;
-		pMouseX -= (double) i;
-		pMouseY -= (double) j;
-		return pMouseX >= (double) (pX - 1) && pMouseX < (double) (pX + pWidth + 1) && pMouseY >= (double) (pY - 1) && pMouseY < (double) (pY + pHeight + 1);
+		pMouseX -= i;
+		pMouseY -= j;
+		return pMouseX >= pX - 1 && pMouseX < pX + pWidth + 1 && pMouseY >= pY - 1 && pMouseY < pY + pHeight + 1;
 	}
 
 	protected void recomputeEnchantments() {
 		Arcana arc = Arcana.getForThreshold(this.parent.getMenu().arcana.get());
-		this.enchantments = RealEnchantmentHelper.getAvailableEnchantmentResults(currentPower, toEnchant, false).stream().map(e -> new ArcanaEnchantmentData(arc, e)).collect(Collectors.toList());
-		if (this.startIndex + 11 >= enchantments.size()) {
+		this.enchantments = RealEnchantmentHelper.getAvailableEnchantmentResults(this.currentPower, this.toEnchant, false).stream().map(e -> new ArcanaEnchantmentData(arc, e)).collect(Collectors.toList());
+		if (this.startIndex + 11 >= this.enchantments.size()) {
 			this.startIndex = 0;
 			this.scrollOffs = 0;
 		}
@@ -271,7 +271,7 @@ public class EnchantingInfoScreen extends Screen {
 
 	protected ArcanaEnchantmentData getHovered(double mouseX, double mouseY) {
 		for (int i = 0; i < 11; i++) {
-			if (enchantments.size() - 1 < i) break;
+			if (this.enchantments.size() - 1 < i) break;
 			if (this.isHovering(89, 18 + i * 13, 128, 13, mouseX, mouseY)) {
 				return this.enchantments.get(this.startIndex + i);
 			}
@@ -284,7 +284,7 @@ public class EnchantingInfoScreen extends Screen {
 		public PowerSlider(int x, int y, int width, int height) {
 			super(x, y, width, height, TextComponent.EMPTY, 0);
 			if (EnchantingInfoScreen.this.selectedSlot != -1 && this.value == 0) {
-				this.value = normalizeValue(EnchantingInfoScreen.this.currentPower == 0 ? (max() + min()) / 2 : EnchantingInfoScreen.this.currentPower);
+				this.value = this.normalizeValue(EnchantingInfoScreen.this.currentPower == 0 ? (this.max() + this.min()) / 2 : EnchantingInfoScreen.this.currentPower);
 				this.applyValue();
 			}
 			this.updateMessage();
@@ -297,13 +297,13 @@ public class EnchantingInfoScreen extends Screen {
 
 		@Override
 		protected void applyValue() {
-			EnchantingInfoScreen.this.currentPower = denormalizeValue(this.value);
+			EnchantingInfoScreen.this.currentPower = this.denormalizeValue(this.value);
 			EnchantingInfoScreen.this.recomputeEnchantments();
 		}
 
 		public void setValue(int value) {
 			if (!EnchantingInfoScreen.this.isDragging()) {
-				this.value = normalizeValue(value);
+				this.value = this.normalizeValue(value);
 				this.applyValue();
 				this.updateMessage();
 			}
@@ -313,22 +313,22 @@ public class EnchantingInfoScreen extends Screen {
 		 * Converts an int value within the range into a slider percentage.
 		 */
 		public double normalizeValue(double value) {
-			return Mth.clamp((snapToStepClamp(value) - min()) / (max() - min()), 0.0D, 1.0D);
+			return Mth.clamp((this.snapToStepClamp(value) - this.min()) / (this.max() - this.min()), 0.0D, 1.0D);
 		}
 
 		/**
 		 * Converts a slider percentage to its bounded int value.
 		 */
 		public int denormalizeValue(double value) {
-			return (int) snapToStepClamp(Mth.lerp(Mth.clamp(value, 0.0D, 1.0D), min(), max()));
+			return (int) this.snapToStepClamp(Mth.lerp(Mth.clamp(value, 0.0D, 1.0D), this.min(), this.max()));
 		}
 
 		private double snapToStepClamp(double valueIn) {
-			if (step() > 0.0F) {
-				valueIn = step() * Math.round(valueIn / step());
+			if (this.step() > 0.0F) {
+				valueIn = this.step() * Math.round(valueIn / this.step());
 			}
 
-			return Mth.clamp(valueIn, min(), max());
+			return Mth.clamp(valueIn, this.min(), this.max());
 		}
 
 		private int min() {
@@ -340,7 +340,7 @@ public class EnchantingInfoScreen extends Screen {
 		}
 
 		private float step() {
-			return 1F / Math.max(max() - min(), 1);
+			return 1F / Math.max(this.max() - this.min(), 1);
 		}
 	}
 

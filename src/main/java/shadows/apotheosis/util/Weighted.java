@@ -16,8 +16,9 @@ public class Weighted implements WeightedEntry {
 		this.weight = pWeight;
 	}
 
+	@Override
 	public Weight getWeight() {
-		if (_weight == null) _weight = Weight.of(weight);
-		return _weight;
+		if (this._weight == null) this._weight = Weight.of(this.weight);
+		return this._weight;
 	}
 }

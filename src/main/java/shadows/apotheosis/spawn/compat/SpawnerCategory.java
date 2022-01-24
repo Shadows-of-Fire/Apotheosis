@@ -36,7 +36,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerWrapper> {
 
 	@Override
 	public Component getTitle() {
-		return title;
+		return this.title;
 	}
 
 	@Override

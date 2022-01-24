@@ -26,8 +26,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
-import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.util.BlockUtil;
 
 public class MiningArrowEntity extends AbstractArrow implements IEntityAdditionalSpawnData {
@@ -84,8 +84,8 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 		Vec3 motion = this.getDeltaMovement();
 		if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
 			double d0 = motion.horizontalDistance();
-			this.setYRot((float) (Mth.atan2(motion.x, motion.z) * (double) (180F / (float) Math.PI)));
-			this.setXRot((float) (Mth.atan2(motion.y, d0) * (double) (180F / (float) Math.PI)));
+			this.setYRot((float) (Mth.atan2(motion.x, motion.z) * (180F / (float) Math.PI)));
+			this.setXRot((float) (Mth.atan2(motion.y, d0) * (180F / (float) Math.PI)));
 			this.yRotO = this.getYRot();
 			this.xRotO = this.getXRot();
 		}
@@ -136,7 +136,7 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 			double dZ = motion.z;
 			if (this.isCritArrow()) {
 				for (int i = 0; i < 4; ++i) {
-					this.level.addParticle(ParticleTypes.CRIT, this.getX() + dX * (double) i / 4.0D, this.getY() + dY * (double) i / 4.0D, this.getZ() + dZ * (double) i / 4.0D, -dX, -dY + 0.2D, -dZ);
+					this.level.addParticle(ParticleTypes.CRIT, this.getX() + dX * i / 4.0D, this.getY() + dY * i / 4.0D, this.getZ() + dZ * i / 4.0D, -dX, -dY + 0.2D, -dZ);
 				}
 			}
 
@@ -145,12 +145,12 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 			double nextZ = this.getZ() + dZ;
 			double hDist = motion.horizontalDistance();
 			if (noClip) {
-				this.setYRot((float) (Mth.atan2(-dX, -dZ) * (double) (180F / (float) Math.PI)));
+				this.setYRot((float) (Mth.atan2(-dX, -dZ) * (180F / (float) Math.PI)));
 			} else {
-				this.setYRot((float) (Mth.atan2(dX, dZ) * (double) (180F / (float) Math.PI)));
+				this.setYRot((float) (Mth.atan2(dX, dZ) * (180F / (float) Math.PI)));
 			}
 
-			this.setXRot((float) (Mth.atan2(dY, hDist) * (double) (180F / (float) Math.PI)));
+			this.setXRot((float) (Mth.atan2(dY, hDist) * (180F / (float) Math.PI)));
 			this.setXRot(lerpRotation(this.xRotO, this.getXRot()));
 			this.setYRot(lerpRotation(this.yRotO, this.getYRot()));
 			float f = 0.99F;
@@ -162,10 +162,10 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 				f = this.getWaterInertia();
 			}
 
-			this.setDeltaMovement(motion.scale((double) f));
+			this.setDeltaMovement(motion.scale(f));
 			if (!this.isNoGravity() && !noClip) {
 				Vec3 vec34 = this.getDeltaMovement();
-				this.setDeltaMovement(vec34.x, vec34.y - (double) 0.05F, vec34.z);
+				this.setDeltaMovement(vec34.x, vec34.y - 0.05F, vec34.z);
 			}
 
 			this.setPos(nextX, nextY, nextZ);

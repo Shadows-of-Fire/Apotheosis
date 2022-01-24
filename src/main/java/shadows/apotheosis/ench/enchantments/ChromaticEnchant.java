@@ -19,7 +19,7 @@ import shadows.apotheosis.ench.EnchModule;
 
 public class ChromaticEnchant extends Enchantment {
 
-	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), (map) -> {
+	private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), map -> {
 		map.put(DyeColor.WHITE, Blocks.WHITE_WOOL);
 		map.put(DyeColor.ORANGE, Blocks.ORANGE_WOOL);
 		map.put(DyeColor.MAGENTA, Blocks.MAGENTA_WOOL);
@@ -42,6 +42,7 @@ public class ChromaticEnchant extends Enchantment {
 		super(Rarity.RARE, EnchModule.SHEARS, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 	}
 
+	@Override
 	public int getMinCost(int pLevel) {
 		return 40;
 	}

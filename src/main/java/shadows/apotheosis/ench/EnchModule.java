@@ -295,7 +295,8 @@ public class EnchModule {
 				new BlockItem(Apoth.Blocks.RECTIFIER_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t2"),
 				new BlockItem(Apoth.Blocks.RECTIFIER_T3, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t3"),
 				new BlockItem(Apoth.Blocks.SIGHTSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf"),
-				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf_t2")
+				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf_t2"),
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "inert_trident")
 				);
 		//Formatter::on
 	}

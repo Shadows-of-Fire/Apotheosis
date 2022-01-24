@@ -33,7 +33,7 @@ public class EnchLibraryTile extends BlockEntity {
 	protected final Object2ShortMap<Enchantment> points = new Object2ShortOpenHashMap<>();
 	protected final Object2ByteMap<Enchantment> maxLevels = new Object2ByteOpenHashMap<>();
 	protected final Set<EnchLibraryContainer> activeContainers = new HashSet<>();
-	protected final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> new EnchLibItemHandler());
+	protected final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(EnchLibItemHandler::new);
 
 	public EnchLibraryTile(BlockPos pos, BlockState state) {
 		super(Apoth.Tiles.LIBRARY, pos, state);
@@ -186,7 +186,7 @@ public class EnchLibraryTile extends BlockEntity {
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return itemHandler.cast();
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return this.itemHandler.cast();
 		return super.getCapability(cap, side);
 	}
 
@@ -206,7 +206,7 @@ public class EnchLibraryTile extends BlockEntity {
 		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 			if (stack.getItem() != Items.ENCHANTED_BOOK || stack.getCount() > 1) return stack;
 			else if (!simulate) {
-				depositBook(stack);
+				EnchLibraryTile.this.depositBook(stack);
 			}
 			return ItemStack.EMPTY;
 		}

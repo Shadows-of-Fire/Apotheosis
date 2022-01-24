@@ -34,19 +34,20 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
 		super(type, level);
 	}
 
+	@Override
 	@Accessor
 	public abstract ItemStack getTridentItem();
 
 	@Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true)
 	public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
-		oldVel = this.getDeltaMovement();
-		if (piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
+		this.oldVel = this.getDeltaMovement();
+		if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
 	}
 
 	@Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true)
 	public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
-		int pierceLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, getTridentItem());
-		if (pierces++ < pierceLevel) {
+		int pierceLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem());
+		if (this.pierces++ < pierceLevel) {
 			this.dealtDamage = false;
 			this.setDeltaMovement(this.oldVel);
 			this.piercingIgnoreEntityIds.add(res.getEntity().getId());

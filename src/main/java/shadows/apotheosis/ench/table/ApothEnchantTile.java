@@ -49,7 +49,7 @@ public class ApothEnchantTile extends EnchantmentTableBlockEntity {
 	@Override
 	public void invalidateCaps() {
 		super.invalidateCaps();
-		invCap.invalidate();
+		this.invCap.invalidate();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ public class GrowthSerumEnchant extends Enchantment {
 		super(Rarity.VERY_RARE, EnchModule.SHEARS, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 	}
 
+	@Override
 	public int getMinCost(int pLevel) {
 		return 60;
 	}

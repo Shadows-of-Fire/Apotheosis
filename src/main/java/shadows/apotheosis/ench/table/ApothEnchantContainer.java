@@ -114,8 +114,8 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 		this.addDataSlots(this.quanta.getArray());
 		this.addDataSlots(this.arcana.getArray());
 		this.addDataSlots(this.rectification.getArray());
-		clues.set(0);
-		this.addDataSlot(clues);
+		this.clues.set(0);
+		this.addDataSlot(this.clues);
 	}
 
 	@Override
@@ -130,7 +130,8 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 
 		this.access.execute((world, pos) -> {
 			ItemStack enchanted = toEnchant;
-			float eterna = this.eterna.get(), quanta = this.quanta.get(), arcana = this.arcana.get(), rectification = this.rectification.get();
+			float eterna = this.eterna.get(), quanta = this.quanta.get(), arcana = this.arcana.get(),
+					rectification = this.rectification.get();
 			List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 			if (!list.isEmpty()) {
 				player.onEnchantmentPerformed(toEnchant, cost);
@@ -174,7 +175,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 				ItemStack toEnchant = inventoryIn.getItem(0);
 				this.gatherStats();
 				EnchantingRecipe match = EnchantingRecipe.findItemMatch(world, toEnchant);
-				if (toEnchant.getCount() == 1 && (match != null || (toEnchant.getItem().isEnchantable(toEnchant) && isEnchantableEnough(toEnchant)))) {
+				if (toEnchant.getCount() == 1 && (match != null || toEnchant.getItem().isEnchantable(toEnchant) && isEnchantableEnough(toEnchant))) {
 					float eterna = this.eterna.get();
 					if (eterna < 1.5) eterna = 1.5F; // Allow for enchanting with no bookshelves as vanilla does
 					this.random.setSeed(this.enchantmentSeed.get());
@@ -204,7 +205,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 								while (clues-- > 0 && !list.isEmpty()) {
 									clueList.add(list.remove(this.random.nextInt(list.size())));
 								}
-								PacketDistro.sendTo(Apotheosis.CHANNEL, new ClueMessage(slot, clueList, list.isEmpty()), player);
+								PacketDistro.sendTo(Apotheosis.CHANNEL, new ClueMessage(slot, clueList, list.isEmpty()), this.player);
 							}
 						}
 					}

@@ -73,6 +73,7 @@ public class VillageModule {
 			for (Item i : ForgeRegistries.ITEMS) {
 				if (i instanceof IApothArrowItem) {
 					DispenserBlock.registerBehavior(i, new AbstractProjectileDispenseBehavior() {
+						@Override
 						protected Projectile getProjectile(Level world, Position pos, ItemStack stack) {
 							return ((IApothArrowItem) i).fromDispenser(world, pos.x(), pos.y(), pos.z());
 						}

@@ -23,13 +23,13 @@ public abstract class FallingBlockEntityMixin extends Entity {
 	@Override
 	public ItemEntity spawnAtLocation(ItemLike pItem) {
 		if (pItem instanceof INBTSensitiveFallingBlock) {
-			return ths().spawnAtLocation(((INBTSensitiveFallingBlock) pItem).toStack(ths().getBlockState(), ths().blockData), 0F);
+			return this.ths().spawnAtLocation(((INBTSensitiveFallingBlock) pItem).toStack(this.ths().getBlockState(), this.ths().blockData), 0F);
 		}
-		return ths().spawnAtLocation(pItem, 0);
+		return this.ths().spawnAtLocation(pItem, 0);
 	}
 
 	private FallingBlockEntity ths() {
-		return ((FallingBlockEntity) (Object) this);
+		return (FallingBlockEntity) (Object) this;
 	}
 
 }

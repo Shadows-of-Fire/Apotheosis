@@ -17,6 +17,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.renderer.GameRenderer;
@@ -92,7 +93,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 	public void draw(EnchantingRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
 		boolean hover = false;
 		if (mouseX > 57 && mouseX <= 57 + 108 && mouseY > 4 && mouseY <= 4 + 19) {
-			Screen.blit(stack, 57, 4, 0, 0, 71, 108, 19, 256, 256);
+			GuiComponent.blit(stack, 57, 4, 0, 0, 71, 108, 19, 256, 256);
 			hover = true;
 		}
 
@@ -118,23 +119,23 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 		RenderSystem.setShaderTexture(0, TEXTURES);
 		int[] pos = { (int) (stats.eterna / EnchantingStatManager.getAbsoluteMaxEterna() * 110), (int) (stats.quanta / 100 * 110), (int) (stats.arcana / 100 * 110) };
 		if (stats.eterna > 0) {
-			Screen.blit(stack, 56, 27, 0, 56, pos[0], 5, 256, 256);
+			GuiComponent.blit(stack, 56, 27, 0, 56, pos[0], 5, 256, 256);
 		}
 		if (stats.quanta > 0) {
-			Screen.blit(stack, 56, 37, 0, 61, pos[1], 5, 256, 256);
+			GuiComponent.blit(stack, 56, 37, 0, 61, pos[1], 5, 256, 256);
 		}
 		if (stats.arcana > 0) {
-			Screen.blit(stack, 56, 47, 0, 66, pos[2], 5, 256, 256);
+			GuiComponent.blit(stack, 56, 47, 0, 66, pos[2], 5, 256, 256);
 		}
 		RenderSystem.enableBlend();
 		if (maxStats.eterna > 0) {
-			Screen.blit(stack, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna - stats.eterna) / EnchantingStatManager.getAbsoluteMaxEterna() * 110), 5, 256, 256);
+			GuiComponent.blit(stack, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna - stats.eterna) / EnchantingStatManager.getAbsoluteMaxEterna() * 110), 5, 256, 256);
 		}
 		if (maxStats.quanta > 0) {
-			Screen.blit(stack, 56 + pos[1], 37, pos[1], 95, (int) ((maxStats.quanta - stats.quanta) / 100 * 110), 5, 256, 256);
+			GuiComponent.blit(stack, 56 + pos[1], 37, pos[1], 95, (int) ((maxStats.quanta - stats.quanta) / 100 * 110), 5, 256, 256);
 		}
 		if (maxStats.arcana > 0) {
-			Screen.blit(stack, 56 + pos[2], 47, pos[2], 100, (int) ((maxStats.arcana - stats.arcana) / 100 * 110), 5, 256, 256);
+			GuiComponent.blit(stack, 56 + pos[2], 47, pos[2], 100, (int) ((maxStats.arcana - stats.arcana) / 100 * 110), 5, 256, 256);
 		}
 		RenderSystem.disableBlend();
 		Screen scn = Minecraft.getInstance().screen;
@@ -178,7 +179,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 
 	public static void drawWordWrap(Font font, FormattedText pText, int pX, int pY, int pMaxWidth, int pColor, PoseStack stack) {
 		for (FormattedCharSequence formattedcharsequence : font.split(pText, pMaxWidth)) {
-			font.draw(stack, formattedcharsequence, (float) pX, (float) pY, pColor);
+			font.draw(stack, formattedcharsequence, pX, pY, pColor);
 			pY += 9;
 		}
 

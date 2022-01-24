@@ -59,9 +59,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 					JsonObject obj = (JsonObject) ele;
 					Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
 					if (obj.has("tag")) {
-						Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, new ResourceLocation(obj.get("tag").getAsString()), (p_151262_) -> {
-							return new JsonSyntaxException("Unknown block tag '" + p_151262_ + "'");
-						});
+						Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, new ResourceLocation(obj.get("tag").getAsString()), p_151262_ -> new JsonSyntaxException("Unknown block tag '" + p_151262_ + "'"));
 						tag.getValues().forEach(b -> this.stats.put(b.delegate, stats));
 					} else {
 						Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
@@ -155,7 +153,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	}
 
 	private float computeAbsoluteMaxEterna() {
-		return stats.values().stream().max(Comparator.comparingDouble(s -> s.maxEterna)).get().maxEterna;
+		return this.stats.values().stream().max(Comparator.comparingDouble(s -> s.maxEterna)).get().maxEterna;
 	}
 
 	public static void dispatch(Player player) {

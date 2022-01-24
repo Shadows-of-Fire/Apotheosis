@@ -103,7 +103,7 @@ public class EnchantmentInfo {
 	/**
 	 * This is the default minimum power function.
 	 * If the level is equal to or below the default max level, we return the original value {@link Enchantment#getMinCost(int)}
-	 * 
+	 *
 	 * If the level is above than the default max level, then we compute the following:
 	 * Let diff be the slope of {@link Enchantment#getMinCost(int)}, or 15, if the slope would be zero.
 	 * minPower = baseMinPower + diff * (level - baseMaxLevel) ^ 1.6

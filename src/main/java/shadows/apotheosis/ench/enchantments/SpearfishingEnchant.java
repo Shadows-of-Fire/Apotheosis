@@ -22,10 +22,12 @@ public class SpearfishingEnchant extends Enchantment {
 	/**
 	* Returns the minimal value of enchantability needed on the enchantment level passed.
 	*/
+	@Override
 	public int getMinCost(int pEnchantmentLevel) {
 		return 12 + (pEnchantmentLevel - 1) * 18;
 	}
 
+	@Override
 	public int getMaxCost(int pEnchantmentLevel) {
 		return 200;
 	}
@@ -33,6 +35,7 @@ public class SpearfishingEnchant extends Enchantment {
 	/**
 	* Returns the maximum level that the enchantment can have.
 	*/
+	@Override
 	public int getMaxLevel() {
 		return 5;
 	}

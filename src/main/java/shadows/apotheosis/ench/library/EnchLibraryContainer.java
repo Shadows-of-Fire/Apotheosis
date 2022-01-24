@@ -96,7 +96,7 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 	}
 
 	public byte getMaxLevel(Enchantment enchant) {
-		return tile.getLevelsMap().getByte(enchant);
+		return this.tile.getLevelsMap().getByte(enchant);
 	}
 
 	@Override

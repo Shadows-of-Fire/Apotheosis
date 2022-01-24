@@ -13,5 +13,5 @@ public class AnvilMenuMixin {
 		if (old == 40) return Integer.MAX_VALUE;
 		return old;
 	}
-	
+
 }
