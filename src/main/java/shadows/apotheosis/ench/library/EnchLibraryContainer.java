@@ -1,9 +1,8 @@
 package shadows.apotheosis.ench.library;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import it.unimi.dsi.fastutil.objects.Object2ShortMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -72,14 +71,11 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 				return 1;
 			}
 		});
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(inv, j + i * 9 + 9, 8 + j * 18, 159 + i * 18));
-			}
-		}
-		for (int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(inv, k, 8 + k * 18, 217));
-		}
+		this.addPlayerSlots(inv, 8, 159);
+		this.mover.registerRule((stack, slot) -> slot == 0, 2, 38);
+		this.mover.registerRule((stack, slot) -> slot == 1, 2, 38);
+		this.mover.registerRule((stack, slot) -> stack.is(Items.ENCHANTED_BOOK), 0, 1);
+		this.registerInvShuffleRules();
 	}
 
 	@Override
@@ -91,48 +87,16 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 		return (int) this.tile.getPointsMap().values().intStream().filter(s -> s > 0).count();
 	}
 
-	public List<Object2ShortMap.Entry<Enchantment>> getPointsForDisplay() {
-		return this.tile.getPointsMap().object2ShortEntrySet().stream().filter(s -> s.getShortValue() > 0).collect(Collectors.toList());
+	public List<Object2IntMap.Entry<Enchantment>> getPointsForDisplay() {
+		return this.tile.getPointsMap().object2IntEntrySet().stream().filter(s -> s.getIntValue() > 0).toList();
 	}
 
-	public byte getMaxLevel(Enchantment enchant) {
-		return this.tile.getLevelsMap().getByte(enchant);
+	public int getMaxLevel(Enchantment enchant) {
+		return this.tile.getMax(enchant);
 	}
 
-	@Override
-	public ItemStack quickMoveStack(Player player, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
-			ItemStack itemstack1 = slot.getItem();
-			itemstack = itemstack1.copy();
-			if (index == 0) {
-				if (!this.moveItemStackTo(itemstack1, 2, 38, true)) { return ItemStack.EMPTY; }
-			} else if (index == 1) {
-				if (!this.moveItemStackTo(itemstack1, 2, 38, true)) { return ItemStack.EMPTY; }
-			} else if (itemstack1.getItem() == Items.LAPIS_LAZULI) {
-				if (!this.moveItemStackTo(itemstack1, 1, 2, true)) { return ItemStack.EMPTY; }
-			} else {
-				if (this.slots.get(0).hasItem() || !this.slots.get(0).mayPlace(itemstack1)) { return ItemStack.EMPTY; }
-
-				ItemStack itemstack2 = itemstack1.copy();
-				itemstack2.setCount(1);
-				itemstack1.shrink(1);
-				this.slots.get(0).set(itemstack2);
-			}
-
-			if (itemstack1.isEmpty()) {
-				slot.set(ItemStack.EMPTY);
-			} else {
-				slot.setChanged();
-			}
-
-			if (itemstack1.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
-
-			slot.onTake(player, itemstack1);
-		}
-
-		return itemstack;
+	public int getPointCap() {
+		return this.tile.maxPoints;
 	}
 
 	public void setNotifier(Runnable r) {
@@ -150,10 +114,10 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 		Enchantment ench = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getValue(id);
 		ItemStack outSlot = this.ioInv.getItem(1);
 		int curLvl = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(ench, 0);
-		int desired = shift ? this.tile.getMax(ench) : curLvl + 1;
-		if (!this.tile.canExtract(ench, desired, curLvl)) return;
+		int targetLevel = shift ? Math.min(this.tile.getMax(ench), 1 + (int) (Math.log(this.tile.getPointsMap().getInt(ench) + EnchLibraryTile.levelToPoints(curLvl)) / Math.log(2))) : curLvl + 1;
+		if (!this.tile.canExtract(ench, targetLevel, curLvl)) return;
 		if (outSlot.isEmpty()) outSlot = new ItemStack(Items.ENCHANTED_BOOK);
-		this.tile.extractEnchant(outSlot, ench, desired);
+		this.tile.extractEnchant(outSlot, ench, targetLevel);
 		this.ioInv.setItem(1, outSlot);
 	}
 }

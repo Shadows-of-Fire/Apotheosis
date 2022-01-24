@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
@@ -41,8 +42,13 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
 
 	public static final Component NAME = new TranslatableComponent("apotheosis.ench.library");
 
-	public EnchLibraryBlock() {
+	protected final BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier;
+	protected final int maxLevel;
+
+	public EnchLibraryBlock(BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier, int maxLevel) {
 		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
+		this.tileSupplier = tileSupplier;
+		this.maxLevel = maxLevel;
 	}
 
 	@Override
@@ -69,7 +75,7 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
 
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-		return new EnchLibraryTile(pPos, pState);
+		return this.tileSupplier.create(pPos, pState);
 	}
 
 	@Override
@@ -99,6 +105,7 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> list, TooltipFlag advanced) {
+		list.add(new TranslatableComponent("tooltip.enchlib.capacity", new TranslatableComponent("enchantment.level." + this.maxLevel)).withStyle(ChatFormatting.GOLD));
 		CompoundTag tag = stack.getTagElement("BlockEntityTag");
 		if (tag != null && tag.contains("Points")) {
 			list.add(new TranslatableComponent("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(ChatFormatting.GOLD));

@@ -78,6 +78,7 @@ public class Apoth {
 		public static final Block RECTIFIER_T3 = null;
 		public static final Block SIGHTSHELF = null;
 		public static final Block SIGHTSHELF_T2 = null;
+		public static final EnchLibraryBlock ENDER_LIBRARY = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -182,6 +183,7 @@ public class Apoth {
 	public static final class Tiles {
 		public static final BlockEntityType<EnchLibraryTile> LIBRARY = null;
 		public static final BlockEntityType<AnvilTile> ANVIL = null;
+		public static final BlockEntityType<EnchLibraryTile> ENDER_LIBRARY = null;
 	}
 
 	public static final class Tags {
@@ -202,7 +204,7 @@ public class Apoth {
 	//	public static final ReflectiveEnchant REFLECTIVE = null;
 	//	public static final BerserkersFuryEnchant BERSERK = null;
 	//	public static final CapturingEnchant CAPTURING = null;
-
+	
 	//	public static final KnowledgeEnchant KNOWLEDGE = null;
 	//	public static final SplittingEnchant SPLITTING = null;
 	//	public static final NaturesBlessingEnchant NATURES_BLESSING = null;
@@ -228,7 +230,7 @@ public class Apoth {
 	public static final MobEffect BLEEDING = null;
 	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
 	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
-
+	
 	//	@ObjectHolder("minecraft:enchanting_table")
 	//	public static final BlockEntityType<ApothEnchantTile> ENCHANTING_TABLE = null;
 	//	public static final MenuType<ApothEnchantContainer> ENCHANTING = null;

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "apotheosis:block/ender_library",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "apotheosis:block/ender_library",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "apotheosis:block/ender_library"
+    },
+    "facing=west": {
+      "model": "apotheosis:block/ender_library",
+      "y": 90
+    }
+  }
+}

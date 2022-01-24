@@ -67,16 +67,19 @@ public class EnchantingRecipe implements Recipe<Container> {
 	}
 
 	@Override
+	@Deprecated
 	public boolean matches(Container pContainer, Level pLevel) {
 		return false;
 	}
 
 	@Override
+	@Deprecated
 	public ItemStack assemble(Container pContainer) {
 		return ItemStack.EMPTY;
 	}
 
 	@Override
+	@Deprecated
 	public boolean canCraftInDimensions(int pWidth, int pHeight) {
 		return false;
 	}
@@ -86,6 +89,10 @@ public class EnchantingRecipe implements Recipe<Container> {
 		return this.output;
 	}
 
+	public ItemStack assemble(ItemStack input, float eterna, float quanta, float arcana) {
+		return this.getResultItem().copy();
+	}
+
 	@Override
 	public ResourceLocation getId() {
 		return this.id;
@@ -93,17 +100,17 @@ public class EnchantingRecipe implements Recipe<Container> {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return SERIALIZER;
+		return EnchantingRecipe.SERIALIZER;
 	}
 
 	@Override
 	public RecipeType<?> getType() {
-		return TYPE;
+		return EnchantingRecipe.TYPE;
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<EnchantingRecipe> {
 
-		private static final Gson GSON = new GsonBuilder().create();
+		protected static final Gson GSON = new GsonBuilder().create();
 
 		@Override
 		public EnchantingRecipe fromJson(ResourceLocation id, JsonObject obj) {

@@ -137,7 +137,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 				player.onEnchantmentPerformed(toEnchant, cost);
 				if (list.get(0).enchantment == Apoth.Enchantments.INFUSION) {
 					EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
-					if (match != null) this.enchantSlots.setItem(0, match.getResultItem().copy());
+					if (match != null) this.enchantSlots.setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));
 					else return;
 				} else this.enchantSlots.setItem(0, ((IEnchantableItem) toEnchant.getItem()).onEnchantment(toEnchant, list));
 

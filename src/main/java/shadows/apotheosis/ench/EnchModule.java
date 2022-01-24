@@ -84,7 +84,8 @@ import shadows.apotheosis.ench.enchantments.twisted.ExploitationEnchant;
 import shadows.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
-import shadows.apotheosis.ench.library.EnchLibraryTile;
+import shadows.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
+import shadows.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
 import shadows.apotheosis.ench.objects.GlowyItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.TomeItem;
@@ -94,6 +95,7 @@ import shadows.apotheosis.ench.table.ApothEnchantBlock;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
+import shadows.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.util.PlaceboUtil;
@@ -159,7 +161,7 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
-		Apotheosis.HELPER.addShaped(Apoth.Blocks.LIBRARY, 3, 3, Blocks.ENDER_CHEST, Apoth.Blocks.HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.HELLSHELF, Blocks.ENCHANTING_TABLE, Apoth.Blocks.HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.HELLSHELF, Blocks.ENDER_CHEST);
+		Apotheosis.HELPER.addShaped(Apoth.Blocks.LIBRARY, 3, 3, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENCHANTING_TABLE, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST);
 		LootSystem.defaultBlockTable(Apoth.Blocks.BLAZING_HELLSHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.GLOWING_HELLSHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.CRYSTAL_SEASHELF);
@@ -193,7 +195,8 @@ public class EnchModule {
 		e.getRegistry().register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
 		BlockEntityType.ENCHANTING_TABLE.factory = ApothEnchantTile::new;
 		BlockEntityType.ENCHANTING_TABLE.validBlocks = ImmutableSet.of(Blocks.ENCHANTING_TABLE);
-		e.getRegistry().register(new BlockEntityType<>(EnchLibraryTile::new, ImmutableSet.of(Apoth.Blocks.LIBRARY), null).setRegistryName("library"));
+		e.getRegistry().register(new BlockEntityType<>(BasicLibraryTile::new, ImmutableSet.of(Apoth.Blocks.LIBRARY), null).setRegistryName("library"));
+		e.getRegistry().register(new BlockEntityType<>(EnderLibraryTile::new, ImmutableSet.of(Apoth.Blocks.ENDER_LIBRARY), null).setRegistryName("ender_library"));
 	}
 
 	@SubscribeEvent
@@ -205,6 +208,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void recipeSerializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(EnchantingRecipe.SERIALIZER.setRegistryName("enchanting"));
+		e.getRegistry().register(KeepNBTEnchantingRecipe.SERIALIZER.setRegistryName("keep_nbt_enchanting"));
 	}
 
 	/**
@@ -247,7 +251,8 @@ public class EnchModule {
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
 				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
 				new Block(BlockBehaviour.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf"),
-				new EnchLibraryBlock().setRegistryName("library"),
+				new EnchLibraryBlock(BasicLibraryTile::new, 16).setRegistryName("library"),
+				new EnchLibraryBlock(EnderLibraryTile::new, 31).setRegistryName("ender_library"),
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier"),
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t2"),
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t3"),
@@ -295,7 +300,8 @@ public class EnchModule {
 				new BlockItem(Apoth.Blocks.RECTIFIER_T3, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t3"),
 				new BlockItem(Apoth.Blocks.SIGHTSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf"),
 				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf_t2"),
-				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "inert_trident")
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "inert_trident"),
+				new BlockItem(Apoth.Blocks.ENDER_LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("ender_library")
 				);
 		//Formatter::on
 	}

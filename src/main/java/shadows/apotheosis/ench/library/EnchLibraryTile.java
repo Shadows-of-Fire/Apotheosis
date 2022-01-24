@@ -4,10 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import it.unimi.dsi.fastutil.objects.Object2ByteMap;
-import it.unimi.dsi.fastutil.objects.Object2ByteOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Object2ShortMap;
-import it.unimi.dsi.fastutil.objects.Object2ShortOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -28,15 +27,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.placebo.recipe.VanillaPacketDispatcher;
 
-public class EnchLibraryTile extends BlockEntity {
+public abstract class EnchLibraryTile extends BlockEntity {
 
-	protected final Object2ShortMap<Enchantment> points = new Object2ShortOpenHashMap<>();
-	protected final Object2ByteMap<Enchantment> maxLevels = new Object2ByteOpenHashMap<>();
+	protected final Object2IntMap<Enchantment> points = new Object2IntOpenHashMap<>();
+	protected final Object2IntMap<Enchantment> maxLevels = new Object2IntOpenHashMap<>();
 	protected final Set<EnchLibraryContainer> activeContainers = new HashSet<>();
 	protected final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(EnchLibItemHandler::new);
+	protected final int maxLevel;
+	protected final int maxPoints;
 
-	public EnchLibraryTile(BlockPos pos, BlockState state) {
-		super(Apoth.Tiles.LIBRARY, pos, state);
+	public EnchLibraryTile(BlockEntityType<?> type, BlockPos pos, BlockState state, int maxLevel) {
+		super(type, pos, state);
+		this.maxLevel = maxLevel;
+		this.maxPoints = levelToPoints(maxLevel);
 	}
 
 	/**
@@ -50,10 +53,10 @@ public class EnchLibraryTile extends BlockEntity {
 		Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(book);
 		for (Map.Entry<Enchantment, Integer> e : enchs.entrySet()) {
 			if (e.getKey() == null || e.getValue() == null) continue;
-			short nVal = (short) (this.points.getShort(e.getKey()) + levelToPoints(e.getValue()));
-			if (nVal < 0) nVal = Short.MAX_VALUE;
-			this.points.put(e.getKey(), nVal);
-			this.maxLevels.put(e.getKey(), (byte) Math.max(this.maxLevels.getByte(e.getKey()), e.getValue().byteValue()));
+			int newPoints = Math.min(this.maxPoints, this.points.getInt(e.getKey()) + levelToPoints(e.getValue()));
+			if (newPoints < 0) newPoints = maxPoints;
+			this.points.put(e.getKey(), newPoints);
+			this.maxLevels.put(e.getKey(), Math.min(this.maxLevel, Math.max(this.maxLevels.getInt(e.getKey()), e.getValue())));
 		}
 		if (enchs.size() > 0) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
 	}
@@ -69,8 +72,8 @@ public class EnchLibraryTile extends BlockEntity {
 		Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(stack);
 		enchs.put(ench, level);
 		EnchantmentHelper.setEnchantments(enchs, stack);
-		this.points.put(ench, (short) (this.points.getShort(ench) - levelToPoints(level) + levelToPoints(curLvl)));
-		VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+		this.points.put(ench, Math.max(0, (this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl)))); //Safety, should never be below zero anyway.
+		if (!this.level.isClientSide()) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
 	}
 
 	/**
@@ -78,10 +81,10 @@ public class EnchLibraryTile extends BlockEntity {
 	 * @param ench The enchantment being extracted
 	 * @param level The desired target level
 	 * @param currentLevel The current level of this enchantment on the item being applied to.
-	 * @return
+	 * @return If this level of this enchantment can be extracted.
 	 */
 	public boolean canExtract(Enchantment ench, int level, int currentLevel) {
-		return this.maxLevels.getByte(ench) >= level && this.points.getShort(ench) >= levelToPoints(level) - levelToPoints(currentLevel);
+		return this.maxLevels.getInt(ench) >= level && this.points.getInt(ench) >= levelToPoints(level) - levelToPoints(currentLevel);
 	}
 
 	/**
@@ -89,20 +92,20 @@ public class EnchLibraryTile extends BlockEntity {
 	 * @param level The level to convert.
 	 * @return 2^(level - 1)
 	 */
-	public static short levelToPoints(int level) {
-		return (short) Math.pow(2, level - 1);
+	public static int levelToPoints(int level) {
+		return (int) Math.pow(2, level - 1);
 	}
 
 	@Override
 	public void saveAdditional(CompoundTag tag) {
 		CompoundTag points = new CompoundTag();
-		for (Object2ShortMap.Entry<Enchantment> e : this.points.object2ShortEntrySet()) {
-			points.putShort(e.getKey().getRegistryName().toString(), e.getShortValue());
+		for (Object2IntMap.Entry<Enchantment> e : this.points.object2IntEntrySet()) {
+			points.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
 		}
 		tag.put("Points", points);
 		CompoundTag levels = new CompoundTag();
-		for (Object2ByteMap.Entry<Enchantment> e : this.maxLevels.object2ByteEntrySet()) {
-			levels.putByte(e.getKey().getRegistryName().toString(), e.getByteValue());
+		for (Object2IntMap.Entry<Enchantment> e : this.maxLevels.object2IntEntrySet()) {
+			levels.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
 		}
 		tag.put("Levels", levels);
 		super.saveAdditional(tag);
@@ -115,13 +118,13 @@ public class EnchLibraryTile extends BlockEntity {
 		for (String s : points.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
-			this.points.put(ench, points.getShort(s));
+			this.points.put(ench, points.getInt(s));
 		}
 		CompoundTag levels = tag.getCompound("Levels");
 		for (String s : levels.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
-			this.maxLevels.put(ench, levels.getByte(s));
+			this.maxLevels.put(ench, levels.getInt(s));
 		}
 	}
 
@@ -132,13 +135,13 @@ public class EnchLibraryTile extends BlockEntity {
 		for (String s : points.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
-			this.points.put(ench, points.getShort(s));
+			this.points.put(ench, points.getInt(s));
 		}
 		CompoundTag levels = tag.getCompound("Levels");
 		for (String s : levels.getAllKeys()) {
 			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(s));
 			if (ench == null) continue;
-			this.maxLevels.put(ench, levels.getByte(s));
+			this.maxLevels.put(ench, levels.getInt(s));
 		}
 		this.activeContainers.forEach(EnchLibraryContainer::onChanged);
 	}
@@ -152,23 +155,23 @@ public class EnchLibraryTile extends BlockEntity {
 	public CompoundTag getUpdateTag() {
 		CompoundTag tag = super.getUpdateTag();
 		CompoundTag points = new CompoundTag();
-		for (Object2ShortMap.Entry<Enchantment> e : this.points.object2ShortEntrySet()) {
-			points.putShort(e.getKey().getRegistryName().toString(), e.getShortValue());
+		for (Object2IntMap.Entry<Enchantment> e : this.points.object2IntEntrySet()) {
+			points.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
 		}
 		tag.put("Points", points);
 		CompoundTag levels = new CompoundTag();
-		for (Object2ByteMap.Entry<Enchantment> e : this.maxLevels.object2ByteEntrySet()) {
-			levels.putByte(e.getKey().getRegistryName().toString(), e.getByteValue());
+		for (Object2IntMap.Entry<Enchantment> e : this.maxLevels.object2IntEntrySet()) {
+			levels.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
 		}
 		tag.put("Levels", levels);
 		return tag;
 	}
 
-	public Object2ShortMap<Enchantment> getPointsMap() {
+	public Object2IntMap<Enchantment> getPointsMap() {
 		return this.points;
 	}
 
-	public Object2ByteMap<Enchantment> getLevelsMap() {
+	public Object2IntMap<Enchantment> getLevelsMap() {
 		return this.maxLevels;
 	}
 
@@ -180,8 +183,8 @@ public class EnchLibraryTile extends BlockEntity {
 		this.activeContainers.remove(ctr);
 	}
 
-	public byte getMax(Enchantment ench) {
-		return this.maxLevels.getByte(ench);
+	public int getMax(Enchantment ench) {
+		return Math.min(this.maxLevel, this.maxLevels.getInt(ench));
 	}
 
 	@Override
@@ -224,6 +227,22 @@ public class EnchLibraryTile extends BlockEntity {
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
 			return slot == 0 && stack.getItem() == Items.ENCHANTED_BOOK;
+		}
+
+	}
+
+	public static class BasicLibraryTile extends EnchLibraryTile {
+
+		public BasicLibraryTile(BlockPos pos, BlockState state) {
+			super(Apoth.Tiles.LIBRARY, pos, state, 16);
+		}
+
+	}
+
+	public static class EnderLibraryTile extends EnchLibraryTile {
+
+		public EnderLibraryTile(BlockPos pos, BlockState state) {
+			super(Apoth.Tiles.ENDER_LIBRARY, pos, state, 31);
 		}
 
 	}
