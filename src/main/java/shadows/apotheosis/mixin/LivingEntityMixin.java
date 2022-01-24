@@ -20,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apotheosis;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -33,6 +34,7 @@ public abstract class LivingEntityMixin extends Entity {
 	 * @reason Injection of Sundering Potion Effect
 	 * Calculates damage taken based on potions. Required for sundering.
 	 * Called from {@link LivingEntity#getDamageAfterMagicAbsorb(DamageSource, float)}
+	 * TODO: Reduce to @Inject
 	 */
 	@Overwrite
 	public float getDamageAfterMagicAbsorb(DamageSource source, float damage) {
@@ -84,6 +86,6 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Inject(method = "blockUsingShield", at = @At(value = "HEAD"))
 	public void apoth_reflective(LivingEntity attacker, CallbackInfo ci) {
-		Apoth.Enchantments.REFLECTIVE.reflectiveHook((LivingEntity) (Object) this, attacker);
+		if (Apotheosis.enableEnch) Apoth.Enchantments.REFLECTIVE.reflectiveHook((LivingEntity) (Object) this, attacker);
 	}
 }

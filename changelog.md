@@ -3,6 +3,9 @@
 * Made the enchantment library require Infused Hellshelves instead of standard.
 * Added the Library of Alexandria, which goes up to level 31.
 * Added a recipe to make Potion Charms unbreakable.
+* Aikini: Updated chinese translation.
+* Re-Added compat for quark ancient tomes.
+* Fixed issues caused by disabling modules.
 
 ## 5.1.1
 * Fixed a crash caused by a missing null check on LootingLevelEvent#getDamageSource

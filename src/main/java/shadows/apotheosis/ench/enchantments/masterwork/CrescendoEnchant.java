@@ -14,6 +14,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.mixin.CrossbowItemMixin;
 
@@ -50,6 +51,7 @@ public class CrescendoEnchant extends Enchantment {
 	 * Injected by {@link CrossbowItemMixin}
 	 */
 	public static void onArrowFired(ItemStack crossbow) {
+		if (!Apotheosis.enableEnch) return;
 		int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CRESCENDO, crossbow);
 		if (level > 0 && nbt.get() != null) {
 			int shots = crossbow.getTag().getInt("shots");
@@ -72,6 +74,7 @@ public class CrescendoEnchant extends Enchantment {
 	 * Injected by {@link CrossbowItemMixin}
 	 */
 	public static void preArrowFired(ItemStack crossbow) {
+		if (!Apotheosis.enableEnch) return;
 		int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CRESCENDO, crossbow);
 		if (level > 0) {
 			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Tag.TAG_COMPOUND).copy());
@@ -84,6 +87,7 @@ public class CrescendoEnchant extends Enchantment {
 	 * Injected by {@link CrossbowItemMixin}
 	 */
 	public static void markGeneratedArrows(Projectile arrow, ItemStack crossbow) {
+		if (!Apotheosis.enableEnch) return;
 		if (crossbow.getTag().getInt("shots") > 0 && arrow instanceof AbstractArrow arr) {
 			arr.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 		}

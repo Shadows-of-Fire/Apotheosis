@@ -30,8 +30,7 @@ public class CrossbowItemMixin {
 		CrescendoEnchant.preArrowFired(pPlayer.getItemInHand(pHand));
 	}
 
-	//TODO: Update to FAILSOFT
-	@Inject(method = "shootProjectile", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/item/CrossbowItem;getArrow(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/projectile/AbstractArrow;"), locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "shootProjectile", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/item/CrossbowItem;getArrow(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/projectile/AbstractArrow;"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	private static void apoth_markArrows(Level pLevel, LivingEntity pShooter, InteractionHand pHand, ItemStack pCrossbowStack, ItemStack pAmmoStack, float pSoundPitch, boolean pIsCreativeMode, float pVelocity, float pInaccuracy, float pProjectileAngle, CallbackInfo ci, boolean flag, Projectile arrow) {
 		CrescendoEnchant.markGeneratedArrows(arrow, pCrossbowStack);
 	}
