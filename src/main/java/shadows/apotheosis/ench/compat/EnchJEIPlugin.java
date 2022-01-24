@@ -13,7 +13,6 @@ import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -73,17 +72,14 @@ public class EnchJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
+		if (!Apotheosis.enableEnch) return;
 		reg.addRecipeCatalyst(new ItemStack(Blocks.ENCHANTING_TABLE), EnchantingCategory.UID);
 	}
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration reg) {
+		if (!Apotheosis.enableEnch) return;
 		reg.addRecipeCategories(new EnchantingCategory(reg.getJeiHelpers().getGuiHelper()));
-	}
-
-	@Override
-	public void registerRecipeTransferHandlers(IRecipeTransferRegistration reg) {
-		//reg.addRecipeTransferHandler(ApothEnchantContainer.class, EnchantingCategory.UID, 0, 1, 2, 9 * 4); Button doesn't fit in jei :(
 	}
 
 }

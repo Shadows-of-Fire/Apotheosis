@@ -2,7 +2,9 @@ package shadows.apotheosis.ench.compat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -39,6 +41,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 
 	public static final ResourceLocation UID = new ResourceLocation(Apotheosis.MODID, "enchanting");
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_jei.png");
+	private static final Map<Class<?>, Extension<?>> EXTENSIONS = new HashMap<>();
 
 	private final IDrawable background;
 	private final IDrawable icon;
@@ -76,17 +79,28 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 	}
 
 	@Override
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setIngredients(EnchantingRecipe recipe, IIngredients ing) {
-		ing.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-		ing.setInputIngredients(Arrays.asList(recipe.getInput()));
+		Extension ext = EXTENSIONS.get(recipe.getClass());
+		if (ext != null) ext.setIngredients(recipe, ing);
+		else {
+			ing.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
+			ing.setInputIngredients(Arrays.asList(recipe.getInput()));
+		}
 	}
 
 	@Override
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void setRecipe(IRecipeLayout layout, EnchantingRecipe recipe, IIngredients ing) {
 		IGuiItemStackGroup stacks = layout.getItemStacks();
 		stacks.init(0, true, 5, 5);
 		stacks.init(1, false, 36, 5);
-		stacks.set(ing);
+
+		Extension ext = EXTENSIONS.get(recipe.getClass());
+		if (ext != null) ext.setRecipe(recipe, layout, ing);
+		else {
+			stacks.set(ing);
+		}
 	}
 
 	@Override
@@ -183,6 +197,17 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 			pY += 9;
 		}
 
+	}
+
+	public static <T extends EnchantingRecipe> void registerExtension(Class<T> cls, Extension<T> ext) {
+		EXTENSIONS.put(cls, ext);
+	}
+
+	public static interface Extension<T extends EnchantingRecipe> {
+
+		public void setIngredients(T recipe, IIngredients ingredients);
+
+		public void setRecipe(T recipe, IRecipeLayout recipeLayout, IIngredients ingredients);
 	}
 
 }

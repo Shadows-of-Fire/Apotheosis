@@ -1,3 +1,9 @@
+## 5.1.2
+* Fixed a bug with the Enchantment Library where books above level 16 broke everything.
+* Made the enchantment library require Infused Hellshelves instead of standard.
+* Added the Library of Alexandria, which goes up to level 31.
+* Added a recipe to make Potion Charms unbreakable.
+
 ## 5.1.1
 * Fixed a crash caused by a missing null check on LootingLevelEvent#getDamageSource
 * Added the Inert Trident and a new recipe for tridents.

@@ -146,6 +146,7 @@ public class PotionModule {
 	@SubscribeEvent
 	public void serializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(PotionCharmRecipe.Serializer.INSTANCE.setRegistryName(Apoth.Items.POTION_CHARM.getRegistryName()));
+		e.getRegistry().register(PotionEnchantingRecipe.SERIALIZER.setRegistryName("potion_charm_enchanting"));
 	}
 
 	@SubscribeEvent

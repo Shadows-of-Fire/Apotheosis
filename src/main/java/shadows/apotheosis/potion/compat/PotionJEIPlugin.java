@@ -1,6 +1,7 @@
 package shadows.apotheosis.potion.compat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import mezz.jei.api.IModPlugin;
@@ -24,8 +25,10 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.common.util.Size2i;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.ench.compat.EnchantingCategory;
 import shadows.apotheosis.potion.PotionCharmItem;
 import shadows.apotheosis.potion.PotionCharmRecipe;
+import shadows.apotheosis.potion.PotionEnchantingRecipe;
 
 @JeiPlugin
 public class PotionJEIPlugin implements IModPlugin {
@@ -42,6 +45,7 @@ public class PotionJEIPlugin implements IModPlugin {
 	public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration reg) {
 		if (!Apotheosis.enablePotion) return;
 		reg.getCraftingCategory().addCategoryExtension(PotionCharmRecipe.class, PotionCharmRecipeWrapper::new);
+		EnchantingCategory.registerExtension(PotionEnchantingRecipe.class, new PotionCharmEnchantingWrapper());
 	}
 
 	@Override
@@ -96,6 +100,35 @@ public class PotionJEIPlugin implements IModPlugin {
 			Size2i size = this.getSize();
 			PotionJEIPlugin.this.gridHelper.setInputs(guiItemStacks, clones, size.width, size.height);
 			guiItemStacks.set(0, output);
+		}
+
+	}
+
+	private class PotionCharmEnchantingWrapper implements EnchantingCategory.Extension<PotionEnchantingRecipe> {
+
+		@Override
+		public void setIngredients(PotionEnchantingRecipe recipe, IIngredients ing) {
+			ing.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
+			ing.setInputIngredients(Arrays.asList(recipe.getInput()));
+		}
+
+		@Override
+		public void setRecipe(PotionEnchantingRecipe recipe, IRecipeLayout recipeLayout, IIngredients ingredients) {
+			IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
+			ItemStack focus = recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
+			Potion potion = PotionUtils.getPotion(focus);
+			List<List<ItemStack>> recipeInputs = ingredients.getInputs(VanillaTypes.ITEM);
+			List<List<ItemStack>> clones = new ArrayList<>();
+			recipeInputs.forEach(l -> {
+				List<ItemStack> cloneList = new ArrayList<>();
+				l.stream().map(ItemStack::copy).map(s -> s.hasTag() && s.getTag().contains("Potion") ? PotionUtils.setPotion(s, potion) : s).forEach(cloneList::add);
+				clones.add(cloneList);
+			});
+			ItemStack output = new ItemStack(Apoth.Items.POTION_CHARM);
+			output.getOrCreateTag().putBoolean("Unbreakable", true);
+			PotionUtils.setPotion(output, potion);
+			stacks.set(1, output);
+			stacks.set(0, clones.get(0));
 		}
 
 	}

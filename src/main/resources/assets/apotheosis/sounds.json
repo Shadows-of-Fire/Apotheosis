@@ -1,7 +1,2 @@
 {
-	"altar": {
-		"category": "block",
-		"subtitle": "apotheosis.subtitle.altar",
-		"sounds": ["apotheosis:altar"]
-	}
 }
