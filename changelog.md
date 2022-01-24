@@ -1,3 +1,9 @@
+## 5.1.1
+* Fixed a crash caused by a missing null check on LootingLevelEvent#getDamageSource
+* Added the Inert Trident and a new recipe for tridents.
+* Removed the crafting recipe for XP Bottles
+* Added an Infusion Enchanting recipe for XP bottles
+
 ## 5.1.0
 * The Enchantment Module lands on 1.18.1!
 * I'll try my best to list everything, but there's a LOT of changes, so expect some misses!
@@ -16,6 +22,7 @@
 * Item Enchantability now no longer impacts power, but provides a direct Arcana boost.
 * Endless Quiver has been moved from the Potion Module to the Enchanting Module.
 * Added the "Available Enchantments" screen, which can be used while enchanting to see everything you might roll.
+* Removed the Altar of the Sea
 * Update Graphic: https://imgur.com/a/DfJKn4j
 
 ## 5.0.0

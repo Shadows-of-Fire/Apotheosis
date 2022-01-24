@@ -1,0 +1,25 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "minecraft:honey_bottle"
+	},
+	"requirements": {
+		"eterna": 50,
+		"quanta": 25,
+		"arcana": 25
+	},
+	"max_requirements": {
+		"eterna": -1,
+		"quanta": -1,
+		"arcana": -1
+	},
+	"display_level": 3,
+	"result": {
+		"item": "minecraft:experience_bottle",
+		"count": 32
+	}
+}

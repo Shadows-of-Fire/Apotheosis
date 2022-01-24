@@ -159,7 +159,6 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
-		Apotheosis.HELPER.addShaped(Items.EXPERIENCE_BOTTLE, 3, 3, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE, Items.ENCHANTED_BOOK, Items.HONEY_BOTTLE, Items.ENCHANTED_BOOK, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.LIBRARY, 3, 3, Blocks.ENDER_CHEST, Apoth.Blocks.HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.HELLSHELF, Blocks.ENCHANTING_TABLE, Apoth.Blocks.HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.HELLSHELF, Blocks.ENDER_CHEST);
 		LootSystem.defaultBlockTable(Apoth.Blocks.BLAZING_HELLSHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.GLOWING_HELLSHELF);

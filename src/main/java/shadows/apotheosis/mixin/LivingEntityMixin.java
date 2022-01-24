@@ -53,7 +53,7 @@ public abstract class LivingEntityMixin extends Entity {
 			float resisted = damage - newDamage;
 
 			if (resisted > 0.0F && resisted < 3.4028235E37F) {
-				if (this instanceof ServerPlayer sp) {
+				if ((Object) this instanceof ServerPlayer sp) {
 					sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_RESISTED), Math.round(resisted * 10.0F));
 				} else if (source.getEntity() instanceof ServerPlayer sp) {
 					sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_DEALT_RESISTED), Math.round(resisted * 10.0F));

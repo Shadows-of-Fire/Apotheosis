@@ -1,6 +1,6 @@
 package shadows.apotheosis.ench.compat;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -66,7 +66,9 @@ public class EnchJEIPlugin implements IModPlugin {
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.enchanting"));
 		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.library"));
-		reg.addRecipes(Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == EnchantingRecipe.TYPE).collect(Collectors.toList()), EnchantingCategory.UID);
+		List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
+		recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
+		reg.addRecipes(recipes, EnchantingCategory.UID);
 	}
 
 	@Override
