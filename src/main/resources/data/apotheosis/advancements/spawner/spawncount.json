@@ -22,7 +22,7 @@
 			"conditions": {
 				"modifier": "spawn_count",
 				"spawn_count": {
-					"min": 20
+					"min": 16
 				}
 			}
 		}

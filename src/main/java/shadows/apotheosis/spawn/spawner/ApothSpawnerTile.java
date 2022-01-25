@@ -188,6 +188,8 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 								return;
 							}
 
+							if (ApothSpawnerTile.this.hasNoAI) entity.getPersistentData().putBoolean("apotheosis:movable", true);
+
 							int k = pServerLevel.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
 							if (k >= this.maxNearbyEntities) {
 								this.delay(pServerLevel, pPos);

@@ -20,7 +20,7 @@
 		"modifier": {
 			"trigger": "apotheosis:spawner_modifier",
 			"conditions": {
-				"modifier": "require_players"
+				"ignore_players": true
 			}
 		}
 	},

@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -27,9 +28,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -60,6 +63,7 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		MinecraftForge.EVENT_BUS.addListener(this::handleTooltips);
+		MinecraftForge.EVENT_BUS.addListener(this::tickDumbMobs);
 		this.reload(null);
 		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, CreativeModeTab.TAB_MISC, "f_41377_");
 	}
@@ -107,6 +111,16 @@ public class SpawnerModule {
 		if (s.getItem() instanceof SpawnEggItem egg) {
 			EntityType<?> type = egg.getType(s.getTag());
 			if (bannedMobs.contains(type.getRegistryName())) e.getToolTip().add(new TranslatableComponent("misc.apotheosis.banned").withStyle(ChatFormatting.GRAY));
+		}
+	}
+
+	public void tickDumbMobs(LivingUpdateEvent e) {
+		if (e.getEntityLiving() instanceof Mob mob) {
+			if (!mob.level.isClientSide && mob.isNoAi() && mob.getPersistentData().getBoolean("apotheosis:movable")) {
+				mob.setNoAi(false);
+				mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
+				mob.setNoAi(true);
+			}
 		}
 	}
 
