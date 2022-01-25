@@ -75,7 +75,7 @@ public class SpawnerStats {
 		public boolean apply(Boolean value, Boolean min, Boolean max, ApothSpawnerTile spawner) {
 			boolean old = getter.apply(spawner);
 			setter.accept(spawner, value);
-			return old == getter.apply(spawner);
+			return old != getter.apply(spawner);
 		}
 
 		@Override
@@ -99,7 +99,7 @@ public class SpawnerStats {
 		public boolean apply(Integer value, Integer min, Integer max, ApothSpawnerTile spawner) {
 			int old = getter.apply(spawner);
 			setter.accept(spawner, Mth.clamp(old + value, min, max));
-			return old == getter.apply(spawner);
+			return old != getter.apply(spawner);
 		}
 
 		@Override

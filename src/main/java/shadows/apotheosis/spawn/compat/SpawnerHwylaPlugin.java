@@ -9,16 +9,19 @@ import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
 import mcp.mobius.waila.api.config.IPluginConfig;
-import net.minecraft.client.Minecraft;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.spawn.modifiers.SpawnerStats;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
+import shadows.placebo.util.ClientUtil;
 
 @WailaPlugin
 public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<BlockEntity> {
@@ -34,20 +37,25 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 
 	@Override
 	public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-		if (Minecraft.getInstance().options.keyShift.isDown()) {
+		if (ClientUtil.isHoldingCtrl()) {
 			int[] stats = accessor.getServerData().getIntArray(STATS);
-			if (stats.length != 10) return;
-			tooltip.add(new TranslatableComponent("waila.spw.mindelay", stats[0]));
-			tooltip.add(new TranslatableComponent("waila.spw.maxdelay", stats[1]));
-			tooltip.add(new TranslatableComponent("waila.spw.spawncount", stats[2]));
-			tooltip.add(new TranslatableComponent("waila.spw.maxnearby", stats[3]));
-			tooltip.add(new TranslatableComponent("waila.spw.playerrange", stats[4]));
-			tooltip.add(new TranslatableComponent("waila.spw.spawnrange", stats[5]));
-			if (stats[6] == 1) tooltip.add(new TranslatableComponent("waila.spw.ignoreplayers"));
-			if (stats[7] == 1) tooltip.add(new TranslatableComponent("waila.spw.ignoreconditions"));
-			if (stats[8] == 1) tooltip.add(new TranslatableComponent("waila.spw.ignorecap"));
-			if (stats[9] == 1) tooltip.add(new TranslatableComponent("waila.spw.redstone"));
-		} else tooltip.add(new TranslatableComponent("waila.spw.sneak"));
+			if (stats.length != 11) return;
+			tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), stats[0]));
+			tooltip.add(concat(SpawnerStats.MAX_DELAY.name(), stats[1]));
+			tooltip.add(concat(SpawnerStats.SPAWN_COUNT.name(), stats[2]));
+			tooltip.add(concat(SpawnerStats.MAX_NEARBY_ENTITIES.name(), stats[3]));
+			tooltip.add(concat(SpawnerStats.REQ_PLAYER_RANGE.name(), stats[4]));
+			tooltip.add(concat(SpawnerStats.SPAWN_RANGE.name(), stats[5]));
+			if (stats[6] == 1) tooltip.add(SpawnerStats.IGNORE_PLAYERS.name());
+			if (stats[7] == 1) tooltip.add(SpawnerStats.IGNORE_CONDITIONS.name());
+			if (stats[8] == 1) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name());
+			if (stats[9] == 1) tooltip.add(SpawnerStats.IGNORE_LIGHT.name());
+			if (stats[10] == 1) tooltip.add(SpawnerStats.NO_AI.name());
+		} else tooltip.add(new TranslatableComponent("misc.apotheosis.ctrl_stats"));
+	}
+
+	private Component concat(Object... args) {
+		return new TranslatableComponent("misc.apotheosis.value_concat", args).withStyle(ChatFormatting.GRAY);
 	}
 
 	@Override
@@ -55,7 +63,22 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 		if (te instanceof ApothSpawnerTile) {
 			ApothSpawnerTile spw = (ApothSpawnerTile) te;
 			BaseSpawner logic = spw.getSpawner();
-			tag.putIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.requiredPlayerRange, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0, spw.ignoresLight ? 1 : 0, spw.redstoneControl ? 1 : 0 });
+			//Formatter::off
+			tag.putIntArray(STATS, 
+				new int[] { 
+					logic.minSpawnDelay, 
+					logic.maxSpawnDelay, 
+					logic.spawnCount, 
+					logic.maxNearbyEntities, 
+					logic.requiredPlayerRange, 
+					logic.spawnRange, 
+					spw.ignoresPlayers ? 1 : 0, 
+					spw.ignoresConditions ? 1 : 0, 
+					spw.redstoneControl ? 1 : 0,
+					spw.ignoresLight ? 1 : 0, 
+					spw.hasNoAI ? 1 : 0
+				});
+			//Formatter::on
 		}
 	}
 

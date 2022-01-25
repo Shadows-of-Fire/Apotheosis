@@ -2,6 +2,7 @@ package shadows.apotheosis.spawn.modifiers;
 
 import com.google.gson.JsonElement;
 
+import net.minecraft.network.chat.TranslatableComponent;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 public interface SpawnerStat<T> {
@@ -27,4 +28,12 @@ public interface SpawnerStat<T> {
 	boolean apply(T value, T min, T max, ApothSpawnerTile spawner);
 
 	Class<T> getTypeClass();
+
+	default TranslatableComponent name() {
+		return new TranslatableComponent("stat.apotheosis." + getId());
+	}
+
+	default TranslatableComponent desc() {
+		return new TranslatableComponent("stat.apotheosis." + getId() + ".desc");
+	}
 }

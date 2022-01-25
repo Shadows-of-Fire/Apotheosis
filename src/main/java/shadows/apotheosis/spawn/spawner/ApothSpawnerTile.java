@@ -20,6 +20,7 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.SpawnData;
@@ -28,6 +29,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.eventbus.api.Event.Result;
 
 public class ApothSpawnerTile extends SpawnerBlockEntity {
 
@@ -47,6 +50,8 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 		tag.putBoolean("ignore_players", this.ignoresPlayers);
 		tag.putBoolean("ignore_conditions", this.ignoresConditions);
 		tag.putBoolean("redstone_control", this.redstoneControl);
+		tag.putBoolean("ignore_light", this.ignoresLight);
+		tag.putBoolean("no_ai", this.hasNoAI);
 		super.saveAdditional(tag);
 	}
 
@@ -55,6 +60,8 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 		this.ignoresPlayers = tag.getBoolean("ignore_players");
 		this.ignoresConditions = tag.getBoolean("ignore_conditions");
 		this.redstoneControl = tag.getBoolean("redstone_control");
+		this.ignoresLight = tag.getBoolean("ignore_light");
+		this.hasNoAI = tag.getBoolean("no_ai");
 		super.load(tag);
 	}
 
@@ -153,9 +160,10 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 							BlockPos blockpos = new BlockPos(d0, d1, d2);
 
 							//LOGIC CHANGE : Ability to ignore conditions set in the spawner and by the entity.
+							LyingLevel liar = new LyingLevel(pServerLevel);
+							boolean useLiar = false;
 							if (!ApothSpawnerTile.this.ignoresConditions) {
 								if (ApothSpawnerTile.this.ignoresLight) {
-									LyingLevel liar = new LyingLevel(pServerLevel);
 									boolean pass = false;
 									for (int light = 0; light < 16; light++) {
 										liar.setFakeLightLevel(light);
@@ -165,11 +173,12 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 										}
 									}
 									if (!pass) continue;
+									else useLiar = true;
 								} else if (!checkSpawnRules(optional, pServerLevel, blockpos)) continue;
 							}
 
 							compoundtag.putBoolean("NoAI", ApothSpawnerTile.this.hasNoAI); // Technically, this breaks existing spawners that are NoAI... but I've never heard of one of those.
-							
+
 							Entity entity = EntityType.loadEntityRecursive(compoundtag, pServerLevel, p_151310_ -> {
 								p_151310_.moveTo(d0, d1, d2, p_151310_.getYRot(), p_151310_.getXRot());
 								return p_151310_;
@@ -188,12 +197,12 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 							entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), pServerLevel.random.nextFloat() * 360.0F, 0.0F);
 							if (entity instanceof Mob) {
 								Mob mob = (Mob) entity;
-								if (!net.minecraftforge.event.ForgeEventFactory.canEntitySpawnSpawner(mob, pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this)) {
+								if (!canEntitySpawnSpawner(mob, useLiar ? liar : pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this)) {
 									continue;
 								}
 
 								if (this.nextSpawnData.getEntityToSpawn().size() == 1 && this.nextSpawnData.getEntityToSpawn().contains("id", 8)) {
-									if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(mob, pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER)) ((Mob) entity).finalizeSpawn(pServerLevel, pServerLevel.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
+									if (!ForgeEventFactory.doSpecialSpawn(mob, pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER)) ((Mob) entity).finalizeSpawn(pServerLevel, pServerLevel.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
 								}
 							}
 
@@ -217,6 +226,15 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 				}
 			}
+		}
+
+		/**
+		 * Copy of {@link ForgeEventFactory#canEntitySpawnSpawner}
+		 */
+		public boolean canEntitySpawnSpawner(Mob entity, LevelAccessor world, float x, float y, float z, BaseSpawner spawner) {
+			Result result = ForgeEventFactory.canEntitySpawn(entity, world, x, y, z, spawner, MobSpawnType.SPAWNER);
+			if (result == Result.DEFAULT) return (ApothSpawnerTile.this.ignoresConditions || entity.checkSpawnRules(world, MobSpawnType.SPAWNER)) && entity.checkSpawnObstruction(world); // vanilla logic (inverted)
+			else return result == Result.ALLOW;
 		}
 
 		/**

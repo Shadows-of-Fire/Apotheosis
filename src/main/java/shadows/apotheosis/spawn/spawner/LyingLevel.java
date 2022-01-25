@@ -241,4 +241,9 @@ public class LyingLevel implements ServerLevelAccessor {
 		return this.fakeLightLevel;
 	}
 
+	@Override
+	public int getRawBrightness(BlockPos pBlockPos, int pAmount) {
+		return this.fakeLightLevel;
+	}
+
 }

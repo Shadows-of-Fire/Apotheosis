@@ -44,7 +44,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	public SpawnerCategory(IGuiHelper helper) {
 		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 168, 75).build();
 		this.icon = helper.createDrawableIngredient(new ItemStack(Items.SPAWNER));
-		this.title = new TranslatableComponent("jei.spw.title");
+		this.title = new TranslatableComponent("title.apotheosis.spawner");
 	}
 
 	@Override
@@ -114,20 +114,19 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 		int top = 0;
 		int left = 168;
 		for (StatModifier<?> s : recipe.getStatModifiers()) {
-			String statname = s.stat.getId();
 			String value = s.value.toString();
 			if (value.equals("true")) value = "+";
 			else if (value.equals("false")) value = "-";
 			else if (s.value instanceof Number num && num.intValue() > 0) value = "+" + value;
-			Component msg = new TranslatableComponent("misc.apotheosis.concat", value, new TranslatableComponent("stat.apotheosis." + statname));
+			Component msg = new TranslatableComponent("misc.apotheosis.concat", value, s.stat.name());
 			int width = font.width(msg);
 			boolean hover = mouseX >= left - width && mouseX < left && mouseY >= top && mouseY < top + font.lineHeight + 1;
 			font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
 
 			if (hover) {
 				List<Component> list = new ArrayList<>();
-				list.add(new TranslatableComponent("stat.apotheosis." + statname).withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
-				list.add(new TranslatableComponent("stat.apotheosis." + statname + ".desc").withStyle(ChatFormatting.GRAY));
+				list.add(s.stat.name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
+				list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
 				if (s.value instanceof Number) {
 					if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TextComponent(""));
 					if (((Number) s.min).intValue() > 0) list.add(new TranslatableComponent("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));

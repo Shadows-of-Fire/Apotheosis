@@ -86,7 +86,8 @@ def replaceProperties = [modid: modid,
 						 mcVersion: mcVersion, 
 						 forgeVersion: forgeVersion,
 						 mixins: mixins,
-						 clientMixins: clientMixins
+						 clientMixins: clientMixins,
+						 placeboDep: placeboDep
 						]
 processResources {
     inputs.properties replaceProperties

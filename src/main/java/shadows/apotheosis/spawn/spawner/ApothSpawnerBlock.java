@@ -39,6 +39,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
+import shadows.apotheosis.spawn.modifiers.SpawnerStats;
+import shadows.placebo.util.ClientUtil;
 import shadows.placebo.util.IReplacementBlock;
 
 public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock {
@@ -86,7 +88,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 		ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
 		if (te instanceof ApothSpawnerTile tile) {
 			SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
-			if (match.apply(tile)) {
+			if (match != null && match.apply(tile)) {
 				if (world.isClientSide) return InteractionResult.SUCCESS;
 				if (!player.isCreative()) {
 					stack.shrink(1);
@@ -94,8 +96,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 				}
 				AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayer) player, tile, match);
 				world.sendBlockUpdated(pos, state, state, 3);
-				return InteractionResult.CONSUME;
-
+				return InteractionResult.SUCCESS;
 			}
 		}
 		return InteractionResult.PASS;
@@ -105,23 +106,32 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
-			CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
-			if (tag.contains("SpawnData")) tooltip.add(this.grayTranslated("info.spw.entity", tag.getCompound("SpawnData").getCompound("entity").getString("id")));
-			if (tag.contains("MinSpawnDelay")) tooltip.add(this.grayTranslated("waila.spw.mindelay", tag.getShort("MinSpawnDelay")));
-			if (tag.contains("MaxSpawnDelay")) tooltip.add(this.grayTranslated("waila.spw.maxdelay", tag.getShort("MaxSpawnDelay")));
-			if (tag.contains("SpawnCount")) tooltip.add(this.grayTranslated("waila.spw.spawncount", tag.getShort("SpawnCount")));
-			if (tag.contains("MaxNearbyEntities")) tooltip.add(this.grayTranslated("waila.spw.maxnearby", tag.getShort("MaxNearbyEntities")));
-			if (tag.contains("RequiredPlayerRange")) tooltip.add(this.grayTranslated("waila.spw.playerrange", tag.getShort("RequiredPlayerRange")));
-			if (tag.contains("SpawnRange")) tooltip.add(this.grayTranslated("waila.spw.spawnrange", tag.getShort("SpawnRange")));
-			if (tag.getBoolean("ignore_players")) tooltip.add(this.grayTranslated("waila.spw.ignoreplayers"));
-			if (tag.getBoolean("ignore_conditions")) tooltip.add(this.grayTranslated("waila.spw.ignoreconditions"));
-			if (tag.getBoolean("ignore_cap")) tooltip.add(this.grayTranslated("waila.spw.ignorecap"));
-			if (tag.getBoolean("redstone_control")) tooltip.add(this.grayTranslated("waila.spw.redstone"));
+			if (ClientUtil.isHoldingShift()) {
+				CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
+				if (tag.contains("SpawnData")) tooltip.add(concat("misc.apotheosis.entity", tag.getCompound("SpawnData").getCompound("entity").getString("id")));
+				if (tag.contains("MinSpawnDelay")) tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), tag.getShort("MinSpawnDelay")));
+				if (tag.contains("MaxSpawnDelay")) tooltip.add(concat(SpawnerStats.MAX_DELAY.name(), tag.getShort("MaxSpawnDelay")));
+				if (tag.contains("SpawnCount")) tooltip.add(concat(SpawnerStats.SPAWN_COUNT.name(), tag.getShort("SpawnCount")));
+				if (tag.contains("MaxNearbyEntities")) tooltip.add(concat(SpawnerStats.MAX_NEARBY_ENTITIES.name(), tag.getShort("MaxNearbyEntities")));
+				if (tag.contains("RequiredPlayerRange")) tooltip.add(concat(SpawnerStats.REQ_PLAYER_RANGE.name(), tag.getShort("RequiredPlayerRange")));
+				if (tag.contains("SpawnRange")) tooltip.add(concat(SpawnerStats.SPAWN_RANGE.name(), tag.getShort("SpawnRange")));
+				if (tag.getBoolean("ignore_players")) tooltip.add(SpawnerStats.IGNORE_PLAYERS.name().withStyle(ChatFormatting.GRAY));
+				if (tag.getBoolean("ignore_conditions")) tooltip.add(SpawnerStats.IGNORE_CONDITIONS.name().withStyle(ChatFormatting.GRAY));
+				if (tag.getBoolean("redstone_control")) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.GRAY));
+				if (tag.getBoolean("ignore_light")) tooltip.add(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.GRAY));
+				if (tag.getBoolean("no_ai")) tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.GRAY));
+			} else {
+				tooltip.add(new TranslatableComponent("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
+			}
 		}
 	}
 
-	private Component grayTranslated(String s, Object... args) {
-		return new TranslatableComponent(s, args).withStyle(ChatFormatting.GRAY);
+	private Component concat(String s, Object... args) {
+		return concat(new TranslatableComponent(s), args[0]);
+	}
+
+	private Component concat(Object... args) {
+		return new TranslatableComponent("misc.apotheosis.value_concat", args).withStyle(ChatFormatting.GRAY);
 	}
 
 	@Override

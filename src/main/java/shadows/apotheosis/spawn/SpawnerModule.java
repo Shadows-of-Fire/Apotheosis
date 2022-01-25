@@ -1,15 +1,19 @@
 package shadows.apotheosis.spawn;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.CreativeModeTab;
@@ -26,6 +30,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -45,7 +50,7 @@ public class SpawnerModule {
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
 	public static int spawnerSilkLevel = 1;
 	public static int spawnerSilkDamage = 100;
-	public static List<String> bannedMobs = new ArrayList<>();
+	public static Set<ResourceLocation> bannedMobs = new HashSet<>();
 
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
@@ -54,6 +59,7 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::handleCapturing);
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
+		MinecraftForge.EVENT_BUS.addListener(this::handleTooltips);
 		this.reload(null);
 		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, CreativeModeTab.TAB_MISC, "f_41377_");
 	}
@@ -78,7 +84,7 @@ public class SpawnerModule {
 		if (killer instanceof LivingEntity) {
 			int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CAPTURING, ((LivingEntity) killer).getMainHandItem());
 			LivingEntity killed = e.getEntityLiving();
-			if (bannedMobs.contains(killed.getType().getRegistryName().toString())) return;
+			if (bannedMobs.contains(killed.getType().getRegistryName())) return;
 			if (killed.level.random.nextFloat() < level / 250F) {
 				ItemStack egg = new ItemStack(SpawnEggItem.BY_ID.get(killed.getType()));
 				e.getDrops().add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));
@@ -87,23 +93,21 @@ public class SpawnerModule {
 	}
 
 	public void handleUseItem(RightClickBlock e) {
-		/*
-		BlockEntity te;
-		if ((te = e.getWorld().getBlockEntity(e.getPos())) instanceof ApothSpawnerTile) {
+		if (e.getWorld().getBlockEntity(e.getPos()) instanceof ApothSpawnerTile) {
 			ItemStack s = e.getItemStack();
-		
-			if (e.getPlayer().isShiftKeyDown() && s.getItem() instanceof SpawnEggItem) {
-				if (SpawnerModifiers.EGG.modify((ApothSpawnerTile) te, s, false)) {
-					e.setCanceled(true);
-					return;
-				}
+			if (s.getItem() instanceof SpawnEggItem egg) {
+				EntityType<?> type = egg.getType(s.getTag());
+				if (bannedMobs.contains(type.getRegistryName())) e.setCanceled(true);
 			}
-		
-			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(e.getPlayer().getItemInHand(e.getHand() == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND));
-			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values())
-				if (sm.canModify((ApothSpawnerTile) te, s, inverse)) e.setUseBlock(Result.ALLOW);
 		}
-		*/
+	}
+
+	public void handleTooltips(ItemTooltipEvent e) {
+		ItemStack s = e.getItemStack();
+		if (s.getItem() instanceof SpawnEggItem egg) {
+			EntityType<?> type = egg.getType(s.getTag());
+			if (bannedMobs.contains(type.getRegistryName())) e.getToolTip().add(new TranslatableComponent("misc.apotheosis.banned").withStyle(ChatFormatting.GRAY));
+		}
 	}
 
 	public void reload(ApotheosisReloadEvent e) {
@@ -113,7 +117,7 @@ public class SpawnerModule {
 		bannedMobs.clear();
 		String[] bans = config.getStringList("Banned Mobs", "spawn_eggs", new String[0], "A list of entity registry names that cannot be applied to spawners via egg.");
 		for (String s : bans)
-			bannedMobs.add(s);
+			bannedMobs.add(new ResourceLocation(s));
 		if (e == null && config.hasChanged()) config.save();
 	}
 
