@@ -1,0 +1,20 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:fermented_spider_eye"
+	},
+	"offhand": {
+		"item": "minecraft:quartz"
+	},
+	"consumes_offhand": false,
+	"stat_changes": [{
+		"id": "spawn_count",
+		"value": -1,
+		"min": 1,
+		"max": -1
+	}]
+}

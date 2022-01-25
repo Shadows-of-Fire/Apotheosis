@@ -21,6 +21,7 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,8 +33,9 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 	public boolean ignoresPlayers = false;
 	public boolean ignoresConditions = false;
-	public boolean ignoresCap = false;
-	public boolean redstoneEnabled = false;
+	public boolean redstoneControl = false;
+	public boolean ignoresLight = false;
+	public boolean hasNoAI = false;
 
 	public ApothSpawnerTile(BlockPos pos, BlockState state) {
 		super(pos, state);
@@ -44,8 +46,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 	public void saveAdditional(CompoundTag tag) {
 		tag.putBoolean("ignore_players", this.ignoresPlayers);
 		tag.putBoolean("ignore_conditions", this.ignoresConditions);
-		tag.putBoolean("ignore_cap", this.ignoresCap);
-		tag.putBoolean("redstone_control", this.redstoneEnabled);
+		tag.putBoolean("redstone_control", this.redstoneControl);
 		super.saveAdditional(tag);
 	}
 
@@ -53,8 +54,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 	public void load(CompoundTag tag) {
 		this.ignoresPlayers = tag.getBoolean("ignore_players");
 		this.ignoresConditions = tag.getBoolean("ignore_conditions");
-		this.ignoresCap = tag.getBoolean("ignore_cap");
-		this.redstoneEnabled = tag.getBoolean("redstone_control");
+		this.redstoneControl = tag.getBoolean("redstone_control");
 		super.load(tag);
 	}
 
@@ -88,7 +88,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 		private boolean isActivated(Level level, BlockPos pos) {
 			boolean flag = ApothSpawnerTile.this.ignoresPlayers || level.hasNearbyAlivePlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, this.requiredPlayerRange);
-			return flag && (!ApothSpawnerTile.this.redstoneEnabled || ApothSpawnerTile.this.level.hasNeighborSignal(pos));
+			return flag && (!ApothSpawnerTile.this.redstoneControl || ApothSpawnerTile.this.level.hasNeighborSignal(pos));
 		}
 
 		private void delay(Level pLevel, BlockPos pPos) {
@@ -154,20 +154,22 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 							//LOGIC CHANGE : Ability to ignore conditions set in the spawner and by the entity.
 							if (!ApothSpawnerTile.this.ignoresConditions) {
-								if (this.nextSpawnData.getCustomSpawnRules().isPresent()) {
-									if (!optional.get().getCategory().isFriendly() && pServerLevel.getDifficulty() == Difficulty.PEACEFUL) {
-										continue;
+								if (ApothSpawnerTile.this.ignoresLight) {
+									LyingLevel liar = new LyingLevel(pServerLevel);
+									boolean pass = false;
+									for (int light = 0; light < 16; light++) {
+										liar.setFakeLightLevel(light);
+										if (checkSpawnRules(optional, liar, blockpos)) {
+											pass = true;
+											break;
+										}
 									}
-
-									SpawnData.CustomSpawnRules spawndata$customspawnrules = this.nextSpawnData.getCustomSpawnRules().get();
-									if (!spawndata$customspawnrules.blockLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.BLOCK, blockpos)) || !spawndata$customspawnrules.skyLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.SKY, blockpos))) {
-										continue;
-									}
-								} else if (!SpawnPlacements.checkSpawnRules(optional.get(), pServerLevel, MobSpawnType.SPAWNER, blockpos, pServerLevel.getRandom())) {
-									continue;
-								}
+									if (!pass) continue;
+								} else if (!checkSpawnRules(optional, pServerLevel, blockpos)) continue;
 							}
 
+							compoundtag.putBoolean("NoAI", ApothSpawnerTile.this.hasNoAI); // Technically, this breaks existing spawners that are NoAI... but I've never heard of one of those.
+							
 							Entity entity = EntityType.loadEntityRecursive(compoundtag, pServerLevel, p_151310_ -> {
 								p_151310_.moveTo(d0, d1, d2, p_151310_.getYRot(), p_151310_.getXRot());
 								return p_151310_;
@@ -177,13 +179,10 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 								return;
 							}
 
-							//LOGIC CHANGE : Ability to ignore the spawned entity cap - infinite spawning potential!
-							if (!ApothSpawnerTile.this.ignoresCap) {
-								int k = pServerLevel.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
-								if (k >= this.maxNearbyEntities) {
-									this.delay(pServerLevel, pPos);
-									return;
-								}
+							int k = pServerLevel.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
+							if (k >= this.maxNearbyEntities) {
+								this.delay(pServerLevel, pPos);
+								return;
 							}
 
 							entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), pServerLevel.random.nextFloat() * 360.0F, 0.0F);
@@ -219,6 +218,27 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 				}
 			}
 		}
+
+		/**
+		 * Checks if the requested entity passes spawn rule checks or not.
+		 */
+		private boolean checkSpawnRules(Optional<EntityType<?>> optional, ServerLevelAccessor pServerLevel, BlockPos blockpos) {
+			if (this.nextSpawnData.getCustomSpawnRules().isPresent()) {
+				if (!optional.get().getCategory().isFriendly() && pServerLevel.getDifficulty() == Difficulty.PEACEFUL) {
+					return false;
+				}
+
+				SpawnData.CustomSpawnRules spawndata$customspawnrules = this.nextSpawnData.getCustomSpawnRules().get();
+				if (ApothSpawnerTile.this.ignoresLight) return true; // All custom spawn rules are light-based, so if we ignore light, we can short-circuit here.
+				if (!spawndata$customspawnrules.blockLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.BLOCK, blockpos)) || !spawndata$customspawnrules.skyLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.SKY, blockpos))) {
+					return false;
+				}
+			} else if (!SpawnPlacements.checkSpawnRules(optional.get(), pServerLevel, MobSpawnType.SPAWNER, blockpos, pServerLevel.getRandom())) {
+				return false;
+			}
+			return true;
+		}
+
 	}
 
 }

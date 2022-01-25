@@ -55,7 +55,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 		if (te instanceof ApothSpawnerTile) {
 			ApothSpawnerTile spw = (ApothSpawnerTile) te;
 			BaseSpawner logic = spw.getSpawner();
-			tag.putIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.requiredPlayerRange, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0, spw.ignoresCap ? 1 : 0, spw.redstoneEnabled ? 1 : 0 });
+			tag.putIntArray(STATS, new int[] { logic.minSpawnDelay, logic.maxSpawnDelay, logic.spawnCount, logic.maxNearbyEntities, logic.requiredPlayerRange, logic.spawnRange, spw.ignoresPlayers ? 1 : 0, spw.ignoresConditions ? 1 : 0, spw.ignoresLight ? 1 : 0, spw.redstoneControl ? 1 : 0 });
 		}
 	}
 

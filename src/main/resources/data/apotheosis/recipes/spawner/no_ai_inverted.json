@@ -1,0 +1,18 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:chorus_fruit"
+	},
+	"offhand": {
+		"item": "minecraft:quartz"
+	},
+	"consumes_offhand": false,
+	"stat_changes": [{
+		"id": "no_ai",
+		"value": false
+	}]
+}

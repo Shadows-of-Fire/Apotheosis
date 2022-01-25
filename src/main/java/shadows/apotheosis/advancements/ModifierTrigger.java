@@ -7,7 +7,6 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.CriterionTrigger;
@@ -20,7 +19,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile.SpawnerLogicExt;
@@ -74,10 +72,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 		Boolean ignoreConditions = json.has("ignore_conditions") ? json.get("ignore_conditions").getAsBoolean() : null;
 		Boolean ignoreCap = json.has("ignore_cap") ? json.get("ignore_cap").getAsBoolean() : null;
 		Boolean redstone = json.has("redstone") ? json.get("redstone").getAsBoolean() : null;
-		JsonElement modif = json.get("modifier");
-		SpawnerModifier modifier = null;
-		if (modif != null) modifier = SpawnerModifiers.MODIFIERS.values().stream().filter(m -> m.getId().equals(modif.getAsString())).findAny().orElse(null);
-		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, redstone, modifier);
+		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, redstone);
 	}
 
 	public void trigger(ServerPlayer player, ApothSpawnerTile tile, SpawnerModifier modif) {
@@ -99,9 +94,8 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 		private final Boolean ignoreConditions;
 		private final Boolean ignoreCap;
 		private final Boolean redstone;
-		private final SpawnerModifier modifier;
 
-		public Instance(MinMaxBounds.Ints minDelay, MinMaxBounds.Ints maxDelay, MinMaxBounds.Ints spawnCount, MinMaxBounds.Ints nearbyEnts, MinMaxBounds.Ints playerRange, MinMaxBounds.Ints spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone, SpawnerModifier modifier) {
+		public Instance(MinMaxBounds.Ints minDelay, MinMaxBounds.Ints maxDelay, MinMaxBounds.Ints spawnCount, MinMaxBounds.Ints nearbyEnts, MinMaxBounds.Ints playerRange, MinMaxBounds.Ints spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone) {
 			super(ModifierTrigger.ID, EntityPredicate.Composite.ANY);
 			this.minDelay = minDelay;
 			this.maxDelay = maxDelay;
@@ -113,7 +107,6 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 			this.ignoreConditions = ignoreConditions;
 			this.ignoreCap = ignoreCap;
 			this.redstone = redstone;
-			this.modifier = modifier;
 		}
 
 		@Override
@@ -123,7 +116,6 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 
 		public boolean test(ApothSpawnerTile tile, SpawnerModifier modif) {
 			SpawnerLogicExt logic = (SpawnerLogicExt) tile.spawner;
-			if (this.modifier != null && modif != this.modifier) return false;
 			if (!this.minDelay.matches(logic.minSpawnDelay)) return false;
 			if (!this.maxDelay.matches(logic.maxSpawnDelay)) return false;
 			if (!this.spawnCount.matches(logic.spawnCount)) return false;
@@ -132,8 +124,8 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 			if (!this.spawnRange.matches(logic.spawnRange)) return false;
 			if (this.ignorePlayers != null && tile.ignoresPlayers != this.ignorePlayers) return false;
 			if (this.ignoreConditions != null && tile.ignoresConditions != this.ignoreConditions) return false;
-			if (this.ignoreCap != null && tile.ignoresCap != this.ignoreCap) return false;
-			if (this.redstone != null && tile.redstoneEnabled != this.redstone) return false;
+			//if (this.ignoreCap != null && tile.ignoresCap != this.ignoreCap) return false;
+			if (this.redstone != null && tile.redstoneControl != this.redstone) return false;
 			return true;
 		}
 	}

@@ -18,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -38,7 +37,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.apotheosis.advancements.AdvancementTriggers;
-import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.placebo.util.IReplacementBlock;
@@ -83,20 +81,21 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		ItemStack stack = player.getItemInHand(hand);
 		BlockEntity te = world.getBlockEntity(pos);
+		ItemStack stack = player.getItemInHand(hand);
+		ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
 		if (te instanceof ApothSpawnerTile tile) {
-			boolean inverse = SpawnerModifiers.INVERSE.getIngredient().test(player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND));
-			for (SpawnerModifier sm : SpawnerModifiers.MODIFIERS.values()) {
-				if (sm.canModify(tile, stack, inverse)) {
-					if (world.isClientSide) return InteractionResult.SUCCESS;
-					if (sm.modify(tile, stack, inverse)) {
-						if (!player.isCreative() && !(stack.getItem() instanceof SpawnEggItem)) stack.shrink(1);
-						AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayer) player, tile, sm);
-						world.sendBlockUpdated(pos, state, state, 3);
-						return InteractionResult.SUCCESS;
-					}
+			SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
+			if (match.apply(tile)) {
+				if (world.isClientSide) return InteractionResult.SUCCESS;
+				if (!player.isCreative()) {
+					stack.shrink(1);
+					if (match.consumesOffhand()) otherStack.shrink(1);
 				}
+				AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayer) player, tile, match);
+				world.sendBlockUpdated(pos, state, state, 3);
+				return InteractionResult.CONSUME;
+
 			}
 		}
 		return InteractionResult.PASS;
