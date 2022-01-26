@@ -47,6 +47,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -61,6 +62,7 @@ import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
 import shadows.apotheosis.ench.anvil.ApothAnvilItem;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
+import shadows.apotheosis.ench.compat.EnchTOPPlugin;
 import shadows.apotheosis.ench.enchantments.ChromaticEnchant;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.InertEnchantment;
@@ -182,6 +184,7 @@ public class EnchModule {
 		e.enqueueWork(() -> {
 			DispenserBlock.registerBehavior(Items.SHEARS, new ShearsDispenseItemBehavior());
 		});
+		if (ModList.get().isLoaded("theoneprobe")) EnchTOPPlugin.register();
 	}
 
 	@SubscribeEvent
