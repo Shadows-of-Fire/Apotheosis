@@ -2,6 +2,7 @@
 * Improved the Spawner Modifiers JEI window.
 * Fixed a bug when viewing all recipes, and the potion charm recipe showed up (which crashed).
 * Improved error handling when an invalid banned mob entry is detected.
+* Fixed Endless Quiver translation.
 
 ## 5.2.0
 * The Spawner Module has been rewritten!

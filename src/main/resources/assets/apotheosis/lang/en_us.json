@@ -493,6 +493,9 @@
 
 	"enchantment.apotheosis.spearfishing": "Spearfishing",
     "enchantment.apotheosis.spearfishing.desc": "Kills with a thrown trident may catch a fish.",
+	
+    "enchantment.apotheosis.endless_quiver": "Endless Quiver",
+    "enchantment.apotheosis.endless_quiver.desc": "Makes all arrows infinite.",
 
     "comment_id": "/Vanilla",
 	"generic.reachDistance": "Reach Distance",
@@ -661,8 +664,6 @@
 	"info.apotheosis.all_available": "View all available enchantments",
 	
     "comment_id": "/Potion Module",
-    "enchantment.apotheosis.true_infinity": "Endless Quiver",
-    "enchantment.apotheosis.true_infinity.desc": "Makes all arrows infinite.",
 
     "item.minecraft.potion.effect.resistance": "Potion of Resistance",
     "item.minecraft.splash_potion.effect.resistance": "Splash Potion of Resistance",
