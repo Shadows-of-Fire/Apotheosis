@@ -1,0 +1,12 @@
+{
+	"replace": false,
+	"values": [{
+			"id": "apotheosis:beeshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:melonshelf",
+			"required": false
+		}
+	]
+}

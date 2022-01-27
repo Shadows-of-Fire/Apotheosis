@@ -1,3 +1,7 @@
+## 5.2.2
+* Fixed various blocks not breaking faster with the correct tool.
+* Fixed various blocks not dropping when broken.
+
 ## 5.2.1
 * Improved the Spawner Modifiers JEI window.
 * Fixed a bug when viewing all recipes, and the potion charm recipe showed up (which crashed).

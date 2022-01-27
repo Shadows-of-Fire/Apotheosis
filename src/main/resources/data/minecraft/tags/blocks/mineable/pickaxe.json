@@ -1,0 +1,76 @@
+{
+	"replace": false,
+	"values": [{
+			"id": "apotheosis:endshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:pearl_endshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:draconic_endshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:hellshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:infused_hellshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:blazing_hellshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:glowing_hellshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:seashelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:infused_seashelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:crystal_seashelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:heart_seashelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:library",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rectifier",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rectifier_t2",
+			"required": false
+		},
+		{
+			"id": "apotheosis:rectifier_t3",
+			"required": false
+		},
+		{
+			"id": "apotheosis:sightshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:sightshelf_t2",
+			"required": false
+		},
+		{
+			"id": "apotheosis:ender_library",
+			"required": false
+		}
+	]
+}

@@ -164,8 +164,12 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
 		Apotheosis.HELPER.addShaped(Apoth.Blocks.LIBRARY, 3, 3, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENCHANTING_TABLE, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST);
+		LootSystem.defaultBlockTable(Apoth.Blocks.HELLSHELF);
+		LootSystem.defaultBlockTable(Apoth.Blocks.INFUSED_HELLSHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.BLAZING_HELLSHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.GLOWING_HELLSHELF);
+		LootSystem.defaultBlockTable(Apoth.Blocks.SEASHELF);
+		LootSystem.defaultBlockTable(Apoth.Blocks.INFUSED_SEASHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.CRYSTAL_SEASHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.HEART_SEASHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.ENDSHELF);
@@ -179,6 +183,7 @@ public class EnchModule {
 		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T3);
 		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF);
 		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF_T2);
+		LootSystem.defaultBlockTable(Apoth.Blocks.ENDER_LIBRARY);
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		e.enqueueWork(() -> {
