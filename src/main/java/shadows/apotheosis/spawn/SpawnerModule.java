@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -134,7 +135,12 @@ public class SpawnerModule {
 		bannedMobs.clear();
 		String[] bans = config.getStringList("Banned Mobs", "spawn_eggs", new String[0], "A list of entity registry names that cannot be applied to spawners via egg.");
 		for (String s : bans)
-			bannedMobs.add(new ResourceLocation(s));
+			try {
+				bannedMobs.add(new ResourceLocation(s));
+			} catch (ResourceLocationException ex) {
+				SpawnerModule.LOG.error("Invalid entry {} detected in the spawner banned mobs list.", s);
+				ex.printStackTrace();
+			}
 		if (e == null && config.hasChanged()) config.save();
 	}
 

@@ -63,10 +63,10 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout layout, SpawnerModifier wrap, IIngredients ing) {
+	public void setRecipe(IRecipeLayout layout, SpawnerModifier recipe, IIngredients ing) {
 		IGuiItemStackGroup stacks = layout.getItemStacks();
 		stacks.init(0, true, 10, 10);
-		stacks.init(1, true, 10, 47);
+		if (recipe.getOffhandInput() != Ingredient.EMPTY) stacks.init(1, true, 10, 47);
 		stacks.set(ing);
 	}
 
@@ -88,12 +88,16 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 
 	@Override
 	public void draw(SpawnerModifier recipe, PoseStack stack, double mouseX, double mouseY) {
+		if (recipe.getOffhandInput() == Ingredient.EMPTY) {
+			GuiComponent.blit(stack, 1, 31, 0, 0, 88, 28, 34, 256, 256);
+		}
+
 		Screen scn = Minecraft.getInstance().screen;
 		if (scn == null) return; // We need this to render tooltips, bail if its not there.
 		if (mouseX >= -1 && mouseX < 9 && mouseY >= 13 && mouseY < 13 + 12) {
 			GuiComponent.blit(stack, -1, 13, 0, 0, 75, 10, 12, 256, 256);
 			scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.apotheosis.mainhand")), (int) mouseX, (int) mouseY);
-		} else if (mouseX >= -1 && mouseX < 9 && mouseY >= 50 && mouseY < 50 + 12) {
+		} else if (mouseX >= -1 && mouseX < 9 && mouseY >= 50 && mouseY < 50 + 12 && recipe.getOffhandInput() != Ingredient.EMPTY) {
 			GuiComponent.blit(stack, -1, 50, 0, 0, 75, 10, 12, 256, 256);
 			scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.apotheosis.offhand"), new TranslatableComponent("misc.apotheosis.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX, (int) mouseY);
 		} else if (mouseX >= 33 && mouseX < 33 + 16 && mouseY >= 30 && mouseY < 30 + 16) {
@@ -106,12 +110,12 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 		mvMatrix.setIdentity();
 		mvMatrix.multiply(stack.last().pose());
 		mvStack.translate(0, 0.5, -2000);
-		Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(new ItemStack(Items.SPAWNER), 34, 29);
+		Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(new ItemStack(Items.SPAWNER), 31, 29);
 		mvStack.popPose();
 		RenderSystem.applyModelViewMatrix();
 
 		Font font = Minecraft.getInstance().font;
-		int top = 0;
+		int top = 75 / 2 - (recipe.getStatModifiers().size() * (font.lineHeight + 2)) / 2 + 2;
 		int left = 168;
 		for (StatModifier<?> s : recipe.getStatModifiers()) {
 			String value = s.value.toString();

@@ -13,6 +13,7 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
+import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICustomCraftingCategoryExtension;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
@@ -22,6 +23,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.common.util.Size2i;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
@@ -86,8 +88,9 @@ public class PotionJEIPlugin implements IModPlugin {
 		@Override
 		public void setRecipe(IRecipeLayout recipeLayout, IIngredients ingredients) {
 			IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-			ItemStack focus = recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
-			Potion potion = PotionUtils.getPotion(focus);
+			IFocus<ItemStack> fcs = recipeLayout.getFocus(VanillaTypes.ITEM);
+			ItemStack focus = fcs == null ? ItemStack.EMPTY : recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
+			Potion potion = PotionUtils.getPotion(focus) == Potions.EMPTY ? Potions.STRONG_SWIFTNESS : PotionUtils.getPotion(focus);
 			List<List<ItemStack>> recipeInputs = ingredients.getInputs(VanillaTypes.ITEM);
 			List<List<ItemStack>> clones = new ArrayList<>();
 			recipeInputs.forEach(l -> {
@@ -115,20 +118,15 @@ public class PotionJEIPlugin implements IModPlugin {
 		@Override
 		public void setRecipe(PotionEnchantingRecipe recipe, IRecipeLayout recipeLayout, IIngredients ingredients) {
 			IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
-			ItemStack focus = recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
-			Potion potion = PotionUtils.getPotion(focus);
-			List<List<ItemStack>> recipeInputs = ingredients.getInputs(VanillaTypes.ITEM);
-			List<List<ItemStack>> clones = new ArrayList<>();
-			recipeInputs.forEach(l -> {
-				List<ItemStack> cloneList = new ArrayList<>();
-				l.stream().map(ItemStack::copy).map(s -> s.hasTag() && s.getTag().contains("Potion") ? PotionUtils.setPotion(s, potion) : s).forEach(cloneList::add);
-				clones.add(cloneList);
-			});
+			IFocus<ItemStack> fcs = recipeLayout.getFocus(VanillaTypes.ITEM);
+			ItemStack focus = fcs == null ? ItemStack.EMPTY : recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
+			Potion potion = PotionUtils.getPotion(focus) == Potions.EMPTY ? Potions.STRONG_SWIFTNESS : PotionUtils.getPotion(focus);
 			ItemStack output = new ItemStack(Apoth.Items.POTION_CHARM);
-			output.getOrCreateTag().putBoolean("Unbreakable", true);
 			PotionUtils.setPotion(output, potion);
+			ItemStack input = output.copy();
+			output.getOrCreateTag().putBoolean("Unbreakable", true);
 			stacks.set(1, output);
-			stacks.set(0, clones.get(0));
+			stacks.set(0, input);
 		}
 
 	}

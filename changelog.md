@@ -1,3 +1,8 @@
+## 5.2.1
+* Improved the Spawner Modifiers JEI window.
+* Fixed a bug when viewing all recipes, and the potion charm recipe showed up (which crashed).
+* Improved error handling when an invalid banned mob entry is detected.
+
 ## 5.2.0
 * The Spawner Module has been rewritten!
 * Spawner Modifiers are now a JSON-based recipe system, with two inputs to any number of stat changes.
