@@ -21,6 +21,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -127,20 +128,28 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 			boolean hover = mouseX >= left - width && mouseX < left && mouseY >= top && mouseY < top + font.lineHeight + 1;
 			font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
 
+			int maxWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+			maxWidth = maxWidth - (maxWidth - 198) / 2 - 198;
+
 			if (hover) {
 				List<Component> list = new ArrayList<>();
 				list.add(s.stat.name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
 				list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
 				if (s.value instanceof Number) {
-					if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TextComponent(""));
+					if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TextComponent(" "));
 					if (((Number) s.min).intValue() > 0) list.add(new TranslatableComponent("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));
 					if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TranslatableComponent("misc.apotheosis.max_value", s.max).withStyle(ChatFormatting.GRAY));
 				}
-				scn.renderComponentTooltip(stack, list, left + 6, (int) mouseY);
+				renderComponentTooltip(scn, stack, list, left + 6, (int) mouseY, maxWidth, font);
 			}
 
 			top += font.lineHeight + 2;
 		}
+	}
+
+	private static void renderComponentTooltip(Screen scn, PoseStack stack, List<Component> list, int x, int y, int maxWidth, Font font) {
+		List<FormattedText> text = list.stream().map(c -> font.getSplitter().splitLines(c, maxWidth, c.getStyle())).flatMap(List::stream).toList();
+		scn.renderComponentTooltip(stack, text, x, y, font);
 	}
 
 }

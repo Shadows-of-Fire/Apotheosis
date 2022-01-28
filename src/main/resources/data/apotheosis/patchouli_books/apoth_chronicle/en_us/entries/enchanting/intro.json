@@ -1,0 +1,11 @@
+{
+    "name": "book.apotheosis.ench_module.intro",
+    "icon": "minecraft:enchanting_table",
+    "category": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "This is a test entry, but it should show up!"
+        }
+    ]
+}

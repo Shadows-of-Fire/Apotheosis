@@ -64,6 +64,9 @@ repositories {
 	maven {
 		url "https://maven.k-4u.nl/"
 	}
+	maven { 
+		url "https://maven.blamejared.com"
+	}
 }
 
 dependencies {
@@ -76,6 +79,8 @@ dependencies {
 	implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {
 		transitive = false
 	})
+	compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouliVer}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouliVer}")
 }
 
 mixin {

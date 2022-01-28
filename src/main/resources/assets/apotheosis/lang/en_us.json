@@ -322,8 +322,8 @@
 	"stat.apotheosis.no_ai.desc": "Spawned entities will have no AI",
 
     "title.apotheosis.spawner": "Spawner Modification",
-    "info.apotheosis.spawner": "Spawners can be collected with %s, and may be modified with various items.",
-    "info.apotheosis.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n+0.4%% chance per level.",
+    "info.apotheosis.spawner": "Spawners can be collected with %s and may be modified with various items.",
+    "info.apotheosis.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n \\nDrop Rate: 0.4%% per level",
 
     "comment_id": "/Enchantment Module",
     "block.apotheosis.hellshelf": "Hellshelf",
@@ -749,5 +749,10 @@
 	"comment_id": "/Misc",
 	"generic.reachDistance": "Reach Distance",
 	"info.apoth.modifier_disabled": "This Modifier is Disabled",
-	"itemGroup.apotheosis": "Apotheosis"
+	"itemGroup.apotheosis": "Apotheosis",
+	
+	"comment_id": "Guidebook",
+	"book.apotheosis.name": "Chronicle of Shadows",
+	"book.apotheosis.subtitle": "Apotheotic Guide",
+	"book.apotheosis.landing": "Welcome to the world of Apotheosis.$(br2)Apotheosis is organized into $(#8080FF)Modules$(), and so is the content of this book.$(br2)Disabled modules are hidden."
 }

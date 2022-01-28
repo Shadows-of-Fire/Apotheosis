@@ -1,3 +1,7 @@
+## 5.2.3
+* Further updated the Spawner Modifiers JEI window.
+* Improved TOP/Jade Spawner support.
+
 ## 5.2.2
 * Fixed various blocks not breaking faster with the correct tool.
 * Fixed various blocks not dropping when broken.

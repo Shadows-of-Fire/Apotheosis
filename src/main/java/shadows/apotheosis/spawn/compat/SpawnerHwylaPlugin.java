@@ -12,6 +12,7 @@ import mcp.mobius.waila.api.config.IPluginConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BaseSpawner;
@@ -46,16 +47,16 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 			tooltip.add(concat(SpawnerStats.MAX_NEARBY_ENTITIES.name(), stats[3]));
 			tooltip.add(concat(SpawnerStats.REQ_PLAYER_RANGE.name(), stats[4]));
 			tooltip.add(concat(SpawnerStats.SPAWN_RANGE.name(), stats[5]));
-			if (stats[6] == 1) tooltip.add(SpawnerStats.IGNORE_PLAYERS.name());
-			if (stats[7] == 1) tooltip.add(SpawnerStats.IGNORE_CONDITIONS.name());
-			if (stats[8] == 1) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name());
-			if (stats[9] == 1) tooltip.add(SpawnerStats.IGNORE_LIGHT.name());
-			if (stats[10] == 1) tooltip.add(SpawnerStats.NO_AI.name());
+			if (stats[6] == 1) tooltip.add(SpawnerStats.IGNORE_PLAYERS.name().withStyle(ChatFormatting.DARK_GREEN));
+			if (stats[7] == 1) tooltip.add(SpawnerStats.IGNORE_CONDITIONS.name().withStyle(ChatFormatting.DARK_GREEN));
+			if (stats[8] == 1) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
+			if (stats[9] == 1) tooltip.add(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
+			if (stats[10] == 1) tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
 		} else tooltip.add(new TranslatableComponent("misc.apotheosis.ctrl_stats"));
 	}
 
 	private Component concat(Object... args) {
-		return new TranslatableComponent("misc.apotheosis.value_concat", args).withStyle(ChatFormatting.GRAY);
+		return new TranslatableComponent("misc.apotheosis.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
 	}
 
 	@Override
