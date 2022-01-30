@@ -1,0 +1,12 @@
+{
+    "name": "Sugar Cane",
+    "icon": "minecraft:sugar_cane",
+    "category": "apotheosis:garden/garden",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Sugar Cane has had its max growth height increased to 255.$(p)This value is configurable, so it might be a bit lower than that based on modpack."
+        }
+	]
+}
