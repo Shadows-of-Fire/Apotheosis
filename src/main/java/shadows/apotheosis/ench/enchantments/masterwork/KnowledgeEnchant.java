@@ -21,7 +21,7 @@ public class KnowledgeEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 50 + (level - 1) * 45;
+		return 55 + (level - 1) * 45;
 	}
 
 	@Override

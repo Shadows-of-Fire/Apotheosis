@@ -31,7 +31,7 @@ public class CrescendoEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 50 + (level - 1) * 30; // 50/80/110/140/170
+		return 55 + (level - 1) * 30; // 50/80/110/140/170
 	}
 
 	@Override

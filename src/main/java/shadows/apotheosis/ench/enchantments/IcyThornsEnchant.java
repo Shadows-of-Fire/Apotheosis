@@ -11,6 +11,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.util.FakePlayer;
 
 public class IcyThornsEnchant extends Enchantment {
@@ -37,6 +38,11 @@ public class IcyThornsEnchant extends Enchantment {
 	@Override
 	public boolean canEnchant(ItemStack stack) {
 		return stack.getItem() instanceof ArmorItem ? true : super.canEnchant(stack);
+	}
+
+	@Override
+	protected boolean checkCompatibility(Enchantment pOther) {
+		return super.checkCompatibility(pOther) && pOther != Enchantments.THORNS;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package shadows.apotheosis.ench.enchantments;
 
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -8,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import shadows.apotheosis.ench.EnchModule;
 
 public class ReflectiveEnchant extends Enchantment {
@@ -40,15 +42,20 @@ public class ReflectiveEnchant extends Enchantment {
 	 * Enables application of the reflective defenses enchantment.
 	 * Called from {@link LivingEntity#blockUsingShield(LivingEntity)}
 	 */
-	public void reflectiveHook(LivingEntity user, LivingEntity attacker) {
+	public void reflect(ShieldBlockEvent e) {
+		LivingEntity user = e.getEntityLiving();
+		Entity attacker = e.getDamageSource().getDirectEntity();
+		ItemStack shield = user.getUseItem();
 		int level;
-		if ((level = EnchantmentHelper.getItemEnchantmentLevel(this, user.getUseItem())) > 0) {
+		if ((level = EnchantmentHelper.getItemEnchantmentLevel(this, shield)) > 0) {
 			if (user.level.random.nextInt(Math.max(2, 7 - level)) == 0) {
-				DamageSource src = user instanceof Player ? DamageSource.playerAttack((Player) user).setMagic().bypassArmor() : DamageSource.MAGIC;
-				attacker.hurt(src, level * 1.6F);
-				user.getUseItem().hurtAndBreak(10, attacker, e -> {
-					e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
-				});
+				DamageSource src = user instanceof Player plr ? DamageSource.playerAttack(plr).setMagic().bypassArmor() : DamageSource.MAGIC;
+				if (attacker instanceof LivingEntity livingAttacker) {
+					livingAttacker.hurt(src, level * 0.15F * e.getBlockedDamage());
+					shield.hurtAndBreak(10, user, ent -> {
+						ent.broadcastBreakEvent(EquipmentSlot.OFFHAND);
+					});
+				}
 			}
 		}
 	}

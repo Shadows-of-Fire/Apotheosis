@@ -39,7 +39,7 @@ public class ChainsawEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 50;
+		return 55;
 	}
 
 	@Override

@@ -1,0 +1,12 @@
+{
+    "name": "Shears",
+    "icon": "minecraft:shears",
+    "category": "apotheosis:enchanting/changes",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Alongside the new enchantments, Shears may now also receive $(9)Unbreaking$(), $(9)Efficiency$(), and $(9)Fortune$()."
+        }
+	]
+}

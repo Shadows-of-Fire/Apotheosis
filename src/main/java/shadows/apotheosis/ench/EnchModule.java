@@ -51,7 +51,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.network.IContainerFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
@@ -99,6 +98,7 @@ import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.util.PlaceboUtil;
 
@@ -128,6 +128,7 @@ public class EnchModule {
 	public static final EnchantmentCategory SHEARS = EnchantmentCategory.create("SHEARS", i -> i instanceof ShearsItem);
 	public static final EnchantmentCategory PICKAXE = EnchantmentCategory.create("PICKAXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.PICKAXE_DIG));
 	public static final EnchantmentCategory AXE = EnchantmentCategory.create("AXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.AXE_DIG));
+	public static final EnchantmentCategory ARMOR_CHEST_LEGS = EnchantmentCategory.create("ARMOR_CHEST_LEGS", i -> EnchantmentCategory.ARMOR_CHEST.canEnchant(i) && EnchantmentCategory.ARMOR_LEGS.canEnchant(i));
 
 	static Configuration enchInfoConfig;
 
@@ -210,7 +211,7 @@ public class EnchModule {
 	@SubscribeEvent
 	public void containers(Register<MenuType<?>> e) {
 		e.getRegistry().register(new MenuType<>(ApothEnchantContainer::new).setRegistryName("enchanting_table"));
-		e.getRegistry().register(new MenuType<>((IContainerFactory<EnchLibraryContainer>) (id, inv, buf) -> new EnchLibraryContainer(id, inv, buf.readBlockPos())).setRegistryName("library"));
+		e.getRegistry().register(ContainerUtil.makeType(EnchLibraryContainer::new).setRegistryName("library"));
 	}
 
 	@SubscribeEvent

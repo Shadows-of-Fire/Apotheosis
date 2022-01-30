@@ -18,7 +18,7 @@ public class GrowthSerumEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int pLevel) {
-		return 60;
+		return 55;
 	}
 
 	@Override

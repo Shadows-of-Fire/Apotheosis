@@ -1,0 +1,16 @@
+{
+    "name": "Obliteration",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/anvil",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Obliteration$() is another brand new anvil exclusive enchantment.$(p)An obliteration anvil can convert a single enchanted book with exactly one enchantment into two enchanted books, each one level lower."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Essentially, an obliteration anvil can perform the inverse of combining two enchantments.$(p)To use an obliteration anvil, throw an enchanted book into the world, and place the anvil so that it lands on top of the book."
+		}
+	]
+}

@@ -4,14 +4,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
+import shadows.apotheosis.ench.EnchModule;
 
 public class ReboundingEnchant extends Enchantment {
 
 	public ReboundingEnchant() {
-		super(Rarity.RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
+		super(Rarity.RARE, EnchModule.ARMOR_CHEST_LEGS, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class ReboundingEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 30 + level * 18;
+		return 22 + (level - 1) * 18;
 	}
 
 	@Override

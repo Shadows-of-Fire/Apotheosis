@@ -94,7 +94,7 @@ public class SpawnerModifier implements Recipe<Container> {
 	@Override
 	@Deprecated
 	public ItemStack assemble(Container pContainer) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class SpawnerModifier implements Recipe<Container> {
 	@Override
 	@Deprecated
 	public ItemStack getResultItem() {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override

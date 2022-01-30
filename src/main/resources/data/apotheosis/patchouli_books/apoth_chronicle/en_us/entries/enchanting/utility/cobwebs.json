@@ -1,0 +1,11 @@
+{
+    "name": "Cobwebs",
+    "icon": "minecraft:cobweb",
+    "category": "apotheosis:enchanting/utility",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Cobwebs can be combined with an item in an anvil to remove all enchantments.$(p)Prismatic Cobwebs can be combined with an item in an anvil to remove all curses."
+        }
+	]
+}

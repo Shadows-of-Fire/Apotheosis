@@ -1,0 +1,12 @@
+{
+    "name": "Tridents",
+    "icon": "minecraft:trident",
+    "category": "apotheosis:enchanting/changes",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Alongside the new enchantments, Tridents may now also receive $(9)Sharpness$(), $(9)Looting$(), and $(9)Piercing$().$(p)Sharpness and Looting function as they do on swords.$(p)Piercing causes thrown tridents to be able to hit additional enemies."
+        }
+	]
+}

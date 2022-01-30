@@ -26,6 +26,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.compat.PatchouliCompat;
 import shadows.apotheosis.compat.TOPCompat;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
@@ -106,6 +107,7 @@ public class Apotheosis {
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		if (ModList.get().isLoaded("theoneprobe")) TOPCompat.register();
+		if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
 	}
 
 	@SubscribeEvent

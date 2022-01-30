@@ -51,7 +51,7 @@ public class MinersFervorEnchant extends DiggingEnchantment {
 		if (depth > 0) {
 			if (stack.getDestroySpeed(e.getState()) > 1.0F) {
 				float hardness = e.getState().getDestroySpeed(e.getPlayer().level, e.getPos());
-				e.setNewSpeed(Math.min(29.99F, 7.5F + 4.5F * depth) * hardness);
+				e.setNewSpeed(Math.min(29.9999F, 7.5F + 4.5F * depth) * hardness);
 			}
 		}
 	}
