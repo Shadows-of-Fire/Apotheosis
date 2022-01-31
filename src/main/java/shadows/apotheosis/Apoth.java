@@ -103,7 +103,7 @@ public class Apoth {
 		public static final Item FISHING_TOME = null;
 		public static final Item BOW_TOME = null;
 
-		@ObjectHolder("witherskelefix:fragment")
+		@ObjectHolder("wstweaks:fragment")
 		public static final Item SKULL_FRAGMENT = null;
 	}
 

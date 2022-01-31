@@ -1,0 +1,8 @@
+{
+    "name": "Potion Charms",
+	"parent": "apotheosis:potion/potion",
+    "description": "This section details $(9)Potion Charms$() and all their uses and nuances.",
+    "icon": "apotheosis:potion_charm",
+	"flag": "apotheosis:potion",
+	"sortnum": 1
+}
