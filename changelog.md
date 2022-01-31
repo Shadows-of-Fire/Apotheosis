@@ -1,6 +1,12 @@
-## 5.2.3
+## 5.3.0
+* Added Patchouli Support! The Chronicle of Shadows now details everything about Apotheosis.
 * Further updated the Spawner Modifiers JEI window.
 * Improved TOP/Jade Spawner support.
+* Made Icy Thorns incompatible with Thorns
+* Fixed Rebounding being applicable to boots and helmets.
+* Changed Reflective Defenses to do a percent of the original damage.
+* Buffed Shield Bash's damage and reduced durability cost.
+* Fixed Spawner Modifier recipes returning null to ItemStack methods.
 
 ## 5.2.2
 * Fixed various blocks not breaking faster with the correct tool.
