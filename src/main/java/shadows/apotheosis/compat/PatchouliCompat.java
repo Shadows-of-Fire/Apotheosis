@@ -17,6 +17,7 @@ public class PatchouliCompat {
 			api.setConfigFlag("apotheosis:potion", Apotheosis.enablePotion);
 			api.setConfigFlag("apotheosis:village", Apotheosis.enableVillage);
 			api.setConfigFlag("apotheosis:wstloaded", ModList.get().isLoaded("wstweaks"));
+			api.setConfigFlag("apotheosis:curiosloaded", ModList.get().isLoaded("curios"));
 		}
 	}
 

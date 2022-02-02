@@ -26,6 +26,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -39,6 +40,7 @@ import shadows.apotheosis.potion.compat.CuriosCompat;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.SunderingEffect;
 import shadows.placebo.config.Configuration;
+import top.theillusivec4.curios.api.SlotTypeMessage;
 
 public class PotionModule {
 
@@ -53,6 +55,8 @@ public class PotionModule {
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			FMLJavaModLoadingContext.get().getModEventBus().register(new PotionModuleClient());
 		});
+		InterModComms.sendTo("curios", "REGISTER_TYPE", () -> new SlotTypeMessage.Builder("charm").size(1).build());
+
 	}
 
 	@SubscribeEvent

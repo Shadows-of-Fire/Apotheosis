@@ -75,7 +75,7 @@ dependencies {
 	implementation fg.deobf("mezz.jei:jei-${jeiVersion}")
 	implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
 	implementation fileTree(dir: "libs", include: "*.jar")
-	implementation fg.deobf("top.theillusivec4.curios:curios-forge:1.18-5.0.2.4")
+	implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVer}")
 	implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {
 		transitive = false
 	})
