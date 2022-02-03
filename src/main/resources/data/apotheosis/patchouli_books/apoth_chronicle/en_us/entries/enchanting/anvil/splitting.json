@@ -10,7 +10,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "To use a splitting anvil, throw an enchanted book into the world, and place the anvil so that it lands on top of the book."
+			"text": "To use a splitting anvil, throw an enchanted book into the world, and place the anvil so that it lands on top of the book.$(p)A book with Sharpness III and Looting II that is split would become two books, one with Sharpness III and another with Looting II."
 		}
 	]
 }

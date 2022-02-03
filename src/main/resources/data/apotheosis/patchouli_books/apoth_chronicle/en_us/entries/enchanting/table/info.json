@@ -33,7 +33,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "Given the current item, and the currently selected power level, a certain array of enchantments are available.$(p)This window shows you each enchantment, their level, rarity, and chance of being selected.$(p)It will also show what enchantments are exclusive with eachother."
+			"text": "Given the current item, and the currently selected power level, a certain array of enchantments are available.$(p)This window shows you each enchantment, their level, rarity, and chance of being selected.$(p)It will also show what enchantments are exclusive with each other."
 		},
 		{
             "type": "patchouli:image",

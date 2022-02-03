@@ -129,7 +129,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 			font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
 
 			int maxWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
-			maxWidth = maxWidth - (maxWidth - 198) / 2 - 198;
+			maxWidth = maxWidth - (maxWidth - 210) / 2 - 210;
 
 			if (hover) {
 				List<Component> list = new ArrayList<>();

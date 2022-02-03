@@ -25,7 +25,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "Arcana",
-			"text": "$(arcana) is a secondary stat. It controls the rarity weights, and at certain thresholds will guarantee you get additional enchantments.$(p)At 25% $(arcana), you will always receive two enchantments. At 75%, you will always receive three."
+			"text": "$(arcana) is a secondary stat. It controls the rarity weights, and at certain thresholds will guarantee you get additional enchantments.$(p)At 25% $(arcana), you will always receive at least two enchantments. At 75%, you will always receive three."
 		},
 		{
 			"type": "patchouli:text",

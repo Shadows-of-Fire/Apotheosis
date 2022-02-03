@@ -11,6 +11,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -71,6 +72,13 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 	}
 
 	public class SpawnerLogicExt extends BaseSpawner {
+
+		@Override
+		public void setEntityId(EntityType<?> pType) {
+			super.setEntityId(pType);
+			this.spawnPotentials = SimpleWeightedRandomList.single(this.nextSpawnData);
+			this.delay(ApothSpawnerTile.this.level, ApothSpawnerTile.this.worldPosition);
+		}
 
 		@Override
 		public void broadcastEvent(Level level, BlockPos pos, int id) {

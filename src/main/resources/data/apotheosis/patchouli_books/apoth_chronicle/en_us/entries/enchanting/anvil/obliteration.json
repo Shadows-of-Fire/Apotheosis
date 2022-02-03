@@ -10,7 +10,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "Essentially, an obliteration anvil can perform the inverse of combining two enchantments.$(p)To use an obliteration anvil, throw an enchanted book into the world, and place the anvil so that it lands on top of the book."
+			"text": "To use an obliteration anvil, throw an enchanted book into the world, and place the anvil so that it lands on top of the book.$(p)A book with Sharpness III that is obliterated would become two books, each with Sharpness II."
 		}
 	]
 }

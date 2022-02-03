@@ -10,7 +10,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "Additionally, the max effective protection points has been raised from 20 to 65. Protection points past 20 are less effective, and points past 65 have no effect."
+            "text": "Additionally, the max effective protection points has been raised from 20 to 65.$(p)Protection points past 20 are less effective, and points past 65 have no effect."
         }
 	]
 }
