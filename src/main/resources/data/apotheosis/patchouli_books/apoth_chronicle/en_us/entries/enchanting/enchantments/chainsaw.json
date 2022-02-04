@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Chainsaw$() is a Masterwork enchantment that can be applied to axes.$(p)When breaking a tree, the entire tree will begin to be broken down with it.$(p)This uses durability from the axe."
+            "text": "$(2)Chainsaw$() is a Masterwork enchantment that can be applied to axes.$(p)When breaking a tree, the entire tree will be harvested.$(p)This uses durability from the axe."
         }
 	]
 }

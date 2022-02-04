@@ -13,11 +13,11 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "But how is $(fpower) calculated? Well, it takes some math.$(p)Intially, you have a $(bpower), which is the level you spent while enchanting.$(p)Then, $(quanta) and Rectification modify your $(bpower) to produce your $(fpower)"
+			"text": "But how is $(fpower) calculated? Well, it takes some math.$(p)Intially, you have a $(bpower), which is the level you spent while enchanting.$(p)Then, $(quanta) and Rectification modify your $(bpower) to produce your $(fpower)."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "The specifics of how each stat modifies your $(bpower) can be found in the $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) and $(l:apotheosis:enchanting/table/stats#rectification)Rectification$() entries.$(p)Typically a higher $(fpower) will get you access to higher level enchantments."
+			"text": "The specifics of how each stat modifies your $(bpower) can be found in the $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) and $(l:apotheosis:enchanting/table/stats#rectification)Rectification$() entries.$(p)Typically, a higher $(fpower) will get you access to higher level enchantments."
 		}
 	]
 }

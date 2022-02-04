@@ -47,7 +47,7 @@
 		{
             "type": "patchouli:text",
 			"title": "Redstone Control",
-            "text": "A spawner with $(9)Redstone Control$() requires a redstone signal to operate.$(p)This allows for control over when the spawner is operational."
+            "text": "A spawner with $(9)Redstone Control$() requires a redstone signal to operate.$(p)This lets you control when the spawner is operating."
         },
 		{
             "type": "patchouli:text",
