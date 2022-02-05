@@ -2,6 +2,7 @@
     "name": "Tomes",
     "icon": "apotheosis:other_tome",
     "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",

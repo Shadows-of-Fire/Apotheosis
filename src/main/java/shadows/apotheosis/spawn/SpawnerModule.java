@@ -13,11 +13,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +22,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -62,7 +58,7 @@ public class SpawnerModule {
 	public void setup(FMLCommonSetupEvent e) {
 		BlockEntityType.MOB_SPAWNER.factory = ApothSpawnerTile::new;
 		BlockEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
-		MinecraftForge.EVENT_BUS.addListener(this::handleCapturing);
+		MinecraftForge.EVENT_BUS.addListener(this::dropsEvent);
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		MinecraftForge.EVENT_BUS.addListener(this::handleTooltips);
@@ -87,17 +83,8 @@ public class SpawnerModule {
 		e.getRegistry().register(new CapturingEnchant().setRegistryName(Apotheosis.MODID, "capturing"));
 	}
 
-	public void handleCapturing(LivingDropsEvent e) {
-		Entity killer = e.getSource().getEntity();
-		if (killer instanceof LivingEntity) {
-			int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CAPTURING, ((LivingEntity) killer).getMainHandItem());
-			LivingEntity killed = e.getEntityLiving();
-			if (bannedMobs.contains(killed.getType().getRegistryName())) return;
-			if (killed.level.random.nextFloat() < level / 250F) {
-				ItemStack egg = new ItemStack(SpawnEggItem.BY_ID.get(killed.getType()));
-				e.getDrops().add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));
-			}
-		}
+	public void dropsEvent(LivingDropsEvent e) {
+		Apoth.Enchantments.CAPTURING.handleCapturing(e);
 	}
 
 	public void handleUseItem(RightClickBlock e) {

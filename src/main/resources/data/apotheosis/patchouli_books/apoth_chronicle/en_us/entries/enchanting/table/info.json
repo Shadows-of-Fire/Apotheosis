@@ -2,6 +2,7 @@
     "name": "The Info Menu",
     "icon": "apotheosis:textures/gui/book/question_mark.png",
     "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",

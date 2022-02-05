@@ -2,6 +2,7 @@
     "name": "Tridents",
     "icon": "minecraft:trident",
     "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
     "pages": [
         {

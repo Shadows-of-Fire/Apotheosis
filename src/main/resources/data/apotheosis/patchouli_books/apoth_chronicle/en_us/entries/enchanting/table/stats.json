@@ -2,6 +2,7 @@
     "name": "Enchanting Stats",
     "icon": "minecraft:bookshelf",
     "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",

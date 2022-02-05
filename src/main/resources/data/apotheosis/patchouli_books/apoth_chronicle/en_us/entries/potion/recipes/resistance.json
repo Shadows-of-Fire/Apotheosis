@@ -2,6 +2,7 @@
     "name": "Resistance",
     "icon": "minecraft:textures/mob_effect/resistance.png",
     "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
 	"sortnum": 0,
     "pages": [
         {

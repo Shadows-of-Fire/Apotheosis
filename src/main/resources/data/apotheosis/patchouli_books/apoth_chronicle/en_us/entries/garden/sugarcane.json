@@ -2,6 +2,7 @@
     "name": "Sugar Cane",
     "icon": "minecraft:sugar_cane",
     "category": "apotheosis:garden/garden",
+	"flag": "apotheosis:garden",
 	"sortnum": 0,
     "pages": [
         {

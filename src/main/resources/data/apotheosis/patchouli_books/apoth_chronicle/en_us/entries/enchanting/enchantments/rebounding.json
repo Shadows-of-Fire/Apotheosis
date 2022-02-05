@@ -2,6 +2,7 @@
     "name": "Rebounding",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
     "pages": [
         {

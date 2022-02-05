@@ -2,6 +2,7 @@
     "name": "Enchanting Power",
     "icon": "minecraft:experience_bottle",
     "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",

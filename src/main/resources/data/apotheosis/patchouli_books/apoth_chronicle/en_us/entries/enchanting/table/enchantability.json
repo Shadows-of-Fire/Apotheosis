@@ -2,6 +2,7 @@
     "name": "Item Enchantability",
     "icon": "minecraft:golden_sword",
     "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",

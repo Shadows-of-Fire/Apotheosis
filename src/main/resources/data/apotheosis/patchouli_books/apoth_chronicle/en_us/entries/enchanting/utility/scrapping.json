@@ -2,6 +2,7 @@
     "name": "Tome of Scrapping",
     "icon": "apotheosis:scrap_tome",
     "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
     "pages": [
         {

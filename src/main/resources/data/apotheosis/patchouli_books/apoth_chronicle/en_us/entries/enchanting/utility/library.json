@@ -2,6 +2,7 @@
     "name": "Enchantment Library",
     "icon": "apotheosis:library",
     "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 2,
     "pages": [
         {

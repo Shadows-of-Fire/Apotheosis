@@ -2,6 +2,7 @@
     "name": "Protection",
     "icon": "minecraft:netherite_chestplate",
     "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
     "pages": [
         {

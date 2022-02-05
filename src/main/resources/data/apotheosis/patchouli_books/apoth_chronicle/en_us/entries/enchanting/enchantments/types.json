@@ -2,6 +2,7 @@
     "name": "Enchantment Types",
     "icon": "minecraft:emerald",
     "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
 	"sortnum": -1,
     "pages": [
         {

@@ -2,6 +2,7 @@
     "name": "Cobwebs",
     "icon": "minecraft:cobweb",
     "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",

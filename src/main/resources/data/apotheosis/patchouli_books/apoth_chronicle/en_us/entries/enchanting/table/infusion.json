@@ -2,6 +2,7 @@
     "name": "Infusion Enchanting",
     "icon": "apotheosis:infused_hellshelf",
     "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",

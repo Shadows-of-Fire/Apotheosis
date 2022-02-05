@@ -2,6 +2,7 @@
     "name": "Knowledge of the Ages",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
     "pages": [
         {

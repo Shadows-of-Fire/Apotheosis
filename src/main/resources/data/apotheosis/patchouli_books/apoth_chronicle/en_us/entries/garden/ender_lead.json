@@ -2,6 +2,7 @@
     "name": "Ender Lead",
     "icon": "apotheosis:ender_lead",
     "category": "apotheosis:garden/garden",
+	"flag": "apotheosis:garden",
 	"sortnum": 1,
     "pages": [
         {

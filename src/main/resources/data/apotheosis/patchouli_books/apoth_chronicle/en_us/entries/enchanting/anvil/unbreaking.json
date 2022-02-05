@@ -2,6 +2,7 @@
     "name": "Unbreaking",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/anvil",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
     "pages": [
         {

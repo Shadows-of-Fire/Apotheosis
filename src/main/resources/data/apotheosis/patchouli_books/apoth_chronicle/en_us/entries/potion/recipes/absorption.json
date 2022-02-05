@@ -2,6 +2,7 @@
     "name": "Absorption",
     "icon": "minecraft:textures/mob_effect/absorption.png",
     "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
 	"sortnum": 0,
     "pages": [
         {

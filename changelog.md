@@ -1,3 +1,6 @@
+## 5.3.1
+* Fixed book pages not loading when certain modules are disabled.
+
 ## 5.3.0
 * Added Patchouli Support! The Chronicle of Shadows now details everything about Apotheosis.
 * Further updated the Spawner Modifiers JEI window.

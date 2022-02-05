@@ -2,6 +2,7 @@
     "name": "Sharpness",
     "icon": "minecraft:netherite_sword",
     "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
     "pages": [
         {

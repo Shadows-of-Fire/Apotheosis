@@ -2,6 +2,7 @@
     "name": "Haste",
     "icon": "minecraft:textures/mob_effect/haste.png",
     "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
 	"sortnum": 1,
     "pages": [
         {
