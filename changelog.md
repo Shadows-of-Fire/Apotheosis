@@ -9,6 +9,8 @@
 * Fixed Spawner Modifier recipes returning null to ItemStack methods.
 * Fixed Potion Charm Curios compat.
 * Fixed Spawners not clearing spawn potentials when an egg is applied.
+* Enchantment Descriptions and Patchouli are going to be marked as required deps now, despite being optional deps.
+  * This is so that they get automatically installed by CF.
 
 ## 5.2.2
 * Fixed various blocks not breaking faster with the correct tool.
