@@ -1,0 +1,2 @@
+The file "book.png" is a recolor of https://github.com/malcolmriley/unused-textures/blob/master/items/book_grimoire_abyssal.png
+It is licensed CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/

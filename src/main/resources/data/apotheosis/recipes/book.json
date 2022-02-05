@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "patchouli"
+	}],
+	"group": "something",
+	"ingredients": [{
+			"item": "minecraft:book"
+		},
+		{
+			"tag": "forge:ingots/gold"
+		}
+	],
+	"result": {
+		"item": "patchouli:guide_book",
+		"nbt": "{\"patchouli:book\": \"apotheosis:apoth_chronicle\"}",
+		"count": 1
+	}
+}
