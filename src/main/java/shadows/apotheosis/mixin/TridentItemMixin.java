@@ -18,11 +18,12 @@ public abstract class TridentItemMixin extends Item {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment ench) {
+		if (!Apotheosis.enableEnch) return super.canApplyAtEnchantingTable(stack, ench);
 		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.SHARPNESS || ench == Enchantments.MOB_LOOTING || ench == Enchantments.PIERCING;
 	}
 
 	@Override
 	public String getCreatorModId(ItemStack itemStack) {
-		return Apotheosis.MODID;
+		return Apotheosis.enableEnch ? Apotheosis.MODID : "minecraft";
 	}
 }

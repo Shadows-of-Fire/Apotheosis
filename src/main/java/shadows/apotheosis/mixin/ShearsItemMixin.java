@@ -18,17 +18,18 @@ public class ShearsItemMixin extends Item {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment ench) {
+		if (!Apotheosis.enableEnch) return super.canApplyAtEnchantingTable(stack, ench);
 		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.BLOCK_EFFICIENCY || ench == Enchantments.BLOCK_FORTUNE;
 	}
 
 	@Override
 	public int getEnchantmentValue() {
-		return 15;
+		return Apotheosis.enableEnch ? 15 : 0;
 	}
 
 	@Override
 	public String getCreatorModId(ItemStack itemStack) {
-		return Apotheosis.MODID;
+		return Apotheosis.enableEnch ? Apotheosis.MODID : "minecraft";
 	}
 
 }

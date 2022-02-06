@@ -1,5 +1,6 @@
 ## 5.3.1
 * Fixed book pages not loading when certain modules are disabled.
+* Fixed a few other bugs occuring when the enchanting module is disabled.
 
 ## 5.3.0
 * Added Patchouli Support! The Chronicle of Shadows now details everything about Apotheosis.
