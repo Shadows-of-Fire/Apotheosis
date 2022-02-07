@@ -3,6 +3,7 @@ package shadows.apotheosis.spawn.spawner;
 import java.util.List;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -42,7 +43,6 @@ import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.spawn.modifiers.SpawnerStats;
-import shadows.placebo.util.ClientUtil;
 import shadows.placebo.util.IReplacementBlock;
 
 public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock {
@@ -108,7 +108,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
-			if (ClientUtil.isHoldingShift()) {
+			if (Screen.hasShiftDown()) {
 				CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
 				if (tag.contains("SpawnData")) {
 					String name = tag.getCompound("SpawnData").getCompound("entity").getString("id");

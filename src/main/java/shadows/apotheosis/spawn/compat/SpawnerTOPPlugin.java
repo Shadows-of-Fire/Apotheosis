@@ -7,10 +7,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import shadows.apotheosis.compat.TOPCompat;
 import shadows.apotheosis.spawn.modifiers.SpawnerStats;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
+import shadows.placebo.compat.TOPCompat;
 
 public class SpawnerTOPPlugin implements TOPCompat.Provider {
 

@@ -1,4 +1,5 @@
 {
+  "type": "apotheosis:basic_trade",
   "input_1": {
     "item": "minecraft:emerald",
     "count": 1

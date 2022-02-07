@@ -1,5 +1,6 @@
 {
-  "rare": "",
+  "type": "apotheosis:basic_trade",
+  "rare": "true",
   "input_1": {
     "item": "minecraft:emerald",
     "count": 10

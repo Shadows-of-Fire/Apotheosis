@@ -44,7 +44,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 
 	public SpawnerCategory(IGuiHelper helper) {
 		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 168, 75).build();
-		this.icon = helper.createDrawableIngredient(new ItemStack(Items.SPAWNER));
+		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Items.SPAWNER));
 		this.title = new TranslatableComponent("title.apotheosis.spawner");
 	}
 

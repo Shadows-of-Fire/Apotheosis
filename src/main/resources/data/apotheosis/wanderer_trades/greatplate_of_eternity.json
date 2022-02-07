@@ -1,6 +1,6 @@
 {
-  "rare": "",
-  "rare": "",
+  "type": "apotheosis:basic_trade",
+  "rare": "true",
   "input_1": {
     "item": "minecraft:diamond_chestplate",
     "count": 1,

@@ -49,7 +49,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 
 	public EnchantingCategory(IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(TEXTURES, 0, 0, 170, 56);
-		this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blocks.ENCHANTING_TABLE));
+		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.ENCHANTING_TABLE));
 		this.localizedName = new TranslatableComponent("apotheosis.recipes.enchanting");
 	}
 

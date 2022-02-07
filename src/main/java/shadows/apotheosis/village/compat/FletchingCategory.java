@@ -27,7 +27,7 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 	public FletchingCategory(IGuiHelper guiHelper) {
 		ResourceLocation location = FletchingScreen.TEXTURES;
 		this.background = guiHelper.createDrawable(location, 6, 16, 139, 54);
-		this.icon = guiHelper.createDrawableIngredient(new ItemStack(Blocks.FLETCHING_TABLE));
+		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.FLETCHING_TABLE));
 		this.localizedName = new TranslatableComponent("apotheosis.recipes.fletching");
 	}
 

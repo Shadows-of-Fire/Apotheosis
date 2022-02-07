@@ -25,7 +25,6 @@ import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -153,14 +152,6 @@ public class EnchModuleEvents {
 	@SubscribeEvent
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(EnchantingStatManager.INSTANCE);
-	}
-
-	@SubscribeEvent
-	public void login(PlayerLoggedInEvent e) {
-		Player p = e.getPlayer();
-		if (!p.level.isClientSide) {
-			EnchantingStatManager.dispatch(p);
-		}
 	}
 
 }

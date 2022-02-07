@@ -1,3 +1,7 @@
+## 5.3.2
+* Upgraded to Placebo AutoSync and Container Data systems.
+  * Should fix any issues relating to enchanting stats not showing on LAN worlds.
+
 ## 5.3.1
 * Fixed book pages not loading when certain modules are disabled.
 * Fixed a few other bugs occuring when the enchanting module is disabled.

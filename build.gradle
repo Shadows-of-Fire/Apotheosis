@@ -19,7 +19,7 @@ apply plugin: 'eclipse'
 
 archivesBaseName = "${fileName}-${mcVersion}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(project.properties.javaVersion)
 
 minecraft {
     mappings channel: 'parchment', version: project.properties.parchmentVersion
@@ -52,19 +52,19 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven {
+    maven { // JEI
         url "https://dvs1.progwml6.com/files/maven"
     }
-	maven {
+	maven { // CurseForge
         url "https://www.cursemaven.com"
     }
-	maven {
+	maven { // Curios
 	 	url "https://maven.theillusivec4.top/"
 	}
-	maven {
+	maven { // The One Probe
 		url "https://maven.k-4u.nl/"
 	}
-	maven { 
+	maven { // Patchouli
 		url "https://maven.blamejared.com"
 	}
 }
@@ -72,15 +72,14 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mcVersion}-${forgeVersion}"
 	if(project.mixin.toBoolean()) annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
-	implementation fg.deobf("mezz.jei:jei-${jeiVersion}")
-	implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
-	implementation fileTree(dir: "libs", include: "*.jar")
-	implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVer}")
-	implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {
+	if(project.hasProperty('jeiVersion')) implementation fg.deobf("mezz.jei:jei-${jeiVersion}")
+	if(project.hasProperty('jadeFileId')) implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
+	if(project.hasProperty('curiosVer'))  implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVer}")
+	if(project.hasProperty('topVersion')) implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {
 		transitive = false
 	})
-	compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouliVer}:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouliVer}")
+	if(project.hasProperty('patchouliVer')) implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouliVer}")
+	implementation fileTree(dir: 'libs', include: '*.jar')
 }
 
 mixin {
@@ -97,9 +96,14 @@ def replaceProperties = [modid: modid,
 						 mcVersion: mcVersion, 
 						 forgeVersion: forgeVersion,
 						 mixins: mixins,
-						 clientMixins: clientMixins,
-						 placeboDep: placeboDep
+						 clientMixins: clientMixins
 						]
+
+if(project.hasProperty('placeboDep')) replaceProperties.put 'placeboDep', placeboDep
+if(project.hasProperty('curiosVer')) replaceProperties.put 'curiosVer', curiosVer
+if(project.hasProperty('topVersion')) replaceProperties.put 'topVersion', topVersion
+if(project.hasProperty('patchouliVer')) replaceProperties.put 'patchouliVer', patchouliVer
+
 processResources {
     inputs.properties replaceProperties
     replaceProperties.put 'project', project

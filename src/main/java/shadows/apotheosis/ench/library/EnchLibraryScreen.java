@@ -12,6 +12,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
@@ -34,7 +35,6 @@ import net.minecraftforge.registries.ForgeRegistry;
 import shadows.apotheosis.Apotheosis;
 import shadows.placebo.Placebo;
 import shadows.placebo.packets.ButtonClickMessage;
-import shadows.placebo.util.ClientUtil;
 
 public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContainer> {
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/library.png");
@@ -75,7 +75,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 			list.add(new TextComponent(""));
 			ItemStack outSlot = this.menu.ioInv.getItem(1);
 			int current = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(libSlot.ench, 0);
-			boolean shift = ClientUtil.isHoldingShift();
+			boolean shift = Screen.hasShiftDown();
 			int targetLevel = shift ? Math.min(libSlot.maxLvl, 1 + (int) (Math.log(libSlot.points + EnchLibraryTile.levelToPoints(current)) / Math.log(2))) : current + 1;
 			if (targetLevel == current) targetLevel++;
 			int cost = EnchLibraryTile.levelToPoints(targetLevel) - EnchLibraryTile.levelToPoints(current);
@@ -134,7 +134,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		LibrarySlot libSlot = this.getHoveredSlot((int) pMouseX, (int) pMouseY);
 		if (libSlot != null) {
 			int id = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getID(libSlot.ench);
-			if (ClientUtil.isHoldingShift()) id |= 0x80000000;
+			if (Screen.hasShiftDown()) id |= 0x80000000;
 			this.menu.onButtonClick(id);
 			Placebo.CHANNEL.sendToServer(new ButtonClickMessage(id));
 			this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));

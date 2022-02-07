@@ -20,3 +20,4 @@ ren modid %modid%
 cd ../assets
 ren modid %modid%
 cd ../../../..
+call gradlew processResources --no-daemon

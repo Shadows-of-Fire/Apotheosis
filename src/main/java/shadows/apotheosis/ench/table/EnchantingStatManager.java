@@ -1,79 +1,84 @@
 package shadows.apotheosis.ench.table;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.tags.SerializationTags;
 import net.minecraft.tags.Tag;
-import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkEvent.Context;
-import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.IRegistryDelegate;
-import net.minecraftforge.server.ServerLifecycleHooks;
-import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.objects.IEnchantingBlock;
-import shadows.apotheosis.util.JsonUtil;
-import shadows.placebo.network.MessageHelper;
-import shadows.placebo.network.MessageProvider;
-import shadows.placebo.network.PacketDistro;
+import shadows.apotheosis.ench.table.EnchantingStatManager.BlockStats;
+import shadows.placebo.json.PlaceboJsonReloadListener;
+import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.SerializerBuilder;
 
-public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
+public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats> {
 
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	public static final EnchantingStatManager INSTANCE = new EnchantingStatManager();
-	private final Map<IRegistryDelegate<Block>, Stats> stats = new HashMap<>();
+	private final Map<Block, Stats> statsPerBlock = new HashMap<>();
 
 	private float absoluteMaxEterna = 50;
 
 	protected EnchantingStatManager() {
-		super(GSON, "enchanting_stats");
+		super(EnchModule.LOGGER, "enchanting_stats", true, false);
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> objects, ResourceManager mgr, ProfilerFiller profile) {
-		this.stats.clear();
-		objects.forEach((key, ele) -> {
-			try {
-				if (!JsonUtil.checkAndLogEmpty(ele, key, "Enchanting Stats", EnchModule.LOGGER)) {
-					JsonObject obj = (JsonObject) ele;
-					Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
-					if (obj.has("tag")) {
-						Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, new ResourceLocation(obj.get("tag").getAsString()), p_151262_ -> new JsonSyntaxException("Unknown block tag '" + p_151262_ + "'"));
-						tag.getValues().forEach(b -> this.stats.put(b.delegate, stats));
-					} else {
-						Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
-						this.stats.put(b.delegate, stats);
-					}
-				}
-			} catch (Exception e) {
-				EnchModule.LOGGER.error("Failed to read enchantment stat file {}.", key);
-				e.printStackTrace();
+	@SuppressWarnings("deprecation")
+	protected void registerBuiltinSerializers() {
+		this.registerSerializer(DEFAULT, new SerializerBuilder<BlockStats>("Enchanting Stats").withJsonDeserializer(obj -> {
+			Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
+			List<Block> blocks = new ArrayList<>();
+			if (obj.has("tag")) {
+				Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, new ResourceLocation(obj.get("tag").getAsString()), p_151262_ -> new JsonSyntaxException("Unknown block tag '" + p_151262_ + "'"));
+				blocks.addAll(tag.getValues());
+			} else {
+				Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
+				blocks.add(b);
 			}
-		});
-		EnchModule.LOGGER.info("Registered {} blocks with enchanting stats.", this.stats.size());
-		if (ServerLifecycleHooks.getCurrentServer() != null) Apotheosis.CHANNEL.send(PacketDistributor.ALL.noArg(), new StatSyncMessage(this.stats));
-		this.absoluteMaxEterna = this.computeAbsoluteMaxEterna();
+			return new BlockStats(blocks, stats);
+		}).withNetworkSerializer((stats, buf) -> {
+			buf.writeInt(stats.blocks.size());
+			stats.blocks.forEach(b -> buf.writeInt(Registry.BLOCK.getId(b)));
+			stats.stats.write(buf);
+		}).withNetworkDeserializer(buf -> {
+			int size = buf.readInt();
+			List<Block> blocks = new ArrayList<>();
+			for (int i = 0; i < size; i++)
+				blocks.add(Registry.BLOCK.byId(buf.readInt()));
+			return new BlockStats(blocks, Stats.read(buf));
+		}));
+	}
+
+	@Override
+	protected void beginReload() {
+		super.beginReload();
+		this.statsPerBlock.clear();
+	}
+
+	@Override
+	protected void onReload() {
+		super.onReload();
+		for (BlockStats bStats : this.registry.values()) {
+			bStats.blocks.forEach(b -> this.statsPerBlock.put(b, bStats.stats));
+		}
+		this.computeAbsoluteMaxEterna();
 	}
 
 	/**
@@ -83,7 +88,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	 */
 	public static float getEterna(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
-		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).eterna;
+		if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).eterna;
 		return state.getEnchantPowerBonus(world, pos);
 	}
 
@@ -94,7 +99,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	 */
 	public static float getMaxEterna(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
-		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).maxEterna;
+		if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).maxEterna;
 		if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getMaxEnchantingPower(state, world, pos);
 		return 15;
 	}
@@ -106,7 +111,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	 */
 	public static float getQuanta(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
-		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).quanta;
+		if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).quanta;
 		else if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getQuantaBonus(state, world, pos);
 		return 0;
 	}
@@ -118,7 +123,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	 */
 	public static float getArcana(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
-		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).arcana;
+		if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).arcana;
 		else if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getArcanaBonus(state, world, pos);
 		return 0;
 	}
@@ -129,7 +134,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	 */
 	public static float getQuantaRectification(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
-		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).rectification;
+		if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).rectification;
 		if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getQuantaRectification(state, world, pos);
 		return 0;
 	}
@@ -140,7 +145,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	 */
 	public static int getBonusClues(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
-		if (INSTANCE.stats.containsKey(block.delegate)) return INSTANCE.stats.get(block.delegate).clues;
+		if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).clues;
 		if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getBonusClues(state, world, pos);
 		return 0;
 	}
@@ -153,11 +158,7 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 	}
 
 	private float computeAbsoluteMaxEterna() {
-		return this.stats.values().stream().max(Comparator.comparingDouble(s -> s.maxEterna)).get().maxEterna;
-	}
-
-	public static void dispatch(Player player) {
-		PacketDistro.sendTo(Apotheosis.CHANNEL, new StatSyncMessage(INSTANCE.stats), player);
+		return this.registry.values().stream().max(Comparator.comparingDouble(s -> s.stats.maxEterna)).get().stats.maxEterna;
 	}
 
 	/**
@@ -194,44 +195,14 @@ public class EnchantingStatManager extends SimpleJsonResourceReloadListener {
 		}
 	}
 
-	public static class StatSyncMessage implements MessageProvider<StatSyncMessage> {
+	public static class BlockStats extends TypeKeyedBase<BlockStats> {
 
-		final Map<IRegistryDelegate<Block>, Stats> stats;
+		public final List<Block> blocks;
+		public final Stats stats;
 
-		private StatSyncMessage(Map<IRegistryDelegate<Block>, Stats> stats) {
+		public BlockStats(List<Block> blocks, Stats stats) {
+			this.blocks = blocks;
 			this.stats = stats;
-		}
-
-		public StatSyncMessage() {
-			this.stats = new HashMap<>();
-		}
-
-		@Override
-		public void write(StatSyncMessage msg, FriendlyByteBuf buf) {
-			buf.writeShort(msg.stats.size());
-			for (Map.Entry<IRegistryDelegate<Block>, Stats> e : msg.stats.entrySet()) {
-				buf.writeInt(((ForgeRegistry<Block>) ForgeRegistries.BLOCKS).getID(e.getKey().get()));
-				e.getValue().write(buf);
-			}
-		}
-
-		@Override
-		public StatSyncMessage read(FriendlyByteBuf buf) {
-			int size = buf.readShort();
-			StatSyncMessage pkt = new StatSyncMessage();
-			for (int i = 0; i < size; i++) {
-				Block b = ((ForgeRegistry<Block>) ForgeRegistries.BLOCKS).getValue(buf.readInt());
-				pkt.stats.put(b.delegate, Stats.read(buf));
-			}
-			return pkt;
-		}
-
-		@Override
-		public void handle(StatSyncMessage msg, Supplier<Context> ctx) {
-			MessageHelper.handlePacket(() -> () -> {
-				INSTANCE.stats.clear();
-				INSTANCE.stats.putAll(msg.stats);
-			}, ctx);
 		}
 
 	}
