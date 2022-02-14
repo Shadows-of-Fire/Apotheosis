@@ -1,3 +1,7 @@
+## 5.3.3
+* Fixed Capturing not working with some modded spawn eggs.
+* Fixed an issue with infusing the Enchantment Library.
+
 ## 5.3.2
 * Upgraded to Placebo AutoSync and Container Data systems.
   * Should fix any issues relating to enchanting stats not showing on LAN worlds.
