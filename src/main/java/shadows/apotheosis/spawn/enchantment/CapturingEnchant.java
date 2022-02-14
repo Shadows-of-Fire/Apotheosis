@@ -5,10 +5,10 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.spawn.SpawnerModule;
@@ -41,7 +41,7 @@ public class CapturingEnchant extends Enchantment {
 			LivingEntity killed = e.getEntityLiving();
 			if (SpawnerModule.bannedMobs.contains(killed.getType().getRegistryName())) return;
 			if (killed.level.random.nextFloat() < level / 250F) {
-				ItemStack egg = new ItemStack(SpawnEggItem.BY_ID.get(killed.getType()));
+				ItemStack egg = new ItemStack(ForgeSpawnEggItem.fromEntityType(killed.getType()));
 				e.getDrops().add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));
 			}
 		}
