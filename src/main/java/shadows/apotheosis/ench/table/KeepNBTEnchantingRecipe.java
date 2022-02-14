@@ -20,7 +20,7 @@ public class KeepNBTEnchantingRecipe extends EnchantingRecipe {
 
 	public ItemStack assemble(ItemStack input, float eterna, float quanta, float arcana) {
 		ItemStack out = this.getResultItem().copy();
-		out.setTag(input.getTag().copy());
+		if (input.hasTag()) out.setTag(input.getTag().copy());
 		return out;
 	}
 
