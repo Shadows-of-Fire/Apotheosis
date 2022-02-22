@@ -1,6 +1,20 @@
 {
 	"comment_id": "/Deadly Module",
 	
+	"affix.apotheosis:common_max_hp": "of Health",
+	"affix.apotheosis:common_max_hp.prefix": "Tough",
+	"affix.apotheosis:common_armor": "of Iron",
+	"affix.apotheosis:common_armor.prefix": "Armored",
+	"affix.apotheosis:common_dmg": "of Stabbing",
+	"affix.apotheosis:common_dmg.prefix": "Pointy",
+	"affix.apotheosis:common_mvspd": "of Motion",
+	"affix.apotheosis:common_mvspd.prefix": "Quick",
+	"affix.apotheosis:common_aspd": "of Slicing",
+	"affix.apotheosis:common_aspd.prefix": "Nimble",
+	
+	"info.apotheosis.affix_item": "Apotheotic Affix Item",
+	"item.modifiers.both_hands": "When in Any Hand:",
+	
 	"affix.apotheosis:reach_distance.name": "Reach Distance - (%s)",
 	"affix.apotheosis:enchantability.name": "Enchantability - (%s)",
 	

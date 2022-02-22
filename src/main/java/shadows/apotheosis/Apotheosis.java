@@ -27,6 +27,8 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.compat.PatchouliCompat;
+import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.deadly.loot.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
@@ -69,7 +71,7 @@ public class Apotheosis {
 	public static Configuration config;
 	public static boolean enableSpawner = true;
 	public static boolean enableGarden = true;
-	public static boolean enableDeadly = false;
+	public static boolean enableDeadly = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillage = true;
@@ -82,7 +84,7 @@ public class Apotheosis {
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-		//enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		if (config.hasChanged()) config.save();
@@ -95,7 +97,7 @@ public class Apotheosis {
 		if (enableEnch) bus.register(new EnchModule());
 		if (enableSpawner) bus.register(new SpawnerModule());
 		if (enableGarden) bus.register(new GardenModule());
-		//if (enableDeadly) bus.register(new DeadlyModule());
+		if (enableDeadly) bus.register(new DeadlyModule());
 		if (enablePotion) bus.register(new PotionModule());
 		if (enableVillage) bus.register(new VillageModule());
 
@@ -105,6 +107,7 @@ public class Apotheosis {
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
+		Affix.classload();
 	}
 
 	@SubscribeEvent

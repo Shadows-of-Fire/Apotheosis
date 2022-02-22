@@ -186,81 +186,19 @@ public class Apoth {
 		public static final BlockEntityType<EnchLibraryTile> ENDER_LIBRARY = null;
 	}
 
+	@ObjectHolder(Apotheosis.MODID)
+	public static final class Attributes {
+
+	}
+
+	@ObjectHolder(Apotheosis.MODID)
+	public static final class Affixes {
+
+	}
+
 	public static final class Tags {
 		public static final IOptionalNamedTag<Item> BOON_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "boon_drops"), null);
 		public static final IOptionalNamedTag<Item> SPEARFISHING_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"), null);
 	}
 
-	/*	public static final HellshelfBlock HELLSHELF = null;
-	//	public static final Item PRISMATIC_WEB = null;
-	//	public static final HellInfusionEnchantment HELL_INFUSION = null;
-	//	public static final MinersFervorEnchant DEPTH_MINER = null;
-	//	public static final StableFootingEnchant STABLE_FOOTING = null;
-	//	public static final ScavengerEnchant SCAVENGER = null;
-	//	public static final LifeMendingEnchant LIFE_MENDING = null;
-	//	public static final IcyThornsEnchant ICY_THORNS = null;
-	//	public static final TemptingEnchant TEMPTING = null;
-	//	public static final ShieldBashEnchant SHIELD_BASH = null;
-	//	public static final ReflectiveEnchant REFLECTIVE = null;
-	//	public static final BerserkersFuryEnchant BERSERK = null;
-	//	public static final CapturingEnchant CAPTURING = null;
-	
-	//	public static final KnowledgeEnchant KNOWLEDGE = null;
-	//	public static final SplittingEnchant SPLITTING = null;
-	//	public static final NaturesBlessingEnchant NATURES_BLESSING = null;
-	//	public static final ReboundingEnchant REBOUNDING = null;
-	//	public static final TomeItem NULL_BOOK = null;
-	//	public static final TomeItem ARMOR_HEAD_BOOK = null;
-	//	public static final TomeItem ARMOR_CHEST_BOOK = null;
-	//	public static final TomeItem ARMOR_LEGS_BOOK = null;
-	//	public static final TomeItem ARMOR_FEET_BOOK = null;
-	//	public static final TomeItem WEAPON_BOOK = null;
-	//	public static final TomeItem DIGGER_BOOK = null;
-	//	public static final TomeItem FISHING_ROD_BOOK = null;
-	//	public static final TomeItem BOW_BOOK = null;
-	//	public static final SeaAltarBlock PRISMATIC_ALTAR = null;
-	public static final SoundEvent ALTAR_SOUND = null;
-	//	public static final MagicProtEnchant MAGIC_PROTECTION = null;
-	//	public static final ScrappingTomeItem SCRAP_TOME = null;
-	//	public static final BlockEntityType<AnvilTile> ANVIL = null;
-	//	@ObjectHolder("apotheosis:prismatic_altar")
-	//	public static final BlockEntityType<SeaAltarTile> ALTAR_TYPE = null;
-	public static final ObsidianArrowItem OBSIDIAN_ARROW = null;
-	public static final EntityType<ObsidianArrowEntity> OB_ARROW_ENTITY = null;
-	public static final MobEffect BLEEDING = null;
-	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
-	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
-	
-	//	@ObjectHolder("minecraft:enchanting_table")
-	//	public static final BlockEntityType<ApothEnchantTile> ENCHANTING_TABLE = null;
-	//	public static final MenuType<ApothEnchantContainer> ENCHANTING = null;
-	//	public static final SeaInfusionEnchantment SEA_INFUSION = null;
-	//	public static final SeashelfBlock SEASHELF = null;
-	public static final Block BLAZING_HELLSHELF = null;
-	public static final Block GLOWING_HELLSHELF = null;
-	public static final Block CRYSTAL_SEASHELF = null;
-	public static final Block HEART_SEASHELF = null;
-	public static final Block ENDSHELF = null;
-	public static final Block PEARL_ENDSHELF = null;
-	public static final Block DRACONIC_ENDSHELF = null;
-	public static final Block BEESHELF = null;
-	public static final Block MELONSHELF = null;
-	public static final Enchantment OBLITERATION = null;
-	public static final Enchantment CRESCENDO = null;
-	public static final ObsidianArrowItem OBSIDIAN_ARROW = null;
-	public static final EntityType<ObsidianArrowEntity> OB_ARROW_ENTITY = null;
-	public static final MobEffect BLEEDING = null;
-	public static final EntityType<BroadheadArrowEntity> BH_ARROW_ENTITY = null;
-	public static final BroadheadArrowItem BROADHEAD_ARROW = null;
-	public static final EntityType<ExplosiveArrowEntity> EX_ARROW_ENTITY = null;
-	public static final ExplosiveArrowItem EXPLOSIVE_ARROW = null;
-	public static final EntityType<MiningArrowEntity> MN_ARROW_ENTITY = null;
-	public static final MiningArrowItem IRON_MINING_ARROW = null;
-	public static final MiningArrowItem DIAMOND_MINING_ARROW = null;
-	//	public static final BossSpawnerBlock BOSS_SPAWNER = null;
-	//public static final BlockEntityType<BossSpawnerTile> BOSS_SPAWN_TILE = null;
-	public static final Block ENCHANTMENT_LIBRARY = null;
-	//public static final BlockEntityType<EnchLibraryTile> ENCH_LIB_TILE = null;
-	//public static final MenuType<EnchLibraryContainer> ENCH_LIB_CON = null;
-	*/
 }

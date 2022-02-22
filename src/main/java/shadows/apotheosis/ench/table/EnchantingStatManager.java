@@ -157,8 +157,8 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 		return INSTANCE.absoluteMaxEterna;
 	}
 
-	private float computeAbsoluteMaxEterna() {
-		return this.registry.values().stream().max(Comparator.comparingDouble(s -> s.stats.maxEterna)).get().stats.maxEterna;
+	private void computeAbsoluteMaxEterna() {
+		this.absoluteMaxEterna = this.registry.values().stream().max(Comparator.comparingDouble(s -> s.stats.maxEterna)).get().stats.maxEterna;
 	}
 
 	/**

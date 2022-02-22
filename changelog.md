@@ -1,3 +1,8 @@
+## 5.4.0
+* The Deadly Module is back!
+* Fixed the Enchantment Library not saving if it was the only changed TE in a chunk.
+* Fixed the Absolute Max Eterna not being updated when it changed.
+
 ## 5.3.3
 * Fixed Capturing not working with some modded spawn eggs.
 * Fixed an issue with infusing the Enchantment Library.

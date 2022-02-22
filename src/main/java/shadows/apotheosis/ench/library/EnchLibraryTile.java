@@ -59,6 +59,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 			this.maxLevels.put(e.getKey(), Math.min(this.maxLevel, Math.max(this.maxLevels.getInt(e.getKey()), e.getValue())));
 		}
 		if (enchs.size() > 0) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+		this.setChanged();
 	}
 
 	/**
@@ -74,6 +75,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 		EnchantmentHelper.setEnchantments(enchs, stack);
 		this.points.put(ench, Math.max(0, (this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl)))); //Safety, should never be below zero anyway.
 		if (!this.level.isClientSide()) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+		this.setChanged();
 	}
 
 	/**
