@@ -24,6 +24,15 @@ public class EnchHooks {
 	}
 
 	/**
+	 * Replaces the call to {@link Enchantment#getMaxLevel()} in loot-only classes.
+	 * Injected by coremods/ench/ench_info_loot_redirector.js
+	 */
+	public static int getMaxLootLevel(Enchantment ench) {
+		if (!Apotheosis.enableEnch) return ench.getMaxLevel();
+		return EnchModule.getEnchInfo(ench).getMaxLootLevel();
+	}
+
+	/**
 	 * Replaces the call to {@link Enchantment#isTreasureOnly()} in various classes.
 	 * Injected by coremods/ench/ench_info_redirector.js
 	 */
@@ -39,6 +48,15 @@ public class EnchHooks {
 	public static boolean isDiscoverable(Enchantment ench) {
 		if (!Apotheosis.enableEnch) return ench.isDiscoverable();
 		return EnchModule.getEnchInfo(ench).isDiscoverable();
+	}
+
+	/**
+	 * Replaces the call to {@link Enchantment#isDiscoverable()} in loot-only classes.
+	 * Injected by coremods/ench/ench_info_loot_redirector.js
+	 */
+	public static boolean isLootable(Enchantment ench) {
+		if (!Apotheosis.enableEnch) return ench.isDiscoverable();
+		return EnchModule.getEnchInfo(ench).isLootable();
 	}
 
 	/**

@@ -2,6 +2,9 @@
 * The Deadly Module is back!
 * Fixed the Enchantment Library not saving if it was the only changed TE in a chunk.
 * Fixed the Absolute Max Eterna not being updated when it changed.
+* Added additional controls for max loot level of certain enchantments.
+  * Also added the ability to remove books containing certain enchants from loot pools.
+* Made table levels round eterna values, instead of clamping.
 
 ## 5.3.3
 * Fixed Capturing not working with some modded spawn eggs.

@@ -68,9 +68,9 @@ public class DeadlyModule {
 		e.getRegistry().registerAll(
 				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.MAX_HEALTH, Operation.ADDITION, (level -> 0.5F + Math.round(level * 3) / 2F)).build("common_max_hp"),
 				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.ARMOR, Operation.ADDITION, 0.5F, 2).build("common_armor"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with( Attributes.ATTACK_DAMAGE, Operation.ADDITION, 0.5F, 2).build("common_dmg"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with( Attributes.MOVEMENT_SPEED, Operation.MULTIPLY_TOTAL, 0.05F, 0.15F).build("common_mvspd"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with( Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, 0.1F, 0.25F).build("common_aspd")
+				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.ATTACK_DAMAGE, Operation.ADDITION, 0.5F, 2).build("common_dmg"),
+				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.MOVEMENT_SPEED, Operation.MULTIPLY_TOTAL, 0.05F, 0.15F).build("common_mvspd"),
+				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, 0.1F, 0.25F).build("common_aspd")
 		);
 		//Formatter::on
 	}

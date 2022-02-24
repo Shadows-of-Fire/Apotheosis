@@ -10,27 +10,33 @@ import shadows.placebo.config.Configuration;
 public class EnchantmentInfo {
 
 	protected final Enchantment ench;
-	protected final int maxLevel;
-	protected final boolean treasure, discoverable, tradeable;
+	protected final int maxLevel, maxLootLevel;
+	protected final boolean treasure, discoverable, lootable, tradeable;
 	protected final PowerFunc maxPower, minPower;
 
-	public EnchantmentInfo(Enchantment ench, int maxLevel, PowerFunc max, PowerFunc min, boolean treasure, boolean discoverable, boolean tradeable) {
+	public EnchantmentInfo(Enchantment ench, int maxLevel, int maxLootLevel, PowerFunc max, PowerFunc min, boolean treasure, boolean discoverable, boolean lootable, boolean tradeable) {
 		this.ench = ench;
 		this.maxLevel = maxLevel;
+		this.maxLootLevel = maxLootLevel;
 		this.maxPower = max;
 		this.minPower = min;
 		this.treasure = treasure;
 		this.discoverable = discoverable;
+		this.lootable = lootable;
 		this.tradeable = tradeable;
 	}
 
 	@Deprecated
 	public EnchantmentInfo(Enchantment ench) {
-		this(ench, ench.getMaxLevel(), defaultMax(ench), defaultMin(ench), ench.isTreasureOnly(), ench.isDiscoverable(), ench.isTradeable());
+		this(ench, ench.getMaxLevel(), ench.getMaxLevel(), defaultMax(ench), defaultMin(ench), ench.isTreasureOnly(), ench.isDiscoverable(), ench.isDiscoverable(), ench.isTradeable());
 	}
 
 	public int getMaxLevel() {
-		return Math.min(EnchModule.ENCH_HARD_CAPS.getOrDefault(this.ench, Integer.MAX_VALUE), this.maxLevel);
+		return Math.min(EnchModule.ENCH_HARD_CAPS.getOrDefault(this.ench, 127), this.maxLevel);
+	}
+
+	public int getMaxLootLevel() {
+		return Math.min(EnchModule.ENCH_HARD_CAPS.getOrDefault(this.ench, 127), this.maxLootLevel);
 	}
 
 	public int getMinPower(int level) {
@@ -49,6 +55,10 @@ public class EnchantmentInfo {
 		return this.treasure;
 	}
 
+	public boolean isLootable() {
+		return this.lootable;
+	}
+
 	public boolean isTradeable() {
 		return this.tradeable;
 	}
@@ -56,14 +66,16 @@ public class EnchantmentInfo {
 	public static EnchantmentInfo load(Enchantment ench, Configuration cfg) {
 		String category = ench.getRegistryName().toString();
 		int max = cfg.getInt("Max Level", category, EnchModule.getDefaultMax(ench), 1, 127, "The max level of this enchantment - originally " + ench.getMaxLevel() + ".");
+		int maxLoot = cfg.getInt("Max Loot Level", category, ench.getMaxLevel(), 1, 127, "The max level of this enchantment available from loot sources.");
 		String maxF = cfg.getString("Max Power Function", category, "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
 		String minF = cfg.getString("Min Power Function", category, "", "A function to determine the min enchanting power.");
 		PowerFunc maxPower = maxF.isEmpty() ? defaultMax(ench) : new ExpressionPowerFunc(maxF);
 		PowerFunc minPower = minF.isEmpty() ? defaultMin(ench) : new ExpressionPowerFunc(minF);
-		boolean treasure = cfg.getBoolean("Treasure", category, ench.isTreasureOnly(), "If this enchantment is available via treasure (loot) sources. Ignored if not discoverable.");
-		boolean discoverable = cfg.getBoolean("Discoverable", category, ench.isDiscoverable(), "If this enchantment is obtainable via loot and enchanting.");
-		boolean tradeable = cfg.getBoolean("Tradeable", category, ench.isDiscoverable(), "If this enchantment is obtainable via villager trades.");
-		EnchantmentInfo info = new EnchantmentInfo(ench, max, maxPower, minPower, treasure, discoverable, tradeable);
+		boolean treasure = cfg.getBoolean("Treasure", category, ench.isTreasureOnly(), "If this enchantment is only available by loot sources.");
+		boolean discoverable = cfg.getBoolean("Discoverable", category, ench.isDiscoverable(), "If this enchantment is obtainable via enchanting and enchanted loot items.");
+		boolean lootable = cfg.getBoolean("Lootable", category, ench.isDiscoverable(), "If enchanted books of this enchantment are available via loot sources.");
+		boolean tradeable = cfg.getBoolean("Tradeable", category, ench.isTradeable(), "If enchanted books of this enchantment are available via villager trades.");
+		EnchantmentInfo info = new EnchantmentInfo(ench, max, maxLoot, maxPower, minPower, treasure, discoverable, lootable, tradeable);
 		String rarity = cfg.getString("Rarity", ench.getRegistryName().toString(), ench.getRarity().name(), "The rarity of this enchantment.  Valid values are COMMON, UNCOMMON, RARE, and VERY_RARE.");
 		try {
 			Enchantment.Rarity r = Enchantment.Rarity.valueOf(rarity);

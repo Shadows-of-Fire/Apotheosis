@@ -3,20 +3,20 @@ var Opcodes = Java.type('org.objectweb.asm.Opcodes');
 var Handle = Java.type('org.objectweb.asm.Handle');
 var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
 
-function maxLevelNode(){
+function maxLootLevelNode(){
 	return new MethodInsnNode(
 			Opcodes.INVOKESTATIC, 
 			"shadows/apotheosis/ench/asm/EnchHooks", 
-			"getMaxLevel", 
+			"getMaxLootLevel", 
 			"(Lnet/minecraft/world/item/enchantment/Enchantment;)I", 
 			false);
 }
 
-function discoverableNode(){
+function lootableNode(){
 	return new MethodInsnNode(
 			Opcodes.INVOKESTATIC, 
 			"shadows/apotheosis/ench/asm/EnchHooks", 
-			"isDiscoverable", 
+			"isLootable", 
 			"(Lnet/minecraft/world/item/enchantment/Enchantment;)Z", 
 			false);
 }
@@ -48,23 +48,20 @@ function search(name, replacements){
 
 function initializeCoreMod() {
 	return {
-		'ench_info_redirects': {
+		'ench_info_loot_redirects': {
 			'target': {
 				'type': 'CLASS',
 				'names': function(listofclasses) {
 					return [
-						'vazkii.quark.content.tools.module.AncientTomesModule',
-						'vazkii.quark.content.tools.item.AncientTomeItem',
-						'net.minecraft.server.commands.EnchantCommand',
-						'net.minecraft.world.item.EnchantedBookItem',
-						'net.minecraft.world.inventory.AnvilMenu'
+						'net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction',
+						'net.minecraft.world.entity.npc.VillagerTrades$EnchantBookForEmeralds'
 					]
 				}
 			},
 			'transformer': function(classNode) {
 				var replacements = [
-					{'name': ASMAPI.mapMethod("m_6586_"), 'factory': maxLevelNode, 'count': 0, 'logName': 'Enchantment#getMaxLevel()'},
-					{'name': ASMAPI.mapMethod("m_6592_"), 'factory': discoverableNode, 'count': 0, 'logName': 'Enchantment#isDiscoverable()'},
+					{'name': ASMAPI.mapMethod("m_6586_"), 'factory': maxLootLevelNode, 'count': 0, 'logName': 'Enchantment#getMaxLevel()'},
+					{'name': ASMAPI.mapMethod("m_6592_"), 'factory': lootableNode, 'count': 0, 'logName': 'Enchantment#isDiscoverable()'},
 					{'name': ASMAPI.mapMethod("m_6591_"), 'factory': treasureNode, 'count': 0, 'logName': 'Enchantment#isTreasureOnly()'},
 					{'name': ASMAPI.mapMethod("m_6594_"), 'factory': tradeableNode, 'count': 0, 'logName': 'Enchantment#isTradeable()'}
 				];

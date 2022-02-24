@@ -9,7 +9,10 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -29,10 +32,12 @@ import shadows.apotheosis.deadly.loot.LootRarity;
  */
 public class AttributeAffix extends Affix {
 
+	protected final @Nullable Predicate<LootCategory> types;
 	protected final List<ModifierInst> modifiers;
 
-	public AttributeAffix(LootRarity rarity, ModifierInst... modifiers) {
+	public AttributeAffix(LootRarity rarity, @Nullable Predicate<LootCategory> types, ModifierInst... modifiers) {
 		super(rarity);
+		this.types = types;
 		this.modifiers = Arrays.asList(modifiers);
 	}
 
@@ -61,7 +66,7 @@ public class AttributeAffix extends Affix {
 
 	@Override
 	public boolean canApply(LootCategory type) {
-		return true;
+		return this.types == null ? true : this.types.test(type);
 	}
 
 	public record ModifierInst(Supplier<Attribute> attr, Operation op, Function<Float, Float> valueFactory, Map<EquipmentSlot, UUID> cache) {
@@ -75,9 +80,15 @@ public class AttributeAffix extends Affix {
 
 		private final LootRarity rarity;
 		private final List<ModifierInst> modifiers = new ArrayList<>();
+		private Predicate<LootCategory> types;
 
 		public Builder(LootRarity rarity) {
 			this.rarity = rarity;
+		}
+
+		public Builder types(Predicate<LootCategory> types) {
+			this.types = types;
+			return this;
 		}
 
 		public Builder with(Supplier<Attribute> attr, Operation op, Function<Float, Float> valueFactory) {
@@ -98,7 +109,7 @@ public class AttributeAffix extends Affix {
 		}
 
 		public AttributeAffix build(String id) {
-			return (AttributeAffix) new AttributeAffix(rarity, modifiers.toArray(new ModifierInst[0])).setRegistryName(id);
+			return (AttributeAffix) new AttributeAffix(rarity, types, modifiers.toArray(new ModifierInst[0])).setRegistryName(id);
 		}
 
 	}
