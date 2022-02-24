@@ -39,11 +39,11 @@ public class RealEnchantmentHelper {
 	public static int getEnchantmentCost(Random rand, int num, float eterna, ItemStack stack) {
 		int ench = stack.getItemEnchantability();
 		if (ench <= 0) return 0;
-		int level = (int) (eterna * 2);
+		int level = Math.round(eterna * 2);
 		if (num == 2) return level;
 		float lowBound = 0.6F - 0.4F * (1 - num);
 		float highBound = 0.8F - 0.4F * (1 - num);
-		return Math.max(1, (int) (level * Mth.nextFloat(rand, lowBound, highBound)));
+		return Math.max(1, Math.round((level * Mth.nextFloat(rand, lowBound, highBound))));
 	}
 
 	/**
