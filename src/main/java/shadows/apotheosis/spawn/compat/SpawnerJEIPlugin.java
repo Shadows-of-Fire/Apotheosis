@@ -33,7 +33,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 		List<SpawnerModifier> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(SpawnerModifier.TYPE);
 		recipes.sort((r1, r2) -> r1.getOffhandInput() == Ingredient.EMPTY ? r2.getOffhandInput() == Ingredient.EMPTY ? 0 : -1 : 1);
 
-		reg.addRecipes(recipes, SpawnerCategory.UID);
+		reg.addRecipes(SpawnerCategory.TYPE, recipes);
 		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
 		for (Item i : ForgeRegistries.ITEMS) {
 			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.capturing"));
@@ -43,7 +43,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
 		if (!Apotheosis.enableSpawner) return;
-		reg.addRecipeCatalyst(new ItemStack(Blocks.SPAWNER), this.getPluginUid());
+		reg.addRecipeCatalyst(new ItemStack(Blocks.SPAWNER), SpawnerCategory.TYPE);
 	}
 
 	@Override

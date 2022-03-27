@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableMap;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -44,7 +44,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchBook);
 		IVanillaRecipeFactory factory = reg.getVanillaRecipeFactory();
 		//Formatter::off
-		reg.addRecipes(ImmutableList.of(
+		reg.addRecipes(RecipeTypes.ANVIL, ImmutableList.of(
 			factory.createAnvilRecipe(
 				enchDiaSword,
 				ImmutableList.of(new ItemStack(Blocks.COBWEB)),
@@ -60,20 +60,21 @@ public class EnchJEIPlugin implements IModPlugin {
 			factory.createAnvilRecipe(
 				new ItemStack(Blocks.DAMAGED_ANVIL),
 				ImmutableList.of(new ItemStack(Blocks.IRON_BLOCK)),
-				ImmutableList.of(new ItemStack(Blocks.ANVIL)))),
-			VanillaRecipeCategoryUid.ANVIL);
+				ImmutableList.of(new ItemStack(Blocks.ANVIL)))
+			)
+		);
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.enchanting"));
 		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.library"));
 		List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
 		recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
-		reg.addRecipes(recipes, EnchantingCategory.UID);
+		reg.addRecipes(EnchantingCategory.TYPE, recipes);
 	}
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
 		if (!Apotheosis.enableEnch) return;
-		reg.addRecipeCatalyst(new ItemStack(Blocks.ENCHANTING_TABLE), EnchantingCategory.UID);
+		reg.addRecipeCatalyst(new ItemStack(Blocks.ENCHANTING_TABLE), EnchantingCategory.TYPE);
 	}
 
 	@Override

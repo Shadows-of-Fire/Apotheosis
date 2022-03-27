@@ -10,11 +10,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -40,6 +42,7 @@ import shadows.apotheosis.ench.table.EnchantingStatManager.Stats;
 public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 
 	public static final ResourceLocation UID = new ResourceLocation(Apotheosis.MODID, "enchanting");
+	public static final RecipeType<EnchantingRecipe> TYPE = RecipeType.create(Apotheosis.MODID, "enchanting", EnchantingRecipe.class);
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_jei.png");
 	private static final Map<Class<?>, Extension<?>> EXTENSIONS = new HashMap<>();
 
@@ -79,27 +82,19 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void setIngredients(EnchantingRecipe recipe, IIngredients ing) {
-		Extension ext = EXTENSIONS.get(recipe.getClass());
-		if (ext != null) ext.setIngredients(recipe, ing);
-		else {
-			ing.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-			ing.setInputIngredients(Arrays.asList(recipe.getInput()));
-		}
+	public RecipeType<EnchantingRecipe> getRecipeType() {
+		return TYPE;
 	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void setRecipe(IRecipeLayout layout, EnchantingRecipe recipe, IIngredients ing) {
-		IGuiItemStackGroup stacks = layout.getItemStacks();
-		stacks.init(0, true, 5, 5);
-		stacks.init(1, false, 36, 5);
-
-		Extension ext = EXTENSIONS.get(recipe.getClass());
-		if (ext != null) ext.setRecipe(recipe, layout, ing);
+	public void setRecipe(IRecipeLayoutBuilder builder, EnchantingRecipe recipe, IFocusGroup focuses) {
+		IRecipeSlotBuilder input = builder.addSlot(RecipeIngredientRole.INPUT, 6, 6);
+		IRecipeSlotBuilder output = builder.addSlot(RecipeIngredientRole.OUTPUT, 37, 6);
+		Extension<?> ext = EXTENSIONS.get(recipe.getClass());
+		if (ext != null) ext.setRecipe(builder, input, output, recipe, focuses);
 		else {
-			stacks.set(ing);
+			input.addIngredients(VanillaTypes.ITEM, Arrays.asList(recipe.getInput().getItems()));
+			output.addIngredient(VanillaTypes.ITEM, recipe.getResultItem());
 		}
 	}
 
@@ -204,10 +199,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 	}
 
 	public static interface Extension<T extends EnchantingRecipe> {
-
-		public void setIngredients(T recipe, IIngredients ingredients);
-
-		public void setRecipe(T recipe, IRecipeLayout recipeLayout, IIngredients ingredients);
+		public void setRecipe(IRecipeLayoutBuilder builder, IRecipeSlotBuilder input, IRecipeSlotBuilder output, EnchantingRecipe recipe, IFocusGroup focuses);
 	}
 
 }

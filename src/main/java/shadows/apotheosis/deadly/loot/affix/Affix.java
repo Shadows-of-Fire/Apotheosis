@@ -27,8 +27,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.minecraftforge.registries.RegistryBuilder;
-import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.deadly.loot.LootCategory;
 import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -41,17 +39,10 @@ import shadows.placebo.config.Configuration;
  */
 public abstract class Affix implements IForgeRegistryEntry<Affix> {
 
-	static {
-		RegistryBuilder<Affix> build = new RegistryBuilder<>();
-		build.setName(new ResourceLocation(Apotheosis.MODID, "affixes"));
-		build.setType(Affix.class);
-		REGISTRY = (ForgeRegistry<Affix>) build.create();
-	}
-
 	/**
 	 * The affix registry.
 	 */
-	public static final ForgeRegistry<Affix> REGISTRY;
+	public static ForgeRegistry<Affix> REGISTRY;
 
 	/**
 	 * Config for affixes.

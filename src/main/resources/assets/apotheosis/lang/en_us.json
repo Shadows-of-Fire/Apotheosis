@@ -11,6 +11,11 @@
 	"affix.apotheosis:common_mvspd.prefix": "Quick",
 	"affix.apotheosis:common_aspd": "of Slicing",
 	"affix.apotheosis:common_aspd.prefix": "Nimble",
+	"affix.apotheosis:common_kb": "of Shoving",
+	"affix.apotheosis:common_kb.prefix": "Pushy",
+	"affix.apotheosis:common_reach": "of Poking",
+	"affix.apotheosis:common_reach.prefix": "Long",
+	
 	
 	"info.apotheosis.affix_item": "Apotheotic Affix Item",
 	"item.modifiers.both_hands": "When in Any Hand:",

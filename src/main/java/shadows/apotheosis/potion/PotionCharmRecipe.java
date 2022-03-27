@@ -31,6 +31,7 @@ import shadows.apotheosis.Apotheosis;
 public class PotionCharmRecipe extends ShapedRecipe {
 
 	protected final IntList potionSlots = new IntArrayList();
+	protected final Ingredient potion = makePotionIngredient();
 
 	public PotionCharmRecipe(List<Object> ingredients, int width, int height) {
 		super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", width, height, makeIngredients(ingredients), new ItemStack(Apoth.Items.POTION_CHARM));
@@ -39,16 +40,20 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		}
 	}
 
-	private static NonNullList<Ingredient> makeIngredients(List<Object> ingredients) {
+	private static Ingredient makePotionIngredient() {
 		List<ItemStack> potionStacks = new ArrayList<>();
-		List<Object> realIngredients = new ArrayList<>();
 		for (Potion p : ForgeRegistries.POTIONS) {
 			if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
 			ItemStack potion = new ItemStack(Items.POTION);
 			PotionUtils.setPotion(potion, p);
 			potionStacks.add(potion);
 		}
-		Ingredient potion = Ingredient.of(potionStacks.toArray(new ItemStack[0]));
+		return Ingredient.of(potionStacks.toArray(new ItemStack[0]));
+	}
+
+	private static NonNullList<Ingredient> makeIngredients(List<Object> ingredients) {
+		List<Object> realIngredients = new ArrayList<>();
+		Ingredient potion = makePotionIngredient();
 
 		for (Object o : ingredients) {
 			if (o.equals("potion")) realIngredients.add(potion);
@@ -56,6 +61,14 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		}
 
 		return Apotheosis.HELPER.createInput(true, realIngredients.toArray());
+	}
+
+	public Ingredient getPotionIngredient() {
+		return potion;
+	}
+
+	public IntList getPotionSlots() {
+		return potionSlots;
 	}
 
 	@Override

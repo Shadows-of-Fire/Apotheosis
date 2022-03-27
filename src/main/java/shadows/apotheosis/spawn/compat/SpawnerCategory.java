@@ -9,11 +9,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -37,13 +38,14 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/spawner_jei.png");
 	public static final ResourceLocation UID = new ResourceLocation(Apotheosis.MODID, "spawner_modifiers");
+	public static final RecipeType<SpawnerModifier> TYPE = RecipeType.create(Apotheosis.MODID, "spawner_modifiers", SpawnerModifier.class);
 
 	private IDrawable bg;
 	private IDrawable icon;
 	private Component title;
 
 	public SpawnerCategory(IGuiHelper helper) {
-		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 168, 75).build();
+		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 169, 75).build();
 		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Items.SPAWNER));
 		this.title = new TranslatableComponent("title.apotheosis.spawner");
 	}
@@ -51,6 +53,11 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	@Override
 	public ResourceLocation getUid() {
 		return UID;
+	}
+
+	@Override
+	public RecipeType<SpawnerModifier> getRecipeType() {
+		return TYPE;
 	}
 
 	@Override
@@ -64,11 +71,11 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout layout, SpawnerModifier recipe, IIngredients ing) {
-		IGuiItemStackGroup stacks = layout.getItemStacks();
-		stacks.init(0, true, 10, 10);
-		if (recipe.getOffhandInput() != Ingredient.EMPTY) stacks.init(1, true, 10, 47);
-		stacks.set(ing);
+	public void setRecipe(IRecipeLayoutBuilder builder, SpawnerModifier recipe, IFocusGroup focuses) {
+		builder.addSlot(RecipeIngredientRole.INPUT, 11, 11).addIngredients(recipe.getMainhandInput());
+		if (recipe.getOffhandInput() != Ingredient.EMPTY) builder.addSlot(RecipeIngredientRole.INPUT, 11, 48).addIngredients(recipe.getOffhandInput());
+		builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.SPAWNER));
+		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.SPAWNER));
 	}
 
 	@Override
@@ -79,12 +86,6 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	@Override
 	public Class<? extends SpawnerModifier> getRecipeClass() {
 		return SpawnerModifier.class;
-	}
-
-	@Override
-	public void setIngredients(SpawnerModifier recipe, IIngredients ing) {
-		ing.setInputIngredients(Arrays.asList(recipe.getMainhandInput(), recipe.getOffhandInput(), Ingredient.of(Blocks.SPAWNER)));
-		ing.setOutput(VanillaTypes.ITEM, new ItemStack(Blocks.SPAWNER));
 	}
 
 	@Override

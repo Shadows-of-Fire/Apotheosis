@@ -26,7 +26,7 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
 
 	protected final ResourceLocation id;
 	protected final ItemStack output;
-	protected final List<Ingredient> inputs = NonNullList.withSize(3, Ingredient.EMPTY);
+	protected final NonNullList<Ingredient> inputs = NonNullList.withSize(3, Ingredient.EMPTY);
 
 	public FletchingRecipe(ResourceLocation id, ItemStack output, List<Ingredient> inputs) {
 		this.id = id;
@@ -74,7 +74,8 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
 		return VillageModule.FLETCHING;
 	}
 
-	public List<Ingredient> getInputs() {
+	@Override
+	public NonNullList<Ingredient> getIngredients() {
 		return this.inputs;
 	}
 

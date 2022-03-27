@@ -53,7 +53,7 @@ import shadows.placebo.util.PlaceboUtil;
 
 public class VillageModule {
 
-	public static final RecipeType<FletchingRecipe> FLETCHING = RecipeType.register(Apotheosis.MODID + ":fletching");
+	public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType(Apotheosis.MODID + ":fletching");
 	public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Village");
 

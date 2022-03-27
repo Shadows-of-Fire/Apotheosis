@@ -6,10 +6,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.ench.EnchModuleEvents.TridentGetter;
 
@@ -48,7 +50,7 @@ public class SpearfishingEnchant extends Enchantment {
 			int level = EnchantmentHelper.getItemEnchantmentLevel(this, triStack);
 			if (trident.random.nextFloat() < 3.5F * level) {
 				Entity dead = e.getEntityLiving();
-				e.getDrops().add(new ItemEntity(trident.level, dead.getX(), dead.getY(), dead.getZ(), new ItemStack(Apoth.Tags.SPEARFISHING_DROPS.getRandomElement(trident.random), 1 + trident.random.nextInt(3))));
+				e.getDrops().add(new ItemEntity(trident.level, dead.getX(), dead.getY(), dead.getZ(), new ItemStack(ForgeRegistries.ITEMS.tags().getTag(Apoth.Tags.SPEARFISHING_DROPS).getRandomElement(trident.random).orElse(Items.AIR), 1 + trident.random.nextInt(3))));
 			}
 		}
 	}

@@ -2,14 +2,15 @@ package shadows.apotheosis;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.common.Tags.IOptionalNamedTag;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
@@ -188,7 +189,46 @@ public class Apoth {
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Attributes {
-
+		/**
+		 * Bonus to how fast a ranged weapon is charged. Base Value = (1.0) = 100%
+		 */
+		public static final Attribute DRAW_SPEED = null;
+		/**
+		 * Chance that a non-jump-attack will critically strike.  Base value = (1.0) = 0%
+		 */
+		public static final Attribute CRIT_CHANCE = null;
+		/**
+		 * Amount of damage caused by critical strikes. Base value = (1.0) = 100%
+		 */
+		public static final Attribute CRIT_DAMAGE = null;
+		/**
+		 * Bonus magic damage that slows enemies hit. Base value = (0.0) = 0 damage
+		 */
+		public static final Attribute COLD_DAMAGE = null;
+		/**
+		 * Bonus magic damage that burns enemies hit. Base value = (0.0) = 0 damage
+		 */
+		public static final Attribute FIRE_DAMAGE = null;
+		/**
+		 * Percent of physical damage converted to health. Base value = (1.0) = 0%
+		 */
+		public static final Attribute LIFE_STEAL = null;
+		/**
+		 * Percent of physical damage that bypasses armor. Base value = (1.0) = 0%
+		 */
+		public static final Attribute PIERCING = null;
+		/**
+		 * Bonus physical damage dealt equal to enemy's current health. Base value = (1.0) = 0%
+		 */
+		public static final Attribute CURRENT_HP_DAMAGE = null;
+		/**
+		 * Percent of physical damage converted to absorption hearts. Base value = (1.0) = 0%
+		 */
+		public static final Attribute OVERHEAL = null;
+		/**
+		 * Extra health that regenerates when not taking damage. Base value = (0.0) = 0 damage
+		 */
+		public static final Attribute GHOST_HEALTH = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -197,8 +237,8 @@ public class Apoth {
 	}
 
 	public static final class Tags {
-		public static final IOptionalNamedTag<Item> BOON_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "boon_drops"), null);
-		public static final IOptionalNamedTag<Item> SPEARFISHING_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"), null);
+		public static final TagKey<Item> BOON_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "boon_drops"));
+		public static final TagKey<Item> SPEARFISHING_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"));
 	}
 
 }

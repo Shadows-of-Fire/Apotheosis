@@ -8,14 +8,13 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.SerializationTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,8 +45,8 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 			Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
 			List<Block> blocks = new ArrayList<>();
 			if (obj.has("tag")) {
-				Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, new ResourceLocation(obj.get("tag").getAsString()), p_151262_ -> new JsonSyntaxException("Unknown block tag '" + p_151262_ + "'"));
-				blocks.addAll(tag.getValues());
+				TagKey<Block> tag = BlockTags.create(new ResourceLocation(obj.get("tag").getAsString()));
+				ForgeRegistries.BLOCKS.tags().getTag(tag).iterator().forEachRemaining(blocks::add);
 			} else {
 				Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
 				blocks.add(b);

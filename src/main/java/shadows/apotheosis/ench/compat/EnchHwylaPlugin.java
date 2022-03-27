@@ -4,9 +4,10 @@ import java.util.Map;
 
 import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.IServerDataProvider;
 import mcp.mobius.waila.api.ITooltip;
+import mcp.mobius.waila.api.IWailaClientRegistration;
+import mcp.mobius.waila.api.IWailaCommonRegistration;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
@@ -27,9 +28,13 @@ import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
 public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<BlockEntity> {
 
 	@Override
-	public void register(IRegistrar reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothAnvilBlock.class);
+	public void register(IWailaCommonRegistration reg) {
 		reg.registerBlockDataProvider(this, AnvilTile.class);
+	}
+
+	@Override
+	public void registerClient(IWailaClientRegistration reg) {
+		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothAnvilBlock.class);
 	}
 
 	@Override

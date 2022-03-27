@@ -1,10 +1,16 @@
 ## 5.4.0
 * The Deadly Module is back!
+* Not yet released, this is here for staging purposes.
+
+## 5.3.4
+* Updated to 1.18.2
 * Fixed the Enchantment Library not saving if it was the only changed TE in a chunk.
 * Fixed the Absolute Max Eterna not being updated when it changed.
 * Added additional controls for max loot level of certain enchantments.
   * Also added the ability to remove books containing certain enchants from loot pools.
 * Made table levels round eterna values, instead of clamping.
+* Updated to new JEI and Jade API's.
+  * Potion Charm recipes in JEI should be a bit more responsive now.
 
 ## 5.3.3
 * Fixed Capturing not working with some modded spawn eggs.

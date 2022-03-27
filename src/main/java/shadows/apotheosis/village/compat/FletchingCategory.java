@@ -1,11 +1,15 @@
 package shadows.apotheosis.village.compat;
 
+import java.util.Arrays;
+import java.util.List;
+
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -19,6 +23,7 @@ import shadows.apotheosis.village.fletching.FletchingScreen;
 public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 
 	public static final ResourceLocation UID = new ResourceLocation(Apotheosis.MODID, "fletching");
+	public static final RecipeType<FletchingRecipe> TYPE = RecipeType.create(Apotheosis.MODID, "fletching", FletchingRecipe.class);
 
 	private final IDrawable background;
 	private final IDrawable icon;
@@ -57,19 +62,17 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 	}
 
 	@Override
-	public void setIngredients(FletchingRecipe recipe, IIngredients ing) {
-		ing.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-		ing.setInputIngredients(recipe.getInputs());
+	public RecipeType<FletchingRecipe> getRecipeType() {
+		return TYPE;
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout layout, FletchingRecipe recipe, IIngredients ing) {
-		IGuiItemStackGroup stacks = layout.getItemStacks();
-		stacks.init(0, false, 116, 18);
-		stacks.init(1, true, 41, 0);
-		stacks.init(2, true, 41, 18);
-		stacks.init(3, true, 41, 36);
-		stacks.set(ing);
+	public void setRecipe(IRecipeLayoutBuilder builder, FletchingRecipe recipe, IFocusGroup focuses) {
+		List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(i -> Arrays.asList(i.getItems())).toList();
+		for (int i = 0; i < 3; i++) {
+			builder.addSlot(RecipeIngredientRole.INPUT, 42, 1 + i * 18).addIngredients(VanillaTypes.ITEM, inputs.get(i));
+		}
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 19).addIngredient(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 }

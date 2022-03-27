@@ -18,7 +18,7 @@ public class ApothEnchantTile extends EnchantmentTableBlockEntity {
 	protected ItemStackHandler inv = new ItemStackHandler(1) {
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
-			return Tags.Items.GEMS_LAPIS.contains(stack.getItem());
+			return stack.is(Tags.Items.ENCHANTING_FUELS);
 		};
 	};
 

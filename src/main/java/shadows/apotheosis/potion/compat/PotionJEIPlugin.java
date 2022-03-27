@@ -3,31 +3,36 @@ package shadows.apotheosis.potion.compat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.recipe.IFocus;
-import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICustomCraftingCategoryExtension;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.common.util.Size2i;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.compat.EnchantingCategory;
+import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.potion.PotionCharmItem;
 import shadows.apotheosis.potion.PotionCharmRecipe;
 import shadows.apotheosis.potion.PotionEnchantingRecipe;
@@ -61,18 +66,12 @@ public class PotionJEIPlugin implements IModPlugin {
 		return new ResourceLocation(Apotheosis.MODID, "potion");
 	}
 
-	private class PotionCharmRecipeWrapper implements ICustomCraftingCategoryExtension {
+	private class PotionCharmRecipeWrapper implements ICraftingCategoryExtension {
 
 		private final PotionCharmRecipe recipe;
 
 		PotionCharmRecipeWrapper(PotionCharmRecipe recipe) {
 			this.recipe = recipe;
-		}
-
-		@Override
-		public void setIngredients(IIngredients ingredients) {
-			ingredients.setInputIngredients(this.recipe.getIngredients());
-			ingredients.setOutput(VanillaTypes.ITEM, this.recipe.getResultItem());
 		}
 
 		@Override
@@ -86,23 +85,30 @@ public class PotionJEIPlugin implements IModPlugin {
 		}
 
 		@Override
-		public void setRecipe(IRecipeLayout recipeLayout, IIngredients ingredients) {
-			IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-			IFocus<ItemStack> fcs = recipeLayout.getFocus(VanillaTypes.ITEM);
-			ItemStack focus = fcs == null ? ItemStack.EMPTY : recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
-			Potion potion = PotionUtils.getPotion(focus) == Potions.EMPTY ? Potions.STRONG_SWIFTNESS : PotionUtils.getPotion(focus);
-			List<List<ItemStack>> recipeInputs = ingredients.getInputs(VanillaTypes.ITEM);
-			List<List<ItemStack>> clones = new ArrayList<>();
-			recipeInputs.forEach(l -> {
-				List<ItemStack> cloneList = new ArrayList<>();
-				l.stream().map(ItemStack::copy).map(s -> s.hasTag() && s.getTag().contains("Potion") ? PotionUtils.setPotion(s, potion) : s).forEach(cloneList::add);
-				clones.add(cloneList);
-			});
+		public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
+			Potion potion = PotionUtils.getPotion(focuses.getFocuses(VanillaTypes.ITEM).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY));
+			List<List<ItemStack>> recipeInputs = this.recipe.getIngredients().stream().map(i -> Arrays.asList(i.getItems())).collect(Collectors.toCollection(ArrayList::new));
+			if (potion != Potions.EMPTY) {
+				for (int i : recipe.getPotionSlots()) {
+					recipeInputs.set(i, Arrays.asList(PotionUtils.setPotion(new ItemStack(Items.POTION), potion)));
+				}
+			}
 			ItemStack output = new ItemStack(Apoth.Items.POTION_CHARM);
 			PotionUtils.setPotion(output, potion);
 			Size2i size = this.getSize();
-			PotionJEIPlugin.this.gridHelper.setInputs(guiItemStacks, clones, size.width, size.height);
-			guiItemStacks.set(0, output);
+			craftingGridHelper.setInputs(builder, VanillaTypes.ITEM, recipeInputs, size.width, size.height);
+			if (potion != Potions.EMPTY) {
+				craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM, Arrays.asList(output));
+			} else {
+				List<ItemStack> potionStacks = new ArrayList<>();
+				for (Potion p : ForgeRegistries.POTIONS) {
+					if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
+					ItemStack charm = new ItemStack(Apoth.Items.POTION_CHARM);
+					PotionUtils.setPotion(charm, p);
+					potionStacks.add(charm);
+				}
+				craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM, potionStacks);
+			}
 		}
 
 	}
@@ -110,23 +116,31 @@ public class PotionJEIPlugin implements IModPlugin {
 	private class PotionCharmEnchantingWrapper implements EnchantingCategory.Extension<PotionEnchantingRecipe> {
 
 		@Override
-		public void setIngredients(PotionEnchantingRecipe recipe, IIngredients ing) {
-			ing.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-			ing.setInputIngredients(Arrays.asList(recipe.getInput()));
-		}
-
-		@Override
-		public void setRecipe(PotionEnchantingRecipe recipe, IRecipeLayout recipeLayout, IIngredients ingredients) {
-			IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
-			IFocus<ItemStack> fcs = recipeLayout.getFocus(VanillaTypes.ITEM);
-			ItemStack focus = fcs == null ? ItemStack.EMPTY : recipeLayout.getFocus(VanillaTypes.ITEM).getValue();
-			Potion potion = PotionUtils.getPotion(focus) == Potions.EMPTY ? Potions.STRONG_SWIFTNESS : PotionUtils.getPotion(focus);
-			ItemStack output = new ItemStack(Apoth.Items.POTION_CHARM);
-			PotionUtils.setPotion(output, potion);
-			ItemStack input = output.copy();
-			output.getOrCreateTag().putBoolean("Unbreakable", true);
-			stacks.set(1, output);
-			stacks.set(0, input);
+		public void setRecipe(IRecipeLayoutBuilder builder, IRecipeSlotBuilder input, IRecipeSlotBuilder output, EnchantingRecipe recipe, IFocusGroup focuses) {
+			Potion potion = PotionUtils.getPotion(focuses.getFocuses(VanillaTypes.ITEM).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY));
+			if (potion != Potions.EMPTY) {
+				ItemStack out = new ItemStack(Apoth.Items.POTION_CHARM);
+				PotionUtils.setPotion(out, potion);
+				ItemStack in = out.copy();
+				out.getOrCreateTag().putBoolean("Unbreakable", true);
+				input.addIngredient(VanillaTypes.ITEM, in);
+				output.addIngredient(VanillaTypes.ITEM, out);
+			} else {
+				List<ItemStack> potionStacks = new ArrayList<>();
+				List<ItemStack> unbreakable = new ArrayList<>();
+				for (Potion p : ForgeRegistries.POTIONS) {
+					if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
+					ItemStack charm = new ItemStack(Apoth.Items.POTION_CHARM);
+					PotionUtils.setPotion(charm, p);
+					potionStacks.add(charm);
+					ItemStack copy = charm.copy();
+					copy.getOrCreateTag().putBoolean("Unbreakable", true);
+					unbreakable.add(copy);
+				}
+				input.addIngredients(VanillaTypes.ITEM, potionStacks);
+				output.addIngredients(VanillaTypes.ITEM, unbreakable);
+			}
+			builder.createFocusLink(input, output);
 		}
 
 	}

@@ -29,6 +29,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.SlotItemHandler;
 import shadows.apotheosis.Apoth;
@@ -64,7 +65,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 		this.addSecretSlot(new Slot(this.enchantSlots, 1, 35, 47) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
-				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
+				return stack.is(Tags.Items.ENCHANTING_FUELS);
 			}
 		});
 		this.initCommon(inv);
@@ -89,7 +90,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 		this.addSecretSlot(new SlotItemHandler(te.inv, 0, 35, 47) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
-				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
+				return stack.is(Tags.Items.ENCHANTING_FUELS);
 			}
 		});
 		this.initCommon(inv);

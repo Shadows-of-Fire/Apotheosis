@@ -68,6 +68,14 @@ public enum LootCategory {
 		return this.validator.test(stack);
 	}
 
+	public boolean isRanged() {
+		return this == BOW || this == CROSSBOW;
+	}
+
+	public boolean isDefensive() {
+		return this == ARMOR || this == SHIELD;
+	}
+
 	private static class ShieldBreakerTest implements Predicate<ItemStack> {
 
 		@Override

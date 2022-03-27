@@ -82,7 +82,7 @@ public class AffixHelper {
 		Component comp = new TranslatableComponent("%s", new TextComponent("")).withStyle(Style.EMPTY.withColor(rarity.getColor()));
 		CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
 		afxData.putString("Name", Component.Serializer.toJson(comp));
-		AffixHelper.addLore(stack, new TranslatableComponent("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
+		if (!stack.getOrCreateTagElement("display").contains("Lore")) AffixHelper.addLore(stack, new TranslatableComponent("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
 		afxData.putString("Rarity", rarity.name());
 		stack.hideTooltipPart(TooltipPart.MODIFIERS);
 	}

@@ -21,10 +21,11 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.ench.table.EnchantingStatManager.Stats;
+import shadows.placebo.util.PlaceboUtil;
 
 public class EnchantingRecipe implements Recipe<Container> {
 
-	public static final RecipeType<EnchantingRecipe> TYPE = RecipeType.register("apotheosis:enchanting");
+	public static final RecipeType<EnchantingRecipe> TYPE = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
 	public static final Serializer SERIALIZER = new Serializer();
 	public static final Stats NO_MAX = new Stats(-1, -1, -1, -1, -1, -1);
 

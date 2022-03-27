@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
+import shadows.placebo.util.PlaceboUtil;
 
 /**
  * Parent class for all spawner modifiers.
@@ -29,7 +30,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
  */
 public class SpawnerModifier implements Recipe<Container> {
 
-	public static final RecipeType<SpawnerModifier> TYPE = RecipeType.register("apotheosis:spawner_modifier");
+	public static final RecipeType<SpawnerModifier> TYPE = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
 	public static final Serializer SERIALIZER = new Serializer();
 
 	protected final ResourceLocation id;

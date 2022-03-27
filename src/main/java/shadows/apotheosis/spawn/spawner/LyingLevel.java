@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.MinecraftServer;
@@ -152,7 +153,7 @@ public class LyingLevel implements ServerLevelAccessor {
 	}
 
 	@Override
-	public Biome getUncachedNoiseBiome(int pX, int pY, int pZ) {
+	public Holder<Biome> getUncachedNoiseBiome(int pX, int pY, int pZ) {
 		return wrapped.getUncachedNoiseBiome(pX, pY, pZ);
 	}
 

@@ -2,9 +2,10 @@ package shadows.apotheosis.spawn.compat;
 
 import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.IServerDataProvider;
 import mcp.mobius.waila.api.ITooltip;
+import mcp.mobius.waila.api.IWailaClientRegistration;
+import mcp.mobius.waila.api.IWailaCommonRegistration;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
@@ -17,7 +18,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.modifiers.SpawnerStats;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
@@ -28,10 +28,13 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 	public static final String STATS = "spw_stats";
 
 	@Override
-	public void register(IRegistrar reg) {
-		if (!Apotheosis.enableSpawner) return;
-		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothSpawnerBlock.class);
+	public void register(IWailaCommonRegistration reg) {
 		reg.registerBlockDataProvider(this, ApothSpawnerTile.class);
+	}
+
+	@Override
+	public void registerClient(IWailaClientRegistration reg) {
+		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothSpawnerBlock.class);
 	}
 
 	@Override

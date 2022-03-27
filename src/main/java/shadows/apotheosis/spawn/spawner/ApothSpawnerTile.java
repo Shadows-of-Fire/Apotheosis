@@ -21,7 +21,6 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.SpawnData;
@@ -30,8 +29,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.eventbus.api.Event.Result;
 
 public class ApothSpawnerTile extends SpawnerBlockEntity {
 
@@ -207,12 +204,16 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 							entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), pServerLevel.random.nextFloat() * 360.0F, 0.0F);
 							if (entity instanceof Mob) {
 								Mob mob = (Mob) entity;
-								if (!canEntitySpawnSpawner(mob, useLiar ? liar : pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this)) {
-									continue;
+								net.minecraftforge.eventbus.api.Event.Result res = net.minecraftforge.event.ForgeEventFactory.canEntitySpawn(mob, useLiar ? liar : pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER);
+								if (res == net.minecraftforge.eventbus.api.Event.Result.DENY) continue;
+								if (res == net.minecraftforge.eventbus.api.Event.Result.DEFAULT) {
+									if (!ApothSpawnerTile.this.ignoresConditions && (this.nextSpawnData.getCustomSpawnRules().isEmpty() && !mob.checkSpawnRules(pServerLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(pServerLevel))) {
+										continue;
+									}
 								}
 
 								if (this.nextSpawnData.getEntityToSpawn().size() == 1 && this.nextSpawnData.getEntityToSpawn().contains("id", 8)) {
-									if (!ForgeEventFactory.doSpecialSpawn(mob, pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER)) ((Mob) entity).finalizeSpawn(pServerLevel, pServerLevel.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
+									if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(mob, useLiar ? liar : pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER)) ((Mob) entity).finalizeSpawn(pServerLevel, pServerLevel.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
 								}
 							}
 
@@ -236,15 +237,6 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 				}
 			}
-		}
-
-		/**
-		 * Copy of {@link ForgeEventFactory#canEntitySpawnSpawner}
-		 */
-		public boolean canEntitySpawnSpawner(Mob entity, LevelAccessor world, float x, float y, float z, BaseSpawner spawner) {
-			Result result = ForgeEventFactory.canEntitySpawn(entity, world, x, y, z, spawner, MobSpawnType.SPAWNER);
-			if (result == Result.DEFAULT) return (ApothSpawnerTile.this.ignoresConditions || entity.checkSpawnRules(world, MobSpawnType.SPAWNER)) && entity.checkSpawnObstruction(world); // vanilla logic (inverted)
-			else return result == Result.ALLOW;
 		}
 
 		/**

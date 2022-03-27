@@ -1,7 +1,5 @@
 package shadows.apotheosis.village.compat;
 
-import java.util.stream.Collectors;
-
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -15,6 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.village.VillageModule;
 import shadows.apotheosis.village.fletching.FletchingContainer;
+import shadows.apotheosis.village.fletching.FletchingRecipe;
 
 @JeiPlugin
 public class VillageJEIPlugin implements IModPlugin {
@@ -26,7 +25,7 @@ public class VillageJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
-		reg.addRecipeCatalyst(new ItemStack(Blocks.FLETCHING_TABLE), FletchingCategory.UID);
+		reg.addRecipeCatalyst(new ItemStack(Blocks.FLETCHING_TABLE), FletchingCategory.TYPE);
 	}
 
 	@Override
@@ -36,12 +35,12 @@ public class VillageJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
-		reg.addRecipes(Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == VillageModule.FLETCHING).collect(Collectors.toList()), FletchingCategory.UID);
+		reg.addRecipes(FletchingCategory.TYPE, Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == VillageModule.FLETCHING).map(r -> (FletchingRecipe) r).toList());
 	}
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration reg) {
-		reg.addRecipeTransferHandler(FletchingContainer.class, FletchingCategory.UID, 1, 3, 4, 9 * 4);
+		reg.addRecipeTransferHandler(FletchingContainer.class, FletchingCategory.TYPE, 1, 3, 4, 9 * 4);
 	}
 
 }

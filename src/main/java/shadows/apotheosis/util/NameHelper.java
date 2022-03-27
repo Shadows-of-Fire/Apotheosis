@@ -240,11 +240,11 @@ public class NameHelper {
 		return name;*/
 	}
 
-	private static String[] getMaterialDescriptors(Tier materialName) {
+	public static String[] getMaterialDescriptors(Tier materialName) {
 		return materials.computeIfAbsent(materialName, s -> new String[] { "" });
 	}
 
-	private static String[] getArmorDescriptors(ArmorMaterial materialName) {
+	public static String[] getArmorDescriptors(ArmorMaterial materialName) {
 		return armors.computeIfAbsent(materialName, s -> new String[] { "" });
 	}
 

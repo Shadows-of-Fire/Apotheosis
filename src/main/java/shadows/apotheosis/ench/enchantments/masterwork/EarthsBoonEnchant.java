@@ -6,11 +6,13 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.ench.EnchModule;
 
@@ -46,7 +48,7 @@ public class EarthsBoonEnchant extends Enchantment {
 		int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
 		if (player.level.isClientSide) return;
 		if (e.getState().is(Tags.Blocks.STONE) && level > 0 && player.random.nextFloat() <= 0.01F * level) {
-			ItemStack newDrop = new ItemStack(Apoth.Tags.BOON_DROPS.getRandomElement(player.random));
+			ItemStack newDrop = new ItemStack(ForgeRegistries.ITEMS.tags().getTag(Apoth.Tags.BOON_DROPS).getRandomElement(player.random).orElse(Items.AIR));
 			Block.popResource(player.level, e.getPos(), newDrop);
 		}
 	}
