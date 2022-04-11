@@ -2,9 +2,8 @@ package shadows.apotheosis.ench;
 
 import java.math.BigDecimal;
 
-import com.udojava.evalex.Expression;
-
 import net.minecraft.enchantment.Enchantment;
+import s_com.udojava.evalex.Expression;
 
 public class EnchantmentInfo {
 

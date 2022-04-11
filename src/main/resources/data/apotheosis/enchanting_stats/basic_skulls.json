@@ -1,0 +1,18 @@
+{
+	"blocks": [
+			"minecraft:skeleton_skull",
+			"minecraft:skeleton_wall_skull",
+			"minecraft:creeper_head",
+			"minecraft:creeper_wall_head",
+			"minecraft:zombie_head",
+			"minecraft:zombie_wall_head"
+		],
+	"stats": {
+		"maxEterna": 0,
+		"eterna": 0,
+		"quanta": 5,
+		"arcana": 0,
+		"rectification": 0,
+		"clues": 0
+	}
+}

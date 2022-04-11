@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.library;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +10,9 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import it.unimi.dsi.fastutil.objects.Object2ShortMap.Entry;
+import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.client.audio.SimpleSound;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
@@ -32,7 +34,6 @@ import net.minecraftforge.registries.ForgeRegistry;
 import shadows.apotheosis.Apotheosis;
 import shadows.placebo.Placebo;
 import shadows.placebo.net.MessageButtonClick;
-import shadows.placebo.util.ClientUtil;
 
 public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/library.png");
@@ -67,25 +68,22 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 		LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
 		if (libSlot != null) {
 			List<IFormattableTextComponent> list = new ArrayList<>();
-			list.add(new TranslationTextComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(Color.fromRgb(0xFFFF80))));
+			list.add(new TranslationTextComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(Color.fromRgb(0xFFFF80)).setUnderlined(true)));
+			list.add(new TranslationTextComponent("tooltip.enchlib.max_lvl", new TranslationTextComponent("enchantment.level." + libSlot.maxLvl)).withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("tooltip.enchlib.points", format(libSlot.points), format(this.menu.getPointCap())).withStyle(TextFormatting.GRAY));
 			list.add(new StringTextComponent(""));
-			list.add(new TranslationTextComponent("tooltip.enchlib.1", new TranslationTextComponent("enchantment.level." + libSlot.maxLvl)));
-			list.add(new TranslationTextComponent("tooltip.enchlib.2", libSlot.points));
 			ItemStack outSlot = this.menu.ioInv.getItem(1);
 			int current = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(libSlot.ench, 0);
-			boolean shift = ClientUtil.isHoldingShift();
-			if (!shift && (outSlot.isEmpty() || current == 0)) list.add(new TranslationTextComponent("tooltip.enchlib.4", 1).setStyle(Style.EMPTY.withColor(TextFormatting.GOLD)));
-			else if (!shift) {
-				int cost = EnchLibraryTile.levelToPoints(current + 1) - EnchLibraryTile.levelToPoints(current);
-				if (current + 1 > libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
-				else list.add(new TranslationTextComponent("tooltip.enchlib.4", cost).setStyle(Style.EMPTY.withColor(cost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD)));
-			} else {
-				int maxCost = EnchLibraryTile.levelToPoints(libSlot.maxLvl) - EnchLibraryTile.levelToPoints(current);
-				if (current < libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.6", maxCost).setStyle(Style.EMPTY.withColor(maxCost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD)));
-				else list.add(new TranslationTextComponent("tooltip.enchlib.5").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
+			boolean shift = Screen.hasShiftDown();
+			int targetLevel = shift ? Math.min(libSlot.maxLvl, 1 + (int) (Math.log(libSlot.points + EnchLibraryTile.levelToPoints(current)) / Math.log(2))) : current + 1;
+			if (targetLevel == current) targetLevel++;
+			int cost = EnchLibraryTile.levelToPoints(targetLevel) - EnchLibraryTile.levelToPoints(current);
+			if (targetLevel > libSlot.maxLvl) list.add(new TranslationTextComponent("tooltip.enchlib.unavailable").setStyle(Style.EMPTY.withColor(TextFormatting.RED)));
+			else {
+				list.add(new TranslationTextComponent("tooltip.enchlib.extracting", new TranslationTextComponent("enchantment.level." + targetLevel)).withStyle(TextFormatting.BLUE));
+				list.add(new TranslationTextComponent("tooltip.enchlib.cost", cost).withStyle(cost > libSlot.points ? TextFormatting.RED : TextFormatting.GOLD));
 			}
-
-			this.renderWrappedToolTip(stack, list, this.getGuiLeft() - 16 - this.font.width(list.get(3)), mouseY, this.font);
+			this.renderWrappedToolTip(stack, list, this.getGuiLeft() - 16 - this.font.width(list.get(2)), mouseY, this.font);
 		}
 	}
 
@@ -110,7 +108,7 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 		this.minecraft.getTextureManager().bind(TEXTURES);
 		boolean hover = this.isHovering(x - this.leftPos, y - this.topPos, 64, 17, mouseX, mouseY);
 		this.blit(stack, x, y, 178, hover ? 19 : 0, 64, 19);
-		int progress = (int) Math.round(62 * Math.sqrt(data.points) / (float) Math.sqrt(32767));
+		int progress = (int) Math.round(62 * Math.sqrt(data.points) / (float) Math.sqrt(this.menu.getPointCap()));
 		this.blit(stack, x + 1, y + 12, 179, 38, progress, 5);
 		stack.pushPose();
 		ITextComponent txt = new TranslationTextComponent(data.ench.getDescriptionId());
@@ -132,7 +130,8 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 		LibrarySlot libSlot = this.getHoveredSlot((int) pMouseX, (int) pMouseY);
 		if (libSlot != null) {
 			int id = ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).getID(libSlot.ench);
-			if (ClientUtil.isHoldingShift()) id |= 0x80000000;
+			if (Screen.hasShiftDown()) id |= 0x80000000;
+			this.menu.onButtonClick(id);
 			Placebo.CHANNEL.sendToServer(new MessageButtonClick(id));
 			this.minecraft.getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
 		}
@@ -181,14 +180,14 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 	private void containerChanged() {
 		this.data.clear();
 		for (Entry<Enchantment> e : this.menu.getPointsForDisplay()) {
-			this.data.add(new LibrarySlot(e.getKey(), e.getShortValue(), this.menu.tile.getLevelsMap().getByte(e.getKey())));
+			this.data.add(new LibrarySlot(e.getKey(), e.getIntValue(), this.menu.getMaxLevel(e.getKey())));
 		}
 
 		if (!this.isScrollBarActive()) {
 			this.scrollOffs = 0.0F;
 			this.startIndex = 0;
 		}
-		Collections.sort(data, (a, b) -> I18n.get(a.ench.getDescriptionId()).compareTo(I18n.get(b.ench.getDescriptionId())));
+		Collections.sort(this.data, (a, b) -> I18n.get(a.ench.getDescriptionId()).compareTo(I18n.get(b.ench.getDescriptionId())));
 	}
 
 	@Nullable
@@ -203,14 +202,24 @@ public class EnchLibraryScreen extends ContainerScreen<EnchLibraryContainer> {
 
 	private static class LibrarySlot {
 		protected final Enchantment ench;
-		protected final short points;
-		protected final byte maxLvl;
+		protected final int points;
+		protected final int maxLvl;
 
-		private LibrarySlot(Enchantment ench, short points, byte maxLvl) {
+		private LibrarySlot(Enchantment ench, int points, int maxLvl) {
 			this.ench = ench;
 			this.points = points;
 			this.maxLvl = maxLvl;
 		}
+	}
+
+	private static DecimalFormat f = new DecimalFormat("##.#");
+
+	public static String format(int n) {
+		int log = (int) StrictMath.log10(n);
+		if (log <= 4) return String.valueOf(n);
+		if (log == 5) return f.format(n / 1000D) + "K";
+		if (log <= 8) return f.format(n / 1000000D) + "M";
+		else return f.format(n / 1000000000D) + "B";
 	}
 
 }

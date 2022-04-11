@@ -4,7 +4,6 @@
   "enchantment_datas": "coremods/enchantment_datas.js",
   "tempting": "coremods/tempting.js",
   "reflective": "coremods/reflective.js",
-  "item_ench": "coremods/item_ench.js",
   "calc_stack_ench": "coremods/calc_stack_ench.js",
   "container_repair": "coremods/container_repair.js",
   "enchantability": "coremods/enchantability.js",

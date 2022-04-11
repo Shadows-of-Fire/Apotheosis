@@ -1,6 +1,7 @@
 package shadows.apotheosis.ench;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
@@ -30,11 +30,10 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -101,6 +100,7 @@ public class EnchModuleEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) throws Exception {
 		Entity attacker = e.getSource().getEntity();
+		LivingEntity target = e.getEntityLiving();
 		if (attacker instanceof PlayerEntity) {
 			PlayerEntity p = (PlayerEntity) attacker;
 			if (p.level.isClientSide) return;
@@ -109,7 +109,9 @@ public class EnchModuleEvents {
 				if (this.dropLoot == null) {
 					this.dropLoot = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213354_a", DamageSource.class, boolean.class);
 				}
-				this.dropLoot.invoke(e.getEntityLiving(), e.getSource(), true);
+				target.captureDrops(new ArrayList<>());
+				this.dropLoot.invoke(target, e.getSource(), true);
+				e.getDrops().addAll(target.captureDrops(null));
 			}
 			int knowledge = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.KNOWLEDGE, p.getMainHandItem());
 			if (knowledge > 0 && !(e.getEntity() instanceof PlayerEntity)) {
@@ -118,36 +120,21 @@ public class EnchModuleEvents {
 					items += i.getItem().getCount();
 				if (items > 0) e.getDrops().clear();
 				items *= knowledge * 25;
-				Entity ded = e.getEntityLiving();
 				while (items > 0) {
 					int i = ExperienceOrbEntity.getExperienceValue(items);
 					items -= i;
-					p.level.addFreshEntity(new ExperienceOrbEntity(p.level, ded.getX(), ded.getY(), ded.getZ(), i));
+					p.level.addFreshEntity(new ExperienceOrbEntity(p.level, target.getX(), target.getY(), target.getZ(), i));
 				}
 			}
 		}
 	}
 
-	final EquipmentSlotType[] slots = EquipmentSlotType.values();
-
 	/**
 	 * Event handler for the Life Mending enchantment
 	 */
 	@SubscribeEvent
-	public void lifeMend(LivingUpdateEvent e) {
-		if (e.getEntity().level.isClientSide || e.getEntity().tickCount % 20 != 0) return;
-		for (EquipmentSlotType slot : this.slots) {
-			ItemStack stack = e.getEntityLiving().getItemBySlot(slot);
-			if (!stack.isEmpty() && stack.isDamaged()) {
-				int level = EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.LIFE_MENDING, stack);
-				if (level > 0) {
-					int i = Math.min(level, stack.getDamageValue());
-					e.getEntityLiving().hurt(EnchModule.CORRUPTED, i * 0.7F);
-					stack.setDamageValue(stack.getDamageValue() - i);
-					return;
-				}
-			}
-		}
+	public void lifeMend(LivingHealEvent e) {
+		ApotheosisObjects.LIFE_MENDING.lifeMend(e);
 	}
 
 	/**
@@ -225,168 +212,5 @@ public class EnchModuleEvents {
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(EnchantingStatManager.INSTANCE);
 	}
-
-	@SubscribeEvent
-	public void login(PlayerLoggedInEvent e) {
-		PlayerEntity p = e.getPlayer();
-		if (!p.level.isClientSide) {
-			EnchantingStatManager.dispatch(p);
-		}
-	}
-
-	/*
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void updateRepairOutput(AnvilUpdateEvent e) {
-		ItemStack left = e.getLeft();
-		ItemStack right = e.getRight();
-		int i = 0;
-		int j = 0;
-		int k = 0;
-		{
-			ItemStack leftCopy = left.copy();
-			Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(leftCopy);
-			j = j + left.getRepairCost() + (right.isEmpty() ? 0 : right.getRepairCost());
-			int materialCost = 0;
-			boolean isRightEnchBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
-			if (leftCopy.isDamageable() && leftCopy.getItem().getIsRepairable(left, right)) { //Repair Material case
-				int repairNeeded = Math.min(leftCopy.getDamage(), leftCopy.getMaxDamage() / 4);
-				if (repairNeeded <= 0) return;
-
-				int matCostIterator;
-				for (matCostIterator = 0; repairNeeded > 0 && matCostIterator < right.getCount(); ++matCostIterator) {
-					int j3 = leftCopy.getDamage() - repairNeeded;
-					leftCopy.setDamage(j3);
-					++i;
-					repairNeeded = Math.min(leftCopy.getDamage(), leftCopy.getMaxDamage() / 4);
-				}
-
-				materialCost = matCostIterator;
-			} else {
-				if (!isRightEnchBook && (leftCopy.getItem() != right.getItem() || !leftCopy.isDamageable())) { return; }
-
-				if (leftCopy.isDamageable() && !isRightEnchBook) { //Two Item Merge case
-					int repairNeeded = left.getMaxDamage() - left.getDamage();
-					int i1 = right.getMaxDamage() - right.getDamage();
-					int j1 = i1 + leftCopy.getMaxDamage() * 12 / 100;
-					int k1 = repairNeeded + j1;
-					int l1 = leftCopy.getMaxDamage() - k1;
-					if (l1 < 0) {
-						l1 = 0;
-					}
-
-					if (l1 < leftCopy.getDamage()) {
-						leftCopy.setDamage(l1);
-						i += 2;
-					}
-				}
-
-				Map<Enchantment, Integer> map1 = EnchantmentHelper.getEnchantments(right);
-				boolean flag2 = false;
-				boolean flag3 = false;
-
-				for (Enchantment enchantment1 : map1.keySet()) {
-					if (enchantment1 != null) {
-						int i2 = map.getOrDefault(enchantment1, 0);
-						int j2 = map1.get(enchantment1);
-						j2 = i2 == j2 ? j2 + 1 : Math.max(j2, i2);
-						boolean flag1 = enchantment1.canApply(left);
-						if (e.getPlayer().abilities.isCreativeMode || left.getItem() == Items.ENCHANTED_BOOK) {
-							flag1 = true;
-						}
-
-						for (Enchantment enchantment : map.keySet()) {
-							if (enchantment != enchantment1 && !enchantment1.isCompatibleWith(enchantment)) {
-								flag1 = false;
-								++i;
-							}
-						}
-
-						if (!flag1) {
-							flag3 = true;
-						} else {
-							flag2 = true;
-							if (j2 > enchantment1.getMaxLevel()) {
-								j2 = enchantment1.getMaxLevel();
-							}
-
-							map.put(enchantment1, j2);
-							int k3 = 0;
-							switch (enchantment1.getRarity()) {
-							case COMMON:
-								k3 = 1;
-								break;
-							case UNCOMMON:
-								k3 = 2;
-								break;
-							case RARE:
-								k3 = 4;
-								break;
-							case VERY_RARE:
-								k3 = 8;
-							}
-
-							if (isRightEnchBook) {
-								k3 = Math.max(1, k3 / 2);
-							}
-
-							i += k3 * j2;
-							if (itemstack.getCount() > 1) {
-								i = 40;
-							}
-						}
-					}
-				}
-
-				if (flag3 && !flag2) {
-					this.resultSlots.setInventorySlotContents(0, ItemStack.EMPTY);
-					this.maximumCost.set(0);
-					return;
-				}
-			}
-		}
-
-		if (StringUtils.isBlank(this.repairedItemName)) {
-			if (itemstack.hasDisplayName()) {
-				k = 1;
-				i += k;
-				leftCopy.clearCustomName();
-			}
-		} else if (!this.repairedItemName.equals(itemstack.getDisplayName().getString())) {
-			k = 1;
-			i += k;
-			leftCopy.setDisplayName(new StringTextComponent(this.repairedItemName));
-		}
-		if (flag && !leftCopy.isBookEnchantable(right)) leftCopy = ItemStack.EMPTY;
-
-		this.maximumCost.set(j + i);
-		if (i <= 0) {
-			leftCopy = ItemStack.EMPTY;
-		}
-
-		if (k == i && k > 0 && this.maximumCost.get() >= 40) {
-			this.maximumCost.set(39);
-		}
-
-		if (this.maximumCost.get() >= 40 && !this.player.abilities.isCreativeMode) {
-			leftCopy = ItemStack.EMPTY;
-		}
-
-		if (!leftCopy.isEmpty()) {
-			int k2 = leftCopy.getRepairCost();
-			if (!right.isEmpty() && k2 < right.getRepairCost()) {
-				k2 = right.getRepairCost();
-			}
-
-			if (k != i || k == 0) {
-				k2 = getNewRepairCost(k2);
-			}
-
-			leftCopy.setRepairCost(k2);
-			EnchantmentHelper.setEnchantments(map, leftCopy);
-		}
-
-		this.resultSlots.setInventorySlotContents(0, leftCopy);
-		this.detectAndSendChanges();
-	}*/
 
 }

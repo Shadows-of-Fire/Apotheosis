@@ -1,0 +1,25 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "minecraft:carrot"
+	},
+	"requirements": {
+		"eterna": 10,
+		"quanta": 10,
+		"arcana": 0
+	},
+	"max_requirements": {
+		"eterna": 10,
+		"quanta": 30,
+		"arcana": -1
+	},
+	"display_level": 3,
+	"result": {
+		"item": "minecraft:golden_carrot",
+		"count": 1
+	}
+}

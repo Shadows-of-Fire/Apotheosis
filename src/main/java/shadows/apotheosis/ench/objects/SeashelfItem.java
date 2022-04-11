@@ -1,7 +1,7 @@
 package shadows.apotheosis.ench.objects;
 
 import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -19,21 +19,6 @@ public class SeashelfItem extends BlockItem {
 	}
 
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return !stack.isEnchanted() && stack.getCount() == 1 && enchantment == ApotheosisObjects.SEA_INFUSION;
-	}
-
-	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return true;
-	}
-
-	@Override
-	public int getItemEnchantability(ItemStack stack) {
-		return 65;
-	}
-
-	@Override
 	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
 		super.fillItemCategory(group, items);
 		if (this.allowdedIn(group)) {
@@ -41,11 +26,16 @@ public class SeashelfItem extends BlockItem {
 			ListNBT list = new ListNBT();
 			CompoundNBT tag = new CompoundNBT();
 			tag.putString("id", "apotheosis:sea_infusion");
-			tag.putShort("lvl", (short) 5);
+			tag.putShort("lvl", (short) 3);
 			list.add(tag);
 			s.addTagElement("Enchantments", list);
 			items.add(s);
 		}
+	}
+
+	@Override
+	public String getDescriptionId(ItemStack pStack) {
+		return EnchantmentHelper.getItemEnchantmentLevel(ApotheosisObjects.SEA_INFUSION, pStack) >= 3 ? "block.apotheosis.infused_seashelf" : super.getDescriptionId();
 	}
 
 }

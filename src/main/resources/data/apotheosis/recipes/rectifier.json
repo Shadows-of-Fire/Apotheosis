@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "AHA",
+    "HSH",
+    "AHA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:glowstone"
+    },
+	"H": {
+      "item": "minecraft:honeycomb_block"
+    },
+	"S": {
+      "item": "apotheosis:seashelf",
+	  "ench": "apotheosis:sea_infusion",
+	  "level": 3,
+	  "type": "apotheosis:enchantment"
+    }
+  },
+  "result": {
+    "item": "apotheosis:rectifier",
+    "count": 1
+  }
+}

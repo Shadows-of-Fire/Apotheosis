@@ -3,7 +3,7 @@ package shadows.apotheosis.ench.library;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import it.unimi.dsi.fastutil.objects.Object2ShortMap;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -108,8 +108,16 @@ public class EnchLibraryContainer extends Container implements IButtonContainer 
 		return (int) this.tile.getPointsMap().values().stream().filter(s -> s > 0).count();
 	}
 
-	public List<Object2ShortMap.Entry<Enchantment>> getPointsForDisplay() {
-		return this.tile.getPointsMap().object2ShortEntrySet().stream().filter(s -> s.getShortValue() > 0).collect(Collectors.toList());
+	public List<Object2IntMap.Entry<Enchantment>> getPointsForDisplay() {
+		return this.tile.getPointsMap().object2IntEntrySet().stream().filter(s -> s.getIntValue() > 0).collect(Collectors.toList());
+	}
+
+	public int getMaxLevel(Enchantment enchant) {
+		return this.tile.getMax(enchant);
+	}
+
+	public int getPointCap() {
+		return this.tile.maxPoints;
 	}
 
 	@Override

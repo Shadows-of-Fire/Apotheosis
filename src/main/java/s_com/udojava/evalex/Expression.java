@@ -25,7 +25,7 @@
  *
  */
 
-package com.udojava.evalex;
+package s_com.udojava.evalex;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

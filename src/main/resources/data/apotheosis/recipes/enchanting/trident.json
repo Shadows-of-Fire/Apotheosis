@@ -1,0 +1,24 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "apotheosis:inert_trident"
+	},
+	"requirements": {
+		"eterna": 20,
+		"quanta": 20,
+		"arcana": 35
+	},
+	"max_requirements": {
+		"eterna": 30,
+		"quanta": 50,
+		"arcana": -1
+	},
+	"result": {
+		"item": "minecraft:trident",
+		"count": 1
+	}
+}

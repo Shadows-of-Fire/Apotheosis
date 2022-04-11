@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "something",
+  "pattern": [
+    "NNN",
+    " H ",
+    " I "
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:nautilus_shell"
+    },
+	"H": {
+      "item": "minecraft:heart_of_the_sea"
+    },
+	"I": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "apotheosis:inert_trident",
+    "count": 1
+  }
+}

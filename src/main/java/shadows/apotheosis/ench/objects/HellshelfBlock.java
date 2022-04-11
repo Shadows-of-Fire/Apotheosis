@@ -39,7 +39,7 @@ public class HellshelfBlock extends Block implements IEnchantingBlock {
 
 	@Override
 	public float getQuantaBonus(BlockState state, IWorldReader world, BlockPos pos) {
-		return 0.15F + state.getValue(INFUSION) * 0.01F;
+		return 1.5F + state.getValue(INFUSION) * 0.1F;
 	}
 
 	@Override

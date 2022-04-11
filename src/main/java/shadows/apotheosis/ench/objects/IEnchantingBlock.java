@@ -6,6 +6,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 /**
+ * This doc is garbage //TODO: FIXME
  * This is the main interface for all blocks that provide stats to an enchanting table.
  * The stats allocated to an enchanting table are as follows:
  * Enchanting Power: This is the primary stat, which controls the level at which the table enchants at.
@@ -51,6 +52,25 @@ public interface IEnchantingBlock extends IForgeBlock {
 	 * @return The change in Arcana caused by this block.
 	 */
 	default float getArcanaBonus(BlockState state, IWorldReader world, BlockPos pos) {
+		return 0;
+	}
+
+	/**
+	 * Determines how much "Quanta Rectification" this block provides.
+	 * 1F of Rectification reduces the negative threshold by 1%
+	 * [-Q, +Q] -> [-(1-QR/100F)Q, +Q]
+	 * At 100%, quanta only has a positive effect.
+	 * @return The Quanta Rectification bonus from this block.
+	 */
+	default float getQuantaRectification(BlockState state, IWorldReader world, BlockPos pos) {
+		return 0;
+	}
+
+	/**
+	 * Determines how many extra clues can be viewed by the client when this block is present.
+	 * @return The number of bonus clues to show.
+	 */
+	default int getBonusClues(BlockState state, IWorldReader world, BlockPos pos) {
 		return 0;
 	}
 

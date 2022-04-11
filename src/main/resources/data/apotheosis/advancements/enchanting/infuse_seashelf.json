@@ -1,0 +1,35 @@
+{
+	"parent": "apotheosis:enchanting/seashelf",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:seashelf",
+			"nbt": "{\"Enchantments\":[{\"id\":\"sharpness\",\"lvl\":1}]}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.infuse_seashelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.infuse_seashelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "minecraft:enchanted_item",
+			"conditions": {
+				"item": {
+					"items": ["apotheosis:seashelf"]
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
+}

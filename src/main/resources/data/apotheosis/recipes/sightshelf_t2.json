@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "GHG",
+    "PEP",
+    "GHG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:emerald_block"
+    },
+	"H": {
+      "tag": "forge:ingots/netherite"
+    },
+	"P": {
+	  "type": "forge:nbt",
+      "item": "minecraft:potion",
+	  "nbt": "{\"Potion\": \"minecraft:long_night_vision\"}"
+    },
+	"E": {
+      "item": "apotheosis:sightshelf"
+    }
+  },
+  "result": {
+    "item": "apotheosis:sightshelf_t2",
+    "count": 1
+  }
+}

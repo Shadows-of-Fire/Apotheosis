@@ -1,0 +1,21 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "apotheosis:seashelf"
+	},
+	"requirements": {
+		"eterna": 22.5,
+		"quanta": 15,
+		"arcana": 10
+	},
+	"display_level": 5,
+	"result": {
+		"item": "apotheosis:seashelf",
+		"nbt": "{\"Enchantments\":[{\"id\":\"apotheosis:sea_infusion\",\"lvl\":3}]}",
+		"count": 1
+	}
+}

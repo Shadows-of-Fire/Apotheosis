@@ -35,6 +35,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Potions;
 import net.minecraft.tileentity.TileEntityType;
@@ -64,6 +65,7 @@ import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
 import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
+import shadows.apotheosis.ench.enchantments.InertEnchantment;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
 import shadows.apotheosis.ench.enchantments.LifeMendingEnchant;
 import shadows.apotheosis.ench.enchantments.MagicProtEnchant;
@@ -78,7 +80,8 @@ import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
-import shadows.apotheosis.ench.library.EnchLibraryTile;
+import shadows.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
+import shadows.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
 import shadows.apotheosis.ench.objects.ApothShearsItem;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
 import shadows.apotheosis.ench.objects.HellshelfItem;
@@ -91,6 +94,8 @@ import shadows.apotheosis.ench.replacements.DefenseEnchant;
 import shadows.apotheosis.ench.table.ApothEnchantBlock;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.ApothEnchantTile;
+import shadows.apotheosis.ench.table.EnchantingRecipe;
+import shadows.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.loot.LootSystem;
@@ -168,6 +173,12 @@ public class EnchModule {
 		LootSystem.defaultBlockTable(ApotheosisObjects.BEESHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.MELONSHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.ENCHANTMENT_LIBRARY);
+		LootSystem.defaultBlockTable(ApotheosisObjects.RECTIFIER);
+		LootSystem.defaultBlockTable(ApotheosisObjects.RECTIFIER_T2);
+		LootSystem.defaultBlockTable(ApotheosisObjects.RECTIFIER_T3);
+		LootSystem.defaultBlockTable(ApotheosisObjects.SIGHTSHELF);
+		LootSystem.defaultBlockTable(ApotheosisObjects.SIGHTSHELF_T2);
+		LootSystem.defaultBlockTable(ApotheosisObjects.ENDER_LIBRARY);
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		e.enqueueWork(() -> {
@@ -186,7 +197,8 @@ public class EnchModule {
 		e.getRegistry().register(new TileEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
 		e.getRegistry().register(new TileEntityType<>(SeaAltarTile::new, ImmutableSet.of(ApotheosisObjects.PRISMATIC_ALTAR), null).setRegistryName("prismatic_altar"));
 		e.getRegistry().register(new TileEntityType<>(ApothEnchantTile::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null).setRegistryName("minecraft:enchanting_table"));
-		e.getRegistry().register(new TileEntityType<>(EnchLibraryTile::new, ImmutableSet.of(ApotheosisObjects.ENCHANTMENT_LIBRARY), null).setRegistryName("ench_lib_tile"));
+		e.getRegistry().register(new TileEntityType<>(BasicLibraryTile::new, ImmutableSet.of(ApotheosisObjects.ENCHANTMENT_LIBRARY), null).setRegistryName("ench_lib_tile"));
+		e.getRegistry().register(new TileEntityType<>(EnderLibraryTile::new, ImmutableSet.of(ApotheosisObjects.ENDER_LIBRARY), null).setRegistryName("ender_lib_tile"));
 	}
 
 	@SubscribeEvent
@@ -234,7 +246,13 @@ public class EnchModule {
 				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
 				new Block(AbstractBlock.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
 				new Block(AbstractBlock.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf"),
-				new EnchLibraryBlock().setRegistryName("enchantment_library")
+				new EnchLibraryBlock(BasicLibraryTile::new, 16).setRegistryName("enchantment_library"),
+				new EnchLibraryBlock(EnderLibraryTile::new, 31).setRegistryName("ender_library"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t2"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t3"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("sightshelf"),
+				new Block(AbstractBlock.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("sightshelf_t2")
 				);
 		//Formatter::on
 		PlaceboUtil.registerOverride(new ApothEnchantBlock(), Apotheosis.MODID);
@@ -271,7 +289,14 @@ public class EnchModule {
 				new BlockItem(ApotheosisObjects.PEARL_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
 				new BlockItem(ApotheosisObjects.BEESHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
 				new BlockItem(ApotheosisObjects.MELONSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf"),
-				new BlockItem(ApotheosisObjects.ENCHANTMENT_LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("enchantment_library")
+				new BlockItem(ApotheosisObjects.ENCHANTMENT_LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("enchantment_library"),
+				new BlockItem(ApotheosisObjects.RECTIFIER, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier"),
+				new BlockItem(ApotheosisObjects.RECTIFIER_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t2"),
+				new BlockItem(ApotheosisObjects.RECTIFIER_T3, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t3"),
+				new BlockItem(ApotheosisObjects.SIGHTSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf"),
+				new BlockItem(ApotheosisObjects.SIGHTSHELF_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf_t2"),
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "inert_trident"),
+				new BlockItem(ApotheosisObjects.ENDER_LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("ender_library")
 				);
 		//Formatter::on
 	}
@@ -306,7 +331,8 @@ public class EnchModule {
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.PROJECTILE, ARMOR).setRegistryName("minecraft", "projectile_protection"),
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
 				new ObliterationEnchant().setRegistryName("obliteration"),
-				new CrescendoEnchant().setRegistryName("crescendo")
+				new CrescendoEnchant().setRegistryName("crescendo"),
+				new InertEnchantment().setRegistryName("infusion")
 				);
 		//Formatter::on
 	}
@@ -314,6 +340,12 @@ public class EnchModule {
 	@SubscribeEvent
 	public void sounds(Register<SoundEvent> e) {
 		e.getRegistry().register(new SoundEvent(new ResourceLocation(Apotheosis.MODID, "altar")).setRegistryName(Apotheosis.MODID, "altar_sound"));
+	}
+
+	@SubscribeEvent
+	public void recipeSerializers(Register<IRecipeSerializer<?>> e) {
+		e.getRegistry().register(EnchantingRecipe.SERIALIZER.setRegistryName("enchanting"));
+		e.getRegistry().register(KeepNBTEnchantingRecipe.SERIALIZER.setRegistryName("keep_nbt_enchanting"));
 	}
 
 	public static EnchantmentInfo getEnchInfo(Enchantment ench) {
@@ -387,7 +419,7 @@ public class EnchModule {
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 			for (int i = 1; i <= info.getMaxLevel(); i++)
-				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
+				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.warn("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable via table enchanting.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
 		}
 
 		if (e == null && enchInfoConfig.hasChanged()) enchInfoConfig.save();

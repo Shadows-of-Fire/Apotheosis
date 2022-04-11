@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:enchanting/hellshelf",
+	"parent": "apotheosis:enchanting/infuse_hellshelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"

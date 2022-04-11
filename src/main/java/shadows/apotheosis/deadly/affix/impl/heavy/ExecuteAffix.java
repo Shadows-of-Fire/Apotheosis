@@ -37,7 +37,7 @@ public class ExecuteAffix extends RangedAffix {
 		if (target instanceof LivingEntity) {
 			LivingEntity living = (LivingEntity) target;
 			if (living.getHealth() / living.getMaxHealth() < level) {
-				living.hurt(EXECUTION, Float.MAX_VALUE);
+				living.die(EXECUTION);
 			}
 		}
 	}

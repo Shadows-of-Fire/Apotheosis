@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:enchanting/seashelf",
+	"parent": "apotheosis:enchanting/infuse_seashelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"

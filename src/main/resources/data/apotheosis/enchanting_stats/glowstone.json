@@ -2,8 +2,10 @@
 	"block": "minecraft:glowstone",
 	"stats": {
 		"maxEterna": 0,
-		"eterna": -0.33,
+		"eterna": 0,
 		"quanta": 0,
-		"arcana": 0.25
+		"arcana": 0,
+		"rectification": 1.5,
+		"clues": 0
 	}
 }

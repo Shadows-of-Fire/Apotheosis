@@ -2,8 +2,9 @@
 	"block": "apotheosis:blazing_hellshelf",
 	"stats": {
 		"maxEterna": 30,
-		"eterna": 2,
-		"quanta": 0.3,
-		"arcana": 0
+		"eterna": 4,
+		"quanta": 5,
+		"arcana": 0,
+		"clues": -1
 	}
 }

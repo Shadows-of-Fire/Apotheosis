@@ -2,6 +2,7 @@ package shadows.apotheosis.ench.library;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -40,8 +41,13 @@ public class EnchLibraryBlock extends HorizontalBlock {
 
 	public static final ITextComponent NAME = new TranslationTextComponent("apotheosis.ench.library");
 
-	public EnchLibraryBlock() {
+	protected final Supplier<? extends EnchLibraryTile> tileSupplier;
+	protected final int maxLevel;
+
+	public EnchLibraryBlock(Supplier<? extends EnchLibraryTile> tileSupplier, int maxLevel) {
 		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
+		this.tileSupplier = tileSupplier;
+		this.maxLevel = maxLevel;
 	}
 
 	@Override
@@ -67,13 +73,13 @@ public class EnchLibraryBlock extends HorizontalBlock {
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext p_196258_1_) {
-		return this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
+	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+		return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
 	}
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new EnchLibraryTile();
+		return this.tileSupplier.get();
 	}
 
 	@Override
@@ -104,6 +110,7 @@ public class EnchLibraryBlock extends HorizontalBlock {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, IBlockReader world, List<ITextComponent> list, ITooltipFlag advanced) {
+		list.add(new TranslationTextComponent("tooltip.enchlib.capacity", new TranslationTextComponent("enchantment.level." + this.maxLevel)).withStyle(TextFormatting.GOLD));
 		CompoundNBT tag = stack.getTagElement("BlockEntityTag");
 		if (tag != null && tag.contains("Points")) {
 			list.add(new TranslationTextComponent("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(TextFormatting.GOLD));

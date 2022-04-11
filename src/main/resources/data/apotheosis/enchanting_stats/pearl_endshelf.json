@@ -3,7 +3,7 @@
 	"stats": {
 		"maxEterna": 40,
 		"eterna": 3,
-		"quanta": 0.5,
-		"arcana": 0.75
+		"quanta": 5,
+		"arcana": 7.5
 	}
 }

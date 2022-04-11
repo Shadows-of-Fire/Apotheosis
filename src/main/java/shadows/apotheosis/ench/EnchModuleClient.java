@@ -57,7 +57,9 @@ public class EnchModuleClient {
 			float eterna = EnchantingStatManager.getEterna(state, world, BlockPos.ZERO);
 			float quanta = EnchantingStatManager.getQuanta(state, world, BlockPos.ZERO);
 			float arcana = EnchantingStatManager.getArcana(state, world, BlockPos.ZERO);
-			if (eterna != 0 || quanta != 0 || arcana != 0) {
+			float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
+			int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
+			if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
 				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.ench_stats").withStyle(TextFormatting.GOLD));
 			}
 			if (eterna != 0) {
@@ -66,10 +68,16 @@ public class EnchModuleClient {
 				} else e.getToolTip().add(new TranslationTextComponent("info.apotheosis.eterna", String.format("%.2f", eterna)).withStyle(TextFormatting.GREEN));
 			}
 			if (quanta != 0) {
-				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta * 10)).withStyle(TextFormatting.RED));
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(TextFormatting.RED));
 			}
 			if (arcana != 0) {
-				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana * 10)).withStyle(TextFormatting.DARK_PURPLE));
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(TextFormatting.DARK_PURPLE));
+			}
+			if (rectification != 0) {
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(TextFormatting.YELLOW));
+			}
+			if (clues != 0) {
+				e.getToolTip().add(new TranslationTextComponent("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(TextFormatting.DARK_AQUA));
 			}
 		}
 	}

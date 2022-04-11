@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "GHG",
+    "PES",
+    "GHG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+	"H": {
+      "item": "apotheosis:hellshelf",
+	  "ench": "apotheosis:hell_infusion",
+	  "level": 3,
+	  "type": "apotheosis:enchantment"
+    },
+	"S": {
+      "item": "minecraft:glass"
+    },
+	"P": {
+	  "type": "forge:nbt",
+      "item": "minecraft:potion",
+	  "nbt": "{\"Potion\": \"minecraft:night_vision\"}"
+    },
+	"E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "apotheosis:sightshelf",
+    "count": 1
+  }
+}

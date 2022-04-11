@@ -31,6 +31,7 @@ import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
+import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
 import shadows.apotheosis.ench.objects.HellshelfBlock;
@@ -155,5 +156,13 @@ public class ApotheosisObjects {
 	public static final Block ENCHANTMENT_LIBRARY = null;
 	public static final TileEntityType<EnchLibraryTile> ENCH_LIB_TILE = null;
 	public static final ContainerType<EnchLibraryContainer> ENCH_LIB_CON = null;
+	public static final Enchantment INFUSION = null;
+	public static final Block RECTIFIER = null;
+	public static final Block RECTIFIER_T2 = null;
+	public static final Block RECTIFIER_T3 = null;
+	public static final Block SIGHTSHELF = null;
+	public static final Block SIGHTSHELF_T2 = null;
+	public static final EnchLibraryBlock ENDER_LIBRARY = null;
+	public static final TileEntityType<EnchLibraryTile> ENDER_LIB_TILE = null;
 
 }

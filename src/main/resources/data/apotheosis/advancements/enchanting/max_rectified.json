@@ -1,0 +1,47 @@
+{
+	"parent": "apotheosis:enchanting/max_stats",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:experience_bottle"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.max_rectified"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.max_rectified.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "minecraft:enchanted_item",
+			"conditions": {
+				"eterna": {
+					"min": 50,
+					"max": 1000
+				},
+				"arcana": {
+					"min": 100,
+					"max": 1000
+				},
+				"quanta": {
+					"min": 100,
+					"max": 1000
+				},
+				"rectification": {
+					"min": 100,
+					"max": 1000
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
+}

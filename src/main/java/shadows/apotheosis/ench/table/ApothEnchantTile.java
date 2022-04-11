@@ -24,14 +24,12 @@ public class ApothEnchantTile extends EnchantingTableTileEntity {
 	};
 
 	public ApothEnchantTile() {
-
 	}
 
 	@Override
 	public CompoundNBT save(CompoundNBT tag) {
-		super.save(tag);
 		tag.put("inventory", this.inv.serializeNBT());
-		return tag;
+		return super.save(tag);
 	}
 
 	@Override
@@ -51,6 +49,18 @@ public class ApothEnchantTile extends EnchantingTableTileEntity {
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return this.invCap.cast();
 		return super.getCapability(cap, side);
+	}
+
+	@Override
+	public void invalidateCaps() {
+		super.invalidateCaps();
+		this.invCap.invalidate();
+	}
+
+	@Override
+	public void reviveCaps() {
+		super.reviveCaps();
+		this.invCap = LazyOptional.of(() -> this.inv);
 	}
 
 }

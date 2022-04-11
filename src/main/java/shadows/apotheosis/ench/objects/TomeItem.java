@@ -5,10 +5,12 @@ import java.util.Locale;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BookItem;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -23,8 +25,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
+import shadows.apotheosis.ench.table.IEnchantableItem;
 
-public class TomeItem extends BookItem {
+public class TomeItem extends BookItem implements IEnchantableItem {
 
 	final ItemStack rep;
 	final EnchantmentType type;
@@ -71,6 +74,20 @@ public class TomeItem extends BookItem {
 			return ActionResult.consume(book);
 		}
 		return ActionResult.pass(stack);
+	}
+
+	@Override
+	public ItemStack onEnchantment(ItemStack stack, List<EnchantmentData> enchantments) {
+		stack = new ItemStack(Items.ENCHANTED_BOOK);
+		for (EnchantmentData inst : enchantments) {
+			EnchantedBookItem.addEnchantment(stack, inst);
+		}
+		return stack;
+	}
+
+	@Override
+	public boolean forciblyAllowsTableEnchantment(ItemStack stack, Enchantment enchantment) {
+		return this.canApplyAtEnchantingTable(stack, enchantment);
 	}
 
 }

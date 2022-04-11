@@ -8,10 +8,12 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -73,7 +75,10 @@ public class EnchantmentIngredient extends Ingredient {
 
 		@Override
 		public EnchantmentIngredient parse(JsonObject json) {
-			return null;
+			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(json.get("item").getAsString()));
+			Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(json.get("ench").getAsString()));
+			int level = json.get("level").getAsInt();
+			return new EnchantmentIngredient(item, ench, level);
 		}
 
 		@Override

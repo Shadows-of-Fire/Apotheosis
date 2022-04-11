@@ -22,72 +22,79 @@ public class RealEnchantmentHelper {
 
 	/**
 	 * Determines the level of the given enchantment table slot.
+	 * An item with 0 enchantability cannot be enchanted, so this method returns zero.
+	 * Slot 2 (the highest level slot) always receives a level equal to power * 2.
+	 * Slot 1 recieves between 60% and 80% of Slot 2.
+	 * Slot 0 receives between 20% and 40% of Slot 2.
 	 * @param rand Pre-seeded random.
 	 * @param num Enchantment Slot Number [0-2]
-	 * @param power Enchantment Power (Eterna Level)
+	 * @param eterna Enchantment Power (Eterna Level)
 	 * @param stack Itemstack to be enchanted.
 	 * @return The level that the table will use for this specific slot.
 	 */
-	public static int calcSlotLevel(Random rand, int num, float power, ItemStack stack) {
+	public static int getEnchantmentCost(Random rand, int num, float eterna, ItemStack stack) {
 		int ench = stack.getItemEnchantability();
 		if (ench <= 0) return 0;
-		int level = (int) (power * 2);
+		int level = Math.round(eterna * 2);
 		if (num == 2) return level;
-		float lowBound = Math.min(0.85F, 0.6F - 0.4F * (1 - num) + ench / 200F);
-		float highBound = Math.min(0.95F, 0.8F - 0.4F * (1 - num) + ench / 200F);
-		return (int) (level * MathHelper.nextFloat(rand, lowBound, highBound));
+		float lowBound = 0.6F - 0.4F * (1 - num);
+		float highBound = 0.8F - 0.4F * (1 - num);
+		return Math.max(1, Math.round((level * MathHelper.nextFloat(rand, lowBound, highBound))));
 	}
 
 	/**
 	 * Creates a list of enchantments for a specific slot given various variables.
 	 * @param rand Pre-seeded random.
 	 * @param stack Itemstack to be enchanted.
-	 * @param power Enchantment Power (Eterna Level)
+	 * @param level Enchanting Slot XP Level
 	 * @param quanta Quanta Level
-	 * @param arcanaLevel Arcana Level
+	 * @param arcana Arcana Level
 	 * @param treasure If treasure enchantments can show up.
 	 * @return A list of enchantments based on the seed, item, and eterna/quanta/arcana levels.
 	 */
-	public static List<EnchantmentData> buildEnchantmentList(Random rand, ItemStack stack, int power, float quanta, float arcanaLevel, boolean treasure) {
+	public static List<EnchantmentData> selectEnchantment(Random rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure) {
 		List<EnchantmentData> chosenEnchants = Lists.newArrayList();
 		int enchantability = stack.getItemEnchantability();
-		if (enchantability <= 0) {
-			return chosenEnchants;
-		} else {
-			power = power + rand.nextInt(Math.max(enchantability / 2, 1));
-			float factor = MathHelper.nextFloat(rand, -1F, 1F) * quanta / 10;
-			power = MathHelper.clamp(Math.round(power + power * factor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
-			Arcana arcana = Arcana.getForThreshold(arcanaLevel);
-			List<EnchantmentData> allEnchants = getEnchantmentDatas(power, stack, treasure);
+		int srcLevel = level;
+		if (enchantability > 0) {
+			float quantaFactor = 1 + MathHelper.nextFloat(rand, -1F + rectification / 100F, 1F) * quanta / 100F; //The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
+			level = MathHelper.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
+			Arcana arcanaVals = Arcana.getForThreshold(arcana);
+			List<EnchantmentData> allEnchants = getAvailableEnchantmentResults(level, stack, treasure);
 			Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
-			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment));
-			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcana, d)).collect(Collectors.toList());
+			allEnchants.removeIf(e -> enchants.containsKey(e.enchantment)); //Remove duplicates.
+			List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcanaVals, d)).collect(Collectors.toList());
 			if (!possibleEnchants.isEmpty()) {
 				chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
 				removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 
-				if (arcanaLevel >= 2.5F && !possibleEnchants.isEmpty()) {
+				if (arcana >= 25F && !possibleEnchants.isEmpty()) {
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
 					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
 				}
 
-				if (arcanaLevel >= 7.5F && !possibleEnchants.isEmpty()) {
+				if (arcana >= 75F && !possibleEnchants.isEmpty()) {
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
 				}
 
-				while (arcanaLevel + rand.nextInt(50) <= power) {
-					removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
+				int randomBound = 50;
+				if (level > 45) {
+					level = (int) (srcLevel * 1.15F);
+				}
+
+				while (rand.nextInt(randomBound) <= level) {
+					if (!chosenEnchants.isEmpty()) removeIncompatible(possibleEnchants, Util.lastOf(chosenEnchants));
+
 					if (possibleEnchants.isEmpty()) {
 						break;
 					}
 
 					chosenEnchants.add(WeightedRandom.getRandomItem(rand, possibleEnchants).data);
-					power /= 2;
+					level /= 2;
 				}
 			}
-
-			return chosenEnchants;
 		}
+		return ((IEnchantableItem) stack.getItem()).selectEnchantments(chosenEnchants, rand, stack, srcLevel, quanta, arcana, treasure);
 	}
 
 	/**
@@ -105,16 +112,19 @@ public class RealEnchantmentHelper {
 	}
 
 	/**
-	 * Gets all enchantments that can be applied to the given item at the respective power level.
+	 * @param power The current enchanting power.
+	 * @param stack The ItemStack being enchanted.
+	 * @param allowTreasure If treasure enchantments are allowed.
+	 * @return All possible enchantments that are eligible to be placed on this item at a specific power level.
 	 */
-	public static List<EnchantmentData> getEnchantmentDatas(int power, ItemStack stack, boolean treasure) {
-		return EnchHooks.getEnchantmentDatas(power, stack, treasure);
+	public static List<EnchantmentData> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure) {
+		return EnchHooks.getEnchantmentDatas(power, stack, allowTreasure);
 	}
 
-	private static class ArcanaEnchantmentData extends WeightedRandom.Item {
+	public static class ArcanaEnchantmentData extends WeightedRandom.Item {
 		EnchantmentData data;
 
-		private ArcanaEnchantmentData(Arcana arcana, EnchantmentData data) {
+		public ArcanaEnchantmentData(Arcana arcana, EnchantmentData data) {
 			super(arcana.getRarities()[data.enchantment.getRarity().ordinal()]);
 			this.data = data;
 		}

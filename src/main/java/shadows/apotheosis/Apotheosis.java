@@ -1,6 +1,7 @@
 package shadows.apotheosis;
 
 import java.io.File;
+import java.util.Collections;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
@@ -28,7 +29,7 @@ import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
-import shadows.apotheosis.ench.table.EnchantingStatManager.StatSyncMessage;
+import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
@@ -110,7 +111,7 @@ public class Apotheosis {
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
-		NetworkUtils.registerMessage(CHANNEL, 1, new StatSyncMessage());
+		NetworkUtils.registerMessage(CHANNEL, 1, new ClueMessage(0, Collections.emptyList(), false));
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);

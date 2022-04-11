@@ -4,7 +4,6 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EnchantingTableBlock;
@@ -28,7 +27,7 @@ import shadows.placebo.util.IReplacementBlock;
 public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacementBlock {
 
 	public ApothEnchantBlock() {
-		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
+		super(Block.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
 		this.setRegistryName("minecraft:enchanting_table");
 	}
 
@@ -45,7 +44,7 @@ public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacem
 	}
 
 	@Override
-	public TileEntity newBlockEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader world) {
 		return new ApothEnchantTile();
 	}
 
@@ -94,7 +93,7 @@ public class ApothEnchantBlock extends EnchantingTableBlock implements IReplacem
 								break;
 							}
 
-							level.addParticle(ParticleTypes.ENCHANT, (double) pos.getX() + 0.5D, (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D, (double) ((float) i + rand.nextFloat()) - 0.5D, (double) ((float) k - rand.nextFloat() - 1.0F), (double) ((float) j + rand.nextFloat()) - 0.5D);
+							level.addParticle(ParticleTypes.ENCHANT, pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, i + rand.nextFloat() - 0.5D, k - rand.nextFloat() - 1.0F, j + rand.nextFloat() - 0.5D);
 						}
 					}
 				}

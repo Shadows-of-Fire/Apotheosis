@@ -1,3 +1,18 @@
+## 4.9.0
+* This is a Backport of some major 1.18.2 changes.
+* Added the Enchantment Info Screen
+* Added Rectification and Clues
+* Added Rectification Shelves and Sightshelves.
+  * Recipes look weird due to a lack of 1.18 content.  Glowstone replaces amethyst, glass replaces spyglass.
+* Added Infusion Enchanting
+  * Hellshelves and Seashelves can no longer be enchanted except via infusion enchanting.
+* Internal data values for Quanta and Arcana have been multiplied by 10, update JSON files accordingly!
+* Added the Library of Alexandria
+* Added a way to make Potion Charms unbreakable (requires ench module).
+* Updated Life Mending to act like the 1.18.2 version.
+* Scavenger bonus drops will now be converted by KoTA.
+* The execute affix simply kills the target, instead of dealing Float.MAX_VALUE true damage.
+
 ## 4.8.4
 * E.Kim: Updated ko_kr.json (Korean Translation)
 * Added the ability turn off mythic items being unbreakable.
