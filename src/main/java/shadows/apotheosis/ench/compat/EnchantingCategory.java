@@ -153,7 +153,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 			List<Component> list = new ArrayList<>();
 			list.add(new TranslatableComponent("container.enchant.clue", Apoth.Enchantments.INFUSION.getFullname(1).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 			scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
-		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 27 && mouseY <= 27 + 5) {
+		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 26 && mouseY <= 27 + 5) {
 			List<Component> list = new ArrayList<>();
 			list.add(new TranslatableComponent("gui.apotheosis.enchant.eterna").withStyle(ChatFormatting.GREEN));
 			if (maxStats.eterna == stats.eterna) {
@@ -163,7 +163,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 				if (maxStats.eterna > -1) list.add(new TranslatableComponent("info.apotheosis.eterna_at_most", maxStats.eterna, EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
 			}
 			scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
-		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 37 && mouseY <= 37 + 5) {
+		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 36 && mouseY <= 37 + 5) {
 			List<Component> list = new ArrayList<>();
 			list.add(new TranslatableComponent("gui.apotheosis.enchant.quanta").withStyle(ChatFormatting.RED));
 			if (maxStats.quanta == stats.quanta) {
@@ -173,7 +173,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 				if (maxStats.quanta > -1) list.add(new TranslatableComponent("info.apotheosis.percent_at_most", maxStats.quanta).withStyle(ChatFormatting.GRAY));
 			}
 			scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
-		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 47 && mouseY <= 47 + 5) {
+		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 46 && mouseY <= 47 + 5) {
 			List<Component> list = new ArrayList<>();
 			list.add(new TranslatableComponent("gui.apotheosis.enchant.arcana").withStyle(ChatFormatting.DARK_PURPLE));
 			if (maxStats.arcana == stats.arcana) {
