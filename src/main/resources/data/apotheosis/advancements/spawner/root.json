@@ -8,25 +8,27 @@
 			"item": "minecraft:spawner"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.spawner.root"
+			"translate": "advancements.apotheosis.spawner"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.spawner.root.desc"
+			"translate": "advancements.apotheosis.spawner.desc"
 		},
 		"frame": "task",
-		"show_toast": false,
-		"announce_to_chat": false,
-		"hidden": false,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {
-		"game_start": {
-			"trigger": "tick"
+		"spawner": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"item": [{
+					"items": ["minecraft:spawner"]
+				}]
+			}
 		}
 	},
 	"requirements": [
 		[
-			"game_start"
+			"spawner"
 		]
 	]
 }

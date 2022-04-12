@@ -7,7 +7,6 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.ICriterionTrigger;
@@ -20,8 +19,8 @@ import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.loot.ConditionArraySerializer;
 import net.minecraft.util.ResourceLocation;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.spawn.SpawnerModifiers;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
+import shadows.apotheosis.spawn.modifiers.SpawnerStats;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile.SpawnerLogicExt;
 
@@ -64,20 +63,18 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 
 	@Override
 	public ModifierTrigger.Instance createInstance(JsonObject json, ConditionArrayParser conditionsParser) {
-		MinMaxBounds.IntBound minDelay = MinMaxBounds.IntBound.fromJson(json.get("min_delay"));
-		MinMaxBounds.IntBound maxDelay = MinMaxBounds.IntBound.fromJson(json.get("max_delay"));
-		MinMaxBounds.IntBound spawnCount = MinMaxBounds.IntBound.fromJson(json.get("spawn_count"));
-		MinMaxBounds.IntBound nearbyEnts = MinMaxBounds.IntBound.fromJson(json.get("max_nearby_entities"));
-		MinMaxBounds.IntBound playerRange = MinMaxBounds.IntBound.fromJson(json.get("player_activation_range"));
-		MinMaxBounds.IntBound spawnRange = MinMaxBounds.IntBound.fromJson(json.get("spawn_range"));
-		Boolean ignorePlayers = json.has("ignore_players") ? json.get("ignore_players").getAsBoolean() : null;
-		Boolean ignoreConditions = json.has("ignore_conditions") ? json.get("ignore_conditions").getAsBoolean() : null;
-		Boolean ignoreCap = json.has("ignore_cap") ? json.get("ignore_cap").getAsBoolean() : null;
-		Boolean redstone = json.has("redstone") ? json.get("redstone").getAsBoolean() : null;
-		JsonElement modif = json.get("modifier");
-		SpawnerModifier modifier = null;
-		if (modif != null) modifier = SpawnerModifiers.MODIFIERS.values().stream().filter(m -> m.getId().equals(modif.getAsString())).findAny().orElse(null);
-		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, ignoreCap, redstone, modifier);
+		MinMaxBounds.IntBound minDelay = MinMaxBounds.IntBound.fromJson(json.get(SpawnerStats.MIN_DELAY.getId()));
+		MinMaxBounds.IntBound maxDelay = MinMaxBounds.IntBound.fromJson(json.get(SpawnerStats.MAX_DELAY.getId()));
+		MinMaxBounds.IntBound spawnCount = MinMaxBounds.IntBound.fromJson(json.get(SpawnerStats.SPAWN_COUNT.getId()));
+		MinMaxBounds.IntBound nearbyEnts = MinMaxBounds.IntBound.fromJson(json.get(SpawnerStats.MAX_NEARBY_ENTITIES.getId()));
+		MinMaxBounds.IntBound playerRange = MinMaxBounds.IntBound.fromJson(json.get(SpawnerStats.REQ_PLAYER_RANGE.getId()));
+		MinMaxBounds.IntBound spawnRange = MinMaxBounds.IntBound.fromJson(json.get(SpawnerStats.SPAWN_RANGE.getId()));
+		Boolean ignorePlayers = json.has(SpawnerStats.IGNORE_PLAYERS.getId()) ? json.get(SpawnerStats.IGNORE_PLAYERS.getId()).getAsBoolean() : null;
+		Boolean ignoreConditions = json.has(SpawnerStats.IGNORE_CONDITIONS.getId()) ? json.get(SpawnerStats.IGNORE_CONDITIONS.getId()).getAsBoolean() : null;
+		Boolean redstone = json.has(SpawnerStats.REDSTONE_CONTROL.getId()) ? json.get(SpawnerStats.REDSTONE_CONTROL.getId()).getAsBoolean() : null;
+		Boolean ignoreLight = json.has(SpawnerStats.IGNORE_LIGHT.getId()) ? json.get(SpawnerStats.IGNORE_LIGHT.getId()).getAsBoolean() : null;
+		Boolean noAI = json.has(SpawnerStats.NO_AI.getId()) ? json.get(SpawnerStats.NO_AI.getId()).getAsBoolean() : null;
+		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, redstone, ignoreLight, noAI);
 	}
 
 	public void trigger(ServerPlayerEntity player, ApothSpawnerTile tile, SpawnerModifier modif) {
@@ -97,11 +94,11 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 		private final MinMaxBounds.IntBound spawnRange;
 		private final Boolean ignorePlayers;
 		private final Boolean ignoreConditions;
-		private final Boolean ignoreCap;
 		private final Boolean redstone;
-		private final SpawnerModifier modifier;
+		private final Boolean ignoreLight;
+		private final Boolean noAI;
 
-		public Instance(MinMaxBounds.IntBound minDelay, MinMaxBounds.IntBound maxDelay, MinMaxBounds.IntBound spawnCount, MinMaxBounds.IntBound nearbyEnts, MinMaxBounds.IntBound playerRange, MinMaxBounds.IntBound spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean ignoreCap, Boolean redstone, SpawnerModifier modifier) {
+		public Instance(MinMaxBounds.IntBound minDelay, MinMaxBounds.IntBound maxDelay, MinMaxBounds.IntBound spawnCount, MinMaxBounds.IntBound nearbyEnts, MinMaxBounds.IntBound playerRange, MinMaxBounds.IntBound spawnRange, Boolean ignorePlayers, Boolean ignoreConditions, Boolean redstone, Boolean ignoreLight, Boolean noAI) {
 			super(ModifierTrigger.ID, EntityPredicate.AndPredicate.ANY);
 			this.minDelay = minDelay;
 			this.maxDelay = maxDelay;
@@ -111,9 +108,9 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			this.spawnRange = spawnRange;
 			this.ignorePlayers = ignorePlayers;
 			this.ignoreConditions = ignoreConditions;
-			this.ignoreCap = ignoreCap;
 			this.redstone = redstone;
-			this.modifier = modifier;
+			this.ignoreLight = ignoreLight;
+			this.noAI = noAI;
 		}
 
 		@Override
@@ -123,7 +120,6 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 
 		public boolean test(ApothSpawnerTile tile, SpawnerModifier modif) {
 			SpawnerLogicExt logic = (SpawnerLogicExt) tile.spawner;
-			if (this.modifier != null && modif != this.modifier) return false;
 			if (!this.minDelay.matches(logic.minSpawnDelay)) return false;
 			if (!this.maxDelay.matches(logic.maxSpawnDelay)) return false;
 			if (!this.spawnCount.matches(logic.spawnCount)) return false;
@@ -132,8 +128,9 @@ public class ModifierTrigger implements ICriterionTrigger<ModifierTrigger.Instan
 			if (!this.spawnRange.matches(logic.spawnRange)) return false;
 			if (this.ignorePlayers != null && tile.ignoresPlayers != this.ignorePlayers) return false;
 			if (this.ignoreConditions != null && tile.ignoresConditions != this.ignoreConditions) return false;
-			if (this.ignoreCap != null && tile.ignoresCap != this.ignoreCap) return false;
-			if (this.redstone != null && tile.redstoneEnabled != this.redstone) return false;
+			if (this.redstone != null && tile.redstoneControl != this.redstone) return false;
+			if (this.ignoreLight != null && tile.ignoresLight != this.ignoreLight) return false;
+			if (this.noAI != null && tile.hasNoAI != this.noAI) return false;
 			return true;
 		}
 	}

@@ -17,10 +17,11 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.IModBusEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -36,6 +37,7 @@ import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
+import shadows.apotheosis.util.TOPCompat;
 import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.NBTIngredient;
@@ -104,11 +106,15 @@ public class Apotheosis {
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
+		bus.addListener(this::imc);
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 	}
 
-	@SubscribeEvent
+	public void imc(InterModEnqueueEvent e) {
+		if (ModList.get().isLoaded("theoneprobe")) TOPCompat.register();
+	}
+
 	public void init(FMLCommonSetupEvent e) {
 		NetworkUtils.registerMessage(CHANNEL, 0, new ParticleMessage());
 		NetworkUtils.registerMessage(CHANNEL, 1, new ClueMessage(0, Collections.emptyList(), false));

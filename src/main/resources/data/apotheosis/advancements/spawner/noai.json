@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:spawner/nearbyents",
+	"parent": "apotheosis:spawner/modifier",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "spawner"
@@ -9,10 +9,10 @@
 			"item": "minecraft:chorus_fruit"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.spawncap"
+			"translate": "advancements.apotheosis.noai"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.spawncap.desc"
+			"translate": "advancements.apotheosis.noai.desc"
 		},
 		"frame": "challenge"
 	},
@@ -20,7 +20,7 @@
 		"modifier": {
 			"trigger": "apotheosis:spawner_modifier",
 			"conditions": {
-				"modifier": "ignore_spawn_cap"
+				"no_ai": true
 			}
 		}
 	},

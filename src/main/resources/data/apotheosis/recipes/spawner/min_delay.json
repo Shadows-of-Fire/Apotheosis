@@ -1,0 +1,16 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:sugar"
+	},
+	"stat_changes": [{
+		"id": "min_delay",
+		"value": -10,
+		"min": 20,
+		"max": -1
+	}]
+}

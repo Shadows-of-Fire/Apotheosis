@@ -20,7 +20,7 @@
 		"modifier": {
 			"trigger": "apotheosis:spawner_modifier",
 			"conditions": {
-				"modifier": "redstone_control"
+				"redstone_control": true
 			}
 		}
 	},

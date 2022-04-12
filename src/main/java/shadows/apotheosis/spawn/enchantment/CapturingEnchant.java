@@ -17,7 +17,7 @@ public class CapturingEnchant extends Enchantment {
 
 	@Override
 	public int getMinCost(int level) {
-		return 35 + (level - 1) * 15;
+		return 28 + (level - 1) * 15;
 	}
 
 	@Override

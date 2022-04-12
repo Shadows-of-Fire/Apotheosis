@@ -1,121 +1,192 @@
 package shadows.apotheosis.spawn.modifiers;
 
-import net.minecraft.block.Block;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
-import shadows.apotheosis.spawn.SpawnerModifiers;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
-import shadows.placebo.config.Configuration;
 
 /**
  * Parent class for all spawner modifiers.
  * @author Shadows
  *
  */
-public abstract class SpawnerModifier {
+public class SpawnerModifier implements IRecipe<IInventory> {
 
-	public static final String ITEM = "item";
-	public static final String VALUE = "value";
-	public static final String MIN = "min_value";
-	public static final String MAX = "max_value";
+	public static final IRecipeType<SpawnerModifier> TYPE = IRecipeType.register("apotheosis:spawner_modifier");
+	public static final Serializer SERIALIZER = new Serializer();
 
-	/**
-	 * The matching item for this modifier.
-	 */
-	protected LazyValue<Ingredient> item;
+	protected final ResourceLocation id;
+	protected final Ingredient mainHand, offHand;
+	protected final boolean consumesOffhand;
+	protected final List<StatModifier<?>> statChanges;
 
-	/**
-	 * The amount this modifier changes it's respective stat.
-	 */
-	protected int value;
-
-	/**
-	 * The in int value of this modifier value.
-	 */
-	protected int min;
-
-	/**
-	 * The max int value of this modifier value.
-	 */
-	protected int max;
-
-	/**
-	 * @param item
-	 * @param value
-	 * @param min
-	 * @param max
-	 */
-	public SpawnerModifier(int value, int min, int max) {
-		this.value = value;
-		this.min = min;
-		this.max = max;
-	}
-
-	public SpawnerModifier() {
-		this(-1, -1, -1);
+	public SpawnerModifier(ResourceLocation id, Ingredient mainHand, Ingredient offHand, boolean consumesOffhand, List<StatModifier<?>> stats) {
+		this.id = id;
+		this.mainHand = mainHand;
+		this.offHand = offHand;
+		this.consumesOffhand = consumesOffhand;
+		this.statChanges = ImmutableList.copyOf(stats);
 	}
 
 	/**
-	 * Checks if this modifier can be applied.  Should check matching item and if the spawner is not at capacity.
-	 * @param spawner The spawner you are modifying.
-	 * @param stack The mainhand stack of the player.
-	 * @param inverting If the player is holding the inverse item in their offhand.
-	 * @return If this modifier can act, given the conditions.
+	 * Tests if this modifier matches the held items.
+	 * @return If this modifier matches the given items.
 	 */
-	public boolean canModify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting) {
-		return this.item.get().test(stack);
+	public boolean matches(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
+		if (this.mainHand.test(mainhand)) {
+			if (this.offHand == Ingredient.EMPTY) return true;
+			return this.offHand.test(offhand);
+		}
+		return false;
 	}
 
 	/**
 	 * Applies this modifier.
-	 * @param spawner The spawner you are modifying.
-	 * @param stack The mainhand stack of the player.
-	 * @param inverting If the player is holding the inverse item in their offhand.
-	 * @return The value to be returned to {@link Block#onBlockActivated}
+	 * @return If any part of the modification was successful, and items should be consumed.
 	 */
-	public abstract boolean modify(ApothSpawnerTile spawner, ItemStack stack, boolean inverting);
-
-	/**
-	 * Reads this modifier from config.  Should update all relevant values.
-	 */
-	public void load(Configuration cfg) {
-		String s = cfg.getString(ITEM, this.getId(), this.getDefaultItem(), "The item that applies this modifier.");
-		this.item = SpawnerModifiers.readIngredient(s);
-		if (this.value != -1) this.value = cfg.getInt(VALUE, this.getId(), this.value, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount each item changes this stat.");
-		if (this.min != -1) this.min = cfg.getInt(MIN, this.getId(), this.min, Integer.MIN_VALUE, Integer.MAX_VALUE, "The min value of this stat.");
-		if (this.max != -1) this.max = cfg.getInt(MAX, this.getId(), this.max, Integer.MIN_VALUE, Integer.MAX_VALUE, "The max value of this stat.");
+	public boolean apply(ApothSpawnerTile tile) {
+		boolean success = false;
+		for (StatModifier<?> m : this.statChanges) {
+			if (m.apply(tile)) success = true;
+		}
+		return success;
 	}
 
-	public Ingredient getIngredient() {
-		return this.item.get();
+	public boolean consumesOffhand() {
+		return this.consumesOffhand;
 	}
 
-	public int getValue() {
-		return this.value;
+	public Ingredient getMainhandInput() {
+		return this.mainHand;
 	}
 
-	public int getMin() {
-		return this.min;
+	public Ingredient getOffhandInput() {
+		return this.offHand;
 	}
 
-	public int getMax() {
-		return this.max;
+	public List<StatModifier<?>> getStatModifiers() {
+		return this.statChanges;
 	}
 
-	public abstract String getId();
+	@Override
+	@Deprecated
+	public boolean matches(IInventory pContainer, World pLevel) {
+		return false;
+	}
 
-	public abstract String getDefaultItem();
+	@Override
+	@Deprecated
+	public ItemStack assemble(IInventory pContainer) {
+		return ItemStack.EMPTY;
+	}
 
-	/**
-	 * Updates modifier data.
-	 * Used on the client during the receipt of modifiers from the server.
-	 */
-	public void sync(Ingredient ing, int value, int min, int max) {
-		this.item = new LazyValue<>(() -> ing);
-		this.item.get();
-		this.value = value;
-		this.min = min;
-		this.max = max;
+	@Override
+	@Deprecated
+	public boolean canCraftInDimensions(int pWidth, int pHeight) {
+		return false;
+	}
+
+	@Override
+	@Deprecated
+	public ItemStack getResultItem() {
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public ResourceLocation getId() {
+		return this.id;
+	}
+
+	@Override
+	public IRecipeSerializer<?> getSerializer() {
+		return SpawnerModifier.SERIALIZER;
+	}
+
+	@Override
+	public IRecipeType<?> getType() {
+		return SpawnerModifier.TYPE;
+	}
+
+	@Nullable
+	public static SpawnerModifier findMatch(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
+		List<SpawnerModifier> recipes = tile.getLevel().getRecipeManager().getAllRecipesFor(SpawnerModifier.TYPE);
+		recipes.sort((r1, r2) -> r1.offHand == Ingredient.EMPTY ? r2.offHand == Ingredient.EMPTY ? 0 : 1 : -1);
+		for (SpawnerModifier r : recipes)
+			if (r.matches(tile, mainhand, offhand)) return r;
+		return null;
+	}
+
+	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SpawnerModifier> {
+
+		@Override
+		public SpawnerModifier fromJson(ResourceLocation id, JsonObject obj) {
+			Ingredient mainhand = Ingredient.fromJson(obj.get("mainhand"));
+			Ingredient offhand = obj.has("offhand") ? Ingredient.fromJson(obj.get("offhand")) : Ingredient.EMPTY;
+			JsonArray stats = obj.get("stat_changes").getAsJsonArray();
+			List<StatModifier<?>> statChanges = new ArrayList<>();
+			for (JsonElement e : stats) {
+				statChanges.add(StatModifier.parse(e.getAsJsonObject()));
+			}
+			return new SpawnerModifier(id, mainhand, offhand, offhand == Ingredient.EMPTY ? false : obj.get("consumes_offhand").getAsBoolean(), statChanges);
+		}
+
+		@Override
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public SpawnerModifier fromNetwork(ResourceLocation id, PacketBuffer buf) {
+			Ingredient mainhand = Ingredient.fromNetwork(buf);
+			Ingredient offhand = buf.readBoolean() ? Ingredient.fromNetwork(buf) : Ingredient.EMPTY;
+			boolean consumesOffhand = buf.readBoolean();
+			List<StatModifier<?>> statChanges = new ArrayList<>();
+			int size = buf.readByte();
+			for (int i = 0; i < size; i++) {
+				SpawnerStat<?> stat = SpawnerStats.REGISTRY.get(buf.readUtf(32));
+				boolean isBool = buf.readBoolean();
+				if (isBool) {
+					statChanges.add(new StatModifier(stat, buf.readBoolean(), false, false));
+				} else {
+					statChanges.add(new StatModifier(stat, buf.readInt(), buf.readInt(), buf.readInt()));
+				}
+			}
+			return new SpawnerModifier(id, mainhand, offhand, consumesOffhand, statChanges);
+		}
+
+		@Override
+		public void toNetwork(PacketBuffer buf, SpawnerModifier recipe) {
+			recipe.mainHand.toNetwork(buf);
+			buf.writeBoolean(recipe.offHand != Ingredient.EMPTY);
+			if (recipe.offHand != Ingredient.EMPTY) recipe.offHand.toNetwork(buf);
+			buf.writeBoolean(recipe.consumesOffhand);
+			buf.writeByte(recipe.statChanges.size());
+			for (StatModifier<?> s : recipe.statChanges) {
+				SpawnerStat<?> stat = s.stat;
+				buf.writeUtf(stat.getId(), 32);
+				boolean isBool = stat.getTypeClass() == Boolean.class;
+				buf.writeBoolean(isBool);
+				if (isBool) {
+					buf.writeBoolean((boolean) (Object) s.value);
+				} else {
+					buf.writeInt((int) (Object) s.value);
+					buf.writeInt((int) (Object) s.min);
+					buf.writeInt((int) (Object) s.max);
+				}
+			}
+		}
 	}
 }

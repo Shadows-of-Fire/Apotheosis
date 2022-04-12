@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:spawner/maxdelay",
+	"parent": "apotheosis:spawner/light",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "spawner"
@@ -20,7 +20,7 @@
 		"modifier": {
 			"trigger": "apotheosis:spawner_modifier",
 			"conditions": {
-				"modifier": "ignore_spawn_conditions"
+				"ignore_conditions": true
 			}
 		}
 	},

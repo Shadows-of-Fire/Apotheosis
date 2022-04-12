@@ -1,25 +1,27 @@
 {
-	"parent": "apotheosis:spawner/root",
+	"parent": "apotheosis:spawner/modifier",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "spawner"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:sugar"
+			"item": "minecraft:soul_lantern"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.modifier"
+			"translate": "advancements.apotheosis.light"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.modifier.desc"
+			"translate": "advancements.apotheosis.light.desc"
 		},
-		"frame": "task"
+		"frame": "goal"
 	},
 	"criteria": {
 		"modifier": {
 			"trigger": "apotheosis:spawner_modifier",
-			"conditions": {}
+			"conditions": {
+				"ignore_light": true
+			}
 		}
 	},
 	"requirements": [

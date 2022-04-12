@@ -21,8 +21,8 @@
 			"trigger": "apotheosis:spawner_modifier",
 			"conditions": {
 				"modifier": "player_activation_range",
-				"player_activation_range": {
-					"min": 50
+				"req_player_range": {
+					"min": 48
 				}
 			}
 		}

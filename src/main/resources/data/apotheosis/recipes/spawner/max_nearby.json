@@ -1,0 +1,16 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:ghast_tear"
+	},
+	"stat_changes": [{
+		"id": "max_nearby_entities",
+		"value": 2,
+		"min": -1,
+		"max": 32
+	}]
+}

@@ -45,6 +45,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -61,6 +62,7 @@ import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
 import shadows.apotheosis.ench.anvil.ApothAnvilItem;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
+import shadows.apotheosis.ench.compat.EnchTOPPlugin;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
 import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
@@ -184,6 +186,7 @@ public class EnchModule {
 		e.enqueueWork(() -> {
 			DispenserBlock.registerBehavior(Items.SHEARS, new BeehiveDispenseBehavior());
 		});
+		if (ModList.get().isLoaded("theoneprobe")) EnchTOPPlugin.register();
 	}
 
 	@SubscribeEvent

@@ -1,4 +1,4 @@
-## 4.9.0
+## 4.8.999
 * This is a Backport of some major 1.18.2 changes.
 * Added the Enchantment Info Screen
 * Added Rectification and Clues
@@ -8,10 +8,18 @@
   * Hellshelves and Seashelves can no longer be enchanted except via infusion enchanting.
 * Internal data values for Quanta and Arcana have been multiplied by 10, update JSON files accordingly!
 * Added the Library of Alexandria
+* Fixed infinite enchantment dupe bug with libraries.
 * Added a way to make Potion Charms unbreakable (requires ench module).
 * Updated Life Mending to act like the 1.18.2 version.
 * Scavenger bonus drops will now be converted by KoTA.
 * The execute affix simply kills the target, instead of dealing Float.MAX_VALUE true damage.
+* Revamped Spawner Modifiers to the extended 1.18 system.
+  * They are now JSON recipes and support multiple stat changes per single modifier, as well as per-modifier stat caps.
+* Removed the Ignore Spawn Cap modifier.
+* Added the Ignore Light Levels and NoAI modifiers.
+* Updated Spawner Modifier JEI plugin substantially.
+* Added The One Probe compat
+* Updated advancements to account for changes.
 
 ## 4.8.4
 * E.Kim: Updated ko_kr.json (Korean Translation)

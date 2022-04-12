@@ -61,6 +61,9 @@ repositories {
 	maven {
 	 	url 'https://maven.theillusivec4.top/'
 	}
+	maven { // The One Probe
+		url "https://maven.k-4u.nl/"
+	}
 }
 
 dependencies {
@@ -70,6 +73,9 @@ dependencies {
 	implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
 	implementation fileTree(dir: 'libs', include: '*.jar')
 	implementation fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.3')
+	compileOnly fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:1.16-3.1.4-2") {
+		transitive = false
+	})
 }
 
 mixin {

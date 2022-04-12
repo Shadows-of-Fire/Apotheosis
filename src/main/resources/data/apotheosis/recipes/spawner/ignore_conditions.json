@@ -1,0 +1,14 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:dragon_egg"
+	},
+	"stat_changes": [{
+		"id": "ignore_conditions",
+		"value": true
+	}]
+}

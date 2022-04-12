@@ -1,0 +1,16 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:prismarine_crystals"
+	},
+	"stat_changes": [{
+		"id": "req_player_range",
+		"value": 2,
+		"min": -1,
+		"max": 48
+	}]
+}

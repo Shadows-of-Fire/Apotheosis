@@ -22,17 +22,17 @@
 			"trigger": "apotheosis:spawner_modifier",
 			"conditions": {
 				"min_delay": {
-					"max": 5,
+					"max": 20,
 					"min": 0
 				},
 				"max_delay": {
-					"max": 10,
+					"max": 20,
 					"min": 0
 				},
 				"ignore_players": true,
 				"ignore_conditions": true,
-				"ignore_cap": true,
-				"redstone": true
+				"no_ai": true,
+				"redstone_control": true
 			}
 		}
 	},
