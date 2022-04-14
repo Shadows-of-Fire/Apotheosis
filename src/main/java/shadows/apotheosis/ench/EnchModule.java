@@ -34,15 +34,19 @@ import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.Potions;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags.IOptionalNamedTag;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -64,7 +68,12 @@ import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.compat.EnchTOPPlugin;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
+import shadows.apotheosis.ench.enchantments.ChainsawEnchant;
+import shadows.apotheosis.ench.enchantments.ChromaticEnchant;
 import shadows.apotheosis.ench.enchantments.CrescendoEnchant;
+import shadows.apotheosis.ench.enchantments.EarthsBoonEnchant;
+import shadows.apotheosis.ench.enchantments.ExploitationEnchant;
+import shadows.apotheosis.ench.enchantments.GrowthSerumEnchant;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.InertEnchantment;
@@ -78,6 +87,7 @@ import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
 import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
 import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
+import shadows.apotheosis.ench.enchantments.SpearfishingEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
@@ -126,6 +136,11 @@ public class EnchModule {
 	public static final EnchantmentType HOE = EnchantmentType.create("HOE", i -> i instanceof HoeItem);
 	public static final EnchantmentType SHIELD = EnchantmentType.create("SHIELD", i -> i instanceof ShieldItem);
 	public static final EnchantmentType ANVIL = EnchantmentType.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
+	public static final EnchantmentType SHEARS = EnchantmentType.create("SHEARS", i -> i instanceof ShearsItem);
+	public static final IOptionalNamedTag<Item> SPEARFISHING_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"));
+	public static final EnchantmentType AXE = EnchantmentType.create("AXE", i -> i.getToolTypes(new ItemStack(i)).contains(ToolType.AXE));
+	public static final EnchantmentType PICKAXE = EnchantmentType.create("AXE", i -> i.getToolTypes(new ItemStack(i)).contains(ToolType.PICKAXE));
+	public static final IOptionalNamedTag<Item> BOON_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "boon_drops"));
 	static Configuration enchInfoConfig;
 
 	@SubscribeEvent
@@ -162,8 +177,7 @@ public class EnchModule {
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, ApotheosisObjects.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
 		Apotheosis.HELPER.addShaped(ApotheosisObjects.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
-		Apotheosis.HELPER.addShaped(Items.EXPERIENCE_BOTTLE, 3, 3, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE, Items.ENCHANTED_BOOK, Items.HONEY_BOTTLE, Items.ENCHANTED_BOOK, Items.GLOWSTONE, "forge:gems/diamond", Items.GLOWSTONE);
-		Apotheosis.HELPER.addShaped(ApotheosisObjects.ENCHANTMENT_LIBRARY, 3, 3, Blocks.ENDER_CHEST, ApotheosisObjects.HELLSHELF, Blocks.ENDER_CHEST, ApotheosisObjects.HELLSHELF, Blocks.ENCHANTING_TABLE, ApotheosisObjects.HELLSHELF, Blocks.ENDER_CHEST, ApotheosisObjects.HELLSHELF, Blocks.ENDER_CHEST);
+		Apotheosis.HELPER.addShaped(ApotheosisObjects.ENCHANTMENT_LIBRARY, 3, 3, Blocks.ENDER_CHEST, maxHellshelf, Blocks.ENDER_CHEST, maxHellshelf, Blocks.ENCHANTING_TABLE, maxHellshelf, Blocks.ENDER_CHEST, maxHellshelf, Blocks.ENDER_CHEST);
 		LootSystem.defaultBlockTable(ApotheosisObjects.PRISMATIC_ALTAR);
 		LootSystem.defaultBlockTable(ApotheosisObjects.BLAZING_HELLSHELF);
 		LootSystem.defaultBlockTable(ApotheosisObjects.GLOWING_HELLSHELF);
@@ -335,7 +349,13 @@ public class EnchModule {
 				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlotType.FEET).setRegistryName("minecraft", "feather_falling"),
 				new ObliterationEnchant().setRegistryName("obliteration"),
 				new CrescendoEnchant().setRegistryName("crescendo"),
-				new InertEnchantment().setRegistryName("infusion")
+				new InertEnchantment().setRegistryName("infusion"),
+				new ChromaticEnchant().setRegistryName("chromatic"),
+				new ExploitationEnchant().setRegistryName("exploitation"),
+				new GrowthSerumEnchant().setRegistryName("growth_serum"),
+				new SpearfishingEnchant().setRegistryName("spearfishing"),
+				new ChainsawEnchant().setRegistryName("chainsaw"),
+				new EarthsBoonEnchant().setRegistryName("earths_boon")
 				);
 		//Formatter::on
 	}

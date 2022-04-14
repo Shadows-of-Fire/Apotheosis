@@ -24,6 +24,7 @@ public class ModuleCondition implements ICondition {
 		types.put("enchantment", () -> Apotheosis.enableEnch);
 		types.put("potion", () -> Apotheosis.enablePotion);
 		types.put("village", () -> Apotheosis.enableVillage);
+		types.put("book", () -> Apotheosis.giveBook);
 	}
 
 	final String name;
@@ -46,7 +47,7 @@ public class ModuleCondition implements ICondition {
 
 		@Override
 		public void write(JsonObject json, ModuleCondition value) {
-			json.addProperty("field", value.name);
+			json.addProperty("module", value.name);
 		}
 
 		@Override

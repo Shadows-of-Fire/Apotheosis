@@ -17,6 +17,11 @@ import shadows.apotheosis.ench.altar.SeaAltarTile;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
 import shadows.apotheosis.ench.enchantments.BerserkersFuryEnchant;
+import shadows.apotheosis.ench.enchantments.ChainsawEnchant;
+import shadows.apotheosis.ench.enchantments.ChromaticEnchant;
+import shadows.apotheosis.ench.enchantments.EarthsBoonEnchant;
+import shadows.apotheosis.ench.enchantments.ExploitationEnchant;
+import shadows.apotheosis.ench.enchantments.GrowthSerumEnchant;
 import shadows.apotheosis.ench.enchantments.HellInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.IcyThornsEnchant;
 import shadows.apotheosis.ench.enchantments.KnowledgeEnchant;
@@ -29,6 +34,7 @@ import shadows.apotheosis.ench.enchantments.ReflectiveEnchant;
 import shadows.apotheosis.ench.enchantments.ScavengerEnchant;
 import shadows.apotheosis.ench.enchantments.SeaInfusionEnchantment;
 import shadows.apotheosis.ench.enchantments.ShieldBashEnchant;
+import shadows.apotheosis.ench.enchantments.SpearfishingEnchant;
 import shadows.apotheosis.ench.enchantments.StableFootingEnchant;
 import shadows.apotheosis.ench.enchantments.TemptingEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
@@ -164,5 +170,11 @@ public class ApotheosisObjects {
 	public static final Block SIGHTSHELF_T2 = null;
 	public static final EnchLibraryBlock ENDER_LIBRARY = null;
 	public static final TileEntityType<EnchLibraryTile> ENDER_LIB_TILE = null;
+	public static final SpearfishingEnchant SPEARFISHING = null;
+	public static final ChromaticEnchant CHROMATIC = null;
+	public static final ExploitationEnchant EXPLOITATION = null;
+	public static final GrowthSerumEnchant GROWTH_SERUM = null;
+	public static final EarthsBoonEnchant EARTHS_BOON = null;
+	public static final ChainsawEnchant CHAINSAW = null;
 
 }

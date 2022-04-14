@@ -67,7 +67,7 @@ public class DeadlyModule {
 	public void preInit(ApotheosisConstruction e) {
 		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, DeadlyWorldGen::onBiomeLoad);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, DeadlyWorldGen::onBiomeLoad); // Should be HIGH, but Yung's Better Dungeons will remove it, so...
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
 
@@ -87,8 +87,8 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
-		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("boss_dungeon"));
-		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dungeon_2"));
+		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("boss_dng"));
+		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dng_2"));
 		e.getRegistry().register(RogueSpawnerFeature.INSTANCE.setRegistryName("rogue_spawner"));
 		e.getRegistry().register(TroveFeature.INSTANCE.setRegistryName("trove"));
 		e.getRegistry().register(TomeTowerFeature.INSTANCE.setRegistryName("tome_tower"));

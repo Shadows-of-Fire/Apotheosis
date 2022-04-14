@@ -34,7 +34,12 @@ public class SpawnerJEIPlugin implements IModPlugin {
 		recipes.sort((r1, r2) -> r1.getOffhandInput() == Ingredient.EMPTY ? r2.getOffhandInput() == Ingredient.EMPTY ? 0 : -1 : 1);
 
 		reg.addRecipes(recipes, SpawnerCategory.UID);
-		reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.spawner", ((IFormattableTextComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(TextFormatting.DARK_BLUE).getString()));
+		if (SpawnerModule.spawnerSilkLevel == 0) {
+			reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.spawner.always_drop"));
+		} else if (SpawnerModule.spawnerSilkLevel == -1) {
+			reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.spawner.no_silk"));
+		} else reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.spawner", ((IFormattableTextComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(TextFormatting.DARK_BLUE).getString()));
+
 		for (Item i : ForgeRegistries.ITEMS) {
 			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM, new TranslationTextComponent("info.apotheosis.capturing"));
 		}

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -47,6 +48,11 @@ public class IcyThornsEnchant extends Enchantment {
 			LivingEntity ent = (LivingEntity) attacker;
 			ent.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
 		}
+	}
+
+	@Override
+	protected boolean checkCompatibility(Enchantment pEnch) {
+		return super.checkCompatibility(pEnch) && pEnch != Enchantments.THORNS;
 	}
 
 }

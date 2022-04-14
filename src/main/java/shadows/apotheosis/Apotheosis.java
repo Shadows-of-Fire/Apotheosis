@@ -27,6 +27,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.compat.PatchouliCompat;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
@@ -77,6 +78,7 @@ public class Apotheosis {
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillage = true;
+	public static boolean giveBook = true;
 
 	public static float localAtkStrength = 1;
 
@@ -89,6 +91,7 @@ public class Apotheosis {
 		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
+		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
 		if (config.hasChanged()) config.save();
 	}
 
@@ -109,6 +112,7 @@ public class Apotheosis {
 		bus.addListener(this::imc);
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
+		if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
 	}
 
 	public void imc(InterModEnqueueEvent e) {

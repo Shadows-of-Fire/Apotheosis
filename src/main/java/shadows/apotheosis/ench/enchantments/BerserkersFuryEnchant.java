@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextFormatting;
 public class BerserkersFuryEnchant extends Enchantment {
 
 	public BerserkersFuryEnchant() {
-		super(Rarity.VERY_RARE, EnchantmentType.ARMOR, new EquipmentSlotType[] { EquipmentSlotType.CHEST, EquipmentSlotType.LEGS });
+		super(Rarity.VERY_RARE, EnchantmentType.ARMOR, new EquipmentSlotType[] { EquipmentSlotType.CHEST });
 	}
 
 	@Override

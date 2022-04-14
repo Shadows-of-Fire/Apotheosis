@@ -189,16 +189,13 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 							boolean useLiar = false;
 							if (!ApothSpawnerTile.this.ignoresConditions) {
 								if (ApothSpawnerTile.this.ignoresLight) {
-									boolean pass = false;
 									for (int light = 0; light < 16; light++) {
 										liar.setFakeLightLevel(light);
 										if (checkSpawnRules(optional, liar, blockpos)) {
-											pass = true;
+											useLiar = true;
 											break;
 										}
 									}
-									if (!pass) continue;
-									else useLiar = true;
 								} else if (!checkSpawnRules(optional, (IServerWorld) world, blockpos)) continue;
 							}
 
@@ -227,7 +224,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								net.minecraftforge.eventbus.api.Event.Result res = net.minecraftforge.event.ForgeEventFactory.canEntitySpawn(mob, useLiar ? liar : world, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, SpawnReason.SPAWNER);
 								if (res == net.minecraftforge.eventbus.api.Event.Result.DENY) continue;
 								if (res == net.minecraftforge.eventbus.api.Event.Result.DEFAULT) {
-									if (!ApothSpawnerTile.this.ignoresConditions && (!mob.checkSpawnRules(world, SpawnReason.SPAWNER) || !mob.checkSpawnObstruction(world))) {
+									if (!ApothSpawnerTile.this.ignoresConditions && (!mob.checkSpawnRules(useLiar ? liar : world, SpawnReason.SPAWNER) || !mob.checkSpawnObstruction(world))) {
 										continue;
 									}
 								}
@@ -263,10 +260,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 		 * Checks if the requested entity passes spawn rule checks or not.
 		 */
 		private boolean checkSpawnRules(Optional<EntityType<?>> optional, IServerWorld pServerLevel, BlockPos blockpos) {
-			if (!EntitySpawnPlacementRegistry.checkSpawnRules(optional.get(), pServerLevel, SpawnReason.SPAWNER, blockpos, pServerLevel.getRandom())) {
-				return false;
-			}
-			return true;
+			return EntitySpawnPlacementRegistry.checkSpawnRules(optional.get(), pServerLevel, SpawnReason.SPAWNER, blockpos, pServerLevel.getRandom());
 		}
 
 	}

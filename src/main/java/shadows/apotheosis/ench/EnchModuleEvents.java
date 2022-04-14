@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
@@ -32,9 +33,11 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -126,6 +129,7 @@ public class EnchModuleEvents {
 					p.level.addFreshEntity(new ExperienceOrbEntity(p.level, target.getX(), target.getY(), target.getZ(), i));
 				}
 			}
+			ApotheosisObjects.SPEARFISHING.addFishes(e);
 		}
 	}
 
@@ -211,6 +215,28 @@ public class EnchModuleEvents {
 	@SubscribeEvent
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(EnchantingStatManager.INSTANCE);
+	}
+
+	public static interface TridentGetter {
+		ItemStack getTridentItem();
+	}
+
+	@SubscribeEvent
+	public void looting(LootingLevelEvent e) {
+		DamageSource src = e.getDamageSource();
+		if (src != null && src.getDirectEntity() instanceof TridentEntity) {
+			ItemStack triStack = ((TridentGetter) src.getDirectEntity()).getTridentItem();
+			e.setLootingLevel(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, triStack));
+		}
+	}
+	
+	/**
+	 * Event handler for the Boon of the Earth enchant.
+	 */
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void breakSpeed(BlockEvent.BreakEvent e) {
+		ApotheosisObjects.EARTHS_BOON.provideBenefits(e);
+		ApotheosisObjects.CHAINSAW.chainsaw(e);
 	}
 
 }

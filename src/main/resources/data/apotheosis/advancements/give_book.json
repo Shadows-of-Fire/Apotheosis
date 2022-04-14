@@ -1,0 +1,19 @@
+{
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "book"
+	},{
+		"type": "forge:mod_loaded",
+		"modid": "patchouli"
+	}],
+	"criteria": {
+		"tick": {
+			"trigger": "minecraft:tick"
+		}
+	},
+	"rewards": {
+		"loot": [
+			"apotheosis:book"
+		]
+	}
+}

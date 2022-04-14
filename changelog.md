@@ -20,6 +20,11 @@
 * Updated Spawner Modifier JEI plugin substantially.
 * Added The One Probe compat
 * Updated advancements to account for changes.
+* The Chronicle of Shadows has been added - Patchouli is required.
+  * There is no section for the Deadly Module, as it did not exist in 1.18 to be backported.
+* Shear and Trident enchantments have been added.
+* Chainsaw and Earth's Boon have been added.
+* Deadly Module worldgen should now work properly even if YUNG's Better Dungeons is installed.
 
 ## 4.8.4
 * E.Kim: Updated ko_kr.json (Korean Translation)
