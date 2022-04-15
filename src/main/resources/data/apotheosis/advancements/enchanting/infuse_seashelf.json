@@ -22,7 +22,7 @@
 			"trigger": "minecraft:enchanted_item",
 			"conditions": {
 				"item": {
-					"items": ["apotheosis:seashelf"]
+					"item": "apotheosis:seashelf"
 				}
 			}
 		}

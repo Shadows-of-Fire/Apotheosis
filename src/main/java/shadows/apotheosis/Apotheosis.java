@@ -39,6 +39,7 @@ import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
 import shadows.apotheosis.util.TOPCompat;
+import shadows.apotheosis.util.UnenchantedIngredient;
 import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.NBTIngredient;
@@ -125,6 +126,7 @@ public class Apotheosis {
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
+		CraftingHelper.register(new ResourceLocation(MODID, "unenchanted"), UnenchantedIngredient.Serializer.INSTANCE);
 	}
 
 	public void reloads(AddReloadListenerEvent e) {

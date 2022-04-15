@@ -1,3 +1,9 @@
+## 4.8.9999
+* Fixed a server startup crash caused by the spawner module.
+* Fixed the Infuse Hellshelf / Seashelf advancements.
+* Fixed a bug where Infused Hell/Sea shelves could be re-infused for no benefit.
+
+
 ## 4.8.999
 * This is a Backport of some major 1.18.2 changes.
 * Added the Enchantment Info Screen

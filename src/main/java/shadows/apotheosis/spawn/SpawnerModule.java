@@ -28,18 +28,16 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
@@ -66,7 +64,6 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::handleCapturing);
 		MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
-		MinecraftForge.EVENT_BUS.addListener(this::handleTooltips);
 		MinecraftForge.EVENT_BUS.addListener(this::tickDumbMobs);
 		this.reload(null);
 		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.TAB_MISC, "field_77701_a");
@@ -86,6 +83,11 @@ public class SpawnerModule {
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
 		e.getRegistry().register(new CapturingEnchant().setRegistryName(Apotheosis.MODID, "capturing"));
+	}
+	
+	@SubscribeEvent
+	public void client(FMLClientSetupEvent e) {
+		MinecraftForge.EVENT_BUS.register(new SpawnerModuleClient());
 	}
 
 	public void handleCapturing(LivingDropsEvent e) {
@@ -109,15 +111,6 @@ public class SpawnerModule {
 				EntityType<?> type = egg.getType(s.getTag());
 				if (bannedMobs.contains(type.getRegistryName())) e.setCanceled(true);
 			}
-		}
-	}
-
-	public void handleTooltips(ItemTooltipEvent e) {
-		ItemStack s = e.getItemStack();
-		if (s.getItem() instanceof SpawnEggItem) {
-			SpawnEggItem egg = (SpawnEggItem) s.getItem();
-			EntityType<?> type = egg.getType(s.getTag());
-			if (bannedMobs.contains(type.getRegistryName())) e.getToolTip().add(new TranslationTextComponent("misc.apotheosis.banned").withStyle(TextFormatting.GRAY));
 		}
 	}
 

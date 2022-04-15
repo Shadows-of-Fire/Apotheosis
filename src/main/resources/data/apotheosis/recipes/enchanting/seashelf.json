@@ -5,7 +5,8 @@
 		"module": "enchantment"
 	}],
 	"input": {
-		"item": "apotheosis:seashelf"
+		"item": "apotheosis:seashelf",
+		"type": "apotheosis:unenchanted"
 	},
 	"requirements": {
 		"eterna": 22.5,
