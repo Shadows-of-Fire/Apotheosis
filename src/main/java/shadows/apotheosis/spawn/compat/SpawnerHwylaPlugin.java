@@ -38,7 +38,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
 		if (Screen.hasControlDown()) {
 			int[] stats = accessor.getServerData().getIntArray(STATS);
-			if (stats.length != 11) return;
+			if (stats.length != 12) return;
 			tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.MIN_DELAY.name(), stats[0]));
 			tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.MAX_DELAY.name(), stats[1]));
 			tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.SPAWN_COUNT.name(), stats[2]));
@@ -50,6 +50,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 			if (stats[8] == 1) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name().withStyle(TextFormatting.DARK_GREEN));
 			if (stats[9] == 1) tooltip.add(SpawnerStats.IGNORE_LIGHT.name().withStyle(TextFormatting.DARK_GREEN));
 			if (stats[10] == 1) tooltip.add(SpawnerStats.NO_AI.name().withStyle(TextFormatting.DARK_GREEN));
+			if (stats[11] == 1) tooltip.add(SpawnerStats.SILENT.name().withStyle(TextFormatting.DARK_GREEN));
 		} else tooltip.add(new TranslationTextComponent("misc.apotheosis.ctrl_stats"));
 	}
 
@@ -71,7 +72,8 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 					spw.ignoresConditions ? 1 : 0, 
 					spw.redstoneControl ? 1 : 0,
 					spw.ignoresLight ? 1 : 0, 
-					spw.hasNoAI ? 1 : 0
+					spw.hasNoAI ? 1 : 0, 
+					spw.silent ? 1 : 0
 				});
 			//Formatter::on
 		}

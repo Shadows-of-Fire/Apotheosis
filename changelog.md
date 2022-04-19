@@ -1,4 +1,11 @@
-## 4.8.9999
+## 4.8.99B
+* Increased the weight for affix trades on wandering traders from 3 to 15.
+  * Added a config to change the weights as well.
+* Fixed affix loot item names being italic.
+* Added the Silent spawner modifier which marks all spawned mobs as silent.
+* Capturing can now be applied to axes.
+
+## 4.8.99A (4.8.9999)
 * Fixed a server startup crash caused by the spawner module.
 * Fixed the Infuse Hellshelf / Seashelf advancements.
 * Fixed a bug where Infused Hell/Sea shelves could be re-infused for no benefit.

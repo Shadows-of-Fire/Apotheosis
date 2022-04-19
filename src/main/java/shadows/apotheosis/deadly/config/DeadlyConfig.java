@@ -38,6 +38,7 @@ public class DeadlyConfig {
 	public static int tomeTowerChance = 125;
 
 	public static boolean affixTrades = true;
+	public static int affixTradeWeight = 15;
 	public static boolean mythicUnbreakable = true;
 
 	public static int spawnerValueChance = 9;
@@ -79,8 +80,9 @@ public class DeadlyConfig {
 		tomeTowerChance = c.getInt("Tome Tower", "frequency", tomeTowerChance, 0, 50000, "The 1/n chance (per chunk) that a tome tower may attempt generation. 0 = disabled, lower = more chances.");
 
 		affixTrades = c.getBoolean("Affix Trades", "wanderer", true, "If the wandering trader may sell affix loot items as a rare trade.");
+		affixTradeWeight = c.getInt("Affix Trade Weight", "affixes", affixTradeWeight, 1, 2000, "The weight of affix trades in the wandering trader generic trade pool.");
 		mythicUnbreakable = c.getBoolean("Mythic Unbreakable", "affixes", mythicUnbreakable, "If mythic items are unbreakable.");
-		
+
 		spawnerValueChance = c.getInt("Spawner Rare Loot Chance", "general", spawnerValueChance, 0, 80000, "The 1/n chance that a rogue spawner will generate with a CHEST_VALUABLE instead of it's default chest.  0 to disable.");
 
 		TYPE_OVERRIDES.clear();

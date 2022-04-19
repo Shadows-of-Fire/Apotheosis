@@ -139,7 +139,7 @@ public class AffixLootManager extends JsonReloadListener {
 		}
 
 		Color color = rarity.getColor();
-		stack.setHoverName(new TranslationTextComponent("%s", (((IFormattableTextComponent) name).withStyle(Style.EMPTY)).withStyle(Style.EMPTY.withColor(color))));
+		stack.setHoverName(new TranslationTextComponent("%s", (((IFormattableTextComponent) name)).withStyle(Style.EMPTY.withColor(color).withItalic(false))));
 		return stack;
 	}
 

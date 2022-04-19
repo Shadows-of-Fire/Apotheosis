@@ -34,6 +34,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 	public boolean redstoneControl = false;
 	public boolean ignoresLight = false;
 	public boolean hasNoAI = false;
+	public boolean silent = false;
 
 	public ApothSpawnerTile() {
 		this.spawner = new SpawnerLogicExt();
@@ -46,6 +47,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 		tag.putBoolean("redstone_control", this.redstoneControl);
 		tag.putBoolean("ignore_light", this.ignoresLight);
 		tag.putBoolean("no_ai", this.hasNoAI);
+		tag.putBoolean("silent", this.silent);
 		return super.save(tag);
 	}
 
@@ -56,6 +58,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 		this.redstoneControl = tag.getBoolean("redstone_control");
 		this.ignoresLight = tag.getBoolean("ignore_light");
 		this.hasNoAI = tag.getBoolean("no_ai");
+		this.silent = tag.getBoolean("silent");
 		super.load(state, tag);
 	}
 
@@ -211,6 +214,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 							}
 
 							if (ApothSpawnerTile.this.hasNoAI) entity.getPersistentData().putBoolean("apotheosis:movable", true);
+							if (ApothSpawnerTile.this.silent) entity.setSilent(true);
 
 							int nearby = world.getEntitiesOfClass(entity.getClass(), new AxisAlignedBB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
 							if (nearby >= this.maxNearbyEntities) {

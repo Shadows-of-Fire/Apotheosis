@@ -35,6 +35,8 @@ public class SpawnerStats {
 	public static final SpawnerStat<Boolean> IGNORE_LIGHT = register(new BoolStat("ignore_light", s -> s.ignoresLight, (s, v) -> s.ignoresLight = v));
 
 	public static final SpawnerStat<Boolean> NO_AI = register(new BoolStat("no_ai", s -> s.hasNoAI, (s, v) -> s.hasNoAI = v));
+	
+	public static final SpawnerStat<Boolean> SILENT = register(new BoolStat("silent", s -> s.silent, (s, v) -> s.silent = v));
 
 	private static <T extends SpawnerStat<?>> T register(T t) {
 		REGISTRY.put(t.getId(), t);
