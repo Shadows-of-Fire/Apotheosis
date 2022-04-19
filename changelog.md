@@ -2,6 +2,10 @@
 * The Deadly Module is back!
 * Not yet released, this is here for staging purposes.
 
+## 5.3.5
+* JEI will now display if spawner silk touch is disabled, always enabled, or requires a certain level.
+  * Previously it only displayed if it required a certain level.
+
 ## 5.3.4
 * Updated to 1.18.2
 * Fixed the Enchantment Library not saving if it was the only changed TE in a chunk.
