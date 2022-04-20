@@ -8,11 +8,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
 import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.modifiers.AffixModifier;
+import shadows.apotheosis.deadly.config.DeadlyConfig;
 
 /**
  * Allows the user to place torches from the tool, for a durability cost.
@@ -58,8 +58,8 @@ public class TorchPlacementAffix extends Affix {
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx, float level) {
 		PlayerEntity player = ctx.getPlayer();
-		if (Items.TORCH.useOn(ctx).consumesAction()) {
-			ctx.getItemInHand().grow(1);
+		if (DeadlyConfig.torchItem.get().useOn(ctx).consumesAction()) {
+			if (ctx.getItemInHand().isEmpty()) ctx.getItemInHand().grow(1);
 			player.getItemInHand(ctx.getHand()).hurtAndBreak((int) level, player, p -> p.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
 			return ActionResultType.SUCCESS;
 		}

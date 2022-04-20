@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.deadly.affix.EquipmentType;
 import shadows.apotheosis.deadly.affix.LootRarity;
@@ -40,6 +44,7 @@ public class DeadlyConfig {
 	public static boolean affixTrades = true;
 	public static int affixTradeWeight = 15;
 	public static boolean mythicUnbreakable = true;
+	public static Supplier<Item> torchItem = () -> Items.TORCH;
 
 	public static int spawnerValueChance = 9;
 
@@ -82,6 +87,16 @@ public class DeadlyConfig {
 		affixTrades = c.getBoolean("Affix Trades", "wanderer", true, "If the wandering trader may sell affix loot items as a rare trade.");
 		affixTradeWeight = c.getInt("Affix Trade Weight", "affixes", affixTradeWeight, 1, 2000, "The weight of affix trades in the wandering trader generic trade pool.");
 		mythicUnbreakable = c.getBoolean("Mythic Unbreakable", "affixes", mythicUnbreakable, "If mythic items are unbreakable.");
+		String torch = c.getString("Torch Placement Item", "affixes", "minecraft:torch", "The item that will be used when attempting to place torches with the torch placer affix.  Must be a valid item that places a block on right click.");
+		torchItem = () -> {
+			try {
+				Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(torch));
+				return i == Items.AIR ? Items.TORCH : i;
+			} catch (Exception ex) {
+				DeadlyModule.LOGGER.error("Invalid torch item {}", torch);
+				return Items.TORCH;
+			}
+		};
 
 		spawnerValueChance = c.getInt("Spawner Rare Loot Chance", "general", spawnerValueChance, 0, 80000, "The 1/n chance that a rogue spawner will generate with a CHEST_VALUABLE instead of it's default chest.  0 to disable.");
 
