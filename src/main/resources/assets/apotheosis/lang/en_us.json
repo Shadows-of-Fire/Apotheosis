@@ -826,6 +826,8 @@
 	
 	"book.apotheosis.name": "Chronicle of Shadows",
 	"book.apotheosis.subtitle": "Apotheotic Guide",
-	"book.apotheosis.landing": "Welcome to the world of Apotheosis.$(br2)Apotheosis is organized into $(#8080FF)Modules$(), and so is the content of this book.$(br2)Disabled modules are hidden."
+	"book.apotheosis.landing": "Welcome to the world of Apotheosis.$(br2)Apotheosis is organized into $(#8080FF)Modules$(), and so is the content of this book.$(br2)Disabled modules are hidden.",
+	
+	"item.apotheosis.spawner": "%s Spawner"
 
 }

@@ -19,9 +19,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
@@ -36,7 +34,6 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import shadows.apotheosis.Apotheosis;
@@ -46,6 +43,7 @@ import shadows.apotheosis.spawn.compat.SpawnerTOPPlugin;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerItem;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
@@ -66,13 +64,19 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		MinecraftForge.EVENT_BUS.addListener(this::tickDumbMobs);
 		this.reload(null);
-		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, ItemGroup.TAB_MISC, "field_77701_a");
 		if (ModList.get().isLoaded("theoneprobe")) SpawnerTOPPlugin.register();
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverride(new ApothSpawnerBlock(), Apotheosis.MODID);
+		ApothSpawnerBlock spawner = new ApothSpawnerBlock();
+		PlaceboUtil.overrideStates(Blocks.SPAWNER, spawner);
+		e.getRegistry().register(spawner);
+	}
+
+	@SubscribeEvent
+	public void items(Register<Item> e) {
+		e.getRegistry().register(new ApothSpawnerItem());
 	}
 
 	@SubscribeEvent
@@ -84,7 +88,7 @@ public class SpawnerModule {
 	public void enchants(Register<Enchantment> e) {
 		e.getRegistry().register(new CapturingEnchant().setRegistryName(Apotheosis.MODID, "capturing"));
 	}
-	
+
 	@SubscribeEvent
 	public void client(FMLClientSetupEvent e) {
 		MinecraftForge.EVENT_BUS.register(new SpawnerModuleClient());

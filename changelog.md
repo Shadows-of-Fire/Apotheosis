@@ -1,3 +1,10 @@
+## 4.8.99C
+* Fixed Spawner entity names not showing.
+  * The name is no longer in the tooltip, and is now shown in the item name.
+* Fixed adding nbt tags to spawner stacks that have no nbt.
+* Spawners will now received colored names based on the contained entity type.
+* The item that the Torch Placement affix uses can be configured.
+
 ## 4.8.99B
 * Increased the weight for affix trades on wandering traders from 3 to 15.
   * Added a config to change the weights as well.

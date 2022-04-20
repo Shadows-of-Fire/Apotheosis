@@ -9,7 +9,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.SpawnerBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -63,7 +62,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	@Override
 	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		TileEntity te = world.getBlockEntity(pos);
-		if (te != null) {
+		if (te != null && stack.hasTag()) {
 			te.load(state, stack.getOrCreateTagElement("BlockEntityTag"));
 			te.setPosition(pos);
 		}
@@ -114,11 +113,6 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Constants.NBT.TAG_COMPOUND)) {
 			if (Screen.hasShiftDown()) {
 				CompoundNBT tag = stack.getTag().getCompound("BlockEntityTag");
-				if (tag.contains("SpawnData")) {
-					String name = tag.getCompound("SpawnData").getCompound("entity").getString("id");
-					String key = "entity." + name.replace(':', '.');
-					tooltip.add(concat(new TranslationTextComponent("misc.apotheosis.entity"), I18n.exists(key) ? I18n.get(key) : name));
-				}
 				if (tag.contains("MinSpawnDelay")) tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), tag.getShort("MinSpawnDelay")));
 				if (tag.contains("MaxSpawnDelay")) tooltip.add(concat(SpawnerStats.MAX_DELAY.name(), tag.getShort("MaxSpawnDelay")));
 				if (tag.contains("SpawnCount")) tooltip.add(concat(SpawnerStats.SPAWN_COUNT.name(), tag.getShort("SpawnCount")));
