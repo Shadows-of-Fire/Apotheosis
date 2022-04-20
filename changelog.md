@@ -4,6 +4,7 @@
 * Fixed adding nbt tags to spawner stacks that have no nbt.
 * Spawners will now received colored names based on the contained entity type.
 * The item that the Torch Placement affix uses can be configured.
+* Fixed Boon of the Earth being applicable on axes instead of pickaxes.
 
 ## 4.8.99B
 * Increased the weight for affix trades on wandering traders from 3 to 15.

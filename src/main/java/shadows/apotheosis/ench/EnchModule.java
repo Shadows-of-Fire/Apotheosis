@@ -139,7 +139,7 @@ public class EnchModule {
 	public static final EnchantmentType SHEARS = EnchantmentType.create("SHEARS", i -> i instanceof ShearsItem);
 	public static final IOptionalNamedTag<Item> SPEARFISHING_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"));
 	public static final EnchantmentType AXE = EnchantmentType.create("AXE", i -> i.getToolTypes(new ItemStack(i)).contains(ToolType.AXE));
-	public static final EnchantmentType PICKAXE = EnchantmentType.create("AXE", i -> i.getToolTypes(new ItemStack(i)).contains(ToolType.PICKAXE));
+	public static final EnchantmentType PICKAXE = EnchantmentType.create("PICKAXE", i -> i.getToolTypes(new ItemStack(i)).contains(ToolType.PICKAXE));
 	public static final IOptionalNamedTag<Item> BOON_DROPS = ItemTags.createOptional(new ResourceLocation(Apotheosis.MODID, "boon_drops"));
 	static Configuration enchInfoConfig;
 
