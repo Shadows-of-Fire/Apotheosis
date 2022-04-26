@@ -1,17 +1,22 @@
 package shadows.apotheosis;
 
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
@@ -187,44 +192,49 @@ public class Apoth {
 		public static final BlockEntityType<EnchLibraryTile> ENDER_LIBRARY = null;
 	}
 
+	//pc3k: forge registries are filled alphabetically and some affixes use custom attributes
+	//so either back to CustomAttributes class holding those or we have to init here
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Attributes {
+
+		public static final Attribute SNIPE_DAMAGE = new RangedAttribute("apoth.snipe_damage", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "snipe_damage");
+
 		/**
 		 * Bonus to how fast a ranged weapon is charged. Base Value = (1.0) = 100%
 		 */
-		public static final Attribute DRAW_SPEED = null;
+		public static final Attribute DRAW_SPEED = new RangedAttribute("apoth.draw_speed", 1, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "draw_speed");
 		/**
 		 * Chance that a non-jump-attack will critically strike.  Base value = (1.0) = 0%
 		 */
-		public static final Attribute CRIT_CHANCE = null;
+		public static final Attribute CRIT_CHANCE = new RangedAttribute("apoth.crit_chance", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "crit_chance");
 		/**
 		 * Amount of damage caused by critical strikes. Base value = (1.0) = 100%
 		 */
-		public static final Attribute CRIT_DAMAGE = null;
+		public static final Attribute CRIT_DAMAGE = new RangedAttribute("apoth.crit_damage", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "crit_damage");
 		/**
 		 * Bonus magic damage that slows enemies hit. Base value = (0.0) = 0 damage
 		 */
-		public static final Attribute COLD_DAMAGE = null;
+		public static final Attribute COLD_DAMAGE = new RangedAttribute("apoth.cold_damage", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "cold_damage");
 		/**
 		 * Bonus magic damage that burns enemies hit. Base value = (0.0) = 0 damage
 		 */
-		public static final Attribute FIRE_DAMAGE = null;
+		public static final Attribute FIRE_DAMAGE = new RangedAttribute("apoth.fire_damage", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "fire_damage");
 		/**
 		 * Percent of physical damage converted to health. Base value = (1.0) = 0%
 		 */
-		public static final Attribute LIFE_STEAL = null;
+		public static final Attribute LIFE_STEAL = new RangedAttribute("apoth.life_steal", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "life_steal");
 		/**
 		 * Percent of physical damage that bypasses armor. Base value = (1.0) = 0%
 		 */
-		public static final Attribute PIERCING = null;
+		public static final Attribute PIERCING = new RangedAttribute("apoth.piercing", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "piercing");
 		/**
 		 * Bonus physical damage dealt equal to enemy's current health. Base value = (1.0) = 0%
 		 */
-		public static final Attribute CURRENT_HP_DAMAGE = null;
+		public static final Attribute CURRENT_HP_DAMAGE = new RangedAttribute("apoth.current_hp_damage", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "current_hp_damage");
 		/**
 		 * Percent of physical damage converted to absorption hearts. Base value = (1.0) = 0%
 		 */
-		public static final Attribute OVERHEAL = null;
+		public static final Attribute OVERHEAL = new RangedAttribute("apoth.overhealing", 0, 0, 1024).setSyncable(true).setRegistryName(Apotheosis.MODID, "overheal");
 		/**
 		 * Extra health that regenerates when not taking damage. Base value = (0.0) = 0 damage
 		 */
@@ -233,6 +243,55 @@ public class Apoth {
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Affixes {
+
+		//Generic
+		public static final Affix REACH_DISTANCE = null;
+		public static final Affix ENCHANTABILITY = null;
+
+		//Bow
+		public static final Affix DRAW_SPEED = null;
+		public static final Affix MOVEMENT_SPEED = null;
+		public static final Affix SNIPE_DAMAGE = null;
+		public static final Affix SPECTRAL_SHOT = null;
+		public static final Affix SNARE_HIT = null;
+		public static final Affix MAGIC_ARROW = null;
+		public static final Affix TELEPORT_DROPS = null;
+
+		//Sword
+		public static final Affix ATTACK_SPEED = null;
+		public static final Affix COLD_DAMAGE = null;
+		public static final Affix CRIT_CHANCE = null;
+		public static final Affix CRIT_DAMAGE = null;
+		public static final Affix DAMAGE_CHAIN = null;
+		public static final Affix FIRE_DAMAGE = null;
+		public static final Affix LIFE_STEAL = null;
+		public static final Affix LOOT_PINATA = null;
+
+		//Axe
+		public static final Affix PIERCING = null;
+		public static final Affix MAX_CRIT = null;
+		public static final Affix CLEAVE = null;
+		public static final Affix CURRENT_HP_DAMAGE = null;
+		public static final Affix EXECUTE = null;
+		public static final Affix OVERHEAL = null;
+
+		//Tool
+		public static final Affix TORCH_PLACEMENT = null;
+		public static final Affix OMNITOOL = null;
+		public static final Affix RADIUS_MINING = null;
+
+		//Armor
+		public static final Affix ARMOR = null;
+		public static final Affix ARMOR_TOUGHNESS = null;
+		public static final Affix MAX_HEALTH = null;
+
+		//Shield
+		public static final Affix ARROW_CATCHER = null;
+		public static final Affix SHIELD_SPEED = null;
+		public static final Affix DISENGAGE = null;
+		public static final Affix SPIKED_SHIELD = null;
+		public static final Affix ELDRITCH_BLOCK = null;
+		public static final Affix SHIELD_DAMAGE = null;
 
 	}
 

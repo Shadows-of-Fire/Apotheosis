@@ -1,7 +1,6 @@
-package shadows.apotheosis.deadly.loot.affix;
+package shadows.apotheosis.deadly.affix;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
+import java.util.function.*;
 
 import javax.annotation.Nullable;
 
@@ -10,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,6 +30,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import shadows.apotheosis.deadly.loot.LootCategory;
 import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.apotheosis.util.Weighted;
 import shadows.placebo.config.Configuration;
 
 /**
@@ -37,7 +38,7 @@ import shadows.placebo.config.Configuration;
  * However, they are only available via loot, and have some additional rules.
  * The Affix's Level is a float from 0 to 1 that defines its relative power level, compared to max.	
  */
-public abstract class Affix implements IForgeRegistryEntry<Affix> {
+public abstract class Affix extends Weighted implements IForgeRegistryEntry<Affix>, WeightedEntry {
 
 	/**
 	 * The affix registry.
@@ -54,9 +55,17 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 */
 	protected ResourceLocation name;
 
+	//pc3k: in case rarity on affix was meant to be its weight -> for the love of god pls no.
+	// It kills possibility of fine-tuning for no reason
+	/**
+	 * Minimum item rarity required for this affix.
+	 */
 	protected final LootRarity rarity;
 
-	public Affix(LootRarity rarity) {
+	public abstract boolean isPrefix();
+
+	public Affix(LootRarity rarity, int weight) {
+		super(weight);
 		this.rarity = rarity;
 	}
 
@@ -75,7 +84,7 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * This consumer will insert tooltips immediately after enchantment tooltips, or after the name if none are present.
 	 * @param stack The stack the affix is on.
 	 * @param level The level of this affix.
-	 * @param tooltips The destination for tooltips.
+	 * @param list The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, float level, Consumer<Component> list) {
 		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level)));
@@ -83,12 +92,12 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 
 	/**
 	 * Chain the name of this affix to the existing name.  If this is a prefix, it should be applied to the front.
-	 * If this is a suffix, it should be applied to the black.
+	 * If this is a suffix, it should be applied to the back.
 	 * @param name The current name, which may have been modified by other affixes.	
 	 * @return The new name, consuming the old name in the process.
 	 */
 	public Component chainName(Component name, boolean prefix) {
-		if (prefix) return new TranslatableComponent("%s %s", new TranslatableComponent("affix." + this.name + ".prefix"), name);
+		if (prefix) return new TranslatableComponent("%s %s", new TranslatableComponent("affix." + this.name), name);
 		return new TranslatableComponent("%s %s", name, new TranslatableComponent("affix." + this.name));
 	}
 
@@ -136,7 +145,7 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	}
 
 	/**
-	 * Called when {@link Item#onItemUse(ItemUseContext)} would be called for an item with this affix.
+	 * Called when {@link Item#useOn(UseOnContext)}} would be called for an item with this affix.
 	 * Return null to not impact the original result type.
 	 */
 	@Nullable
@@ -210,4 +219,11 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 		return this.rarity;
 	}
 
+	/**
+	 * Handles the upgrading of this affix's level, given two levels.
+	 * Default logic is (highest level + lowest level / 2)
+	 */
+	public float upgradeLevel(float curLvl, float newLvl) {
+		return newLvl > curLvl ? newLvl + curLvl / 2 : newLvl / 2 + curLvl;
+	}
 }

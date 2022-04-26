@@ -3,9 +3,9 @@ function initializeCoreMod() {
         'apothstackmodifier': {
             'target': {
                 'type': 'METHOD',
-                'class': 'net.minecraft.entity.ai.attributes.AttributeModifier',
-                'methodName': 'func_233800_a_',
-                'methodDesc': '(Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/entity/ai/attributes/AttributeModifier;'
+                'class': 'net.minecraft.world.entity.ai.attributes.AttributeModifier',
+                'methodName': 'm_22212_',
+                'methodDesc': '(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;'
             },
             'transformer': function(method) {
                 var owner = "shadows/apotheosis/deadly/asm/DeadlyHooks";

@@ -3,19 +3,15 @@ function initializeCoreMod() {
         'apothmythicrepair': {
             'target': {
                 'type': 'METHOD',
-                'class': 'net.minecraft.inventory.container.RepairContainer',
-                'methodName': 'func_82848_d',
+                'class': 'net.minecraft.world.inventory.AnvilMenu',
+                'methodName': 'm_6640_',
                 'methodDesc': '()V'
             },
             'transformer': function(method) {
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
-                var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
-                var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
-                var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
-                var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
                 var instr = method.instructions;
-				ASMAPI.log('INFO', 'Patching RepairContainer#updateRepairOutput');
+				ASMAPI.log('INFO', 'Patching AnvilMenu#createResult');
 
                 var owner = "shadows/apotheosis/deadly/asm/DeadlyHooks";
                 var name = "isTrulyDamageable";
@@ -31,7 +27,7 @@ function initializeCoreMod() {
                 var i;
                 for (i = 0; i < instr.size(); i++) {
                     var n = instr.get(i);
-                    if (n.getOpcode() == Opcodes.INVOKEVIRTUAL && n.name.equals(ASMAPI.mapMethod('func_77984_f'))) {
+                    if (n.getOpcode() == Opcodes.INVOKEVIRTUAL && n.name.equals(ASMAPI.mapMethod('m_41763_'))) {
                         ix++;
                         instr.set(n, hook.clone({}));
                     }

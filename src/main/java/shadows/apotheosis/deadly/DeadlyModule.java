@@ -1,47 +1,64 @@
 package shadows.apotheosis.deadly;
 
-import java.io.File;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraftforge.common.ForgeMod;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
+import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.affix.AffixEvents;
+import shadows.apotheosis.deadly.affix.Affixes;
+import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
+import shadows.apotheosis.deadly.affix.recipe.AffixShardingRecipe;
+import shadows.apotheosis.deadly.affix.recipe.SoulfireCookingRecipe;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
-import shadows.apotheosis.deadly.loot.LootCategory;
 import shadows.apotheosis.deadly.loot.LootRarity;
-import shadows.apotheosis.deadly.loot.affix.Affix;
-import shadows.apotheosis.deadly.loot.affix.AttributeAffix;
+import shadows.apotheosis.deadly.objects.AffixTomeItem;
+import shadows.apotheosis.deadly.objects.RarityShardItem;
+import shadows.apotheosis.deadly.reload.AffixLootManager;
+import shadows.apotheosis.deadly.reload.BossArmorManager;
+import shadows.apotheosis.deadly.reload.BossItemManager;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.recipe.RecipeHelper;
+
+import java.io.File;
+import java.util.EnumMap;
+import java.util.Locale;
 
 public class DeadlyModule {
 
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Deadly");
+	private static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Apotheosis.MODID);
+
+	public static final EnumMap<LootRarity, RarityShardItem> RARITY_SHARDS = new EnumMap<>(LootRarity.class);
+	public static final EnumMap<LootRarity, AffixTomeItem> RARITY_TOMES = new EnumMap<>(LootRarity.class);
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
+		MinecraftForge.EVENT_BUS.register(new AffixEvents());
+		MinecraftForge.EVENT_BUS.addListener(this::reloads);
+
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		STRUCTURES.register(modEventBus);
 	}
 
 	@SubscribeEvent
@@ -49,26 +66,58 @@ public class DeadlyModule {
 		this.reload(null);
 		MinecraftForge.EVENT_BUS.register(new DeadlyModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
+		DeadlyLoot.init();
+
+		LootRarity[] vals = LootRarity.values();
+		for (int i = 0; i < vals.length - 1; i++) {
+			RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + vals[i].name().toLowerCase(Locale.ROOT)), vals[i]));
+			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 2), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
+		}
 	}
 
+
 	@SubscribeEvent
-	public void register(Register<Feature<?>> e) {
+	public void register(Register<StructureFeature<?>> e) {
+		//TODO: pc3k
+//		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("boss_dungeon"));
+//		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dungeon_2"));
+//		e.getRegistry().register(RogueSpawnerFeature.INSTANCE.setRegistryName("rogue_spawner"));
+//		e.getRegistry().register(TroveFeature.INSTANCE.setRegistryName("trove"));
+//		e.getRegistry().register(TomeTowerFeature.INSTANCE.setRegistryName(Apotheosis.MODID,"tome_tower"));
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
+		for (LootRarity r : LootRarity.values()) {
+			RarityShardItem shard = new RarityShardItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+			shard.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_shard");
+			e.getRegistry().register(shard);
+			RARITY_SHARDS.put(r, shard);
+		}
+		for (LootRarity r : LootRarity.values()) {
+			AffixTomeItem tome = new AffixTomeItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+			tome.setRegistryName(r.name().toLowerCase(Locale.ROOT) + "_tome");
+			e.getRegistry().register(tome);
+			RARITY_TOMES.put(r, tome);
+		}
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
+		//TODO: pc3k
+//		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1).noDrops().noOcclusion()).setRegistryName("boss_spawner"));
 	}
 
 	@SubscribeEvent
 	public void tiles(Register<BlockEntityType<?>> e) {
+		//TODO: pc3k
+//		e.getRegistry().register(new BlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(ApotheosisObjects.BOSS_SPAWNER), null).setRegistryName("boss_spawn_tile"));
 	}
 
 	@SubscribeEvent
 	public void serializers(Register<RecipeSerializer<?>> e) {
+		e.getRegistry().register(AffixShardingRecipe.SERIALIZER.setRegistryName(new ResourceLocation("affix_sharding")));
+		e.getRegistry().register(SoulfireCookingRecipe.SERIALIZER.setRegistryName(new ResourceLocation("soulfire_cooking")));
 	}
 
 	@SubscribeEvent
@@ -80,40 +129,23 @@ public class DeadlyModule {
 	}
 
 	@SubscribeEvent
-	public void attribs(Register<Attribute> e) {
-		//Formatter::off
-		e.getRegistry().registerAll(
-				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("draw_speed"),
-				new RangedAttribute("apotheosis:crit_chance", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("crit_chance"),
-				new RangedAttribute("apotheosis:crit_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("crit_damage"),
-				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("cold_damage"),
-				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("fire_damage"),
-				new RangedAttribute("apotheosis:life_steal", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("life_steal"),
-				new RangedAttribute("apotheosis:piercing", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("piercing"),
-				new RangedAttribute("apotheosis:current_hp_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("current_hp_damage"),
-				new RangedAttribute("apotheosis:overheal", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("overheal")
-		);
-		//Formatter::on
-	}
+	public void attribs(Register<Attribute> e) { CustomAttributes.register(e); }
 
 	@SubscribeEvent
-	public void affixes(Register<Affix> e) {
-		//Formatter::off
-		e.getRegistry().registerAll(
-				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.MAX_HEALTH, Operation.ADDITION, (level -> 0.5F + Math.round(level * 3) / 2F)).types(LootCategory::isDefensive).build("common_max_hp"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.ARMOR, Operation.ADDITION, 0.5F, 2).types(LootCategory::isDefensive).build("common_armor"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.ATTACK_DAMAGE, Operation.ADDITION, 0.5F, 2).build("common_dmg"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.MOVEMENT_SPEED, Operation.MULTIPLY_TOTAL, 0.05F, 0.15F).build("common_mvspd"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL, 0.1F, 0.25F).build("common_aspd"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with(Attributes.ATTACK_KNOCKBACK, Operation.ADDITION, 0.25F, 0.5F).build("common_kb"),
-				new AttributeAffix.Builder(LootRarity.COMMON).with(ForgeMod.REACH_DISTANCE, Operation.ADDITION, (level -> 0.5F + Math.round(level * 3) / 2F)).build("common_reach")
-		);
-		//Formatter::on
-	}
+	public void affixes(Register<Affix> e) { Affixes.register(e); }
 
 	@SubscribeEvent
 	public void client(FMLClientSetupEvent e) {
 		e.enqueueWork(DeadlyModuleClient::init);
+	}
+
+
+	public void reloads(AddReloadListenerEvent e) {
+		e.addListener(BossArmorManager.INSTANCE);
+		e.addListener(BossItemManager.INSTANCE);
+		e.addListener(AffixLootManager.INSTANCE);
+		//TODO: pc3k
+//		e.addListener(RandomSpawnerManager.INSTANCE);
 	}
 
 	/**

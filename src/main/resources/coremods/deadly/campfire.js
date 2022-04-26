@@ -3,15 +3,15 @@ function initializeCoreMod() {
         'apothcampfire': {
             'target': {
                 'type': 'METHOD',
-                'class': 'net.minecraft.tileentity.CampfireTileEntity',
-                'methodName': 'func_213980_a',
+                'class': 'net.minecraft.world.level.block.entity.CampfireBlockEntity',
+                'methodName': 'm_59051_',
                 'methodDesc': '(Lnet/minecraft/item/ItemStack;)Ljava/util/Optional;'
             },
             'transformer': function(method) {
 				var owner = "shadows/apotheosis/deadly/asm/DeadlyHooks";
                 var name = "getCampfireInv";
-                var desc = "(Lnet/minecraft/inventory/IInventory;Lnet/minecraft/tileentity/CampfireTileEntity;)Lnet/minecraft/inventory/IInventory;";
-                var instr = method.instructions;
+                var desc = "(Lnet/minecraft/world/Container;Lnet/minecraft/world/level/block/entity/CampfireBlockEntity;)Lnet/minecraft/world/Container;";
+                // var instr = method.instructions;
 				
                 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
                 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
@@ -20,7 +20,7 @@ function initializeCoreMod() {
                 var LdcInsnNode = Java.type('org.objectweb.asm.tree.LdcInsnNode');
                 var InsnList = Java.type('org.objectweb.asm.tree.InsnList');
                 var instr = method.instructions;
-				ASMAPI.log('INFO', 'Patching CampfireTileEntity#findMatchingRecipe');
+				ASMAPI.log('INFO', 'Patching CampfireBlockEntity#getCookableRecipe');
 
                 var invoke = null;
                 var i;

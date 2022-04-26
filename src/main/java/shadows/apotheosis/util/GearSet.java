@@ -20,13 +20,16 @@ import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.placebo.json.PlaceboJsonReloadListener;
+import shadows.placebo.json.SerializerBuilder;
 
 /**
  * Util class to contain the full equipment for an entity.
  * @author Shadows
  *
  */
-public class GearSet extends Weighted {
+public class GearSet extends Weighted implements PlaceboJsonReloadListener.TypeKeyed<GearSet> {
 
 	@Expose(deserialize = false)
 	protected ResourceLocation id;
@@ -37,6 +40,7 @@ public class GearSet extends Weighted {
 	protected final List<WeightedItemStack> chestplates;
 	protected final List<WeightedItemStack> helmets;
 	protected final List<String> tags = new ArrayList<>();
+	private SerializerBuilder<GearSet>.Serializer serializer;
 
 	public GearSet(int weight, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets) {
 		super(weight);
@@ -48,14 +52,27 @@ public class GearSet extends Weighted {
 		this.helmets = helmets;
 	}
 
+	@Override
 	public void setId(ResourceLocation id) {
 		if (this.id == null) {
 			this.id = id;
 		} else throw new IllegalStateException("Cannot set the id of this boss item, it is already set!");
 	}
 
+	@Override
+	public void setSerializer(SerializerBuilder<GearSet>.Serializer serializer) {
+		if (this.serializer != null) throw new UnsupportedOperationException();
+		this.serializer = serializer;
+	}
+
+	@Override
 	public ResourceLocation getId() {
 		return this.id;
+	}
+
+	@Override
+	public SerializerBuilder<GearSet>.Serializer getSerializer() {
+		return this.serializer;
 	}
 
 	/**

@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.deadly.loot.LootController;
 import shadows.apotheosis.deadly.loot.LootRarity;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.AffixHelper;
 
 public class LootifyCommand {
 
@@ -30,7 +30,7 @@ public class LootifyCommand {
 			LootRarity rarity = LootRarity.valueOf(type.toUpperCase(Locale.ROOT));
 			ItemStack stack = p.getMainHandItem();
 			AffixHelper.setAffixes(stack, Collections.emptyMap());
-			LootController.createLootItem(stack, rarity, p.level.random);
+			LootController.lootifyItem(stack, rarity, p.level.random);
 			return 0;
 		})));
 	}

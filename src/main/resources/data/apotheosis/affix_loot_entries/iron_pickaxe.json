@@ -2,6 +2,6 @@
 	"stack": {
 		"item": "minecraft:iron_pickaxe"
 	},
-	"type": "PICKAXE",
+	"type": "BREAKER",
 	"weight": 8
 }

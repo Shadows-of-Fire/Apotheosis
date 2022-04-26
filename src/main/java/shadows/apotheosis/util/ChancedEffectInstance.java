@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ChancedEffectInstance {
 	protected final float chance;
 	protected final MobEffect effect;
-	protected final RandomIntRange amp;
+	protected final IntValueRange amp;
 	protected final boolean ambient;
 	protected final boolean visible;
 
@@ -30,7 +30,7 @@ public class ChancedEffectInstance {
 	 * @param effect The effect.
 	 * @param amp A random range of possible amplifiers.
 	 */
-	public ChancedEffectInstance(float chance, MobEffect effect, RandomIntRange amp, boolean ambient, boolean visible) {
+	public ChancedEffectInstance(float chance, MobEffect effect, IntValueRange amp, boolean ambient, boolean visible) {
 		this.chance = chance;
 		this.effect = effect;
 		this.amp = amp;
@@ -47,7 +47,7 @@ public class ChancedEffectInstance {
 	}
 
 	public MobEffectInstance createInstance(Random rand, int duration) {
-		return new MobEffectInstance(this.effect, duration, this.amp.generateInt(rand), this.ambient, this.visible);
+		return new MobEffectInstance(this.effect, duration, this.amp.getRandomValue(rand), this.ambient, this.visible);
 	}
 
 	public static class Deserializer implements JsonDeserializer<ChancedEffectInstance> {
@@ -55,7 +55,7 @@ public class ChancedEffectInstance {
 		@Override
 		public ChancedEffectInstance deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			JsonObject obj = json.getAsJsonObject();
-			float chance = obj.get("chance").getAsFloat();
+			float chance = obj.has("chance") ? obj.get("chance").getAsFloat() : 0f;
 			String _effect = obj.get("effect").getAsString();
 			MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(_effect));
 			if (effect == null) throw new JsonParseException("Attempted to construct a ChancedEffectInstance with invalid effect: " + _effect);
@@ -65,9 +65,9 @@ public class ChancedEffectInstance {
 				JsonObject range = obj.get("amplifier").getAsJsonObject();
 				int min = range.get("min").getAsInt();
 				int max = range.get("max").getAsInt();
-				return new ChancedEffectInstance(chance, effect, new RandomIntRange(min, max), ambient, visible);
+				return new ChancedEffectInstance(chance, effect, new IntValueRange(min, max), ambient, visible);
 			}
-			return new ChancedEffectInstance(chance, effect, RandomIntRange.ZERO, ambient, visible);
+			return new ChancedEffectInstance(chance, effect, IntValueRange.ZERO, ambient, visible);
 		}
 	}
 }

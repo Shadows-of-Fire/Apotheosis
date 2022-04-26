@@ -10,7 +10,7 @@ public class Weighted implements WeightedEntry {
 	@Expose(deserialize = false)
 	private Weight _weight;
 
-	public final int weight;
+	protected final int weight;
 
 	public Weighted(int pWeight) {
 		this.weight = pWeight;

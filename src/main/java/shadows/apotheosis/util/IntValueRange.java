@@ -5,11 +5,11 @@ import java.util.Random;
 /**
  * A class that helps to generate random values within a range.
  */
-public class RandomIntRange {
+public class IntValueRange {
 
-	public static final RandomIntRange ZERO = new RandomIntRange(0, 1) {
+	public static final IntValueRange ZERO = new IntValueRange(0, 1) {
 		@Override
-		public int generateInt(Random rand) {
+		public int getRandomValue(Random rand) {
 			return 0;
 		}
 	};
@@ -22,7 +22,7 @@ public class RandomIntRange {
 	 * @param min Min value, inclusive.
 	 * @param max Max value, exclusive.
 	 */
-	public RandomIntRange(int min, int max) {
+	public IntValueRange(int min, int max) {
 		this.min = min;
 		this.max = max;
 	}
@@ -35,7 +35,7 @@ public class RandomIntRange {
 		return this.max;
 	}
 
-	public int generateInt(Random rand) {
+	public int getRandomValue(Random rand) {
 		return this.min + rand.nextInt(this.max - this.min);
 	}
 }

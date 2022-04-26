@@ -85,7 +85,7 @@ public class EnchHooks {
 
 	/**
 	 * Calculates the delay for catching a fish.  Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
-	 * Called at the end of {@link FishingBobberEntity#catchingFish(BlockPos)}
+	 * Called at the end of {@link FishingHook#catchingFish(BlockPos)}
 	 * Injected by coremods/ench/fishing_hook.js
 	 */
 	public static int getTicksCaughtDelay(FishingHook bobber) {

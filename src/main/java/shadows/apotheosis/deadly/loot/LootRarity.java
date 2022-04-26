@@ -30,9 +30,9 @@ public enum LootRarity {
 		this(TextColor.fromRgb(color), affixes);
 	}
 
-	private LootRarity(TextColor color, int affixes) {
+	private LootRarity(TextColor color, int allowedAffixesCount) {
 		this.color = color;
-		this.affixes = affixes;
+		this.affixes = allowedAffixesCount;
 	}
 
 	public TextColor getColor() {

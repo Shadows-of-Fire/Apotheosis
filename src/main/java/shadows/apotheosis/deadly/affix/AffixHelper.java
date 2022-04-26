@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly.loot.affix;
+package shadows.apotheosis.deadly.affix;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class AffixHelper {
 	 */
 	public static void applyAffix(ItemStack stack, Affix affix, float level) {
 		LootCategory cat = LootCategory.forItem(stack);
-		if (cat == null || !affix.canApply(cat)) return;
+		if (!(stack.getItem() instanceof IAffixSensitiveItem) && (cat == null || !affix.canApply(cat))) return;
 		var afxData = stack.getOrCreateTagElement(AFFIX_DATA);
 		if (!afxData.contains(AFFIXES)) afxData.put(AFFIXES, new CompoundTag());
 		var affixes = afxData.getCompound(AFFIXES);
@@ -72,9 +72,9 @@ public class AffixHelper {
 		display.put("Lore", tag);
 	}
 
-	public static List<Affix> getAffixesFor(LootCategory type, LootRarity rarity) {
+	public static List<Affix> getAffixesFor(LootCategory type, LootRarity maxAffixRarity) {
 		List<Affix> affixes = new ArrayList<>();
-		Affix.REGISTRY.getValues().stream().filter(t -> t.canApply(type) && t.getRarity() == rarity).forEach(affixes::add);
+		Affix.REGISTRY.getValues().stream().filter(t -> t.canApply(type) && t.getRarity().ordinal() <= maxAffixRarity.ordinal()).forEach(affixes::add);
 		return affixes;
 	}
 

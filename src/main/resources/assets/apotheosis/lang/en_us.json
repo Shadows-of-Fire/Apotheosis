@@ -84,6 +84,7 @@
     "affix.apotheosis:life_steal": "Vampiric %s",
     "affix.apotheosis:loot_pinata": "%s of Explosive Fortune",
     
+	"affix.apotheosis:piercing": "Piercing %s",
     "affix.apotheosis:max_crit": "%s of Violence",
     "affix.apotheosis:cleave": "Berserker's %s",
     "affix.apotheosis:current_hp_damage": "%s, the God-Slayer",
@@ -178,6 +179,15 @@
     "type.apotheosis.axe": "Axe",
     "type.apotheosis.armor": "Armor",
     "type.apotheosis.shield": "Shield",
+
+    "lootCategory.apotheosis.sword": "Sword",
+    "lootCategory.apotheosis.bow": "Bow",
+    "lootCategory.apotheosis.crossbow": "Crossbow",
+    "lootCategory.apotheosis.breaker": "Tool",
+    "lootCategory.apotheosis.heavy_weapon": "Heavy Weapon",
+    "lootCategory.apotheosis.armor": "Armor",
+    "lootCategory.apotheosis.trident": "Trident",
+    "lootCategory.apotheosis.shield": "Shield",
 
     "comment_id": "/Advancements",
 

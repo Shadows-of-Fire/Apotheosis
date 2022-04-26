@@ -1,4 +1,8 @@
 {
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "patchouli"
+	}],
 	"type": "advancement_reward",
 	"pools": [{
 		"rolls": 1,

@@ -12,6 +12,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,18 +22,30 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.deadly.objects.AffixTomeItem;
+import shadows.apotheosis.deadly.objects.RarityShardItem;
 import shadows.apotheosis.util.ItemAccess;
 
 public class DeadlyModuleClient {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.addListener(DeadlyModuleClient::tooltips);
+
+		Minecraft.getInstance().getItemColors().register((stack, tint) -> {
+			return ((RarityShardItem) stack.getItem()).getRarity().getColor().getValue();
+		}, DeadlyModule.RARITY_SHARDS.values().toArray(new Item[6]));
+
+		Minecraft.getInstance().getItemColors().register((stack, tint) -> {
+			if (tint != 1) return -1;
+			return ((AffixTomeItem) stack.getItem()).getRarity().getColor().getValue();
+		}, DeadlyModule.RARITY_TOMES.values().toArray(new Item[6]));
 	}
 
 	public static void tooltips(ItemTooltipEvent e) {

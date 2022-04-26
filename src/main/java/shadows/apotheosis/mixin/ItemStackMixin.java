@@ -1,11 +1,16 @@
 package shadows.apotheosis.mixin;
 
 import java.util.List;
+import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraftforge.common.MinecraftForge;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +25,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.ItemUseEvent;
+import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.deadly.asm.DeadlyHooks;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
@@ -47,4 +54,11 @@ public class ItemStackMixin {
 		if (Apotheosis.enableDeadly) list.add(new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
+	@Inject(method = "onItemUse", at=@At("RETURN"), cancellable = true, remap = false)
+	public void apoth_onItemUse(UseOnContext ctx, Function<UseOnContext, InteractionResult> callback, CallbackInfoReturnable<InteractionResult> cir)
+	{
+		ItemUseEvent event = new ItemUseEvent(ctx);
+		MinecraftForge.EVENT_BUS.post(event);
+		if(event.isCanceled()) cir.setReturnValue(event.getCancellationResult());
+	}
 }
