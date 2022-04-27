@@ -8,15 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +27,7 @@ import shadows.apotheosis.deadly.affix.attributes.CustomAttributes;
 import shadows.apotheosis.deadly.affix.recipe.AffixShardingRecipe;
 import shadows.apotheosis.deadly.affix.recipe.SoulfireCookingRecipe;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
+import shadows.apotheosis.deadly.gen.DeadlyFeatures;
 import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
 import shadows.apotheosis.deadly.objects.RarityShardItem;
@@ -47,7 +45,6 @@ import java.util.Locale;
 public class DeadlyModule {
 
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Deadly");
-	private static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Apotheosis.MODID);
 
 	public static final EnumMap<LootRarity, RarityShardItem> RARITY_SHARDS = new EnumMap<>(LootRarity.class);
 	public static final EnumMap<LootRarity, AffixTomeItem> RARITY_TOMES = new EnumMap<>(LootRarity.class);
@@ -57,8 +54,7 @@ public class DeadlyModule {
 		MinecraftForge.EVENT_BUS.register(new AffixEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		STRUCTURES.register(modEventBus);
+		DeadlyFeatures.init();
 	}
 
 	@SubscribeEvent
@@ -73,17 +69,6 @@ public class DeadlyModule {
 			RecipeHelper.addRecipe(new AffixShardingRecipe(new ResourceLocation(Apotheosis.MODID, "affix_sharding_" + vals[i].name().toLowerCase(Locale.ROOT)), vals[i]));
 			Apotheosis.HELPER.addShapeless(new ItemStack(RARITY_SHARDS.get(vals[i]), 2), new ItemStack(RARITY_SHARDS.get(vals[i + 1])));
 		}
-	}
-
-
-	@SubscribeEvent
-	public void register(Register<StructureFeature<?>> e) {
-		//TODO: pc3k
-//		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("boss_dungeon"));
-//		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dungeon_2"));
-//		e.getRegistry().register(RogueSpawnerFeature.INSTANCE.setRegistryName("rogue_spawner"));
-//		e.getRegistry().register(TroveFeature.INSTANCE.setRegistryName("trove"));
-//		e.getRegistry().register(TomeTowerFeature.INSTANCE.setRegistryName(Apotheosis.MODID,"tome_tower"));
 	}
 
 	@SubscribeEvent
