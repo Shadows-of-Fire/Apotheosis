@@ -31,7 +31,7 @@ public enum LootCategory {
 	SHIELD(s -> s.canPerformAction(ToolActions.SHIELD_BLOCK), s -> arr(EquipmentSlot.OFFHAND)),
 	TRIDENT(s -> s.getItem() instanceof TridentItem, s -> arr(EquipmentSlot.MAINHAND)),
 	SWORD(
-			s -> s.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0),
+			s-> s.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, s).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0),
 			s -> arr(EquipmentSlot.MAINHAND));
 
 	private final Predicate<ItemStack> validator;
