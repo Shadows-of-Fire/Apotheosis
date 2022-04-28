@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -32,7 +33,7 @@ public class TomeTowerFeature extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         try {
-            if (!checkDimension(ctx.level().getLevel().dimension())) throw new CustomException("Bad dimension");
+            if (!DeadlyConfig.DIM_WHITELIST.contains((ctx.level().getLevel().dimension().location()))) throw new CustomException("Bad dimension");
 
             var pos = ctx.origin().offset(ctx.random().nextInt(5), -1, ctx.random().nextInt(5));
 
@@ -64,10 +65,6 @@ public class TomeTowerFeature extends Feature<NoneFeatureConfiguration> {
             DeadlyModule.LOGGER.debug("Failed to spawn Tome tower! Reason: {}", ex.getMessage());
         }
         return false;
-    }
-
-    static boolean checkDimension(ResourceKey<Level> key){
-        return DeadlyConfig.DIM_WHITELIST.contains(key.location());
     }
 
     class CustomException extends Exception{

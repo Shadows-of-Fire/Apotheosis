@@ -15,7 +15,6 @@ public class DeadlyConfig {
 
 	public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
 	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
-//	public static final Map<ResourceLocation, EquipmentType> TYPE_OVERRIDES = new HashMap<>();
 
 	public static Configuration config;
 
@@ -39,11 +38,6 @@ public class DeadlyConfig {
 
 	public static int[] rarityThresholds = new int[] { 400, 700, 880, 950, 995 };
 
-	//pc3k: now configurable via worldgen/biome tag HAS_STRUCTURE/XXX
-//	public static boolean canGenerateIn(WorldGenLevel world) {
-//		ResourceKey<Level> key = world.getLevel().dimension();
-//		return DIM_WHITELIST.contains(key.location());
-//	}
 	public static void load(Configuration c) {
 
 		String[] dims = c.getStringList("Generation Dimension Whitelist", "general", new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");

@@ -41,18 +41,7 @@ public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> 
     protected void registerBuiltinSerializers() {
         this.registerSerializer(DEFAULT,
                 new SerializerBuilder<AffixLootEntry>("AffixLootEntry")
-                        .withJsonDeserializer(jo -> {
-                            try {
-                                var lootItem = GSON.fromJson(jo, AffixLootEntry.class);
-                                this.logger.info("Parsed affix loot entry item: {}", lootItem.getId());
-                                return lootItem;
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                                throw e;
-                            }
-                        }));
+                        .withJsonDeserializer(jo -> GSON.fromJson(jo, AffixLootEntry.class)));
     }
 
     public static List<AffixLootEntry> getEntries() {

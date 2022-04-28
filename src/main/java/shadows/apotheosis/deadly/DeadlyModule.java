@@ -34,6 +34,7 @@ import shadows.apotheosis.deadly.objects.RarityShardItem;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.deadly.reload.BossItemManager;
+import shadows.apotheosis.deadly.reload.RandomSpawnerManager;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.RecipeHelper;
@@ -129,8 +130,7 @@ public class DeadlyModule {
 		e.addListener(BossArmorManager.INSTANCE);
 		e.addListener(BossItemManager.INSTANCE);
 		e.addListener(AffixLootManager.INSTANCE);
-		//TODO: pc3k
-//		e.addListener(RandomSpawnerManager.INSTANCE);
+		e.addListener(RandomSpawnerManager.INSTANCE);
 	}
 
 	/**
