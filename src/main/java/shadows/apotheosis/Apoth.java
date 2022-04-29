@@ -17,6 +17,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraftforge.registries.ObjectHolder;
 import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
+import shadows.apotheosis.deadly.objects.BossSpawnerBlockEntity;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
@@ -85,6 +87,7 @@ public class Apoth {
 		public static final Block SIGHTSHELF = null;
 		public static final Block SIGHTSHELF_T2 = null;
 		public static final EnchLibraryBlock ENDER_LIBRARY = null;
+		public static final BossSpawnerBlock BOSS_SPAWNER = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -190,6 +193,7 @@ public class Apoth {
 		public static final BlockEntityType<EnchLibraryTile> LIBRARY = null;
 		public static final BlockEntityType<AnvilTile> ANVIL = null;
 		public static final BlockEntityType<EnchLibraryTile> ENDER_LIBRARY = null;
+		public static final BlockEntityType<BossSpawnerBlockEntity> BOSS_SPAWN_TILE = null;
 	}
 
 	//pc3k: forge registries are filled alphabetically and some affixes use custom attributes

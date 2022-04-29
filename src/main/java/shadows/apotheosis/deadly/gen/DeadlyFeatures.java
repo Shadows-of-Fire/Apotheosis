@@ -18,8 +18,7 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
 
 import java.util.function.Supplier;
 
-import static shadows.apotheosis.deadly.gen.DeadlyConfiguredFeatures.ROGUE_SPAWNER_PLACED;
-import static shadows.apotheosis.deadly.gen.DeadlyConfiguredFeatures.TOME_TOWER_PLACED;
+import static shadows.apotheosis.deadly.gen.DeadlyConfiguredFeatures.*;
 
 public final class DeadlyFeatures {
     private DeadlyFeatures() {}
@@ -27,6 +26,7 @@ public final class DeadlyFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Apotheosis.MODID);
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> TOME_TOWER = register("tome_tower", TomeTowerFeature::new);
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ROGUE_SPAWNER = register("rogue_spawner", RogueSpawnerFeature::new);
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> BOSS_DUNGEON = register("boss_dungeon", BossDungeonFeature::new);
 
     public static void init () {
         FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -44,8 +44,8 @@ public final class DeadlyFeatures {
     private static void onBiomeLoad(BiomeLoadingEvent event) {
         if (!DeadlyConfig.BIOME_BLACKLIST.contains(event.getName())) {
             event.getGeneration()
-                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(ROGUE_SPAWNER_PLACED));
-//                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(BOSS_DUNGEON_PLACED))
+                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(ROGUE_SPAWNER_PLACED))
+                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(BOSS_DUNGEON_PLACED));
 //                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(BOSS_DUNGEON_2_PLACED))
 //                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(ORE_TROVE_PLACED));
 

@@ -1,5 +1,6 @@
 package shadows.apotheosis.deadly;
 
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -7,7 +8,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -17,6 +21,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
@@ -30,11 +35,14 @@ import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.gen.DeadlyFeatures;
 import shadows.apotheosis.deadly.loot.LootRarity;
 import shadows.apotheosis.deadly.objects.AffixTomeItem;
+import shadows.apotheosis.deadly.objects.BossSpawnerBlock;
+import shadows.apotheosis.deadly.objects.BossSpawnerBlockEntity;
 import shadows.apotheosis.deadly.objects.RarityShardItem;
 import shadows.apotheosis.deadly.reload.AffixLootManager;
 import shadows.apotheosis.deadly.reload.BossArmorManager;
 import shadows.apotheosis.deadly.reload.BossItemManager;
 import shadows.apotheosis.deadly.reload.RandomSpawnerManager;
+import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.recipe.RecipeHelper;
@@ -90,14 +98,12 @@ public class DeadlyModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		//TODO: pc3k
-//		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1).noDrops().noOcclusion()).setRegistryName("boss_spawner"));
+		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1).noDrops().noOcclusion()).setRegistryName("boss_spawner"));
 	}
 
 	@SubscribeEvent
 	public void tiles(Register<BlockEntityType<?>> e) {
-		//TODO: pc3k
-//		e.getRegistry().register(new BlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(ApotheosisObjects.BOSS_SPAWNER), null).setRegistryName("boss_spawn_tile"));
+		e.getRegistry().register(new BlockEntityType<>(BossSpawnerBlockEntity::new, ImmutableSet.of(Apoth.Blocks.BOSS_SPAWNER), null).setRegistryName("boss_spawn_tile"));
 	}
 
 	@SubscribeEvent
