@@ -21,6 +21,15 @@ public final class DeadlyConfiguredFeatures {
 
 //    public static final ConfiguredFeature<?, ?> ORE_TROVE = register(TroveFeature.INSTANCE.configured(IFeatureConfig.NONE).range(64).squared().count(DeadlyConfig.troveAttempts), "ore_trove");
 
+    public static final ConfiguredFeature<?, ?> ORE_TROVE_CONFIGURED = new ConfiguredFeature<>(DeadlyFeatures.ORE_TROVE.get(), NoneFeatureConfiguration.INSTANCE);
+    public static final PlacedFeature ORE_TROVE_PLACED = new PlacedFeature(
+            Holder.direct(ORE_TROVE_CONFIGURED),
+            List.of(InSquarePlacement.spread(),
+                    CountPlacement.of(DeadlyConfig.troveAttempts),
+                    HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(20), VerticalAnchor.absolute(64))
+            )
+    );
+
     public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_CONFIGURED = new ConfiguredFeature<>(DeadlyFeatures.BOSS_DUNGEON.get(), NoneFeatureConfiguration.INSTANCE);
     public static final PlacedFeature BOSS_DUNGEON_PLACED = new PlacedFeature(
             Holder.direct(BOSS_DUNGEON_CONFIGURED),
@@ -66,6 +75,7 @@ public final class DeadlyConfiguredFeatures {
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "rogue_spawner"), ROGUE_SPAWNER_CONFIGURED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon"), BOSS_DUNGEON_CONFIGURED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon_2"), BOSS_DUNGEON_2_CONFIGURED);
+        Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "ore_trove"), ORE_TROVE_CONFIGURED);
     }
 
     public static void registerPlacedFeatures() {
@@ -75,5 +85,6 @@ public final class DeadlyConfiguredFeatures {
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "rogue_spawner"), ROGUE_SPAWNER_PLACED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon"), BOSS_DUNGEON_PLACED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon_2"), BOSS_DUNGEON_2_PLACED);
+        Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "ore_trove"), ORE_TROVE_PLACED);
     }
 }
