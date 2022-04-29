@@ -19,8 +19,6 @@ public final class DeadlyConfiguredFeatures {
     private DeadlyConfiguredFeatures() {}
 
 
-//    public static final ConfiguredFeature<?, ?> BOSS_DUNGEON = register(BossDungeonFeature.INSTANCE.configured(IFeatureConfig.NONE).range(80).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon");
-//    public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2 = register(BossDungeonFeature2.INSTANCE.configured(IFeatureConfig.NONE).range(80).squared().count(DeadlyConfig.bossDungeonAttempts), "boss_dungeon_2");
 //    public static final ConfiguredFeature<?, ?> ORE_TROVE = register(TroveFeature.INSTANCE.configured(IFeatureConfig.NONE).range(64).squared().count(DeadlyConfig.troveAttempts), "ore_trove");
 
     public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_CONFIGURED = new ConfiguredFeature<>(DeadlyFeatures.BOSS_DUNGEON.get(), NoneFeatureConfiguration.INSTANCE);
@@ -28,6 +26,15 @@ public final class DeadlyConfiguredFeatures {
             Holder.direct(BOSS_DUNGEON_CONFIGURED),
             List.of(InSquarePlacement.spread(),
                     CountPlacement.of(DeadlyConfig.bossDungeonAttempts),
+                    HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(20), VerticalAnchor.belowTop(20))
+            )
+    );
+
+    public static final ConfiguredFeature<?, ?> BOSS_DUNGEON_2_CONFIGURED = new ConfiguredFeature<>(DeadlyFeatures.BOSS_DUNGEON_2.get(), NoneFeatureConfiguration.INSTANCE);
+    public static final PlacedFeature BOSS_DUNGEON_2_PLACED = new PlacedFeature(
+            Holder.direct(BOSS_DUNGEON_2_CONFIGURED),
+            List.of(InSquarePlacement.spread(),
+                    CountPlacement.of(DeadlyConfig.bossDungeon2Attempts),
                     HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(20), VerticalAnchor.belowTop(20))
             )
     );
@@ -58,6 +65,7 @@ public final class DeadlyConfiguredFeatures {
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "tome_tower"), TOME_TOWER_CONFIGURED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "rogue_spawner"), ROGUE_SPAWNER_CONFIGURED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon"), BOSS_DUNGEON_CONFIGURED);
+        Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon_2"), BOSS_DUNGEON_2_CONFIGURED);
     }
 
     public static void registerPlacedFeatures() {
@@ -66,5 +74,6 @@ public final class DeadlyConfiguredFeatures {
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "tome_tower"), TOME_TOWER_PLACED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "rogue_spawner"), ROGUE_SPAWNER_PLACED);
         Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon"), BOSS_DUNGEON_PLACED);
+        Registry.register(registry, new ResourceLocation(Apotheosis.MODID, "boss_dungeon_2"), BOSS_DUNGEON_2_PLACED);
     }
 }

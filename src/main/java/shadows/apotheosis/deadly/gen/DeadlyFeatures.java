@@ -27,6 +27,7 @@ public final class DeadlyFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> TOME_TOWER = register("tome_tower", TomeTowerFeature::new);
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ROGUE_SPAWNER = register("rogue_spawner", RogueSpawnerFeature::new);
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BOSS_DUNGEON = register("boss_dungeon", BossDungeonFeature::new);
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> BOSS_DUNGEON_2 = register("boss_dungeon_2", BossDungeonFeature2::new);
 
     public static void init () {
         FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -45,8 +46,8 @@ public final class DeadlyFeatures {
         if (!DeadlyConfig.BIOME_BLACKLIST.contains(event.getName())) {
             event.getGeneration()
                     .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(ROGUE_SPAWNER_PLACED))
-                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(BOSS_DUNGEON_PLACED));
-//                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(BOSS_DUNGEON_2_PLACED))
+                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(BOSS_DUNGEON_PLACED))
+                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(BOSS_DUNGEON_2_PLACED));
 //                    .addFeature(Decoration.UNDERGROUND_STRUCTURES, Holder.direct(ORE_TROVE_PLACED));
 
             if (Apotheosis.enableEnch && DeadlyConfig.tomeTowerChance > 0)
