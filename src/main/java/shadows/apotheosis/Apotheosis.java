@@ -32,6 +32,7 @@ import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
+import shadows.apotheosis.miscs.MiscsModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.util.EnchantmentIngredient;
@@ -91,7 +92,6 @@ public class Apotheosis {
 	}
 
 	public Apotheosis() {
-		//Affix.classload();
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		if (enableEnch) bus.register(new EnchModule());
@@ -100,6 +100,7 @@ public class Apotheosis {
 		if (enableDeadly) bus.register(new DeadlyModule());
 		if (enablePotion) bus.register(new PotionModule());
 		if (enableVillage) bus.register(new VillageModule());
+		bus.register(new MiscsModule());
 
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
