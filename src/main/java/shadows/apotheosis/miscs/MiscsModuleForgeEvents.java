@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class MiscsModuleForgeEvents {
@@ -33,6 +34,20 @@ public class MiscsModuleForgeEvents {
             if(cap.getIgnoreList().contains(event.getItem().getItem().getItem().getRegistryName())){
                 event.setCanceled(true);
             }
+        });
+    }
+
+    @SubscribeEvent
+    public void playerCloned(PlayerEvent.Clone event){
+        if (!event.isWasDeath()) {
+            //travel from end to overworld, cababilities still there
+            return;
+        }
+
+        event.getOriginal().getCapability(MiscCapability.ITEM_PICKUP_IGNORE_LIST_CAPABILITY).ifPresent(cap -> {
+            var ignoreList = cap.getIgnoreList();
+            event.getEntity().getCapability(MiscCapability.ITEM_PICKUP_IGNORE_LIST_CAPABILITY)
+                    .resolve().get().setIgnoreList(ignoreList);
         });
     }
 }
