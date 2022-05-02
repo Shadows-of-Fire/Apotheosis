@@ -245,13 +245,13 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 			for (int j = -1; j <= 1; ++j) {
 				for (int k = -1; k <= 1; ++k) {
 					if ((j != 0 || k != 0) && world.isEmptyBlock(pos.offset(k, 0, j)) && world.isEmptyBlock(pos.offset(k, 1, j))) {
-						this.gatherStats(eternaMap, stats, world, pos.offset(k * 2, 0, j * 2));
-						this.gatherStats(eternaMap, stats, world, pos.offset(k * 2, 1, j * 2));
+						gatherStats(eternaMap, stats, world, pos.offset(k * 2, 0, j * 2));
+						gatherStats(eternaMap, stats, world, pos.offset(k * 2, 1, j * 2));
 						if (k != 0 && j != 0) {
-							this.gatherStats(eternaMap, stats, world, pos.offset(k * 2, 0, j));
-							this.gatherStats(eternaMap, stats, world, pos.offset(k * 2, 1, j));
-							this.gatherStats(eternaMap, stats, world, pos.offset(k, 0, j * 2));
-							this.gatherStats(eternaMap, stats, world, pos.offset(k, 1, j * 2));
+							gatherStats(eternaMap, stats, world, pos.offset(k * 2, 0, j));
+							gatherStats(eternaMap, stats, world, pos.offset(k * 2, 1, j));
+							gatherStats(eternaMap, stats, world, pos.offset(k, 0, j * 2));
+							gatherStats(eternaMap, stats, world, pos.offset(k, 1, j * 2));
 						}
 					}
 				}
@@ -272,7 +272,7 @@ public class ApothEnchantContainer extends EnchantmentContainer {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void gatherStats(Float2FloatMap eternaMap, float[] stats, World world, BlockPos pos) {
+	public static void gatherStats(Float2FloatMap eternaMap, float[] stats, World world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 		if (state.isAir(world, pos)) return;
 		float max = EnchantingStatManager.getMaxEterna(state, world, pos);

@@ -1,3 +1,8 @@
+## 4.8.99D
+* Fixed spawners not invoking finalizeSpawn.
+* Added i18n: true declaration to patchouli book.json file (by request).
+* Added Enchanting Stats for both shelves and the table to ToP/HWYLA.
+
 ## 4.8.99C
 * Fixed Spawner entity names not showing.
   * The name is no longer in the tooltip, and is now shown in the item name.

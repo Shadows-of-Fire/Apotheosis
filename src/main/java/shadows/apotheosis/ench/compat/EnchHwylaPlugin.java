@@ -11,6 +11,8 @@ import mcp.mobius.waila.api.IServerDataProvider;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -29,17 +31,21 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 
 	@Override
 	public void register(IRegistrar reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothAnvilBlock.class);
+		reg.registerComponentProvider(this, TooltipPosition.BODY, Block.class);
 		reg.registerBlockDataProvider(this, ApothAnvilBlock.class);
 	}
 
 	@Override
 	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
-		CompoundNBT tag = accessor.getServerData();
-		Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
-		for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
-			tooltip.add(e.getKey().getFullname(e.getValue()));
+		if (accessor.getBlock() instanceof ApothAnvilBlock) {
+			CompoundNBT tag = accessor.getServerData();
+			Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Constants.NBT.TAG_COMPOUND));
+			for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
+				tooltip.add(e.getKey().getFullname(e.getValue()));
+			}
 		}
+		CommonTooltipUtil.appendBlockStats(accessor.getWorld(), accessor.getBlockState(), tooltip::add);
+		if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(accessor.getWorld(), accessor.getPosition(), tooltip::add);
 	}
 
 	@Override

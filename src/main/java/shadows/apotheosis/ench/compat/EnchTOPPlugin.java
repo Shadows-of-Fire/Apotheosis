@@ -5,6 +5,7 @@ import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -27,6 +28,8 @@ public class EnchTOPPlugin implements TOPCompat.Provider {
 				info.text(e.getKey().getFullname(e.getIntValue()));
 			}
 		}
+		CommonTooltipUtil.appendBlockStats(level, state, info::mcText);
+		if (state.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(level, hitData.getPos(), info::mcText);
 	}
 
 }

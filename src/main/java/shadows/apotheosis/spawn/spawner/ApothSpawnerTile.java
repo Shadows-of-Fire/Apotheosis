@@ -173,14 +173,16 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 					boolean flag = false;
 
 					for (int i = 0; i < this.spawnCount; ++i) {
-						CompoundNBT compoundnbt = this.nextSpawnData.getTag();
-						Optional<EntityType<?>> optional = EntityType.by(compoundnbt);
+						CompoundNBT tag = this.nextSpawnData.getTag();
+						Optional<EntityType<?>> optional = EntityType.by(tag);
 						if (!optional.isPresent()) {
 							this.reset();
 							return;
 						}
 
-						ListNBT listnbt = compoundnbt.getList("Pos", 6);
+						tag.remove("NoAI"); // TODO: Remove, bugfix for extra nbt tag that was erroneously added.
+
+						ListNBT listnbt = tag.getList("Pos", 6);
 						int j = listnbt.size();
 						double x = j >= 1 ? listnbt.getDouble(0) : pPos.getX() + (world.random.nextDouble() - world.random.nextDouble()) * this.spawnRange + 0.5D;
 						double y = j >= 2 ? listnbt.getDouble(1) : (double) (pPos.getY() + world.random.nextInt(3) - 1);
@@ -202,9 +204,7 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								} else if (!checkSpawnRules(optional, (IServerWorld) world, blockpos)) continue;
 							}
 
-							compoundnbt.putBoolean("NoAI", ApothSpawnerTile.this.hasNoAI); // Technically, this breaks existing spawners that are NoAI... but I've never heard of one of those.
-
-							Entity entity = EntityType.loadEntityRecursive(compoundnbt, world, newEntity -> {
+							Entity entity = EntityType.loadEntityRecursive(tag, world, newEntity -> {
 								newEntity.moveTo(x, y, z, newEntity.yRot, newEntity.xRot);
 								return newEntity;
 							});
@@ -213,7 +213,10 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								return;
 							}
 
-							if (ApothSpawnerTile.this.hasNoAI) entity.getPersistentData().putBoolean("apotheosis:movable", true);
+							if (ApothSpawnerTile.this.hasNoAI && entity instanceof MobEntity) {
+								((MobEntity) entity).setNoAi(true);
+								entity.getPersistentData().putBoolean("apotheosis:movable", true);
+							}
 							if (ApothSpawnerTile.this.silent) entity.setSilent(true);
 
 							int nearby = world.getEntitiesOfClass(entity.getClass(), new AxisAlignedBB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
@@ -234,7 +237,9 @@ public class ApothSpawnerTile extends MobSpawnerTileEntity {
 								}
 
 								if (this.nextSpawnData.getTag().size() == 1 && this.nextSpawnData.getTag().contains("id", 8)) {
-									if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(mob, world, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, SpawnReason.SPAWNER)) mob.finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(entity.blockPosition()), SpawnReason.SPAWNER, null, null);
+									if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(mob, world, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, SpawnReason.SPAWNER)) {
+										mob.finalizeSpawn((IServerWorld) world, world.getCurrentDifficultyAt(entity.blockPosition()), SpawnReason.SPAWNER, null, null);
+									}
 								}
 							}
 
