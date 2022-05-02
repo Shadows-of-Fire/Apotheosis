@@ -13,5 +13,6 @@
 		"$(arcana)": "$(#A800A8)Arcana$()",
 		"$(fpower)": "$(#CC00CC)Final Power$()",
 		"$(bpower)": "$(6)Base Power$()"
-	}
+	},
+	"i18n": true
 }
