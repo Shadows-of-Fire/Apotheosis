@@ -1,3 +1,7 @@
+## 4.8.99E
+* Removed i18n: true declaration from patchouli book due to formatting errors.
+  * Book can still be translated, just not through language files.
+
 ## 4.8.99D
 * Fixed spawners not invoking finalizeSpawn.
 * Added i18n: true declaration to patchouli book.json file (by request).
