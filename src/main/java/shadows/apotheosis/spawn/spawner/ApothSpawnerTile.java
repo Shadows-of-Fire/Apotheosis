@@ -149,14 +149,15 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 					boolean flag = false;
 
 					for (int i = 0; i < this.spawnCount; ++i) {
-						CompoundTag compoundtag = this.nextSpawnData.getEntityToSpawn();
-						Optional<EntityType<?>> optional = EntityType.by(compoundtag);
+						CompoundTag tag = this.nextSpawnData.getEntityToSpawn();
+						Optional<EntityType<?>> optional = EntityType.by(tag);
 						if (optional.isEmpty()) {
 							this.delay(pServerLevel, pPos);
 							return;
 						}
 
-						ListTag listtag = compoundtag.getList("Pos", 6);
+						tag.remove("NoAI"); // TODO: Remove, bugfix for extra nbt tag that was erroneously added.
+						ListTag listtag = tag.getList("Pos", 6);
 						int j = listtag.size();
 						double d0 = j >= 1 ? listtag.getDouble(0) : pPos.getX() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * this.spawnRange + 0.5D;
 						double d1 = j >= 2 ? listtag.getDouble(1) : (double) (pPos.getY() + pServerLevel.random.nextInt(3) - 1);
@@ -182,9 +183,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 								} else if (!checkSpawnRules(optional, pServerLevel, blockpos)) continue;
 							}
 
-							compoundtag.putBoolean("NoAI", ApothSpawnerTile.this.hasNoAI); // Technically, this breaks existing spawners that are NoAI... but I've never heard of one of those.
-
-							Entity entity = EntityType.loadEntityRecursive(compoundtag, pServerLevel, p_151310_ -> {
+							Entity entity = EntityType.loadEntityRecursive(tag, pServerLevel, p_151310_ -> {
 								p_151310_.moveTo(d0, d1, d2, p_151310_.getYRot(), p_151310_.getXRot());
 								return p_151310_;
 							});
@@ -193,7 +192,10 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 								return;
 							}
 
-							if (ApothSpawnerTile.this.hasNoAI) entity.getPersistentData().putBoolean("apotheosis:movable", true);
+							if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
+								mob.setNoAi(true);
+								entity.getPersistentData().putBoolean("apotheosis:movable", true);
+							}
 
 							int k = pServerLevel.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
 							if (k >= this.maxNearbyEntities) {

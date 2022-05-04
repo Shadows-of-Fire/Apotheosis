@@ -5,6 +5,11 @@
 ## 5.3.5
 * JEI will now display if spawner silk touch is disabled, always enabled, or requires a certain level.
   * Previously it only displayed if it required a certain level.
+* Updated to Placebo 6.4.0
+  * Some fixes made in Placebo impact Apotheosis content.
+* Fixed spawners never invoking finalizeSpawn.
+  * This would cause slimes to always be the smallest size, among other bugs.
+* 
 
 ## 5.3.4
 * Updated to 1.18.2
