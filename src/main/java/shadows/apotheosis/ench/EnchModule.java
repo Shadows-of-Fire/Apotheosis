@@ -107,6 +107,7 @@ import shadows.apotheosis.ench.table.ApothEnchantBlock;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
+import shadows.apotheosis.ench.table.EnchantingStatManager;
 import shadows.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.placebo.config.Configuration;
@@ -201,6 +202,7 @@ public class EnchModule {
 			DispenserBlock.registerBehavior(Items.SHEARS, new BeehiveDispenseBehavior());
 		});
 		if (ModList.get().isLoaded("theoneprobe")) EnchTOPPlugin.register();
+		EnchantingStatManager noop = EnchantingStatManager.INSTANCE; // Hack to classload this class...
 	}
 
 	@SubscribeEvent

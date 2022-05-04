@@ -1,3 +1,10 @@
+## 4.8.99F
+* Fixed Enchanting Stats not showing on the client if you joined a server for the first time without doing anything else.
+  * This issue only occured if you just started the client and joined, and only persisted for as long as the first login session.
+  * A /reload would also fix it for all logged in clients.
+* Hopefully this can be the last build for 1.16.5...
+  * This is gonna come back to bite me, for sure.
+
 ## 4.8.99E
 * Removed i18n: true declaration from patchouli book due to formatting errors.
   * Book can still be translated, just not through language files.
