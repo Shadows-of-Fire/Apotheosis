@@ -117,6 +117,7 @@ public class SpawnerModule {
 
 	public void reload(ApotheosisReloadEvent e) {
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
+		config.setTitle("Apotheosis Spawner Module Configuration");
 		spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
 		spawnerSilkDamage = config.getInt("Spawner Silk Damage", "general", 100, 0, 100000, "The durability damage dealt to an item that silk touches a spawner.");
 		bannedMobs.clear();

@@ -96,6 +96,7 @@ import shadows.apotheosis.ench.table.ApothEnchantBlock;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
+import shadows.apotheosis.ench.table.EnchantingStatManager;
 import shadows.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.container.ContainerUtil;
@@ -191,6 +192,7 @@ public class EnchModule {
 			DispenserBlock.registerBehavior(Items.SHEARS, new ShearsDispenseItemBehavior());
 		});
 		if (ModList.get().isLoaded("theoneprobe")) EnchTOPPlugin.register();
+		EnchantingStatManager.INSTANCE.registerToBus();
 	}
 
 	@SubscribeEvent
@@ -404,6 +406,8 @@ public class EnchModule {
 
 	public void reload(ApotheosisReloadEvent e) {
 		enchInfoConfig = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
+		enchInfoConfig.setTitle("Apotheosis Enchantment Information");
+		enchInfoConfig.setComment("This file contains configurable data for each enchantment.\nThe names of each category correspond to the registry names of every loaded enchantment.");
 		ENCHANTMENT_INFO.clear();
 
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {

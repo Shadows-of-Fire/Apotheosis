@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -62,10 +61,10 @@ public class VillageModule {
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
 		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
-		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "f_27323_");
 		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PoiType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
+		config.setTitle("Apotheosis Village Module Configuration");
 		WandererReplacements.load(config);
 		if (config.hasChanged()) config.save();
 
@@ -81,6 +80,7 @@ public class VillageModule {
 				}
 			}
 		});
+		WandererTradeManager.INSTANCE.registerToBus();
 	}
 
 	@SubscribeEvent
@@ -160,9 +160,5 @@ public class VillageModule {
 	@SubscribeEvent
 	public void effects(Register<MobEffect> e) {
 		e.getRegistry().register(new BleedingEffect().setRegistryName("bleeding"));
-	}
-
-	public void reloads(AddReloadListenerEvent e) {
-		e.addListener(WandererTradeManager.INSTANCE);
 	}
 }

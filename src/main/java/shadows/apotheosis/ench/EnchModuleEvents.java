@@ -16,7 +16,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -32,7 +31,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
-import shadows.apotheosis.ench.table.EnchantingStatManager;
 
 public class EnchModuleEvents {
 
@@ -147,11 +145,6 @@ public class EnchModuleEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void livingHurt(LivingHurtEvent e) {
 		Apoth.Enchantments.BERSERKERS_FURY.livingHurt(e);
-	}
-
-	@SubscribeEvent
-	public void reloads(AddReloadListenerEvent e) {
-		e.addListener(EnchantingStatManager.INSTANCE);
 	}
 
 }

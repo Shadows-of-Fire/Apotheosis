@@ -46,6 +46,7 @@ public class GardenModule {
 
 	public void reload(ApotheosisReloadEvent e) {
 		Configuration c = new Configuration(new File(Apotheosis.configDir, "garden.cfg"));
+		c.setTitle("Apotheosis Garden Module Configuration");
 		maxCactusHeight = c.getInt("Cactus Height", "general", maxCactusHeight, 1, 512, "The max height a stack of cacti may grow to.  Vanilla is 3.  Values greater than 32 are uncapped growth.");
 		maxReedHeight = c.getInt("Reed Height", "general", maxReedHeight, 1, 512, "The max height a stack of reeds may grow to.  Vanilla is 3.  Values greater than 32 are uncapped growth.");
 		maxBambooHeight = c.getInt("Bamboo Height", "general", maxBambooHeight, 1, 64, "The max height a stack of bamboo may grow to.  Vanilla is 16.");

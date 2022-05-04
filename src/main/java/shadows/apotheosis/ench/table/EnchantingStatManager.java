@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -46,7 +47,7 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 			List<Block> blocks = new ArrayList<>();
 			if (obj.has("tag")) {
 				TagKey<Block> tag = BlockTags.create(new ResourceLocation(obj.get("tag").getAsString()));
-				ForgeRegistries.BLOCKS.tags().getTag(tag).iterator().forEachRemaining(blocks::add);
+				this.getContext().getTag(tag).getValues().stream().map(Holder::value).forEach(blocks::add);
 			} else {
 				Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
 				blocks.add(b);
