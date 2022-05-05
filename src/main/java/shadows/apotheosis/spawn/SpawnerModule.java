@@ -43,6 +43,7 @@ import shadows.apotheosis.spawn.compat.SpawnerTOPPlugin;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
+import shadows.apotheosis.spawn.spawner.ApothSpawnerItem;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
@@ -70,7 +71,14 @@ public class SpawnerModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverride(new ApothSpawnerBlock(), Apotheosis.MODID);
+		ApothSpawnerBlock spawner = new ApothSpawnerBlock();
+		PlaceboUtil.overrideStates(Blocks.SPAWNER, spawner);
+		e.getRegistry().register(spawner);
+	}
+
+	@SubscribeEvent
+	public void items(Register<Item> e) {
+		e.getRegistry().register(new ApothSpawnerItem());
 	}
 
 	@SubscribeEvent

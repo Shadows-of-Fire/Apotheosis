@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -37,8 +36,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -63,7 +60,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		BlockEntity te = world.getBlockEntity(pos);
-		if (te != null) te.load(stack.getOrCreateTagElement("BlockEntityTag"));
+		if (te != null && stack.hasTag()) te.load(stack.getOrCreateTagElement("BlockEntityTag"));
 	}
 
 	@Override
@@ -105,16 +102,10 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
 			if (Screen.hasShiftDown()) {
 				CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
-				if (tag.contains("SpawnData")) {
-					String name = tag.getCompound("SpawnData").getCompound("entity").getString("id");
-					String key = "entity." + name.replace(':', '.');
-					tooltip.add(concat(new TranslatableComponent("misc.apotheosis.entity"), I18n.exists(key) ? I18n.get(key) : name));
-				}
 				if (tag.contains("MinSpawnDelay")) tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), tag.getShort("MinSpawnDelay")));
 				if (tag.contains("MaxSpawnDelay")) tooltip.add(concat(SpawnerStats.MAX_DELAY.name(), tag.getShort("MaxSpawnDelay")));
 				if (tag.contains("SpawnCount")) tooltip.add(concat(SpawnerStats.SPAWN_COUNT.name(), tag.getShort("SpawnCount")));

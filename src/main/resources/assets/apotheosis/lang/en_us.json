@@ -299,8 +299,10 @@
     "advancements.apotheosis.ultimate_spawner.desc": "Create a spawner with minimal delays that has redstone control, no AI, ignores spawn conditions, and ignores players.",
 
     "comment_id": "/Spawner Module",
+	
+	"item.apotheosis.spawner": "%s Spawner",
+	
     "enchantment.apotheosis.capturing": "Capturing",
-
     "enchantment.apotheosis.capturing.desc": "Makes mobs have a chance to drop their spawn egg.",
 
     "misc.apotheosis.concat": "%s %s",

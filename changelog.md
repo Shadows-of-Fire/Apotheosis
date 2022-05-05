@@ -12,6 +12,7 @@
 * Fixed compat with Goblin Traders.
 * Added tooltips for Enchanting Stats and the currently computed Table Stats to ToP/Jade
 * Added the Silent spawner modifier.
+* Spawner entity names will now be shown in the item name.
 
 
 ## 5.3.4
