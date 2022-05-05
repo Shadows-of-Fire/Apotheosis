@@ -57,7 +57,8 @@ function initializeCoreMod() {
 						'vazkii.quark.content.tools.item.AncientTomeItem',
 						'net.minecraft.server.commands.EnchantCommand',
 						'net.minecraft.world.item.EnchantedBookItem',
-						'net.minecraft.world.inventory.AnvilMenu'
+						'net.minecraft.world.inventory.AnvilMenu',
+						'com.mrcrayfish.goblintraders.Hooks'
 					]
 				}
 			},
