@@ -1,3 +1,12 @@
+## 5.4.1A
+* Early Affixes port - most of affixes work as they did in 1.16.5 but some might not - this is alpha
+  * Fire damage affix does not ignite things on hit and not sure if it applies dmg at all, likewise cold damage
+  * Setting weights for affixes in config file is disabled for now 
+* Tome Towers, Rogue Spawners, Ore Troves and Boss Dungeons (both variants) are back
+* Added '/ipiList <add|remove|list|clear> [item]' command - allows player to disable picking items of specific type from ground
+  * each player can only set it up for themselves, list is saved on server and persist through death
+* Re-enabled affix related advancements
+
 ## 5.4.0
 * The Deadly Module is back!
 * Not yet released, this is here for staging purposes.
