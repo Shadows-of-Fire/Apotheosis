@@ -662,6 +662,8 @@
     "tooltip.enchlib.extracting": "Extracting Level %s",
     "tooltip.enchlib.cost": "Point Cost: %s",
     "tooltip.enchlib.item": "Storing %d enchantments.",
+    "tooltip.enchlib.nfilt": "Name Filter",
+    "tooltip.enchlib.ifilt": "Item Filter",
     "info.apotheosis.library": "The enchantment library is a block that stores enchantments.  Inserting an enchanted book will deposit it.  Left-clicking on a stored enchantment will extract one level of it.  Shift-clicking will extract the max level available.",
     "info.apotheosis.runes": "The Runes Reveal",
     "info.apotheosis.no_clue": "The Runes Reveal Nothing",

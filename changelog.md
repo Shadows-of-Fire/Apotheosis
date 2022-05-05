@@ -13,6 +13,8 @@
 * Added tooltips for Enchanting Stats and the currently computed Table Stats to ToP/Jade
 * Added the Silent spawner modifier.
 * Spawner entity names will now be shown in the item name.
+* Added Filters to the Enchantment Library!
+  * You can filter on both enchantment name and applicable item.
 
 
 ## 5.3.4
