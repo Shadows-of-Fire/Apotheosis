@@ -3,6 +3,8 @@
 * Not yet released, this is here for staging purposes.
 
 ## 5.3.5
+* The Up-Back-Porting Update!
+  * Because this includes all the changes that were made during the 1.16.5 backports.
 * JEI will now display if spawner silk touch is disabled, always enabled, or requires a certain level.
   * Previously it only displayed if it required a certain level.
 * Updated to Placebo 6.4.0
@@ -15,7 +17,6 @@
 * Spawner entity names will now be shown in the item name.
 * Added Filters to the Enchantment Library!
   * You can filter on both enchantment name and applicable item.
-
 
 ## 5.3.4
 * Updated to 1.18.2
