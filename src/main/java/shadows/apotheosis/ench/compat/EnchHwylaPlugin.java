@@ -20,6 +20,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
@@ -34,16 +36,20 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 
 	@Override
 	public void registerClient(IWailaClientRegistration reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothAnvilBlock.class);
+		reg.registerComponentProvider(this, TooltipPosition.BODY, Block.class);
 	}
 
 	@Override
 	public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-		CompoundTag tag = accessor.getServerData();
-		Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
-		for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
-			tooltip.add(e.getKey().getFullname(e.getValue()));
+		if (accessor.getBlock() instanceof ApothAnvilBlock) {
+			CompoundTag tag = accessor.getServerData();
+			Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
+			for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
+				tooltip.add(e.getKey().getFullname(e.getValue()));
+			}
 		}
+		CommonTooltipUtil.appendBlockStats(accessor.getLevel(), accessor.getBlockState(), tooltip::add);
+		if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(accessor.getLevel(), accessor.getPosition(), tooltip::add);
 	}
 
 	@Override

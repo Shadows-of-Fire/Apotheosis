@@ -9,7 +9,9 @@
   * Some fixes made in Placebo impact Apotheosis content.
 * Fixed spawners never invoking finalizeSpawn.
   * This would cause slimes to always be the smallest size, among other bugs.
-* 
+* Fixed compat with Goblin Traders.
+* Added tooltips for Enchanting Stats and the currently computed Table Stats to ToP/HWYLA
+
 
 ## 5.3.4
 * Updated to 1.18.2
