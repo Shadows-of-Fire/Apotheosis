@@ -10,7 +10,8 @@
 * Fixed spawners never invoking finalizeSpawn.
   * This would cause slimes to always be the smallest size, among other bugs.
 * Fixed compat with Goblin Traders.
-* Added tooltips for Enchanting Stats and the currently computed Table Stats to ToP/HWYLA
+* Added tooltips for Enchanting Stats and the currently computed Table Stats to ToP/Jade
+* Added the Silent spawner modifier.
 
 
 ## 5.3.4

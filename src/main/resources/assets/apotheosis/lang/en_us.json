@@ -327,6 +327,7 @@
     "stat.apotheosis.redstone_control": "Redstone Control",
     "stat.apotheosis.ignore_light": "Ignores Light",
     "stat.apotheosis.no_ai": "No AI",
+	"stat.apotheosis.silent": "Silent",
 
     "stat.apotheosis.min_delay.desc": "The minimum number of ticks between spawns",
     "stat.apotheosis.max_delay.desc": "The maximum number of ticks between spawns",
@@ -339,6 +340,7 @@
     "stat.apotheosis.redstone_control.desc": "The spawner requires redstone to activate",
     "stat.apotheosis.ignore_light.desc": "The spawner ignores light levels",
     "stat.apotheosis.no_ai.desc": "Spawned entities will have no AI",
+	"stat.apotheosis.silent.desc": "Spawned entities will make no noise",
 
     "title.apotheosis.spawner": "Spawner Modification",
     "info.apotheosis.spawner": "Spawners can be collected with %s and may be modified with various items.",

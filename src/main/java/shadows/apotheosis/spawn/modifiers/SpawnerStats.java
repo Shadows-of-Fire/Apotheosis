@@ -36,6 +36,8 @@ public class SpawnerStats {
 
 	public static final SpawnerStat<Boolean> NO_AI = register(new BoolStat("no_ai", s -> s.hasNoAI, (s, v) -> s.hasNoAI = v));
 
+	public static final SpawnerStat<Boolean> SILENT = register(new BoolStat("silent", s -> s.silent, (s, v) -> s.silent = v));
+
 	private static <T extends SpawnerStat<?>> T register(T t) {
 		REGISTRY.put(t.getId(), t);
 		return t;
