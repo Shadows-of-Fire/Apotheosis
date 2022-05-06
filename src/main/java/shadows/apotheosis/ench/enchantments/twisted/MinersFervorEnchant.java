@@ -47,11 +47,11 @@ public class MinersFervorEnchant extends DiggingEnchantment {
 		Player p = e.getPlayer();
 		ItemStack stack = p.getMainHandItem();
 		if (stack.isEmpty()) return;
-		int depth = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
-		if (depth > 0) {
+		int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
+		if (level > 0) {
 			if (stack.getDestroySpeed(e.getState()) > 1.0F) {
 				float hardness = e.getState().getDestroySpeed(e.getPlayer().level, e.getPos());
-				e.setNewSpeed(Math.min(29.9999F, 7.5F + 4.5F * depth) * hardness);
+				e.setNewSpeed(Math.max(e.getNewSpeed(), Math.min(29.9999F, 7.5F + 4.5F * level) * hardness));
 			}
 		}
 	}
