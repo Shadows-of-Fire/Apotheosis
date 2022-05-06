@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import net.minecraft.ChatFormatting;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.EntitySelector;
@@ -114,12 +116,15 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	}
 
 	@Override
-	protected void falling(FallingBlockEntity e) {
-		super.falling(e);
-		BlockEntity te = e.level.getBlockEntity(new BlockPos(e.position()));
-		e.blockData = new CompoundTag();
-		if (te instanceof AnvilTile) {
-			e.blockData = te.saveWithFullMetadata();
+	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRand) {
+		if (isFree(pLevel.getBlockState(pPos.below())) && pPos.getY() >= pLevel.getMinBuildHeight()) {
+			BlockEntity be = pLevel.getBlockEntity(pPos);
+			FallingBlockEntity e = FallingBlockEntity.fall(pLevel, pPos, pState);
+			if (be instanceof AnvilTile anvil) {
+				e.blockData = new CompoundTag();
+				anvil.saveAdditional(e.blockData);
+			}
+			this.falling(e);
 		}
 	}
 
