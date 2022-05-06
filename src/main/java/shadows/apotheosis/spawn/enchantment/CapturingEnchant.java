@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.spawn.SpawnerModule;
 
 public class CapturingEnchant extends Enchantment {
@@ -32,6 +33,11 @@ public class CapturingEnchant extends Enchantment {
 	@Override
 	public int getMaxCost(int level) {
 		return this.getMinCost(level) + 15;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		return super.canApplyAtEnchantingTable(stack) || EnchModule.AXE.canEnchant(stack.getItem());
 	}
 
 	public void handleCapturing(LivingDropsEvent e) {

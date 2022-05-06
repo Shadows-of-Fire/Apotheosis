@@ -17,6 +17,9 @@
 * Spawner entity names will now be shown in the item name.
 * Added Filters to the Enchantment Library!
   * You can filter on both enchantment name and applicable item.
+* Added a config option for the Chronicle of Shadows.
+* Allowed Capturing on Axes.
+* Made KoTA convert extra drops from Scavenger and Spearfishing.
 
 ## 5.3.4
 * Updated to 1.18.2

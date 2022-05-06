@@ -76,8 +76,8 @@ public class EnchModuleEvents {
 		Entity attacker = e.getSource().getEntity();
 		if (attacker instanceof Player p) {
 			Apoth.Enchantments.SCAVENGER.drops(p, e);
-			Apoth.Enchantments.KNOWLEDGE.drops(p, e);
 			Apoth.Enchantments.SPEARFISHING.addFishes(e);
+			Apoth.Enchantments.KNOWLEDGE.drops(p, e);
 		}
 	}
 

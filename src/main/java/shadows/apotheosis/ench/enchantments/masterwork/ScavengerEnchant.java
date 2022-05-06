@@ -3,6 +3,7 @@ package shadows.apotheosis.ench.enchantments.masterwork;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -58,7 +59,9 @@ public class ScavengerEnchant extends Enchantment {
 		if (p.level.isClientSide) return;
 		int scavenger = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
 		if (scavenger > 0 && p.level.random.nextInt(100) < scavenger * 2.5F) {
+			e.getEntityLiving().captureDrops(new ArrayList<>());
 			dropFromLootTable.invoke(e.getEntityLiving(), e.getSource(), true);
+			e.getDrops().addAll(e.getEntityLiving().captureDrops(null));
 		}
 	}
 
