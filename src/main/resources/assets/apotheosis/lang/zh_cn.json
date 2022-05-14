@@ -271,7 +271,7 @@
     "advancements.apotheosis.spawner.desc": "利用精准采集魔咒获得一个生物的刷怪笼。",
     "advancements.apotheosis.capturing": "捉住了！",
     "advancements.apotheosis.capturing.desc": "利用捕捉魔咒获得一个生物的刷怪蛋。",
-    "advancements.apotheosis.modifier": "只是一些技术性调整...",
+    "advancements.apotheosis.modifier": "只是一些技术性调整……",
     "advancements.apotheosis.modifier.desc": "使用调节器更改刷怪笼的属性。",
     "advancements.apotheosis.spawncount": "他的尺寸真是太大了！",
     "advancements.apotheosis.spawncount.desc": "将刷怪笼的刷怪数量增加至 16。",
@@ -299,8 +299,10 @@
     "advancements.apotheosis.ultimate_spawner.desc": "放置并调节出一个刷怪延迟最小、能用红石控制、刷出实体无 AI、忽略生物群系与忽略玩家的刷怪笼。",
     
     "comment_id": "/刷怪笼模块",
-    "enchantment.apotheosis.capturing": "捕捉",
-    
+
+    "item.apotheosis.spawner": "%s刷怪笼",
+
+    "enchantment.apotheosis.capturing": "捕捉", 
     "enchantment.apotheosis.capturing.desc": "使生物死亡时有概率掉落自身刷怪蛋。",
     
     "misc.apotheosis.concat": "%s %s",
@@ -327,6 +329,7 @@
     "stat.apotheosis.redstone_control": "红石控制",
     "stat.apotheosis.ignore_light": "忽略光照",
     "stat.apotheosis.no_ai": "无 AI",
+    "stat.apotheosis.silent": "静音",
     
     "stat.apotheosis.min_delay.desc": "刷怪间隔的最少游戏刻",
     "stat.apotheosis.max_delay.desc": "刷怪间隔的最大游戏刻",
@@ -339,9 +342,12 @@
     "stat.apotheosis.redstone_control.desc": "刷怪笼需要红石激活",
     "stat.apotheosis.ignore_light.desc": "刷怪笼忽略光照等级",
     "stat.apotheosis.no_ai.desc": "刷怪笼刷出的生物无 AI",
+    "stat.apotheosis.silent.desc": "使刷怪笼刷出的生物静音",
     
     "title.apotheosis.spawner": "刷怪笼调节器",
     "info.apotheosis.spawner": "可以利用%s魔咒收集刷怪笼并使用各种调节器修改刷怪笼的属性。",
+    "info.apotheosis.spawner.no_silk": "刷怪笼的属性可以使用各种物品进行调节，但当前使用精准采集获得刷怪笼被禁止。",
+    "info.apotheosis.spawner.always_drop": "刷怪笼的属性可以使用各种物品进行调节，并且破坏后能够掉落。",
     "info.apotheosis.capturing": "利用捕捉魔咒能使生物死亡时有概率掉落自身刷怪蛋。\\n \\n掉落概率：0.4%% 每级",
     
     "comment_id": "/附魔模块",
@@ -377,6 +383,11 @@
     "info.apotheosis.arcana.p": " - 阿卡那：+%s%%",
     "info.apotheosis.rectification.p": " - 校准：+%s%%",
     "info.apotheosis.clues.p": " - 魔咒线索：+%s",
+    "info.apotheosis.eterna.t": "位阶：%s/%s",
+	"info.apotheosis.quanta.t": "量子化：%s%%",
+	"info.apotheosis.arcana.t": "阿卡那：%s%%",
+	"info.apotheosis.rectification.t": "校准：%s%%",
+	"info.apotheosis.clues.t": "魔咒线索：%s",
     "gui.apotheosis.enchant.eterna.desc": " - 魔法能量",
     "gui.apotheosis.enchant.eterna.desc2": "决定附魔台的最大附魔等级。",
     "gui.apotheosis.enchant.eterna.desc3": "当前值：%s/%s",
@@ -414,7 +425,7 @@
     "enchantment.apotheosis.mounted_strike": "骑砍",
     "enchantment.apotheosis.mounted_strike.desc": "在骑乘时攻击能造成额外伤害。",
     
-    "enchantment.apotheosis.miners_fervor": "矿工热枕",
+    "enchantment.apotheosis.miners_fervor": "矿工热忱",
     "enchantment.apotheosis.miners_fervor.desc": "极大提高玩家挖掘效率，但是不能瞬间挖掉方块。",
     
     "enchantment.apotheosis.stable_footing": "稳定步伐",
@@ -453,7 +464,7 @@
     "info.apotheosis.other_tome": "接受除了已有宝典外的杂项魔咒。",
     "info.apotheosis.helmet_tome": "仅接受适用于头盔的魔咒。",
     "info.apotheosis.chestplate_tome": "仅接受适用于胸甲的魔咒。",
-    "info.apotheosis.leggings_tome": "仅接受适用于头盔的魔咒。",
+    "info.apotheosis.leggings_tome": "仅接受适用于护腿的魔咒。",
     "info.apotheosis.boots_tome": "仅接受适用于靴子的魔咒。",
     "info.apotheosis.weapon_tome": "仅接受适用于武器的魔咒。",
     "info.apotheosis.pickaxe_tome": "仅接受适用于镐的魔咒。",
@@ -651,6 +662,8 @@
     "tooltip.enchlib.extracting": "提取魔咒等级 %s",
     "tooltip.enchlib.cost": "消耗点数：%s",
     "tooltip.enchlib.item": "当前储存了 %d 种魔咒。",
+    "tooltip.enchlib.nfilt": "名称筛选",
+    "tooltip.enchlib.ifilt": "物品筛选",
     "info.apotheosis.library": "魔咒图书馆是一个储存魔咒的方块。放入一本附有魔咒的附魔书可以将其中的魔咒储存进去。鼠标左击一种储存的魔咒将提取一级魔咒，按住 Shift 键左击将提取可用的最大等级魔咒。",
     "info.apotheosis.runes": "符文之语",
     "info.apotheosis.no_clue": "符文什么也没揭示",
@@ -735,10 +748,10 @@
     "info.apotheosis.anvil": "可以被附魔。",
     
     "comment_id": "/花园模块",
-    "item.apotheosis.ender_lead": "末影栓绳",
-    "info.apotheosis.noentity": "栓有实体：无",
-    "info.apotheosis.containedentity": "栓有实体：%s",
-    "info.apotheosis.ender_lead": "末影栓绳是一种可以用来移动动物的物品。鼠标左击捕捉动物，鼠标右击释放动物。末影栓绳仅能捕捉动物。",
+    "item.apotheosis.ender_lead": "末影拴绳",
+    "info.apotheosis.noentity": "拴有实体：无",
+    "info.apotheosis.containedentity": "拴有实体：%s",
+    "info.apotheosis.ender_lead": "末影拴绳是一种可以用来移动动物的物品。鼠标左击捕捉动物，鼠标右击释放动物。末影拴绳仅能捕捉动物。",
     
     "comment_id": "/村民模块",
     "name.apotheosis.merch_sword": "奴役狂梦",
@@ -775,4 +788,3 @@
     "book.apotheosis.subtitle": "神化指南",
     "book.apotheosis.landing": "欢迎来到神化的世界。$(br2)神化模组分为不同的$(#8080FF)模块$()，这本书的内容也是如此。$(br2)禁用的模块其内容将被隐藏。"
     }
-  
