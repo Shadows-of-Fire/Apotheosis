@@ -65,7 +65,10 @@ public class SpawnerModifier implements Recipe<Container> {
 	public boolean apply(ApothSpawnerTile tile) {
 		boolean success = false;
 		for (StatModifier<?> m : this.statChanges) {
-			if (m.apply(tile)) success = true;
+			if (m.apply(tile)) {
+				success = true;
+				tile.setChanged();
+			}
 		}
 		return success;
 	}
