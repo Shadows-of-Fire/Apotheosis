@@ -13,8 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -135,10 +133,12 @@ public class EnchModuleEvents {
 	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void applyUnbreaking(AnvilRepairEvent e) {
-		if (e.getPlayer().containerMenu instanceof AnvilMenu) {
-			AnvilMenu r = (AnvilMenu) e.getPlayer().containerMenu;
-			BlockEntity te = r.access.evaluate(Level::getBlockEntity).orElse(null);
-			if (te instanceof AnvilTile) e.setBreakChance(e.getBreakChance() / (((AnvilTile) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
+		if (e.getPlayer().containerMenu instanceof AnvilMenu anvMenu) {
+			anvMenu.access.execute((level, pos) -> {
+				if (level.getBlockEntity(pos) instanceof AnvilTile anvil) {
+					e.setBreakChance(e.getBreakChance() / (anvil.getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
+				}
+			});
 		}
 	}
 
