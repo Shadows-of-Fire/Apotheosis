@@ -93,17 +93,24 @@ public class ChainsawEnchant extends Enchantment {
 			if (++this.ticks % 2 != 0) return false;
 			if (this.axe.isEmpty()) return true;
 			int minY = this.hits.keySet().intStream().min().getAsInt();
-			Queue<BlockPos> queue = this.hits.remove(minY);
+			Queue<BlockPos> queue = this.hits.get(minY);
+			int breaks = 0;
 			while (!queue.isEmpty()) {
 				BlockPos pos = queue.poll();
 				for (BlockPos p : BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 1, 1))) {
+					if (p.equals(pos)) continue;
 					BlockState state = this.level.getBlockState(p);
 					if (state.is(BlockTags.LOGS)) {
 						BlockUtil.breakExtraBlock(this.level, p, this.axe, this.owner);
-						this.hits.computeIfAbsent(p.getY(), i -> new ArrayDeque<>()).add(p.immutable());
+						if (!this.level.getBlockState(p).is(BlockTags.LOGS)) { // Ensure a change happened
+							this.hits.computeIfAbsent(p.getY(), i -> new ArrayDeque<>()).add(p.immutable());
+							breaks++;
+						}
 					}
 				}
+				if (breaks > 5) break;
 			}
+			if (queue.isEmpty()) this.hits.remove(minY);
 			return this.hits.isEmpty();
 		}
 
