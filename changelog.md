@@ -2,6 +2,13 @@
 * The Deadly Module is back!
 * Not yet released, this is here for staging purposes.
 
+## 5.3.6
+* HolyDiana: Updated Chinese Translation.
+* Fixed issues with modded anvils.
+* Added a speed limit to Chainsaw so it can't stall servers.
+* Fixed issues with recipe types.
+* Fixed modified spawners not saving.
+
 ## 5.3.5
 * The Up-Back-Porting Update!
   * Because this includes all the changes that were made during the 1.16.5 backports.
