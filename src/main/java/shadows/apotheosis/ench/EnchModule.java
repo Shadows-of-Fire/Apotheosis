@@ -30,6 +30,7 @@ import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -130,6 +131,7 @@ public class EnchModule {
 	public static final EnchantmentCategory PICKAXE = EnchantmentCategory.create("PICKAXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.PICKAXE_DIG));
 	public static final EnchantmentCategory AXE = EnchantmentCategory.create("AXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.AXE_DIG));
 	public static final EnchantmentCategory ARMOR_CHEST_LEGS = EnchantmentCategory.create("ARMOR_CHEST_LEGS", i -> EnchantmentCategory.ARMOR_CHEST.canEnchant(i) && EnchantmentCategory.ARMOR_LEGS.canEnchant(i));
+	public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
 
 	static Configuration enchInfoConfig;
 

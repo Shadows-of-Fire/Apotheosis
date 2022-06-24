@@ -20,12 +20,11 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.EnchantingStatManager.Stats;
-import shadows.placebo.util.PlaceboUtil;
 
 public class EnchantingRecipe implements Recipe<Container> {
 
-	public static final RecipeType<EnchantingRecipe> TYPE = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
 	public static final Serializer SERIALIZER = new Serializer();
 	public static final Stats NO_MAX = new Stats(-1, -1, -1, -1, -1, -1);
 
@@ -106,7 +105,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
 	@Override
 	public RecipeType<?> getType() {
-		return EnchantingRecipe.TYPE;
+		return EnchModule.INFUSION;
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<EnchantingRecipe> {
@@ -149,7 +148,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
 	@Nullable
 	public static EnchantingRecipe findMatch(Level level, ItemStack input, float eterna, float quanta, float arcana) {
-		List<EnchantingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
+		List<EnchantingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(EnchModule.INFUSION);
 		recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna, r2.requirements.eterna));
 		for (EnchantingRecipe r : recipes)
 			if (r.matches(input, eterna, quanta, arcana)) return r;
@@ -157,7 +156,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 	}
 
 	public static EnchantingRecipe findItemMatch(Level level, ItemStack toEnchant) {
-		return level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE).stream().filter(r -> r.getInput().test(toEnchant)).findFirst().orElse(null);
+		return level.getRecipeManager().getAllRecipesFor(EnchModule.INFUSION).stream().filter(r -> r.getInput().test(toEnchant)).findFirst().orElse(null);
 	}
 
 }

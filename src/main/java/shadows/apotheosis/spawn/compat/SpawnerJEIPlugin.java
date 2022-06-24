@@ -30,7 +30,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enableSpawner) return;
-		List<SpawnerModifier> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(SpawnerModifier.TYPE);
+		List<SpawnerModifier> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(SpawnerModule.MODIFIER);
 		recipes.sort((r1, r2) -> r1.getOffhandInput() == Ingredient.EMPTY ? r2.getOffhandInput() == Ingredient.EMPTY ? 0 : -1 : 1);
 
 		reg.addRecipes(SpawnerCategory.TYPE, recipes);

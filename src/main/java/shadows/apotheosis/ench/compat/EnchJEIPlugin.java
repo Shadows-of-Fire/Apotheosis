@@ -23,6 +23,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
 
 @JeiPlugin
@@ -66,7 +67,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		//Formatter::on
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.enchanting"));
 		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.library"));
-		List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
+		List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(EnchModule.INFUSION);
 		recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
 		reg.addRecipes(EnchantingCategory.TYPE, recipes);
 	}
