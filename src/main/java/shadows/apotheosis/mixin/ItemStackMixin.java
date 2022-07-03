@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.AffixHelper;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {

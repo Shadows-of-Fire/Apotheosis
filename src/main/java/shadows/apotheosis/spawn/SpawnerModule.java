@@ -21,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -52,8 +51,6 @@ import shadows.placebo.util.PlaceboUtil;
 public class SpawnerModule {
 
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
-	public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
-
 	public static int spawnerSilkLevel = 1;
 	public static int spawnerSilkDamage = 100;
 	public static Set<ResourceLocation> bannedMobs = new HashSet<>();

@@ -18,7 +18,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -52,7 +51,6 @@ import shadows.placebo.util.PlaceboUtil;
 
 public class VillageModule {
 
-	public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType(Apotheosis.MODID + ":fletching");
 	public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Village");
 

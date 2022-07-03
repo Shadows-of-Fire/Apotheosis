@@ -1,5 +1,15 @@
 {
     "comment_id": "/Deadly Module",
+
+    "attribute.modifier.plus.0": "+%s %s",
+    "attribute.modifier.plus.1": "+%s%% Base %s",
+    "attribute.modifier.plus.2": "+%s%% Total %s",
+    "attribute.modifier.take.0": "-%s %s",
+    "attribute.modifier.take.1": "-%s%% Base %s",
+    "attribute.modifier.take.2": "-%s%% Total %s",
+    "attribute.modifier.equals.0": "%s %s",
+    "attribute.modifier.equals.1": "%s%% %s",
+    "attribute.modifier.equals.2": "%s%% %s",
     
     "affix.apotheosis:common_max_hp": "of Health",
     "affix.apotheosis:common_max_hp.prefix": "Tough",

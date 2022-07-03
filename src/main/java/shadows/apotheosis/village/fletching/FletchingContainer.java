@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.village.VillageModule;
+import shadows.apotheosis.Apoth.RecipeTypes;
 
 public class FletchingContainer extends AbstractContainerMenu {
 
@@ -64,7 +64,7 @@ public class FletchingContainer extends AbstractContainerMenu {
 		if (!this.world.isClientSide) {
 			ServerPlayer serverplayerentity = (ServerPlayer) this.player;
 			ItemStack itemstack = ItemStack.EMPTY;
-			Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(VillageModule.FLETCHING, this.craftMatrix, this.world);
+			Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(RecipeTypes.FLETCHING, this.craftMatrix, this.world);
 			if (optional.isPresent()) {
 				FletchingRecipe icraftingrecipe = optional.get();
 				itemstack = icraftingrecipe.assemble(this.craftMatrix);
@@ -135,7 +135,7 @@ public class FletchingContainer extends AbstractContainerMenu {
 		public void onTake(Player thePlayer, ItemStack stack) {
 			this.checkTakeAchievements(stack);
 			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
-			NonNullList<ItemStack> nonnulllist = thePlayer.level.getRecipeManager().getRemainingItemsFor(VillageModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level);
+			NonNullList<ItemStack> nonnulllist = thePlayer.level.getRecipeManager().getRemainingItemsFor(RecipeTypes.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level);
 			net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 			for (int i = 0; i < nonnulllist.size(); ++i) {
 				ItemStack itemstack = FletchingContainer.this.craftMatrix.getItem(i);

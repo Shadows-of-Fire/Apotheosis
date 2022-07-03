@@ -28,11 +28,11 @@ import net.minecraftforge.registries.RegistryBuilder;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
+import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.affix.AttributeAffix;
 import shadows.apotheosis.deadly.config.DeadlyConfig;
 import shadows.apotheosis.deadly.loot.LootCategory;
 import shadows.apotheosis.deadly.loot.LootRarity;
-import shadows.apotheosis.deadly.loot.affix.Affix;
-import shadows.apotheosis.deadly.loot.affix.AttributeAffix;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.config.Configuration;
 

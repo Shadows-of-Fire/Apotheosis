@@ -15,6 +15,7 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolActions;
@@ -31,7 +32,7 @@ public enum LootCategory {
 	SHIELD(s -> s.canPerformAction(ToolActions.SHIELD_BLOCK), s -> arr(EquipmentSlot.OFFHAND)),
 	TRIDENT(s -> s.getItem() instanceof TridentItem, s -> arr(EquipmentSlot.MAINHAND)),
 	SWORD(
-			s -> s.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0),
+			s -> s.getItem() instanceof SwordItem || s.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, s).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0),
 			s -> arr(EquipmentSlot.MAINHAND));
 
 	private final Predicate<ItemStack> validator;

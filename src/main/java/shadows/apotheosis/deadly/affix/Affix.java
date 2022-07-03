@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly.loot.affix;
+package shadows.apotheosis.deadly.affix;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;

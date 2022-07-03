@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
@@ -37,13 +38,16 @@ import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
+import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.garden.EnderLeadItem;
 import shadows.apotheosis.potion.LuckyFootItem;
 import shadows.apotheosis.potion.PotionCharmItem;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.SunderingEffect;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
+import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.village.fletching.FletchingContainer;
+import shadows.apotheosis.village.fletching.FletchingRecipe;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.BroadheadArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ExplosiveArrowEntity;
@@ -52,6 +56,7 @@ import shadows.apotheosis.village.fletching.arrows.MiningArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.MiningArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
+import shadows.placebo.util.PlaceboUtil;
 
 /**
  * Object Holder Class.  For the main mod class, see {@link Apotheosis}
@@ -239,6 +244,12 @@ public class Apoth {
 	public static final class Tags {
 		public static final TagKey<Item> BOON_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "boon_drops"));
 		public static final TagKey<Item> SPEARFISHING_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"));
+	}
+
+	public static final class RecipeTypes {
+		public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType(Apotheosis.MODID + ":fletching");
+		public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
+		public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
 	}
 
 }

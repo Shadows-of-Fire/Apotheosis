@@ -96,7 +96,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
 		if (libSlot != null) {
 			List<FormattedText> list = new ArrayList<>();
-			list.add(new TranslatableComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).setUnderlined(true)));
+			list.add(new TranslatableComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true)));
 			if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc")) {
 				Component txt = new TranslatableComponent(libSlot.ench.getDescriptionId() + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true));
 				list.addAll(this.font.getSplitter().splitLines(txt, this.getGuiLeft() - 16, txt.getStyle()));

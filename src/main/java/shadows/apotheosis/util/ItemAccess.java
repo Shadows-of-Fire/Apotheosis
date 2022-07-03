@@ -4,11 +4,10 @@ import java.util.UUID;
 
 import net.minecraft.world.item.Item;
 
-public class ItemAccess extends Item {
+public final class ItemAccess extends Item {
 
-	public ItemAccess(Properties pProperties) {
+	private ItemAccess(Properties pProperties) {
 		super(pProperties);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static UUID getBaseAD() {

@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly.loot.affix;
+package shadows.apotheosis.deadly.affix;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,6 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStack.TooltipPart;
 import shadows.apotheosis.deadly.loot.LootCategory;
 import shadows.apotheosis.deadly.loot.LootRarity;
 
@@ -84,7 +83,6 @@ public class AffixHelper {
 		afxData.putString("Name", Component.Serializer.toJson(comp));
 		if (!stack.getOrCreateTagElement("display").contains("Lore")) AffixHelper.addLore(stack, new TranslatableComponent("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
 		afxData.putString("Rarity", rarity.name());
-		stack.hideTooltipPart(TooltipPart.MODIFIERS);
 	}
 
 	@Nullable

@@ -1,6 +1,8 @@
 ## 5.4.0
 * The Deadly Module is back!
 * Not yet released, this is here for staging purposes.
+* Fixed Silent modifier not showing in spawner tooltips.
+* Fixed a crash when modules were disabled.
 
 ## 5.3.6
 * HolyDiana: Updated Chinese Translation.

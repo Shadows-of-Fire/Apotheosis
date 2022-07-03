@@ -19,6 +19,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.village.VillageModule;
 
@@ -71,7 +72,7 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
 
 	@Override
 	public RecipeType<?> getType() {
-		return VillageModule.FLETCHING;
+		return RecipeTypes.FLETCHING;
 	}
 
 	@Override

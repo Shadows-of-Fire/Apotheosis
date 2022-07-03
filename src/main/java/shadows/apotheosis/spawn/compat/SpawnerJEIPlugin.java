@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -30,7 +31,7 @@ public class SpawnerJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enableSpawner) return;
-		List<SpawnerModifier> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(SpawnerModule.MODIFIER);
+		List<SpawnerModifier> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.MODIFIER);
 		recipes.sort((r1, r2) -> r1.getOffhandInput() == Ingredient.EMPTY ? r2.getOffhandInput() == Ingredient.EMPTY ? 0 : -1 : 1);
 
 		reg.addRecipes(SpawnerCategory.TYPE, recipes);

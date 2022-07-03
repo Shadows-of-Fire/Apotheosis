@@ -6,8 +6,8 @@ import java.util.Random;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import shadows.apotheosis.deadly.loot.affix.Affix;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
+import shadows.apotheosis.deadly.affix.Affix;
+import shadows.apotheosis.deadly.affix.AffixHelper;
 
 public class LootController {
 

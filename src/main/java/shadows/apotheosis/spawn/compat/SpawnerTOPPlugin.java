@@ -32,6 +32,7 @@ public class SpawnerTOPPlugin implements TOPCompat.Provider {
 			if (spw.redstoneControl) info.mcText(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
 			if (spw.ignoresLight) info.mcText(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
 			if (spw.hasNoAI) info.mcText(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
+			if (spw.silent) info.mcText(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
 		}
 	}
 

@@ -10,8 +10,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.village.VillageModule;
 import shadows.apotheosis.village.fletching.FletchingContainer;
 import shadows.apotheosis.village.fletching.FletchingRecipe;
 
@@ -35,7 +35,7 @@ public class VillageJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
-		reg.addRecipes(FletchingCategory.TYPE, Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == VillageModule.FLETCHING).map(r -> (FletchingRecipe) r).toList());
+		reg.addRecipes(FletchingCategory.TYPE, Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == RecipeTypes.FLETCHING).map(r -> (FletchingRecipe) r).toList());
 	}
 
 	@Override

@@ -13,9 +13,9 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import shadows.apotheosis.deadly.affix.AffixHelper;
 import shadows.apotheosis.deadly.loot.LootController;
 import shadows.apotheosis.deadly.loot.LootRarity;
-import shadows.apotheosis.deadly.loot.affix.AffixHelper;
 
 public class LootifyCommand {
 
