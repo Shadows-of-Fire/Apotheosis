@@ -69,21 +69,6 @@ public class EnchHooks {
 	}
 
 	/**
-	 * Override for protection calculations.  Removes the hard cap of total level 20.  Effectiveness is reduced past 20.
-	 * New max protection value is 65.
-	 * 80% Reduction at 20, 95% at 65.
-	 */
-	public static float getDamageAfterMagicAbsorb(float damage, float enchantModifiers) {
-		float clamped = Mth.clamp(enchantModifiers, 0, 20);
-		float remaining = Mth.clamp(enchantModifiers - 20, 0, 45);
-		float factor = 1 - clamped / 25;
-		if (remaining > 0) {
-			factor -= 0.2F * remaining / 60;
-		}
-		return damage * factor;
-	}
-
-	/**
 	 * Calculates the delay for catching a fish.  Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
 	 * Called at the end of {@link FishingBobberEntity#catchingFish(BlockPos)}
 	 * Injected by coremods/ench/fishing_hook.js

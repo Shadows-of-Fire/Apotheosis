@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -69,10 +69,10 @@ public class AttributeAffix extends Affix {
 		return this.types == null ? true : this.types.test(type);
 	}
 
-	public record ModifierInst(Supplier<Attribute> attr, Operation op, Function<Float, Float> valueFactory, Map<EquipmentSlot, UUID> cache) {
+	public record ModifierInst(Supplier<Attribute> attr, Operation op, Float2FloatFunction valueFactory, Map<EquipmentSlot, UUID> cache) {
 
 		public AttributeModifier build(EquipmentSlot slot, ResourceLocation id, float level) {
-			return new AttributeModifier(cache.computeIfAbsent(slot, k -> UUID.randomUUID()), "affix:" + id, valueFactory.apply(level), op);
+			return new AttributeModifier(cache.computeIfAbsent(slot, k -> UUID.randomUUID()), "affix:" + id, valueFactory.get(level), op);
 		}
 	}
 
@@ -91,12 +91,12 @@ public class AttributeAffix extends Affix {
 			return this;
 		}
 
-		public Builder with(Supplier<Attribute> attr, Operation op, Function<Float, Float> valueFactory) {
+		public Builder with(Supplier<Attribute> attr, Operation op, Float2FloatFunction valueFactory) {
 			this.modifiers.add(new ModifierInst(attr, op, valueFactory, new HashMap<>()));
 			return this;
 		}
 
-		public Builder with(Attribute attr, Operation op, Function<Float, Float> valueFactory) {
+		public Builder with(Attribute attr, Operation op, Float2FloatFunction valueFactory) {
 			return with(() -> attr, op, valueFactory);
 		}
 

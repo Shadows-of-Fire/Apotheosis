@@ -10,23 +10,72 @@
     "attribute.modifier.equals.0": "%s %s",
     "attribute.modifier.equals.1": "%s%% %s",
     "attribute.modifier.equals.2": "%s%% %s",
+	
+	"apotheosis:draw_speed": "Draw Speed",
+	"apotheosis:crit_chance": "Crit Chance",
+	"apotheosis:crit_damage": "Crit Damage",
+	"apotheosis:cold_damage": "Cold Damage",
+	"apotheosis:fire_damage": "Fire Damage",
+	"apotheosis:life_steal": "Life Steal",
+	"apotheosis:piercing": "Armor Piercing",
+	"apotheosis:current_hp_damage": "Current HP Damage",
+	"apotheosis:overheal": "Overheal",
+	"apotheosis:ghost_health": "Ghost Health",
+	"apotheosis:break_speed": "Break Speed",
+	
+
+	"comment_id": "//Common Affixes",
+
+    "affix.apotheosis:tough": "Tough",
+    "affix.apotheosis:tough.suffix": "of Health",
+
+    "affix.apotheosis:armored": "Armored",
+    "affix.apotheosis:armored.suffix": "of Iron",
+
+    "affix.apotheosis:pointy": "Pointy",
+    "affix.apotheosis:pointy.suffix": "of Stabbing",
+
+    "affix.apotheosis:quick": "Quick",
+    "affix.apotheosis:quick.suffix": "of Motion",
+
+    "affix.apotheosis:nimble": "Nimble",
+    "affix.apotheosis:nimble.suffix": "of Slicing",
+
+    "affix.apotheosis:pushy": "Pushy",
+    "affix.apotheosis:pushy.suffix": "of Shoving",
+
+    "affix.apotheosis:long": "Long",
+    "affix.apotheosis:long.suffix": "of Length",
+
+	"affix.apotheosis:extended": "Extended",
+    "affix.apotheosis:extended.suffix": "of Poking",
+
+	"affix.apotheosis:agile": "Agile",
+    "affix.apotheosis:agile.suffix": "of Dexterity",
     
-    "affix.apotheosis:common_max_hp": "of Health",
-    "affix.apotheosis:common_max_hp.prefix": "Tough",
-    "affix.apotheosis:common_armor": "of Iron",
-    "affix.apotheosis:common_armor.prefix": "Armored",
-    "affix.apotheosis:common_dmg": "of Stabbing",
-    "affix.apotheosis:common_dmg.prefix": "Pointy",
-    "affix.apotheosis:common_mvspd": "of Motion",
-    "affix.apotheosis:common_mvspd.prefix": "Quick",
-    "affix.apotheosis:common_aspd": "of Slicing",
-    "affix.apotheosis:common_aspd.prefix": "Nimble",
-    "affix.apotheosis:common_kb": "of Shoving",
-    "affix.apotheosis:common_kb.prefix": "Pushy",
-    "affix.apotheosis:common_reach": "of Poking",
-    "affix.apotheosis:common_reach.prefix": "Long",
+	"comment_id": "//Uncommon Affixes",
     
-    
+	"affix.apotheosis:reinforced": "Reinforced",
+    "affix.apotheosis:reinforced.suffix": "of the Fortress",
+
+    "affix.apotheosis:plated": "Plated",
+    "affix.apotheosis:plated.suffix": "of Reflection",
+
+    "affix.apotheosis:blessed": "Blessed",
+    "affix.apotheosis:blessed.suffix": "of Holy Flame",
+
+    "affix.apotheosis:light": "Light",
+    "affix.apotheosis:light.suffix": "of Weightlessness",
+
+    "affix.apotheosis:icy": "Icy",
+    "affix.apotheosis:icy.suffix": "of Frost",
+
+    "affix.apotheosis:weighted": "Weighted",
+    "affix.apotheosis:weighted.suffix": "of Crushing",
+	
+	
+	
+	
     "info.apotheosis.affix_item": "Apotheotic Affix Item",
     "item.modifiers.both_hands": "When in Any Hand:",
     

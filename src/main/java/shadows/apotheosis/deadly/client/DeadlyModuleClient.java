@@ -1,4 +1,4 @@
-package shadows.apotheosis.deadly;
+package shadows.apotheosis.deadly.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +35,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.util.ItemAccess;
 
 public class DeadlyModuleClient {
@@ -209,6 +210,7 @@ public class DeadlyModuleClient {
 					boolean[] merged = new boolean[3];
 					Map<Operation, List<AttributeModifier>> shiftExpands = new HashMap<>();
 					for (AttributeModifier modifier : modifs) {
+						if (modifier.getAmount() == 0) continue;
 						if (sums[modifier.getOperation().ordinal()] != 0) merged[modifier.getOperation().ordinal()] = true;
 						sums[modifier.getOperation().ordinal()] += modifier.getAmount();
 						shiftExpands.computeIfAbsent(modifier.getOperation(), k -> new LinkedList<>()).add(modifier);
@@ -225,7 +227,9 @@ public class DeadlyModuleClient {
 							shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(toComponent(attr, modif, player))));
 						}
 					}
-				} else modifs.forEach(m -> tooltip.accept(toComponent(attr, m, player)));
+				} else modifs.forEach(m -> {
+					if (m.getAmount() != 0) tooltip.accept(toComponent(attr, m, player));
+				});
 			}
 		}
 	}

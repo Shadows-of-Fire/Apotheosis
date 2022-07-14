@@ -28,7 +28,6 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.compat.PatchouliCompat;
 import shadows.apotheosis.deadly.DeadlyModule;
-import shadows.apotheosis.deadly.affix.Affix;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
@@ -95,7 +94,6 @@ public class Apotheosis {
 	}
 
 	public Apotheosis() {
-		Affix.classload();
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		if (enableEnch) bus.register(new EnchModule());
@@ -111,7 +109,6 @@ public class Apotheosis {
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
-		Affix.classload();
 		Apoth.RecipeTypes.FLETCHING.getClass(); // Static init wew
 	}
 

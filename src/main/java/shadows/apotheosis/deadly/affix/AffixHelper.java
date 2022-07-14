@@ -1,11 +1,14 @@
 package shadows.apotheosis.deadly.affix;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +20,8 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryManager;
 import shadows.apotheosis.deadly.loot.LootCategory;
 import shadows.apotheosis.deadly.loot.LootRarity;
 
@@ -24,6 +29,7 @@ public class AffixHelper {
 
 	public static final String AFFIX_DATA = "AffixData";
 	public static final String AFFIXES = "Affixes";
+	private static final Map<LootCategory, Multimap<LootRarity, Affix>> BY_CATEGORY = new EnumMap<>(LootCategory.class);
 
 	/**
 	 * Adds this specific affix to the Item's NBT tag.
@@ -71,10 +77,8 @@ public class AffixHelper {
 		display.put("Lore", tag);
 	}
 
-	public static List<Affix> getAffixesFor(LootCategory type, LootRarity rarity) {
-		List<Affix> affixes = new ArrayList<>();
-		Affix.REGISTRY.getValues().stream().filter(t -> t.canApply(type) && t.getRarity() == rarity).forEach(affixes::add);
-		return affixes;
+	public static Collection<Affix> getAffixesFor(LootCategory type, LootRarity rarity) {
+		return BY_CATEGORY.get(type).get(rarity);
 	}
 
 	public static void setRarity(ItemStack stack, LootRarity rarity) {
@@ -97,6 +101,20 @@ public class AffixHelper {
 			}
 		}
 		return null;
+	}
+
+	public static void recomputeMaps(IForgeRegistry<Affix> reg, RegistryManager stage) {
+		BY_CATEGORY.clear();
+		LootCategory[] cats = LootCategory.values();
+		for (LootCategory cat : cats)
+			BY_CATEGORY.put(cat, HashMultimap.create());
+		for (Affix afx : reg) {
+			for (LootCategory cat : cats) {
+				if (afx.canApply(cat)) {
+					BY_CATEGORY.get(cat).put(afx.getRarity(), afx);
+				}
+			}
+		}
 	}
 
 }

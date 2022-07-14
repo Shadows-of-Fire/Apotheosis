@@ -1,5 +1,6 @@
 package shadows.apotheosis.deadly.loot;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -14,7 +15,7 @@ public class LootController {
 	public static ItemStack createLootItem(ItemStack stack, LootRarity rarity, Random rand) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == null) return stack;
-		List<Affix> affixes = AffixHelper.getAffixesFor(cat, rarity);
+		List<Affix> affixes = new ArrayList<>(AffixHelper.getAffixesFor(cat, rarity));
 		Collections.shuffle(affixes, rand);
 
 		AffixHelper.applyAffix(stack, affixes.get(0), rand.nextFloat());

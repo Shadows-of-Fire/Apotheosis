@@ -234,6 +234,10 @@ public class Apoth {
 		 * Extra health that regenerates when not taking damage. Base value = (0.0) = 0 damage
 		 */
 		public static final Attribute GHOST_HEALTH = null;
+		/**
+		 * Mining Speed. Base value = (1.0) = 100% default break speed
+		 */
+		public static final Attribute BREAK_SPEED = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)

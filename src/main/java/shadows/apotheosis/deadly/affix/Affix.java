@@ -33,9 +33,9 @@ import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.config.Configuration;
 
 /**
- * An affix is a construct very similar to an enchantment.
- * However, they are only available via loot, and have some additional rules.
- * The Affix's Level is a float from 0 to 1 that defines its relative power level, compared to max.	
+ * An affix is a construct very similar to an enchantment, providing bonuses to arbitrary items.
+ * The Affix's Level is a float from 0 to 1 that defines its relative power level, compared to max.
+ * What the level means is up to the individual affix.
  */
 public abstract class Affix implements IForgeRegistryEntry<Affix> {
 
@@ -88,8 +88,8 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * @return The new name, consuming the old name in the process.
 	 */
 	public Component chainName(Component name, boolean prefix) {
-		if (prefix) return new TranslatableComponent("%s %s", new TranslatableComponent("affix." + this.name + ".prefix"), name);
-		return new TranslatableComponent("%s %s", name, new TranslatableComponent("affix." + this.name));
+		if (prefix) return new TranslatableComponent("%s %s", new TranslatableComponent("affix." + this.name), name);
+		return new TranslatableComponent("%s %s", name, new TranslatableComponent("affix." + this.name + ".suffix"));
 	}
 
 	/**
@@ -181,9 +181,6 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	@Override
 	public Class<Affix> getRegistryType() {
 		return Affix.class;
-	}
-
-	public static void classload() {
 	}
 
 	@Override
