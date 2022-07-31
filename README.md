@@ -5,7 +5,7 @@ It's divided into modules, each separate from another.  Any module can be disabl
 
 The following modules are present:
 * Enchanting: Adds a ton of extra enchantments, uncaps the enchanting table, and edits some core mechanics of the game.
-* * Anvil: Anvils can be enchanted, and are also uncapped.
+  * Anvil: Anvils can be enchanted, and are also uncapped.
 * Spawner: Mob Spawners can be customized, and they can be changed to any type by acquiring spawn eggs.
 * Deadly: Boss Monsters and Rogue Spawners are present in the world, both with the potential for unique loot.
 * Potion: Recipes for unused vanilla potions, and additional potion effects.
