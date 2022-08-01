@@ -26,7 +26,9 @@ public class GardenModule {
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
 		this.reload(null);
-		Apotheosis.HELPER.addShapeless(Apoth.Items.ENDER_LEAD, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
+		Apotheosis.HELPER.registerProvider(factory -> {
+			factory.addShapeless(Apoth.Items.ENDER_LEAD, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
+		});
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 	}
 

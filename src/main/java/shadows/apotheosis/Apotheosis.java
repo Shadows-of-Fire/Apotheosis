@@ -2,6 +2,10 @@ package shadows.apotheosis;
 
 import java.io.File;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -13,6 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -26,8 +31,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.compat.PatchouliCompat;
-import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
@@ -99,15 +104,16 @@ public class Apotheosis {
 		if (enableEnch) bus.register(new EnchModule());
 		if (enableSpawner) bus.register(new SpawnerModule());
 		if (enableGarden) bus.register(new GardenModule());
-		if (enableDeadly) bus.register(new DeadlyModule());
+		if (enableDeadly) bus.register(new AdventureModule());
 		if (enablePotion) bus.register(new PotionModule());
 		if (enableVillage) bus.register(new VillageModule());
 
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
-		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
+		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
+		MinecraftForge.EVENT_BUS.addListener(this::cmds);
 		if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
 		Apoth.RecipeTypes.FLETCHING.getClass(); // Static init wew
 	}
@@ -121,13 +127,22 @@ public class Apotheosis {
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
 	}
 
+	@SubscribeEvent
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(RunnableReloader.of(() -> MinecraftForge.EVENT_BUS.post(new ApotheosisReloadEvent())));
 	}
 
+	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
 		Player p = e.getPlayer();
 		localAtkStrength = p.getAttackStrengthScale(0.5F);
+	}
+
+	@SubscribeEvent
+	public void cmds(RegisterCommandsEvent e) {
+		var builder = Commands.literal("apoth");
+		MinecraftForge.EVENT_BUS.post(new ApotheosisCommandEvent(builder));
+		e.getDispatcher().register(builder);
 	}
 
 	public static Ingredient potionIngredient(Potion type) {
@@ -145,6 +160,23 @@ public class Apotheosis {
 	 * It may be fired off the main thread.
 	 */
 	public static class ApotheosisReloadEvent extends Event {
+	}
+
+	/**
+	 * The apotheosis command event is fired when commands are to be registered.
+	 * Register subcommands at this time.
+	 */
+	public static class ApotheosisCommandEvent extends Event {
+
+		private final LiteralArgumentBuilder<CommandSourceStack> root;
+
+		public ApotheosisCommandEvent(LiteralArgumentBuilder<CommandSourceStack> root) {
+			this.root = root;
+		}
+
+		public LiteralArgumentBuilder<CommandSourceStack> getRoot() {
+			return this.root;
+		}
 	}
 
 }

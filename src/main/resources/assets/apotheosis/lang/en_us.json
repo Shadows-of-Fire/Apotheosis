@@ -1,5 +1,9 @@
 {
-    "comment_id": "/Deadly Module",
+    "comment_id": "/Adventure Module",
+
+    "info.apotheosis.affix_item": "Apotheotic Affix Item",
+    "item.modifiers.both_hands": "When in Any Hand:",
+    "item.modifiers.socket": "When Socketed:",
 
     "attribute.modifier.plus.0": "+%s %s",
     "attribute.modifier.plus.1": "+%s%% Base %s",
@@ -23,9 +27,6 @@
 	"apotheosis:ghost_health": "Ghost Health",
 	"apotheosis:break_speed": "Break Speed",
 	
-
-	"comment_id": "//Common Affixes",
-
     "affix.apotheosis:tough": "Tough",
     "affix.apotheosis:tough.suffix": "of Health",
 
@@ -44,41 +45,84 @@
     "affix.apotheosis:pushy": "Pushy",
     "affix.apotheosis:pushy.suffix": "of Shoving",
 
-    "affix.apotheosis:long": "Long",
-    "affix.apotheosis:long.suffix": "of Length",
+    "affix.apotheosis:aquatic": "Aquatic",
+    "affix.apotheosis:aquatic.suffix": "of the Ocean",
+
+	"affix.apotheosis:gravitational": "Gravitational",
+    "affix.apotheosis:gravitational.suffix": "of Gravity",
+
+	"affix.apotheosis:long": "Long",
+    "affix.apotheosis:long.suffix": "of Great Lengths",
 
 	"affix.apotheosis:extended": "Extended",
-    "affix.apotheosis:extended.suffix": "of Poking",
+    "affix.apotheosis:extended.suffix": "of Distant Battles",
 
 	"affix.apotheosis:agile": "Agile",
     "affix.apotheosis:agile.suffix": "of Dexterity",
+
+	"affix.apotheosis:plated": "Plated",
+    "affix.apotheosis:plated.suffix": "of the Defender",
+
+	"affix.apotheosis:dense": "Dense",
+    "affix.apotheosis:dense.suffix": "of Stubbornness",
+
+	"affix.apotheosis:tall": "Tall",
+    "affix.apotheosis:tall.suffix": "of Height",
+
+	"affix.apotheosis:lucky": "Lucky",
+    "affix.apotheosis:lucky.suffix": "of Luck",
+
+	"affix.apotheosis:sharpened": "Sharpened",
+    "affix.apotheosis:sharpened.suffix": "of Critical Thinking",
+
+	"affix.apotheosis:lethal": "Lethal",
+    "affix.apotheosis:lethal.suffix": "of Lethality",
+
+	"affix.apotheosis:icy": "Icy",
+    "affix.apotheosis:icy.suffix": "of the Frostlands",
+
+	"affix.apotheosis:flaming": "Flaming",
+    "affix.apotheosis:flaming.suffix": "of the Sun",
+
+	"affix.apotheosis:vampiric": "Vampiric",
+    "affix.apotheosis:vampiric.suffix": "of Bloodletting",
+
+	"affix.apotheosis:shredding": "Shredding",
+    "affix.apotheosis:shredding.suffix": "of Penetration",
+
+	"affix.apotheosis:giant_slaying": "Giant Slaying",
+    "affix.apotheosis:giant_slaying.suffix": "of the Colossal Strikes",
+
+	"affix.apotheosis:berserking": "Berserking",
+    "affix.apotheosis:berserking.suffix": "of Infinite Battles",
+
+	"affix.apotheosis:destructive": "Destructive",
+    "affix.apotheosis:destructive.suffix": "of Quarrying",
     
-	"comment_id": "//Uncommon Affixes",
-    
-	"affix.apotheosis:reinforced": "Reinforced",
-    "affix.apotheosis:reinforced.suffix": "of the Fortress",
-
-    "affix.apotheosis:plated": "Plated",
-    "affix.apotheosis:plated.suffix": "of Reflection",
-
-    "affix.apotheosis:blessed": "Blessed",
-    "affix.apotheosis:blessed.suffix": "of Holy Flame",
-
-    "affix.apotheosis:light": "Light",
-    "affix.apotheosis:light.suffix": "of Weightlessness",
-
-    "affix.apotheosis:icy": "Icy",
-    "affix.apotheosis:icy.suffix": "of Frost",
-
-    "affix.apotheosis:weighted": "Weighted",
-    "affix.apotheosis:weighted.suffix": "of Crushing",
+	"socket.apotheosis.empty": "Empty Socket",
+	
+	"item.apotheosis.gem.0": "Parity Gem",
+	"item.apotheosis.gem.1": "Arcane Gem",
+	"item.apotheosis.gem.2": "Splendor Gem",
+	"item.apotheosis.gem.3": "Breach Gem",
+	"item.apotheosis.gem.4": "Guardian Gem",
+	"item.apotheosis.gem.5": "Chaotic Gem",
+	"item.apotheosis.gem.6": "Necrotic Gem",
+	"item.apotheosis.gem.7": "Mirror Gem",
+	"item.apotheosis.gem.8": "Geometric Gem",
+	"item.apotheosis.gem.9": "Valence Gem",
+	"item.apotheosis.gem.10": "Endersurge Gem",
 	
 	
 	
 	
-    "info.apotheosis.affix_item": "Apotheotic Affix Item",
-    "item.modifiers.both_hands": "When in Any Hand:",
-    
+	
+	
+	
+	
+	
+	
+	
     "affix.apotheosis:reach_distance.name": "Reach Distance - (%s)",
     "affix.apotheosis:enchantability.name": "Enchantability - (%s)",
     

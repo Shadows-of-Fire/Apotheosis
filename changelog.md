@@ -3,6 +3,11 @@
 * Not yet released, this is here for staging purposes.
 * Fixed Silent modifier not showing in spawner tooltips.
 * Fixed a crash when modules were disabled.
+* Fixed shield bash applying when in the offhand
+* Fixed crashes if you somehow managed to obtain the Infusion enchantment
+  * You arent' supposed to be able to get this by any means.
+* Added a config to allow certain potions to be marked as "Extended Duration" for potion charms.
+  * This helps prevent weirdness with stuff that breaks when it expires and reapplies rapidly.
 
 ## 5.3.6
 * HolyDiana: Updated Chinese Translation.

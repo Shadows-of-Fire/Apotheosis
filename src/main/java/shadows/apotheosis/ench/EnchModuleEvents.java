@@ -108,6 +108,10 @@ public class EnchModuleEvents {
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
 		Apoth.Enchantments.STABLE_FOOTING.breakSpeed(e);
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void breakSpeedLow(PlayerEvent.BreakSpeed e) {
 		Apoth.Enchantments.MINERS_FERVOR.breakSpeed(e);
 	}
 

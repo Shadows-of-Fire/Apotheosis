@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.AffixHelper;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
@@ -29,15 +29,15 @@ public class ItemStackMixin {
 	public void apoth_getHoverName(CallbackInfoReturnable<Component> ci) {
 		ItemStack ths = (ItemStack) (Object) this;
 		CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);
-		if (afxData != null && afxData.contains("Name", 8)) {
+		if (afxData != null && afxData.contains(AffixHelper.NAME, 8)) {
 			try {
-				Component component = Component.Serializer.fromJson(afxData.getString("Name"));
+				Component component = Component.Serializer.fromJson(afxData.getString(AffixHelper.NAME));
 				if (component instanceof TranslatableComponent tComp) {
 					tComp.getArgs()[0] = ci.getReturnValue();
 					ci.setReturnValue(tComp);
-				} else afxData.remove("Name");
+				} else afxData.remove(AffixHelper.NAME);
 			} catch (Exception exception) {
-				afxData.remove("Name");
+				afxData.remove(AffixHelper.NAME);
 			}
 		}
 	}

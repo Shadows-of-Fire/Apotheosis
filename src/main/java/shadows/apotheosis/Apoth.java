@@ -13,6 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
@@ -108,6 +109,7 @@ public class Apoth {
 		public static final Item PICKAXE_TOME = null;
 		public static final Item FISHING_TOME = null;
 		public static final Item BOW_TOME = null;
+		public static final Item GEM = null;
 
 		@ObjectHolder("wstweaks:fragment")
 		public static final Item SKULL_FRAGMENT = null;
@@ -242,6 +244,8 @@ public class Apoth {
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Affixes {
+
+		public static final SocketAffix SOCKET = null;
 
 	}
 
