@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
-import shadows.apotheosis.adventure.client.AdventureModuleClient;
+import shadows.placebo.util.AttributeHelper;
 
 public class GemItem extends Item {
 
@@ -38,7 +38,7 @@ public class GemItem extends Item {
 		}
 		tooltip.add(TextComponent.EMPTY);
 		tooltip.add((new TranslatableComponent("item.modifiers.socket")).withStyle(ChatFormatting.GOLD));
-		tooltip.add(AdventureModuleClient.toComponent(bonus.getKey(), bonus.getValue(), null));
+		tooltip.add(AttributeHelper.toComponent(bonus.getKey(), bonus.getValue()));
 	}
 
 	@Override

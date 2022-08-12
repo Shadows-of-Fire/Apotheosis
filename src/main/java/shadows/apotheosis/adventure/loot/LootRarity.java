@@ -16,26 +16,26 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.AdventureConfig;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.placebo.PlaceboClient.RainbowColor;
 
-public record LootRarity(String id, TextColor color, List<LootRule> rules) {
+public record LootRarity(String id, TextColor color, List<LootRule> rules, int ordinal) {
 
 	public static final Map<String, LootRarity> BY_ID;
 
 	//Formatter::off
 	public static final LootRarity COMMON = new LootRarity("common", 0x808080, ImmutableList.of(
 			new LootRule(AffixType.STAT, 1),
-			new LootRule(AffixType.STAT, 0.5F)
+			new LootRule(AffixType.STAT, 0.25F)
 	));
 
 	public static final LootRarity UNCOMMON = new LootRarity("uncommon", 0x33FF33, ImmutableList.of(
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
-			new LootRule(AffixType.STAT, 0.6F),
-			new LootRule(AffixType.STAT, 0.25F),
+			new LootRule(AffixType.STAT, 0.45F),
 			new LootRule(AffixType.SOCKET, 0.2F)
 	));
 
@@ -43,7 +43,6 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules) {
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.EFFECT, 1),
-			new LootRule(AffixType.STAT, 0.75F),
 			new LootRule(AffixType.EFFECT, 0.33F),
 			new LootRule(AffixType.SOCKET, 0.33F)
 	));
@@ -53,9 +52,7 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules) {
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.EFFECT, 1),
-			new LootRule(AffixType.EFFECT, 1),
-			new LootRule(AffixType.STAT, 0.6F),
-			new LootRule(AffixType.T2_EFFECT, 0.4F),
+			new LootRule(AffixType.EFFECT, 0.65F),
 			new LootRule(AffixType.SOCKET, 0.33F),
 			new LootRule(AffixType.SOCKET, 0.33F)
 	));
@@ -64,11 +61,9 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules) {
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
-			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.EFFECT, 1),
-			new LootRule(AffixType.T2_EFFECT, 1),
-			new LootRule(AffixType.STAT, 0.3F),
-			new LootRule(AffixType.T3_EFFECT, 0.3F),
+			new LootRule(AffixType.EFFECT, 1),
+			new LootRule(AffixType.EFFECT, 0.3F),
 			new LootRule(AffixType.SOCKET, 0.33F),
 			new LootRule(AffixType.SOCKET, 0.33F),
 			new LootRule(AffixType.SOCKET, 0.33F)
@@ -81,8 +76,18 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules) {
 		BY_ID = ImmutableMap.<String, LootRarity>builder().put(COMMON.id, COMMON).put(UNCOMMON.id, UNCOMMON).put(RARE.id, RARE).put(EPIC.id, EPIC).put(MYTHIC.id, MYTHIC).put(ANCIENT.id, ANCIENT).build();
 	}
 
+	private static int num = 0;
+
+	public LootRarity(String id, TextColor color, List<LootRule> rules) {
+		this(id, color, rules, num++);
+	}
+
 	public LootRarity(String id, int color, List<LootRule> rules) {
 		this(id, TextColor.fromRgb(color), rules);
+	}
+
+	public boolean isAtLeast(LootRarity other) {
+		return this.ordinal() >= other.ordinal();
 	}
 
 	public static LootRarity byId(String id) {
@@ -138,6 +143,7 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules) {
 					return;
 				}
 				List<Affix> available = AffixHelper.byType(type).stream().filter(a -> a.canApplyTo(stack, rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
+				if (available.size() == 0) AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}!", type, chance);
 				Collections.shuffle(available, rand);
 				currentAffixes.add(available.get(0));
 			}

@@ -11,7 +11,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.affix.Affix;
@@ -44,13 +45,13 @@ public class LootController {
 		}
 
 		Collections.shuffle(nameList);
-		Component name = stack.getItem().getName(stack);
-		name = nameList.get(0).chainName(name, false);
-		if (nameList.size() > 1) name = nameList.get(1).chainName(name, true);
+		TranslatableComponent name = (TranslatableComponent) new TranslatableComponent(nameList.size() > 1 ? "%s %s %s" : "%s %s", "", "", "").withStyle(Style.EMPTY.withColor(rarity.color()));
+		name.getArgs()[0] = nameList.get(0).getName(true);
+		if (nameList.size() > 1) name.getArgs()[2] = nameList.get(1).getName(false);
 
 		AffixHelper.setRarity(stack, rarity);
 		AffixHelper.setAffixes(stack, loaded);
-		stack.setHoverName(name);
+		AffixHelper.setName(stack, name);
 
 		return stack;
 	}

@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -23,8 +24,10 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,6 +47,7 @@ import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.mixin.LivingEntityInvoker;
 import shadows.apotheosis.util.DamageSourceUtil;
+import shadows.placebo.events.ItemUseEvent;
 
 public class AdventureModuleEvents {
 
@@ -104,6 +108,7 @@ public class AdventureModuleEvents {
 				affixes.values().forEach(a -> {
 					a.onArrowFired(living, arrow);
 					nbt.putFloat(a.affix().getRegistryName().toString(), a.level());
+					nbt.putString(AffixHelper.RARITY, a.rarity().id());
 				});
 				arrow.getPersistentData().put("apoth.affixes", nbt);
 			}
@@ -166,23 +171,23 @@ public class AdventureModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void attack(LivingAttackEvent e) {
+		if (e.getEntity().level.isClientSide) return;
 		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
 			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE) - 1;
 			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE);
 			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE);
 			LivingEntity target = e.getEntityLiving();
 			if (target.invulnerableTime < 10) {
-				// Likely call Affix.onEntityHurt here
 				if (hpDmg > 0.001) {
 					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
 				}
 				if (fireDmg > 0.001) {
 					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * fireDmg);
-					target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (40 * fireDmg)));
+					target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (15 * fireDmg)));
 				}
 				if (coldDmg > 0.001) {
 					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * coldDmg);
-					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (40 * coldDmg), (int) Mth.floor(coldDmg / 3)));
+					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), (int) Mth.floor(coldDmg / 5)));
 				}
 			}
 		}
@@ -195,21 +200,77 @@ public class AdventureModuleEvents {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void crit(CriticalHitEvent e) {
 		double critChance = e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1;
-		float critDmg = (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE) - 1;
+		float critDmg = 1.5F * (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE);
 
-		if (!e.isVanillaCritical() && e.getPlayer().level.random.nextFloat() <= critChance) {
+		if (critChance > 1) {
 			e.setResult(Result.ALLOW);
-			e.setDamageModifier(1.5F);
-		}
 
-		if (critDmg < 0.001) {
-			e.setDamageModifier((1 + critDmg) * e.getDamageModifier());
+			float modifier = 1F;
+			while (critChance > 1) {
+				critChance--;
+				modifier *= critDmg;
+			}
+
+			if (e.getPlayer().level.random.nextFloat() <= critChance) modifier *= critDmg;
+
+			e.setDamageModifier(modifier);
+		} else if (e.getPlayer().level.random.nextFloat() <= critChance) {
+			e.setResult(Result.ALLOW);
+			e.setDamageModifier(critDmg);
+		} else {
+			e.setDamageModifier(critDmg);
 		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void breakSpd(BreakSpeed e) {
 		e.setNewSpeed(e.getNewSpeed() * (float) e.getPlayer().getAttributeValue(Apoth.Attributes.BREAK_SPEED));
+	}
+
+	@SubscribeEvent
+	public void onItemUse(ItemUseEvent e) {
+		ItemStack s = e.getItemStack();
+		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
+		for (AffixInstance inst : affixes.values()) {
+			InteractionResult type = inst.onItemUse(e.getContext());
+			if (type != null) {
+				e.setCanceled(true);
+				e.setCancellationResult(type);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void shieldBlock(ShieldBlockEvent e) {
+		ItemStack stack = e.getEntityLiving().getUseItem();
+		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+		float blocked = e.getBlockedDamage();
+		for (AffixInstance inst : affixes.values()) {
+			blocked = inst.onShieldBlock(e.getEntityLiving(), e.getDamageSource(), blocked);
+		}
+		if (blocked != e.getOriginalBlockedDamage()) e.setBlockedDamage(blocked);
+	}
+
+	@SubscribeEvent
+	public void blockBreak(BreakEvent e) {
+		ItemStack stack = e.getPlayer().getMainHandItem();
+		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+		for (AffixInstance inst : affixes.values()) {
+			inst.onBlockBreak(e.getPlayer(), e.getWorld(), e.getPos(), e.getState());
+		}
+	}
+
+	@SubscribeEvent
+	public void arrow(EntityJoinWorldEvent e) {
+		if (e.getEntity() instanceof AbstractArrow arrow) {
+			if (arrow.level.isClientSide || arrow.getPersistentData().getBoolean("apoth.attrib.done")) return;
+			if (arrow.getOwner() instanceof LivingEntity le) {
+				arrow.setBaseDamage(arrow.getBaseDamage() * le.getAttributeValue(Apoth.Attributes.ARROW_DAMAGE));
+				arrow.setDeltaMovement(arrow.getDeltaMovement().scale(le.getAttributeValue(Apoth.Attributes.ARROW_VELOCITY)));
+				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= (le.getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1));
+			}
+			arrow.getPersistentData().putBoolean("apoth.attrib.done", true);
+		}
 	}
 
 }

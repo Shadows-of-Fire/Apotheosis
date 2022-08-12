@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -38,7 +39,7 @@ public class AttributeAffix extends Affix {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, java.util.function.Consumer<Component> list) {
+	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 	};
 
 	@Override

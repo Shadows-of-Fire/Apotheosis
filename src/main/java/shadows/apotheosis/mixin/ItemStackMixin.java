@@ -33,7 +33,7 @@ public class ItemStackMixin {
 			try {
 				Component component = Component.Serializer.fromJson(afxData.getString(AffixHelper.NAME));
 				if (component instanceof TranslatableComponent tComp) {
-					tComp.getArgs()[0] = ci.getReturnValue();
+					tComp.getArgs()[1] = ci.getReturnValue();
 					ci.setReturnValue(tComp);
 				} else afxData.remove(AffixHelper.NAME);
 			} catch (Exception exception) {

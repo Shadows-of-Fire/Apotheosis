@@ -389,18 +389,20 @@ public class EnchModule {
 	/**
 	 * Tries to find a max level for this enchantment.  This is used to scale up default levels to the Apoth cap.
 	 * Single-Level enchantments are not scaled.
-	 * Barring that, enchantments are scaled using the {@link EnchantmentInfo#defaultMin(Enchantment)} until it is >= 150
+	 * Barring that, enchantments are scaled using the {@link EnchantmentInfo#defaultMin(Enchantment)} until outside the default level space.
 	 */
 	public static int getDefaultMax(Enchantment ench) {
 		int level = ench.getMaxLevel();
 		if (level == 1) return 1;
-		PowerFunc func = EnchantmentInfo.defaultMin(ench);
-		int minPower = func.getPower(level);
-		if (minPower >= 150) return level;
+		PowerFunc minFunc = EnchantmentInfo.defaultMin(ench);
+		int max = (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4);
+		int minPower = minFunc.getPower(level);
+		if (minPower >= max) return level;
 		int lastPower = minPower;
-		while (minPower < 150) {
-			minPower = func.getPower(++level);
+		while (minPower < max) {
+			minPower = minFunc.getPower(++level);
 			if (lastPower == minPower) return level;
+			if (minPower > max) return level - 1;
 			lastPower = minPower;
 		}
 		return level;
@@ -419,7 +421,7 @@ public class EnchModule {
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 			for (int i = 1; i <= info.getMaxLevel(); i++)
-				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.error("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
+				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.warn("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
 		}
 
 		if (e == null && enchInfoConfig.hasChanged()) enchInfoConfig.save();

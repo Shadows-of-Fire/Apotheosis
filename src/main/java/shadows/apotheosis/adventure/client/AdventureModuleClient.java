@@ -54,6 +54,7 @@ import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import shadows.apotheosis.util.ItemAccess;
+import shadows.placebo.util.AttributeHelper;
 
 public class AdventureModuleClient {
 
@@ -97,6 +98,17 @@ public class AdventureModuleClient {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public static void affixTooltips(ItemTooltipEvent e) {
+		ItemStack stack = e.getItemStack();
+		if (stack.hasTag()) {
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+			List<Component> components = new ArrayList<>();
+			affixes.values().forEach(inst -> inst.addInformation(components::add));
+			e.getToolTip().addAll(1, components);
+		}
+	}
+
 	public static Multimap<Attribute, AttributeModifier> sortedMap() {
 		return TreeMultimap.create((k1, k2) -> k1.getRegistryName().compareTo(k2.getRegistryName()), (v1, v2) -> {
 			int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
@@ -133,6 +145,11 @@ public class AdventureModuleClient {
 			modifMh.stream().filter(a1 -> modifOh.stream().anyMatch(a2 -> a1.getName().equals(a2.getName()))).forEach(modif -> dualHand.put(atr, modif));
 		}
 
+		dualHand.values().forEach(m -> {
+			mainhand.values().remove(m);
+			offhand.values().removeIf(m1 -> m1.getName().equals(m.getName()));
+		});
+
 		int sockets = SocketHelper.getSockets(stack);
 		Set<UUID> skips = new HashSet<>();
 		if (sockets > 0) {
@@ -143,10 +160,12 @@ public class AdventureModuleClient {
 		}
 
 		applyTextFor(player, stack, tooltip, dualHand, "both_hands", skips);
+		applyTextFor(player, stack, tooltip, mainhand, EquipmentSlot.MAINHAND.getName(), skips);
+		applyTextFor(player, stack, tooltip, offhand, EquipmentSlot.OFFHAND.getName(), skips);
 
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			if (slot.ordinal() < 2) continue;
 			Multimap<Attribute, AttributeModifier> modifiers = getSortedModifiers(stack, slot);
-			if (slot.ordinal() < 2) dualHand.entries().stream().forEach(e -> modifiers.remove(e.getKey(), e.getValue()));
 			applyTextFor(player, stack, tooltip, modifiers, slot.getName(), skips);
 		}
 	}
@@ -157,25 +176,6 @@ public class AdventureModuleClient {
 
 	private static MutableComponent list() {
 		return new TextComponent(" \u2507 ").withStyle(ChatFormatting.GRAY);
-	}
-
-	public static Component toComponent(Attribute attr, AttributeModifier modif, @Nullable Player player) {
-		double amt = modif.getAmount();
-
-		if (modif.getOperation() == Operation.ADDITION) {
-			if (attr == Attributes.KNOCKBACK_RESISTANCE) amt *= 10.0D;
-		} else {
-			amt *= 100.0D;
-		}
-
-		int code = modif.getOperation().ordinal();
-
-		if (amt > 0.0D) {
-			return new TranslatableComponent("attribute.modifier.plus." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
-		} else {
-			amt *= -1.0D;
-			return new TranslatableComponent("attribute.modifier.take." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
-		}
 	}
 
 	private static void applyTextFor(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, Multimap<Attribute, AttributeModifier> modifierMap, String group, Set<UUID> skips) {
@@ -215,7 +215,7 @@ public class AdventureModuleClient {
 					text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), new TranslatableComponent(Attributes.ATTACK_DAMAGE.getDescriptionId()));
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
 					for (AttributeModifier modifier : dmgModifs) {
-						tooltip.accept(list().append(toComponent(Attributes.ATTACK_DAMAGE, modifier, player)));
+						tooltip.accept(list().append(AttributeHelper.toComponent(Attributes.ATTACK_DAMAGE, modifier)));
 					}
 					float bonus = EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
 					if (bonus > 0) {
@@ -239,7 +239,7 @@ public class AdventureModuleClient {
 					text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), new TranslatableComponent(Attributes.ATTACK_SPEED.getDescriptionId()));
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
 					for (AttributeModifier modifier : spdModifs) {
-						tooltip.accept(list().append(toComponent(Attributes.ATTACK_SPEED, modifier, player)));
+						tooltip.accept(list().append(AttributeHelper.toComponent(Attributes.ATTACK_SPEED, modifier)));
 					}
 				}
 			}
@@ -265,13 +265,14 @@ public class AdventureModuleClient {
 						if (merged[i]) style = sums[i] < 0 ? Style.EMPTY.withColor(TextColor.fromRgb(0xF93131)) : Style.EMPTY.withColor(TextColor.fromRgb(0x7A7AF9));
 						else style = sums[i] < 0 ? Style.EMPTY.withColor(ChatFormatting.RED) : Style.EMPTY.withColor(ChatFormatting.BLUE);
 						if (sums[i] < 0) sums[i] *= -1;
+						if (attr == Attributes.KNOCKBACK_RESISTANCE) sums[i] *= 10;
 						tooltip.accept(new TranslatableComponent(key, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(sums[i]), new TranslatableComponent(attr.getDescriptionId())).withStyle(style));
 						if (merged[i] && Screen.hasShiftDown()) {
-							shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(toComponent(attr, modif, player))));
+							shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(AttributeHelper.toComponent(attr, modif))));
 						}
 					}
 				} else modifs.forEach(m -> {
-					if (m.getAmount() != 0) tooltip.accept(toComponent(attr, m, player));
+					if (m.getAmount() != 0) tooltip.accept(AttributeHelper.toComponent(attr, m));
 				});
 			}
 		}

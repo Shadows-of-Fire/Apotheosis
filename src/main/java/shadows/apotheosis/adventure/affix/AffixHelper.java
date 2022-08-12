@@ -9,7 +9,8 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.ChatFormatting;
+import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
+import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -53,6 +54,11 @@ public class AffixHelper {
 		afxData.put(AFFIXES, affixesTag);
 	}
 
+	public static void setName(ItemStack stack, Component name) {
+		CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
+		afxData.putString(NAME, Component.Serializer.toJson(name));
+	}
+
 	public static Map<Affix, AffixInstance> getAffixes(ItemStack stack) {
 		Map<Affix, AffixInstance> map = new HashMap<>();
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
@@ -86,7 +92,7 @@ public class AffixHelper {
 		Component comp = new TranslatableComponent("%s", new TextComponent("")).withStyle(Style.EMPTY.withColor(rarity.color()));
 		CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
 		afxData.putString(NAME, Component.Serializer.toJson(comp));
-		if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack, new TranslatableComponent("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
+		//if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack, new TranslatableComponent("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
 		afxData.putString(RARITY, rarity.id());
 	}
 
@@ -116,6 +122,21 @@ public class AffixHelper {
 	public static void recomputeMaps(IForgeRegistry<Affix> reg, RegistryManager stage) {
 		BY_TYPE.clear();
 		reg.forEach(a -> BY_TYPE.put(a.getType(), a));
+	}
+
+	/**
+	 * Level Function that allows for only returning "nice" stepped numbers.
+	 * @param min The min value
+	 * @param steps The max number of steps
+	 * @param step The value per step
+	 * @return A level function according to these rules
+	 */
+	public static Float2FloatFunction step(float min, int steps, float step) {
+		return level -> min + (int) (steps * (level + 0.5F / steps)) * step;
+	}
+
+	public static Float2IntFunction step(int min, int steps, int step) {
+		return level -> min + (int) (steps * (level + 0.5F / steps)) * step;
 	}
 
 }

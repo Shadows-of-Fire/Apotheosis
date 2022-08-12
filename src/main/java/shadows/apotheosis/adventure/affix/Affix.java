@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -19,10 +20,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.GameData;
@@ -81,14 +85,12 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	}
 
 	/**
-	 * Chain the name of this affix to the existing name.  If this is a prefix, it should be applied to the front.
-	 * If this is a suffix, it should be applied to the black.
-	 * @param name The current name, which may have been modified by other affixes.	
-	 * @return The new name, consuming the old name in the process.
+	 * Get a component representing an addition of this affix to the item's name.
+	 * @return The name part, prefix or suffix, as requested.
 	 */
-	public Component chainName(ItemStack stack, LootRarity rarity, float level, Component name, boolean prefix) {
-		if (prefix) return new TranslatableComponent("%s %s", new TranslatableComponent("affix." + this.name), name);
-		return new TranslatableComponent("%s %s", name, new TranslatableComponent("affix." + this.name + ".suffix"));
+	public Component getName(ItemStack stack, LootRarity rarity, float level, boolean prefix) {
+		if (prefix) return new TranslatableComponent("affix." + this.name);
+		return new TranslatableComponent("affix." + this.name + ".suffix");
 	}
 
 	/**
@@ -99,7 +101,7 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * @param source The damage source to compare against.<br>
 	 * @return How many protection points this affix is worth against this source.<br>
 	 */
-	public int getProtectionLevel(ItemStack stack, LootRarity rarity, float level, DamageSource source) {
+	public int getDamageProtection(ItemStack stack, LootRarity rarity, float level, DamageSource source) {
 		return 0;
 	}
 
@@ -107,7 +109,7 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * Calculates the additional damage this affix deals.
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
-	public float getExtraDamageFor(ItemStack stack, LootRarity rarity, float level, MobType creatureType) {
+	public float getDamageBonus(ItemStack stack, LootRarity rarity, float level, MobType creatureType) {
 		return 0.0F;
 	}
 
@@ -118,14 +120,14 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * @param target The target entity being attacked.
 	 * @param level The level of this affix, if applicable.
 	 */
-	public void onEntityDamaged(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity target) {
+	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity target) {
 	}
 
 	/**
 	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
 	 * called.
 	 */
-	public void onUserHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity attacker) {
+	public void doPostHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity attacker) {
 	}
 
 	/**
@@ -152,7 +154,6 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	/**
 	 * Called when a shield with this affix blocks some amount of damage.
 	 * @param entity The blocking entity.
-	 * @param stack  The shield itemstack the affix is on .
 	 * @param source The damage source being blocked.
 	 * @param amount The amount of damage blocked.
 	 * @param level  The level of this affix.
@@ -160,6 +161,17 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 */
 	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
 		return amount;
+	}
+
+	/**
+	 * Called when a player with this affix breaks a block.
+	 * @param player The breaking player.
+	 * @param world  The level the block was broken in.
+	 * @param pos    The position of the block.
+	 * @param state  The state that was broken.
+	 */
+	public void onBlockBreak(ItemStack stack, LootRarity rarity, float level, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+
 	}
 
 	@Override

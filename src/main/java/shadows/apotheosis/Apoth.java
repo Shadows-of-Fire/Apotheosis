@@ -240,6 +240,14 @@ public class Apoth {
 		 * Mining Speed. Base value = (1.0) = 100% default break speed
 		 */
 		public static final Attribute BREAK_SPEED = null;
+		/**
+		 * Arrow Damage. Base value = (1.0) = 100% default arrow damage
+		 */
+		public static final Attribute ARROW_DAMAGE = null;
+		/**
+		 * Arrow Velocity. Base value = (1.0) = 100% default arrow velocity
+		 */
+		public static final Attribute ARROW_VELOCITY = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)

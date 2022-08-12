@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
@@ -15,11 +16,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
 
@@ -48,13 +51,11 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	}
 
 	/**
-	 * Chain the name of this affix to the existing name.  If this is a prefix, it should be applied to the front.
-	 * If this is a suffix, it should be applied to the black.
-	 * @param name The current name, which may have been modified by other affixes.	
-	 * @return The new name, consuming the old name in the process.
+	 * Get a component representing an addition of this affix to the item's name.
+	 * @return The name part, prefix or suffix, as requested.
 	 */
-	public Component chainName(Component name, boolean prefix) {
-		return affix.chainName(stack, rarity, level, name, prefix);
+	public Component getName(boolean prefix) {
+		return affix.getName(stack, rarity, level, prefix);
 	}
 
 	/**
@@ -65,16 +66,16 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @param source The damage source to compare against.<br>
 	 * @return How many protection points this affix is worth against this source.<br>
 	 */
-	public int getProtectionLevel(DamageSource source) {
-		return affix.getProtectionLevel(stack, rarity, level, source);
+	public int getDamageProtection(DamageSource source) {
+		return affix.getDamageProtection(stack, rarity, level, source);
 	}
 
 	/**
 	 * Calculates the additional damage this affix deals.
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
-	public float getExtraDamageFor(MobType creatureType) {
-		return affix.getExtraDamageFor(stack, rarity, level, creatureType);
+	public float getDamageBonus(MobType creatureType) {
+		return affix.getDamageBonus(stack, rarity, level, creatureType);
 	}
 
 	/**
@@ -84,16 +85,16 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @param target The target entity being attacked.
 	 * @param level The level of this affix, if applicable.
 	 */
-	public void onEntityDamaged(LivingEntity user, @Nullable Entity target) {
-		affix.onEntityDamaged(stack, rarity, level, user, target);
+	public void doPostAttack(LivingEntity user, @Nullable Entity target) {
+		affix.doPostAttack(stack, rarity, level, user, target);
 	}
 
 	/**
 	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
 	 * called.
 	 */
-	public void onUserHurt(LivingEntity user, @Nullable Entity attacker) {
-		affix.onUserHurt(stack, rarity, level, user, attacker);
+	public void doPostHurt(LivingEntity user, @Nullable Entity attacker) {
+		affix.doPostHurt(stack, rarity, level, user, attacker);
 	}
 
 	/**
@@ -113,13 +114,6 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	}
 
 	/**
-	 * Called when an arrow that was marked with this affix hits a target.
-	 */
-	public void onArrowImpact(AbstractArrow arrow, HitResult res, HitResult.Type type) {
-		affix.onArrowImpact(rarity, level, arrow, res, type);
-	}
-
-	/**
 	 * Called when a shield with this affix blocks some amount of damage.
 	 * @param entity The blocking entity.
 	 * @param stack  The shield itemstack the affix is on .
@@ -130,6 +124,10 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 */
 	public float onShieldBlock(LivingEntity entity, DamageSource source, float amount) {
 		return affix.onShieldBlock(stack, rarity, level, entity, source, amount);
+	}
+
+	public void onBlockBreak(Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+		affix.onBlockBreak(stack, rarity, level, player, world, pos, state);
 	}
 
 }
