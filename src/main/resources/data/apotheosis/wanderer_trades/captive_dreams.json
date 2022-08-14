@@ -1,4 +1,8 @@
 {
+  "conditions": [{
+    "type": "apotheosis:module",
+    "module": "village"
+  }],
   "type": "apotheosis:basic_trade",
   "rare": "true",
   "input_1": {

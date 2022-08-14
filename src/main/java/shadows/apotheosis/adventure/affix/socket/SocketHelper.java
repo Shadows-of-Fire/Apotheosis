@@ -14,6 +14,10 @@ public class SocketHelper {
 
 	public static final String GEMS = "gems";
 
+	public static List<ItemStack> getGems(ItemStack stack) {
+		return getGems(stack, getSockets(stack));
+	}
+
 	public static List<ItemStack> getGems(ItemStack stack, int size) {
 		List<ItemStack> gems = NonNullList.withSize(size, ItemStack.EMPTY);
 		int i = 0;
@@ -40,6 +44,10 @@ public class SocketHelper {
 		var inst = AffixHelper.getAffixes(stack).get(Apoth.Affixes.SOCKET);
 		if (inst == null) return 0;
 		return (int) inst.level();
+	}
+
+	public static int getEmptySockets(ItemStack stack) {
+		return (int) getGems(stack).stream().filter(ItemStack::isEmpty).count();
 	}
 
 }

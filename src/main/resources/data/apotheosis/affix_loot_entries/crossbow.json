@@ -2,6 +2,6 @@
 	"stack": {
 		"item": "minecraft:crossbow"
 	},
-	"type": "RANGED",
+	"type": "CROSSBOW",
 	"weight": 10
 }

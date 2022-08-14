@@ -4,6 +4,9 @@
     "info.apotheosis.affix_item": "Apotheotic Affix Item",
     "item.modifiers.both_hands": "When in Either Hand:",
     "item.modifiers.socket": "When Socketed:",
+	
+	"death.attack.apotheosis.execute": "%s was executed by %s",
+	"death.attack.apotheosis.execute.item": "%s was executed by %s using %s",
 
     "attribute.modifier.plus.0": "+%s %s",
     "attribute.modifier.plus.1": "+%s%% Base %s",
@@ -145,8 +148,51 @@
 	
 	"affix.apotheosis:spectral": "Spectral",
     "affix.apotheosis:spectral.suffix": "of the Forlorn",
-    "affix.apotheosis:spectral.desc": "You have a %d%% chance to shoot a second arrow.",
+    "affix.apotheosis:spectral.desc": "You have a %s%% chance to shoot a second arrow.",
 	
+	"affix.apotheosis:magical": "Magical",
+    "affix.apotheosis:magical.suffix": "of the Arcane",
+    "affix.apotheosis:magical.desc": "Your arrow deal magic damage.",
+	
+	"affix.apotheosis:festive": "Festive",
+    "affix.apotheosis:festive.suffix": "of Partying",
+    "affix.apotheosis:festive.desc": "Slain enemies have a %s%% chance to be a Loot Piñata",
+	
+	"affix.apotheosis:thunderstruck": "Thunderstruck",
+    "affix.apotheosis:thunderstruck.suffix": "of the Storm",
+    "affix.apotheosis:thunderstruck.desc": "Your attacks deal %s damage to nearby enemies.",
+	
+	"affix.apotheosis:retreating": "Retreating",
+    "affix.apotheosis:retreating.suffix": "of the Jester",
+    "affix.apotheosis:retreating.desc": "You will leap back when blocking in melee.",
+	
+	"affix.apotheosis:telepathic": "Telepathic",
+    "affix.apotheosis:telepathic.suffix": "of Space and Time",
+    "affix.apotheosis:telepathic.desc.weapon": "Mob drops will teleport to you.",
+    "affix.apotheosis:telepathic.desc.tool": "Block drops will teleport to you.",
+
+	"affix.apotheosis:executing": "Executing",
+    "affix.apotheosis:executing.suffix": "of the Executioner",
+    "affix.apotheosis:executing.desc": "Enemies below %s%% max health will be executed.",
+	
+	"affix.apotheosis:cleaving": "Cleaving",
+    "affix.apotheosis:cleaving.suffix": "of the Butcher",
+    "affix.apotheosis:cleaving.desc": "Attacks have a %s%% chance to also hit up to %s nearby enemies.",
+	
+	"affix.apotheosis:radial": "Radial",
+    "affix.apotheosis:radial.suffix": "of the Earthbreaker",
+    "affix.apotheosis:radial.desc.1": "This tool breaks in a 1x2 area.",
+    "affix.apotheosis:radial.desc.2": "This tool breaks in a 3x2 area.",
+    "affix.apotheosis:radial.desc.3": "This tool breaks in a 3x3 area.",
+    "affix.apotheosis:radial.desc.4": "This tool breaks in a 5x5 area.",
+	
+	"affix.apotheosis:omnetic": "Omnetic",
+    "affix.apotheosis:omnetic.suffix": "of the Singularity",
+    "affix.apotheosis:omnetic.desc": "This tool has %s effectiveness against all blocks.",
+	"misc.apotheosis.iron": "iron",
+	"misc.apotheosis.diamond": "diamond",
+	"misc.apotheosis.netherite": "netherite",
+
 	"socket.apotheosis.empty": "Empty Socket",
 	
 	"item.apotheosis.gem.0": "Parity Gem",

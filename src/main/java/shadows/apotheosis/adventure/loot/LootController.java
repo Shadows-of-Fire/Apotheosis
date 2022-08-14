@@ -25,6 +25,10 @@ public class LootController {
 	public static ItemStack createLootItem(ItemStack stack, LootRarity rarity, Random rand) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == null) return stack;
+		return createLootItem(stack, cat, rarity, rand);
+	}
+
+	public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, Random rand) {
 		Set<Affix> selected = new HashSet<>();
 		MutableInt sockets = new MutableInt(0);
 		for (LootRule rule : rarity.rules()) {
@@ -54,6 +58,12 @@ public class LootController {
 		AffixHelper.setName(stack, name);
 
 		return stack;
+	}
+
+	public static ItemStack createRandomLootItem(Random rand, int rarityOffset) {
+		LootRarity rarity = LootRarity.random(rand, rarityOffset);
+		AffixLootEntry entry = AffixLootManager.getRandomEntry(rand);
+		return createLootItem(entry.getStack(), entry.getType(), rarity, rand);
 	}
 
 }

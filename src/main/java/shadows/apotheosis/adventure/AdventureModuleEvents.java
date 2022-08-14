@@ -22,11 +22,14 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -149,6 +152,7 @@ public class AdventureModuleEvents {
 				}
 			}
 		}
+		Apoth.Affixes.MAGICAL.onDamage(e);
 	}
 
 	/**
@@ -271,6 +275,31 @@ public class AdventureModuleEvents {
 			}
 			arrow.getPersistentData().putBoolean("apoth.attrib.done", true);
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void drops(LivingDropsEvent e) {
+		Apoth.Affixes.FESTIVE.drops(e);
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void dropsLowest(LivingDropsEvent e) {
+		Apoth.Affixes.TELEPATHIC.drops(e);
+	}
+
+	@SubscribeEvent
+	public void harvest(HarvestCheck e) {
+		Apoth.Affixes.OMNETIC.harvest(e);
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void speed(BreakSpeed e) {
+		Apoth.Affixes.OMNETIC.speed(e);
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void onBreak(BlockEvent.BreakEvent e) {
+		Apoth.Affixes.RADIAL.onBreak(e);
 	}
 
 }

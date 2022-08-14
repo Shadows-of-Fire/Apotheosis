@@ -75,7 +75,7 @@ public class Apotheosis {
 	public static Configuration config;
 	public static boolean enableSpawner = true;
 	public static boolean enableGarden = true;
-	public static boolean enableDeadly = true;
+	public static boolean enableAdventure = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillage = true;
@@ -89,12 +89,12 @@ public class Apotheosis {
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
 		config.setTitle("Apotheosis Module Control");
-		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.");
+		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");
 		if (config.hasChanged()) config.save();
 	}
 
@@ -104,7 +104,7 @@ public class Apotheosis {
 		if (enableEnch) bus.register(new EnchModule());
 		if (enableSpawner) bus.register(new SpawnerModule());
 		if (enableGarden) bus.register(new GardenModule());
-		if (enableDeadly) bus.register(new AdventureModule());
+		if (enableAdventure) bus.register(new AdventureModule());
 		if (enablePotion) bus.register(new PotionModule());
 		if (enableVillage) bus.register(new VillageModule());
 

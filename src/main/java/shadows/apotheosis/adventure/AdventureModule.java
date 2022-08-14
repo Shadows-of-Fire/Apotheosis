@@ -39,12 +39,24 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.AttributeAffix;
+import shadows.apotheosis.adventure.affix.effect.CleavingAffix;
+import shadows.apotheosis.adventure.affix.effect.ExecutingAffix;
+import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
+import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
+import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
 import shadows.apotheosis.adventure.affix.effect.PotionAffix;
 import shadows.apotheosis.adventure.affix.effect.PotionAffix.Target;
+import shadows.apotheosis.adventure.affix.effect.RadialAffix;
+import shadows.apotheosis.adventure.affix.effect.RetreatingAffix;
 import shadows.apotheosis.adventure.affix.effect.SpectralShotAffix;
+import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
+import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
+import shadows.apotheosis.adventure.affix.socket.GemManager;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
+import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
+import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.NameHelper;
@@ -65,6 +77,11 @@ public class AdventureModule {
 		this.reload(null);
 		MinecraftForge.EVENT_BUS.register(new AdventureModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
+		GemManager.INSTANCE.registerToBus();
+		AffixLootManager.INSTANCE.registerToBus();
+		Apotheosis.HELPER.registerProvider(f -> {
+			f.addRecipe(new SocketingRecipe());
+		});
 	}
 
 	@SubscribeEvent
@@ -86,6 +103,7 @@ public class AdventureModule {
 
 	@SubscribeEvent
 	public void serializers(Register<RecipeSerializer<?>> e) {
+		e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE.setRegistryName("socketing"));
 	}
 
 	@SubscribeEvent
@@ -102,7 +120,7 @@ public class AdventureModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("draw_speed"),
-				new RangedAttribute("apotheosis:crit_chance", 1.0D, 1.0D, 2.0D).setSyncable(true).setRegistryName("crit_chance"),
+				new RangedAttribute("apotheosis:crit_chance", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("crit_chance"),
 				new RangedAttribute("apotheosis:crit_damage", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("crit_damage"),
 				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("cold_damage"),
 				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("fire_damage"),
@@ -441,7 +459,16 @@ public class AdventureModule {
 				.types(LootCategory::isRanged)
 				.build(AffixType.EFFECT, Target.ARROW_TARGET, "satanic"),
 				
-				new SpectralShotAffix().setRegistryName("spectral")
+				new SpectralShotAffix().setRegistryName("spectral"),
+				new MagicalArrowAffix().setRegistryName("magical"),
+				new FestiveAffix().setRegistryName("festive"),
+				new ThunderstruckAffix().setRegistryName("thunderstruck"),
+				new RetreatingAffix().setRegistryName("retreating"),
+				new TelepathicAffix().setRegistryName("telepathic"),
+				new ExecutingAffix().setRegistryName("executing"),
+				new CleavingAffix().setRegistryName("cleaving"),
+				new OmneticAffix().setRegistryName("omnetic"),
+				new RadialAffix().setRegistryName("radial")
 		);
 		//Formatter::on
 	}

@@ -13,6 +13,11 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
+import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
+import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
+import shadows.apotheosis.adventure.affix.effect.RadialAffix;
+import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
@@ -252,9 +257,12 @@ public class Apoth {
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Affixes {
-
 		public static final SocketAffix SOCKET = null;
-
+		public static final MagicalArrowAffix MAGICAL = null;
+		public static final FestiveAffix FESTIVE = null;
+		public static final TelepathicAffix TELEPATHIC = null;
+		public static final OmneticAffix OMNETIC = null;
+		public static final RadialAffix RADIAL = null;
 	}
 
 	public static final class Tags {

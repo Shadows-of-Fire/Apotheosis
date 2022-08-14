@@ -1,0 +1,11 @@
+{
+	"weight": 2,
+	"variant": 6,
+	"attribute": "apotheosis:fire_damage",
+	"operation": "ADDITION",
+	"value": {
+		"min": 4,
+		"steps": 10,
+		"step": 0.5
+	}
+}

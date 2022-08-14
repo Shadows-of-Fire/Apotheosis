@@ -1,6 +1,7 @@
 package shadows.apotheosis.adventure.affix.socket;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -19,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.Apoth;
 import shadows.placebo.util.AttributeHelper;
 
 public class GemItem extends Item {
@@ -58,15 +60,25 @@ public class GemItem extends Item {
 		return Pair.of(attrib, modif);
 	}
 
-	@Nullable
 	public static void setStoredBonus(ItemStack stack, Attribute attrib, AttributeModifier modif) {
 		CompoundTag tag = modif.save();
 		tag.putString("attribute", attrib.getRegistryName().toString());
 		stack.getOrCreateTag().put(MODIFIER, tag);
 	}
 
+	public static void setVariant(ItemStack stack, int variant) {
+		stack.getOrCreateTag().putInt("variant", variant);
+	}
+
 	public static int getVariant(ItemStack stack) {
 		return stack.hasTag() ? stack.getTag().getInt("variant") : 0;
+	}
+
+	public static ItemStack fromGem(Gem gem, Random rand) {
+		ItemStack stack = new ItemStack(Apoth.Items.GEM);
+		setVariant(stack, gem.getVariant());
+		setStoredBonus(stack, gem.attribute, new AttributeModifier("GemBonus_" + gem.getId(), gem.value.get(rand.nextFloat()), gem.operation));
+		return stack;
 	}
 
 }

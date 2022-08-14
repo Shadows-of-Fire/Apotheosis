@@ -79,6 +79,13 @@ public class EnchModuleEvents {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void dropsLowest(LivingDropsEvent e) {
+		if (e.getSource().getEntity() instanceof Player p) {
+			Apoth.Enchantments.KNOWLEDGE.drops(p, e);
+		}
+	}
+
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void healing(LivingHealEvent e) {
 		Apoth.Enchantments.LIFE_MENDING.lifeMend(e);

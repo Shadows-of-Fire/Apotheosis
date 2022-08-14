@@ -44,7 +44,7 @@ public class ItemStackMixin {
 
 	@Inject(method = "getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;", at = @At(shift = Shift.BEFORE, value = "JUMP", ordinal = 9, opcode = Opcodes.IFEQ), locals = LocalCapture.CAPTURE_FAILSOFT)
 	public void getTooltipLines(@Nullable Player pPlayer, TooltipFlag pIsAdvanced, CallbackInfoReturnable<List<Component>> cir, List<Component> list) {
-		if (Apotheosis.enableDeadly) list.add(new TextComponent("APOTH_REMOVE_MARKER"));
+		if (Apotheosis.enableAdventure) list.add(new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
 }

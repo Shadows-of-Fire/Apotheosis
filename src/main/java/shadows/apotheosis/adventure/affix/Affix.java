@@ -81,7 +81,7 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(loreComponent("affix." + this.getRegistryName() + ".desc", fmt(level)));
+		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", fmt(level)).withStyle(ChatFormatting.YELLOW));
 	}
 
 	/**

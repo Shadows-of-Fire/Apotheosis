@@ -2,6 +2,6 @@
 	"stack": {
 		"item": "minecraft:bow"
 	},
-	"type": "RANGED",
+	"type": "BOW",
 	"weight": 10
 }

@@ -107,9 +107,9 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 	 * Rarity      | Chance <br>
 	 * Common      | 40% <br>
 	 * Uncommon    | 30% <br>
-	 * Rare        | 18% <br>
-	 * Epic        | 7% <br>
-	 * Mythic      | 4.5% <br>
+	 * Rare        | 15% <br>
+	 * Epic        | 9% <br>
+	 * Mythic      | 5.5% <br>
 	 * Ancient     | 0.5% <br>
 	 * @return A random loot rarity, offset by the given min value.
 	 */
@@ -126,7 +126,7 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 		} else if (range < AdventureConfig.rarityThresholds[4]) {
 			return MYTHIC;
 		} else {
-			return ANCIENT;
+			return MYTHIC; // ANCIENT;
 		}
 	}
 

@@ -20,7 +20,7 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class SpectralShotAffix extends Affix {
 
-	protected static Float2FloatFunction LEVEL_FUNC = AffixHelper.step(0.2F, 8, 0.05F);
+	protected static final Float2FloatFunction LEVEL_FUNC = AffixHelper.step(0.2F, 8, 0.05F);
 
 	public SpectralShotAffix() {
 		super(AffixType.EFFECT);

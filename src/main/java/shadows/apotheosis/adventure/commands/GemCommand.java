@@ -22,7 +22,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.adventure.affix.socket.Gem;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
+import shadows.apotheosis.adventure.affix.socket.GemManager;
 
 public class GemCommand {
 
@@ -34,8 +36,18 @@ public class GemCommand {
 		return SharedSuggestionProvider.suggest(ForgeRegistries.ATTRIBUTES.getKeys().stream().map(ResourceLocation::toString), builder);
 	};
 
+	public static final SuggestionProvider<CommandSourceStack> SUGGEST_GEM = (ctx, builder) -> {
+		return SharedSuggestionProvider.suggest(GemManager.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
+	};
+
 	public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-		root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(SUGGEST_ATTRIB).then(Commands.argument("op", StringArgumentType.word()).suggests(SUGGEST_OP).then(Commands.argument("value", FloatArgumentType.floatArg()).then(Commands.argument("variant", IntegerArgumentType.integer(0, 11)).executes(c -> {
+		root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {
+			Gem gem = GemManager.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));
+			Player p = c.getSource().getPlayerOrException();
+			ItemStack stack = GemItem.fromGem(gem, p.random);
+			p.addItem(stack);
+			return 0;
+		}))).then(Commands.literal("custom").then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(SUGGEST_ATTRIB).then(Commands.argument("op", StringArgumentType.word()).suggests(SUGGEST_OP).then(Commands.argument("value", FloatArgumentType.floatArg()).then(Commands.argument("variant", IntegerArgumentType.integer(0, 11)).executes(c -> {
 			Player p = c.getSource().getPlayerOrException();
 			ItemStack gem = new ItemStack(Apoth.Items.GEM);
 			CompoundTag tag = gem.getOrCreateTag();
@@ -47,7 +59,12 @@ public class GemCommand {
 			GemItem.setStoredBonus(gem, attrib, modif);
 			p.addItem(gem);
 			return 0;
-		}))))));
+		})))))).then(Commands.literal("random").executes(c -> {
+			Player p = c.getSource().getPlayerOrException();
+			ItemStack gem = GemManager.getRandomGemStack(p.random);
+			p.addItem(gem);
+			return 0;
+		})));
 	}
 
 }

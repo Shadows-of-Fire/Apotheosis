@@ -69,7 +69,7 @@ public enum LootCategory {
 	}
 
 	public boolean isRanged() {
-		return this == BOW || this == CROSSBOW;
+		return this == BOW || this == CROSSBOW || this == TRIDENT;
 	}
 
 	public boolean isDefensive() {
