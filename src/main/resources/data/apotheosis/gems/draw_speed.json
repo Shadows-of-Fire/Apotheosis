@@ -1,5 +1,6 @@
 {
 	"weight": 5,
+	"quality": 1,
 	"variant": 0,
 	"attribute": "apotheosis:draw_speed",
 	"operation": "MULTIPLY_TOTAL",

@@ -1,6 +1,8 @@
 ## 5.4.0
 * The Deadly Module is back!
-* Not yet released, this is here for staging purposes.
+  * However, it's actually called the Adventure Module now.
+  * Currently, the Adventure Module only includes Affix Loot.  Bosses, random spawners, etc will be coming later.
+  * Affix Loot can be obtained from naturally spawned mobs, loot chests, and wandering traders.
 * Fixed Silent modifier not showing in spawner tooltips.
 * Fixed a crash when modules were disabled.
 * Fixed shield bash applying when in the offhand
@@ -8,6 +10,7 @@
   * You arent' supposed to be able to get this by any means.
 * Added a config to allow certain potions to be marked as "Extended Duration" for potion charms.
   * This helps prevent weirdness with stuff that breaks when it expires and reapplies rapidly.
+* Draconic Endshelves have been buffed to 5 Eterna (was 4) so you only need 2 total dragon heads to max out.
 
 ## 5.3.6
 * HolyDiana: Updated Chinese Translation.

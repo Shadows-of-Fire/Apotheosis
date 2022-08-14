@@ -1,5 +1,6 @@
 {
 	"weight": 2,
+	"quality": 3,
 	"variant": 5,
 	"attribute": "forge:entity_gravity",
 	"operation": "MULTIPLY_TOTAL",

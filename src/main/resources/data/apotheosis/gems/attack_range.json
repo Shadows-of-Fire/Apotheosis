@@ -1,5 +1,6 @@
 {
 	"weight": 5,
+	"quality": 2,
 	"variant": 8,
 	"attribute": "forge:attack_range",
 	"operation": "MULTIPLY_TOTAL",

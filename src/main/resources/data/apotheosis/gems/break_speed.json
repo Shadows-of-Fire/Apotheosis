@@ -1,5 +1,6 @@
 {
 	"weight": 3,
+	"quality": 3,
 	"variant": 5,
 	"attribute": "apotheosis:break_speed",
 	"operation": "MULTIPLY_TOTAL",

@@ -17,7 +17,10 @@ public class AdventureConfig {
 
 	//Boss Stats
 	//public static int surfaceBossChance = 85;
-	public static int randomAffixItem = 125;
+	public static float randomAffixItem = 0.04F;
+	public static float gemDropChance = 0.03F;
+	public static float affixChestChance = 0.75F;
+	public static float gemChestChance = 0.55F;
 	//public static boolean surfaceBossLightning = true;
 	//public static boolean curseBossItems = false;
 
@@ -57,6 +60,13 @@ public class AdventureConfig {
 				e.printStackTrace();
 			}
 		}
+
+		randomAffixItem = c.getFloat("Random Affix Chance", "affixes", randomAffixItem, 0, 1, "The chance that a naturally spawned mob will be granted an affix item. 0 = 0%, 1 = 100%");
+		gemDropChance = c.getFloat("Gem Drop Chance", "affixes", gemDropChance, 0, 1, "The chance that a mob will drop a gem. 0 = 0%, 1 = 100%");
+
+		affixChestChance = c.getFloat("Affix Chest Chance", "affixes", gemChestChance, 0, 1, "The chance that an affix item will be added to a loot chest. 0 = 0%, 1 = 100%");
+		gemChestChance = c.getFloat("Gem Chest Chance", "affixes", gemChestChance, 0, 1, "The chance that a gem will be added to a loot chest. 0 = 0%, 1 = 100%");
+
 	}
 
 }

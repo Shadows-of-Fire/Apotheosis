@@ -1,5 +1,6 @@
 {
 	"weight": 5,
+	"quality": 1,
 	"variant": 3,
 	"attribute": "minecraft:generic.attack_damage",
 	"operation": "MULTIPLY_TOTAL",

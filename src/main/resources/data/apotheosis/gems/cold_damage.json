@@ -1,5 +1,6 @@
 {
 	"weight": 2,
+	"quality": 4,
 	"variant": 1,
 	"attribute": "apotheosis:cold_damage",
 	"operation": "ADDITION",

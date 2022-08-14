@@ -1,5 +1,6 @@
 {
 	"weight": 3,
+	"quality": 1,
 	"variant": 4,
 	"attribute": "minecraft:generic.armor",
 	"operation": "MULTIPLY_TOTAL",

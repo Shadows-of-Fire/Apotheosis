@@ -1,5 +1,6 @@
 {
 	"weight": 1,
+	"quality": 5,
 	"variant": 10,
 	"attribute": "apotheosis:current_hp_damage",
 	"operation": "MULTIPLY_TOTAL",

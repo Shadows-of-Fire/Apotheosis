@@ -1,5 +1,6 @@
 {
 	"weight": 1,
+	"quality": 3,
 	"variant": 7,
 	"attribute": "minecraft:generic.armor_toughness",
 	"operation": "ADDITION",

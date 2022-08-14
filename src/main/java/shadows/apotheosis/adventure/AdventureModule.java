@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -57,6 +58,8 @@ import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
+import shadows.apotheosis.adventure.loot.AffixLootModifier;
+import shadows.apotheosis.adventure.loot.GemLootModifier;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.NameHelper;
@@ -104,6 +107,12 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void serializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE.setRegistryName("socketing"));
+	}
+
+	@SubscribeEvent
+	public void lootSerializers(Register<GlobalLootModifierSerializer<?>> e) {
+		e.getRegistry().register(new GemLootModifier.Serializer().setRegistryName("gems"));
+		e.getRegistry().register(new AffixLootModifier.Serializer().setRegistryName("affix_loot"));
 	}
 
 	@SubscribeEvent
@@ -497,7 +506,7 @@ public class AdventureModule {
 	 * Loads all configurable data for the deadly module.
 	 */
 	public void reload(ApotheosisReloadEvent e) {
-		Configuration mainConfig = new Configuration(new File(Apotheosis.configDir, "deadly.cfg"));
+		Configuration mainConfig = new Configuration(new File(Apotheosis.configDir, "adventure.cfg"));
 		Configuration nameConfig = new Configuration(new File(Apotheosis.configDir, "names.cfg"));
 		AdventureConfig.load(mainConfig);
 		NameHelper.load(nameConfig);

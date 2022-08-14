@@ -61,7 +61,7 @@ public class GemCommand {
 			return 0;
 		})))))).then(Commands.literal("random").executes(c -> {
 			Player p = c.getSource().getPlayerOrException();
-			ItemStack gem = GemManager.getRandomGemStack(p.random);
+			ItemStack gem = GemManager.getRandomGemStack(p.random, p.getLuck());
 			p.addItem(gem);
 			return 0;
 		})));

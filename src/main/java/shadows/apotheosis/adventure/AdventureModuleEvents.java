@@ -13,10 +13,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -25,6 +29,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
@@ -40,6 +45,7 @@ import shadows.apotheosis.Apotheosis.ApotheosisCommandEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.socket.GemManager;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
 import shadows.apotheosis.adventure.commands.GemCommand;
 import shadows.apotheosis.adventure.commands.LootifyCommand;
@@ -47,6 +53,7 @@ import shadows.apotheosis.adventure.commands.ModifierCommand;
 import shadows.apotheosis.adventure.commands.RarityCommand;
 import shadows.apotheosis.adventure.commands.SocketCommand;
 import shadows.apotheosis.adventure.loot.LootCategory;
+import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.mixin.LivingEntityInvoker;
 import shadows.apotheosis.util.DamageSourceUtil;
@@ -277,6 +284,16 @@ public class AdventureModuleEvents {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void dropsHigh(LivingDropsEvent e) {
+		if (e.getSource().getEntity() instanceof Player p) {
+			if (p instanceof FakePlayer) return;
+			if (p.random.nextFloat() <= AdventureConfig.gemDropChance) {
+				e.getDrops().add(new ItemEntity(p.level, p.getX(), p.getY(), p.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck()), 0, 0, 0));
+			}
+		}
+	}
+
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) {
 		Apoth.Affixes.FESTIVE.drops(e);
@@ -300,6 +317,18 @@ public class AdventureModuleEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onBreak(BlockEvent.BreakEvent e) {
 		Apoth.Affixes.RADIAL.onBreak(e);
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void special(SpecialSpawn e) {
+		if (e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem) {
+			e.setCanceled(true);
+			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), 0, 0);
+			LootCategory cat = LootCategory.forItem(affixItem);
+			EquipmentSlot slot = cat.getSlots(affixItem)[0];
+			e.getEntityLiving().setItemSlot(slot, affixItem);
+			if (e.getEntityLiving() instanceof Mob mob) mob.setGuaranteedDrop(slot);
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 {
 	"weight": 1,
+	"quality": 4,
 	"variant": 4,
 	"attribute": "apotheosis:overheal",
 	"operation": "MULTIPLY_TOTAL",

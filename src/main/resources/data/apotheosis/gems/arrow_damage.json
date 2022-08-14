@@ -1,5 +1,6 @@
 {
 	"weight": 2,
+	"quality": 2,
 	"variant": 3,
 	"attribute": "apotheosis:arrow_damage",
 	"operation": "MULTIPLY_TOTAL",

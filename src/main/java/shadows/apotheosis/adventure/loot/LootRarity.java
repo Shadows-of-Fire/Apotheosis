@@ -53,7 +53,7 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.EFFECT, 1),
 			new LootRule(AffixType.EFFECT, 0.65F),
-			new LootRule(AffixType.SOCKET, 0.33F),
+			new LootRule(AffixType.SOCKET, 0.5F),
 			new LootRule(AffixType.SOCKET, 0.33F)
 	));
 
@@ -64,9 +64,9 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 			new LootRule(AffixType.EFFECT, 1),
 			new LootRule(AffixType.EFFECT, 1),
 			new LootRule(AffixType.EFFECT, 0.3F),
-			new LootRule(AffixType.SOCKET, 0.33F),
-			new LootRule(AffixType.SOCKET, 0.33F),
-			new LootRule(AffixType.SOCKET, 0.33F)
+			new LootRule(AffixType.SOCKET, 0.5F),
+			new LootRule(AffixType.SOCKET, 0.45F),
+			new LootRule(AffixType.SOCKET, 0.4F)
 	));
 	//Formatter::on
 

@@ -1,5 +1,6 @@
 {
 	"weight": 2,
+	"quality": 5,
 	"variant": 5,
 	"attribute": "apotheosis:crit_damage",
 	"operation": "MULTIPLY_TOTAL",

@@ -17,6 +17,7 @@ public final class Gem extends TypeKeyedBase<Gem> implements WeightedEntry {
 
 	protected int weight;
 	protected int variant;
+	protected int quality;
 	protected Attribute attribute;
 	protected Operation operation;
 	protected Float2FloatFunction value;
@@ -29,6 +30,10 @@ public final class Gem extends TypeKeyedBase<Gem> implements WeightedEntry {
 		return this.variant;
 	}
 
+	public int getQuality() {
+		return this.quality;
+	}
+
 	@Override
 	public Weight getWeight() {
 		return Weight.of(weight);
@@ -38,6 +43,7 @@ public final class Gem extends TypeKeyedBase<Gem> implements WeightedEntry {
 		Gem gem = new Gem();
 		gem.weight = GsonHelper.getAsInt(json, "weight");
 		gem.variant = GsonHelper.getAsInt(json, "variant");
+		gem.quality = GsonHelper.getAsInt(json, "quality");
 		gem.attribute = JsonUtil.getRegistryObject(json, "attribute", ForgeRegistries.ATTRIBUTES);
 		gem.operation = GemManager.GSON.fromJson(json.get("operation"), Operation.class);
 		JsonObject value = GsonHelper.getAsJsonObject(json, "value");

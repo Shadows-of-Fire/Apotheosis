@@ -1,5 +1,6 @@
 {
 	"weight": 2,
+	"quality": 1,
 	"variant": 8,
 	"attribute": "forge:step_height_addition",
 	"operation": "ADDITION",

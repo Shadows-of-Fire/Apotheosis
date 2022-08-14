@@ -13,6 +13,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
@@ -62,6 +63,7 @@ public class CleavingAffix extends Affix {
 			if (user.level.random.nextFloat() < chance && user instanceof Player player) {
 				Predicate<Entity> pred = e -> {
 					if (e instanceof Animal && !(target instanceof Animal)) return false;
+					if (e instanceof AbstractVillager && !(target instanceof AbstractVillager)) return false;
 					return e != user && e instanceof LivingEntity;
 				};
 				List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), pred);

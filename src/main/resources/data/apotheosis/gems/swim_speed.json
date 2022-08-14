@@ -1,5 +1,6 @@
 {
 	"weight": 4,
+	"quality": 0,
 	"variant": 1,
 	"attribute": "forge:swim_speed",
 	"operation": "MULTIPLY_TOTAL",

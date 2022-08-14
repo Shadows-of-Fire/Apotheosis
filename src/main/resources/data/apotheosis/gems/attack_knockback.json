@@ -1,5 +1,6 @@
 {
 	"weight": 3,
+	"quality": 2,
 	"variant": 8,
 	"attribute": "minecraft:generic.attack_knockback",
 	"operation": "ADDITION",

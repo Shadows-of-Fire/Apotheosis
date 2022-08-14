@@ -1,5 +1,6 @@
 {
 	"weight": 2,
+	"quality": 3,
 	"variant": 2,
 	"attribute": "minecraft:generic.luck",
 	"operation": "ADDITION",

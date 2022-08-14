@@ -1,5 +1,6 @@
 {
 	"weight": 2,
+	"quality": 4,
 	"variant": 6,
 	"attribute": "apotheosis:fire_damage",
 	"operation": "ADDITION",

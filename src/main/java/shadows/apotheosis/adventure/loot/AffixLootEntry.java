@@ -12,11 +12,13 @@ import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 public class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements WeightedEntry {
 
 	protected final int weight;
+	protected final int quality;
 	protected final ItemStack stack;
 	protected final LootCategory type;
 
-	public AffixLootEntry(int weight, ItemStack stack, LootCategory type) {
+	public AffixLootEntry(int weight, int quality, ItemStack stack, LootCategory type) {
 		this.weight = weight;
+		this.quality = quality;
 		this.stack = stack;
 		this.type = type;
 	}
@@ -24,6 +26,14 @@ public class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements Wei
 	@Override
 	public Weight getWeight() {
 		return Weight.of(weight);
+	}
+
+	public int getIntWeight() {
+		return weight;
+	}
+
+	public int getQuality() {
+		return this.quality;
 	}
 
 	public ItemStack getStack() {

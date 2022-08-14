@@ -60,9 +60,9 @@ public class LootController {
 		return stack;
 	}
 
-	public static ItemStack createRandomLootItem(Random rand, int rarityOffset) {
+	public static ItemStack createRandomLootItem(Random rand, int rarityOffset, float luck) {
 		LootRarity rarity = LootRarity.random(rand, rarityOffset);
-		AffixLootEntry entry = AffixLootManager.getRandomEntry(rand);
+		AffixLootEntry entry = AffixLootManager.getRandomEntry(rand, luck);
 		return createLootItem(entry.getStack(), entry.getType(), rarity, rand);
 	}
 

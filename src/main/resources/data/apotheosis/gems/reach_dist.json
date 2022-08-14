@@ -1,5 +1,6 @@
 {
 	"weight": 5,
+	"quality": 1,
 	"variant": 8,
 	"attribute": "forge:reach_distance",
 	"operation": "MULTIPLY_TOTAL",

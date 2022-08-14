@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import org.spongepowered.asm.mixin.Unique;
 
+import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.json.ItemAdapter;
@@ -50,8 +52,13 @@ public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> 
 	 * @param rand A random.
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
-	public static AffixLootEntry getRandomEntry(Random rand) {
-		return WeightedRandom.getRandomItem(rand, INSTANCE.list, INSTANCE.totalWeight).get();
+	public static AffixLootEntry getRandomEntry(Random rand, float luck) {
+		if (luck == 0) return WeightedRandom.getRandomItem(rand, INSTANCE.list, INSTANCE.totalWeight).get();
+		List<Wrapper<AffixLootEntry>> temp = new ArrayList<>(INSTANCE.list.size());
+		for (AffixLootEntry g : INSTANCE.list) {
+			temp.add(WeightedEntry.wrap(g, getModifiedWeight(g.weight, g.quality, luck)));
+		}
+		return WeightedRandom.getRandomItem(rand, temp).get().getData();
 	}
 
 	/**
@@ -60,9 +67,20 @@ public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> 
 	 * @param rarity If this is {@link LootRarity#ANCIENT}, then the item returned will be an {@link Unique}
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
-	public static AffixLootEntry getRandomEntry(Random rand, LootCategory type) {
-		if (type == null) return getRandomEntry(rand);
-		return WeightedRandom.getRandomItem(rand, INSTANCE.list.stream().filter(p -> p.getType() == type).collect(Collectors.toList())).get();
+	public static AffixLootEntry getRandomEntry(Random rand, LootCategory type, float luck) {
+		if (type == null) return getRandomEntry(rand, luck);
+		List<AffixLootEntry> filtered = INSTANCE.list.stream().filter(p -> p.getType() == type).collect(Collectors.toList());
+		if (luck == 0) return WeightedRandom.getRandomItem(rand, filtered).get();
+
+		List<Wrapper<AffixLootEntry>> temp = new ArrayList<>(filtered.size());
+		for (AffixLootEntry g : filtered) {
+			temp.add(WeightedEntry.wrap(g, getModifiedWeight(g.weight, g.quality, luck)));
+		}
+		return WeightedRandom.getRandomItem(rand, temp).get().getData();
+	}
+
+	public static int getModifiedWeight(int weight, int quality, float luck) {
+		return Math.max(0, (int) (quality * luck) + weight);
 	}
 
 }
