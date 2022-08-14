@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -244,7 +245,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 			float[] stats = { 0, 15F, 0, 0, 0 };
 			for (int j = -1; j <= 1; ++j) {
 				for (int k = -1; k <= 1; ++k) {
-					if ((j != 0 || k != 0) && world.isEmptyBlock(pos.offset(k, 0, j)) && world.isEmptyBlock(pos.offset(k, 1, j))) {
+					if ((j != 0 || k != 0) && isEmptyEnough(world, pos.offset(k, 0, j)) && isEmptyEnough(world, pos.offset(k, 1, j))) {
 						gatherStats(eternaMap, stats, world, pos.offset(k * 2, 0, j * 2));
 						gatherStats(eternaMap, stats, world, pos.offset(k * 2, 1, j * 2));
 						if (k != 0 && j != 0) {
@@ -269,6 +270,10 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 			this.clues.set((int) stats[4]);
 			return this;
 		}).orElse(this);
+	}
+
+	private static boolean isEmptyEnough(Level level, BlockPos pos) {
+		return level.isEmptyBlock(pos) || level.getFluidState(pos).is(FluidTags.WATER);
 	}
 
 	public static void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {

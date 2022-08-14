@@ -36,6 +36,7 @@ public class SocketingRecipe extends UpgradeRecipe {
 	 */
 	public ItemStack assemble(Container pInv) {
 		ItemStack out = pInv.getItem(0).copy();
+		if (out.isEmpty()) return ItemStack.EMPTY;
 		int sockets = SocketHelper.getSockets(out);
 		int free = SocketHelper.getEmptySockets(out);
 		List<ItemStack> gems = SocketHelper.getGems(out, sockets);

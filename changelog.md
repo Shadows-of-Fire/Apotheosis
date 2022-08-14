@@ -11,6 +11,9 @@
 * Added a config to allow certain potions to be marked as "Extended Duration" for potion charms.
   * This helps prevent weirdness with stuff that breaks when it expires and reapplies rapidly.
 * Draconic Endshelves have been buffed to 5 Eterna (was 4) so you only need 2 total dragon heads to max out.
+* More Wandering Traders should spawn, but they'll also despawn a bit faster.
+  * They can also spawn underground.
+* Made enchantment tables ignore water during checks.
 
 ## 5.3.6
 * HolyDiana: Updated Chinese Translation.

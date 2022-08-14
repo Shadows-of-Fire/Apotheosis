@@ -17,10 +17,6 @@ public class AdventureConfig {
 
 	//Boss Stats
 	//public static int surfaceBossChance = 85;
-	public static float randomAffixItem = 0.04F;
-	public static float gemDropChance = 0.03F;
-	public static float affixChestChance = 0.75F;
-	public static float gemChestChance = 0.55F;
 	//public static boolean surfaceBossLightning = true;
 	//public static boolean curseBossItems = false;
 
@@ -31,12 +27,17 @@ public class AdventureConfig {
 	//public static int troveAttempts = 8;
 	//public static int tomeTowerChance = 125;
 
-	public static boolean affixTrades = true;
 	//public static boolean mythicUnbreakable = true;
 
 	//public static int spawnerValueChance = 9;
 
+	// Affix
+	public static float randomAffixItem = 0.04F;
+	public static float gemDropChance = 0.03F;
+	public static float affixChestChance = 0.75F;
+	public static float gemChestChance = 0.55F;
 	public static int[] rarityThresholds = new int[] { 400, 700, 850, 940, 995 };
+	public static boolean disableQuarkOnAffixItems = true;
 
 	public static void load(Configuration c) {
 		int i = 0;
@@ -67,6 +68,7 @@ public class AdventureConfig {
 		affixChestChance = c.getFloat("Affix Chest Chance", "affixes", gemChestChance, 0, 1, "The chance that an affix item will be added to a loot chest. 0 = 0%, 1 = 100%");
 		gemChestChance = c.getFloat("Gem Chest Chance", "affixes", gemChestChance, 0, 1, "The chance that a gem will be added to a loot chest. 0 = 0%, 1 = 100%");
 
+		disableQuarkOnAffixItems = c.getBoolean("Disable Quark Tooltips for Affix Items", "affixes", true, "If Quark's Attribute Tooltip handling is disabled for affix items");
 	}
 
 }

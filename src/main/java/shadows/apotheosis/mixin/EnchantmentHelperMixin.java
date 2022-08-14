@@ -56,7 +56,7 @@ public class EnchantmentHelperMixin {
 	/**
 	 * Injection to {@link EnchantmentHelper#getDamageProtection(Iterable, DamageSource)}
 	 */
-	@Inject(at = @At("RETURN"), method = "getDamageProtection(ILnet/minecraft/world/damagesource/DamageSource;)I", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "getDamageProtection(Ljava/lang/Iterable;Lnet/minecraft/world/damagesource/DamageSource;)I", cancellable = true)
 	private static void apoth_getDamageProtection(Iterable<ItemStack> stacks, DamageSource source, CallbackInfoReturnable<Integer> cir) {
 		int prot = cir.getReturnValueI();
 		for (ItemStack s : stacks) {
@@ -72,13 +72,13 @@ public class EnchantmentHelperMixin {
 	 * Injection to {@link EnchantmentHelper#getDamageBonus(ItemStack, MobType)
 	 */
 	@Inject(at = @At("RETURN"), method = "getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F", cancellable = true)
-	private static float apoth_getDamageBonus(ItemStack stack, MobType type, CallbackInfoReturnable<Float> cir) {
+	private static void apoth_getDamageBonus(ItemStack stack, MobType type, CallbackInfoReturnable<Float> cir) {
 		float dmg = cir.getReturnValueF();
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 		for (AffixInstance inst : affixes.values()) {
 			dmg += inst.getDamageBonus(type);
 		}
-		return dmg;
+		cir.setReturnValue(dmg);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class EnchantmentHelperMixin {
 	/**
 	 * Injection to {@link EnchantmentHelper#doPostHurtEffects(LivingEntity, Entity)}
 	 */
-	@Inject(at = @At("TAIL"), method = "doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;)V")
+	@Inject(at = @At("TAIL"), method = "doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V")
 	private static void apoth_doPostHurtEffects(LivingEntity user, Entity attacker, CallbackInfo ci) {
 		for (ItemStack s : user.getAllSlots()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
