@@ -2,6 +2,10 @@ package shadows.apotheosis;
 
 import java.io.File;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -13,6 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -26,8 +31,8 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.compat.PatchouliCompat;
-import shadows.apotheosis.deadly.DeadlyModule;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
@@ -70,7 +75,7 @@ public class Apotheosis {
 	public static Configuration config;
 	public static boolean enableSpawner = true;
 	public static boolean enableGarden = true;
-	public static boolean enableDeadly = true;
+	public static boolean enableAdventure = true;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillage = true;
@@ -84,12 +89,12 @@ public class Apotheosis {
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-		enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
+		enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
 		config.setTitle("Apotheosis Module Control");
-		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.");
+		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");
 		if (config.hasChanged()) config.save();
 	}
 
@@ -99,15 +104,16 @@ public class Apotheosis {
 		if (enableEnch) bus.register(new EnchModule());
 		if (enableSpawner) bus.register(new SpawnerModule());
 		if (enableGarden) bus.register(new GardenModule());
-		if (enableDeadly) bus.register(new DeadlyModule());
+		if (enableAdventure) bus.register(new AdventureModule());
 		if (enablePotion) bus.register(new PotionModule());
 		if (enableVillage) bus.register(new VillageModule());
 
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
-		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
+		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
+		MinecraftForge.EVENT_BUS.addListener(this::cmds);
 		if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
 		Apoth.RecipeTypes.FLETCHING.getClass(); // Static init wew
 	}
@@ -121,13 +127,22 @@ public class Apotheosis {
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
 	}
 
+	@SubscribeEvent
 	public void reloads(AddReloadListenerEvent e) {
 		e.addListener(RunnableReloader.of(() -> MinecraftForge.EVENT_BUS.post(new ApotheosisReloadEvent())));
 	}
 
+	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
 		Player p = e.getPlayer();
 		localAtkStrength = p.getAttackStrengthScale(0.5F);
+	}
+
+	@SubscribeEvent
+	public void cmds(RegisterCommandsEvent e) {
+		var builder = Commands.literal("apoth");
+		MinecraftForge.EVENT_BUS.post(new ApotheosisCommandEvent(builder));
+		e.getDispatcher().register(builder);
 	}
 
 	public static Ingredient potionIngredient(Potion type) {
@@ -145,6 +160,23 @@ public class Apotheosis {
 	 * It may be fired off the main thread.
 	 */
 	public static class ApotheosisReloadEvent extends Event {
+	}
+
+	/**
+	 * The apotheosis command event is fired when commands are to be registered.
+	 * Register subcommands at this time.
+	 */
+	public static class ApotheosisCommandEvent extends Event {
+
+		private final LiteralArgumentBuilder<CommandSourceStack> root;
+
+		public ApotheosisCommandEvent(LiteralArgumentBuilder<CommandSourceStack> root) {
+			this.root = root;
+		}
+
+		public LiteralArgumentBuilder<CommandSourceStack> getRoot() {
+			return this.root;
+		}
 	}
 
 }

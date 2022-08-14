@@ -5,6 +5,7 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -97,11 +98,14 @@ public class PotionModule {
 
 			PotionBrewing.addMix(Potions.AWKWARD, Apoth.Items.LUCKY_FOOT, Potions.LUCK);
 		});
-		Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
-		Ingredient abs = Apotheosis.potionIngredient(Apoth.Potions.STRONG_ABSORPTION);
-		Ingredient res = Apotheosis.potionIngredient(Apoth.Potions.RESISTANCE);
-		Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
-		Apotheosis.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
+		Apotheosis.HELPER.registerProvider(factory -> {
+			Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
+			Ingredient abs = Apotheosis.potionIngredient(Apoth.Potions.STRONG_ABSORPTION);
+			Ingredient res = Apotheosis.potionIngredient(Apoth.Potions.RESISTANCE);
+			Ingredient regen = Apotheosis.potionIngredient(Potions.STRONG_REGENERATION);
+			factory.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
+		});
+
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
 		MinecraftForge.EVENT_BUS.addListener(this::xp);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
@@ -180,6 +184,18 @@ public class PotionModule {
 	public void reload(ApotheosisReloadEvent e) {
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
 		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
+
+		String[] defExt = new String[] { MobEffects.NIGHT_VISION.getRegistryName().toString(), MobEffects.HEALTH_BOOST.getRegistryName().toString() };
+		String[] names = config.getStringList("Extended Potion Charms", "general", defExt, "A list of effects that, when as charms, will be applied and reapplied at a longer threshold to avoid issues at low durations, like night vision.");
+		PotionCharmItem.EXTENDED_POTIONS.clear();
+		for (String s : names) {
+			try {
+				PotionCharmItem.EXTENDED_POTIONS.add(new ResourceLocation(s));
+			} catch (ResourceLocationException ex) {
+				LOG.error("Invalid extended potion charm entry {} will be ignored.", s);
+			}
+		}
+
 		if (e == null && config.hasChanged()) config.save();
 	}
 

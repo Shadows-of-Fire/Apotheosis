@@ -108,7 +108,7 @@ public class EnchantmentInfo {
 
 	}
 
-	private static PowerFunc defaultMax(Enchantment ench) {
+	public static PowerFunc defaultMax(Enchantment ench) {
 		return level -> (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4);
 	}
 

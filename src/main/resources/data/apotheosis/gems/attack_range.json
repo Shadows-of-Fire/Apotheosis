@@ -1,0 +1,11 @@
+{
+	"weight": 5,
+	"variant": 8,
+	"attribute": "forge:attack_range",
+	"operation": "MULTIPLY_TOTAL",
+	"value": {
+		"min": 0.35,
+		"steps": 5,
+		"step": 0.1
+	}
+}

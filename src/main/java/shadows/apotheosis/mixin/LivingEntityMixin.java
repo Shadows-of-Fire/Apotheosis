@@ -100,7 +100,9 @@ public abstract class LivingEntityMixin extends Entity {
 				Apoth.Attributes.CURRENT_HP_DAMAGE, 
 				Apoth.Attributes.OVERHEAL,
 				Apoth.Attributes.GHOST_HEALTH,
-				Apoth.Attributes.BREAK_SPEED);
+				Apoth.Attributes.BREAK_SPEED,
+				Apoth.Attributes.ARROW_DAMAGE,
+				Apoth.Attributes.ARROW_VELOCITY);
 		//Formatter::on
 	}
 

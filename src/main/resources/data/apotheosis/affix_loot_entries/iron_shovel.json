@@ -2,6 +2,6 @@
 	"stack": {
 		"item": "minecraft:iron_shovel"
 	},
-	"type": "SHOVEL",
+	"type": "BREAKER",
 	"weight": 8
 }

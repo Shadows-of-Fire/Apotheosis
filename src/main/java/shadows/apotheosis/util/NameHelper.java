@@ -23,7 +23,7 @@ import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
-import shadows.apotheosis.deadly.DeadlyModule;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.config.Configuration;
 
 /**
@@ -286,7 +286,7 @@ public class NameHelper {
 					armorsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
 				}
 			} catch (Exception e) {
-				DeadlyModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", i.getRegistryName());
+				AdventureModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", i.getRegistryName());
 				e.printStackTrace();
 			}
 		}

@@ -9,9 +9,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.common.BasicItemListing;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.affix.trades.AffixTrade;
 import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.json.ItemAdapter;
 import shadows.placebo.json.PlaceboJsonReloadListener;
@@ -41,12 +41,11 @@ public class WandererTradeManager extends PlaceboJsonReloadListener<JsonTrade> {
 			boolean rare = GsonHelper.getAsBoolean(obj, "rare", false);
 			return new BasicJsonTrade(price1, price2, output, maxTrades, xp, priceMult, rare);
 		}));
+		this.registerSerializer(new ResourceLocation(Apotheosis.MODID, "affix"), new SerializerBuilder<JsonTrade>("Affix Trade").withJsonDeserializer(obj -> ItemAdapter.ITEM_READER.fromJson(obj, AffixTrade.class)));
 	}
 
 	@Override
 	protected <T extends JsonTrade> void register(ResourceLocation key, T trade) {
-		MerchantOffer offer = trade.getOffer(null, null);
-		if (offer.getResult() == null || offer.getResult().isEmpty() || offer.getMaxUses() == 0) throw new RuntimeException("Wanderer Trade " + key + " is invalid.");
 		super.register(key, trade);
 	}
 

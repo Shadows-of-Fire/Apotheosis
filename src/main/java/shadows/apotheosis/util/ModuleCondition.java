@@ -20,7 +20,8 @@ public class ModuleCondition implements ICondition {
 	static {
 		types.put("spawner", () -> Apotheosis.enableSpawner);
 		types.put("garden", () -> Apotheosis.enableGarden);
-		types.put("deadly", () -> Apotheosis.enableDeadly);
+		types.put("deadly", () -> Apotheosis.enableAdventure); // Deprecated
+		types.put("adventure", () -> Apotheosis.enableAdventure);
 		types.put("enchantment", () -> Apotheosis.enableEnch);
 		types.put("potion", () -> Apotheosis.enablePotion);
 		types.put("village", () -> Apotheosis.enableVillage);

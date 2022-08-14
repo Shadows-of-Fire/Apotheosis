@@ -6,6 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolActions;
 import shadows.apotheosis.ench.EnchModule;
 
@@ -44,9 +45,11 @@ public class ShieldBashEnchant extends Enchantment {
 	public void doPostAttack(LivingEntity user, Entity target, int level) {
 		if (target instanceof LivingEntity) {
 			ItemStack stack = user.getMainHandItem();
-			stack.hurtAndBreak(Math.max(1, 20 - level), user, e -> {
-				e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
-			});
+			if (EnchantmentHelper.getItemEnchantmentLevel(this, stack) == level) {
+				stack.hurtAndBreak(Math.max(1, 20 - level), user, e -> {
+					e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
+				});
+			}
 		}
 	}
 

@@ -27,6 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
+import shadows.placebo.recipe.RecipeHelper;
 
 public class PotionCharmRecipe extends ShapedRecipe {
 
@@ -60,7 +61,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 			else realIngredients.add(o);
 		}
 
-		return Apotheosis.HELPER.createInput(true, realIngredients.toArray());
+		return RecipeHelper.createInput(Apotheosis.MODID, true, realIngredients.toArray());
 	}
 
 	public Ingredient getPotionIngredient() {

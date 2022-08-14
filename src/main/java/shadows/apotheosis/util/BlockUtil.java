@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
@@ -38,11 +39,14 @@ public class BlockUtil {
 	public static boolean breakExtraBlock(ServerLevel world, BlockPos pos, ItemStack mainhand, @Nullable UUID source) {
 		BlockState blockstate = world.getBlockState(pos);
 		FakePlayer player;
-		if (source != null) player = FakePlayerFactory.get(world, new GameProfile(source, UsernameCache.getLastKnownUsername(source)));
-		else player = FakePlayerFactory.getMinecraft(world);
+		if (source != null) {
+			player = FakePlayerFactory.get(world, new GameProfile(source, UsernameCache.getLastKnownUsername(source)));
+			Player realPlayer = world.getPlayerByUUID(source);
+			if (realPlayer != null) player.setPos(realPlayer.position());
+		} else player = FakePlayerFactory.getMinecraft(world);
 		if (player.connection == null) player.connection = new DeadPacketListenerImpl(player);
 		player.getInventory().items.set(player.getInventory().selected, mainhand);
-		player.setPos(pos.getX(), pos.getY(), pos.getZ());
+		//player.setPos(pos.getX(), pos.getY(), pos.getZ());
 
 		if (blockstate.getDestroySpeed(world, pos) < 0 || !blockstate.canHarvestBlock(world, pos, player)) return false;
 
@@ -67,7 +71,7 @@ public class BlockUtil {
 				} else {
 					ItemStack itemstack = player.getMainHandItem();
 					ItemStack itemstack1 = itemstack.copy();
-					boolean canHarvest = blockstate.canHarvestBlock(world, pos, player); // previously player.hasCorrectToolForDrops(blockstate)
+					boolean canHarvest = blockstate.canHarvestBlock(world, pos, player);
 					itemstack.mineBlock(world, blockstate, pos, player);
 					if (itemstack.isEmpty() && !itemstack1.isEmpty()) net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, InteractionHand.MAIN_HAND);
 					boolean removed = removeBlock(world, player, pos, canHarvest);

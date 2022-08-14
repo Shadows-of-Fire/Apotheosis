@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.deadly.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.AffixHelper;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
@@ -29,22 +29,22 @@ public class ItemStackMixin {
 	public void apoth_getHoverName(CallbackInfoReturnable<Component> ci) {
 		ItemStack ths = (ItemStack) (Object) this;
 		CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);
-		if (afxData != null && afxData.contains("Name", 8)) {
+		if (afxData != null && afxData.contains(AffixHelper.NAME, 8)) {
 			try {
-				Component component = Component.Serializer.fromJson(afxData.getString("Name"));
+				Component component = Component.Serializer.fromJson(afxData.getString(AffixHelper.NAME));
 				if (component instanceof TranslatableComponent tComp) {
-					tComp.getArgs()[0] = ci.getReturnValue();
+					tComp.getArgs()[1] = ci.getReturnValue();
 					ci.setReturnValue(tComp);
-				} else afxData.remove("Name");
+				} else afxData.remove(AffixHelper.NAME);
 			} catch (Exception exception) {
-				afxData.remove("Name");
+				afxData.remove(AffixHelper.NAME);
 			}
 		}
 	}
 
 	@Inject(method = "getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;", at = @At(shift = Shift.BEFORE, value = "JUMP", ordinal = 9, opcode = Opcodes.IFEQ), locals = LocalCapture.CAPTURE_FAILSOFT)
 	public void getTooltipLines(@Nullable Player pPlayer, TooltipFlag pIsAdvanced, CallbackInfoReturnable<List<Component>> cir, List<Component> list) {
-		if (Apotheosis.enableDeadly) list.add(new TextComponent("APOTH_REMOVE_MARKER"));
+		if (Apotheosis.enableAdventure) list.add(new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
 }

@@ -1,0 +1,11 @@
+{
+	"weight": 2,
+	"variant": 2,
+	"attribute": "minecraft:generic.luck",
+	"operation": "ADDITION",
+	"value": {
+		"min": 10,
+		"steps": 100,
+		"step": 0.5
+	}
+}

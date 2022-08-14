@@ -23,7 +23,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -45,7 +44,6 @@ import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import shadows.apotheosis.village.fletching.effects.BleedingEffect;
 import shadows.apotheosis.village.wanderer.WandererReplacements;
-import shadows.apotheosis.village.wanderer.WandererTradeManager;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
 
@@ -58,7 +56,6 @@ public class VillageModule {
 
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
-		MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
 		Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "f_27323_");
 		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PoiType.FLETCHER);
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
@@ -78,7 +75,6 @@ public class VillageModule {
 				}
 			}
 		});
-		WandererTradeManager.INSTANCE.registerToBus();
 	}
 
 	@SubscribeEvent

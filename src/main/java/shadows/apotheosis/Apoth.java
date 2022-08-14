@@ -13,6 +13,12 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
+import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
+import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
+import shadows.apotheosis.adventure.affix.effect.RadialAffix;
+import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
+import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
@@ -108,6 +114,7 @@ public class Apoth {
 		public static final Item PICKAXE_TOME = null;
 		public static final Item FISHING_TOME = null;
 		public static final Item BOW_TOME = null;
+		public static final Item GEM = null;
 
 		@ObjectHolder("wstweaks:fragment")
 		public static final Item SKULL_FRAGMENT = null;
@@ -238,11 +245,24 @@ public class Apoth {
 		 * Mining Speed. Base value = (1.0) = 100% default break speed
 		 */
 		public static final Attribute BREAK_SPEED = null;
+		/**
+		 * Arrow Damage. Base value = (1.0) = 100% default arrow damage
+		 */
+		public static final Attribute ARROW_DAMAGE = null;
+		/**
+		 * Arrow Velocity. Base value = (1.0) = 100% default arrow velocity
+		 */
+		public static final Attribute ARROW_VELOCITY = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Affixes {
-
+		public static final SocketAffix SOCKET = null;
+		public static final MagicalArrowAffix MAGICAL = null;
+		public static final FestiveAffix FESTIVE = null;
+		public static final TelepathicAffix TELEPATHIC = null;
+		public static final OmneticAffix OMNETIC = null;
+		public static final RadialAffix RADIAL = null;
 	}
 
 	public static final class Tags {

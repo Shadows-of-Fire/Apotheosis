@@ -1,5 +1,12 @@
-{
-    "comment_id": "/Deadly Module",
+	{
+    "comment_id": "/Adventure Module",
+
+    "info.apotheosis.affix_item": "Apotheotic Affix Item",
+    "item.modifiers.both_hands": "When in Either Hand:",
+    "item.modifiers.socket": "When Socketed:",
+	
+	"death.attack.apotheosis.execute": "%s was executed by %s",
+	"death.attack.apotheosis.execute.item": "%s was executed by %s using %s",
 
     "attribute.modifier.plus.0": "+%s %s",
     "attribute.modifier.plus.1": "+%s%% Base %s",
@@ -22,63 +29,199 @@
 	"apotheosis:overheal": "Overheal",
 	"apotheosis:ghost_health": "Ghost Health",
 	"apotheosis:break_speed": "Break Speed",
+	"apotheosis:arrow_damage": "Arrow Damage",
+	"apotheosis:arrow_velocity": "Arrow Velocity",
 	
+    "affix.apotheosis:blessed": "Blessed",
+    "affix.apotheosis:blessed.suffix": "of Health",
 
-	"comment_id": "//Common Affixes",
+    "affix.apotheosis:ironforged": "Ironforged",
+    "affix.apotheosis:ironforged.suffix": "of Iron",
 
-    "affix.apotheosis:tough": "Tough",
-    "affix.apotheosis:tough.suffix": "of Health",
+    "affix.apotheosis:violent": "Violent",
+    "affix.apotheosis:violent.suffix": "of Slaying",
 
-    "affix.apotheosis:armored": "Armored",
-    "affix.apotheosis:armored.suffix": "of Iron",
+    "affix.apotheosis:windswept": "Windswept",
+    "affix.apotheosis:windswept.suffix": "of the Current",
 
-    "affix.apotheosis:pointy": "Pointy",
-    "affix.apotheosis:pointy.suffix": "of Stabbing",
+    "affix.apotheosis:graceful": "Graceful",
+    "affix.apotheosis:graceful.suffix": "of the Duelist",
 
-    "affix.apotheosis:quick": "Quick",
-    "affix.apotheosis:quick.suffix": "of Motion",
+    "affix.apotheosis:forceful": "Forceful",
+    "affix.apotheosis:forceful.suffix": "of the Bull",
 
-    "affix.apotheosis:nimble": "Nimble",
-    "affix.apotheosis:nimble.suffix": "of Slicing",
+    "affix.apotheosis:aquatic": "Aquatic",
+    "affix.apotheosis:aquatic.suffix": "of the Ocean",
 
-    "affix.apotheosis:pushy": "Pushy",
-    "affix.apotheosis:pushy.suffix": "of Shoving",
+	"affix.apotheosis:gravitational": "Gravitational",
+    "affix.apotheosis:gravitational.suffix": "of Gravity",
 
-    "affix.apotheosis:long": "Long",
-    "affix.apotheosis:long.suffix": "of Length",
+	"affix.apotheosis:lengthy": "Lengthy",
+    "affix.apotheosis:lengthy.suffix": "of Grasping",
 
-	"affix.apotheosis:extended": "Extended",
-    "affix.apotheosis:extended.suffix": "of Poking",
+	"affix.apotheosis:elongated": "Elongated",
+    "affix.apotheosis:elongated.suffix": "of Distant Battles",
 
 	"affix.apotheosis:agile": "Agile",
     "affix.apotheosis:agile.suffix": "of Dexterity",
-    
-	"comment_id": "//Uncommon Affixes",
-    
-	"affix.apotheosis:reinforced": "Reinforced",
-    "affix.apotheosis:reinforced.suffix": "of the Fortress",
 
-    "affix.apotheosis:plated": "Plated",
-    "affix.apotheosis:plated.suffix": "of Reflection",
+	"affix.apotheosis:steel_touched": "Steel Touched",
+    "affix.apotheosis:steel_touched.suffix": "of the Defender",
 
-    "affix.apotheosis:blessed": "Blessed",
-    "affix.apotheosis:blessed.suffix": "of Holy Flame",
+	"affix.apotheosis:stalwart": "Stalwart",
+    "affix.apotheosis:stalwart.suffix": "of Stubbornness",
 
-    "affix.apotheosis:light": "Light",
-    "affix.apotheosis:light.suffix": "of Weightlessness",
+	"affix.apotheosis:elastic": "Elastic",
+    "affix.apotheosis:elastic.suffix": "of the Climb",
 
-    "affix.apotheosis:icy": "Icy",
-    "affix.apotheosis:icy.suffix": "of Frost",
+	"affix.apotheosis:fortunate": "Fortunate",
+    "affix.apotheosis:fortunate.suffix": "of the Four-Leaf Clover",
 
-    "affix.apotheosis:weighted": "Weighted",
-    "affix.apotheosis:weighted.suffix": "of Crushing",
+	"affix.apotheosis:intricate": "Intricate",
+    "affix.apotheosis:intricate.suffix": "of Critical Thinking",
+
+	"affix.apotheosis:lacerating": "Lacerating",
+    "affix.apotheosis:lacerating.suffix": "of Surgical Precision",
+
+	"affix.apotheosis:glacial": "Glacial",
+    "affix.apotheosis:glacial.suffix": "of the Frostlands",
+
+	"affix.apotheosis:infernal": "Infernal",
+    "affix.apotheosis:infernal.suffix": "of the Sun",
+
+	"affix.apotheosis:vampiric": "Vampiric",
+    "affix.apotheosis:vampiric.suffix": "of Bloodletting",
+
+	"affix.apotheosis:shredding": "Shredding",
+    "affix.apotheosis:shredding.suffix": "of Penetration",
+
+	"affix.apotheosis:giant_slaying": "Giant Slaying",
+    "affix.apotheosis:giant_slaying.suffix": "of Colossal Strikes",
+
+	"affix.apotheosis:berserking": "Berserking",
+    "affix.apotheosis:berserking.suffix": "of the Berserker",
+
+	"affix.apotheosis:destructive": "Destructive",
+    "affix.apotheosis:destructive.suffix": "of Quarrying",
+
+	"affix.apotheosis:elven": "Elven",
+    "affix.apotheosis:elven.suffix": "of the First Archer",
+
+	"affix.apotheosis:streamlined": "Streamlined",
+    "affix.apotheosis:streamlined.suffix": "of the Sniper",
+	
+	"affix.apotheosis:elusive": "Elusive",
+    "affix.apotheosis:elusive.suffix": "of Evasion",
+
+	"affix.apotheosis:swift": "Swift",
+    "affix.apotheosis:swift.suffix": "of Smashing",
+
+	"affix.apotheosis:ensnaring": "Ensnaring",
+    "affix.apotheosis:ensnaring.suffix": "of the Predator",
+
+	"affix.apotheosis:venomous": "Venomous",
+    "affix.apotheosis:venomous.suffix": "of the Snake",
+
+	"affix.apotheosis:fleeting": "Fleeting", 
+    "affix.apotheosis:fleeting.suffix": "of the Ranger",
+
+	"affix.apotheosis:weakening": "Weakening",
+    "affix.apotheosis:weakening.suffix": "of Weakness",
+
+	"affix.apotheosis:bolstering": "Bolstering",
+    "affix.apotheosis:bolstering.suffix": "of Fortitude",
+
+	"affix.apotheosis:revitalizing": "Revitalizing",
+    "affix.apotheosis:revitalizing.suffix": "of the Wellspring",
+
+	"affix.apotheosis:shulkers": "Shulker's",
+    "affix.apotheosis:shulkers.suffix": "of Levitation",
+
+	"affix.apotheosis:withering": "Withering",
+    "affix.apotheosis:withering.suffix": "of the Dark Skeleton",
+
+	"affix.apotheosis:ivy_laced": "Ivy Laced",
+    "affix.apotheosis:ivy_laced.suffix": "of Natural Toxins",
+
+	"affix.apotheosis:satanic": "Satanic",
+    "affix.apotheosis:satanic.suffix": "of the Curse",
+	
+	"affix.apotheosis:spectral": "Spectral",
+    "affix.apotheosis:spectral.suffix": "of the Forlorn",
+    "affix.apotheosis:spectral.desc": "You have a %s%% chance to shoot a second arrow.",
+	
+	"affix.apotheosis:magical": "Magical",
+    "affix.apotheosis:magical.suffix": "of the Arcane",
+    "affix.apotheosis:magical.desc": "Your arrow deal magic damage.",
+	
+	"affix.apotheosis:festive": "Festive",
+    "affix.apotheosis:festive.suffix": "of Partying",
+    "affix.apotheosis:festive.desc": "Slain enemies have a %s%% chance to be a Loot Piñata",
+	
+	"affix.apotheosis:thunderstruck": "Thunderstruck",
+    "affix.apotheosis:thunderstruck.suffix": "of the Storm",
+    "affix.apotheosis:thunderstruck.desc": "Your attacks deal %s damage to nearby enemies.",
+	
+	"affix.apotheosis:retreating": "Retreating",
+    "affix.apotheosis:retreating.suffix": "of the Jester",
+    "affix.apotheosis:retreating.desc": "You will leap back when blocking in melee.",
+	
+	"affix.apotheosis:telepathic": "Telepathic",
+    "affix.apotheosis:telepathic.suffix": "of Space and Time",
+    "affix.apotheosis:telepathic.desc.weapon": "Mob drops will teleport to you.",
+    "affix.apotheosis:telepathic.desc.tool": "Block drops will teleport to you.",
+
+	"affix.apotheosis:executing": "Executing",
+    "affix.apotheosis:executing.suffix": "of the Executioner",
+    "affix.apotheosis:executing.desc": "Enemies below %s%% max health will be executed.",
+	
+	"affix.apotheosis:cleaving": "Cleaving",
+    "affix.apotheosis:cleaving.suffix": "of the Butcher",
+    "affix.apotheosis:cleaving.desc": "Attacks have a %s%% chance to also hit up to %s nearby enemies.",
+	
+	"affix.apotheosis:radial": "Radial",
+    "affix.apotheosis:radial.suffix": "of the Earthbreaker",
+    "affix.apotheosis:radial.desc.1": "This tool breaks in a 1x2 area.",
+    "affix.apotheosis:radial.desc.2": "This tool breaks in a 3x2 area.",
+    "affix.apotheosis:radial.desc.3": "This tool breaks in a 3x3 area.",
+    "affix.apotheosis:radial.desc.4": "This tool breaks in a 5x5 area.",
+	
+	"affix.apotheosis:omnetic": "Omnetic",
+    "affix.apotheosis:omnetic.suffix": "of the Singularity",
+    "affix.apotheosis:omnetic.desc": "This tool has %s effectiveness against all blocks.",
+	"misc.apotheosis.iron": "iron",
+	"misc.apotheosis.diamond": "diamond",
+	"misc.apotheosis.netherite": "netherite",
+
+	"socket.apotheosis.empty": "Empty Socket",
+	
+	"item.apotheosis.gem.0": "Parity Gem",
+	"item.apotheosis.gem.1": "Arcane Gem",
+	"item.apotheosis.gem.2": "Splendor Gem",
+	"item.apotheosis.gem.3": "Breach Gem",
+	"item.apotheosis.gem.4": "Guardian Gem",
+	"item.apotheosis.gem.5": "Chaotic Gem",
+	"item.apotheosis.gem.6": "Necrotic Gem",
+	"item.apotheosis.gem.7": "Mirror Gem",
+	"item.apotheosis.gem.8": "Geometric Gem",
+	"item.apotheosis.gem.9": "Valence Gem",
+	"item.apotheosis.gem.10": "Endersurge Gem",
+	
+	"affix.apotheosis.target.attack_self": "On hit, gain %s",
+	"affix.apotheosis.target.attack_target": "On hit, inflict %s",
+	"affix.apotheosis.target.hurt_self": "When attacked, gain %s",
+	"affix.apotheosis.target.hurt_attacker": "When attacked, inflict %s",
+	"affix.apotheosis.target.break_self": "On block break, gain %s",
+	"affix.apotheosis.target.arrow_self": "On arrow hit, gain %s",
+	"affix.apotheosis.target.arrow_target": "On arrow hit, inflict %s",
+	"affix.apotheosis.target.block_self": "Upon blocking, gain %s",
+	"affix.apotheosis.target.block_attacker": "Upon blocking, inflict %s",
 	
 	
 	
 	
-    "info.apotheosis.affix_item": "Apotheotic Affix Item",
-    "item.modifiers.both_hands": "When in Any Hand:",
-    
+	
+	
     "affix.apotheosis:reach_distance.name": "Reach Distance - (%s)",
     "affix.apotheosis:enchantability.name": "Enchantability - (%s)",
     

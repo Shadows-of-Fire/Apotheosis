@@ -1,16 +1,20 @@
 package shadows.apotheosis.potion;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
@@ -32,6 +36,8 @@ import shadows.apotheosis.Apotheosis;
 
 public class PotionCharmItem extends Item {
 
+	public static final Set<ResourceLocation> EXTENDED_POTIONS = new HashSet<>();
+
 	public PotionCharmItem() {
 		super(new Item.Properties().stacksTo(1).durability(192).tab(Apotheosis.APOTH_GROUP).setNoRepair());
 	}
@@ -48,14 +54,18 @@ public class PotionCharmItem extends Item {
 			Potion p = PotionUtils.getPotion(stack);
 			MobEffectInstance contained = p.getEffects().get(0);
 			MobEffectInstance active = ((ServerPlayer) entity).getEffect(contained.getEffect());
-			if (active == null || active.getDuration() < (active.getEffect() == MobEffects.NIGHT_VISION ? 210 : 5)) {
-				int durationOffset = contained.getEffect() == MobEffects.NIGHT_VISION ? 210 : 5;
+			if (active == null || active.getDuration() < getCriticalDuration(active.getEffect())) {
+				int durationOffset = getCriticalDuration(contained.getEffect());
 				if (contained.getEffect() == MobEffects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
 				MobEffectInstance newEffect = new MobEffectInstance(contained.getEffect(), (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
 				((ServerPlayer) entity).addEffect(newEffect);
 				if (stack.hurt(contained.getEffect() == MobEffects.REGENERATION ? 2 : 1, world.random, (ServerPlayer) entity)) stack.shrink(1);
 			}
 		}
+	}
+
+	private static int getCriticalDuration(MobEffect effect) {
+		return EXTENDED_POTIONS.contains(effect.getRegistryName()) ? 210 : 5;
 	}
 
 	@Override
