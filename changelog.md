@@ -1,3 +1,6 @@
+## 4.8.9A0
+* Addressed an issue where the anvil was capturing pseudo-enchantments from Astral Sorcery when placed.
+
 ## 4.8.99F
 * Fixed Enchanting Stats not showing on the client if you joined a server for the first time without doing anything else.
   * This issue only occured if you just started the client and joined, and only persisted for as long as the first login session.

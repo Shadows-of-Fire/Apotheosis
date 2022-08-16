@@ -341,11 +341,11 @@ public class AffixEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void addAffixGear(LivingSpawnEvent.SpecialSpawn e) {
-		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION) {
+		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION || DeadlyConfig.unnaturalBosses) {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
 			if (!e.getWorld().isClientSide() && entity instanceof MonsterEntity) {
-				if (entity.getMainHandItem().isEmpty() && DeadlyConfig.randomAffixItem > 0 && rand.nextInt(DeadlyConfig.randomAffixItem) == 0) {
+				if (DeadlyConfig.randomAffixItem > 0 && rand.nextInt(DeadlyConfig.randomAffixItem) == 0) {
 					LootRarity rarity = LootRarity.random(rand);
 					AffixLootEntry entry = AffixLootManager.getRandomEntry(rand);
 					EquipmentSlotType slot = entry.getType().getSlot(entry.getStack());
@@ -353,6 +353,7 @@ public class AffixEvents {
 					loot.getTag().putBoolean("apoth_rspawn", true);
 					entity.setItemSlot(slot, loot);
 					((MobEntity) entity).setDropChance(slot, 2);
+					e.setCanceled(true);
 					return;
 				}
 			}
@@ -361,7 +362,7 @@ public class AffixEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void surfaceBosses(LivingSpawnEvent.CheckSpawn e) {
-		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION) {
+		if (e.getSpawnReason() == SpawnReason.NATURAL || e.getSpawnReason() == SpawnReason.CHUNK_GENERATION || DeadlyConfig.unnaturalBosses) {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
 			if (!e.getWorld().isClientSide() && entity instanceof MonsterEntity && e.getResult() == Result.DEFAULT) {

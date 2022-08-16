@@ -48,6 +48,8 @@ public class DeadlyConfig {
 
 	public static int spawnerValueChance = 9;
 
+	public static boolean unnaturalBosses = false;
+
 	public static int[] rarityThresholds = new int[] { 400, 700, 880, 950, 1000 };
 
 	public static void loadConfigs() {
@@ -121,6 +123,8 @@ public class DeadlyConfig {
 				rarityThresholds[i++] = threshold;
 			}
 		}
+
+		unnaturalBosses = c.getBoolean("Unnatural Bosses", "bosses", false, "If non-natural entity spawns can trigger a boss to spawn.");
 	}
 
 	public static boolean canGenerateIn(ISeedReader world) {
