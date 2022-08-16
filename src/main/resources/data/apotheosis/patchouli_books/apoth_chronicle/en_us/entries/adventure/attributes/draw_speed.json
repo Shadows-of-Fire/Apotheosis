@@ -1,0 +1,17 @@
+{
+    "name": "Draw Speed",
+    "icon": "minecraft:bow",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Draw Speed$() is how fast you can draw a ranged weapon, relative to the original speed. 1 = 100%, 2 = 200%, etc.$(p)Found on bows or crossbows."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 4$(p)"
+		}
+	]
+}

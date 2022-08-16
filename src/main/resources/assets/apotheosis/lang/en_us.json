@@ -152,7 +152,7 @@
 	
 	"affix.apotheosis:magical": "Magical",
     "affix.apotheosis:magical.suffix": "of the Arcane",
-    "affix.apotheosis:magical.desc": "Your arrow deal magic damage.",
+    "affix.apotheosis:magical.desc": "Your arrows deal magic damage.",
 	
 	"affix.apotheosis:festive": "Festive",
     "affix.apotheosis:festive.suffix": "of Partying",
@@ -194,6 +194,7 @@
 	"misc.apotheosis.netherite": "netherite",
 
 	"socket.apotheosis.empty": "Empty Socket",
+	"affix.apotheosis:durable.desc": "This item ignores %s%% of durability damage.",
 	
 	"item.apotheosis.gem.0": "Parity Gem",
 	"item.apotheosis.gem.1": "Arcane Gem",

@@ -14,10 +14,11 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
-import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
 
 public class LootController {
@@ -31,8 +32,10 @@ public class LootController {
 	public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, Random rand) {
 		Set<Affix> selected = new HashSet<>();
 		MutableInt sockets = new MutableInt(0);
+		float durability = 0;
 		for (LootRule rule : rarity.rules()) {
-			rule.execute(stack, rarity, selected, sockets, rand);
+			if (rule.type() == AffixType.DURABILITY) durability = rule.chance();
+			else rule.execute(stack, rarity, selected, sockets, rand);
 		}
 
 		Map<Affix, AffixInstance> loaded = new HashMap<>();
@@ -43,9 +46,13 @@ public class LootController {
 			nameList.add(inst);
 		}
 
+		// Socket and Durability handling, which is non-standard.
 		if (sockets.intValue() > 0) {
-			AffixInstance inst = new AffixInstance(Apoth.Affixes.SOCKET, stack, rarity, sockets.intValue());
-			loaded.put(Apoth.Affixes.SOCKET, inst);
+			loaded.put(Affixes.SOCKET, new AffixInstance(Affixes.SOCKET, stack, rarity, sockets.intValue()));
+		}
+
+		if (durability > 0) {
+			loaded.put(Affixes.DURABLE, new AffixInstance(Affixes.DURABLE, stack, rarity, durability));
 		}
 
 		Collections.shuffle(nameList);

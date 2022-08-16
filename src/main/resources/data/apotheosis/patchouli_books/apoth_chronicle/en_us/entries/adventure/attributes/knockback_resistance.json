@@ -1,0 +1,17 @@
+{
+    "name": "Knockback Resistance",
+    "icon": "minecraft:shulker_shell",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Knockback Resistance$() is how resistant you are to being knocked back by attacks. At the max value, you are immune to knockback.$(p)Usually provided by armor or shields."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 1$(p)Note: Modifiers providing this value say they provide 10x what they really provide, so +1 Knockback Resistance is really +0.1."
+		}
+	]
+}

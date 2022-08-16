@@ -211,6 +211,6 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 
 	public static String fmt(float f) {
 		if (f == (long) f) return String.format("%d", (long) f);
-		else return String.format("%.2f", f);
+		else return ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(f);
 	}
 }

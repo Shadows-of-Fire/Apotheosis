@@ -1,0 +1,17 @@
+{
+    "name": "Fire Damage",
+    "icon": "minecraft:blaze_powder",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Fire Damage$() is bonus magic damage applied to melee attacks. It also sets the target on fire for a short time. Higher damage increases the fire duration.$(p)Found on melee weapons."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 1024$(p)"
+		}
+	]
+}

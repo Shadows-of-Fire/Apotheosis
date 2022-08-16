@@ -42,22 +42,27 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 	public static final LootRarity RARE = new LootRarity("rare", 0x5555FF, ImmutableList.of(
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
+			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.EFFECT, 1),
 			new LootRule(AffixType.EFFECT, 0.33F),
-			new LootRule(AffixType.SOCKET, 0.33F)
+			new LootRule(AffixType.SOCKET, 0.33F),
+			new LootRule(AffixType.DURABILITY, 0.1F)
 	));
 
 	public static final LootRarity EPIC = new LootRarity("epic", 0xBB00BB, ImmutableList.of(
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
+			new LootRule(AffixType.STAT, 0.5F),
 			new LootRule(AffixType.EFFECT, 1),
 			new LootRule(AffixType.EFFECT, 0.65F),
 			new LootRule(AffixType.SOCKET, 0.5F),
-			new LootRule(AffixType.SOCKET, 0.33F)
+			new LootRule(AffixType.SOCKET, 0.33F),
+			new LootRule(AffixType.DURABILITY, 0.3F)
 	));
 
 	public static final LootRarity MYTHIC = new LootRarity("mythic", 0xED7014, ImmutableList.of(
+			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
@@ -66,7 +71,8 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 			new LootRule(AffixType.EFFECT, 0.3F),
 			new LootRule(AffixType.SOCKET, 0.5F),
 			new LootRule(AffixType.SOCKET, 0.45F),
-			new LootRule(AffixType.SOCKET, 0.4F)
+			new LootRule(AffixType.SOCKET, 0.4F),
+			new LootRule(AffixType.DURABILITY, 0.5F)
 	));
 	//Formatter::on
 
@@ -137,6 +143,7 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 	public static record LootRule(AffixType type, float chance) {
 
 		public void execute(ItemStack stack, LootRarity rarity, Set<Affix> currentAffixes, MutableInt sockets, Random rand) {
+			if (this.type == AffixType.DURABILITY) return;
 			if (rand.nextFloat() <= chance) {
 				if (this.type == AffixType.SOCKET) {
 					sockets.add(1);

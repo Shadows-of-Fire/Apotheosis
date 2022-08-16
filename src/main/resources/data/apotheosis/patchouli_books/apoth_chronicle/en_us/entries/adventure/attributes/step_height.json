@@ -1,0 +1,17 @@
+{
+    "name": "Step Height",
+    "icon": "minecraft:iron_boots",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Step Height$() changes how high you can automatically step-up blocks.$(p)Only found on boots."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 512$(p)Note: This value is not your total step height, but rather a value added to your implicit base of 0.5."
+		}
+	]
+}

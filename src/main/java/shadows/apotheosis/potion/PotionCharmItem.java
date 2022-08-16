@@ -146,7 +146,14 @@ public class PotionCharmItem extends Item {
 				}
 			}
 		}
+	}
 
+	@Override
+	public String getCreatorModId(ItemStack itemStack) {
+		Potion potionType = PotionUtils.getPotion(itemStack);
+		ResourceLocation resourceLocation = ForgeRegistries.POTIONS.getKey(potionType);
+		if (resourceLocation != null) { return resourceLocation.getNamespace(); }
+		return this.getRegistryName().getNamespace();
 	}
 
 }

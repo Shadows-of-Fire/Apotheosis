@@ -1,0 +1,7 @@
+{
+    "name": "Affixes",
+    "description": "While adventuring, you may encounter items with various bonuses.$(p)These are Affix Items.",
+    "icon": "minecraft:diamond_chestplate",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

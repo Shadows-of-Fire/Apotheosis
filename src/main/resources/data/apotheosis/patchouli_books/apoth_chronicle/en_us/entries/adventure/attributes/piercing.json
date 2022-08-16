@@ -1,0 +1,17 @@
+{
+    "name": "Piercing",
+    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Piercing$() refers to how much of your target's armor is ignored when you attack them.$(p)This stat is only found on heavy weapons."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024$(p)Note: A value of 1.0 is actually 0% piercing, but if the base was zero, percentage modifiers would have no effect, and flat modifiers don't convey the bonus correctly."
+		}
+	]
+}

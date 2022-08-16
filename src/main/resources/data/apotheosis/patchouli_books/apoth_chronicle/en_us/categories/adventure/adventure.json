@@ -1,0 +1,6 @@
+{
+    "name": "Adventure Module",
+    "description": "Formerly known as the $(4)Deadly Module$(), the Adventure Module contains all sorts of RPG-esque features.$(p)From Affix Loot to Boss Mobs, it's all here.",
+    "icon": "minecraft:netherite_sword",
+	"flag": "apotheosis:adventure"
+}

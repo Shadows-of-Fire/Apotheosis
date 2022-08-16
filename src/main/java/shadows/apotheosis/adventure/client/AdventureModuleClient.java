@@ -3,11 +3,13 @@ package shadows.apotheosis.adventure.client;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -22,6 +24,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -35,6 +38,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -70,31 +74,48 @@ public class AdventureModuleClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		ItemStack stack = e.getItemStack();
 		List<Component> list = e.getToolTip();
-		int rmvIdx = -1;
+		int rmvIdx = -1, rmvIdx2 = -1;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i) instanceof TextComponent tc) {
 				if (tc.getText().equals("APOTH_REMOVE_MARKER")) {
-					list.removeAll(list.subList(i, list.size()));
 					rmvIdx = i;
+				}
+				if (tc.getText().equals("APOTH_REMOVE_MARKER_2")) {
+					rmvIdx2 = i;
 					break;
 				}
 			}
 		}
-		if (rmvIdx == -1) return;
+		if (rmvIdx == -1 || rmvIdx2 == -1) return;
+		list.removeAll(list.subList(rmvIdx, rmvIdx2 + 1));
 		int flags = getHideFlags(stack);
 		if (!shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) return;
 		int stupidLambdaFinal = rmvIdx;
 		int oldSize = list.size();
 		applyModifierTooltips(e.getPlayer(), stack, c -> list.add(stupidLambdaFinal, c));
 		Collections.reverse(list.subList(rmvIdx, rmvIdx + list.size() - oldSize));
+		list.add(rmvIdx + list.size() - oldSize, new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent
 	public static void comps(RenderTooltipEvent.GatherComponents e) {
+		List<Either<FormattedText, TooltipComponent>> list = e.getTooltipElements();
+		int rmvIdx = -1;
+		for (int i = 0; i < list.size(); i++) {
+			Optional<FormattedText> o = list.get(i).left();
+			if (o.isPresent() && o.get() instanceof TextComponent tc) {
+				if (tc.getText().equals("APOTH_REMOVE_MARKER")) {
+					rmvIdx = i;
+					list.remove(i);
+					break;
+				}
+			}
+		}
+		if (rmvIdx == -1) return;
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(e.getItemStack());
 		if (affixes.containsKey(Apoth.Affixes.SOCKET)) {
 			int size = (int) affixes.get(Apoth.Affixes.SOCKET).level();
-			e.getTooltipElements().add(Either.right(new SocketComponent(SocketHelper.getGems(e.getItemStack(), size))));
+			e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(SocketHelper.getGems(e.getItemStack(), size))));
 		}
 	}
 
@@ -104,7 +125,7 @@ public class AdventureModuleClient {
 		if (stack.hasTag()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 			List<Component> components = new ArrayList<>();
-			affixes.values().forEach(inst -> inst.addInformation(components::add));
+			affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().getType().ordinal())).forEach(inst -> inst.addInformation(components::add));
 			e.getToolTip().addAll(1, components);
 		}
 	}

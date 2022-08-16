@@ -16,6 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -188,6 +189,7 @@ public class AdventureModuleEvents {
 			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE);
 			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE);
 			LivingEntity target = e.getEntityLiving();
+			int time = target.invulnerableTime;
 			if (target.invulnerableTime < 10) {
 				if (hpDmg > 0.001) {
 					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
@@ -201,6 +203,7 @@ public class AdventureModuleEvents {
 					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), (int) Mth.floor(coldDmg / 5)));
 				}
 			}
+			target.invulnerableTime = time;
 		}
 	}
 
@@ -211,7 +214,7 @@ public class AdventureModuleEvents {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void crit(CriticalHitEvent e) {
 		double critChance = e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1;
-		float critDmg = 1.5F * (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE);
+		float critDmg = (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE);
 
 		if (critChance > 1) {
 			e.setResult(Result.ALLOW);
@@ -289,7 +292,8 @@ public class AdventureModuleEvents {
 		if (e.getSource().getEntity() instanceof Player p) {
 			if (p instanceof FakePlayer) return;
 			if (p.random.nextFloat() <= AdventureConfig.gemDropChance) {
-				e.getDrops().add(new ItemEntity(p.level, p.getX(), p.getY(), p.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck()), 0, 0, 0));
+				Entity ent = e.getEntity();
+				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck()), 0, 0, 0));
 			}
 		}
 	}
@@ -321,7 +325,7 @@ public class AdventureModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void special(SpecialSpawn e) {
-		if (e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem) {
+		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem) {
 			e.setCanceled(true);
 			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), 0, 0);
 			LootCategory cat = LootCategory.forItem(affixItem);

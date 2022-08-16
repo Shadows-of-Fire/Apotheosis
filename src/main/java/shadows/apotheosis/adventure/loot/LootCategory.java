@@ -76,12 +76,16 @@ public enum LootCategory {
 		return this == ARMOR || this == SHIELD;
 	}
 
+	public boolean isLightWeapon() {
+		return this == SWORD || this == TRIDENT;
+	}
+
 	public boolean isWeapon() {
 		return this == SWORD || this == HEAVY_WEAPON || this == TRIDENT;
 	}
 
 	public boolean isWeaponOrShield() {
-		return isWeapon() || this == SHIELD;
+		return isLightWeapon() || this == SHIELD;
 	}
 
 	public boolean isMainhand() {

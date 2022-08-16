@@ -32,8 +32,8 @@ public class AdventureConfig {
 	//public static int spawnerValueChance = 9;
 
 	// Affix
-	public static float randomAffixItem = 0.04F;
-	public static float gemDropChance = 0.03F;
+	public static float randomAffixItem = 0.07F;
+	public static float gemDropChance = 0.04F;
 	public static float affixChestChance = 0.75F;
 	public static float gemChestChance = 0.55F;
 	public static int[] rarityThresholds = new int[] { 400, 700, 850, 940, 995 };

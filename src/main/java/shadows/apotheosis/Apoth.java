@@ -13,6 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.adventure.affix.effect.DurableAffix;
 import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
 import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
 import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
@@ -210,7 +211,7 @@ public class Apoth {
 		 */
 		public static final Attribute CRIT_CHANCE = null;
 		/**
-		 * Amount of damage caused by critical strikes. Base value = (1.0) = 100%
+		 * Amount of damage caused by critical strikes. Base value = (1.5) = 150%
 		 */
 		public static final Attribute CRIT_DAMAGE = null;
 		/**
@@ -257,7 +258,10 @@ public class Apoth {
 
 	@ObjectHolder(Apotheosis.MODID)
 	public static final class Affixes {
+		// Implicit affixes
 		public static final SocketAffix SOCKET = null;
+		public static final DurableAffix DURABLE = null;
+		// Real affixes
 		public static final MagicalArrowAffix MAGICAL = null;
 		public static final FestiveAffix FESTIVE = null;
 		public static final TelepathicAffix TELEPATHIC = null;

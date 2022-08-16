@@ -35,7 +35,7 @@ public class TelepathicAffix extends Affix {
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == null) return false;
-		return (cat.isRanged() || cat.isWeapon() || cat == LootCategory.BREAKER) && rarity.isAtLeast(LootRarity.EPIC);
+		return (cat.isRanged() || cat.isLightWeapon() || cat == LootCategory.BREAKER) && rarity.isAtLeast(LootRarity.EPIC);
 	}
 
 	@Override

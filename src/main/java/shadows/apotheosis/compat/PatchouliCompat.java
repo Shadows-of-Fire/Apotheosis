@@ -11,7 +11,7 @@ public class PatchouliCompat {
 		IPatchouliAPI api = PatchouliAPI.get();
 		if (!api.isStub()) {
 			api.setConfigFlag("apotheosis:enchanting", Apotheosis.enableEnch);
-			api.setConfigFlag("apotheosis:deadly", Apotheosis.enableAdventure);
+			api.setConfigFlag("apotheosis:adventure", Apotheosis.enableAdventure);
 			api.setConfigFlag("apotheosis:spawner", Apotheosis.enableSpawner);
 			api.setConfigFlag("apotheosis:garden", Apotheosis.enableGarden);
 			api.setConfigFlag("apotheosis:potion", Apotheosis.enablePotion);

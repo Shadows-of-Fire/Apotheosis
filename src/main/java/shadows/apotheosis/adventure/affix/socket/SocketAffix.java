@@ -28,7 +28,7 @@ public final class SocketAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return true;
+		return false;
 	}
 
 	@Override

@@ -1,0 +1,17 @@
+{
+    "name": "Cold Damage",
+    "icon": "minecraft:blue_ice",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Cold Damage$() is bonus magic damage applied to melee attacks. It also applies a slow dependent on the strength of the damage.$(p)Found on melee weapons."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 1024$(p)"
+		}
+	]
+}
