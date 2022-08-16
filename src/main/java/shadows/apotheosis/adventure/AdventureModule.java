@@ -42,6 +42,8 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.AttributeAffix;
 import shadows.apotheosis.adventure.affix.effect.CatalyzingAffix;
 import shadows.apotheosis.adventure.affix.effect.CleavingAffix;
+import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
+import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix.DamageType;
 import shadows.apotheosis.adventure.affix.effect.DurableAffix;
 import shadows.apotheosis.adventure.affix.effect.EnlightenedAffix;
 import shadows.apotheosis.adventure.affix.effect.ExecutingAffix;
@@ -60,6 +62,9 @@ import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.GemManager;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
+import shadows.apotheosis.adventure.boss.BossArmorManager;
+import shadows.apotheosis.adventure.boss.BossEvents;
+import shadows.apotheosis.adventure.boss.BossItemManager;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.AffixLootModifier;
@@ -83,9 +88,12 @@ public class AdventureModule {
 	public void init(FMLCommonSetupEvent e) {
 		this.reload(null);
 		MinecraftForge.EVENT_BUS.register(new AdventureModuleEvents());
+		MinecraftForge.EVENT_BUS.register(new BossEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		GemManager.INSTANCE.registerToBus();
 		AffixLootManager.INSTANCE.registerToBus();
+		BossArmorManager.INSTANCE.registerToBus();
+		BossItemManager.INSTANCE.registerToBus();
 		Apotheosis.HELPER.registerProvider(f -> {
 			f.addRecipe(new SocketingRecipe());
 		});
@@ -502,6 +510,37 @@ public class AdventureModule {
 				.with(LootRarity.ANCIENT, step(180, 5, 20), step(1, 3, 1))
 				.types(LootCategory::isRanged)
 				.build(AffixType.EFFECT, Target.ARROW_TARGET, "satanic"),
+				
+				new DamageReductionAffix.Builder(DamageType.PHYSICAL)
+				.with(LootRarity.EPIC, step(0.05F, 5, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.05F, 10, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.05F, 20, 0.01F))
+				.build("blockading"),
+				
+				new DamageReductionAffix.Builder(DamageType.MAGIC)
+				.with(LootRarity.EPIC, step(0.05F, 5, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.05F, 10, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.05F, 20, 0.01F))
+				.build("runed"),
+				
+				new DamageReductionAffix.Builder(DamageType.EXPLOSION)
+				.with(LootRarity.EPIC, step(0.15F, 5, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.35F, 10, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.55F, 20, 0.01F))
+				.build("blast_forged"),
+
+				new DamageReductionAffix.Builder(DamageType.FIRE)
+				.with(LootRarity.EPIC, step(0.25F, 5, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.40F, 10, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.60F, 20, 0.01F))
+				.build("dwarven"),
+
+				new DamageReductionAffix.Builder(DamageType.FALL)
+				.with(LootRarity.RARE, step(0.15F, 10, 0.01F))
+				.with(LootRarity.EPIC, step(0.40F, 15, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.75F, 25, 0.01F))
+				.with(LootRarity.ANCIENT, l -> 1)
+				.build("feathery"),
 				
 				new SpectralShotAffix().setRegistryName("spectral"),
 				new MagicalArrowAffix().setRegistryName("magical"),

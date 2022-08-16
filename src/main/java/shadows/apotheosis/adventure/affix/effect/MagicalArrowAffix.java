@@ -22,7 +22,7 @@ public class MagicalArrowAffix extends Affix {
 	}
 
 	// EventPriority.HIGH
-	public void onDamage(LivingHurtEvent e) {
+	public void onHurt(LivingHurtEvent e) {
 		if (e.getSource().getDirectEntity() instanceof AbstractArrow arrow) {
 			CompoundTag nbt = arrow.getPersistentData().getCompound("apoth.affixes");
 			if (nbt.contains(this.getRegistryName().toString())) {

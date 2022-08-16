@@ -59,6 +59,13 @@ public class AffixHelper {
 		afxData.putString(NAME, Component.Serializer.toJson(name));
 	}
 
+	@Nullable
+	public static Component getName(ItemStack stack) {
+		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
+		if (afxData == null) return null;
+		return Component.Serializer.fromJson(afxData.getString(NAME));
+	}
+
 	public static Map<Affix, AffixInstance> getAffixes(ItemStack stack) {
 		Map<Affix, AffixInstance> map = new HashMap<>();
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);

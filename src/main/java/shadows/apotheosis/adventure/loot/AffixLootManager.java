@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.spongepowered.asm.mixin.Unique;
 
+import com.google.common.base.Preconditions;
+
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
@@ -38,6 +41,13 @@ public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> 
 	protected void beginReload() {
 		super.beginReload();
 		this.list.clear();
+	}
+
+	@Override
+	protected <T extends AffixLootEntry> void register(ResourceLocation key, T item) {
+		Preconditions.checkArgument(!item.stack.isEmpty());
+		Preconditions.checkNotNull(item.type);
+		super.register(key, item);
 	}
 
 	@Override

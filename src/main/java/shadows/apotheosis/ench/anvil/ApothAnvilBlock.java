@@ -80,8 +80,10 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	@Override
 	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		BlockEntity te = world.getBlockEntity(pos);
-		if (te instanceof AnvilTile) {
-			((AnvilTile) te).getEnchantments().putAll(EnchantmentHelper.getEnchantments(stack));
+		if (te instanceof AnvilTile anvil) {
+			Map<Enchantment, Integer> ench = EnchantmentHelper.getEnchantments(stack);
+			ench.keySet().removeIf(e -> !this.asItem().canApplyAtEnchantingTable(stack, e));
+			anvil.getEnchantments().putAll(ench);
 		}
 	}
 

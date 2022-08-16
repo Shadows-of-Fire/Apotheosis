@@ -50,6 +50,7 @@ import shadows.apotheosis.Apotheosis.ApotheosisCommandEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
 import shadows.apotheosis.adventure.affix.socket.GemManager;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
 import shadows.apotheosis.adventure.commands.GemCommand;
@@ -169,7 +170,8 @@ public class AdventureModuleEvents {
 				}
 			}
 		}
-		Apoth.Affixes.MAGICAL.onDamage(e);
+		Apoth.Affixes.MAGICAL.onHurt(e);
+		DamageReductionAffix.onHurt(e);
 	}
 
 	/**
@@ -302,7 +304,8 @@ public class AdventureModuleEvents {
 	public void dropsHigh(LivingDropsEvent e) {
 		if (e.getSource().getEntity() instanceof Player p) {
 			if (p instanceof FakePlayer) return;
-			if (p.random.nextFloat() <= AdventureConfig.gemDropChance) {
+			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? 0.33F : 0);
+			if (p.random.nextFloat() <= chance) {
 				Entity ent = e.getEntity();
 				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck()), 0, 0, 0));
 			}

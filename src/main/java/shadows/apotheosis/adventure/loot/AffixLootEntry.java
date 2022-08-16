@@ -37,7 +37,7 @@ public class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements Wei
 	}
 
 	public ItemStack getStack() {
-		return this.stack;
+		return this.stack.copy();
 	}
 
 	public LootCategory getType() {

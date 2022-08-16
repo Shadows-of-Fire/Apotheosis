@@ -18,10 +18,15 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.datafixers.util.Either;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -42,9 +47,13 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -56,11 +65,14 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
+import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import shadows.apotheosis.util.ItemAccess;
 import shadows.placebo.util.AttributeHelper;
 
 public class AdventureModuleClient {
+
+	public static List<BossSpawnData> BOSS_SPAWNS = new ArrayList<>();
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(AdventureModuleClient.class);
@@ -68,6 +80,35 @@ public class AdventureModuleClient {
 		ItemProperties.register(Apoth.Items.GEM, new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> {
 			return GemItem.getVariant(stack);
 		});
+	}
+
+	@SubscribeEvent
+	public static void render(RenderLevelLastEvent e) {
+		PoseStack stack = e.getPoseStack();
+		MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+		Player p = Minecraft.getInstance().player;
+		for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
+			BossSpawnData data = BOSS_SPAWNS.get(i);
+			stack.pushPose();
+			float partials = e.getPartialTick();
+			Vec3 vec = Minecraft.getInstance().getCameraEntity().getEyePosition(partials);
+			stack.translate(-vec.x, -vec.y, -vec.z);
+			stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
+			BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level.getGameTime(), 0, 64, data.color(), 0.166F, 0.33F);
+			stack.popPose();
+		}
+		buf.endBatch();
+	}
+
+	@SubscribeEvent
+	public static void time(ClientTickEvent e) {
+		if (e.phase != Phase.END) return;
+		for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
+			BossSpawnData data = BOSS_SPAWNS.get(i);
+			if (data.ticks().getAndIncrement() > 400) {
+				BOSS_SPAWNS.remove(i--);
+			}
+		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

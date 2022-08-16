@@ -151,7 +151,7 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 				}
 				List<Affix> available = AffixHelper.byType(type).stream().filter(a -> a.canApplyTo(stack, rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
 				if (available.size() == 0) {
-					AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", LootCategory.forItem(stack), rarity.id(), type, chance);
+					AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", stack.getItem().getRegistryName(), rarity.id(), type, chance);
 					return;
 				}
 				Collections.shuffle(available, rand);

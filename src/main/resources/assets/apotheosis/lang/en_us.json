@@ -3,7 +3,6 @@
 
     "info.apotheosis.affix_item": "Apotheotic Affix Item",
     "item.modifiers.both_hands": "When in Either Hand:",
-    "item.modifiers.socket": "When Socketed:",
 	
 	"death.attack.apotheosis.execute": "%s was executed by %s",
 	"death.attack.apotheosis.execute.item": "%s was executed by %s using %s",
@@ -219,14 +218,40 @@
     "affix.apotheosis:radial.desc.3": "This tool breaks in a 3x3 area.",
     "affix.apotheosis:radial.desc.4": "This tool breaks in a 5x5 area.",
 	
-	"affix.apotheosis:omnetic": "Omnetic",
-    "affix.apotheosis:omnetic.suffix": "of the Singularity",
-    "affix.apotheosis:omnetic.desc": "This tool has %s effectiveness against all blocks.",
 	"misc.apotheosis.iron": "iron",
 	"misc.apotheosis.diamond": "diamond",
 	"misc.apotheosis.netherite": "netherite",
+	
+	"affix.apotheosis:omnetic": "Omnetic",
+    "affix.apotheosis:omnetic.suffix": "of the Singularity",
+    "affix.apotheosis:omnetic.desc": "This tool has %s effectiveness against all blocks.",
+	
+	"misc.apotheosis.physical": "Physical",
+	"misc.apotheosis.magic": "Magic",
+	"misc.apotheosis.fire": "Fire",
+	"misc.apotheosis.fall": "Fall",
+	"misc.apotheosis.explosion": "Explosive",
+    "affix.apotheosis:damage_reduction.desc": "%s damage taken is reduced by %s%%.",
+	
+	"affix.apotheosis:blockading": "Blockading",
+    "affix.apotheosis:blockading.suffix": "of the Blockade",
+	
+	"affix.apotheosis:runed": "Runed",
+    "affix.apotheosis:runed.suffix": "of the Spellwarden",
+	
+	"affix.apotheosis:blast_forged": "Blast-Forged",
+    "affix.apotheosis:blast_forged.suffix": "of the Forge God",
+	
+	"affix.apotheosis:dwarven": "Dwarven",
+    "affix.apotheosis:dwarven.suffix": "of the Volcano",
+	
+	"affix.apotheosis:feathery": "Feathery",
+    "affix.apotheosis:feathery.suffix": "of the Eagle",
 
 	"socket.apotheosis.empty": "Empty Socket",
+    "item.modifiers.socket": "When Socketed:",
+	"info.apotheosis.socketing": "Gems can be socketed with a Smithing Table. Item on the left, gem on the right.\n\nOnce socketed, a gem cannot be removed.",
+	
 	"affix.apotheosis:durable.desc": "This item ignores %s%% of durability damage.",
 	
 	"item.apotheosis.gem.0": "Parity Gem",
@@ -251,7 +276,7 @@
 	"affix.apotheosis.target.block_self": "Upon blocking, gain %s",
 	"affix.apotheosis.target.block_attacker": "Upon blocking, inflict %s",
 	
-	
+	"info.apotheosis.boss_spawn": "%s has Awoken!",
 	
 	
 	

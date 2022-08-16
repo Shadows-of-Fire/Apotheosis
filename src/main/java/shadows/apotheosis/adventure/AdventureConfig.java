@@ -1,6 +1,8 @@
 package shadows.apotheosis.adventure;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -15,14 +17,14 @@ import shadows.placebo.config.Configuration;
 
 public class AdventureConfig {
 
-	//public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
-	//public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
+	public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
+	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
 	public static final Map<ResourceLocation, LootCategory> TYPE_OVERRIDES = new HashMap<>();
 
 	//Boss Stats
-	//public static int surfaceBossChance = 85;
-	//public static boolean surfaceBossLightning = true;
-	//public static boolean curseBossItems = false;
+	public static float surfaceBossChance = 0.015F;
+	public static boolean surfaceBossLightning = true;
+	public static boolean curseBossItems = false;
 
 	//Generation Chances
 	//public static int bossDungeonAttempts = 8;
@@ -30,9 +32,6 @@ public class AdventureConfig {
 	//public static int rogueSpawnerAttempts = 4;
 	//public static int troveAttempts = 8;
 	//public static int tomeTowerChance = 125;
-
-	//public static boolean mythicUnbreakable = true;
-
 	//public static int spawnerValueChance = 9;
 
 	// Affix
@@ -45,6 +44,7 @@ public class AdventureConfig {
 	public static Supplier<Item> torchItem = () -> Items.TORCH;
 
 	public static void load(Configuration c) {
+		c.setTitle("Apotheosis Adventure Module Config");
 		for (LootRarity r : LootRarity.values()) {
 			if (r != LootRarity.ANCIENT) {
 				int threshold = c.getInt(r.id(), "rarity", rarityThresholds[r.ordinal()], 0, 1000, "The threshold for this rarity.  The percentage chance of this rarity appearing is equal to (previous threshold - this threshold) / 10.");
@@ -84,6 +84,10 @@ public class AdventureConfig {
 				return Items.TORCH;
 			}
 		};
+
+		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", false, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
+		surfaceBossChance = c.getFloat("Surface Boss Chance", "bosses", surfaceBossChance, 0, 1, "The chance that a naturally spawned mob that can see the sky is transformed into a boss. 0 = 0%, 1 = 100%");
+
 	}
 
 }

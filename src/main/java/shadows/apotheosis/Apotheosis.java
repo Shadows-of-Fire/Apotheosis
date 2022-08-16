@@ -32,6 +32,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.client.BossSpawnMessage;
 import shadows.apotheosis.compat.PatchouliCompat;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
@@ -121,6 +122,7 @@ public class Apotheosis {
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
 		MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
+		MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage(null, 0));
 		MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage(0, null, false));
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());

@@ -16,20 +16,24 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.Weight;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 
 /**
  * Util class to contain the full equipment for an entity.
  * @author Shadows
  *
  */
-public class GearSet extends Weighted {
+public class GearSet extends TypeKeyedBase<GearSet> implements WeightedEntry {
 
 	@Expose(deserialize = false)
-	protected ResourceLocation id;
+	private Weight _weight;
+	protected final int weight;
 	protected final List<WeightedItemStack> mainhands;
 	protected final List<WeightedItemStack> offhands;
 	protected final List<WeightedItemStack> boots;
@@ -39,7 +43,7 @@ public class GearSet extends Weighted {
 	protected final List<String> tags = new ArrayList<>();
 
 	public GearSet(int weight, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets) {
-		super(weight);
+		this.weight = weight;
 		this.mainhands = mainhands;
 		this.offhands = offhands;
 		this.boots = boots;
@@ -48,14 +52,10 @@ public class GearSet extends Weighted {
 		this.helmets = helmets;
 	}
 
-	public void setId(ResourceLocation id) {
-		if (this.id == null) {
-			this.id = id;
-		} else throw new IllegalStateException("Cannot set the id of this boss item, it is already set!");
-	}
-
-	public ResourceLocation getId() {
-		return this.id;
+	@Override
+	public Weight getWeight() {
+		if (this._weight == null) this._weight = Weight.of(this.weight);
+		return this._weight;
 	}
 
 	/**

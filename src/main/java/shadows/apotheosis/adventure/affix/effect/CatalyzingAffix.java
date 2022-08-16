@@ -40,7 +40,7 @@ public class CatalyzingAffix extends Affix {
 
 	@Override
 	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
-		if (source.isExplosion()) {i 
+		if (source.isExplosion()) {
 			int time = getTrueLevel(rarity, level) + (int) (amount * 4);
 			int modifier = 1 + (int) (amount / 12);
 			entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, time, modifier));

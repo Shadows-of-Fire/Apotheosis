@@ -34,7 +34,7 @@ public class ItemStackMixin {
 		CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);
 		if (afxData != null && afxData.contains(AffixHelper.NAME, 8)) {
 			try {
-				Component component = Component.Serializer.fromJson(afxData.getString(AffixHelper.NAME));
+				Component component = AffixHelper.getName(ths);
 				if (component instanceof TranslatableComponent tComp) {
 					tComp.getArgs()[1] = ci.getReturnValue();
 					ci.setReturnValue(tComp);
