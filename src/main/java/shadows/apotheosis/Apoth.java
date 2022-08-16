@@ -245,7 +245,7 @@ public class Apoth {
 		/**
 		 * Mining Speed. Base value = (1.0) = 100% default break speed
 		 */
-		public static final Attribute BREAK_SPEED = null;
+		public static final Attribute MINING_SPEED = null;
 		/**
 		 * Arrow Damage. Base value = (1.0) = 100% default arrow damage
 		 */

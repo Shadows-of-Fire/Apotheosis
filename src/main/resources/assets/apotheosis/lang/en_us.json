@@ -28,7 +28,7 @@
 	"apotheosis:current_hp_damage": "Current HP Damage",
 	"apotheosis:overheal": "Overheal",
 	"apotheosis:ghost_health": "Ghost Health",
-	"apotheosis:break_speed": "Break Speed",
+	"apotheosis:mining_speed": "Mining Speed",
 	"apotheosis:arrow_damage": "Arrow Damage",
 	"apotheosis:arrow_velocity": "Arrow Velocity",
 	
@@ -178,7 +178,40 @@
 	"affix.apotheosis:cleaving": "Cleaving",
     "affix.apotheosis:cleaving.suffix": "of the Butcher",
     "affix.apotheosis:cleaving.desc": "Attacks have a %s%% chance to also hit up to %s nearby enemies.",
+
+	"affix.apotheosis:enlightened": "Enlightened",
+    "affix.apotheosis:enlightened.suffix": "of the Lightbringer",
+    "affix.apotheosis:enlightened.desc": "This tool can place a torch at the cost of %s durability.",
+
+	"affix.apotheosis:psychic": "Psychic",
+    "affix.apotheosis:psychic.suffix": "of the Vengeful",
+    "affix.apotheosis:psychic.desc": "Blocking a projectile deals %s%% of the damage to the shooter.",
+
+	"affix.apotheosis:catalyzing": "Catalyzing",
+    "affix.apotheosis:catalyzing.suffix": "of the Converted",
+    "affix.apotheosis:catalyzing.desc": "Blocking an explosion will grant you great strength.",
+
+	"affix.apotheosis:annihilating": "Annihilating",
+    "affix.apotheosis:annihilating.suffix": "of the Titan",
+
+	"affix.apotheosis:decimating": "Decimating",
+    "affix.apotheosis:decimating.suffix": "of the God-King",
 	
+	"affix.apotheosis:murderous": "Murderous",
+    "affix.apotheosis:murderous.suffix": "of the Minotaur",
+	
+	"affix.apotheosis:acidic": "Acidic",
+    "affix.apotheosis:acidic.suffix": "of Corrosion",
+
+	"affix.apotheosis:caustic": "Caustic",
+    "affix.apotheosis:caustic.suffix": "of the Caustic Realm",
+
+	"affix.apotheosis:sophisticated": "Sophisticated",
+    "affix.apotheosis:sophisticated.suffix": "of the Ancient Library",
+
+	"affix.apotheosis:devilish": "Devilish",
+    "affix.apotheosis:devilish.suffix": "of the Veteran",
+
 	"affix.apotheosis:radial": "Radial",
     "affix.apotheosis:radial.suffix": "of the Earthbreaker",
     "affix.apotheosis:radial.desc.1": "This tool breaks in a 1x2 area.",

@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -17,6 +18,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -76,12 +80,17 @@ public class AdventureModuleEvents {
 		SocketCommand.register(e.getRoot());
 	}
 
+	private static final UUID HEAVY_WEAPON_AS = UUID.fromString("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454");
+
 	@SubscribeEvent
 	public void affixModifiers(ItemAttributeModifierEvent e) {
 		ItemStack stack = e.getItemStack();
 		if (stack.hasTag()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 			affixes.forEach((afx, inst) -> inst.addModifiers(e.getSlotType(), e::addModifier));
+			if (!affixes.isEmpty() && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
+				e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(HEAVY_WEAPON_AS, "Heavy Weapon AS", -0.60, Operation.MULTIPLY_TOTAL));
+			}
 		}
 	}
 
@@ -216,6 +225,8 @@ public class AdventureModuleEvents {
 		double critChance = e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1;
 		float critDmg = (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE);
 
+		if (e.isVanillaCritical()) critChance += 1;
+
 		if (critChance > 1) {
 			e.setResult(Result.ALLOW);
 
@@ -238,7 +249,7 @@ public class AdventureModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void breakSpd(BreakSpeed e) {
-		e.setNewSpeed(e.getNewSpeed() * (float) e.getPlayer().getAttributeValue(Apoth.Attributes.BREAK_SPEED));
+		e.setNewSpeed(e.getNewSpeed() * (float) e.getPlayer().getAttributeValue(Apoth.Attributes.MINING_SPEED));
 	}
 
 	@SubscribeEvent

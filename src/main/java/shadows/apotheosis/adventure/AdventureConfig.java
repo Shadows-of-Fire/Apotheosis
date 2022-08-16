@@ -3,8 +3,12 @@ package shadows.apotheosis.adventure;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.config.Configuration;
@@ -38,13 +42,13 @@ public class AdventureConfig {
 	public static float gemChestChance = 0.55F;
 	public static int[] rarityThresholds = new int[] { 400, 700, 850, 940, 995 };
 	public static boolean disableQuarkOnAffixItems = true;
+	public static Supplier<Item> torchItem = () -> Items.TORCH;
 
 	public static void load(Configuration c) {
-		int i = 0;
 		for (LootRarity r : LootRarity.values()) {
 			if (r != LootRarity.ANCIENT) {
-				int threshold = c.getInt(r.id(), "rarity", rarityThresholds[i], 0, 1000, "The threshold for this rarity.  The percentage chance of this rarity appearing is equal to (previous threshold - this threshold) / 10.");
-				rarityThresholds[i++] = threshold;
+				int threshold = c.getInt(r.id(), "rarity", rarityThresholds[r.ordinal()], 0, 1000, "The threshold for this rarity.  The percentage chance of this rarity appearing is equal to (previous threshold - this threshold) / 10.");
+				rarityThresholds[r.ordinal()] = threshold;
 			}
 		}
 
@@ -69,6 +73,17 @@ public class AdventureConfig {
 		gemChestChance = c.getFloat("Gem Chest Chance", "affixes", gemChestChance, 0, 1, "The chance that a gem will be added to a loot chest. 0 = 0%, 1 = 100%");
 
 		disableQuarkOnAffixItems = c.getBoolean("Disable Quark Tooltips for Affix Items", "affixes", true, "If Quark's Attribute Tooltip handling is disabled for affix items");
+
+		String torch = c.getString("Torch Placement Item", "affixes", "minecraft:torch", "The item that will be used when attempting to place torches with the torch placer affix.  Must be a valid item that places a block on right click.");
+		torchItem = () -> {
+			try {
+				Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(torch));
+				return i == Items.AIR ? Items.TORCH : i;
+			} catch (Exception ex) {
+				AdventureModule.LOGGER.error("Invalid torch item {}", torch);
+				return Items.TORCH;
+			}
+		};
 	}
 
 }

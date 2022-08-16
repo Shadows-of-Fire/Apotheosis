@@ -2,7 +2,7 @@
 	"weight": 3,
 	"quality": 3,
 	"variant": 5,
-	"attribute": "apotheosis:break_speed",
+	"attribute": "apotheosis:mining_speed",
 	"operation": "MULTIPLY_TOTAL",
 	"value": {
 		"min": 0.35,

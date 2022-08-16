@@ -40,14 +40,17 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.AttributeAffix;
+import shadows.apotheosis.adventure.affix.effect.CatalyzingAffix;
 import shadows.apotheosis.adventure.affix.effect.CleavingAffix;
 import shadows.apotheosis.adventure.affix.effect.DurableAffix;
+import shadows.apotheosis.adventure.affix.effect.EnlightenedAffix;
 import shadows.apotheosis.adventure.affix.effect.ExecutingAffix;
 import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
 import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
 import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
 import shadows.apotheosis.adventure.affix.effect.PotionAffix;
 import shadows.apotheosis.adventure.affix.effect.PotionAffix.Target;
+import shadows.apotheosis.adventure.affix.effect.PsychicAffix;
 import shadows.apotheosis.adventure.affix.effect.RadialAffix;
 import shadows.apotheosis.adventure.affix.effect.RetreatingAffix;
 import shadows.apotheosis.adventure.affix.effect.SpectralShotAffix;
@@ -139,7 +142,7 @@ public class AdventureModule {
 				new RangedAttribute("apotheosis:current_hp_damage", 1.0D, 1.0D, 2.0D).setSyncable(true).setRegistryName("current_hp_damage"),
 				new RangedAttribute("apotheosis:overheal", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("overheal"),
 				new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("ghost_health"),
-				new RangedAttribute("apotheosis:break_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("break_speed"),
+				new RangedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("mining_speed"),
 				new RangedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("arrow_damage"),
 				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("arrow_velocity")
 		);
@@ -153,20 +156,20 @@ public class AdventureModule {
 				// Defensive Affixes
 				new AttributeAffix.Builder(() -> Attributes.MAX_HEALTH, Operation.ADDITION)
 				.with(LootRarity.COMMON, step(0.5F, 3, 0.5F))
-				.with(LootRarity.UNCOMMON, step(1.5F, 4, 0.5F))
-				.with(LootRarity.RARE, step(2F, 6, 0.5F))
-				.with(LootRarity.EPIC, step(3F, 7, 0.5F))
-				.with(LootRarity.MYTHIC, step(4F, 14, 0.5F))
-				.with(LootRarity.ANCIENT, step(8F, 20, 0.5F))
+				.with(LootRarity.UNCOMMON, step(1.5F, 5, 0.5F))
+				.with(LootRarity.RARE, step(3F, 8, 0.5F))
+				.with(LootRarity.EPIC, step(5F, 10, 0.5F))
+				.with(LootRarity.MYTHIC, step(8F, 14, 0.5F))
+				.with(LootRarity.ANCIENT, step(12F, 20, 0.5F))
 				.types(LootCategory::isDefensive).build("blessed"),
 
 				new AttributeAffix.Builder(() -> Attributes.ARMOR, Operation.ADDITION)
 				.with(LootRarity.COMMON, step(0.25F, 3, 0.25F))
-				.with(LootRarity.UNCOMMON, step(1F, 4, 0.25F))
-				.with(LootRarity.RARE, step(2F, 6, 0.25F))
-				.with(LootRarity.EPIC, step(3F, 8, 0.25F))
-				.with(LootRarity.MYTHIC, step(4F, 10, 0.25F))
-				.with(LootRarity.ANCIENT, step(5F, 16, 0.25F))
+				.with(LootRarity.UNCOMMON, step(1F, 8, 0.25F))
+				.with(LootRarity.RARE, step(3F, 10, 0.25F))
+				.with(LootRarity.EPIC, step(5F, 16, 0.25F))
+				.with(LootRarity.MYTHIC, step(7F, 24, 0.25F))
+				.with(LootRarity.ANCIENT, step(9F, 30, 0.25F))
 				.types(LootCategory::isDefensive).build("ironforged"),
 
 				new AttributeAffix.Builder(ForgeMod.SWIM_SPEED, Operation.MULTIPLY_TOTAL)
@@ -189,25 +192,25 @@ public class AdventureModule {
 
 				new AttributeAffix.Builder(() -> Attributes.ARMOR_TOUGHNESS, Operation.ADDITION)
 				.with(LootRarity.UNCOMMON, step(0.25F, 2, 0.25F))
-				.with(LootRarity.RARE, step(0.5F, 3, 0.25F))
-				.with(LootRarity.EPIC, step(1F, 4, 0.25F))
-				.with(LootRarity.MYTHIC, step(1.5F, 5, 0.25F))
-				.with(LootRarity.ANCIENT, step(3F, 8, 0.25F))
+				.with(LootRarity.RARE, step(1F, 4, 0.25F))
+				.with(LootRarity.EPIC, step(2F, 7, 0.25F))
+				.with(LootRarity.MYTHIC, step(4F, 12, 0.25F))
+				.with(LootRarity.ANCIENT, step(6F, 18, 0.25F))
 				.types(LootCategory::isDefensive).build("steel_touched"),
 
 				new AttributeAffix.Builder(() -> Attributes.KNOCKBACK_RESISTANCE, Operation.ADDITION)
-				.with(LootRarity.UNCOMMON, step(0.04F, 2, 0.02F))
-				.with(LootRarity.RARE, step(0.06F, 3, 0.02F))
-				.with(LootRarity.EPIC, step(0.1F, 6, 0.02F))
-				.with(LootRarity.MYTHIC, step(0.2F, 8, 0.02F))
-				.with(LootRarity.ANCIENT, step(0.4F, 12, 0.02F)) 
+				.with(LootRarity.UNCOMMON, step(0.04F, 5, 0.02F))
+				.with(LootRarity.RARE, step(0.06F, 6, 0.02F))
+				.with(LootRarity.EPIC, step(0.1F, 10, 0.02F))
+				.with(LootRarity.MYTHIC, step(0.2F, 14, 0.02F))
+				.with(LootRarity.ANCIENT, step(0.4F, 16, 0.02F)) 
 				.types(LootCategory::isDefensive).build("stalwart"),
 
 				new PotionAffix.Builder(() -> MobEffects.DAMAGE_RESISTANCE)
-				.with(LootRarity.RARE, step(20, 3, 20), l -> 0)
-				.with(LootRarity.EPIC, step(40, 4, 20), step(0, 1, 1))
-				.with(LootRarity.MYTHIC, step(60, 6, 20), step(0, 1, 1))
-				.with(LootRarity.ANCIENT, step(100, 10, 40), step(1, 2, 1))
+				.with(LootRarity.RARE, step(20, 30, 2), l -> 0)
+				.with(LootRarity.EPIC, step(40, 50, 2), step(0, 1, 1))
+				.with(LootRarity.MYTHIC, step(60, 70, 2), step(0, 1, 1))
+				.with(LootRarity.ANCIENT, step(100, 100, 4), step(1, 2, 1))
 				.types(l -> l == LootCategory.ARMOR)
 				.build(AffixType.EFFECT, Target.HURT_SELF, "bolstering"),
 
@@ -229,27 +232,27 @@ public class AdventureModule {
 				
 				new AttributeAffix.Builder(ForgeMod.STEP_HEIGHT_ADDITION, Operation.ADDITION)
 				.with(LootRarity.UNCOMMON, step(0.25F, 1, 0.25F))
-				.with(LootRarity.RARE, step(0.25F, 3, 0.25F))
-				.with(LootRarity.EPIC, step(0.25F, 4, 0.25F))
-				.with(LootRarity.MYTHIC, step(0.25F, 6, 0.25F))
-				.with(LootRarity.ANCIENT, step(0.25F, 7, 0.25F))
+				.with(LootRarity.RARE, step(0.5F, 3, 0.25F))
+				.with(LootRarity.EPIC, step(0.5F, 4, 0.25F))
+				.with(LootRarity.MYTHIC, step(1F, 6, 0.25F))
+				.with(LootRarity.ANCIENT, step(1.5F, 7, 0.25F))
 				.types(l -> l == LootCategory.ARMOR).items(s -> ((ArmorItem) s.getItem()).getSlot() == EquipmentSlot.FEET).build("elastic"),
 		
 				new AttributeAffix.Builder(() -> Attributes.LUCK, Operation.ADDITION)
-				.with(LootRarity.RARE, step(1F, 6, 0.25F))
-				.with(LootRarity.EPIC, step(1.25F, 6, 0.25F))
-				.with(LootRarity.MYTHIC, step(1.5F, 6, 0.25F))
-				.with(LootRarity.ANCIENT, step(2F, 12, 0.25F))
+				.with(LootRarity.RARE, step(2F, 10, 0.25F))
+				.with(LootRarity.EPIC, step(3F, 10, 0.25F))
+				.with(LootRarity.MYTHIC, step(5F, 12, 0.25F))
+				.with(LootRarity.ANCIENT, step(8F, 16, 0.25F))
 				.types(l -> l == LootCategory.ARMOR).build("fortunate"),
 				
 				// Light Weapon Affixes
 				new AttributeAffix.Builder(() -> Attributes.ATTACK_DAMAGE, Operation.ADDITION)
 				.with(LootRarity.COMMON, step(0.5F, 4, 0.25F))
-				.with(LootRarity.UNCOMMON, step(1F, 6, 0.25F))
-				.with(LootRarity.RARE, step(2F, 10, 0.25F))
-				.with(LootRarity.EPIC, step(4F, 14, 0.25F))
-				.with(LootRarity.MYTHIC, step(5F, 16, 0.25F))
-				.with(LootRarity.ANCIENT, step(8F, 20, 0.25F))
+				.with(LootRarity.UNCOMMON, step(1F, 10, 0.25F))
+				.with(LootRarity.RARE, step(2F, 16, 0.25F))
+				.with(LootRarity.EPIC, step(6F, 18, 0.25F))
+				.with(LootRarity.MYTHIC, step(8F, 24, 0.25F))
+				.with(LootRarity.ANCIENT, step(12F, 30, 0.25F))
 				.types(LootCategory::isLightWeapon).build("violent"),
 
 				new AttributeAffix.Builder(() -> Attributes.ATTACK_SPEED, Operation.MULTIPLY_TOTAL)
@@ -269,24 +272,78 @@ public class AdventureModule {
 				.with(LootRarity.MYTHIC, step(2F, 10, 0.25F))
 				.with(LootRarity.ANCIENT, step(2.5F, 16, 0.25F))
 				.types(LootCategory::isLightWeapon).build("elongated"),
-				
+
 				// Heavy Weapon Affixes
+				new AttributeAffix.Builder(() -> Attributes.ATTACK_DAMAGE, Operation.ADDITION)
+				.with(LootRarity.COMMON, step(2F, 8, 0.25F))
+				.with(LootRarity.UNCOMMON, step(4F, 12, 0.25F))
+				.with(LootRarity.RARE, step(5.5F, 20, 0.25F))
+				.with(LootRarity.EPIC, step(7F, 24, 0.25F))
+				.with(LootRarity.MYTHIC, step(10F, 30, 0.25F))
+				.with(LootRarity.ANCIENT, step(16F, 36, 0.25F))
+				.types(l -> l == LootCategory.HEAVY_WEAPON).build("murderous"),
+				
 				new AttributeAffix.Builder(() -> Attributes.ATTACK_KNOCKBACK, Operation.ADDITION)
 				.with(LootRarity.COMMON, step(0.25F, 10, 0.025F))
-				.with(LootRarity.UNCOMMON, step(0.5F, 20, 0.025F))
-				.with(LootRarity.RARE, step(0.75F, 30, 0.025F))
-				.with(LootRarity.EPIC, step(1F, 30, 0.025F))
-				.with(LootRarity.MYTHIC, step(1.25F, 30, 0.025F))
-				.with(LootRarity.ANCIENT, step(1.5F, 50, 0.025F))
+				.with(LootRarity.UNCOMMON, step(0.75F, 20, 0.025F))
+				.with(LootRarity.RARE, step(1.5F, 30, 0.025F))
+				.with(LootRarity.EPIC, step(2F, 30, 0.025F))
+				.with(LootRarity.MYTHIC, step(3.5F, 30, 0.025F))
+				.with(LootRarity.ANCIENT, l -> 5F)
 				.types(l -> l == LootCategory.HEAVY_WEAPON).build("forceful"),
 
+				new AttributeAffix.Builder(() -> Apoth.Attributes.PIERCING, Operation.MULTIPLY_BASE)
+				.with(LootRarity.COMMON, step(0.25F, 5, 0.01F))
+				.with(LootRarity.UNCOMMON, step(0.40F, 7, 0.01F))
+				.with(LootRarity.RARE, step(0.50F, 8, 0.01F))
+				.with(LootRarity.EPIC, step(0.70F, 10, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.85F, 15, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.90F, 20, 0.01F))
+				.types(l -> l == LootCategory.HEAVY_WEAPON).build("shredding"),
+
+				new AttributeAffix.Builder(() -> Apoth.Attributes.CURRENT_HP_DAMAGE, Operation.MULTIPLY_BASE)
+				.with(LootRarity.COMMON, step(0.01F, 5, 0.01F))
+				.with(LootRarity.UNCOMMON, step(0.04F, 6, 0.01F))
+				.with(LootRarity.RARE, step(0.10F, 8, 0.01F))
+				.with(LootRarity.EPIC, step(0.14F, 10, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.18F, 16, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.25F, 20, 0.01F))
+				.types(l -> l == LootCategory.HEAVY_WEAPON).build("giant_slaying"),
+
+				new AttributeAffix.Builder(() -> Apoth.Attributes.OVERHEAL, Operation.MULTIPLY_BASE)
+				.with(LootRarity.COMMON, step(0.05F, 5, 0.01F))
+				.with(LootRarity.UNCOMMON, step(0.15F, 10, 0.01F))
+				.with(LootRarity.RARE, step(0.25F, 10, 0.01F))
+				.with(LootRarity.EPIC, step(0.40F, 12, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.50F, 14, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.65F, 20, 0.01F))
+				.types(l -> l == LootCategory.HEAVY_WEAPON).build("berserking"),
+
+				new AttributeAffix.Builder(() -> Apoth.Attributes.CRIT_CHANCE, Operation.MULTIPLY_BASE)
+				.with(LootRarity.COMMON, step(0.25F, 10, 0.01F))
+				.with(LootRarity.UNCOMMON, step(0.40F, 20, 0.01F))
+				.with(LootRarity.RARE, step(0.75F, 35, 0.01F))
+				.with(LootRarity.EPIC, step(0.90F, 45, 0.01F))
+				.with(LootRarity.MYTHIC, step(1.35F, 55, 0.01F))
+				.with(LootRarity.ANCIENT, step(2.00F, 40, 0.01F))
+				.types(l -> l == LootCategory.HEAVY_WEAPON).build("annihilating"),
+
+				new AttributeAffix.Builder(() -> Apoth.Attributes.CRIT_DAMAGE, Operation.MULTIPLY_BASE)
+				.with(LootRarity.COMMON, step(0.25F, 10, 0.01F))
+				.with(LootRarity.UNCOMMON, step(0.35F, 15, 0.01F))
+				.with(LootRarity.RARE, step(0.55F, 20, 0.01F))
+				.with(LootRarity.EPIC, step(0.70F, 28, 0.01F))
+				.with(LootRarity.MYTHIC, step(1.15F, 35, 0.01F))
+				.with(LootRarity.ANCIENT, step(1.65F, 40, 0.01F))
+				.types(l -> l == LootCategory.HEAVY_WEAPON).build("decimating"),
+
 				new AttributeAffix.Builder(ForgeMod.REACH_DISTANCE, Operation.ADDITION)
-				.with(LootRarity.COMMON, step(0.5F, 4, 0.25F))
-				.with(LootRarity.UNCOMMON, step(0.75F, 5, 0.25F))
-				.with(LootRarity.RARE, step(1F, 6, 0.25F))
-				.with(LootRarity.EPIC, step(1.5F, 8, 0.25F))
-				.with(LootRarity.MYTHIC, step(2F, 10, 0.25F))
-				.with(LootRarity.ANCIENT, step(2.5F, 16, 0.25F))
+				.with(LootRarity.COMMON, step(0.5F, 6, 0.25F))
+				.with(LootRarity.UNCOMMON, step(0.75F, 8, 0.25F))
+				.with(LootRarity.RARE, step(1F, 10, 0.25F))
+				.with(LootRarity.EPIC, step(1.5F, 12, 0.25F))
+				.with(LootRarity.MYTHIC, step(2F, 14, 0.25F))
+				.with(LootRarity.ANCIENT, step(2.5F, 20, 0.25F))
 				.types(l -> l == LootCategory.BREAKER).build("lengthy"),
 
 				new AttributeAffix.Builder(() -> Apoth.Attributes.DRAW_SPEED, Operation.MULTIPLY_BASE)
@@ -299,37 +356,37 @@ public class AdventureModule {
 				.types(LootCategory::isRanged).build("agile"),
 
 				new AttributeAffix.Builder(() -> Apoth.Attributes.CRIT_CHANCE, Operation.MULTIPLY_BASE)
-				.with(LootRarity.COMMON, step(0.05F, 5, 0.01F))
-				.with(LootRarity.UNCOMMON, step(0.10F, 10, 0.01F))
-				.with(LootRarity.RARE, step(0.15F, 10, 0.01F))
-				.with(LootRarity.EPIC, step(0.20F, 12, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.30F, 14, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.40F, 10, 0.01F))
-				.types(l -> !l.isRanged()).build("intricate"),
+				.with(LootRarity.COMMON, step(0.05F, 10, 0.01F))
+				.with(LootRarity.UNCOMMON, step(0.20F, 20, 0.01F))
+				.with(LootRarity.RARE, step(0.25F, 35, 0.01F))
+				.with(LootRarity.EPIC, step(0.30F, 55, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.50F, 60, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.70F, 110, 0.01F))
+				.types(LootCategory::isLightWeapon).build("intricate"),
 				
 				new AttributeAffix.Builder(() -> Apoth.Attributes.CRIT_DAMAGE, Operation.MULTIPLY_BASE)
 				.with(LootRarity.COMMON, step(0.05F, 5, 0.01F))
-				.with(LootRarity.UNCOMMON, step(0.10F, 10, 0.01F))
-				.with(LootRarity.RARE, step(0.15F, 10, 0.01F))
-				.with(LootRarity.EPIC, step(0.20F, 12, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.30F, 14, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.40F, 10, 0.01F))
-				.types(LootCategory::isWeapon).build("lacerating"),
+				.with(LootRarity.UNCOMMON, step(0.15F, 10, 0.01F))
+				.with(LootRarity.RARE, step(0.25F, 25, 0.01F))
+				.with(LootRarity.EPIC, step(0.45F, 35, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.75F, 45, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.95F, 55, 0.01F))
+				.types(LootCategory::isLightWeapon).build("lacerating"),
 				
 				new AttributeAffix.Builder(() -> Apoth.Attributes.COLD_DAMAGE, Operation.ADDITION)
 				.with(LootRarity.UNCOMMON, step(1F, 6, 0.25F))
-				.with(LootRarity.RARE, step(2F, 8, 0.25F))
-				.with(LootRarity.EPIC, step(2F, 10, 0.25F))
-				.with(LootRarity.MYTHIC, step(3F, 12, 0.25F))
-				.with(LootRarity.ANCIENT, step(4F, 12, 0.25F))
+				.with(LootRarity.RARE, step(2F, 10, 0.25F))
+				.with(LootRarity.EPIC, step(4F, 14, 0.25F))
+				.with(LootRarity.MYTHIC, step(5F, 17, 0.25F))
+				.with(LootRarity.ANCIENT, step(7F, 20, 0.25F))
 				.types(LootCategory::isLightWeapon).build("glacial"),
 				
 				new AttributeAffix.Builder(() -> Apoth.Attributes.FIRE_DAMAGE, Operation.ADDITION)
 				.with(LootRarity.UNCOMMON, step(1F, 6, 0.25F))
-				.with(LootRarity.RARE, step(2F, 8, 0.25F))
-				.with(LootRarity.EPIC, step(2F, 10, 0.25F))
-				.with(LootRarity.MYTHIC, step(3F, 12, 0.25F))
-				.with(LootRarity.ANCIENT, step(4F, 12, 0.25F))
+				.with(LootRarity.RARE, step(2F, 10, 0.25F))
+				.with(LootRarity.EPIC, step(4F, 14, 0.25F))
+				.with(LootRarity.MYTHIC, step(5F, 17, 0.25F))
+				.with(LootRarity.ANCIENT, step(7F, 20, 0.25F))
 				.types(LootCategory::isLightWeapon).build("infernal"),
 
 				new AttributeAffix.Builder(() -> Apoth.Attributes.LIFE_STEAL, Operation.MULTIPLY_BASE)
@@ -341,49 +398,22 @@ public class AdventureModule {
 				.with(LootRarity.ANCIENT, step(0.40F, 10, 0.01F))
 				.types(LootCategory::isLightWeapon).build("vampiric"),
 
-				new AttributeAffix.Builder(() -> Apoth.Attributes.PIERCING, Operation.MULTIPLY_BASE)
-				.with(LootRarity.COMMON, step(0.25F, 5, 0.01F))
-				.with(LootRarity.UNCOMMON, step(0.35F, 7, 0.01F))
-				.with(LootRarity.RARE, step(0.45F, 8, 0.01F))
-				.with(LootRarity.EPIC, step(0.55F, 10, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.65F, 15, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.80F, 20, 0.01F))
-				.types(l -> l == LootCategory.HEAVY_WEAPON).build("shredding"),
-
-				new AttributeAffix.Builder(() -> Apoth.Attributes.CURRENT_HP_DAMAGE, Operation.MULTIPLY_BASE)
-				.with(LootRarity.COMMON, step(0.01F, 5, 0.01F))
-				.with(LootRarity.UNCOMMON, step(0.04F, 6, 0.01F))
-				.with(LootRarity.RARE, step(0.09F, 7, 0.01F))
-				.with(LootRarity.EPIC, step(0.13F, 8, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.17F, 12, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.25F, 20, 0.01F))
-				.types(l -> l == LootCategory.HEAVY_WEAPON).build("giant_slaying"),
-
-				new AttributeAffix.Builder(() -> Apoth.Attributes.OVERHEAL, Operation.MULTIPLY_BASE)
+				new AttributeAffix.Builder(() -> Apoth.Attributes.MINING_SPEED, Operation.MULTIPLY_BASE)
 				.with(LootRarity.COMMON, step(0.05F, 5, 0.01F))
-				.with(LootRarity.UNCOMMON, step(0.10F, 10, 0.01F))
-				.with(LootRarity.RARE, step(0.15F, 10, 0.01F))
-				.with(LootRarity.EPIC, step(0.20F, 12, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.30F, 14, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.40F, 10, 0.01F))
-				.types(l -> l == LootCategory.HEAVY_WEAPON).build("berserking"),
-
-				new AttributeAffix.Builder(() -> Apoth.Attributes.BREAK_SPEED, Operation.MULTIPLY_BASE)
-				.with(LootRarity.COMMON, step(0.05F, 5, 0.01F))
-				.with(LootRarity.UNCOMMON, step(0.10F, 10, 0.01F))
-				.with(LootRarity.RARE, step(0.15F, 10, 0.01F))
-				.with(LootRarity.EPIC, step(0.20F, 12, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.30F, 14, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.40F, 10, 0.01F))
+				.with(LootRarity.UNCOMMON, step(0.20F, 10, 0.01F))
+				.with(LootRarity.RARE, step(0.35F, 10, 0.01F))
+				.with(LootRarity.EPIC, step(0.50F, 12, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.65F, 14, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.90F, 10, 0.01F))
 				.types(l -> l == LootCategory.BREAKER).build("destructive"),
 				
 				new AttributeAffix.Builder(() -> Apoth.Attributes.ARROW_DAMAGE, Operation.MULTIPLY_BASE)
 				.with(LootRarity.COMMON, step(0.05F, 5, 0.01F))
 				.with(LootRarity.UNCOMMON, step(0.20F, 15, 0.01F))
-				.with(LootRarity.RARE, step(0.25F, 15, 0.01F))
-				.with(LootRarity.EPIC, step(0.40F, 20, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.50F, 20, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.70F, 30, 0.01F))
+				.with(LootRarity.RARE, step(0.30F, 20, 0.01F))
+				.with(LootRarity.EPIC, step(0.45F, 30, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.60F, 40, 0.01F))
+				.with(LootRarity.ANCIENT, step(0.75F, 50, 0.01F))
 				.types(LootCategory::isRanged).build("elven"),
 
 				new AttributeAffix.Builder(() -> Apoth.Attributes.ARROW_VELOCITY, Operation.MULTIPLY_BASE)
@@ -482,8 +512,45 @@ public class AdventureModule {
 				new ExecutingAffix().setRegistryName("executing"),
 				new CleavingAffix().setRegistryName("cleaving"),
 				new OmneticAffix().setRegistryName("omnetic"),
-				new RadialAffix().setRegistryName("radial")
+				new RadialAffix().setRegistryName("radial"),
+				new EnlightenedAffix().setRegistryName("enlightened"),
+				new PsychicAffix().setRegistryName("psychic"),
+				new CatalyzingAffix().setRegistryName("catalyzing")
 		);
+
+		if(Apotheosis.enablePotion) {
+			e.getRegistry().registerAll(
+				new PotionAffix.Builder(() -> Apoth.Effects.SUNDERING)
+				.with(LootRarity.MYTHIC, step(60, 10, 5), step(0, 1, 1))
+				.with(LootRarity.ANCIENT, step(100, 20, 5), step(1, 1, 1))
+				.types(LootCategory::isRanged)
+				.build(AffixType.EFFECT, Target.ARROW_TARGET, "acidic"),
+
+				new PotionAffix.Builder(() -> Apoth.Effects.SUNDERING)
+				.with(LootRarity.RARE, step(30, 15, 5), l -> 0)
+				.with(LootRarity.EPIC, step(40, 15, 5), step(0, 1, 1))
+				.with(LootRarity.MYTHIC, step(60, 20, 5), step(1, 1, 1))
+				.with(LootRarity.ANCIENT, step(100, 20, 5), step(2, 1, 1))
+				.types(l -> l == LootCategory.HEAVY_WEAPON)
+				.build(AffixType.EFFECT, Target.ATTACK_TARGET, "caustic"),
+
+				new PotionAffix.Builder(() -> Apoth.Effects.KNOWLEDGE)
+				.with(LootRarity.RARE, step(30, 15, 5), l -> 0)
+				.with(LootRarity.EPIC, step(40, 15, 5), step(0, 1, 1))
+				.with(LootRarity.MYTHIC, step(60, 20, 5), step(1, 1, 1))
+				.with(LootRarity.ANCIENT, step(100, 20, 5), step(2, 1, 1))
+				.types(LootCategory::isLightWeapon)
+				.build(AffixType.EFFECT, Target.ATTACK_SELF, "sophisticated"),
+
+				new PotionAffix.Builder(() -> Apoth.Effects.BLEEDING)
+				.with(LootRarity.RARE, step(60, 15, 5), l -> 0)
+				.with(LootRarity.EPIC, step(90, 15, 5), step(0, 1, 1))
+				.with(LootRarity.MYTHIC, step(120, 20, 5), step(1, 1, 1))
+				.with(LootRarity.ANCIENT, step(200, 20, 5), step(2, 1, 1))
+				.types(l -> l == LootCategory.SHIELD)
+				.build(AffixType.EFFECT, Target.BLOCK_ATTACKER, "devilish")
+			);
+		}
 		//Formatter::on
 	}
 

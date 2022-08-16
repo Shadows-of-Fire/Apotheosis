@@ -1,5 +1,5 @@
 {
-    "name": "Break Speed",
+    "name": "Mining Speed",
     "icon": "minecraft:netherite_pickaxe",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Increasing your $(9)Break Speed$() increases the speed at which you break blocks. At the base value of 1.0, you break blocks like normal.$(p)Found on pickaxes and shovels."
+            "text": "Increasing your $(9)Mining Speed$() increases the speed at which you break blocks. At the base value of 1.0, you break blocks like normal.$(p)Found on pickaxes and shovels."
         },
 		{
 			"type": "patchouli:text",

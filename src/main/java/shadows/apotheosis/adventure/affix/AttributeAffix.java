@@ -46,10 +46,14 @@ public class AttributeAffix extends Affix {
 	public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == null) {
-			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName());
+			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName().getString());
 			return;
 		}
 		ModifierInst modif = modifiers.get(rarity);
+		if (modif.attr.get() == null) {
+			AdventureModule.LOGGER.debug("The affix {} has attempted to apply a null attribute modifier to {}!", this.getRegistryName(), stack.getHoverName().getString());
+			return;
+		}
 		for (EquipmentSlot slot : cat.getSlots(stack)) {
 			if (slot == type) {
 				map.accept(modif.attr.get(), modif.build(slot, this.getRegistryName(), level));
