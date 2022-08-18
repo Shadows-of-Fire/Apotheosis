@@ -1,0 +1,7 @@
+{
+    "name": "Bosses",
+    "description": "A $(9)Boss$() is an enemy that has tapped into the power of affixes.$(p)You can usually identify one by their unique name and powerful gear.",
+    "icon": "apotheosis:boss_summoner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

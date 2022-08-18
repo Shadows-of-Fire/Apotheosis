@@ -20,6 +20,8 @@ import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
 import shadows.apotheosis.adventure.affix.effect.RadialAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
+import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
+import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ObliterationEnchant;
 import shadows.apotheosis.ench.anvil.SplittingEnchant;
@@ -92,6 +94,7 @@ public class Apoth {
 		public static final Block SIGHTSHELF = null;
 		public static final Block SIGHTSHELF_T2 = null;
 		public static final EnchLibraryBlock ENDER_LIBRARY = null;
+		public static final BossSpawnerBlock BOSS_SPAWNER = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -198,6 +201,7 @@ public class Apoth {
 		public static final BlockEntityType<EnchLibraryTile> LIBRARY = null;
 		public static final BlockEntityType<AnvilTile> ANVIL = null;
 		public static final BlockEntityType<EnchLibraryTile> ENDER_LIBRARY = null;
+		public static final BlockEntityType<BossSpawnerTile> BOSS_SPAWNER = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -278,6 +282,18 @@ public class Apoth {
 		public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType(Apotheosis.MODID + ":fletching");
 		public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
 		public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
+	}
+
+	public static final class LootTables {
+		public static final ResourceLocation CHEST_VALUABLE = r("chests/chest_valuable");
+		public static final ResourceLocation SPAWNER_BRUTAL_ROTATE = r("chests/spawner_brutal_rotate");
+		public static final ResourceLocation SPAWNER_BRUTAL = r("chests/spawner_brutal");
+		public static final ResourceLocation SPAWNER_SWARM = r("chests/spawner_swarm");
+		public static final ResourceLocation TOME_TOWER = r("chests/tome_tower");
+
+		private static ResourceLocation r(String s) {
+			return new ResourceLocation(Apotheosis.MODID, s);
+		}
 	}
 
 }

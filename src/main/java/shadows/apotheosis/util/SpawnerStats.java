@@ -2,6 +2,9 @@ package shadows.apotheosis.util;
 
 import com.google.gson.annotations.SerializedName;
 
+import net.minecraft.world.level.BaseSpawner;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+
 public class SpawnerStats {
 
 	@SerializedName("spawn_delay")
@@ -31,6 +34,17 @@ public class SpawnerStats {
 		this.maxNearbyEntities = nearby;
 		this.spawnRange = range;
 		this.playerRange = playerRange;
+	}
+
+	public void apply(SpawnerBlockEntity entity) {
+		BaseSpawner base = entity.spawner;
+		base.spawnDelay = this.spawnDelay;
+		base.minSpawnDelay = this.minDelay;
+		base.maxSpawnDelay = this.maxDelay;
+		base.spawnCount = this.spawnCount;
+		base.maxNearbyEntities = this.maxNearbyEntities;
+		base.spawnRange = this.spawnRange;
+		base.requiredPlayerRange = this.playerRange;
 	}
 
 }

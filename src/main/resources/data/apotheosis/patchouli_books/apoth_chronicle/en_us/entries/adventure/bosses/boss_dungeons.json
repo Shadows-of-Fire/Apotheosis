@@ -1,0 +1,17 @@
+{
+    "name": "Boss Dungeons",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Located deep in the ancient caverns of the earth are hidden structures, housing the untold power of the affixes. It would be a welcome surprise if that power was free for the taking, but alas, it is instead defended by a Boss."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Found underground are a few different variants of structures known as Boss Dungeons.  Each dungeon contains a boss spawner and a few loot chests.  The spawner will trigger upon getting close to it, unleashing the contained boss."
+		}
+	]
+}

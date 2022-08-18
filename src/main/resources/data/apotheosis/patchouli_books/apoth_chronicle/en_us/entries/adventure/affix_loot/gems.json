@@ -1,0 +1,23 @@
+{
+    "name": "Gems",
+    "icon": "apotheosis:gem",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A $(9)Gem$() is a crystal of condensed strength. When socketed into an affix item, a Gem will provide a powerful attribute bonus whenever the item normally would."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Obtaining Gems",
+			"text": "Gems can be found in chest loot, and may rarely be found when killing mobs. However, for a gem to drop, the killer must be a real player, not a machine or other automation source.$(p)Gems are more likely to drop from Bosses."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Socketing Gems",
+			"text": "To socket a gem into an item, combine the two in a Smithing Table.$(p)Place the item on the left, and the gem on the right.$(p)Socketed gems cannot be removed."
+		}
+	]
+}

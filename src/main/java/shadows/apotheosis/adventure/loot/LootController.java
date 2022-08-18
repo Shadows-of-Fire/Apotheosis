@@ -52,7 +52,7 @@ public class LootController {
 		}
 
 		if (durability > 0) {
-			loaded.put(Affixes.DURABLE, new AffixInstance(Affixes.DURABLE, stack, rarity, durability));
+			loaded.put(Affixes.DURABLE, new AffixInstance(Affixes.DURABLE, stack, rarity, durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
 		}
 
 		Collections.shuffle(nameList);

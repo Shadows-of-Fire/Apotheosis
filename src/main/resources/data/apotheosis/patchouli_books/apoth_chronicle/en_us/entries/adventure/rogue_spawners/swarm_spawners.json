@@ -1,0 +1,13 @@
+{
+    "name": "Swarm Spawners",
+    "icon": "minecraft:spider_eye",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A swarm spawner is a vile subtype of rogue spawner that will spawn mobs in high quantities very rapidly.$(p)Typically they are limited to weaker mobs, often of the arachnid variety, so they are not terrifyingly overwhelming."
+        }
+	]
+}

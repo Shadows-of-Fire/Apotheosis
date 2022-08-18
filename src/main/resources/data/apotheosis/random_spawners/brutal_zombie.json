@@ -9,10 +9,72 @@
 		"player_activation_range": 12
 	},
 	"spawn_potentials": [{
-		"entity": "zombie",
-		"nbt": "{Health:30d,Attributes:[{Base:0.23d,Modifiers:[{Amount:0.15d,Operation:2,UUID:[I;-1015019516,-1053671403,-2022218929,-660669376],Name:\"placebo:brutal_max_spd\"}],Name:\"minecraft:generic.movement_speed\"},{Base:3.0d,Modifiers:[{Amount:0.5d,Operation:2,UUID:[I;1196188625,-245480066,-1688560149,2127781011],Name:\"placebo:brutal_max_dmg\"}],Name:\"minecraft:generic.attack_damage\"},{Base:20.0d,Modifiers:[{Amount:0.50d,Operation:2,UUID:[I;1251298849,971720602,-1424695206,147657752],Name:\"placebo:brutal_max_hp\"}],Name:\"minecraft:generic.max_health\"}],ActiveEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:10000000,Id:12b,Amplifier:0b}]}",
+		"data": {
+			"entity": {
+				"Health": 30.0,
+				"Attributes": [{
+						"Base": 0.23,
+						"Modifiers": [{
+							"Amount": 0.15,
+							"Operation": 2,
+							"UUID": [
+								-1015019516,
+								-1053671403,
+								-2022218929,
+								-660669376
+							],
+							"Name": "placebo:brutal_max_spd"
+						}],
+						"Name": "minecraft:generic.movement_speed"
+					},
+					{
+						"Base": 3.0,
+						"Modifiers": [{
+							"Amount": 0.5,
+							"Operation": 2,
+							"UUID": [
+								1196188625,
+								-245480066,
+								-1688560149,
+								2127781011
+							],
+							"Name": "placebo:brutal_max_dmg"
+						}],
+						"Name": "minecraft:generic.attack_damage"
+					},
+					{
+						"Base": 20.0,
+						"Modifiers": [{
+							"Amount": 0.5,
+							"Operation": 2,
+							"UUID": [
+								1251298849,
+								971720602,
+								-1424695206,
+								147657752
+							],
+							"Name": "placebo:brutal_max_hp"
+						}],
+						"Name": "minecraft:generic.max_health"
+					}
+				],
+				"id": "zombie",
+				"ActiveEffects": [{
+					"Ambient": 0,
+					"CurativeItems": [{
+						"id": "minecraft:milk_bucket",
+						"Count": 1
+					}],
+					"ShowIcon": 1,
+					"ShowParticles": 1,
+					"Duration": 10000000,
+					"Id": 12,
+					"Amplifier": 0
+				}]
+			}
+		},
 		"weight": 1
 	}],
-	"loot_table": "apotheosis:spawner_brutal",
+	"loot_table": "apotheosis:chests/spawner_brutal",
 	"weight": 3
 }

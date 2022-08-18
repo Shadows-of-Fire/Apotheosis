@@ -34,6 +34,7 @@ public class SocketingRecipe extends UpgradeRecipe {
 	/**
 	 * Returns an Item that is the result of this recipe
 	 */
+	@Override
 	public ItemStack assemble(Container pInv) {
 		ItemStack out = pInv.getItem(0).copy();
 		if (out.isEmpty()) return ItemStack.EMPTY;
@@ -48,6 +49,7 @@ public class SocketingRecipe extends UpgradeRecipe {
 	/**
 	 * Used to determine if this recipe can fit in a grid of the given width/height
 	 */
+	@Override
 	public boolean canCraftInDimensions(int pWidth, int pHeight) {
 		return pWidth * pHeight >= 2;
 	}
@@ -56,24 +58,34 @@ public class SocketingRecipe extends UpgradeRecipe {
 	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
 	 */
+	@Override
 	public ItemStack getResultItem() {
 		return ItemStack.EMPTY;
 	}
 
+	@Override
 	public ItemStack getToastSymbol() {
 		return new ItemStack(Blocks.SMITHING_TABLE);
 	}
 
+	@Override
 	public ResourceLocation getId() {
 		return ID;
 	}
 
+	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return Serializer.INSTANCE;
 	}
 
+	@Override
 	public RecipeType<?> getType() {
 		return RecipeType.SMITHING;
+	}
+	
+	@Override
+	public boolean isSpecial() {
+		return true;
 	}
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SocketingRecipe> {

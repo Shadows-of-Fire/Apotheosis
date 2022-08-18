@@ -5,6 +5,8 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.collect.ImmutableSet;
+
 import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.core.BlockPos;
@@ -20,7 +22,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -63,15 +67,23 @@ import shadows.apotheosis.adventure.affix.socket.GemManager;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
 import shadows.apotheosis.adventure.boss.BossArmorManager;
+import shadows.apotheosis.adventure.boss.BossDungeonFeature;
+import shadows.apotheosis.adventure.boss.BossDungeonFeature2;
 import shadows.apotheosis.adventure.boss.BossEvents;
 import shadows.apotheosis.adventure.boss.BossItemManager;
+import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
+import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
+import shadows.apotheosis.adventure.boss.BossSummonerItem;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.AffixLootModifier;
 import shadows.apotheosis.adventure.loot.GemLootModifier;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
+import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.util.NameHelper;
+import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
 
 public class AdventureModule {
@@ -94,6 +106,7 @@ public class AdventureModule {
 		AffixLootManager.INSTANCE.registerToBus();
 		BossArmorManager.INSTANCE.registerToBus();
 		BossItemManager.INSTANCE.registerToBus();
+		RandomSpawnerManager.INSTANCE.registerToBus();
 		Apotheosis.HELPER.registerProvider(f -> {
 			f.addRecipe(new SocketingRecipe());
 		});
@@ -101,19 +114,28 @@ public class AdventureModule {
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
+		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("boss_dng"));
+		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dng_2"));
+		e.getRegistry().register(RogueSpawnerFeature.INSTANCE.setRegistryName("rogue_spawner"));
+		//e.getRegistry().register(TroveFeature.INSTANCE.setRegistryName("trove"));
+		//e.getRegistry().register(TomeTowerFeature.INSTANCE.setRegistryName("tome_tower"));
+		MinecraftForge.EVENT_BUS.register(AdventureGeneration.class);
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
 		e.getRegistry().register(new GemItem(new Item.Properties().stacksTo(1)).setRegistryName("gem"));
+		e.getRegistry().register(new BossSummonerItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("boss_summoner"));
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
+		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()).setRegistryName("boss_spawner"));
 	}
 
 	@SubscribeEvent
 	public void tiles(Register<BlockEntityType<?>> e) {
+		e.getRegistry().register(new TickingBlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(Apoth.Blocks.BOSS_SPAWNER), false, true).setRegistryName("boss_spawner"));
 	}
 
 	@SubscribeEvent
@@ -625,7 +647,7 @@ public class AdventureModule {
 		if (e == null && nameConfig.hasChanged()) nameConfig.save();
 	}
 
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	public static void debugLog(BlockPos pos, String name) {
 		if (DEBUG) AdventureModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());

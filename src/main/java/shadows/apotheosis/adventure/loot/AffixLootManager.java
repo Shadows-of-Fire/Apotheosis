@@ -15,18 +15,15 @@ import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.json.ItemAdapter;
-import shadows.placebo.json.PlaceboJsonReloadListener;
 import shadows.placebo.json.SerializerBuilder;
+import shadows.placebo.json.WeightedJsonReloadListener;
 
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
  */
-public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> {
+public class AffixLootManager extends WeightedJsonReloadListener<AffixLootEntry> {
 
 	public static final AffixLootManager INSTANCE = new AffixLootManager();
-
-	protected List<AffixLootEntry> list = new ArrayList<>();
-	protected int totalWeight = 0;
 
 	private AffixLootManager() {
 		super(AdventureModule.LOGGER, "affix_loot_entries", false, false);
@@ -38,23 +35,10 @@ public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> 
 	}
 
 	@Override
-	protected void beginReload() {
-		super.beginReload();
-		this.list.clear();
-	}
-
-	@Override
 	protected <T extends AffixLootEntry> void register(ResourceLocation key, T item) {
 		Preconditions.checkArgument(!item.stack.isEmpty());
 		Preconditions.checkNotNull(item.type);
 		super.register(key, item);
-	}
-
-	@Override
-	protected void onReload() {
-		super.onReload();
-		this.list.addAll(this.getValues());
-		totalWeight = WeightedRandom.getTotalWeight(this.list);
 	}
 
 	/**
@@ -63,9 +47,9 @@ public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> 
 	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
 	 */
 	public static AffixLootEntry getRandomEntry(Random rand, float luck) {
-		if (luck == 0) return WeightedRandom.getRandomItem(rand, INSTANCE.list, INSTANCE.totalWeight).get();
-		List<Wrapper<AffixLootEntry>> temp = new ArrayList<>(INSTANCE.list.size());
-		for (AffixLootEntry g : INSTANCE.list) {
+		if (luck == 0) return WeightedRandom.getRandomItem(rand, INSTANCE.entries, INSTANCE.weight).get();
+		List<Wrapper<AffixLootEntry>> temp = new ArrayList<>(INSTANCE.entries.size());
+		for (AffixLootEntry g : INSTANCE.entries) {
 			temp.add(WeightedEntry.wrap(g, getModifiedWeight(g.weight, g.quality, luck)));
 		}
 		return WeightedRandom.getRandomItem(rand, temp).get().getData();
@@ -79,7 +63,7 @@ public class AffixLootManager extends PlaceboJsonReloadListener<AffixLootEntry> 
 	 */
 	public static AffixLootEntry getRandomEntry(Random rand, LootCategory type, float luck) {
 		if (type == null) return getRandomEntry(rand, luck);
-		List<AffixLootEntry> filtered = INSTANCE.list.stream().filter(p -> p.getType() == type).collect(Collectors.toList());
+		List<AffixLootEntry> filtered = INSTANCE.entries.stream().filter(p -> p.getType() == type).collect(Collectors.toList());
 		if (luck == 0) return WeightedRandom.getRandomItem(rand, filtered).get();
 
 		List<Wrapper<AffixLootEntry>> temp = new ArrayList<>(filtered.size());

@@ -1,8 +1,8 @@
 ## 5.4.0
 * The Deadly Module is back!
   * However, it's actually called the Adventure Module now.
-  * Currently, the Adventure Module only includes Affix Loot and surface bosses.
-  * Worldgen features (boss dungeons, random spawners, etc) will be coming later.
+  * The module mainly contains a fully revamped Affix Loot system, and verbatim ports of the Boss and Rogue Spawner systems.
+  * Reworks to Bosses and Rogue Spawners will be coming later.
   * Affix Loot can be obtained from bosses, naturally spawned mobs, loot chests, and wandering traders.
 * Fixed Silent modifier not showing in spawner tooltips.
 * Fixed a crash when modules were disabled.

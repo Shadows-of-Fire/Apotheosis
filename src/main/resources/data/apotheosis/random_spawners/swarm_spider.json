@@ -9,10 +9,25 @@
 		"player_activation_range": 14
 	},
 	"spawn_potentials": [{
-		"entity": "spider",
-		"nbt": "{ActiveEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:10000000,Id:1b,Amplifier:0b}]}",
+		"data": {
+			"entity": {
+				"id": "spider",
+				"ActiveEffects": [{
+					"Ambient": 0,
+					"CurativeItems": [{
+						"id": "minecraft:milk_bucket",
+						"Count": 1
+					}],
+					"ShowIcon": 1,
+					"ShowParticles": 1,
+					"Duration": 10000000,
+					"Id": 1,
+					"Amplifier": 0
+				}]
+			}
+		},
 		"weight": 1
 	}],
-	"loot_table": "apotheosis:spawner_swarm",
+	"loot_table": "apotheosis:chests/spawner_swarm",
 	"weight": 3
 }

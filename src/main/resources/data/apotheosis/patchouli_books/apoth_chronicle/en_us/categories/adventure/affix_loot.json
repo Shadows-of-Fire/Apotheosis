@@ -1,0 +1,7 @@
+{
+    "name": "Affix Loot",
+    "description": "While adventuring, you may encounter items with various bonuses.$(p)These are Affix Items, relics of the past with varying degrees of power.",
+    "icon": "minecraft:chest",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

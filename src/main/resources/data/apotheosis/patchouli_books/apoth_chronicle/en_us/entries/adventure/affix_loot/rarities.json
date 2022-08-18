@@ -1,0 +1,43 @@
+{
+    "name": "Rarities",
+    "icon": "minecraft:nether_star",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Every affix item has a $(9)Rarity$() associated with it. The rarity of the item determines how strong it will be, and what affixes will be applied to it.$(p)A higher rarity is always stronger than the last."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Common",
+			"text": "A $(#808080)Common$() item is the most basic type of affix item.  Each one will always have a single stat bonus, and has a low chance to gain a second."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Uncommon",
+			"text": "An $(#33FF33)Uncommon$() item is a step up from a common item, but still doesn't get any unique effects. These items always have two stat bonuses, and may receive a third.$(p)They may also receive a single socket."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Rare",
+			"text": "$(#5555FF)Rare$() items are where affixes begin to shine. These items receive three stat bonuses and a special effect, and may receive a second effect.$(p)They may also receive a socket, and always have a slight durability bonus."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Epic",
+			"text": "$(#BB00BB)Epic$() items are on the cusp of greatness. They receive three stats and an effect, and may receive a fourth stat and second effect.$(p)They may also receive up to two sockets, and have a stronger durability bonus."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Mythic",
+			"text": "$(#ED7014)Mythic$() items were forged by a lost entity of great power. They receive four stats and two effects, and may receive a third effect as well as three sockets.$(p)They also carry a significant durability bonus."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Ancient",
+			"text": "An $(b)Ancient$() item is the pinnacle of creation, an unimaginable concentration of power bestowed only to the luckiest.$(p)They're so rare, some might say they aren't even implemented yet..."
+		}
+	]
+}

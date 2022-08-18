@@ -46,19 +46,19 @@ public class ItemStackMixin {
 	}
 
 	// Injects just before ItemStack.TooltipPart.MODIFIERS is written to the tooltip to remember where to rewind to.
-	@Inject(method = "getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;", at = @At(value = "INVOKE", ordinal = 3, target = "shouldShowInTooltip"), locals = LocalCapture.CAPTURE_FAILSOFT)
+	@Inject(method = "getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;", at = @At(value = "INVOKE", ordinal = 3, target = "net/minecraft/world/item/ItemStack.shouldShowInTooltip(ILnet/minecraft/world/item/ItemStack$TooltipPart;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	public void apoth_tooltipMarker(@Nullable Player pPlayer, TooltipFlag pIsAdvanced, CallbackInfoReturnable<List<Component>> cir, List<Component> list) {
 		if (Apotheosis.enableAdventure) list.add(new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
 	// Injects just before ItemStack.TooltipPart.MODIFIERS is written to the tooltip to remember where to rewind to.
-	@Inject(method = "getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;", at = @At(value = "INVOKE", ordinal = 1, target = "hasTag"), locals = LocalCapture.CAPTURE_FAILSOFT)
+	@Inject(method = "getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;", at = @At(value = "INVOKE", ordinal = 1, target = "net/minecraft/world/item/ItemStack.hasTag()Z"), locals = LocalCapture.CAPTURE_FAILSOFT)
 	public void apoth_tooltipMarker2(@Nullable Player pPlayer, TooltipFlag pIsAdvanced, CallbackInfoReturnable<List<Component>> cir, List<Component> list) {
 		if (Apotheosis.enableAdventure) list.add(new TextComponent("APOTH_REMOVE_MARKER_2"));
 	}
 
 	// Actually applies the above, since mixin can't write back to params
-	@ModifyVariable(at = @At(value = "INVOKE", target = "getDamageValue"), method = "hurt", argsOnly = true, ordinal = 0)
+	@ModifyVariable(at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getDamageValue()I"), method = "hurt", argsOnly = true, ordinal = 0)
 	public int swapDura(int amount, int amountCopy, Random pRandom, @Nullable ServerPlayer pUser) {
 		int blocked = 0;
 		AffixInstance inst = AffixHelper.getAffixes((ItemStack) (Object) this).get(Affixes.DURABLE);

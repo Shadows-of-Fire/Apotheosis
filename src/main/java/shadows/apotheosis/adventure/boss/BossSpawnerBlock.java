@@ -1,0 +1,72 @@
+package shadows.apotheosis.adventure.boss;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import shadows.apotheosis.Apoth;
+import shadows.placebo.block_entity.TickingBlockEntity;
+
+public class BossSpawnerBlock extends Block implements EntityBlock {
+
+	public BossSpawnerBlock(Properties properties) {
+		super(properties);
+	}
+
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+		return new BossSpawnerTile(pPos, pState);
+	}
+
+	public static class BossSpawnerTile extends BlockEntity implements TickingBlockEntity {
+
+		protected BossItem item;
+		protected int ticks = 0;
+
+		public BossSpawnerTile(BlockPos pos, BlockState state) {
+			super(Apoth.Tiles.BOSS_SPAWNER, pos, state);
+		}
+
+		@Override
+		public void serverTick(Level pLevel, BlockPos pPos, BlockState pState) {
+			if (this.level.isClientSide) return;
+			if (this.ticks++ % 40 == 0 && this.level.getEntities(EntityType.PLAYER, new AABB(this.worldPosition).inflate(8, 8, 8), EntitySelector.NO_SPECTATORS).stream().anyMatch(p -> !p.isCreative())) {
+				this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
+				BlockPos pos = this.worldPosition;
+				if (this.item != null) {
+					Mob entity = this.item.createBoss((ServerLevel) this.level, pos, this.level.getRandom());
+					entity.setPersistenceRequired();
+					this.level.addFreshEntity(entity);
+				}
+			}
+		}
+
+		public void setBossItem(BossItem item) {
+			this.item = item;
+		}
+
+		@Override
+		public void saveAdditional(CompoundTag tag) {
+			tag.putString("boss_item", this.item.getId().toString());
+			super.saveAdditional(tag);
+		}
+
+		@Override
+		public void load(CompoundTag tag) {
+			this.item = BossItemManager.INSTANCE.getById(new ResourceLocation(tag.getString("boss_item")));
+			super.load(tag);
+		}
+
+	}
+
+}

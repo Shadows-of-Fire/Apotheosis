@@ -1,6 +1,6 @@
 {
     "name": "Adventure Module",
-    "description": "Formerly known as the $(4)Deadly Module$(), the Adventure Module contains all sorts of RPG-esque features.$(p)From Affix Loot to Boss Mobs, it's all here.",
+    "description": "Formerly known as the $(4)Deadly Module$(), the Adventure Module allows you to gear up with procedurally generated loot items that have powerful bonuses.$(p)But beware, new foes are also present.",
     "icon": "minecraft:netherite_sword",
 	"flag": "apotheosis:adventure"
 }

@@ -1,0 +1,251 @@
+{
+  "pools": [
+    {
+      "name": "placebo_code_pool_19",
+      "rolls": {
+        "min": 5.0,
+        "max": 6.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:creeper_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:skeleton_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:spider_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:zombie_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:slime_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:enderman_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:cave_spider_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 1,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:silverfish_spawn_egg",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "quality": 4,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:diamond",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "quality": 4,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:emerald",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 10,
+          "quality": 1,
+          "min": 1,
+          "max": 5,
+          "stack": {
+            "item": "minecraft:iron_ingot",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 10,
+          "quality": 3,
+          "min": 1,
+          "max": 5,
+          "stack": {
+            "item": "minecraft:gold_ingot",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:golden_apple",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 1,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:name_tag",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 1,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:lead",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "quality": 1,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:saddle",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "quality": 3,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:diamond_horse_armor",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:slime_ball",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:bucket",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:anvil",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "min": 3,
+          "max": 8,
+          "stack": {
+            "item": "minecraft:obsidian",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 3,
+          "quality": 5,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:book",
+            "count": 1
+          }
+        }
+      ],
+      "bonus_rolls": {
+        "min": 1.0,
+        "max": 4.0
+      }
+    }
+  ]
+}

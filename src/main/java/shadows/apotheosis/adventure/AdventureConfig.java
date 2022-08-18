@@ -7,9 +7,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import net.minecraft.ResourceLocationException;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -23,16 +27,16 @@ public class AdventureConfig {
 
 	//Boss Stats
 	public static float surfaceBossChance = 0.015F;
-	public static boolean surfaceBossLightning = true;
+	public static boolean announceBossSpawns = true;
 	public static boolean curseBossItems = false;
 
 	//Generation Chances
-	//public static int bossDungeonAttempts = 8;
-	//public static int bossDungeon2Attempts = 8;
-	//public static int rogueSpawnerAttempts = 4;
+	public static int bossDungeonAttempts = 8;
+	public static int bossDungeon2Attempts = 8;
+	public static int rogueSpawnerAttempts = 4;
 	//public static int troveAttempts = 8;
 	//public static int tomeTowerChance = 125;
-	//public static int spawnerValueChance = 9;
+	public static float spawnerValueChance = 0.11F;
 
 	// Affix
 	public static float randomAffixItem = 0.07F;
@@ -85,9 +89,36 @@ public class AdventureConfig {
 			}
 		};
 
+		announceBossSpawns = c.getBoolean("Announce Boss Spawns", "bosses", true, "If boss spawns are announced via beam, chat message, and a sound.");
 		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", false, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
 		surfaceBossChance = c.getFloat("Surface Boss Chance", "bosses", surfaceBossChance, 0, 1, "The chance that a naturally spawned mob that can see the sky is transformed into a boss. 0 = 0%, 1 = 100%");
 
+		String[] dims = c.getStringList("Generation Dimension Whitelist", "general", new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");
+		DIM_WHITELIST.clear();
+		for (String s : dims) {
+			try {
+				DIM_WHITELIST.add(new ResourceLocation(s.trim()));
+			} catch (ResourceLocationException e) {
+				AdventureModule.LOGGER.error("Invalid dim whitelist entry: " + s + " will be ignored");
+			}
+		}
+
+		String[] biomes = c.getStringList("Generation Biome Blacklist", "general", new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
+		BIOME_BLACKLIST.clear();
+		for (String s : biomes) {
+			try {
+				BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
+			} catch (ResourceLocationException e) {
+				AdventureModule.LOGGER.error("Invalid biome blacklist entry: " + s + " will be ignored!");
+			}
+		}
+
+		spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
+	}
+
+	public static boolean canGenerateIn(WorldGenLevel world) {
+		ResourceKey<Level> key = world.getLevel().dimension();
+		return DIM_WHITELIST.contains(key.location());
 	}
 
 }

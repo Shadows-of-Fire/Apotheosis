@@ -1,5 +1,5 @@
 {
-	"weight": 2,
+	"weight": 10,
 	"quality": 3,
 	"variant": 5,
 	"attribute": "forge:entity_gravity",
