@@ -49,7 +49,7 @@ public class AttributeAffix extends Affix {
 			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName().getString());
 			return;
 		}
-		ModifierInst modif = modifiers.get(rarity);
+		ModifierInst modif = this.modifiers.get(rarity);
 		if (modif.attr.get() == null) {
 			AdventureModule.LOGGER.debug("The affix {} has attempted to apply a null attribute modifier to {}!", this.getRegistryName(), stack.getHoverName().getString());
 			return;
@@ -65,13 +65,13 @@ public class AttributeAffix extends Affix {
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == null) return false;
-		return (types == null || types.test(cat)) && (items == null || items.test(stack)) && modifiers.containsKey(rarity);
+		return (this.types == null || this.types.test(cat)) && (this.items == null || this.items.test(stack)) && this.modifiers.containsKey(rarity);
 	};
 
 	public record ModifierInst(Supplier<Attribute> attr, Operation op, Float2FloatFunction valueFactory, Map<EquipmentSlot, UUID> cache) {
 
 		public AttributeModifier build(EquipmentSlot slot, ResourceLocation id, float level) {
-			return new AttributeModifier(cache.computeIfAbsent(slot, k -> UUID.randomUUID()), "affix:" + id, valueFactory.get(level), op);
+			return new AttributeModifier(this.cache.computeIfAbsent(slot, k -> UUID.randomUUID()), "affix:" + id, this.valueFactory.get(level), this.op);
 		}
 	}
 
@@ -105,16 +105,16 @@ public class AttributeAffix extends Affix {
 		}
 
 		public Builder with(LootRarity rarity, Float2FloatFunction valueFactory) {
-			this.modifiers.put(rarity, new ModifierInst(attr, op, valueFactory, new HashMap<>()));
+			this.modifiers.put(rarity, new ModifierInst(this.attr, this.op, valueFactory, new HashMap<>()));
 			return this;
 		}
 
 		public Builder with(LootRarity rarity, float min, float max) {
-			return with(rarity, level -> min + level * max);
+			return this.with(rarity, level -> min + level * max);
 		}
 
 		public AttributeAffix build(String id) {
-			return (AttributeAffix) new AttributeAffix(modifiers, types, items).setRegistryName(id);
+			return (AttributeAffix) new AttributeAffix(this.modifiers, this.types, this.items).setRegistryName(id);
 		}
 
 	}

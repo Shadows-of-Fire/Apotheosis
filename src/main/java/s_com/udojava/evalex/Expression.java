@@ -280,11 +280,11 @@ public class Expression {
 		}
 
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		public int getNumParams() {
-			return numParams;
+			return this.numParams;
 		}
 
 		/**
@@ -335,15 +335,15 @@ public class Expression {
 		}
 
 		public String getOper() {
-			return oper;
+			return this.oper;
 		}
 
 		public int getPrecedence() {
-			return precedence;
+			return this.precedence;
 		}
 
 		public boolean isLeftAssoc() {
-			return leftAssoc;
+			return this.leftAssoc;
 		}
 
 		/**
@@ -390,7 +390,7 @@ public class Expression {
 
 		@Override
 		public boolean hasNext() {
-			return pos < input.length();
+			return this.pos < this.input.length();
 		}
 
 		/**
@@ -399,8 +399,8 @@ public class Expression {
 		 * @return The next character or character 0, if at end of string.
 		 */
 		private char peekNextChar() {
-			if (pos < input.length() - 1) {
-				return input.charAt(pos + 1);
+			if (this.pos < this.input.length() - 1) {
+				return this.input.charAt(this.pos + 1);
 			} else {
 				return 0;
 			}
@@ -409,40 +409,42 @@ public class Expression {
 		@Override
 		public String next() {
 			StringBuilder token = new StringBuilder();
-			if (pos >= input.length()) { return previousToken = null; }
-			char ch = input.charAt(pos);
-			while (Character.isWhitespace(ch) && pos < input.length()) {
-				ch = input.charAt(++pos);
+			if (this.pos >= this.input.length()) { return this.previousToken = null; }
+			char ch = this.input.charAt(this.pos);
+			while (Character.isWhitespace(ch) && this.pos < this.input.length()) {
+				ch = this.input.charAt(++this.pos);
 			}
 			if (Character.isDigit(ch)) {
-				while ((Character.isDigit(ch) || ch == decimalSeparator) && pos < input.length()) {
-					token.append(input.charAt(pos++));
-					ch = pos == input.length() ? 0 : input.charAt(pos);
+				while ((Character.isDigit(ch) || ch == Expression.this.decimalSeparator) && this.pos < this.input.length()) {
+					token.append(this.input.charAt(this.pos++));
+					ch = this.pos == this.input.length() ? 0 : this.input.charAt(this.pos);
 				}
-			} else if (ch == minusSign && Character.isDigit(peekNextChar()) && ("(".equals(previousToken) || ",".equals(previousToken) || previousToken == null || operators.containsKey(previousToken))) {
-				token.append(minusSign);
-				pos++;
-				token.append(next());
+			} else if (ch == Expression.this.minusSign && Character.isDigit(this.peekNextChar()) && ("(".equals(this.previousToken) || ",".equals(this.previousToken) || this.previousToken == null || Expression.this.operators.containsKey(this.previousToken))) {
+				token.append(Expression.this.minusSign);
+				this.pos++;
+				token.append(this.next());
 			} else if (Character.isLetter(ch) || ch == '_') {
-				while ((Character.isLetter(ch) || Character.isDigit(ch) || ch == '_') && pos < input.length()) {
-					token.append(input.charAt(pos++));
-					ch = pos == input.length() ? 0 : input.charAt(pos);
+				while ((Character.isLetter(ch) || Character.isDigit(ch) || ch == '_') && this.pos < this.input.length()) {
+					token.append(this.input.charAt(this.pos++));
+					ch = this.pos == this.input.length() ? 0 : this.input.charAt(this.pos);
 				}
 			} else if (ch == '(' || ch == ')' || ch == ',') {
 				token.append(ch);
-				pos++;
+				this.pos++;
 			} else {
-				while (!Character.isLetter(ch) && !Character.isDigit(ch) && ch != '_' && !Character.isWhitespace(ch) && ch != '(' && ch != ')' && ch != ',' && pos < input.length()) {
-					token.append(input.charAt(pos));
-					pos++;
-					ch = pos == input.length() ? 0 : input.charAt(pos);
-					if (ch == minusSign) {
+				while (!Character.isLetter(ch) && !Character.isDigit(ch) && ch != '_' && !Character.isWhitespace(ch) && ch != '(' && ch != ')' && ch != ',' && this.pos < this.input.length()) {
+					token.append(this.input.charAt(this.pos));
+					this.pos++;
+					ch = this.pos == this.input.length() ? 0 : this.input.charAt(this.pos);
+					if (ch == Expression.this.minusSign) {
 						break;
 					}
 				}
-				if (!operators.containsKey(token.toString())) { throw new ExpressionException("Unknown operator '" + token + "' at position " + (pos - token.length() + 1)); }
+				if (!Expression.this.operators.containsKey(token.toString())) {
+					throw new ExpressionException("Unknown operator '" + token + "' at position " + (this.pos - token.length() + 1));
+				}
 			}
-			return previousToken = token.toString();
+			return this.previousToken = token.toString();
 		}
 
 		@Override
@@ -456,7 +458,7 @@ public class Expression {
 		 * @return The actual character position.
 		 */
 		public int getPos() {
-			return pos;
+			return this.pos;
 		}
 
 	}
@@ -470,37 +472,37 @@ public class Expression {
 	 */
 	public Expression(String expression) {
 		this.expression = expression;
-		addOperator(new Operator("+", 20, true) {
+		this.addOperator(new Operator("+", 20, true) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
-				return v1.add(v2, mc);
+				return v1.add(v2, Expression.this.mc);
 			}
 		});
-		addOperator(new Operator("-", 20, true) {
+		this.addOperator(new Operator("-", 20, true) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
-				return v1.subtract(v2, mc);
+				return v1.subtract(v2, Expression.this.mc);
 			}
 		});
-		addOperator(new Operator("*", 30, true) {
+		this.addOperator(new Operator("*", 30, true) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
-				return v1.multiply(v2, mc);
+				return v1.multiply(v2, Expression.this.mc);
 			}
 		});
-		addOperator(new Operator("/", 30, true) {
+		this.addOperator(new Operator("/", 30, true) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
-				return v1.divide(v2, mc);
+				return v1.divide(v2, Expression.this.mc);
 			}
 		});
-		addOperator(new Operator("%", 30, true) {
+		this.addOperator(new Operator("%", 30, true) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
-				return v1.remainder(v2, mc);
+				return v1.remainder(v2, Expression.this.mc);
 			}
 		});
-		addOperator(new Operator("^", 40, false) {
+		this.addOperator(new Operator("^", 40, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				/*-
@@ -512,17 +514,17 @@ public class Expression {
 				v2 = v2.multiply(new BigDecimal(signOf2)); // n2 is now positive
 				BigDecimal remainderOf2 = v2.remainder(BigDecimal.ONE);
 				BigDecimal n2IntPart = v2.subtract(remainderOf2);
-				BigDecimal intPow = v1.pow(n2IntPart.intValueExact(), mc);
+				BigDecimal intPow = v1.pow(n2IntPart.intValueExact(), Expression.this.mc);
 				BigDecimal doublePow = new BigDecimal(Math.pow(dn1, remainderOf2.doubleValue()));
 
-				BigDecimal result = intPow.multiply(doublePow, mc);
+				BigDecimal result = intPow.multiply(doublePow, Expression.this.mc);
 				if (signOf2 == -1) {
-					result = BigDecimal.ONE.divide(result, mc.getPrecision(), RoundingMode.HALF_UP);
+					result = BigDecimal.ONE.divide(result, Expression.this.mc.getPrecision(), RoundingMode.HALF_UP);
 				}
 				return result;
 			}
 		});
-		addOperator(new Operator("&&", 4, false) {
+		this.addOperator(new Operator("&&", 4, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				boolean b1 = !v1.equals(BigDecimal.ZERO);
@@ -531,7 +533,7 @@ public class Expression {
 			}
 		});
 
-		addOperator(new Operator("||", 2, false) {
+		this.addOperator(new Operator("||", 2, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				boolean b1 = !v1.equals(BigDecimal.ZERO);
@@ -540,61 +542,61 @@ public class Expression {
 			}
 		});
 
-		addOperator(new Operator(">", 10, false) {
+		this.addOperator(new Operator(">", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) == 1 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
 
-		addOperator(new Operator(">=", 10, false) {
+		this.addOperator(new Operator(">=", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) >= 0 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
 
-		addOperator(new Operator("<", 10, false) {
+		this.addOperator(new Operator("<", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) == -1 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
 
-		addOperator(new Operator("<=", 10, false) {
+		this.addOperator(new Operator("<=", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) <= 0 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
 
-		addOperator(new Operator("=", 7, false) {
+		this.addOperator(new Operator("=", 7, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) == 0 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-		addOperator(new Operator("==", 7, false) {
+		this.addOperator(new Operator("==", 7, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
-				return operators.get("=").eval(v1, v2);
+				return Expression.this.operators.get("=").eval(v1, v2);
 			}
 		});
 
-		addOperator(new Operator("!=", 7, false) {
+		this.addOperator(new Operator("!=", 7, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) != 0 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-		addOperator(new Operator("<>", 7, false) {
+		this.addOperator(new Operator("<>", 7, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
-				return operators.get("!=").eval(v1, v2);
+				return Expression.this.operators.get("!=").eval(v1, v2);
 			}
 		});
 
-		addFunction(new Function("NOT", 1) {
+		this.addFunction(new Function("NOT", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				boolean zero = parameters.get(0).compareTo(BigDecimal.ZERO) == 0;
@@ -602,7 +604,7 @@ public class Expression {
 			}
 		});
 
-		addFunction(new Function("IF", 3) {
+		this.addFunction(new Function("IF", 3) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				boolean isTrue = !parameters.get(0).equals(BigDecimal.ZERO);
@@ -610,70 +612,70 @@ public class Expression {
 			}
 		});
 
-		addFunction(new Function("RANDOM", 0) {
+		this.addFunction(new Function("RANDOM", 0) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.random();
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("SIN", 1) {
+		this.addFunction(new Function("SIN", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.sin(Math.toRadians(parameters.get(0).doubleValue()));
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("COS", 1) {
+		this.addFunction(new Function("COS", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.cos(Math.toRadians(parameters.get(0).doubleValue()));
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("TAN", 1) {
+		this.addFunction(new Function("TAN", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.tan(Math.toRadians(parameters.get(0).doubleValue()));
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("SINH", 1) {
+		this.addFunction(new Function("SINH", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.sinh(parameters.get(0).doubleValue());
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("COSH", 1) {
+		this.addFunction(new Function("COSH", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.cosh(parameters.get(0).doubleValue());
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("TANH", 1) {
+		this.addFunction(new Function("TANH", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.tanh(parameters.get(0).doubleValue());
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("RAD", 1) {
+		this.addFunction(new Function("RAD", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.toRadians(parameters.get(0).doubleValue());
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("DEG", 1) {
+		this.addFunction(new Function("DEG", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.toDegrees(parameters.get(0).doubleValue());
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("MAX", 2) {
+		this.addFunction(new Function("MAX", 2) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				BigDecimal v1 = parameters.get(0);
@@ -681,7 +683,7 @@ public class Expression {
 				return v1.compareTo(v2) > 0 ? v1 : v2;
 			}
 		});
-		addFunction(new Function("MIN", 2) {
+		this.addFunction(new Function("MIN", 2) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				BigDecimal v1 = parameters.get(0);
@@ -689,49 +691,49 @@ public class Expression {
 				return v1.compareTo(v2) < 0 ? v1 : v2;
 			}
 		});
-		addFunction(new Function("ABS", 1) {
+		this.addFunction(new Function("ABS", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
-				return parameters.get(0).abs(mc);
+				return parameters.get(0).abs(Expression.this.mc);
 			}
 		});
-		addFunction(new Function("LOG", 1) {
+		this.addFunction(new Function("LOG", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.log(parameters.get(0).doubleValue());
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("LOG10", 1) {
+		this.addFunction(new Function("LOG10", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				double d = Math.log10(parameters.get(0).doubleValue());
-				return new BigDecimal(d, mc);
+				return new BigDecimal(d, Expression.this.mc);
 			}
 		});
-		addFunction(new Function("ROUND", 2) {
+		this.addFunction(new Function("ROUND", 2) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				BigDecimal toRound = parameters.get(0);
 				int precision = parameters.get(1).intValue();
-				return toRound.setScale(precision, mc.getRoundingMode());
+				return toRound.setScale(precision, Expression.this.mc.getRoundingMode());
 			}
 		});
-		addFunction(new Function("FLOOR", 1) {
+		this.addFunction(new Function("FLOOR", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				BigDecimal toRound = parameters.get(0);
 				return toRound.setScale(0, RoundingMode.FLOOR);
 			}
 		});
-		addFunction(new Function("CEILING", 1) {
+		this.addFunction(new Function("CEILING", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				BigDecimal toRound = parameters.get(0);
 				return toRound.setScale(0, RoundingMode.CEILING);
 			}
 		});
-		addFunction(new Function("SQRT", 1) {
+		this.addFunction(new Function("SQRT", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
 				/*
@@ -740,8 +742,10 @@ public class Expression {
 				 */
 				BigDecimal x = parameters.get(0);
 				if (x.compareTo(BigDecimal.ZERO) == 0) { return new BigDecimal(0); }
-				if (x.signum() < 0) { throw new ExpressionException("Argument to SQRT() function must not be negative"); }
-				BigInteger n = x.movePointRight(mc.getPrecision() << 1).toBigInteger();
+				if (x.signum() < 0) {
+					throw new ExpressionException("Argument to SQRT() function must not be negative");
+				}
+				BigInteger n = x.movePointRight(Expression.this.mc.getPrecision() << 1).toBigInteger();
 
 				int bits = n.bitLength() + 1 >> 1;
 				BigInteger ix = n.shiftRight(bits);
@@ -754,13 +758,13 @@ public class Expression {
 					Thread.yield();
 				} while (ix.compareTo(ixPrev) != 0);
 
-				return new BigDecimal(ix, mc.getPrecision());
+				return new BigDecimal(ix, Expression.this.mc.getPrecision());
 			}
 		});
 
-		variables.put("PI", PI);
-		variables.put("TRUE", BigDecimal.ONE);
-		variables.put("FALSE", BigDecimal.ZERO);
+		this.variables.put("PI", PI);
+		this.variables.put("TRUE", BigDecimal.ONE);
+		this.variables.put("FALSE", BigDecimal.ZERO);
 
 	}
 
@@ -772,9 +776,9 @@ public class Expression {
 	 * @return <code>true</code>, if the input string is a number.
 	 */
 	private boolean isNumber(String st) {
-		if (st.charAt(0) == minusSign && st.length() == 1) return false;
+		if (st.charAt(0) == this.minusSign && st.length() == 1) return false;
 		for (char ch : st.toCharArray()) {
-			if (!Character.isDigit(ch) && ch != minusSign && ch != decimalSeparator) return false;
+			if (!Character.isDigit(ch) && ch != this.minusSign && ch != this.decimalSeparator) return false;
 		}
 		return true;
 	}
@@ -798,11 +802,11 @@ public class Expression {
 		String previousToken = null;
 		while (tokenizer.hasNext()) {
 			String token = tokenizer.next();
-			if (isNumber(token)) {
+			if (this.isNumber(token)) {
 				outputQueue.add(token);
-			} else if (variables.containsKey(token)) {
+			} else if (this.variables.containsKey(token)) {
 				outputQueue.add(token);
-			} else if (functions.containsKey(token.toUpperCase())) {
+			} else if (this.functions.containsKey(token.toUpperCase())) {
 				stack.push(token);
 				lastFunction = token;
 			} else if (Character.isLetter(token.charAt(0))) {
@@ -811,18 +815,22 @@ public class Expression {
 				while (!stack.isEmpty() && !"(".equals(stack.peek())) {
 					outputQueue.add(stack.pop());
 				}
-				if (stack.isEmpty()) { throw new ExpressionException("Parse error for function '" + lastFunction + "'"); }
-			} else if (operators.containsKey(token)) {
-				Operator o1 = operators.get(token);
+				if (stack.isEmpty()) {
+					throw new ExpressionException("Parse error for function '" + lastFunction + "'");
+				}
+			} else if (this.operators.containsKey(token)) {
+				Operator o1 = this.operators.get(token);
 				String token2 = stack.isEmpty() ? null : stack.peek();
-				while (operators.containsKey(token2) && (o1.isLeftAssoc() && o1.getPrecedence() <= operators.get(token2).getPrecedence() || o1.getPrecedence() < operators.get(token2).getPrecedence())) {
+				while (this.operators.containsKey(token2) && (o1.isLeftAssoc() && o1.getPrecedence() <= this.operators.get(token2).getPrecedence() || o1.getPrecedence() < this.operators.get(token2).getPrecedence())) {
 					outputQueue.add(stack.pop());
 					token2 = stack.isEmpty() ? null : stack.peek();
 				}
 				stack.push(token);
 			} else if ("(".equals(token)) {
 				if (previousToken != null) {
-					if (isNumber(previousToken)) { throw new ExpressionException("Missing operator at character position " + tokenizer.getPos()); }
+					if (this.isNumber(previousToken)) {
+						throw new ExpressionException("Missing operator at character position " + tokenizer.getPos());
+					}
 				}
 				stack.push(token);
 			} else if (")".equals(token)) {
@@ -831,7 +839,7 @@ public class Expression {
 				}
 				if (stack.isEmpty()) { throw new RuntimeException("Mismatched parentheses"); }
 				stack.pop();
-				if (!stack.isEmpty() && functions.containsKey(stack.peek().toUpperCase())) {
+				if (!stack.isEmpty() && this.functions.containsKey(stack.peek().toUpperCase())) {
 					outputQueue.add(stack.pop());
 				}
 			}
@@ -840,7 +848,9 @@ public class Expression {
 		while (!stack.isEmpty()) {
 			String element = stack.pop();
 			if ("(".equals(element) || ")".equals(element)) { throw new RuntimeException("Mismatched parentheses"); }
-			if (!operators.containsKey(element)) { throw new RuntimeException("Unknown operator or function: " + element); }
+			if (!this.operators.containsKey(element)) {
+				throw new RuntimeException("Unknown operator or function: " + element);
+			}
 			outputQueue.add(element);
 		}
 		return outputQueue;
@@ -855,15 +865,15 @@ public class Expression {
 
 		Stack<BigDecimal> stack = new Stack<>();
 
-		for (String token : getRPN()) {
-			if (operators.containsKey(token)) {
+		for (String token : this.getRPN()) {
+			if (this.operators.containsKey(token)) {
 				BigDecimal v1 = stack.pop();
 				BigDecimal v2 = stack.pop();
-				stack.push(operators.get(token).eval(v2, v1));
-			} else if (variables.containsKey(token)) {
-				stack.push(variables.get(token).round(mc));
-			} else if (functions.containsKey(token.toUpperCase())) {
-				Function f = functions.get(token.toUpperCase());
+				stack.push(this.operators.get(token).eval(v2, v1));
+			} else if (this.variables.containsKey(token)) {
+				stack.push(this.variables.get(token).round(this.mc));
+			} else if (this.functions.containsKey(token.toUpperCase())) {
+				Function f = this.functions.get(token.toUpperCase());
 				ArrayList<BigDecimal> p = new ArrayList<>(f.getNumParams());
 				for (int i = 0; i < f.numParams; i++) {
 					p.add(0, stack.pop());
@@ -871,7 +881,7 @@ public class Expression {
 				BigDecimal fResult = f.eval(p);
 				stack.push(fResult);
 			} else {
-				stack.push(new BigDecimal(token, mc));
+				stack.push(new BigDecimal(token, this.mc));
 			}
 		}
 		return stack.pop().stripTrailingZeros();
@@ -886,7 +896,7 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setPrecision(int precision) {
-		mc = new MathContext(precision);
+		this.mc = new MathContext(precision);
 		return this;
 	}
 
@@ -898,7 +908,7 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setRoundingMode(RoundingMode roundingMode) {
-		mc = new MathContext(mc.getPrecision(), roundingMode);
+		this.mc = new MathContext(this.mc.getPrecision(), roundingMode);
 		return this;
 	}
 
@@ -911,7 +921,7 @@ public class Expression {
 	 *         there was none.
 	 */
 	public Operator addOperator(Operator operator) {
-		return operators.put(operator.getOper(), operator);
+		return this.operators.put(operator.getOper(), operator);
 	}
 
 	/**
@@ -923,7 +933,7 @@ public class Expression {
 	 *         there was none.
 	 */
 	public Function addFunction(Function function) {
-		return functions.put(function.getName(), function);
+		return this.functions.put(function.getName(), function);
 	}
 
 	/**
@@ -936,7 +946,7 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setVariable(String variable, BigDecimal value) {
-		variables.put(variable, value);
+		this.variables.put(variable, value);
 		return this;
 	}
 
@@ -950,10 +960,10 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setVariable(String variable, String value) {
-		if (isNumber(value)) variables.put(variable, new BigDecimal(value));
+		if (this.isNumber(value)) this.variables.put(variable, new BigDecimal(value));
 		else {
-			expression = expression.replaceAll("\\b" + variable + "\\b", "(" + value + ")");
-			rpn = null;
+			this.expression = this.expression.replaceAll("\\b" + variable + "\\b", "(" + value + ")");
+			this.rpn = null;
 		}
 		return this;
 	}
@@ -968,7 +978,7 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression with(String variable, BigDecimal value) {
-		return setVariable(variable, value);
+		return this.setVariable(variable, value);
 	}
 
 	/**
@@ -981,7 +991,7 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression and(String variable, String value) {
-		return setVariable(variable, value);
+		return this.setVariable(variable, value);
 	}
 
 	/**
@@ -994,7 +1004,7 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression and(String variable, BigDecimal value) {
-		return setVariable(variable, value);
+		return this.setVariable(variable, value);
 	}
 
 	/**
@@ -1007,7 +1017,7 @@ public class Expression {
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression with(String variable, String value) {
-		return setVariable(variable, value);
+		return this.setVariable(variable, value);
 	}
 
 	/**
@@ -1017,7 +1027,7 @@ public class Expression {
 	 * @return A new iterator instance for this expression.
 	 */
 	public Iterator<String> getExpressionTokenizer() {
-		return new Tokenizer(expression);
+		return new Tokenizer(this.expression);
 	}
 
 	/**
@@ -1028,10 +1038,10 @@ public class Expression {
 	 * @return The cached RPN instance.
 	 */
 	private List<String> getRPN() {
-		if (rpn == null) {
-			rpn = shuntingYard(expression);
+		if (this.rpn == null) {
+			this.rpn = this.shuntingYard(this.expression);
 		}
-		return rpn;
+		return this.rpn;
 	}
 
 	/**
@@ -1042,7 +1052,7 @@ public class Expression {
 	 */
 	public String toRPN() {
 		String result = new String();
-		for (String st : getRPN()) {
+		for (String st : this.getRPN()) {
 			result = result.isEmpty() ? result : result + " ";
 			result += st;
 		}

@@ -89,7 +89,7 @@ public class PotionJEIPlugin implements IModPlugin {
 			Potion potion = PotionUtils.getPotion(focuses.getFocuses(VanillaTypes.ITEM).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY));
 			List<List<ItemStack>> recipeInputs = this.recipe.getIngredients().stream().map(i -> Arrays.asList(i.getItems())).collect(Collectors.toCollection(ArrayList::new));
 			if (potion != Potions.EMPTY) {
-				for (int i : recipe.getPotionSlots()) {
+				for (int i : this.recipe.getPotionSlots()) {
 					recipeInputs.set(i, Arrays.asList(PotionUtils.setPotion(new ItemStack(Items.POTION), potion)));
 				}
 			}

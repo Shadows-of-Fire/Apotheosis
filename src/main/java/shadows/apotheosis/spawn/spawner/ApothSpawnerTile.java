@@ -176,14 +176,14 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 									boolean pass = false;
 									for (int light = 0; light < 16; light++) {
 										liar.setFakeLightLevel(light);
-										if (checkSpawnRules(optional, liar, blockpos)) {
+										if (this.checkSpawnRules(optional, liar, blockpos)) {
 											pass = true;
 											break;
 										}
 									}
 									if (!pass) continue;
 									else useLiar = true;
-								} else if (!checkSpawnRules(optional, pServerLevel, blockpos)) continue;
+								} else if (!this.checkSpawnRules(optional, pServerLevel, blockpos)) continue;
 							}
 
 							Entity entity = EntityType.loadEntityRecursive(tag, pServerLevel, p_151310_ -> {

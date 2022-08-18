@@ -54,7 +54,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 		for (Map.Entry<Enchantment, Integer> e : enchs.entrySet()) {
 			if (e.getKey() == null || e.getValue() == null) continue;
 			int newPoints = Math.min(this.maxPoints, this.points.getInt(e.getKey()) + levelToPoints(e.getValue()));
-			if (newPoints < 0) newPoints = maxPoints;
+			if (newPoints < 0) newPoints = this.maxPoints;
 			this.points.put(e.getKey(), newPoints);
 			this.maxLevels.put(e.getKey(), Math.min(this.maxLevel, Math.max(this.maxLevels.getInt(e.getKey()), e.getValue())));
 		}
@@ -73,7 +73,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 		Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(stack);
 		enchs.put(ench, level);
 		EnchantmentHelper.setEnchantments(enchs, stack);
-		this.points.put(ench, Math.max(0, (this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl)))); //Safety, should never be below zero anyway.
+		this.points.put(ench, Math.max(0, this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl))); //Safety, should never be below zero anyway.
 		if (!this.level.isClientSide()) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
 		this.setChanged();
 	}

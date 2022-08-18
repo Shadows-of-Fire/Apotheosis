@@ -19,7 +19,7 @@ public class StatModifier<T> {
 	}
 
 	public boolean apply(ApothSpawnerTile tile) {
-		return this.stat.apply(value, min, max, tile);
+		return this.stat.apply(this.value, this.min, this.max, tile);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

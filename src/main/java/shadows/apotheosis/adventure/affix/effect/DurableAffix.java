@@ -21,6 +21,7 @@ public class DurableAffix extends Affix {
 		return false; // Can only be applied manually via LootController
 	}
 
+	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", fmt(100 * level)).withStyle(Style.EMPTY.withColor(rarity.color())));
 	}

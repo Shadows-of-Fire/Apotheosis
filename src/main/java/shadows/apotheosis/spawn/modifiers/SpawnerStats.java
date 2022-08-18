@@ -75,9 +75,9 @@ public class SpawnerStats {
 
 		@Override
 		public boolean apply(Boolean value, Boolean min, Boolean max, ApothSpawnerTile spawner) {
-			boolean old = getter.apply(spawner);
-			setter.accept(spawner, value);
-			return old != getter.apply(spawner);
+			boolean old = this.getter.apply(spawner);
+			this.setter.accept(spawner, value);
+			return old != this.getter.apply(spawner);
 		}
 
 		@Override
@@ -99,9 +99,9 @@ public class SpawnerStats {
 
 		@Override
 		public boolean apply(Integer value, Integer min, Integer max, ApothSpawnerTile spawner) {
-			int old = getter.apply(spawner);
-			setter.accept(spawner, Mth.clamp(old + value, min, max));
-			return old != getter.apply(spawner);
+			int old = this.getter.apply(spawner);
+			this.setter.accept(spawner, Mth.clamp(old + value, min, max));
+			return old != this.getter.apply(spawner);
 		}
 
 		@Override

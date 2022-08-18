@@ -56,9 +56,9 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
 					BlockState state = world.getBlockState(blockpos);
 					Material material = state.getMaterial();
 					boolean flag = material.isSolid();
-					if (y == floor && !flag) { return false; } //Exit if the floor is not fully solid.
+					 //Exit if the floor is not fully solid.
 
-					if (y == roof && !flag) { return false; } //Exit if the roof is not fully solid.
+					if ((y == floor && !flag) || (y == roof && !flag)) { return false; } //Exit if the roof is not fully solid.
 
 					if ((x == -xRadius || x == xRadius || z == -zRadius || z == zRadius) && y == 1 && state.isAir() && states[x + xRadius][y - 1 + 1][z + zRadius].isAir()) {
 						++doors; //Count number of 2x1 holes at y=0.

@@ -43,7 +43,7 @@ public class RealEnchantmentHelper {
 		if (num == 2) return level;
 		float lowBound = 0.6F - 0.4F * (1 - num);
 		float highBound = 0.8F - 0.4F * (1 - num);
-		return Math.max(1, Math.round((level * Mth.nextFloat(rand, lowBound, highBound))));
+		return Math.max(1, Math.round(level * Mth.nextFloat(rand, lowBound, highBound)));
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class RealEnchantmentHelper {
 		allowTreasure = enchi.isTreasureAllowed(stack, allowTreasure);
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
-			if ((info.isTreasure() && !allowTreasure) || !info.isDiscoverable()) continue;
+			if (info.isTreasure() && !allowTreasure || !info.isDiscoverable()) continue;
 			if (enchantment.canApplyAtEnchantingTable(stack) || enchi.forciblyAllowsTableEnchantment(stack, enchantment)) {
 				for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
 					if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {

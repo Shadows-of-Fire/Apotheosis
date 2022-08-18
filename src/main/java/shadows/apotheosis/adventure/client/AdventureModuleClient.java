@@ -79,9 +79,7 @@ public class AdventureModuleClient {
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(AdventureModuleClient.class);
 		MinecraftForgeClient.registerTooltipComponentFactory(SocketComponent.class, SocketTooltipRenderer::new);
-		ItemProperties.register(Apoth.Items.GEM, new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> {
-			return GemItem.getVariant(stack);
-		});
+		ItemProperties.register(Apoth.Items.GEM, new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
 		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.BOSS_SPAWNER, RenderType.cutout());
 	}
 
@@ -249,7 +247,7 @@ public class AdventureModuleClient {
 			if (modifierMap.isEmpty()) return;
 
 			tooltip.accept(TextComponent.EMPTY);
-			tooltip.accept((new TranslatableComponent("item.modifiers." + group)).withStyle(ChatFormatting.GRAY));
+			tooltip.accept(new TranslatableComponent("item.modifiers." + group).withStyle(ChatFormatting.GRAY));
 
 			AttributeModifier baseAD = null, baseAS = null;
 			List<AttributeModifier> dmgModifs = new ArrayList<>(), spdModifs = new ArrayList<>();
@@ -271,7 +269,7 @@ public class AdventureModuleClient {
 				for (AttributeModifier modif : dmgModifs) {
 					if (modif.getOperation() == Operation.ADDITION) base = amt = amt + modif.getAmount();
 					else if (modif.getOperation() == Operation.MULTIPLY_BASE) amt += modif.getAmount() * base;
-					else amt *= (1 + modif.getAmount());
+					else amt *= 1 + modif.getAmount();
 				}
 				amt += EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
 				MutableComponent text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(Attributes.ATTACK_DAMAGE.getDescriptionId()));
@@ -296,7 +294,7 @@ public class AdventureModuleClient {
 				for (AttributeModifier modif : spdModifs) {
 					if (modif.getOperation() == Operation.ADDITION) base = amt = amt + modif.getAmount();
 					else if (modif.getOperation() == Operation.MULTIPLY_BASE) amt += modif.getAmount() * base;
-					else amt *= (1 + modif.getAmount());
+					else amt *= 1 + modif.getAmount();
 				}
 				MutableComponent text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(Attributes.ATTACK_SPEED.getDescriptionId()));
 				tooltip.accept(new TextComponent(" ").append(text).withStyle(spdModifs.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
@@ -310,8 +308,7 @@ public class AdventureModuleClient {
 			}
 
 			for (Attribute attr : modifierMap.keySet()) {
-				if (baseAD != null && attr == Attributes.ATTACK_DAMAGE) continue;
-				if (baseAS != null && attr == Attributes.ATTACK_SPEED) continue;
+				if ((baseAD != null && attr == Attributes.ATTACK_DAMAGE) || (baseAS != null && attr == Attributes.ATTACK_SPEED)) continue;
 				Collection<AttributeModifier> modifs = modifierMap.get(attr);
 				if (modifs.size() > 1) {
 					double[] sums = new double[3];

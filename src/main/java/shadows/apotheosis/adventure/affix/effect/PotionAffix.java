@@ -58,7 +58,7 @@ public class PotionAffix extends Affix {
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == null) return false;
-		return (types == null || types.test(cat)) && (items == null || items.test(stack)) && effects.containsKey(rarity);
+		return (this.types == null || this.types.test(cat)) && (this.items == null || this.items.test(stack)) && this.effects.containsKey(rarity);
 	};
 
 	@Override
@@ -134,7 +134,7 @@ public class PotionAffix extends Affix {
 	public static record EffectInst(Supplier<MobEffect> effect, Float2IntFunction time, @Nullable Float2IntFunction amp) {
 
 		public MobEffectInstance build(float level) {
-			return new MobEffectInstance(effect.get(), time.get(level), amp == null ? 0 : amp.get(level));
+			return new MobEffectInstance(this.effect.get(), this.time.get(level), this.amp == null ? 0 : this.amp.get(level));
 		}
 	}
 
@@ -160,7 +160,7 @@ public class PotionAffix extends Affix {
 		}
 
 		public MutableComponent toComponent(Object... args) {
-			return new TranslatableComponent("affix.apotheosis.target." + id, args);
+			return new TranslatableComponent("affix.apotheosis.target." + this.id, args);
 		}
 	}
 
@@ -192,12 +192,12 @@ public class PotionAffix extends Affix {
 		}
 
 		public Builder with(LootRarity rarity, Float2IntFunction timeFunc, @Nullable Float2IntFunction ampFunc) {
-			this.effects.put(rarity, new EffectInst(effect, timeFunc, ampFunc));
+			this.effects.put(rarity, new EffectInst(this.effect, timeFunc, ampFunc));
 			return this;
 		}
 
 		public PotionAffix build(AffixType type, Target target, String id) {
-			return (PotionAffix) new PotionAffix(type, effects, types, items, target).setRegistryName(id);
+			return (PotionAffix) new PotionAffix(type, this.effects, this.types, this.items, target).setRegistryName(id);
 		}
 
 	}

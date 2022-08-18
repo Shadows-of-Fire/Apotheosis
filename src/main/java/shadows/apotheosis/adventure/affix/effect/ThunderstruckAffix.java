@@ -41,7 +41,7 @@ public class ThunderstruckAffix extends Affix {
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
-		return (cat != null && cat.isLightWeapon()) && rarity.isAtLeast(LootRarity.RARE);
+		return cat != null && cat.isLightWeapon() && rarity.isAtLeast(LootRarity.RARE);
 	}
 
 	@Override
@@ -49,8 +49,7 @@ public class ThunderstruckAffix extends Affix {
 		if (user.level.isClientSide) return;
 		if (Apotheosis.localAtkStrength >= 0.98) {
 			Predicate<Entity> pred = e -> {
-				if (e instanceof Animal && !(target instanceof Animal)) return false;
-				if (e instanceof AbstractVillager && !(target instanceof AbstractVillager)) return false;
+				if ((e instanceof Animal && !(target instanceof Animal)) || (e instanceof AbstractVillager && !(target instanceof AbstractVillager))) return false;
 				return e != user && e instanceof LivingEntity;
 			};
 			List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), pred);

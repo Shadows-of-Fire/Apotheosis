@@ -27,6 +27,7 @@ public class SocketingRecipe extends UpgradeRecipe {
 	/**
 	 * Used to check if a recipe matches current crafting inventory
 	 */
+	@Override
 	public boolean matches(Container pInv, Level pLevel) {
 		return SocketHelper.getEmptySockets(pInv.getItem(0)) > 0 && pInv.getItem(1).getItem() == Apoth.Items.GEM;
 	}
@@ -82,7 +83,7 @@ public class SocketingRecipe extends UpgradeRecipe {
 	public RecipeType<?> getType() {
 		return RecipeType.SMITHING;
 	}
-	
+
 	@Override
 	public boolean isSpecial() {
 		return true;
@@ -92,14 +93,17 @@ public class SocketingRecipe extends UpgradeRecipe {
 
 		public static Serializer INSTANCE = new Serializer();
 
+		@Override
 		public SocketingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
 			return new SocketingRecipe();
 		}
 
+		@Override
 		public SocketingRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
 			return new SocketingRecipe();
 		}
 
+		@Override
 		public void toNetwork(FriendlyByteBuf pBuffer, SocketingRecipe pRecipe) {
 
 		}

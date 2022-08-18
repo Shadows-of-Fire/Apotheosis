@@ -117,7 +117,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 		RenderSystem.applyModelViewMatrix();
 
 		Font font = Minecraft.getInstance().font;
-		int top = 75 / 2 - (recipe.getStatModifiers().size() * (font.lineHeight + 2)) / 2 + 2;
+		int top = 75 / 2 - recipe.getStatModifiers().size() * (font.lineHeight + 2) / 2 + 2;
 		int left = 168;
 		for (StatModifier<?> s : recipe.getStatModifiers()) {
 			String value = s.value.toString();

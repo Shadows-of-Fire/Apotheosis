@@ -20,6 +20,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
 import shadows.placebo.PlaceboClient.RainbowColor;
 
 public record LootRarity(String id, TextColor color, List<LootRule> rules, int ordinal) {
@@ -144,14 +145,14 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 
 		public void execute(ItemStack stack, LootRarity rarity, Set<Affix> currentAffixes, MutableInt sockets, Random rand) {
 			if (this.type == AffixType.DURABILITY) return;
-			if (rand.nextFloat() <= chance) {
+			if (rand.nextFloat() <= this.chance) {
 				if (this.type == AffixType.SOCKET) {
 					sockets.add(1);
 					return;
 				}
-				List<Affix> available = AffixHelper.byType(type).stream().filter(a -> a.canApplyTo(stack, rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
+				List<Affix> available = AffixHelper.byType(this.type).stream().filter(a -> a.canApplyTo(stack, rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
 				if (available.size() == 0) {
-					AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", stack.getItem().getRegistryName(), rarity.id(), type, chance);
+					AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", stack.getItem().getRegistryName(), rarity.id(), this.type, this.chance);
 					return;
 				}
 				Collections.shuffle(available, rand);

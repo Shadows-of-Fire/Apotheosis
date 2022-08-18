@@ -54,177 +54,177 @@ public class LyingLevel implements ServerLevelAccessor {
 
 	@Override
 	public long nextSubTickCount() {
-		return wrapped.nextSubTickCount();
+		return this.wrapped.nextSubTickCount();
 	}
 
 	@Override
 	public LevelTickAccess<Block> getBlockTicks() {
-		return wrapped.getBlockTicks();
+		return this.wrapped.getBlockTicks();
 	}
 
 	@Override
 	public LevelTickAccess<Fluid> getFluidTicks() {
-		return wrapped.getFluidTicks();
+		return this.wrapped.getFluidTicks();
 	}
 
 	@Override
 	public LevelData getLevelData() {
-		return wrapped.getLevelData();
+		return this.wrapped.getLevelData();
 	}
 
 	@Override
 	public DifficultyInstance getCurrentDifficultyAt(BlockPos pPos) {
-		return wrapped.getCurrentDifficultyAt(pPos);
+		return this.wrapped.getCurrentDifficultyAt(pPos);
 	}
 
 	@Override
 	public MinecraftServer getServer() {
-		return wrapped.getServer();
+		return this.wrapped.getServer();
 	}
 
 	@Override
 	public ChunkSource getChunkSource() {
-		return wrapped.getChunkSource();
+		return this.wrapped.getChunkSource();
 	}
 
 	@Override
 	public Random getRandom() {
-		return wrapped.getRandom();
+		return this.wrapped.getRandom();
 	}
 
 	@Override
 	public void playSound(Player pPlayer, BlockPos pPos, SoundEvent pSound, SoundSource pCategory, float pVolume, float pPitch) {
-		wrapped.playSound(pPlayer, pPos, pSound, pCategory, pVolume, pPitch);
+		this.wrapped.playSound(pPlayer, pPos, pSound, pCategory, pVolume, pPitch);
 	}
 
 	@Override
 	public void addParticle(ParticleOptions pParticleData, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-		wrapped.addParticle(pParticleData, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
+		this.wrapped.addParticle(pParticleData, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
 	}
 
 	@Override
 	public void levelEvent(Player pPlayer, int pType, BlockPos pPos, int pData) {
-		wrapped.levelEvent(pPlayer, pType, pPos, pData);
+		this.wrapped.levelEvent(pPlayer, pType, pPos, pData);
 	}
 
 	@Override
 	public void gameEvent(Entity pEntity, GameEvent pEvent, BlockPos pPos) {
-		wrapped.gameEvent(pEntity, pEvent, pPos);
+		this.wrapped.gameEvent(pEntity, pEvent, pPos);
 	}
 
 	@Override
 	public RegistryAccess registryAccess() {
-		return wrapped.registryAccess();
+		return this.wrapped.registryAccess();
 	}
 
 	@Override
 	public List<Entity> getEntities(Entity pEntity, AABB pArea, Predicate<? super Entity> pPredicate) {
-		return wrapped.getEntities(pEntity, pArea, pPredicate);
+		return this.wrapped.getEntities(pEntity, pArea, pPredicate);
 	}
 
 	@Override
 	public <T extends Entity> List<T> getEntities(EntityTypeTest<Entity, T> pEntityTypeTest, AABB pArea, Predicate<? super T> pPredicate) {
-		return wrapped.getEntities(pEntityTypeTest, pArea, pPredicate);
+		return this.wrapped.getEntities(pEntityTypeTest, pArea, pPredicate);
 	}
 
 	@Override
 	public List<? extends Player> players() {
-		return wrapped.players();
+		return this.wrapped.players();
 	}
 
 	@Override
 	public ChunkAccess getChunk(int pX, int pZ, ChunkStatus pRequiredStatus, boolean pNonnull) {
-		return wrapped.getChunk(pX, pZ, pRequiredStatus, pNonnull);
+		return this.wrapped.getChunk(pX, pZ, pRequiredStatus, pNonnull);
 	}
 
 	@Override
 	public int getHeight(Types pHeightmapType, int pX, int pZ) {
-		return wrapped.getHeight(pHeightmapType, pX, pZ);
+		return this.wrapped.getHeight(pHeightmapType, pX, pZ);
 	}
 
 	@Override
 	public int getSkyDarken() {
-		return wrapped.getSkyDarken();
+		return this.wrapped.getSkyDarken();
 	}
 
 	@Override
 	public BiomeManager getBiomeManager() {
-		return wrapped.getBiomeManager();
+		return this.wrapped.getBiomeManager();
 	}
 
 	@Override
 	public Holder<Biome> getUncachedNoiseBiome(int pX, int pY, int pZ) {
-		return wrapped.getUncachedNoiseBiome(pX, pY, pZ);
+		return this.wrapped.getUncachedNoiseBiome(pX, pY, pZ);
 	}
 
 	@Override
 	public boolean isClientSide() {
-		return wrapped.isClientSide(); //Should always be false, but whatever
+		return this.wrapped.isClientSide(); //Should always be false, but whatever
 	}
 
 	@Override
 	public int getSeaLevel() {
-		return wrapped.getSeaLevel();
+		return this.wrapped.getSeaLevel();
 	}
 
 	@Override
 	public DimensionType dimensionType() {
-		return wrapped.dimensionType();
+		return this.wrapped.dimensionType();
 	}
 
 	@Override
 	public float getShade(Direction pDirection, boolean pShade) {
-		return wrapped.getShade(pDirection, pShade);
+		return this.wrapped.getShade(pDirection, pShade);
 	}
 
 	@Override
 	public LevelLightEngine getLightEngine() {
-		return wrapped.getLightEngine();
+		return this.wrapped.getLightEngine();
 	}
 
 	@Override
 	public BlockEntity getBlockEntity(BlockPos pPos) {
-		return wrapped.getBlockEntity(pPos);
+		return this.wrapped.getBlockEntity(pPos);
 	}
 
 	@Override
 	public BlockState getBlockState(BlockPos p_45571_) {
-		return wrapped.getBlockState(p_45571_);
+		return this.wrapped.getBlockState(p_45571_);
 	}
 
 	@Override
 	public FluidState getFluidState(BlockPos pPos) {
-		return wrapped.getFluidState(pPos);
+		return this.wrapped.getFluidState(pPos);
 	}
 
 	@Override
 	public WorldBorder getWorldBorder() {
-		return wrapped.getWorldBorder();
+		return this.wrapped.getWorldBorder();
 	}
 
 	@Override
 	public boolean isStateAtPosition(BlockPos pPos, Predicate<BlockState> pState) {
-		return wrapped.isStateAtPosition(pPos, pState);
+		return this.wrapped.isStateAtPosition(pPos, pState);
 	}
 
 	@Override
 	public boolean isFluidAtPosition(BlockPos pPos, Predicate<FluidState> pPredicate) {
-		return wrapped.isFluidAtPosition(pPos, pPredicate);
+		return this.wrapped.isFluidAtPosition(pPos, pPredicate);
 	}
 
 	@Override
 	public boolean setBlock(BlockPos pPos, BlockState pState, int pFlags, int pRecursionLeft) {
-		return wrapped.setBlock(pPos, pState, pFlags, pRecursionLeft);
+		return this.wrapped.setBlock(pPos, pState, pFlags, pRecursionLeft);
 	}
 
 	@Override
 	public boolean removeBlock(BlockPos pPos, boolean pIsMoving) {
-		return wrapped.removeBlock(pPos, pIsMoving);
+		return this.wrapped.removeBlock(pPos, pIsMoving);
 	}
 
 	@Override
 	public boolean destroyBlock(BlockPos pPos, boolean pDropBlock, Entity pEntity, int pRecursionLeft) {
-		return wrapped.destroyBlock(pPos, pDropBlock, pEntity, pRecursionLeft);
+		return this.wrapped.destroyBlock(pPos, pDropBlock, pEntity, pRecursionLeft);
 	}
 
 	@Override

@@ -34,6 +34,7 @@ public class CleavingAffix extends Affix {
 		super(AffixType.EFFECT);
 	}
 
+	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		return LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && rarity.isAtLeast(LootRarity.RARE);
 	}
@@ -62,8 +63,7 @@ public class CleavingAffix extends Affix {
 			int targets = getTargets(rarity, level);
 			if (user.level.random.nextFloat() < chance && user instanceof Player player) {
 				Predicate<Entity> pred = e -> {
-					if (e instanceof Animal && !(target instanceof Animal)) return false;
-					if (e instanceof AbstractVillager && !(target instanceof AbstractVillager)) return false;
+					if ((e instanceof Animal && !(target instanceof Animal)) || (e instanceof AbstractVillager && !(target instanceof AbstractVillager))) return false;
 					return e != user && e instanceof LivingEntity;
 				};
 				List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), pred);

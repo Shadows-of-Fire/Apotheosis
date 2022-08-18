@@ -19,7 +19,7 @@ import shadows.placebo.json.NBTAdapter;
 
 /**
  * The wandering merchant sucks.  Trades are totally underwhelming and are borderline garbage 99% of the time.
- * 
+ *
  * The village-module-specific trades are only enabled if the module is enabled, but this data loader is always enabled.
  * @author Shadows
  *

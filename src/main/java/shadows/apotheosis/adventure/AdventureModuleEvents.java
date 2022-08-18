@@ -211,7 +211,7 @@ public class AdventureModuleEvents {
 				}
 				if (coldDmg > 0.001) {
 					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * coldDmg);
-					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), (int) Mth.floor(coldDmg / 5)));
+					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
 				}
 			}
 			target.invulnerableTime = time;
@@ -294,7 +294,7 @@ public class AdventureModuleEvents {
 			if (arrow.getOwner() instanceof LivingEntity le) {
 				arrow.setBaseDamage(arrow.getBaseDamage() * le.getAttributeValue(Apoth.Attributes.ARROW_DAMAGE));
 				arrow.setDeltaMovement(arrow.getDeltaMovement().scale(le.getAttributeValue(Apoth.Attributes.ARROW_VELOCITY)));
-				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= (le.getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1));
+				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1);
 			}
 			arrow.getPersistentData().putBoolean("apoth.attrib.done", true);
 		}

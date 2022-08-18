@@ -14,9 +14,9 @@ public class CombatRulesMixin {
 	 * Override for protection calculations.  Removes the hard cap of total level 20.  Effectiveness is reduced past 20.
 	 * New max protection value is 65.
 	 * 80% Reduction at 20, 95% at 65.
-	 * 
+	 *
 	 * The first 20 points provide 4% reduction each, the last 45 provide 0.33% reduction each.
-	 * 
+	 *
 	 * @author Shadows
 	 * @reason Update combat rules to account for higher protection levels.
 	 * @param damage The incoming damage, after armor has been applied.
@@ -36,15 +36,15 @@ public class CombatRulesMixin {
 
 	/**
 	 * Override for armor calculations.
-	 * 
+	 *
 	 * Vanilla computations are:
 	 * DR = clamp(armor - damage / (2 + toughness / 4), armor / 5, 20) / 25
-	 * 
+	 *
 	 * Apoth computations are:
 	 * DR = clamp(1.25 * armor - damage / (2 + toughness / 4), armor * (.25 + toughness/200), 20) / 25
-	 * 
+	 *
 	 * This tends to prevent slightly more damage than vanilla: https://i.imgur.com/uFUt9JP.png
-	 * 
+	 *
 	 * @author Shadows
 	 * @reason Update combat rules to account for higher armor levels.
 	 * @param damage The incoming unmitigated damage.

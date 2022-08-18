@@ -36,7 +36,7 @@ public final class Gem extends TypeKeyedBase<Gem> implements WeightedEntry {
 
 	@Override
 	public Weight getWeight() {
-		return Weight.of(weight);
+		return Weight.of(this.weight);
 	}
 
 	public static Gem fromJson(JsonObject json) {

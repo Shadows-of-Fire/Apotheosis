@@ -36,7 +36,7 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @param map The destination for generated attribute modifiers.
 	 */
 	public void addModifiers(EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
-		affix.addModifiers(stack, rarity, level, type, map);
+		this.affix.addModifiers(this.stack, this.rarity, this.level, type, map);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(Consumer<Component> list) {
-		affix.addInformation(stack, rarity, level, list);
+		this.affix.addInformation(this.stack, this.rarity, this.level, list);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @return The name part, prefix or suffix, as requested.
 	 */
 	public Component getName(boolean prefix) {
-		return affix.getName(stack, rarity, level, prefix);
+		return this.affix.getName(this.stack, this.rarity, this.level, prefix);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @return How many protection points this affix is worth against this source.<br>
 	 */
 	public int getDamageProtection(DamageSource source) {
-		return affix.getDamageProtection(stack, rarity, level, source);
+		return this.affix.getDamageProtection(this.stack, this.rarity, this.level, source);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
 	public float getDamageBonus(MobType creatureType) {
-		return affix.getDamageBonus(stack, rarity, level, creatureType);
+		return this.affix.getDamageBonus(this.stack, this.rarity, this.level, creatureType);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @param level The level of this affix, if applicable.
 	 */
 	public void doPostAttack(LivingEntity user, @Nullable Entity target) {
-		affix.doPostAttack(stack, rarity, level, user, target);
+		this.affix.doPostAttack(this.stack, this.rarity, this.level, user, target);
 	}
 
 	/**
@@ -94,14 +94,14 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * called.
 	 */
 	public void doPostHurt(LivingEntity user, @Nullable Entity attacker) {
-		affix.doPostHurt(stack, rarity, level, user, attacker);
+		this.affix.doPostHurt(this.stack, this.rarity, this.level, user, attacker);
 	}
 
 	/**
 	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
 	 */
 	public void onArrowFired(LivingEntity user, AbstractArrow arrow) {
-		affix.onArrowFired(stack, rarity, level, user, arrow);
+		this.affix.onArrowFired(this.stack, this.rarity, this.level, user, arrow);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 */
 	@Nullable
 	public InteractionResult onItemUse(UseOnContext ctx) {
-		return affix.onItemUse(stack, rarity, level, ctx);
+		return this.affix.onItemUse(this.stack, this.rarity, this.level, ctx);
 	}
 
 	/**
@@ -123,11 +123,11 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
 	 */
 	public float onShieldBlock(LivingEntity entity, DamageSource source, float amount) {
-		return affix.onShieldBlock(stack, rarity, level, entity, source, amount);
+		return this.affix.onShieldBlock(this.stack, this.rarity, this.level, entity, source, amount);
 	}
 
 	public void onBlockBreak(Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		affix.onBlockBreak(stack, rarity, level, player, world, pos, state);
+		this.affix.onBlockBreak(this.stack, this.rarity, this.level, player, world, pos, state);
 	}
 
 }

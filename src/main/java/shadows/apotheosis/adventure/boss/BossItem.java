@@ -219,10 +219,10 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 	 * @return this
 	 */
 	public BossItem validate() {
-		Preconditions.checkNotNull(entity, "Boss Item " + id + " has null entity type!");
-		Preconditions.checkNotNull(size, "Boss Item " + id + " has no size!");
-		Preconditions.checkArgument(rarityOffset >= 0 && rarityOffset < 1000, "Boss Item " + id + " has an invalid rarity offset: " + rarityOffset);
-		Preconditions.checkArgument(enchLevels != null && enchLevels.length == 4 && Arrays.stream(enchLevels).allMatch(i -> i >= 0), "Boss Item " + id + " has invalid ench levels: " + enchLevels);
+		Preconditions.checkNotNull(this.entity, "Boss Item " + this.id + " has null entity type!");
+		Preconditions.checkNotNull(this.size, "Boss Item " + this.id + " has no size!");
+		Preconditions.checkArgument(this.rarityOffset >= 0 && this.rarityOffset < 1000, "Boss Item " + this.id + " has an invalid rarity offset: " + this.rarityOffset);
+		Preconditions.checkArgument(this.enchLevels != null && this.enchLevels.length == 4 && Arrays.stream(this.enchLevels).allMatch(i -> i >= 0), "Boss Item " + this.id + " has invalid ench levels: " + this.enchLevels);
 		return this;
 	}
 

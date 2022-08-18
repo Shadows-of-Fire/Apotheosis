@@ -44,7 +44,7 @@ public class GemManager extends PlaceboJsonReloadListener<Gem> {
 	protected void onReload() {
 		super.onReload();
 		this.gemList.addAll(this.getValues());
-		totalWeight = WeightedRandom.getTotalWeight(this.gemList);
+		this.totalWeight = WeightedRandom.getTotalWeight(this.gemList);
 	}
 
 	public static Gem getRandomGem(Random rand, float luck) {

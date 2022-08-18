@@ -34,8 +34,7 @@ public class DefenseEnchant extends ProtectionEnchantment {
 	 */
 	@Override
 	public boolean checkCompatibility(Enchantment ench) {
-		if (this == Enchantments.FALL_PROTECTION) return ench != this;
-		if (this == Enchantments.ALL_DAMAGE_PROTECTION) return ench != this;
+		if ((this == Enchantments.FALL_PROTECTION) || (this == Enchantments.ALL_DAMAGE_PROTECTION)) return ench != this;
 		if (ench instanceof ProtectionEnchantment) {
 			ProtectionEnchantment pEnch = (ProtectionEnchantment) ench;
 			if (ench == this) return false;

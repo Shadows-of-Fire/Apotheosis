@@ -66,7 +66,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 	@Override
 	protected void init() {
 		super.init();
-		this.filter = this.addRenderableWidget(new EditBox(font, this.getGuiLeft() + 91, this.getGuiTop() + 20 + font.lineHeight + 2, 78, font.lineHeight + 4, filter, new TextComponent("")));
+		this.filter = this.addRenderableWidget(new EditBox(this.font, this.getGuiLeft() + 91, this.getGuiTop() + 20 + this.font.lineHeight + 2, 78, this.font.lineHeight + 4, this.filter, new TextComponent("")));
 		this.filter.setResponder(t -> this.containerChanged());
 	}
 
@@ -219,7 +219,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
 	private void containerChanged() {
 		this.data.clear();
-		List<Entry<Enchantment>> entries = filter(this.menu.getPointsForDisplay());
+		List<Entry<Enchantment>> entries = this.filter(this.menu.getPointsForDisplay());
 		for (Entry<Enchantment> e : entries) {
 			this.data.add(new LibrarySlot(e.getKey(), e.getIntValue(), this.menu.getMaxLevel(e.getKey())));
 		}

@@ -67,7 +67,7 @@ public class RadialAffix extends Affix {
 	}
 
 	private static int getTrueLevel(LootRarity rarity, float level) {
-		return Math.min(4, (rarity.ordinal() - LootRarity.RARE.ordinal()) + SIZE_FUNC.get(level));
+		return Math.min(4, rarity.ordinal() - LootRarity.RARE.ordinal() + SIZE_FUNC.get(level));
 	}
 
 	/**

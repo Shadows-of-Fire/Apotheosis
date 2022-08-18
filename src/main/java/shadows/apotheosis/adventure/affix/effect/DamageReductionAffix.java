@@ -38,7 +38,7 @@ public class DamageReductionAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix.apotheosis:damage_reduction.desc", new TranslatableComponent("misc.apotheosis." + type.id), fmt(100 * getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix.apotheosis:damage_reduction.desc", new TranslatableComponent("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
 	}
 
 	public static void onHurt(LivingHurtEvent e) {
@@ -50,7 +50,7 @@ public class DamageReductionAffix extends Affix {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
 			for (AffixInstance inst : affixes.values()) {
 				if (inst.affix() instanceof DamageReductionAffix dmg && dmg.type.test(src)) {
-					amount *= (1 - dmg.getTrueLevel(inst.rarity(), inst.level()));
+					amount *= 1 - dmg.getTrueLevel(inst.rarity(), inst.level());
 				}
 			}
 		}
@@ -101,7 +101,7 @@ public class DamageReductionAffix extends Affix {
 		}
 
 		public DamageReductionAffix build(String id) {
-			return (DamageReductionAffix) new DamageReductionAffix(type, levels).setRegistryName(id);
+			return (DamageReductionAffix) new DamageReductionAffix(this.type, this.levels).setRegistryName(id);
 		}
 
 	}

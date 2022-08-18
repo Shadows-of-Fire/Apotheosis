@@ -56,7 +56,7 @@ public abstract class LivingEntityMixin extends Entity {
 			float resisted = damage - newDamage;
 
 			if (resisted > 0.0F && resisted < 3.4028235E37F) {
-				if ((Object) this instanceof ServerPlayer sp) {
+				if (this instanceof ServerPlayer sp) {
 					sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_RESISTED), Math.round(resisted * 10.0F));
 				} else if (source.getEntity() instanceof ServerPlayer sp) {
 					sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_DEALT_RESISTED), Math.round(resisted * 10.0F));
@@ -89,15 +89,15 @@ public abstract class LivingEntityMixin extends Entity {
 	private static void createLivingAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
 		AttributeSupplier.Builder builder = cir.getReturnValue();
 		//Formatter::off
-		addIfExists(builder, 
-				Apoth.Attributes.DRAW_SPEED, 
-				Apoth.Attributes.CRIT_CHANCE, 
-				Apoth.Attributes.CRIT_DAMAGE, 
-				Apoth.Attributes.COLD_DAMAGE, 
-				Apoth.Attributes.FIRE_DAMAGE, 
-				Apoth.Attributes.LIFE_STEAL, 
-				Apoth.Attributes.PIERCING, 
-				Apoth.Attributes.CURRENT_HP_DAMAGE, 
+		addIfExists(builder,
+				Apoth.Attributes.DRAW_SPEED,
+				Apoth.Attributes.CRIT_CHANCE,
+				Apoth.Attributes.CRIT_DAMAGE,
+				Apoth.Attributes.COLD_DAMAGE,
+				Apoth.Attributes.FIRE_DAMAGE,
+				Apoth.Attributes.LIFE_STEAL,
+				Apoth.Attributes.PIERCING,
+				Apoth.Attributes.CURRENT_HP_DAMAGE,
 				Apoth.Attributes.OVERHEAL,
 				Apoth.Attributes.GHOST_HEALTH,
 				Apoth.Attributes.MINING_SPEED,

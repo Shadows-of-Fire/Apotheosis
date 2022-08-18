@@ -120,10 +120,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 
 		public boolean test(ApothSpawnerTile tile, SpawnerModifier modif) {
 			SpawnerLogicExt logic = (SpawnerLogicExt) tile.spawner;
-			if (!this.minDelay.matches(logic.minSpawnDelay)) return false;
-			if (!this.maxDelay.matches(logic.maxSpawnDelay)) return false;
-			if (!this.spawnCount.matches(logic.spawnCount)) return false;
-			if (!this.nearbyEnts.matches(logic.maxNearbyEntities)) return false;
+			if (!this.minDelay.matches(logic.minSpawnDelay) || !this.maxDelay.matches(logic.maxSpawnDelay) || !this.spawnCount.matches(logic.spawnCount) || !this.nearbyEnts.matches(logic.maxNearbyEntities)) return false;
 			if (!this.playerRange.matches(logic.requiredPlayerRange)) return false;
 			if (!this.spawnRange.matches(logic.spawnRange)) return false;
 			if (this.ignorePlayers != null && tile.ignoresPlayers != this.ignorePlayers) return false;

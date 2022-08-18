@@ -28,17 +28,11 @@ import shadows.apotheosis.adventure.affix.socket.GemManager;
 
 public class GemCommand {
 
-	public static final SuggestionProvider<CommandSourceStack> SUGGEST_OP = (ctx, builder) -> {
-		return SharedSuggestionProvider.suggest(Arrays.stream(Operation.values()).map(Operation::name), builder);
-	};
+	public static final SuggestionProvider<CommandSourceStack> SUGGEST_OP = (ctx, builder) -> SharedSuggestionProvider.suggest(Arrays.stream(Operation.values()).map(Operation::name), builder);
 
-	public static final SuggestionProvider<CommandSourceStack> SUGGEST_ATTRIB = (ctx, builder) -> {
-		return SharedSuggestionProvider.suggest(ForgeRegistries.ATTRIBUTES.getKeys().stream().map(ResourceLocation::toString), builder);
-	};
+	public static final SuggestionProvider<CommandSourceStack> SUGGEST_ATTRIB = (ctx, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ATTRIBUTES.getKeys().stream().map(ResourceLocation::toString), builder);
 
-	public static final SuggestionProvider<CommandSourceStack> SUGGEST_GEM = (ctx, builder) -> {
-		return SharedSuggestionProvider.suggest(GemManager.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
-	};
+	public static final SuggestionProvider<CommandSourceStack> SUGGEST_GEM = (ctx, builder) -> SharedSuggestionProvider.suggest(GemManager.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
 
 	public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
 		root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {

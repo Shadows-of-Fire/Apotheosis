@@ -85,11 +85,11 @@ public enum LootCategory {
 	}
 
 	public boolean isWeaponOrShield() {
-		return isLightWeapon() || this == SHIELD;
+		return this.isLightWeapon() || this == SHIELD;
 	}
 
 	public boolean isMainhand() {
-		return isWeapon() || this == BREAKER || this == TRIDENT;
+		return this.isWeapon() || this == BREAKER || this == TRIDENT;
 	}
 
 	private static class ShieldBreakerTest implements Predicate<ItemStack> {

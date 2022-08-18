@@ -31,12 +31,12 @@ public class BasicJsonTrade extends BasicItemListing implements JsonTrade {
 
 	@Override
 	public ResourceLocation getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override
 	public SerializerBuilder<JsonTrade>.Serializer getSerializer() {
-		return serializer;
+		return this.serializer;
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class GemItem extends Item {
 			return;
 		}
 		tooltip.add(TextComponent.EMPTY);
-		tooltip.add((new TranslatableComponent("item.modifiers.socket")).withStyle(ChatFormatting.GOLD));
+		tooltip.add(new TranslatableComponent("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
 		tooltip.add(AttributeHelper.toComponent(bonus.getKey(), bonus.getValue()));
 	}
 

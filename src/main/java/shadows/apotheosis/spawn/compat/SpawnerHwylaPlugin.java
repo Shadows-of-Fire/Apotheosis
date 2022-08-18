@@ -63,18 +63,18 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 			ApothSpawnerTile spw = (ApothSpawnerTile) te;
 			BaseSpawner logic = spw.getSpawner();
 			//Formatter::off
-			tag.putIntArray(STATS, 
-				new int[] { 
-					logic.minSpawnDelay, 
-					logic.maxSpawnDelay, 
-					logic.spawnCount, 
-					logic.maxNearbyEntities, 
-					logic.requiredPlayerRange, 
-					logic.spawnRange, 
-					spw.ignoresPlayers ? 1 : 0, 
-					spw.ignoresConditions ? 1 : 0, 
+			tag.putIntArray(STATS,
+				new int[] {
+					logic.minSpawnDelay,
+					logic.maxSpawnDelay,
+					logic.spawnCount,
+					logic.maxNearbyEntities,
+					logic.requiredPlayerRange,
+					logic.spawnRange,
+					spw.ignoresPlayers ? 1 : 0,
+					spw.ignoresConditions ? 1 : 0,
 					spw.redstoneControl ? 1 : 0,
-					spw.ignoresLight ? 1 : 0, 
+					spw.ignoresLight ? 1 : 0,
 					spw.hasNoAI ? 1 : 0,
 					spw.silent ? 1 : 0
 				});

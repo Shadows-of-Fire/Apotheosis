@@ -65,11 +65,11 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	}
 
 	public Ingredient getPotionIngredient() {
-		return potion;
+		return this.potion;
 	}
 
 	public IntList getPotionSlots() {
-		return potionSlots;
+		return this.potionSlots;
 	}
 
 	@Override

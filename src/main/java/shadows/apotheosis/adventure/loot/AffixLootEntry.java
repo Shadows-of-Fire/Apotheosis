@@ -25,11 +25,11 @@ public class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements Wei
 
 	@Override
 	public Weight getWeight() {
-		return Weight.of(weight);
+		return Weight.of(this.weight);
 	}
 
 	public int getIntWeight() {
-		return weight;
+		return this.weight;
 	}
 
 	public int getQuality() {

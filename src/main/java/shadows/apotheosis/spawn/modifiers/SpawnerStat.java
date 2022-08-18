@@ -30,10 +30,10 @@ public interface SpawnerStat<T> {
 	Class<T> getTypeClass();
 
 	default TranslatableComponent name() {
-		return new TranslatableComponent("stat.apotheosis." + getId());
+		return new TranslatableComponent("stat.apotheosis." + this.getId());
 	}
 
 	default TranslatableComponent desc() {
-		return new TranslatableComponent("stat.apotheosis." + getId() + ".desc");
+		return new TranslatableComponent("stat.apotheosis." + this.getId() + ".desc");
 	}
 }

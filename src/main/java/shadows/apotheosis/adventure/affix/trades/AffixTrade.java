@@ -27,7 +27,7 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 
 	@Override
 	public MerchantOffer getOffer(Entity pTrader, Random pRand) {
-		ItemStack affixItem = LootController.createRandomLootItem(pRand, rarityOffset, 0);
+		ItemStack affixItem = LootController.createRandomLootItem(pRand, this.rarityOffset, 0);
 		affixItem.getTag().putBoolean("apoth_merchant", true);
 		ItemStack stdItem = affixItem.copy();
 		stdItem.setTag(null);
@@ -41,7 +41,7 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 
 	@Override
 	public boolean isRare() {
-		return rare;
+		return this.rare;
 	}
 
 }
