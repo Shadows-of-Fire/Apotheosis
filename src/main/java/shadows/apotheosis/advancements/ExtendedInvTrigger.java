@@ -1,5 +1,6 @@
 package shadows.apotheosis.advancements;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -21,6 +22,9 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.socket.SocketHelper;
+import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
@@ -47,13 +51,16 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 				return enchMap.values().stream().anyMatch(bound::matches);
 			}) };
 		}
-		//if (type.equals("affix")) {
-		//	return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
-		//}
-		//if (type.equals("rarity")) {
-		//	LootRarity rarity = LootRarity.valueOf(json.get("rarity").getAsString());
-		//	return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
-		//}
+		if (type.equals("affix")) {
+			return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
+		}
+		if (type.equals("rarity")) {
+			LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
+			return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
+		}
+		if (type.equals("socket")) {
+			return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };
+		}
 		if (type.equals("nbt")) {
 			CompoundTag tag;
 			try {

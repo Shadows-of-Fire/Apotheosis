@@ -28,6 +28,7 @@ public class AffixLootModifier extends LootModifier {
 		if (IS_CHEST.test(context) && context.getRandom().nextFloat() <= AdventureConfig.affixChestChance) {
 			float luck = context.getLuck();
 			ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), Math.min(1000, (int) (25 * luck)), luck);
+			affixItem.getTag().putBoolean("apoth_rchest", true);
 			generatedLoot.add(affixItem);
 		}
 		return generatedLoot;

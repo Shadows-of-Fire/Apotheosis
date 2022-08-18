@@ -1,37 +1,36 @@
 {
-	"parent": "apotheosis:affix/rare",
+	"parent": "apotheosis:affix/root",
 	"conditions": [{
 		"type": "apotheosis:module",
-		"module": "deadly"
+		"module": "adventure"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:diamond_sword"
+			"item": "apotheosis:gem"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.epic"
+			"translate": "advancements.apotheosis.gem"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.epic.desc"
+			"translate": "advancements.apotheosis.gem.desc"
 		},
 		"frame": "task",
 		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {
-		"sword": {
+		"gem": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"apoth": {
-					"type": "rarity",
-					"rarity": "EPIC"
-				}
+				"items": [{
+					"items": ["apotheosis:gem"]
+				}]
 			}
 		}
 	},
 	"requirements": [
 		[
-			"sword"
+			"gem"
 		]
 	]
 }

@@ -15,7 +15,7 @@
 			"translate": "advancements.apotheosis.common.desc"
 		},
 		"frame": "task",
-		"hidden": false,
+		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {

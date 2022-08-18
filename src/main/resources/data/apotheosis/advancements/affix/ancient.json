@@ -16,7 +16,7 @@
 			"translate": "advancements.apotheosis.ancient.desc"
 		},
 		"frame": "challenge",
-		"hidden": false,
+		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {

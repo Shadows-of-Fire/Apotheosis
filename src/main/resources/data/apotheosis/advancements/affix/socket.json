@@ -1,38 +1,36 @@
 {
-	"parent": "apotheosis:affix/epic",
+	"parent": "apotheosis:affix/gem",
 	"conditions": [{
 		"type": "apotheosis:module",
-		"module": "deadly"
+		"module": "adventure"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:diamond_sword",
-			"nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
+			"item": "minecraft:smithing_table"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.mythic"
+			"translate": "advancements.apotheosis.socket"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.mythic.desc"
+			"translate": "advancements.apotheosis.socket.desc"
 		},
-		"frame": "goal",
+		"frame": "task",
 		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {
-		"sword": {
+		"socket": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"apoth": {
-					"type": "rarity",
-					"rarity": "MYTHIC"
+					"type": "socket"
 				}
 			}
 		}
 	},
 	"requirements": [
 		[
-			"sword"
+			"socket"
 		]
 	]
 }
