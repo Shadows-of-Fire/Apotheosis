@@ -40,8 +40,7 @@ public class ThunderstruckAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		LootCategory cat = LootCategory.forItem(stack);
-		return cat != null && cat.isLightWeapon() && rarity.isAtLeast(LootRarity.RARE);
+		return LootCategory.forItem(stack).isLightWeapon() && rarity.isAtLeast(LootRarity.RARE);
 	}
 
 	@Override

@@ -1,3 +1,9 @@
+## 5.4.1
+* Disabled debug logging for adventure module world generation.
+  * This isn't really a big deal but it's very log-spammy.
+* Fixed a crash that would occur when using a spyglass (or other charged item).
+* Fixed boss spawners not operating at all.
+
 ## 5.4.0
 * The Deadly Module is back!
   * However, it's actually called the Adventure Module now.

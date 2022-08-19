@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -29,7 +30,7 @@ public class ShearsItemMixin extends Item {
 
 	@Override
 	public String getCreatorModId(ItemStack itemStack) {
-		return Apotheosis.enableEnch ? Apotheosis.MODID : "minecraft";
+		return Apotheosis.enableEnch && this == Items.SHEARS ? Apotheosis.MODID : super.getCreatorModId(itemStack);
 	}
 
 }

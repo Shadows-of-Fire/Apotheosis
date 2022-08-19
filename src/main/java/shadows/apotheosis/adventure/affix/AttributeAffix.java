@@ -45,7 +45,7 @@ public class AttributeAffix extends Affix {
 	@Override
 	public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(stack);
-		if (cat == null) {
+		if (cat == LootCategory.NONE) {
 			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName().getString());
 			return;
 		}
@@ -64,7 +64,7 @@ public class AttributeAffix extends Affix {
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
-		if (cat == null) return false;
+		if (cat == LootCategory.NONE) return false;
 		return (this.types == null || this.types.test(cat)) && (this.items == null || this.items.test(stack)) && this.modifiers.containsKey(rarity);
 	};
 

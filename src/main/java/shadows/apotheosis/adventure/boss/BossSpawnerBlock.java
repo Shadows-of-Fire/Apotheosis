@@ -10,14 +10,14 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apoth;
 import shadows.placebo.block_entity.TickingBlockEntity;
+import shadows.placebo.block_entity.TickingEntityBlock;
 
-public class BossSpawnerBlock extends Block implements EntityBlock {
+public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 
 	public BossSpawnerBlock(Properties properties) {
 		super(properties);
@@ -57,7 +57,7 @@ public class BossSpawnerBlock extends Block implements EntityBlock {
 
 		@Override
 		public void saveAdditional(CompoundTag tag) {
-			tag.putString("boss_item", this.item.getId().toString());
+			if (this.item != null) tag.putString("boss_item", this.item.getId().toString());
 			super.saveAdditional(tag);
 		}
 

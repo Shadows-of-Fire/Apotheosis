@@ -38,7 +38,7 @@ public final class SocketAffix extends Affix {
 	@Override
 	public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(stack);
-		if (cat == null) {
+		if (cat == LootCategory.NONE) {
 			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName());
 			return;
 		}

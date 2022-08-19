@@ -3,7 +3,7 @@ package shadows.apotheosis.adventure.loot;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import javax.annotation.Nullable;
+import com.google.common.base.Predicates;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.InteractionHand;
@@ -21,6 +21,7 @@ import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 public enum LootCategory {
+	NONE(Predicates.alwaysFalse(), s -> new EquipmentSlot[0]),
 	BOW(s -> s.getItem() instanceof BowItem, s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND)),
 	CROSSBOW(s -> s.getItem() instanceof CrossbowItem, s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND)),
 	BREAKER(
@@ -48,12 +49,11 @@ public enum LootCategory {
 
 	static final LootCategory[] VALUES = values();
 
-	@Nullable
 	public static LootCategory forItem(ItemStack item) {
 		for (LootCategory c : VALUES) {
 			if (c.isValid(item)) return c;
 		}
-		return null;
+		return NONE;
 	}
 
 	/**

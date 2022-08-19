@@ -25,7 +25,7 @@ public class LootController {
 
 	public static ItemStack createLootItem(ItemStack stack, LootRarity rarity, Random rand) {
 		LootCategory cat = LootCategory.forItem(stack);
-		if (cat == null) return stack;
+		if (cat == LootCategory.NONE) return stack;
 		return createLootItem(stack, cat, rarity, rand);
 	}
 

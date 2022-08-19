@@ -148,7 +148,7 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 
 		for (EquipmentSlot t : EquipmentSlot.values()) {
 			ItemStack s = entity.getItemBySlot(t);
-			if (!s.isEmpty() && LootCategory.forItem(s) != null) {
+			if (!s.isEmpty() && LootCategory.forItem(s) != LootCategory.NONE) {
 				anyValid = true;
 				break;
 			}
@@ -159,7 +159,7 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 		int guaranteed = rand.nextInt(6);
 
 		ItemStack temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
-		while (temp.isEmpty() || LootCategory.forItem(temp) == null) {
+		while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategory.NONE) {
 			guaranteed = rand.nextInt(6);
 			temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
 		}
