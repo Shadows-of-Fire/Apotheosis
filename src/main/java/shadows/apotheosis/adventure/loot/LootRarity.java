@@ -15,7 +15,10 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
@@ -96,6 +99,10 @@ public record LootRarity(String id, TextColor color, List<LootRule> rules, int o
 
 	public boolean isAtLeast(LootRarity other) {
 		return this.ordinal() >= other.ordinal();
+	}
+
+	public Component toComponent() {
+		return new TranslatableComponent("rarity.apoth." + this.id).withStyle(Style.EMPTY.withColor(this.color));
 	}
 
 	public static LootRarity byId(String id) {

@@ -304,7 +304,7 @@ public class AdventureModuleEvents {
 	public void dropsHigh(LivingDropsEvent e) {
 		if (e.getSource().getEntity() instanceof Player p) {
 			if (p instanceof FakePlayer) return;
-			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? 0.33F : 0);
+			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
 			if (p.random.nextFloat() <= chance) {
 				Entity ent = e.getEntity();
 				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck()), 0, 0, 0));

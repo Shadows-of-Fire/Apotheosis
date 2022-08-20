@@ -7,12 +7,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.village.VillageModule;
 
 public class ExplosiveArrowEntity extends AbstractArrow {
 
@@ -48,7 +48,7 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, BlockInteraction.DESTROY);
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, VillageModule.expArrowMode);
 			this.discard();
 		}
 	}
@@ -61,7 +61,7 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, BlockInteraction.DESTROY);
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, VillageModule.expArrowMode);
 			this.discard();
 		}
 	}

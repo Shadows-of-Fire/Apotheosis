@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -54,6 +55,8 @@ public class VillageModule {
 
 	public static Configuration config;
 
+	public static BlockInteraction expArrowMode = BlockInteraction.DESTROY;
+
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
 		Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "f_27323_");
@@ -61,6 +64,9 @@ public class VillageModule {
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		config.setTitle("Apotheosis Village Module Configuration");
 		WandererReplacements.load(config);
+
+		boolean blockDmg = config.getBoolean("Explosive Arrow Block Damage", "arrows", true, "If explosive arrows can break blocks.");
+		expArrowMode = blockDmg ? BlockInteraction.DESTROY : BlockInteraction.NONE;
 		if (config.hasChanged()) config.save();
 
 		e.enqueueWork(() -> {

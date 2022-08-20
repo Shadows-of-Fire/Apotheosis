@@ -1,0 +1,101 @@
+{
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"size": "small",
+	"color": "rainbow",
+	"waves": [{
+			"entities": [{
+				"type": "apotheosis:boss"
+			}],
+			"rewards": [{
+				"type": "apotheosis:affix",
+				"rarity": "uncommon"
+			}],
+			"max_wave_time": 1250,
+			"setup_time": 150
+		},
+		{
+			"entities": [{
+				"type": "apotheosis:boss"
+			}],
+			"modifiers": [{
+					"attribute": "generic.max_health",
+					"operation": "MULTIPLY_TOTAL",
+					"value": 0.33
+				},
+				{
+					"attribute": "generic.armor",
+					"operation": "ADDITION",
+					"value": 2.5
+				},
+				{
+					"attribute": "generic.attack_damage",
+					"operation": "MULTIPLY_TOTAL",
+					"value": 0.33
+				},
+				{
+					"attribute": "generic.knockback_resistance",
+					"operation": "ADDITION",
+					"value": 0.05
+				},
+				{
+					"attribute": "generic.movement_speed",
+					"operation": "MULTIPLY_TOTAL",
+					"value": 0.05
+				}
+			],
+			"rewards": [{
+				"type": "apotheosis:affix",
+				"rarity": "rare"
+			}],
+			"max_wave_time": 1750,
+			"setup_time": 400
+		},
+		{
+			"entities": [{
+				"type": "apotheosis:boss",
+				"boss": "apotheosis:enderman"
+			}],
+			"modifiers": [{
+					"attribute": "generic.max_health",
+					"operation": "MULTIPLY_TOTAL",
+					"value": 0.66
+				},
+				{
+					"attribute": "generic.armor",
+					"operation": "ADDITION",
+					"value": 4
+				},
+				{
+					"attribute": "generic.attack_damage",
+					"operation": "MULTIPLY_TOTAL",
+					"value": 0.5
+				},
+				{
+					"attribute": "generic.knockback_resistance",
+					"operation": "ADDITION",
+					"value": 0.10
+				},
+				{
+					"attribute": "generic.movement_speed",
+					"operation": "MULTIPLY_TOTAL",
+					"value": 0.10
+				}
+			],
+			"rewards": [{
+				"type": "apotheosis:affix",
+				"rarity": "epic"
+			}],
+			"max_wave_time": 2250,
+			"setup_time": 400
+		}
+	],
+	"rewards": [{
+		"type": "apotheosis:affix",
+		"rarity": "mythic"
+	}],
+	"completion_xp": 2500,
+	"spawn_range": 5
+}

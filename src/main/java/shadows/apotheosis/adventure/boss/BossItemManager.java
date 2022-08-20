@@ -1,5 +1,8 @@
 package shadows.apotheosis.adventure.boss;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -7,7 +10,9 @@ import com.google.gson.GsonBuilder;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.adventure.AdventureModule;
@@ -51,6 +56,21 @@ public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
 	@Override
 	protected void registerBuiltinSerializers() {
 		this.registerSerializer(DEFAULT, new SerializerBuilder<BossItem>("Apotheosis Boss").withJsonDeserializer(obj -> GSON.fromJson(obj, BossItem.class)));
+	}
+
+	@Override
+	@Deprecated
+	public BossItem getRandomItem(Random rand) {
+		return WeightedRandom.getRandomItem(rand, entries, weight).orElseThrow();
+	}
+
+	/**
+	 * Returns a boss that is appropriate for the given dimension, or null if none are available.
+	 */
+	@Nullable
+	public BossItem getRandomItem(Random rand, ServerLevelAccessor level) {
+		List<BossItem> valid = this.entries.stream().filter(b -> (b.dimensions == null || b.dimensions.isEmpty()) || b.dimensions.contains(level.getLevel().dimension().location())).toList();
+		return WeightedRandom.getRandomItem(rand, valid).orElse(null);
 	}
 
 }

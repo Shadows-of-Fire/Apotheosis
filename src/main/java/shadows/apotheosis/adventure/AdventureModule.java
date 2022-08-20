@@ -10,7 +10,6 @@ import com.google.common.collect.ImmutableSet;
 import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -30,12 +29,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryBuilder;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -75,6 +72,7 @@ import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.adventure.boss.BossSummonerItem;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
+import shadows.apotheosis.adventure.compat.GatewaysCompat;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.AffixLootModifier;
 import shadows.apotheosis.adventure.loot.GemLootModifier;
@@ -109,6 +107,9 @@ public class AdventureModule {
 		RandomSpawnerManager.INSTANCE.registerToBus();
 		Apotheosis.HELPER.registerProvider(f -> {
 			f.addRecipe(new SocketingRecipe());
+		});
+		e.enqueueWork(() -> {
+			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
 		});
 	}
 
@@ -147,15 +148,6 @@ public class AdventureModule {
 	public void lootSerializers(Register<GlobalLootModifierSerializer<?>> e) {
 		e.getRegistry().register(new GemLootModifier.Serializer().setRegistryName("gems"));
 		e.getRegistry().register(new AffixLootModifier.Serializer().setRegistryName("affix_loot"));
-	}
-
-	@SubscribeEvent
-	public void registry(NewRegistryEvent e) {
-		RegistryBuilder<Affix> build = new RegistryBuilder<>();
-		build.setName(new ResourceLocation(Apotheosis.MODID, "affixes"));
-		build.setType(Affix.class);
-		build.disableSaving().onBake(AffixHelper::recomputeMaps);
-		e.create(build, r -> Affix.REGISTRY = (ForgeRegistry<Affix>) r);
 	}
 
 	@SubscribeEvent

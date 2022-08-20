@@ -14,6 +14,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -67,7 +68,7 @@ public class RadialAffix extends Affix {
 	}
 
 	private static int getTrueLevel(LootRarity rarity, float level) {
-		return Math.min(4, rarity.ordinal() - LootRarity.RARE.ordinal() + SIZE_FUNC.get(level));
+		return Mth.clamp(rarity.ordinal() - LootRarity.RARE.ordinal() + SIZE_FUNC.get(level), 1, 4);
 	}
 
 	/**

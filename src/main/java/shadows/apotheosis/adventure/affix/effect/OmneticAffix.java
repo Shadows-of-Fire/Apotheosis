@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -96,7 +97,7 @@ public class OmneticAffix extends Affix {
 	}
 
 	private static int getListOffset(LootRarity rarity) {
-		return 3 * Math.min(2, rarity.ordinal() - LootRarity.RARE.ordinal());
+		return 3 * Mth.clamp(rarity.ordinal() - LootRarity.RARE.ordinal(), 0, 2);
 	}
 
 	static float getBaseSpeed(Player player, Item tool, BlockState state, BlockPos pos) {

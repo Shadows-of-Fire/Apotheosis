@@ -1,0 +1,180 @@
+package shadows.apotheosis.adventure.compat;
+
+import java.util.function.Consumer;
+
+import javax.annotation.Nullable;
+
+import com.google.gson.JsonObject;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.AABB;
+import shadows.apotheosis.adventure.boss.BossItem;
+import shadows.apotheosis.adventure.boss.BossItemManager;
+import shadows.apotheosis.adventure.loot.AffixLootManager;
+import shadows.apotheosis.adventure.loot.LootController;
+import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.gateways.entity.GatewayEntity;
+import shadows.gateways.gate.Reward;
+import shadows.gateways.gate.WaveEntity;
+import shadows.placebo.json.SerializerBuilder;
+
+public class GatewaysCompat {
+
+	public static void register() {
+		WaveEntity.SERIALIZERS.put(new ResourceLocation("apotheosis:boss"), BossWaveEntity.SERIALIZER);
+		Reward.SERIALIZERS.put("apotheosis:random_affix", new SerializerBuilder<AffixItemReward>("Affix Reward").autoRegister(AffixItemReward.class).build(true));
+		Reward.SERIALIZERS.put("apotheosis:affix", new SerializerBuilder<RarityAffixItemReward>("Rarity Affix Reward").autoRegister(RarityAffixItemReward.class).build(true));
+	}
+
+	public static class BossWaveEntity implements WaveEntity {
+
+		static final SerializerBuilder<WaveEntity>.Serializer SERIALIZER = new SerializerBuilder<WaveEntity>("Boss Wave Entity").autoRegister(BossWaveEntity.class).build(true);
+
+		private final @Nullable BossItem boss;
+
+		public BossWaveEntity(@Nullable BossItem boss) {
+			this.boss = boss;
+		}
+
+		@Override
+		public LivingEntity createEntity(Level level) {
+			BossItem realBoss = this.boss == null ? BossItemManager.INSTANCE.getRandomItem(level.random, (ServerLevel) level) : this.boss;
+			if (realBoss == null) return null; // error condition
+			return realBoss.createBoss((ServerLevelAccessor) level, BlockPos.ZERO, level.random);
+		}
+
+		@Override
+		public Component getDescription() {
+			return new TranslatableComponent("misc.apotheosis.boss", new TranslatableComponent(this.boss == null ? "misc.apotheosis.random" : boss.getEntity().getDescriptionId()));
+		}
+
+		@Override
+		public AABB getAABB(double x, double y, double z) {
+			return this.boss == null ? new AABB(0, 0, 0, 2, 2, 2).move(x, y, z) : this.boss.getSize();
+		}
+
+		@Override
+		public boolean shouldFinalizeSpawn() {
+			return false;
+		}
+
+		@Override
+		public SerializerBuilder<WaveEntity>.Serializer getSerializer() {
+			return SERIALIZER;
+		}
+
+		public JsonObject write() {
+			JsonObject entityData = new JsonObject();
+			if (this.boss != null) entityData.addProperty("boss", boss.getId().toString());
+			return entityData;
+		}
+
+		public static WaveEntity read(JsonObject obj) {
+			BossItem boss = obj.has("boss") ? BossItemManager.INSTANCE.getById(new ResourceLocation(obj.get("boss").getAsString())) : null;
+			return new BossWaveEntity(boss);
+		}
+
+		public void write(FriendlyByteBuf buf) {
+			buf.writeResourceLocation(this.boss == null ? new ResourceLocation("null", "null") : this.boss.getId());
+		}
+
+		public static WaveEntity read(FriendlyByteBuf buf) {
+			BossItem boss = BossItemManager.INSTANCE.getById(buf.readResourceLocation());
+			return new BossWaveEntity(boss);
+		}
+	}
+
+	/**
+	 * Provides a random affix item as a reward.
+	 */
+	public static record AffixItemReward(int rarityOffset) implements Reward {
+
+		@Override
+		public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
+			list.accept(LootController.createRandomLootItem(level.random, rarityOffset, summoner.getLuck()));
+		}
+
+		@Override
+		public JsonObject write() {
+			JsonObject obj = Reward.super.write();
+			obj.addProperty("rarity_offset", rarityOffset);
+			return obj;
+		}
+
+		public static AffixItemReward read(JsonObject obj) {
+			return new AffixItemReward(obj.get("rarity_offset").getAsInt());
+		}
+
+		@Override
+		public void write(FriendlyByteBuf buf) {
+			Reward.super.write(buf);
+			buf.writeShort(rarityOffset);
+		}
+
+		public static AffixItemReward read(FriendlyByteBuf buf) {
+			return new AffixItemReward(buf.readShort());
+		}
+
+		@Override
+		public String getName() {
+			return "apotheosis:random_affix";
+		}
+
+		@Override
+		public void appendHoverText(Consumer<Component> list) {
+			list.accept(new TranslatableComponent("reward.apotheosis.random_affix", this.rarityOffset));
+		}
+	}
+
+	/**
+	 * Provides a random affix item as a reward.
+	 */
+	public static record RarityAffixItemReward(LootRarity rarity) implements Reward {
+
+		@Override
+		public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
+			list.accept(LootController.createLootItem(AffixLootManager.getRandomEntry(level.random, summoner.getLuck()).getStack(), rarity, level.random));
+		}
+
+		@Override
+		public JsonObject write() {
+			JsonObject obj = Reward.super.write();
+			obj.addProperty("rarity", rarity.id());
+			return obj;
+		}
+
+		public static RarityAffixItemReward read(JsonObject obj) {
+			return new RarityAffixItemReward(LootRarity.byId(obj.get("rarity").getAsString()));
+		}
+
+		@Override
+		public void write(FriendlyByteBuf buf) {
+			Reward.super.write(buf);
+			buf.writeUtf(this.rarity.id());
+		}
+
+		public static RarityAffixItemReward read(FriendlyByteBuf buf) {
+			return new RarityAffixItemReward(LootRarity.byId(buf.readUtf()));
+		}
+
+		@Override
+		public String getName() {
+			return "apotheosis:affix";
+		}
+
+		@Override
+		public void appendHoverText(Consumer<Component> list) {
+			list.accept(new TranslatableComponent("reward.apotheosis.affix", this.rarity.toComponent()));
+		}
+	}
+}

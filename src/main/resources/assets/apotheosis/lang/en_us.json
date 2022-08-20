@@ -292,6 +292,14 @@
 
     "item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 
+	"comment_id": "/Adventure + Gateways Compat",
+
+	"misc.apotheosis.boss": "%s Apotheotic Boss",
+	"misc.apotheosis.random": "Random",
+	"reward.apotheosis.affix": "%s Affix Item",
+	"reward.apotheosis.random_affix": "Random Affix Item",
+	"apotheosis.boss_gate_small": "Small Apotheotic Boss Gate",
+
     "comment_id": "/Advancements",
 
     "advancements.apotheosis.enchantment": "The Secrets of Enchanting",

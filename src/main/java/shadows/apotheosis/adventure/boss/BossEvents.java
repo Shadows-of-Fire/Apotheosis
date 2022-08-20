@@ -33,8 +33,9 @@ public class BossEvents {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
 			if (!e.getWorld().isClientSide() && entity instanceof Monster && e.getResult() == Result.DEFAULT) {
-				if (rand.nextFloat() <= AdventureConfig.surfaceBossChance && e.getWorld().canSeeSky(new BlockPos(e.getX(), e.getY(), e.getZ()))) {
-					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand);
+				if (rand.nextFloat() <= AdventureConfig.surfaceBossChance && isValidBossPos(e.getWorld(), new BlockPos(e.getX(), e.getY(), e.getZ()))) {
+					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, (ServerLevelAccessor) e.getWorld());
+					if (item == null) return;
 					Player player = e.getWorld().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
 					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
 					Mob boss = item.createBoss((ServerLevelAccessor) e.getWorld(), new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand);
@@ -53,6 +54,10 @@ public class BossEvents {
 				}
 			}
 		}
+	}
+
+	private static boolean isValidBossPos(LevelAccessor level, BlockPos pos) {
+		return level.canSeeSky(pos);
 	}
 
 	private static boolean canSpawn(LevelAccessor world, Mob entity, double playerDist) {

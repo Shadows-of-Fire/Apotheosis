@@ -1,3 +1,15 @@
+## 5.4.2
+* Fixed a crash that occurred when the Adventure Module is disabled.
+* Fixed the APOTH_REMOVE_MARKER showing up in so many places
+  * Technically this only occurs when something isn't fully handling tooltips, but I can sort of mitigate it on my end.
+  * It still shows up in some cases, but that requires the other mods to fix their tooltip handling.
+* Added compat with Gateways to Eternity.  An example is provided at data/apotheosis/gateways/boss_gate_small.json
+* Added a config option for the Gem Boss Bonus drop change, which is added to the normal drop chance for bosses.
+  * Previously it was a flat 33% and could not be changed.
+* Added a config option to prevent block damage from explosive arrows.
+* Made the boss "nbt" field get applied both before {as load()} and after {as readAdditionalSaveData()} the boss is modified.
+* Fixed some crashes involving Uncommon pickaxes.
+
 ## 5.4.1
 * Disabled debug logging for adventure module world generation.
   * This isn't really a big deal but it's very log-spammy.

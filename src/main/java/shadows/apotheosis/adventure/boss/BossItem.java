@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
@@ -76,8 +78,10 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 	protected final List<RandomAttributeModifier> modifiers;
 	@SerializedName("nbt")
 	protected final CompoundTag customNbt;
+	@SerializedName("dimensions")
+	protected final Set<ResourceLocation> dimensions;
 
-	public BossItem(int weight, EntityType<?> entity, AABB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundTag customNbt) {
+	public BossItem(int weight, EntityType<?> entity, AABB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundTag customNbt, Set<ResourceLocation> dimensions) {
 		this.weight = weight;
 		this.entity = entity;
 		this.size = size;
@@ -88,6 +92,7 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 		this.armorSets = armorSets;
 		this.modifiers = modifiers;
 		this.customNbt = customNbt;
+		this.dimensions = dimensions;
 	}
 
 	@Override
@@ -113,8 +118,11 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 	 */
 	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, Random rand) {
 		Mob entity = (Mob) this.entity.create(world.getLevel());
-		entity.readAdditionalSaveData(this.customNbt == null ? new CompoundTag() : this.customNbt);
+		if (this.customNbt != null) entity.load(this.customNbt);
 		this.initBoss(rand, entity);
+		// Re-read here so we can apply certain things after the boss has been modified
+		// But only mob-specific things, not a full load()
+		if (this.customNbt != null) entity.readAdditionalSaveData(this.customNbt);
 		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
 		return entity;
 	}
