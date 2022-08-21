@@ -1,0 +1,78 @@
+{
+	"entity": "minecraft:phantom",
+	"weight": 50,
+	"size": {
+		"width": 2.5,
+		"height": 1
+	},
+	"enchant_chance": 0.7,
+	"rarity_offset": 700,
+	"enchantment_levels": [35, 30, 60, 50],
+	"effects": [{
+		"effect": "minecraft:fire_resistance",
+		"chance": 1.0
+	}],
+	"attribute_modifiers": [{
+			"attribute": "minecraft:generic.max_health",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 6,
+				"max": 14
+			}
+		},
+		{
+			"attribute": "minecraft:generic.movement_speed",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 0.20,
+				"max": 0.36
+			}
+		},
+		{
+			"attribute": "minecraft:generic.flying_speed",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 0.20,
+				"max": 0.36
+			}
+		},
+		{
+			"attribute": "minecraft:generic.armor",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 0.40,
+				"max": 1.50
+			}
+		},
+		{
+			"attribute": "minecraft:generic.armor_toughness",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 0.40,
+				"max": 1.50
+			}
+		},
+		{
+			"attribute": "minecraft:generic.attack_damage",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 4,
+				"max": 8
+			}
+		},
+		{
+			"attribute": "minecraft:generic.knockback_resistance",
+			"operation": "ADDITION",
+			"value": {
+				"min": 0.85,
+				"max": 1
+			}
+		}
+	],
+	"valid_gear_sets": [
+		"#the_end"
+	],
+	"dimensions": [
+		"minecraft:the_end"
+	]
+}

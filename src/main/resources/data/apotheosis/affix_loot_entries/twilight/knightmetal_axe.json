@@ -1,0 +1,13 @@
+{
+  "weight": 50,
+  "quality": 8,
+  "stack": {
+    "item": "twilightforest:knightmetal_axe",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "HEAVY_WEAPON",
+  "dimensions": [
+    "twilightforest:twilight_forest"
+  ]
+}

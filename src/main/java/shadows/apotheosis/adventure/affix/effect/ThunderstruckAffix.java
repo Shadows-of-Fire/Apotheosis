@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.affix.effect;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.ChatFormatting;
@@ -11,8 +10,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apotheosis;
@@ -47,11 +44,7 @@ public class ThunderstruckAffix extends Affix {
 	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
 		if (user.level.isClientSide) return;
 		if (Apotheosis.localAtkStrength >= 0.98) {
-			Predicate<Entity> pred = e -> {
-				if ((e instanceof Animal && !(target instanceof Animal)) || (e instanceof AbstractVillager && !(target instanceof AbstractVillager))) return false;
-				return e != user && e instanceof LivingEntity;
-			};
-			List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), pred);
+			List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), CleavingAffix.cleavePredicate(user, target));
 			for (Entity e : nearby) {
 				e.hurt(DamageSource.LIGHTNING_BOLT, getTrueLevel(rarity, level));
 			}

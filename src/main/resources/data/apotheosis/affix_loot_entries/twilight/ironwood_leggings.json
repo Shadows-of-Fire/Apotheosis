@@ -1,0 +1,13 @@
+{
+  "weight": 100,
+  "quality": 1,
+  "stack": {
+    "item": "twilightforest:ironwood_leggings",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "ARMOR",
+  "dimensions": [
+    "twilightforest:twilight_forest"
+  ]
+}

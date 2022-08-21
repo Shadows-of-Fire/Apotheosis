@@ -1,7 +1,6 @@
 package shadows.apotheosis.adventure.loot;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import com.google.gson.JsonObject;
 
@@ -13,10 +12,9 @@ import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
+import shadows.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
 
 public class AffixLootModifier extends LootModifier {
-
-	public static final Predicate<LootContext> IS_CHEST = c -> c.getQueriedLootTableId().getPath().startsWith("chests/");
 
 	protected AffixLootModifier(LootItemCondition[] conditionsIn) {
 		super(conditionsIn);
@@ -25,11 +23,17 @@ public class AffixLootModifier extends LootModifier {
 	@Override
 	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
 		if (!Apotheosis.enableAdventure) return generatedLoot;
-		if (IS_CHEST.test(context) && context.getRandom().nextFloat() <= AdventureConfig.affixChestChance) {
-			float luck = context.getLuck();
-			ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), Math.min(1000, (int) (25 * luck)), luck);
-			affixItem.getTag().putBoolean("apoth_rchest", true);
-			generatedLoot.add(affixItem);
+		for (LootPatternMatcher m : AdventureConfig.AFFIX_ITEM_LOOT_RULES) {
+			if (m.matches(context.getQueriedLootTableId())) {
+				if (context.getRandom().nextFloat() <= m.chance()) {
+					float luck = context.getLuck();
+					ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), 0, luck, context.getLevel());
+					if (affixItem.isEmpty()) break;
+					affixItem.getTag().putBoolean("apoth_rchest", true);
+					generatedLoot.add(affixItem);
+				}
+				break;
+			}
 		}
 		return generatedLoot;
 	}

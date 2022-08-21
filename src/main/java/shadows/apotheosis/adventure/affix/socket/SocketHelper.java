@@ -26,6 +26,7 @@ public class SocketHelper {
 			ListTag gemData = afxData.getList(GEMS, Tag.TAG_COMPOUND);
 			for (Tag tag : gemData) {
 				gems.set(i++, ItemStack.of((CompoundTag) tag));
+				if (i >= size) break;
 			}
 		}
 		return gems;

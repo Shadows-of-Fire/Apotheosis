@@ -1,0 +1,65 @@
+{
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+	"weight": 60,
+	"mainhands": [{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:knightmetal_sword"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:knightmetal_axe"
+			}
+		},
+		{
+			"weight": 2,
+			"stack": {
+				"item": "twilightforest:knightmetal_pickaxe"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:knightmetal_shield"
+		}
+	}],
+	"boots": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:knightmetal_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:knightmetal_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:knightmetal_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 9,
+		"stack": {
+			"item": "twilightforest:knightmetal_helmet"
+		}
+	},
+	{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:quest_ram_trophy"
+		}
+	}],
+	"tags": [
+		"twilight"
+	]
+}

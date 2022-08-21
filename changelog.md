@@ -1,4 +1,24 @@
+## 5.5.0
+* Added dimensional bosses - each dimension will now have their own boss spawn tables.
+  * Overworld bosses will be weaker than Nether bosses, which will be weaker than End bosses.
+  * This creates a sort of progression between dimensions, and stops things like Netherite gear being obtained at the start of gameplay.
+* Added a ton more entries to the boss tables, compared to the previous 6 total unique boss entities.
+* Added builtin support for Twilight Forest.  Gear found here is rouhgly on-par with the nether.
+* Added leather, chain, and gold to the boss armor tables (in their appropriate dimensions).
+* Bosses still need more work, mostly stat scaling with rarity and some other things, stay tuned for that. (eta 5.5.x or 5.6.0)
+* Fixed affix items spawning on non-monsters (bats, fish, etc).
+* Added dimensional affix loot tables.  Gems are currently still global, will address if that needs per-dim logic later.
+* Updated the way that the selection process for affix loot (and gems) works in chests.
+  * You can now specify pairs of regex patterns and drop chances for loot tables matching that pattern, allowing more fine-grained control.
+* Balance is still a disaster!  Hopefully addressing that soon.
+  * Thoughts so far:
+  * Attribute bonus numbers across the board probably need to be reduced.
+  * Gems need to be swapped from + %Total to + %Base, since + %Total is multiplicative and gem-spamming is silly.
+  * Critical Strike attributes need nerfs also due to multiplicative nonsense.
+  * Potentially per-dimming rarities, similar to how items and bosses were per-dimmed this update.
+
 ## 5.4.2
+* This update never released, this is technically part of 5.5.0's changelog, but it was written separately.
 * Fixed a crash that occurred when the Adventure Module is disabled.
 * Fixed the APOTH_REMOVE_MARKER showing up in so many places
   * Technically this only occurs when something isn't fully handling tooltips, but I can sort of mitigate it on my end.

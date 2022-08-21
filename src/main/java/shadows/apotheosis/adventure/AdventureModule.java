@@ -1,6 +1,7 @@
 package shadows.apotheosis.adventure;
 
 import java.io.File;
+import java.util.function.BiConsumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +12,9 @@ import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -28,6 +31,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -169,6 +173,33 @@ public class AdventureModule {
 				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("arrow_velocity")
 		);
 		//Formatter::on
+	}
+
+	@SubscribeEvent
+	public void applyAttribs(EntityAttributeModificationEvent e) {
+		e.getTypes().forEach(type -> {
+			//Formatter::off
+			addAll(type, e::add,
+					Apoth.Attributes.DRAW_SPEED,
+					Apoth.Attributes.CRIT_CHANCE,
+					Apoth.Attributes.CRIT_DAMAGE,
+					Apoth.Attributes.COLD_DAMAGE,
+					Apoth.Attributes.FIRE_DAMAGE,
+					Apoth.Attributes.LIFE_STEAL,
+					Apoth.Attributes.PIERCING,
+					Apoth.Attributes.CURRENT_HP_DAMAGE,
+					Apoth.Attributes.OVERHEAL,
+					Apoth.Attributes.GHOST_HEALTH,
+					Apoth.Attributes.MINING_SPEED,
+					Apoth.Attributes.ARROW_DAMAGE,
+					Apoth.Attributes.ARROW_VELOCITY);
+			//Formatter::on
+		});
+	}
+
+	private static void addAll(EntityType<? extends LivingEntity> type, BiConsumer<EntityType<? extends LivingEntity>, Attribute> add, Attribute... attribs) {
+		for (Attribute a : attribs)
+			add.accept(type, a);
 	}
 
 	@SubscribeEvent

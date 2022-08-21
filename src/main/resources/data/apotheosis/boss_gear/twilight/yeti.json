@@ -1,0 +1,65 @@
+{
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+	"weight": 10,
+	"mainhands": [{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:knightmetal_sword"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:knightmetal_axe"
+			}
+		},
+		{
+			"weight": 2,
+			"stack": {
+				"item": "twilightforest:knightmetal_pickaxe"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:knightmetal_shield"
+		}
+	}],
+	"boots": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:yeti_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:yeti_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:yeti_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 6,
+		"stack": {
+			"item": "twilightforest:yeti_helmet"
+		}
+	},
+	{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:alpha_yeti_trophy"
+		}
+	}],
+	"tags": [
+		"twilight"
+	]
+}

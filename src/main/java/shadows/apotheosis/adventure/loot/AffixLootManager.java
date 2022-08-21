@@ -5,16 +5,23 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.spongepowered.asm.mixin.Unique;
+import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ServerLevelAccessor;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.util.IPerDimension;
 import shadows.placebo.json.ItemAdapter;
+import shadows.placebo.json.NBTAdapter;
 import shadows.placebo.json.SerializerBuilder;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
@@ -22,6 +29,14 @@ import shadows.placebo.json.WeightedJsonReloadListener;
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
  */
 public class AffixLootManager extends WeightedJsonReloadListener<AffixLootEntry> {
+
+	//Formatter::off
+	public static final Gson GSON = new GsonBuilder()
+			.registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE)
+			.registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
+			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
+			.create();
+	//Formatter::on
 
 	public static final AffixLootManager INSTANCE = new AffixLootManager();
 
@@ -31,7 +46,7 @@ public class AffixLootManager extends WeightedJsonReloadListener<AffixLootEntry>
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new SerializerBuilder<AffixLootEntry>("Affix Loot Entry").json(obj -> ItemAdapter.ITEM_READER.fromJson(obj, AffixLootEntry.class), e -> ItemAdapter.ITEM_READER.toJsonTree(e).getAsJsonObject()));
+		this.registerSerializer(DEFAULT, new SerializerBuilder<AffixLootEntry>("Affix Loot Entry").json(obj -> GSON.fromJson(obj, AffixLootEntry.class), e -> GSON.toJsonTree(e).getAsJsonObject()));
 	}
 
 	@Override
@@ -41,36 +56,38 @@ public class AffixLootManager extends WeightedJsonReloadListener<AffixLootEntry>
 		super.register(key, item);
 	}
 
-	/**
-	 * Selects a random loot entry itemstack from the list of entries.
-	 * @param rand A random.
-	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
-	 */
-	public static AffixLootEntry getRandomEntry(Random rand, float luck) {
-		if (luck == 0) return WeightedRandom.getRandomItem(rand, INSTANCE.entries, INSTANCE.weight).get();
-		List<Wrapper<AffixLootEntry>> temp = new ArrayList<>(INSTANCE.entries.size());
-		for (AffixLootEntry g : INSTANCE.entries) {
-			temp.add(WeightedEntry.wrap(g, getModifiedWeight(g.weight, g.quality, luck)));
-		}
-		return WeightedRandom.getRandomItem(rand, temp).get().getData();
+	@Override
+	@Deprecated
+	public AffixLootEntry getRandomItem(Random rand) {
+		return super.getRandomItem(rand);
 	}
 
 	/**
-	 * Selects a random loot entry itemstack from the list of entries, filtered by type.
-	 * @param rand A random.
-	 * @param rarity If this is {@link LootRarity#ANCIENT}, then the item returned will be an {@link Unique}
-	 * @return A loot entry's stack, or a unique, if the rarity selected was ancient.
+	 * @see {@link AffixLootManager#getRandomEntry(Random, LootCategory, float, ServerLevelAccessor)}
 	 */
-	public static AffixLootEntry getRandomEntry(Random rand, LootCategory type, float luck) {
-		if (type == null) return getRandomEntry(rand, luck);
-		List<AffixLootEntry> filtered = INSTANCE.entries.stream().filter(p -> p.getType() == type).collect(Collectors.toList());
-		if (luck == 0) return WeightedRandom.getRandomItem(rand, filtered).get();
+	@Nullable
+	public static AffixLootEntry getRandomEntry(Random rand, float luck, ServerLevelAccessor level) {
+		return getRandomEntry(rand, null, luck, level);
+	}
+
+	/**
+	 * Selects a random AffixLootEntry from the entire pool, given the conditions.
+	 * @param rand The Random
+	 * @param type The type of object to select.  If null, it may select any type.
+	 * @param luck The player's luck.
+	 * @param level The world where the item is being generated.
+	 * @return A random AffixLootEntry matching the criteria, or null, if no matches are available.
+	 */
+	@Nullable
+	public static AffixLootEntry getRandomEntry(Random rand, @Nullable LootCategory type, float luck, ServerLevelAccessor level) {
+		List<AffixLootEntry> filtered = INSTANCE.entries.stream().filter(IPerDimension.matches(level)).filter(p -> type == null || p.getType() == type).collect(Collectors.toList());
+		if (luck == 0) return WeightedRandom.getRandomItem(rand, filtered).orElse(null);
 
 		List<Wrapper<AffixLootEntry>> temp = new ArrayList<>(filtered.size());
 		for (AffixLootEntry g : filtered) {
 			temp.add(WeightedEntry.wrap(g, getModifiedWeight(g.weight, g.quality, luck)));
 		}
-		return WeightedRandom.getRandomItem(rand, temp).get().getData();
+		return WeightedRandom.getRandomItem(rand, temp).map(Wrapper::getData).orElse(null);
 	}
 
 	public static int getModifiedWeight(int weight, int quality, float luck) {

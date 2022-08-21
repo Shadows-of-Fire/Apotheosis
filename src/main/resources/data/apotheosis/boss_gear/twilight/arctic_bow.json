@@ -1,0 +1,71 @@
+{
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+	"weight": 40,
+	"mainhands": [{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:triple_bow"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:seeker_bow"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:ice_bow"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:ender_bow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:arctic_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:arctic_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:arctic_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 9,
+		"stack": {
+			"item": "twilightforest:arctic_helmet"
+		}
+	},
+	{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:alpha_yeti_trophy"
+		}
+	}],
+	"tags": [
+		"twilight_bow"
+	]
+}

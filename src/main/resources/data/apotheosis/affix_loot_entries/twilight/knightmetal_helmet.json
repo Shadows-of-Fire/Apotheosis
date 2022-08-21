@@ -1,0 +1,13 @@
+{
+  "weight": 65,
+  "quality": 5,
+  "stack": {
+    "item": "twilightforest:knightmetal_helmet",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "ARMOR",
+  "dimensions": [
+    "twilightforest:twilight_forest"
+  ]
+}

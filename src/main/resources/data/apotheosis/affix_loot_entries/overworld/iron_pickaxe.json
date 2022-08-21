@@ -1,0 +1,13 @@
+{
+  "weight": 85,
+  "quality": 4,
+  "stack": {
+    "item": "minecraft:iron_pickaxe",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "BREAKER",
+  "dimensions": [
+    "minecraft:overworld"
+  ]
+}

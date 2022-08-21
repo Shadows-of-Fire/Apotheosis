@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -49,11 +48,12 @@ import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.GearSet;
 import shadows.apotheosis.util.GearSet.SetPredicate;
+import shadows.apotheosis.util.IPerDimension;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.RandomAttributeModifier;
 
-public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
+public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry, IPerDimension {
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
@@ -78,7 +78,6 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 	protected final List<RandomAttributeModifier> modifiers;
 	@SerializedName("nbt")
 	protected final CompoundTag customNbt;
-	@SerializedName("dimensions")
 	protected final Set<ResourceLocation> dimensions;
 
 	public BossItem(int weight, EntityType<?> entity, AABB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundTag customNbt, Set<ResourceLocation> dimensions) {
@@ -145,7 +144,6 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 			modif.apply(rand, entity);
 		}
 
-		entity.setHealth(entity.getMaxHealth());
 		entity.goalSelector.availableGoals.removeIf(IS_VILLAGER_ATTACK);
 		String name = NameHelper.setEntityName(rand, entity);
 
@@ -175,7 +173,7 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(s);
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
-			else entity.setDropChance(s, ThreadLocalRandom.current().nextFloat() / 2);
+			else entity.setDropChance(s, 0.03F);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name));
 				LootRarity rarity = AffixHelper.getRarity(stack);
@@ -187,6 +185,7 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 			}
 		}
 		entity.getPersistentData().putBoolean("apoth.boss", true);
+		entity.setHealth(entity.getMaxHealth());
 	}
 
 	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
@@ -232,6 +231,11 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry {
 		Preconditions.checkArgument(this.rarityOffset >= 0 && this.rarityOffset < 1000, "Boss Item " + this.id + " has an invalid rarity offset: " + this.rarityOffset);
 		Preconditions.checkArgument(this.enchLevels != null && this.enchLevels.length == 4 && Arrays.stream(this.enchLevels).allMatch(i -> i >= 0), "Boss Item " + this.id + " has invalid ench levels: " + this.enchLevels);
 		return this;
+	}
+
+	@Override
+	public Set<ResourceLocation> getDimensions() {
+		return this.dimensions;
 	}
 
 }

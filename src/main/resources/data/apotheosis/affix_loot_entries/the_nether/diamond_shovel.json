@@ -1,0 +1,13 @@
+{
+  "weight": 70,
+  "quality": 6,
+  "stack": {
+    "item": "minecraft:diamond_shovel",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "BREAKER",
+  "dimensions": [
+    "minecraft:the_nether"
+  ]
+}

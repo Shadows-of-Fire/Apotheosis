@@ -1,0 +1,43 @@
+{
+	"weight": 100,
+	"mainhands": [{
+			"weight": 3,
+			"stack": {
+				"item": "minecraft:bow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:iron_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:iron_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:iron_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:iron_helmet"
+		}
+	}],
+	"tags": [
+		"the_nether_bow"
+	]
+}

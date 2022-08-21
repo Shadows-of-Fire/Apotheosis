@@ -1,0 +1,53 @@
+{
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+	"weight": 60,
+	"mainhands": [{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:fiery_sword"
+			}
+		},
+		{
+			"weight": 2,
+			"stack": {
+				"item": "twilightforest:fiery_pickaxe"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:fiery_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:fiery_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:fiery_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:fiery_helmet"
+		}
+	}],
+	"tags": [
+		"twilight"
+	]
+}

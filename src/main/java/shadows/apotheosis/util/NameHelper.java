@@ -11,16 +11,17 @@ import java.util.stream.Collectors;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
@@ -110,31 +111,44 @@ public class NameHelper {
 	 */
 	private static String[] shields = { "Shield", "Buckler", "Targe", "Greatshield", "Blockade", "Bulwark", "Tower Shield", "Protector", "Aegis" };
 
+	private static Map<Tier, String> tierKeys = new HashMap<>();
+	private static Map<ArmorMaterial, String> materialKeys = new HashMap<>();
+
 	/**
 	 * Array of descriptors for items based on tool material.
 	 */
-	private static Map<Tier, String[]> materials = new HashMap<>();
+	private static Map<String, String[]> tierNames = new HashMap<>();
 	static {
-		materials.put(Tiers.WOOD, new String[] { "Wooden", "Wood", "Hardwood", "Balsa Wood", "Mahogany", "Plywood" });
-		materials.put(Tiers.STONE, new String[] { "Stone", "Rock", "Marble", "Cobblestone", });
-		materials.put(Tiers.IRON, new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
-		materials.put(Tiers.DIAMOND, new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
-		materials.put(Tiers.GOLD, new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
-		materials.put(Tiers.NETHERITE, new String[] { "Burnt", "Embered", "Fiery", "Hellborn", "Flameforged" });
+		tierNames.put(Tiers.WOOD.name(), new String[] { "Wooden", "Wood", "Hardwood", "Balsa Wood", "Mahogany", "Plywood" });
+		tierNames.put(Tiers.STONE.name(), new String[] { "Stone", "Rock", "Marble", "Cobblestone", });
+		tierNames.put(Tiers.IRON.name(), new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
+		tierNames.put(Tiers.GOLD.name(), new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
+		tierNames.put(Tiers.DIAMOND.name(), new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
+		tierNames.put(Tiers.NETHERITE.name(), new String[] { "Burnt", "Embered", "Fiery", "Hellborn", "Flameforged" });
+		tierNames.put("twilightforest_ironwood_sword", new String[] { "Ironwood", "Earthbound", "Oaken", "Ironcapped" });
+		tierNames.put("twilightforest_knightmetal_sword", new String[] { "Knightmetal", "Knightly", "Phantom-Forged" });
+		tierNames.put("twilightforest_steeleaf_sword", new String[] { "Steeleaf", "Organic", "Natural", "Cobaltstem", "Tungstenpetal" });
+		tierNames.put("twilightforest_fiery_sword", new String[] { "Fiery", "Flaming", "Hydra-Infused", "Infernal" });
 	}
 
 	/**
 	 * Array of descriptors for items based on armor material.
 	 */
-	private static Map<ArmorMaterial, String[]> armors = new HashMap<>();
+	private static Map<String, String[]> materialNames = new HashMap<>();
 	static {
-		armors.put(ArmorMaterials.LEATHER, new String[] { "Leather", "Rawhide", "Lamellar", "Cow Skin" });
-		armors.put(ArmorMaterials.CHAIN, new String[] { "Chainmail", "Chain", "Chain Link", "Scale" });
-		armors.put(ArmorMaterials.IRON, new String[] { "Iron", "Steel", "Ferrous", "Rusty", "Wrought Iron" });
-		armors.put(ArmorMaterials.DIAMOND, new String[] { "Diamond", "Zircon", "Gemstone", "Jewel", "Crystal" });
-		armors.put(ArmorMaterials.GOLD, new String[] { "Golden", "Gold", "Gilt", "Auric", "Ornate" });
-		armors.put(ArmorMaterials.NETHERITE, new String[] { "Burnt", "Embered", "Fiery", "Hellborn", "Flameforged" });
-		armors.put(ArmorMaterials.TURTLE, new String[] { "Tortollan", "Very Tragic", "Environmental", "Organic" });
+		materialNames.put(ArmorMaterials.LEATHER.name(), new String[] { "Leather", "Rawhide", "Lamellar", "Cow Skin" });
+		materialNames.put(ArmorMaterials.CHAIN.name(), new String[] { "Chainmail", "Chain", "Chain Link", "Scale" });
+		materialNames.put(ArmorMaterials.IRON.name(), tierNames.get(Tiers.IRON.name()));
+		materialNames.put(ArmorMaterials.GOLD.name(), tierNames.get(Tiers.GOLD.name()));
+		materialNames.put(ArmorMaterials.DIAMOND.name(), tierNames.get(Tiers.DIAMOND.name()));
+		materialNames.put(ArmorMaterials.NETHERITE.name(), tierNames.get(Tiers.NETHERITE.name()));
+		materialNames.put(ArmorMaterials.TURTLE.name(), new String[] { "Tortollan", "Very Tragic", "Environmental", "Organic" });
+		materialNames.put("ARMOR_IRONWOOD", tierNames.get("twilightforest_ironwood_sword"));
+		materialNames.put("ARMOR_KNIGHTLY", tierNames.get("twilightforest_knightmetal_sword"));
+		materialNames.put("ARMOR_STEELEAF", tierNames.get("twilightforest_steeleaf_sword"));
+		materialNames.put("ARMOR_FIERY", tierNames.get("twilightforest_fiery_sword"));
+		materialNames.put("ARMOR_ARCTIC", new String[] { "Arctic", "Frostforged", "Caribou Skin", "Gutskin", "Insulating" });
+		materialNames.put("ARMOR_YETI", new String[] { "Yeti", "Abominable", "Snow-Demon", "Grinch" });
 	}
 
 	public static String suffixFormat = "%s the %s";
@@ -148,6 +162,9 @@ public class NameHelper {
 	 */
 	public static String nameFromParts(Random random) {
 		String name = NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)] + NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
+		if (random.nextFloat() <= 0.75F) {
+			name += NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
+		}
 		if (random.nextBoolean()) {
 			name += NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
 		}
@@ -157,8 +174,8 @@ public class NameHelper {
 	/**
 	 * Applies a random name to an entity.
 	 * The root name is either randomly selected from {@link NameHelper#names} or generated by {@link NameHelper#nameFromParts(Random)}
-	 * There is a 20% chance for a prefix to be selected from {@link NameHelper#prefixes}
-	 * There is a 50% chance for a suffix to be selected from {@link NameHelper#suffixes}
+	 * There is a 50% chance for a prefix to be selected from {@link NameHelper#prefixes}
+	 * There is a 80% chance for a suffix to be selected from {@link NameHelper#suffixes}
 	 * @return The root name of the entity, without any prefixes or suffixes.
 	 */
 	public static String setEntityName(Random random, Mob entity) {
@@ -173,11 +190,12 @@ public class NameHelper {
 		}
 
 		String name = root;
-		if (random.nextInt(5) == 0 && prefixes.length > 0) name = NameHelper.prefixes[random.nextInt(NameHelper.prefixes.length)] + " " + name;
-		if (random.nextBoolean() && suffixes.length > 0) {
+		if (random.nextBoolean() && prefixes.length > 0) name = NameHelper.prefixes[random.nextInt(NameHelper.prefixes.length)] + " " + name;
+		if (random.nextFloat() <= 0.8F && suffixes.length > 0) {
 			name = String.format(suffixFormat, name, NameHelper.suffixes[random.nextInt(NameHelper.suffixes.length)]);
 		}
 		entity.setCustomName(new TextComponent(name));
+		entity.setCustomNameVisible(true);
 		return root;
 	}
 
@@ -186,22 +204,32 @@ public class NameHelper {
 	 * An additional prefix will be selected based on the item type.
 	 * This is a best-guess system.  One half of the name is based on the material, the other half is based on the item type.
 	 * The secondary half will fall back to the item display name, if what the item is cannot be inferred.
-	 * @param itemStack The stack to be named.
+	 * @param stack The stack to be named.
 	 * @param name The name of the owning entity, usually created by {@link NameHelper#setEntityName(Random, EntityLiving)}
 	 * @return The name of the item, without the owning prefix of the boss's name
 	 */
-	public static BaseComponent setItemName(Random random, ItemStack itemStack) {
-		BaseComponent name = (BaseComponent) itemStack.getHoverName();
+	public static Component setItemName(Random random, ItemStack stack) {
+		MutableComponent name = (MutableComponent) stack.getItem().getName(stack);
+		String baseName = name.getString();
 
-		if (itemStack.getItem() instanceof TieredItem) {
-			Tier material = ((TieredItem) itemStack.getItem()).getTier();
-			String[] descriptors = getMaterialDescriptors(material);
-			name = new TextComponent(descriptors[random.nextInt(descriptors.length)] + " ");
+		if (stack.getItem() instanceof TieredItem) { // Tools or Weapons
+			Tier tier = ((TieredItem) stack.getItem()).getTier();
+			String[] tierNames = getTierNames(tier);
+			if (tierNames.length == 0) {
+				String[] split = baseName.split(" ");
+				String rebuilt = "";
+				for (int i = 0; i < split.length - 1; i++) {
+					rebuilt += split[i] + " ";
+				}
+				name = new TextComponent(rebuilt);
+			} else {
+				name = new TextComponent(tierNames[random.nextInt(tierNames.length)] + " ");
+			}
 
 			String[] type = { "Tool" };
-			Set<ToolAction> types = ToolAction.getActions().stream().filter(itemStack::canPerformAction).collect(Collectors.toSet());
+			Set<ToolAction> types = ToolAction.getActions().stream().filter(stack::canPerformAction).collect(Collectors.toSet());
 
-			if (itemStack.getItem() instanceof SwordItem) {
+			if (stack.getItem() instanceof SwordItem) {
 				type = swords;
 			} else if (types.contains(ToolActions.AXE_DIG)) {
 				type = axes;
@@ -213,16 +241,25 @@ public class NameHelper {
 				type = shields;
 			}
 			name.append(type[random.nextInt(type.length)]);
-		} else if (itemStack.getItem() instanceof BowItem) {
+		} else if (stack.getItem() instanceof ProjectileWeaponItem) { // Special Bow Handling
 			String[] type = bows;
 			name = new TextComponent(type[random.nextInt(type.length)]);
-		} else if (itemStack.getItem() instanceof ArmorItem) {
-			ArmorMaterial amaterial = ((ArmorItem) itemStack.getItem()).getMaterial();
-			String[] descriptors = getArmorDescriptors(amaterial);
-			name = new TextComponent(descriptors[random.nextInt(descriptors.length)] + " ");
+		} else if (stack.getItem() instanceof ArmorItem) { // Armors
+			ArmorMaterial armorMat = ((ArmorItem) stack.getItem()).getMaterial();
+			String[] matNames = getMaterialNames(armorMat);
+			if (matNames.length == 0) {
+				String[] split = baseName.split(" ");
+				String rebuilt = "";
+				for (int i = 0; i < split.length - 1; i++) {
+					rebuilt += split[i] + " ";
+				}
+				name = new TextComponent(rebuilt);
+			} else {
+				name = new TextComponent(matNames[random.nextInt(matNames.length)] + " ");
+			}
 
 			String[] type = { "Armor" };
-			switch (((ArmorItem) itemStack.getItem()).getSlot()) {
+			switch (((ArmorItem) stack.getItem()).getSlot()) {
 			case HEAD:
 				type = helms;
 				break;
@@ -240,16 +277,16 @@ public class NameHelper {
 			name.append(type[random.nextInt(type.length)]);
 		}
 
-		itemStack.setHoverName(name);
+		stack.setHoverName(name);
 		return name;
 	}
 
-	public static String[] getMaterialDescriptors(Tier materialName) {
-		return materials.computeIfAbsent(materialName, s -> new String[] { "" });
+	public static String[] getTierNames(Tier materialName) {
+		return tierNames.computeIfAbsent(getKey(materialName), s -> new String[0]);
 	}
 
-	public static String[] getArmorDescriptors(ArmorMaterial materialName) {
-		return armors.computeIfAbsent(materialName, s -> new String[] { "" });
+	public static String[] getMaterialNames(ArmorMaterial materialName) {
+		return materialNames.computeIfAbsent(getKey(materialName), s -> new String[0]);
 	}
 
 	public static void load(Configuration c) {
@@ -298,15 +335,18 @@ public class NameHelper {
 		for (Map.Entry<Tier, List<Item>> e : itemsByTier.entrySet()) {
 			Tier tier = e.getKey();
 			List<Item> items = e.getValue();
-			String[] read = c.getStringList(getID(tier, items), "tools", materials.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairIngredient));
-			if (read.length > 0) materials.put(tier, read);
+			String key = getID(tier, items);
+			tierKeys.put(tier, key);
+			String[] read = c.getStringList(key, "tools", tierNames.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairIngredient));
+			if (read.length > 0) tierNames.put(key, read);
 		}
 
 		for (Map.Entry<ArmorMaterial, List<Item>> e : armorsByTier.entrySet()) {
 			ArmorMaterial tier = e.getKey();
 			List<Item> items = e.getValue();
-			String[] read = c.getStringList(getID(tier, items), "armors", armors.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairIngredient));
-			if (read.length > 0) armors.put(tier, read);
+			String key = getID(tier, items);
+			String[] read = c.getStringList(key, "armors", materialNames.getOrDefault(tier, new String[0]), computeComment(items, tier::getRepairIngredient));
+			if (read.length > 0) materialNames.put(key, read);
 		}
 
 		suffixFormat = c.getString("Suffix Format", "formatting", suffixFormat, "The format string that will be used when a suffix is applied.");
@@ -328,6 +368,14 @@ public class NameHelper {
 		if (o instanceof Enum<?>) return ((Enum<?>) o).name();
 		ResourceLocation id = items.get(0).getRegistryName();
 		return id.getNamespace() + "_" + id.getPath();
+	}
+
+	private static String getKey(Tier tier) {
+		return tierKeys.getOrDefault(tier, "");
+	}
+
+	private static String getKey(ArmorMaterial mat) {
+		return materialKeys.getOrDefault(mat, "");
 	}
 
 }

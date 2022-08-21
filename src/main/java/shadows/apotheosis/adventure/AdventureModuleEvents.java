@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -339,9 +341,9 @@ public class AdventureModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void special(SpecialSpawn e) {
-		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem) {
+		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
 			e.setCanceled(true);
-			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), 0, 0);
+			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), 0, 0, (ServerLevel) e.getEntity().level);
 			affixItem.getTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);
 			EquipmentSlot slot = cat.getSlots(affixItem)[0];

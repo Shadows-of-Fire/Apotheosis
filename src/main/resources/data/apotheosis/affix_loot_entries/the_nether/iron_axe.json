@@ -1,0 +1,13 @@
+{
+  "weight": 100,
+  "quality": 1,
+  "stack": {
+    "item": "minecraft:iron_axe",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "HEAVY_WEAPON",
+  "dimensions": [
+    "minecraft:the_nether"
+  ]
+}

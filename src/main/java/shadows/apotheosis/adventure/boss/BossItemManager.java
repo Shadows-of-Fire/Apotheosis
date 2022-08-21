@@ -21,6 +21,7 @@ import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.EntityTypeDeserializer;
 import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
+import shadows.apotheosis.util.IPerDimension;
 import shadows.placebo.json.NBTAdapter;
 import shadows.placebo.json.RandomAttributeModifier;
 import shadows.placebo.json.SerializerBuilder;
@@ -35,7 +36,6 @@ public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
 			.registerTypeAdapter(SetPredicate.class, new SetPredicateAdapter())
 			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
-			//.registerTypeAdapter(RandomIntRange.class, new RandomIntRange.Serializer())
 			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
 			.registerTypeAdapter(RandomAttributeModifier.class, new RandomAttributeModifier.Deserializer())
 			.registerTypeAdapter(AABB.class, new AxisAlignedBBDeserializer())
@@ -61,7 +61,7 @@ public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
 	@Override
 	@Deprecated
 	public BossItem getRandomItem(Random rand) {
-		return WeightedRandom.getRandomItem(rand, entries, weight).orElseThrow();
+		return super.getRandomItem(rand);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
 	 */
 	@Nullable
 	public BossItem getRandomItem(Random rand, ServerLevelAccessor level) {
-		List<BossItem> valid = this.entries.stream().filter(b -> (b.dimensions == null || b.dimensions.isEmpty()) || b.dimensions.contains(level.getLevel().dimension().location())).toList();
+		List<BossItem> valid = this.entries.stream().filter(IPerDimension.matches(level)).toList();
 		return WeightedRandom.getRandomItem(rand, valid).orElse(null);
 	}
 

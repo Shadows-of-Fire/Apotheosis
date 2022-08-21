@@ -1,0 +1,11 @@
+{
+	"weight": 50,
+	"quality": 1,
+	"stack": {
+		"item": "minecraft:turtle_helmet"
+	},
+	"type": "BOW",
+	"dimensions": [
+		"minecraft:overworld"
+	]
+}

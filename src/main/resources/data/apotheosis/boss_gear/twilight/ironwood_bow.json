@@ -1,0 +1,65 @@
+{
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+	"weight": 100,
+	"mainhands": [{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:triple_bow"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:seeker_bow"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:ice_bow"
+			}
+		},
+		{
+			"weight": 3,
+			"stack": {
+				"item": "twilightforest:ender_bow"
+			}
+		}
+	],
+	"offhands": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:shield"
+		}
+	}],
+	"boots": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:ironwood_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:ironwood_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:ironwood_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 1,
+		"stack": {
+			"item": "twilightforest:ironwood_helmet"
+		}
+	}],
+	"tags": [
+		"twilight_bow"
+	]
+}

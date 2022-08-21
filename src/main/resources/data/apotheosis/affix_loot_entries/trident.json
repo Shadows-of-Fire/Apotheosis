@@ -1,8 +1,8 @@
 {
-	"quality": 4,
+	"weight": 50,
+	"quality": 1,
 	"stack": {
 		"item": "minecraft:trident"
 	},
-	"type": "TRIDENT",
-	"weight": 5
+	"type": "TRIDENT"
 }

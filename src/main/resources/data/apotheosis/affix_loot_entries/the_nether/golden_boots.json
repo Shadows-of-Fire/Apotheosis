@@ -1,0 +1,13 @@
+{
+  "weight": 85,
+  "quality": 3,
+  "stack": {
+    "item": "minecraft:golden_boots",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "ARMOR",
+  "dimensions": [
+    "minecraft:the_nether"
+  ]
+}

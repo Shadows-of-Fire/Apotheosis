@@ -1,8 +1,8 @@
 {
-	"quality": 2,
+	"weight": 50,
+	"quality": 1,
 	"stack": {
 		"item": "minecraft:bow"
 	},
-	"type": "BOW",
-	"weight": 10
+	"type": "BOW"
 }

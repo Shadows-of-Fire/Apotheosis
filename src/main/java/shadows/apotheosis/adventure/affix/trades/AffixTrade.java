@@ -2,8 +2,11 @@ package shadows.apotheosis.adventure.affix.trades;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,8 +29,10 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 	}
 
 	@Override
+	@Nullable
 	public MerchantOffer getOffer(Entity pTrader, Random pRand) {
-		ItemStack affixItem = LootController.createRandomLootItem(pRand, this.rarityOffset, 0);
+		if (!(pTrader.level instanceof ServerLevel)) return null;
+		ItemStack affixItem = LootController.createRandomLootItem(pRand, this.rarityOffset, 0, (ServerLevel) pTrader.level);
 		affixItem.getTag().putBoolean("apoth_merchant", true);
 		ItemStack stdItem = affixItem.copy();
 		stdItem.setTag(null);

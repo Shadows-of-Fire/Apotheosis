@@ -1,6 +1,9 @@
 package shadows.apotheosis.adventure.boss;
 
 import java.util.Random;
+import java.util.function.BiPredicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -15,6 +18,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -28,36 +33,36 @@ import shadows.placebo.network.PacketDistro;
 public class BossEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void surfaceBosses(LivingSpawnEvent.CheckSpawn e) {
+	public void naturalBosses(LivingSpawnEvent.CheckSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL || e.getSpawnReason() == MobSpawnType.CHUNK_GENERATION) {
 			LivingEntity entity = e.getEntityLiving();
 			Random rand = e.getWorld().getRandom();
-			if (!e.getWorld().isClientSide() && entity instanceof Monster && e.getResult() == Result.DEFAULT) {
-				if (rand.nextFloat() <= AdventureConfig.surfaceBossChance && isValidBossPos(e.getWorld(), new BlockPos(e.getX(), e.getY(), e.getZ()))) {
-					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, (ServerLevelAccessor) e.getWorld());
+			if (!e.getWorld().isClientSide() && entity instanceof Monster && e.getResult() != Result.DENY) {
+				ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getWorld();
+				Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
+				if (rules == null) return;
+				if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, new BlockPos(e.getX(), e.getY(), e.getZ()))) {
+					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, sLevel);
 					if (item == null) return;
-					Player player = e.getWorld().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
+					Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
 					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
-					Mob boss = item.createBoss((ServerLevelAccessor) e.getWorld(), new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand);
-					if (canSpawn(e.getWorld(), boss, player.distanceToSqr(boss))) {
-						e.getWorld().addFreshEntity(boss);
+					Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand);
+					if (canSpawn(sLevel, boss, player.distanceToSqr(boss))) {
+						sLevel.addFreshEntity(boss);
 						e.setResult(Result.DENY);
 						AdventureModule.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());
-						e.getWorld().players().forEach(p -> {
-							if (p.distanceToSqr(boss) <= 64 * 64) {
+						sLevel.players().forEach(p -> {
+							Vec3 tPos = new Vec3(boss.getX(), p.getY(), boss.getZ());
+							if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
 								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(new TranslatableComponent("info.apotheosis.boss_spawn", boss.getCustomName(), (int) boss.getX(), (int) boss.getY())));
 								PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), boss.getCustomName().getStyle().getColor().getValue()), player);
 							}
 						});
-						e.getWorld().playSound(null, boss.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, 4, 1.25F);
+						sLevel.playSound(null, boss.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceRange / 16, 1.25F);
 					}
 				}
 			}
 		}
-	}
-
-	private static boolean isValidBossPos(LevelAccessor level, BlockPos pos) {
-		return level.canSeeSky(pos);
 	}
 
 	private static boolean canSpawn(LevelAccessor world, Mob entity, double playerDist) {
@@ -65,6 +70,24 @@ public class BossEvents {
 			return false;
 		} else {
 			return entity.checkSpawnRules(world, MobSpawnType.NATURAL) && entity.checkSpawnObstruction(world);
+		}
+	}
+
+	public static enum BossSpawnRules implements BiPredicate<ServerLevelAccessor, BlockPos> {
+		NEEDS_SKY((level, pos) -> level.canSeeSky(pos)),
+		NEEDS_SURFACE(
+				(level, pos) -> pos.getY() >= level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ())),
+		ANY((level, pos) -> true);
+
+		BiPredicate<ServerLevelAccessor, BlockPos> pred;
+
+		private BossSpawnRules(BiPredicate<ServerLevelAccessor, BlockPos> pred) {
+			this.pred = pred;
+		}
+
+		@Override
+		public boolean test(ServerLevelAccessor t, BlockPos u) {
+			return pred.test(t, u);
 		}
 	}
 

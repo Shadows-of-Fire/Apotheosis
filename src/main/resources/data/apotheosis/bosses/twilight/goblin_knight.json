@@ -1,0 +1,66 @@
+{
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+	"entity": "twilightforest:lower_goblin_knight",
+	"weight": 55,
+	"size": {
+		"width": 1.4,
+		"height": 2.5
+	},
+	"enchant_chance": 0.45,
+	"rarity_offset": 540,
+	"enchantment_levels": [30, 25, 50, 40],
+	"effects": [{
+		"effect": "minecraft:fire_resistance",
+		"chance": 1.0
+	}],
+	"attribute_modifiers": [{
+			"attribute": "minecraft:generic.max_health",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 4,
+				"max": 10
+			}
+		},
+		{
+			"attribute": "minecraft:generic.movement_speed",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 0.10,
+				"max": 0.25
+			}
+		},
+		{
+			"attribute": "minecraft:generic.armor",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 0.20,
+				"max": 0.70
+			}
+		},
+		{
+			"attribute": "minecraft:generic.attack_damage",
+			"operation": "MULTIPLY_TOTAL",
+			"value": {
+				"min": 3,
+				"max": 6.5
+			}
+		},
+		{
+			"attribute": "minecraft:generic.knockback_resistance",
+			"operation": "ADDITION",
+			"value": {
+				"min": 0.65,
+				"max": 0.7
+			}
+		}
+	],
+	"valid_gear_sets": [
+		"#twilight"
+	],
+	"dimensions": [
+		"twilightforest:twilight_forest"
+	]
+}

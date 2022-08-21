@@ -1,0 +1,8 @@
+{
+	"weight": 50,
+	"quality": 3,
+	"stack": {
+		"item": "twilightforest:seeker_bow"
+	},
+	"type": "BOW"
+}

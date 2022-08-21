@@ -1,0 +1,44 @@
+{
+	"weight": 90,
+	"mainhands": [{
+			"weight": 3,
+			"stack": {
+				"item": "minecraft:bow"
+			}
+		}
+	],
+	"offhands": [],
+	"boots": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:chainmail_boots"
+		}
+	}],
+	"leggings": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:chainmail_leggings"
+		}
+	}],
+	"chestplates": [{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:chainmail_chestplate"
+		}
+	}],
+	"helmets": [{
+		"weight": 3,
+		"stack": {
+			"item": "minecraft:chainmail_helmet"
+		}
+	},
+	{
+		"weight": 1,
+		"stack": {
+			"item": "minecraft:turtle_helmet"
+		}
+	}],
+	"tags": [
+		"overworld"
+	]
+}

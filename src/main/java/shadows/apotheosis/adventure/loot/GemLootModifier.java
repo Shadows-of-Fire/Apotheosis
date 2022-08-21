@@ -1,7 +1,6 @@
 package shadows.apotheosis.adventure.loot;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import com.google.gson.JsonObject;
 
@@ -13,11 +12,10 @@ import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
+import shadows.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
 import shadows.apotheosis.adventure.affix.socket.GemManager;
 
 public class GemLootModifier extends LootModifier {
-
-	public static final Predicate<LootContext> IS_CHEST = c -> c.getQueriedLootTableId().getPath().startsWith("chests/");
 
 	protected GemLootModifier(LootItemCondition[] conditionsIn) {
 		super(conditionsIn);
@@ -26,10 +24,15 @@ public class GemLootModifier extends LootModifier {
 	@Override
 	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
 		if (!Apotheosis.enableAdventure) return generatedLoot;
-		if (IS_CHEST.test(context) && context.getRandom().nextFloat() <= AdventureConfig.gemChestChance) {
-			float luck = context.getLuck();
-			ItemStack gem = GemManager.getRandomGemStack(context.getRandom(), luck);
-			generatedLoot.add(gem);
+		for (LootPatternMatcher m : AdventureConfig.AFFIX_ITEM_LOOT_RULES) {
+			if (m.matches(context.getQueriedLootTableId())) {
+				if (context.getRandom().nextFloat() <= m.chance()) {
+					float luck = context.getLuck();
+					ItemStack gem = GemManager.getRandomGemStack(context.getRandom(), luck);
+					generatedLoot.add(gem);
+				}
+				break;
+			}
 		}
 		return generatedLoot;
 	}

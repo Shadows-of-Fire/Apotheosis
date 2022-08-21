@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
@@ -62,11 +63,7 @@ public class CleavingAffix extends Affix {
 			float chance = getChance(rarity, level);
 			int targets = getTargets(rarity, level);
 			if (user.level.random.nextFloat() < chance && user instanceof Player player) {
-				Predicate<Entity> pred = e -> {
-					if ((e instanceof Animal && !(target instanceof Animal)) || (e instanceof AbstractVillager && !(target instanceof AbstractVillager))) return false;
-					return e != user && e instanceof LivingEntity;
-				};
-				List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), pred);
+				List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), cleavePredicate(user, target));
 				for (Entity e : nearby) {
 					if (targets > 0) {
 						user.attackStrengthTicker = 300;
@@ -77,6 +74,14 @@ public class CleavingAffix extends Affix {
 			}
 			cleaving = false;
 		}
+	}
+
+	public static Predicate<Entity> cleavePredicate(Entity user, Entity target) {
+		return e -> {
+			if ((e instanceof Animal && !(target instanceof Animal)) || (e instanceof AbstractVillager && !(target instanceof AbstractVillager))) return false;
+			if (!AdventureConfig.cleaveHitsPlayers && e instanceof Player) return false;
+			return e != user && e instanceof LivingEntity;
+		};
 	}
 
 }

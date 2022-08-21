@@ -1,0 +1,13 @@
+{
+  "weight": 70,
+  "quality": 5,
+  "stack": {
+    "item": "minecraft:iron_boots",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "ARMOR",
+  "dimensions": [
+    "minecraft:overworld"
+  ]
+}

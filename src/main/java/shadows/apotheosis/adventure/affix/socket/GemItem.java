@@ -15,6 +15,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -35,12 +37,12 @@ public class GemItem extends Item {
 	public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
 		var bonus = getStoredBonus(pStack);
 		if (bonus == null) {
-			tooltip.add(new TextComponent("Errored gem with no bonus!"));
+			tooltip.add(new TextComponent("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
 			return;
 		}
 		tooltip.add(TextComponent.EMPTY);
 		tooltip.add(new TranslatableComponent("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
-		tooltip.add(AttributeHelper.toComponent(bonus.getKey(), bonus.getValue()));
+		tooltip.add(toComponent(bonus.getKey(), bonus.getValue()));
 	}
 
 	@Override
@@ -79,6 +81,29 @@ public class GemItem extends Item {
 		setVariant(stack, gem.getVariant());
 		setStoredBonus(stack, gem.attribute, new AttributeModifier("GemBonus_" + gem.getId(), gem.value.get(rand.nextFloat()), gem.operation));
 		return stack;
+	}
+
+	/**
+	 * Copy of {@link AttributeHelper#toComponent(Attribute, AttributeModifier)}
+	 * Uses Apoth-specific translation keys that differentiate between +%Base and +%Total
+	 */
+	public static Component toComponent(Attribute attr, AttributeModifier modif) {
+		double amt = modif.getAmount();
+
+		if (modif.getOperation() == Operation.ADDITION) {
+			if (attr == Attributes.KNOCKBACK_RESISTANCE) amt *= 10.0D;
+		} else {
+			amt *= 100.0D;
+		}
+
+		int code = modif.getOperation().ordinal();
+		String key = code == 0 ? "attribute.modifier." : "attribute.modifier.apotheosis.";
+		if (amt > 0.0D) {
+			return new TranslatableComponent(key + "plus." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
+		} else {
+			amt *= -1.0D;
+			return new TranslatableComponent(key + "take." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
+		}
 	}
 
 }

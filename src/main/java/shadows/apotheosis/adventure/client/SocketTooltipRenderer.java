@@ -24,7 +24,6 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
-import shadows.placebo.util.AttributeHelper;
 
 public class SocketTooltipRenderer implements ClientTooltipComponent {
 
@@ -81,7 +80,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	public static Component getSocketDesc(ItemStack gem) {
 		Pair<Attribute, AttributeModifier> data = GemItem.getStoredBonus(gem);
 		if (data == null) return new TranslatableComponent("socket.apotheosis.empty");
-		return AttributeHelper.toComponent(data.getLeft(), data.getRight());
+		return GemItem.toComponent(data.getLeft(), data.getRight());
 	}
 
 	public static record SocketComponent(List<ItemStack> gems) implements TooltipComponent {

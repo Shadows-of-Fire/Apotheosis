@@ -86,6 +86,7 @@ public class EnchantmentHelperMixin {
 	 */
 	@Inject(at = @At("TAIL"), method = "doPostDamageEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V")
 	private static void apoth_doPostDamageEffects(LivingEntity user, Entity target, CallbackInfo ci) {
+		if (user == null) return;
 		for (ItemStack s : user.getAllSlots()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
 			for (AffixInstance inst : affixes.values()) {
@@ -102,6 +103,7 @@ public class EnchantmentHelperMixin {
 	 */
 	@Inject(at = @At("TAIL"), method = "doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V")
 	private static void apoth_doPostHurtEffects(LivingEntity user, Entity attacker, CallbackInfo ci) {
+		if (user == null) return;
 		for (ItemStack s : user.getAllSlots()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
 			for (AffixInstance inst : affixes.values()) {

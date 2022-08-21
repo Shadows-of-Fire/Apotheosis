@@ -12,21 +12,27 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -38,6 +44,7 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -51,7 +58,8 @@ import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
@@ -71,7 +79,6 @@ import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import shadows.apotheosis.util.ItemAccess;
-import shadows.placebo.util.AttributeHelper;
 
 public class AdventureModuleClient {
 
@@ -85,7 +92,8 @@ public class AdventureModuleClient {
 	}
 
 	@SubscribeEvent
-	public static void render(RenderLevelLastEvent e) {
+	public static void render(RenderLevelStageEvent e) {
+		if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) return;
 		PoseStack stack = e.getPoseStack();
 		MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 		Player p = Minecraft.getInstance().player;
@@ -133,9 +141,9 @@ public class AdventureModuleClient {
 		list.removeAll(list.subList(rmvIdx, rmvIdx2 + 1));
 		int flags = getHideFlags(stack);
 		if (!shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) return;
-		int stupidLambdaFinal = rmvIdx;
+		int fRmvIdx = rmvIdx;
 		int oldSize = list.size();
-		applyModifierTooltips(e.getPlayer(), stack, c -> list.add(stupidLambdaFinal, c));
+		applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
 		Collections.reverse(list.subList(rmvIdx, rmvIdx + list.size() - oldSize));
 		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET)) list.add(rmvIdx + list.size() - oldSize, new TextComponent("APOTH_REMOVE_MARKER"));
 	}
@@ -245,10 +253,11 @@ public class AdventureModuleClient {
 	private static void applyTextFor(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, Multimap<Attribute, AttributeModifier> modifierMap, String group, Set<UUID> skips) {
 		if (!modifierMap.isEmpty()) {
 			modifierMap.values().removeIf(m -> skips.contains(m.getId()));
-			if (modifierMap.isEmpty()) return;
 
 			tooltip.accept(TextComponent.EMPTY);
 			tooltip.accept(new TranslatableComponent("item.modifiers." + group).withStyle(ChatFormatting.GRAY));
+
+			if (modifierMap.isEmpty()) return;
 
 			AttributeModifier baseAD = null, baseAS = null;
 			List<AttributeModifier> dmgModifs = new ArrayList<>(), spdModifs = new ArrayList<>();
@@ -279,7 +288,7 @@ public class AdventureModuleClient {
 					text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), new TranslatableComponent(Attributes.ATTACK_DAMAGE.getDescriptionId()));
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
 					for (AttributeModifier modifier : dmgModifs) {
-						tooltip.accept(list().append(AttributeHelper.toComponent(Attributes.ATTACK_DAMAGE, modifier)));
+						tooltip.accept(list().append(GemItem.toComponent(Attributes.ATTACK_DAMAGE, modifier)));
 					}
 					float bonus = EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
 					if (bonus > 0) {
@@ -303,7 +312,7 @@ public class AdventureModuleClient {
 					text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), new TranslatableComponent(Attributes.ATTACK_SPEED.getDescriptionId()));
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
 					for (AttributeModifier modifier : spdModifs) {
-						tooltip.accept(list().append(AttributeHelper.toComponent(Attributes.ATTACK_SPEED, modifier)));
+						tooltip.accept(list().append(GemItem.toComponent(Attributes.ATTACK_SPEED, modifier)));
 					}
 				}
 			}
@@ -324,6 +333,7 @@ public class AdventureModuleClient {
 					for (int i = 0; i < 3; i++) {
 						if (sums[i] == 0) continue;
 						String key = "attribute.modifier." + (sums[i] < 0 ? "take." : "plus.") + i;
+						if (i != 0) key = "attribute.modifier.apotheosis" + (sums[i] < 0 ? "take." : "plus.") + i;
 						Style style;
 						if (merged[i]) style = sums[i] < 0 ? Style.EMPTY.withColor(TextColor.fromRgb(0xF93131)) : Style.EMPTY.withColor(TextColor.fromRgb(0x7A7AF9));
 						else style = sums[i] < 0 ? Style.EMPTY.withColor(ChatFormatting.RED) : Style.EMPTY.withColor(ChatFormatting.BLUE);
@@ -331,14 +341,70 @@ public class AdventureModuleClient {
 						if (attr == Attributes.KNOCKBACK_RESISTANCE) sums[i] *= 10;
 						tooltip.accept(new TranslatableComponent(key, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(sums[i]), new TranslatableComponent(attr.getDescriptionId())).withStyle(style));
 						if (merged[i] && Screen.hasShiftDown()) {
-							shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(AttributeHelper.toComponent(attr, modif))));
+							shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(GemItem.toComponent(attr, modif))));
 						}
 					}
 				} else modifs.forEach(m -> {
-					if (m.getAmount() != 0) tooltip.accept(AttributeHelper.toComponent(attr, m));
+					if (m.getAmount() != 0) tooltip.accept(GemItem.toComponent(attr, m));
 				});
 			}
 		}
+	}
+
+	// Unused, doesn't actually work to render beacons without depth.
+	private static abstract class CustomBeacon extends RenderStateShard {
+
+		public CustomBeacon(String pName, Runnable pSetupState, Runnable pClearState) {
+			super(pName, pSetupState, pClearState);
+		}
+
+		//Formatter::off
+		static final BiFunction<ResourceLocation, Boolean, RenderType> BEACON_BEAM = Util.memoize((p_173224_, p_173225_) -> {
+			RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder()
+				.setShaderState(RENDERTYPE_BEACON_BEAM_SHADER)
+				.setTextureState(new RenderStateShard.TextureStateShard(p_173224_, false, false))
+				.setTransparencyState(p_173225_ ? TRANSLUCENT_TRANSPARENCY : NO_TRANSPARENCY)
+				.setWriteMaskState(p_173225_ ? COLOR_WRITE : COLOR_WRITE)
+				.setDepthTestState(NO_DEPTH_TEST)
+				.setCullState(NO_CULL)
+				.createCompositeState(false);
+			return RenderType.create("custom_beacon_beam", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, true, rendertype$compositestate);
+		});
+		//Formatter::on
+	}
+
+	static final RenderType beaconBeam(ResourceLocation tex, boolean color) {
+		return CustomBeacon.BEACON_BEAM.apply(tex, color);
+	}
+
+	public static void renderBeaconBeam(PoseStack pPoseStack, MultiBufferSource pBufferSource, ResourceLocation pBeamLocation, float pPartialTick, float pTextureScale, long pGameTime, int pYOffset, int pHeight, float[] pColors, float pBeamRadius, float pGlowRadius) {
+		int i = pYOffset + pHeight;
+		pPoseStack.pushPose();
+		pPoseStack.translate(0.5D, 0.0D, 0.5D);
+		float f = (float) Math.floorMod(pGameTime, 40) + pPartialTick;
+		float f1 = pHeight < 0 ? f : -f;
+		float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
+		float f3 = pColors[0];
+		float f4 = pColors[1];
+		float f5 = pColors[2];
+		pPoseStack.pushPose();
+		pPoseStack.mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
+		float f6 = 0.0F;
+		float f8 = 0.0F;
+		float f9 = -pBeamRadius;
+		float f12 = -pBeamRadius;
+		float f15 = -1.0F + f2;
+		float f16 = (float) pHeight * pTextureScale * (0.5F / pBeamRadius) + f15;
+		BeaconRenderer.renderPart(pPoseStack, pBufferSource.getBuffer(beaconBeam(pBeamLocation, false)), f3, f4, f5, 1.0F, pYOffset, i, 0.0F, pBeamRadius, pBeamRadius, 0.0F, f9, 0.0F, 0.0F, f12, 0.0F, 1.0F, f16, f15);
+		pPoseStack.popPose();
+		f6 = -pGlowRadius;
+		float f7 = -pGlowRadius;
+		f8 = -pGlowRadius;
+		f9 = -pGlowRadius;
+		f15 = -1.0F + f2;
+		f16 = (float) pHeight * pTextureScale + f15;
+		BeaconRenderer.renderPart(pPoseStack, pBufferSource.getBuffer(beaconBeam(pBeamLocation, true)), f3, f4, f5, 0.125F, pYOffset, i, f6, f7, pGlowRadius, f8, f9, pGlowRadius, pGlowRadius, pGlowRadius, 0.0F, 1.0F, f16, f15);
+		pPoseStack.popPose();
 	}
 
 }

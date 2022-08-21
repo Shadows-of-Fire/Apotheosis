@@ -14,6 +14,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ServerLevelAccessor;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
@@ -29,6 +30,14 @@ public class LootController {
 		return createLootItem(stack, cat, rarity, rand);
 	}
 
+	/**
+	 * Modifies an ItemStack with affixes of the target category and rarity.
+	 * @param stack The ItemStack.
+	 * @param cat The LootCategory.  Should be valid for the item being passed.
+	 * @param rarity The target Rarity.
+	 * @param rand The Random
+	 * @return The modifed ItemStack (note the original is not preserved, but the stack is returned for simplicity).
+	 */
 	public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, Random rand) {
 		Set<Affix> selected = new HashSet<>();
 		MutableInt sockets = new MutableInt(0);
@@ -67,9 +76,18 @@ public class LootController {
 		return stack;
 	}
 
-	public static ItemStack createRandomLootItem(Random rand, int rarityOffset, float luck) {
+	/**
+	 * Pulls a random LootRarity and AffixLootEntry, and generates an Affix Item
+	 * @param rand Random
+	 * @param rarityOffset The rarity offset
+	 * @param luck The player's luck level
+	 * @param level The world, since affix loot entries are per-dimension.
+	 * @return An affix item, or an empty ItemStack if no entries were available for the dimension.
+	 */
+	public static ItemStack createRandomLootItem(Random rand, int rarityOffset, float luck, ServerLevelAccessor level) {
 		LootRarity rarity = LootRarity.random(rand, rarityOffset);
-		AffixLootEntry entry = AffixLootManager.getRandomEntry(rand, luck);
+		AffixLootEntry entry = AffixLootManager.getRandomEntry(rand, luck, level);
+		if (entry == null) return ItemStack.EMPTY;
 		return createLootItem(entry.getStack(), entry.getType(), rarity, rand);
 	}
 

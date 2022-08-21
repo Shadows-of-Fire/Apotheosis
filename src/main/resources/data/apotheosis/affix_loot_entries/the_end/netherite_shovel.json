@@ -1,0 +1,13 @@
+{
+  "weight": 70,
+  "quality": 10,
+  "stack": {
+    "item": "minecraft:netherite_shovel",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "BREAKER",
+  "dimensions": [
+    "minecraft:the_end"
+  ]
+}
