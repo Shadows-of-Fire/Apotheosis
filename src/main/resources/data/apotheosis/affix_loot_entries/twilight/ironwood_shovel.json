@@ -1,4 +1,8 @@
 {
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
   "weight": 100,
   "quality": 1,
   "stack": {

@@ -15,6 +15,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.Weight;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -58,7 +60,6 @@ public class AdventureConfig {
 	public static float randomAffixItem = 0.07F;
 	public static float gemDropChance = 0.04F;
 	public static float gemBossBonus = 0.33F;
-	public static int[] rarityThresholds = new int[] { 400, 720, 870, 960, 995 };
 	public static boolean disableQuarkOnAffixItems = true;
 	public static Supplier<Item> torchItem = () -> Items.TORCH;
 	public static boolean cleaveHitsPlayers = false;
@@ -67,9 +68,12 @@ public class AdventureConfig {
 		c.setTitle("Apotheosis Adventure Module Config");
 		for (LootRarity r : LootRarity.values()) {
 			if (r != LootRarity.ANCIENT) {
-				int threshold = c.getInt(r.id(), "rarity", rarityThresholds[r.ordinal()], 0, 1000, "The threshold for this rarity.  The percentage chance of this rarity appearing is equal to (previous threshold - this threshold) / 10.");
-				rarityThresholds[r.ordinal()] = threshold;
+				int weight = c.getInt(r.id(), "rarity", r.defaultWeight(), 0, 10000, "The weight of this rarity.  The chance of this rarity appearing is <weight>/<total weight>.");
+				LootRarity.WEIGHTS.put(r, Weight.of(weight));
 			}
+		}
+		if (WeightedRandom.getTotalWeight(LootRarity.LIST) == 0) {
+			throw new RuntimeException("The total loot rarity weight may not be zero!");
 		}
 
 		TYPE_OVERRIDES.clear();
@@ -91,7 +95,7 @@ public class AdventureConfig {
 		gemBossBonus = c.getFloat("Gem Boss Bonus", "affixes", gemBossBonus, 0, 1, "The flat bonus chance that bosses have to drop a gem, added to Gem Drop Chance. 0 = 0%, 1 = 100%");
 		cleaveHitsPlayers = c.getBoolean("Cleave Players", "affixes", cleaveHitsPlayers, "If affixes that cleave can hit players (excluding the user).");
 
-		String[] lootRules = c.getStringList("Affix Item Loot Rules", "general", new String[] { "minecraft:chests.*|0.5", "chests.*|0.35", "twilightforest:structures.*|0.4" },
+		String[] lootRules = c.getStringList("Affix Item Loot Rules", "affixes", new String[] { "minecraft:chests.*|0.5", "chests.*|0.35", "twilightforest:structures.*|0.4" },
 		//Formatter::off
 			"Loot Rules, in the form of Loot Table Matchers, permitting affix items to spawn in loot tables." 
 		  + "\nThe format for these is domain:pattern|chance and domain is optional.  Domain is a modid, pattern is a regex string, and chance is a float 0..1 chance for the item to spawn in any matched tables." 
@@ -114,7 +118,7 @@ public class AdventureConfig {
 			}
 		}
 
-		lootRules = c.getStringList("Gem Loot Rules", "general", new String[] { "minecraft:chests.*|0.30", "chests.*|0.15", "twilightforest:structures.*|0.20" }, "Loot Rules, in the form of Loot Table Matchers, permitting gems to spawn in loot tables.  See comment on \"Affix Item Loot Rules\" for description.");
+		lootRules = c.getStringList("Gem Loot Rules", "gems", new String[] { "minecraft:chests.*|0.30", "chests.*|0.15", "twilightforest:structures.*|0.20" }, "Loot Rules, in the form of Loot Table Matchers, permitting gems to spawn in loot tables.  See comment on \"Affix Item Loot Rules\" for description.");
 		GEM_LOOT_RULES.clear();
 		for (String s : lootRules) {
 			try {
@@ -147,7 +151,7 @@ public class AdventureConfig {
 		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", false, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
 		bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", 96, 0, 1024, "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.");
 
-		String[] dims = c.getStringList("Boss Spawn Dimensions", "general", new String[] { "minecraft:overworld|0.015|NEEDS_SKY", "minecraft:the_nether|0.02|ANY", "minecraft:the_end|0.025|NEEDS_SURFACE", "twilightforest:twilight_forest|0.02|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
+		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.015|NEEDS_SKY", "minecraft:the_nether|0.02|ANY", "minecraft:the_end|0.025|NEEDS_SURFACE", "twilightforest:twilight_forest|0.02|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();
 		for (String s : dims) {
 			try {
@@ -159,7 +163,7 @@ public class AdventureConfig {
 			}
 		}
 
-		dims = c.getStringList("Generation Dimension Whitelist", "general", new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");
+		dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that the deadly module will generate in.");
 		DIM_WHITELIST.clear();
 		for (String s : dims) {
 			try {
@@ -169,7 +173,7 @@ public class AdventureConfig {
 			}
 		}
 
-		String[] biomes = c.getStringList("Generation Biome Blacklist", "general", new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
+		String[] biomes = c.getStringList("Generation Biome Blacklist", "worldgen", new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
 		BIOME_BLACKLIST.clear();
 		for (String s : biomes) {
 			try {
@@ -178,6 +182,10 @@ public class AdventureConfig {
 				AdventureModule.LOGGER.error("Invalid biome blacklist entry: " + s + " will be ignored!");
 			}
 		}
+
+		bossDungeonAttempts = c.getInt("Boss Dungeon Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon generation attempts per-chunk.");
+		bossDungeon2Attempts = c.getInt("Boss Dungeon (Variant 2) Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon (variant 2) generation attempts per-chunk.");
+		rogueSpawnerAttempts = c.getInt("Rogue Spawner Attempts", "worldgen", 4, 0, 256, "The number of rogue spawner generation attempts per-chunk.");
 
 		spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
 	}

@@ -41,8 +41,7 @@ public class ExecutingAffix extends Affix {
 	@Override
 	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
 		float threshold = getTrueLevel(rarity, level);
-		if (target instanceof LivingEntity) {
-			LivingEntity living = (LivingEntity) target;
+		if (target instanceof LivingEntity living && !living.level.isClientSide) {
 			if (living.getHealth() / living.getMaxHealth() < threshold) {
 				living.die(new EntityDamageSource("apotheosis.execute", user).bypassInvul().bypassArmor().bypassMagic());
 			}

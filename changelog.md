@@ -1,3 +1,10 @@
+## 5.5.2
+* Fixed the executing affix crashing clients.
+* Fixed a few adventure.cfg options being in the wrong categories.
+  * This may invalidate some config changes - re-check them!
+* Fixed twilight Affix Loot Entries not having the correct conditions.
+* Fixed generation attempts configs not being read from the file.
+
 ## 5.5.1
 * Hotfix for some more really weird array-list-index bugs that should be impossible.
 
