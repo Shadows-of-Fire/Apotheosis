@@ -1,3 +1,6 @@
+## 5.5.1
+* Hotfix for some more really weird array-list-index bugs that should be impossible.
+
 ## 5.5.0
 * Added dimensional bosses - each dimension will now have their own boss spawn tables.
   * Overworld bosses will be weaker than Nether bosses, which will be weaker than End bosses.

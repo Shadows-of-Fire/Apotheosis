@@ -144,8 +144,8 @@ public class AdventureModuleClient {
 		int fRmvIdx = rmvIdx;
 		int oldSize = list.size();
 		applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
-		Collections.reverse(list.subList(rmvIdx, rmvIdx + list.size() - oldSize));
-		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET)) list.add(rmvIdx + list.size() - oldSize, new TextComponent("APOTH_REMOVE_MARKER"));
+		Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
+		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET)) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent
