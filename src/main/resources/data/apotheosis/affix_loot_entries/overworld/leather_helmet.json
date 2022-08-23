@@ -1,6 +1,6 @@
 {
   "weight": 100,
-  "quality": 1,
+  "quality": 1.0,
   "stack": {
     "item": "minecraft:leather_helmet",
     "count": 1,
@@ -9,5 +9,6 @@
   "type": "ARMOR",
   "dimensions": [
     "minecraft:overworld"
-  ]
+  ],
+  "max_rarity": "rare"
 }

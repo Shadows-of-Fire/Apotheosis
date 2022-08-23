@@ -23,7 +23,8 @@ public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEnt
 			.registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE)
 			.registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
 			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-			.create();
+			.registerTypeAdapter(LootRarity.class, new LootRarity.Serializer())
+			.setPrettyPrinting().create();
 	//Formatter::on
 
 	public static final AffixLootManager INSTANCE = new AffixLootManager();
@@ -38,7 +39,7 @@ public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEnt
 	}
 
 	@Override
-	protected <T extends AffixLootEntry> void validateItem(T item) {
+	protected void validateItem(AffixLootEntry item) {
 		super.validateItem(item);
 		Preconditions.checkArgument(!item.stack.isEmpty());
 		Preconditions.checkArgument(item.type != null);

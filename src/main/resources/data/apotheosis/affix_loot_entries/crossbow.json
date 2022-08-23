@@ -1,8 +1,0 @@
-{
-	"weight": 50,
-	"quality": 1,
-	"stack": {
-		"item": "minecraft:crossbow"
-	},
-	"type": "CROSSBOW"
-}

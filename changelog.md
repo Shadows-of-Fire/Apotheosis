@@ -5,6 +5,15 @@
 * Fixed twilight Affix Loot Entries not having the correct conditions.
 * Fixed generation attempts configs not being read from the file.
 * Fixed an issue where elemental damages were causing mobs to not drop loot or play death sounds.
+* Made it so gems can have per-dimension drops instead of all being global (like bosses and affix loot).
+  * This has not yet been implemented on individual gem jsons.
+* Made bosses respect luck through quality levels (higher luck can bring forth stronger bosses).
+* Natural bosses will glow briefly on spawn.
+* Restricted rarity levels on a per-dimension bases.
+  * Overworld: Common to Rare
+  * Nether and Twilght: Uncommon to Epic
+  * End: Rare to Mythic
+
 
 ## 5.5.1
 * Hotfix for some more really weird array-list-index bugs that should be impossible.

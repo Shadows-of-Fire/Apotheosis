@@ -291,9 +291,9 @@ public class AdventureModule {
 				.types(l -> l == LootCategory.ARMOR).items(s -> ((ArmorItem) s.getItem()).getSlot() == EquipmentSlot.FEET).build("elastic"),
 
 				new AttributeAffix.Builder(() -> Attributes.LUCK, Operation.ADDITION)
-				.with(LootRarity.RARE, step(2F, 10, 0.25F))
-				.with(LootRarity.EPIC, step(3F, 10, 0.25F))
-				.with(LootRarity.MYTHIC, step(5F, 12, 0.25F))
+				.with(LootRarity.RARE, step(1F, 8, 0.25F))
+				.with(LootRarity.EPIC, step(2F, 10, 0.25F))
+				.with(LootRarity.MYTHIC, step(4F, 12, 0.25F))
 				.with(LootRarity.ANCIENT, step(8F, 16, 0.25F))
 				.types(l -> l == LootCategory.ARMOR).build("fortunate"),
 

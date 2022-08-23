@@ -13,5 +13,7 @@
   "type": "HEAVY_WEAPON",
   "dimensions": [
     "twilightforest:twilight_forest"
-  ]
+  ],
+  "min_rarity": "uncommon",
+  "max_rarity": "epic"
 }

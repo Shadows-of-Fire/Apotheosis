@@ -1,0 +1,13 @@
+{
+	"weight": 50,
+	"quality": 2.5,
+	"stack": {
+		"item": "minecraft:crossbow"
+	},
+	"type": "CROSSBOW",
+	"min_rarity": "rare",
+	"max_rarity": "mythic",
+	"dimensions": [
+		"minecraft:the_end"
+	]
+}

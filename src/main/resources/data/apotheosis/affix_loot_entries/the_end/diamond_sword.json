@@ -1,6 +1,6 @@
 {
   "weight": 100,
-  "quality": 5,
+  "quality": 5.0,
   "stack": {
     "item": "minecraft:diamond_sword",
     "count": 1,
@@ -9,5 +9,7 @@
   "type": "SWORD",
   "dimensions": [
     "minecraft:the_end"
-  ]
+  ],
+  "min_rarity": "rare",
+  "max_rarity": "mythic"
 }

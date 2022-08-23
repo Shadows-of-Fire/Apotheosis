@@ -11,6 +11,8 @@ import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -42,12 +44,12 @@ public class BossEvents {
 				Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
 				if (rules == null) return;
 				if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, new BlockPos(e.getX(), e.getY(), e.getZ()))) {
-					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, sLevel);
-					if (item == null) return;
 					Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
 					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
-					Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand);
+					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player.getLuck(), sLevel);
+					Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
 					if (canSpawn(sLevel, boss, player.distanceToSqr(boss))) {
+						boss.addEffect(new MobEffectInstance(MobEffects.GLOWING, 400));
 						sLevel.addFreshEntity(boss);
 						e.setResult(Result.DENY);
 						AdventureModule.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());

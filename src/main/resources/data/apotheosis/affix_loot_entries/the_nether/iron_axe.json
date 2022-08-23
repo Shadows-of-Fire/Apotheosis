@@ -1,6 +1,6 @@
 {
   "weight": 100,
-  "quality": 1,
+  "quality": 1.0,
   "stack": {
     "item": "minecraft:iron_axe",
     "count": 1,
@@ -9,5 +9,7 @@
   "type": "HEAVY_WEAPON",
   "dimensions": [
     "minecraft:the_nether"
-  ]
+  ],
+  "min_rarity": "uncommon",
+  "max_rarity": "epic"
 }

@@ -50,7 +50,7 @@ public class GatewaysCompat {
 		public LivingEntity createEntity(Level level) {
 			BossItem realBoss = this.boss == null ? BossItemManager.INSTANCE.getRandomItem(level.random, (ServerLevel) level) : this.boss;
 			if (realBoss == null) return null; // error condition
-			return realBoss.createBoss((ServerLevelAccessor) level, BlockPos.ZERO, level.random);
+			return realBoss.createBoss((ServerLevelAccessor) level, BlockPos.ZERO, level.random, 0);
 		}
 
 		@Override
@@ -80,7 +80,7 @@ public class GatewaysCompat {
 		}
 
 		public static WaveEntity read(JsonObject obj) {
-			BossItem boss = obj.has("boss") ? BossItemManager.INSTANCE.getById(new ResourceLocation(obj.get("boss").getAsString())) : null;
+			BossItem boss = obj.has("boss") ? BossItemManager.INSTANCE.getValue(new ResourceLocation(obj.get("boss").getAsString())) : null;
 			return new BossWaveEntity(boss);
 		}
 
@@ -89,7 +89,7 @@ public class GatewaysCompat {
 		}
 
 		public static WaveEntity read(FriendlyByteBuf buf) {
-			BossItem boss = BossItemManager.INSTANCE.getById(buf.readResourceLocation());
+			BossItem boss = BossItemManager.INSTANCE.getValue(buf.readResourceLocation());
 			return new BossWaveEntity(boss);
 		}
 	}

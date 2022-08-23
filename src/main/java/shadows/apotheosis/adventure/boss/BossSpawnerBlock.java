@@ -1,5 +1,7 @@
 package shadows.apotheosis.adventure.boss;
 
+import java.util.Optional;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -7,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -40,14 +43,17 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 		@Override
 		public void serverTick(Level pLevel, BlockPos pPos, BlockState pState) {
 			if (this.level.isClientSide) return;
-			if (this.ticks++ % 40 == 0 && this.level.getEntities(EntityType.PLAYER, new AABB(this.worldPosition).inflate(8, 8, 8), EntitySelector.NO_SPECTATORS).stream().anyMatch(p -> !p.isCreative())) {
-				this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
-				BlockPos pos = this.worldPosition;
-				if (this.item != null) {
-					Mob entity = this.item.createBoss((ServerLevel) this.level, pos, this.level.getRandom());
-					entity.setPersistenceRequired();
-					this.level.addFreshEntity(entity);
-				}
+			if (this.ticks++ % 40 == 0) {
+				Optional<Player> opt = this.level.getEntities(EntityType.PLAYER, new AABB(this.worldPosition).inflate(8, 8, 8), EntitySelector.NO_SPECTATORS).stream().findFirst();
+				opt.ifPresent(player -> {
+					this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
+					BlockPos pos = this.worldPosition;
+					if (this.item != null) {
+						Mob entity = this.item.createBoss((ServerLevel) this.level, pos, this.level.getRandom(), player.getLuck());
+						entity.setPersistenceRequired();
+						this.level.addFreshEntity(entity);
+					}
+				});
 			}
 		}
 
@@ -63,7 +69,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 
 		@Override
 		public void load(CompoundTag tag) {
-			this.item = BossItemManager.INSTANCE.getById(new ResourceLocation(tag.getString("boss_item")));
+			this.item = BossItemManager.INSTANCE.getValue(new ResourceLocation(tag.getString("boss_item")));
 			super.load(tag);
 		}
 

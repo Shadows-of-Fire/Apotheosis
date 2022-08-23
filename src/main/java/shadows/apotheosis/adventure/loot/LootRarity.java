@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.loot;
 
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,6 +17,13 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -200,6 +208,31 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 				Collections.shuffle(available, rand);
 				currentAffixes.add(available.get(0));
 			}
+		}
+	}
+
+	public static class Serializer implements JsonSerializer<LootRarity>, JsonDeserializer<LootRarity> {
+
+		@Override
+		public LootRarity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			return LootRarity.byId(json.getAsString());
+		}
+
+		@Override
+		public JsonElement serialize(LootRarity src, Type typeOfSrc, JsonSerializationContext context) {
+			return new JsonPrimitive(src.id);
+		}
+
+	}
+
+	public static interface Clamped {
+
+		public LootRarity getMinRarity();
+
+		public LootRarity getMaxRarity();
+
+		default LootRarity clamp(LootRarity rarity) {
+			return rarity.clamp(getMinRarity(), getMaxRarity());
 		}
 
 	}

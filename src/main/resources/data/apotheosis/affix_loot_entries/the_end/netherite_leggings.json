@@ -1,6 +1,6 @@
 {
   "weight": 70,
-  "quality": 10,
+  "quality": 10.0,
   "stack": {
     "item": "minecraft:netherite_leggings",
     "count": 1,
@@ -9,5 +9,7 @@
   "type": "ARMOR",
   "dimensions": [
     "minecraft:the_end"
-  ]
+  ],
+  "min_rarity": "rare",
+  "max_rarity": "mythic"
 }

@@ -1,6 +1,6 @@
 {
   "weight": 85,
-  "quality": 5,
+  "quality": 5.0,
   "stack": {
     "item": "minecraft:golden_pickaxe",
     "count": 1,
@@ -9,5 +9,7 @@
   "type": "BREAKER",
   "dimensions": [
     "minecraft:the_nether"
-  ]
+  ],
+  "min_rarity": "uncommon",
+  "max_rarity": "epic"
 }

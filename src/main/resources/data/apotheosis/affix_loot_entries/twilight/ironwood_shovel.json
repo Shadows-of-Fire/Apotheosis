@@ -13,5 +13,7 @@
   "type": "BREAKER",
   "dimensions": [
     "twilightforest:twilight_forest"
-  ]
+  ],
+  "min_rarity": "uncommon",
+  "max_rarity": "epic"
 }

@@ -2,6 +2,8 @@ package shadows.apotheosis.adventure.loot;
 
 import java.util.Set;
 
+import com.google.gson.annotations.SerializedName;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import shadows.placebo.json.DimWeightedJsonReloadListener.IDimWeighted;
@@ -11,20 +13,26 @@ import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
  * A loot entry represents a possible item that can come out of a loot roll.
  * It is classified into a type, which is used to determine possible affixes.
  */
-public class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements IDimWeighted {
+public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements IDimWeighted, LootRarity.Clamped {
 
-	protected final int weight;
-	protected final float quality;
-	protected final ItemStack stack;
-	protected final LootCategory type;
-	protected final Set<ResourceLocation> dimensions;
+	protected int weight;
+	protected float quality;
+	protected ItemStack stack;
+	protected LootCategory type;
+	protected Set<ResourceLocation> dimensions;
+	@SerializedName("min_rarity")
+	protected LootRarity minRarity;
+	@SerializedName("max_rarity")
+	protected LootRarity maxRarity;
 
-	public AffixLootEntry(int weight, float quality, ItemStack stack, LootCategory type, Set<ResourceLocation> dimensions) {
+	public AffixLootEntry(int weight, float quality, ItemStack stack, LootCategory type, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max) {
 		this.weight = weight;
 		this.quality = quality;
 		this.stack = stack;
 		this.type = type;
 		this.dimensions = dimensions;
+		this.minRarity = min;
+		this.maxRarity = max;
 	}
 
 	@Override
@@ -48,6 +56,16 @@ public class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements IDi
 	@Override
 	public Set<ResourceLocation> getDimensions() {
 		return this.dimensions;
+	}
+
+	@Override
+	public LootRarity getMinRarity() {
+		return this.minRarity;
+	}
+
+	@Override
+	public LootRarity getMaxRarity() {
+		return this.maxRarity;
 	}
 
 }

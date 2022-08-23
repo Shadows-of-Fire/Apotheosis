@@ -1,6 +1,6 @@
 {
   "weight": 85,
-  "quality": 3,
+  "quality": 3.0,
   "stack": {
     "item": "minecraft:golden_boots",
     "count": 1,
@@ -9,5 +9,7 @@
   "type": "ARMOR",
   "dimensions": [
     "minecraft:the_nether"
-  ]
+  ],
+  "min_rarity": "uncommon",
+  "max_rarity": "epic"
 }

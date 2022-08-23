@@ -1,7 +1,5 @@
 package shadows.apotheosis.adventure.boss;
 
-import javax.annotation.Nullable;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.AxisAlignedBBDeserializer;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.EntityTypeDeserializer;
@@ -33,6 +32,7 @@ public class BossItemManager extends DimWeightedJsonReloadListener<BossItem> {
 			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
 			.registerTypeAdapter(RandomAttributeModifier.class, new RandomAttributeModifier.Deserializer())
 			.registerTypeAdapter(AABB.class, new AxisAlignedBBDeserializer())
+			.registerTypeAdapter(LootRarity.class, new LootRarity.Serializer())
 			.registerTypeAdapter(CompoundTag.class, new NBTAdapter()).create();
 	//Formatter::on
 
@@ -42,9 +42,10 @@ public class BossItemManager extends DimWeightedJsonReloadListener<BossItem> {
 		super(AdventureModule.LOGGER, "bosses", false, false);
 	}
 
-	@Nullable
-	public BossItem getById(ResourceLocation id) {
-		return this.registry.get(id);
+	@Override
+	protected void validateItem(BossItem item) {
+		super.validateItem(item);
+		item.validate();
 	}
 
 	@Override

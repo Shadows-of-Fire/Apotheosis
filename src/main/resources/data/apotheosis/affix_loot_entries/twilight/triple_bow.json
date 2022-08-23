@@ -8,5 +8,7 @@
 	"stack": {
 		"item": "twilightforest:triple_bow"
 	},
-	"type": "BOW"
+	"type": "BOW",
+  "min_rarity": "uncommon",
+  "max_rarity": "epic"
 }

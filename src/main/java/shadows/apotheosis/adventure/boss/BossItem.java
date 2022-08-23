@@ -50,45 +50,36 @@ import shadows.placebo.json.DimWeightedJsonReloadListener.IDimWeighted;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.RandomAttributeModifier;
 
-public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
+public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted, LootRarity.Clamped {
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
-	protected final int weight;
-	protected final float quality;
-	protected final EntityType<?> entity;
-	protected final AABB size;
+	protected int weight;
+	protected float quality;
+	protected EntityType<?> entity;
+	protected AABB size;
 	@SerializedName("enchant_chance")
-	protected final float enchantChance;
-	@SerializedName("rarity_offset")
-	protected final int rarityOffset;
+	protected float enchantChance;
 	/**
 	 * The enchantment levels for a specific boss.  Order is {<Generic with EnchModule>, <Generic without>, <Affix with>, <Affix without>}.
 	 */
 	@SerializedName("enchantment_levels")
-	protected final int[] enchLevels;
-	protected final List<ChancedEffectInstance> effects;
+	protected int[] enchLevels;
+	protected List<ChancedEffectInstance> effects;
 	@SerializedName("valid_gear_sets")
-	protected final List<SetPredicate> armorSets;
+	protected List<SetPredicate> armorSets;
 	@SerializedName("attribute_modifiers")
-	protected final List<RandomAttributeModifier> modifiers;
+	protected List<RandomAttributeModifier> modifiers;
 	@SerializedName("nbt")
-	protected final CompoundTag customNbt;
-	protected final Set<ResourceLocation> dimensions;
+	protected CompoundTag customNbt;
+	protected Set<ResourceLocation> dimensions;
+	@SerializedName("min_rarity")
+	protected LootRarity minRarity;
+	@SerializedName("max_rarity")
+	protected LootRarity maxRarity;
 
-	public BossItem(int weight, float quality, EntityType<?> entity, AABB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundTag customNbt, Set<ResourceLocation> dimensions) {
-		this.weight = weight;
-		this.quality = quality;
-		this.entity = entity;
-		this.size = size;
-		this.enchantChance = enchantChance;
-		this.rarityOffset = rarityOffset;
-		this.enchLevels = enchLevels;
-		this.effects = effects;
-		this.armorSets = armorSets;
-		this.modifiers = modifiers;
-		this.customNbt = customNbt;
-		this.dimensions = dimensions;
+	public BossItem() {
+		// No ctor, not meant to be created via code
 	}
 
 	@Override
@@ -99,6 +90,16 @@ public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
 	@Override
 	public float getQuality() {
 		return this.quality;
+	}
+
+	@Override
+	public LootRarity getMinRarity() {
+		return this.minRarity;
+	}
+
+	@Override
+	public LootRarity getMaxRarity() {
+		return this.maxRarity;
 	}
 
 	public AABB getSize() {
@@ -116,10 +117,10 @@ public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
 	 * @param rand A random, used for selection of boss stats.
 	 * @return The newly created boss.
 	 */
-	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, Random rand) {
+	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, Random rand, float luck) {
 		Mob entity = (Mob) this.entity.create(world.getLevel());
 		if (this.customNbt != null) entity.load(this.customNbt);
-		this.initBoss(rand, entity);
+		this.initBoss(rand, entity, luck);
 		// Re-read here so we can apply certain things after the boss has been modified
 		// But only mob-specific things, not a full load()
 		if (this.customNbt != null) entity.readAdditionalSaveData(this.customNbt);
@@ -132,7 +133,7 @@ public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
 	 * @param rand
 	 * @param entity
 	 */
-	public void initBoss(Random rand, Mob entity) {
+	public void initBoss(Random rand, Mob entity, float luck) {
 		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
 		for (ChancedEffectInstance inst : this.effects) {
@@ -176,7 +177,7 @@ public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, 0.03F);
 			if (s.ordinal() == guaranteed) {
-				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name));
+				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck));
 				LootRarity rarity = AffixHelper.getRarity(stack);
 				entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
 			} else if (rand.nextFloat() < this.enchantChance) {
@@ -189,10 +190,10 @@ public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
 		entity.setHealth(entity.getMaxHealth());
 	}
 
-	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName) {
+	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName, float luck) {
 		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(random, stack, Apotheosis.enableEnch ? this.enchLevels[2] : this.enchLevels[3], true);
 		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max)), stack);
-		LootRarity rarity = LootRarity.random(random, this.rarityOffset);
+		LootRarity rarity = this.clamp(LootRarity.random(random, luck));
 		NameHelper.setItemName(random, stack);
 		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, random);
 
@@ -227,9 +228,10 @@ public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
 	 * @return this
 	 */
 	public BossItem validate() {
+		Preconditions.checkArgument(this.weight >= 0, "Boss Item " + this.id + " has a negative weight!");
+		Preconditions.checkArgument(this.quality >= 0, "Boss Item " + this.id + " has a negative quality!");
 		Preconditions.checkNotNull(this.entity, "Boss Item " + this.id + " has null entity type!");
 		Preconditions.checkNotNull(this.size, "Boss Item " + this.id + " has no size!");
-		Preconditions.checkArgument(this.rarityOffset >= 0 && this.rarityOffset < 1000, "Boss Item " + this.id + " has an invalid rarity offset: " + this.rarityOffset);
 		Preconditions.checkArgument(this.enchLevels != null && this.enchLevels.length == 4 && Arrays.stream(this.enchLevels).allMatch(i -> i >= 0), "Boss Item " + this.id + " has invalid ench levels: " + this.enchLevels);
 		return this;
 	}

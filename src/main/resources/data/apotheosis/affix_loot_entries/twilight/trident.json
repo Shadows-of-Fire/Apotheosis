@@ -1,0 +1,13 @@
+{
+	"weight": 50,
+	"quality": 2.5,
+	"stack": {
+		"item": "minecraft:trident"
+	},
+	"type": "TRIDENT",
+	"min_rarity": "uncommon",
+	"max_rarity": "epic",
+	"dimensions": [
+		"twilightforest:twilight_forest"
+	]
+}
