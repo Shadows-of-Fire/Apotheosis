@@ -3,7 +3,6 @@ package shadows.apotheosis.adventure.affix.effect;
 import java.util.List;
 import java.util.function.Consumer;
 
-import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -18,13 +17,14 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 /**
  * Damage Chain
  */
 public class ThunderstruckAffix extends Affix {
 
-	protected static final Float2IntFunction LEVEL_FUNC = AffixHelper.step(2, 6, 1);
+	protected static final StepFunction LEVEL_FUNC = AffixHelper.step(2, 6, 1);
 
 	public ThunderstruckAffix() {
 		super(AffixType.EFFECT);
@@ -52,7 +52,7 @@ public class ThunderstruckAffix extends Affix {
 	}
 
 	private static float getTrueLevel(LootRarity rarity, float level) {
-		return (rarity.ordinal() - LootRarity.RARE.ordinal()) * 2 + LEVEL_FUNC.get(level);
+		return (rarity.ordinal() - LootRarity.RARE.ordinal()) * 2 + LEVEL_FUNC.getInt(level);
 	}
 
 }

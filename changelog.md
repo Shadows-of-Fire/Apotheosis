@@ -4,6 +4,7 @@
   * This may invalidate some config changes - re-check them!
 * Fixed twilight Affix Loot Entries not having the correct conditions.
 * Fixed generation attempts configs not being read from the file.
+* Fixed an issue where elemental damages were causing mobs to not drop loot or play death sounds.
 
 ## 5.5.1
 * Hotfix for some more really weird array-list-index bugs that should be impossible.

@@ -109,10 +109,6 @@ public class AttributeAffix extends Affix {
 			return this;
 		}
 
-		public Builder with(LootRarity rarity, float min, float max) {
-			return this.with(rarity, level -> min + level * max);
-		}
-
 		public AttributeAffix build(String id) {
 			return (AttributeAffix) new AttributeAffix(this.modifiers, this.types, this.items).setRegistryName(id);
 		}

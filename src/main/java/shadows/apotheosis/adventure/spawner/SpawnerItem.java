@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.spawner;
 
 import java.util.Random;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.core.BlockPos;
@@ -10,8 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -22,14 +19,13 @@ import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.util.SpawnerStats;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 import shadows.placebo.util.ChestBuilder;
 
-public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements WeightedEntry {
+public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWeighted {
 
 	public static final Block[] FILLER_BLOCKS = new Block[] { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
-	@Expose(deserialize = false)
-	private Weight _weight;
 	protected final int weight;
 	protected final SpawnerStats stats;
 	@SerializedName("spawn_potentials")
@@ -45,9 +41,13 @@ public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements WeightedE
 	}
 
 	@Override
-	public Weight getWeight() {
-		if (this._weight == null) this._weight = Weight.of(this.weight);
-		return this._weight;
+	public int getWeight() {
+		return this.weight;
+	}
+
+	@Override
+	public float getQuality() {
+		return 0;
 	}
 
 	@SuppressWarnings("deprecation")

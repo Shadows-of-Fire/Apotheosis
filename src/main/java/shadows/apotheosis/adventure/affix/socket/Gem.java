@@ -1,26 +1,23 @@
 package shadows.apotheosis.adventure.affix.socket;
 
-import com.google.gson.JsonObject;
+import java.util.Set;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraftforge.registries.ForgeRegistries;
-import shadows.apotheosis.adventure.affix.AffixHelper;
-import shadows.placebo.json.JsonUtil;
+import shadows.apotheosis.util.StepFunction;
+import shadows.placebo.json.DimWeightedJsonReloadListener.IDimWeighted;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 
-public final class Gem extends TypeKeyedBase<Gem> implements WeightedEntry {
+public final class Gem extends TypeKeyedBase<Gem> implements IDimWeighted {
 
 	protected int weight;
 	protected int variant;
-	protected int quality;
+	protected float quality;
 	protected Attribute attribute;
 	protected Operation operation;
-	protected Float2FloatFunction value;
+	protected StepFunction value;
+	protected Set<ResourceLocation> dimensions;
 
 	Gem() {
 
@@ -30,28 +27,18 @@ public final class Gem extends TypeKeyedBase<Gem> implements WeightedEntry {
 		return this.variant;
 	}
 
-	public int getQuality() {
+	@Override
+	public float getQuality() {
 		return this.quality;
 	}
 
 	@Override
-	public Weight getWeight() {
-		return Weight.of(this.weight);
+	public int getWeight() {
+		return this.weight;
 	}
 
-	public static Gem fromJson(JsonObject json) {
-		Gem gem = new Gem();
-		gem.weight = GsonHelper.getAsInt(json, "weight");
-		gem.variant = GsonHelper.getAsInt(json, "variant");
-		gem.quality = GsonHelper.getAsInt(json, "quality");
-		gem.attribute = JsonUtil.getRegistryObject(json, "attribute", ForgeRegistries.ATTRIBUTES);
-		gem.operation = GemManager.GSON.fromJson(json.get("operation"), Operation.class);
-		JsonObject value = GsonHelper.getAsJsonObject(json, "value");
-		gem.value = AffixHelper.step(GsonHelper.getAsFloat(value, "min"), GsonHelper.getAsInt(value, "steps"), GsonHelper.getAsFloat(value, "step"));
-		return gem;
-	}
-
-	public JsonObject toJson() {
-		return new JsonObject(); // TODO: Implement serializer
+	@Override
+	public Set<ResourceLocation> getDimensions() {
+		return this.dimensions;
 	}
 }

@@ -8,7 +8,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -32,6 +31,7 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 public class PotionAffix extends Affix {
 
@@ -131,10 +131,10 @@ public class PotionAffix extends Affix {
 		return mutablecomponent.withStyle(mobeffect.getCategory().getTooltipFormatting());
 	}
 
-	public static record EffectInst(Supplier<MobEffect> effect, Float2IntFunction time, @Nullable Float2IntFunction amp) {
+	public static record EffectInst(Supplier<MobEffect> effect, StepFunction time, @Nullable StepFunction amp) {
 
 		public MobEffectInstance build(float level) {
-			return new MobEffectInstance(this.effect.get(), this.time.get(level), this.amp == null ? 0 : this.amp.get(level));
+			return new MobEffectInstance(this.effect.get(), this.time.getInt(level), this.amp == null ? 0 : this.amp.getInt(level));
 		}
 	}
 
@@ -191,7 +191,7 @@ public class PotionAffix extends Affix {
 			return this;
 		}
 
-		public Builder with(LootRarity rarity, Float2IntFunction timeFunc, @Nullable Float2IntFunction ampFunc) {
+		public Builder with(LootRarity rarity, StepFunction timeFunc, @Nullable StepFunction ampFunc) {
 			this.effects.put(rarity, new EffectInst(this.effect, timeFunc, ampFunc));
 			return this;
 		}

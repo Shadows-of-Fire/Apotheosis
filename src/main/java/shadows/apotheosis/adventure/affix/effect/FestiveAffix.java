@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -23,13 +22,14 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 /**
  * Loot Pinata
  */
 public class FestiveAffix extends Affix {
 
-	protected static final Float2FloatFunction LEVEL_FUNC = AffixHelper.step(0.03F, 6, 0.005F);
+	protected static final StepFunction LEVEL_FUNC = AffixHelper.step(0.03F, 6, 0.005F);
 
 	public FestiveAffix() {
 		super(AffixType.EFFECT);

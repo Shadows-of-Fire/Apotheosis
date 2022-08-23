@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.affix.effect;
 
 import java.util.function.Consumer;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -17,13 +16,14 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 /**
  * When blocking an arrow, hurt the shooter.
  */
 public class PsychicAffix extends Affix {
 
-	protected static final Float2FloatFunction LEVEL_FUNC = AffixHelper.step(0.2F, 40, 0.01F);
+	protected static final StepFunction LEVEL_FUNC = AffixHelper.step(0.2F, 40, 0.01F);
 
 	public PsychicAffix() {
 		super(AffixType.EFFECT);

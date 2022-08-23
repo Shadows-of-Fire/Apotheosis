@@ -11,7 +11,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Preconditions;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.core.BlockPos;
@@ -22,8 +21,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -48,18 +45,17 @@ import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.GearSet;
 import shadows.apotheosis.util.GearSet.SetPredicate;
-import shadows.apotheosis.util.IPerDimension;
 import shadows.apotheosis.util.NameHelper;
+import shadows.placebo.json.DimWeightedJsonReloadListener.IDimWeighted;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.RandomAttributeModifier;
 
-public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry, IPerDimension {
+public class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted {
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
-	@Expose(deserialize = false)
-	private Weight _weight;
 	protected final int weight;
+	protected final float quality;
 	protected final EntityType<?> entity;
 	protected final AABB size;
 	@SerializedName("enchant_chance")
@@ -80,8 +76,9 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry, 
 	protected final CompoundTag customNbt;
 	protected final Set<ResourceLocation> dimensions;
 
-	public BossItem(int weight, EntityType<?> entity, AABB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundTag customNbt, Set<ResourceLocation> dimensions) {
+	public BossItem(int weight, float quality, EntityType<?> entity, AABB size, float enchantChance, int rarityOffset, int[] enchLevels, List<ChancedEffectInstance> effects, List<SetPredicate> armorSets, List<RandomAttributeModifier> modifiers, CompoundTag customNbt, Set<ResourceLocation> dimensions) {
 		this.weight = weight;
+		this.quality = quality;
 		this.entity = entity;
 		this.size = size;
 		this.enchantChance = enchantChance;
@@ -95,9 +92,13 @@ public class BossItem extends TypeKeyedBase<BossItem> implements WeightedEntry, 
 	}
 
 	@Override
-	public Weight getWeight() {
-		if (this._weight == null) this._weight = Weight.of(this.weight);
-		return this._weight;
+	public int getWeight() {
+		return this.weight;
+	}
+
+	@Override
+	public float getQuality() {
+		return this.quality;
 	}
 
 	public AABB getSize() {

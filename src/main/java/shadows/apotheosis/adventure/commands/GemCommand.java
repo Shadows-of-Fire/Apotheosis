@@ -15,6 +15,7 @@ import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -55,7 +56,7 @@ public class GemCommand {
 			return 0;
 		})))))).then(Commands.literal("random").executes(c -> {
 			Player p = c.getSource().getPlayerOrException();
-			ItemStack gem = GemManager.getRandomGemStack(p.random, p.getLuck());
+			ItemStack gem = GemManager.getRandomGemStack(p.random, p.getLuck(), (ServerLevel) p.level);
 			p.addItem(gem);
 			return 0;
 		})));

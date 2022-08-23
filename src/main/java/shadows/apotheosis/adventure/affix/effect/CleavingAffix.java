@@ -5,8 +5,6 @@ import java.util.function.Consumer;
 
 import com.google.common.base.Predicate;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
-import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -24,11 +22,12 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 public class CleavingAffix extends Affix {
 
-	protected static final Float2FloatFunction CHANCE_FUNC = AffixHelper.step(0.3F, 4, 0.05F);
-	protected static final Float2IntFunction TARGETS_FUNC = AffixHelper.step(2, 5, 1);
+	protected static final StepFunction CHANCE_FUNC = AffixHelper.step(0.3F, 4, 0.05F);
+	protected static final StepFunction TARGETS_FUNC = AffixHelper.step(2, 5, 1);
 	private static boolean cleaving = false;
 
 	public CleavingAffix() {
@@ -53,7 +52,7 @@ public class CleavingAffix extends Affix {
 		// We want targets to sort of be separate from chance, so we modulo and double.
 		level %= 0.5F;
 		level *= 2;
-		return (rarity.ordinal() - LootRarity.RARE.ordinal()) * 2 + TARGETS_FUNC.get(level);
+		return (rarity.ordinal() - LootRarity.RARE.ordinal()) * 2 + TARGETS_FUNC.getInt(level);
 	}
 
 	@Override

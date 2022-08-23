@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.affix.effect;
 
 import java.util.function.Consumer;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -17,10 +16,11 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 public class SpectralShotAffix extends Affix {
 
-	protected static final Float2FloatFunction LEVEL_FUNC = AffixHelper.step(0.2F, 8, 0.05F);
+	protected static final StepFunction LEVEL_FUNC = AffixHelper.step(0.2F, 8, 0.05F);
 
 	public SpectralShotAffix() {
 		super(AffixType.EFFECT);

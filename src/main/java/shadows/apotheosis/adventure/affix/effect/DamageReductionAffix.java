@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -19,13 +18,14 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
 
 	private final DamageType type;
-	private final Map<LootRarity, Float2FloatFunction> levelFuncs;
+	private final Map<LootRarity, StepFunction> levelFuncs;
 
-	public DamageReductionAffix(DamageType type, Map<LootRarity, Float2FloatFunction> levelFuncs) {
+	public DamageReductionAffix(DamageType type, Map<LootRarity, StepFunction> levelFuncs) {
 		super(AffixType.EFFECT);
 		this.type = type;
 		this.levelFuncs = levelFuncs;
@@ -89,13 +89,13 @@ public class DamageReductionAffix extends Affix {
 	public static class Builder {
 
 		private final DamageType type;
-		private final Map<LootRarity, Float2FloatFunction> levels = new HashMap<>();
+		private final Map<LootRarity, StepFunction> levels = new HashMap<>();
 
 		public Builder(DamageType type) {
 			this.type = type;
 		}
 
-		public Builder with(LootRarity rarity, Float2FloatFunction levelFunc) {
+		public Builder with(LootRarity rarity, StepFunction levelFunc) {
 			this.levels.put(rarity, levelFunc);
 			return this;
 		}

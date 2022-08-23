@@ -86,7 +86,7 @@ public class LootController {
 	 */
 	public static ItemStack createRandomLootItem(Random rand, int rarityOffset, float luck, ServerLevelAccessor level) {
 		LootRarity rarity = LootRarity.random(rand, rarityOffset);
-		AffixLootEntry entry = AffixLootManager.getRandomEntry(rand, luck, level);
+		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, luck, level);
 		if (entry == null) return ItemStack.EMPTY;
 		return createLootItem(entry.getStack(), entry.getType(), rarity, rand);
 	}

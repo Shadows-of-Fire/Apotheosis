@@ -8,8 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
-import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -85,6 +83,7 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
 import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.util.NameHelper;
+import shadows.apotheosis.util.StepFunction;
 import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
 
@@ -260,7 +259,7 @@ public class AdventureModule {
 				.types(LootCategory::isDefensive).build("stalwart"),
 
 				new PotionAffix.Builder(() -> MobEffects.DAMAGE_RESISTANCE)
-				.with(LootRarity.RARE, step(20, 30, 2), l -> 0)
+				.with(LootRarity.RARE, step(20, 30, 2), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(40, 50, 2), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(60, 70, 2), step(0, 1, 1))
 				.with(LootRarity.ANCIENT, step(100, 100, 4), step(1, 2, 1))
@@ -268,9 +267,9 @@ public class AdventureModule {
 				.build(AffixType.EFFECT, Target.HURT_SELF, "bolstering"),
 
 				new PotionAffix.Builder(() -> MobEffects.HEAL)
-				.with(LootRarity.EPIC, l -> 1, step(0, 1, 1))
-				.with(LootRarity.MYTHIC, l -> 1, step(0, 2, 1))
-				.with(LootRarity.ANCIENT, l -> 1, step(1, 3, 1))
+				.with(LootRarity.EPIC, step(1, 1, 0), step(0, 1, 1))
+				.with(LootRarity.MYTHIC, step(1, 1, 0), step(0, 2, 1))
+				.with(LootRarity.ANCIENT, step(1, 1, 0), step(1, 3, 1))
 				.types(l -> l == LootCategory.ARMOR)
 				.build(AffixType.EFFECT, Target.HURT_SELF, "revitalizing"),
 
@@ -482,50 +481,50 @@ public class AdventureModule {
 				new DurableAffix().setRegistryName("durable"),
 
 				new PotionAffix.Builder(() -> MobEffects.MOVEMENT_SPEED)
-				.with(LootRarity.RARE, step(100, 5, 20), l -> 0)
-				.with(LootRarity.EPIC, step(140, 8, 20), l -> 0)
+				.with(LootRarity.RARE, step(100, 5, 20), step(0, 1, 0))
+				.with(LootRarity.EPIC, step(140, 8, 20), step(0, 1, 0))
 				.with(LootRarity.MYTHIC, step(180, 10, 20), step(0, 1, 1))
-				.with(LootRarity.ANCIENT, step(240, 10, 40), l -> 2)
+				.with(LootRarity.ANCIENT, step(240, 10, 40), step(2, 1, 0))
 				.types(LootCategory::isWeapon)
 				.build(AffixType.EFFECT, Target.ATTACK_SELF, "elusive"),
 
 				new PotionAffix.Builder(() -> MobEffects.DIG_SPEED)
-				.with(LootRarity.RARE, step(100, 5, 20), l -> 0)
+				.with(LootRarity.RARE, step(100, 5, 20), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(140, 8, 20), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(180, 10, 20), step(0, 1, 2))
-				.with(LootRarity.ANCIENT, step(240, 10, 40), l -> 2)
+				.with(LootRarity.ANCIENT, step(240, 10, 40), step(2, 1, 0))
 				.types(l -> l == LootCategory.BREAKER)
 				.build(AffixType.EFFECT, Target.BREAK_SELF, "swift"),
 
 				new PotionAffix.Builder(() -> MobEffects.MOVEMENT_SLOWDOWN)
-				.with(LootRarity.RARE, step(20, 2, 20), l -> 0)
+				.with(LootRarity.RARE, step(20, 2, 20), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(60, 8, 20), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(80, 10, 20), step(0, 1, 2))
-				.with(LootRarity.ANCIENT, step(120, 10, 40), l -> 2)
+				.with(LootRarity.ANCIENT, step(120, 10, 40), step(2, 1, 0))
 				.types(LootCategory::isRanged)
 				.build(AffixType.EFFECT, Target.ARROW_TARGET, "ensnaring"),
 
 				new PotionAffix.Builder(() -> MobEffects.POISON)
-				.with(LootRarity.RARE, step(60, 5, 20), l -> 0)
+				.with(LootRarity.RARE, step(60, 5, 20), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(100, 8, 20), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(120, 10, 20), step(0, 1, 2))
-				.with(LootRarity.ANCIENT, step(160, 10, 40), l -> 2)
+				.with(LootRarity.ANCIENT, step(160, 10, 40), step(2, 1, 0))
 				.types(l -> l == LootCategory.SHIELD)
 				.build(AffixType.EFFECT, Target.BLOCK_ATTACKER, "venomous"),
 
 				new PotionAffix.Builder(() -> MobEffects.MOVEMENT_SPEED)
-				.with(LootRarity.RARE, step(60, 5, 20), l -> 0)
-				.with(LootRarity.EPIC, step(80, 8, 20), l -> 0)
+				.with(LootRarity.RARE, step(60, 5, 20), step(0, 1, 0))
+				.with(LootRarity.EPIC, step(80, 8, 20), step(0, 1, 0))
 				.with(LootRarity.MYTHIC, step(100, 10, 20), step(0, 1, 1))
-				.with(LootRarity.ANCIENT, step(120, 10, 40), l -> 2)
+				.with(LootRarity.ANCIENT, step(120, 10, 40), step(2, 1, 0))
 				.types(LootCategory::isRanged)
 				.build(AffixType.EFFECT, Target.ARROW_SELF, "fleeting"),
 
 				new PotionAffix.Builder(() -> MobEffects.WEAKNESS)
-				.with(LootRarity.RARE, step(40, 5, 20), l -> 0)
+				.with(LootRarity.RARE, step(40, 5, 20), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(60, 8, 20), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(80, 10, 20), step(0, 1, 1))
-				.with(LootRarity.ANCIENT, step(120, 10, 40), l -> 2)
+				.with(LootRarity.ANCIENT, step(120, 10, 40), step(2, 1, 0))
 				.types(LootCategory::isWeapon)
 				.build(AffixType.EFFECT, Target.ATTACK_TARGET, "weakening"),
 
@@ -539,7 +538,7 @@ public class AdventureModule {
 				new PotionAffix.Builder(() -> MobEffects.WITHER)
 				.with(LootRarity.EPIC, step(40, 8, 20), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(60, 10, 20), step(0, 1, 2))
-				.with(LootRarity.ANCIENT, step(100, 10, 40), l -> 2)
+				.with(LootRarity.ANCIENT, step(100, 10, 40), step(2, 1, 0))
 				.types(l -> l == LootCategory.SHIELD)
 				.build(AffixType.EFFECT, Target.BLOCK_ATTACKER, "withering"),
 
@@ -584,7 +583,7 @@ public class AdventureModule {
 				.with(LootRarity.RARE, step(0.15F, 10, 0.01F))
 				.with(LootRarity.EPIC, step(0.40F, 15, 0.01F))
 				.with(LootRarity.MYTHIC, step(0.75F, 25, 0.01F))
-				.with(LootRarity.ANCIENT, l -> 1)
+				.with(LootRarity.ANCIENT, step(1, 1, 0))
 				.build("feathery"),
 
 				new SpectralShotAffix().setRegistryName("spectral"),
@@ -611,7 +610,7 @@ public class AdventureModule {
 				.build(AffixType.EFFECT, Target.ARROW_TARGET, "acidic"),
 
 				new PotionAffix.Builder(() -> Apoth.Effects.SUNDERING)
-				.with(LootRarity.RARE, step(30, 15, 5), l -> 0)
+				.with(LootRarity.RARE, step(30, 15, 5), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(40, 15, 5), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(60, 20, 5), step(1, 1, 1))
 				.with(LootRarity.ANCIENT, step(100, 20, 5), step(2, 1, 1))
@@ -619,7 +618,7 @@ public class AdventureModule {
 				.build(AffixType.EFFECT, Target.ATTACK_TARGET, "caustic"),
 
 				new PotionAffix.Builder(() -> Apoth.Effects.KNOWLEDGE)
-				.with(LootRarity.RARE, step(30, 15, 5), l -> 0)
+				.with(LootRarity.RARE, step(30, 15, 5), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(40, 15, 5), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(60, 20, 5), step(1, 1, 1))
 				.with(LootRarity.ANCIENT, step(100, 20, 5), step(2, 1, 1))
@@ -627,7 +626,7 @@ public class AdventureModule {
 				.build(AffixType.EFFECT, Target.ATTACK_SELF, "sophisticated"),
 
 				new PotionAffix.Builder(() -> Apoth.Effects.BLEEDING)
-				.with(LootRarity.RARE, step(60, 15, 5), l -> 0)
+				.with(LootRarity.RARE, step(60, 15, 5), step(0, 1, 0))
 				.with(LootRarity.EPIC, step(90, 15, 5), step(0, 1, 1))
 				.with(LootRarity.MYTHIC, step(120, 20, 5), step(1, 1, 1))
 				.with(LootRarity.ANCIENT, step(200, 20, 5), step(2, 1, 1))
@@ -645,11 +644,7 @@ public class AdventureModule {
 	 * @param step The value per step
 	 * @return A level function according to these rules
 	 */
-	private static Float2FloatFunction step(float min, int steps, float step) {
-		return AffixHelper.step(min, steps, step);
-	}
-
-	private static Float2IntFunction step(int min, int steps, int step) {
+	private static StepFunction step(float min, int steps, float step) {
 		return AffixHelper.step(min, steps, step);
 	}
 

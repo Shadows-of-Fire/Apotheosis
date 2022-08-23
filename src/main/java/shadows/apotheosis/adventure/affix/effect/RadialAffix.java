@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,11 +31,12 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 import shadows.placebo.util.PlaceboUtil;
 
 public class RadialAffix extends Affix {
 
-	protected static final Float2IntFunction SIZE_FUNC = AffixHelper.step(1, 2, 1);
+	protected static final StepFunction SIZE_FUNC = AffixHelper.step(1, 2, 1);
 	private static Set<UUID> breakers = new HashSet<>();
 
 	public RadialAffix() {
@@ -68,7 +68,7 @@ public class RadialAffix extends Affix {
 	}
 
 	private static int getTrueLevel(LootRarity rarity, float level) {
-		return Mth.clamp(rarity.ordinal() - LootRarity.RARE.ordinal() + SIZE_FUNC.get(level), 1, 4);
+		return Mth.clamp(rarity.ordinal() - LootRarity.RARE.ordinal() + SIZE_FUNC.getInt(level), 1, 4);
 	}
 
 	/**

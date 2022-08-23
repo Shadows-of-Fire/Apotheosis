@@ -21,8 +21,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.AdventureModule;
@@ -31,11 +31,11 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.placebo.PlaceboClient.RainbowColor;
 
-public record LootRarity(int defaultWeight, String id, TextColor color, List<LootRule> rules, int ordinal) implements WeightedEntry {
+public record LootRarity(int defaultWeight, String id, TextColor color, List<LootRule> rules, int ordinal) {
 
 	public static final List<LootRarity> LIST;
 	public static final Map<String, LootRarity> BY_ID;
-	public static final Map<LootRarity, Weight> WEIGHTS = new HashMap<>();
+	public static final Map<LootRarity, float[]> WEIGHTS = new HashMap<>();
 
 	//Formatter::off
 	public static final LootRarity COMMON = new LootRarity(400, "common", 0x808080, ImmutableList.of(
@@ -111,14 +111,16 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	/**
 	 * Returns the minimum (worst) rarity between this and other.
 	 */
-	public LootRarity min(LootRarity other) {
+	public LootRarity min(@Nullable LootRarity other) {
+		if (other == null) return this;
 		return this.ordinal <= other.ordinal ? this : other;
 	}
 
 	/**
 	 * Returns the maximum (best) rarity between this and other.
 	 */
-	public LootRarity max(LootRarity other) {
+	public LootRarity max(@Nullable LootRarity other) {
+		if (other == null) return this;
 		return this.ordinal >= other.ordinal ? this : other;
 	}
 
@@ -136,6 +138,10 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 		return new TranslatableComponent("rarity.apoth." + this.id).withStyle(Style.EMPTY.withColor(this.color));
 	}
 
+	public int getModifiedWeight(float luck) {
+		return (int) (WEIGHTS.get(this)[0] + WEIGHTS.get(this)[1] * luck);
+	}
+
 	public static LootRarity byId(String id) {
 		return BY_ID.get(id);
 	}
@@ -148,12 +154,12 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 		return BY_ID.values();
 	}
 
-	public static LootRarity random(Random rand) {
-		return random(rand, null, null);
+	public static LootRarity random(Random rand, float luck) {
+		return random(rand, luck, null, null);
 	}
 
-	public static LootRarity random(Random rand, LootRarity min) {
-		return random(rand, min, null);
+	public static LootRarity random(Random rand, float luck, LootRarity min) {
+		return random(rand, luck, min, null);
 	}
 
 	/**
@@ -167,8 +173,9 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	 * Ancient     | 0.5% <br>
 	 * @return A random loot rarity, offset by the given min value.
 	 */
-	public static LootRarity random(Random rand, @Nullable LootRarity min, @Nullable LootRarity max) {
-		return WeightedRandom.getRandomItem(rand, LIST).map(l -> l.clamp(min, max)).get();
+	public static LootRarity random(Random rand, float luck, @Nullable LootRarity min, @Nullable LootRarity max) {
+		List<Wrapper<LootRarity>> list = LIST.stream().map(r -> WeightedEntry.wrap(r, r.getModifiedWeight(luck))).toList();
+		return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).map(l -> l.clamp(min, max)).get();
 	}
 
 	public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
@@ -195,10 +202,5 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 			}
 		}
 
-	}
-
-	@Override
-	public Weight getWeight() {
-		return WEIGHTS.get(this);
 	}
 }

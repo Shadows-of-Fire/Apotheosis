@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -194,30 +195,36 @@ public class AdventureModuleEvents {
 		}
 	}
 
+	private static boolean noRecurse = false;
+
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void attack(LivingAttackEvent e) {
 		if (e.getEntity().level.isClientSide) return;
+		if (noRecurse) return;
+		noRecurse = true;
 		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
 			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE) - 1;
 			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE);
 			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE);
 			LivingEntity target = e.getEntityLiving();
 			int time = target.invulnerableTime;
-			if (target.invulnerableTime < 10) {
-				if (hpDmg > 0.001) {
-					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
-				}
-				if (fireDmg > 0.001) {
-					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * fireDmg);
-					target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (15 * fireDmg)));
-				}
-				if (coldDmg > 0.001) {
-					((LivingEntityInvoker) target).callActuallyHurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * coldDmg);
-					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
-				}
+			target.invulnerableTime = 0;
+			if (hpDmg > 0.001) {
+				target.hurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
+			}
+			target.invulnerableTime = 0;
+			if (fireDmg > 0.001) {
+				target.hurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * fireDmg);
+				target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (15 * fireDmg)));
+			}
+			target.invulnerableTime = 0;
+			if (coldDmg > 0.001) {
+				target.hurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * coldDmg);
+				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
 			}
 			target.invulnerableTime = time;
 		}
+		noRecurse = false;
 	}
 
 	private static DamageSource src(LivingEntity entity) {
@@ -304,12 +311,12 @@ public class AdventureModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void dropsHigh(LivingDropsEvent e) {
-		if (e.getSource().getEntity() instanceof Player p) {
+		if (e.getSource().getEntity() instanceof ServerPlayer p) {
 			if (p instanceof FakePlayer) return;
 			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
 			if (p.random.nextFloat() <= chance) {
 				Entity ent = e.getEntity();
-				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck()), 0, 0, 0));
+				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck(), p.getLevel()), 0, 0, 0));
 			}
 		}
 	}

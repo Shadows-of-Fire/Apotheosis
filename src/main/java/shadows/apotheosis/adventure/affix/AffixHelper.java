@@ -9,8 +9,6 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
-import it.unimi.dsi.fastutil.floats.Float2IntFunction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -23,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.StepFunction;
 
 public class AffixHelper {
 
@@ -131,19 +130,8 @@ public class AffixHelper {
 		reg.forEach(a -> BY_TYPE.put(a.getType(), a));
 	}
 
-	/**
-	 * Level Function that allows for only returning "nice" stepped numbers.
-	 * @param min The min value
-	 * @param steps The max number of steps
-	 * @param step The value per step
-	 * @return A level function according to these rules
-	 */
-	public static Float2FloatFunction step(float min, int steps, float step) {
-		return level -> min + (int) (steps * (level + 0.5F / steps)) * step;
-	}
-
-	public static Float2IntFunction step(int min, int steps, int step) {
-		return level -> min + (int) (steps * (level + 0.5F / steps)) * step;
+	public static StepFunction step(float min, int steps, float step) {
+		return new StepFunction(min, steps, step);
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -15,8 +16,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -68,11 +67,13 @@ public class AdventureConfig {
 		c.setTitle("Apotheosis Adventure Module Config");
 		for (LootRarity r : LootRarity.values()) {
 			if (r != LootRarity.ANCIENT) {
-				int weight = c.getInt(r.id(), "rarity", r.defaultWeight(), 0, 10000, "The weight of this rarity.  The chance of this rarity appearing is <weight>/<total weight>.");
-				LootRarity.WEIGHTS.put(r, Weight.of(weight));
+				int weight = c.getInt(r.id() + " weight", "rarities", r.defaultWeight(), 0, 10000, "The weight of this rarity.  The chance of this rarity appearing is <weight>/<total weight>.");
+				float quality = c.getFloat(r.id() + " quality", "rarities", r.ordinal() * 1.5F, 0, 100, "The quality of this rarity.  Each point of luck increases the weight of this rarity by the quality value.");
+				LootRarity.WEIGHTS.put(r, new float[] { weight, quality });
 			}
+			LootRarity.WEIGHTS.put(LootRarity.ANCIENT, new float[] { 0, 0 });
 		}
-		if (WeightedRandom.getTotalWeight(LootRarity.LIST) == 0) {
+		if (LootRarity.WEIGHTS.values().stream().collect(Collectors.summarizingInt(arr -> (int) arr[0])).getSum() <= 0) {
 			throw new RuntimeException("The total loot rarity weight may not be zero!");
 		}
 
