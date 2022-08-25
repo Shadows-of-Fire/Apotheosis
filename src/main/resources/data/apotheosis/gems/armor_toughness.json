@@ -5,8 +5,8 @@
 	"attribute": "minecraft:generic.armor_toughness",
 	"operation": "ADDITION",
 	"value": {
-		"min": 4,
-		"steps": 8,
+		"min": 1,
+		"steps": 4,
 		"step": 0.5
 	}
 }

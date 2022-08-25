@@ -5,7 +5,7 @@
 	"attribute": "minecraft:generic.attack_knockback",
 	"operation": "ADDITION",
 	"value": {
-		"min": 1,
+		"min": 0.5,
 		"steps": 5,
 		"step": 0.5
 	}

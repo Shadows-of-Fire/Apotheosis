@@ -6,7 +6,7 @@
 	"operation": "ADDITION",
 	"value": {
 		"min": 3,
-		"steps": 10,
+		"steps": 11,
 		"step": 0.5
 	}
 }
