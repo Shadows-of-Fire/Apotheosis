@@ -22,6 +22,7 @@
 * Added more configs to adjust boss announcements.
 * Reduced gem stats across the board, and adjusted them to be + % Base instead of + % Total.
 * Adjusted default boss spawn rates.
+* Nerfed crit affixes.  Multiplicative things are scary, mk?
 
 ## 5.5.1
 * Hotfix for some more really weird array-list-index bugs that should be impossible.
