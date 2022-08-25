@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.util.StepFunction;
+import shadows.placebo.util.StepFunction;
 
 public class AffixHelper {
 

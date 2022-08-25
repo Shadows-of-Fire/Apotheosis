@@ -20,6 +20,7 @@ public class SocketHelper {
 
 	public static List<ItemStack> getGems(ItemStack stack, int size) {
 		List<ItemStack> gems = NonNullList.withSize(size, ItemStack.EMPTY);
+		if (size == 0) return gems;
 		int i = 0;
 		CompoundTag afxData = stack.getTagElement(AffixHelper.AFFIX_DATA);
 		if (afxData != null && afxData.contains(GEMS)) {

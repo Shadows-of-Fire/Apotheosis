@@ -1,5 +1,6 @@
 {
 	"weight": 90,
+	"quality": 2.5,
 	"mainhands": [{
 			"weight": 3,
 			"stack": {
@@ -39,6 +40,6 @@
 		}
 	}],
 	"tags": [
-		"overworld"
+		"overworld_bow"
 	]
 }

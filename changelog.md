@@ -1,4 +1,9 @@
-## 5.5.2
+## 5.6.0
+* Consider this to be "Major Balance Pass #1"
+* Bosses now have per-rarity scaling!
+  * This means that bosses will have adequately scaled difficulties based on their rewards.
+  * The old system simply had rarity selection be independent of boss stats.
+  * Bosses may seem significantly weaker (except mythic and perhaps epic bosses).
 * Fixed the executing affix crashing clients.
 * Fixed a few adventure.cfg options being in the wrong categories.
   * This may invalidate some config changes - re-check them!
@@ -13,7 +18,10 @@
   * Overworld: Common to Rare
   * Nether and Twilght: Uncommon to Epic
   * End: Rare to Mythic
-
+  * Bosses do not explicitly follow those guidelines.
+* Added more configs to adjust boss announcements.
+* Reduced gem stats across the board, and adjusted them to be + % Base instead of + % Total.
+* Adjusted default boss spawn rates.
 
 ## 5.5.1
 * Hotfix for some more really weird array-list-index bugs that should be impossible.

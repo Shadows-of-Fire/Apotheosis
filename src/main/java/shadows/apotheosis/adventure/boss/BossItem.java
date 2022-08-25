@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.boss;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,23 +57,19 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 	protected float quality;
 	protected EntityType<?> entity;
 	protected AABB size;
-	@SerializedName("enchant_chance")
-	protected float enchantChance;
-	/**
-	 * The enchantment levels for a specific boss.  Order is {<Generic with EnchModule>, <Generic without>, <Affix with>, <Affix without>}.
-	 */
-	@SerializedName("enchantment_levels")
-	protected int[] enchLevels;
-	protected List<ChancedEffectInstance> effects;
+	protected Map<LootRarity, BossStats> stats;
+
 	@SerializedName("valid_gear_sets")
 	protected List<SetPredicate> armorSets;
-	@SerializedName("attribute_modifiers")
-	protected List<RandomAttributeModifier> modifiers;
+
 	@SerializedName("nbt")
 	protected CompoundTag customNbt;
+
 	protected Set<ResourceLocation> dimensions;
+
 	@SerializedName("min_rarity")
 	protected LootRarity minRarity;
+
 	@SerializedName("max_rarity")
 	protected LootRarity maxRarity;
 
@@ -134,22 +129,24 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 	 * @param entity
 	 */
 	public void initBoss(Random rand, Mob entity, float luck) {
+		LootRarity rarity = this.clamp(LootRarity.random(rand, luck));
+		BossStats stats = this.stats.get(rarity);
 		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
-		for (ChancedEffectInstance inst : this.effects) {
+		for (ChancedEffectInstance inst : stats.effects) {
 			if (rand.nextFloat() <= inst.getChance()) {
 				entity.addEffect(inst.createInstance(rand, duration));
 			}
 		}
 
-		for (RandomAttributeModifier modif : this.modifiers) {
+		for (RandomAttributeModifier modif : stats.modifiers) {
 			modif.apply(rand, entity);
 		}
 
 		entity.goalSelector.availableGoals.removeIf(IS_VILLAGER_ATTACK);
 		String name = NameHelper.setEntityName(rand, entity);
 
-		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, this.armorSets);
+		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.armorSets);
 		set.apply(entity);
 
 		boolean anyValid = false;
@@ -177,11 +174,10 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, 0.03F);
 			if (s.ordinal() == guaranteed) {
-				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck));
-				LootRarity rarity = AffixHelper.getRarity(stack);
+				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck, rarity));
 				entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
-			} else if (rand.nextFloat() < this.enchantChance) {
-				List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? this.enchLevels[0] : this.enchLevels[1], true);
+			} else if (rand.nextFloat() < stats.enchantChance) {
+				List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[0] : stats.enchLevels[1], true);
 				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max, HashMap::new)), stack);
 				entity.setItemSlot(s, stack);
 			}
@@ -190,10 +186,11 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 		entity.setHealth(entity.getMaxHealth());
 	}
 
-	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName, float luck) {
-		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(random, stack, Apotheosis.enableEnch ? this.enchLevels[2] : this.enchLevels[3], true);
+	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName, float luck, LootRarity rarity) {
+		BossStats stats = this.stats.get(rarity);
+		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(random, stack, Apotheosis.enableEnch ? stats.enchLevels[2] : stats.enchLevels[3], true);
 		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max)), stack);
-		LootRarity rarity = this.clamp(LootRarity.random(random, luck));
+
 		NameHelper.setItemName(random, stack);
 		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, random);
 
@@ -232,7 +229,18 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 		Preconditions.checkArgument(this.quality >= 0, "Boss Item " + this.id + " has a negative quality!");
 		Preconditions.checkNotNull(this.entity, "Boss Item " + this.id + " has null entity type!");
 		Preconditions.checkNotNull(this.size, "Boss Item " + this.id + " has no size!");
-		Preconditions.checkArgument(this.enchLevels != null && this.enchLevels.length == 4 && Arrays.stream(this.enchLevels).allMatch(i -> i >= 0), "Boss Item " + this.id + " has invalid ench levels: " + this.enchLevels);
+		if (this.minRarity != null) {
+			Preconditions.checkArgument(this.maxRarity == null || this.maxRarity.isAtLeast(this.minRarity));
+		}
+		if (this.maxRarity != null) {
+			Preconditions.checkArgument(this.minRarity == null || this.maxRarity.isAtLeast(this.minRarity));
+		}
+		LootRarity r = LootRarity.COMMON.max(this.minRarity);
+		while (r != LootRarity.ANCIENT) {
+			Preconditions.checkNotNull(this.stats.get(r));
+			if (r == this.maxRarity) break;
+			r = LootRarity.LIST.get(r.ordinal() + 1);
+		}
 		return this;
 	}
 

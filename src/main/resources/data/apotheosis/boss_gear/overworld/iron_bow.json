@@ -1,5 +1,6 @@
 {
 	"weight": 80,
+	"quality": 5,
 	"mainhands": [{
 			"weight": 3,
 			"stack": {

@@ -31,8 +31,8 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.util.StepFunction;
 import shadows.placebo.util.PlaceboUtil;
+import shadows.placebo.util.StepFunction;
 
 public class RadialAffix extends Affix {
 

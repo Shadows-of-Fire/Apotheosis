@@ -54,13 +54,13 @@ public class BossEvents {
 						e.setResult(Result.DENY);
 						AdventureModule.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());
 						sLevel.players().forEach(p -> {
-							Vec3 tPos = new Vec3(boss.getX(), p.getY(), boss.getZ());
+							Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
 							if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
 								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(new TranslatableComponent("info.apotheosis.boss_spawn", boss.getCustomName(), (int) boss.getX(), (int) boss.getY())));
 								PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), boss.getCustomName().getStyle().getColor().getValue()), player);
 							}
 						});
-						sLevel.playSound(null, boss.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceRange / 16, 1.25F);
+						if (AdventureConfig.bossAnnounceSound) sLevel.playSound(null, boss.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceRange / 16, 1.25F);
 					}
 				}
 			}

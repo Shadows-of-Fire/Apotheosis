@@ -15,7 +15,7 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.util.StepFunction;
+import shadows.placebo.util.StepFunction;
 
 public class EnlightenedAffix extends Affix {
 

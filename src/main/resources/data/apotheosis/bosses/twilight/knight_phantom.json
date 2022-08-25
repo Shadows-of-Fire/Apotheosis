@@ -5,62 +5,130 @@
 	}],
 	"entity": "twilightforest:knight_phantom",
 	"weight": 65,
+	"quality": 5,
 	"size": {
 		"width": 1.4,
 		"height": 1.4
 	},
-	"enchant_chance": 0.4,
-	"rarity_offset": 500,
-	"enchantment_levels": [30, 25, 50, 40],
-	"effects": [{
-		"effect": "minecraft:fire_resistance",
-		"chance": 1.0
-	}],
-	"attribute_modifiers": [{
-			"attribute": "minecraft:generic.max_health",
-			"operation": "MULTIPLY_TOTAL",
-			"value": {
-				"min": 4,
-				"max": 10
-			}
-		},
-		{
-			"attribute": "minecraft:generic.movement_speed",
-			"operation": "MULTIPLY_TOTAL",
-			"value": {
-				"min": 0.10,
-				"max": 0.25
-			}
-		},
-		{
-			"attribute": "minecraft:generic.armor",
-			"operation": "MULTIPLY_TOTAL",
-			"value": {
-				"min": 0.20,
-				"max": 0.70
-			}
-		},
-		{
-			"attribute": "minecraft:generic.attack_damage",
-			"operation": "MULTIPLY_TOTAL",
-			"value": {
-				"min": 3,
-				"max": 6.5
-			}
-		},
-		{
-			"attribute": "minecraft:generic.knockback_resistance",
-			"operation": "ADDITION",
-			"value": {
-				"min": 0.65,
-				"max": 0.7
-			}
-		}
-	],
 	"valid_gear_sets": [
 		"#twilight"
 	],
 	"dimensions": [
 		"twilightforest:twilight_forest"
-	]
+	],
+	"min_rarity": "epic",
+	"max_rarity": "mythic",
+	"stats": {
+		"epic": {
+			"enchant_chance": 0.75,
+			"enchantment_levels": [26, 22, 40, 30],
+			"effects": [{
+				"effect": "minecraft:fire_resistance",
+				"chance": 1.0
+			}],
+			"attribute_modifiers": [{
+					"attribute": "minecraft:generic.max_health",
+					"operation": "ADDITION",
+					"value": {
+						"min": 120,
+						"steps": 75,
+						"step": 2
+					}
+				},
+				{
+					"attribute": "minecraft:generic.movement_speed",
+					"operation": "MULTIPLY_BASE",
+					"value": {
+						"min": 0.12,
+						"steps": 25,
+						"step": 0.01
+					}
+				},
+				{
+					"attribute": "minecraft:generic.attack_damage",
+					"operation": "MULTIPLY_BASE",
+					"value": {
+						"min": 0.32,
+						"steps": 35,
+						"step": 0.01
+					}
+				},
+				{
+					"attribute": "minecraft:generic.knockback_resistance",
+					"operation": "ADDITION",
+					"value": 0.55
+				},
+				{
+					"attribute": "minecraft:generic.armor",
+					"operation": "ADDITION",
+					"value": 8
+				},
+				{
+					"attribute": "minecraft:generic.armor_toughness",
+					"operation": "ADDITION",
+					"value": 4.5
+				}
+			]
+		},
+		"mythic": {
+			"enchant_chance": 0.85,
+			"enchantment_levels": [30, 25, 48, 35],
+			"effects": [{
+				"effect": "minecraft:fire_resistance",
+				"chance": 1.0
+			}],
+			"attribute_modifiers": [{
+					"attribute": "minecraft:generic.max_health",
+					"operation": "ADDITION",
+					"value": {
+						"min": 180,
+						"steps": 75,
+						"step": 2
+					}
+				},
+				{
+					"attribute": "minecraft:generic.movement_speed",
+					"operation": "MULTIPLY_BASE",
+					"value": {
+						"min": 0.15,
+						"steps": 35,
+						"step": 0.01
+					}
+				},
+				{
+					"attribute": "minecraft:generic.flying_speed",
+					"operation": "MULTIPLY_BASE",
+					"value": {
+						"min": 0.15,
+						"steps": 35,
+						"step": 0.01
+					}
+				},
+				{
+					"attribute": "minecraft:generic.attack_damage",
+					"operation": "MULTIPLY_BASE",
+					"value": {
+						"min": 0.32,
+						"steps": 35,
+						"step": 0.01
+					}
+				},
+				{
+					"attribute": "minecraft:generic.knockback_resistance",
+					"operation": "ADDITION",
+					"value": 0.65
+				},
+				{
+					"attribute": "minecraft:generic.armor",
+					"operation": "ADDITION",
+					"value": 10
+				},
+				{
+					"attribute": "minecraft:generic.armor_toughness",
+					"operation": "ADDITION",
+					"value": 6
+				}
+			]
+		}
+	}
 }

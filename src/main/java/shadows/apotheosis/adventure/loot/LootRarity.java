@@ -150,6 +150,11 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 		return (int) (WEIGHTS.get(this)[0] + WEIGHTS.get(this)[1] * luck);
 	}
 
+	@Override
+	public String toString() {
+		return this.id;
+	}
+
 	public static LootRarity byId(String id) {
 		return BY_ID.get(id);
 	}

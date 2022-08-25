@@ -5,9 +5,9 @@ import java.util.Set;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import shadows.apotheosis.util.StepFunction;
 import shadows.placebo.json.DimWeightedJsonReloadListener.IDimWeighted;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.util.StepFunction;
 
 public final class Gem extends TypeKeyedBase<Gem> implements IDimWeighted {
 

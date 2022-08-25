@@ -43,9 +43,10 @@ public class AdventureConfig {
 	public static final List<LootPatternMatcher> GEM_LOOT_RULES = new ArrayList<>();
 
 	//Boss Stats
-	public static boolean announceBossSpawns = true;
 	public static boolean curseBossItems = false;
 	public static float bossAnnounceRange = 96;
+	public static boolean bossAnnounceSound = false;
+	public static boolean bossAnnounceIgnoreY = false;
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
@@ -148,11 +149,12 @@ public class AdventureConfig {
 			}
 		};
 
-		announceBossSpawns = c.getBoolean("Announce Boss Spawns", "bosses", true, "If boss spawns are announced via beam, chat message, and a sound.");
 		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", false, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
 		bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", 96, 0, 1024, "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.");
+		bossAnnounceSound = c.getBoolean("Boss Announce Sound", "bosses", true, "If the boss announcement plays a sound.");
+		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", true, "If the boss announcement range ignores y-level.");
 
-		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.015|NEEDS_SKY", "minecraft:the_nether|0.02|ANY", "minecraft:the_end|0.025|NEEDS_SURFACE", "twilightforest:twilight_forest|0.02|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
+		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.012|NEEDS_SKY", "minecraft:the_nether|0.023|ANY", "minecraft:the_end|0.008|NEEDS_SURFACE", "twilightforest:twilight_forest|0.02|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();
 		for (String s : dims) {
 			try {

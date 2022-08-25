@@ -13,27 +13,24 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.google.gson.annotations.Expose;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 /**
  * Util class to contain the full equipment for an entity.
  * @author Shadows
  *
  */
-public class GearSet extends TypeKeyedBase<GearSet> implements WeightedEntry {
+public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 
-	@Expose(deserialize = false)
-	private Weight _weight;
 	protected final int weight;
+	protected final float quality;
 	protected final List<WeightedItemStack> mainhands;
 	protected final List<WeightedItemStack> offhands;
 	protected final List<WeightedItemStack> boots;
@@ -42,8 +39,9 @@ public class GearSet extends TypeKeyedBase<GearSet> implements WeightedEntry {
 	protected final List<WeightedItemStack> helmets;
 	protected final List<String> tags = new ArrayList<>();
 
-	public GearSet(int weight, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets) {
+	public GearSet(int weight, float quality, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets) {
 		this.weight = weight;
+		this.quality = quality;
 		this.mainhands = mainhands;
 		this.offhands = offhands;
 		this.boots = boots;
@@ -53,9 +51,13 @@ public class GearSet extends TypeKeyedBase<GearSet> implements WeightedEntry {
 	}
 
 	@Override
-	public Weight getWeight() {
-		if (this._weight == null) this._weight = Weight.of(this.weight);
-		return this._weight;
+	public int getWeight() {
+		return this.weight;
+	}
+
+	@Override
+	public float getQuality() {
+		return this.quality;
 	}
 
 	/**

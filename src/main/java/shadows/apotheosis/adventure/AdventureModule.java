@@ -83,9 +83,9 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
 import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.util.NameHelper;
-import shadows.apotheosis.util.StepFunction;
 import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.util.StepFunction;
 
 public class AdventureModule {
 
