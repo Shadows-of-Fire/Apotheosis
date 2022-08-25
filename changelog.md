@@ -1,3 +1,6 @@
+## 5.6.1
+* Hotfix for a crash caused by dimensions without affix loot entries.
+
 ## 5.6.0
 * Consider this to be "Major Balance Pass #1"
 * Bosses now have per-rarity scaling!

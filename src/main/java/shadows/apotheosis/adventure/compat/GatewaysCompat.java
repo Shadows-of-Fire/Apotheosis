@@ -48,7 +48,7 @@ public class GatewaysCompat {
 
 		@Override
 		public LivingEntity createEntity(Level level) {
-			BossItem realBoss = this.boss == null ? BossItemManager.INSTANCE.getRandomItem(level.random, (ServerLevel) level) : this.boss;
+			BossItem realBoss = this.boss == null ? BossItemManager.INSTANCE.getRandomItem(level.random) : this.boss;
 			if (realBoss == null) return null; // error condition
 			return realBoss.createBoss((ServerLevelAccessor) level, BlockPos.ZERO, level.random, 0);
 		}
@@ -143,7 +143,7 @@ public class GatewaysCompat {
 
 		@Override
 		public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-			list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck(), level).getStack(), rarity, level.random));
+			list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck()).getStack(), rarity, level.random));
 		}
 
 		@Override

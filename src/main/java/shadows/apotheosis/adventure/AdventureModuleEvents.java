@@ -351,7 +351,8 @@ public class AdventureModuleEvents {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
 			e.setCanceled(true);
 			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), 0, 0, (ServerLevel) e.getEntity().level);
-			affixItem.getTag().putBoolean("apoth_rspawn", true);
+			if (affixItem.isEmpty()) return;
+			affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);
 			EquipmentSlot slot = cat.getSlots(affixItem)[0];
 			e.getEntityLiving().setItemSlot(slot, affixItem);
