@@ -7,10 +7,10 @@
 	"death.attack.apotheosis.execute": "%s被%s处决了",
 	"death.attack.apotheosis.execute.item": "%s被%s用%s处决了",
     
-    "attribute.modifier.apotheosis.plus.1": "+%s%%基础%s",
-    "attribute.modifier.apotheosis.plus.2": "+%s%%总%s",
-    "attribute.modifier.apotheosis.take.1": "-%s%%基础%s",
-    "attribute.modifier.apotheosis.take.2": "-%s%%总%s",
+    "attribute.modifier.apotheosis.plus.1": "+%s%% 基础%s",
+    "attribute.modifier.apotheosis.plus.2": "+%s%% 总%s",
+    "attribute.modifier.apotheosis.take.1": "-%s%% 基础%s",
+    "attribute.modifier.apotheosis.take.2": "-%s%% 总%s",
 
 	"apotheosis:draw_speed": "拉弓速度",
 	"apotheosis:crit_chance": "暴击率",
