@@ -1,5 +1,5 @@
 {
-    "comment_id": "/致命模块",
+    "comment_id": "/冒险模块",
     
     "info.apotheosis.affix_item": "神化模组词缀物品",
     "item.modifiers.both_hands": "在任意手时：",
@@ -287,7 +287,7 @@
 
     "item.apotheosis.boss_summoner": "神化Boss召唤器",
 
-	"comment_id": "/冒险 + Gateways兼容",
+	"comment_id": "/冒险 + Gateways模组兼容",
 
 	"misc.apotheosis.boss": "%s神化Boss",
 	"misc.apotheosis.random": "随机",
