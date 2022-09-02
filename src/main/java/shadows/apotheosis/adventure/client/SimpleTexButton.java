@@ -1,0 +1,69 @@
+package shadows.apotheosis.adventure.client;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+
+public class SimpleTexButton extends Button {
+	protected final ResourceLocation texture;
+	protected final int xTexStart;
+	protected final int yTexStart;
+	protected final int textureWidth;
+	protected final int textureHeight;
+
+	public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, Button.OnPress pOnPress) {
+		this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, 256, 256, pOnPress);
+	}
+
+	public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress) {
+		this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, pTextureWidth, pTextureHeight, pOnPress, TextComponent.EMPTY);
+	}
+
+	public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress, Component pMessage) {
+		this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, pTextureWidth, pTextureHeight, pOnPress, NO_TOOLTIP, pMessage);
+	}
+
+	public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress, Button.OnTooltip pOnTooltip, Component pMessage) {
+		super(pX, pY, pWidth, pHeight, pMessage, pOnPress, pOnTooltip);
+		this.textureWidth = pTextureWidth;
+		this.textureHeight = pTextureHeight;
+		this.xTexStart = pXTexStart;
+		this.yTexStart = pYTexStart;
+		this.texture = texture;
+	}
+
+	public void setPosition(int pX, int pY) {
+		this.x = pX;
+		this.y = pY;
+	}
+
+	@Override
+	public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderTexture(0, texture);
+		int yTex = yTexStart;
+		if (!this.isActive()) {
+			yTex += this.height;
+		} else if (this.isHoveredOrFocused()) {
+			yTex += this.height * 2;
+		}
+
+		RenderSystem.enableDepthTest();
+		blit(pPoseStack, this.x, this.y, this.xTexStart, yTex, this.width, this.height, textureWidth, textureHeight);
+	}
+
+	@Override
+	public void renderToolTip(PoseStack pPoseStack, int pMouseX, int pMouseY) {
+		if (this.onTooltip != NO_TOOLTIP) this.onTooltip.onTooltip(this, pPoseStack, pMouseX, pMouseY);
+		else if (this.getMessage() != TextComponent.EMPTY) {
+			Minecraft.getInstance().screen.renderTooltip(pPoseStack, getMessage(), pMouseX, pMouseY);
+		}
+	}
+
+}

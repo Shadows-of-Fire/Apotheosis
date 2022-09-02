@@ -1,6 +1,6 @@
 {
 	"entity": "minecraft:bee",
-	"weight": 7,
+	"weight": 1,
 	"quality": 5,
 	"size": {
 		"width": 1,
@@ -26,8 +26,8 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 200,
-						"steps": 20,
+						"min": 600,
+						"steps": 1.0,
 						"step": 5
 					}
 				},
@@ -44,7 +44,7 @@
 					"attribute": "minecraft:generic.flying_speed",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.25,
+						"min": 0.45,
 						"steps": 10,
 						"step": 0.01
 					}
@@ -62,9 +62,9 @@
 					"attribute": "minecraft:generic.attack_damage",
 					"operation": "ADDITION",
 					"value": {
-						"min": 20,
+						"min": 40,
 						"steps": 20,
-						"step": 1
+						"step": 2
 					}
 				},
 				{

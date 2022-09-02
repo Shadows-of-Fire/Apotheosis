@@ -19,6 +19,10 @@ import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
 import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
 import shadows.apotheosis.adventure.affix.effect.RadialAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
+import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
+import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
+import shadows.apotheosis.adventure.affix.salvage.SalvageMenu;
+import shadows.apotheosis.adventure.affix.salvage.SalvageTableBlock;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
@@ -95,6 +99,8 @@ public class Apoth {
 		public static final Block SIGHTSHELF_T2 = null;
 		public static final EnchLibraryBlock ENDER_LIBRARY = null;
 		public static final BossSpawnerBlock BOSS_SPAWNER = null;
+		public static final ReforgingTableBlock REFORGING_TABLE = null;
+		public static final SalvageTableBlock SALVAGE_TABLE = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -119,6 +125,9 @@ public class Apoth {
 		public static final Item FISHING_TOME = null;
 		public static final Item BOW_TOME = null;
 		public static final Item GEM = null;
+		public static final Item GEM_DUST = null;
+		public static final Item VIAL_OF_EXPULSION = null;
+		public static final Item VIAL_OF_EXTRACTION = null;
 
 		@ObjectHolder("wstweaks:fragment")
 		public static final Item SKULL_FRAGMENT = null;
@@ -194,6 +203,8 @@ public class Apoth {
 		public static final MenuType<FletchingContainer> FLETCHING = null;
 		public static final MenuType<EnchLibraryContainer> LIBRARY = null;
 		public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE = null;
+		public static final MenuType<ReforgingMenu> REFORGING = null;
+		public static final MenuType<SalvageMenu> SALVAGE = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)

@@ -129,7 +129,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 	 * @param entity
 	 */
 	public void initBoss(Random rand, Mob entity, float luck) {
-		LootRarity rarity = this.clamp(LootRarity.random(rand, luck));
+		LootRarity rarity = LootRarity.random(rand, luck, this);
 		BossStats stats = this.stats.get(rarity);
 		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 

@@ -32,7 +32,6 @@ public class GatewaysCompat {
 
 	public static void register() {
 		WaveEntity.SERIALIZERS.put(new ResourceLocation("apotheosis:boss"), BossWaveEntity.SERIALIZER);
-		Reward.SERIALIZERS.put("apotheosis:random_affix", new SerializerBuilder<AffixItemReward>("Affix Reward").autoRegister(AffixItemReward.class).build(true));
 		Reward.SERIALIZERS.put("apotheosis:affix", new SerializerBuilder<RarityAffixItemReward>("Rarity Affix Reward").autoRegister(RarityAffixItemReward.class).build(true));
 	}
 
@@ -91,48 +90,6 @@ public class GatewaysCompat {
 		public static WaveEntity read(FriendlyByteBuf buf) {
 			BossItem boss = BossItemManager.INSTANCE.getValue(buf.readResourceLocation());
 			return new BossWaveEntity(boss);
-		}
-	}
-
-	/**
-	 * Provides a random affix item as a reward.
-	 */
-	public static record AffixItemReward(int rarityOffset) implements Reward {
-
-		@Override
-		public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-			list.accept(LootController.createRandomLootItem(level.random, rarityOffset, summoner.getLuck(), level));
-		}
-
-		@Override
-		public JsonObject write() {
-			JsonObject obj = Reward.super.write();
-			obj.addProperty("rarity_offset", rarityOffset);
-			return obj;
-		}
-
-		public static AffixItemReward read(JsonObject obj) {
-			return new AffixItemReward(obj.get("rarity_offset").getAsInt());
-		}
-
-		@Override
-		public void write(FriendlyByteBuf buf) {
-			Reward.super.write(buf);
-			buf.writeShort(rarityOffset);
-		}
-
-		public static AffixItemReward read(FriendlyByteBuf buf) {
-			return new AffixItemReward(buf.readShort());
-		}
-
-		@Override
-		public String getName() {
-			return "apotheosis:random_affix";
-		}
-
-		@Override
-		public void appendHoverText(Consumer<Component> list) {
-			list.accept(new TranslatableComponent("reward.apotheosis.random_affix", this.rarityOffset));
 		}
 	}
 

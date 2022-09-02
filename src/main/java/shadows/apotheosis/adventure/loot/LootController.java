@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import net.minecraft.network.chat.Style;
@@ -24,6 +26,9 @@ import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
 
 public class LootController {
 
+	/**
+	 * @see {@link LootController#createLootItem(ItemStack, LootCategory, LootRarity, Random)}
+	 */
 	public static ItemStack createLootItem(ItemStack stack, LootRarity rarity, Random rand) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == LootCategory.NONE) return stack;
@@ -79,15 +84,15 @@ public class LootController {
 	/**
 	 * Pulls a random LootRarity and AffixLootEntry, and generates an Affix Item
 	 * @param rand Random
-	 * @param rarityOffset The rarity offset
+	 * @param rarity The rarity, or null if it should be randomly selected.
 	 * @param luck The player's luck level
 	 * @param level The world, since affix loot entries are per-dimension.
 	 * @return An affix item, or an empty ItemStack if no entries were available for the dimension.
 	 */
-	public static ItemStack createRandomLootItem(Random rand, int rarityOffset, float luck, ServerLevelAccessor level) {
-		LootRarity rarity = LootRarity.random(rand, rarityOffset);
+	public static ItemStack createRandomLootItem(Random rand, @Nullable LootRarity rarity, float luck, ServerLevelAccessor level) {
 		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, luck, level);
 		if (entry == null) return ItemStack.EMPTY;
+		if (rarity == null) rarity = LootRarity.random(rand, luck, entry);
 		return createLootItem(entry.getStack(), entry.getType(), rarity, rand);
 	}
 

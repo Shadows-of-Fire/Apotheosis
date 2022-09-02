@@ -10,5 +10,8 @@
 	},
 	"type": "BOW",
   "min_rarity": "uncommon",
-  "max_rarity": "epic"
+  "max_rarity": "epic",
+  "dimensions": [
+    "twilightforest:twilight_forest"
+  ]
 }

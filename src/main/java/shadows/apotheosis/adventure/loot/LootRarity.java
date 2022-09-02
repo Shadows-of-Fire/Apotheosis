@@ -1,7 +1,6 @@
 package shadows.apotheosis.adventure.loot;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
@@ -38,8 +36,9 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.placebo.PlaceboClient.RainbowColor;
+import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
-public record LootRarity(int defaultWeight, String id, TextColor color, List<LootRule> rules, int ordinal) {
+public record LootRarity(int defaultWeight, String id, TextColor color, List<LootRule> rules, int ordinal) implements ILuckyWeighted {
 
 	public static final List<LootRarity> LIST;
 	public static final Map<String, LootRarity> BY_ID;
@@ -104,12 +103,22 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 
 	private static int num = 0;
 
-	public LootRarity(int defaultWeight, String id, TextColor color, List<LootRule> rules) {
+	private LootRarity(int defaultWeight, String id, TextColor color, List<LootRule> rules) {
 		this(defaultWeight, id, color, rules, num++);
 	}
 
-	public LootRarity(int defaultWeight, String id, int color, List<LootRule> rules) {
+	private LootRarity(int defaultWeight, String id, int color, List<LootRule> rules) {
 		this(defaultWeight, id, TextColor.fromRgb(color), rules);
+	}
+
+	@Override
+	public float getQuality() {
+		return WEIGHTS.get(this)[1];
+	}
+
+	@Override
+	public int getWeight() {
+		return (int) WEIGHTS.get(this)[0];
 	}
 
 	public boolean isAtLeast(LootRarity other) {
@@ -146,10 +155,6 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 		return new TranslatableComponent("rarity.apoth." + this.id).withStyle(Style.EMPTY.withColor(this.color));
 	}
 
-	public int getModifiedWeight(float luck) {
-		return (int) (WEIGHTS.get(this)[0] + WEIGHTS.get(this)[1] * luck);
-	}
-
 	@Override
 	public String toString() {
 		return this.id;
@@ -163,32 +168,22 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 		return BY_ID.keySet();
 	}
 
-	public static Collection<LootRarity> values() {
-		return BY_ID.values();
+	public static List<LootRarity> values() {
+		return LIST;
 	}
 
 	public static LootRarity random(Random rand, float luck) {
 		return random(rand, luck, null, null);
 	}
 
-	public static LootRarity random(Random rand, float luck, LootRarity min) {
-		return random(rand, luck, min, null);
+	public static LootRarity random(Random rand, float luck, @Nullable Clamped item) {
+		if (item == null) return random(rand, luck);
+		return random(rand, luck, item.getMinRarity(), item.getMaxRarity());
 	}
 
-	/**
-	 * Default Chance Table: <br>
-	 * Rarity      | Chance <br>
-	 * Common      | 40% <br>
-	 * Uncommon    | 30% <br>
-	 * Rare        | 15% <br>
-	 * Epic        | 9% <br>
-	 * Mythic      | 5.5% <br>
-	 * Ancient     | 0.5% <br>
-	 * @return A random loot rarity, offset by the given min value.
-	 */
 	public static LootRarity random(Random rand, float luck, @Nullable LootRarity min, @Nullable LootRarity max) {
-		List<Wrapper<LootRarity>> list = LIST.stream().map(r -> WeightedEntry.wrap(r, r.getModifiedWeight(luck))).toList();
-		return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).map(l -> l.clamp(min, max)).get();
+		List<Wrapper<LootRarity>> list = LIST.stream().filter(r -> r.clamp(min, max) == r).map(r -> r.<LootRarity>wrap(luck)).toList();
+		return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).get();
 	}
 
 	public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {

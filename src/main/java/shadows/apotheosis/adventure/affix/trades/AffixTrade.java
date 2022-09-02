@@ -4,10 +4,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.google.gson.annotations.SerializedName;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -19,12 +18,9 @@ import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 
 public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 
-	@SerializedName("rarity_offset")
-	protected final int rarityOffset;
 	protected final boolean rare;
 
 	public AffixTrade(int rarityOffset, boolean rare) {
-		this.rarityOffset = rarityOffset;
 		this.rare = rare;
 	}
 
@@ -32,7 +28,9 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 	@Nullable
 	public MerchantOffer getOffer(Entity pTrader, Random pRand) {
 		if (!(pTrader.level instanceof ServerLevel)) return null;
-		ItemStack affixItem = LootController.createRandomLootItem(pRand, this.rarityOffset, 0, (ServerLevel) pTrader.level);
+		Player nearest = pTrader.level.getNearestPlayer(pTrader, 32);
+		float luck = nearest != null ? nearest.getLuck() : 0;
+		ItemStack affixItem = LootController.createRandomLootItem(pRand, null, luck, (ServerLevel) pTrader.level);
 		affixItem.getTag().putBoolean("apoth_merchant", true);
 		ItemStack stdItem = affixItem.copy();
 		stdItem.setTag(null);

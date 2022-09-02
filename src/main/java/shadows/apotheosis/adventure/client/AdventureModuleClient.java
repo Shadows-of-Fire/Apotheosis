@@ -29,6 +29,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -74,6 +75,8 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.reforging.ReforgingScreen;
+import shadows.apotheosis.adventure.affix.salvage.SalvageScreen;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
@@ -89,6 +92,8 @@ public class AdventureModuleClient {
 		MinecraftForgeClient.registerTooltipComponentFactory(SocketComponent.class, SocketTooltipRenderer::new);
 		ItemProperties.register(Apoth.Items.GEM, new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
 		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.BOSS_SPAWNER, RenderType.cutout());
+		MenuScreens.register(Apoth.Menus.REFORGING, ReforgingScreen::new);
+		MenuScreens.register(Apoth.Menus.SALVAGE, SalvageScreen::new);
 	}
 
 	@SubscribeEvent

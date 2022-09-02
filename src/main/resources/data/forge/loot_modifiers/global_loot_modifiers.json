@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
+	"apotheosis:affix_conversion",
     "apotheosis:affix_loot",
 	"apotheosis:gems"
   ]

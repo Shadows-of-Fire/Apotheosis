@@ -1,11 +1,13 @@
 package shadows.apotheosis.adventure;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 import com.google.common.collect.ImmutableSet;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -28,6 +30,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -64,11 +68,11 @@ import shadows.apotheosis.adventure.commands.SocketCommand;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.mixin.LivingEntityInvoker;
 import shadows.apotheosis.util.DamageSourceUtil;
+import shadows.placebo.events.AnvilLandEvent;
 import shadows.placebo.events.ItemUseEvent;
 
-public class AdventureModuleEvents {
+public class AdventureEvents {
 
 	@SubscribeEvent
 	public void reloads(AddReloadListenerEvent e) {
@@ -157,22 +161,26 @@ public class AdventureModuleEvents {
 		}
 	}
 
-	/**
-	 * This event handler manages the Piercing attribute.
-	 */
 	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void onDamage(LivingHurtEvent e) {
+	public void pierce(LivingHurtEvent e) {
 		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker) {
-			if (!e.getSource().isBypassArmor()) {
+			if (!e.getSource().isBypassArmor() && !e.getSource().isMagic()) {
 				LivingEntity target = e.getEntityLiving();
 				float pierce = (float) (attacker.getAttributeValue(Apoth.Attributes.PIERCING) - 1);
 				if (pierce > 0.001) {
 					float pierceDmg = e.getAmount() * pierce;
 					e.setAmount(e.getAmount() - pierce);
-					((LivingEntityInvoker) target).callActuallyHurt(DamageSourceUtil.copy(e.getSource()).bypassArmor(), pierceDmg);
+					int time = target.invulnerableTime;
+					target.invulnerableTime = 0;
+					target.hurt(DamageSourceUtil.copy(e.getSource()).bypassArmor(), pierceDmg);
+					target.invulnerableTime = time;
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void onDamage(LivingHurtEvent e) {
 		Apoth.Affixes.MAGICAL.onHurt(e);
 		DamageReductionAffix.onHurt(e);
 	}
@@ -210,7 +218,7 @@ public class AdventureModuleEvents {
 			int time = target.invulnerableTime;
 			target.invulnerableTime = 0;
 			if (hpDmg > 0.001) {
-				target.hurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
+				target.hurt(src(attacker).bypassArmor(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
 			}
 			target.invulnerableTime = 0;
 			if (fireDmg > 0.001) {
@@ -311,7 +319,7 @@ public class AdventureModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void dropsHigh(LivingDropsEvent e) {
-		if (e.getSource().getEntity() instanceof ServerPlayer p) {
+		if (e.getSource().getEntity() instanceof ServerPlayer p && e.getEntity() instanceof Monster) {
 			if (p instanceof FakePlayer) return;
 			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
 			if (p.random.nextFloat() <= chance) {
@@ -350,13 +358,28 @@ public class AdventureModuleEvents {
 	public void special(SpecialSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
 			e.setCanceled(true);
-			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), 0, 0, (ServerLevel) e.getEntity().level);
+			Player nearest = e.getEntity().level.getNearestPlayer(e.getEntity(), 32);
+			float luck = nearest != null ? nearest.getLuck() : 0;
+			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), null, luck, (ServerLevel) e.getEntity().level);
 			if (affixItem.isEmpty()) return;
 			affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);
 			EquipmentSlot slot = cat.getSlots(affixItem)[0];
 			e.getEntityLiving().setItemSlot(slot, affixItem);
 			if (e.getEntityLiving() instanceof Mob mob) mob.setGuaranteedDrop(slot);
+		}
+	}
+
+	@SubscribeEvent
+	public void gemSmashing(AnvilLandEvent e) {
+		Level level = e.getLevel();
+		BlockPos pos = e.getPos();
+		List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
+		for (ItemEntity ent : items) {
+			ItemStack stack = ent.getItem();
+			if (stack.getItem() == Apoth.Items.GEM) {
+				ent.setItem(new ItemStack(Apoth.Items.GEM_DUST, stack.getCount()));
+			}
 		}
 	}
 

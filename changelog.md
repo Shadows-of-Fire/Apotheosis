@@ -1,3 +1,28 @@
+## 5.7.0
+
+### Features
+* Added a new Affix Conversion Loot Modifier!
+  * This modifier gives all loot-generated gear pieces a chance to be rolled as an affix item.
+  * The chance is configurable on a per-loot-table basis and the rarities are dimensional.
+  * This reduces the burden of messing with the affix loot entries table when large swathes of gear already generate.
+* Added Gem Dust, a magical resource obtained by smashing Apotheotic Gems with an anvil.
+* Added the Vial of Searing Expulsion and Vial of Arcane Extraction, which allow for gem removal.
+* Added the Scrapping Table, which allows you to break down affix items into rarity materials.
+* Added the Reforging Table, which allows you to reroll the affixes on an item (including items you have crafted yourself)!
+  * Reforging an item costs two rarity materials and some gem dust proportional to the rarity level.
+  * Items can only be rolled as their primary type detected automatically or set through the config.
+
+### Bugfixes
+* Made % Current HP damage to armor-piercing physical instead of magical damage.
+* Fixed gems dropping off of non-monsters.
+* Fixed rarities on affix loot items not clamping properly.
+  * Bosses always worked as expected, but random items were ignoring the min and max values.
+* Updated default loot rules from chests.* to .*chests.* so certain modded chests aren't missed.
+
+### Misc
+* Added more default boss names.
+  * Your /config/apotheosis/names.cfg file will not update automatically, you may want to delete it to receive the new entries!
+
 ## 5.6.1
 * Hotfix for a crash caused by dimensions without affix loot entries.
 

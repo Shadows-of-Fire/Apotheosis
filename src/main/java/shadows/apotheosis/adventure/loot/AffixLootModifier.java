@@ -27,7 +27,7 @@ public class AffixLootModifier extends LootModifier {
 			if (m.matches(context.getQueriedLootTableId())) {
 				if (context.getRandom().nextFloat() <= m.chance()) {
 					float luck = context.getLuck();
-					ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), 0, luck, context.getLevel());
+					ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), null, luck, context.getLevel());
 					if (affixItem.isEmpty()) break;
 					affixItem.getTag().putBoolean("apoth_rchest", true);
 					generatedLoot.add(affixItem);

@@ -34,13 +34,19 @@ public class AdventureConfig {
 	public static final Map<ResourceLocation, Pair<Float, BossSpawnRules>> BOSS_SPAWN_RULES = new HashMap<>();
 
 	/**
-	 * These two maps contain pairs of "loot table matchers" to the drop chance for those loot tables.
+	 * These lists contain "loot table matchers" for the drop chances for loot tables.
 	 * Loot table matchers take the form of domain:pattern and the float chance is 0..1
 	 * Omitting the domain causes the pattern to be run for all domains.
 	 * The pattern is only run on the loot table's path.
 	 */
 	public static final List<LootPatternMatcher> AFFIX_ITEM_LOOT_RULES = new ArrayList<>();
 	public static final List<LootPatternMatcher> GEM_LOOT_RULES = new ArrayList<>();
+
+	/**
+	 * Loot table matchers and dimensional rarities for affix conversion rules.
+	 */
+	public static final List<LootPatternMatcher> AFFIX_CONVERT_LOOT_RULES = new ArrayList<>();
+	public static final Map<ResourceLocation, LootRarity.Clamped> AFFIX_CONVERT_RARITIES = new HashMap<>();
 
 	//Boss Stats
 	public static boolean curseBossItems = false;
@@ -97,7 +103,7 @@ public class AdventureConfig {
 		gemBossBonus = c.getFloat("Gem Boss Bonus", "affixes", gemBossBonus, 0, 1, "The flat bonus chance that bosses have to drop a gem, added to Gem Drop Chance. 0 = 0%, 1 = 100%");
 		cleaveHitsPlayers = c.getBoolean("Cleave Players", "affixes", cleaveHitsPlayers, "If affixes that cleave can hit players (excluding the user).");
 
-		String[] lootRules = c.getStringList("Affix Item Loot Rules", "affixes", new String[] { "minecraft:chests.*|0.5", "chests.*|0.35", "twilightforest:structures.*|0.4" },
+		String[] lootRules = c.getStringList("Affix Item Loot Rules", "affixes", new String[] { "minecraft:chests.*|0.5", ".*chests.*|0.35", "twilightforest:structures.*|0.4" },
 		//Formatter::off
 			"Loot Rules, in the form of Loot Table Matchers, permitting affix items to spawn in loot tables." 
 		  + "\nThe format for these is domain:pattern|chance and domain is optional.  Domain is a modid, pattern is a regex string, and chance is a float 0..1 chance for the item to spawn in any matched tables." 
@@ -108,30 +114,59 @@ public class AdventureConfig {
 		AFFIX_ITEM_LOOT_RULES.clear();
 		for (String s : lootRules) {
 			try {
-				int pipe = s.lastIndexOf('|');
-				int colon = s.indexOf(':');
-				float chance = Float.parseFloat(s.substring(pipe + 1, s.length()));
-				String domain = colon == -1 ? null : s.substring(0, colon);
-				Pattern pattern = Pattern.compile(s.substring(colon + 1, pipe));
-				AFFIX_ITEM_LOOT_RULES.add(new LootPatternMatcher(domain, pattern, chance));
+				AFFIX_ITEM_LOOT_RULES.add(LootPatternMatcher.parse(s));
 			} catch (Exception e) {
 				AdventureModule.LOGGER.error("Invalid affix item loot rule: " + s + " will be ignored");
 				e.printStackTrace();
 			}
 		}
 
-		lootRules = c.getStringList("Gem Loot Rules", "gems", new String[] { "minecraft:chests.*|0.30", "chests.*|0.15", "twilightforest:structures.*|0.20" }, "Loot Rules, in the form of Loot Table Matchers, permitting gems to spawn in loot tables.  See comment on \"Affix Item Loot Rules\" for description.");
+		lootRules = c.getStringList("Gem Loot Rules", "gems", new String[] { "minecraft:chests.*|0.30", ".*chests.*|0.15", "twilightforest:structures.*|0.20" }, "Loot Rules, in the form of Loot Table Matchers, permitting gems to spawn in loot tables.  See comment on \"Affix Item Loot Rules\" for description.");
 		GEM_LOOT_RULES.clear();
 		for (String s : lootRules) {
 			try {
-				int pipe = s.lastIndexOf('|');
-				int colon = s.indexOf(':');
-				float chance = Float.parseFloat(s.substring(pipe + 1, s.length()));
-				String domain = colon == -1 ? null : s.substring(0, colon);
-				Pattern pattern = Pattern.compile(s.substring(colon + 1, pipe));
-				GEM_LOOT_RULES.add(new LootPatternMatcher(domain, pattern, chance));
+				GEM_LOOT_RULES.add(LootPatternMatcher.parse(s));
 			} catch (Exception e) {
 				AdventureModule.LOGGER.error("Invalid gem loot rule: " + s + " will be ignored");
+				e.printStackTrace();
+			}
+		}
+
+		lootRules = c.getStringList("Affix Convert Loot Rules", "affixes", new String[] { ".*|0.85" }, "Loot Rules, in the form of Loot Table Matchers, permitting affixes to be added to any valid item. Here, the chance refers to the chance an item receives affixes. See comment on \"Affix Item Loot Rules\" for description.");
+		AFFIX_CONVERT_LOOT_RULES.clear();
+		for (String s : lootRules) {
+			try {
+				AFFIX_CONVERT_LOOT_RULES.add(LootPatternMatcher.parse(s));
+			} catch (Exception e) {
+				AdventureModule.LOGGER.error("Invalid affix convert loot rule: " + s + " will be ignored");
+				e.printStackTrace();
+			}
+		}
+
+		String[] convertRarities = c.getStringList("Affix Convert Rarities", "affixes", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimenaional rarities for affix conversion (see \"Affix Convert Loot Rules\"), in the form of dimension|min|max. A dimension not listed uses all rarities.");
+		AFFIX_CONVERT_RARITIES.clear();
+		for (String s : convertRarities) {
+			try {
+				String[] split = s.split("\\|");
+				ResourceLocation dim = new ResourceLocation(split[0]);
+				LootRarity min = LootRarity.byId(split[1]);
+				LootRarity max = LootRarity.byId(split[2]);
+				LootRarity.Clamped clamp = new LootRarity.Clamped() {
+
+					@Override
+					public LootRarity getMinRarity() {
+						return min;
+					}
+
+					@Override
+					public LootRarity getMaxRarity() {
+						return max;
+					}
+
+				};
+				AFFIX_CONVERT_RARITIES.put(dim, clamp);
+			} catch (Exception e) {
+				AdventureModule.LOGGER.error("Invalid Affix Convert Rarity: " + s + " will be ignored");
 				e.printStackTrace();
 			}
 		}
@@ -202,6 +237,15 @@ public class AdventureConfig {
 
 		public boolean matches(ResourceLocation id) {
 			return (domain == null || domain.equals(id.getNamespace())) && pathRegex.matcher(id.getPath()).matches();
+		}
+
+		public static LootPatternMatcher parse(String s) throws Exception {
+			int pipe = s.lastIndexOf('|');
+			int colon = s.indexOf(':');
+			float chance = Float.parseFloat(s.substring(pipe + 1, s.length()));
+			String domain = colon == -1 ? null : s.substring(0, colon);
+			Pattern pattern = Pattern.compile(s.substring(colon + 1, pipe));
+			return new LootPatternMatcher(domain, pattern, chance);
 		}
 	}
 
