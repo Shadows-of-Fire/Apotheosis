@@ -226,7 +226,8 @@ public class Apoth {
 		 */
 		public static final Attribute CRIT_CHANCE = null;
 		/**
-		 * Amount of damage caused by critical strikes. Base value = (1.5) = 150%
+		 * Amount of damage caused by critical strikes. Base value = (1.0) = 100%
+		 * Not related to vanilla critical strikes.
 		 */
 		public static final Attribute CRIT_DAMAGE = null;
 		/**

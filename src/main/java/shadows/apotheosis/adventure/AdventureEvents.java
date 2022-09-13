@@ -243,13 +243,11 @@ public class AdventureEvents {
 	public void crit(CriticalHitEvent e) {
 		double critChance = e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1;
 		float critDmg = (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE);
+		float modifier = e.isVanillaCritical() ? e.getDamageModifier() : 1.0F;
 
-		if (e.isVanillaCritical()) critChance += 1;
-
-		if (critChance > 1) {
+		if (critChance > 1) { // Overcrit applies the modifier multiple times.
 			e.setResult(Result.ALLOW);
 
-			float modifier = 1F;
 			while (critChance > 1) {
 				critChance--;
 				modifier *= critDmg;
@@ -260,9 +258,9 @@ public class AdventureEvents {
 			e.setDamageModifier(modifier);
 		} else if (e.getPlayer().level.random.nextFloat() <= critChance) {
 			e.setResult(Result.ALLOW);
-			e.setDamageModifier(critDmg);
+			e.setDamageModifier(modifier * critDmg);
 		} else {
-			e.setDamageModifier(critDmg);
+			e.setDamageModifier(modifier * critDmg);
 		}
 	}
 

@@ -23,6 +23,15 @@
 * Added more default boss names.
   * Your /config/apotheosis/names.cfg file will not update automatically, you may want to delete it to receive the new entries!
 
+### Balance
+* Nerfed critical hits again.  Since crits are multiplicative, higher values are very dangerous.
+  * Crit Chance Gem Range: ~~[5%, 80%]~~ -> [5%, 25%]
+  * Crit Damage Gem Range: ~~[5%, 30%]~~ -> [5%, 15%]
+* Changed how the crit attributes interact with vanilla crits.
+  * Vanilla crits will now be separate from the attributes, but will be multiplicative with them.
+  * Crit Damage will increase vanilla crit damage, but it will not apply twice if a standard crit also occurs.
+  * Overcrits are still possible.
+
 ## 5.6.1
 * Hotfix for a crash caused by dimensions without affix loot entries.
 

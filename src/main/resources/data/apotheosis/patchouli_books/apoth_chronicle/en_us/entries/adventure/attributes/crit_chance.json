@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Crit Chance$() is the chance that an attack (or arrow) becomes a critical strike (if it wouldn't normally be). Values over 100% cause you to perform higher-strength critical hits.$(p)Found on weapons."
+            "text": "$(9)Crit Chance$() is the chance that an attack (or arrow) becomes a critical strike, compounding with jump crits. Values over 100% allow you to perform multicrits.$(p)Found on weapons."
         },
 		{
 			"type": "patchouli:text",

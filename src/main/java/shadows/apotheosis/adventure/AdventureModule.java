@@ -199,7 +199,7 @@ public class AdventureModule {
 		e.getRegistry().registerAll(
 				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 4.0D).setSyncable(true).setRegistryName("draw_speed"),
 				new RangedAttribute("apotheosis:crit_chance", 1.0D, 1.0D, 5.0D).setSyncable(true).setRegistryName("crit_chance"),
-				new RangedAttribute("apotheosis:crit_damage", 1.5D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("crit_damage"),
+				new RangedAttribute("apotheosis:crit_damage", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("crit_damage"),
 				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("cold_damage"),
 				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("fire_damage"),
 				new RangedAttribute("apotheosis:life_steal", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("life_steal"),
