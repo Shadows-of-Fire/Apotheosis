@@ -65,6 +65,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 				mvStack.scale(0.5F, 0.5F, 1);
 				itemRenderer.renderAndDecorateFakeItem(gem, 2 * x + 1, 2 * y + 1);
 				mvStack.popPose();
+				RenderSystem.applyModelViewMatrix();
 			}
 			y += this.spacing;
 		}
