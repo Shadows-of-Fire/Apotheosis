@@ -178,6 +178,8 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void serializers(Register<RecipeSerializer<?>> e) {
 		e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE.setRegistryName("socketing"));
+		e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE.setRegistryName("expulsion"));
+		e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE.setRegistryName("extraction"));
 	}
 
 	@SubscribeEvent
@@ -622,7 +624,7 @@ public class AdventureModule {
 				new DamageReductionAffix.Builder(DamageType.FALL)
 				.with(LootRarity.RARE, step(0.15F, 10, 0.01F))
 				.with(LootRarity.EPIC, step(0.40F, 15, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.75F, 25, 0.01F))
+				.with(LootRarity.MYTHIC, step(0.55F, 25, 0.01F))
 				.with(LootRarity.ANCIENT, step(1, 1, 0))
 				.build("feathery"),
 

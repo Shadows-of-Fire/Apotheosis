@@ -39,13 +39,15 @@ public class PotionAffix extends Affix {
 	protected final @Nullable Predicate<LootCategory> types;
 	protected final @Nullable Predicate<ItemStack> items;
 	protected final Target target;
+	protected final int instantCooldown;
 
-	public PotionAffix(AffixType type, Map<LootRarity, EffectInst> modifiers, @Nullable Predicate<LootCategory> types, @Nullable Predicate<ItemStack> items, Target target) {
+	public PotionAffix(AffixType type, Map<LootRarity, EffectInst> effects, @Nullable Predicate<LootCategory> types, @Nullable Predicate<ItemStack> items, Target target, int instantCooldown) {
 		super(type);
-		this.effects = modifiers;
+		this.effects = effects;
 		this.types = types;
 		this.items = items;
 		this.target = target;
+		this.instantCooldown = instantCooldown;
 	}
 
 	@Override
@@ -67,7 +69,7 @@ public class PotionAffix extends Affix {
 		if (this.target == Target.HURT_SELF) user.addEffect(inst.build(level));
 		else if (this.target == Target.HURT_ATTACKER) {
 			if (attacker instanceof LivingEntity tLiving) {
-				tLiving.addEffect(inst.build(level));
+				applyEffect(tLiving, inst, level);
 			}
 		}
 	}
@@ -78,7 +80,7 @@ public class PotionAffix extends Affix {
 		if (this.target == Target.ATTACK_SELF) user.addEffect(inst.build(level));
 		else if (this.target == Target.ATTACK_TARGET) {
 			if (target instanceof LivingEntity tLiving) {
-				tLiving.addEffect(inst.build(level));
+				applyEffect(tLiving, inst, level);
 			}
 		}
 	}
@@ -87,7 +89,7 @@ public class PotionAffix extends Affix {
 	public void onBlockBreak(ItemStack stack, LootRarity rarity, float level, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
 		EffectInst inst = this.effects.get(rarity);
 		if (this.target == Target.BREAK_SELF) {
-			player.addEffect(inst.build(level));
+			applyEffect(player, inst, level);
 		}
 	}
 
@@ -96,11 +98,11 @@ public class PotionAffix extends Affix {
 		EffectInst inst = this.effects.get(rarity);
 		if (this.target == Target.ARROW_SELF) {
 			if (arrow.getOwner() instanceof LivingEntity owner) {
-				owner.addEffect(inst.build(level));
+				applyEffect(owner, inst, level);
 			}
 		} else if (this.target == Target.ARROW_TARGET) {
 			if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-				target.addEffect(inst.build(level));
+				applyEffect(target, inst, level);
 			}
 		}
 	}
@@ -109,11 +111,21 @@ public class PotionAffix extends Affix {
 	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
 		EffectInst inst = this.effects.get(rarity);
 		if (this.target == Target.BLOCK_SELF) {
-			entity.addEffect(inst.build(level));
+			applyEffect(entity, inst, level);
 		} else if (this.target == Target.BLOCK_ATTACKER && source.getDirectEntity() instanceof LivingEntity target) {
-			target.addEffect(inst.build(level));
+			applyEffect(target, inst, level);
 		}
 		return amount;
+	}
+
+	private void applyEffect(LivingEntity target, EffectInst inst, float level) {
+		MobEffectInstance mei = inst.build(level);
+		if (mei.getEffect().isInstantenous()) {
+			long lastApplied = target.getPersistentData().getLong("apoth.affix_cooldown." + this.getRegistryName().toString());
+			if (lastApplied != 0 && lastApplied + 30 >= target.level.getGameTime()) return;
+		}
+		target.addEffect(mei);
+		target.getPersistentData().putLong("apoth.affix_cooldown." + this.getRegistryName().toString(), target.level.getGameTime());
 	}
 
 	public static Component toComponent(MobEffectInstance inst) {
@@ -171,9 +183,15 @@ public class PotionAffix extends Affix {
 
 		private Predicate<LootCategory> types;
 		private Predicate<ItemStack> items;
+		private int instantCooldown = 30;
 
 		public Builder(Supplier<MobEffect> effect) {
 			this.effect = effect;
+		}
+
+		public Builder cooldown(int instantCooldown) {
+			this.instantCooldown = instantCooldown;
+			return this;
 		}
 
 		public Builder types(Predicate<LootCategory> types) {
@@ -197,7 +215,7 @@ public class PotionAffix extends Affix {
 		}
 
 		public PotionAffix build(AffixType type, Target target, String id) {
-			return (PotionAffix) new PotionAffix(type, this.effects, this.types, this.items, target).setRegistryName(id);
+			return (PotionAffix) new PotionAffix(type, this.effects, this.types, this.items, target, this.instantCooldown).setRegistryName(id);
 		}
 
 	}

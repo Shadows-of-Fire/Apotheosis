@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.CombatRules;
@@ -79,5 +80,14 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@Shadow
 	public abstract MobEffectInstance getEffect(MobEffect ef);
+
+	@Override
+	public int getTeamColor() {
+		if (super.getTeamColor() == 16777215) {
+			Component name = this.getCustomName();
+			if (name != null && name.getStyle().getColor() != null) return name.getStyle().getColor().getValue();
+		}
+		return super.getTeamColor();
+	}
 
 }

@@ -169,7 +169,7 @@ public class AdventureEvents {
 				float pierce = (float) (attacker.getAttributeValue(Apoth.Attributes.PIERCING) - 1);
 				if (pierce > 0.001) {
 					float pierceDmg = e.getAmount() * pierce;
-					e.setAmount(e.getAmount() - pierce);
+					e.setAmount(e.getAmount() - pierceDmg);
 					int time = target.invulnerableTime;
 					target.invulnerableTime = 0;
 					target.hurt(DamageSourceUtil.copy(e.getSource()).bypassArmor(), pierceDmg);

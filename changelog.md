@@ -1,4 +1,5 @@
 ## 5.7.0
+* As noted in-line below, you should regenerate all or part of your /config/apotheosis/adventure.cfg file.
 
 ### Features
 * Added a new Affix Conversion Loot Modifier!
@@ -11,17 +12,27 @@
 * Added the Reforging Table, which allows you to reroll the affixes on an item (including items you have crafted yourself)!
   * Reforging an item costs two rarity materials and some gem dust proportional to the rarity level.
   * Items can only be rolled as their primary type detected automatically or set through the config.
+* Bosses will now glow their rarity color on spawn, instead of white.
+  * Glow duration increased from 20 seconds to 2 minutes.
+* There is now a boss cooldown timer, defaulting to 20 seconds.
+  * Regardless of the boss spawn chance, no boss may spawn until the timer has elapsed since the last boss spawn.
 
 ### Bugfixes
-* Made % Current HP damage to armor-piercing physical instead of magical damage.
+* Made % Current HP damage deal armor-piercing physical damage instead of magic damage.
 * Fixed gems dropping off of non-monsters.
 * Fixed rarities on affix loot items not clamping properly.
   * Bosses always worked as expected, but random items were ignoring the min and max values.
 * Updated default loot rules from chests.* to .*chests.* so certain modded chests aren't missed.
+* Used a different event for surface boss spawns, which should resolve the "infinite boss spawns" that is being seen in some environments.
+  * This means only "real" spawns will actually attempt to trigger a boss, instead of all potentials, which means that boss numbers need to be adjusted.
+  * You may want to allow the spawn chance section of your configs regenerate.
+* AHilyard: Fixed a transform issue with other tooltip components and apoth sockets.
 
 ### Misc
 * Added more default boss names.
   * Your /config/apotheosis/names.cfg file will not update automatically, you may want to delete it to receive the new entries!
+* ZHAY10086: Updated chinese translation.
+* Socket tooltips will now always be added to the socketed item.
 
 ### Balance
 * Nerfed critical hits again.  Since crits are multiplicative, higher values are very dangerous.
@@ -31,6 +42,9 @@
   * Vanilla crits will now be separate from the attributes, but will be multiplicative with them.
   * Crit Damage will increase vanilla crit damage, but it will not apply twice if a standard crit also occurs.
   * Overcrits are still possible.
+* Endermite boss weight reduced from 80 to 10.
+  * This change was made since an endermite boss constantly engages all endermen nearby.
+* Instant potion affixes will now have a cooldown between activations.
 
 ## 5.6.1
 * Hotfix for a crash caused by dimensions without affix loot entries.

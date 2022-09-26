@@ -53,6 +53,7 @@ public class AdventureConfig {
 	public static float bossAnnounceRange = 96;
 	public static boolean bossAnnounceSound = false;
 	public static boolean bossAnnounceIgnoreY = false;
+	public static int bossSpawnCooldown = 400;
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
@@ -63,8 +64,8 @@ public class AdventureConfig {
 	public static float spawnerValueChance = 0.11F;
 
 	// Affix
-	public static float randomAffixItem = 0.07F;
-	public static float gemDropChance = 0.04F;
+	public static float randomAffixItem = 0.11F;
+	public static float gemDropChance = 0.045F;
 	public static float gemBossBonus = 0.33F;
 	public static boolean disableQuarkOnAffixItems = true;
 	public static Supplier<Item> torchItem = () -> Items.TORCH;
@@ -188,8 +189,9 @@ public class AdventureConfig {
 		bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", 96, 0, 1024, "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.");
 		bossAnnounceSound = c.getBoolean("Boss Announce Sound", "bosses", true, "If the boss announcement plays a sound.");
 		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", true, "If the boss announcement range ignores y-level.");
+		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 0, 400, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
 
-		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.012|NEEDS_SKY", "minecraft:the_nether|0.023|ANY", "minecraft:the_end|0.008|NEEDS_SURFACE", "twilightforest:twilight_forest|0.02|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
+		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.06|NEEDS_SKY", "minecraft:the_nether|0.035|ANY", "minecraft:the_end|0.03|NEEDS_SURFACE", "twilightforest:twilight_forest|0.10|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();
 		for (String s : dims) {
 			try {

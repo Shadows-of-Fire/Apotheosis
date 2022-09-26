@@ -145,11 +145,12 @@ public class AdventureModuleClient {
 		if (rmvIdx == -1 || rmvIdx2 == -1) return;
 		list.removeAll(list.subList(rmvIdx, rmvIdx2 + 1));
 		int flags = getHideFlags(stack);
-		if (!shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) return;
 		int fRmvIdx = rmvIdx;
 		int oldSize = list.size();
-		applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
-		Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
+		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
+			applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
+			Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
+		}
 		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET)) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
@@ -209,7 +210,7 @@ public class AdventureModuleClient {
 	}
 
 	private static int getHideFlags(ItemStack stack) {
-		return stack.hasTag() && stack.getTag().contains("HideFlags", 99) ? stack.getTag().getInt("HideFlags") : 0;
+		return stack.hasTag() && stack.getTag().contains("HideFlags", 99) ? stack.getTag().getInt("HideFlags") : stack.getItem().getDefaultTooltipHideFlags(stack);
 	}
 
 	private static void applyModifierTooltips(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip) {

@@ -1,6 +1,6 @@
 {
 	"entity": "minecraft:endermite",
-	"weight": 80,
+	"weight": 10,
 	"quality": 1,
 	"size": {
 		"width": 1,

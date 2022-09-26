@@ -20,6 +20,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -184,6 +186,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 		}
 		entity.getPersistentData().putBoolean("apoth.boss", true);
 		entity.setHealth(entity.getMaxHealth());
+		entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
 	}
 
 	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName, float luck, LootRarity rarity) {
