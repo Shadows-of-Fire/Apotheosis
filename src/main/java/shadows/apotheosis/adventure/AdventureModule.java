@@ -27,12 +27,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
@@ -70,8 +72,9 @@ import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
-import shadows.apotheosis.adventure.affix.salvage.SalvageMenu;
-import shadows.apotheosis.adventure.affix.salvage.SalvageTableBlock;
+import shadows.apotheosis.adventure.affix.salvaging.SalvageItem;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
@@ -87,6 +90,7 @@ import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.adventure.boss.BossSummonerItem;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
+import shadows.apotheosis.adventure.compat.AdventureTOPPlugin;
 import shadows.apotheosis.adventure.compat.GatewaysCompat;
 import shadows.apotheosis.adventure.loot.AffixConvertLootModifier;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
@@ -131,9 +135,11 @@ public class AdventureModule {
 			Item g = Apoth.Items.GEM_DUST;
 			f.addShaped(Apoth.Items.VIAL_OF_EXPULSION, 3, 3, g, Items.MAGMA_CREAM, g, Items.BLAZE_ROD, Apotheosis.potionIngredient(Potions.THICK), Items.BLAZE_ROD, g, Items.LAVA_BUCKET, g);
 			f.addShaped(Apoth.Items.VIAL_OF_EXTRACTION, 3, 3, g, Items.AMETHYST_SHARD, g, Items.ENDER_PEARL, Apotheosis.potionIngredient(Potions.THICK), Items.ENDER_PEARL, g, Items.WATER_BUCKET, g);
+			f.addShaped(Apoth.Blocks.SALVAGING_TABLE, 3, 3, g, Tags.Items.INGOTS_GOLD, g, Tags.Items.INGOTS_GOLD, Blocks.SMITHING_TABLE, Tags.Items.INGOTS_GOLD, g, Items.LAVA_BUCKET, g);
 		});
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
+			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
 		});
 	}
 
@@ -155,19 +161,20 @@ public class AdventureModule {
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("vial_of_extraction"));
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("vial_of_expulsion"));
 		for (LootRarity r : LootRarity.values()) {
-			Item material = new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName(r.id() + "_material");
+			if (r == LootRarity.ANCIENT) continue;
+			Item material = new SalvageItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName(r.id() + "_material");
 			e.getRegistry().register(material);
 			RARITY_MATERIALS.put(r, material.delegate);
 		}
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("reforging_table"));
-		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGE_TABLE, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("salvage_table"));
+		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("salvaging_table"));
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()).setRegistryName("boss_spawner"));
 		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("reforging_table"));
-		e.getRegistry().register(new SalvageTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("salvage_table"));
+		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("salvaging_table"));
 	}
 
 	@SubscribeEvent
@@ -192,7 +199,7 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void containers(Register<MenuType<?>> e) {
 		e.getRegistry().register(new MenuType<>(ReforgingMenu::new).setRegistryName("reforging"));
-		e.getRegistry().register(new MenuType<>(SalvageMenu::new).setRegistryName("salvage"));
+		e.getRegistry().register(new MenuType<>(SalvagingMenu::new).setRegistryName("salvage"));
 	}
 
 	@SubscribeEvent

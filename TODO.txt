@@ -6,8 +6,6 @@ Advancements for Fletching
 
 Glass break faster with pickaxe
 
-Experience Storage System with level precision
-
 ---Suggestions---
 
  Some sort of item to directly upgrade 1 enchantment by 1 level. 
@@ -26,3 +24,5 @@ Experience Storage System with level precision
  trident had a damage increasing enchant. One that wasn't specific to certain mobs 
  
  Allow enchantment name color to be changed as part of enchantments.cfg
+ 
+ Make the book be granted when a user first interacts with apoth content instead of on startup.

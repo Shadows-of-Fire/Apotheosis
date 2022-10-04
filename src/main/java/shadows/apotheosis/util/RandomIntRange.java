@@ -36,6 +36,6 @@ public class RandomIntRange {
 	}
 
 	public int generateInt(Random rand) {
-		return this.min + rand.nextInt(this.max - this.min);
+		return this.min + rand.nextInt(Math.max(1, this.max - this.min));
 	}
 }

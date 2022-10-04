@@ -35,7 +35,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
-import shadows.placebo.PlaceboClient.RainbowColor;
+import shadows.placebo.color.GradientColor;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public record LootRarity(int defaultWeight, String id, TextColor color, List<LootRule> rules, int ordinal) implements ILuckyWeighted {
@@ -94,7 +94,7 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	));
 	//Formatter::on
 
-	public static final LootRarity ANCIENT = new LootRarity(0, "ancient", new RainbowColor(), ImmutableList.of());
+	public static final LootRarity ANCIENT = new LootRarity(0, "ancient", GradientColor.RAINBOW, ImmutableList.of());
 
 	static {
 		LIST = ImmutableList.of(COMMON, UNCOMMON, RARE, EPIC, MYTHIC, ANCIENT);

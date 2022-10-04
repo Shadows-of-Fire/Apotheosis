@@ -1,10 +1,10 @@
-package shadows.apotheosis.adventure.affix.salvage;
+package shadows.apotheosis.adventure.affix.salvaging;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -18,20 +18,20 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.client.SimpleTexButton;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
-public class SalvageScreen extends AbstractContainerScreen<SalvageMenu> {
+public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage.png");
 
-	protected Button salvage;
-	protected Button salvageCommon;
-	protected Button salvageUncommon;
-	protected Button salvageRare;
-	protected Button salvageEpic;
+	protected SimpleTexButton salvage;
+	protected SimpleTexButton salvageCommon;
+	protected SimpleTexButton salvageUncommon;
+	protected SimpleTexButton salvageRare;
+	protected SimpleTexButton salvageEpic;
 
-	public SalvageScreen(SalvageMenu menu, Inventory inv, Component title) {
+	public SalvagingScreen(SalvagingMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
 		this.titleLabelX = 176 / 2 - Minecraft.getInstance().font.width(title) / 2;
-		this.titleLabelY = 4;
+		this.titleLabelY = 10;
 		this.menu.setButtonUpdater(this::updateButtons);
 	}
 
@@ -40,11 +40,18 @@ public class SalvageScreen extends AbstractContainerScreen<SalvageMenu> {
 		super.init();
 		int left = this.getGuiLeft();
 		int top = this.getGuiTop();
-		salvage = this.addRenderableWidget(new SimpleTexButton(left + 36, top + 27, 32, 32, 176, 48, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0), new TranslatableComponent("apotheosis.button.salvage")));
-		salvageCommon = this.addRenderableWidget(new SimpleTexButton(left + 84, top + 35, 16, 16, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 1), new TranslatableComponent("apotheosis.button.salvage_all.common")));
-		salvageUncommon = this.addRenderableWidget(new SimpleTexButton(left + 103, top + 35, 16, 16, 176 + 16, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 2), new TranslatableComponent("apotheosis.button.salvage_all.uncommon")));
-		salvageRare = this.addRenderableWidget(new SimpleTexButton(left + 122, top + 35, 16, 16, 176 + 32, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 3), new TranslatableComponent("apotheosis.button.salvage_all.rare")));
-		salvageEpic = this.addRenderableWidget(new SimpleTexButton(left + 141, top + 35, 16, 16, 176 + 48, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 4), new TranslatableComponent("apotheosis.button.salvage_all.epic")));
+		//Formatter::off
+		salvage = this.addRenderableWidget(new SimpleTexButton(left + 36, top + 27, 32, 32, 176, 48, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0), 
+				new TranslatableComponent("button.apotheosis.salvage")).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage").withStyle(ChatFormatting.RED)));
+		salvageCommon = this.addRenderableWidget(new SimpleTexButton(left + 84, top + 35, 16, 16, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 1), 
+				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.COMMON.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
+		salvageUncommon = this.addRenderableWidget(new SimpleTexButton(left + 103, top + 35, 16, 16, 176 + 16, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 2), 
+				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.UNCOMMON.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
+		salvageRare = this.addRenderableWidget(new SimpleTexButton(left + 122, top + 35, 16, 16, 176 + 32, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 3), 
+				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.RARE.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
+		salvageEpic = this.addRenderableWidget(new SimpleTexButton(left + 141, top + 35, 16, 16, 176 + 48, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 4), 
+				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.EPIC.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
+		//Formatter::on
 		updateButtons();
 	}
 

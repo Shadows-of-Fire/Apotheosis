@@ -27,6 +27,10 @@ public class AdventureJEIPlugin implements IModPlugin {
 		ItemStack gem = new ItemStack(Apoth.Items.GEM);
 		GemItem.setStoredBonus(gem, Attributes.LUCK, new AttributeModifier("debug", 9999, Operation.ADDITION));
 		reg.addIngredientInfo(gem, VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.socketing"));
+
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.GEM_DUST), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.gem_crushing"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXTRACTION), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.gem_extraction"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXPULSION), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.gem_expulsion"));
 	}
 
 }

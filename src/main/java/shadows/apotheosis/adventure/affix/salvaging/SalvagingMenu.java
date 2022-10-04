@@ -1,4 +1,4 @@
-package shadows.apotheosis.adventure.affix.salvage;
+package shadows.apotheosis.adventure.affix.salvaging;
 
 import java.util.Random;
 
@@ -19,26 +19,26 @@ import shadows.placebo.cap.InternalItemHandler;
 import shadows.placebo.container.FilteredSlot;
 import shadows.placebo.container.PlaceboContainerMenu;
 
-public class SalvageMenu extends PlaceboContainerMenu {
+public class SalvagingMenu extends PlaceboContainerMenu {
 
 	protected final Player player;
 	protected final ContainerLevelAccess access;
 	protected final InternalItemHandler inputSlots = new InternalItemHandler(1);
 	protected Runnable updateButtons;
 
-	public SalvageMenu(int id, Inventory inv) {
+	public SalvagingMenu(int id, Inventory inv) {
 		this(id, inv, ContainerLevelAccess.NULL);
 	}
 
-	public SalvageMenu(int id, Inventory inv, ContainerLevelAccess access) {
+	public SalvagingMenu(int id, Inventory inv, ContainerLevelAccess access) {
 		super(Apoth.Menus.SALVAGE, id, inv);
 		this.player = inv.player;
 		this.access = access;
-		this.addSlot(new FilteredSlot(this.inputSlots, 0, 13, 36) {
+		this.addSlot(new FilteredSlot(this.inputSlots, 0, 12, 35, s -> AffixHelper.getRarity(s) != null) {
 			@Override
 			public void setChanged() {
 				super.setChanged();
-				if (SalvageMenu.this.updateButtons != null) SalvageMenu.this.updateButtons.run();
+				if (SalvagingMenu.this.updateButtons != null) SalvagingMenu.this.updateButtons.run();
 			}
 		});
 
@@ -57,7 +57,7 @@ public class SalvageMenu extends PlaceboContainerMenu {
 					@Override
 					public void setChanged() {
 						super.setChanged();
-						if (SalvageMenu.this.updateButtons != null) SalvageMenu.this.updateButtons.run();
+						if (SalvagingMenu.this.updateButtons != null) SalvagingMenu.this.updateButtons.run();
 					}
 				});
 			}
@@ -70,7 +70,7 @@ public class SalvageMenu extends PlaceboContainerMenu {
 				@Override
 				public void setChanged() {
 					super.setChanged();
-					if (SalvageMenu.this.updateButtons != null) SalvageMenu.this.updateButtons.run();
+					if (SalvagingMenu.this.updateButtons != null) SalvagingMenu.this.updateButtons.run();
 				}
 
 			});
@@ -83,7 +83,7 @@ public class SalvageMenu extends PlaceboContainerMenu {
 
 	@Override
 	public boolean stillValid(Player pPlayer) {
-		return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.SALVAGE_TABLE, true);
+		return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE, true);
 	}
 
 	@Override

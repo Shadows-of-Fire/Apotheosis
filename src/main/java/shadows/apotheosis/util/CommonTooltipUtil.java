@@ -1,4 +1,4 @@
-package shadows.apotheosis.ench.compat;
+package shadows.apotheosis.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,18 +6,43 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.google.common.base.Predicates;
+
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
+import shadows.placebo.util.AttributeHelper;
 
 public class CommonTooltipUtil {
+
+	public static void appendBossData(Level level, LivingEntity entity, Consumer<Component> tooltip) {
+		LootRarity rarity = LootRarity.byId(entity.getPersistentData().getString("apoth.rarity"));
+		if (rarity == null) return;
+		tooltip.accept(new TranslatableComponent("info.apotheosis.boss", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
+		tooltip.accept(TextComponent.EMPTY);
+		tooltip.accept(new TranslatableComponent("info.apotheosis.boss_modifiers").withStyle(ChatFormatting.GRAY));
+		AttributeMap map = entity.getAttributes();
+		ForgeRegistries.ATTRIBUTES.getValues().stream().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {
+			for (AttributeModifier modif : inst.getModifiers()) {
+				if (modif.getName().startsWith("placebo_random_modifier_")) {
+					tooltip.accept(AttributeHelper.toComponent(inst.getAttribute(), modif));
+				}
+			}
+		});
+	}
 
 	public static void appendBlockStats(Level world, BlockState state, Consumer<Component> tooltip) {
 		float maxEterna = EnchantingStatManager.getMaxEterna(state, world, BlockPos.ZERO);

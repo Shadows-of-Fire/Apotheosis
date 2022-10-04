@@ -246,9 +246,10 @@
 	"socket.apotheosis.empty": "Empty Socket",
     "item.modifiers.socket": "When Socketed:",
 	"info.apotheosis.socketing": "Gems can be socketed with a Smithing Table. Item on the left, gem on the right.\n\nOnce socketed, a gem cannot be removed.",
-	
+
 	"affix.apotheosis:durable.desc": "This item ignores %s%% of durability damage.",
-	
+
+    "item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.0": "Parity Gem",
 	"item.apotheosis.gem.1": "Arcane Gem",
 	"item.apotheosis.gem.2": "Splendor Gem",
@@ -260,7 +261,31 @@
 	"item.apotheosis.gem.8": "Geometric Gem",
 	"item.apotheosis.gem.9": "Valence Gem",
 	"item.apotheosis.gem.10": "Endersurge Gem",
+	"item.apotheosis.vial_of_extraction": "Vial of Arcane Extraction",
+	"item.apotheosis.vial_of_extraction.desc": "Gem Removal Serum",
+	"item.apotheosis.vial_of_expulsion": "Vial of Searing Expulsion",
+	"item.apotheosis.vial_of_expulsion.desc": "Gem Removal Serum",
+	"item.apotheosis.gem_dust": "Gem Dust",
+	"item.apotheosis.gem_dust.desc": "A Crushed Apotheotic Gemstone",
+	"item.apotheosis.common_material": "Mysterious Metal",
+	"item.apotheosis.uncommon_material": "Timeworn Fabric",
+	"item.apotheosis.rare_material": "Luminous Crystal Shard",
+	"item.apotheosis.epic_material": "Arcane Sands",
+	"item.apotheosis.mythic_material": "Godforged Pearl",
 	
+	"block.apotheosis.salvaging_table": "Salvaging Table",
+	"block.apotheosis.salvaging_table.desc": "Breaks down Affix Items into Rarity Materials",
+	"block.apotheosis.reforging_table": "Reforging Table",
+	"block.apotheosis.reforging_table.desc": "Uses Gem Dust and Rarity Materials to reroll affixes",
+	
+	"button.apotheosis.salvage": "Salvage Item",
+	"button.apotheosis.salvage_all": "Salvage All %s Items",
+	"button.apotheosis.no_salvage": "No item selected",
+	"button.apotheosis.no_salvage_all": "No valid items in inventory",
+
+	"container.apotheosis.salvage": "Salvage Affix Items",
+	"container.apotheosis.reforge": "Reforge Items",
+
 	"affix.apotheosis.target.attack_self": "On hit, gain %s",
 	"affix.apotheosis.target.attack_target": "On hit, inflict %s",
 	"affix.apotheosis.target.hurt_self": "When attacked, gain %s",
@@ -272,6 +297,13 @@
 	"affix.apotheosis.target.block_attacker": "Upon blocking, inflict %s",
 	
 	"info.apotheosis.boss_spawn": "%s has awoken nearby!",
+	"info.apotheosis.boss": "%s Apotheotic Boss",
+	"info.apotheosis.boss_item": "Will Drop: %s",
+	"info.apotheosis.boss_modifiers": "Boss Modifiers:",
+	"info.apotheosis.rarity_material": "Rarity Material (%s)",
+	"info.apotheosis.gem_crushing": "Gem Dust is obtained by dropping any Apotheotic Gem the in world, and making an Anvil block fall onto it.",
+	"info.apotheosis.gem_extraction": "Used in a Smithing Table to unsocket Apotheotic Gems.\n\nThe item will be destroyed in the process.",
+	"info.apotheosis.gem_expulsion": "Used in a Smithing Table to unsocket Apotheotic Gems.\n\nThe gems will be destroyed in the process.",
 	
     "rarity.apoth.common": "Common",
     "rarity.apoth.uncommon": "Uncommon",
@@ -284,8 +316,6 @@
     "death.attack.apoth.frozen_solid.player": "%s was frozen solid by %s.",
     "death.attack.apoth.execute": "%s was executed.",
     "death.attack.apoth.execute.player": "%s was executed by %s.",
-
-    "item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 
 	"comment_id": "/Adventure + Gateways Compat",
 

@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import shadows.apotheosis.ench.anvil.AnvilTile;
+import shadows.apotheosis.util.CommonTooltipUtil;
 import shadows.placebo.compat.TOPCompat;
 
 public class EnchTOPPlugin implements TOPCompat.Provider {

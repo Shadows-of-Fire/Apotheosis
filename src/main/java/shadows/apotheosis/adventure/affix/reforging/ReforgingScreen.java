@@ -32,7 +32,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 	public ReforgingScreen(ReforgingMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
 		this.titleLabelX = 176 / 2 - Minecraft.getInstance().font.width(title) / 2;
-		this.titleLabelY = 4;
+		this.titleLabelY = 10;
 	}
 
 	@Override

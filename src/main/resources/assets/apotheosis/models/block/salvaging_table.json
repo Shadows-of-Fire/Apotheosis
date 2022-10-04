@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "apotheosis:blocks/salvaging_table_front",
+    "north": "apotheosis:blocks/salvaging_table_front",
+    "south": "apotheosis:blocks/salvaging_table_front",
+    "east": "apotheosis:blocks/salvaging_table_side",
+    "west": "apotheosis:blocks/salvaging_table_side",
+    "up": "apotheosis:blocks/salvaging_table_top",
+    "down": "apotheosis:blocks/salvaging_table_bottom"
+  }
+}

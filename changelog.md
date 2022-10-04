@@ -6,6 +6,8 @@
   * This modifier gives all loot-generated gear pieces a chance to be rolled as an affix item.
   * The chance is configurable on a per-loot-table basis and the rarities are dimensional.
   * This reduces the burden of messing with the affix loot entries table when large swathes of gear already generate.
+  * ATTENTION PACKDEVS! If you do not update your config you will start seeing any sticks dropped by a loot table being given affixes!
+    * Consider yourselves warned.
 * Added Gem Dust, a magical resource obtained by smashing Apotheotic Gems with an anvil.
 * Added the Vial of Searing Expulsion and Vial of Arcane Extraction, which allow for gem removal.
 * Added the Scrapping Table, which allows you to break down affix items into rarity materials.
@@ -16,6 +18,7 @@
   * Glow duration increased from 20 seconds to 2 minutes.
 * There is now a boss cooldown timer, defaulting to 20 seconds.
   * Regardless of the boss spawn chance, no boss may spawn until the timer has elapsed since the last boss spawn.
+* Bosses will now report their rarity and boss-specific bonus modifiers in Jade/TOP.
 
 ### Bugfixes
 * Made % Current HP damage deal armor-piercing physical damage instead of magic damage.

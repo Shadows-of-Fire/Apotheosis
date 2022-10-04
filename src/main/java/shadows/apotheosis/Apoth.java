@@ -21,8 +21,8 @@ import shadows.apotheosis.adventure.affix.effect.RadialAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
-import shadows.apotheosis.adventure.affix.salvage.SalvageMenu;
-import shadows.apotheosis.adventure.affix.salvage.SalvageTableBlock;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
@@ -100,7 +100,7 @@ public class Apoth {
 		public static final EnchLibraryBlock ENDER_LIBRARY = null;
 		public static final BossSpawnerBlock BOSS_SPAWNER = null;
 		public static final ReforgingTableBlock REFORGING_TABLE = null;
-		public static final SalvageTableBlock SALVAGE_TABLE = null;
+		public static final SalvagingTableBlock SALVAGING_TABLE = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)
@@ -204,7 +204,7 @@ public class Apoth {
 		public static final MenuType<EnchLibraryContainer> LIBRARY = null;
 		public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE = null;
 		public static final MenuType<ReforgingMenu> REFORGING = null;
-		public static final MenuType<SalvageMenu> SALVAGE = null;
+		public static final MenuType<SalvagingMenu> SALVAGE = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)

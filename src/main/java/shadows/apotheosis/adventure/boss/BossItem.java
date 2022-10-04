@@ -185,6 +185,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 			}
 		}
 		entity.getPersistentData().putBoolean("apoth.boss", true);
+		entity.getPersistentData().putString("apoth.rarity", rarity.id());
 		entity.setHealth(entity.getMaxHealth());
 		entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
 	}

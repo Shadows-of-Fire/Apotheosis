@@ -76,7 +76,7 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingScreen;
-import shadows.apotheosis.adventure.affix.salvage.SalvageScreen;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
@@ -93,7 +93,7 @@ public class AdventureModuleClient {
 		ItemProperties.register(Apoth.Items.GEM, new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
 		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.BOSS_SPAWNER, RenderType.cutout());
 		MenuScreens.register(Apoth.Menus.REFORGING, ReforgingScreen::new);
-		MenuScreens.register(Apoth.Menus.SALVAGE, SalvageScreen::new);
+		MenuScreens.register(Apoth.Menus.SALVAGE, SalvagingScreen::new);
 	}
 
 	@SubscribeEvent
@@ -184,6 +184,9 @@ public class AdventureModuleClient {
 			List<Component> components = new ArrayList<>();
 			affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().getType().ordinal())).forEach(inst -> inst.addInformation(components::add));
 			e.getToolTip().addAll(1, components);
+		}
+		if (stack.getItem() == Apoth.Items.GEM_DUST || stack.getItem() == Apoth.Items.VIAL_OF_EXPULSION || stack.getItem() == Apoth.Items.VIAL_OF_EXTRACTION) {
+			e.getToolTip().add(new TranslatableComponent(e.getItemStack().getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
 	}
 

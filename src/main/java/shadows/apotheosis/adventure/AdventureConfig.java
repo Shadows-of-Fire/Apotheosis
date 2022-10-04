@@ -86,7 +86,7 @@ public class AdventureConfig {
 		}
 
 		TYPE_OVERRIDES.clear();
-		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:stick|SWORD" }, "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.  Types are SWORD, TRIDENT, SHIELD, HEAVY_WEAPON, BREAKER, CROSSBOW, BOW");
+		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|SWORD" }, "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.  Types are SWORD, TRIDENT, SHIELD, HEAVY_WEAPON, BREAKER, CROSSBOW, BOW");
 		for (String s : overrides) {
 			String[] split = s.split("\\|");
 			try {
@@ -191,7 +191,7 @@ public class AdventureConfig {
 		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", true, "If the boss announcement range ignores y-level.");
 		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 0, 400, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
 
-		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.06|NEEDS_SKY", "minecraft:the_nether|0.035|ANY", "minecraft:the_end|0.03|NEEDS_SURFACE", "twilightforest:twilight_forest|0.10|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
+		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.033|NEEDS_SKY", "minecraft:the_nether|0.02|ANY", "minecraft:the_end|0.015|NEEDS_SURFACE", "twilightforest:twilight_forest|0.08|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();
 		for (String s : dims) {
 			try {
