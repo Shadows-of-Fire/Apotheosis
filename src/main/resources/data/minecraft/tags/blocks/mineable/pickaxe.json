@@ -71,6 +71,10 @@
 		{
 			"id": "apotheosis:ender_library",
 			"required": false
+		},
+		{
+			"id": "apotheosis:reforging_table",
+			"required": false
 		}
 	]
 }

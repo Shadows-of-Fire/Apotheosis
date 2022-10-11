@@ -7,6 +7,10 @@
 		{
 			"id": "apotheosis:melonshelf",
 			"required": false
+		},
+		{
+			"id": "apotheosis:salvaging_table",
+			"required": false
 		}
 	]
 }

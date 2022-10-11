@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,7 +24,14 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
 	@Override
 	public void clientTick(Level pLevel, BlockPos pPos, BlockState pState) {
-		time++;
+		Player player = pLevel.getNearestPlayer((double) pPos.getX() + 0.5D, (double) pPos.getY() + 0.5D, (double) pPos.getZ() + 0.5D, 4, false);
+
+		if (player != null) {
+			time++;
+		} else {
+			if (time == 0 && step1) return;
+			else time++;
+		}
 
 		if (step1 && time == 59) {
 			step1 = false;
@@ -33,7 +41,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 			for (int i = 0; i < 6; i++) {
 				pLevel.addParticle(ParticleTypes.CRIT, pPos.getX() + 0.5 + 0.2 * rand.nextDouble(), pPos.getY() + 13 / 16D, pPos.getZ() + 0.5 + 0.2 * rand.nextDouble(), 0, 0, 0);
 			}
-			pLevel.playLocalSound(pPos.getX(), pPos.getY(), pPos.getZ(), SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.005F, 1.7F + rand.nextFloat() * 0.2F, true);
+			pLevel.playLocalSound(pPos.getX(), pPos.getY(), pPos.getZ(), SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.03F, 1.7F + rand.nextFloat() * 0.2F, true);
 			step1 = true;
 			time = 0;
 		}

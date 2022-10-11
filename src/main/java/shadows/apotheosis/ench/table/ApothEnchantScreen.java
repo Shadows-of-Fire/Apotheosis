@@ -310,7 +310,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 		if (this.isHovering(60, 14 + 19 * 3 + 5, 110, 5, mouseX, mouseY)) {
 			List<Component> list = Lists.newArrayList();
 			list.add(new TextComponent(eterna() + I18n.get("gui.apotheosis.enchant.eterna.desc")));
-			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.eterna.desc2")));
+			list.add(new TranslatableComponent("gui.apotheosis.enchant.eterna.desc2").withStyle(ChatFormatting.GRAY));
 			if (this.menu.eterna.get() > 0) {
 				list.add(new TextComponent(""));
 				list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.eterna.desc3", f(this.menu.eterna.get()), this.menu.eterna.getMax())).withStyle(ChatFormatting.GRAY));
@@ -319,8 +319,8 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 		} else if (this.isHovering(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
 			List<Component> list = Lists.newArrayList();
 			list.add(new TextComponent(quanta() + I18n.get("gui.apotheosis.enchant.quanta.desc")));
-			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc2")));
-			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc3")));
+			list.add(new TranslatableComponent("gui.apotheosis.enchant.quanta.desc2").withStyle(ChatFormatting.GRAY));
+			list.add(new TextComponent(rectification() + I18n.get("gui.apotheosis.enchant.quanta.desc3")).withStyle(ChatFormatting.GRAY));
 			if (this.menu.quanta.get() > 0) {
 				list.add(new TextComponent(""));
 				list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc4", f(this.menu.quanta.get()))).withStyle(ChatFormatting.GRAY));
@@ -341,13 +341,14 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 			stack.pushPose();
 			stack.translate(0, 0, 4);
 			list.add(new TextComponent(arcana() + I18n.get("gui.apotheosis.enchant.arcana.desc")));
-			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc2")));
-			list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc3")));
+			list.add(new TranslatableComponent("gui.apotheosis.enchant.arcana.desc2").withStyle(ChatFormatting.GRAY));
+			list.add(new TranslatableComponent("gui.apotheosis.enchant.arcana.desc3").withStyle(ChatFormatting.GRAY));
 			if (this.menu.arcana.get() > 0) {
 				list.add(new TextComponent(""));
 				float ench = this.menu.getSlot(0).getItem().getItemEnchantability() / 2F;
 				list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc4", f(this.menu.arcana.get() - ench))).withStyle(ChatFormatting.GRAY));
 				list.add(new TranslatableComponent("info.apotheosis.ench_bonus", f(ench)).withStyle(ChatFormatting.YELLOW));
+				list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc5", f(this.menu.arcana.get()))).withStyle(ChatFormatting.GOLD));
 			}
 			this.renderComponentTooltip(stack, list, mouseX, mouseY);
 			stack.popPose();
@@ -469,6 +470,10 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 
 	private static String arcana() {
 		return ChatFormatting.DARK_PURPLE + I18n.get("gui.apotheosis.enchant.arcana") + ChatFormatting.RESET;
+	}
+
+	private static String rectification() {
+		return ChatFormatting.YELLOW + I18n.get("gui.apotheosis.enchant.rectification") + ChatFormatting.RESET;
 	}
 
 	private static String f(float f) {

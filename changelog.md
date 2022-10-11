@@ -42,6 +42,7 @@
   * Your /config/apotheosis/names.cfg file will not update automatically, you may want to delete it to receive the new entries!
 * ZHAY10086: Updated chinese translation.
 * Socket tooltips will now always be added to the socketed item.
+* Updated enchanting stat descriptions in the Enchanting Table.
 
 ### Balance
 * Nerfed critical hits again.  Since crits are multiplicative, higher values are very dangerous.

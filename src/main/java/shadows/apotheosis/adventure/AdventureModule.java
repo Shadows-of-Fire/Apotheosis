@@ -104,6 +104,7 @@ import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.loot.LootSystem;
 import shadows.placebo.util.StepFunction;
 
 public class AdventureModule {
@@ -140,6 +141,8 @@ public class AdventureModule {
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
+			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE);
+			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE);
 		});
 	}
 
@@ -173,8 +176,8 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()).setRegistryName("boss_spawner"));
-		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("reforging_table"));
-		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("salvaging_table"));
+		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5, 1000F)).setRegistryName("reforging_table"));
+		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)).setRegistryName("salvaging_table"));
 	}
 
 	@SubscribeEvent
