@@ -1,11 +1,14 @@
 {
-	"weight": 50,
-	"quality": 1,
-	"stack": {
-		"item": "minecraft:turtle_helmet"
-	},
-	"type": "BOW",
-	"dimensions": [
-		"minecraft:overworld"
-	]
+  "weight": 55,
+  "quality": 3.5,
+  "stack": {
+    "item": "minecraft:turtle_helmet",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "ARMOR",
+  "dimensions": [
+    "minecraft:overworld"
+  ],
+  "max_rarity": "rare"
 }

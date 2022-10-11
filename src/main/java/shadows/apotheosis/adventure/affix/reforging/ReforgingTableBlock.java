@@ -17,15 +17,30 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import shadows.placebo.block_entity.TickingEntityBlock;
 
-public class ReforgingTableBlock extends Block {
-	private static final Component TITLE = new TranslatableComponent("container.apotheosis.reforge");
+public class ReforgingTableBlock extends Block implements TickingEntityBlock {
+	public static final Component TITLE = new TranslatableComponent("container.apotheosis.reforge");
+	public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
 	public ReforgingTableBlock(BlockBehaviour.Properties p_56420_) {
 		super(p_56420_);
+	}
+
+	@Override
+	public boolean useShapeForLightOcclusion(BlockState pState) {
+		return true;
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+		return SHAPE;
 	}
 
 	@Override
@@ -48,5 +63,10 @@ public class ReforgingTableBlock extends Block {
 	@Override
 	public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
 		list.add(new TranslatableComponent(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+	}
+
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+		return new ReforgingTableTile(pPos, pState);
 	}
 }

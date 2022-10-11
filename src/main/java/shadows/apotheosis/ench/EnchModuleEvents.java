@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -88,6 +89,7 @@ public class EnchModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void healing(LivingHealEvent e) {
+		if (e.getEntity().getType() == EntityType.ARMOR_STAND) return; // https://github.com/Shadows-of-Fire/Apotheosis/issues/636
 		Apoth.Enchantments.LIFE_MENDING.lifeMend(e);
 	}
 

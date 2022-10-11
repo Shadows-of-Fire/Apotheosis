@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -36,7 +38,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
@@ -45,6 +50,8 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
@@ -58,29 +65,39 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.client.model.ForgeModelBakery;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingScreen;
+import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
+import shadows.apotheosis.adventure.client.from_mantle.ColoredBlockModel;
+import shadows.apotheosis.adventure.client.from_mantle.ColoredItemModel;
 import shadows.apotheosis.util.ItemAccess;
 
 public class AdventureModuleClient {
@@ -94,6 +111,23 @@ public class AdventureModuleClient {
 		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.BOSS_SPAWNER, RenderType.cutout());
 		MenuScreens.register(Apoth.Menus.REFORGING, ReforgingScreen::new);
 		MenuScreens.register(Apoth.Menus.SALVAGE, SalvagingScreen::new);
+		BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE, k -> new ReforgingTableTileRenderer());
+		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.REFORGING_TABLE, RenderType.cutout());
+	}
+
+	public static void onBossSpawn(BlockPos pos, float[] color) {
+		BOSS_SPAWNS.add(new BossSpawnData(pos, color, new MutableInt()));
+		Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.blockPosition()));
+	}
+
+	@EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
+	public static class ModelSubscriber {
+		@SubscribeEvent
+		public static void models(ModelRegistryEvent e) {
+			ForgeModelBakery.addSpecialModel(new ResourceLocation(Apotheosis.MODID, "item/hammer"));
+			ModelLoaderRegistry.registerLoader(new ResourceLocation("apotheosis", "lit"), ColoredBlockModel.LOADER);
+			ModelLoaderRegistry.registerLoader(new ResourceLocation("apotheosis", "lit_item"), ColoredItemModel.LOADER);
+		}
 	}
 
 	@SubscribeEvent
@@ -184,9 +218,6 @@ public class AdventureModuleClient {
 			List<Component> components = new ArrayList<>();
 			affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().getType().ordinal())).forEach(inst -> inst.addInformation(components::add));
 			e.getToolTip().addAll(1, components);
-		}
-		if (stack.getItem() == Apoth.Items.GEM_DUST || stack.getItem() == Apoth.Items.VIAL_OF_EXPULSION || stack.getItem() == Apoth.Items.VIAL_OF_EXTRACTION) {
-			e.getToolTip().add(new TranslatableComponent(e.getItemStack().getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
 	}
 

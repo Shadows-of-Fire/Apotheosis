@@ -19,6 +19,7 @@
 * There is now a boss cooldown timer, defaulting to 20 seconds.
   * Regardless of the boss spawn chance, no boss may spawn until the timer has elapsed since the last boss spawn.
 * Bosses will now report their rarity and boss-specific bonus modifiers in Jade/TOP.
+* The Boss Announcement Volume can now be configured per-client.
 
 ### Bugfixes
 * Made % Current HP damage deal armor-piercing physical damage instead of magic damage.
@@ -30,6 +31,11 @@
   * This means only "real" spawns will actually attempt to trigger a boss, instead of all potentials, which means that boss numbers need to be adjusted.
   * You may want to allow the spawn chance section of your configs regenerate.
 * AHilyard: Fixed a transform issue with other tooltip components and apoth sockets.
+* Fixed a crash when a boss forcibly rejects the custom boss name.
+* Fixed the Executing affix leaving fake entities.
+* Fixed the Rebounding enchantment being unavailable.
+* Fixed spawners not fully resetting entity NBT when changing mob types.
+* Cleaving attacks on monsters will no longer hit any non-monster entities.
 
 ### Misc
 * Added more default boss names.

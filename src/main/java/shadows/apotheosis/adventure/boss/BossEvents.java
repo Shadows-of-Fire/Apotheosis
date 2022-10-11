@@ -9,12 +9,11 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -65,10 +64,11 @@ public class BossEvents {
 							Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
 							if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
 								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(new TranslatableComponent("info.apotheosis.boss_spawn", boss.getCustomName(), (int) boss.getX(), (int) boss.getY())));
-								PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), boss.getCustomName().getStyle().getColor().getValue()), player);
+								TextColor color = boss.getCustomName().getStyle().getColor();
+								if (color == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getCustomName().getString(), boss.getType().getRegistryName());
+								PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()), player);
 							}
 						});
-						if (AdventureConfig.bossAnnounceSound) sLevel.playSound(null, boss.blockPosition(), SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceRange / 16, 1.25F);
 						bossCooldowns.put(entity.level.dimension().location(), AdventureConfig.bossSpawnCooldown);
 					}
 				}

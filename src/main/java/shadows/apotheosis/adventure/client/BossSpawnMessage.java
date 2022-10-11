@@ -34,7 +34,7 @@ public class BossSpawnMessage implements MessageProvider<BossSpawnMessage> {
 	@Override
 	public void handle(BossSpawnMessage msg, Supplier<Context> ctx) {
 		MessageHelper.handlePacket(() -> () -> {
-			AdventureModuleClient.BOSS_SPAWNS.add(new BossSpawnData(msg.pos, toFloats(msg.color), new MutableInt()));
+			AdventureModuleClient.onBossSpawn(msg.pos, toFloats(msg.color));
 		}, ctx);
 	}
 

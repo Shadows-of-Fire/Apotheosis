@@ -267,7 +267,7 @@
 	"item.apotheosis.vial_of_expulsion.desc": "Gem Removal Serum",
 	"item.apotheosis.gem_dust": "Gem Dust",
 	"item.apotheosis.gem_dust.desc": "A Crushed Apotheotic Gemstone",
-	"item.apotheosis.common_material": "Mysterious Metal",
+	"item.apotheosis.common_material": "Mysterious Scrap Metal",
 	"item.apotheosis.uncommon_material": "Timeworn Fabric",
 	"item.apotheosis.rare_material": "Luminous Crystal Shard",
 	"item.apotheosis.epic_material": "Arcane Sands",
@@ -304,6 +304,7 @@
 	"info.apotheosis.gem_crushing": "Gem Dust is obtained by dropping any Apotheotic Gem the in world, and making an Anvil block fall onto it.",
 	"info.apotheosis.gem_extraction": "Used in a Smithing Table to unsocket Apotheotic Gems.\n\nThe item will be destroyed in the process.",
 	"info.apotheosis.gem_expulsion": "Used in a Smithing Table to unsocket Apotheotic Gems.\n\nThe gems will be destroyed in the process.",
+	"info.apotheosis.salvaging": "Rarity Materials are obtained by salvaging Affix Items in a Salvaging Table.",
 	
     "rarity.apoth.common": "Common",
     "rarity.apoth.uncommon": "Uncommon",

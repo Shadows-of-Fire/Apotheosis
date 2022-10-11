@@ -21,6 +21,7 @@ import shadows.apotheosis.adventure.affix.effect.RadialAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
+import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
@@ -213,6 +214,7 @@ public class Apoth {
 		public static final BlockEntityType<AnvilTile> ANVIL = null;
 		public static final BlockEntityType<EnchLibraryTile> ENDER_LIBRARY = null;
 		public static final BlockEntityType<BossSpawnerTile> BOSS_SPAWNER = null;
+		public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = null;
 	}
 
 	@ObjectHolder(Apotheosis.MODID)

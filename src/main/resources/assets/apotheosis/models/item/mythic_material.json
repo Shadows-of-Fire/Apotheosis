@@ -1,6 +1,12 @@
 {
+	"loader": "apotheosis:lit_item",
     "parent": "item/generated",
     "textures": {
         "layer0": "apotheosis:items/mythic_material"
-    }
+    },
+	"colors": [
+		{
+			"luminosity": 15
+		}
+	]
 }

@@ -16,9 +16,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.block.Block;
@@ -39,12 +39,12 @@ import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.ticks.LevelTickAccess;
 
-public class LyingLevel implements ServerLevelAccessor {
+public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
 
-	protected final Level wrapped;
+	protected final ServerLevel wrapped;
 	protected int fakeLightLevel;
 
-	public LyingLevel(Level wrapped) {
+	public LyingLevel(ServerLevel wrapped) {
 		this.wrapped = wrapped;
 	}
 
@@ -229,7 +229,7 @@ public class LyingLevel implements ServerLevelAccessor {
 
 	@Override
 	public ServerLevel getLevel() {
-		return (ServerLevel) this.wrapped;
+		return this.wrapped;
 	}
 
 	@Override
@@ -245,6 +245,11 @@ public class LyingLevel implements ServerLevelAccessor {
 	@Override
 	public int getRawBrightness(BlockPos pBlockPos, int pAmount) {
 		return this.fakeLightLevel;
+	}
+
+	@Override
+	public long getSeed() {
+		return this.wrapped.getSeed();
 	}
 
 }

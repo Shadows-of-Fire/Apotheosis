@@ -1,6 +1,12 @@
 {
+	"loader": "apotheosis:lit_item",
     "parent": "item/generated",
     "textures": {
         "layer0": "apotheosis:items/gem_dust"
-    }
+    },
+	"colors": [
+		{
+			"luminosity": 15
+		}
+	]
 }

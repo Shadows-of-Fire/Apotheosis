@@ -129,7 +129,7 @@ public class EnchModule {
 	public static final EnchantmentCategory SHEARS = EnchantmentCategory.create("SHEARS", i -> i instanceof ShearsItem);
 	public static final EnchantmentCategory PICKAXE = EnchantmentCategory.create("PICKAXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.PICKAXE_DIG));
 	public static final EnchantmentCategory AXE = EnchantmentCategory.create("AXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.AXE_DIG));
-	public static final EnchantmentCategory ARMOR_CHEST_LEGS = EnchantmentCategory.create("ARMOR_CHEST_LEGS", i -> EnchantmentCategory.ARMOR_CHEST.canEnchant(i) && EnchantmentCategory.ARMOR_LEGS.canEnchant(i));
+	public static final EnchantmentCategory ARMOR_CHEST_LEGS = EnchantmentCategory.create("ARMOR_CHEST_LEGS", i -> EnchantmentCategory.ARMOR_CHEST.canEnchant(i) || EnchantmentCategory.ARMOR_LEGS.canEnchant(i));
 	static Configuration enchInfoConfig;
 
 	@SubscribeEvent

@@ -75,6 +75,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
 		@Override
 		public void setEntityId(EntityType<?> pType) {
+			this.nextSpawnData = new SpawnData();
 			super.setEntityId(pType);
 			this.spawnPotentials = SimpleWeightedRandomList.single(this.nextSpawnData);
 			if (ApothSpawnerTile.this.level != null) this.delay(ApothSpawnerTile.this.level, ApothSpawnerTile.this.worldPosition);

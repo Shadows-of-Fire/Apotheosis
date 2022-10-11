@@ -27,14 +27,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
@@ -42,6 +41,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.IRegistryDelegate;
 import shadows.apotheosis.Apoth;
@@ -72,6 +72,7 @@ import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
+import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvageItem;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
@@ -135,7 +136,6 @@ public class AdventureModule {
 			Item g = Apoth.Items.GEM_DUST;
 			f.addShaped(Apoth.Items.VIAL_OF_EXPULSION, 3, 3, g, Items.MAGMA_CREAM, g, Items.BLAZE_ROD, Apotheosis.potionIngredient(Potions.THICK), Items.BLAZE_ROD, g, Items.LAVA_BUCKET, g);
 			f.addShaped(Apoth.Items.VIAL_OF_EXTRACTION, 3, 3, g, Items.AMETHYST_SHARD, g, Items.ENDER_PEARL, Apotheosis.potionIngredient(Potions.THICK), Items.ENDER_PEARL, g, Items.WATER_BUCKET, g);
-			f.addShaped(Apoth.Blocks.SALVAGING_TABLE, 3, 3, g, Tags.Items.INGOTS_GOLD, g, Tags.Items.INGOTS_GOLD, Blocks.SMITHING_TABLE, Tags.Items.INGOTS_GOLD, g, Items.LAVA_BUCKET, g);
 		});
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
@@ -173,13 +173,14 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()).setRegistryName("boss_spawner"));
-		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("reforging_table"));
-		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("salvaging_table"));
+		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("reforging_table"));
+		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2, 4).requiresCorrectToolForDrops()).setRegistryName("salvaging_table"));
 	}
 
 	@SubscribeEvent
 	public void tiles(Register<BlockEntityType<?>> e) {
 		e.getRegistry().register(new TickingBlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(Apoth.Blocks.BOSS_SPAWNER), false, true).setRegistryName("boss_spawner"));
+		e.getRegistry().register(new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Apoth.Blocks.REFORGING_TABLE), true, false).setRegistryName("reforging_table"));
 	}
 
 	@SubscribeEvent
@@ -700,6 +701,7 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void client(FMLClientSetupEvent e) {
 		e.enqueueWork(AdventureModuleClient::init);
+		FMLJavaModLoadingContext.get().getModEventBus().register(new AdventureModuleClient());
 	}
 
 	/**

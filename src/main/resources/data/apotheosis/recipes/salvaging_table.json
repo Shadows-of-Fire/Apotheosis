@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    "GIG",
+    "ISI",
+    "GLG"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/gold"
+    },
+	"G": {
+      "item": "apotheosis:gem_dust"
+    },
+	"S": {
+      "item": "minecraft:smithing_table"
+    },
+	"L": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "result": {
+    "item": "apotheosis:salvaging_table",
+    "count": 1
+  }
+}

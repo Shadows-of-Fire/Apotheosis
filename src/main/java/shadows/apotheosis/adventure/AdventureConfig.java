@@ -51,7 +51,7 @@ public class AdventureConfig {
 	//Boss Stats
 	public static boolean curseBossItems = false;
 	public static float bossAnnounceRange = 96;
-	public static boolean bossAnnounceSound = false;
+	public static float bossAnnounceVolume = 0.75F;
 	public static boolean bossAnnounceIgnoreY = false;
 	public static int bossSpawnCooldown = 400;
 
@@ -64,7 +64,7 @@ public class AdventureConfig {
 	public static float spawnerValueChance = 0.11F;
 
 	// Affix
-	public static float randomAffixItem = 0.11F;
+	public static float randomAffixItem = 0.24F;
 	public static float gemDropChance = 0.045F;
 	public static float gemBossBonus = 0.33F;
 	public static boolean disableQuarkOnAffixItems = true;
@@ -187,11 +187,11 @@ public class AdventureConfig {
 
 		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", false, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
 		bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", 96, 0, 1024, "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.");
-		bossAnnounceSound = c.getBoolean("Boss Announce Sound", "bosses", true, "If the boss announcement plays a sound.");
+		bossAnnounceVolume = c.getFloat("Boss Announce Volume", "bosses", bossAnnounceVolume, 0, 1, "The volume of the boss announcement sound. 0 to disable. This control is clientside.");
 		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", true, "If the boss announcement range ignores y-level.");
-		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 0, 400, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
+		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 400, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
 
-		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.033|NEEDS_SKY", "minecraft:the_nether|0.02|ANY", "minecraft:the_end|0.015|NEEDS_SURFACE", "twilightforest:twilight_forest|0.08|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
+		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.02|NEEDS_SKY", "minecraft:the_nether|0.03|ANY", "minecraft:the_end|0.02|NEEDS_SURFACE", "twilightforest:twilight_forest|0.05|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();
 		for (String s : dims) {
 			try {

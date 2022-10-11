@@ -11,6 +11,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -79,6 +80,7 @@ public class CleavingAffix extends Affix {
 		return e -> {
 			if ((e instanceof Animal && !(target instanceof Animal)) || (e instanceof AbstractVillager && !(target instanceof AbstractVillager))) return false;
 			if (!AdventureConfig.cleaveHitsPlayers && e instanceof Player) return false;
+			if ((target instanceof Enemy && !(e instanceof Enemy))) return false;
 			return e != user && e instanceof LivingEntity;
 		};
 	}
