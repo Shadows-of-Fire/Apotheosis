@@ -133,7 +133,7 @@ public class AdventureConfig {
 			}
 		}
 
-		lootRules = c.getStringList("Affix Convert Loot Rules", "affixes", new String[] { ".*|0.85" }, "Loot Rules, in the form of Loot Table Matchers, permitting affixes to be added to any valid item. Here, the chance refers to the chance an item receives affixes. See comment on \"Affix Item Loot Rules\" for description.");
+		lootRules = c.getStringList("Affix Convert Loot Rules", "affixes", new String[] { ".*blocks.*|0", ".*|0.85" }, "Loot Rules, in the form of Loot Table Matchers, permitting affixes to be added to any valid item. Here, the chance refers to the chance an item receives affixes. See comment on \"Affix Item Loot Rules\" for description.");
 		AFFIX_CONVERT_LOOT_RULES.clear();
 		for (String s : lootRules) {
 			try {

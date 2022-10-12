@@ -1,5 +1,11 @@
 package shadows.apotheosis.adventure.affix.salvaging;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -14,25 +20,28 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.client.SimpleTexButton;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.util.ClientUtil;
 
 public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage.png");
 
-	protected SimpleTexButton salvage;
-	protected SimpleTexButton salvageCommon;
-	protected SimpleTexButton salvageUncommon;
-	protected SimpleTexButton salvageRare;
-	protected SimpleTexButton salvageEpic;
+	protected final Map<LootRarity, List<Slot>> itemSlots = new HashMap<>();
+	protected final ItemStack[] mats = new ItemStack[4];
+	protected SimpleTexButton[] buttons = new SimpleTexButton[5];
 
 	public SalvagingScreen(SalvagingMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
 		this.titleLabelX = 176 / 2 - Minecraft.getInstance().font.width(title) / 2;
-		this.titleLabelY = 10;
+		this.titleLabelY = 6;
 		this.menu.setButtonUpdater(this::updateButtons);
+		for (int i = 0; i < 4; i++) {
+			mats[i] = new ItemStack(AdventureModule.RARITY_MATERIALS.get(LootRarity.values().get(i)).get());
+		}
 	}
 
 	@Override
@@ -41,64 +50,70 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		int left = this.getGuiLeft();
 		int top = this.getGuiTop();
 		//Formatter::off
-		salvage = this.addRenderableWidget(new SimpleTexButton(left + 36, top + 27, 32, 32, 176, 48, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0), 
+		buttons[0] = this.addRenderableWidget(new SimpleTexButton(left + 36, top + 33, 20, 20, 196, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0), 
 				new TranslatableComponent("button.apotheosis.salvage")).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage").withStyle(ChatFormatting.RED)));
-		salvageCommon = this.addRenderableWidget(new SimpleTexButton(left + 84, top + 35, 16, 16, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 1), 
+		buttons[1] = this.addRenderableWidget(new SimpleTexButton(left + 70, top + 25, 20, 36, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 1), 
 				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.COMMON.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
-		salvageUncommon = this.addRenderableWidget(new SimpleTexButton(left + 103, top + 35, 16, 16, 176 + 16, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 2), 
+		buttons[2] = this.addRenderableWidget(new SimpleTexButton(left + 95, top + 25, 20, 36, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 2), 
 				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.UNCOMMON.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
-		salvageRare = this.addRenderableWidget(new SimpleTexButton(left + 122, top + 35, 16, 16, 176 + 32, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 3), 
+		buttons[3] = this.addRenderableWidget(new SimpleTexButton(left + 120, top + 25, 20, 36, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 3), 
 				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.RARE.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
-		salvageEpic = this.addRenderableWidget(new SimpleTexButton(left + 141, top + 35, 16, 16, 176 + 48, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 4), 
+		buttons[4] = this.addRenderableWidget(new SimpleTexButton(left + 145, top + 25, 20, 36, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 4), 
 				new TranslatableComponent("button.apotheosis.salvage_all", LootRarity.EPIC.toComponent())).setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage_all").withStyle(ChatFormatting.RED)));
 		//Formatter::on
 		updateButtons();
 	}
 
 	public void updateButtons() {
-		if (this.salvage == null) return;
-		this.salvage.active = !this.menu.getSlot(0).getItem().isEmpty();
+		if (this.buttons[0] == null) return;
+		this.itemSlots.clear();
+		this.buttons[0].active = AffixHelper.getRarity(this.menu.getSlot(0).getItem()) != null;
 
-		this.salvageCommon.active = false;
-		this.salvageUncommon.active = false;
-		this.salvageRare.active = false;
-		this.salvageEpic.active = false;
+		this.buttons[1].active = false;
+		this.buttons[2].active = false;
+		this.buttons[3].active = false;
+		this.buttons[4].active = false;
 
 		for (int i = 1; i < this.menu.slots.size(); i++) {
 			Slot s = this.menu.getSlot(i);
 			ItemStack stack = s.getItem();
 			LootRarity rarity = stack.hasTag() ? AffixHelper.getRarity(stack) : null;
-			if (rarity != null) {
-				switch (rarity.ordinal()) {
-				case 0:
-					this.salvageCommon.active = true;
-					break;
-				case 1:
-					this.salvageUncommon.active = true;
-					break;
-				case 2:
-					this.salvageRare.active = true;
-					break;
-				case 3:
-					this.salvageEpic.active = true;
-					break;
-				default:
-				}
+			if (rarity != null && rarity.ordinal() <= LootRarity.EPIC.ordinal()) {
+				buttons[rarity.ordinal() + 1].active = true;
+				this.itemSlots.computeIfAbsent(rarity, r -> new ArrayList<>()).add(s);
 			}
 		}
 	}
 
 	@Override
-	public void removed() {
-		super.removed();
-	}
+	public void render(PoseStack stack, int pMouseX, int pMouseY, float pPartialTick) {
+		this.renderBackground(stack);
+		super.render(stack, pMouseX, pMouseY, pPartialTick);
+		int left = this.getGuiLeft();
+		int top = this.getGuiTop();
 
-	@Override
-	public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-		this.renderBackground(pPoseStack);
-		super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-		RenderSystem.disableBlend();
-		this.renderTooltip(pPoseStack, pMouseX, pMouseY);
+		RenderSystem.setShaderTexture(0, TEXTURE);
+		RenderSystem.enableBlend();
+		stack.pushPose();
+		//stack.translate(0, 0, 1000);
+
+		for (int i = 0; i < 4; i++) {
+			if (buttons[i + 1].isHoveredOrFocused()) {
+				LootRarity rarity = LootRarity.values().get(i);
+				List<Slot> slots = this.itemSlots.getOrDefault(rarity, Collections.emptyList());
+				for (Slot s : slots) {
+					ClientUtil.colorBlit(stack, left + s.x, top + s.y, 80, 20, 16, 16, 0xAA000000 | rarity.color().getValue());
+					//this.blit(stack, left + s.x, top + s.y, 216, 0, 16, 16);
+				}
+			}
+		}
+		stack.popPose();
+
+		for (int i = 0; i < 4; i++) {
+			Minecraft.getInstance().getItemRenderer().renderGuiItem(mats[i], left + 73 + 25 * i, top + 44);
+		}
+
+		this.renderTooltip(stack, pMouseX, pMouseY);
 	}
 
 	@Override
@@ -110,12 +125,6 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(pPoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
-	}
-
-	@Override
-	protected void renderLabels(PoseStack pPoseStack, int pX, int pY) {
-		RenderSystem.disableBlend();
-		super.renderLabels(pPoseStack, pX, pY);
 	}
 
 }
