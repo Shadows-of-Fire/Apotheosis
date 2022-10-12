@@ -104,6 +104,7 @@ import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
+import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.util.StepFunction;
 
@@ -202,7 +203,7 @@ public class AdventureModule {
 
 	@SubscribeEvent
 	public void containers(Register<MenuType<?>> e) {
-		e.getRegistry().register(new MenuType<>(ReforgingMenu::new).setRegistryName("reforging"));
+		e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new).setRegistryName("reforging"));
 		e.getRegistry().register(new MenuType<>(SalvagingMenu::new).setRegistryName("salvage"));
 	}
 

@@ -6,12 +6,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -23,7 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 import shadows.placebo.block_entity.TickingEntityBlock;
+import shadows.placebo.container.SimplerMenuProvider;
 
 public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 	public static final Component TITLE = new TranslatableComponent("container.apotheosis.reforge");
@@ -44,20 +45,15 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 	}
 
 	@Override
-	public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
-		return new SimpleMenuProvider((id, inv, player) -> {
-			return new ReforgingMenu(id, inv, ContainerLevelAccess.create(pLevel, pPos));
-		}, TITLE);
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+		if (world.isClientSide) return InteractionResult.SUCCESS;
+		NetworkHooks.openGui((ServerPlayer) player, this.getMenuProvider(state, world, pos), pos);
+		return InteractionResult.CONSUME;
 	}
 
 	@Override
-	public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-		if (pLevel.isClientSide) {
-			return InteractionResult.SUCCESS;
-		} else {
-			pPlayer.openMenu(pState.getMenuProvider(pLevel, pPos));
-			return InteractionResult.CONSUME;
-		}
+	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+		return new SimplerMenuProvider<>(world, pos, ReforgingMenu::new);
 	}
 
 	@Override

@@ -6,13 +6,13 @@
   }],
   "group": "something",
   "pattern": [
-    "GIG",
-    "ISI",
+    "CCC",
+    "PSA",
     "GLG"
   ],
   "key": {
-    "I": {
-      "tag": "forge:ingots/gold"
+    "C": {
+      "tag": "forge:ingots/copper"
     },
 	"G": {
       "item": "apotheosis:gem_dust"
@@ -22,6 +22,12 @@
     },
 	"L": {
       "item": "minecraft:lava_bucket"
+    },
+	"P": {
+      "item": "minecraft:iron_pickaxe"
+    },
+	"A": {
+      "item": "minecraft:iron_axe"
     }
   },
   "result": {

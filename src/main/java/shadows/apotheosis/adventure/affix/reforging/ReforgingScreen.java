@@ -1,168 +1,205 @@
 package shadows.apotheosis.adventure.affix.reforging;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.client.SimpleTexButton;
+import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.placebo.util.ClientUtil;
 
 public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/reforge.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/reforge.png");
 
-	protected Button forgeButton;
-	protected int topAnimTime;
-	protected int botAnimTime;
-	protected int midAnimTime;
-	protected int cenAnimTime;
-	protected int finAnimTime;
+	protected ItemStack[] choices = new ItemStack[3];
+	protected ItemStack lastInput = ItemStack.EMPTY;
+	protected LootRarity lastRarity = null;
+	protected Component title;
 
 	public ReforgingScreen(ReforgingMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title);
-		this.titleLabelX = 176 / 2 - Minecraft.getInstance().font.width(title) / 2;
-		this.titleLabelY = 10;
+		this.titleLabelY = 5;
+		Arrays.fill(choices, ItemStack.EMPTY);
+		this.title = new TranslatableComponent("container.apotheosis.reforge");
 	}
 
-	@Override
-	protected void init() {
-		super.init();
-		int left = this.getGuiLeft();
-		int top = this.getGuiTop();
-		forgeButton = this.addRenderableWidget(new SimpleTexButton(left + 110, top + 33, 20, 20, 176, 0, TEXTURE, 256, 256, (btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0)));
-		forgeButton.active = false;
+	public boolean shouldRecompute() {
+		ItemStack input = this.menu.getSlot(0).getItem();
+		LootRarity rarity = this.getMenu().getRarity();
+		return !ItemStack.isSameItemSameTags(input, lastInput) || lastRarity != rarity;
 	}
 
-	@Override
-	protected void containerTick() {
-		ItemStack topMat = this.menu.getSlot(0).getItem();
-		if (!topMat.isEmpty()) {
-			topAnimTime++;
-		} else topAnimTime = 0;
-
-		if (!this.menu.getSlot(1).getItem().isEmpty()) {
-			botAnimTime++;
-		} else botAnimTime = 0;
-
-		if (botAnimTime >= 20 && topAnimTime >= 20) {
-			midAnimTime++;
-		} else midAnimTime = 0;
-
-		ItemStack dust = this.menu.getSlot(2).getItem();
-		LootRarity rarity = AdventureModule.RARITY_MATERIALS.inverse().get(topMat.getItem().delegate);
-		if (rarity != null && midAnimTime >= 12 && !dust.isEmpty()) {
-			int dustNeeded = rarity.ordinal() + 1;
-			float dustHad = dust.getCount();
-			float maxWidth = Math.min(15, (15 * (dustHad / dustNeeded)));
-
-			if (Math.min(d(cenAnimTime), maxWidth) < maxWidth) {
-				cenAnimTime++;
-			} else if (Math.min(d(cenAnimTime), maxWidth) > maxWidth) {
-				cenAnimTime--;
+	public void recomputeChoices() {
+		ItemStack input = this.menu.getSlot(0).getItem();
+		LootRarity rarity = this.getMenu().getRarity();
+		if (input.isEmpty() || rarity == null) {
+			Arrays.fill(choices, ItemStack.EMPTY);
+		} else {
+			Random rand = this.menu.random;
+			for (int i = 0; i < 3; i++) {
+				rand.setSeed(this.menu.getSeed() ^ input.getItem().getRegistryName().hashCode() + i);
+				choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
 			}
-		} else cenAnimTime = 0;
-
-		if (cenAnimTime >= 12 && !this.menu.getSlot(3).getItem().isEmpty()) {
-			finAnimTime++;
-		} else finAnimTime = 0;
-
-		if (finAnimTime >= 30) {
-			forgeButton.active = true;
-		} else forgeButton.active = false;
+		}
+		this.lastInput = input.copy();
+		this.lastRarity = rarity;
 	}
 
 	@Override
-	public void removed() {
-		super.removed();
-	}
-
-	@Override
-	public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+	public void render(PoseStack pPoseStack, int x, int y, float pPartialTick) {
+		if (shouldRecompute()) recomputeChoices();
 		this.renderBackground(pPoseStack);
-		super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+		super.render(pPoseStack, x, y, pPartialTick);
 		RenderSystem.disableBlend();
-		this.renderTooltip(pPoseStack, pMouseX, pMouseY);
-	}
+		this.renderTooltip(pPoseStack, x, y);
 
-	protected float getTopAnimX() {
-		return Math.min(d(topAnimTime), 9);
-	}
+		int xCenter = (this.width - this.imageWidth) / 2;
+		int yCenter = (this.height - this.imageHeight) / 2;
 
-	protected float getTopAnimY() {
-		return Mth.clamp(d(topAnimTime) - 6, 3, 15);
-	}
+		int dust = this.menu.getDustCount();
+		int mats = this.menu.getMatCount();
+		LootRarity rarity = this.menu.getRarity();
 
-	float d(int t) {
-		return (t + this.minecraft.getDeltaFrameTime()) / 0.75F;
-	}
+		for (int slot = 0; slot < 3; ++slot) {
+			ItemStack choice = this.choices[slot];
+			if (choice.isEmpty() || this.menu.needsReset()) continue;
+			int cost = (slot + 1) * 2;
+			List<Component> tooltips = new ArrayList<>();
 
-	protected float getBotAnimX() {
-		return Math.min(d(botAnimTime), 9);
-	}
+			tooltips.add(new TranslatableComponent("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+			tooltips.add(TextComponent.EMPTY);
+			tooltips.add(new TranslatableComponent("%s %s", cost, Apoth.Items.GEM_DUST.getName(ItemStack.EMPTY)).withStyle(dust < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
+			tooltips.add(new TranslatableComponent("%s %s", cost, this.menu.getSlot(1).getItem().getHoverName()).withStyle(mats < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
 
-	protected float getBotAnimY() {
-		return Mth.clamp(d(botAnimTime) - 6, 3, 14);
+			int levels = this.minecraft.player.experienceLevel;
+			int levelReq = this.menu.getLevelCost(slot, rarity);
+
+			String key = levels >= levelReq ? "container.enchant.level.many" : "container.enchant.level.requirement";
+
+			tooltips.add(new TranslatableComponent(key, levels >= levelReq ? cost : levelReq).withStyle(levels < levelReq ? ChatFormatting.RED : ChatFormatting.GRAY));
+
+			int k2 = x - (xCenter + 60);
+			int l2 = y - (yCenter + 14 + 19 * slot);
+			if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
+				this.renderTooltip(pPoseStack, choice.getTooltipLines(this.menu.player, TooltipFlag.Default.NORMAL), Optional.empty(), x, y, choice);
+				this.drawOnLeft(pPoseStack, tooltips, this.getGuiTop() + 29);
+			}
+		}
 	}
 
 	@Override
-	protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
+	protected void renderBg(PoseStack stack, float partials, int x, int y) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, TEXTURE);
-		int i = (this.width - this.imageWidth) / 2;
-		int j = (this.height - this.imageHeight) / 2;
-		this.blit(pPoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-		ItemStack topMat = this.menu.getSlot(0).getItem();
-		ItemStack botMat = this.menu.getSlot(1).getItem();
-		if (!topMat.isEmpty()) {
-			LootRarity rarity = AdventureModule.RARITY_MATERIALS.inverse().get(topMat.getItem().delegate);
-			ClientUtil.colorBlit(pPoseStack, i + 27, j + 27, 0, 166, getTopAnimX(), getTopAnimY(), rarity.color().getValue());
-			if (!botMat.isEmpty()) {
-				if (botMat.getItem() == topMat.getItem()) {
-					if (midAnimTime > 0) ClientUtil.colorBlit(pPoseStack, i + 33, j + 42, 6, 181, Math.min(d(midAnimTime), 8), 3, rarity.color().getValue());
-					ItemStack dust = this.menu.getSlot(2).getItem();
-					if (!dust.isEmpty()) {
-						int dustNeeded = rarity.ordinal() + 1;
-						float dustHad = dust.getCount();
-						float maxWidth = Math.min(15, (15 * (dustHad / dustNeeded)));
-						ClientUtil.colorBlit(pPoseStack, i + 63, j + 42, 36, 181, Math.min(d(cenAnimTime), maxWidth), 3, rarity.color().getValue());
-						ItemStack main = this.menu.getSlot(3).getItem();
-						if (!main.isEmpty() && dustHad >= dustNeeded) {
-							ClientUtil.colorBlit(pPoseStack, i + 100, j + 36, 73, 175, Math.min(d(finAnimTime), 40), 15, rarity.color().getValue());
-						}
-					}
-				} else {
-					ClientUtil.colorBlit(pPoseStack, i + 33, j + 42, 6, 181, Math.min(d(midAnimTime), 8), 3, 0);
-				}
-			}
-		}
-		if (!botMat.isEmpty()) {
-			LootRarity rarity = AdventureModule.RARITY_MATERIALS.inverse().get(botMat.getItem().delegate);
-			float animX = getBotAnimX();
-			float animY = getBotAnimY();
-			ClientUtil.colorBlit(pPoseStack, i + 27, j + 45 + (14 - animY), 0, 184 + (14 - animY), animX, animY, rarity.color().getValue());
-		}
+		int xCenter = (this.width - this.imageWidth) / 2;
+		int yCenter = (this.height - this.imageHeight) / 2;
+		this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
 
-		//this.blit(pPoseStack, i + 59, j + 20, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16);
-		if ((this.menu.getSlot(0).hasItem() || this.menu.getSlot(1).hasItem()) && !this.menu.getSlot(2).hasItem()) {
-			//this.blit(pPoseStack, i + 99, j + 45, this.imageWidth, 0, 28, 21);
+		int dust = this.menu.getDustCount();
+		int mats = this.menu.getMatCount();
+		LootRarity rarity = this.menu.getRarity();
+
+		EnchantmentNames.getInstance().initSeed(this.menu.getSeed());
+		for (int slot = 0; slot < 3; ++slot) {
+			RenderSystem.setShader(GameRenderer::getPositionTexShader);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.setShaderTexture(0, TEXTURE);
+			int j1 = xCenter + 60;
+			int k1 = j1 + 20;
+
+			ItemStack choice = this.choices[slot];
+			if (choice.isEmpty() || this.menu.needsReset()) {
+				this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
+			} else {
+				int cost = (slot + 1) * 2;
+
+				int level = this.menu.getLevelCost(slot, rarity);
+				String levelStr = "" + level;
+				int width = 86 - this.font.width(levelStr);
+				FormattedText randText = EnchantmentNames.getInstance().getRandomName(this.font, width);
+				int color = 0xcdcdcd;
+				if ((dust < cost || this.minecraft.player.experienceLevel < level || mats < cost) && !this.minecraft.player.getAbilities().instabuild) {
+					this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
+					blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
+					this.font.drawWordWrap(randText, k1, yCenter + 16 + 19 * slot, width, 0x515151);
+					color = 0x7F7172;
+				} else {
+					int k2 = x - (xCenter + 60);
+					int l2 = y - (yCenter + 14 + 19 * slot);
+					if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
+						this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166 + 38, 108, 19);
+						color = 16777088;
+					} else {
+						this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166, 108, 19);
+					}
+					blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
+
+					this.font.drawWordWrap(randText, k1, yCenter + 16 + 19 * slot, width, color);
+					color = 0xE6C6C8;
+				}
+				this.font.drawShadow(stack, levelStr, k1 + 86 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color);
+			}
 		}
 	}
 
 	@Override
-	protected void renderLabels(PoseStack pPoseStack, int pX, int pY) {
-		RenderSystem.disableBlend();
-		super.renderLabels(pPoseStack, pX, pY);
+	protected void renderLabels(PoseStack stack, int x, int y) {
+		this.font.draw(stack, this.title, (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
+		this.font.draw(stack, this.playerInventoryTitle, (float) this.inventoryLabelX, (float) this.inventoryLabelY, 4210752);
+	}
+
+	@Override
+	public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+		int i = (this.width - this.imageWidth) / 2;
+		int j = (this.height - this.imageHeight) / 2;
+
+		for (int k = 0; k < 3; ++k) {
+			double d0 = pMouseX - (i + 60);
+			double d1 = pMouseY - (j + 14 + 19 * k);
+			if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.menu.clickMenuButton(this.minecraft.player, k)) {
+				this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, k);
+				return true;
+			}
+		}
+
+		return super.mouseClicked(pMouseX, pMouseY, pButton);
+	}
+
+	public void drawOnLeft(PoseStack stack, List<Component> list, int y) {
+		if (list.isEmpty()) return;
+		int xPos = this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get();
+		int maxWidth = 9999;
+		if (xPos < 0) {
+			maxWidth = this.getGuiLeft() - 6;
+			xPos = -8;
+		}
+
+		List<FormattedText> split = new ArrayList<>();
+		int lambdastupid = maxWidth;
+		list.forEach(comp -> split.addAll(this.font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
+
+		this.renderComponentTooltip(stack, split, xPos, y, this.font);
+
+		//GuiUtils.drawHoveringText(stack, list, xPos, y, width, height, maxWidth, this.font);
 	}
 }

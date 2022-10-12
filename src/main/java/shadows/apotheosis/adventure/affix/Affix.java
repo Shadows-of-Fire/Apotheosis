@@ -213,4 +213,14 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 		if (f == (long) f) return String.format("%d", (long) f);
 		else return ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(f);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Affix afx && afx.getRegistryName().equals(this.getRegistryName());
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getRegistryName().hashCode();
+	}
 }

@@ -284,7 +284,10 @@
 	"button.apotheosis.no_salvage_all": "No valid items in inventory",
 
 	"container.apotheosis.salvage": "Salvage Affix Items",
-	"container.apotheosis.reforge": "Reforge Items",
+	"container.apotheosis.reforge": "Reforge",
+	"text.apotheosis.dust_cost": "%s %s",
+	"text.apotheosis.mat_cost": "%s %s",
+	"text.apotheosis.reforge_cost": "Reforge Cost",
 
 	"affix.apotheosis.target.attack_self": "On hit, gain %s",
 	"affix.apotheosis.target.attack_target": "On hit, inflict %s",
