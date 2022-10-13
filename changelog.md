@@ -21,7 +21,7 @@
 * The Boss Announcement Volume can now be configured per-client.
 
 ### Bugfixes
-* Made % Current HP damage deal armor-piercing physical damage instead of magic damage.
+* Made Current HP damage deal armor-piercing physical damage instead of magic damage.
 * Fixed gems dropping off of non-monsters.
 * Fixed rarities on affix loot items not clamping properly.
   * Bosses always worked as expected, but random items were ignoring the min and max values.
@@ -35,6 +35,8 @@
 * Fixed the Rebounding enchantment being unavailable.
 * Fixed spawners not fully resetting entity NBT when changing mob types.
 * Cleaving attacks on monsters will no longer hit any non-monster entities.
+* Current HP damage will no longer be applied if the attack speed bar is not at least 75% charged.
+  * It will still be scaled by the attack strength, so attacking exactly at 75% charge will yield 75% of the full-strength damage.
 
 ### Misc
 * Added more default boss names.

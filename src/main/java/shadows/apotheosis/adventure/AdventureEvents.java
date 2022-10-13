@@ -217,7 +217,7 @@ public class AdventureEvents {
 			LivingEntity target = e.getEntityLiving();
 			int time = target.invulnerableTime;
 			target.invulnerableTime = 0;
-			if (hpDmg > 0.001) {
+			if (hpDmg > 0.001 && Apotheosis.localAtkStrength >= 0.75F) {
 				target.hurt(src(attacker).bypassArmor(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
 			}
 			target.invulnerableTime = 0;
