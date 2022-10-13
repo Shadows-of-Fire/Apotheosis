@@ -1,0 +1,44 @@
+{
+    "name": "Salvaging",
+    "icon": "apotheosis:salvaging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"text": "The $(9)Salvaging Table$() is used to break down affix items into their corresponding $(9)Rarity Materials$()."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:common_material",
+			"link_recipe": true,
+            "text": "A strangely shaped piece of an unidentifiable metal.$(p)This material is obtained when salvaging common items."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:uncommon_material",
+			"link_recipe": true,
+            "text": "An incredibly durable fabric, worn down by countless ages. It boasts not a single tear.$(p)Found when salvaging uncommon items."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:rare_material",
+			"link_recipe": true,
+            "text": "A piece of the brightest crystal ever to exist. Though it is but a shard, it contains a strong magical power.$(p)Acquired from salvaging rare items."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:epic_material",
+			"link_recipe": true,
+            "text": "Grains of sand from a magical realm, where arcane magic warps all life.$(p)Salvaging an epic item reduces them to this form."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:mythic_material",
+			"link_recipe": true,
+            "text": "A pearl of purified godlike energy. The immense power sealed within makes it quite volatile.$(p)These extraordinary creations may only be obtained through salvaging mythic items."
+        }
+	]
+}

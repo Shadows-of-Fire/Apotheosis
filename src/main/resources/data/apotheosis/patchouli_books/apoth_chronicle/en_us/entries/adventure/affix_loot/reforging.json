@@ -1,0 +1,49 @@
+{
+    "name": "Reforging",
+    "icon": "apotheosis:reforging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 4,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:reforging_table",
+			"text": "The $(9)Reforging Table$() is used to breathe new life into an item, wiping away any affixes and granting entirely new ones."
+		},
+		{
+            "type": "patchouli:text",
+            "text": "Through the raw potential of $(9)Rarity Materials$() and the versatility of $(9)Gem Dust$(), it is now possible to reforge an item with brand new affixes.$(p)Reforging is not limited to items that already have affixes, and can be performed with any valid item."
+        },
+		{
+            "type": "patchouli:image",
+			"title": "Input Slots",
+			"images": [
+				"apotheosis:textures/gui/book/reforge_slots.png"
+			],
+			"text": "The Reforging Table has three input slots."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Input Slots",
+			"text": "The top slot holds the item you wish to reforge.$(p)The left slot accepts $(9)Rarity Materials$().$(p)The right slot is for Gem Dust.$(p)All slots must be filled for a successful reforging."
+		},
+		{
+            "type": "patchouli:image",
+			"title": "Reforging",
+			"images": [
+				"apotheosis:textures/gui/book/reforge_menu.png"
+			],
+			"text": "Similar to an Enchanting Table, you get three choices."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Reforging",
+			"text": "Each choice represents a potential new form of the item being reforged. The cost varies per choice, requiring 2/4/6 Gem Dust, Rarity Materials, and Experience Levels respectively.$(p)To reforge your item, simply click the desired choice."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Notes",
+			"text": "Items can be reforged multiple times, but you must pick up and replace the item first.$(p)No choice is inherently stronger than the others.$(p)The Reforging Table uses your Enchantment Seed to determine the choices."
+		}
+	]
+}

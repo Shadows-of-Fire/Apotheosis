@@ -278,16 +278,17 @@
 	"block.apotheosis.reforging_table": "Reforging Table",
 	"block.apotheosis.reforging_table.desc": "Uses Gem Dust and Rarity Materials to reroll affixes",
 	
-	"button.apotheosis.salvage": "Salvage Item",
-	"button.apotheosis.salvage_all": "Salvage All %s Items",
-	"button.apotheosis.no_salvage": "No item selected",
+	"button.apotheosis.salvage": "Salvage Items",
+	"button.apotheosis.no_salvage": "No items selected",
 	"button.apotheosis.no_salvage_all": "No valid items in inventory",
 
-	"container.apotheosis.salvage": "Salvage Affix Items",
+	"container.apotheosis.salvage": "Salvage",
 	"container.apotheosis.reforge": "Reforge",
 	"text.apotheosis.dust_cost": "%s %s",
 	"text.apotheosis.mat_cost": "%s %s",
 	"text.apotheosis.reforge_cost": "Reforge Cost",
+	"text.apotheosis.salvage_results": "Salvage Results",
+	"text.apotheosis.results": "Results",
 
 	"affix.apotheosis.target.attack_self": "On hit, gain %s",
 	"affix.apotheosis.target.attack_target": "On hit, inflict %s",

@@ -7,12 +7,11 @@
   * The chance is configurable on a per-loot-table basis and the rarities are dimensional.
   * This reduces the burden of messing with the affix loot entries table when large swathes of gear already generate.
   * ATTENTION PACKDEVS! If you do not update your config you will start seeing any sticks dropped by a loot table being given affixes!
-    * Consider yourselves warned.
 * Added Gem Dust, a magical resource obtained by smashing Apotheotic Gems with an anvil.
 * Added the Vial of Searing Expulsion and Vial of Arcane Extraction, which allow for gem removal.
 * Added the Scrapping Table, which allows you to break down affix items into rarity materials.
 * Added the Reforging Table, which allows you to reroll the affixes on an item (including items you have crafted yourself)!
-  * Reforging an item costs two rarity materials and some gem dust proportional to the rarity level.
+  * Reforging an item costs rarity materials, gem dust, and experience.
   * Items can only be rolled as their primary type detected automatically or set through the config.
 * Bosses will now glow their rarity color on spawn, instead of white.
   * Glow duration increased from 20 seconds to 2 minutes.

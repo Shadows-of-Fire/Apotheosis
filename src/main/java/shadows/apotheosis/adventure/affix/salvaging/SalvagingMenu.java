@@ -2,6 +2,8 @@ package shadows.apotheosis.adventure.affix.salvaging;
 
 import java.util.Random;
 
+import com.google.common.base.Predicates;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,7 +25,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 
 	protected final Player player;
 	protected final ContainerLevelAccess access;
-	protected final InternalItemHandler inputSlots = new InternalItemHandler(1);
+	protected final InternalItemHandler invSlots = new InternalItemHandler(21);
 	protected Runnable updateButtons;
 
 	public SalvagingMenu(int id, Inventory inv) {
@@ -34,17 +36,39 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 		super(Apoth.Menus.SALVAGE, id, inv);
 		this.player = inv.player;
 		this.access = access;
-		this.addSlot(new FilteredSlot(this.inputSlots, 0, 12, 35, s -> AffixHelper.getRarity(s) != null) {
-			@Override
-			public void setChanged() {
-				super.setChanged();
-				if (SalvagingMenu.this.updateButtons != null) SalvagingMenu.this.updateButtons.run();
-			}
-		});
+		for (int i = 0; i < 15; i++) {
+			this.addSlot(new FilteredSlot(this.invSlots, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> AffixHelper.getRarity(s) != null) {
+				@Override
+				public void setChanged() {
+					super.setChanged();
+					if (SalvagingMenu.this.updateButtons != null) SalvagingMenu.this.updateButtons.run();
+				}
+
+				@Override
+				public int getMaxStackSize() {
+					return 1;
+				}
+
+				@Override
+				public int getMaxStackSize(ItemStack stack) {
+					return 1;
+				}
+			});
+		}
+
+		for (int i = 0; i < 6; i++) {
+			this.addSlot(new FilteredSlot(this.invSlots, 15 + i, 134 + i % 2 * 18, 17 + i / 2 * 18, Predicates.alwaysFalse()) {
+				@Override
+				public void setChanged() {
+					super.setChanged();
+					if (SalvagingMenu.this.updateButtons != null) SalvagingMenu.this.updateButtons.run();
+				}
+			});
+		}
 
 		this.addPlayerSlots(inv, 8, 84);
-		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && AffixHelper.getRarity(stack) != null, 0, 1);
-		this.mover.registerRule((stack, slot) -> slot == 0, this.playerInvStart, this.hotbarStart + 9);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && AffixHelper.getRarity(stack) != null, 0, 15);
+		this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
 		this.registerInvShuffleRules();
 	}
 
@@ -90,45 +114,18 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 	public void removed(Player pPlayer) {
 		super.removed(pPlayer);
 		this.access.execute((level, pos) -> {
-			this.clearContainer(pPlayer, new RecipeWrapper(this.inputSlots));
+			this.clearContainer(pPlayer, new RecipeWrapper(this.invSlots));
 		});
 	}
 
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0) {
-			ItemStack stack = this.getSlot(0).getItem();
-			if (!stack.isEmpty()) {
-				LootRarity rarity = AffixHelper.getRarity(stack);
-
-				if (rarity != null) {
-					ItemStack mat = new ItemStack(AdventureModule.RARITY_MATERIALS.get(rarity).get(), getSalvageCount(stack, player.random));
-					this.getSlot(0).set(mat);
-				}
-			}
-		}
-
-		if (id > 0 && id <= 4) {
-			switch (id) {
-			case 1:
-				salvageAll(LootRarity.COMMON);
-				break;
-			case 2:
-				salvageAll(LootRarity.UNCOMMON);
-				break;
-			case 3:
-				salvageAll(LootRarity.RARE);
-				break;
-			case 4:
-				salvageAll(LootRarity.EPIC);
-				break;
-			}
-		}
-
-		if (id <= 4) {
+			salvageAll(LootRarity.COMMON);
 			player.level.playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 0.99F, this.level.random.nextFloat() * 0.25F + 1F);
 			player.level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.BLOCKS, 0.34F, this.level.random.nextFloat() * 0.2F + 0.8F);
 			player.level.playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.45F, this.level.random.nextFloat() * 0.5F + 0.75F);
+			return true;
 		}
 		return super.clickMenuButton(player, id);
 	}
@@ -145,29 +142,39 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 	}
 
 	protected void salvageAll(LootRarity target) {
-		for (int i = 1; i < this.slots.size(); i++) {
+		for (int i = 0; i < 15; i++) {
 			Slot s = this.getSlot(i);
 			ItemStack stack = s.getItem();
-			LootRarity rarity = stack.hasTag() ? AffixHelper.getRarity(stack) : null;
-			if (rarity == target) {
-				ItemStack mat = new ItemStack(AdventureModule.RARITY_MATERIALS.get(rarity).get(), getSalvageCount(stack, player.random));
-				giveItem(this.player, mat);
-				stack.shrink(1);
-			}
+			ItemStack out = salvageItem(stack, this.player.random);
+			LootRarity rarity = AffixHelper.getRarity(stack);
+			s.set(ItemStack.EMPTY);
+			if (out.isEmpty()) continue;
+			out = this.invSlots.insertItem(rarity.ordinal() + 15, out, false);
+			if (!out.isEmpty()) giveItem(this.player, out);
 		}
 	}
 
-	protected int getSalvageCount(ItemStack stack, Random rand) {
+	public static int getSalvageCount(ItemStack stack, Random rand) {
+		int[] counts = getSalvageCounts(stack);
+		return rand.nextInt(counts[0], counts[1] + 1);
+	}
+
+	public static int[] getSalvageCounts(ItemStack stack) {
 		if (stack.isDamageableItem()) {
-			int max = stack.getMaxDamage();
-			int damage = stack.getDamageValue();
-			float durability = max - damage;
-			float ratio = durability / max;
-			if (ratio >= 0.75F) {
-				return 1 + rand.nextInt(3);
-			} else if (ratio >= 0.5F) return 1 + rand.nextInt(2);
+			int maxDmg = stack.getMaxDamage();
+			float durability = maxDmg - stack.getDamageValue();
+			int ratio = (int) (durability / maxDmg * 100);
+			int max = ratio / 20 - 1;
+			return new int[] { max <= 2 ? 0 : 1, Math.max(1, max) };
 		}
-		return 1;
+		return new int[] { 1, 1 };
+	}
+
+	public static ItemStack salvageItem(ItemStack stack, Random rand) {
+		LootRarity rarity = AffixHelper.getRarity(stack);
+		if (rarity == null) return ItemStack.EMPTY;
+		ItemStack mat = new ItemStack(AdventureModule.RARITY_MATERIALS.get(rarity).get(), getSalvageCount(stack, rand));
+		return mat;
 	}
 
 }
