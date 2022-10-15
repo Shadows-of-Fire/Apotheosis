@@ -1,0 +1,41 @@
+{
+	"type": "apotheosis:attribute",
+	"attribute": "minecraft:generic.max_health",
+	"operation": "ADDITION",
+	"values": {
+		"common": {
+			"min": 0.5,
+			"steps": 3,
+			"step": 0.5
+		},
+		"uncommon": {
+			"min": 1.5,
+			"steps": 5,
+			"step": 0.5
+		},
+		"rare": {
+			"min": 3,
+			"steps": 8,
+			"step": 0.5
+		},
+		"epic": {
+			"min": 5,
+			"steps": 10,
+			"step": 0.5
+		},
+		"mythic": {
+			"min": 8,
+			"steps": 14,
+			"step": 0.5
+		},
+		"ancient": {
+			"min": 12,
+			"steps": 20,
+			"step": 0.5
+		}
+	},
+	"types": [
+		"ARMOR",
+		"SHIELD"
+	]
+}

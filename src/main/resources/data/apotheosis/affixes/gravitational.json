@@ -1,0 +1,44 @@
+{
+	"type": "apotheosis:attribute",
+	"attribute": "forge:entity_gravity",
+	"operation": "MULTIPLY_TOTAL",
+	"values": {
+		"common": {
+			"min": -0.04,
+			"steps": 4,
+			"step": -0.02
+		},
+		"uncommon": {
+			"min": -0.08,
+			"steps": 6,
+			"step": -0.02
+		},
+		"rare": {
+			"min": -0.12,
+			"steps": 6,
+			"step": -0.02
+		},
+		"epic": {
+			"min": -0.16,
+			"steps": 8,
+			"step": -0.02
+		},
+		"mythic": {
+			"min": -0.20,
+			"steps": 8,
+			"step": -0.02
+		},
+		"ancient": {
+			"min": -0.30,
+			"steps": 20,
+			"step": -0.02
+		}
+	},
+	"types": [
+		"ARMOR"
+	],
+	"armor_types": [
+		"CHEST",
+		"LEGS"
+	]
+}

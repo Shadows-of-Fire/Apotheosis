@@ -28,7 +28,7 @@ public final class SocketAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return false;
+		return LootCategory.forItem(stack) != null;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public final class SocketAffix extends Affix {
 	public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == LootCategory.NONE) {
-			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName().getString());
+			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getId(), stack.getHoverName().getString());
 			return;
 		}
 
@@ -54,4 +54,5 @@ public final class SocketAffix extends Affix {
 			if (s == type) modifiers.forEach(map);
 		}
 	}
+
 }

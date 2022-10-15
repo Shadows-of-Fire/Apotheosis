@@ -1,18 +1,21 @@
 package shadows.apotheosis.adventure.affix.effect;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
-import javax.annotation.Nullable;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -27,27 +30,28 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.affix.Affix;
+import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.JsonUtil;
 import shadows.placebo.util.StepFunction;
 
 public class PotionAffix extends Affix {
 
 	protected final Map<LootRarity, EffectInst> effects;
-	protected final @Nullable Predicate<LootCategory> types;
-	protected final @Nullable Predicate<ItemStack> items;
+	protected final Set<LootCategory> types;
 	protected final Target target;
-	protected final int instantCooldown;
+	protected final int cooldown;
 
-	public PotionAffix(AffixType type, Map<LootRarity, EffectInst> effects, @Nullable Predicate<LootCategory> types, @Nullable Predicate<ItemStack> items, Target target, int instantCooldown) {
-		super(type);
+	public PotionAffix(Map<LootRarity, EffectInst> effects, Set<LootCategory> types, Target target, int cooldown) {
+		super(AffixType.EFFECT);
 		this.effects = effects;
 		this.types = types;
-		this.items = items;
 		this.target = target;
-		this.instantCooldown = instantCooldown;
+		this.cooldown = cooldown;
 	}
 
 	@Override
@@ -60,7 +64,7 @@ public class PotionAffix extends Affix {
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == LootCategory.NONE) return false;
-		return (this.types == null || this.types.test(cat)) && (this.items == null || this.items.test(stack)) && this.effects.containsKey(rarity);
+		return (this.types.isEmpty() || this.types.contains(cat)) && this.effects.containsKey(rarity);
 	};
 
 	@Override
@@ -120,12 +124,12 @@ public class PotionAffix extends Affix {
 
 	private void applyEffect(LivingEntity target, EffectInst inst, float level) {
 		MobEffectInstance mei = inst.build(level);
-		if (mei.getEffect().isInstantenous()) {
-			long lastApplied = target.getPersistentData().getLong("apoth.affix_cooldown." + this.getRegistryName().toString());
-			if (lastApplied != 0 && lastApplied + 30 >= target.level.getGameTime()) return;
+		if (this.cooldown != 0) {
+			long lastApplied = target.getPersistentData().getLong("apoth.affix_cooldown." + this.getId().toString());
+			if (lastApplied != 0 && lastApplied + this.cooldown >= target.level.getGameTime()) return;
 		}
 		target.addEffect(mei);
-		target.getPersistentData().putLong("apoth.affix_cooldown." + this.getRegistryName().toString(), target.level.getGameTime());
+		target.getPersistentData().putLong("apoth.affix_cooldown." + this.getId().toString(), target.level.getGameTime());
 	}
 
 	public static Component toComponent(MobEffectInstance inst) {
@@ -143,11 +147,66 @@ public class PotionAffix extends Affix {
 		return mutablecomponent.withStyle(mobeffect.getCategory().getTooltipFormatting());
 	}
 
-	public static record EffectInst(Supplier<MobEffect> effect, StepFunction time, @Nullable StepFunction amp) {
+	public static record EffectInst(MobEffect effect, StepFunction duration, StepFunction amplifier) {
 
 		public MobEffectInstance build(float level) {
-			return new MobEffectInstance(this.effect.get(), this.time.getInt(level), this.amp == null ? 0 : this.amp.getInt(level));
+			return new MobEffectInstance(this.effect, this.duration.getInt(level), this.amplifier.getInt(level));
 		}
+
+		public void write(FriendlyByteBuf buf) {
+			this.duration.write(buf);
+			this.amplifier.write(buf);
+		}
+
+		public static EffectInst read(MobEffect effect, FriendlyByteBuf buf) {
+			return new EffectInst(effect, StepFunction.read(buf), StepFunction.read(buf));
+		}
+	}
+
+	public static PotionAffix read(JsonObject obj) {
+		MobEffect effect = JsonUtil.getRegistryObject(obj, "mob_effect", ForgeRegistries.MOB_EFFECTS);
+		Target target = Target.valueOf(GsonHelper.getAsString(obj, "target"));
+		JsonObject valueMap = GsonHelper.getAsJsonObject(obj, "values");
+		Map<LootRarity, EffectInst> effects = new HashMap<>();
+		for (String s : valueMap.keySet()) {
+			LootRarity rarity = LootRarity.byId(s);
+			JsonObject child = valueMap.get(s).getAsJsonObject();
+			JsonElement dur = child.get("duration");
+			StepFunction duration = dur.isJsonObject() ? GSON.fromJson(dur, StepFunction.class) : StepFunction.constant(dur.getAsInt());
+			JsonElement amp = child.get("amplifier");
+			StepFunction amplifier = amp.isJsonObject() ? GSON.fromJson(amp, StepFunction.class) : StepFunction.constant(amp.getAsInt());
+			effects.put(rarity, new EffectInst(effect, duration, amplifier));
+		}
+		var types = AffixHelper.readTypes(GsonHelper.getAsJsonArray(obj, "types"));
+		int cooldown = GsonHelper.getAsInt(obj, "cooldown", 0);
+		return new PotionAffix(effects, types, target, cooldown);
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		EffectInst inst = this.effects.values().stream().findFirst().get();
+		buf.writeRegistryId(inst.effect);
+		buf.writeMap(this.effects, (b, key) -> b.writeUtf(key.id()), (b, modif) -> modif.write(b));
+		buf.writeByte(this.types.size());
+		this.types.forEach(c -> buf.writeEnum(c));
+		buf.writeEnum(this.target);
+		buf.writeInt(this.cooldown);
+	}
+
+	public static PotionAffix read(FriendlyByteBuf buf) {
+		MobEffect effect = buf.readRegistryIdSafe(MobEffect.class);
+		Map<LootRarity, EffectInst> effects = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> EffectInst.read(effect, b));
+		Set<LootCategory> types = new HashSet<>();
+		int size = buf.readByte();
+		for (int i = 0; i < size; i++) {
+			types.add(buf.readEnum(LootCategory.class));
+		}
+		Target target = buf.readEnum(Target.class);
+		int cooldown = buf.readInt();
+		return new PotionAffix(effects, types, target, cooldown);
 	}
 
 	/**
@@ -174,50 +233,6 @@ public class PotionAffix extends Affix {
 		public MutableComponent toComponent(Object... args) {
 			return new TranslatableComponent("affix.apotheosis.target." + this.id, args);
 		}
-	}
-
-	public static class Builder {
-
-		private final Supplier<MobEffect> effect;
-		private final Map<LootRarity, EffectInst> effects = new HashMap<>();
-
-		private Predicate<LootCategory> types;
-		private Predicate<ItemStack> items;
-		private int instantCooldown = 30;
-
-		public Builder(Supplier<MobEffect> effect) {
-			this.effect = effect;
-		}
-
-		public Builder cooldown(int instantCooldown) {
-			this.instantCooldown = instantCooldown;
-			return this;
-		}
-
-		public Builder types(Predicate<LootCategory> types) {
-			this.types = types;
-			return this;
-		}
-
-		/**
-		 * Limits the items this affix can apply to.
-		 * Importantly, these are checked after types, so if types are filtered
-		 * then it is guaranteed that any checked item is of a valid type.
-		 */
-		public Builder items(Predicate<ItemStack> items) {
-			this.items = items;
-			return this;
-		}
-
-		public Builder with(LootRarity rarity, StepFunction timeFunc, @Nullable StepFunction ampFunc) {
-			this.effects.put(rarity, new EffectInst(this.effect, timeFunc, ampFunc));
-			return this;
-		}
-
-		public PotionAffix build(AffixType type, Target target, String id) {
-			return (PotionAffix) new PotionAffix(type, this.effects, this.types, this.items, target, this.instantCooldown).setRegistryName(id);
-		}
-
 	}
 
 }

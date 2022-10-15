@@ -5,12 +5,15 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -28,34 +31,21 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.GameData;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
-import shadows.placebo.config.Configuration;
+import shadows.placebo.json.ItemAdapter;
+import shadows.placebo.json.JsonUtil;
+import shadows.placebo.json.NBTAdapter;
+import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 
 /**
  * An affix is a construct very similar to an enchantment, providing bonuses to arbitrary items.
  * The Affix's Level is a float from 0 to 1 that defines its relative power level, compared to max.
  * What the level means is up to the individual affix.
  */
-public abstract class Affix implements IForgeRegistryEntry<Affix> {
+public abstract class Affix extends TypeKeyedBase<Affix> {
 
-	/**
-	 * The affix registry.
-	 */
-	public static ForgeRegistry<Affix> REGISTRY;
-
-	/**
-	 * Config for affixes.
-	 */
-	public static Configuration config;
-
-	/**
-	 * The registry name of this item.
-	 */
-	protected ResourceLocation name;
+	protected static final Gson GSON = new GsonBuilder().registerTypeAdapter(LootRarity.class, JsonUtil.<LootRarity>makeSerializer((json, type, ctx) -> LootRarity.byId(json.getAsString()), null)).registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE).create();
 
 	protected final AffixType type;
 
@@ -81,7 +71,7 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", fmt(level)).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", fmt(level)).withStyle(ChatFormatting.YELLOW));
 	}
 
 	/**
@@ -89,8 +79,8 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	 * @return The name part, prefix or suffix, as requested.
 	 */
 	public Component getName(ItemStack stack, LootRarity rarity, float level, boolean prefix) {
-		if (prefix) return new TranslatableComponent("affix." + this.name);
-		return new TranslatableComponent("affix." + this.name + ".suffix");
+		if (prefix) return new TranslatableComponent("affix." + this.getId());
+		return new TranslatableComponent("affix." + this.getId() + ".suffix");
 	}
 
 	/**
@@ -175,28 +165,8 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 	}
 
 	@Override
-	public Affix setRegistryName(ResourceLocation name) {
-		if (this.name == null) this.name = name;
-		return this;
-	}
-
-	public Affix setRegistryName(String name) {
-		return this.setRegistryName(GameData.checkPrefix(name, false));
-	}
-
-	@Override
-	public ResourceLocation getRegistryName() {
-		return this.name;
-	}
-
-	@Override
-	public Class<Affix> getRegistryType() {
-		return Affix.class;
-	}
-
-	@Override
 	public String toString() {
-		return String.format("Affix: %s", this.name);
+		return String.format("Affix: %s", this.getId());
 	}
 
 	public AffixType getType() {
@@ -216,11 +186,11 @@ public abstract class Affix implements IForgeRegistryEntry<Affix> {
 
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof Affix afx && afx.getRegistryName().equals(this.getRegistryName());
+		return obj instanceof Affix afx && afx.getId().equals(this.getId());
 	}
 
 	@Override
 	public int hashCode() {
-		return this.getRegistryName().hashCode();
+		return this.getId().hashCode();
 	}
 }

@@ -1,8 +1,12 @@
 package shadows.apotheosis.adventure.affix.effect;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
+import com.google.gson.JsonObject;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,20 +24,21 @@ import shadows.placebo.util.StepFunction;
 
 public class SpectralShotAffix extends Affix {
 
-	protected static final StepFunction LEVEL_FUNC = AffixHelper.step(0.2F, 8, 0.05F);
+	protected final Map<LootRarity, StepFunction> values;
 
-	public SpectralShotAffix() {
+	public SpectralShotAffix(Map<LootRarity, StepFunction> values) {
 		super(AffixType.EFFECT);
+		this.values = values;
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack).isRanged() && rarity.isAtLeast(LootRarity.EPIC);
+		return LootCategory.forItem(stack).isRanged() && this.values.containsKey(rarity);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
 	}
 
 	@Override
@@ -63,8 +68,26 @@ public class SpectralShotAffix extends Affix {
 		dest.xRotO = dest.xRotO;
 	}
 
-	private static float getTrueLevel(LootRarity rarity, float level) {
-		return (rarity.ordinal() - LootRarity.EPIC.ordinal()) * 0.2F + LEVEL_FUNC.get(level);
+	private float getTrueLevel(LootRarity rarity, float level) {
+		return this.values.get(rarity).get(level);
+	}
+
+	public static SpectralShotAffix read(JsonObject obj) {
+		var values = AffixHelper.readValues(obj);
+		return new SpectralShotAffix(values);
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
+	}
+
+	public static SpectralShotAffix read(FriendlyByteBuf buf) {
+		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
+		return new SpectralShotAffix(values);
 	}
 
 }

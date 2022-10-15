@@ -18,12 +18,12 @@ public class DurableAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return false; // Can only be applied manually via LootController
+		return stack.isDamageableItem();
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", fmt(100 * level)).withStyle(Style.EMPTY.withColor(rarity.color())));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", fmt(100 * level)).withStyle(Style.EMPTY.withColor(rarity.color())));
 	}
 
 }

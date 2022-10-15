@@ -62,11 +62,11 @@ public class LootController {
 
 		// Socket and Durability handling, which is non-standard.
 		if (sockets.intValue() > 0) {
-			loaded.put(Affixes.SOCKET, new AffixInstance(Affixes.SOCKET, stack, rarity, sockets.intValue()));
+			loaded.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, rarity, sockets.intValue()));
 		}
 
 		if (durability > 0) {
-			loaded.put(Affixes.DURABLE, new AffixInstance(Affixes.DURABLE, stack, rarity, durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
+			loaded.put(Affixes.DURABLE.get(), new AffixInstance(Affixes.DURABLE.get(), stack, rarity, durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
 		}
 
 		Collections.shuffle(nameList, rand);

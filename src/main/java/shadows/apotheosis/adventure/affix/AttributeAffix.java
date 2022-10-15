@@ -1,26 +1,36 @@
 package shadows.apotheosis.adventure.affix;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
+import org.apache.commons.lang3.tuple.Pair;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.JsonUtil;
+import shadows.placebo.util.StepFunction;
 
 /**
  * Helper class for affixes that modify attributes, as the apply method is the same for most of those.
@@ -28,14 +38,14 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 public class AttributeAffix extends Affix {
 
 	protected final Map<LootRarity, ModifierInst> modifiers;
-	protected final @Nullable Predicate<LootCategory> types;
-	protected final @Nullable Predicate<ItemStack> items;
+	protected final Set<LootCategory> types;
+	protected final Set<EquipmentSlot> armorTypes;
 
-	public AttributeAffix(Map<LootRarity, ModifierInst> modifiers, @Nullable Predicate<LootCategory> types, @Nullable Predicate<ItemStack> items) {
+	public AttributeAffix(Attribute attr, Operation op, Map<LootRarity, StepFunction> values, Set<LootCategory> types, Set<EquipmentSlot> armorTypes) {
 		super(AffixType.STAT);
-		this.modifiers = modifiers;
+		this.modifiers = values.entrySet().stream().map(entry -> Pair.of(entry.getKey(), new ModifierInst(attr, op, entry.getValue(), new HashMap<>()))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
 		this.types = types;
-		this.items = items;
+		this.armorTypes = armorTypes;
 	}
 
 	@Override
@@ -46,17 +56,17 @@ public class AttributeAffix extends Affix {
 	public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == LootCategory.NONE) {
-			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getRegistryName(), stack.getHoverName().getString());
+			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getId(), stack.getHoverName().getString());
 			return;
 		}
 		ModifierInst modif = this.modifiers.get(rarity);
-		if (modif.attr.get() == null) {
-			AdventureModule.LOGGER.debug("The affix {} has attempted to apply a null attribute modifier to {}!", this.getRegistryName(), stack.getHoverName().getString());
+		if (modif.attr == null) {
+			AdventureModule.LOGGER.debug("The affix {} has attempted to apply a null attribute modifier to {}!", this.getId(), stack.getHoverName().getString());
 			return;
 		}
 		for (EquipmentSlot slot : cat.getSlots(stack)) {
 			if (slot == type) {
-				map.accept(modif.attr.get(), modif.build(slot, this.getRegistryName(), level));
+				map.accept(modif.attr, modif.build(slot, this.getId(), level));
 			}
 		}
 	}
@@ -65,54 +75,56 @@ public class AttributeAffix extends Affix {
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == LootCategory.NONE) return false;
-		return (this.types == null || this.types.test(cat)) && (this.items == null || this.items.test(stack)) && this.modifiers.containsKey(rarity);
+		return (this.types.isEmpty() || this.types.contains(cat)) && (cat != LootCategory.ARMOR || this.armorTypes.isEmpty() || this.armorTypes.contains(((ArmorItem) stack.getItem()).getSlot())) && this.modifiers.containsKey(rarity);
 	};
 
-	public record ModifierInst(Supplier<Attribute> attr, Operation op, Float2FloatFunction valueFactory, Map<EquipmentSlot, UUID> cache) {
+	public record ModifierInst(Attribute attr, Operation op, StepFunction valueFactory, Map<EquipmentSlot, UUID> cache) {
 
 		public AttributeModifier build(EquipmentSlot slot, ResourceLocation id, float level) {
 			return new AttributeModifier(this.cache.computeIfAbsent(slot, k -> UUID.randomUUID()), "affix:" + id, this.valueFactory.get(level), this.op);
 		}
 	}
 
-	public static class Builder {
+	public static AttributeAffix read(JsonObject obj) {
+		Attribute attr = JsonUtil.getRegistryObject(obj, "attribute", ForgeRegistries.ATTRIBUTES);
+		Operation op = Operation.valueOf(GsonHelper.getAsString(obj, "operation"));
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
+		var types = AffixHelper.readTypes(GsonHelper.getAsJsonArray(obj, "types"));
+		Set<EquipmentSlot> armorTypes = GSON.fromJson(GsonHelper.getAsJsonArray(obj, "armor_types", new JsonArray()), new TypeToken<Set<EquipmentSlot>>() {
+		}.getType());
+		return new AttributeAffix(attr, op, values, types, armorTypes);
+	}
 
-		private final Supplier<Attribute> attr;
-		private final Operation op;
-		private final Map<LootRarity, ModifierInst> modifiers = new HashMap<>();
+	public JsonObject write() {
+		return new JsonObject();
+	}
 
-		private Predicate<LootCategory> types;
-		private Predicate<ItemStack> items;
+	public void write(FriendlyByteBuf buf) {
+		ModifierInst inst = this.modifiers.values().stream().findFirst().get();
+		buf.writeRegistryId(inst.attr);
+		buf.writeEnum(inst.op);
+		buf.writeMap(this.modifiers, (b, key) -> b.writeUtf(key.id()), (b, modif) -> modif.valueFactory.write(b));
+		buf.writeByte(this.types.size());
+		this.types.forEach(c -> buf.writeEnum(c));
+		buf.writeByte(this.armorTypes.size());
+		this.armorTypes.forEach(c -> buf.writeEnum(c));
+	}
 
-		public Builder(Supplier<Attribute> attr, Operation op) {
-			this.attr = attr;
-			this.op = op;
+	public static AttributeAffix read(FriendlyByteBuf buf) {
+		Attribute attr = buf.readRegistryIdSafe(Attribute.class);
+		Operation op = buf.readEnum(Operation.class);
+		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
+		Set<LootCategory> types = new HashSet<>();
+		Set<EquipmentSlot> armorTypes = new HashSet<>();
+		int size = buf.readByte();
+		for (int i = 0; i < size; i++) {
+			types.add(buf.readEnum(LootCategory.class));
 		}
-
-		public Builder types(Predicate<LootCategory> types) {
-			this.types = types;
-			return this;
+		size = buf.readByte();
+		for (int i = 0; i < size; i++) {
+			armorTypes.add(buf.readEnum(EquipmentSlot.class));
 		}
-
-		/**
-		 * Limits the items this affix can apply to.
-		 * Importantly, these are checked after types, so if types are filtered
-		 * then it is guaranteed that any checked item is of a valid type.
-		 */
-		public Builder items(Predicate<ItemStack> items) {
-			this.items = items;
-			return this;
-		}
-
-		public Builder with(LootRarity rarity, Float2FloatFunction valueFactory) {
-			this.modifiers.put(rarity, new ModifierInst(this.attr, this.op, valueFactory, new HashMap<>()));
-			return this;
-		}
-
-		public AttributeAffix build(String id) {
-			return (AttributeAffix) new AttributeAffix(this.modifiers, this.types, this.items).setRegistryName(id);
-		}
-
+		return new AttributeAffix(attr, op, values, types, armorTypes);
 	}
 
 }

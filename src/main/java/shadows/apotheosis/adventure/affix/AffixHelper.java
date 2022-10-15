@@ -3,11 +3,13 @@ package shadows.apotheosis.adventure.affix;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -18,8 +20,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryManager;
+import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.StepFunction;
 
@@ -32,8 +33,6 @@ public class AffixHelper {
 	public static final String AFFIXES = "affixes";
 	public static final String RARITY = "rarity";
 	public static final String NAME = "name";
-
-	private static final Multimap<AffixType, Affix> BY_TYPE = HashMultimap.create();
 
 	/**
 	 * Adds this specific affix to the Item's NBT tag.
@@ -48,7 +47,7 @@ public class AffixHelper {
 		CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
 		CompoundTag affixesTag = new CompoundTag();
 		for (AffixInstance inst : affixes.values()) {
-			affixesTag.putFloat(inst.affix().getRegistryName().toString(), inst.level());
+			affixesTag.putFloat(inst.affix().getId().toString(), inst.level());
 		}
 		afxData.put(AFFIXES, affixesTag);
 	}
@@ -73,8 +72,8 @@ public class AffixHelper {
 			LootRarity rarity = getRarity(stack);
 			if (rarity == null) rarity = LootRarity.COMMON;
 			for (String key : affixes.getAllKeys()) {
-				Affix affix = Affix.REGISTRY.getValue(new ResourceLocation(key));
-				if (affix == null) continue;
+				Affix affix = AffixManager.INSTANCE.getValue(new ResourceLocation(key));
+				if (affix == null || !affix.canApplyTo(stack, rarity)) continue;
 				float lvl = affixes.getFloat(key);
 				map.put(affix, new AffixInstance(affix, stack, rarity, lvl));
 			}
@@ -122,16 +121,21 @@ public class AffixHelper {
 	}
 
 	public static Collection<Affix> byType(AffixType type) {
-		return BY_TYPE.get(type);
-	}
-
-	public static void recomputeMaps(IForgeRegistry<Affix> reg, RegistryManager stage) {
-		BY_TYPE.clear();
-		reg.forEach(a -> BY_TYPE.put(a.getType(), a));
+		return AffixManager.INSTANCE.getTypeMap().get(type);
 	}
 
 	public static StepFunction step(float min, int steps, float step) {
 		return new StepFunction(min, steps, step);
+	}
+
+	public static Map<LootRarity, StepFunction> readValues(JsonObject obj) {
+		return Affix.GSON.fromJson(obj, new TypeToken<Map<LootRarity, StepFunction>>() {
+		}.getType());
+	}
+
+	public static Set<LootCategory> readTypes(JsonArray json) {
+		return Affix.GSON.fromJson(json, new TypeToken<Set<LootCategory>>() {
+		}.getType());
 	}
 
 }

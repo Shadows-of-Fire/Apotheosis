@@ -2,8 +2,11 @@ package shadows.apotheosis.adventure.affix.effect;
 
 import java.util.function.Consumer;
 
+import com.google.gson.JsonObject;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,22 +30,25 @@ public class TelepathicAffix extends Affix {
 
 	public static Vec3 blockDropTargetPos = null;
 
-	public TelepathicAffix() {
+	protected LootRarity minRarity;
+
+	public TelepathicAffix(LootRarity minRarity) {
 		super(AffixType.EFFECT);
+		this.minRarity = minRarity;
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == LootCategory.NONE) return false;
-		return (cat.isRanged() || cat.isLightWeapon() || cat == LootCategory.BREAKER) && rarity.isAtLeast(LootRarity.EPIC);
+		return (cat.isRanged() || cat.isLightWeapon() || cat == LootCategory.BREAKER) && rarity.isAtLeast(minRarity);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		LootCategory cat = LootCategory.forItem(stack);
 		String type = cat.isRanged() || cat.isWeapon() ? "weapon" : "tool";
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc." + type).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc." + type).withStyle(ChatFormatting.YELLOW));
 	}
 
 	// EventPriority.LOWEST
@@ -52,11 +58,11 @@ public class TelepathicAffix extends Affix {
 		Vec3 targetPos = null;
 		if (src.getDirectEntity() instanceof AbstractArrow arrow && arrow.getOwner() != null) {
 			CompoundTag affixes = src.getDirectEntity().getPersistentData().getCompound("apoth.affixes");
-			canTeleport = affixes.contains(Affixes.TELEPATHIC.getRegistryName().toString());
+			canTeleport = Affixes.TELEPATHIC.isPresent() && affixes.contains(Affixes.TELEPATHIC.getId().toString());
 			targetPos = arrow.getOwner().position();
 		} else if (src.getDirectEntity() instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
-			canTeleport = AffixHelper.getAffixes(weapon).containsKey(Affixes.TELEPATHIC);
+			canTeleport = AffixHelper.getAffixes(weapon).containsKey(Affixes.TELEPATHIC.get());
 			targetPos = living.position();
 		}
 
@@ -66,6 +72,22 @@ public class TelepathicAffix extends Affix {
 				item.setPickUpDelay(0);
 			}
 		}
+	}
+
+	public static Affix read(JsonObject obj) {
+		return new TelepathicAffix(GSON.fromJson(obj.get("min_rarity"), LootRarity.class));
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		buf.writeUtf(this.minRarity.id());
+	}
+
+	public static Affix read(FriendlyByteBuf buf) {
+		return new TelepathicAffix(LootRarity.byId(buf.readUtf()));
 	}
 
 }

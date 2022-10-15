@@ -1,0 +1,43 @@
+{
+	"type": "apotheosis:attribute",
+	"attribute": "forge:swim_speed",
+	"operation": "MULTIPLY_TOTAL",
+	"values": {
+		"common": {
+			"min": 0.05,
+			"steps": 10,
+			"step": 0.02
+		},
+		"uncommon": {
+			"min": 0.08,
+			"steps": 10,
+			"step": 0.02
+		},
+		"rare": {
+			"min": 0.12,
+			"steps": 10,
+			"step": 0.02
+		},
+		"epic": {
+			"min": 0.15,
+			"steps": 12,
+			"step": 0.02
+		},
+		"mythic": {
+			"min": 0.18,
+			"steps": 15,
+			"step": 0.02
+		},
+		"ancient": {
+			"min": 0.25,
+			"steps": 30,
+			"step": 0.02
+		}
+	},
+	"types": [
+		"ARMOR"
+	],
+	"armor_types": [
+		"FEET"
+	]
+}

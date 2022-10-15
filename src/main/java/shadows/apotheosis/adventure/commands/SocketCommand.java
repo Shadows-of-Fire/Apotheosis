@@ -32,7 +32,7 @@ public class SocketCommand {
 
 			int sockets = IntegerArgumentType.getInteger(c, "sockets");
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-			affixes.put(Affixes.SOCKET, new AffixInstance(Affixes.SOCKET, stack, LootRarity.COMMON, sockets));
+			affixes.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, LootRarity.COMMON, sockets));
 			AffixHelper.setAffixes(stack, affixes);
 			return 0;
 		})));

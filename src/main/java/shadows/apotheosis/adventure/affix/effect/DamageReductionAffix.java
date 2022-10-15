@@ -1,15 +1,24 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.affix.Affix;
@@ -22,18 +31,20 @@ import shadows.placebo.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
 
-	private final DamageType type;
-	private final Map<LootRarity, StepFunction> levelFuncs;
+	protected final DamageType type;
+	protected final Map<LootRarity, StepFunction> values;
+	protected final Set<EquipmentSlot> armorTypes;
 
-	public DamageReductionAffix(DamageType type, Map<LootRarity, StepFunction> levelFuncs) {
+	public DamageReductionAffix(DamageType type, Map<LootRarity, StepFunction> levelFuncs, Set<EquipmentSlot> armorTypes) {
 		super(AffixType.EFFECT);
 		this.type = type;
-		this.levelFuncs = levelFuncs;
+		this.values = levelFuncs;
+		this.armorTypes = armorTypes;
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.ARMOR && this.levelFuncs.containsKey(rarity);
+		return LootCategory.forItem(stack) == LootCategory.ARMOR && this.values.containsKey(rarity) && (this.armorTypes.isEmpty() || this.armorTypes.contains(((ArmorItem) stack.getItem()).getSlot()));
 	}
 
 	@Override
@@ -58,11 +69,11 @@ public class DamageReductionAffix extends Affix {
 	}
 
 	private float getTrueLevel(LootRarity rarity, float level) {
-		return this.levelFuncs.get(rarity).get(level);
+		return this.values.get(rarity).get(level);
 	}
 
 	public static enum DamageType implements Predicate<DamageSource> {
-		PHYSICAL("physical", d -> !d.isMagic() && !d.isFire() && !d.isExplosion()),
+		PHYSICAL("physical", d -> !d.isMagic() && !d.isFire() && !d.isExplosion() && !d.isFall()),
 		MAGIC("magic", DamageSource::isMagic),
 		FIRE("fire", DamageSource::isFire),
 		FALL("fall", DamageSource::isFall),
@@ -86,24 +97,34 @@ public class DamageReductionAffix extends Affix {
 		}
 	}
 
-	public static class Builder {
+	public static DamageReductionAffix read(JsonObject obj) {
+		DamageType type = DamageType.valueOf(GsonHelper.getAsString(obj, "damage_type"));
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
+		Set<EquipmentSlot> armorTypes = GSON.fromJson(GsonHelper.getAsJsonArray(obj, "armor_types", new JsonArray()), new TypeToken<Set<EquipmentSlot>>() {
+		}.getType());
+		return new DamageReductionAffix(type, values, armorTypes);
+	}
 
-		private final DamageType type;
-		private final Map<LootRarity, StepFunction> levels = new HashMap<>();
+	public JsonObject write() {
+		return new JsonObject();
+	}
 
-		public Builder(DamageType type) {
-			this.type = type;
+	public void write(FriendlyByteBuf buf) {
+		buf.writeEnum(this.type);
+		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
+		buf.writeByte(this.armorTypes.size());
+		this.armorTypes.forEach(c -> buf.writeEnum(c));
+	}
+
+	public static DamageReductionAffix read(FriendlyByteBuf buf) {
+		DamageType type = buf.readEnum(DamageType.class);
+		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
+		Set<EquipmentSlot> armorTypes = new HashSet<>();
+		int size = buf.readByte();
+		for (int i = 0; i < size; i++) {
+			armorTypes.add(buf.readEnum(EquipmentSlot.class));
 		}
-
-		public Builder with(LootRarity rarity, StepFunction levelFunc) {
-			this.levels.put(rarity, levelFunc);
-			return this;
-		}
-
-		public DamageReductionAffix build(String id) {
-			return (DamageReductionAffix) new DamageReductionAffix(this.type, this.levels).setRegistryName(id);
-		}
-
+		return new DamageReductionAffix(type, values, armorTypes);
 	}
 
 }

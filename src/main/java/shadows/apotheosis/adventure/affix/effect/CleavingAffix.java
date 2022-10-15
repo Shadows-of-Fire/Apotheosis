@@ -1,11 +1,15 @@
 package shadows.apotheosis.adventure.affix.effect;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import com.google.common.base.Predicate;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +23,6 @@ import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -27,33 +30,34 @@ import shadows.placebo.util.StepFunction;
 
 public class CleavingAffix extends Affix {
 
-	protected static final StepFunction CHANCE_FUNC = AffixHelper.step(0.3F, 4, 0.05F);
-	protected static final StepFunction TARGETS_FUNC = AffixHelper.step(2, 5, 1);
+	protected final Map<LootRarity, CleaveValues> values;
+
 	private static boolean cleaving = false;
 
-	public CleavingAffix() {
+	public CleavingAffix(Map<LootRarity, CleaveValues> values) {
 		super(AffixType.EFFECT);
+		this.values = values;
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && rarity.isAtLeast(LootRarity.RARE);
+		return LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && this.values.containsKey(rarity);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getChance(rarity, level)), getTargets(rarity, level)).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getChance(rarity, level)), getTargets(rarity, level)).withStyle(ChatFormatting.YELLOW));
 	}
 
-	private static float getChance(LootRarity rarity, float level) {
-		return (rarity.ordinal() - LootRarity.RARE.ordinal()) * 0.2F + CHANCE_FUNC.get(level);
+	private float getChance(LootRarity rarity, float level) {
+		return this.values.get(rarity).chance.get(level);
 	}
 
-	private static int getTargets(LootRarity rarity, float level) {
+	private int getTargets(LootRarity rarity, float level) {
 		// We want targets to sort of be separate from chance, so we modulo and double.
 		level %= 0.5F;
 		level *= 2;
-		return (rarity.ordinal() - LootRarity.RARE.ordinal()) * 2 + TARGETS_FUNC.getInt(level);
+		return (int) this.values.get(rarity).targets.get(level);
 	}
 
 	@Override
@@ -83,6 +87,38 @@ public class CleavingAffix extends Affix {
 			if ((target instanceof Enemy && !(e instanceof Enemy))) return false;
 			return e != user && e instanceof LivingEntity;
 		};
+	}
+
+	static class CleaveValues {
+		final StepFunction chance;
+		final StepFunction targets;
+
+		CleaveValues(StepFunction chance, StepFunction targets) {
+			this.chance = chance;
+			this.targets = targets;
+		}
+	}
+
+	public static CleavingAffix read(JsonObject obj) {
+		Map<LootRarity, CleaveValues> values = Affix.GSON.fromJson(obj, new TypeToken<Map<LootRarity, CleaveValues>>() {
+		}.getType());
+		return new CleavingAffix(values);
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, pair) -> {
+			pair.chance.write(buf);
+			pair.targets.write(buf);
+		});
+	}
+
+	public static CleavingAffix read(FriendlyByteBuf buf) {
+		Map<LootRarity, CleaveValues> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> new CleaveValues(StepFunction.read(b), StepFunction.read(b)));
+		return new CleavingAffix(values);
 	}
 
 }

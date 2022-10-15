@@ -11,16 +11,12 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -32,7 +28,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -48,28 +43,7 @@ import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
-import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
-import shadows.apotheosis.adventure.affix.AffixType;
-import shadows.apotheosis.adventure.affix.AttributeAffix;
-import shadows.apotheosis.adventure.affix.effect.CatalyzingAffix;
-import shadows.apotheosis.adventure.affix.effect.CleavingAffix;
-import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
-import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix.DamageType;
-import shadows.apotheosis.adventure.affix.effect.DurableAffix;
-import shadows.apotheosis.adventure.affix.effect.EnlightenedAffix;
-import shadows.apotheosis.adventure.affix.effect.ExecutingAffix;
-import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
-import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
-import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
-import shadows.apotheosis.adventure.affix.effect.PotionAffix;
-import shadows.apotheosis.adventure.affix.effect.PotionAffix.Target;
-import shadows.apotheosis.adventure.affix.effect.PsychicAffix;
-import shadows.apotheosis.adventure.affix.effect.RadialAffix;
-import shadows.apotheosis.adventure.affix.effect.RetreatingAffix;
-import shadows.apotheosis.adventure.affix.effect.SpectralShotAffix;
-import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
-import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
+import shadows.apotheosis.adventure.affix.AffixManager;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
@@ -80,7 +54,6 @@ import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.GemManager;
-import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
 import shadows.apotheosis.adventure.boss.BossArmorManager;
 import shadows.apotheosis.adventure.boss.BossDungeonFeature;
@@ -97,7 +70,6 @@ import shadows.apotheosis.adventure.loot.AffixConvertLootModifier;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.AffixLootModifier;
 import shadows.apotheosis.adventure.loot.GemLootModifier;
-import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
 import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
@@ -106,7 +78,6 @@ import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.loot.LootSystem;
-import shadows.placebo.util.StepFunction;
 
 public class AdventureModule {
 
@@ -126,6 +97,7 @@ public class AdventureModule {
 		MinecraftForge.EVENT_BUS.register(new AdventureEvents());
 		MinecraftForge.EVENT_BUS.register(new BossEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
+		AffixManager.INSTANCE.registerToBus();
 		GemManager.INSTANCE.registerToBus();
 		AffixLootManager.INSTANCE.registerToBus();
 		BossArmorManager.INSTANCE.registerToBus();
@@ -254,95 +226,11 @@ public class AdventureModule {
 		for (Attribute a : attribs)
 			add.accept(type, a);
 	}
-
+	/*
 	@SubscribeEvent
 	public void affixes(Register<Affix> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				// Defensive Affixes
-				new AttributeAffix.Builder(() -> Attributes.MAX_HEALTH, Operation.ADDITION)
-				.with(LootRarity.COMMON, step(0.5F, 3, 0.5F))
-				.with(LootRarity.UNCOMMON, step(1.5F, 5, 0.5F))
-				.with(LootRarity.RARE, step(3F, 8, 0.5F))
-				.with(LootRarity.EPIC, step(5F, 10, 0.5F))
-				.with(LootRarity.MYTHIC, step(8F, 14, 0.5F))
-				.with(LootRarity.ANCIENT, step(12F, 20, 0.5F))
-				.types(LootCategory::isDefensive).build("blessed"),
-
-				new AttributeAffix.Builder(() -> Attributes.ARMOR, Operation.ADDITION)
-				.with(LootRarity.COMMON, step(0.25F, 3, 0.25F))
-				.with(LootRarity.UNCOMMON, step(1F, 8, 0.25F))
-				.with(LootRarity.RARE, step(3F, 10, 0.25F))
-				.with(LootRarity.EPIC, step(5F, 16, 0.25F))
-				.with(LootRarity.MYTHIC, step(7F, 24, 0.25F))
-				.with(LootRarity.ANCIENT, step(9F, 30, 0.25F))
-				.types(LootCategory::isDefensive).build("ironforged"),
-
-				new AttributeAffix.Builder(ForgeMod.SWIM_SPEED, Operation.MULTIPLY_TOTAL)
-				.with(LootRarity.COMMON, step(0.05F, 10, 0.02F))
-				.with(LootRarity.UNCOMMON, step(0.08F, 10, 0.02F))
-				.with(LootRarity.RARE, step(0.12F, 10, 0.02F))
-				.with(LootRarity.EPIC, step(0.15F, 12, 0.02F))
-				.with(LootRarity.MYTHIC, step(0.18F, 14, 0.02F))
-				.with(LootRarity.ANCIENT, step(0.25F, 10, 0.02F))
-				.types(l -> l == LootCategory.ARMOR).items(s -> ((ArmorItem) s.getItem()).getSlot() == EquipmentSlot.FEET).build("aquatic"),
-
-				new AttributeAffix.Builder(ForgeMod.ENTITY_GRAVITY, Operation.MULTIPLY_TOTAL)
-				.with(LootRarity.COMMON, step(-0.05F, 2, -0.02F))
-				.with(LootRarity.UNCOMMON, step(-0.05F, 4, -0.02F))
-				.with(LootRarity.RARE, step(-0.05F, 6, -0.02F))
-				.with(LootRarity.EPIC, step(-0.05F, 8, -0.02F))
-				.with(LootRarity.MYTHIC, step(-0.05F, 10, -0.02F))
-				.with(LootRarity.ANCIENT, step(-0.05F, 10, -0.02F))
-				.types(l -> l == LootCategory.ARMOR).items(s -> ((ArmorItem) s.getItem()).getSlot() == EquipmentSlot.CHEST).build("gravitational"),
-
-				new AttributeAffix.Builder(() -> Attributes.ARMOR_TOUGHNESS, Operation.ADDITION)
-				.with(LootRarity.UNCOMMON, step(0.25F, 2, 0.25F))
-				.with(LootRarity.RARE, step(1F, 4, 0.25F))
-				.with(LootRarity.EPIC, step(2F, 7, 0.25F))
-				.with(LootRarity.MYTHIC, step(4F, 12, 0.25F))
-				.with(LootRarity.ANCIENT, step(6F, 18, 0.25F))
-				.types(LootCategory::isDefensive).build("steel_touched"),
-
-				new AttributeAffix.Builder(() -> Attributes.KNOCKBACK_RESISTANCE, Operation.ADDITION)
-				.with(LootRarity.UNCOMMON, step(0.04F, 5, 0.02F))
-				.with(LootRarity.RARE, step(0.06F, 6, 0.02F))
-				.with(LootRarity.EPIC, step(0.1F, 10, 0.02F))
-				.with(LootRarity.MYTHIC, step(0.2F, 14, 0.02F))
-				.with(LootRarity.ANCIENT, step(0.4F, 16, 0.02F))
-				.types(LootCategory::isDefensive).build("stalwart"),
-
-				new PotionAffix.Builder(() -> MobEffects.DAMAGE_RESISTANCE)
-				.with(LootRarity.RARE, step(20, 30, 2), step(0, 1, 0))
-				.with(LootRarity.EPIC, step(40, 50, 2), step(0, 1, 1))
-				.with(LootRarity.MYTHIC, step(60, 70, 2), step(0, 1, 1))
-				.with(LootRarity.ANCIENT, step(100, 100, 4), step(1, 2, 1))
-				.types(l -> l == LootCategory.ARMOR)
-				.build(AffixType.EFFECT, Target.HURT_SELF, "bolstering"),
-
-				new PotionAffix.Builder(() -> MobEffects.HEAL)
-				.with(LootRarity.EPIC, step(1, 1, 0), step(0, 1, 1))
-				.with(LootRarity.MYTHIC, step(1, 1, 0), step(0, 2, 1))
-				.with(LootRarity.ANCIENT, step(1, 1, 0), step(1, 3, 1))
-				.types(l -> l == LootCategory.ARMOR)
-				.build(AffixType.EFFECT, Target.HURT_SELF, "revitalizing"),
-
-				new AttributeAffix.Builder(() -> Attributes.MOVEMENT_SPEED, Operation.MULTIPLY_TOTAL)
-				.with(LootRarity.COMMON, step(0.05F, 10, 0.01F))
-				.with(LootRarity.UNCOMMON, step(0.08F, 10, 0.01F))
-				.with(LootRarity.RARE, step(0.12F, 10, 0.01F))
-				.with(LootRarity.EPIC, step(0.15F, 12, 0.01F))
-				.with(LootRarity.MYTHIC, step(0.18F, 14, 0.01F))
-				.with(LootRarity.ANCIENT, step(0.25F, 10, 0.01F))
-				.types(l -> l.isRanged() || l == LootCategory.ARMOR).build("windswept"),
-
-				new AttributeAffix.Builder(ForgeMod.STEP_HEIGHT_ADDITION, Operation.ADDITION)
-				.with(LootRarity.UNCOMMON, step(0.25F, 1, 0.25F))
-				.with(LootRarity.RARE, step(0.5F, 3, 0.25F))
-				.with(LootRarity.EPIC, step(0.5F, 4, 0.25F))
-				.with(LootRarity.MYTHIC, step(1F, 6, 0.25F))
-				.with(LootRarity.ANCIENT, step(1.5F, 7, 0.25F))
-				.types(l -> l == LootCategory.ARMOR).items(s -> ((ArmorItem) s.getItem()).getSlot() == EquipmentSlot.FEET).build("elastic"),
 
 				new AttributeAffix.Builder(() -> Attributes.LUCK, Operation.ADDITION)
 				.with(LootRarity.RARE, step(1.5F, 8, 0.25F))
@@ -690,17 +578,7 @@ public class AdventureModule {
 		}
 		//Formatter::on
 	}
-
-	/**
-	 * Level Function that allows for only returning "nice" stepped numbers.
-	 * @param min The min value
-	 * @param steps The max number of steps
-	 * @param step The value per step
-	 * @return A level function according to these rules
-	 */
-	private static StepFunction step(float min, int steps, float step) {
-		return AffixHelper.step(min, steps, step);
-	}
+*/
 
 	@SubscribeEvent
 	public void client(FMLClientSetupEvent e) {

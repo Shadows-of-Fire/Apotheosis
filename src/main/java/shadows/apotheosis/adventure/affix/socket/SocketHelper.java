@@ -7,7 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
-import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 
 public class SocketHelper {
@@ -43,7 +43,7 @@ public class SocketHelper {
 	}
 
 	public static int getSockets(ItemStack stack) {
-		var inst = AffixHelper.getAffixes(stack).get(Apoth.Affixes.SOCKET);
+		var inst = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
 		if (inst == null) return 0;
 		return (int) inst.level();
 	}

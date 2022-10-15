@@ -1,29 +1,25 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
-import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
-import net.minecraftforge.registries.IRegistryDelegate;
-import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
@@ -33,44 +29,30 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class OmneticAffix extends Affix {
 
-	private static final List<IRegistryDelegate<Item>> TIERS = buildTierArray();
-	private static String[] descs = { "misc.apotheosis.iron", "misc.apotheosis.diamond", "misc.apotheosis.netherite" };
+	protected final Map<LootRarity, OmneticData> values;
 
-	public OmneticAffix() {
+	public OmneticAffix(Map<LootRarity, OmneticData> values) {
 		super(AffixType.EFFECT);
+		this.values = values;
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.BREAKER;
+		return LootCategory.forItem(stack) == LootCategory.BREAKER && values.containsKey(rarity);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", new TranslatableComponent(descs[getListOffset(rarity) / 3])).withStyle(ChatFormatting.YELLOW));
-	}
-
-	private static List<IRegistryDelegate<Item>> buildTierArray() {
-		List<IRegistryDelegate<Item>> items = new ArrayList<>();
-		items.add(Items.IRON_PICKAXE.delegate);
-		items.add(Items.IRON_AXE.delegate);
-		items.add(Items.IRON_SHOVEL.delegate);
-		items.add(Items.DIAMOND_PICKAXE.delegate);
-		items.add(Items.DIAMOND_AXE.delegate);
-		items.add(Items.DIAMOND_SHOVEL.delegate);
-		items.add(Items.NETHERITE_PICKAXE.delegate);
-		items.add(Items.NETHERITE_AXE.delegate);
-		items.add(Items.NETHERITE_SHOVEL.delegate);
-		return ImmutableList.copyOf(items);
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", "misc.apotheosis." + this.values.get(rarity).name).withStyle(ChatFormatting.YELLOW));
 	}
 
 	public void harvest(HarvestCheck e) {
 		ItemStack stack = e.getPlayer().getMainHandItem();
 		if (!stack.isEmpty()) {
-			AffixInstance inst = AffixHelper.getAffixes(stack).get(Affixes.OMNETIC);
+			AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
 			if (inst != null) {
 				for (int i = 0; i < 3; i++) {
-					Item item = TIERS.get(getListOffset(inst.rarity()) + i).get();
+					ItemStack item = values.get(inst.rarity()).arr[i];
 					if (item.isCorrectToolForDrops(e.getTargetBlock())) {
 						e.setCanHarvest(true);
 						return;
@@ -84,11 +66,11 @@ public class OmneticAffix extends Affix {
 	public void speed(BreakSpeed e) {
 		ItemStack stack = e.getPlayer().getMainHandItem();
 		if (!stack.isEmpty()) {
-			AffixInstance inst = AffixHelper.getAffixes(stack).get(Affixes.OMNETIC);
+			AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
 			if (inst != null) {
 				float speed = e.getOriginalSpeed();
 				for (int i = 0; i < 3; i++) {
-					Item item = TIERS.get(getListOffset(inst.rarity()) + i).get();
+					ItemStack item = values.get(inst.rarity()).arr[i];
 					speed = Math.max(getBaseSpeed(e.getPlayer(), item, e.getState(), e.getPos()), speed);
 				}
 				e.setNewSpeed(speed);
@@ -96,12 +78,52 @@ public class OmneticAffix extends Affix {
 		}
 	}
 
-	private static int getListOffset(LootRarity rarity) {
-		return 3 * Mth.clamp(rarity.ordinal() - LootRarity.RARE.ordinal(), 0, 2);
+	static class OmneticData {
+		final String name;
+		final ItemStack axe, shovel, pickaxe;
+		transient final ItemStack[] arr;
+
+		public OmneticData(String name, ItemStack axe, ItemStack shovel, ItemStack pickaxe) {
+			this.name = name;
+			this.axe = axe;
+			this.shovel = shovel;
+			this.pickaxe = pickaxe;
+			arr = new ItemStack[] { axe, shovel, pickaxe };
+		}
+
+		public void write(FriendlyByteBuf buf) {
+			buf.writeUtf(name);
+			buf.writeItem(axe);
+			buf.writeItem(shovel);
+			buf.writeItem(pickaxe);
+		}
+
+		public static OmneticData read(FriendlyByteBuf buf) {
+			return new OmneticData(buf.readUtf(), buf.readItem(), buf.readItem(), buf.readItem());
+		}
 	}
 
-	static float getBaseSpeed(Player player, Item tool, BlockState state, BlockPos pos) {
-		float f = tool.getDestroySpeed(ItemStack.EMPTY, state);
+	public static Affix read(JsonObject obj) {
+		Map<LootRarity, OmneticData> values = GSON.fromJson(obj.get("values"), new TypeToken<Map<LootRarity, OmneticData>>() {
+		}.getType());
+		return new OmneticAffix(values);
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
+	}
+
+	public static Affix read(FriendlyByteBuf buf) {
+		Map<LootRarity, OmneticData> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> OmneticData.read(b));
+		return new OmneticAffix(values);
+	}
+
+	static float getBaseSpeed(Player player, ItemStack tool, BlockState state, BlockPos pos) {
+		float f = tool.getDestroySpeed(state);
 		if (f > 1.0F) {
 			int i = EnchantmentHelper.getBlockEfficiency(player);
 			ItemStack itemstack = player.getMainHandItem();

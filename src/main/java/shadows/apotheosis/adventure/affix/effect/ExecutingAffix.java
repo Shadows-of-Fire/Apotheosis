@@ -1,8 +1,12 @@
 package shadows.apotheosis.adventure.affix.effect;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
+import com.google.gson.JsonObject;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvent;
@@ -22,24 +26,25 @@ import shadows.placebo.util.StepFunction;
 
 public class ExecutingAffix extends Affix {
 
-	protected static final StepFunction LEVEL_FUNC = AffixHelper.step(0.05F, 5, 0.01F);
+	protected final Map<LootRarity, StepFunction> values;
 
-	public ExecutingAffix() {
+	public ExecutingAffix(Map<LootRarity, StepFunction> values) {
 		super(AffixType.EFFECT);
+		this.values = values;
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && rarity.isAtLeast(LootRarity.EPIC);
+		return LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && values.containsKey(rarity);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
 	}
 
-	private static float getTrueLevel(LootRarity rarity, float level) {
-		return (rarity.ordinal() - LootRarity.EPIC.ordinal()) * 0.05F + LEVEL_FUNC.get(level);
+	private float getTrueLevel(LootRarity rarity, float level) {
+		return this.values.get(rarity).get(level);
 	}
 
 	@Override
@@ -59,6 +64,24 @@ public class ExecutingAffix extends Affix {
 				}
 			}
 		}
+	}
+
+	public static Affix read(JsonObject obj) {
+		var values = AffixHelper.readValues(obj);
+		return new ExecutingAffix(values);
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
+	}
+
+	public static Affix read(FriendlyByteBuf buf) {
+		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
+		return new ExecutingAffix(values);
 	}
 
 }

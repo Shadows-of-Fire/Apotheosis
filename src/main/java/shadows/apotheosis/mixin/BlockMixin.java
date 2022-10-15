@@ -28,7 +28,7 @@ public class BlockMixin {
 
 	@Inject(at = @At("HEAD"), method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V")
 	private static void apoth_telepathicHead(BlockState pState, Level pLevel, BlockPos pPos, @Nullable BlockEntity pBlockEntity, Entity pEntity, ItemStack pTool, CallbackInfo ci) {
-		if (AffixHelper.getAffixes(pTool).containsKey(Affixes.TELEPATHIC)) TelepathicAffix.blockDropTargetPos = new Vec3(pEntity.getX(), pEntity.getY(), pEntity.getZ());
+		if (AffixHelper.getAffixes(pTool).containsKey(Affixes.TELEPATHIC.get())) TelepathicAffix.blockDropTargetPos = new Vec3(pEntity.getX(), pEntity.getY(), pEntity.getZ());
 	}
 
 	@Inject(at = @At("TAIL"), method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V")

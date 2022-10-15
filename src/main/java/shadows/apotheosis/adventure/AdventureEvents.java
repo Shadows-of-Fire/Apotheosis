@@ -57,6 +57,7 @@ import shadows.apotheosis.Apotheosis.ApotheosisCommandEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.AffixManager;
 import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
 import shadows.apotheosis.adventure.affix.socket.GemManager;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
@@ -135,7 +136,7 @@ public class AdventureEvents {
 				CompoundTag nbt = new CompoundTag();
 				affixes.values().forEach(a -> {
 					a.onArrowFired(living, arrow);
-					nbt.putFloat(a.affix().getRegistryName().toString(), a.level());
+					nbt.putFloat(a.affix().getId().toString(), a.level());
 					nbt.putString(AffixHelper.RARITY, a.rarity().id());
 				});
 				arrow.getPersistentData().put("apoth.affixes", nbt);
@@ -152,7 +153,7 @@ public class AdventureEvents {
 			CompoundTag nbt = arrow.getPersistentData().getCompound("apoth.affixes");
 			LootRarity rarity = AffixHelper.getRarity(nbt);
 			for (String s : nbt.getAllKeys()) {
-				Affix a = Affix.REGISTRY.getValue(new ResourceLocation(s));
+				Affix a = AffixManager.INSTANCE.getValue(new ResourceLocation(s));
 				if (a != null) {
 					a.onArrowImpact(rarity, nbt.getFloat(s), arrow, e.getRayTraceResult(), e.getRayTraceResult().getType());
 				}
@@ -181,7 +182,7 @@ public class AdventureEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onDamage(LivingHurtEvent e) {
-		Apoth.Affixes.MAGICAL.onHurt(e);
+		Apoth.Affixes.MAGICAL.ifPresent(afx -> afx.onHurt(e));
 		DamageReductionAffix.onHurt(e);
 	}
 
@@ -329,27 +330,27 @@ public class AdventureEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) {
-		Apoth.Affixes.FESTIVE.drops(e);
+		Apoth.Affixes.FESTIVE.ifPresent(afx -> afx.drops(e));
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void dropsLowest(LivingDropsEvent e) {
-		Apoth.Affixes.TELEPATHIC.drops(e);
+		Apoth.Affixes.TELEPATHIC.ifPresent(afx -> afx.drops(e));
 	}
 
 	@SubscribeEvent
 	public void harvest(HarvestCheck e) {
-		Apoth.Affixes.OMNETIC.harvest(e);
+		Apoth.Affixes.OMNETIC.ifPresent(afx -> afx.harvest(e));
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void speed(BreakSpeed e) {
-		Apoth.Affixes.OMNETIC.speed(e);
+		Apoth.Affixes.OMNETIC.ifPresent(afx -> afx.speed(e));
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onBreak(BlockEvent.BreakEvent e) {
-		Apoth.Affixes.RADIAL.onBreak(e);
+		Apoth.Affixes.RADIAL.ifPresent(afx -> afx.onBreak(e));
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)

@@ -185,12 +185,12 @@ public class AdventureModuleClient {
 			applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
 			Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
 		}
-		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET)) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), new TextComponent("APOTH_REMOVE_MARKER"));
+		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent
 	public static void comps(RenderTooltipEvent.GatherComponents e) {
-		AffixInstance socket = AffixHelper.getAffixes(e.getItemStack()).get(Affixes.SOCKET);
+		AffixInstance socket = AffixHelper.getAffixes(e.getItemStack()).get(Affixes.SOCKET.get());
 		if (socket == null) return;
 
 		List<Either<FormattedText, TooltipComponent>> list = e.getTooltipElements();

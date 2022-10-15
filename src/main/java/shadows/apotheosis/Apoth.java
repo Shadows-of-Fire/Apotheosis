@@ -13,6 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ObjectHolder;
+import shadows.apotheosis.adventure.affix.AffixManager;
 import shadows.apotheosis.adventure.affix.effect.DurableAffix;
 import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
 import shadows.apotheosis.adventure.affix.effect.MagicalArrowAffix;
@@ -70,6 +71,7 @@ import shadows.apotheosis.village.fletching.arrows.MiningArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.MiningArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
+import shadows.placebo.json.DynamicRegistryObject;
 import shadows.placebo.util.PlaceboUtil;
 
 /**
@@ -274,17 +276,16 @@ public class Apoth {
 		public static final Attribute ARROW_VELOCITY = null;
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Affixes {
 		// Implicit affixes
-		public static final SocketAffix SOCKET = null;
-		public static final DurableAffix DURABLE = null;
+		public static final DynamicRegistryObject<SocketAffix> SOCKET = AffixManager.INSTANCE.makeObj(Apotheosis.loc("socket"));
+		public static final DynamicRegistryObject<DurableAffix> DURABLE = AffixManager.INSTANCE.makeObj(Apotheosis.loc("durable"));
 		// Real affixes
-		public static final MagicalArrowAffix MAGICAL = null;
-		public static final FestiveAffix FESTIVE = null;
-		public static final TelepathicAffix TELEPATHIC = null;
-		public static final OmneticAffix OMNETIC = null;
-		public static final RadialAffix RADIAL = null;
+		public static final DynamicRegistryObject<MagicalArrowAffix> MAGICAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("magical"));
+		public static final DynamicRegistryObject<FestiveAffix> FESTIVE = AffixManager.INSTANCE.makeObj(Apotheosis.loc("festive"));
+		public static final DynamicRegistryObject<TelepathicAffix> TELEPATHIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("telepathic"));
+		public static final DynamicRegistryObject<OmneticAffix> OMNETIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("omnetic"));
+		public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("radial"));
 	}
 
 	public static final class Tags {

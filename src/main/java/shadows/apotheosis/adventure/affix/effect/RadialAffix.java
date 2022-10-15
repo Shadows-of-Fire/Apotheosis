@@ -1,15 +1,22 @@
 package shadows.apotheosis.adventure.affix.effect;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
+
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Vec3i;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,25 +39,27 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.PlaceboUtil;
-import shadows.placebo.util.StepFunction;
 
 public class RadialAffix extends Affix {
 
-	protected static final StepFunction SIZE_FUNC = AffixHelper.step(1, 2, 1);
 	private static Set<UUID> breakers = new HashSet<>();
 
-	public RadialAffix() {
+	protected final Map<LootRarity, List<RadialData>> values;
+
+	public RadialAffix(Map<LootRarity, List<RadialData>> values) {
 		super(AffixType.EFFECT);
+		this.values = values;
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.BREAKER;
+		return LootCategory.forItem(stack) == LootCategory.BREAKER && this.values.containsKey(rarity);
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc." + getTrueLevel(rarity, level)).withStyle(ChatFormatting.YELLOW));
+		RadialData data = this.getTrueLevel(rarity, level);
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc" + data.x, data.y).withStyle(ChatFormatting.YELLOW));
 	}
 
 	// EventPriority.LOW
@@ -67,8 +76,57 @@ public class RadialAffix extends Affix {
 		}
 	}
 
-	private static int getTrueLevel(LootRarity rarity, float level) {
-		return Mth.clamp(rarity.ordinal() - LootRarity.RARE.ordinal() + SIZE_FUNC.getInt(level), 1, 4);
+	private RadialData getTrueLevel(LootRarity rarity, float level) {
+		var list = this.values.get(rarity);
+		return list.get(Math.min(list.size() - 1, (int) Mth.lerp(level, 0, list.size())));
+	}
+
+	static class RadialData {
+		final int x, y, xOff, yOff;
+
+		public RadialData(int x, int y, int xOff, int yOff) {
+			this.x = x;
+			this.y = y;
+			this.xOff = xOff;
+			this.yOff = yOff;
+		}
+
+		public void write(FriendlyByteBuf buf) {
+			buf.writeVarIntArray(new int[] { x, y, xOff, yOff });
+		}
+
+		public static RadialData read(FriendlyByteBuf buf) {
+			int[] arr = buf.readVarIntArray();
+			return new RadialData(arr[0], arr[1], arr[2], arr[3]);
+		}
+	}
+
+	public static Affix read(JsonObject obj) {
+		Map<LootRarity, List<RadialData>> values = GSON.fromJson(obj.get("values"), new TypeToken<Map<LootRarity, RadialData>>() {
+		}.getType());
+		return new RadialAffix(values);
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, list) -> {
+			b.writeByte(list.size());
+			list.forEach(d -> d.write(b));
+		});
+	}
+
+	public static Affix read(FriendlyByteBuf buf) {
+		Map<LootRarity, List<RadialData>> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> {
+			int size = b.readByte();
+			List<RadialData> list = new ArrayList<>();
+			for (int i = 0; i < size; i++)
+				list.add(RadialData.read(b));
+			return list;
+		});
+		return new RadialAffix(values);
 	}
 
 	/**
@@ -78,18 +136,10 @@ public class RadialAffix extends Affix {
 	 * @param tool The tool being used (which has this affix on it)
 	 * @param level The level of this affix, in this case, the mode of operation.
 	 */
-	public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, int level, float hardness) {
+	public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
 		if (!breakers.add(player.getUUID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.ew
 		if (!player.isShiftKeyDown()) try {
-			if (level == 1) {
-				breakBlockRadius(player, pos, 1, 2, 0, 1, hardness);
-			} else if (level == 2) {
-				breakBlockRadius(player, pos, 3, 2, 0, 1, hardness);
-			} else if (level == 3) {
-				breakBlockRadius(player, pos, 3, 3, 0, 0, hardness);
-			} else {
-				breakBlockRadius(player, pos, 5, 5, 0, 0, hardness);
-			}
+			breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

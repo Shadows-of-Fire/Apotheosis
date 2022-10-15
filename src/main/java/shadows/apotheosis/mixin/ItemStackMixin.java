@@ -61,7 +61,7 @@ public class ItemStackMixin {
 	@ModifyVariable(at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getDamageValue()I"), method = "hurt", argsOnly = true, ordinal = 0)
 	public int swapDura(int amount, int amountCopy, Random pRandom, @Nullable ServerPlayer pUser) {
 		int blocked = 0;
-		AffixInstance inst = AffixHelper.getAffixes((ItemStack) (Object) this).get(Affixes.DURABLE);
+		AffixInstance inst = AffixHelper.getAffixes((ItemStack) (Object) this).get(Affixes.DURABLE.get());
 		if (inst != null) {
 			float chance = inst.level();
 			for (int i = 0; i < amount; i++) {

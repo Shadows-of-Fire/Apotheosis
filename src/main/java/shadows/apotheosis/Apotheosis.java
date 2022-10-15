@@ -30,13 +30,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.registries.ForgeRegistry;
-import net.minecraftforge.registries.NewRegistryEvent;
-import net.minecraftforge.registries.RegistryBuilder;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.client.BossSpawnMessage;
 import shadows.apotheosis.compat.PatchouliCompat;
 import shadows.apotheosis.ench.EnchModule;
@@ -117,7 +112,6 @@ public class Apotheosis {
 		if (config.hasChanged()) config.save();
 		bus.post(new ApotheosisConstruction());
 		bus.addListener(this::init);
-		bus.addListener(this::registry);
 		MinecraftForge.EVENT_BUS.addListener(this::reloads);
 		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
 		MinecraftForge.EVENT_BUS.addListener(this::cmds);
@@ -133,15 +127,6 @@ public class Apotheosis {
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
-	}
-
-	@SubscribeEvent
-	public void registry(NewRegistryEvent e) {
-		RegistryBuilder<Affix> build = new RegistryBuilder<>();
-		build.setName(new ResourceLocation(Apotheosis.MODID, "affixes"));
-		build.setType(Affix.class);
-		build.disableSaving().onBake(AffixHelper::recomputeMaps);
-		e.create(build, r -> Affix.REGISTRY = (ForgeRegistry<Affix>) r);
 	}
 
 	@SubscribeEvent
@@ -194,6 +179,10 @@ public class Apotheosis {
 		public LiteralArgumentBuilder<CommandSourceStack> getRoot() {
 			return this.root;
 		}
+	}
+
+	public static ResourceLocation loc(String s) {
+		return new ResourceLocation(MODID, s);
 	}
 
 }

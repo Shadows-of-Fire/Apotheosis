@@ -1,8 +1,12 @@
 package shadows.apotheosis.adventure.affix.effect;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
+import com.google.gson.JsonObject;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,26 +26,27 @@ import shadows.placebo.util.StepFunction;
  */
 public class CatalyzingAffix extends Affix {
 
-	protected static final StepFunction LEVEL_FUNC = AffixHelper.step(200, 400, 1);
+	protected final Map<LootRarity, StepFunction> values;
 
-	public CatalyzingAffix() {
+	public CatalyzingAffix(Map<LootRarity, StepFunction> values) {
 		super(AffixType.EFFECT);
+		this.values = values;
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getRegistryName() + ".desc").withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc").withStyle(ChatFormatting.YELLOW));
 	}
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.SHIELD && rarity.isAtLeast(LootRarity.EPIC);
+		return LootCategory.forItem(stack) == LootCategory.SHIELD && this.values.containsKey(rarity);
 	}
 
 	@Override
 	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
 		if (source.isExplosion()) {
-			int time = getTrueLevel(rarity, level) + (int) (amount * 4);
+			int time = this.values.get(rarity).getInt(level);
 			int modifier = 1 + (int) (amount / 12);
 			entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, time, modifier));
 		}
@@ -49,8 +54,22 @@ public class CatalyzingAffix extends Affix {
 		return super.onShieldBlock(stack, rarity, level, entity, source, amount);
 	}
 
-	private static int getTrueLevel(LootRarity rarity, float level) {
-		return (rarity.ordinal() - LootRarity.EPIC.ordinal()) * 200 + LEVEL_FUNC.getInt(level);
+	public static CatalyzingAffix read(JsonObject obj) {
+		var values = AffixHelper.readValues(obj);
+		return new CatalyzingAffix(values);
+	}
+
+	public JsonObject write() {
+		return new JsonObject();
+	}
+
+	public void write(FriendlyByteBuf buf) {
+		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
+	}
+
+	public static CatalyzingAffix read(FriendlyByteBuf buf) {
+		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
+		return new CatalyzingAffix(values);
 	}
 
 }
