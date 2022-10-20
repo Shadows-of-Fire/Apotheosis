@@ -27,7 +27,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraftforge.common.util.Size2i;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
@@ -45,7 +44,7 @@ public class PotionJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enablePotion) return;
-		this.gridHelper = reg.getJeiHelpers().getGuiHelper().createCraftingGridHelper(1);
+		this.gridHelper = reg.getJeiHelpers().getGuiHelper().createCraftingGridHelper();
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class PotionJEIPlugin implements IModPlugin {
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration reg) {
 		if (!Apotheosis.enablePotion) return;
-		reg.registerSubtypeInterpreter(Apoth.Items.POTION_CHARM, new PotionCharmSubtypes());
+		reg.registerSubtypeInterpreter(Apoth.Items.POTION_CHARM.get(), new PotionCharmSubtypes());
 	}
 
 	@Override
@@ -80,34 +79,38 @@ public class PotionJEIPlugin implements IModPlugin {
 		}
 
 		@Override
-		public Size2i getSize() {
-			return new Size2i(3, 3);
+		public int getWidth() {
+			return 3;
+		}
+
+		@Override
+		public int getHeight() {
+			return 3;
 		}
 
 		@Override
 		public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
-			Potion potion = PotionUtils.getPotion(focuses.getFocuses(VanillaTypes.ITEM).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY));
+			Potion potion = PotionUtils.getPotion(focuses.getFocuses(VanillaTypes.ITEM_STACK).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY));
 			List<List<ItemStack>> recipeInputs = this.recipe.getIngredients().stream().map(i -> Arrays.asList(i.getItems())).collect(Collectors.toCollection(ArrayList::new));
 			if (potion != Potions.EMPTY) {
 				for (int i : this.recipe.getPotionSlots()) {
 					recipeInputs.set(i, Arrays.asList(PotionUtils.setPotion(new ItemStack(Items.POTION), potion)));
 				}
 			}
-			ItemStack output = new ItemStack(Apoth.Items.POTION_CHARM);
+			ItemStack output = new ItemStack(Apoth.Items.POTION_CHARM.get());
 			PotionUtils.setPotion(output, potion);
-			Size2i size = this.getSize();
-			craftingGridHelper.setInputs(builder, VanillaTypes.ITEM, recipeInputs, size.width, size.height);
+			craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, recipeInputs, this.getWidth(), this.getHeight());
 			if (potion != Potions.EMPTY) {
-				craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM, Arrays.asList(output));
+				craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, Arrays.asList(output));
 			} else {
 				List<ItemStack> potionStacks = new ArrayList<>();
 				for (Potion p : ForgeRegistries.POTIONS) {
 					if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
-					ItemStack charm = new ItemStack(Apoth.Items.POTION_CHARM);
+					ItemStack charm = new ItemStack(Apoth.Items.POTION_CHARM.get());
 					PotionUtils.setPotion(charm, p);
 					potionStacks.add(charm);
 				}
-				craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM, potionStacks);
+				craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, potionStacks);
 			}
 		}
 
@@ -117,28 +120,28 @@ public class PotionJEIPlugin implements IModPlugin {
 
 		@Override
 		public void setRecipe(IRecipeLayoutBuilder builder, IRecipeSlotBuilder input, IRecipeSlotBuilder output, EnchantingRecipe recipe, IFocusGroup focuses) {
-			Potion potion = PotionUtils.getPotion(focuses.getFocuses(VanillaTypes.ITEM).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY));
+			Potion potion = PotionUtils.getPotion(focuses.getFocuses(VanillaTypes.ITEM_STACK).findFirst().map(IFocus::getTypedValue).map(ITypedIngredient::getIngredient).orElse(ItemStack.EMPTY));
 			if (potion != Potions.EMPTY) {
-				ItemStack out = new ItemStack(Apoth.Items.POTION_CHARM);
+				ItemStack out = new ItemStack(Apoth.Items.POTION_CHARM.get());
 				PotionUtils.setPotion(out, potion);
 				ItemStack in = out.copy();
 				out.getOrCreateTag().putBoolean("Unbreakable", true);
-				input.addIngredient(VanillaTypes.ITEM, in);
-				output.addIngredient(VanillaTypes.ITEM, out);
+				input.addIngredient(VanillaTypes.ITEM_STACK, in);
+				output.addIngredient(VanillaTypes.ITEM_STACK, out);
 			} else {
 				List<ItemStack> potionStacks = new ArrayList<>();
 				List<ItemStack> unbreakable = new ArrayList<>();
 				for (Potion p : ForgeRegistries.POTIONS) {
 					if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
-					ItemStack charm = new ItemStack(Apoth.Items.POTION_CHARM);
+					ItemStack charm = new ItemStack(Apoth.Items.POTION_CHARM.get());
 					PotionUtils.setPotion(charm, p);
 					potionStacks.add(charm);
 					ItemStack copy = charm.copy();
 					copy.getOrCreateTag().putBoolean("Unbreakable", true);
 					unbreakable.add(copy);
 				}
-				input.addIngredients(VanillaTypes.ITEM, potionStacks);
-				output.addIngredients(VanillaTypes.ITEM, unbreakable);
+				input.addIngredients(VanillaTypes.ITEM_STACK, potionStacks);
+				output.addIngredients(VanillaTypes.ITEM_STACK, unbreakable);
 			}
 			builder.createFocusLink(input, output);
 		}
@@ -153,7 +156,7 @@ public class PotionJEIPlugin implements IModPlugin {
 				if (!PotionCharmItem.hasPotion(stack)) return NONE;
 				Potion p = PotionUtils.getPotion(stack);
 				MobEffectInstance contained = p.getEffects().get(0);
-				return contained.getEffect().getRegistryName() + "@" + contained.getAmplifier() + "@" + contained.getDuration();
+				return ForgeRegistries.MOB_EFFECTS.getKey(contained.getEffect()) + "@" + contained.getAmplifier() + "@" + contained.getDuration();
 			}
 			return NONE;
 		}

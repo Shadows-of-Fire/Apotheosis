@@ -7,7 +7,7 @@ import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -65,7 +65,7 @@ public class PotionCharmItem extends Item {
 	}
 
 	private static int getCriticalDuration(MobEffect effect) {
-		return EXTENDED_POTIONS.contains(effect.getRegistryName()) ? 210 : 5;
+		return EXTENDED_POTIONS.contains(ForgeRegistries.MOB_EFFECTS.getKey(effect)) ? 210 : 5;
 	}
 
 	@Override
@@ -98,14 +98,14 @@ public class PotionCharmItem extends Item {
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotion(stack);
 			MobEffectInstance effect = p.getEffects().get(0);
-			TranslatableComponent potionCmp = Component.translatable(effect.getDescriptionId());
+			MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
 			if (effect.getAmplifier() > 0) {
 				potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));
 			}
 			potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
 			tooltip.add(Component.translatable(this.getDescriptionId() + ".desc", potionCmp).withStyle(ChatFormatting.GRAY));
 			boolean enabled = stack.getOrCreateTag().getBoolean("charm_enabled");
-			TranslatableComponent enabledCmp = Component.translatable(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
+			MutableComponent enabledCmp = Component.translatable(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
 			enabledCmp.withStyle(enabled ? ChatFormatting.BLUE : ChatFormatting.RED);
 			if (effect.getDuration() > 20) {
 				potionCmp = Component.translatable("potion.withDuration", potionCmp, MobEffectUtil.formatDuration(effect, 1));
@@ -126,7 +126,7 @@ public class PotionCharmItem extends Item {
 		if (!hasPotion(stack)) return Component.translatable("item.apotheosis.potion_charm_broke");
 		Potion p = PotionUtils.getPotion(stack);
 		MobEffectInstance effect = p.getEffects().get(0);
-		TranslatableComponent potionCmp = Component.translatable(effect.getDescriptionId());
+		MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
 		if (effect.getAmplifier() > 0) {
 			potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));
 		}
@@ -139,7 +139,7 @@ public class PotionCharmItem extends Item {
 
 	@Override
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		if (this.allowdedIn(group)) {
+		if (this.allowedIn(group)) {
 			for (Potion potion : ForgeRegistries.POTIONS) {
 				if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
 					items.add(PotionUtils.setPotion(new ItemStack(this), potion));
@@ -153,7 +153,7 @@ public class PotionCharmItem extends Item {
 		Potion potionType = PotionUtils.getPotion(itemStack);
 		ResourceLocation resourceLocation = ForgeRegistries.POTIONS.getKey(potionType);
 		if (resourceLocation != null) { return resourceLocation.getNamespace(); }
-		return this.getRegistryName().getNamespace();
+		return ForgeRegistries.ITEMS.getKey(this).getNamespace();
 	}
 
 }

@@ -24,7 +24,6 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.placebo.recipe.RecipeHelper;
@@ -35,7 +34,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 	protected final Ingredient potion = makePotionIngredient();
 
 	public PotionCharmRecipe(List<Object> ingredients, int width, int height) {
-		super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", width, height, makeIngredients(ingredients), new ItemStack(Apoth.Items.POTION_CHARM));
+		super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", width, height, makeIngredients(ingredients), new ItemStack(Apoth.Items.POTION_CHARM.get()));
 		for (int i = 0; i < ingredients.size(); i++) {
 			if (ingredients.get(i).equals("potion")) this.potionSlots.add(i);
 		}
@@ -95,7 +94,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 		return Serializer.INSTANCE;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<PotionCharmRecipe> {
+	public static class Serializer implements RecipeSerializer<PotionCharmRecipe> {
 
 		public static final Serializer INSTANCE = new Serializer();
 

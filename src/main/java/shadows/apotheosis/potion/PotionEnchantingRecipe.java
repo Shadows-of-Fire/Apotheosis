@@ -16,7 +16,6 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
@@ -31,7 +30,7 @@ public class PotionEnchantingRecipe extends EnchantingRecipe {
 	}
 
 	private static ItemStack charm() {
-		ItemStack out = new ItemStack(Apoth.Items.POTION_CHARM);
+		ItemStack out = new ItemStack(Apoth.Items.POTION_CHARM.get());
 		out.getOrCreateTag().putBoolean("Unbreakable", true);
 		return out;
 	}
@@ -40,7 +39,7 @@ public class PotionEnchantingRecipe extends EnchantingRecipe {
 		List<ItemStack> potionStacks = new ArrayList<>();
 		for (Potion p : ForgeRegistries.POTIONS) {
 			if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
-			ItemStack potion = new ItemStack(Apoth.Items.POTION_CHARM);
+			ItemStack potion = new ItemStack(Apoth.Items.POTION_CHARM.get());
 			PotionUtils.setPotion(potion, p);
 			potionStacks.add(potion);
 		}
@@ -66,7 +65,7 @@ public class PotionEnchantingRecipe extends EnchantingRecipe {
 		return PotionEnchantingRecipe.SERIALIZER;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<PotionEnchantingRecipe> {
+	public static class Serializer implements RecipeSerializer<PotionEnchantingRecipe> {
 
 		protected static final Gson GSON = new GsonBuilder().create();
 
