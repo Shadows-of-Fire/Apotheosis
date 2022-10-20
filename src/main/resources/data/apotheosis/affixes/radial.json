@@ -1,0 +1,81 @@
+{
+	"type": "apotheosis:radial",
+	"values": {		
+		"uncommon": [
+			{
+				"x": 1,
+				"y": 2,
+				"xOff": 0,
+				"yOff": 1
+			},
+			{
+				"x": 1,
+				"y": 3,
+				"xOff": 0,
+				"yOff": 1
+			}
+		],
+		"rare": [
+			{
+				"x": 1,
+				"y": 3,
+				"xOff": 0,
+				"yOff": 1
+			},
+			{
+				"x": 3,
+				"y": 2,
+				"xOff": 0,
+				"yOff": 1
+			}
+		],
+		"epic": [
+			{
+				"x": 3,
+				"y": 2,
+				"xOff": 0,
+				"yOff": 1
+			},
+			{
+				"x": 3,
+				"y": 3,
+				"xOff": 0,
+				"yOff": 0
+			},
+			{
+				"x": 5,
+				"y": 3,
+				"xOff": 0,
+				"yOff": 0
+			}
+		],
+		"mythic": [
+			{
+				"x": 5,
+				"y": 3,
+				"xOff": 0,
+				"yOff": 0
+			},
+			{
+				"x": 5,
+				"y": 5,
+				"xOff": 0,
+				"yOff": 0
+			}
+		],
+		"ancient": [
+			{
+				"x": 7,
+				"y": 5,
+				"xOff": 0,
+				"yOff": 0
+			},
+			{
+				"x": 7,
+				"y": 7,
+				"xOff": 0,
+				"yOff": 0
+			}
+		]
+	}
+}

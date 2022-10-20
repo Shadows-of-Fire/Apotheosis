@@ -1,0 +1,52 @@
+{
+	"type": "apotheosis:mob_effect",
+	"mob_effect": "minecraft:weakness",
+	"target": "ATTACK_TARGET",
+	"values": {
+		"rare": {
+			"duration": {
+				"min": 20,
+				"steps": 3,
+				"step": 20
+			},
+			"amplifier": 0
+		},
+		"epic": {
+			"duration": {
+				"min": 40,
+				"steps": 3,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 1,
+				"step": 1
+			}
+		},
+		"mythic": {
+			"duration": {
+				"min": 60,
+				"steps": 5,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 2,
+				"step": 1
+			}
+		},
+		"ancient": {
+			"duration": {
+				"min": 80,
+				"steps": 4,
+				"step": 40
+			},
+			"amplifier": 3
+		}
+	},
+	"types": [
+		"SWORD",
+		"TRIDENT",
+		"HEAVY_WEAPON"
+	]
+}

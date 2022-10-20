@@ -1,0 +1,32 @@
+{
+	"type": "apotheosis:mob_effect",
+	"mob_effect": "minecraft:wither",
+	"target": "ARROW_TARGET",
+	"values": {
+		"mythic": {
+			"duration": {
+				"min": 100,
+				"steps": 2,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 3,
+				"step": 1
+			}
+		},
+		"ancient": {
+			"duration": {
+				"min": 180,
+				"steps": 4,
+				"step": 40
+			},
+			"amplifier": 4
+		}
+	},
+	"types": [
+		"BOW",
+		"CROSSBOW",
+		"TRIDENT"
+	]
+}

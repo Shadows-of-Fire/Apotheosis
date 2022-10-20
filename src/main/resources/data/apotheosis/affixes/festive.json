@@ -1,0 +1,20 @@
+{
+	"type": "apotheosis:festive",
+	"values": {
+		"epic": {
+			"min": 0.02,
+			"steps": 5,
+			"step": 0.005
+		},
+		"mythic": {
+			"min": 0.03,
+			"steps": 5,
+			"step": 0.005
+		},
+		"ancient": {
+			"min": 0.05,
+			"steps": 8,
+			"step": 0.005
+		}
+	}
+}

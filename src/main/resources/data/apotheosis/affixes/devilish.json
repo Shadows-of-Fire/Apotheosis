@@ -1,0 +1,54 @@
+{
+	"type": "apotheosis:mob_effect",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "village"
+	}],
+	"mob_effect": "apotheosis:bleeding",
+	"target": "BLOCK_ATTACKER",
+	"values": {
+		"rare": {
+			"duration": {
+				"min": 10,
+				"steps": 2,
+				"step": 20
+			},
+			"amplifier": 0
+		},
+		"epic": {
+			"duration": {
+				"min": 60,
+				"steps": 3,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 1,
+				"step": 1
+			}
+		},
+		"mythic": {
+			"duration": {
+				"min": 80,
+				"steps": 6,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 1,
+				"steps": 1,
+				"step": 1
+			}
+		},
+		"ancient": {
+			"duration": {
+				"min": 100,
+				"steps": 8,
+				"step": 20
+			},
+			"amplifier": 3
+		}
+	},
+	"types": [
+		"SHIELD"
+	]
+}

@@ -1,0 +1,42 @@
+{
+	"type": "apotheosis:attribute",
+	"attribute": "apotheosis:arrow_damage",
+	"operation": "MULTIPLY_BASE",
+	"values": {
+		"common": {
+			"min": 0.05,
+			"steps": 5,
+			"step": 0.01
+		},
+		"uncommon": {
+			"min": 0.15,
+			"steps": 10,
+			"step": 0.01
+		},
+		"rare": {
+			"min": 0.20,
+			"steps": 15,
+			"step": 0.01
+		},
+		"epic": {
+			"min": 0.30,
+			"steps": 20,
+			"step": 0.01
+		},
+		"mythic": {
+			"min": 0.45,
+			"steps": 20,
+			"step": 0.01
+		},
+		"ancient": {
+			"min": 0.70,
+			"steps": 30,
+			"step": 0.01
+		}
+	},
+	"types": [
+		"BOW",
+		"CROSSBOW",
+		"TRIDENT"
+	]
+}

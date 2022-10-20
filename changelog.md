@@ -1,3 +1,17 @@
+## 5.7.1
+* Affixes are now data-driven! Each affix has its own json file located in the `affixes` subdirectory.
+  * Through this, you can now configure the values for each affix at each rarity level.
+  * You can also add new potion and attribute affixes for modded attributes/effects.
+  * This means if you don't like the numbers, or you think something is over/underpowered - just change it!
+* Many affix default values have been rebalanced.
+  * For the most part, this was a reduction in affix levels.
+* Current HP Damage is no longer armor-piercing.
+* The Reforging Table will no longer accept more than 1 item in the primary slot.
+* Heavy Weapons will have their attack speed reduced based on rarity instead of a flat value.
+* Critical hits have been reworked (again).
+  * The first 50% of bonus crit chance is now ignored on a vanilla (jump) crit, but crit damage is increased by 50%.
+  * Overcrits will now scale worse
+
 ## 5.7.0
 * As noted in-line below, you should regenerate all or part of your /config/apotheosis/adventure.cfg file.
 

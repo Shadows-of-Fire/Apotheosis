@@ -1,0 +1,30 @@
+{
+	"type": "apotheosis:enlightened",
+	"values": {
+		"uncommon": {
+			"min": 12,
+			"steps": 4,
+			"step": -1
+		},
+		"rare": {
+			"min": 10,
+			"steps": 4,
+			"step": -1
+		},
+		"epic": {
+			"min": 8,
+			"steps": 4,
+			"step": -1
+		},
+		"mythic": {
+			"min": 6,
+			"steps": 4,
+			"step": -1
+		},
+		"ancient": {
+			"min": 1,
+			"steps": 1,
+			"step": 0
+		}
+	}
+}

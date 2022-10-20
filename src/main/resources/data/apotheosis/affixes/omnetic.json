@@ -1,0 +1,53 @@
+{
+	"type": "apotheosis:omnetic",
+	"values": {
+		"rare": {
+			"name": "iron",
+			"axe": {
+				"item": "minecraft:iron_axe"
+			},
+			"shovel": {
+				"item": "minecraft:iron_shovel"
+			},
+			"pickaxe": {
+				"item": "minecraft:iron_pickaxe"
+			}
+		},
+		"epic": {
+			"name": "diamond",
+			"axe": {
+				"item": "minecraft:diamond_axe"
+			},
+			"shovel": {
+				"item": "minecraft:diamond_shovel"
+			},
+			"pickaxe": {
+				"item": "minecraft:diamond_pickaxe"
+			}
+		},
+		"mythic": {
+			"name": "netherite",
+			"axe": {
+				"item": "minecraft:netherite_axe"
+			},
+			"shovel": {
+				"item": "minecraft:netherite_shovel"
+			},
+			"pickaxe": {
+				"item": "minecraft:netherite_pickaxe"
+			}
+		},
+		"ancient": {
+			"name": "netherite",
+			"axe": {
+				"item": "minecraft:netherite_axe"
+			},
+			"shovel": {
+				"item": "minecraft:netherite_shovel"
+			},
+			"pickaxe": {
+				"item": "minecraft:netherite_pickaxe"
+			}
+		}
+	}
+}

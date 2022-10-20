@@ -1,0 +1,36 @@
+{
+	"type": "apotheosis:mob_effect",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "potion"
+	}],
+	"mob_effect": "apotheosis:sundering",
+	"target": "ARROW_TARGET",
+	"values": {
+		"mythic": {
+			"duration": {
+				"min": 80,
+				"steps": 3,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 1,
+				"step": 1
+			}
+		},
+		"ancient": {
+			"duration": {
+				"min": 100,
+				"steps": 8,
+				"step": 20
+			},
+			"amplifier": 2
+		}
+	},
+	"types": [
+		"BOW",
+		"CROSSBOW",
+		"TRIDENT"
+	]
+}

@@ -1,0 +1,52 @@
+{
+	"type": "apotheosis:mob_effect",
+	"mob_effect": "minecraft:speed",
+	"target": "ATTACK_SELF",
+	"values": {
+		"rare": {
+			"duration": {
+				"min": 100,
+				"steps": 5,
+				"step": 20
+			},
+			"amplifier": 0
+		},
+		"epic": {
+			"duration": {
+				"min": 140,
+				"steps": 8,
+				"step": 20
+			},
+			"amplifier": 0
+		},
+		"mythic": {
+			"duration": {
+				"min": 180,
+				"steps": 10,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 1,
+				"step": 1
+			}
+		},
+		"ancient": {
+			"duration": {
+				"min": 240,
+				"steps": 10,
+				"step": 40
+			},
+			"amplifier": {
+				"min": 2,
+				"steps": 1,
+				"step": 1
+			}
+		}
+	},
+	"types": [
+		"SWORD",
+		"HEAVY_WEAPON",
+		"TRIDENT"
+	]
+}

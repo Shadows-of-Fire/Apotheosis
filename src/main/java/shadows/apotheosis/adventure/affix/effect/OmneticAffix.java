@@ -43,7 +43,7 @@ public class OmneticAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", "misc.apotheosis." + this.values.get(rarity).name).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", new TranslatableComponent("misc.apotheosis." + this.values.get(rarity).name)).withStyle(ChatFormatting.YELLOW));
 	}
 
 	public void harvest(HarvestCheck e) {
@@ -52,7 +52,7 @@ public class OmneticAffix extends Affix {
 			AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
 			if (inst != null) {
 				for (int i = 0; i < 3; i++) {
-					ItemStack item = values.get(inst.rarity()).arr[i];
+					ItemStack item = values.get(inst.rarity()).getArray()[i];
 					if (item.isCorrectToolForDrops(e.getTargetBlock())) {
 						e.setCanHarvest(true);
 						return;
@@ -70,7 +70,7 @@ public class OmneticAffix extends Affix {
 			if (inst != null) {
 				float speed = e.getOriginalSpeed();
 				for (int i = 0; i < 3; i++) {
-					ItemStack item = values.get(inst.rarity()).arr[i];
+					ItemStack item = values.get(inst.rarity()).getArray()[i];
 					speed = Math.max(getBaseSpeed(e.getPlayer(), item, e.getState(), e.getPos()), speed);
 				}
 				e.setNewSpeed(speed);
@@ -81,14 +81,18 @@ public class OmneticAffix extends Affix {
 	static class OmneticData {
 		final String name;
 		final ItemStack axe, shovel, pickaxe;
-		transient final ItemStack[] arr;
+		transient ItemStack[] _arr;
 
 		public OmneticData(String name, ItemStack axe, ItemStack shovel, ItemStack pickaxe) {
 			this.name = name;
 			this.axe = axe;
 			this.shovel = shovel;
 			this.pickaxe = pickaxe;
-			arr = new ItemStack[] { axe, shovel, pickaxe };
+		}
+
+		public ItemStack[] getArray() {
+			if (_arr == null) _arr = new ItemStack[] { axe, shovel, pickaxe };
+			return _arr;
 		}
 
 		public void write(FriendlyByteBuf buf) {

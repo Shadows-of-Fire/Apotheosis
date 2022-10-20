@@ -1,0 +1,53 @@
+{
+	"type": "apotheosis:cleaving",
+	"values": {
+		"rare": {
+			"chance": {
+				"min": 0.3,
+				"steps": 4,
+				"step": 0.05
+			},
+			"targets": {
+				"min": 2,
+				"steps": 5,
+				"step": 1
+			}
+		},
+		"epic": {
+			"chance": {
+				"min": 0.4,
+				"steps": 5,
+				"step": 0.05
+			},
+			"targets": {
+				"min": 3,
+				"steps": 6,
+				"step": 1
+			}
+		},
+		"mythic": {
+			"chance": {
+				"min": 0.5,
+				"steps": 6,
+				"step": 0.05
+			},
+			"targets": {
+				"min": 4,
+				"steps": 7,
+				"step": 1
+			}
+		},
+		"ancient": {
+			"chance": {
+				"min": 0.6,
+				"steps": 8,
+				"step": 0.05
+			},
+			"targets": {
+				"min": 5,
+				"steps": 10,
+				"step": 1
+			}
+		}
+	}
+}

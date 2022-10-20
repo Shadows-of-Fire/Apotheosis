@@ -1,0 +1,21 @@
+{
+	"type": "apotheosis:damage_reduction",
+	"damage_type": "EXPLOSION",
+	"values": {
+		"epic": {
+			"min": 0.15,
+			"steps": 10,
+			"step": 0.01
+		},
+		"mythic": {
+			"min": 0.25,
+			"steps": 10,
+			"step": 0.01
+		},
+		"ancient": {
+			"min": 0.35,
+			"steps": 15,
+			"step": 0.01
+		}
+	}
+}

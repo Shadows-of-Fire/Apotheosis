@@ -39,7 +39,22 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 	public ReforgingMenu(int id, Inventory inv, BlockPos pos) {
 		super(Apoth.Menus.REFORGING, id, inv, pos);
 		this.player = inv.player;
-		this.addSlot(new Slot(this.itemInv, 0, 25, 24));
+		this.addSlot(new Slot(this.itemInv, 0, 25, 24) {
+			@Override
+			public int getMaxStackSize() {
+				return 1;
+			}
+
+			@Override
+			public int getMaxStackSize(ItemStack pStack) {
+				return 1;
+			}
+
+			@Override
+			public boolean mayPlace(ItemStack pStack) {
+				return LootCategory.forItem(pStack) != LootCategory.NONE;
+			}
+		});
 		this.addSlot(new SlotItemHandler(this.tile.inv, 0, 15, 45));
 		this.addSlot(new SlotItemHandler(this.tile.inv, 1, 35, 45));
 		this.addPlayerSlots(inv, 8, 84);

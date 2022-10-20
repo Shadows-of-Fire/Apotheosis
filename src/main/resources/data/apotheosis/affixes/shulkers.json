@@ -1,0 +1,44 @@
+{
+	"type": "apotheosis:mob_effect",
+	"mob_effect": "minecraft:levitation",
+	"target": "ARROW_TARGET",
+	"values": {
+		"epic": {
+			"duration": {
+				"min": 20,
+				"steps": 2,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 1,
+				"step": 1
+			}
+		},
+		"mythic": {
+			"duration": {
+				"min": 20,
+				"steps": 4,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 2,
+				"step": 1
+			}
+		},
+		"ancient": {
+			"duration": {
+				"min": 40,
+				"steps": 4,
+				"step": 40
+			},
+			"amplifier": 3
+		}
+	},
+	"types": [
+		"BOW",
+		"CROSSBOW",
+		"TRIDENT"
+	]
+}

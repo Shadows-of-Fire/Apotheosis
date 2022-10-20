@@ -1,0 +1,30 @@
+{
+	"type": "apotheosis:attribute",
+	"attribute": "minecraft:generic.luck",
+	"operation": "ADDITION",
+	"values": {
+		"rare": {
+			"min": 1.5,
+			"steps": 8,
+			"step": 0.25
+		},
+		"epic": {
+			"min": 2,
+			"steps": 10,
+			"step": 0.25
+		},
+		"mythic": {
+			"min": 4,
+			"steps": 12,
+			"step": 0.25
+		},
+		"ancient": {
+			"min": 8,
+			"steps": 16,
+			"step": 0.25
+		}
+	},
+	"types": [
+		"ARMOR"
+	]
+}

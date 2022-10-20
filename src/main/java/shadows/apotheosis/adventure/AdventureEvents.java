@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -98,7 +99,8 @@ public class AdventureEvents {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 			affixes.forEach((afx, inst) -> inst.addModifiers(e.getSlotType(), e::addModifier));
 			if (!affixes.isEmpty() && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
-				e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(HEAVY_WEAPON_AS, "Heavy Weapon AS", -0.60, Operation.MULTIPLY_TOTAL));
+				double amt = -0.15 - 0.10 * (AffixHelper.getRarity(stack).ordinal());
+				e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(HEAVY_WEAPON_AS, "Heavy Weapon AS", amt, Operation.MULTIPLY_TOTAL));
 			}
 		}
 	}
@@ -218,17 +220,17 @@ public class AdventureEvents {
 			LivingEntity target = e.getEntityLiving();
 			int time = target.invulnerableTime;
 			target.invulnerableTime = 0;
-			if (hpDmg > 0.001 && Apotheosis.localAtkStrength >= 0.75F) {
-				target.hurt(src(attacker).bypassArmor(), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
+			if (hpDmg > 0.001 && Apotheosis.localAtkStrength >= 0.85F) {
+				target.hurt(src(attacker), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
 			}
 			target.invulnerableTime = 0;
-			if (fireDmg > 0.001) {
-				target.hurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * fireDmg);
+			if (fireDmg > 0.001 && Apotheosis.localAtkStrength >= 0.45F) {
+				target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * fireDmg);
 				target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (15 * fireDmg)));
 			}
 			target.invulnerableTime = 0;
-			if (coldDmg > 0.001) {
-				target.hurt(src(attacker).setMagic(), Apotheosis.localAtkStrength * coldDmg);
+			if (coldDmg > 0.001 && Apotheosis.localAtkStrength >= 0.45F) {
+				target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * coldDmg);
 				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
 			}
 			target.invulnerableTime = time;
@@ -244,25 +246,28 @@ public class AdventureEvents {
 	public void crit(CriticalHitEvent e) {
 		double critChance = e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1;
 		float critDmg = (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE);
-		float modifier = e.isVanillaCritical() ? e.getDamageModifier() : 1.0F;
-
-		if (critChance > 1) { // Overcrit applies the modifier multiple times.
-			e.setResult(Result.ALLOW);
-
-			while (critChance > 1) {
-				critChance--;
-				modifier *= critDmg;
-			}
-
-			if (e.getPlayer().level.random.nextFloat() <= critChance) modifier *= critDmg;
-
-			e.setDamageModifier(modifier);
-		} else if (e.getPlayer().level.random.nextFloat() <= critChance) {
-			e.setResult(Result.ALLOW);
-			e.setDamageModifier(modifier * critDmg);
-		} else {
-			e.setDamageModifier(modifier * critDmg);
+		float overcritMult = Math.max(1.5F, critDmg - 1.5F);
+		Random rand = e.getPlayer().random;
+		if (e.isVanillaCritical() && critChance >= 0.5F) {
+			critChance -= 0.5F;
+			critDmg *= 1.5F;
 		}
+
+		// Roll once to determine if the attack should become a crit.
+		if (rand.nextFloat() <= critChance || critChance >= 1) {
+			e.setResult(Result.ALLOW);
+		}
+		// Reduce the chance since this roll "consumes" 1 point.
+		critChance--;
+
+		// Roll for overcrit
+		while (rand.nextFloat() <= critChance) {
+			e.setResult(Result.ALLOW);
+			critChance--;
+			critDmg *= overcritMult;
+		}
+
+		e.setDamageModifier(critDmg);
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)

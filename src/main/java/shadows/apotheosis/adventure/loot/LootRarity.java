@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -94,7 +95,24 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	));
 	//Formatter::on
 
-	public static final LootRarity ANCIENT = new LootRarity(0, "ancient", GradientColor.RAINBOW, ImmutableList.of());
+	public static final LootRarity ANCIENT = new LootRarity(0, "ancient", GradientColor.RAINBOW, ImmutableList.of(
+			new LootRule(AffixType.STAT, 1),
+			new LootRule(AffixType.STAT, 1),
+			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.7F)),
+			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.6F)),			
+			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.5F)),
+			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.4F)),
+			new LootRule(AffixType.EFFECT, 1),
+			new LootRule(AffixType.EFFECT, 1),
+			new LootRule(AffixType.EFFECT, 0.75F),
+			new LootRule(AffixType.EFFECT, 0.45F),
+			new LootRule(AffixType.SOCKET, 1F),
+			new LootRule(AffixType.SOCKET, 0.85F),
+			new LootRule(AffixType.SOCKET, 0.65F),
+			new LootRule(AffixType.SOCKET, 0.45F),
+			new LootRule(AffixType.SOCKET, 0.25F),
+			new LootRule(AffixType.DURABILITY, 0.75F)
+	));
 
 	static {
 		LIST = ImmutableList.of(COMMON, UNCOMMON, RARE, EPIC, MYTHIC, ANCIENT);
@@ -161,7 +179,7 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	}
 
 	public static LootRarity byId(String id) {
-		return BY_ID.get(id);
+		return BY_ID.get(id.toLowerCase(Locale.ROOT));
 	}
 
 	public static Set<String> ids() {

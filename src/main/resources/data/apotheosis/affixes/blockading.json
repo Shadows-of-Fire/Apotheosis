@@ -1,0 +1,21 @@
+{
+	"type": "apotheosis:damage_reduction",
+	"damage_type": "PHYSICAL",
+	"values": {
+		"epic": {
+			"min": 0.05,
+			"steps": 7,
+			"step": 0.01
+		},
+		"mythic": {
+			"min": 0.10,
+			"steps": 7,
+			"step": 0.01
+		},
+		"ancient": {
+			"min": 0.15,
+			"steps": 10,
+			"step": 0.01
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"type": "apotheosis:executing",
+	"values": {
+		"epic": {
+			"min": 0.04,
+			"steps": 4,
+			"step": 0.01
+		},
+		"mythic": {
+			"min": 0.06,
+			"steps": 5,
+			"step": 0.01
+		},
+		"ancient": {
+			"min": 0.12,
+			"steps": 12,
+			"step": 0.01
+		}
+	}
+}
