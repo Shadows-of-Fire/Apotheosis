@@ -136,7 +136,7 @@ public class Apotheosis {
 
 	@SubscribeEvent
 	public void trackCooldown(AttackEntityEvent e) {
-		Player p = e.getPlayer();
+		Player p = e.getEntity();
 		localAtkStrength = p.getAttackStrengthScale(0.5F);
 	}
 

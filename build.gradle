@@ -80,7 +80,7 @@ dependencies {
 	})
 	if(project.hasProperty('patchouliVer')) implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouliVer}")
 	implementation fileTree(dir: 'libs', include: '*.jar')
-	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3820503")
+	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3913301")
 }
 
 mixin {

@@ -12,6 +12,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -59,8 +60,8 @@ public class VillageModule {
 
 	@SubscribeEvent
 	public void setup(FMLCommonSetupEvent e) {
-		Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "f_27323_");
-		types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PoiType.FLETCHER);
+		//Map<BlockState, PoiType> types = ObfuscationReflectionHelper.getPrivateValue(PoiType.class, null, "f_27323_");
+		//types.put(Blocks.FLETCHING_TABLE.defaultBlockState(), PoiTypes.FLETCHER); Should no longer be neccessary due to state cannibalization
 		config = new Configuration(new File(Apotheosis.configDir, "village.cfg"));
 		config.setTitle("Apotheosis Village Module Configuration");
 		WandererReplacements.load(config);

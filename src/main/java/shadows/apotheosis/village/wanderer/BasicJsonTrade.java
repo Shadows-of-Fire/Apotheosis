@@ -3,12 +3,12 @@ package shadows.apotheosis.village.wanderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.BasicItemListing;
-import shadows.placebo.json.SerializerBuilder;
+import shadows.placebo.json.PSerializer;
 
 public class BasicJsonTrade extends BasicItemListing implements JsonTrade {
 
 	protected ResourceLocation id;
-	protected SerializerBuilder<JsonTrade>.Serializer serializer;
+	protected PSerializer<JsonTrade> serializer;
 
 	protected final boolean rare;
 
@@ -24,7 +24,7 @@ public class BasicJsonTrade extends BasicItemListing implements JsonTrade {
 	}
 
 	@Override
-	public void setSerializer(SerializerBuilder<JsonTrade>.Serializer serializer) {
+	public void setSerializer(PSerializer<JsonTrade> serializer) {
 		if (this.serializer != null) throw new UnsupportedOperationException();
 		this.serializer = serializer;
 	}
@@ -35,7 +35,7 @@ public class BasicJsonTrade extends BasicItemListing implements JsonTrade {
 	}
 
 	@Override
-	public SerializerBuilder<JsonTrade>.Serializer getSerializer() {
+	public PSerializer<JsonTrade> getSerializer() {
 		return this.serializer;
 	}
 

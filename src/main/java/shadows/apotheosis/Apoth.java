@@ -12,7 +12,8 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import shadows.apotheosis.adventure.affix.AffixManager;
 import shadows.apotheosis.adventure.affix.effect.DurableAffix;
 import shadows.apotheosis.adventure.affix.effect.FestiveAffix;
@@ -73,207 +74,200 @@ import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import shadows.placebo.json.DynamicRegistryObject;
 import shadows.placebo.util.PlaceboUtil;
+import shadows.placebo.util.RegObjHelper;
 
 /**
  * Object Holder Class.  For the main mod class, see {@link Apotheosis}
  */
 public class Apoth {
 
-	@ObjectHolder(Apotheosis.MODID)
+	private static final RegObjHelper R = new RegObjHelper(Apotheosis.MODID);
+
 	public static final class Blocks {
-		public static final EnchLibraryBlock LIBRARY = null;
-		public static final Block HELLSHELF = null;
-		public static final Block INFUSED_HELLSHELF = null;
-		public static final Block BLAZING_HELLSHELF = null;
-		public static final Block GLOWING_HELLSHELF = null;
-		public static final Block SEASHELF = null;
-		public static final Block INFUSED_SEASHELF = null;
-		public static final Block CRYSTAL_SEASHELF = null;
-		public static final Block HEART_SEASHELF = null;
-		public static final Block ENDSHELF = null;
-		public static final Block PEARL_ENDSHELF = null;
-		public static final Block DRACONIC_ENDSHELF = null;
-		public static final Block BEESHELF = null;
-		public static final Block MELONSHELF = null;
-		public static final Block RECTIFIER = null;
-		public static final Block RECTIFIER_T2 = null;
-		public static final Block RECTIFIER_T3 = null;
-		public static final Block SIGHTSHELF = null;
-		public static final Block SIGHTSHELF_T2 = null;
-		public static final EnchLibraryBlock ENDER_LIBRARY = null;
-		public static final BossSpawnerBlock BOSS_SPAWNER = null;
-		public static final ReforgingTableBlock REFORGING_TABLE = null;
-		public static final SalvagingTableBlock SALVAGING_TABLE = null;
+		public static final RegistryObject<EnchLibraryBlock> LIBRARY = R.block("LIBRARY");
+		public static final RegistryObject<Block> HELLSHELF = R.block("HELLSHELF");
+		public static final RegistryObject<Block> INFUSED_HELLSHELF = R.block("INFUSED_HELLSHELF");
+		public static final RegistryObject<Block> BLAZING_HELLSHELF = R.block("BLAZING_HELLSHELF");
+		public static final RegistryObject<Block> GLOWING_HELLSHELF = R.block("GLOWING_HELLSHELF");
+		public static final RegistryObject<Block> SEASHELF = R.block("SEASHELF");
+		public static final RegistryObject<Block> INFUSED_SEASHELF = R.block("INFUSED_SEASHELF");
+		public static final RegistryObject<Block> CRYSTAL_SEASHELF = R.block("CRYSTAL_SEASHELF");
+		public static final RegistryObject<Block> HEART_SEASHELF = R.block("HEART_SEASHELF");
+		public static final RegistryObject<Block> ENDSHELF = R.block("ENDSHELF");
+		public static final RegistryObject<Block> PEARL_ENDSHELF = R.block("PEARL_ENDSHELF");
+		public static final RegistryObject<Block> DRACONIC_ENDSHELF = R.block("DRACONIC_ENDSHELF");
+		public static final RegistryObject<Block> BEESHELF = R.block("BEESHELF");
+		public static final RegistryObject<Block> MELONSHELF = R.block("MELONSHELF");
+		public static final RegistryObject<Block> RECTIFIER = R.block("RECTIFIER");
+		public static final RegistryObject<Block> RECTIFIER_T2 = R.block("RECTIFIER_T2");
+		public static final RegistryObject<Block> RECTIFIER_T3 = R.block("RECTIFIER_T3");
+		public static final RegistryObject<Block> SIGHTSHELF = R.block("SIGHTSHELF");
+		public static final RegistryObject<Block> SIGHTSHELF_T2 = R.block("SIGHTSHELF_T2");
+		public static final RegistryObject<EnchLibraryBlock> ENDER_LIBRARY = R.block("ENDER_LIBRARY");
+		public static final RegistryObject<BossSpawnerBlock> BOSS_SPAWNER = R.block("BOSS_SPAWNER");
+		public static final RegistryObject<ReforgingTableBlock> REFORGING_TABLE = R.block("REFORGING_TABLE");
+		public static final RegistryObject<SalvagingTableBlock> SALVAGING_TABLE = R.block("SALVAGING_TABLE");
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Items {
-		public static final PotionCharmItem POTION_CHARM = null;
-		public static final LuckyFootItem LUCKY_FOOT = null;
-		public static final ObsidianArrowItem OBSIDIAN_ARROW = null;
-		public static final BroadheadArrowItem BROADHEAD_ARROW = null;
-		public static final ExplosiveArrowItem EXPLOSIVE_ARROW = null;
-		public static final MiningArrowItem IRON_MINING_ARROW = null;
-		public static final MiningArrowItem DIAMOND_MINING_ARROW = null;
-		public static final EnderLeadItem ENDER_LEAD = null;
-		public static final Item PRISMATIC_WEB = null;
-		public static final Item SCRAP_TOME = null;
-		public static final Item OTHER_TOME = null;
-		public static final Item HELMET_TOME = null;
-		public static final Item CHESTPLATE_TOME = null;
-		public static final Item LEGGINGS_TOME = null;
-		public static final Item BOOTS_TOME = null;
-		public static final Item WEAPON_TOME = null;
-		public static final Item PICKAXE_TOME = null;
-		public static final Item FISHING_TOME = null;
-		public static final Item BOW_TOME = null;
-		public static final Item GEM = null;
-		public static final Item GEM_DUST = null;
-		public static final Item VIAL_OF_EXPULSION = null;
-		public static final Item VIAL_OF_EXTRACTION = null;
+		public static final RegistryObject<PotionCharmItem> POTION_CHARM = R.item("POTION_CHARM");
+		public static final RegistryObject<LuckyFootItem> LUCKY_FOOT = R.item("LUCKY_FOOT");
+		public static final RegistryObject<ObsidianArrowItem> OBSIDIAN_ARROW = R.item("OBSIDIAN_ARROW");
+		public static final RegistryObject<BroadheadArrowItem> BROADHEAD_ARROW = R.item("BROADHEAD_ARROW");
+		public static final RegistryObject<ExplosiveArrowItem> EXPLOSIVE_ARROW = R.item("EXPLOSIVE_ARROW");
+		public static final RegistryObject<MiningArrowItem> IRON_MINING_ARROW = R.item("IRON_MINING_ARROW");
+		public static final RegistryObject<MiningArrowItem> DIAMOND_MINING_ARROW = R.item("DIAMOND_MINING_ARROW");
+		public static final RegistryObject<EnderLeadItem> ENDER_LEAD = R.item("ENDER_LEAD");
+		public static final RegistryObject<Item> PRISMATIC_WEB = R.item("PRISMATIC_WEB");
+		public static final RegistryObject<Item> SCRAP_TOME = R.item("SCRAP_TOME");
+		public static final RegistryObject<Item> OTHER_TOME = R.item("OTHER_TOME");
+		public static final RegistryObject<Item> HELMET_TOME = R.item("HELMET_TOME");
+		public static final RegistryObject<Item> CHESTPLATE_TOME = R.item("CHESTPLATE_TOME");
+		public static final RegistryObject<Item> LEGGINGS_TOME = R.item("LEGGINGS_TOME");
+		public static final RegistryObject<Item> BOOTS_TOME = R.item("BOOTS_TOME");
+		public static final RegistryObject<Item> WEAPON_TOME = R.item("WEAPON_TOME");
+		public static final RegistryObject<Item> PICKAXE_TOME = R.item("PICKAXE_TOME");
+		public static final RegistryObject<Item> FISHING_TOME = R.item("FISHING_TOME");
+		public static final RegistryObject<Item> BOW_TOME = R.item("BOW_TOME");
+		public static final RegistryObject<Item> GEM = R.item("GEM");
+		public static final RegistryObject<Item> GEM_DUST = R.item("GEM_DUST");
+		public static final RegistryObject<Item> VIAL_OF_EXPULSION = R.item("VIAL_OF_EXPULSION");
+		public static final RegistryObject<Item> VIAL_OF_EXTRACTION = R.item("VIAL_OF_EXTRACTION");
 
-		@ObjectHolder("wstweaks:fragment")
-		public static final Item SKULL_FRAGMENT = null;
+		public static final RegistryObject<Item> SKULL_FRAGMENT = RegistryObject.create(new ResourceLocation("wstweaks", "fragment"), ForgeRegistries.ITEMS);
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Enchantments {
-		public static final EndlessQuiverEnchant ENDLESS_QUIVER = null;
-		public static final CapturingEnchant CAPTURING = null;
-		public static final BerserkersFuryEnchant BERSERKERS_FURY = null;
-		public static final CrescendoEnchant CRESCENDO = null;
-		public static final KnowledgeEnchant KNOWLEDGE = null;
-		public static final LifeMendingEnchant LIFE_MENDING = null;
-		public static final MinersFervorEnchant MINERS_FERVOR = null;
-		public static final NaturesBlessingEnchant NATURES_BLESSING = null;
-		public static final ReflectiveEnchant REFLECTIVE = null;
-		public static final ScavengerEnchant SCAVENGER = null;
-		public static final StableFootingEnchant STABLE_FOOTING = null;
-		public static final TemptingEnchant TEMPTING = null;
-		public static final ObliterationEnchant OBLITERATION = null;
-		public static final SplittingEnchant SPLITTING = null;
-		public static final InertEnchantment INFUSION = null;
-		public static final ChromaticEnchant CHROMATIC = null;
-		public static final ExploitationEnchant EXPLOITATION = null;
-		public static final GrowthSerumEnchant GROWTH_SERUM = null;
-		public static final EarthsBoonEnchant EARTHS_BOON = null;
-		public static final ChainsawEnchant CHAINSAW = null;
-		public static final SpearfishingEnchant SPEARFISHING = null;
+		public static final RegistryObject<EndlessQuiverEnchant> ENDLESS_QUIVER = R.enchant("ENDLESS_QUIVER");
+		public static final RegistryObject<CapturingEnchant> CAPTURING = R.enchant("CAPTURING");
+		public static final RegistryObject<BerserkersFuryEnchant> BERSERKERS_FURY = R.enchant("BERSERKERS_FURY");
+		public static final RegistryObject<CrescendoEnchant> CRESCENDO = R.enchant("CRESCENDO");
+		public static final RegistryObject<KnowledgeEnchant> KNOWLEDGE = R.enchant("KNOWLEDGE");
+		public static final RegistryObject<LifeMendingEnchant> LIFE_MENDING = R.enchant("LIFE_MENDING");
+		public static final RegistryObject<MinersFervorEnchant> MINERS_FERVOR = R.enchant("MINERS_FERVOR");
+		public static final RegistryObject<NaturesBlessingEnchant> NATURES_BLESSING = R.enchant("NATURES_BLESSING");
+		public static final RegistryObject<ReflectiveEnchant> REFLECTIVE = R.enchant("REFLECTIVE");
+		public static final RegistryObject<ScavengerEnchant> SCAVENGER = R.enchant("SCAVENGER");
+		public static final RegistryObject<StableFootingEnchant> STABLE_FOOTING = R.enchant("STABLE_FOOTING");
+		public static final RegistryObject<TemptingEnchant> TEMPTING = R.enchant("TEMPTING");
+		public static final RegistryObject<ObliterationEnchant> OBLITERATION = R.enchant("OBLITERATION");
+		public static final RegistryObject<SplittingEnchant> SPLITTING = R.enchant("SPLITTING");
+		public static final RegistryObject<InertEnchantment> INFUSION = R.enchant("INFUSION");
+		public static final RegistryObject<ChromaticEnchant> CHROMATIC = R.enchant("CHROMATIC");
+		public static final RegistryObject<ExploitationEnchant> EXPLOITATION = R.enchant("EXPLOITATION");
+		public static final RegistryObject<GrowthSerumEnchant> GROWTH_SERUM = R.enchant("GROWTH_SERUM");
+		public static final RegistryObject<EarthsBoonEnchant> EARTHS_BOON = R.enchant("EARTHS_BOON");
+		public static final RegistryObject<ChainsawEnchant> CHAINSAW = R.enchant("CHAINSAW");
+		public static final RegistryObject<SpearfishingEnchant> SPEARFISHING = R.enchant("SPEARFISHING");
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Potions {
-		public static final Potion RESISTANCE = null;
-		public static final Potion LONG_RESISTANCE = null;
-		public static final Potion STRONG_RESISTANCE = null;
-		public static final Potion ABSORPTION = null;
-		public static final Potion LONG_ABSORPTION = null;
-		public static final Potion STRONG_ABSORPTION = null;
-		public static final Potion HASTE = null;
-		public static final Potion LONG_HASTE = null;
-		public static final Potion STRONG_HASTE = null;
-		public static final Potion FATIGUE = null;
-		public static final Potion LONG_FATIGUE = null;
-		public static final Potion STRONG_FATIGUE = null;
-		public static final Potion SUNDERING = null;
-		public static final Potion LONG_SUNDERING = null;
-		public static final Potion STRONG_SUNDERING = null;
-		public static final Potion KNOWLEDGE = null;
-		public static final Potion LONG_KNOWLEDGE = null;
-		public static final Potion STRONG_KNOWLEDGE = null;
-		public static final Potion WITHER = null;
-		public static final Potion LONG_WITHER = null;
-		public static final Potion STRONG_WITHER = null;
+		public static final RegistryObject<Potion> RESISTANCE = R.potion("RESISTANCE");
+		public static final RegistryObject<Potion> LONG_RESISTANCE = R.potion("LONG_RESISTANCE");
+		public static final RegistryObject<Potion> STRONG_RESISTANCE = R.potion("STRONG_RESISTANCE");
+		public static final RegistryObject<Potion> ABSORPTION = R.potion("ABSORPTION");
+		public static final RegistryObject<Potion> LONG_ABSORPTION = R.potion("LONG_ABSORPTION");
+		public static final RegistryObject<Potion> STRONG_ABSORPTION = R.potion("STRONG_ABSORPTION");
+		public static final RegistryObject<Potion> HASTE = R.potion("HASTE");
+		public static final RegistryObject<Potion> LONG_HASTE = R.potion("LONG_HASTE");
+		public static final RegistryObject<Potion> STRONG_HASTE = R.potion("STRONG_HASTE");
+		public static final RegistryObject<Potion> FATIGUE = R.potion("FATIGUE");
+		public static final RegistryObject<Potion> LONG_FATIGUE = R.potion("LONG_FATIGUE");
+		public static final RegistryObject<Potion> STRONG_FATIGUE = R.potion("STRONG_FATIGUE");
+		public static final RegistryObject<Potion> SUNDERING = R.potion("SUNDERING");
+		public static final RegistryObject<Potion> LONG_SUNDERING = R.potion("LONG_SUNDERING");
+		public static final RegistryObject<Potion> STRONG_SUNDERING = R.potion("STRONG_SUNDERING");
+		public static final RegistryObject<Potion> KNOWLEDGE = R.potion("KNOWLEDGE");
+		public static final RegistryObject<Potion> LONG_KNOWLEDGE = R.potion("LONG_KNOWLEDGE");
+		public static final RegistryObject<Potion> STRONG_KNOWLEDGE = R.potion("STRONG_KNOWLEDGE");
+		public static final RegistryObject<Potion> WITHER = R.potion("WITHER");
+		public static final RegistryObject<Potion> LONG_WITHER = R.potion("LONG_WITHER");
+		public static final RegistryObject<Potion> STRONG_WITHER = R.potion("STRONG_WITHER");
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Entities {
-		public static final EntityType<ObsidianArrowEntity> OBSIDIAN_ARROW = null;
-		public static final EntityType<BroadheadArrowEntity> BROADHEAD_ARROW = null;
-		public static final EntityType<ExplosiveArrowEntity> EXPLOSIVE_ARROW = null;
-		public static final EntityType<MiningArrowEntity> MINING_ARROW = null;
+		public static final RegistryObject<EntityType<ObsidianArrowEntity>> OBSIDIAN_ARROW = R.entity("OBSIDIAN_ARROW");
+		public static final RegistryObject<EntityType<BroadheadArrowEntity>> BROADHEAD_ARROW = R.entity("BROADHEAD_ARROW");
+		public static final RegistryObject<EntityType<ExplosiveArrowEntity>> EXPLOSIVE_ARROW = R.entity("EXPLOSIVE_ARROW");
+		public static final RegistryObject<EntityType<MiningArrowEntity>> MINING_ARROW = R.entity("MINING_ARROW");
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Effects {
-		public static final SunderingEffect SUNDERING = null;
-		public static final KnowledgeEffect KNOWLEDGE = null;
-		public static final MobEffect BLEEDING = null;
+		public static final RegistryObject<SunderingEffect> SUNDERING = R.effect("SUNDERING");
+		public static final RegistryObject<KnowledgeEffect> KNOWLEDGE = R.effect("KNOWLEDGE");
+		public static final RegistryObject<MobEffect> BLEEDING = R.effect("BLEEDING");
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Menus {
-		public static final MenuType<FletchingContainer> FLETCHING = null;
-		public static final MenuType<EnchLibraryContainer> LIBRARY = null;
-		public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE = null;
-		public static final MenuType<ReforgingMenu> REFORGING = null;
-		public static final MenuType<SalvagingMenu> SALVAGE = null;
+		public static final RegistryObject<MenuType<FletchingContainer>> FLETCHING = R.menu("FLETCHING");
+		public static final RegistryObject<MenuType<EnchLibraryContainer>> LIBRARY = R.menu("LIBRARY");
+		public static final RegistryObject<MenuType<ApothEnchantContainer>> ENCHANTING_TABLE = R.menu("ENCHANTING_TABLE");
+		public static final RegistryObject<MenuType<ReforgingMenu>> REFORGING = R.menu("REFORGING");
+		public static final RegistryObject<MenuType<SalvagingMenu>> SALVAGE = R.menu("SALVAGE");
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Tiles {
-		public static final BlockEntityType<EnchLibraryTile> LIBRARY = null;
-		public static final BlockEntityType<AnvilTile> ANVIL = null;
-		public static final BlockEntityType<EnchLibraryTile> ENDER_LIBRARY = null;
-		public static final BlockEntityType<BossSpawnerTile> BOSS_SPAWNER = null;
-		public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = null;
+		public static final RegistryObject<BlockEntityType<EnchLibraryTile>> LIBRARY = R.blockEntity("LIBRARY");
+		public static final RegistryObject<BlockEntityType<AnvilTile>> ANVIL = R.blockEntity("ANVIL");
+		public static final RegistryObject<BlockEntityType<EnchLibraryTile>> ENDER_LIBRARY = R.blockEntity("ENDER_LIBRARY");
+		public static final RegistryObject<BlockEntityType<BossSpawnerTile>> BOSS_SPAWNER = R.blockEntity("BOSS_SPAWNER");
+		public static final RegistryObject<BlockEntityType<ReforgingTableTile>> REFORGING_TABLE = R.blockEntity("REFORGING_TABLE");
 	}
 
-	@ObjectHolder(Apotheosis.MODID)
 	public static final class Attributes {
 		/**
 		 * Bonus to how fast a ranged weapon is charged. Base Value = (1.0) = 100%
 		 */
-		public static final Attribute DRAW_SPEED = null;
+		public static final RegistryObject<Attribute> DRAW_SPEED = R.attribute("DRAW_SPEED");
 		/**
 		 * Chance that a non-jump-attack will critically strike.  Base value = (1.0) = 0%
 		 */
-		public static final Attribute CRIT_CHANCE = null;
+		public static final RegistryObject<Attribute> CRIT_CHANCE = R.attribute("CRIT_CHANCE");
 		/**
 		 * Amount of damage caused by critical strikes. Base value = (1.0) = 100%
 		 * Not related to vanilla critical strikes.
 		 */
-		public static final Attribute CRIT_DAMAGE = null;
+		public static final RegistryObject<Attribute> CRIT_DAMAGE = R.attribute("CRIT_DAMAGE");
 		/**
 		 * Bonus magic damage that slows enemies hit. Base value = (0.0) = 0 damage
 		 */
-		public static final Attribute COLD_DAMAGE = null;
+		public static final RegistryObject<Attribute> COLD_DAMAGE = R.attribute("COLD_DAMAGE");
 		/**
 		 * Bonus magic damage that burns enemies hit. Base value = (0.0) = 0 damage
 		 */
-		public static final Attribute FIRE_DAMAGE = null;
+		public static final RegistryObject<Attribute> FIRE_DAMAGE = R.attribute("FIRE_DAMAGE");
 		/**
 		 * Percent of physical damage converted to health. Base value = (1.0) = 0%
 		 */
-		public static final Attribute LIFE_STEAL = null;
+		public static final RegistryObject<Attribute> LIFE_STEAL = R.attribute("LIFE_STEAL");
 		/**
 		 * Percent of physical damage that bypasses armor. Base value = (1.0) = 0%
 		 */
-		public static final Attribute PIERCING = null;
+		public static final RegistryObject<Attribute> PIERCING = R.attribute("PIERCING");
 		/**
 		 * Bonus physical damage dealt equal to enemy's current health. Base value = (1.0) = 0%
 		 */
-		public static final Attribute CURRENT_HP_DAMAGE = null;
+		public static final RegistryObject<Attribute> CURRENT_HP_DAMAGE = R.attribute("CURRENT_HP_DAMAGE");
 		/**
 		 * Percent of physical damage converted to absorption hearts. Base value = (1.0) = 0%
 		 */
-		public static final Attribute OVERHEAL = null;
+		public static final RegistryObject<Attribute> OVERHEAL = R.attribute("OVERHEAL");
 		/**
 		 * Extra health that regenerates when not taking damage. Base value = (0.0) = 0 damage
 		 */
-		public static final Attribute GHOST_HEALTH = null;
+		public static final RegistryObject<Attribute> GHOST_HEALTH = R.attribute("GHOST_HEALTH");
 		/**
 		 * Mining Speed. Base value = (1.0) = 100% default break speed
 		 */
-		public static final Attribute MINING_SPEED = null;
+		public static final RegistryObject<Attribute> MINING_SPEED = R.attribute("MINING_SPEED");
 		/**
 		 * Arrow Damage. Base value = (1.0) = 100% default arrow damage
 		 */
-		public static final Attribute ARROW_DAMAGE = null;
+		public static final RegistryObject<Attribute> ARROW_DAMAGE = R.attribute("ARROW_DAMAGE");
 		/**
 		 * Arrow Velocity. Base value = (1.0) = 100% default arrow velocity
 		 */
-		public static final Attribute ARROW_VELOCITY = null;
+		public static final RegistryObject<Attribute> ARROW_VELOCITY = R.attribute("ARROW_VELOCITY");
 	}
 
 	public static final class Affixes {
@@ -294,21 +288,17 @@ public class Apoth {
 	}
 
 	public static final class RecipeTypes {
-		public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType(Apotheosis.MODID + ":fletching");
+		public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType("apotheosis:fletching");
 		public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
 		public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
 	}
 
 	public static final class LootTables {
-		public static final ResourceLocation CHEST_VALUABLE = r("chests/chest_valuable");
-		public static final ResourceLocation SPAWNER_BRUTAL_ROTATE = r("chests/spawner_brutal_rotate");
-		public static final ResourceLocation SPAWNER_BRUTAL = r("chests/spawner_brutal");
-		public static final ResourceLocation SPAWNER_SWARM = r("chests/spawner_swarm");
-		public static final ResourceLocation TOME_TOWER = r("chests/tome_tower");
-
-		private static ResourceLocation r(String s) {
-			return new ResourceLocation(Apotheosis.MODID, s);
-		}
+		public static final ResourceLocation CHEST_VALUABLE = Apotheosis.loc("chests/chest_valuable");
+		public static final ResourceLocation SPAWNER_BRUTAL_ROTATE = Apotheosis.loc("chests/spawner_brutal_rotate");
+		public static final ResourceLocation SPAWNER_BRUTAL = Apotheosis.loc("chests/spawner_brutal");
+		public static final ResourceLocation SPAWNER_SWARM = Apotheosis.loc("chests/spawner_swarm");
+		public static final ResourceLocation TOME_TOWER = Apotheosis.loc("chests/tome_tower");
 	}
 
 }
