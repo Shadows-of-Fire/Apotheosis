@@ -37,7 +37,7 @@ public class GemItem extends Item {
 	public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
 		var bonus = getStoredBonus(pStack);
 		if (bonus == null) {
-			tooltip.add(new TextComponent("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
 			return;
 		}
 		tooltip.add(TextComponent.EMPTY);

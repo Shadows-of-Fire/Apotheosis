@@ -3,7 +3,6 @@ package shadows.apotheosis.util;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 
 import com.google.gson.JsonDeserializationContext;
@@ -15,6 +14,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -76,7 +76,7 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 	/**
 	 * Returns a copy of a random itemstack in this list of stacks.
 	 */
-	public static ItemStack getRandomStack(List<WeightedItemStack> stacks, Random random) {
+	public static ItemStack getRandomStack(List<WeightedItemStack> stacks, RandomSource random) {
 		if (stacks.isEmpty()) return ItemStack.EMPTY;
 		return WeightedRandom.getRandomItem(random, stacks).get().getStack().copy();
 	}

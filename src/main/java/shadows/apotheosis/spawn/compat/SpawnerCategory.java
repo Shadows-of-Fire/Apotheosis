@@ -1,6 +1,5 @@
 package shadows.apotheosis.spawn.compat;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +11,7 @@ import com.mojang.math.Matrix4f;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -45,13 +45,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 
 	public SpawnerCategory(IGuiHelper helper) {
 		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 169, 75).build();
-		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Items.SPAWNER));
+		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Items.SPAWNER));
 		this.title = Component.translatable("title.apotheosis.spawner");
-	}
-
-	@Override
-	public ResourceLocation getUid() {
-		return UID;
 	}
 
 	@Override
@@ -73,8 +68,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	public void setRecipe(IRecipeLayoutBuilder builder, SpawnerModifier recipe, IFocusGroup focuses) {
 		builder.addSlot(RecipeIngredientRole.INPUT, 11, 11).addIngredients(recipe.getMainhandInput());
 		if (recipe.getOffhandInput() != Ingredient.EMPTY) builder.addSlot(RecipeIngredientRole.INPUT, 11, 48).addIngredients(recipe.getOffhandInput());
-		builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.SPAWNER));
-		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.SPAWNER));
+		builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
+		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
 	}
 
 	@Override
@@ -83,12 +78,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	}
 
 	@Override
-	public Class<? extends SpawnerModifier> getRecipeClass() {
-		return SpawnerModifier.class;
-	}
-
-	@Override
-	public void draw(SpawnerModifier recipe, PoseStack stack, double mouseX, double mouseY) {
+	public void draw(SpawnerModifier recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
 		if (recipe.getOffhandInput() == Ingredient.EMPTY) {
 			GuiComponent.blit(stack, 1, 31, 0, 0, 88, 28, 34, 256, 256);
 		}
@@ -136,7 +126,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 				list.add(s.stat.name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
 				list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
 				if (s.value instanceof Number) {
-					if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TextComponent(" "));
+					if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.literal(" "));
 					if (((Number) s.min).intValue() > 0) list.add(Component.translatable("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));
 					if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.apotheosis.max_value", s.max).withStyle(ChatFormatting.GRAY));
 				}

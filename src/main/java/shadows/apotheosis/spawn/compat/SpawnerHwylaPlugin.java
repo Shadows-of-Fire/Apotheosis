@@ -1,28 +1,30 @@
 package shadows.apotheosis.spawn.compat;
 
-import mcp.mobius.waila.api.IComponentProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.spawn.modifiers.SpawnerStats;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
-import snownee.jade.api.TooltipPosition;
 import snownee.jade.api.WailaPlugin;
 import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
-public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<BlockEntity> {
+public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockEntity> {
 
 	public static final String STATS = "spw_stats";
 
@@ -33,7 +35,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 
 	@Override
 	public void registerClient(IWailaClientRegistration reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, ApothSpawnerBlock.class);
+		reg.registerBlockComponent(this, ApothSpawnerBlock.class);
 	}
 
 	@Override
@@ -79,6 +81,11 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 				});
 			//Formatter::on
 		}
+	}
+
+	@Override
+	public ResourceLocation getUid() {
+		return Apotheosis.loc("spawner");
 	}
 
 }

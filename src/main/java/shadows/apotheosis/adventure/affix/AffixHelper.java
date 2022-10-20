@@ -93,7 +93,7 @@ public class AffixHelper {
 	}
 
 	public static void setRarity(ItemStack stack, LootRarity rarity) {
-		Component comp = Component.translatable("%s", new TextComponent("")).withStyle(Style.EMPTY.withColor(rarity.color()));
+		Component comp = Component.translatable("%s", Component.literal("")).withStyle(Style.EMPTY.withColor(rarity.color()));
 		CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
 		afxData.putString(NAME, Component.Serializer.toJson(comp));
 		//if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack, Component.translatable("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));

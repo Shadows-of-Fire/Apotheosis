@@ -1,6 +1,5 @@
 package shadows.apotheosis.util;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,7 +193,7 @@ public class NameHelper {
 		if (random.nextFloat() <= 0.8F && suffixes.length > 0) {
 			name = String.format(suffixFormat, name, NameHelper.suffixes[random.nextInt(NameHelper.suffixes.length)]);
 		}
-		entity.setCustomName(new TextComponent(name));
+		entity.setCustomName(Component.literal(name));
 		entity.setCustomNameVisible(true);
 		return root;
 	}
@@ -221,9 +220,9 @@ public class NameHelper {
 				for (int i = 0; i < split.length - 1; i++) {
 					rebuilt += split[i] + " ";
 				}
-				name = new TextComponent(rebuilt);
+				name = Component.literal(rebuilt);
 			} else {
-				name = new TextComponent(tierNames[random.nextInt(tierNames.length)] + " ");
+				name = Component.literal(tierNames[random.nextInt(tierNames.length)] + " ");
 			}
 
 			String[] type = { "Tool" };
@@ -243,7 +242,7 @@ public class NameHelper {
 			name.append(type[random.nextInt(type.length)]);
 		} else if (stack.getItem() instanceof ProjectileWeaponItem) { // Special Bow Handling
 			String[] type = bows;
-			name = new TextComponent(type[random.nextInt(type.length)]);
+			name = Component.literal(type[random.nextInt(type.length)]);
 		} else if (stack.getItem() instanceof ArmorItem) { // Armors
 			ArmorMaterial armorMat = ((ArmorItem) stack.getItem()).getMaterial();
 			String[] matNames = getMaterialNames(armorMat);
@@ -253,9 +252,9 @@ public class NameHelper {
 				for (int i = 0; i < split.length - 1; i++) {
 					rebuilt += split[i] + " ";
 				}
-				name = new TextComponent(rebuilt);
+				name = Component.literal(rebuilt);
 			} else {
-				name = new TextComponent(matNames[random.nextInt(matNames.length)] + " ");
+				name = Component.literal(matNames[random.nextInt(matNames.length)] + " ");
 			}
 
 			String[] type = { "Armor" };
@@ -327,7 +326,7 @@ public class NameHelper {
 					armorsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
 				}
 			} catch (Exception e) {
-				AdventureModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", i.getRegistryName());
+				AdventureModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", ForgeRegistries.ITEMS.getKey(i));
 				e.printStackTrace();
 			}
 		}
@@ -359,14 +358,14 @@ public class NameHelper {
 		String cmt = "A list of material-based prefix names for this material group. May be empty.\n";
 		cmt += "Items in this group: ";
 		for (Item i : items)
-			cmt += i.getRegistryName() + ", ";
+			cmt += ForgeRegistries.ITEMS.getKey(i) + ", ";
 		cmt = cmt.substring(0, cmt.length() - 2);
 		return cmt + "\n";
 	}
 
 	private static String getID(Object o, List<Item> items) {
 		if (o instanceof Enum<?>) return ((Enum<?>) o).name();
-		ResourceLocation id = items.get(0).getRegistryName();
+		ResourceLocation id = ForgeRegistries.ITEMS.getKey(items.get(0));
 		return id.getNamespace() + "_" + id.getPath();
 	}
 

@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.UsernameCache;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import shadows.placebo.util.DeadPacketListenerImpl;
 
 public class BlockUtil {
 
@@ -44,7 +43,6 @@ public class BlockUtil {
 			Player realPlayer = world.getPlayerByUUID(source);
 			if (realPlayer != null) player.setPos(realPlayer.position());
 		} else player = FakePlayerFactory.getMinecraft(world);
-		if (player.connection == null) player.connection = new DeadPacketListenerImpl(player);
 		player.getInventory().items.set(player.getInventory().selected, mainhand);
 		//player.setPos(pos.getX(), pos.getY(), pos.getZ());
 

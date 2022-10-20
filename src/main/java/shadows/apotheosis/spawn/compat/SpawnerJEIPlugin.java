@@ -10,6 +10,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -35,12 +36,12 @@ public class SpawnerJEIPlugin implements IModPlugin {
 
 		reg.addRecipes(SpawnerCategory.TYPE, recipes);
 		if (SpawnerModule.spawnerSilkLevel == -1) {
-			reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, Component.translatable("info.apotheosis.spawner.no_silk"));
+			reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.spawner.no_silk"));
 		} else if (SpawnerModule.spawnerSilkLevel == 0) {
-			reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, Component.translatable("info.apotheosis.spawner.always_drop"));
-		} else reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM, Component.translatable("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
+			reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.spawner.always_drop"));
+		} else reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
 		for (Item i : ForgeRegistries.ITEMS) {
-			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM, Component.translatable("info.apotheosis.capturing"));
+			if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.capturing"));
 		}
 	}
 

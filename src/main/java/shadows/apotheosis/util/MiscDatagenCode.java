@@ -33,7 +33,7 @@ public class MiscDatagenCode {
 
 		BiConsumer<String, AffixLootEntry> writerFunc = (dim, entry) -> {
 			if (entry.getType() == LootCategory.NONE) return;
-			File file = new File(FMLPaths.GAMEDIR.get().toFile(), "datagen/" + dim + "/" + entry.getStack().getItem().getRegistryName().getPath() + ".json");
+			File file = new File(FMLPaths.GAMEDIR.get().toFile(), "datagen/" + dim + "/" + ForgeRegistries.ITEMS.getKey(entry.getStack().getItem()).getPath() + ".json");
 			file.getParentFile().mkdirs();
 			try (FileWriter writer = new FileWriter(file)) {
 				gson.toJson(entry, writer);

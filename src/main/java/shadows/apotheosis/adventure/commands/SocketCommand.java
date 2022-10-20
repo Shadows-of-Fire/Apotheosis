@@ -26,7 +26,7 @@ public class SocketCommand {
 
 			LootCategory cat = LootCategory.forItem(stack);
 			if (cat == LootCategory.NONE) {
-				c.getSource().sendFailure(new TextComponent("The target item cannot receive sockets!"));
+				c.getSource().sendFailure(Component.literal("The target item cannot receive sockets!"));
 				return 1;
 			}
 

@@ -19,7 +19,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
@@ -136,7 +135,7 @@ public class SpawnerModifier implements Recipe<Container> {
 		return null;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SpawnerModifier> {
+	public static class Serializer implements RecipeSerializer<SpawnerModifier> {
 
 		@Override
 		public SpawnerModifier fromJson(ResourceLocation id, JsonObject obj) {

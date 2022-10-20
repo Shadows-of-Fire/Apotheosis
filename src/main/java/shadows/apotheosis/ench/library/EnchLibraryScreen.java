@@ -65,7 +65,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 	@Override
 	protected void init() {
 		super.init();
-		this.filter = this.addRenderableWidget(new EditBox(this.font, this.getGuiLeft() + 91, this.getGuiTop() + 20 + this.font.lineHeight + 2, 78, this.font.lineHeight + 4, this.filter, new TextComponent("")));
+		this.filter = this.addRenderableWidget(new EditBox(this.font, this.getGuiLeft() + 91, this.getGuiTop() + 20 + this.font.lineHeight + 2, 78, this.font.lineHeight + 4, this.filter, Component.literal("")));
 		this.filter.setResponder(t -> this.containerChanged());
 	}
 
@@ -99,12 +99,12 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 			if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc")) {
 				Component txt = Component.translatable(libSlot.ench.getDescriptionId() + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true));
 				list.addAll(this.font.getSplitter().splitLines(txt, this.getGuiLeft() - 16, txt.getStyle()));
-				list.add(new TextComponent(""));
+				list.add(Component.literal(""));
 			}
 
 			list.add(Component.translatable("tooltip.enchlib.max_lvl", Component.translatable("enchantment.level." + libSlot.maxLvl)).withStyle(ChatFormatting.GRAY));
 			list.add(Component.translatable("tooltip.enchlib.points", format(libSlot.points), format(this.menu.getPointCap())).withStyle(ChatFormatting.GRAY));
-			list.add(new TextComponent(""));
+			list.add(Component.literal(""));
 			ItemStack outSlot = this.menu.ioInv.getItem(1);
 			int current = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(libSlot.ench, 0);
 			boolean shift = Screen.hasShiftDown();

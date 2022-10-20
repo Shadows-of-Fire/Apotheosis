@@ -2,7 +2,8 @@ package shadows.apotheosis.spawn.modifiers;
 
 import com.google.gson.JsonElement;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 public interface SpawnerStat<T> {
@@ -29,11 +30,11 @@ public interface SpawnerStat<T> {
 
 	Class<T> getTypeClass();
 
-	default TranslatableComponent name() {
+	default MutableComponent name() {
 		return Component.translatable("stat.apotheosis." + this.getId());
 	}
 
-	default TranslatableComponent desc() {
+	default MutableComponent desc() {
 		return Component.translatable("stat.apotheosis." + this.getId() + ".desc");
 	}
 }

@@ -1,6 +1,5 @@
 package shadows.apotheosis.spawn.spawner;
 
-import java.awt.TextComponent;
 import java.util.List;
 
 import net.minecraft.ChatFormatting;
@@ -11,6 +10,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,7 +20,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -45,7 +44,6 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	public ApothSpawnerBlock() {
 		super(BlockBehaviour.Properties.of(Material.STONE).strength(5.0F).sound(SoundType.METAL).noOcclusion());
-		this.setRegistryName("minecraft", "spawner");
 	}
 
 	@Override
@@ -69,7 +67,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 
 	@Override
 	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
-		if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
+		if (SpawnerModule.spawnerSilkLevel != -1 && stack.getEnchantmentLevel(Enchantments.SILK_TOUCH) >= SpawnerModule.spawnerSilkLevel) {
 			ItemStack s = new ItemStack(this);
 			if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
 			popResource(world, pos, s);
@@ -124,7 +122,7 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	public static Component concat(Object... args) {
-		return Component.translatable("misc.apotheosis.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+		return Component.translatable("misc.apotheosis.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
 	}
 
 	@Override
@@ -133,8 +131,8 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 	}
 
 	@Override
-	public int getExpDrop(BlockState state, LevelReader world, BlockPos pos, int fortune, int silktouch) {
-		return silktouch == 0 ? super.getExpDrop(state, world, pos, fortune, silktouch) : 0;
+	public int getExpDrop(BlockState state, LevelReader world, RandomSource randomSource, BlockPos pos, int fortune, int silktouch) {
+		return silktouch == 0 ? super.getExpDrop(state, world, randomSource, pos, fortune, silktouch) : 0;
 	}
 
 	@Override

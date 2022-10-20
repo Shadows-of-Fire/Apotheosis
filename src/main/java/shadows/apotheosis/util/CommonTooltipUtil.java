@@ -1,6 +1,5 @@
 package shadows.apotheosis.util;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,7 +30,7 @@ public class CommonTooltipUtil {
 		LootRarity rarity = LootRarity.byId(entity.getPersistentData().getString("apoth.rarity"));
 		if (rarity == null) return;
 		tooltip.accept(Component.translatable("info.apotheosis.boss", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
-		tooltip.accept(TextComponent.EMPTY);
+		tooltip.accept(Component.empty());
 		tooltip.accept(Component.translatable("info.apotheosis.boss_modifiers").withStyle(ChatFormatting.GRAY));
 		AttributeMap map = entity.getAttributes();
 		ForgeRegistries.ATTRIBUTES.getValues().stream().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {

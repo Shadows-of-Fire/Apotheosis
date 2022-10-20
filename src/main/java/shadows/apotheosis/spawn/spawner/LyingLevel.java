@@ -1,7 +1,6 @@
 package shadows.apotheosis.spawn.spawner;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 
 import net.minecraft.core.BlockPos;
@@ -13,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -31,12 +31,14 @@ import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.gameevent.GameEvent.Context;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.LevelTickAccess;
 
 public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
@@ -88,7 +90,7 @@ public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
 	}
 
 	@Override
-	public Random getRandom() {
+	public RandomSource getRandom() {
 		return this.wrapped.getRandom();
 	}
 
@@ -233,11 +235,6 @@ public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
 	}
 
 	@Override
-	public float getBrightness(BlockPos pPos) {
-		return this.fakeLightLevel;
-	}
-
-	@Override
 	public int getBrightness(LightLayer pLightType, BlockPos pBlockPos) {
 		return this.fakeLightLevel;
 	}
@@ -250,6 +247,11 @@ public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
 	@Override
 	public long getSeed() {
 		return this.wrapped.getSeed();
+	}
+
+	@Override
+	public void gameEvent(GameEvent pEvent, Vec3 pPosition, Context pContext) {
+		this.wrapped.gameEvent(pEvent, pPosition, pContext);
 	}
 
 }

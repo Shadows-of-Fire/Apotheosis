@@ -184,7 +184,7 @@ public class AdventureModuleClient {
 			applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
 			Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
 		}
-		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), new TextComponent("APOTH_REMOVE_MARKER"));
+		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), Component.literal("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent
@@ -282,11 +282,11 @@ public class AdventureModuleClient {
 	}
 
 	private static MutableComponent padded(String padding, Component comp) {
-		return new TextComponent(padding).append(comp);
+		return Component.literal(padding).append(comp);
 	}
 
 	private static MutableComponent list() {
-		return new TextComponent(" \u2507 ").withStyle(ChatFormatting.GRAY);
+		return Component.literal(" \u2507 ").withStyle(ChatFormatting.GRAY);
 	}
 
 	private static void applyTextFor(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, Multimap<Attribute, AttributeModifier> modifierMap, String group, Set<UUID> skips) {
@@ -346,7 +346,7 @@ public class AdventureModuleClient {
 					else amt *= 1 + modif.getAmount();
 				}
 				MutableComponent text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()));
-				tooltip.accept(new TextComponent(" ").append(text).withStyle(spdModifs.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
+				tooltip.accept(Component.literal(" ").append(text).withStyle(spdModifs.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
 				if (Screen.hasShiftDown() && !spdModifs.isEmpty()) {
 					text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()));
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));

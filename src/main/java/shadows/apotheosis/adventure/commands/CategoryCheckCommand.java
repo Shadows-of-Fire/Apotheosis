@@ -20,8 +20,8 @@ public class CategoryCheckCommand {
 			ItemStack stack = p.getMainHandItem();
 			LootCategory cat = LootCategory.forItem(stack);
 			EquipmentSlot[] slots = cat == null ? null : cat.getSlots(stack);
-			p.sendMessage(new TextComponent("Loot Category - " + (cat == null ? "null" : cat.name().toLowerCase())), Util.NIL_UUID);
-			p.sendMessage(new TextComponent("Equipment Slot - " + (slots == null ? "null" : toStr(slots))), Util.NIL_UUID);
+			p.sendMessage(Component.literal("Loot Category - " + (cat == null ? "null" : cat.name().toLowerCase())), Util.NIL_UUID);
+			p.sendMessage(Component.literal("Equipment Slot - " + (slots == null ? "null" : toStr(slots))), Util.NIL_UUID);
 			return 0;
 		}));
 	}

@@ -40,7 +40,7 @@ public class ModuleCondition implements ICondition {
 	}
 
 	@Override
-	public boolean test() {
+	public boolean test(IContext context) {
 		return types.get(this.name).get();
 	}
 

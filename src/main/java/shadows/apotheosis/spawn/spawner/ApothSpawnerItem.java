@@ -18,7 +18,6 @@ public class ApothSpawnerItem extends BlockItem {
 
 	public ApothSpawnerItem() {
 		super(Blocks.SPAWNER, new Item.Properties().tab(CreativeModeTab.TAB_MISC));
-		this.setRegistryName("minecraft", "spawner");
 	}
 
 	@Override
@@ -35,7 +34,7 @@ public class ApothSpawnerItem extends BlockItem {
 				String key = "entity." + name.replace(':', '.');
 				ChatFormatting color = ChatFormatting.WHITE;
 				try {
-					EntityType<?> t = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(name));
+					EntityType<?> t = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(name));
 					MobCategory cat = t.getCategory();
 					switch (cat) {
 					case CREATURE:

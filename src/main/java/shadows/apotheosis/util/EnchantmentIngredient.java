@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -41,7 +42,7 @@ public class EnchantmentIngredient extends Ingredient {
 
 	@Override
 	public boolean test(ItemStack stack) {
-		return super.test(stack) && EnchantmentHelper.getItemEnchantmentLevel(this.enchantment, stack) >= this.minLevel;
+		return super.test(stack) && stack.getEnchantmentLevel(this.enchantment) >= this.minLevel;
 	}
 
 	@Override
