@@ -19,6 +19,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -90,7 +91,7 @@ public class VillageModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverride(new ApothFletchingBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(Blocks.FLETCHING_TABLE, new ApothFletchingBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent

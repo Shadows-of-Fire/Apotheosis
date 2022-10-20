@@ -1,10 +1,8 @@
 package shadows.apotheosis.garden;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CactusBlock;
@@ -18,11 +16,10 @@ public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 
 	public ApothCactusBlock() {
 		super(BlockBehaviour.Properties.copy(Blocks.CACTUS));
-		this.setRegistryName(new ResourceLocation("cactus"));
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
 		BlockPos blockpos = pos.above();
 		if (!world.isOutsideBuildHeight(blockpos) && world.isEmptyBlock(blockpos)) {
 			int i = 1;
@@ -36,9 +33,9 @@ public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 				if (ForgeHooks.onCropsGrowPre(world, blockpos, state, true)) {
 					if (j == 15) {
 						world.setBlockAndUpdate(blockpos, this.defaultBlockState());
-						BlockState iblockstate = state.setValue(AGE, Integer.valueOf(0));
-						world.setBlock(pos, iblockstate, 4);
-						iblockstate.neighborChanged(world, blockpos, this, pos, false);
+						BlockState newState = state.setValue(AGE, Integer.valueOf(0));
+						world.setBlock(pos, newState, 4);
+						world.neighborChanged(newState, blockpos, this, pos, false);
 					} else {
 						world.setBlock(pos, state.setValue(AGE, Integer.valueOf(j + 1)), 4);
 					}

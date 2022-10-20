@@ -34,14 +34,14 @@ public class GardenModule {
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		PlaceboUtil.registerOverride(new ApothCactusBlock(), Apotheosis.MODID);
-		PlaceboUtil.registerOverride(new ApothSugarcaneBlock(), Apotheosis.MODID);
-		PlaceboUtil.registerOverride(new ApothBambooBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(Blocks.CACTUS, new ApothCactusBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(Blocks.SUGAR_CANE, new ApothSugarcaneBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(Blocks.BAMBOO, new ApothBambooBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new EnderLeadItem().setRegistryName("ender_lead"));
+		e.getRegistry().register(new EnderLeadItem(), "ender_lead");
 		ComposterBlock.COMPOSTABLES.put(Blocks.CACTUS.asItem(), 0.5F);
 		ComposterBlock.COMPOSTABLES.put(Blocks.SUGAR_CANE.asItem(), 0.5F);
 	}

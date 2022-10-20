@@ -1,10 +1,8 @@
 package shadows.apotheosis.garden;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,11 +17,10 @@ public class ApothSugarcaneBlock extends SugarCaneBlock implements IReplacementB
 
 	public ApothSugarcaneBlock() {
 		super(BlockBehaviour.Properties.copy(Blocks.SUGAR_CANE));
-		this.setRegistryName(new ResourceLocation("sugar_cane"));
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
 		if (worldIn.isEmptyBlock(pos.above())) {
 			int i = 0;
 			if (GardenModule.maxReedHeight <= 32) for (i = 1; worldIn.getBlockState(pos.below(i)).getBlock() == this; ++i)
