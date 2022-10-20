@@ -13,8 +13,10 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
 import shadows.apotheosis.Apoth.Affixes;
@@ -29,11 +31,13 @@ public class LootController {
 	/**
 	 * @see {@link LootController#createLootItem(ItemStack, LootCategory, LootRarity, Random)}
 	 */
-	public static ItemStack createLootItem(ItemStack stack, LootRarity rarity, Random rand) {
+	public static ItemStack createLootItem(ItemStack stack, LootRarity rarity, RandomSource rand) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat == LootCategory.NONE) return stack;
 		return createLootItem(stack, cat, rarity, rand);
 	}
+
+	static Random jRand = new Random();
 
 	/**
 	 * Modifies an ItemStack with affixes of the target category and rarity.
@@ -43,7 +47,7 @@ public class LootController {
 	 * @param rand The Random
 	 * @return The modifed ItemStack (note the original is not preserved, but the stack is returned for simplicity).
 	 */
-	public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, Random rand) {
+	public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, RandomSource rand) {
 		Set<Affix> selected = new HashSet<>();
 		MutableInt sockets = new MutableInt(0);
 		float durability = 0;
@@ -69,10 +73,9 @@ public class LootController {
 			loaded.put(Affixes.DURABLE.get(), new AffixInstance(Affixes.DURABLE.get(), stack, rarity, durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
 		}
 
-		Collections.shuffle(nameList, rand);
-		TranslatableComponent name = (TranslatableComponent) Component.translatable(nameList.size() > 1 ? "%s %s %s" : "%s %s", "", "", "").withStyle(Style.EMPTY.withColor(rarity.color()));
-		name.getArgs()[0] = nameList.get(0).getName(true);
-		if (nameList.size() > 1) name.getArgs()[2] = nameList.get(1).getName(false);
+		jRand.setSeed(rand.nextLong());
+		Collections.shuffle(nameList, jRand);
+		MutableComponent name = Component.translatable(nameList.size() > 1 ? "%s %s %s" : "%s %s", nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()));
 
 		AffixHelper.setRarity(stack, rarity);
 		AffixHelper.setAffixes(stack, loaded);
@@ -89,7 +92,7 @@ public class LootController {
 	 * @param level The world, since affix loot entries are per-dimension.
 	 * @return An affix item, or an empty ItemStack if no entries were available for the dimension.
 	 */
-	public static ItemStack createRandomLootItem(Random rand, @Nullable LootRarity rarity, float luck, ServerLevelAccessor level) {
+	public static ItemStack createRandomLootItem(RandomSource rand, @Nullable LootRarity rarity, float luck, ServerLevelAccessor level) {
 		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, luck, level);
 		if (entry == null) return ItemStack.EMPTY;
 		if (rarity == null) rarity = LootRarity.random(rand, luck, entry);

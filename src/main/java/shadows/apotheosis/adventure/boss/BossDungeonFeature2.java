@@ -1,9 +1,8 @@
 package shadows.apotheosis.adventure.boss;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -48,7 +47,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
 		WorldGenLevel world = ctx.level();
 		if (!AdventureConfig.canGenerateIn(world)) return false;
 		BlockPos pos = ctx.origin();
-		Random rand = ctx.random();
+		RandomSource rand = ctx.random();
 
 		BlockState[][][] states = new BlockState[9][8][9];
 
@@ -91,7 +90,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
 			world.setBlock(chest2, StructurePiece.reorient(world, chest2, Blocks.CHEST.defaultBlockState()), 2);
 			RandomizableContainerBlockEntity.setLootTable(world, rand, chest2, BuiltInLootTables.SIMPLE_DUNGEON);
 
-			world.setBlock(pos, Apoth.Blocks.BOSS_SPAWNER.defaultBlockState(), 2);
+			world.setBlock(pos, Apoth.Blocks.BOSS_SPAWNER.get().defaultBlockState(), 2);
 			BlockEntity tileentity = world.getBlockEntity(pos);
 			if (tileentity instanceof BossSpawnerTile) {
 				((BossSpawnerTile) tileentity).setBossItem(BossItemManager.INSTANCE.getRandomItem(rand, world));

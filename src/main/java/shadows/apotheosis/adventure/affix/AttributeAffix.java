@@ -101,7 +101,7 @@ public class AttributeAffix extends Affix {
 
 	public void write(FriendlyByteBuf buf) {
 		ModifierInst inst = this.modifiers.values().stream().findFirst().get();
-		buf.writeRegistryId(inst.attr);
+		buf.writeRegistryId(ForgeRegistries.ATTRIBUTES, inst.attr);
 		buf.writeEnum(inst.op);
 		buf.writeMap(this.modifiers, (b, key) -> b.writeUtf(key.id()), (b, modif) -> modif.valueFactory.write(b));
 		buf.writeByte(this.types.size());

@@ -1,10 +1,9 @@
 package shadows.apotheosis.adventure.affix.trades;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +25,7 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 
 	@Override
 	@Nullable
-	public MerchantOffer getOffer(Entity pTrader, Random pRand) {
+	public MerchantOffer getOffer(Entity pTrader, RandomSource pRand) {
 		if (!(pTrader.level instanceof ServerLevel)) return null;
 		Player nearest = pTrader.level.getNearestPlayer(pTrader, 32);
 		float luck = nearest != null ? nearest.getLuck() : 0;

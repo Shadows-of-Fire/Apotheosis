@@ -44,7 +44,7 @@ public class GemCommand {
 			return 0;
 		}))).then(Commands.literal("custom").then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(SUGGEST_ATTRIB).then(Commands.argument("op", StringArgumentType.word()).suggests(SUGGEST_OP).then(Commands.argument("value", FloatArgumentType.floatArg()).then(Commands.argument("variant", IntegerArgumentType.integer(0, 11)).executes(c -> {
 			Player p = c.getSource().getPlayerOrException();
-			ItemStack gem = new ItemStack(Apoth.Items.GEM);
+			ItemStack gem = new ItemStack(Apoth.Items.GEM.get());
 			CompoundTag tag = gem.getOrCreateTag();
 			tag.putFloat("variant", c.getArgument("variant", Integer.class));
 			Attribute attrib = ForgeRegistries.ATTRIBUTES.getValue(c.getArgument("attribute", ResourceLocation.class));

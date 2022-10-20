@@ -187,7 +187,7 @@ public class PotionAffix extends Affix {
 
 	public void write(FriendlyByteBuf buf) {
 		EffectInst inst = this.effects.values().stream().findFirst().get();
-		buf.writeRegistryId(inst.effect);
+		buf.writeRegistryId(ForgeRegistries.MOB_EFFECTS, inst.effect);
 		buf.writeMap(this.effects, (b, key) -> b.writeUtf(key.id()), (b, modif) -> modif.write(b));
 		buf.writeByte(this.types.size());
 		this.types.forEach(c -> buf.writeEnum(c));

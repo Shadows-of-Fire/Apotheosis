@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.commands;
 
-import java.awt.TextComponent;
 import java.util.Map;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -8,6 +7,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth.Affixes;

@@ -29,7 +29,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -37,7 +36,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.IRegistryDelegate;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
+import net.minecraftforge.registries.RegistryObject;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -83,7 +84,7 @@ public class AdventureModule {
 
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
 
-	public static final BiMap<LootRarity, IRegistryDelegate<Item>> RARITY_MATERIALS = HashBiMap.create();
+	public static final BiMap<LootRarity, RegistryObject<Item>> RARITY_MATERIALS = HashBiMap.create();
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
@@ -107,95 +108,97 @@ public class AdventureModule {
 			f.addRecipe(new SocketingRecipe());
 			f.addRecipe(new ExpulsionRecipe());
 			f.addRecipe(new ExtractionRecipe());
-			Item g = Apoth.Items.GEM_DUST;
+			Item g = Apoth.Items.GEM_DUST.get();
 			f.addShaped(Apoth.Items.VIAL_OF_EXPULSION, 3, 3, g, Items.MAGMA_CREAM, g, Items.BLAZE_ROD, Apotheosis.potionIngredient(Potions.THICK), Items.BLAZE_ROD, g, Items.LAVA_BUCKET, g);
 			f.addShaped(Apoth.Items.VIAL_OF_EXTRACTION, 3, 3, g, Items.AMETHYST_SHARD, g, Items.ENDER_PEARL, Apotheosis.potionIngredient(Potions.THICK), Items.ENDER_PEARL, g, Items.WATER_BUCKET, g);
 		});
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
-			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE);
-			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE);
+			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE.get());
+			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());
 		});
 	}
 
 	@SubscribeEvent
 	public void register(Register<Feature<?>> e) {
-		e.getRegistry().register(BossDungeonFeature.INSTANCE.setRegistryName("boss_dng"));
-		e.getRegistry().register(BossDungeonFeature2.INSTANCE.setRegistryName("boss_dng_2"));
-		e.getRegistry().register(RogueSpawnerFeature.INSTANCE.setRegistryName("rogue_spawner"));
-		//e.getRegistry().register(TroveFeature.INSTANCE.setRegistryName("trove"));
-		//e.getRegistry().register(TomeTowerFeature.INSTANCE.setRegistryName("tome_tower"));
+		e.getRegistry().register(BossDungeonFeature.INSTANCE, "boss_dng");
+		e.getRegistry().register(BossDungeonFeature2.INSTANCE, "boss_dng_2");
+		e.getRegistry().register(RogueSpawnerFeature.INSTANCE, "rogue_spawner");
+		//e.getRegistry().register(TroveFeature.INSTANCE, "trove");
+		//e.getRegistry().register(TomeTowerFeature.INSTANCE, "tome_tower");
 		MinecraftForge.EVENT_BUS.register(AdventureGeneration.class);
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new GemItem(new Item.Properties().stacksTo(1)).setRegistryName("gem"));
-		e.getRegistry().register(new BossSummonerItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("boss_summoner"));
-		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("gem_dust"));
-		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("vial_of_extraction"));
-		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("vial_of_expulsion"));
+		e.getRegistry().register(new GemItem(new Item.Properties().stacksTo(1)), "gem");
+		e.getRegistry().register(new BossSummonerItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "boss_summoner");
+		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_dust");
+		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_extraction");
+		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_expulsion");
 		for (LootRarity r : LootRarity.values()) {
 			if (r == LootRarity.ANCIENT) continue;
-			Item material = new SalvageItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName(r.id() + "_material");
-			e.getRegistry().register(material);
-			RARITY_MATERIALS.put(r, material.delegate);
+			Item material = new SalvageItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+			e.getRegistry().register(material, r.id() + "_material");
+			RARITY_MATERIALS.put(r, RegistryObject.create(Apotheosis.loc(r.id() + "_material"), e.getForgeRegistry()));
 		}
-		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("reforging_table"));
-		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("salvaging_table"));
+		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "reforging_table");
+		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "salvaging_table");
 	}
 
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
-		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noDrops()).setRegistryName("boss_spawner"));
-		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5, 1000F)).setRegistryName("reforging_table"));
-		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)).setRegistryName("salvaging_table"));
+		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable()), "boss_spawner");
+		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5, 1000F)), "reforging_table");
+		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "salvaging_table");
 	}
 
 	@SubscribeEvent
 	public void tiles(Register<BlockEntityType<?>> e) {
-		e.getRegistry().register(new TickingBlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(Apoth.Blocks.BOSS_SPAWNER), false, true).setRegistryName("boss_spawner"));
-		e.getRegistry().register(new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Apoth.Blocks.REFORGING_TABLE), true, false).setRegistryName("reforging_table"));
+		e.getRegistry().register(new TickingBlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(Apoth.Blocks.BOSS_SPAWNER.get()), false, true), "boss_spawner");
+		e.getRegistry().register(new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Apoth.Blocks.REFORGING_TABLE.get()), true, false), "reforging_table");
 	}
 
 	@SubscribeEvent
 	public void serializers(Register<RecipeSerializer<?>> e) {
-		e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE.setRegistryName("socketing"));
-		e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE.setRegistryName("expulsion"));
-		e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE.setRegistryName("extraction"));
+		e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE, "socketing");
+		e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE, "expulsion");
+		e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE, "extraction");
 	}
 
 	@SubscribeEvent
-	public void lootSerializers(Register<GlobalLootModifierSerializer<?>> e) {
-		e.getRegistry().register(new GemLootModifier.Serializer().setRegistryName("gems"));
-		e.getRegistry().register(new AffixLootModifier.Serializer().setRegistryName("affix_loot"));
-		e.getRegistry().register(new AffixConvertLootModifier.Serializer().setRegistryName("affix_conversion"));
+	public void lootSerializers(RegisterEvent e) {
+		if (e.getForgeRegistry() == ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS) {
+			ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("gems", new GemLootModifier.Serializer());
+			ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("affix_loot", new AffixLootModifier.Serializer());
+			ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("affix_conversion", new AffixConvertLootModifier.Serializer());
+		}
 	}
 
 	@SubscribeEvent
 	public void containers(Register<MenuType<?>> e) {
-		e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new).setRegistryName("reforging"));
-		e.getRegistry().register(new MenuType<>(SalvagingMenu::new).setRegistryName("salvage"));
+		e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new), "reforging");
+		e.getRegistry().register(new MenuType<>(SalvagingMenu::new), "salvage");
 	}
 
 	@SubscribeEvent
 	public void attribs(Register<Attribute> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 4.0D).setSyncable(true).setRegistryName("draw_speed"),
-				new RangedAttribute("apotheosis:crit_chance", 1.5D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("crit_chance"),
-				new RangedAttribute("apotheosis:crit_damage", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("crit_damage"),
-				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("cold_damage"),
-				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("fire_damage"),
-				new RangedAttribute("apotheosis:life_steal", 1.0D, 1.0D, 1024.0D).setSyncable(true).setRegistryName("life_steal"),
-				new RangedAttribute("apotheosis:piercing", 1.0D, 1.0D, 2.0D).setSyncable(true).setRegistryName("piercing"),
-				new RangedAttribute("apotheosis:current_hp_damage", 1.0D, 1.0D, 2.0D).setSyncable(true).setRegistryName("current_hp_damage"),
-				new RangedAttribute("apotheosis:overheal", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("overheal"),
-				new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("ghost_health"),
-				new RangedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("mining_speed"),
-				new RangedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("arrow_damage"),
-				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true).setRegistryName("arrow_velocity")
+				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 4.0D).setSyncable(true), "draw_speed",
+				new RangedAttribute("apotheosis:crit_chance", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_chance",
+				new RangedAttribute("apotheosis:crit_damage", 1.0D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
+				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "cold_damage",
+				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "fire_damage",
+				new RangedAttribute("apotheosis:life_steal", 1.0D, 1.0D, 1024.0D).setSyncable(true), "life_steal",
+				new RangedAttribute("apotheosis:piercing", 1.0D, 1.0D, 2.0D).setSyncable(true), "piercing",
+				new RangedAttribute("apotheosis:current_hp_damage", 1.0D, 1.0D, 2.0D).setSyncable(true), "current_hp_damage",
+				new RangedAttribute("apotheosis:overheal", 1.0D, 0.0D, 1024.0D).setSyncable(true), "overheal",
+				new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1024.0D).setSyncable(true), "ghost_health",
+				new RangedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true), "mining_speed",
+				new RangedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_damage",
+				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity"
 		);
 		//Formatter::on
 	}
@@ -222,9 +225,10 @@ public class AdventureModule {
 		});
 	}
 
-	private static void addAll(EntityType<? extends LivingEntity> type, BiConsumer<EntityType<? extends LivingEntity>, Attribute> add, Attribute... attribs) {
-		for (Attribute a : attribs)
-			add.accept(type, a);
+	@SafeVarargs
+	private static void addAll(EntityType<? extends LivingEntity> type, BiConsumer<EntityType<? extends LivingEntity>, Attribute> add, RegistryObject<Attribute>... attribs) {
+		for (RegistryObject<Attribute> a : attribs)
+			add.accept(type, a.get());
 	}
 
 	@SubscribeEvent

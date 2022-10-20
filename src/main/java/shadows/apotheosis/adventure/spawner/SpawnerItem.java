@@ -1,13 +1,12 @@
 package shadows.apotheosis.adventure.spawner;
 
-import java.util.Random;
-
 import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.WorldGenLevel;
@@ -51,13 +50,13 @@ public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWei
 	}
 
 	@SuppressWarnings("deprecation")
-	public void place(WorldGenLevel world, BlockPos pos, Random rand) {
+	public void place(WorldGenLevel world, BlockPos pos, RandomSource rand) {
 		world.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
 		SpawnerBlockEntity entity = (SpawnerBlockEntity) world.getBlockEntity(pos);
 		this.stats.apply(entity);
 		entity.spawner.spawnPotentials = this.spawnPotentials;
 		entity.spawner.setNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
-		ChestBuilder.place(world, rand, pos.below(), rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable);
+		ChestBuilder.place(world, pos.below(), rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable);
 		world.setBlock(pos.above(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].defaultBlockState(), 2);
 		for (Direction f : Plane.HORIZONTAL) {
 			if (world.getBlockState(pos.relative(f)).isAir()) {

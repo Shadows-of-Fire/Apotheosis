@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.affix;
 
-import java.awt.TextComponent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

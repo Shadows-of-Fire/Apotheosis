@@ -2,14 +2,12 @@ package shadows.apotheosis.adventure.affix.socket;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -17,6 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.json.DimWeightedJsonReloadListener;
 import shadows.placebo.json.JsonUtil;
+import shadows.placebo.json.PSerializer;
 
 public class GemManager extends DimWeightedJsonReloadListener<Gem> {
 
@@ -32,10 +31,10 @@ public class GemManager extends DimWeightedJsonReloadListener<Gem> {
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new SerializerBuilder<Gem>("Gem").withJsonDeserializer(obj -> GSON.fromJson(obj, Gem.class)));
+		this.registerSerializer(DEFAULT, new PSerializer.Builder<Gem>("Gem").withJsonDeserializer(obj -> GSON.fromJson(obj, Gem.class)));
 	}
 
-	public static ItemStack getRandomGemStack(Random rand, float luck, ServerLevelAccessor level) {
+	public static ItemStack getRandomGemStack(RandomSource rand, float luck, ServerLevelAccessor level) {
 		return GemItem.fromGem(INSTANCE.getRandomItem(rand, luck, level), rand);
 	}
 

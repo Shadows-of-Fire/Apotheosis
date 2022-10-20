@@ -65,13 +65,11 @@ import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.client.model.ForgeModelBakery;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
@@ -80,6 +78,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.Apotheosis;
@@ -95,8 +94,6 @@ import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
-import shadows.apotheosis.adventure.client.from_mantle.ColoredBlockModel;
-import shadows.apotheosis.adventure.client.from_mantle.ColoredItemModel;
 import shadows.apotheosis.util.ItemAccess;
 
 public class AdventureModuleClient {
@@ -105,27 +102,29 @@ public class AdventureModuleClient {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(AdventureModuleClient.class);
-		MinecraftForgeClient.registerTooltipComponentFactory(SocketComponent.class, SocketTooltipRenderer::new);
-		ItemProperties.register(Apoth.Items.GEM, new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
-		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.BOSS_SPAWNER, RenderType.cutout());
-		MenuScreens.register(Apoth.Menus.REFORGING, ReforgingScreen::new);
-		MenuScreens.register(Apoth.Menus.SALVAGE, SalvagingScreen::new);
-		BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE, k -> new ReforgingTableTileRenderer());
-		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.REFORGING_TABLE, RenderType.cutout());
+		ItemProperties.register(Apoth.Items.GEM.get(), new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
+		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.BOSS_SPAWNER.get(), RenderType.cutout());
+		MenuScreens.register(Apoth.Menus.REFORGING.get(), ReforgingScreen::new);
+		MenuScreens.register(Apoth.Menus.SALVAGE.get(), SalvagingScreen::new);
+		BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
+		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.REFORGING_TABLE.get(), RenderType.cutout());
 	}
 
 	public static void onBossSpawn(BlockPos pos, float[] color) {
 		BOSS_SPAWNS.add(new BossSpawnData(pos, color, new MutableInt()));
-		Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.blockPosition()));
+		Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.random, Minecraft.getInstance().player.blockPosition()));
 	}
 
 	@EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)
-	public static class ModelSubscriber {
+	public static class ModBusSub {
 		@SubscribeEvent
-		public static void models(ModelRegistryEvent e) {
-			ForgeModelBakery.addSpecialModel(new ResourceLocation(Apotheosis.MODID, "item/hammer"));
-			ModelLoaderRegistry.registerLoader(new ResourceLocation("apotheosis", "lit"), ColoredBlockModel.LOADER);
-			ModelLoaderRegistry.registerLoader(new ResourceLocation("apotheosis", "lit_item"), ColoredItemModel.LOADER);
+		public static void models(ModelEvent.RegisterAdditional e) {
+			e.register(new ResourceLocation(Apotheosis.MODID, "item/hammer"));
+		}
+
+		@SubscribeEvent
+		public static void tooltipComps(RegisterClientTooltipComponentFactoriesEvent e) {
+			e.register(SocketComponent.class, SocketTooltipRenderer::new);
 		}
 	}
 
@@ -181,7 +180,7 @@ public class AdventureModuleClient {
 		int fRmvIdx = rmvIdx;
 		int oldSize = list.size();
 		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
-			applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
+			applyModifierTooltips(e.getEntity(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
 			Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
 		}
 		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), Component.literal("APOTH_REMOVE_MARKER"));
@@ -221,11 +220,15 @@ public class AdventureModuleClient {
 	}
 
 	public static Multimap<Attribute, AttributeModifier> sortedMap() {
-		return TreeMultimap.create((k1, k2) -> k1.getRegistryName().compareTo(k2.getRegistryName()), (v1, v2) -> {
+		return TreeMultimap.create((k1, k2) -> id(k1).compareTo(id(k2)), (v1, v2) -> {
 			int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
 			int compValue = Double.compare(v2.getAmount(), v1.getAmount());
 			return compOp == 0 ? compValue == 0 ? v1.getId().compareTo(v2.getId()) : compValue : compOp;
 		});
+	}
+
+	private static ResourceLocation id(Attribute attr) {
+		return ForgeRegistries.ATTRIBUTES.getKey(attr);
 	}
 
 	public static Multimap<Attribute, AttributeModifier> getSortedModifiers(ItemStack stack, EquipmentSlot slot) {
@@ -293,7 +296,7 @@ public class AdventureModuleClient {
 		if (!modifierMap.isEmpty()) {
 			modifierMap.values().removeIf(m -> skips.contains(m.getId()));
 
-			tooltip.accept(TextComponent.EMPTY);
+			tooltip.accept(Component.empty());
 			tooltip.accept(Component.translatable("item.modifiers." + group).withStyle(ChatFormatting.GRAY));
 
 			if (modifierMap.isEmpty()) return;

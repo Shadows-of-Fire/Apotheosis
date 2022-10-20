@@ -55,8 +55,8 @@ public class FestiveAffix extends Affix {
 
 	// EventPriority.LOW
 	public void drops(LivingDropsEvent e) {
-		LivingEntity dead = e.getEntityLiving();
-		if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty() && !(e.getEntityLiving() instanceof Player)) {
+		LivingEntity dead = e.getEntity();
+		if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty() && !(e.getEntity() instanceof Player)) {
 			AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(this);
 			if (inst == null) return;
 			if (player.level.random.nextFloat() < getTrueLevel(inst.rarity(), inst.level())) {

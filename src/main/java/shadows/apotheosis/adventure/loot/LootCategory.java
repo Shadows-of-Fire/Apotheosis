@@ -18,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import shadows.apotheosis.adventure.AdventureConfig;
 
@@ -51,7 +52,7 @@ public enum LootCategory {
 	static final LootCategory[] VALUES = values();
 
 	public static LootCategory forItem(ItemStack item) {
-		LootCategory override = AdventureConfig.TYPE_OVERRIDES.get(item.getItem().getRegistryName());
+		LootCategory override = AdventureConfig.TYPE_OVERRIDES.get(ForgeRegistries.ITEMS.getKey(item.getItem()));
 		if (override != null) return override;
 		for (LootCategory c : VALUES) {
 			if (c.isValid(item)) return c;

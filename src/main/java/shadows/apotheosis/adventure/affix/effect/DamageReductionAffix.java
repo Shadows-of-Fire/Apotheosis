@@ -54,7 +54,7 @@ public class DamageReductionAffix extends Affix {
 	public static void onHurt(LivingHurtEvent e) {
 		DamageSource src = e.getSource();
 		if (src.isBypassInvul() || src.isBypassMagic()) return;
-		LivingEntity ent = e.getEntityLiving();
+		LivingEntity ent = e.getEntity();
 		float amount = e.getAmount();
 		for (ItemStack s : ent.getArmorSlots()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);

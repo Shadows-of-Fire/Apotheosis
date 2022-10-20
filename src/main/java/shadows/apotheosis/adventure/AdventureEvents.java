@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,7 +21,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -36,7 +35,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -114,7 +113,7 @@ public class AdventureEvents {
 	@SubscribeEvent
 	public void drawSpeed(LivingEntityUseItemEvent.Tick e) {
 		if (e.getEntity() instanceof Player player) {
-			double t = player.getAttribute(Apoth.Attributes.DRAW_SPEED).getValue() - 1;
+			double t = player.getAttribute(Apoth.Attributes.DRAW_SPEED.get()).getValue() - 1;
 			if (t == 0 || !LootCategory.forItem(e.getItem()).isRanged()) return;
 			float clamped = values.stream().filter(f -> f >= t).min(Float::compareTo).orElse(3F);
 			while (clamped > 0) {
@@ -129,7 +128,7 @@ public class AdventureEvents {
 	 * Arrows marked as "apoth.generated" will not trigger the affix hook, so affixes can fire arrows without recursion.
 	 */
 	@SubscribeEvent
-	public void fireArrow(EntityJoinWorldEvent e) {
+	public void fireArrow(EntityJoinLevelEvent e) {
 		if (e.getEntity() instanceof AbstractArrow arrow && !arrow.getPersistentData().getBoolean("apoth.generated")) {
 			Entity shooter = arrow.getOwner();
 			if (shooter instanceof LivingEntity living) {
@@ -168,8 +167,8 @@ public class AdventureEvents {
 	public void pierce(LivingHurtEvent e) {
 		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker) {
 			if (!e.getSource().isBypassArmor() && !e.getSource().isMagic()) {
-				LivingEntity target = e.getEntityLiving();
-				float pierce = (float) (attacker.getAttributeValue(Apoth.Attributes.PIERCING) - 1);
+				LivingEntity target = e.getEntity();
+				float pierce = (float) (attacker.getAttributeValue(Apoth.Attributes.PIERCING.get()) - 1);
 				if (pierce > 0.001) {
 					float pierceDmg = e.getAmount() * pierce;
 					e.setAmount(e.getAmount() - pierceDmg);
@@ -194,12 +193,12 @@ public class AdventureEvents {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void afterDamage(LivingHurtEvent e) {
 		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
-			float lifesteal = (float) attacker.getAttributeValue(Apoth.Attributes.LIFE_STEAL) - 1;
-			float dmg = Math.min(e.getAmount(), e.getEntityLiving().getHealth());
+			float lifesteal = (float) attacker.getAttributeValue(Apoth.Attributes.LIFE_STEAL.get()) - 1;
+			float dmg = Math.min(e.getAmount(), e.getEntity().getHealth());
 			if (lifesteal > 0.001) {
 				attacker.heal(dmg * lifesteal);
 			}
-			float overheal = (float) attacker.getAttributeValue(Apoth.Attributes.OVERHEAL) - 1;
+			float overheal = (float) attacker.getAttributeValue(Apoth.Attributes.OVERHEAL.get()) - 1;
 			if (overheal > 0 && attacker.getAbsorptionAmount() < 20) {
 				attacker.setAbsorptionAmount(Math.min(20, attacker.getAbsorptionAmount() + dmg * overheal));
 			}
@@ -218,10 +217,10 @@ public class AdventureEvents {
 		if (noRecurse) return;
 		noRecurse = true;
 		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
-			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE) - 1;
-			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE);
-			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE);
-			LivingEntity target = e.getEntityLiving();
+			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE.get()) - 1;
+			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE.get());
+			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE.get());
+			LivingEntity target = e.getEntity();
 			int time = target.invulnerableTime;
 			target.invulnerableTime = 0;
 			if (hpDmg > 0.001 && Apotheosis.localAtkStrength >= 0.85F) {
@@ -248,10 +247,10 @@ public class AdventureEvents {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void crit(CriticalHitEvent e) {
-		double critChance = e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1;
-		float critDmg = (float) e.getPlayer().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE);
+		double critChance = e.getEntity().getAttributeValue(Apoth.Attributes.CRIT_CHANCE.get()) - 1;
+		float critDmg = (float) e.getEntity().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE.get());
 		float overcritMult = Math.max(1.5F, critDmg - 1.5F);
-		Random rand = e.getPlayer().random;
+		RandomSource rand = e.getEntity().random;
 		if (e.isVanillaCritical() && critChance >= 0.5F) {
 			critChance -= 0.5F;
 			critDmg *= 1.5F;
@@ -276,7 +275,7 @@ public class AdventureEvents {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void breakSpd(BreakSpeed e) {
-		e.setNewSpeed(e.getNewSpeed() * (float) e.getPlayer().getAttributeValue(Apoth.Attributes.MINING_SPEED));
+		e.setNewSpeed(e.getNewSpeed() * (float) e.getEntity().getAttributeValue(Apoth.Attributes.MINING_SPEED.get()));
 	}
 
 	@SubscribeEvent
@@ -294,11 +293,11 @@ public class AdventureEvents {
 
 	@SubscribeEvent
 	public void shieldBlock(ShieldBlockEvent e) {
-		ItemStack stack = e.getEntityLiving().getUseItem();
+		ItemStack stack = e.getEntity().getUseItem();
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 		float blocked = e.getBlockedDamage();
 		for (AffixInstance inst : affixes.values()) {
-			blocked = inst.onShieldBlock(e.getEntityLiving(), e.getDamageSource(), blocked);
+			blocked = inst.onShieldBlock(e.getEntity(), e.getDamageSource(), blocked);
 		}
 		if (blocked != e.getOriginalBlockedDamage()) e.setBlockedDamage(blocked);
 	}
@@ -308,18 +307,18 @@ public class AdventureEvents {
 		ItemStack stack = e.getPlayer().getMainHandItem();
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 		for (AffixInstance inst : affixes.values()) {
-			inst.onBlockBreak(e.getPlayer(), e.getWorld(), e.getPos(), e.getState());
+			inst.onBlockBreak(e.getPlayer(), e.getLevel(), e.getPos(), e.getState());
 		}
 	}
 
 	@SubscribeEvent
-	public void arrow(EntityJoinWorldEvent e) {
+	public void arrow(EntityJoinLevelEvent e) {
 		if (e.getEntity() instanceof AbstractArrow arrow) {
 			if (arrow.level.isClientSide || arrow.getPersistentData().getBoolean("apoth.attrib.done")) return;
 			if (arrow.getOwner() instanceof LivingEntity le) {
-				arrow.setBaseDamage(arrow.getBaseDamage() * le.getAttributeValue(Apoth.Attributes.ARROW_DAMAGE));
-				arrow.setDeltaMovement(arrow.getDeltaMovement().scale(le.getAttributeValue(Apoth.Attributes.ARROW_VELOCITY)));
-				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(Apoth.Attributes.CRIT_CHANCE) - 1);
+				arrow.setBaseDamage(arrow.getBaseDamage() * le.getAttributeValue(Apoth.Attributes.ARROW_DAMAGE.get()));
+				arrow.setDeltaMovement(arrow.getDeltaMovement().scale(le.getAttributeValue(Apoth.Attributes.ARROW_VELOCITY.get())));
+				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(Apoth.Attributes.CRIT_CHANCE.get()) - 1);
 			}
 			arrow.getPersistentData().putBoolean("apoth.attrib.done", true);
 		}
@@ -364,17 +363,17 @@ public class AdventureEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void special(SpecialSpawn e) {
-		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
+		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getLevel().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
 			e.setCanceled(true);
 			Player nearest = e.getEntity().level.getNearestPlayer(e.getEntity(), 32);
 			float luck = nearest != null ? nearest.getLuck() : 0;
-			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), null, luck, (ServerLevel) e.getEntity().level);
+			ItemStack affixItem = LootController.createRandomLootItem(e.getLevel().getRandom(), null, luck, (ServerLevel) e.getEntity().level);
 			if (affixItem.isEmpty()) return;
 			affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);
 			EquipmentSlot slot = cat.getSlots(affixItem)[0];
-			e.getEntityLiving().setItemSlot(slot, affixItem);
-			if (e.getEntityLiving() instanceof Mob mob) mob.setGuaranteedDrop(slot);
+			e.getEntity().setItemSlot(slot, affixItem);
+			e.getEntity().setGuaranteedDrop(slot);
 		}
 	}
 
@@ -385,8 +384,8 @@ public class AdventureEvents {
 		List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
 		for (ItemEntity ent : items) {
 			ItemStack stack = ent.getItem();
-			if (stack.getItem() == Apoth.Items.GEM) {
-				ent.setItem(new ItemStack(Apoth.Items.GEM_DUST, stack.getCount()));
+			if (stack.getItem() == Apoth.Items.GEM.get()) {
+				ent.setItem(new ItemStack(Apoth.Items.GEM_DUST.get(), stack.getCount()));
 			}
 		}
 	}

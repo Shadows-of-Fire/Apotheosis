@@ -37,7 +37,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 		protected int ticks = 0;
 
 		public BossSpawnerTile(BlockPos pos, BlockState state) {
-			super(Apoth.Tiles.BOSS_SPAWNER, pos, state);
+			super(Apoth.Tiles.BOSS_SPAWNER.get(), pos, state);
 		}
 
 		@Override

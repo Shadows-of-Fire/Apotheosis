@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.client;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -23,14 +23,14 @@ public class SimpleTexButton extends Button {
 	protected final int yTexStart;
 	protected final int textureWidth;
 	protected final int textureHeight;
-	protected Component inactiveMessage = TextComponent.EMPTY;
+	protected Component inactiveMessage = CommonComponents.EMPTY;
 
 	public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, Button.OnPress pOnPress) {
 		this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, 256, 256, pOnPress);
 	}
 
 	public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress) {
-		this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, pTextureWidth, pTextureHeight, pOnPress, TextComponent.EMPTY);
+		this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, pTextureWidth, pTextureHeight, pOnPress, CommonComponents.EMPTY);
 	}
 
 	public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress, Component pMessage) {
@@ -77,12 +77,12 @@ public class SimpleTexButton extends Button {
 	@Override
 	public void renderToolTip(PoseStack pPoseStack, int pMouseX, int pMouseY) {
 		if (this.onTooltip != NO_TOOLTIP) this.onTooltip.onTooltip(this, pPoseStack, pMouseX, pMouseY);
-		else if (this.getMessage() != TextComponent.EMPTY) {
+		else if (this.getMessage() != CommonComponents.EMPTY) {
 			MutableComponent primary = (MutableComponent) this.getMessage();
 			if (!this.active) primary = primary.withStyle(ChatFormatting.GRAY);
 			List<FormattedCharSequence> tooltips = new ArrayList<>();
 			tooltips.add(primary.getVisualOrderText());
-			if (!this.active && this.inactiveMessage != TextComponent.EMPTY) tooltips.add(this.inactiveMessage.getVisualOrderText());
+			if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) tooltips.add(this.inactiveMessage.getVisualOrderText());
 			Minecraft.getInstance().screen.renderTooltip(pPoseStack, tooltips, pMouseX, pMouseY);
 		}
 	}

@@ -14,6 +14,7 @@ import com.google.common.base.Preconditions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
@@ -159,7 +160,7 @@ public class NameHelper {
 	 * The name is made out of a random value from name parts, combined with up to two more values from the array.
 	 * The selected values are not unique, and may overlap.
 	 */
-	public static String nameFromParts(Random random) {
+	public static String nameFromParts(RandomSource random) {
 		String name = NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)] + NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
 		if (random.nextFloat() <= 0.75F) {
 			name += NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
@@ -177,21 +178,21 @@ public class NameHelper {
 	 * There is a 80% chance for a suffix to be selected from {@link NameHelper#suffixes}
 	 * @return The root name of the entity, without any prefixes or suffixes.
 	 */
-	public static String setEntityName(Random random, Mob entity) {
+	public static String setEntityName(RandomSource rand, Mob entity) {
 		String root;
 
 		if (names.length > 0 && nameParts.length > 0) {
-			root = random.nextBoolean() ? NameHelper.names[random.nextInt(NameHelper.names.length)] : NameHelper.nameFromParts(random);
+			root = rand.nextBoolean() ? NameHelper.names[rand.nextInt(NameHelper.names.length)] : NameHelper.nameFromParts(rand);
 		} else if (names.length > 0) {
-			root = NameHelper.names[random.nextInt(NameHelper.names.length)];
+			root = NameHelper.names[rand.nextInt(NameHelper.names.length)];
 		} else {
-			root = NameHelper.nameFromParts(random);
+			root = NameHelper.nameFromParts(rand);
 		}
 
 		String name = root;
-		if (random.nextBoolean() && prefixes.length > 0) name = NameHelper.prefixes[random.nextInt(NameHelper.prefixes.length)] + " " + name;
-		if (random.nextFloat() <= 0.8F && suffixes.length > 0) {
-			name = String.format(suffixFormat, name, NameHelper.suffixes[random.nextInt(NameHelper.suffixes.length)]);
+		if (rand.nextBoolean() && prefixes.length > 0) name = NameHelper.prefixes[rand.nextInt(NameHelper.prefixes.length)] + " " + name;
+		if (rand.nextFloat() <= 0.8F && suffixes.length > 0) {
+			name = String.format(suffixFormat, name, NameHelper.suffixes[rand.nextInt(NameHelper.suffixes.length)]);
 		}
 		entity.setCustomName(Component.literal(name));
 		entity.setCustomNameVisible(true);
@@ -207,7 +208,7 @@ public class NameHelper {
 	 * @param name The name of the owning entity, usually created by {@link NameHelper#setEntityName(Random, EntityLiving)}
 	 * @return The name of the item, without the owning prefix of the boss's name
 	 */
-	public static Component setItemName(Random random, ItemStack stack) {
+	public static Component setItemName(RandomSource random, ItemStack stack) {
 		MutableComponent name = (MutableComponent) stack.getItem().getName(stack);
 		String baseName = name.getString();
 

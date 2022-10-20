@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.loot.LootCategory;
@@ -37,7 +38,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 	protected DataSlot needsReset = DataSlot.standalone();
 
 	public ReforgingMenu(int id, Inventory inv, BlockPos pos) {
-		super(Apoth.Menus.REFORGING, id, inv, pos);
+		super(Apoth.Menus.REFORGING.get(), id, inv, pos);
 		this.player = inv.player;
 		this.addSlot(new Slot(this.itemInv, 0, 25, 24) {
 			@Override
@@ -60,7 +61,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 		this.addPlayerSlots(inv, 8, 84);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && LootCategory.forItem(stack) != LootCategory.NONE, 0, 1);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isRarityMat(stack), 1, 2);
-		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST, 2, 3);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 2, 3);
 		this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
 		this.registerInvShuffleRules();
 
@@ -107,7 +108,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 
 				Random rand = this.random;
 				for (int i = 0; i < 3; i++) {
-					rand.setSeed(this.getSeed() ^ input.getItem().getRegistryName().hashCode() + i);
+					rand.setSeed(this.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + i);
 					choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
 				}
 

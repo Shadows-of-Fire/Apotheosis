@@ -4,8 +4,6 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
-
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.BlockPos;
@@ -27,17 +25,18 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.gateways.entity.GatewayEntity;
 import shadows.gateways.gate.Reward;
 import shadows.gateways.gate.WaveEntity;
+import shadows.placebo.json.PSerializer;
 
 public class GatewaysCompat {
 
 	public static void register() {
 		WaveEntity.SERIALIZERS.put(new ResourceLocation("apotheosis:boss"), BossWaveEntity.SERIALIZER);
-		Reward.SERIALIZERS.put("apotheosis:affix", new SerializerBuilder<RarityAffixItemReward>("Rarity Affix Reward").autoRegister(RarityAffixItemReward.class).build(true));
+		Reward.SERIALIZERS.put("apotheosis:affix", PSerializer.autoRegister("Rarity Affix Reward", RarityAffixItemReward.class).build(true));
 	}
 
 	public static class BossWaveEntity implements WaveEntity {
 
-		static final SerializerBuilder<WaveEntity>.Serializer SERIALIZER = new SerializerBuilder<WaveEntity>("Boss Wave Entity").autoRegister(BossWaveEntity.class).build(true);
+		static final PSerializer<WaveEntity> SERIALIZER = PSerializer.<WaveEntity>autoRegister("Boss Wave Entity", BossWaveEntity.class).build(true);
 
 		private final @Nullable BossItem boss;
 
@@ -68,7 +67,7 @@ public class GatewaysCompat {
 		}
 
 		@Override
-		public SerializerBuilder<WaveEntity>.Serializer getSerializer() {
+		public PSerializer<WaveEntity> getSerializer() {
 			return SERIALIZER;
 		}
 

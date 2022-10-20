@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.affix.socket;
 
 import java.awt.TextComponent;
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -12,6 +11,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -76,8 +76,8 @@ public class GemItem extends Item {
 		return stack.hasTag() ? stack.getTag().getInt("variant") : 0;
 	}
 
-	public static ItemStack fromGem(Gem gem, Random rand) {
-		ItemStack stack = new ItemStack(Apoth.Items.GEM);
+	public static ItemStack fromGem(Gem gem, RandomSource rand) {
+		ItemStack stack = new ItemStack(Apoth.Items.GEM.get());
 		setVariant(stack, gem.getVariant());
 		setStoredBonus(stack, gem.attribute, new AttributeModifier("GemBonus_" + gem.getId(), gem.value.get(rand.nextFloat()), gem.operation));
 		return stack;

@@ -28,14 +28,15 @@ import com.google.gson.JsonSerializer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
-import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
 import shadows.placebo.color.GradientColor;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
@@ -95,24 +96,7 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	));
 	//Formatter::on
 
-	public static final LootRarity ANCIENT = new LootRarity(0, "ancient", GradientColor.RAINBOW, ImmutableList.of(
-			new LootRule(AffixType.STAT, 1),
-			new LootRule(AffixType.STAT, 1),
-			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.7F)),
-			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.6F)),			
-			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.5F)),
-			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.4F)),
-			new LootRule(AffixType.EFFECT, 1),
-			new LootRule(AffixType.EFFECT, 1),
-			new LootRule(AffixType.EFFECT, 0.75F),
-			new LootRule(AffixType.EFFECT, 0.45F),
-			new LootRule(AffixType.SOCKET, 1F),
-			new LootRule(AffixType.SOCKET, 0.85F),
-			new LootRule(AffixType.SOCKET, 0.65F),
-			new LootRule(AffixType.SOCKET, 0.45F),
-			new LootRule(AffixType.SOCKET, 0.25F),
-			new LootRule(AffixType.DURABILITY, 0.75F)
-	));
+	public static final LootRarity ANCIENT = new LootRarity(0, "ancient", GradientColor.RAINBOW, ImmutableList.of(new LootRule(AffixType.STAT, 1), new LootRule(AffixType.STAT, 1), new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.7F)), new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.6F)), new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.5F)), new LootRule(AffixType.STAT, 1, new LootRule(AffixType.EFFECT, 0.4F)), new LootRule(AffixType.EFFECT, 1), new LootRule(AffixType.EFFECT, 1), new LootRule(AffixType.EFFECT, 0.75F), new LootRule(AffixType.EFFECT, 0.45F), new LootRule(AffixType.SOCKET, 1F), new LootRule(AffixType.SOCKET, 0.85F), new LootRule(AffixType.SOCKET, 0.65F), new LootRule(AffixType.SOCKET, 0.45F), new LootRule(AffixType.SOCKET, 0.25F), new LootRule(AffixType.DURABILITY, 0.75F)));
 
 	static {
 		LIST = ImmutableList.of(COMMON, UNCOMMON, RARE, EPIC, MYTHIC, ANCIENT);
@@ -190,27 +174,29 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 		return LIST;
 	}
 
-	public static LootRarity random(Random rand, float luck) {
+	public static LootRarity random(RandomSource rand, float luck) {
 		return random(rand, luck, null, null);
 	}
 
-	public static LootRarity random(Random rand, float luck, @Nullable Clamped item) {
+	public static LootRarity random(RandomSource rand, float luck, @Nullable Clamped item) {
 		if (item == null) return random(rand, luck);
 		return random(rand, luck, item.getMinRarity(), item.getMaxRarity());
 	}
 
-	public static LootRarity random(Random rand, float luck, @Nullable LootRarity min, @Nullable LootRarity max) {
+	public static LootRarity random(RandomSource rand, float luck, @Nullable LootRarity min, @Nullable LootRarity max) {
 		List<Wrapper<LootRarity>> list = LIST.stream().filter(r -> r.clamp(min, max) == r).map(r -> r.<LootRarity>wrap(luck)).toList();
 		return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).get();
 	}
 
 	public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
 
+		private static Random jRand = new Random();
+
 		public LootRule(AffixType type, float chance) {
 			this(type, chance, null);
 		}
 
-		public void execute(ItemStack stack, LootRarity rarity, Set<Affix> currentAffixes, MutableInt sockets, Random rand) {
+		public void execute(ItemStack stack, LootRarity rarity, Set<Affix> currentAffixes, MutableInt sockets, RandomSource rand) {
 			if (this.type == AffixType.DURABILITY) return;
 			if (rand.nextFloat() <= this.chance) {
 				if (this.type == AffixType.SOCKET) {
@@ -220,10 +206,11 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 				List<Affix> available = AffixHelper.byType(this.type).stream().filter(a -> a.canApplyTo(stack, rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
 				if (available.size() == 0) {
 					if (backup != null) backup.execute(stack, rarity, currentAffixes, sockets, rand);
-					else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", stack.getItem().getRegistryName(), rarity.id(), this.type, this.chance);
+					else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", ForgeRegistries.ITEMS.getKey(stack.getItem()), rarity.id(), this.type, this.chance);
 					return;
 				}
-				Collections.shuffle(available, rand);
+				jRand.setSeed(rand.nextLong());
+				Collections.shuffle(available, jRand);
 				currentAffixes.add(available.get(0));
 			}
 		}

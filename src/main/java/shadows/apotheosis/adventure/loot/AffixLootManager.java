@@ -1,7 +1,5 @@
 package shadows.apotheosis.adventure.loot;
 
-import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
-
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,6 +11,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.json.DimWeightedJsonReloadListener;
 import shadows.placebo.json.ItemAdapter;
 import shadows.placebo.json.NBTAdapter;
+import shadows.placebo.json.PSerializer;
 
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
@@ -36,7 +35,7 @@ public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEnt
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new SerializerBuilder<AffixLootEntry>("Affix Loot Entry").json(obj -> GSON.fromJson(obj, AffixLootEntry.class), e -> GSON.toJsonTree(e).getAsJsonObject()));
+		this.registerSerializer(DEFAULT, new PSerializer.Builder<AffixLootEntry>("Affix Loot Entry").json(obj -> GSON.fromJson(obj, AffixLootEntry.class), e -> GSON.toJsonTree(e).getAsJsonObject()));
 	}
 
 	@Override

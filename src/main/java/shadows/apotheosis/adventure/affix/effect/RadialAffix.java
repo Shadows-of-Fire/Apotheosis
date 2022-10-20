@@ -69,7 +69,7 @@ public class RadialAffix extends Affix {
 		if (!world.isClientSide && tool.hasTag()) {
 			AffixInstance inst = AffixHelper.getAffixes(tool).get(this);
 			if (inst != null) {
-				float hardness = e.getState().getDestroySpeed(e.getWorld(), e.getPos());
+				float hardness = e.getState().getDestroySpeed(e.getLevel(), e.getPos());
 				breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, getTrueLevel(inst.rarity(), inst.level()), hardness);
 			}
 		}

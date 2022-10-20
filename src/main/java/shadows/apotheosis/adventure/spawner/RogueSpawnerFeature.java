@@ -1,10 +1,10 @@
 package shadows.apotheosis.adventure.spawner;
 
-import java.util.Random;
 import java.util.function.Predicate;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -28,7 +28,7 @@ public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
 		WorldGenLevel world = ctx.level();
 		if (!AdventureConfig.canGenerateIn(world)) return false;
 		BlockPos pos = ctx.origin();
-		Random rand = ctx.random();
+		RandomSource rand = ctx.random();
 		BlockState state = world.getBlockState(pos);
 		BlockState downState = world.getBlockState(pos.below());
 		BlockState upState = world.getBlockState(pos.above());

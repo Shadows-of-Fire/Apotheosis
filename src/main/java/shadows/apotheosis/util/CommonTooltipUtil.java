@@ -12,6 +12,7 @@ import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,7 +31,7 @@ public class CommonTooltipUtil {
 		LootRarity rarity = LootRarity.byId(entity.getPersistentData().getString("apoth.rarity"));
 		if (rarity == null) return;
 		tooltip.accept(Component.translatable("info.apotheosis.boss", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
-		tooltip.accept(Component.empty());
+		tooltip.accept(CommonComponents.EMPTY);
 		tooltip.accept(Component.translatable("info.apotheosis.boss_modifiers").withStyle(ChatFormatting.GRAY));
 		AttributeMap map = entity.getAttributes();
 		ForgeRegistries.ATTRIBUTES.getValues().stream().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {

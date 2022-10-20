@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -17,9 +16,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -111,17 +111,17 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 	 * Generates (but does not spawn) the result of this BossItem.
 	 * @param world The world to create the entity in.
 	 * @param pos The location to place the entity.  Will be centered (+0.5, +0.5).
-	 * @param rand A random, used for selection of boss stats.
+	 * @param random A random, used for selection of boss stats.
 	 * @return The newly created boss.
 	 */
-	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, Random rand, float luck) {
+	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
 		Mob entity = (Mob) this.entity.create(world.getLevel());
 		if (this.customNbt != null) entity.load(this.customNbt);
-		this.initBoss(rand, entity, luck);
+		this.initBoss(random, entity, luck);
 		// Re-read here so we can apply certain things after the boss has been modified
 		// But only mob-specific things, not a full load()
 		if (this.customNbt != null) entity.readAdditionalSaveData(this.customNbt);
-		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, rand.nextFloat() * 360.0F, 0.0F);
+		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
 		return entity;
 	}
 
@@ -130,7 +130,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 	 * @param rand
 	 * @param entity
 	 */
-	public void initBoss(Random rand, Mob entity, float luck) {
+	public void initBoss(RandomSource rand, Mob entity, float luck) {
 		LootRarity rarity = LootRarity.random(rand, luck, this);
 		BossStats stats = this.stats.get(rarity);
 		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
@@ -190,32 +190,32 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 		entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
 	}
 
-	public ItemStack modifyBossItem(ItemStack stack, Random random, String bossName, float luck, LootRarity rarity) {
+	public ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity) {
 		BossStats stats = this.stats.get(rarity);
-		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(random, stack, Apotheosis.enableEnch ? stats.enchLevels[2] : stats.enchLevels[3], true);
+		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[2] : stats.enchLevels[3], true);
 		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max)), stack);
 
-		NameHelper.setItemName(random, stack);
-		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, random);
+		NameHelper.setItemName(rand, stack);
+		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
 
 		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName) + " ";
 		Component name = AffixHelper.getName(stack);
-		if (name instanceof TranslatableComponent tc) {
-			Component copy = Component.translatable(bossOwnerName + tc.getKey(), tc.getArgs()).withStyle(tc.getStyle());
+		if (name.getContents() instanceof TranslatableContents tc) {
+			Component copy = Component.translatable(bossOwnerName + tc.getKey(), tc.getArgs()).withStyle(name.getStyle());
 			AffixHelper.setName(stack, copy);
 		}
 
 		Map<Enchantment, Integer> enchMap = new HashMap<>();
 		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
-			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + random.nextInt(2)));
+			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + rand.nextInt(2)));
 		}
 
 		if (AdventureConfig.curseBossItems) {
 			final ItemStack stk = stack; //Lambda rules require this instead of a direct reference to stack
 			List<Enchantment> curses = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter(e -> e.canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
 			if (!curses.isEmpty()) {
-				Enchantment curse = curses.get(random.nextInt(curses.size()));
-				enchMap.put(curse, Mth.nextInt(random, 1, EnchHooks.getMaxLevel(curse)));
+				Enchantment curse = curses.get(rand.nextInt(curses.size()));
+				enchMap.put(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse)));
 			}
 		}
 

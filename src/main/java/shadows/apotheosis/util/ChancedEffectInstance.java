@@ -1,7 +1,6 @@
 package shadows.apotheosis.util;
 
 import java.lang.reflect.Type;
-import java.util.Random;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -10,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -46,7 +46,7 @@ public class ChancedEffectInstance {
 		return this.effect;
 	}
 
-	public MobEffectInstance createInstance(Random rand, int duration) {
+	public MobEffectInstance createInstance(RandomSource rand, int duration) {
 		return new MobEffectInstance(this.effect, duration, this.amp.generateInt(rand), this.ambient, this.visible);
 	}
 

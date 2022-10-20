@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.util.CommonTooltipUtil;
 import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
@@ -22,7 +23,6 @@ import snownee.jade.api.ITooltip;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
-import snownee.jade.api.TooltipPosition;
 import snownee.jade.api.WailaPlugin;
 import snownee.jade.api.config.IPluginConfig;
 
@@ -36,7 +36,7 @@ public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvi
 
 	@Override
 	public void registerClient(IWailaClientRegistration reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, Entity.class);
+		reg.registerEntityComponent(this, Entity.class);
 	}
 
 	@Override
@@ -72,6 +72,11 @@ public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvi
 			});
 			tag.put("apoth.modifiers", bossAttribs);
 		}
+	}
+
+	@Override
+	public ResourceLocation getUid() {
+		return Apotheosis.loc("adventure");
 	}
 
 }

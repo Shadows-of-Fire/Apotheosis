@@ -1,6 +1,6 @@
 package shadows.apotheosis.util;
 
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 /**
  * A class that helps to generate random values within a range.
@@ -9,7 +9,7 @@ public class RandomIntRange {
 
 	public static final RandomIntRange ZERO = new RandomIntRange(0, 1) {
 		@Override
-		public int generateInt(Random rand) {
+		public int generateInt(RandomSource rand) {
 			return 0;
 		}
 	};
@@ -35,7 +35,7 @@ public class RandomIntRange {
 		return this.max;
 	}
 
-	public int generateInt(Random rand) {
+	public int generateInt(RandomSource rand) {
 		return this.min + rand.nextInt(Math.max(1, this.max - this.min));
 	}
 }

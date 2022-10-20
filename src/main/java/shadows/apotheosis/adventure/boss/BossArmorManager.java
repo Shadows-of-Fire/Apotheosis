@@ -2,26 +2,26 @@ package shadows.apotheosis.adventure.boss;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.util.GearSet;
+import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.placebo.json.ItemAdapter;
 import shadows.placebo.json.NBTAdapter;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
@@ -37,10 +37,10 @@ public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 	/**
 	 * Returns a random weighted armor set based on the given random (and predicate, if applicable).
 	 */
-	public <T extends Predicate<GearSet>> GearSet getRandomSet(Random rand, float luck, @Nullable List<T> filter) {
-		if (filter == null || filter.isEmpty()) return this.getRandomItem(rand, luck);
+	public <T extends Predicate<GearSet>> GearSet getRandomSet(RandomSource rand, float luck, @Nullable List<SetPredicate> armorSets) {
+		if (armorSets == null || armorSets.isEmpty()) return this.getRandomItem(rand, luck);
 		List<GearSet> valid = this.registry.values().stream().filter(e -> {
-			for (Predicate<GearSet> f : filter)
+			for (Predicate<GearSet> f : armorSets)
 				if (f.test(e)) return true;
 			return false;
 		}).collect(Collectors.toList());
@@ -53,7 +53,7 @@ public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new SerializerBuilder<GearSet>("Boss Gear Set").withJsonDeserializer(obj -> GSON.fromJson(obj, GearSet.class)));
+		this.registerSerializer(DEFAULT, new PSerializer.Builder<GearSet>("Boss Gear Set").withJsonDeserializer(obj -> GSON.fromJson(obj, GearSet.class)));
 	}
 
 }

@@ -1,12 +1,10 @@
 package shadows.apotheosis.adventure.commands;
 
-import java.awt.TextComponent;
-
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
-import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -20,8 +18,8 @@ public class CategoryCheckCommand {
 			ItemStack stack = p.getMainHandItem();
 			LootCategory cat = LootCategory.forItem(stack);
 			EquipmentSlot[] slots = cat == null ? null : cat.getSlots(stack);
-			p.sendMessage(Component.literal("Loot Category - " + (cat == null ? "null" : cat.name().toLowerCase())), Util.NIL_UUID);
-			p.sendMessage(Component.literal("Equipment Slot - " + (slots == null ? "null" : toStr(slots))), Util.NIL_UUID);
+			p.sendSystemMessage(Component.literal("Loot Category - " + (cat == null ? "null" : cat.name().toLowerCase())));
+			p.sendSystemMessage(Component.literal("Equipment Slot - " + (slots == null ? "null" : toStr(slots))));
 			return 0;
 		}));
 	}
