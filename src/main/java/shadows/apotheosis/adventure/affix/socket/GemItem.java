@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -81,6 +82,11 @@ public class GemItem extends Item {
 		setVariant(stack, gem.getVariant());
 		setStoredBonus(stack, gem.attribute, new AttributeModifier("GemBonus_" + gem.getId(), gem.value.get(rand.nextFloat()), gem.operation));
 		return stack;
+	}
+
+	@Override
+	public boolean canBeHurtBy(DamageSource src) {
+		return super.canBeHurtBy(src) && src != DamageSource.ANVIL;
 	}
 
 	/**
