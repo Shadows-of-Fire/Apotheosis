@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -15,7 +17,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.json.DimWeightedJsonReloadListener;
 import shadows.placebo.json.JsonUtil;
-import shadows.placebo.json.SerializerBuilder;
 
 public class GemManager extends DimWeightedJsonReloadListener<Gem> {
 

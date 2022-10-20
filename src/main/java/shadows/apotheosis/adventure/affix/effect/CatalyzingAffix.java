@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -35,7 +34,7 @@ public class CatalyzingAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc").withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc").withStyle(ChatFormatting.YELLOW));
 	}
 
 	@Override

@@ -30,7 +30,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -78,6 +77,7 @@ import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.loot.LootSystem;
+import shadows.placebo.util.RegistryEvent.Register;
 
 public class AdventureModule {
 

@@ -201,7 +201,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName) + " ";
 		Component name = AffixHelper.getName(stack);
 		if (name instanceof TranslatableComponent tc) {
-			Component copy = new TranslatableComponent(bossOwnerName + tc.getKey(), tc.getArgs()).withStyle(tc.getStyle());
+			Component copy = Component.translatable(bossOwnerName + tc.getKey(), tc.getArgs()).withStyle(tc.getStyle());
 			AffixHelper.setName(stack, copy);
 		}
 

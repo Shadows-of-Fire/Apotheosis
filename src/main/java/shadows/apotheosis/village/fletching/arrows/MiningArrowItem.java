@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
@@ -37,7 +36,7 @@ public class MiningArrowItem extends ArrowItem implements IApothArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(new TranslatableComponent("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
+		tooltip.add(Component.translatable("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
 	}
 
 	@Override

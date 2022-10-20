@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -36,7 +35,7 @@ public class EnchantmentIngredient extends Ingredient {
 	private static ItemStack format(ItemLike item, Enchantment enchantment, int minLevel) {
 		ItemStack stack = new ItemStack(item);
 		EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, minLevel), stack);
-		PlaceboUtil.addLore(stack, new TranslatableComponent("ingredient.apotheosis.ench", ((MutableComponent) enchantment.getFullname(minLevel)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC)));
+		PlaceboUtil.addLore(stack, Component.translatable("ingredient.apotheosis.ench", ((MutableComponent) enchantment.getFullname(minLevel)).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC)));
 		return stack;
 	}
 

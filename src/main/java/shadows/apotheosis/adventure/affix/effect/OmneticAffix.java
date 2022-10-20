@@ -10,7 +10,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
@@ -43,7 +42,7 @@ public class OmneticAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", new TranslatableComponent("misc.apotheosis." + this.values.get(rarity).name)).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc", Component.translatable("misc.apotheosis." + this.values.get(rarity).name)).withStyle(ChatFormatting.YELLOW));
 	}
 
 	public void harvest(HarvestCheck e) {

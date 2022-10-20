@@ -2,16 +2,6 @@ package shadows.apotheosis.adventure.compat;
 
 import com.google.common.base.Predicates;
 
-import mcp.mobius.waila.api.EntityAccessor;
-import mcp.mobius.waila.api.IEntityComponentProvider;
-import mcp.mobius.waila.api.IServerDataProvider;
-import mcp.mobius.waila.api.ITooltip;
-import mcp.mobius.waila.api.IWailaClientRegistration;
-import mcp.mobius.waila.api.IWailaCommonRegistration;
-import mcp.mobius.waila.api.IWailaPlugin;
-import mcp.mobius.waila.api.TooltipPosition;
-import mcp.mobius.waila.api.WailaPlugin;
-import mcp.mobius.waila.api.config.IPluginConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -25,6 +15,16 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.util.CommonTooltipUtil;
+import snownee.jade.api.EntityAccessor;
+import snownee.jade.api.IEntityComponentProvider;
+import snownee.jade.api.IServerDataProvider;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.IWailaClientRegistration;
+import snownee.jade.api.IWailaCommonRegistration;
+import snownee.jade.api.IWailaPlugin;
+import snownee.jade.api.TooltipPosition;
+import snownee.jade.api.WailaPlugin;
+import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
 public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvider, IServerDataProvider<Entity> {

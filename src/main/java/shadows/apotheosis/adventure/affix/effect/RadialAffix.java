@@ -18,7 +18,6 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +30,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
@@ -59,7 +58,7 @@ public class RadialAffix extends Affix {
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		RadialData data = this.getTrueLevel(rarity, level);
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc" + data.x, data.y).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc" + data.x, data.y).withStyle(ChatFormatting.YELLOW));
 	}
 
 	// EventPriority.LOW

@@ -14,7 +14,6 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -64,8 +63,8 @@ public class EnchJEIPlugin implements IModPlugin {
 			)
 		);
 		//Formatter::on
-		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.enchanting"));
-		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.library"));
+		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, Component.translatable("info.apotheosis.enchanting"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY), VanillaTypes.ITEM, Component.translatable("info.apotheosis.library"));
 		List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(shadows.apotheosis.Apoth.RecipeTypes.INFUSION);
 		recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
 		reg.addRecipes(EnchantingCategory.TYPE, recipes);

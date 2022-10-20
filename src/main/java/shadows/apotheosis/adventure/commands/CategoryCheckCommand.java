@@ -1,11 +1,12 @@
 package shadows.apotheosis.adventure.commands;
 
+import java.awt.TextComponent;
+
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.minecraft.Util;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

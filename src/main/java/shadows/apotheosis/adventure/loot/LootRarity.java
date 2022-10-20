@@ -28,7 +28,6 @@ import com.google.gson.JsonSerializer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
@@ -36,6 +35,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
 import shadows.placebo.color.GradientColor;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
@@ -170,7 +170,7 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	}
 
 	public Component toComponent() {
-		return new TranslatableComponent("rarity.apoth." + this.id).withStyle(Style.EMPTY.withColor(this.color));
+		return Component.translatable("rarity.apoth." + this.id).withStyle(Style.EMPTY.withColor(this.color));
 	}
 
 	@Override

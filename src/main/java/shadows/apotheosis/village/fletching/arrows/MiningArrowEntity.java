@@ -43,11 +43,11 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 	}
 
 	public MiningArrowEntity(Level world) {
-		this(Apoth.Entities.MINING_ARROW, world);
+		this(Apoth.Entities.MINING_ARROW.get(), world);
 	}
 
 	public MiningArrowEntity(LivingEntity shooter, Level world, ItemStack breakerItem, Type type) {
-		super(Apoth.Entities.MINING_ARROW, shooter, world);
+		super(Apoth.Entities.MINING_ARROW.get(), shooter, world);
 		this.breakerItem = breakerItem;
 		this.pickup = AbstractArrow.Pickup.DISALLOWED;
 		this.type = type;
@@ -55,7 +55,7 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 	}
 
 	public MiningArrowEntity(Level world, double x, double y, double z, ItemStack breakerItem, Type type) {
-		super(Apoth.Entities.MINING_ARROW, x, y, z, world);
+		super(Apoth.Entities.MINING_ARROW.get(), x, y, z, world);
 		this.pickup = AbstractArrow.Pickup.DISALLOWED;
 		this.breakerItem = breakerItem;
 		this.type = type;
@@ -225,8 +225,8 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 	}
 
 	public static enum Type {
-		IRON(new ResourceLocation(Apotheosis.MODID, "textures/entity/iron_mining_arrow.png")),
-		DIAMOND(new ResourceLocation(Apotheosis.MODID, "textures/entity/diamond_mining_arrow.png"));
+		IRON(new ResourceLocation(Apotheosis.MODID, "textures/entity/iron_MINING_ARROW.get().png")),
+		DIAMOND(new ResourceLocation(Apotheosis.MODID, "textures/entity/diamond_MINING_ARROW.get().png"));
 
 		private final ResourceLocation texture;
 

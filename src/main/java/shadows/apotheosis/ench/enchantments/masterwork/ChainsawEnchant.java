@@ -21,7 +21,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.util.BlockUtil;
 import shadows.placebo.util.PlaceboTaskQueue;

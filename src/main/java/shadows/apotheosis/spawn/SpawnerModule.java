@@ -11,7 +11,7 @@ import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -27,9 +27,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -47,6 +46,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerItem;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
+import shadows.placebo.util.RegistryEvent.Register;
 
 public class SpawnerModule {
 
@@ -73,34 +73,34 @@ public class SpawnerModule {
 	public void blocks(Register<Block> e) {
 		ApothSpawnerBlock spawner = new ApothSpawnerBlock();
 		PlaceboUtil.overrideStates(Blocks.SPAWNER, spawner);
-		e.getRegistry().register(spawner);
+		e.getRegistry().register(spawner, new ResourceLocation("minecraft", "spawner"));
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new ApothSpawnerItem());
+		e.getRegistry().register(new ApothSpawnerItem(), new ResourceLocation("minecraft", "spawner"));
 	}
 
 	@SubscribeEvent
 	public void serializers(Register<RecipeSerializer<?>> e) {
-		e.getRegistry().register(SpawnerModifier.SERIALIZER.setRegistryName("spawner_modifier"));
+		e.getRegistry().register(SpawnerModifier.SERIALIZER, "spawner_modifier");
 	}
 
 	@SubscribeEvent
 	public void enchants(Register<Enchantment> e) {
-		e.getRegistry().register(new CapturingEnchant().setRegistryName(Apotheosis.MODID, "capturing"));
+		e.getRegistry().register(new CapturingEnchant(), "capturing");
 	}
 
 	public void dropsEvent(LivingDropsEvent e) {
-		Apoth.Enchantments.CAPTURING.handleCapturing(e);
+		Apoth.Enchantments.CAPTURING.get().handleCapturing(e);
 	}
 
 	public void handleUseItem(RightClickBlock e) {
-		if (e.getWorld().getBlockEntity(e.getPos()) instanceof ApothSpawnerTile) {
+		if (e.getLevel().getBlockEntity(e.getPos()) instanceof ApothSpawnerTile) {
 			ItemStack s = e.getItemStack();
 			if (s.getItem() instanceof SpawnEggItem egg) {
 				EntityType<?> type = egg.getType(s.getTag());
-				if (bannedMobs.contains(type.getRegistryName())) e.setCanceled(true);
+				if (bannedMobs.contains(EntityType.getKey(type))) e.setCanceled(true);
 			}
 		}
 	}
@@ -109,12 +109,12 @@ public class SpawnerModule {
 		ItemStack s = e.getItemStack();
 		if (s.getItem() instanceof SpawnEggItem egg) {
 			EntityType<?> type = egg.getType(s.getTag());
-			if (bannedMobs.contains(type.getRegistryName())) e.getToolTip().add(new TranslatableComponent("misc.apotheosis.banned").withStyle(ChatFormatting.GRAY));
+			if (bannedMobs.contains(EntityType.getKey(type))) e.getToolTip().add(Component.translatable("misc.apotheosis.banned").withStyle(ChatFormatting.GRAY));
 		}
 	}
 
-	public void tickDumbMobs(LivingUpdateEvent e) {
-		if (e.getEntityLiving() instanceof Mob mob) {
+	public void tickDumbMobs(LivingTickEvent e) {
+		if (e.getEntity() instanceof Mob mob) {
 			if (!mob.level.isClientSide && mob.isNoAi() && mob.getPersistentData().getBoolean("apotheosis:movable")) {
 				mob.setNoAi(false);
 				mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));

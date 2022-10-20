@@ -4,7 +4,6 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth;
@@ -16,7 +15,7 @@ public class GardenJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enableGarden) return;
-		reg.addIngredientInfo(new ItemStack(Apoth.Items.ENDER_LEAD), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.ender_lead"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.ENDER_LEAD), VanillaTypes.ITEM, Component.translatable("info.apotheosis.ender_lead"));
 	}
 
 	@Override

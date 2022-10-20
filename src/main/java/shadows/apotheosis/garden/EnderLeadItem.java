@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -90,9 +89,9 @@ public class EnderLeadItem extends Item {
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.hasTag()) {
 			CompoundTag tag = stack.getOrCreateTagElement("entity_data");
-			if (tag.isEmpty()) tooltip.add(new TranslatableComponent("info.apotheosis.noentity").withStyle(ChatFormatting.GRAY));
+			if (tag.isEmpty()) tooltip.add(Component.translatable("info.apotheosis.noentity").withStyle(ChatFormatting.GRAY));
 			else {
-				tooltip.add(new TranslatableComponent("info.apotheosis.containedentity", stack.getTag().getString("name")).withStyle(ChatFormatting.GRAY));
+				tooltip.add(Component.translatable("info.apotheosis.containedentity", stack.getTag().getString("name")).withStyle(ChatFormatting.GRAY));
 			}
 		}
 	}

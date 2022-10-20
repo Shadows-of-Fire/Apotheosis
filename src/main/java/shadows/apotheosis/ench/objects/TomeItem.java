@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -52,9 +51,9 @@ public class TomeItem extends BookItem implements IEnchantableItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(new TranslatableComponent("info.apotheosis." + this.getRegistryName().getPath()).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("info.apotheosis." + this.getRegistryName().getPath()).withStyle(ChatFormatting.GRAY));
 		if (stack.isEnchanted()) {
-			tooltip.add(new TranslatableComponent("info.apotheosis.tome_error").withStyle(ChatFormatting.RED));
+			tooltip.add(Component.translatable("info.apotheosis.tome_error").withStyle(ChatFormatting.RED));
 		}
 	}
 

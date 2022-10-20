@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix;
 
+import java.awt.TextComponent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +17,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.loot.LootCategory;
@@ -94,10 +93,10 @@ public class AffixHelper {
 	}
 
 	public static void setRarity(ItemStack stack, LootRarity rarity) {
-		Component comp = new TranslatableComponent("%s", new TextComponent("")).withStyle(Style.EMPTY.withColor(rarity.color()));
+		Component comp = Component.translatable("%s", new TextComponent("")).withStyle(Style.EMPTY.withColor(rarity.color()));
 		CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
 		afxData.putString(NAME, Component.Serializer.toJson(comp));
-		//if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack, new TranslatableComponent("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
+		//if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack, Component.translatable("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
 		afxData.putString(RARITY, rarity.id());
 	}
 

@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,7 +22,6 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.util.GearSet;
 import shadows.placebo.json.ItemAdapter;
 import shadows.placebo.json.NBTAdapter;
-import shadows.placebo.json.SerializerBuilder;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {

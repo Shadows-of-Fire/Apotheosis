@@ -1,5 +1,7 @@
 package shadows.apotheosis.adventure.client.from_mantle;
 
+import static net.minecraft.client.renderer.block.model.BlockModel.FACE_BAKERY;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,8 +41,6 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.IModelConfiguration;
 import net.minecraftforge.client.model.IModelLoader;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
-
-import static net.minecraft.client.renderer.block.model.BlockModel.FACE_BAKERY;
 
 /**
  * Blonet.minecraft.client.renderer.block.model.BlockModeletting element lighting. Similar to {@link MantleItemLayerModel} but for blocks

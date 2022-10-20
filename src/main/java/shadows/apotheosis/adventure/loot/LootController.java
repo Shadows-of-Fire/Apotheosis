@@ -70,7 +70,7 @@ public class LootController {
 		}
 
 		Collections.shuffle(nameList, rand);
-		TranslatableComponent name = (TranslatableComponent) new TranslatableComponent(nameList.size() > 1 ? "%s %s %s" : "%s %s", "", "", "").withStyle(Style.EMPTY.withColor(rarity.color()));
+		TranslatableComponent name = (TranslatableComponent) Component.translatable(nameList.size() > 1 ? "%s %s %s" : "%s %s", "", "", "").withStyle(Style.EMPTY.withColor(rarity.color()));
 		name.getArgs()[0] = nameList.get(0).getName(true);
 		if (nameList.size() > 1) name.getArgs()[2] = nameList.get(1).getName(false);
 

@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -133,15 +132,15 @@ public class PotionAffix extends Affix {
 	}
 
 	public static Component toComponent(MobEffectInstance inst) {
-		MutableComponent mutablecomponent = new TranslatableComponent(inst.getDescriptionId());
+		MutableComponent mutablecomponent = Component.translatable(inst.getDescriptionId());
 		MobEffect mobeffect = inst.getEffect();
 
 		if (inst.getAmplifier() > 0) {
-			mutablecomponent = new TranslatableComponent("potion.withAmplifier", mutablecomponent, new TranslatableComponent("potion.potency." + inst.getAmplifier()));
+			mutablecomponent = Component.translatable("potion.withAmplifier", mutablecomponent, Component.translatable("potion.potency." + inst.getAmplifier()));
 		}
 
 		if (inst.getDuration() > 20) {
-			mutablecomponent = new TranslatableComponent("potion.withDuration", mutablecomponent, MobEffectUtil.formatDuration(inst, 1));
+			mutablecomponent = Component.translatable("potion.withDuration", mutablecomponent, MobEffectUtil.formatDuration(inst, 1));
 		}
 
 		return mutablecomponent.withStyle(mobeffect.getCategory().getTooltipFormatting());
@@ -231,7 +230,7 @@ public class PotionAffix extends Affix {
 		}
 
 		public MutableComponent toComponent(Object... args) {
-			return new TranslatableComponent("affix.apotheosis.target." + this.id, args);
+			return Component.translatable("affix.apotheosis.target." + this.id, args);
 		}
 	}
 

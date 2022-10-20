@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,8 +26,6 @@ import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.objects.IEnchantingBlock;
 import shadows.apotheosis.ench.table.EnchantingStatManager.BlockStats;
 import shadows.placebo.json.PlaceboJsonReloadListener;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
-import shadows.placebo.json.SerializerBuilder;
 
 public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats> {
 

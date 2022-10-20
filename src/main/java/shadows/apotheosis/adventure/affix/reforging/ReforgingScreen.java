@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix.reforging;
 
+import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +16,6 @@ import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +38,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 		super(menu, inv, title);
 		this.titleLabelY = 5;
 		Arrays.fill(choices, ItemStack.EMPTY);
-		this.title = new TranslatableComponent("container.apotheosis.reforge");
+		this.title = Component.translatable("container.apotheosis.reforge");
 	}
 
 	public boolean shouldRecompute() {
@@ -85,17 +84,17 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 			int cost = (slot + 1) * 2;
 			List<Component> tooltips = new ArrayList<>();
 
-			tooltips.add(new TranslatableComponent("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+			tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
 			tooltips.add(TextComponent.EMPTY);
-			tooltips.add(new TranslatableComponent("%s %s", cost, Apoth.Items.GEM_DUST.getName(ItemStack.EMPTY)).withStyle(dust < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
-			tooltips.add(new TranslatableComponent("%s %s", cost, this.menu.getSlot(1).getItem().getHoverName()).withStyle(mats < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
+			tooltips.add(Component.translatable("%s %s", cost, Apoth.Items.GEM_DUST.getName(ItemStack.EMPTY)).withStyle(dust < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
+			tooltips.add(Component.translatable("%s %s", cost, this.menu.getSlot(1).getItem().getHoverName()).withStyle(mats < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
 
 			int levels = this.minecraft.player.experienceLevel;
 			int levelReq = this.menu.getLevelCost(slot, rarity);
 
 			String key = levels >= levelReq ? "container.enchant.level.many" : "container.enchant.level.requirement";
 
-			tooltips.add(new TranslatableComponent(key, levels >= levelReq ? cost : levelReq).withStyle(levels < levelReq ? ChatFormatting.RED : ChatFormatting.GRAY));
+			tooltips.add(Component.translatable(key, levels >= levelReq ? cost : levelReq).withStyle(levels < levelReq ? ChatFormatting.RED : ChatFormatting.GRAY));
 
 			int k2 = x - (xCenter + 60);
 			int l2 = y - (yCenter + 14 + 19 * slot);

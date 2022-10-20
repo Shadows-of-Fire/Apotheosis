@@ -98,20 +98,20 @@ public class PotionCharmItem extends Item {
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotion(stack);
 			MobEffectInstance effect = p.getEffects().get(0);
-			TranslatableComponent potionCmp = new TranslatableComponent(effect.getDescriptionId());
+			TranslatableComponent potionCmp = Component.translatable(effect.getDescriptionId());
 			if (effect.getAmplifier() > 0) {
-				potionCmp = new TranslatableComponent("potion.withAmplifier", potionCmp, new TranslatableComponent("potion.potency." + effect.getAmplifier()));
+				potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));
 			}
 			potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
-			tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".desc", potionCmp).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable(this.getDescriptionId() + ".desc", potionCmp).withStyle(ChatFormatting.GRAY));
 			boolean enabled = stack.getOrCreateTag().getBoolean("charm_enabled");
-			TranslatableComponent enabledCmp = new TranslatableComponent(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
+			TranslatableComponent enabledCmp = Component.translatable(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
 			enabledCmp.withStyle(enabled ? ChatFormatting.BLUE : ChatFormatting.RED);
 			if (effect.getDuration() > 20) {
-				potionCmp = new TranslatableComponent("potion.withDuration", potionCmp, MobEffectUtil.formatDuration(effect, 1));
+				potionCmp = Component.translatable("potion.withDuration", potionCmp, MobEffectUtil.formatDuration(effect, 1));
 			}
 			potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
-			tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".desc3", potionCmp).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable(this.getDescriptionId() + ".desc3", potionCmp).withStyle(ChatFormatting.GRAY));
 		}
 	}
 
@@ -123,14 +123,14 @@ public class PotionCharmItem extends Item {
 
 	@Override
 	public Component getName(ItemStack stack) {
-		if (!hasPotion(stack)) return new TranslatableComponent("item.apotheosis.potion_charm_broke");
+		if (!hasPotion(stack)) return Component.translatable("item.apotheosis.potion_charm_broke");
 		Potion p = PotionUtils.getPotion(stack);
 		MobEffectInstance effect = p.getEffects().get(0);
-		TranslatableComponent potionCmp = new TranslatableComponent(effect.getDescriptionId());
+		TranslatableComponent potionCmp = Component.translatable(effect.getDescriptionId());
 		if (effect.getAmplifier() > 0) {
-			potionCmp = new TranslatableComponent("potion.withAmplifier", potionCmp, new TranslatableComponent("potion.potency." + effect.getAmplifier()));
+			potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));
 		}
-		return new TranslatableComponent("item.apotheosis.potion_charm", potionCmp);
+		return Component.translatable("item.apotheosis.potion_charm", potionCmp);
 	}
 
 	public static boolean hasPotion(ItemStack stack) {

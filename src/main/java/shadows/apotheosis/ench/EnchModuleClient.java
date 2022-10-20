@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -34,8 +33,8 @@ public class EnchModuleClient {
 	@SubscribeEvent
 	public void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
-		if (i == Items.COBWEB) e.getToolTip().add(new TranslatableComponent("info.apotheosis.cobweb").withStyle(ChatFormatting.GRAY));
-		else if (i == Apoth.Items.PRISMATIC_WEB) e.getToolTip().add(new TranslatableComponent("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
+		if (i == Items.COBWEB) e.getToolTip().add(Component.translatable("info.apotheosis.cobweb").withStyle(ChatFormatting.GRAY));
+		else if (i == Apoth.Items.PRISMATIC_WEB) e.getToolTip().add(Component.translatable("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
 		else if (i instanceof BlockItem) {
 			Block block = ((BlockItem) i).getBlock();
 			Level world = Minecraft.getInstance().level;
@@ -60,24 +59,24 @@ public class EnchModuleClient {
 			float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
 			int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
 			if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
-				e.getToolTip().add(new TranslatableComponent("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
+				e.getToolTip().add(Component.translatable("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
 			}
 			if (eterna != 0) {
 				if (eterna > 0) {
-					e.getToolTip().add(new TranslatableComponent("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
-				} else e.getToolTip().add(new TranslatableComponent("info.apotheosis.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
+					e.getToolTip().add(Component.translatable("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
+				} else e.getToolTip().add(Component.translatable("info.apotheosis.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
 			}
 			if (quanta != 0) {
-				e.getToolTip().add(new TranslatableComponent("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
+				e.getToolTip().add(Component.translatable("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
 			}
 			if (arcana != 0) {
-				e.getToolTip().add(new TranslatableComponent("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
+				e.getToolTip().add(Component.translatable("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
 			}
 			if (rectification != 0) {
-				e.getToolTip().add(new TranslatableComponent("info.apotheosis.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
+				e.getToolTip().add(Component.translatable("info.apotheosis.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
 			}
 			if (clues != 0) {
-				e.getToolTip().add(new TranslatableComponent("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+				e.getToolTip().add(Component.translatable("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
 			}
 		}
 	}

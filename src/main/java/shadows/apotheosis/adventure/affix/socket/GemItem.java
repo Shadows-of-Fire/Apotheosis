@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix.socket;
 
+import java.awt.TextComponent;
 import java.util.List;
 import java.util.Random;
 
@@ -10,8 +11,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -42,7 +41,7 @@ public class GemItem extends Item {
 			return;
 		}
 		tooltip.add(TextComponent.EMPTY);
-		tooltip.add(new TranslatableComponent("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
+		tooltip.add(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
 		tooltip.add(toComponent(bonus.getKey(), bonus.getValue()));
 	}
 
@@ -105,10 +104,10 @@ public class GemItem extends Item {
 		int code = modif.getOperation().ordinal();
 		String key = code == 0 ? "attribute.modifier." : "attribute.modifier.apotheosis.";
 		if (amt > 0.0D) {
-			return new TranslatableComponent(key + "plus." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
+			return Component.translatable(key + "plus." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
 		} else {
 			amt *= -1.0D;
-			return new TranslatableComponent(key + "take." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
+			return Component.translatable(key + "take." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
 		}
 	}
 

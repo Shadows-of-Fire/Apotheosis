@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.client;
 
+import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,8 +48,6 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -295,7 +294,7 @@ public class AdventureModuleClient {
 			modifierMap.values().removeIf(m -> skips.contains(m.getId()));
 
 			tooltip.accept(TextComponent.EMPTY);
-			tooltip.accept(new TranslatableComponent("item.modifiers." + group).withStyle(ChatFormatting.GRAY));
+			tooltip.accept(Component.translatable("item.modifiers." + group).withStyle(ChatFormatting.GRAY));
 
 			if (modifierMap.isEmpty()) return;
 
@@ -322,17 +321,17 @@ public class AdventureModuleClient {
 					else amt *= 1 + modif.getAmount();
 				}
 				amt += EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
-				MutableComponent text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(Attributes.ATTACK_DAMAGE.getDescriptionId()));
+				MutableComponent text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId()));
 				tooltip.accept(padded(" ", text).withStyle(dmgModifs.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
 				if (Screen.hasShiftDown() && !dmgModifs.isEmpty()) {
-					text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), new TranslatableComponent(Attributes.ATTACK_DAMAGE.getDescriptionId()));
+					text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId()));
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
 					for (AttributeModifier modifier : dmgModifs) {
 						tooltip.accept(list().append(GemItem.toComponent(Attributes.ATTACK_DAMAGE, modifier)));
 					}
 					float bonus = EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
 					if (bonus > 0) {
-						tooltip.accept(list().append(new TranslatableComponent("attribute.modifier.plus.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(bonus), new TranslatableComponent(Attributes.ATTACK_DAMAGE.getDescriptionId())).withStyle(ChatFormatting.BLUE)));
+						tooltip.accept(list().append(Component.translatable("attribute.modifier.plus.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(bonus), Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId())).withStyle(ChatFormatting.BLUE)));
 					}
 				}
 			}
@@ -346,10 +345,10 @@ public class AdventureModuleClient {
 					else if (modif.getOperation() == Operation.MULTIPLY_BASE) amt += modif.getAmount() * base;
 					else amt *= 1 + modif.getAmount();
 				}
-				MutableComponent text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), new TranslatableComponent(Attributes.ATTACK_SPEED.getDescriptionId()));
+				MutableComponent text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()));
 				tooltip.accept(new TextComponent(" ").append(text).withStyle(spdModifs.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
 				if (Screen.hasShiftDown() && !spdModifs.isEmpty()) {
-					text = new TranslatableComponent("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), new TranslatableComponent(Attributes.ATTACK_SPEED.getDescriptionId()));
+					text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()));
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
 					for (AttributeModifier modifier : spdModifs) {
 						tooltip.accept(list().append(GemItem.toComponent(Attributes.ATTACK_SPEED, modifier)));
@@ -379,7 +378,7 @@ public class AdventureModuleClient {
 						else style = sums[i] < 0 ? Style.EMPTY.withColor(ChatFormatting.RED) : Style.EMPTY.withColor(ChatFormatting.BLUE);
 						if (sums[i] < 0) sums[i] *= -1;
 						if (attr == Attributes.KNOCKBACK_RESISTANCE) sums[i] *= 10;
-						tooltip.accept(new TranslatableComponent(key, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(sums[i]), new TranslatableComponent(attr.getDescriptionId())).withStyle(style));
+						tooltip.accept(Component.translatable(key, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(sums[i]), Component.translatable(attr.getDescriptionId())).withStyle(style));
 						if (merged[i] && Screen.hasShiftDown()) {
 							shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(GemItem.toComponent(attr, modif))));
 						}

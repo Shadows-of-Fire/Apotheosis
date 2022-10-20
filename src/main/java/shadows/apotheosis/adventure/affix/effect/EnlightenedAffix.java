@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +36,7 @@ public class EnlightenedAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", values.get(rarity).getInt(level)).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc", values.get(rarity).getInt(level)).withStyle(ChatFormatting.YELLOW));
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -80,7 +79,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
 	public static Component getSocketDesc(ItemStack gem) {
 		Pair<Attribute, AttributeModifier> data = GemItem.getStoredBonus(gem);
-		if (data == null) return new TranslatableComponent("socket.apotheosis.empty");
+		if (data == null) return Component.translatable("socket.apotheosis.empty");
 		return GemItem.toComponent(data.getLeft(), data.getRight());
 	}
 

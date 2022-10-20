@@ -1,5 +1,6 @@
 package shadows.apotheosis.util;
 
+import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,6 @@ import com.google.common.base.Preconditions;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ArmorItem;

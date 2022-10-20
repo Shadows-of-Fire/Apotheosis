@@ -13,7 +13,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -107,7 +106,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
-		if (!stack.hasFoil()) tooltip.add(new TranslatableComponent("info.apotheosis.anvil").withStyle(ChatFormatting.GRAY));
+		if (!stack.hasFoil()) tooltip.add(Component.translatable("info.apotheosis.anvil").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

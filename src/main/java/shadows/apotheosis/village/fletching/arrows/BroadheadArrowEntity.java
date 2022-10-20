@@ -17,7 +17,7 @@ public class BroadheadArrowEntity extends Arrow {
 	}
 
 	public BroadheadArrowEntity(Level world) {
-		super(Apoth.Entities.BROADHEAD_ARROW, world);
+		super(Apoth.Entities.BROADHEAD_ARROW.get(), world);
 	}
 
 	public BroadheadArrowEntity(LivingEntity shooter, Level world) {
@@ -30,7 +30,7 @@ public class BroadheadArrowEntity extends Arrow {
 
 	@Override
 	protected ItemStack getPickupItem() {
-		return new ItemStack(Apoth.Items.BROADHEAD_ARROW);
+		return new ItemStack(Apoth.Items.BROADHEAD_ARROW.get());
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class BroadheadArrowEntity extends Arrow {
 
 	@Override
 	public EntityType<?> getType() {
-		return Apoth.Entities.BROADHEAD_ARROW;
+		return Apoth.Entities.BROADHEAD_ARROW.get();
 	}
 
 	@Override
@@ -50,16 +50,16 @@ public class BroadheadArrowEntity extends Arrow {
 
 	@Override
 	protected void doPostHurtEffects(LivingEntity living) {
-		MobEffectInstance bleed = living.getEffect(Apoth.Effects.BLEEDING);
+		MobEffectInstance bleed = living.getEffect(Apoth.Effects.BLEEDING.get());
 		if (bleed != null) {
-			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING.get(), bleed.getDuration() + 60, bleed.getAmplifier() + 1));
 		} else {
-			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING, 300));
+			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING.get(), 300));
 		}
 	}
 
 	public BroadheadArrowEntity bleed() {
-		this.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING, 300));
+		this.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING.get(), 300));
 		return this;
 	}
 }

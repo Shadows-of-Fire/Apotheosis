@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import shadows.apotheosis.Apoth;
@@ -16,6 +15,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
+import shadows.placebo.util.RegistryEvent.Register;
 
 public class GardenModule {
 

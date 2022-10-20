@@ -2,7 +2,6 @@ package shadows.apotheosis.village.fletching;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -21,11 +20,10 @@ import shadows.placebo.util.IReplacementBlock;
 
 public class ApothFletchingBlock extends FletchingTableBlock implements IReplacementBlock {
 
-	public static final Component NAME = new TranslatableComponent("apotheosis.recipes.fletching");
+	public static final Component NAME = Component.translatable("apotheosis.recipes.fletching");
 
 	public ApothFletchingBlock() {
 		super(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD));
-		this.setRegistryName("minecraft", "fletching_table");
 	}
 
 	@Override

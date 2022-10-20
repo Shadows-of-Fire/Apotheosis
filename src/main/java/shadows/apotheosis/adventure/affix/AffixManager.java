@@ -1,5 +1,7 @@
 package shadows.apotheosis.adventure.affix;
 
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -25,7 +27,6 @@ import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.placebo.json.PlaceboJsonReloadListener;
-import shadows.placebo.json.SerializerBuilder;
 
 public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 

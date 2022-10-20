@@ -45,7 +45,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -102,6 +101,7 @@ import shadows.placebo.config.Configuration;
 import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.loot.LootSystem;
 import shadows.placebo.util.PlaceboUtil;
+import shadows.placebo.util.RegistryEvent.Register;
 
 /**
  * Short document on enchanting methods:

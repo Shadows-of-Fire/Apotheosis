@@ -21,20 +21,20 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 	}
 
 	public ExplosiveArrowEntity(Level world) {
-		super(Apoth.Entities.EXPLOSIVE_ARROW, world);
+		super(Apoth.Entities.EXPLOSIVE_ARROW.get(), world);
 	}
 
 	public ExplosiveArrowEntity(LivingEntity shooter, Level world) {
-		super(Apoth.Entities.EXPLOSIVE_ARROW, shooter, world);
+		super(Apoth.Entities.EXPLOSIVE_ARROW.get(), shooter, world);
 	}
 
 	public ExplosiveArrowEntity(Level world, double x, double y, double z) {
-		super(Apoth.Entities.EXPLOSIVE_ARROW, x, y, z, world);
+		super(Apoth.Entities.EXPLOSIVE_ARROW.get(), x, y, z, world);
 	}
 
 	@Override
 	protected ItemStack getPickupItem() {
-		return new ItemStack(Apoth.Items.EXPLOSIVE_ARROW);
+		return new ItemStack(Apoth.Items.EXPLOSIVE_ARROW.get());
 	}
 
 	@Override

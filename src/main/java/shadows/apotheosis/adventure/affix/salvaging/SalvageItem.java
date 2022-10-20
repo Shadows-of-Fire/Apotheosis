@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -23,12 +22,12 @@ public class SalvageItem extends Item {
 
 	@Override
 	public Component getName(ItemStack pStack) {
-		return new TranslatableComponent(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(rarity.color()));
+		return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(rarity.color()));
 	}
 
 	@Override
 	public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> list, TooltipFlag pIsAdvanced) {
-		list.add(new TranslatableComponent("info.apotheosis.rarity_material", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
+		list.add(Component.translatable("info.apotheosis.rarity_material", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
 	}
 
 }

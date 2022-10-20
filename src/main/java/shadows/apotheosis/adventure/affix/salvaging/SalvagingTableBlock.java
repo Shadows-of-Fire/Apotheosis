@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -22,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class SalvagingTableBlock extends Block {
-	private static final Component TITLE = new TranslatableComponent("container.apotheosis.salvage");
+	private static final Component TITLE = Component.translatable("container.apotheosis.salvage");
 
 	public SalvagingTableBlock(BlockBehaviour.Properties p_56420_) {
 		super(p_56420_);
@@ -47,6 +46,6 @@ public class SalvagingTableBlock extends Block {
 
 	@Override
 	public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
-		list.add(new TranslatableComponent(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+		list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
 	}
 }

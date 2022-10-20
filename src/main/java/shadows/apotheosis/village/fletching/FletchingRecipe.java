@@ -18,7 +18,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.village.VillageModule;
@@ -80,7 +79,7 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
 		return this.inputs;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<FletchingRecipe> {
+	public static class Serializer implements RecipeSerializer<FletchingRecipe> {
 		public static final ResourceLocation NAME = new ResourceLocation(Apotheosis.MODID, "fletching");
 
 		@Override

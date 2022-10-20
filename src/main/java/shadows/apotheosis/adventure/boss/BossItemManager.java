@@ -1,5 +1,7 @@
 package shadows.apotheosis.adventure.boss;
 
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,7 +20,6 @@ import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
 import shadows.placebo.json.DimWeightedJsonReloadListener;
 import shadows.placebo.json.NBTAdapter;
 import shadows.placebo.json.RandomAttributeModifier;
-import shadows.placebo.json.SerializerBuilder;
 
 public class BossItemManager extends DimWeightedJsonReloadListener<BossItem> {
 

@@ -10,7 +10,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -63,7 +62,7 @@ public class BossEvents {
 						sLevel.players().forEach(p -> {
 							Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
 							if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
-								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(new TranslatableComponent("info.apotheosis.boss_spawn", boss.getCustomName(), (int) boss.getX(), (int) boss.getY())));
+								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", boss.getCustomName(), (int) boss.getX(), (int) boss.getY())));
 								if (boss.getCustomName() == null || boss.getCustomName().getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getCustomName().getString(), boss.getType().getRegistryName());
 								else {
 									TextColor color = boss.getCustomName().getStyle().getColor();

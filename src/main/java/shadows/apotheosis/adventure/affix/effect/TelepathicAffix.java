@@ -8,7 +8,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -48,7 +47,7 @@ public class TelepathicAffix extends Affix {
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		LootCategory cat = LootCategory.forItem(stack);
 		String type = cat.isRanged() || cat.isWeapon() ? "weapon" : "tool";
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc." + type).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc." + type).withStyle(ChatFormatting.YELLOW));
 	}
 
 	// EventPriority.LOWEST

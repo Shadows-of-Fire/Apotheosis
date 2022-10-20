@@ -13,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -71,7 +70,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", fmt(level)).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(level)).withStyle(ChatFormatting.YELLOW));
 	}
 
 	/**
@@ -79,8 +78,8 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	 * @return The name part, prefix or suffix, as requested.
 	 */
 	public Component getName(ItemStack stack, LootRarity rarity, float level, boolean prefix) {
-		if (prefix) return new TranslatableComponent("affix." + this.getId());
-		return new TranslatableComponent("affix." + this.getId() + ".suffix");
+		if (prefix) return Component.translatable("affix." + this.getId());
+		return Component.translatable("affix." + this.getId() + ".suffix");
 	}
 
 	/**
@@ -176,7 +175,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	public abstract boolean canApplyTo(ItemStack stack, LootRarity rarity);
 
 	public static MutableComponent loreComponent(String text, Object... args) {
-		return new TranslatableComponent(text, args).withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_PURPLE);
+		return Component.translatable(text, args).withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_PURPLE);
 	}
 
 	public static String fmt(float f) {

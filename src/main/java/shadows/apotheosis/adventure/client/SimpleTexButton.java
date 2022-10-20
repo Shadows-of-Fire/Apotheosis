@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.client;
 
+import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 

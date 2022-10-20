@@ -32,7 +32,7 @@ public class FletchingContainer extends AbstractContainerMenu {
 	protected final Player player;
 
 	public FletchingContainer(int id, Inventory inv, Level world, BlockPos pos) {
-		super(Apoth.Menus.FLETCHING, id);
+		super(Apoth.Menus.FLETCHING.get(), id);
 		this.world = world;
 		this.pos = pos;
 		this.player = inv.player;

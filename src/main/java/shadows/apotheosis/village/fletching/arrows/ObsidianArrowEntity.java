@@ -17,20 +17,20 @@ public class ObsidianArrowEntity extends AbstractArrow {
 	}
 
 	public ObsidianArrowEntity(Level world) {
-		super(Apoth.Entities.OBSIDIAN_ARROW, world);
+		super(Apoth.Entities.OBSIDIAN_ARROW.get(), world);
 	}
 
 	public ObsidianArrowEntity(LivingEntity shooter, Level world) {
-		super(Apoth.Entities.OBSIDIAN_ARROW, shooter, world);
+		super(Apoth.Entities.OBSIDIAN_ARROW.get(), shooter, world);
 	}
 
 	public ObsidianArrowEntity(Level world, double x, double y, double z) {
-		super(Apoth.Entities.OBSIDIAN_ARROW, x, y, z, world);
+		super(Apoth.Entities.OBSIDIAN_ARROW.get(), x, y, z, world);
 	}
 
 	@Override
 	protected ItemStack getPickupItem() {
-		return new ItemStack(Apoth.Items.OBSIDIAN_ARROW);
+		return new ItemStack(Apoth.Items.OBSIDIAN_ARROW.get());
 	}
 
 	@Override

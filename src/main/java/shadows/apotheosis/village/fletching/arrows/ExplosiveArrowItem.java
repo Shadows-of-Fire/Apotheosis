@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
@@ -30,7 +29,7 @@ public class ExplosiveArrowItem extends ArrowItem implements IApothArrowItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(new TranslatableComponent("info.apotheosis.explosive_arrow").withStyle(ChatFormatting.RED));
+		tooltip.add(Component.translatable("info.apotheosis.explosive_arrow").withStyle(ChatFormatting.RED));
 	}
 
 	@Override

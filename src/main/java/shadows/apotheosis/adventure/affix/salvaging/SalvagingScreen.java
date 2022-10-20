@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -34,7 +33,7 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 	protected final int[] numOuts = new int[12];
 	protected final ItemStack[] mats = new ItemStack[6];
 	protected final TextureAtlasSprite[] sprites = new TextureAtlasSprite[6];
-	protected final Component results = new TranslatableComponent("text.apotheosis.results");
+	protected final Component results = Component.translatable("text.apotheosis.results");
 	protected SimpleTexButton salvageBtn;
 
 	public SalvagingScreen(SalvagingMenu menu, Inventory inv, Component title) {
@@ -58,8 +57,8 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		salvageBtn = this.addRenderableWidget(
 				new SimpleTexButton(left + 105, top + 33, 20, 20, 196, 0, TEXTURE, 256, 256, 
 						(btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0), 
-						new TranslatableComponent("button.apotheosis.salvage"))
-						.setInactiveMessage(new TranslatableComponent("button.apotheosis.no_salvage").withStyle(ChatFormatting.RED))
+						Component.translatable("button.apotheosis.salvage"))
+						.setInactiveMessage(Component.translatable("button.apotheosis.no_salvage").withStyle(ChatFormatting.RED))
 				);
 		//Formatter::on
 		updateButtons();
@@ -118,11 +117,11 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		stack.pushPose();
 		stack.translate(0, 0, -100);
 		List<Component> tooltip = new ArrayList<>();
-		tooltip.add(new TranslatableComponent("text.apotheosis.salvage_results").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+		tooltip.add(Component.translatable("text.apotheosis.salvage_results").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
 
 		for (int i = 0; i < 5; i++) {
 			if (numOuts[i * 2 + 1] > 0) {
-				tooltip.add(new TranslatableComponent("%s-%s %s", numOuts[i * 2], numOuts[i * 2 + 1], mats[i].getHoverName()));
+				tooltip.add(Component.translatable("%s-%s %s", numOuts[i * 2], numOuts[i * 2 + 1], mats[i].getHoverName()));
 			}
 		}
 

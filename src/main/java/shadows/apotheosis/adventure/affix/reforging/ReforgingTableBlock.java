@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,7 +26,7 @@ import shadows.placebo.block_entity.TickingEntityBlock;
 import shadows.placebo.container.SimplerMenuProvider;
 
 public class ReforgingTableBlock extends Block implements TickingEntityBlock {
-	public static final Component TITLE = new TranslatableComponent("container.apotheosis.reforge");
+	public static final Component TITLE = Component.translatable("container.apotheosis.reforge");
 	public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
 	public ReforgingTableBlock(BlockBehaviour.Properties p_56420_) {
@@ -58,7 +57,7 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 
 	@Override
 	public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
-		list.add(new TranslatableComponent(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+		list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

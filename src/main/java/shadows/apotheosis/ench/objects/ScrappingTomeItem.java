@@ -8,7 +8,6 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.BookItem;
 import net.minecraft.world.item.Item;
@@ -42,8 +41,8 @@ public class ScrappingTomeItem extends BookItem {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.isEnchanted()) return;
-		tooltip.add(new TranslatableComponent("info.apotheosis.scrap_tome").withStyle(ChatFormatting.GRAY));
-		tooltip.add(new TranslatableComponent("info.apotheosis.scrap_tome2").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("info.apotheosis.scrap_tome").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("info.apotheosis.scrap_tome2").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

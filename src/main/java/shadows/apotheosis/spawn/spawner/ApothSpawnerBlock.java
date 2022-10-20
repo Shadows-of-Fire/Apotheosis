@@ -1,5 +1,6 @@
 package shadows.apotheosis.spawn.spawner;
 
+import java.awt.TextComponent;
 import java.util.List;
 
 import net.minecraft.ChatFormatting;
@@ -8,8 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -119,13 +118,13 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
 				if (tag.getBoolean("no_ai")) tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
 				if (tag.getBoolean("silent")) tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
 			} else {
-				tooltip.add(new TranslatableComponent("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
+				tooltip.add(Component.translatable("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
 			}
 		}
 	}
 
 	public static Component concat(Object... args) {
-		return new TranslatableComponent("misc.apotheosis.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+		return Component.translatable("misc.apotheosis.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
 	}
 
 	@Override

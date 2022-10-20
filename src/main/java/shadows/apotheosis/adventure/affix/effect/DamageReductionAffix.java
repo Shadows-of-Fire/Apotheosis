@@ -13,7 +13,6 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -49,7 +48,7 @@ public class DamageReductionAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(new TranslatableComponent("affix.apotheosis:damage_reduction.desc", new TranslatableComponent("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix.apotheosis:damage_reduction.desc", Component.translatable("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
 	}
 
 	public static void onHurt(LivingHurtEvent e) {

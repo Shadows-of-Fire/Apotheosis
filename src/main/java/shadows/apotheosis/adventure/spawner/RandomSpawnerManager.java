@@ -2,6 +2,8 @@ package shadows.apotheosis.adventure.spawner;
 
 import java.lang.reflect.Type;
 
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -19,7 +21,6 @@ import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.SpawnData;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.json.NBTAdapter;
-import shadows.placebo.json.SerializerBuilder;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem> {

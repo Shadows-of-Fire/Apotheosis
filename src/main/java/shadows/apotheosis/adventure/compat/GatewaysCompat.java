@@ -4,12 +4,13 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
+
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +27,6 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.gateways.entity.GatewayEntity;
 import shadows.gateways.gate.Reward;
 import shadows.gateways.gate.WaveEntity;
-import shadows.placebo.json.SerializerBuilder;
 
 public class GatewaysCompat {
 
@@ -54,7 +54,7 @@ public class GatewaysCompat {
 
 		@Override
 		public Component getDescription() {
-			return new TranslatableComponent("misc.apotheosis.boss", new TranslatableComponent(this.boss == null ? "misc.apotheosis.random" : boss.getEntity().getDescriptionId()));
+			return Component.translatable("misc.apotheosis.boss", Component.translatable(this.boss == null ? "misc.apotheosis.random" : boss.getEntity().getDescriptionId()));
 		}
 
 		@Override
@@ -131,7 +131,7 @@ public class GatewaysCompat {
 
 		@Override
 		public void appendHoverText(Consumer<Component> list) {
-			list.accept(new TranslatableComponent("reward.apotheosis.affix", this.rarity.toComponent()));
+			list.accept(Component.translatable("reward.apotheosis.affix", this.rarity.toComponent()));
 		}
 	}
 }

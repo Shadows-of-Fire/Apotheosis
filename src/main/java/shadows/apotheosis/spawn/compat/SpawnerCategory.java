@@ -1,5 +1,6 @@
 package shadows.apotheosis.spawn.compat;
 
+import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +24,6 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -47,7 +46,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	public SpawnerCategory(IGuiHelper helper) {
 		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 169, 75).build();
 		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Items.SPAWNER));
-		this.title = new TranslatableComponent("title.apotheosis.spawner");
+		this.title = Component.translatable("title.apotheosis.spawner");
 	}
 
 	@Override
@@ -98,12 +97,12 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 		if (scn == null) return; // We need this to render tooltips, bail if its not there.
 		if (mouseX >= -1 && mouseX < 9 && mouseY >= 13 && mouseY < 13 + 12) {
 			GuiComponent.blit(stack, -1, 13, 0, 0, 75, 10, 12, 256, 256);
-			scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.apotheosis.mainhand")), (int) mouseX, (int) mouseY);
+			scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.mainhand")), (int) mouseX, (int) mouseY);
 		} else if (mouseX >= -1 && mouseX < 9 && mouseY >= 50 && mouseY < 50 + 12 && recipe.getOffhandInput() != Ingredient.EMPTY) {
 			GuiComponent.blit(stack, -1, 50, 0, 0, 75, 10, 12, 256, 256);
-			scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.apotheosis.offhand"), new TranslatableComponent("misc.apotheosis.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX, (int) mouseY);
+			scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.offhand"), Component.translatable("misc.apotheosis.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX, (int) mouseY);
 		} else if (mouseX >= 33 && mouseX < 33 + 16 && mouseY >= 30 && mouseY < 30 + 16) {
-			scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.apotheosis.rclick_spawner")), (int) mouseX, (int) mouseY);
+			scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.rclick_spawner")), (int) mouseX, (int) mouseY);
 		}
 
 		PoseStack mvStack = RenderSystem.getModelViewStack();
@@ -124,7 +123,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 			if (value.equals("true")) value = "+";
 			else if (value.equals("false")) value = "-";
 			else if (s.value instanceof Number num && num.intValue() > 0) value = "+" + value;
-			Component msg = new TranslatableComponent("misc.apotheosis.concat", value, s.stat.name());
+			Component msg = Component.translatable("misc.apotheosis.concat", value, s.stat.name());
 			int width = font.width(msg);
 			boolean hover = mouseX >= left - width && mouseX < left && mouseY >= top && mouseY < top + font.lineHeight + 1;
 			font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
@@ -138,8 +137,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 				list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
 				if (s.value instanceof Number) {
 					if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TextComponent(" "));
-					if (((Number) s.min).intValue() > 0) list.add(new TranslatableComponent("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));
-					if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TranslatableComponent("misc.apotheosis.max_value", s.max).withStyle(ChatFormatting.GRAY));
+					if (((Number) s.min).intValue() > 0) list.add(Component.translatable("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));
+					if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.apotheosis.max_value", s.max).withStyle(ChatFormatting.GRAY));
 				}
 				renderComponentTooltip(scn, stack, list, left + 6, (int) mouseY, maxWidth, font);
 			}

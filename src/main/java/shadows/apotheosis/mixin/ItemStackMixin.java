@@ -1,5 +1,6 @@
 package shadows.apotheosis.mixin;
 
+import java.awt.TextComponent;
 import java.util.List;
 import java.util.Random;
 
@@ -14,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

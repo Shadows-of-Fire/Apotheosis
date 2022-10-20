@@ -1,19 +1,9 @@
 package shadows.apotheosis.spawn.compat;
 
-import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IServerDataProvider;
-import mcp.mobius.waila.api.ITooltip;
-import mcp.mobius.waila.api.IWailaClientRegistration;
-import mcp.mobius.waila.api.IWailaCommonRegistration;
-import mcp.mobius.waila.api.IWailaPlugin;
-import mcp.mobius.waila.api.TooltipPosition;
-import mcp.mobius.waila.api.WailaPlugin;
-import mcp.mobius.waila.api.config.IPluginConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
@@ -21,6 +11,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import shadows.apotheosis.spawn.modifiers.SpawnerStats;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
+import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.IServerDataProvider;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.IWailaClientRegistration;
+import snownee.jade.api.IWailaCommonRegistration;
+import snownee.jade.api.IWailaPlugin;
+import snownee.jade.api.TooltipPosition;
+import snownee.jade.api.WailaPlugin;
+import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
 public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<BlockEntity> {
@@ -54,7 +53,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IComponentProvider, ISe
 			if (stats[9] == 1) tooltip.add(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
 			if (stats[10] == 1) tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
 			if (stats[11] == 1) tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
-		} else tooltip.add(new TranslatableComponent("misc.apotheosis.ctrl_stats"));
+		} else tooltip.add(Component.translatable("misc.apotheosis.ctrl_stats"));
 	}
 
 	@Override

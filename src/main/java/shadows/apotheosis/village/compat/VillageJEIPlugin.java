@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.village.fletching.FletchingContainer;
@@ -40,7 +41,7 @@ public class VillageJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration reg) {
-		reg.addRecipeTransferHandler(FletchingContainer.class, FletchingCategory.TYPE, 1, 3, 4, 9 * 4);
+		reg.addRecipeTransferHandler(FletchingContainer.class, Apoth.Menus.FLETCHING.get(), FletchingCategory.TYPE, 1, 3, 4, 9 * 4);
 	}
 
 }
