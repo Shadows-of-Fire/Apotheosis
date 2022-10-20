@@ -64,9 +64,11 @@ public class BossEvents {
 							Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
 							if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
 								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(new TranslatableComponent("info.apotheosis.boss_spawn", boss.getCustomName(), (int) boss.getX(), (int) boss.getY())));
-								TextColor color = boss.getCustomName().getStyle().getColor();
-								if (color == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getCustomName().getString(), boss.getType().getRegistryName());
-								PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()), player);
+								if (boss.getCustomName() == null || boss.getCustomName().getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getCustomName().getString(), boss.getType().getRegistryName());
+								else {
+									TextColor color = boss.getCustomName().getStyle().getColor();
+									PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()), player);
+								}
 							}
 						});
 						bossCooldowns.put(entity.level.dimension().location(), AdventureConfig.bossSpawnCooldown);

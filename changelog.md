@@ -13,6 +13,7 @@
   * Overcrits will now scale worse
 * Anvils can no longer accidentally void gems.
 * Bosses are now immune to suffocation damage.
+* Fixed a crash that happened if a boss prevents custom names.
 
 ## 5.7.0
 * As noted in-line below, you should regenerate all or part of your /config/apotheosis/adventure.cfg file.
