@@ -26,7 +26,7 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 	protected Runnable notifier = null;
 
 	public EnchLibraryContainer(int id, Inventory inv, BlockPos pos) {
-		super(Apoth.Menus.LIBRARY, id, inv, pos);
+		super(Apoth.Menus.LIBRARY.get(), id, inv, pos);
 		this.tile.addListener(this);
 		this.initCommon(inv);
 	}

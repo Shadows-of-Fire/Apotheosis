@@ -1,6 +1,5 @@
 package shadows.apotheosis.ench.table;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -344,7 +343,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 			list.add(Component.translatable("gui.apotheosis.enchant.arcana.desc3").withStyle(ChatFormatting.GRAY));
 			if (this.menu.arcana.get() > 0) {
 				list.add(Component.literal(""));
-				float ench = this.menu.getSlot(0).getItem().getItemEnchantability() / 2F;
+				float ench = this.menu.getSlot(0).getItem().getEnchantmentValue() / 2F;
 				list.add(Component.literal(I18n.get("gui.apotheosis.enchant.arcana.desc4", f(this.menu.arcana.get() - ench))).withStyle(ChatFormatting.GRAY));
 				list.add(Component.translatable("info.apotheosis.ench_bonus", f(ench)).withStyle(ChatFormatting.YELLOW));
 				list.add(Component.literal(I18n.get("gui.apotheosis.enchant.arcana.desc5", f(this.menu.arcana.get()))).withStyle(ChatFormatting.GOLD));
@@ -393,7 +392,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 					int minPow = Math.round(Mth.clamp(level - level * (quanta - quanta * rectification), 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
 					int maxPow = Math.round(Mth.clamp(level + level * quanta, 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
 					list.add(Component.translatable("info.apotheosis.power_range", Component.literal("" + minPow).withStyle(ChatFormatting.DARK_RED), Component.literal("" + maxPow).withStyle(ChatFormatting.BLUE)));
-					list.add(Component.translatable("info.apotheosis.item_ench", Component.literal("" + enchanting.getItemEnchantability()).withStyle(ChatFormatting.GREEN)));
+					list.add(Component.translatable("info.apotheosis.item_ench", Component.literal("" + enchanting.getEnchantmentValue()).withStyle(ChatFormatting.GREEN)));
 					list.add(Component.translatable("info.apotheosis.num_clues", Component.literal("" + (1 + this.menu.clues.get())).withStyle(ChatFormatting.DARK_AQUA)));
 					this.drawOnLeft(stack, list, this.getGuiTop() + 29);
 					break;

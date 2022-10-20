@@ -21,7 +21,7 @@ public class AnvilTile extends BlockEntity {
 	protected final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
 
 	public AnvilTile(BlockPos pos, BlockState state) {
-		super(Apoth.Tiles.ANVIL, pos, state);
+		super(Apoth.Tiles.ANVIL.get(), pos, state);
 	}
 
 	@Override

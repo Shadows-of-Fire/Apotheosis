@@ -7,7 +7,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import shadows.apotheosis.ench.EnchModule;
 
 public class GrowthSerumEnchant extends Enchantment {
@@ -27,7 +26,7 @@ public class GrowthSerumEnchant extends Enchantment {
 	}
 
 	public void unshear(Sheep sheep, ItemStack shears) {
-		if (EnchantmentHelper.getItemEnchantmentLevel(this, shears) > 0 && sheep.random.nextBoolean()) sheep.setSheared(false);
+		if (shears.getEnchantmentLevel(this) > 0 && sheep.random.nextBoolean()) sheep.setSheared(false);
 	}
 
 }

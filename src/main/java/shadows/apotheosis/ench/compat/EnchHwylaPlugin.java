@@ -2,9 +2,9 @@ package shadows.apotheosis.ench.compat;
 
 import java.util.Map;
 
-import mcp.mobius.waila.api.IComponentProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -14,21 +14,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.anvil.AnvilTile;
 import shadows.apotheosis.ench.anvil.ApothAnvilBlock;
 import shadows.apotheosis.util.CommonTooltipUtil;
 import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
-import snownee.jade.api.TooltipPosition;
 import snownee.jade.api.WailaPlugin;
 import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
-public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServerDataProvider<BlockEntity> {
+public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockEntity> {
 
 	@Override
 	public void register(IWailaCommonRegistration reg) {
@@ -37,7 +38,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 
 	@Override
 	public void registerClient(IWailaClientRegistration reg) {
-		reg.registerComponentProvider(this, TooltipPosition.BODY, Block.class);
+		reg.registerBlockComponent(this, Block.class);
 	}
 
 	@Override
@@ -60,6 +61,11 @@ public class EnchHwylaPlugin implements IWailaPlugin, IComponentProvider, IServe
 			EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), stack);
 			tag.put("enchantments", stack.getEnchantmentTags());
 		}
+	}
+
+	@Override
+	public ResourceLocation getUid() {
+		return Apotheosis.loc("ench");
 	}
 
 }

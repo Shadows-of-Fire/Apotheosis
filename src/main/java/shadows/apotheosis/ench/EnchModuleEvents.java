@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
@@ -42,7 +41,7 @@ public class EnchModuleEvents {
 				e.setCost(1);
 				e.setMaterialCost(1);
 				e.setOutput(stack);
-			} else if (e.getRight().getItem() == Apoth.Items.PRISMATIC_WEB) {
+			} else if (e.getRight().getItem() == Apoth.Items.PRISMATIC_WEB.get()) {
 				ItemStack stack = e.getLeft().copy();
 				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue)), stack);
 				e.setCost(30);
@@ -58,7 +57,7 @@ public class EnchModuleEvents {
 			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(e.getLeft()), out);
 			out.setCount(1);
 			e.setOutput(out);
-			e.setCost(5 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, e.getLeft()) + EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.SPLITTING, e.getLeft()) * 2);
+			e.setCost(5 + e.getLeft().getAllEnchantments().entrySet().stream().mapToInt(ent -> ent.getValue() * (ent.getKey().getRarity().ordinal() + 1)).sum());
 			e.setMaterialCost(1);
 			return;
 		}
@@ -68,34 +67,32 @@ public class EnchModuleEvents {
 	Method dropLoot;
 
 	/**
-	 * Event handler for the Scavenger and Knowledge of the Ages enchantments.
+	 * Event handler for the Scavenger and Spearfishing enchantments.
 	 */
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) throws Throwable {
-		Entity attacker = e.getSource().getEntity();
-		if (attacker instanceof Player p) {
-			Apoth.Enchantments.SCAVENGER.drops(p, e);
-			Apoth.Enchantments.SPEARFISHING.addFishes(e);
-			Apoth.Enchantments.KNOWLEDGE.drops(p, e);
+		if (e.getSource().getEntity() instanceof Player p) {
+			Apoth.Enchantments.SCAVENGER.get().drops(p, e);
+			Apoth.Enchantments.SPEARFISHING.get().addFishes(e);
 		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void dropsLowest(LivingDropsEvent e) {
 		if (e.getSource().getEntity() instanceof Player p) {
-			Apoth.Enchantments.KNOWLEDGE.drops(p, e);
+			Apoth.Enchantments.KNOWLEDGE.get().drops(p, e);
 		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void healing(LivingHealEvent e) {
 		if (e.getEntity().getType() == EntityType.ARMOR_STAND) return; // https://github.com/Shadows-of-Fire/Apotheosis/issues/636
-		Apoth.Enchantments.LIFE_MENDING.lifeMend(e);
+		Apoth.Enchantments.LIFE_MENDING.get().lifeMend(e);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void block(ShieldBlockEvent e) {
-		Apoth.Enchantments.REFLECTIVE.reflect(e);
+		Apoth.Enchantments.REFLECTIVE.get().reflect(e);
 	}
 
 	@SubscribeEvent
@@ -103,7 +100,7 @@ public class EnchModuleEvents {
 		DamageSource src = e.getDamageSource();
 		if (src != null && src.getDirectEntity() instanceof ThrownTrident trident) {
 			ItemStack triStack = ((TridentGetter) trident).getTridentItem();
-			e.setLootingLevel(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, triStack));
+			e.setLootingLevel(triStack.getEnchantmentLevel(Enchantments.MOB_LOOTING));
 		}
 	}
 
@@ -116,12 +113,12 @@ public class EnchModuleEvents {
 	 */
 	@SubscribeEvent
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
-		Apoth.Enchantments.STABLE_FOOTING.breakSpeed(e);
+		Apoth.Enchantments.STABLE_FOOTING.get().breakSpeed(e);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void breakSpeedLow(PlayerEvent.BreakSpeed e) {
-		Apoth.Enchantments.MINERS_FERVOR.breakSpeed(e);
+		Apoth.Enchantments.MINERS_FERVOR.get().breakSpeed(e);
 	}
 
 	/**
@@ -129,8 +126,8 @@ public class EnchModuleEvents {
 	 */
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void breakSpeed(BlockEvent.BreakEvent e) {
-		Apoth.Enchantments.EARTHS_BOON.provideBenefits(e);
-		Apoth.Enchantments.CHAINSAW.chainsaw(e);
+		Apoth.Enchantments.EARTHS_BOON.get().provideBenefits(e);
+		Apoth.Enchantments.CHAINSAW.get().chainsaw(e);
 	}
 
 	/**
@@ -138,7 +135,7 @@ public class EnchModuleEvents {
 	 */
 	@SubscribeEvent
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
-		Apoth.Enchantments.NATURES_BLESSING.rightClick(e);
+		Apoth.Enchantments.NATURES_BLESSING.get().rightClick(e);
 	}
 
 	/**
@@ -146,7 +143,7 @@ public class EnchModuleEvents {
 	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void applyUnbreaking(AnvilRepairEvent e) {
-		if (e.getPlayer().containerMenu instanceof AnvilMenu anvMenu) {
+		if (e.getEntity().containerMenu instanceof AnvilMenu anvMenu) {
 			anvMenu.access.execute((level, pos) -> {
 				if (level.getBlockEntity(pos) instanceof AnvilTile anvil) {
 					e.setBreakChance(e.getBreakChance() / (anvil.getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
@@ -157,7 +154,7 @@ public class EnchModuleEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void livingHurt(LivingHurtEvent e) {
-		Apoth.Enchantments.BERSERKERS_FURY.livingHurt(e);
+		Apoth.Enchantments.BERSERKERS_FURY.get().livingHurt(e);
 	}
 
 }

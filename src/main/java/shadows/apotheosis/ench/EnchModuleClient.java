@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -34,7 +35,7 @@ public class EnchModuleClient {
 	public void tooltips(ItemTooltipEvent e) {
 		Item i = e.getItemStack().getItem();
 		if (i == Items.COBWEB) e.getToolTip().add(Component.translatable("info.apotheosis.cobweb").withStyle(ChatFormatting.GRAY));
-		else if (i == Apoth.Items.PRISMATIC_WEB) e.getToolTip().add(Component.translatable("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
+		else if (i == Apoth.Items.PRISMATIC_WEB.get()) e.getToolTip().add(Component.translatable("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
 		else if (i instanceof BlockItem) {
 			Block block = ((BlockItem) i).getBlock();
 			Level world = Minecraft.getInstance().level;
@@ -83,7 +84,7 @@ public class EnchModuleClient {
 
 	public static void init() {
 		BlockEntityRenderers.register(BlockEntityType.ENCHANTING_TABLE, EnchantTableRenderer::new);
-		MenuScreens.register(Apoth.Menus.ENCHANTING_TABLE, ApothEnchantScreen::new);
-		MenuScreens.register(Apoth.Menus.LIBRARY, EnchLibraryScreen::new);
+		MenuScreens.register(Apoth.Menus.ENCHANTING_TABLE.get(), ApothEnchantScreen::new);
+		MenuScreens.register(Apoth.Menus.LIBRARY.get(), EnchLibraryScreen::new);
 	}
 }

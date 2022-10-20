@@ -1,6 +1,5 @@
 package shadows.apotheosis.ench.library;
 
-import java.awt.TextComponent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;

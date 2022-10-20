@@ -1,7 +1,6 @@
 package shadows.apotheosis.ench.enchantments;
 
-import java.util.Random;
-
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -48,7 +47,7 @@ public class IcyThornsEnchant extends Enchantment {
 	@Override
 	public void doPostHurt(LivingEntity user, Entity attacker, int level) {
 		if (user == null) return;
-		Random rand = user.getRandom();
+		RandomSource rand = user.getRandom();
 		if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
 			LivingEntity ent = (LivingEntity) attacker;
 			ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));

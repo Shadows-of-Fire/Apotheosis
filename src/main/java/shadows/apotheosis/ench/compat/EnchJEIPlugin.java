@@ -14,6 +14,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -50,11 +51,11 @@ public class EnchJEIPlugin implements IModPlugin {
 				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
 			factory.createAnvilRecipe(
 				cursedDiaSword,
-				ImmutableList.of(new ItemStack(Apoth.Items.PRISMATIC_WEB)),
+				ImmutableList.of(new ItemStack(Apoth.Items.PRISMATIC_WEB.get())),
 				ImmutableList.of(new ItemStack(Items.DIAMOND_SWORD))),
 			factory.createAnvilRecipe(
 				enchDiaSword,
-				ImmutableList.of(new ItemStack(Apoth.Items.SCRAP_TOME)),
+				ImmutableList.of(new ItemStack(Apoth.Items.SCRAP_TOME.get())),
 				ImmutableList.of(enchBook)),
 			factory.createAnvilRecipe(
 				new ItemStack(Blocks.DAMAGED_ANVIL),
@@ -63,8 +64,8 @@ public class EnchJEIPlugin implements IModPlugin {
 			)
 		);
 		//Formatter::on
-		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM, Component.translatable("info.apotheosis.enchanting"));
-		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY), VanillaTypes.ITEM, Component.translatable("info.apotheosis.library"));
+		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.enchanting"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.library"));
 		List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(shadows.apotheosis.Apoth.RecipeTypes.INFUSION);
 		recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
 		reg.addRecipes(EnchantingCategory.TYPE, recipes);

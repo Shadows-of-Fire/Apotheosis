@@ -5,7 +5,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.mixin.TemptGoalMixin;
 
@@ -32,9 +31,9 @@ public class TemptingEnchant extends Enchantment {
 	 */
 	public boolean shouldFollow(LivingEntity target) {
 		ItemStack stack = target.getMainHandItem();
-		if (EnchantmentHelper.getItemEnchantmentLevel(this, stack) > 0) return true;
+		if (stack.getEnchantmentLevel(this) > 0) return true;
 		stack = target.getOffhandItem();
-		return EnchantmentHelper.getItemEnchantmentLevel(this, stack) > 0;
+		return stack.getEnchantmentLevel(this) > 0;
 	}
 
 }

@@ -15,7 +15,6 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.dispenser.ShearsDispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
@@ -138,56 +137,56 @@ public class EnchModule {
 
 		Apotheosis.HELPER.registerProvider(factory -> {
 			Ingredient pot = Apotheosis.potionIngredient(Potions.REGENERATION);
-			factory.addShaped(Apoth.Blocks.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "forge:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
+			factory.addShaped(Apoth.Blocks.HELLSHELF.get(), 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "forge:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
 			factory.addShaped(Apoth.Items.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.COBWEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
 			ItemStack book = new ItemStack(Items.BOOK);
 			ItemStack stick = new ItemStack(Items.STICK);
 			ItemStack blaze = new ItemStack(Items.BLAZE_ROD);
-			factory.addShaped(new ItemStack(Apoth.Items.HELMET_TOME, 5), 3, 2, book, book, book, book, blaze, book);
-			factory.addShaped(new ItemStack(Apoth.Items.CHESTPLATE_TOME, 8), 3, 3, book, blaze, book, book, book, book, book, book, book);
-			factory.addShaped(new ItemStack(Apoth.Items.LEGGINGS_TOME, 7), 3, 3, book, null, book, book, blaze, book, book, book, book);
-			factory.addShaped(new ItemStack(Apoth.Items.BOOTS_TOME, 4), 3, 2, book, null, book, book, blaze, book);
-			factory.addShaped(new ItemStack(Apoth.Items.WEAPON_TOME, 2), 1, 3, book, book, new ItemStack(Items.BLAZE_POWDER));
-			factory.addShaped(new ItemStack(Apoth.Items.PICKAXE_TOME, 3), 3, 3, book, book, book, null, blaze, null, null, stick, null);
-			factory.addShaped(new ItemStack(Apoth.Items.FISHING_TOME, 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
-			factory.addShaped(new ItemStack(Apoth.Items.BOW_TOME, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
-			factory.addShapeless(new ItemStack(Apoth.Items.OTHER_TOME, 6), book, book, book, book, book, book, blaze);
-			factory.addShaped(new ItemStack(Apoth.Items.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
-			Ingredient maxHellshelf = Ingredient.of(Apoth.Blocks.INFUSED_HELLSHELF);
-			factory.addShaped(Apoth.Blocks.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
-			factory.addShaped(Apoth.Blocks.GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
-			factory.addShaped(Apoth.Blocks.SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
-			Ingredient maxSeashelf = Ingredient.of(Apoth.Blocks.INFUSED_SEASHELF);
-			factory.addShaped(Apoth.Blocks.CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
-			factory.addShaped(Apoth.Blocks.HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
-			factory.addShaped(Apoth.Blocks.ENDSHELF, 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
-			factory.addShaped(Apoth.Blocks.PEARL_ENDSHELF, 3, 3, Items.END_ROD, null, Items.END_ROD, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF, Items.ENDER_PEARL, Items.END_ROD, null, Items.END_ROD);
-			factory.addShaped(Apoth.Blocks.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
-			factory.addShaped(Apoth.Blocks.BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
-			factory.addShaped(Apoth.Blocks.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
-			factory.addShaped(Apoth.Blocks.LIBRARY, 3, 3, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENCHANTING_TABLE, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF, Blocks.ENDER_CHEST);
+			factory.addShaped(new ItemStack(Apoth.Items.HELMET_TOME.get(), 5), 3, 2, book, book, book, book, blaze, book);
+			factory.addShaped(new ItemStack(Apoth.Items.CHESTPLATE_TOME.get(), 8), 3, 3, book, blaze, book, book, book, book, book, book, book);
+			factory.addShaped(new ItemStack(Apoth.Items.LEGGINGS_TOME.get(), 7), 3, 3, book, null, book, book, blaze, book, book, book, book);
+			factory.addShaped(new ItemStack(Apoth.Items.BOOTS_TOME.get(), 4), 3, 2, book, null, book, book, blaze, book);
+			factory.addShaped(new ItemStack(Apoth.Items.WEAPON_TOME.get(), 2), 1, 3, book, book, new ItemStack(Items.BLAZE_POWDER));
+			factory.addShaped(new ItemStack(Apoth.Items.PICKAXE_TOME.get(), 3), 3, 3, book, book, book, null, blaze, null, null, stick, null);
+			factory.addShaped(new ItemStack(Apoth.Items.FISHING_TOME.get(), 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
+			factory.addShaped(new ItemStack(Apoth.Items.BOW_TOME.get(), 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
+			factory.addShapeless(new ItemStack(Apoth.Items.OTHER_TOME.get(), 6), book, book, book, book, book, book, blaze);
+			factory.addShaped(new ItemStack(Apoth.Items.SCRAP_TOME.get(), 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
+			Ingredient maxHellshelf = Ingredient.of(Apoth.Blocks.INFUSED_HELLSHELF.get());
+			factory.addShaped(Apoth.Blocks.BLAZING_HELLSHELF.get(), 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
+			factory.addShaped(Apoth.Blocks.GLOWING_HELLSHELF.get(), 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
+			factory.addShaped(Apoth.Blocks.SEASHELF.get(), 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
+			Ingredient maxSeashelf = Ingredient.of(Apoth.Blocks.INFUSED_SEASHELF.get());
+			factory.addShaped(Apoth.Blocks.CRYSTAL_SEASHELF.get(), 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
+			factory.addShaped(Apoth.Blocks.HEART_SEASHELF.get(), 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
+			factory.addShaped(Apoth.Blocks.ENDSHELF.get(), 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
+			factory.addShaped(Apoth.Blocks.PEARL_ENDSHELF.get(), 3, 3, Items.END_ROD, null, Items.END_ROD, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF.get(), Items.ENDER_PEARL, Items.END_ROD, null, Items.END_ROD);
+			factory.addShaped(Apoth.Blocks.DRACONIC_ENDSHELF.get(), 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF.get(), Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
+			factory.addShaped(Apoth.Blocks.BEESHELF.get(), 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
+			factory.addShaped(Apoth.Blocks.MELONSHELF.get(), 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
+			factory.addShaped(Apoth.Blocks.LIBRARY.get(), 3, 3, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENCHANTING_TABLE, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENDER_CHEST);
 		});
 
-		LootSystem.defaultBlockTable(Apoth.Blocks.HELLSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.INFUSED_HELLSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.BLAZING_HELLSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.GLOWING_HELLSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.SEASHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.INFUSED_SEASHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.CRYSTAL_SEASHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.HEART_SEASHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.ENDSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.PEARL_ENDSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.DRACONIC_ENDSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.BEESHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.MELONSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.LIBRARY);
-		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER);
-		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T2);
-		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T3);
-		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF);
-		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF_T2);
-		LootSystem.defaultBlockTable(Apoth.Blocks.ENDER_LIBRARY);
+		LootSystem.defaultBlockTable(Apoth.Blocks.HELLSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.INFUSED_HELLSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.BLAZING_HELLSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.GLOWING_HELLSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.SEASHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.INFUSED_SEASHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.CRYSTAL_SEASHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.HEART_SEASHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.ENDSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.PEARL_ENDSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.DRACONIC_ENDSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.BEESHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.MELONSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.LIBRARY.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T2.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T3.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.SIGHTSHELF_T2.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.ENDER_LIBRARY.get());
 		MinecraftForge.EVENT_BUS.register(new EnchModuleEvents());
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		e.enqueueWork(() -> {
@@ -205,23 +204,23 @@ public class EnchModule {
 
 	@SubscribeEvent
 	public void tiles(Register<BlockEntityType<?>> e) {
-		e.getRegistry().register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null).setRegistryName("anvil"));
+		e.getRegistry().register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null), "anvil");
 		BlockEntityType.ENCHANTING_TABLE.factory = ApothEnchantTile::new;
 		BlockEntityType.ENCHANTING_TABLE.validBlocks = ImmutableSet.of(Blocks.ENCHANTING_TABLE);
-		e.getRegistry().register(new BlockEntityType<>(BasicLibraryTile::new, ImmutableSet.of(Apoth.Blocks.LIBRARY), null).setRegistryName("library"));
-		e.getRegistry().register(new BlockEntityType<>(EnderLibraryTile::new, ImmutableSet.of(Apoth.Blocks.ENDER_LIBRARY), null).setRegistryName("ender_library"));
+		e.getRegistry().register(new BlockEntityType<>(BasicLibraryTile::new, ImmutableSet.of(Apoth.Blocks.LIBRARY.get()), null), "library");
+		e.getRegistry().register(new BlockEntityType<>(EnderLibraryTile::new, ImmutableSet.of(Apoth.Blocks.ENDER_LIBRARY.get()), null), "ender_library");
 	}
 
 	@SubscribeEvent
 	public void containers(Register<MenuType<?>> e) {
-		e.getRegistry().register(new MenuType<>(ApothEnchantContainer::new).setRegistryName("enchanting_table"));
-		e.getRegistry().register(ContainerUtil.makeType(EnchLibraryContainer::new).setRegistryName("library"));
+		e.getRegistry().register(new MenuType<>(ApothEnchantContainer::new), "enchanting_table");
+		e.getRegistry().register(ContainerUtil.makeType(EnchLibraryContainer::new), "library");
 	}
 
 	@SubscribeEvent
 	public void recipeSerializers(Register<RecipeSerializer<?>> e) {
-		e.getRegistry().register(EnchantingRecipe.SERIALIZER.setRegistryName("enchanting"));
-		e.getRegistry().register(KeepNBTEnchantingRecipe.SERIALIZER.setRegistryName("keep_nbt_enchanting"));
+		e.getRegistry().register(EnchantingRecipe.SERIALIZER, "enchanting");
+		e.getRegistry().register(KeepNBTEnchantingRecipe.SERIALIZER, "keep_nbt_enchanting");
 	}
 
 	/**
@@ -248,73 +247,73 @@ public class EnchModule {
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new ApothAnvilBlock().setRegistryName("minecraft", "anvil"),
-				new ApothAnvilBlock().setRegistryName("minecraft", "chipped_anvil"),
-				new ApothAnvilBlock().setRegistryName("minecraft", "damaged_anvil"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("hellshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("infused_hellshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("blazing_hellshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("glowing_hellshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("seashelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("infused_seashelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("crystal_seashelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("heart_seashelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("endshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("pearl_endshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("draconic_endshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("beeshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)).setRegistryName("melonshelf"),
-				new EnchLibraryBlock(BasicLibraryTile::new, 16).setRegistryName("library"),
-				new EnchLibraryBlock(EnderLibraryTile::new, 31).setRegistryName("ender_library"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t2"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("rectifier_t3"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("sightshelf"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)).setRegistryName("sightshelf_t2")
+				new ApothAnvilBlock(), "minecraft", "anvil",
+				new ApothAnvilBlock(), "minecraft", "chipped_anvil",
+				new ApothAnvilBlock(), "minecraft", "damaged_anvil",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "hellshelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "infused_hellshelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "blazing_hellshelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "glowing_hellshelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "seashelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "infused_seashelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "crystal_seashelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "heart_seashelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "endshelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "pearl_endshelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "draconic_endshelf",
+				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)), "beeshelf",
+				new Block(BlockBehaviour.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)), "melonshelf",
+				new EnchLibraryBlock(BasicLibraryTile::new, 16), "library",
+				new EnchLibraryBlock(EnderLibraryTile::new, 31), "ender_library",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "rectifier",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "rectifier_t2",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "rectifier_t3",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "sightshelf",
+				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "sightshelf_t2"
 				);
 		//Formatter::on
-		PlaceboUtil.registerOverride(new ApothEnchantBlock(), Apotheosis.MODID);
+		PlaceboUtil.registerOverride(Blocks.ENCHANTING_TABLE, new ApothEnchantBlock(), Apotheosis.MODID);
 	}
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "prismatic_web"),
-				new ApothAnvilItem(Blocks.ANVIL),
-				new ApothAnvilItem(Blocks.CHIPPED_ANVIL),
-				new ApothAnvilItem(Blocks.DAMAGED_ANVIL),
-				new TomeItem(Items.AIR, null).setRegistryName("other_tome"),
-				new TomeItem(Items.DIAMOND_HELMET, EnchantmentCategory.ARMOR_HEAD).setRegistryName("helmet_tome"),
-				new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentCategory.ARMOR_CHEST).setRegistryName("chestplate_tome"),
-				new TomeItem(Items.DIAMOND_LEGGINGS, EnchantmentCategory.ARMOR_LEGS).setRegistryName("leggings_tome"),
-				new TomeItem(Items.DIAMOND_BOOTS, EnchantmentCategory.ARMOR_FEET).setRegistryName("boots_tome"),
-				new TomeItem(Items.DIAMOND_SWORD, EnchantmentCategory.WEAPON).setRegistryName("weapon_tome"),
-				new TomeItem(Items.DIAMOND_PICKAXE, EnchantmentCategory.DIGGER).setRegistryName("pickaxe_tome"),
-				new TomeItem(Items.FISHING_ROD, EnchantmentCategory.FISHING_ROD).setRegistryName("fishing_tome"),
-				new TomeItem(Items.BOW, EnchantmentCategory.BOW).setRegistryName("bow_tome"),
-				new ScrappingTomeItem(),
-				new BlockItem(Apoth.Blocks.HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("hellshelf"),
-				new GlowyItem(Apoth.Blocks.INFUSED_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_hellshelf"),
-				new BlockItem(Apoth.Blocks.BLAZING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("blazing_hellshelf"),
-				new BlockItem(Apoth.Blocks.GLOWING_HELLSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("glowing_hellshelf"),
-				new BlockItem(Apoth.Blocks.SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("seashelf"),
-				new GlowyItem(Apoth.Blocks.INFUSED_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("infused_seashelf"),
-				new BlockItem(Apoth.Blocks.CRYSTAL_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("crystal_seashelf"),
-				new BlockItem(Apoth.Blocks.HEART_SEASHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("heart_seashelf"),
-				new BlockItem(Apoth.Blocks.ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("endshelf"),
-				new BlockItem(Apoth.Blocks.DRACONIC_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("draconic_endshelf"),
-				new BlockItem(Apoth.Blocks.PEARL_ENDSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("pearl_endshelf"),
-				new BlockItem(Apoth.Blocks.BEESHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("beeshelf"),
-				new BlockItem(Apoth.Blocks.MELONSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("melonshelf"),
-				new BlockItem(Apoth.Blocks.LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("library"),
-				new BlockItem(Apoth.Blocks.RECTIFIER, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier"),
-				new BlockItem(Apoth.Blocks.RECTIFIER_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t2"),
-				new BlockItem(Apoth.Blocks.RECTIFIER_T3, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("rectifier_t3"),
-				new BlockItem(Apoth.Blocks.SIGHTSHELF, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf"),
-				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sightshelf_t2"),
-				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)).setRegistryName(Apotheosis.MODID, "inert_trident"),
-				new BlockItem(Apoth.Blocks.ENDER_LIBRARY, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("ender_library")
+				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), Apotheosis.MODID, "prismatic_web",
+				new ApothAnvilItem(Blocks.ANVIL), new ResourceLocation("minecraft", "anvil"),
+				new ApothAnvilItem(Blocks.CHIPPED_ANVIL), new ResourceLocation("minecraft", "chipped_anvil"),
+				new ApothAnvilItem(Blocks.DAMAGED_ANVIL), new ResourceLocation("minecraft", "damaged_anvil"),
+				new TomeItem(Items.AIR, null), "other_tome",
+				new TomeItem(Items.DIAMOND_HELMET, EnchantmentCategory.ARMOR_HEAD), "helmet_tome",
+				new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentCategory.ARMOR_CHEST), "chestplate_tome",
+				new TomeItem(Items.DIAMOND_LEGGINGS, EnchantmentCategory.ARMOR_LEGS), "leggings_tome",
+				new TomeItem(Items.DIAMOND_BOOTS, EnchantmentCategory.ARMOR_FEET), "boots_tome",
+				new TomeItem(Items.DIAMOND_SWORD, EnchantmentCategory.WEAPON), "weapon_tome",
+				new TomeItem(Items.DIAMOND_PICKAXE, EnchantmentCategory.DIGGER), "pickaxe_tome",
+				new TomeItem(Items.FISHING_ROD, EnchantmentCategory.FISHING_ROD), "fishing_tome",
+				new TomeItem(Items.BOW, EnchantmentCategory.BOW), "bow_tome",
+				new ScrappingTomeItem(), "scrap_tome",
+				new BlockItem(Apoth.Blocks.HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "hellshelf",
+				new GlowyItem(Apoth.Blocks.INFUSED_HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "infused_hellshelf",
+				new BlockItem(Apoth.Blocks.BLAZING_HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "blazing_hellshelf",
+				new BlockItem(Apoth.Blocks.GLOWING_HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "glowing_hellshelf",
+				new BlockItem(Apoth.Blocks.SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "seashelf",
+				new GlowyItem(Apoth.Blocks.INFUSED_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "infused_seashelf",
+				new BlockItem(Apoth.Blocks.CRYSTAL_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "crystal_seashelf",
+				new BlockItem(Apoth.Blocks.HEART_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "heart_seashelf",
+				new BlockItem(Apoth.Blocks.ENDSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "endshelf",
+				new BlockItem(Apoth.Blocks.DRACONIC_ENDSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "draconic_endshelf",
+				new BlockItem(Apoth.Blocks.PEARL_ENDSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "pearl_endshelf",
+				new BlockItem(Apoth.Blocks.BEESHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "beeshelf",
+				new BlockItem(Apoth.Blocks.MELONSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "melonshelf",
+				new BlockItem(Apoth.Blocks.LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "library",
+				new BlockItem(Apoth.Blocks.RECTIFIER.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "rectifier",
+				new BlockItem(Apoth.Blocks.RECTIFIER_T2.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "rectifier_t2",
+				new BlockItem(Apoth.Blocks.RECTIFIER_T3.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "rectifier_t3",
+				new BlockItem(Apoth.Blocks.SIGHTSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sightshelf",
+				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sightshelf_t2",
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), Apotheosis.MODID, "inert_trident",
+				new BlockItem(Apoth.Blocks.ENDER_LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "ender_library"
 				);
 		//Formatter::on
 	}
@@ -323,45 +322,40 @@ public class EnchModule {
 	public void enchants(Register<Enchantment> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new MinersFervorEnchant().setRegistryName("miners_fervor"),
-				new StableFootingEnchant().setRegistryName("stable_footing"),
-				new ScavengerEnchant().setRegistryName("scavenger"),
-				new LifeMendingEnchant().setRegistryName("life_mending"),
-				new IcyThornsEnchant().setRegistryName("icy_thorns"),
-				new TemptingEnchant().setRegistryName("tempting"),
-				new ShieldBashEnchant().setRegistryName("shield_bash"),
-				new ReflectiveEnchant().setRegistryName("reflective"),
-				new BerserkersFuryEnchant().setRegistryName("berserkers_fury"),
-				new KnowledgeEnchant().setRegistryName("knowledge"),
-				new SplittingEnchant().setRegistryName("splitting"),
-				new NaturesBlessingEnchant().setRegistryName("natures_blessing"),
-				new ReboundingEnchant().setRegistryName("rebounding"),
-				new BaneEnchant(Rarity.UNCOMMON, MobType.ARTHROPOD, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "bane_of_arthropods"),
-				new BaneEnchant(Rarity.UNCOMMON, MobType.UNDEAD, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "smite"),
-				new BaneEnchant(Rarity.COMMON, MobType.UNDEFINED, EquipmentSlot.MAINHAND).setRegistryName("minecraft", "sharpness"),
-				new BaneEnchant(Rarity.UNCOMMON, MobType.ILLAGER, EquipmentSlot.MAINHAND).setRegistryName("bane_of_illagers"),
-				new DefenseEnchant(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR).setRegistryName("minecraft", "protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FIRE, ARMOR).setRegistryName("minecraft", "fire_protection"),
-				new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.EXPLOSION, ARMOR).setRegistryName("minecraft", "blast_protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.PROJECTILE, ARMOR).setRegistryName("minecraft", "projectile_protection"),
-				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlot.FEET).setRegistryName("minecraft", "feather_falling"),
-				new ObliterationEnchant().setRegistryName("obliteration"),
-				new CrescendoEnchant().setRegistryName("crescendo"),
-				new InertEnchantment().setRegistryName("infusion"),
-				new EndlessQuiverEnchant().setRegistryName("endless_quiver"),
-				new ChromaticEnchant().setRegistryName("chromatic"),
-				new ExploitationEnchant().setRegistryName("exploitation"),
-				new GrowthSerumEnchant().setRegistryName("growth_serum"),
-				new EarthsBoonEnchant().setRegistryName("earths_boon"),
-				new ChainsawEnchant().setRegistryName("chainsaw"),
-				new SpearfishingEnchant().setRegistryName("spearfishing")
+				new MinersFervorEnchant(), "miners_fervor",
+				new StableFootingEnchant(), "stable_footing",
+				new ScavengerEnchant(), "scavenger",
+				new LifeMendingEnchant(), "life_mending",
+				new IcyThornsEnchant(), "icy_thorns",
+				new TemptingEnchant(), "tempting",
+				new ShieldBashEnchant(), "shield_bash",
+				new ReflectiveEnchant(), "reflective",
+				new BerserkersFuryEnchant(), "berserkers_fury",
+				new KnowledgeEnchant(), "knowledge",
+				new SplittingEnchant(), "splitting",
+				new NaturesBlessingEnchant(), "natures_blessing",
+				new ReboundingEnchant(), "rebounding",
+				new BaneEnchant(Rarity.UNCOMMON, MobType.ARTHROPOD, EquipmentSlot.MAINHAND), new ResourceLocation("minecraft", "bane_of_arthropods"),
+				new BaneEnchant(Rarity.UNCOMMON, MobType.UNDEAD, EquipmentSlot.MAINHAND), new ResourceLocation("minecraft", "smite"),
+				new BaneEnchant(Rarity.COMMON, MobType.UNDEFINED, EquipmentSlot.MAINHAND), new ResourceLocation("minecraft", "sharpness"),
+				new BaneEnchant(Rarity.UNCOMMON, MobType.ILLAGER, EquipmentSlot.MAINHAND), "bane_of_illagers",
+				new DefenseEnchant(Rarity.COMMON, ProtectionEnchantment.Type.ALL, ARMOR), new ResourceLocation("minecraft", "protection"),
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FIRE, ARMOR), new ResourceLocation("minecraft", "fire_protection"),
+				new DefenseEnchant(Rarity.RARE, ProtectionEnchantment.Type.EXPLOSION, ARMOR), new ResourceLocation("minecraft", "blast_protection"),
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.PROJECTILE, ARMOR), new ResourceLocation("minecraft", "projectile_protection"),
+				new DefenseEnchant(Rarity.UNCOMMON, ProtectionEnchantment.Type.FALL, EquipmentSlot.FEET), new ResourceLocation("minecraft", "feather_falling"),
+				new ObliterationEnchant(), "obliteration",
+				new CrescendoEnchant(), "crescendo",
+				new InertEnchantment(), "infusion",
+				new EndlessQuiverEnchant(), "endless_quiver",
+				new ChromaticEnchant(), "chromatic",
+				new ExploitationEnchant(), "exploitation",
+				new GrowthSerumEnchant(), "growth_serum",
+				new EarthsBoonEnchant(), "earths_boon",
+				new ChainsawEnchant(), "chainsaw",
+				new SpearfishingEnchant(), "spearfishing"
 				);
 		//Formatter::on
-	}
-
-	@SubscribeEvent
-	public void sounds(Register<SoundEvent> e) {
-		e.getRegistry().register(new SoundEvent(new ResourceLocation(Apotheosis.MODID, "altar")).setRegistryName(Apotheosis.MODID, "altar_sound"));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -376,11 +370,11 @@ public class EnchModule {
 			return new EnchantmentInfo(ench);
 		}
 
-		if (info == null) {
+		if (info == null) { // Should be impossible now.
 			info = EnchantmentInfo.load(ench, enchInfoConfig);
 			ENCHANTMENT_INFO.put(ench, info);
 			if (enchInfoConfig.hasChanged()) enchInfoConfig.save();
-			LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", ench.getRegistryName(), ench.getRegistryName().getNamespace());
+			LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", ForgeRegistries.ENCHANTMENTS.getKey(ench), ForgeRegistries.ENCHANTMENTS.getKey(ench).getNamespace());
 		}
 
 		return info;
@@ -421,7 +415,7 @@ public class EnchModule {
 		for (Enchantment ench : ForgeRegistries.ENCHANTMENTS) {
 			EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 			for (int i = 1; i <= info.getMaxLevel(); i++)
-				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.warn("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ench.getRegistryName(), info.getMinPower(i), info.getMaxPower(i), i);
+				if (info.getMinPower(i) > info.getMaxPower(i)) LOGGER.warn("Enchantment {} has min/max power {}/{} at level {}, making this level unobtainable.", ForgeRegistries.ENCHANTMENTS.getKey(ench), info.getMinPower(i), info.getMaxPower(i), i);
 		}
 
 		if (e == null && enchInfoConfig.hasChanged()) enchInfoConfig.save();

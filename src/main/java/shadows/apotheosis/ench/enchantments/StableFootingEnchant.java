@@ -24,7 +24,7 @@ public class StableFootingEnchant extends Enchantment {
 	}
 
 	public void breakSpeed(PlayerEvent.BreakSpeed e) {
-		Player p = e.getPlayer();
+		Player p = e.getEntity();
 		if (!p.isOnGround() && EnchantmentHelper.getEnchantmentLevel(this, p) > 0) {
 			if (e.getOriginalSpeed() < e.getNewSpeed() * 5) e.setNewSpeed(e.getNewSpeed() * 5F);
 		}

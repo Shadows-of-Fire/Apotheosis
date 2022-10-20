@@ -1,12 +1,11 @@
 package shadows.apotheosis.ench.table;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.SimpleMenuProvider;
@@ -28,7 +27,6 @@ public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplace
 
 	public ApothEnchantBlock() {
 		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
-		this.setRegistryName("minecraft:enchanting_table");
 	}
 
 	@Override
@@ -78,7 +76,7 @@ public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplace
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random rand) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
 		for (int i = -2; i <= 2; ++i) {
 			for (int j = -2; j <= 2; ++j) {
 				if (i > -2 && i < 2 && j == -1) {

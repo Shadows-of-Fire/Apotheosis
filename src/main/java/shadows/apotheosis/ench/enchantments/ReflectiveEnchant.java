@@ -7,7 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import shadows.apotheosis.ench.EnchModule;
@@ -43,11 +42,11 @@ public class ReflectiveEnchant extends Enchantment {
 	 * Called from {@link LivingEntity#blockUsingShield(LivingEntity)}
 	 */
 	public void reflect(ShieldBlockEvent e) {
-		LivingEntity user = e.getEntityLiving();
+		LivingEntity user = e.getEntity();
 		Entity attacker = e.getDamageSource().getDirectEntity();
 		ItemStack shield = user.getUseItem();
-		int level;
-		if ((level = EnchantmentHelper.getItemEnchantmentLevel(this, shield)) > 0) {
+		int level = shield.getEnchantmentLevel(this);
+		if (level > 0) {
 			if (user.level.random.nextInt(Math.max(2, 7 - level)) == 0) {
 				DamageSource src = user instanceof Player plr ? DamageSource.playerAttack(plr).setMagic().bypassArmor() : DamageSource.MAGIC;
 				if (attacker instanceof LivingEntity livingAttacker) {

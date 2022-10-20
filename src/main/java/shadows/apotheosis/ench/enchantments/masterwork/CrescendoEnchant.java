@@ -12,7 +12,6 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -52,7 +51,7 @@ public class CrescendoEnchant extends Enchantment {
 	 */
 	public static void onArrowFired(ItemStack crossbow) {
 		if (!Apotheosis.enableEnch) return;
-		int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CRESCENDO, crossbow);
+		int level = crossbow.getEnchantmentLevel(Apoth.Enchantments.CRESCENDO.get());
 		if (level > 0 && nbt.get() != null) {
 			int shots = crossbow.getTag().getInt("shots");
 			if (shots < level) {
@@ -75,7 +74,7 @@ public class CrescendoEnchant extends Enchantment {
 	 */
 	public static void preArrowFired(ItemStack crossbow) {
 		if (!Apotheosis.enableEnch) return;
-		int level = EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.CRESCENDO, crossbow);
+		int level = crossbow.getEnchantmentLevel(Apoth.Enchantments.CRESCENDO.get());
 		if (level > 0) {
 			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Tag.TAG_COMPOUND).copy());
 		}

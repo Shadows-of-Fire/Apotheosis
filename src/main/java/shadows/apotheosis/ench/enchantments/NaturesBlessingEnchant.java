@@ -6,7 +6,6 @@ import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import shadows.apotheosis.ench.EnchModule;
 
@@ -38,9 +37,9 @@ public class NaturesBlessingEnchant extends Enchantment {
 
 	public void rightClick(PlayerInteractEvent.RightClickBlock e) {
 		ItemStack s = e.getItemStack();
-		int nbLevel = EnchantmentHelper.getItemEnchantmentLevel(this, s);
-		if (!e.getEntity().isShiftKeyDown() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getWorld(), e.getPos(), e.getPlayer())) {
-			s.hurtAndBreak(Math.max(1, 6 - nbLevel), e.getPlayer(), ent -> ent.broadcastBreakEvent(e.getHand()));
+		int nbLevel = s.getEnchantmentLevel(this);
+		if (!e.getEntity().isShiftKeyDown() && nbLevel > 0 && BoneMealItem.applyBonemeal(s.copy(), e.getLevel(), e.getPos(), e.getEntity())) {
+			s.hurtAndBreak(Math.max(1, 6 - nbLevel), e.getEntity(), ent -> ent.broadcastBreakEvent(e.getHand()));
 			e.setCanceled(true);
 			e.setCancellationResult(InteractionResult.SUCCESS);
 		}

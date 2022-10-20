@@ -10,7 +10,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 
 public class KnowledgeEnchant extends Enchantment {
@@ -40,14 +39,14 @@ public class KnowledgeEnchant extends Enchantment {
 	}
 
 	public void drops(Player p, LivingDropsEvent e) {
-		int knowledge = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
+		int knowledge = p.getMainHandItem().getEnchantmentLevel(this);
 		if (knowledge > 0 && !(e.getEntity() instanceof Player)) {
 			int items = 0;
 			for (ItemEntity i : e.getDrops())
 				items += i.getItem().getCount();
 			if (items > 0) e.getDrops().clear();
 			items *= knowledge * 25;
-			Entity ded = e.getEntityLiving();
+			Entity ded = e.getEntity();
 			while (items > 0) {
 				int i = ExperienceOrb.getExperienceValue(items);
 				items -= i;

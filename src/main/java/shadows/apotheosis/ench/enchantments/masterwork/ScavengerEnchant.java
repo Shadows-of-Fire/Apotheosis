@@ -14,7 +14,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
@@ -57,11 +56,11 @@ public class ScavengerEnchant extends Enchantment {
 
 	public void drops(Player p, LivingDropsEvent e) throws Throwable {
 		if (p.level.isClientSide) return;
-		int scavenger = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
+		int scavenger = p.getMainHandItem().getEnchantmentLevel(this);
 		if (scavenger > 0 && p.level.random.nextInt(100) < scavenger * 2.5F) {
-			e.getEntityLiving().captureDrops(new ArrayList<>());
-			dropFromLootTable.invoke(e.getEntityLiving(), e.getSource(), true);
-			e.getDrops().addAll(e.getEntityLiving().captureDrops(null));
+			e.getEntity().captureDrops(new ArrayList<>());
+			dropFromLootTable.invoke(e.getEntity(), e.getSource(), true);
+			e.getDrops().addAll(e.getEntity().captureDrops(null));
 		}
 	}
 

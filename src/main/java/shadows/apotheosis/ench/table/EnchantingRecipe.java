@@ -19,7 +19,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.ench.table.EnchantingStatManager.Stats;
 
@@ -108,7 +107,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 		return RecipeTypes.INFUSION;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<EnchantingRecipe> {
+	public static class Serializer implements RecipeSerializer<EnchantingRecipe> {
 
 		protected static final Gson GSON = new GsonBuilder().create();
 

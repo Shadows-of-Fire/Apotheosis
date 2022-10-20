@@ -12,7 +12,6 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.ench.EnchModule;
@@ -48,7 +47,7 @@ public class ChromaticEnchant extends Enchantment {
 	}
 
 	public List<ItemStack> molestSheepItems(Sheep sheep, ItemStack shears, List<ItemStack> items) {
-		if (EnchantmentHelper.getItemEnchantmentLevel(this, shears) > 0) {
+		if (shears.getEnchantmentLevel(this) > 0) {
 			for (int i = 0; i < items.size(); i++) {
 				if (items.get(i).is(ItemTags.WOOL)) {
 					items.set(i, new ItemStack(ITEM_BY_DYE.get(DyeColor.byId(sheep.random.nextInt(16)))));

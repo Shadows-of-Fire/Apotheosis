@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 
 public class ScrappingTomeItem extends BookItem {
@@ -29,7 +30,6 @@ public class ScrappingTomeItem extends BookItem {
 
 	public ScrappingTomeItem() {
 		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
-		this.setRegistryName(Apotheosis.MODID, "scrap_tome");
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class ScrappingTomeItem extends BookItem {
 		List<Enchantment> keys = Lists.newArrayList(wepEnch.keySet());
 		long seed = 1831;
 		for (Enchantment e : keys) {
-			seed ^= e.getRegistryName().hashCode();
+			seed ^= ForgeRegistries.ENCHANTMENTS.getKey(e).hashCode();
 		}
 		seed ^= ev.getPlayer().getEnchantmentSeed();
 		rand.setSeed(seed);

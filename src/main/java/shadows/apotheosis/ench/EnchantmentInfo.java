@@ -3,6 +3,7 @@ package shadows.apotheosis.ench;
 import java.math.BigDecimal;
 
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 import s_com.udojava.evalex.Expression;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
 import shadows.placebo.config.Configuration;
@@ -64,7 +65,7 @@ public class EnchantmentInfo {
 	}
 
 	public static EnchantmentInfo load(Enchantment ench, Configuration cfg) {
-		String category = ench.getRegistryName().toString();
+		String category = ForgeRegistries.ENCHANTMENTS.getKey(ench).toString();
 		int max = cfg.getInt("Max Level", category, EnchModule.getDefaultMax(ench), 1, 127, "The max level of this enchantment - originally " + ench.getMaxLevel() + ".");
 		int maxLoot = cfg.getInt("Max Loot Level", category, ench.getMaxLevel(), 1, 127, "The max level of this enchantment available from loot sources.");
 		String maxF = cfg.getString("Max Power Function", category, "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
@@ -76,12 +77,12 @@ public class EnchantmentInfo {
 		boolean lootable = cfg.getBoolean("Lootable", category, ench.isDiscoverable(), "If enchanted books of this enchantment are available via loot sources.");
 		boolean tradeable = cfg.getBoolean("Tradeable", category, ench.isTradeable(), "If enchanted books of this enchantment are available via villager trades.");
 		EnchantmentInfo info = new EnchantmentInfo(ench, max, maxLoot, maxPower, minPower, treasure, discoverable, lootable, tradeable);
-		String rarity = cfg.getString("Rarity", ench.getRegistryName().toString(), ench.getRarity().name(), "The rarity of this enchantment.  Valid values are COMMON, UNCOMMON, RARE, and VERY_RARE.");
+		String rarity = cfg.getString("Rarity", category, ench.getRarity().name(), "The rarity of this enchantment.  Valid values are COMMON, UNCOMMON, RARE, and VERY_RARE.");
 		try {
 			Enchantment.Rarity r = Enchantment.Rarity.valueOf(rarity);
 			ench.rarity = r;
 		} catch (Exception ex) {
-			EnchModule.LOGGER.error("Failed to parse rarity for {}, as {} is not a valid rarity string.", ench.getRegistryName(), rarity);
+			EnchModule.LOGGER.error("Failed to parse rarity for {}, as {} is not a valid rarity string.", category, rarity);
 		}
 		return info;
 	}

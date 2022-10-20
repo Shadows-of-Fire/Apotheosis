@@ -1,6 +1,5 @@
 package shadows.apotheosis.ench.table;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -281,7 +280,7 @@ public class EnchantingInfoScreen extends Screen {
 	public class PowerSlider extends AbstractSliderButton {
 
 		public PowerSlider(int x, int y, int width, int height) {
-			super(x, y, width, height, TextComponent.EMPTY, 0);
+			super(x, y, width, height, Component.empty(), 0);
 			if (EnchantingInfoScreen.this.selectedSlot != -1 && this.value == 0) {
 				this.value = this.normalizeValue(EnchantingInfoScreen.this.currentPower == 0 ? (this.max() + this.min()) / 2 : EnchantingInfoScreen.this.currentPower);
 				this.applyValue();

@@ -8,7 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
@@ -45,7 +44,7 @@ public class EarthsBoonEnchant extends Enchantment {
 	public void provideBenefits(BreakEvent e) {
 		Player player = e.getPlayer();
 		ItemStack stack = player.getMainHandItem();
-		int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
+		int level = stack.getEnchantmentLevel(this);
 		if (player.level.isClientSide) return;
 		if (e.getState().is(Tags.Blocks.STONE) && level > 0 && player.random.nextFloat() <= 0.01F * level) {
 			ItemStack newDrop = new ItemStack(ForgeRegistries.ITEMS.tags().getTag(Apoth.Tags.BOON_DROPS).getRandomElement(player.random).orElse(Items.AIR));

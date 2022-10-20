@@ -7,7 +7,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -34,7 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
+import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.container.SimplerMenuProvider;
 
 public class EnchLibraryBlock extends HorizontalDirectionalBlock implements EntityBlock {
@@ -52,9 +51,7 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-		if (world.isClientSide) return InteractionResult.SUCCESS;
-		NetworkHooks.openGui((ServerPlayer) player, this.getMenuProvider(state, world, pos), pos);
-		return InteractionResult.CONSUME;
+		return ContainerUtil.openGui(player, pos, EnchLibraryContainer::new);
 	}
 
 	@Override

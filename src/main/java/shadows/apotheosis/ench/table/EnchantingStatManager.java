@@ -6,10 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -25,7 +24,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.objects.IEnchantingBlock;
 import shadows.apotheosis.ench.table.EnchantingStatManager.BlockStats;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.PlaceboJsonReloadListener;
+import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 
 public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats> {
 
@@ -42,28 +43,7 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 	@Override
 	@SuppressWarnings("deprecation")
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new SerializerBuilder<BlockStats>("Enchanting Stats").withJsonDeserializer(obj -> {
-			Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
-			List<Block> blocks = new ArrayList<>();
-			if (obj.has("tag")) {
-				TagKey<Block> tag = BlockTags.create(new ResourceLocation(obj.get("tag").getAsString()));
-				this.getContext().getTag(tag).getValues().stream().map(Holder::value).forEach(blocks::add);
-			} else {
-				Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
-				blocks.add(b);
-			}
-			return new BlockStats(blocks, stats);
-		}).withNetworkSerializer((stats, buf) -> {
-			buf.writeInt(stats.blocks.size());
-			stats.blocks.forEach(b -> buf.writeInt(Registry.BLOCK.getId(b)));
-			stats.stats.write(buf);
-		}).withNetworkDeserializer(buf -> {
-			int size = buf.readInt();
-			List<Block> blocks = new ArrayList<>();
-			for (int i = 0; i < size; i++)
-				blocks.add(Registry.BLOCK.byId(buf.readInt()));
-			return new BlockStats(blocks, Stats.read(buf));
-		}));
+		this.registerSerializer(DEFAULT, PSerializer.autoRegister("Enchanting Stats", BlockStats.class));
 	}
 
 	@Override
@@ -203,6 +183,39 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 		public BlockStats(List<Block> blocks, Stats stats) {
 			this.blocks = blocks;
 			this.stats = stats;
+		}
+
+		public static BlockStats read(JsonObject obj) {
+			Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
+			List<Block> blocks = new ArrayList<>();
+			if (obj.has("tag")) {
+				TagKey<Block> tag = BlockTags.create(new ResourceLocation(obj.get("tag").getAsString()));
+				EnchantingStatManager.INSTANCE.getContext().getTag(tag).stream().map(Holder::value).forEach(blocks::add);
+			} else {
+				Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
+				blocks.add(b);
+			}
+			return new BlockStats(blocks, stats);
+		}
+
+		public JsonObject write() {
+			return new JsonObject();
+		}
+
+		@SuppressWarnings("deprecation")
+		public void write(FriendlyByteBuf buf) {
+			buf.writeInt(this.blocks.size());
+			this.blocks.forEach(b -> buf.writeInt(Registry.BLOCK.getId(b)));
+			this.stats.write(buf);
+		}
+
+		@SuppressWarnings("deprecation")
+		public static BlockStats read(FriendlyByteBuf buf) {
+			int size = buf.readInt();
+			List<Block> blocks = new ArrayList<>();
+			for (int i = 0; i < size; i++)
+				blocks.add(Registry.BLOCK.byId(buf.readInt()));
+			return new BlockStats(blocks, Stats.read(buf));
 		}
 
 	}

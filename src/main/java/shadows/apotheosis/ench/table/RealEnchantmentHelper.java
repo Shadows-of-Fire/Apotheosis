@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
 import net.minecraft.Util;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.IntrusiveBase;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
@@ -36,8 +36,8 @@ public class RealEnchantmentHelper {
 	 * @param stack Itemstack to be enchanted.
 	 * @return The level that the table will use for this specific slot.
 	 */
-	public static int getEnchantmentCost(Random rand, int num, float eterna, ItemStack stack) {
-		int ench = stack.getItemEnchantability();
+	public static int getEnchantmentCost(RandomSource rand, int num, float eterna, ItemStack stack) {
+		int ench = stack.getEnchantmentValue();
 		if (ench <= 0) return 0;
 		int level = Math.round(eterna * 2);
 		if (num == 2) return level;
@@ -56,9 +56,9 @@ public class RealEnchantmentHelper {
 	 * @param treasure If treasure enchantments can show up.
 	 * @return A list of enchantments based on the seed, item, and eterna/quanta/arcana levels.
 	 */
-	public static List<EnchantmentInstance> selectEnchantment(Random rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure) {
+	public static List<EnchantmentInstance> selectEnchantment(RandomSource rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure) {
 		List<EnchantmentInstance> chosenEnchants = Lists.newArrayList();
-		int enchantability = stack.getItemEnchantability();
+		int enchantability = stack.getEnchantmentValue();
 		int srcLevel = level;
 		if (enchantability > 0) {
 			float quantaFactor = 1 + Mth.nextFloat(rand, -1F + rectification / 100F, 1F) * quanta / 100F; //The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]

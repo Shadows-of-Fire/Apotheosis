@@ -9,9 +9,7 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import shadows.apotheosis.Apoth;
 
 public class EndlessQuiverEnchant extends Enchantment {
 
@@ -45,6 +43,6 @@ public class EndlessQuiverEnchant extends Enchantment {
 	}
 
 	public boolean isTrulyInfinite(ItemStack stack, ItemStack bow, Player player) {
-		return EnchantmentHelper.getItemEnchantmentLevel(Apoth.Enchantments.ENDLESS_QUIVER, bow) > 0 && stack.getItem() instanceof ArrowItem;
+		return bow.getEnchantmentLevel(this) > 0 && stack.getItem() instanceof ArrowItem;
 	}
 }

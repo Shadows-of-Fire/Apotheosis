@@ -13,6 +13,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -51,7 +52,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 
 	public EnchantingCategory(IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(TEXTURES, 0, 0, 170, 56);
-		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.ENCHANTING_TABLE));
+		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.ENCHANTING_TABLE));
 		this.localizedName = Component.translatable("apotheosis.recipes.enchanting");
 	}
 
@@ -66,18 +67,8 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 	}
 
 	@Override
-	public Class<EnchantingRecipe> getRecipeClass() {
-		return EnchantingRecipe.class;
-	}
-
-	@Override
 	public Component getTitle() {
 		return this.localizedName;
-	}
-
-	@Override
-	public ResourceLocation getUid() {
-		return UID;
 	}
 
 	@Override
@@ -92,13 +83,13 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 		Extension<?> ext = EXTENSIONS.get(recipe.getClass());
 		if (ext != null) ext.setRecipe(builder, input, output, recipe, focuses);
 		else {
-			input.addIngredients(VanillaTypes.ITEM, Arrays.asList(recipe.getInput().getItems()));
-			output.addIngredient(VanillaTypes.ITEM, recipe.getResultItem());
+			input.addIngredients(VanillaTypes.ITEM_STACK, Arrays.asList(recipe.getInput().getItems()));
+			output.addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
 		}
 	}
 
 	@Override
-	public void draw(EnchantingRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
+	public void draw(EnchantingRecipe recipe, IRecipeSlotsView slots, PoseStack stack, double mouseX, double mouseY) {
 		boolean hover = false;
 		if (mouseX > 57 && mouseX <= 57 + 108 && mouseY > 4 && mouseY <= 4 + 19) {
 			GuiComponent.blit(stack, 57, 4, 0, 0, 71, 108, 19, 256, 256);
@@ -150,7 +141,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 		if (scn == null) return; // We need this to render tooltips, bail if its not there.
 		if (hover) {
 			List<Component> list = new ArrayList<>();
-			list.add(Component.translatable("container.enchant.clue", Apoth.Enchantments.INFUSION.getFullname(1).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			list.add(Component.translatable("container.enchant.clue", Apoth.Enchantments.INFUSION.get().getFullname(1).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 			scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
 		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 26 && mouseY <= 27 + 5) {
 			List<Component> list = new ArrayList<>();

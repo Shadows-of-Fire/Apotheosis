@@ -20,8 +20,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
@@ -102,12 +102,12 @@ public abstract class EnchLibraryTile extends BlockEntity {
 	public void saveAdditional(CompoundTag tag) {
 		CompoundTag points = new CompoundTag();
 		for (Object2IntMap.Entry<Enchantment> e : this.points.object2IntEntrySet()) {
-			points.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
+			points.putInt(ForgeRegistries.ENCHANTMENTS.getKey(e.getKey()).toString(), e.getIntValue());
 		}
 		tag.put("Points", points);
 		CompoundTag levels = new CompoundTag();
 		for (Object2IntMap.Entry<Enchantment> e : this.maxLevels.object2IntEntrySet()) {
-			levels.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
+			levels.putInt(ForgeRegistries.ENCHANTMENTS.getKey(e.getKey()).toString(), e.getIntValue());
 		}
 		tag.put("Levels", levels);
 		super.saveAdditional(tag);
@@ -158,12 +158,12 @@ public abstract class EnchLibraryTile extends BlockEntity {
 		CompoundTag tag = super.getUpdateTag();
 		CompoundTag points = new CompoundTag();
 		for (Object2IntMap.Entry<Enchantment> e : this.points.object2IntEntrySet()) {
-			points.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
+			points.putInt(ForgeRegistries.ENCHANTMENTS.getKey(e.getKey()).toString(), e.getIntValue());
 		}
 		tag.put("Points", points);
 		CompoundTag levels = new CompoundTag();
 		for (Object2IntMap.Entry<Enchantment> e : this.maxLevels.object2IntEntrySet()) {
-			levels.putInt(e.getKey().getRegistryName().toString(), e.getIntValue());
+			levels.putInt(ForgeRegistries.ENCHANTMENTS.getKey(e.getKey()).toString(), e.getIntValue());
 		}
 		tag.put("Levels", levels);
 		return tag;
@@ -191,7 +191,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return this.itemHandler.cast();
+		if (cap == ForgeCapabilities.ITEM_HANDLER) return this.itemHandler.cast();
 		return super.getCapability(cap, side);
 	}
 
@@ -236,7 +236,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 	public static class BasicLibraryTile extends EnchLibraryTile {
 
 		public BasicLibraryTile(BlockPos pos, BlockState state) {
-			super(Apoth.Tiles.LIBRARY, pos, state, 16);
+			super(Apoth.Tiles.LIBRARY.get(), pos, state, 16);
 		}
 
 	}
@@ -244,7 +244,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 	public static class EnderLibraryTile extends EnchLibraryTile {
 
 		public EnderLibraryTile(BlockPos pos, BlockState state) {
-			super(Apoth.Tiles.ENDER_LIBRARY, pos, state, 31);
+			super(Apoth.Tiles.ENDER_LIBRARY.get(), pos, state, 31);
 		}
 
 	}

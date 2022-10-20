@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import net.minecraft.ChatFormatting;
@@ -16,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -111,13 +111,13 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!Apoth.Tiles.ANVIL.isValid(newState)) {
+		if (!Apoth.Tiles.ANVIL.get().isValid(newState)) {
 			world.removeBlockEntity(pos);
 		}
 	}
 
 	@Override
-	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRand) {
+	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRand) {
 		if (isFree(pLevel.getBlockState(pPos.below())) && pPos.getY() >= pLevel.getMinBuildHeight()) {
 			BlockEntity be = pLevel.getBlockEntity(pPos);
 			FallingBlockEntity e = FallingBlockEntity.fall(pLevel, pPos, pState);

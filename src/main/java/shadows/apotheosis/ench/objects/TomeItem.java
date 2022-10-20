@@ -21,6 +21,7 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.IEnchantableItem;
@@ -51,7 +52,7 @@ public class TomeItem extends BookItem implements IEnchantableItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(Component.translatable("info.apotheosis." + this.getRegistryName().getPath()).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("info.apotheosis." + ForgeRegistries.ITEMS.getKey(this).getPath()).withStyle(ChatFormatting.GRAY));
 		if (stack.isEnchanted()) {
 			tooltip.add(Component.translatable("info.apotheosis.tome_error").withStyle(ChatFormatting.RED));
 		}

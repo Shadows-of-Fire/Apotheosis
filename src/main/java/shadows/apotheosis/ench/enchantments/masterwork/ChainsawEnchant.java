@@ -18,7 +18,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
@@ -56,7 +55,7 @@ public class ChainsawEnchant extends Enchantment {
 		Player player = e.getPlayer();
 		Level level = player.level;
 		ItemStack stack = player.getMainHandItem();
-		int enchLevel = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
+		int enchLevel = stack.getEnchantmentLevel(this);
 		if (player.getClass() == ServerPlayer.class && enchLevel > 0 && !level.isClientSide && this.isTree(level, e.getPos(), e.getState())) {
 			if (!player.getAbilities().instabuild) PlaceboTaskQueue.submitTask("apotheosis:chainsaw_task", new ChainsawTask(player.getUUID(), stack, level, e.getPos()));
 		}

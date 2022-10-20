@@ -8,7 +8,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 
@@ -55,9 +54,9 @@ public class LifeMendingEnchant extends Enchantment {
 		float amt = e.getAmount();
 		if (amt <= 0F) return;
 		for (EquipmentSlot slot : SLOTS) {
-			ItemStack stack = e.getEntityLiving().getItemBySlot(slot);
+			ItemStack stack = e.getEntity().getItemBySlot(slot);
 			if (!stack.isEmpty() && stack.isDamaged()) {
-				int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
+				int level = stack.getEnchantmentLevel(this);
 				if (level <= 0) continue;
 				float cost = 1.0F / (1 << level - 1);
 				int maxRestore = Math.min(Mth.floor(amt / cost), stack.getDamageValue());

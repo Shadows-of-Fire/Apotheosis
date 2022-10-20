@@ -13,7 +13,6 @@ public class ApothAnvilItem extends BlockItem {
 
 	public ApothAnvilItem(Block block) {
 		super(block, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS));
-		this.setRegistryName(block.getRegistryName());
 	}
 
 	@Override
@@ -32,7 +31,7 @@ public class ApothAnvilItem extends BlockItem {
 	}
 
 	@Override
-	public int getItemEnchantability(ItemStack stack) {
+	public int getEnchantmentValue(ItemStack stack) {
 		return 50;
 	}
 

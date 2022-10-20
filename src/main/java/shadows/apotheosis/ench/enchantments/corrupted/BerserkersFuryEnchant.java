@@ -49,7 +49,7 @@ public class BerserkersFuryEnchant extends Enchantment {
 	 * Handles the application of Berserker's Fury.
 	 */
 	public void livingHurt(LivingHurtEvent e) {
-		LivingEntity user = e.getEntityLiving();
+		LivingEntity user = e.getEntity();
 		if (e.getSource().getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
 			int level = EnchantmentHelper.getEnchantmentLevel(this, user);
 			if (level > 0) {

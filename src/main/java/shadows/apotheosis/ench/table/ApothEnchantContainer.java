@@ -137,7 +137,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 			List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 			if (!list.isEmpty()) {
 				player.onEnchantmentPerformed(toEnchant, cost);
-				if (list.get(0).enchantment == Apoth.Enchantments.INFUSION) {
+				if (list.get(0).enchantment == Apoth.Enchantments.INFUSION.get()) {
 					EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
 					if (match != null) this.enchantSlots.setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));
 					else return;
@@ -234,7 +234,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 		EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.eterna.get(), this.quanta.get(), this.arcana.get()))).get().orElse(null);
 		if (enchantSlot == 2 && match != null) {
 			list.clear();
-			list.add(new EnchantmentInstance(Apoth.Enchantments.INFUSION, 1));
+			list.add(new EnchantmentInstance(Apoth.Enchantments.INFUSION.get(), 1));
 		}
 		return list;
 	}
@@ -265,7 +265,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 			}
 			this.eterna.set(stats[0]);
 			this.quanta.set(stats[1]);
-			this.arcana.set(stats[2] + this.getSlot(0).getItem().getItemEnchantability() / 2F);
+			this.arcana.set(stats[2] + this.getSlot(0).getItem().getEnchantmentValue() / 2F);
 			this.rectification.set(stats[3]);
 			this.clues.set((int) stats[4]);
 			return this;
@@ -294,7 +294,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 
 	@Override
 	public MenuType<?> getType() {
-		return Apoth.Menus.ENCHANTING_TABLE;
+		return Apoth.Menus.ENCHANTING_TABLE.get();
 	}
 
 	/**
