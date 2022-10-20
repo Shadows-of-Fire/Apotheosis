@@ -204,6 +204,10 @@ public class AdventureEvents {
 				attacker.setAbsorptionAmount(Math.min(20, attacker.getAbsorptionAmount() + dmg * overheal));
 			}
 		}
+
+		if (e.getSource() == DamageSource.IN_WALL && e.getEntity().getPersistentData().contains("apoth.boss")) {
+			e.setCanceled(true);
+		}
 	}
 
 	private static boolean noRecurse = false;

@@ -12,6 +12,7 @@
   * The first 50% of bonus crit chance is now ignored on a vanilla (jump) crit, but crit damage is increased by 50%.
   * Overcrits will now scale worse
 * Anvils can no longer accidentally void gems.
+* Bosses are now immune to suffocation damage.
 
 ## 5.7.0
 * As noted in-line below, you should regenerate all or part of your /config/apotheosis/adventure.cfg file.
