@@ -275,11 +275,11 @@ public class Apoth {
 		public static final DynamicRegistryObject<SocketAffix> SOCKET = AffixManager.INSTANCE.makeObj(Apotheosis.loc("socket"));
 		public static final DynamicRegistryObject<DurableAffix> DURABLE = AffixManager.INSTANCE.makeObj(Apotheosis.loc("durable"));
 		// Real affixes
-		public static final DynamicRegistryObject<MagicalArrowAffix> MAGICAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("magical"));
-		public static final DynamicRegistryObject<FestiveAffix> FESTIVE = AffixManager.INSTANCE.makeObj(Apotheosis.loc("festive"));
+		public static final DynamicRegistryObject<MagicalArrowAffix> MAGICAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("ranged/special/magical"));
+		public static final DynamicRegistryObject<FestiveAffix> FESTIVE = AffixManager.INSTANCE.makeObj(Apotheosis.loc("sword/special/festive"));
 		public static final DynamicRegistryObject<TelepathicAffix> TELEPATHIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("telepathic"));
-		public static final DynamicRegistryObject<OmneticAffix> OMNETIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("omnetic"));
-		public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("radial"));
+		public static final DynamicRegistryObject<OmneticAffix> OMNETIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("breaker/special/omnetic"));
+		public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("breaker/special/radial"));
 	}
 
 	public static final class Tags {
