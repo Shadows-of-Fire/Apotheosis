@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -55,7 +56,7 @@ public class CatalyzingAffix extends Affix {
 	}
 
 	public static CatalyzingAffix read(JsonObject obj) {
-		var values = AffixHelper.readValues(obj);
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
 		return new CatalyzingAffix(values);
 	}
 

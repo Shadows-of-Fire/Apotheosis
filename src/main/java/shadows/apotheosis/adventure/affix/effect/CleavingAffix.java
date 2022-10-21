@@ -12,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -100,7 +101,7 @@ public class CleavingAffix extends Affix {
 	}
 
 	public static CleavingAffix read(JsonObject obj) {
-		Map<LootRarity, CleaveValues> values = Affix.GSON.fromJson(obj, new TypeToken<Map<LootRarity, CleaveValues>>() {
+		Map<LootRarity, CleaveValues> values = Affix.GSON.fromJson(GsonHelper.getAsJsonObject(obj, "values"), new TypeToken<Map<LootRarity, CleaveValues>>() {
 		}.getType());
 		return new CleavingAffix(values);
 	}

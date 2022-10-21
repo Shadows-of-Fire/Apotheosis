@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
@@ -61,7 +62,7 @@ public class PsychicAffix extends Affix {
 	}
 
 	public static Affix read(JsonObject obj) {
-		var values = AffixHelper.readValues(obj);
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
 		return new PsychicAffix(values);
 	}
 

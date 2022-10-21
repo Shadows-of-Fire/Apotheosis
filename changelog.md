@@ -1,3 +1,7 @@
+## 5.7.2
+* Fixed certain affixes not loading.
+* Fixed a crash that may happen if a boss refuses to allow a custom name to be set.
+
 ## 5.7.1
 * Affixes are now data-driven! Each affix has its own json file located in the `affixes` subdirectory.
   * Through this, you can now configure the values for each affix at each rarity level.
