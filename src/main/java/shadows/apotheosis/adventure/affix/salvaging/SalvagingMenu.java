@@ -1,12 +1,11 @@
 package shadows.apotheosis.adventure.affix.salvaging;
 
-import java.util.Random;
-
 import com.google.common.base.Predicates;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -33,7 +32,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 	}
 
 	public SalvagingMenu(int id, Inventory inv, ContainerLevelAccess access) {
-		super(Apoth.Menus.SALVAGE, id, inv);
+		super(Apoth.Menus.SALVAGE.get(), id, inv);
 		this.player = inv.player;
 		this.access = access;
 		for (int i = 0; i < 15; i++) {
@@ -107,7 +106,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 
 	@Override
 	public boolean stillValid(Player pPlayer) {
-		return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE, true);
+		return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get(), true);
 	}
 
 	@Override
@@ -154,7 +153,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 		}
 	}
 
-	public static int getSalvageCount(ItemStack stack, Random rand) {
+	public static int getSalvageCount(ItemStack stack, RandomSource rand) {
 		int[] counts = getSalvageCounts(stack);
 		return rand.nextInt(counts[0], counts[1] + 1);
 	}
@@ -170,10 +169,10 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 		return new int[] { 1, 1 };
 	}
 
-	public static ItemStack salvageItem(ItemStack stack, Random rand) {
+	public static ItemStack salvageItem(ItemStack stack, RandomSource rand) {
 		LootRarity rarity = AffixHelper.getRarity(stack);
 		if (rarity == null) return ItemStack.EMPTY;
-		ItemStack mat = new ItemStack(AdventureModule.RARITY_MATERIALS.get(rarity).get(), getSalvageCount(stack, rand));
+		ItemStack mat = new ItemStack(AdventureModule.RARITY_MATERIALS.get(rarity), getSalvageCount(stack, rand));
 		return mat;
 	}
 

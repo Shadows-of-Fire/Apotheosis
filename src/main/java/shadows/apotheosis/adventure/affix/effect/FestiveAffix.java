@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -79,7 +80,7 @@ public class FestiveAffix extends Affix {
 	}
 
 	public static Affix read(JsonObject obj) {
-		var values = AffixHelper.readValues(obj);
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
 		return new FestiveAffix(values);
 	}
 

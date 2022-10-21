@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.client;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,6 +47,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -164,11 +164,11 @@ public class AdventureModuleClient {
 		List<Component> list = e.getToolTip();
 		int rmvIdx = -1, rmvIdx2 = -1;
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i) instanceof TextComponent tc) {
-				if (tc.getText().equals("APOTH_REMOVE_MARKER")) {
+			if (list.get(i).getContents() instanceof LiteralContents tc) {
+				if (tc.text().equals("APOTH_REMOVE_MARKER")) {
 					rmvIdx = i;
 				}
-				if (tc.getText().equals("APOTH_REMOVE_MARKER_2")) {
+				if (tc.text().equals("APOTH_REMOVE_MARKER_2")) {
 					rmvIdx2 = i;
 					break;
 				}
@@ -195,8 +195,8 @@ public class AdventureModuleClient {
 		int rmvIdx = -1;
 		for (int i = 0; i < list.size(); i++) {
 			Optional<FormattedText> o = list.get(i).left();
-			if (o.isPresent() && o.get() instanceof TextComponent tc) {
-				if (tc.getText().equals("APOTH_REMOVE_MARKER")) {
+			if (o.isPresent() && o.get() instanceof Component comp && comp.getContents() instanceof LiteralContents tc) {
+				if (tc.text().equals("APOTH_REMOVE_MARKER")) {
 					rmvIdx = i;
 					list.remove(i);
 					break;

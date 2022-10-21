@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -60,8 +61,8 @@ public class ThunderstruckAffix extends Affix {
 	}
 
 	public static Affix read(JsonObject obj) {
-		var values = AffixHelper.readValues(obj);
-		return new EnlightenedAffix(values);
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
+		return new ThunderstruckAffix(values);
 	}
 
 	public JsonObject write() {
@@ -74,7 +75,7 @@ public class ThunderstruckAffix extends Affix {
 
 	public static Affix read(FriendlyByteBuf buf) {
 		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
-		return new EnlightenedAffix(values);
+		return new ThunderstruckAffix(values);
 	}
 
 }

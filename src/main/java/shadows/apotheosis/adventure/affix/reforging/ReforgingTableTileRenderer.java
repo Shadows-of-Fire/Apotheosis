@@ -20,6 +20,7 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
 	private static final ResourceLocation HAMMER = new ResourceLocation(Apotheosis.MODID, "item/hammer");
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public void render(ReforgingTableTile tile, float partials, PoseStack matrix, MultiBufferSource pBufferSource, int light, int overlay) {
 		ItemRenderer irenderer = Minecraft.getInstance().getItemRenderer();
 		BakedModel base = irenderer.getItemModelShaper().getModelManager().getModel(HAMMER);
@@ -36,7 +37,7 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
 		//tile.step1 = true;
 		//tile.time = Math.min(tile.time, 59);
 		//tile.time = 10;
-		
+
 		if (tile.step1) {
 			float factor = tile.time % 60 + partials;
 			float sin = Mth.sin(factor * Mth.PI / 120);

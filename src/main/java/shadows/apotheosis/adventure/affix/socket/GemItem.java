@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.affix.socket;
 
-import java.awt.TextComponent;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -9,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -40,7 +40,7 @@ public class GemItem extends Item {
 			tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
 			return;
 		}
-		tooltip.add(TextComponent.EMPTY);
+		tooltip.add(CommonComponents.EMPTY);
 		tooltip.add(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
 		tooltip.add(toComponent(bonus.getKey(), bonus.getValue()));
 	}
@@ -64,7 +64,7 @@ public class GemItem extends Item {
 
 	public static void setStoredBonus(ItemStack stack, Attribute attrib, AttributeModifier modif) {
 		CompoundTag tag = modif.save();
-		tag.putString("attribute", attrib.getRegistryName().toString());
+		tag.putString("attribute", ForgeRegistries.ATTRIBUTES.getKey(attrib).toString());
 		stack.getOrCreateTag().put(MODIFIER, tag);
 	}
 

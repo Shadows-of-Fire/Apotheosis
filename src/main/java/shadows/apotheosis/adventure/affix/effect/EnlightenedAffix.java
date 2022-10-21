@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -51,7 +52,7 @@ public class EnlightenedAffix extends Affix {
 	}
 
 	public static Affix read(JsonObject obj) {
-		var values = AffixHelper.readValues(obj);
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
 		return new EnlightenedAffix(values);
 	}
 

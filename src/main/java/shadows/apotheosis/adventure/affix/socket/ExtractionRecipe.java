@@ -24,7 +24,7 @@ public class ExtractionRecipe extends UpgradeRecipe implements IExtUpgradeRecipe
 	private static final ResourceLocation ID = new ResourceLocation("apotheosis:extraction");
 
 	public ExtractionRecipe() {
-		super(ID, Ingredient.EMPTY, Ingredient.of(Apoth.Items.VIAL_OF_EXTRACTION), ItemStack.EMPTY);
+		super(ID, Ingredient.EMPTY, Ingredient.of(Apoth.Items.VIAL_OF_EXTRACTION.get()), ItemStack.EMPTY);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class ExtractionRecipe extends UpgradeRecipe implements IExtUpgradeRecipe
 	@Override
 	public boolean matches(Container pInv, Level pLevel) {
 		List<ItemStack> sockets = SocketHelper.getGems(pInv.getItem(0));
-		return pInv.getItem(1).getItem() == Apoth.Items.VIAL_OF_EXTRACTION && !sockets.isEmpty() && !sockets.get(0).isEmpty();
+		return pInv.getItem(1).getItem() == Apoth.Items.VIAL_OF_EXTRACTION.get() && !sockets.isEmpty() && !sockets.get(0).isEmpty();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class ExtractionRecipe extends UpgradeRecipe implements IExtUpgradeRecipe
 		return true;
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ExtractionRecipe> {
+	public static class Serializer implements RecipeSerializer<ExtractionRecipe> {
 
 		public static Serializer INSTANCE = new Serializer();
 

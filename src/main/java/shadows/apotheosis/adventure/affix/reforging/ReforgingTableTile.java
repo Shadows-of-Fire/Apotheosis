@@ -1,21 +1,20 @@
 package shadows.apotheosis.adventure.affix.reforging;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import shadows.apotheosis.Apoth;
@@ -30,7 +29,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
 			if (slot == 0) return ReforgingMenu.isRarityMat(stack);
-			return stack.is(Apoth.Items.GEM_DUST);
+			return stack.is(Apoth.Items.GEM_DUST.get());
 		};
 
 		@Override
@@ -40,7 +39,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 	};
 
 	public ReforgingTableTile(BlockPos pWorldPosition, BlockState pBlockState) {
-		super(Apoth.Tiles.REFORGING_TABLE, pWorldPosition, pBlockState);
+		super(Apoth.Tiles.REFORGING_TABLE.get(), pWorldPosition, pBlockState);
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 			step1 = false;
 			time = 0;
 		} else if (time == 4 && !step1) {
-			Random rand = pLevel.random;
+			RandomSource rand = pLevel.random;
 			for (int i = 0; i < 6; i++) {
 				pLevel.addParticle(ParticleTypes.CRIT, pPos.getX() + 0.5 + 0.2 * rand.nextDouble(), pPos.getY() + 13 / 16D, pPos.getZ() + 0.5 + 0.2 * rand.nextDouble(), 0, 0, 0);
 			}
@@ -84,7 +83,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return this.invCap.cast();
+		if (cap == ForgeCapabilities.ITEM_HANDLER) return this.invCap.cast();
 		return super.getCapability(cap, side);
 	}
 

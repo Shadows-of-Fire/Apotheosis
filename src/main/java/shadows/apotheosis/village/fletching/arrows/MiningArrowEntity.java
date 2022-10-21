@@ -225,8 +225,8 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
 	}
 
 	public static enum Type {
-		IRON(new ResourceLocation(Apotheosis.MODID, "textures/entity/iron_MINING_ARROW.get().png")),
-		DIAMOND(new ResourceLocation(Apotheosis.MODID, "textures/entity/diamond_MINING_ARROW.get().png"));
+		IRON(new ResourceLocation(Apotheosis.MODID, "textures/entity/iron_mining_arrow.png")),
+		DIAMOND(new ResourceLocation(Apotheosis.MODID, "textures/entity/diamond_mining_arrow.png"));
 
 		private final ResourceLocation texture;
 

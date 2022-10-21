@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -21,8 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 import shadows.placebo.block_entity.TickingEntityBlock;
+import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.container.SimplerMenuProvider;
 
 public class ReforgingTableBlock extends Block implements TickingEntityBlock {
@@ -45,9 +44,7 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-		if (world.isClientSide) return InteractionResult.SUCCESS;
-		NetworkHooks.openGui((ServerPlayer) player, this.getMenuProvider(state, world, pos), pos);
-		return InteractionResult.CONSUME;
+		return ContainerUtil.openGui(player, pos, ReforgingMenu::new);
 	}
 
 	@Override

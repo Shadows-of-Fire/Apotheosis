@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.AffixHelper;
@@ -40,8 +41,8 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		super(menu, inv, title);
 		this.menu.setButtonUpdater(this::updateButtons);
 		for (int i = 0; i < 5; i++) {
-			mats[i] = new ItemStack(AdventureModule.RARITY_MATERIALS.get(LootRarity.values().get(i)).get());
-			sprites[i] = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Apotheosis.MODID, "items/" + mats[i].getItem().getRegistryName().getPath()));
+			mats[i] = new ItemStack(AdventureModule.RARITY_MATERIALS.get(LootRarity.values().get(i)));
+			sprites[i] = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(Apotheosis.MODID, "items/" + ForgeRegistries.ITEMS.getKey(mats[i].getItem()).getPath()));
 		}
 		this.titleLabelX--;
 		this.inventoryLabelX--;

@@ -939,7 +939,10 @@
     "generic.reachDistance": "Reach Distance",
     "info.apoth.modifier_disabled": "This Modifier is Disabled",
     "itemGroup.apotheosis": "Apotheosis",
-    
+    "config.jade.plugin_apotheosis.spawner": "Apoth Spawner Module",
+	"config.jade.plugin_apotheosis.ench": "Apoth Ench Module",
+	"config.jade.plugin_apotheosis.adventure": "Apoth Adventure Module",
+	
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",
     "book.apotheosis.subtitle": "Apotheotic Guide",

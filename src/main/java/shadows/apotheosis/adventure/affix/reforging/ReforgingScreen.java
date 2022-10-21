@@ -1,11 +1,9 @@
 package shadows.apotheosis.adventure.affix.reforging;
 
-import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -14,12 +12,15 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.loot.LootController;
@@ -53,9 +54,9 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 		if (input.isEmpty() || rarity == null) {
 			Arrays.fill(choices, ItemStack.EMPTY);
 		} else {
-			Random rand = this.menu.random;
+			RandomSource rand = this.menu.random;
 			for (int i = 0; i < 3; i++) {
-				rand.setSeed(this.menu.getSeed() ^ input.getItem().getRegistryName().hashCode() + i);
+				rand.setSeed(this.menu.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + i);
 				choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
 			}
 		}
@@ -85,8 +86,8 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 			List<Component> tooltips = new ArrayList<>();
 
 			tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
-			tooltips.add(TextComponent.EMPTY);
-			tooltips.add(Component.translatable("%s %s", cost, Apoth.Items.GEM_DUST.getName(ItemStack.EMPTY)).withStyle(dust < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
+			tooltips.add(CommonComponents.EMPTY);
+			tooltips.add(Component.translatable("%s %s", cost, Apoth.Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
 			tooltips.add(Component.translatable("%s %s", cost, this.menu.getSlot(1).getItem().getHoverName()).withStyle(mats < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
 
 			int levels = this.minecraft.player.experienceLevel;

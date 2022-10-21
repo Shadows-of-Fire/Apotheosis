@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,7 +45,14 @@ import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
  */
 public abstract class Affix extends TypeKeyedBase<Affix> {
 
-	protected static final Gson GSON = new GsonBuilder().registerTypeAdapter(LootRarity.class, JsonUtil.<LootRarity>makeSerializer((json, type, ctx) -> LootRarity.byId(json.getAsString()), null)).registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE).create();
+	//Formatter::off
+	protected static final Gson GSON = new GsonBuilder()
+			.registerTypeAdapter(LootRarity.class, JsonUtil.<LootRarity>makeSerializer((json, type, ctx) -> LootRarity.byId(json.getAsString()), null))
+			.registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE)
+			.registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
+			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
+			.create();
+	//Formatter::on
 
 	protected final AffixType type;
 

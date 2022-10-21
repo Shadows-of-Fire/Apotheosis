@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
@@ -26,7 +27,13 @@ import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 
-	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE).setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName()).create();
+	//Formatter::off
+	public static final Gson GSON = new GsonBuilder().setPrettyPrinting()
+			.registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE)
+			.registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
+			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
+			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName()).create();
+	//Formatter::on
 
 	public static final BossArmorManager INSTANCE = new BossArmorManager();
 

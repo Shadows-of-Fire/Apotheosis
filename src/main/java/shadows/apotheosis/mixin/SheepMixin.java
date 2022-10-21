@@ -26,9 +26,9 @@ public class SheepMixin {
 	@Inject(method = "onSheared", at = @At("RETURN"), remap = false, cancellable = true)
 	public void onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune, CallbackInfoReturnable<List<ItemStack>> ci) {
 		if (Apotheosis.enableEnch) {
-			ci.setReturnValue(Apoth.Enchantments.CHROMATIC.molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
-			ci.setReturnValue(Apoth.Enchantments.EXPLOITATION.molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
-			Apoth.Enchantments.GROWTH_SERUM.unshear((Sheep) (Object) this, item);
+			ci.setReturnValue(Apoth.Enchantments.CHROMATIC.get().molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
+			ci.setReturnValue(Apoth.Enchantments.EXPLOITATION.get().molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
+			Apoth.Enchantments.GROWTH_SERUM.get().unshear((Sheep) (Object) this, item);
 		}
 	}
 

@@ -29,7 +29,7 @@ public class SocketingRecipe extends UpgradeRecipe {
 	 */
 	@Override
 	public boolean matches(Container pInv, Level pLevel) {
-		return SocketHelper.getEmptySockets(pInv.getItem(0)) > 0 && pInv.getItem(1).getItem() == Apoth.Items.GEM;
+		return SocketHelper.getEmptySockets(pInv.getItem(0)) > 0 && pInv.getItem(1).getItem() == Apoth.Items.GEM.get();
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class SocketingRecipe extends UpgradeRecipe {
 		return true;
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SocketingRecipe> {
+	public static class Serializer implements RecipeSerializer<SocketingRecipe> {
 
 		public static Serializer INSTANCE = new Serializer();
 

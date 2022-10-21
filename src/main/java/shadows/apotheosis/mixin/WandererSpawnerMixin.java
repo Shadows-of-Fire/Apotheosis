@@ -1,7 +1,5 @@
 package shadows.apotheosis.mixin;
 
-import java.util.Random;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.WanderingTraderSpawner;
@@ -23,7 +22,7 @@ import shadows.apotheosis.village.wanderer.WandererReplacements;
 public class WandererSpawnerMixin {
 
 	@Shadow
-	private Random random;
+	private RandomSource random;
 
 	@ModifyConstant(method = "tick", constant = @Constant(intValue = 75))
 	public int replaceMaxChance(int old) {

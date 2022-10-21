@@ -21,7 +21,7 @@ public class ExpulsionRecipe extends UpgradeRecipe {
 	private static final ResourceLocation ID = new ResourceLocation("apotheosis:expulsion");
 
 	public ExpulsionRecipe() {
-		super(ID, Ingredient.EMPTY, Ingredient.of(Apoth.Items.VIAL_OF_EXPULSION), ItemStack.EMPTY);
+		super(ID, Ingredient.EMPTY, Ingredient.of(Apoth.Items.VIAL_OF_EXPULSION.get()), ItemStack.EMPTY);
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class ExpulsionRecipe extends UpgradeRecipe {
 	 */
 	@Override
 	public boolean matches(Container pInv, Level pLevel) {
-		return pInv.getItem(1).getItem() == Apoth.Items.VIAL_OF_EXPULSION && SocketHelper.getGems(pInv.getItem(0)).stream().anyMatch(i -> !i.isEmpty());
+		return pInv.getItem(1).getItem() == Apoth.Items.VIAL_OF_EXPULSION.get() && SocketHelper.getGems(pInv.getItem(0)).stream().anyMatch(i -> !i.isEmpty());
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class ExpulsionRecipe extends UpgradeRecipe {
 		return true;
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ExpulsionRecipe> {
+	public static class Serializer implements RecipeSerializer<ExpulsionRecipe> {
 
 		public static Serializer INSTANCE = new Serializer();
 

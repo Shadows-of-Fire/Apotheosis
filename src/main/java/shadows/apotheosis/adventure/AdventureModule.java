@@ -84,7 +84,7 @@ public class AdventureModule {
 
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
 
-	public static final BiMap<LootRarity, RegistryObject<Item>> RARITY_MATERIALS = HashBiMap.create();
+	public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
@@ -117,6 +117,7 @@ public class AdventureModule {
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
 			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());
+			AdventureGeneration.init();
 		});
 	}
 
@@ -141,7 +142,7 @@ public class AdventureModule {
 			if (r == LootRarity.ANCIENT) continue;
 			Item material = new SalvageItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 			e.getRegistry().register(material, r.id() + "_material");
-			RARITY_MATERIALS.put(r, RegistryObject.create(Apotheosis.loc(r.id() + "_material"), e.getForgeRegistry()));
+			RARITY_MATERIALS.put(r, material);
 		}
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "reforging_table");
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "salvaging_table");
@@ -168,11 +169,14 @@ public class AdventureModule {
 	}
 
 	@SubscribeEvent
-	public void lootSerializers(RegisterEvent e) {
-		if (e.getForgeRegistry() == ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS) {
-			ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("gems", new GemLootModifier.Serializer());
-			ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("affix_loot", new AffixLootModifier.Serializer());
-			ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("affix_conversion", new AffixConvertLootModifier.Serializer());
+	public void miscRegistration(RegisterEvent e) {
+		if (e.getForgeRegistry() == (Object) ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get()) {
+			e.getForgeRegistry().register("gems", GemLootModifier.CODEC);
+			e.getForgeRegistry().register("affix_loot", AffixLootModifier.CODEC);
+			e.getForgeRegistry().register("affix_conversion", AffixConvertLootModifier.CODEC);
+		}
+		if (e.getForgeRegistry() == (Object) ForgeRegistries.BIOME_MODIFIER_SERIALIZERS.get()) {
+			e.getForgeRegistry().register("blacklist", AdventureGeneration.BlackistModifier.CODEC);
 		}
 	}
 

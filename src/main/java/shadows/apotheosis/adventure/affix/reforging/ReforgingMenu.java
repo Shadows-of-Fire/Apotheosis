@@ -1,17 +1,17 @@
 package shadows.apotheosis.adventure.affix.reforging;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
@@ -33,7 +33,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 			if (ReforgingMenu.this.needsReset()) ReforgingMenu.this.needsReset.set(0);
 		}
 	};
-	protected final Random random = new Random();
+	protected final RandomSource random = new XoroshiroRandomSource(0);
 	protected final int[] seed = new int[2];
 	protected DataSlot needsReset = DataSlot.standalone();
 
@@ -106,7 +106,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 			if (!player.level.isClientSide) {
 				ItemStack[] choices = new ItemStack[3];
 
-				Random rand = this.random;
+				RandomSource rand = this.random;
 				for (int i = 0; i < 3; i++) {
 					rand.setSeed(this.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + i);
 					choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
@@ -132,7 +132,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 	}
 
 	public static boolean isRarityMat(ItemStack stack) {
-		return AdventureModule.RARITY_MATERIALS.containsValue(stack.getItem().delegate);
+		return AdventureModule.RARITY_MATERIALS.containsValue(stack.getItem());
 	}
 
 	public int getMatCount() {
@@ -147,7 +147,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 	public LootRarity getRarity() {
 		ItemStack s = this.getSlot(1).getItem();
 		if (s.isEmpty()) return null;
-		return AdventureModule.RARITY_MATERIALS.inverse().get(s.getItem().delegate);
+		return AdventureModule.RARITY_MATERIALS.inverse().get(s.getItem());
 	}
 
 	public int getDustCost(int slot, LootRarity rarity) {

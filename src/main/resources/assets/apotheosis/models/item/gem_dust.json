@@ -1,12 +1,8 @@
 {
-	"loader": "apotheosis:lit_item",
+	"loader": "forge:item_layers",
     "parent": "item/generated",
     "textures": {
         "layer0": "apotheosis:items/gem_dust"
     },
-	"colors": [
-		{
-			"luminosity": 15
-		}
-	]
+	"emissive_layers": [0]
 }

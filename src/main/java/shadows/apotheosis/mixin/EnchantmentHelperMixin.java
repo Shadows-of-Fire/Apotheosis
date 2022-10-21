@@ -2,7 +2,6 @@ package shadows.apotheosis.mixin;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -11,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,7 +49,7 @@ public class EnchantmentHelperMixin {
 	 * @return A list of enchantments to apply to this item.
 	 */
 	@Overwrite
-	public static List<EnchantmentInstance> selectEnchantment(Random pRandom, ItemStack pItemStack, int pLevel, boolean pAllowTreasure) {
+	public static List<EnchantmentInstance> selectEnchantment(RandomSource pRandom, ItemStack pItemStack, int pLevel, boolean pAllowTreasure) {
 		return RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 0, 0, 0, pAllowTreasure);
 	}
 

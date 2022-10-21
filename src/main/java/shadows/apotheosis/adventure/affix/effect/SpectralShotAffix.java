@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
@@ -72,7 +73,7 @@ public class SpectralShotAffix extends Affix {
 	}
 
 	public static SpectralShotAffix read(JsonObject obj) {
-		var values = AffixHelper.readValues(obj);
+		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
 		return new SpectralShotAffix(values);
 	}
 

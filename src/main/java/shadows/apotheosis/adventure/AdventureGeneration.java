@@ -1,12 +1,13 @@
 package shadows.apotheosis.adventure;
 
-import java.util.List;
-
-import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -18,8 +19,8 @@ import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.boss.BossDungeonFeature;
 import shadows.apotheosis.adventure.boss.BossDungeonFeature2;
@@ -39,14 +40,16 @@ public class AdventureGeneration {
 	public static final Holder<PlacedFeature> ROGUE_SPAWNER = register("rogue_spawner", CF_ROGUE_SPAWNER, CountPlacement.of(AdventureConfig.rogueSpawnerAttempts), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.top()), BiomeFilter.biome());
 	public static final Holder<PlacedFeature> ROGUE_SPAWNER_DEEP = register("rogue_spawner_deep", CF_ROGUE_SPAWNER, CountPlacement.of(AdventureConfig.rogueSpawnerAttempts / 2), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(6), VerticalAnchor.absolute(-1)), BiomeFilter.biome());
 
-	private static final List<Holder<PlacedFeature>> FEATS = ImmutableList.of(BOSS_DUNGEON, BOSS_DUNGEON_DEEP, BOSS_DUNGEON_2, BOSS_DUNGEON_2_DEEP, ROGUE_SPAWNER, ROGUE_SPAWNER_DEEP);
-
 	static Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> register(Feature<NoneFeatureConfiguration> feat, String id) {
 		return FeatureUtils.register(Apotheosis.MODID + ":" + id, feat);
 	}
 
 	static Holder<PlacedFeature> register(String id, Holder<? extends ConfiguredFeature<?, ?>> feat, PlacementModifier... modifs) {
 		return PlacementUtils.register(Apotheosis.MODID + ":" + id, feat, modifs);
+	}
+
+	public static void init() {
+		// wew classloading;
 	}
 
 	/**
@@ -59,12 +62,27 @@ public class AdventureGeneration {
 	 *
 	 * Probably not valid in 1.18+
 	 */
-	@SubscribeEvent
-	public static void onBiomeLoad(BiomeLoadingEvent e) {
-		if (!AdventureConfig.BIOME_BLACKLIST.contains(e.getName())) {
-			for (Holder<PlacedFeature> f : FEATS)
-				e.getGeneration().addFeature(Decoration.UNDERGROUND_STRUCTURES, f);
+	public static record BlackistModifier(HolderSet<Biome> blacklistedBiomes, Holder<PlacedFeature> feature) implements BiomeModifier {
+
+		//Formatter::off
+		public static final Codec<BlackistModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+													Biome.LIST_CODEC.fieldOf("blacklisted_biomes").forGetter(BlackistModifier::blacklistedBiomes), 
+													PlacedFeature.CODEC.fieldOf("feature").forGetter(BlackistModifier::feature))
+													.apply(builder, BlackistModifier::new));
+		//Formatter::on
+
+		@Override
+		public void modify(Holder<Biome> biome, Phase phase, Builder builder) {
+			if (phase == Phase.ADD && !blacklistedBiomes.contains(biome)) {
+				builder.getGenerationSettings().addFeature(Decoration.UNDERGROUND_STRUCTURES, feature);
+			}
 		}
+
+		@Override
+		public Codec<? extends BiomeModifier> codec() {
+			return CODEC;
+		}
+
 	}
 
 }

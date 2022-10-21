@@ -1,14 +1,13 @@
 package shadows.apotheosis.adventure.loot;
 
-import java.util.List;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import com.google.gson.JsonObject;
-
-import net.minecraft.resources.ResourceLocation;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
@@ -17,12 +16,14 @@ import shadows.apotheosis.adventure.affix.socket.GemManager;
 
 public class GemLootModifier extends LootModifier {
 
+	public static final Codec<GemLootModifier> CODEC = RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, GemLootModifier::new));
+
 	protected GemLootModifier(LootItemCondition[] conditionsIn) {
 		super(conditionsIn);
 	}
 
 	@Override
-	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (!Apotheosis.enableAdventure) return generatedLoot;
 		for (LootPatternMatcher m : AdventureConfig.AFFIX_ITEM_LOOT_RULES) {
 			if (m.matches(context.getQueriedLootTableId())) {
@@ -37,18 +38,9 @@ public class GemLootModifier extends LootModifier {
 		return generatedLoot;
 	}
 
-	public static class Serializer extends GlobalLootModifierSerializer<GemLootModifier> {
-
-		@Override
-		public GemLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] conditions) {
-			return new GemLootModifier(conditions);
-		}
-
-		@Override
-		public JsonObject write(GemLootModifier instance) {
-			return this.makeConditions(instance.conditions);
-		}
-
+	@Override
+	public Codec<? extends IGlobalLootModifier> codec() {
+		return CODEC;
 	}
 
 }

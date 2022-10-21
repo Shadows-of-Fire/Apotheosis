@@ -12,7 +12,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -46,7 +45,7 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
 
 	@Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true)
 	public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
-		int pierceLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem());
+		int pierceLevel = this.getTridentItem().getEnchantmentLevel(Enchantments.PIERCING);
 		if (this.pierces++ < pierceLevel) {
 			this.dealtDamage = false;
 			this.setDeltaMovement(this.oldVel);

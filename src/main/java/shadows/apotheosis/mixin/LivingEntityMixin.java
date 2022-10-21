@@ -43,8 +43,8 @@ public abstract class LivingEntityMixin extends Entity {
 				int level = this.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier() + 1;
 				mult -= 0.2 * level;
 			}
-			if (Apoth.Effects.SUNDERING != null && this.hasEffect(Apoth.Effects.SUNDERING) && source != DamageSource.OUT_OF_WORLD) {
-				int level = this.getEffect(Apoth.Effects.SUNDERING).getAmplifier() + 1;
+			if (Apoth.Effects.SUNDERING.isPresent() && this.hasEffect(Apoth.Effects.SUNDERING.get()) && source != DamageSource.OUT_OF_WORLD) {
+				int level = this.getEffect(Apoth.Effects.SUNDERING.get()).getAmplifier() + 1;
 				mult += 0.2 * level;
 			}
 

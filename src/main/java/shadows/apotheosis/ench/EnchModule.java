@@ -247,9 +247,9 @@ public class EnchModule {
 	public void blocks(Register<Block> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new ApothAnvilBlock(), "minecraft", "anvil",
-				new ApothAnvilBlock(), "minecraft", "chipped_anvil",
-				new ApothAnvilBlock(), "minecraft", "damaged_anvil",
+				new ApothAnvilBlock(), new ResourceLocation("minecraft", "anvil"),
+				new ApothAnvilBlock(), new ResourceLocation("minecraft", "chipped_anvil"),
+				new ApothAnvilBlock(), new ResourceLocation("minecraft", "damaged_anvil"),
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "hellshelf",
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "infused_hellshelf",
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "blazing_hellshelf",
@@ -279,7 +279,7 @@ public class EnchModule {
 	public void items(Register<Item> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), Apotheosis.MODID, "prismatic_web",
+				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "prismatic_web",
 				new ApothAnvilItem(Blocks.ANVIL), new ResourceLocation("minecraft", "anvil"),
 				new ApothAnvilItem(Blocks.CHIPPED_ANVIL), new ResourceLocation("minecraft", "chipped_anvil"),
 				new ApothAnvilItem(Blocks.DAMAGED_ANVIL), new ResourceLocation("minecraft", "damaged_anvil"),
@@ -312,7 +312,7 @@ public class EnchModule {
 				new BlockItem(Apoth.Blocks.RECTIFIER_T3.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "rectifier_t3",
 				new BlockItem(Apoth.Blocks.SIGHTSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sightshelf",
 				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sightshelf_t2",
-				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), Apotheosis.MODID, "inert_trident",
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "inert_trident",
 				new BlockItem(Apoth.Blocks.ENDER_LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "ender_library"
 				);
 		//Formatter::on
