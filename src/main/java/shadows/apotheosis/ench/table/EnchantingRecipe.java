@@ -1,5 +1,6 @@
 package shadows.apotheosis.ench.table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -147,7 +148,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
 	@Nullable
 	public static EnchantingRecipe findMatch(Level level, ItemStack input, float eterna, float quanta, float arcana) {
-		List<EnchantingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(RecipeTypes.INFUSION);
+		List<EnchantingRecipe> recipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(RecipeTypes.INFUSION));
 		recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna, r2.requirements.eterna));
 		for (EnchantingRecipe r : recipes)
 			if (r.matches(input, eterna, quanta, arcana)) return r;
