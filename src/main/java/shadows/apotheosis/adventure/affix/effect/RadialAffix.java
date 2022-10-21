@@ -58,7 +58,7 @@ public class RadialAffix extends Affix {
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		RadialData data = this.getTrueLevel(rarity, level);
-		list.accept(Component.translatable("affix." + this.getId() + ".desc" + data.x, data.y).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc", data.x, data.y).withStyle(ChatFormatting.YELLOW));
 	}
 
 	// EventPriority.LOW
