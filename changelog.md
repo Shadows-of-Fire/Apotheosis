@@ -1,6 +1,8 @@
 ## 6.0.1
 * Forward-Ported all changes from 5.7.1-5.7.4
 * Fixed typo in the lang key for the Feathery affix.
+* Fixed a server disconnect present in 5.7.4.
+* Made the new loot pool entries able to specify a subset of gems/entries for selection.
 
 ## 6.0.0
 * Updated to Minecraft 1.19.2
