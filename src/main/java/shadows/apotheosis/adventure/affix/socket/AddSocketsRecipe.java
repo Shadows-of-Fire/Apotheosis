@@ -77,12 +77,12 @@ public class AddSocketsRecipe extends ApothUpgradeRecipe {
 
 		@Override
 		public AddSocketsRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-			return new AddSocketsRecipe(id, CraftingHelper.getIngredient(buf.readResourceLocation(), buf), buf.readInt());
+			return new AddSocketsRecipe(id, Ingredient.fromNetwork(buf), buf.readInt());
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buf, AddSocketsRecipe recipe) {
-			CraftingHelper.write(buf, recipe.getInput());
+			recipe.input.toNetwork(buf);
 			buf.writeInt(recipe.getMaxSockets());
 		}
 	}
