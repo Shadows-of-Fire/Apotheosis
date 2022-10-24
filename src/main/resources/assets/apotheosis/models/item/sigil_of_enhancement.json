@@ -1,17 +1,36 @@
 {
-	"loader": "apotheosis:lit_item",
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "apotheosis:items/rune_base",
-        "layer1": "apotheosis:items/sigil_of_enhancement"
-    },
-	"colors": [
-		{
-			"luminosity": 0
+	"loader": "forge:separate_transforms",
+	"parent": "forge:item/default",
+	"base": {
+		"loader": "apotheosis:item_layers",
+		"parent": "item/generated",
+		"textures": {
+			"layer0": "apotheosis:items/rune_base",
+			"layer1": "apotheosis:items/sigil_of_enhancement"
 		},
-		{
-			"luminosity": 15,
-			"color": "FFD3610D"
+		"forge_data": {
+			"1": {
+				"color": "FFD3610D",
+				"block_light": 15,
+				"sky_light": 15
+			}
 		}
-	]
+	},
+	"perspectives": {
+		"gui": {
+			"loader": "apotheosis:item_layers",
+			"parent": "item/generated",
+			"textures": {
+				"layer0": "apotheosis:items/rune_base",
+				"layer1": "apotheosis:items/sigil_of_enhancement"
+			},
+			"forge_data": {
+				"1": {
+					"color": "FFFF7411",
+					"block_light": 15,
+					"sky_light": 15
+				}
+			}
+		}
+	}
 }

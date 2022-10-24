@@ -1,5 +1,6 @@
 ## 6.0.1
 * Forward-Ported all changes from 5.7.1-5.7.4
+* Fixed typo in the lang key for the Feathery affix.
 
 ## 6.0.0
 * Updated to Minecraft 1.19.2
@@ -7,7 +8,7 @@
 
 ## 5.7.4
 * Fixed a dupe bug caused by the Vial of Arcane Extraction.
-* Fixed some iZ-fighting in the Reforging Table screen.
+* Fixed some Z-fighting in the Reforging Table screen.
 
 ## 5.7.3
 * Fixed the radial affix not loading.

@@ -1,17 +1,3 @@
 {
-	"loader": "apotheosis:lit_item",
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "apotheosis:items/rune_base",
-        "layer1": "apotheosis:items/sigil_of_socketing"
-    },
-	"colors": [
-		{
-			"luminosity": 0
-		},
-		{
-			"luminosity": 15,
-			"color": "FF5D5FBF"
-		}
-	]
+    "parent": "apotheosis:item/sigil_of_socketing"
 }

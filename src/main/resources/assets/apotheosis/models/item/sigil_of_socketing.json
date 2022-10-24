@@ -1,17 +1,36 @@
 {
-	"loader": "apotheosis:lit_item",
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "apotheosis:items/rune_base",
-        "layer1": "apotheosis:items/sigil_of_socketing"
-    },
-	"colors": [
-		{
-			"luminosity": 0
+	"loader": "forge:separate_transforms",
+	"parent": "forge:item/default",
+	"base": {
+		"loader": "apotheosis:item_layers",
+		"parent": "item/generated",
+		"textures": {
+			"layer0": "apotheosis:items/rune_base",
+			"layer1": "apotheosis:items/sigil_of_socketing"
 		},
-		{
-			"luminosity": 15,
-			"color": "FF5D5FBF"
+		"forge_data": {
+			"1": {
+				"color": "FF5D5FBF",
+				"block_light": 15,
+				"sky_light": 15
+			}
 		}
-	]
+	},
+	"perspectives": {
+		"gui": {
+			"loader": "apotheosis:item_layers",
+			"parent": "item/generated",
+			"textures": {
+				"layer0": "apotheosis:items/rune_base",
+				"layer1": "apotheosis:items/sigil_of_socketing"
+			},
+			"forge_data": {
+				"1": {
+					"color": "FF7C81FF",
+					"block_light": 15,
+					"sky_light": 15
+				}
+			}
+		}
+	}
 }

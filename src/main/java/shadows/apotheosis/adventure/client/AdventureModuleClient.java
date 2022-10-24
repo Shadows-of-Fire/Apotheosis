@@ -123,6 +123,11 @@ public class AdventureModuleClient {
 		}
 
 		@SubscribeEvent
+		public static void onRegisterGeometryLoaders(ModelEvent.RegisterGeometryLoaders e) {
+			e.register("item_layers", FItemLayerModel.Loader.INSTANCE);
+		}
+
+		@SubscribeEvent
 		public static void tooltipComps(RegisterClientTooltipComponentFactoriesEvent e) {
 			e.register(SocketComponent.class, SocketTooltipRenderer::new);
 		}

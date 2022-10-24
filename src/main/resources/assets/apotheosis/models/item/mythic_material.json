@@ -1,8 +1,14 @@
 {
-	"loader": "forge:item_layers",
+	"loader": "apotheosis:item_layers",
     "parent": "item/generated",
     "textures": {
         "layer0": "apotheosis:items/mythic_material"
     },
-	"emissive_layers": [0]
+	"forge_data": {
+		"0": {
+			"color": "FFFFFFFF",
+			"block_light": 15,
+			"sky_light": 15
+		}
+	}
 }

@@ -238,7 +238,7 @@
     "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "of the Volcano",
 	
 	"affix.apotheosis:armor/dmg_reduction/feathery": "Feathery",
-    "affix.apotheosis:farmor/dmg_reduction/eathery.suffix": "of the Eagle",
+    "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "of the Eagle",
 
 	"socket.apotheosis.empty": "Empty Socket",
     "item.modifiers.socket": "When Socketed:",
