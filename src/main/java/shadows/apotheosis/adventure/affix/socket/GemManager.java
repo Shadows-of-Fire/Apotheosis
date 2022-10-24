@@ -1,7 +1,5 @@
 package shadows.apotheosis.adventure.affix.socket;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import com.google.gson.Gson;
@@ -21,9 +19,6 @@ public class GemManager extends DimWeightedJsonReloadListener<Gem> {
 
 	public static final Gson GSON = new GsonBuilder().registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer()).registerTypeAdapter(Attribute.class, JsonUtil.makeSerializer(ForgeRegistries.ATTRIBUTES)).create();
 	public static final GemManager INSTANCE = new GemManager();
-
-	protected List<Gem> gemList = new ArrayList<>();
-	protected int totalWeight = 0;
 
 	public GemManager() {
 		super(AdventureModule.LOGGER, "gems", false, false);

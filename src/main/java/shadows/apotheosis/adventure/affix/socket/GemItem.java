@@ -10,6 +10,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.AttributeHelper;
 
 public class GemItem extends Item {
@@ -41,9 +44,30 @@ public class GemItem extends Item {
 			tooltip.add(new TextComponent("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
 			return;
 		}
+		float purity = getPurity(pStack);
+		if (purity != 0) {
+			Component purityText = new TextComponent(ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((int) (purity * 100)) + "%");//.withStyle(Style.EMPTY.withColor(getPurityColor(purity)));
+			tooltip.add(new TranslatableComponent("text.apotheosis.purity", purityText).withStyle(Style.EMPTY.withColor(0xAEA2D6)));
+		}
 		tooltip.add(TextComponent.EMPTY);
 		tooltip.add(new TranslatableComponent("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
 		tooltip.add(toComponent(bonus.getKey(), bonus.getValue()));
+	}
+
+	@Override
+	public Component getName(ItemStack pStack) {
+		float purity = getPurity(pStack);
+		if (purity == 0) return super.getName(pStack);
+		return new TranslatableComponent(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(getPurityColor(purity)));
+	}
+
+	private static TextColor getPurityColor(float purity) {
+		if (purity <= 0.20) return LootRarity.COMMON.color();
+		else if (purity <= 0.40) return LootRarity.UNCOMMON.color();
+		else if (purity <= 0.60) return LootRarity.RARE.color();
+		else if (purity <= 0.80) return LootRarity.EPIC.color();
+		else if (purity <= 1) return LootRarity.MYTHIC.color();
+		return LootRarity.ANCIENT.color();
 	}
 
 	@Override
@@ -77,10 +101,21 @@ public class GemItem extends Item {
 		return stack.hasTag() ? stack.getTag().getInt("variant") : 0;
 	}
 
+	public static void setPurity(ItemStack stack, float purity) {
+		stack.getOrCreateTag().putFloat("purity", purity);
+	}
+
+	public static float getPurity(ItemStack stack) {
+		return stack.hasTag() ? stack.getTag().getFloat("purity") : 0;
+	}
+
 	public static ItemStack fromGem(Gem gem, Random rand) {
 		ItemStack stack = new ItemStack(Apoth.Items.GEM);
 		setVariant(stack, gem.getVariant());
-		setStoredBonus(stack, gem.attribute, new AttributeModifier("GemBonus_" + gem.getId(), gem.value.get(rand.nextFloat()), gem.operation));
+		float level = rand.nextFloat();
+		float purity = gem.value.get(level) / gem.value.get(1);
+		setStoredBonus(stack, gem.attribute, new AttributeModifier("GemBonus_" + gem.getId(), gem.value.get(level), gem.operation));
+		setPurity(stack, purity);
 		return stack;
 	}
 

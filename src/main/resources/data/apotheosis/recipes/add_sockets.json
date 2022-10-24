@@ -1,0 +1,12 @@
+{
+  "type": "apotheosis:add_sockets",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "input": {
+	"item": "apotheosis:sigil_of_socketing"
+  },
+  "max_sockets": 3
+}

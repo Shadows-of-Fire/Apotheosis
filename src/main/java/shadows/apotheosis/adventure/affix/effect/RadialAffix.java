@@ -60,7 +60,7 @@ public class RadialAffix extends Affix {
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		RadialData data = this.getTrueLevel(rarity, level);
-		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc" + data.x, data.y).withStyle(ChatFormatting.YELLOW));
+		list.accept(new TranslatableComponent("affix." + this.getId() + ".desc", data.x, data.y).withStyle(ChatFormatting.YELLOW));
 	}
 
 	// EventPriority.LOW
@@ -103,7 +103,7 @@ public class RadialAffix extends Affix {
 	}
 
 	public static Affix read(JsonObject obj) {
-		Map<LootRarity, List<RadialData>> values = GSON.fromJson(GsonHelper.getAsJsonObject(obj, "values"), new TypeToken<Map<LootRarity, RadialData>>() {
+		Map<LootRarity, List<RadialData>> values = GSON.fromJson(GsonHelper.getAsJsonObject(obj, "values"), new TypeToken<Map<LootRarity, List<RadialData>>>() {
 		}.getType());
 		return new RadialAffix(values);
 	}

@@ -208,10 +208,7 @@
 
 	"affix.apotheosis:radial": "Radial",
     "affix.apotheosis:radial.suffix": "of the Earthbreaker",
-    "affix.apotheosis:radial.desc.1": "This tool breaks in a 1x2 area.",
-    "affix.apotheosis:radial.desc.2": "This tool breaks in a 3x2 area.",
-    "affix.apotheosis:radial.desc.3": "This tool breaks in a 3x3 area.",
-    "affix.apotheosis:radial.desc.4": "This tool breaks in a 5x5 area.",
+    "affix.apotheosis:radial.desc": "This tool breaks in a %sx%s area.",
 	
 	"misc.apotheosis.iron": "iron",
 	"misc.apotheosis.diamond": "diamond",
@@ -245,7 +242,7 @@
 
 	"socket.apotheosis.empty": "Empty Socket",
     "item.modifiers.socket": "When Socketed:",
-	"info.apotheosis.socketing": "Gems can be socketed with a Smithing Table. Item on the left, gem on the right.\n\nOnce socketed, a gem cannot be removed.",
+	"info.apotheosis.socketing": "Gems can be socketed with a Smithing Table. Item on the left, gem on the right.\n\nChoose wisely, as removing a socketed gem is costly.",
 
 	"affix.apotheosis:durable.desc": "This item ignores %s%% of durability damage.",
 
@@ -272,6 +269,10 @@
 	"item.apotheosis.rare_material": "Luminous Crystal Shard",
 	"item.apotheosis.epic_material": "Arcane Sands",
 	"item.apotheosis.mythic_material": "Godforged Pearl",
+	"item.apotheosis.sigil_of_socketing": "Sigil of Socketing",
+	"item.apotheosis.superior_sigil_of_socketing": "Superior Sigil of Socketing",
+	"item.apotheosis.sigil_of_enhancement": "[NYI] Sigil of Enhancement",
+	"item.apotheosis.superior_sigil_of_enhancement": "[NYI] Superior Sigil of Enhancement",
 	
 	"block.apotheosis.salvaging_table": "Salvaging Table",
 	"block.apotheosis.salvaging_table.desc": "Breaks down Affix Items into Rarity Materials",
@@ -289,6 +290,9 @@
 	"text.apotheosis.reforge_cost": "Reforge Cost",
 	"text.apotheosis.salvage_results": "Salvage Results",
 	"text.apotheosis.results": "Results",
+	"text.apotheosis.purity": "Purity: %s",
+	"text.apotheosis.socket_limit": "Max Sockets Applied: %s",
+	"title.apotheosis.smithing": "Apotheotic Smithing",
 
 	"affix.apotheosis.target.attack_self": "On hit, gain %s",
 	"affix.apotheosis.target.attack_target": "On hit, inflict %s",

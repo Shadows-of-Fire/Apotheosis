@@ -1,3 +1,13 @@
+## 5.7.3
+* Fixed the radial affix not loading.
+* Added the apotheosis:random_gem and apotheosis:random_affix_item Loot Pool Entry Types.
+* Gems will now report their Purity (strength relative to max value) on their tooltip.
+  * Should help with knowing how strong a gem is relative to others of the same stat.
+* Added the Sigil of Socketing, which can apply sockets to items.
+* Fixed an issue where not enough effect-type affixes were available for rare armor items.
+* Loot Pinata will no longer work on equipment items.
+
+
 ## 5.7.2
 * Fixed certain affixes not loading.
 * Fixed a crash that may happen if a boss refuses to allow a custom name to be set.

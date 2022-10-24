@@ -20,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
@@ -55,6 +56,15 @@ public class FestiveAffix extends Affix {
 		return this.values.get(rarity).get(level);
 	}
 
+	private static String MARKER = "apoth.equipment";
+
+	// EventPriority.LOW
+	public void markEquipment(LivingDeathEvent e) {
+		e.getEntityLiving().getAllSlots().forEach(i -> {
+			if (!i.isEmpty()) i.getOrCreateTag().putBoolean(MARKER, true);
+		});
+	}
+
 	// EventPriority.LOW
 	public void drops(LivingDropsEvent e) {
 		LivingEntity dead = e.getEntityLiving();
@@ -65,8 +75,9 @@ public class FestiveAffix extends Affix {
 				player.level.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (player.level.random.nextFloat() - player.level.random.nextFloat()) * 0.2F) * 0.7F);
 				((ServerLevel) player.level).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
 				List<ItemEntity> drops = new ArrayList<>(e.getDrops());
-				for (int i = 0; i < 20; i++) {
-					for (ItemEntity item : drops) {
+				for (ItemEntity item : drops) {
+					if (item.getItem().hasTag() && item.getItem().getTag().contains(MARKER)) continue;
+					for (int i = 0; i < 20; i++) {
 						e.getDrops().add(new ItemEntity(player.level, item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
 					}
 				}
@@ -78,6 +89,12 @@ public class FestiveAffix extends Affix {
 				}
 			}
 		}
+		e.getDrops().stream().map(ItemEntity::getItem).forEach(s -> {
+			if (s.hasTag() && s.getTag().contains(MARKER)) {
+				s.getTag().remove(MARKER);
+				if (s.getTag().isEmpty()) s.setTag(null);
+			}
+		});
 	}
 
 	public static Affix read(JsonObject obj) {

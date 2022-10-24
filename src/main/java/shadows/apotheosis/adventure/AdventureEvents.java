@@ -39,6 +39,7 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -98,7 +99,7 @@ public class AdventureEvents {
 		if (stack.hasTag()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 			affixes.forEach((afx, inst) -> inst.addModifiers(e.getSlotType(), e::addModifier));
-			if (!affixes.isEmpty() && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
+			if (AffixHelper.getRarity(stack) != null && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
 				double amt = -0.15 - 0.10 * (AffixHelper.getRarity(stack).ordinal());
 				e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(HEAVY_WEAPON_AS, "Heavy Weapon AS", amt, Operation.MULTIPLY_TOTAL));
 			}
@@ -340,6 +341,11 @@ public class AdventureEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void drops(LivingDropsEvent e) {
 		Apoth.Affixes.FESTIVE.ifPresent(afx -> afx.drops(e));
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void deathMark(LivingDeathEvent e) {
+		Apoth.Affixes.FESTIVE.ifPresent(afx -> afx.markEquipment(e));
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

@@ -1,6 +1,7 @@
 package shadows.apotheosis.adventure.affix.socket;
 
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -8,7 +9,10 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth.Affixes;
+import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class SocketHelper {
 
@@ -46,6 +50,12 @@ public class SocketHelper {
 		var inst = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
 		if (inst == null) return 0;
 		return (int) inst.level();
+	}
+
+	public static void setSockets(ItemStack stack, int sockets) {
+		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+		affixes.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, LootRarity.COMMON, sockets));
+		AffixHelper.setAffixes(stack, affixes);
 	}
 
 	public static int getEmptySockets(ItemStack stack) {

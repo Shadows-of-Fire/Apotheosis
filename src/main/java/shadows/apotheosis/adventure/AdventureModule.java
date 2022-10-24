@@ -11,6 +11,8 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,9 +21,12 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.UpgradeRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -50,6 +55,7 @@ import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvageItem;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
+import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
@@ -69,10 +75,13 @@ import shadows.apotheosis.adventure.compat.GatewaysCompat;
 import shadows.apotheosis.adventure.loot.AffixConvertLootModifier;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.AffixLootModifier;
+import shadows.apotheosis.adventure.loot.AffixLootPoolEntry;
 import shadows.apotheosis.adventure.loot.GemLootModifier;
+import shadows.apotheosis.adventure.loot.GemLootPoolEntry;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
 import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
+import shadows.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
@@ -116,6 +125,8 @@ public class AdventureModule {
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
 			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE);
 			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE);
+			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
+			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
 		});
 	}
 
@@ -144,6 +155,10 @@ public class AdventureModule {
 		}
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("reforging_table"));
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE, new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("salvaging_table"));
+		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sigil_of_socketing"));
+		e.getRegistry().register(new GlowyItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("superior_sigil_of_socketing"));
+		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("sigil_of_enhancement"));
+		e.getRegistry().register(new GlowyItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)).setRegistryName("superior_sigil_of_enhancement"));
 	}
 
 	@SubscribeEvent
@@ -164,6 +179,7 @@ public class AdventureModule {
 		e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE.setRegistryName("socketing"));
 		e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE.setRegistryName("expulsion"));
 		e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE.setRegistryName("extraction"));
+		e.getRegistry().register(AddSocketsRecipe.Serializer.INSTANCE.setRegistryName("add_sockets"));
 	}
 
 	@SubscribeEvent
@@ -249,6 +265,13 @@ public class AdventureModule {
 
 	public static void debugLog(BlockPos pos, String name) {
 		if (DEBUG) AdventureModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	public static class ApothUpgradeRecipe extends UpgradeRecipe {
+
+		public ApothUpgradeRecipe(ResourceLocation pId, Ingredient pBase, Ingredient pAddition, ItemStack pResult) {
+			super(pId, pBase, pAddition, pResult);
+		}
 	}
 
 }

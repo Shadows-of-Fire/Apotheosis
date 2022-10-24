@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    "GDG",
+    "GLG",
+    "GAG"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:dragon_breath"
+    },
+	"G": {
+      "item": "apotheosis:gem_dust"
+    },
+	"L": {
+      "item": "minecraft:lodestone"
+    },
+	"A": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "item": "apotheosis:sigil_of_socketing",
+    "count": 1
+  }
+}
