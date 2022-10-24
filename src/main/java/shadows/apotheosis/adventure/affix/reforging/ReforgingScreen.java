@@ -101,7 +101,9 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 			int l2 = y - (yCenter + 14 + 19 * slot);
 			if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
 				this.renderTooltip(pPoseStack, choice.getTooltipLines(this.menu.player, TooltipFlag.Default.NORMAL), Optional.empty(), x, y, choice);
+				pPoseStack.translate(0, 0, -100);
 				this.drawOnLeft(pPoseStack, tooltips, this.getGuiTop() + 29);
+				pPoseStack.translate(0, 0, 100);
 			}
 		}
 	}

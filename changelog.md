@@ -1,3 +1,7 @@
+## 5.7.4
+* Fixed a dupe bug caused by the Vial of Arcane Extraction.
+* Fixed some iZ-fighting in the Reforging Table screen.
+
 ## 5.7.3
 * Fixed the radial affix not loading.
 * Added the apotheosis:random_gem and apotheosis:random_affix_item Loot Pool Entry Types.
