@@ -356,6 +356,17 @@
             "item": "minecraft:book",
             "count": 1
           }
+        },
+        {
+          "type": "apotheosis:random_gem",
+		  "weight": 20,
+          "quality": 15
+        },
+        {
+          "type": "apotheosis:random_affix_item",
+		  "weight": 20,
+          "quality": 15,
+		  "rarity": "rare"
         }
       ],
       "bonus_rolls": {

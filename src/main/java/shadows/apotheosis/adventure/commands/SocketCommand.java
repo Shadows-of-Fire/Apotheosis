@@ -1,7 +1,5 @@
 package shadows.apotheosis.adventure.commands;
 
-import java.util.Map;
-
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -10,12 +8,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import shadows.apotheosis.Apoth.Affixes;
-import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
-import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.loot.LootCategory;
-import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class SocketCommand {
 
@@ -31,9 +25,7 @@ public class SocketCommand {
 			}
 
 			int sockets = IntegerArgumentType.getInteger(c, "sockets");
-			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-			affixes.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, LootRarity.COMMON, sockets));
-			AffixHelper.setAffixes(stack, affixes);
+			SocketHelper.setSockets(stack, sockets);
 			return 0;
 		})));
 	}

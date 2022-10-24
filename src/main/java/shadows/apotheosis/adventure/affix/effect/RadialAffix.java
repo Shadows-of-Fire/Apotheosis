@@ -19,6 +19,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -101,7 +102,7 @@ public class RadialAffix extends Affix {
 	}
 
 	public static Affix read(JsonObject obj) {
-		Map<LootRarity, List<RadialData>> values = GSON.fromJson(obj.get("values"), new TypeToken<Map<LootRarity, RadialData>>() {
+		Map<LootRarity, List<RadialData>> values = GSON.fromJson(GsonHelper.getAsJsonObject(obj, "values"), new TypeToken<Map<LootRarity, List<RadialData>>>() {
 		}.getType());
 		return new RadialAffix(values);
 	}

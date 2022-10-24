@@ -85,7 +85,7 @@ import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import shadows.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
-import shadows.apotheosis.ench.objects.GlowyItem;
+import shadows.apotheosis.ench.objects.GlowyBlockItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
@@ -294,11 +294,11 @@ public class EnchModule {
 				new TomeItem(Items.BOW, EnchantmentCategory.BOW), "bow_tome",
 				new ScrappingTomeItem(), "scrap_tome",
 				new BlockItem(Apoth.Blocks.HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "hellshelf",
-				new GlowyItem(Apoth.Blocks.INFUSED_HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "infused_hellshelf",
+				new GlowyBlockItem(Apoth.Blocks.INFUSED_HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "infused_hellshelf",
 				new BlockItem(Apoth.Blocks.BLAZING_HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "blazing_hellshelf",
 				new BlockItem(Apoth.Blocks.GLOWING_HELLSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "glowing_hellshelf",
 				new BlockItem(Apoth.Blocks.SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "seashelf",
-				new GlowyItem(Apoth.Blocks.INFUSED_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "infused_seashelf",
+				new GlowyBlockItem(Apoth.Blocks.INFUSED_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "infused_seashelf",
 				new BlockItem(Apoth.Blocks.CRYSTAL_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "crystal_seashelf",
 				new BlockItem(Apoth.Blocks.HEART_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "heart_seashelf",
 				new BlockItem(Apoth.Blocks.ENDSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "endshelf",

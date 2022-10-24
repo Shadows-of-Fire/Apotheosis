@@ -2,6 +2,11 @@
 	"type": "apotheosis:damage_reduction",
 	"damage_type": "FIRE",
 	"values": {
+		"rare": {
+			"min": 0.05,
+			"steps": 10,
+			"step": 0.01
+		},
 		"epic": {
 			"min": 0.15,
 			"steps": 10,

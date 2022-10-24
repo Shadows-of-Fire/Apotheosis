@@ -1,0 +1,17 @@
+{
+	"loader": "apotheosis:lit_item",
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "apotheosis:items/rune_base",
+        "layer1": "apotheosis:items/sigil_of_enhancement"
+    },
+	"colors": [
+		{
+			"luminosity": 0
+		},
+		{
+			"luminosity": 15,
+			"color": "FFD3610D"
+		}
+	]
+}
