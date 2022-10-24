@@ -1,3 +1,8 @@
+## 5.7.5
+* Backported changes from 6.0.1
+* Fixed a server disconnect present in 5.7.4.
+* Made the new loot pool entries able to specify a subset of gems/entries for selection.
+
 ## 5.7.4
 * Fixed a dupe bug caused by the Vial of Arcane Extraction.
 * Fixed some iZ-fighting in the Reforging Table screen.

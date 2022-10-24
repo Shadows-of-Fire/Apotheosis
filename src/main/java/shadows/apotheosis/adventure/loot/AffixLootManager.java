@@ -1,5 +1,8 @@
 package shadows.apotheosis.adventure.loot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,6 +31,8 @@ public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEnt
 	//Formatter::on
 
 	public static final AffixLootManager INSTANCE = new AffixLootManager();
+	
+	private static List<Runnable> loadCallbacks = new ArrayList<>(); // TODO: Replace with more complete solution in PlaceboJsonReloadListener.
 
 	private AffixLootManager() {
 		super(AdventureModule.LOGGER, "affix_loot_entries", false, false);
@@ -44,6 +49,16 @@ public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEnt
 		Preconditions.checkArgument(!item.stack.isEmpty());
 		Preconditions.checkArgument(item.type != null);
 		Preconditions.checkArgument(item.type != LootCategory.NONE);
+	}
+	
+	@Override
+	protected void onReload() {
+		super.onReload();
+		loadCallbacks.forEach(Runnable::run);
+	}
+	
+	public static void registerCallback(Runnable r) {
+		loadCallbacks.add(r);
 	}
 
 }
