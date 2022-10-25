@@ -88,11 +88,13 @@ public class FestiveAffix extends Affix {
 				}
 			}
 		}
-		e.getDrops().stream().map(ItemEntity::getItem).forEach(s -> {
+		e.getDrops().stream().forEach(ent -> {
+			ItemStack s = ent.getItem();
 			if (s.hasTag() && s.getTag().contains(MARKER)) {
 				s.getTag().remove(MARKER);
 				if (s.getTag().isEmpty()) s.setTag(null);
 			}
+			ent.setItem(s);
 		});
 	}
 
