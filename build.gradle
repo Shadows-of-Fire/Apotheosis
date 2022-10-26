@@ -82,6 +82,7 @@ dependencies {
 	implementation fileTree(dir: 'libs', include: '*.jar')
 	if(project.hasProperty('mmmFileId')) implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${mmmFileId}")
 	if(project.hasProperty('gsVersion')) compileOnly fg.deobf("net.darkhax.gamestages:GameStages-Forge-${gsVersion}")
+	if(project.hasProperty('bsVersion')) compileOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${bsVersion}")
 }
 
 mixin {
