@@ -17,7 +17,7 @@ public class BossSummonerItem extends Item {
 	public InteractionResult useOn(UseOnContext ctx) {
 		Level world = ctx.getLevel();
 		if (world.isClientSide) return InteractionResult.SUCCESS;
-		BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer().getLuck(), (ServerLevel) world);
+		BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer(), (ServerLevel) world);
 		if (item == null) return InteractionResult.FAIL;
 		BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
 		if (!world.noCollision(item.getSize().move(pos))) {

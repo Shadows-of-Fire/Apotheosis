@@ -1,3 +1,8 @@
+## 5.7.5-J
+* Special build for Journey 2 The Core.
+* Added GameStages support for Affix Items, Bosses, and Gems.
+* Added a mixin that is patching a bandaid in InControl.
+
 ## 5.7.5
 * Backported changes from 6.0.1
 * Fixed a server disconnect present in 5.7.4.

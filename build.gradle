@@ -80,7 +80,8 @@ dependencies {
 	})
 	if(project.hasProperty('patchouliVer')) implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouliVer}")
 	implementation fileTree(dir: 'libs', include: '*.jar')
-	implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3820503")
+	if(project.hasProperty('mmmFileId')) implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${mmmFileId}")
+	if(project.hasProperty('gsVersion')) compileOnly fg.deobf("net.darkhax.gamestages:GameStages-Forge-${gsVersion}")
 }
 
 mixin {

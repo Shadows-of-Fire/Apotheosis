@@ -18,13 +18,17 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.compat.GameStagesCompat;
 
 public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 	public static final Serializer SERIALIZER = new Serializer();
@@ -45,16 +49,18 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 		super(weight, quality, conditions, functions);
 		this.rarity = rarity;
 		this.entries = entries;
-		if(!this.entries.isEmpty()) awaitingLoad.add(this);
+		if (!this.entries.isEmpty()) awaitingLoad.add(this);
 	}
 
 	@Override
 	protected void createItemStack(Consumer<ItemStack> list, LootContext ctx) {
 		ItemStack stack;
+		Player player = getPlayer(ctx);
+		if (player == null) return;
 		if (this.resolvedEntries.isEmpty()) {
-			stack = LootController.createRandomLootItem(ctx.getRandom(), this.rarity, ctx.getLuck(), ctx.getLevel());
+			stack = LootController.createRandomLootItem(ctx.getRandom(), this.rarity, player, ctx.getLevel());
 		} else {
-			AffixLootEntry entry = WeightedRandom.getRandomItem(ctx.getRandom(), this.resolvedEntries.stream().map(e -> e.<AffixLootEntry>wrap(ctx.getLuck())).toList()).get().getData();
+			AffixLootEntry entry = WeightedRandom.getRandomItem(ctx.getRandom(), this.resolvedEntries.stream().filter(a -> GameStagesCompat.hasStage(player, a.stages)).map(e -> e.<AffixLootEntry>wrap(ctx.getLuck())).toList()).get().getData();
 			stack = LootController.createLootItem(entry.getStack().copy(), this.rarity == null ? LootRarity.random(ctx.getRandom(), ctx.getLuck(), entry) : this.rarity, ctx.getRandom());
 		}
 		list.accept(stack);
@@ -70,8 +76,16 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 	}
 
 	private <T> T printErrorOnNull(T t, ResourceLocation id) {
-		if(t == null) AdventureModule.LOGGER.error("An AffixLootPoolEntry failed to resolve the Affix Entry {}!", id);
+		if (t == null) AdventureModule.LOGGER.error("An AffixLootPoolEntry failed to resolve the Affix Entry {}!", id);
 		return t;
+	}
+
+	@Nullable
+	public static Player getPlayer(LootContext ctx) {
+		if (ctx.getParam(LootContextParams.KILLER_ENTITY) instanceof Player p) return p;
+		if (ctx.getParam(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
+		if (ServerLifecycleHooks.getCurrentServer() != null) return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().stream().findFirst().orElse(null);
+		return null;
 	}
 
 	public static class Serializer extends LootPoolSingletonContainer.Serializer<AffixLootPoolEntry> {
@@ -79,7 +93,8 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 		@Override
 		protected AffixLootPoolEntry deserialize(JsonObject obj, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] lootConditions, LootItemFunction[] lootFunctions) {
 			LootRarity rarity = LootRarity.byId(GsonHelper.getAsString(obj, "rarity", ""));
-			List<String> entries = context.deserialize(GsonHelper.getAsJsonArray(obj, "entries", new JsonArray()), new TypeToken<List<String>>() {}.getType());
+			List<String> entries = context.deserialize(GsonHelper.getAsJsonArray(obj, "entries", new JsonArray()), new TypeToken<List<String>>() {
+			}.getType());
 			return new AffixLootPoolEntry(rarity, entries.stream().map(ResourceLocation::new).toList(), weight, quality, lootConditions, lootFunctions);
 		}
 

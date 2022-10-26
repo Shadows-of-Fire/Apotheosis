@@ -47,7 +47,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 				opt.ifPresent(player -> {
 					this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
 					BlockPos pos = this.worldPosition;
-					BossItem bossItem = this.item == null ? BossItemManager.INSTANCE.getRandomItem(this.level.getRandom(), player.getLuck(), (ServerLevel) this.level) : this.item;
+					BossItem bossItem = this.item == null ? BossItemManager.INSTANCE.getRandomItem(this.level.getRandom(), player, (ServerLevel) this.level) : this.item;
 					Mob entity = bossItem.createBoss((ServerLevel) this.level, pos, this.level.getRandom(), player.getLuck());
 					entity.setPersistenceRequired();
 					this.level.addFreshEntity(entity);

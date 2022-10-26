@@ -1,14 +1,23 @@
 package shadows.apotheosis.adventure.boss;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.random.WeightedEntry.Wrapper;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.compat.GameStagesCompat;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.AxisAlignedBBDeserializer;
 import shadows.apotheosis.util.ChancedEffectInstance;
@@ -51,6 +60,18 @@ public class BossItemManager extends DimWeightedJsonReloadListener<BossItem> {
 	@Override
 	protected void registerBuiltinSerializers() {
 		this.registerSerializer(DEFAULT, new SerializerBuilder<BossItem>("Apotheosis Boss").withJsonDeserializer(obj -> GSON.fromJson(obj, BossItem.class)));
+	}
+
+	@Override
+	@Deprecated // Use player-ctx version
+	public BossItem getRandomItem(Random rand, float luck, ServerLevelAccessor level) {
+		return super.getRandomItem(rand, luck, level);
+	}
+
+	public BossItem getRandomItem(Random rand, Player player, ServerLevelAccessor level) {
+		List<Wrapper<BossItem>> list = new ArrayList<>(zeroLuckList.size());
+		this.registry.values().stream().filter(IDimWeighted.matches(level.getLevel().dimension().location())).filter(i -> GameStagesCompat.hasStage(player, i.stages)).map(l -> l.<BossItem>wrap(player.getLuck())).forEach(list::add);
+		return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).orElse(null);
 	}
 
 }

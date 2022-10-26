@@ -28,9 +28,9 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 	@Nullable
 	public MerchantOffer getOffer(Entity pTrader, Random pRand) {
 		if (!(pTrader.level instanceof ServerLevel)) return null;
-		Player nearest = pTrader.level.getNearestPlayer(pTrader, 32);
-		float luck = nearest != null ? nearest.getLuck() : 0;
-		ItemStack affixItem = LootController.createRandomLootItem(pRand, null, luck, (ServerLevel) pTrader.level);
+		Player nearest = pTrader.level.getNearestPlayer(pTrader, 64);
+		if (nearest == null) return null;
+		ItemStack affixItem = LootController.createRandomLootItem(pRand, null, nearest, (ServerLevel) pTrader.level);
 		affixItem.getTag().putBoolean("apoth_merchant", true);
 		ItemStack stdItem = affixItem.copy();
 		stdItem.setTag(null);

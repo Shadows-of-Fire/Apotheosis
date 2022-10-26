@@ -15,6 +15,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
 import shadows.apotheosis.Apoth.Affixes;
@@ -89,8 +90,9 @@ public class LootController {
 	 * @param level The world, since affix loot entries are per-dimension.
 	 * @return An affix item, or an empty ItemStack if no entries were available for the dimension.
 	 */
-	public static ItemStack createRandomLootItem(Random rand, @Nullable LootRarity rarity, float luck, ServerLevelAccessor level) {
-		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, luck, level);
+	public static ItemStack createRandomLootItem(Random rand, @Nullable LootRarity rarity, Player player, ServerLevelAccessor level) {
+		float luck = player.getLuck();
+		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, player, level);
 		if (entry == null) return ItemStack.EMPTY;
 		if (rarity == null) rarity = LootRarity.random(rand, luck, entry);
 		return createLootItem(entry.getStack(), entry.getType(), rarity, rand);
