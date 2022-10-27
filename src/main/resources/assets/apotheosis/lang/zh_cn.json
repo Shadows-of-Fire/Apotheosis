@@ -291,7 +291,7 @@
 	"text.apotheosis.salvage_results": "回收结果",
 	"text.apotheosis.results": "结果",
 	"text.apotheosis.purity": "纯度：%s",
-	"text.apotheosis.socket_limit": "应用最大镶孔: %s",
+	"text.apotheosis.socket_limit": "镶孔最多应用: %s",
 	"title.apotheosis.smithing": "神化锻造",
 
 	"affix.apotheosis.target.attack_self": "• 击中目标时，获得%s",
