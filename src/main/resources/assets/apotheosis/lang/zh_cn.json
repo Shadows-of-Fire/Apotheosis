@@ -281,18 +281,18 @@
 	
 	"button.apotheosis.salvage": "回收物品",
 	"button.apotheosis.no_salvage": "未放入物品",
-	"button.apotheosis.no_salvage_all": "库存中没有可回收的物品",
+	"button.apotheosis.no_salvage_all": "物品栏中没有可回收的物品",
 
 	"container.apotheosis.salvage": "回收",
 	"container.apotheosis.reforge": "重铸",
 	"text.apotheosis.dust_cost": "%s %s",
 	"text.apotheosis.mat_cost": "%s %s",
-	"text.apotheosis.reforge_cost": "重铸费用",
+	"text.apotheosis.reforge_cost": "重铸花费",
 	"text.apotheosis.salvage_results": "回收结果",
 	"text.apotheosis.results": "结果",
 	"text.apotheosis.purity": "纯度：%s",
 	"text.apotheosis.socket_limit": "应用最大镶孔: %s",
-	"title.apotheosis.smithing": "神化炼金术",
+	"title.apotheosis.smithing": "神化锻造",
 
 	"affix.apotheosis.target.attack_self": "击中目标时，获得%s",
 	"affix.apotheosis.target.attack_target": "击中目标时，造成%s",
@@ -306,7 +306,7 @@
 	
 	"info.apotheosis.boss_spawn": "%s在附近苏醒了！",
 	"info.apotheosis.boss": "神化Boss（%s）",
-	"info.apotheosis.boss_item": "将掉落: %s",
+	"info.apotheosis.boss_item": "将掉落：%s",
 	"info.apotheosis.boss_modifiers": "Boss属性：",
 	"info.apotheosis.rarity_material": "珍宝材料（%s）",
 	"info.apotheosis.gem_crushing": "宝石粉通过下落的铁砧砸中任意神话宝石获得。",
