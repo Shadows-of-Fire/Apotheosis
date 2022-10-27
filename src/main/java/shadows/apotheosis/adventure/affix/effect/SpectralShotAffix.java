@@ -54,7 +54,6 @@ public class SpectralShotAffix extends Affix {
 				spectralArrow.setKnockback(arrow.knockback);
 				spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
 				spectralArrow.pickup = Pickup.CREATIVE_ONLY;
-				spectralArrow.getPersistentData().putBoolean("apoth.attrib.done", true);
 				arrow.level.addFreshEntity(spectralArrow);
 			}
 		}
