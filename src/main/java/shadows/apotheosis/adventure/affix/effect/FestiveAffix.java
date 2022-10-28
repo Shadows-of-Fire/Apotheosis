@@ -69,8 +69,7 @@ public class FestiveAffix extends Affix {
 		LivingEntity dead = e.getEntity();
 		if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty() && !(e.getEntity() instanceof Player)) {
 			AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(this);
-			if (inst == null) return;
-			if (player.level.random.nextFloat() < getTrueLevel(inst.rarity(), inst.level())) {
+			if (inst != null && player.level.random.nextFloat() < getTrueLevel(inst.rarity(), inst.level())) {
 				player.level.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (player.level.random.nextFloat() - player.level.random.nextFloat()) * 0.2F) * 0.7F);
 				((ServerLevel) player.level).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
 				List<ItemEntity> drops = new ArrayList<>(e.getDrops());
