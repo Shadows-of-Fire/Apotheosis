@@ -142,48 +142,48 @@
 	
 	"affix.apotheosis:spectral": "Spectral",
     "affix.apotheosis:spectral.suffix": "of the Forlorn",
-    "affix.apotheosis:spectral.desc": "You have a %s%% chance to shoot a second arrow.",
+    "affix.apotheosis:spectral.desc": "• You have a %s%% chance to shoot a second arrow.",
 	
 	"affix.apotheosis:magical": "Magical",
     "affix.apotheosis:magical.suffix": "of the Arcane",
-    "affix.apotheosis:magical.desc": "Your arrows deal magic damage.",
+    "affix.apotheosis:magical.desc": "• Your arrows deal magic damage.",
 	
 	"affix.apotheosis:festive": "Festive",
     "affix.apotheosis:festive.suffix": "of Partying",
-    "affix.apotheosis:festive.desc": "Slain enemies have a %s%% chance to be a Loot Piñata",
+    "affix.apotheosis:festive.desc": "• Slain enemies have a %s%% chance to be a Loot Piñata",
 	
 	"affix.apotheosis:thunderstruck": "Thunderstruck",
     "affix.apotheosis:thunderstruck.suffix": "of the Storm",
-    "affix.apotheosis:thunderstruck.desc": "Your attacks deal %s damage to nearby enemies.",
+    "affix.apotheosis:thunderstruck.desc": "• Your attacks deal %s damage to nearby enemies.",
 	
 	"affix.apotheosis:retreating": "Retreating",
     "affix.apotheosis:retreating.suffix": "of the Jester",
-    "affix.apotheosis:retreating.desc": "You will leap back when blocking in melee.",
+    "affix.apotheosis:retreating.desc": "• You will leap back when blocking in melee.",
 	
 	"affix.apotheosis:telepathic": "Telepathic",
     "affix.apotheosis:telepathic.suffix": "of Space and Time",
-    "affix.apotheosis:telepathic.desc.weapon": "Mob drops will teleport to you.",
-    "affix.apotheosis:telepathic.desc.tool": "Block drops will teleport to you.",
+    "affix.apotheosis:telepathic.desc.weapon": "• Mob drops will teleport to you.",
+    "affix.apotheosis:telepathic.desc.tool": "• Block drops will teleport to you.",
 
 	"affix.apotheosis:executing": "Executing",
     "affix.apotheosis:executing.suffix": "of the Executioner",
-    "affix.apotheosis:executing.desc": "Enemies below %s%% max health will be executed.",
+    "affix.apotheosis:executing.desc": "• Enemies below %s%% max health will be executed.",
 	
 	"affix.apotheosis:cleaving": "Cleaving",
     "affix.apotheosis:cleaving.suffix": "of the Butcher",
-    "affix.apotheosis:cleaving.desc": "Attacks have a %s%% chance to also hit up to %s nearby enemies.",
+    "affix.apotheosis:cleaving.desc": "• Attacks have a %s%% chance to also hit up to %s nearby enemies.",
 
 	"affix.apotheosis:enlightened": "Enlightened",
     "affix.apotheosis:enlightened.suffix": "of the Lightbringer",
-    "affix.apotheosis:enlightened.desc": "This tool can place a torch at the cost of %s durability.",
+    "affix.apotheosis:enlightened.desc": "• This tool can place a torch at the cost of %s durability.",
 
 	"affix.apotheosis:psychic": "Psychic",
     "affix.apotheosis:psychic.suffix": "of the Vengeful",
-    "affix.apotheosis:psychic.desc": "Blocking a projectile deals %s%% of the damage to the shooter.",
+    "affix.apotheosis:psychic.desc": "• Blocking a projectile deals %s%% of the damage to the shooter.",
 
 	"affix.apotheosis:catalyzing": "Catalyzing",
     "affix.apotheosis:catalyzing.suffix": "of the Converted",
-    "affix.apotheosis:catalyzing.desc": "Blocking an explosion will grant you great strength.",
+    "affix.apotheosis:catalyzing.desc": "• Blocking an explosion will grant you great strength.",
 
 	"affix.apotheosis:annihilating": "Annihilating",
     "affix.apotheosis:annihilating.suffix": "of the Titan",
@@ -208,7 +208,7 @@
 
 	"affix.apotheosis:radial": "Radial",
     "affix.apotheosis:radial.suffix": "of the Earthbreaker",
-    "affix.apotheosis:radial.desc": "This tool breaks in a %sx%s area.",
+    "affix.apotheosis:radial.desc": "• This tool breaks in a %sx%s area.",
 	
 	"misc.apotheosis.iron": "iron",
 	"misc.apotheosis.diamond": "diamond",
@@ -216,14 +216,14 @@
 	
 	"affix.apotheosis:omnetic": "Omnetic",
     "affix.apotheosis:omnetic.suffix": "of the Singularity",
-    "affix.apotheosis:omnetic.desc": "This tool has %s effectiveness against all blocks.",
+    "affix.apotheosis:omnetic.desc": "• This tool has %s effectiveness against all blocks.",
 	
 	"misc.apotheosis.physical": "Physical",
 	"misc.apotheosis.magic": "Magic",
 	"misc.apotheosis.fire": "Fire",
 	"misc.apotheosis.fall": "Fall",
 	"misc.apotheosis.explosion": "Explosive",
-    "affix.apotheosis:damage_reduction.desc": "%s damage taken is reduced by %s%%.",
+    "affix.apotheosis:damage_reduction.desc": "• %s damage taken is reduced by %s%%.",
 	
 	"affix.apotheosis:blockading": "Blockading",
     "affix.apotheosis:blockading.suffix": "of the Blockade",
@@ -244,7 +244,17 @@
     "item.modifiers.socket": "When Socketed:",
 	"info.apotheosis.socketing": "Gems can be socketed with a Smithing Table. Item on the left, gem on the right.\n\nChoose wisely, as removing a socketed gem is costly.",
 
-	"affix.apotheosis:durable.desc": "This item ignores %s%% of durability damage.",
+	"affix.apotheosis:durable.desc": "• This item ignores %s%% of durability damage.",
+	
+	"affix.apotheosis.target.attack_self": "• On hit, gain %s",
+	"affix.apotheosis.target.attack_target": "• On hit, inflict %s",
+	"affix.apotheosis.target.hurt_self": "• When attacked, gain %s",
+	"affix.apotheosis.target.hurt_attacker": "• When attacked, inflict %s",
+	"affix.apotheosis.target.break_self": "• On block break, gain %s",
+	"affix.apotheosis.target.arrow_self": "• On arrow hit, gain %s",
+	"affix.apotheosis.target.arrow_target": "• On arrow hit, inflict %s",
+	"affix.apotheosis.target.block_self": "• Upon blocking, gain %s",
+	"affix.apotheosis.target.block_attacker": "• Upon blocking, inflict %s",
 
     "item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.0": "Parity Gem",
@@ -293,16 +303,6 @@
 	"text.apotheosis.purity": "Purity: %s",
 	"text.apotheosis.socket_limit": "Max Sockets Applied: %s",
 	"title.apotheosis.smithing": "Apotheotic Smithing",
-
-	"affix.apotheosis.target.attack_self": "On hit, gain %s",
-	"affix.apotheosis.target.attack_target": "On hit, inflict %s",
-	"affix.apotheosis.target.hurt_self": "When attacked, gain %s",
-	"affix.apotheosis.target.hurt_attacker": "When attacked, inflict %s",
-	"affix.apotheosis.target.break_self": "On block break, gain %s",
-	"affix.apotheosis.target.arrow_self": "On arrow hit, gain %s",
-	"affix.apotheosis.target.arrow_target": "On arrow hit, inflict %s",
-	"affix.apotheosis.target.block_self": "Upon blocking, gain %s",
-	"affix.apotheosis.target.block_attacker": "Upon blocking, inflict %s",
 	
 	"info.apotheosis.boss_spawn": "%s has awoken nearby!",
 	"info.apotheosis.boss": "%s Apotheotic Boss",

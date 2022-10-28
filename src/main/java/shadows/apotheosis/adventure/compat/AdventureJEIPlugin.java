@@ -47,6 +47,7 @@ public class AdventureJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
+		if (!Apotheosis.enableAdventure) return;
 		ItemStack gem = new ItemStack(Apoth.Items.GEM);
 		GemItem.setStoredBonus(gem, Attributes.LUCK, new AttributeModifier("debug", 9999, Operation.ADDITION));
 		reg.addIngredientInfo(gem, VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.socketing"));
@@ -61,6 +62,7 @@ public class AdventureJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration reg) {
+		if (!Apotheosis.enableAdventure) return;
 		reg.addRecipeCategories(new ApothSmithingCategory(reg.getJeiHelpers().getGuiHelper()));
 	}
 
