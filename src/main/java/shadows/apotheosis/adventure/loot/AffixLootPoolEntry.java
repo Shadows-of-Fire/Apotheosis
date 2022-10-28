@@ -82,8 +82,8 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 
 	@Nullable
 	public static Player getPlayer(LootContext ctx) {
-		if (ctx.getParam(LootContextParams.KILLER_ENTITY) instanceof Player p) return p;
-		if (ctx.getParam(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
+		if (ctx.getParamOrNull(LootContextParams.KILLER_ENTITY) instanceof Player p) return p;
+		if (ctx.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
 		if (ServerLifecycleHooks.getCurrentServer() != null) return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().stream().findFirst().orElse(null);
 		return null;
 	}
