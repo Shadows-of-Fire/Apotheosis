@@ -1,3 +1,6 @@
+## 6.0.2
+* Forward-Ported all changes from 5.7.6.
+
 ## 6.0.1
 * Forward-Ported all changes from 5.7.1-5.7.4
 * Fixed typo in the lang key for the Feathery affix.
