@@ -1,3 +1,9 @@
+## 5.7.6
+* Fixed an issue where Loot Pinata was causing all dropped items to have extra NBT data.
+* WeiAL: Updated Chinese translation.
+* Updated affix tooltips with a dot prefix.
+* Fixed the Adventure Module JEI plugin being enabled when it was disabled.
+
 ## 5.7.5
 * Backported changes from 6.0.1
 * Fixed a server disconnect present in 5.7.4.
@@ -5,7 +11,7 @@
 
 ## 5.7.4
 * Fixed a dupe bug caused by the Vial of Arcane Extraction.
-* Fixed some iZ-fighting in the Reforging Table screen.
+* Fixed some Z-fighting in the Reforging Table screen.
 
 ## 5.7.3
 * Fixed the radial affix not loading.
