@@ -217,7 +217,8 @@ public class AdventureEvents {
 		if (e.getEntity().level.isClientSide) return;
 		if (noRecurse) return;
 		noRecurse = true;
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
+		Entity isArrow = event.getSource().getDirectEntity() instanceof AbstractArrow ? ((AbstractArrow)event.getSource().getDirectEntity()).getOwner() : event.getSource().getDirectEntity();
+		if (isArrow instanceof LivingEntity attacker && !e.getSource().isMagic()) {
 			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE.get()) - 1;
 			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE.get());
 			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE.get());
