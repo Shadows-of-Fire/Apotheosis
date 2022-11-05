@@ -6,14 +6,15 @@ import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import shadows.placebo.json.DimWeightedJsonReloadListener.IDimWeighted;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
+import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 /**
  * A loot entry represents a possible item that can come out of a loot roll.
  * It is classified into a type, which is used to determine possible affixes.
  */
-public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements IDimWeighted, LootRarity.Clamped {
+public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements ILuckyWeighted, IDimensional, LootRarity.Clamped {
 
 	protected int weight;
 	protected float quality;

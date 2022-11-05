@@ -33,7 +33,6 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
@@ -103,11 +102,9 @@ public class AdventureModuleClient {
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(AdventureModuleClient.class);
 		ItemProperties.register(Apoth.Items.GEM.get(), new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
-		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.BOSS_SPAWNER.get(), RenderType.cutout());
 		MenuScreens.register(Apoth.Menus.REFORGING.get(), ReforgingScreen::new);
 		MenuScreens.register(Apoth.Menus.SALVAGE.get(), SalvagingScreen::new);
 		BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
-		ItemBlockRenderTypes.setRenderLayer(Apoth.Blocks.REFORGING_TABLE.get(), RenderType.cutout());
 	}
 
 	public static void onBossSpawn(BlockPos pos, float[] color) {

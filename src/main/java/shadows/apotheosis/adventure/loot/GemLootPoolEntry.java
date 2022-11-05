@@ -26,15 +26,17 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.Gem;
 import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.GemManager;
+import shadows.placebo.json.ListenerCallback;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemLootPoolEntry extends LootPoolSingletonContainer {
 	public static final Serializer SERIALIZER = new Serializer();
 	public static final LootPoolEntryType TYPE = new LootPoolEntryType(SERIALIZER);
 	private static Set<GemLootPoolEntry> awaitingLoad = Collections.newSetFromMap(new WeakHashMap<>());
 	static {
-		GemManager.registerCallback(() -> {
+		GemManager.INSTANCE.registerCallback(ListenerCallback.reloadOnly(r -> {
 			awaitingLoad.forEach(GemLootPoolEntry::resolve);
-		});
+		}));
 	}
 
 	private final List<ResourceLocation> gems;
@@ -53,7 +55,7 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 		if (!this.resolvedGems.isEmpty()) {
 			gem = WeightedRandom.getRandomItem(ctx.getRandom(), this.resolvedGems.stream().map(g -> g.<Gem>wrap(ctx.getLuck())).toList()).get().getData();
 		} else {
-			gem = GemManager.INSTANCE.getRandomItem(ctx.getRandom(), ctx.getLevel());
+			gem = GemManager.INSTANCE.getRandomItem(ctx.getRandom(), ctx.getLuck(), IDimensional.matches(ctx.getLevel()));
 		}
 
 		ItemStack stack = GemItem.fromGem(gem, ctx.getRandom());
@@ -70,7 +72,7 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 	}
 
 	private <T> T printErrorOnNull(T t, ResourceLocation id) {
-		if(t == null) AdventureModule.LOGGER.error("A GemLootPoolEntry failed to resolve the Gem {}!", id);
+		if (t == null) AdventureModule.LOGGER.error("A GemLootPoolEntry failed to resolve the Gem {}!", id);
 		return t;
 	}
 
@@ -78,7 +80,8 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 
 		@Override
 		protected GemLootPoolEntry deserialize(JsonObject jsonObject, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] lootConditions, LootItemFunction[] lootFunctions) {
-			List<String> gems = context.deserialize(GsonHelper.getAsJsonArray(jsonObject, "gems", new JsonArray()), new TypeToken<List<String>>() {}.getType());
+			List<String> gems = context.deserialize(GsonHelper.getAsJsonArray(jsonObject, "gems", new JsonArray()), new TypeToken<List<String>>() {
+			}.getType());
 			return new GemLootPoolEntry(gems.stream().map(ResourceLocation::new).toList(), weight, quality, lootConditions, lootFunctions);
 		}
 

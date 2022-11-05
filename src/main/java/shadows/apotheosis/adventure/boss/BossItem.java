@@ -47,11 +47,12 @@ import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.GearSet;
 import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.NameHelper;
-import shadows.placebo.json.DimWeightedJsonReloadListener.IDimWeighted;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.RandomAttributeModifier;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
+import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
-public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeighted, LootRarity.Clamped {
+public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped {
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 

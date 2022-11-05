@@ -25,15 +25,16 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.placebo.json.ListenerCallback;
 
 public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 	public static final Serializer SERIALIZER = new Serializer();
 	public static final LootPoolEntryType TYPE = new LootPoolEntryType(SERIALIZER);
 	private static Set<AffixLootPoolEntry> awaitingLoad = Collections.newSetFromMap(new WeakHashMap<>());
 	static {
-		AffixLootManager.registerCallback(() -> {
+		AffixLootManager.INSTANCE.registerCallback(ListenerCallback.reloadOnly(r -> {
 			awaitingLoad.forEach(AffixLootPoolEntry::resolve);
-		});
+		}));
 	}
 
 	@Nullable

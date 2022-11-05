@@ -1,5 +1,6 @@
 {
 	"parent": "block/block",
+	"render_type": "cutout",
     "textures": {
         "particle": "apotheosis:blocks/reforging_table_bottom",
         "bottom": "apotheosis:blocks/reforging_table_bottom",

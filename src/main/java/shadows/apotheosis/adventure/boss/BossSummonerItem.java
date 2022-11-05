@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class BossSummonerItem extends Item {
 
@@ -17,7 +18,7 @@ public class BossSummonerItem extends Item {
 	public InteractionResult useOn(UseOnContext ctx) {
 		Level world = ctx.getLevel();
 		if (world.isClientSide) return InteractionResult.SUCCESS;
-		BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer().getLuck(), (ServerLevel) world);
+		BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer().getLuck(), IDimensional.matches(world));
 		if (item == null) return InteractionResult.FAIL;
 		BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
 		if (!world.noCollision(item.getSize().move(pos))) {

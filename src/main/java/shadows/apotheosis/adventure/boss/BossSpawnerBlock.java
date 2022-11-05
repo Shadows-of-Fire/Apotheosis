@@ -19,6 +19,7 @@ import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apoth;
 import shadows.placebo.block_entity.TickingBlockEntity;
 import shadows.placebo.block_entity.TickingEntityBlock;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 
@@ -47,7 +48,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 				opt.ifPresent(player -> {
 					this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
 					BlockPos pos = this.worldPosition;
-					BossItem bossItem = this.item == null ? BossItemManager.INSTANCE.getRandomItem(this.level.getRandom(), player.getLuck(), (ServerLevel) this.level) : this.item;
+					BossItem bossItem = this.item == null ? BossItemManager.INSTANCE.getRandomItem(this.level.getRandom(), player.getLuck(), IDimensional.matches(this.level)) : this.item;
 					Mob entity = bossItem.createBoss((ServerLevel) this.level, pos, this.level.getRandom(), player.getLuck());
 					entity.setPersistenceRequired();
 					this.level.addFreshEntity(entity);

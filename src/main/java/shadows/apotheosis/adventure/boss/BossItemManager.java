@@ -15,13 +15,13 @@ import shadows.apotheosis.util.AxisAlignedBBDeserializer;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.GearSet.SetPredicate;
 import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
-import shadows.placebo.json.DimWeightedJsonReloadListener;
 import shadows.placebo.json.JsonUtil;
 import shadows.placebo.json.NBTAdapter;
 import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.RandomAttributeModifier;
+import shadows.placebo.json.WeightedJsonReloadListener;
 
-public class BossItemManager extends DimWeightedJsonReloadListener<BossItem> {
+public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
 
 	//Formatter::off
 	public static final Gson GSON = new GsonBuilder()

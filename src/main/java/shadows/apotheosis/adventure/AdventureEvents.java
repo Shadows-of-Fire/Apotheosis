@@ -73,6 +73,7 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.DamageSourceUtil;
 import shadows.placebo.events.AnvilLandEvent;
 import shadows.placebo.events.ItemUseEvent;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class AdventureEvents {
 
@@ -332,7 +333,7 @@ public class AdventureEvents {
 			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
 			if (p.random.nextFloat() <= chance) {
 				Entity ent = e.getEntity();
-				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck(), p.getLevel()), 0, 0, 0));
+				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck(), IDimensional.matches(p.getLevel())), 0, 0, 0));
 			}
 		}
 	}

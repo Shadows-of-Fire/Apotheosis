@@ -25,6 +25,7 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class LootController {
 
@@ -93,7 +94,7 @@ public class LootController {
 	 * @return An affix item, or an empty ItemStack if no entries were available for the dimension.
 	 */
 	public static ItemStack createRandomLootItem(RandomSource rand, @Nullable LootRarity rarity, float luck, ServerLevelAccessor level) {
-		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, luck, level);
+		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, luck, IDimensional.matches(level.getLevel()));
 		if (entry == null) return ItemStack.EMPTY;
 		if (rarity == null) rarity = LootRarity.random(rand, luck, entry);
 		return createLootItem(entry.getStack(), entry.getType(), rarity, rand);

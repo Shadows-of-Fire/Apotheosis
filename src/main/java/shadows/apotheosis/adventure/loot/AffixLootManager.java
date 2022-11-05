@@ -1,8 +1,5 @@
 package shadows.apotheosis.adventure.loot;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,15 +8,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.placebo.json.DimWeightedJsonReloadListener;
 import shadows.placebo.json.ItemAdapter;
 import shadows.placebo.json.NBTAdapter;
 import shadows.placebo.json.PSerializer;
+import shadows.placebo.json.WeightedJsonReloadListener;
 
 /**
  * Core loot registry.  Handles the management of all Affixes, LootEntries, and generation of loot items.
  */
-public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEntry> {
+public class AffixLootManager extends WeightedJsonReloadListener<AffixLootEntry> {
 
 	//Formatter::off
 	public static final Gson GSON = new GsonBuilder()
@@ -31,8 +28,6 @@ public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEnt
 	//Formatter::on
 
 	public static final AffixLootManager INSTANCE = new AffixLootManager();
-	
-	private static List<Runnable> loadCallbacks = new ArrayList<>(); // TODO: Replace with more complete solution in PlaceboJsonReloadListener.
 
 	private AffixLootManager() {
 		super(AdventureModule.LOGGER, "affix_loot_entries", false, false);
@@ -49,16 +44,6 @@ public class AffixLootManager extends DimWeightedJsonReloadListener<AffixLootEnt
 		Preconditions.checkArgument(!item.stack.isEmpty());
 		Preconditions.checkArgument(item.type != null);
 		Preconditions.checkArgument(item.type != LootCategory.NONE);
-	}
-	
-	@Override
-	protected void onReload() {
-		super.onReload();
-		loadCallbacks.forEach(Runnable::run);
-	}
-	
-	public static void registerCallback(Runnable r) {
-		loadCallbacks.add(r);
 	}
 
 }
