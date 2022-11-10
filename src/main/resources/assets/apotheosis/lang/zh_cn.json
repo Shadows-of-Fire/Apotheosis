@@ -393,7 +393,7 @@
     "advancements.apotheosis.max_stats": "登峰造极",
     "advancements.apotheosis.max_stats.desc": "在位阶、量子化与阿卡那全满的附魔台上附魔一个物品。",
     "advancements.apotheosis.max_stable": "恒稳力量",
-    "advancements.apotheosis.max_stable.desc": "在位阶、量子化全满但阿卡那为 0% 的附魔台上附魔一个物品。",
+    "advancements.apotheosis.max_stable.desc": "在位阶、阿卡那全满但量子化为 0% 的附魔台上附魔一个物品。",
     "advancements.apotheosis.max_rectified": "精益求精",
     "advancements.apotheosis.max_rectified.desc": "在位阶、量子化、阿卡那与校准全满的附魔台上附魔一个物品。",
     
