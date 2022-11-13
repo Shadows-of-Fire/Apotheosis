@@ -35,7 +35,7 @@ public class CleavingAffix extends Affix {
 	private static boolean cleaving = false;
 
 	public CleavingAffix(Map<LootRarity, CleaveValues> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

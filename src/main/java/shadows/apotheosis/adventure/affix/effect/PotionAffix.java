@@ -46,7 +46,7 @@ public class PotionAffix extends Affix {
 	protected final int cooldown;
 
 	public PotionAffix(Map<LootRarity, EffectInst> effects, Set<LootCategory> types, Target target, int cooldown) {
-		super(AffixType.EFFECT);
+		super(AffixType.POTION);
 		this.effects = effects;
 		this.types = types;
 		this.target = target;

@@ -27,7 +27,7 @@ public class SpectralShotAffix extends Affix {
 	protected final Map<LootRarity, StepFunction> values;
 
 	public SpectralShotAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

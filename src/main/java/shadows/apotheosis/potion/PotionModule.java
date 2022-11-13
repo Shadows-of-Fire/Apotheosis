@@ -183,10 +183,11 @@ public class PotionModule {
 
 	public void reload(ApotheosisReloadEvent e) {
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
-		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
+		config.setTitle("Apotheosis Potion Module Configuration");
+		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.\nServer-authoritative.");
 
 		String[] defExt = new String[] { ForgeRegistries.MOB_EFFECTS.getKey(MobEffects.NIGHT_VISION).toString(), ForgeRegistries.MOB_EFFECTS.getKey(MobEffects.HEALTH_BOOST).toString() };
-		String[] names = config.getStringList("Extended Potion Charms", "general", defExt, "A list of effects that, when as charms, will be applied and reapplied at a longer threshold to avoid issues at low durations, like night vision.");
+		String[] names = config.getStringList("Extended Potion Charms", "general", defExt, "A list of effects that, when as charms, will be applied and reapplied at a longer threshold to avoid issues at low durations, like night vision.\nServer-authoritative.");
 		PotionCharmItem.EXTENDED_POTIONS.clear();
 		for (String s : names) {
 			try {

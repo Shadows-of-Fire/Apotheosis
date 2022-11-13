@@ -21,7 +21,7 @@ public class RetreatingAffix extends Affix {
 	protected LootRarity minRarity;
 
 	public RetreatingAffix(LootRarity minRarity) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.minRarity = minRarity;
 	}
 

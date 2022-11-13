@@ -17,7 +17,7 @@ public class MagicalArrowAffix extends Affix {
 	protected LootRarity minRarity;
 
 	public MagicalArrowAffix(LootRarity minRarity) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.minRarity = minRarity;
 	}
 

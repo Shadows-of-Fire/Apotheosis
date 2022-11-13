@@ -74,12 +74,12 @@ public class Apotheosis {
 
 	public static File configDir;
 	public static Configuration config;
-	public static boolean enableSpawner = true;
-	public static boolean enableGarden = true;
-	public static boolean enableAdventure = true;
 	public static boolean enableEnch = true;
+	public static boolean enableAdventure = true;
+	public static boolean enableSpawner = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillage = true;
+	public static boolean enableGarden = true;
 	public static boolean giveBook = true;
 
 	public static float localAtkStrength = 1;
@@ -88,11 +88,11 @@ public class Apotheosis {
 		configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
 		config = new Configuration(new File(configDir, MODID + ".cfg"));
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
-		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
-		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
 		enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
+		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
+		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
 		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
 		config.setTitle("Apotheosis Module Control");
 		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");

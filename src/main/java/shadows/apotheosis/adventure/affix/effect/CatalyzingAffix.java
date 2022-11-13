@@ -29,7 +29,7 @@ public class CatalyzingAffix extends Affix {
 	protected final Map<LootRarity, StepFunction> values;
 
 	public CatalyzingAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

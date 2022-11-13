@@ -50,7 +50,7 @@ public class EnchantmentHelperMixin {
 	 */
 	@Overwrite
 	public static List<EnchantmentInstance> selectEnchantment(RandomSource pRandom, ItemStack pItemStack, int pLevel, boolean pAllowTreasure) {
-		return RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 0, 0, 0, pAllowTreasure);
+		return RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 15F, 0, 0, pAllowTreasure);
 	}
 
 	/**

@@ -32,7 +32,7 @@ public class TelepathicAffix extends Affix {
 	protected LootRarity minRarity;
 
 	public TelepathicAffix(LootRarity minRarity) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.minRarity = minRarity;
 	}
 

@@ -26,7 +26,7 @@ public class EnlightenedAffix extends Affix {
 	protected final Map<LootRarity, StepFunction> values;
 
 	public EnlightenedAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

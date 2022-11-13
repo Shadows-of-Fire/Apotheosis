@@ -47,7 +47,7 @@ public class RadialAffix extends Affix {
 	protected final Map<LootRarity, List<RadialData>> values;
 
 	public RadialAffix(Map<LootRarity, List<RadialData>> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

@@ -31,7 +31,7 @@ public class ThunderstruckAffix extends Affix {
 	protected final Map<LootRarity, StepFunction> values;
 
 	public ThunderstruckAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

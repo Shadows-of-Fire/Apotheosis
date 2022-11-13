@@ -61,7 +61,7 @@ public class VillageModule {
 		config.setTitle("Apotheosis Village Module Configuration");
 		WandererReplacements.load(config);
 
-		boolean blockDmg = config.getBoolean("Explosive Arrow Block Damage", "arrows", true, "If explosive arrows can break blocks.");
+		boolean blockDmg = config.getBoolean("Explosive Arrow Block Damage", "arrows", true, "If explosive arrows can break blocks.\nServer-authoritative.");
 		expArrowMode = blockDmg ? BlockInteraction.DESTROY : BlockInteraction.NONE;
 		if (config.hasChanged()) config.save();
 

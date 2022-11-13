@@ -31,7 +31,7 @@ public class OmneticAffix extends Affix {
 	protected final Map<LootRarity, OmneticData> values;
 
 	public OmneticAffix(Map<LootRarity, OmneticData> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

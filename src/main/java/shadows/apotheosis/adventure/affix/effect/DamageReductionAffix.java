@@ -35,7 +35,7 @@ public class DamageReductionAffix extends Affix {
 	protected final Set<EquipmentSlot> armorTypes;
 
 	public DamageReductionAffix(DamageType type, Map<LootRarity, StepFunction> levelFuncs, Set<EquipmentSlot> armorTypes) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.type = type;
 		this.values = levelFuncs;
 		this.armorTypes = armorTypes;

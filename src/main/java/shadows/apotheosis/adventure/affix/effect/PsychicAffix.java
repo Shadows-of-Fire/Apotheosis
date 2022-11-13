@@ -30,7 +30,7 @@ public class PsychicAffix extends Affix {
 	protected final Map<LootRarity, StepFunction> values;
 
 	public PsychicAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 

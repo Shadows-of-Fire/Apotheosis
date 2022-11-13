@@ -37,7 +37,7 @@ public class FestiveAffix extends Affix {
 	protected final Map<LootRarity, StepFunction> values;
 
 	public FestiveAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.EFFECT);
+		super(AffixType.ABILITY);
 		this.values = values;
 	}
 
