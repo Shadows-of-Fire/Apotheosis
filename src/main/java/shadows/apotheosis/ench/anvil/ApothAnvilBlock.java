@@ -135,8 +135,8 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 		List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
 		if (anvil.blockData == null) return;
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.deserializeEnchantments(anvil.blockData.getList("enchantments", Tag.TAG_COMPOUND));
-		int oblit = enchantments.getOrDefault(Apoth.Enchantments.OBLITERATION, 0);
-		int split = enchantments.getOrDefault(Apoth.Enchantments.SPLITTING, 0);
+		int oblit = enchantments.getOrDefault(Apoth.Enchantments.OBLITERATION.get(), 0);
+		int split = enchantments.getOrDefault(Apoth.Enchantments.SPLITTING.get(), 0);
 		int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
 		if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
 			ItemStack stack = entity.getItem();
