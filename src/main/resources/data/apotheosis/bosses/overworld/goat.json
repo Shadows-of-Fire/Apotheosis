@@ -1,7 +1,7 @@
 {
 	"entity": "minecraft:goat",
 	"weight": 1,
-	"quality": 5,
+	"quality": 0,
 	"size": {
 		"width": 1.4,
 		"height": 1.4
@@ -12,10 +12,10 @@
 	"dimensions": [
 		"minecraft:overworld"
 	],
-	"min_rarity": "mythic",
-	"max_rarity": "mythic",
+	"min_rarity": "epic",
+	"max_rarity": "epic",
 	"stats": {
-		"mythic": {
+		"epic": {
 			"enchant_chance": 0.75,
 			"enchantment_levels": [25, 20, 50, 40],
 			"effects": [{

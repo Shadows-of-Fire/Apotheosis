@@ -1,4 +1,4 @@
-package shadows.apotheosis.adventure.affix.socket;
+package shadows.apotheosis.adventure.affix.socket.gem;
 
 import java.util.Set;
 
@@ -10,7 +10,7 @@ import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 import shadows.placebo.util.StepFunction;
 
-public final class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional {
+public final class StatGem extends TypeKeyedBase<StatGem> implements ILuckyWeighted, IDimensional {
 
 	protected int weight;
 	protected int variant;
@@ -20,7 +20,7 @@ public final class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDi
 	protected StepFunction value;
 	protected Set<ResourceLocation> dimensions;
 
-	Gem() {
+	StatGem() {
 
 	}
 

@@ -1,4 +1,4 @@
-package shadows.apotheosis.adventure.affix.socket;
+package shadows.apotheosis.adventure.affix.socket.gem;
 
 import java.util.function.Predicate;
 

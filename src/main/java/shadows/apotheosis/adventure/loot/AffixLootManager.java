@@ -43,7 +43,7 @@ public class AffixLootManager extends WeightedJsonReloadListener<AffixLootEntry>
 		super.validateItem(item);
 		Preconditions.checkArgument(!item.stack.isEmpty());
 		Preconditions.checkArgument(item.type != null);
-		Preconditions.checkArgument(item.type != LootCategory.NONE);
+		Preconditions.checkArgument(!item.type.isNone());
 	}
 
 }

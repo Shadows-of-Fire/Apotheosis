@@ -19,7 +19,7 @@ public class SocketCommand {
 			ItemStack stack = p.getMainHandItem();
 
 			LootCategory cat = LootCategory.forItem(stack);
-			if (cat == LootCategory.NONE) {
+			if (cat.isNone()) {
 				c.getSource().sendFailure(Component.literal("The target item cannot receive sockets!"));
 				return 1;
 			}

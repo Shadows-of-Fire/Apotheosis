@@ -12,7 +12,7 @@ import net.minecraftforge.common.loot.LootModifier;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
-import shadows.apotheosis.adventure.affix.socket.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemLootModifier extends LootModifier {

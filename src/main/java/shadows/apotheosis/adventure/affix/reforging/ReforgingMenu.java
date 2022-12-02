@@ -53,13 +53,13 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 
 			@Override
 			public boolean mayPlace(ItemStack pStack) {
-				return LootCategory.forItem(pStack) != LootCategory.NONE;
+				return !LootCategory.forItem(pStack).isNone();
 			}
 		});
 		this.addSlot(new SlotItemHandler(this.tile.inv, 0, 15, 45));
 		this.addSlot(new SlotItemHandler(this.tile.inv, 1, 35, 45));
 		this.addPlayerSlots(inv, 8, 84);
-		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && LootCategory.forItem(stack) != LootCategory.NONE, 0, 1);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && !LootCategory.forItem(stack).isNone(), 0, 1);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isRarityMat(stack), 1, 2);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 2, 3);
 		this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);

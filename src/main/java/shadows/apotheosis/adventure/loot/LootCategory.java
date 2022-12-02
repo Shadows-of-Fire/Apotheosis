@@ -96,6 +96,10 @@ public enum LootCategory {
 		return this.isWeapon() || this == BREAKER || this == TRIDENT;
 	}
 
+	public boolean isNone() {
+		return this == NONE;
+	}
+
 	private static class ShieldBreakerTest implements Predicate<ItemStack> {
 
 		@Override

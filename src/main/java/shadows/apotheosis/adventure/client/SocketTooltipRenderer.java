@@ -22,7 +22,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 public class SocketTooltipRenderer implements ClientTooltipComponent {
 

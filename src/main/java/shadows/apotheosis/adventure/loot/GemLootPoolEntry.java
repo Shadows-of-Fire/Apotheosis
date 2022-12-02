@@ -23,9 +23,9 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.affix.socket.Gem;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
-import shadows.apotheosis.adventure.affix.socket.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.placebo.json.ListenerCallback;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 

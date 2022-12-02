@@ -22,9 +22,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.adventure.affix.socket.Gem;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
-import shadows.apotheosis.adventure.affix.socket.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemCommand {

@@ -12,6 +12,8 @@ import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class SocketHelper {
@@ -35,6 +37,10 @@ public class SocketHelper {
 			}
 		}
 		return gems;
+	}
+
+	public static List<Gem> getActiveGems(ItemStack stack) {
+		return getGems(stack).stream().filter(i -> !i.isEmpty()).map(GemItem::getGem).toList();
 	}
 
 	public static void setGems(ItemStack stack, List<ItemStack> gems) {

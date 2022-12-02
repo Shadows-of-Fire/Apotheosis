@@ -89,8 +89,8 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingScreen;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import shadows.apotheosis.util.ItemAccess;
@@ -183,7 +183,7 @@ public class AdventureModuleClient {
 		int oldSize = list.size();
 		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
 			applyModifierTooltips(e.getEntity(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
-			Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
+			Collections.reverse(list.subList(rmvIdx, Math.min(rmvIdx, rmvIdx + list.size() - oldSize)));
 		}
 		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), Component.literal("APOTH_REMOVE_MARKER"));
 	}

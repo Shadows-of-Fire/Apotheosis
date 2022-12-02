@@ -30,8 +30,8 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 @JeiPlugin
 public class AdventureJEIPlugin implements IModPlugin {

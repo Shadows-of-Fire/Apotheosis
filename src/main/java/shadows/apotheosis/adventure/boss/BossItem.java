@@ -156,7 +156,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
 		for (EquipmentSlot t : EquipmentSlot.values()) {
 			ItemStack s = entity.getItemBySlot(t);
-			if (!s.isEmpty() && LootCategory.forItem(s) != LootCategory.NONE) {
+			if (!s.isEmpty() && !LootCategory.forItem(s).isNone()) {
 				anyValid = true;
 				break;
 			}

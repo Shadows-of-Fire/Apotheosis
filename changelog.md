@@ -1,3 +1,6 @@
+## 6.1.0
+* Config files have been updated to be more user-friendly.
+
 ## 6.0.2
 * Forward-Ported all changes from 5.7.6.
 

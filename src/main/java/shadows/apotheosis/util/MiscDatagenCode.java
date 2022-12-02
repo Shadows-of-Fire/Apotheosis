@@ -32,7 +32,7 @@ public class MiscDatagenCode {
 		Set<ResourceLocation> end = ImmutableSet.of(new ResourceLocation("the_end"));
 
 		BiConsumer<String, AffixLootEntry> writerFunc = (dim, entry) -> {
-			if (entry.getType() == LootCategory.NONE) return;
+			if (entry.getType().isNone()) return;
 			File file = new File(FMLPaths.GAMEDIR.get().toFile(), "datagen/" + dim + "/" + ForgeRegistries.ITEMS.getKey(entry.getStack().getItem()).getPath() + ".json");
 			file.getParentFile().mkdirs();
 			try (FileWriter writer = new FileWriter(file)) {

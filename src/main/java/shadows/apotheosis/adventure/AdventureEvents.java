@@ -60,7 +60,7 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixManager;
 import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
-import shadows.apotheosis.adventure.affix.socket.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
 import shadows.apotheosis.adventure.commands.GemCommand;
 import shadows.apotheosis.adventure.commands.LootifyCommand;
