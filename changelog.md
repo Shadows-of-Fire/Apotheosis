@@ -1,7 +1,9 @@
 ## 5.7.J
 * Special build for Journey 2 The Core.
 * Added GameStages support for Affix Items, Bosses, and Gems.
-* Added a mixin that is patching a bandaid in InControl.
+
+## 5.7.7
+* Fixed a crash that happened when resolving tooltips.
 
 ## 5.7.6
 * Fixed an issue where Loot Pinata was causing all dropped items to have extra NBT data.
