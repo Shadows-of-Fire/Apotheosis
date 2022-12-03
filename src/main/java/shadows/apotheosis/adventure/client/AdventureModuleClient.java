@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -164,28 +163,29 @@ public class AdventureModuleClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		ItemStack stack = e.getItemStack();
 		List<Component> list = e.getToolTip();
-		int rmvIdx = -1, rmvIdx2 = -1;
+		int fstMarkIdx = -1, secMarkIdx = -1;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i) instanceof TextComponent tc) {
 				if (tc.getText().equals("APOTH_REMOVE_MARKER")) {
-					rmvIdx = i;
+					fstMarkIdx = i;
 				}
 				if (tc.getText().equals("APOTH_REMOVE_MARKER_2")) {
-					rmvIdx2 = i;
+					secMarkIdx = i;
 					break;
 				}
 			}
 		}
-		if (rmvIdx == -1 || rmvIdx2 == -1) return;
-		list.removeAll(list.subList(rmvIdx, rmvIdx2 + 1));
-		int flags = getHideFlags(stack);
-		int fRmvIdx = rmvIdx;
-		int oldSize = list.size();
-		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
-			applyModifierTooltips(e.getPlayer(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
-			Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
+		if (fstMarkIdx == -1 || secMarkIdx == -1) return;
+		var it = list.listIterator(fstMarkIdx);
+		for (int i = fstMarkIdx; i < secMarkIdx + 1; i++) {
+			it.next();
+			it.remove();
 		}
-		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), new TextComponent("APOTH_REMOVE_MARKER"));
+		int flags = getHideFlags(stack);
+		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
+			applyModifierTooltips(e.getPlayer(), stack, it::add);
+		}
+		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) it.add(new TextComponent("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent

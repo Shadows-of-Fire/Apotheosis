@@ -1,3 +1,6 @@
+## 5.7.7
+* Fixed a crash that happened when resolving tooltips.
+
 ## 5.7.6
 * Fixed an issue where Loot Pinata was causing all dropped items to have extra NBT data.
 * WeiAL: Updated Chinese translation.
