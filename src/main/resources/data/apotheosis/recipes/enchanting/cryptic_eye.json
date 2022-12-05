@@ -1,0 +1,31 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [
+		{
+			"type": "apotheosis:module",
+			"module": "enchantment"
+		},
+		{
+			"type": "forge:mod_loaded",
+			"modid": "endrem"
+		}
+	],
+	"input": {
+		"item": "minecraft:ender_eye"
+	},
+	"requirements": {
+		"eterna": 30,
+		"quanta": 100,
+		"arcana": 100
+	},
+	"max_requirements": {
+		"eterna": -1,
+		"quanta": -1,
+		"arcana": -1
+	},
+	"display_level": 3,
+	"result": {
+		"item": "endrem:cryptic_eye",
+		"count": 1
+	}
+}
