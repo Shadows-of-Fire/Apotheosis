@@ -144,7 +144,7 @@ public class AdventureConfig {
 			}
 		}
 
-		String[] convertRarities = c.getStringList("Affix Convert Rarities", "affixes", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimenaional rarities for affix conversion (see \"Affix Convert Loot Rules\"), in the form of dimension|min|max. A dimension not listed uses all rarities.");
+		String[] convertRarities = c.getStringList("Affix Convert Rarities", "affixes", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimensional rarities for affix conversion (see \"Affix Convert Loot Rules\"), in the form of dimension|min|max. A dimension not listed uses all rarities.");
 		AFFIX_CONVERT_RARITIES.clear();
 		for (String s : convertRarities) {
 			try {
