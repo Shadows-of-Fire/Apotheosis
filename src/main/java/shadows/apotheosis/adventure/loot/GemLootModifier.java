@@ -30,7 +30,7 @@ public class GemLootModifier extends LootModifier {
 			if (m.matches(context.getQueriedLootTableId())) {
 				if (context.getRandom().nextFloat() <= m.chance()) {
 					float luck = context.getLuck();
-					ItemStack gem = GemManager.getRandomGemStack(context.getRandom(), luck, IDimensional.matches(context.getLevel()));
+					ItemStack gem = GemManager.createRandomGemStack(context.getRandom(), null, luck, IDimensional.matches(context.getLevel()));
 					generatedLoot.add(gem);
 				}
 				break;

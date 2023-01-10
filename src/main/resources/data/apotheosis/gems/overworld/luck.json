@@ -1,0 +1,30 @@
+{
+	"type": "apotheosis:stat",
+	"variant": "splendor",
+	"weight": 5,
+	"quality": 0.75,
+	"dimensions": [
+		"minecraft:overworld"
+	],
+	"min_rarity": "common",
+	"max_rarity": "rare",
+	"attribute": "minecraft:generic.luck",
+	"operation": "ADDITION",
+	"values": {
+		"common": {
+			"min": 0.2,
+			"steps": 2,
+			"step": 0.1
+		},
+		"uncommon": {
+			"min": 0.3,
+			"steps": 4,
+			"step": 0.1
+		},
+		"rare": {
+			"min": 0.4,
+			"steps": 6,
+			"step": 0.1
+		}
+	}
+}

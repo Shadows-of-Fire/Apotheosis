@@ -1,0 +1,4 @@
+{
+	"type": "apotheosis:legacy",
+	"_comment": "The legacy gem is an internal-only gem used for backwards compatibility. Do not edit or remove this file."
+}

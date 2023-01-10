@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -164,28 +163,29 @@ public class AdventureModuleClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		ItemStack stack = e.getItemStack();
 		List<Component> list = e.getToolTip();
-		int rmvIdx = -1, rmvIdx2 = -1;
+		int markIdx1 = -1, markIdx2 = -1;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getContents() instanceof LiteralContents tc) {
 				if (tc.text().equals("APOTH_REMOVE_MARKER")) {
-					rmvIdx = i;
+					markIdx1 = i;
 				}
 				if (tc.text().equals("APOTH_REMOVE_MARKER_2")) {
-					rmvIdx2 = i;
+					markIdx2 = i;
 					break;
 				}
 			}
 		}
-		if (rmvIdx == -1 || rmvIdx2 == -1) return;
-		list.removeAll(list.subList(rmvIdx, rmvIdx2 + 1));
-		int flags = getHideFlags(stack);
-		int fRmvIdx = rmvIdx;
-		int oldSize = list.size();
-		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
-			applyModifierTooltips(e.getEntity(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
-			Collections.reverse(list.subList(rmvIdx, Math.min(rmvIdx, rmvIdx + list.size() - oldSize)));
+		if (markIdx1 == -1 || markIdx2 == -1) return;
+		var it = list.listIterator(markIdx1);
+		for (int i = markIdx1; i < markIdx2 + 1; i++) {
+			it.next();
+			it.remove();
 		}
-		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), Component.literal("APOTH_REMOVE_MARKER"));
+		int flags = getHideFlags(stack);
+		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
+			applyModifierTooltips(e.getEntity(), stack, it::add);
+		}
+		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) it.add(Component.literal("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent
@@ -270,8 +270,7 @@ public class AdventureModuleClient {
 		Set<UUID> skips = new HashSet<>();
 		if (sockets > 0) {
 			for (ItemStack gem : SocketHelper.getGems(stack, sockets)) {
-				var modif = GemItem.getStoredBonus(gem);
-				if (modif != null) skips.add(modif.getValue().getId());
+				skips.addAll(GemItem.getUUIDs(gem));
 			}
 		}
 
@@ -377,7 +376,7 @@ public class AdventureModuleClient {
 					for (int i = 0; i < 3; i++) {
 						if (sums[i] == 0) continue;
 						String key = "attribute.modifier." + (sums[i] < 0 ? "take." : "plus.") + i;
-						if (i != 0) key = "attribute.modifier.apotheosis" + (sums[i] < 0 ? "take." : "plus.") + i;
+						if (i != 0) key = "attribute.modifier.apotheosis." + (sums[i] < 0 ? "take." : "plus.") + i;
 						Style style;
 						if (merged[i]) style = sums[i] < 0 ? Style.EMPTY.withColor(TextColor.fromRgb(0xF93131)) : Style.EMPTY.withColor(TextColor.fromRgb(0x7A7AF9));
 						else style = sums[i] < 0 ? Style.EMPTY.withColor(ChatFormatting.RED) : Style.EMPTY.withColor(ChatFormatting.BLUE);

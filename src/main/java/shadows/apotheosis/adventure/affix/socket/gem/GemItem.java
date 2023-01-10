@@ -1,19 +1,21 @@
 package shadows.apotheosis.adventure.affix.socket.gem;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -23,14 +25,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
-import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apoth.Gems;
+import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem.GemVariant;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.AttributeHelper;
 
 public class GemItem extends Item {
 
-	public static final String MODIFIER = "modifier";
+	public static final String UUID_ARRAY = "uuids";
+	public static final String GEM = "gem";
 
 	public GemItem(Properties pProperties) {
 		super(pProperties);
@@ -38,85 +42,138 @@ public class GemItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
-		var bonus = getStoredBonus(pStack);
-		if (bonus == null) {
+		Gem gem = getGemOrLegacy(pStack);
+		if (gem == null) {
 			tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
 			return;
 		}
-
-		float purity = getPurity(pStack);
-		if (purity != 0) {
-			Component purityText = Component.literal(ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((int) (purity * 100)) + "%");//.withStyle(Style.EMPTY.withColor(getPurityColor(purity)));
-			tooltip.add(Component.translatable("text.apotheosis.purity", purityText).withStyle(Style.EMPTY.withColor(0xAEA2D6)));
-		}
-		tooltip.add(CommonComponents.EMPTY);
-		tooltip.add(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
-		tooltip.add(toComponent(bonus.getKey(), bonus.getValue()));
+		int facets = getFacets(pStack);
+		gem.addInformation(pStack, getLootRarity(pStack), facets, tooltip::add);
 	}
 
 	@Override
 	public Component getName(ItemStack pStack) {
-		float purity = getPurity(pStack);
-		if (purity == 0) return super.getName(pStack);
-		return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(getPurityColor(purity)));
-	}
-
-	private static TextColor getPurityColor(float purity) {
-		if (purity <= 0.20) return LootRarity.COMMON.color();
-		else if (purity <= 0.40) return LootRarity.UNCOMMON.color();
-		else if (purity <= 0.60) return LootRarity.RARE.color();
-		else if (purity <= 0.80) return LootRarity.EPIC.color();
-		else if (purity <= 1) return LootRarity.MYTHIC.color();
-		return LootRarity.ANCIENT.color();
+		Gem gem = getGem(pStack);
+		LootRarity rarity = getLootRarity(pStack);
+		if (gem == null || rarity == null) return super.getName(pStack);
+		MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
+		int facets = GemItem.getFacets(pStack);
+		if (facets > 0 && facets == gem.getMaxFacets(pStack, rarity)) {
+			comp = Component.translatable("item.apotheosis.gem.flawless", comp);
+		} else if (facets == 0 && gem != Gems.LEGACY.get()) {
+			comp = Component.translatable("item.apotheosis.gem.cracked", comp);
+		}
+		return comp.withStyle(Style.EMPTY.withColor(rarity.color()));
 	}
 
 	@Override
 	public String getDescriptionId(ItemStack pStack) {
 		int variant = getVariant(pStack);
-		return super.getDescriptionId(pStack) + "." + variant;
+		if (variant >= GemVariant.BY_ID.size()) return super.getDescriptionId(pStack);
+		return super.getDescriptionId(pStack) + "." + GemVariant.values()[variant].key();
 	}
 
+	@Override
+	public boolean isFoil(ItemStack pStack) {
+		Gem gem = getGem(pStack);
+		LootRarity rarity = getLootRarity(pStack);
+		if (gem == null || rarity == null) return super.isFoil(pStack);
+		int facets = GemItem.getFacets(pStack);
+		return facets > 0 && facets == gem.getMaxFacets(pStack, rarity);
+	}
+
+	/**
+	 * Retrieves the attribute modifier UUID(s) from a gem itemstack.
+	 * @param gem The gem stack
+	 * @returns The stored UUID(s), creating them if they do not exist.
+	 */
+	public static List<UUID> getUUIDs(ItemStack gemStack) {
+		Gem gem = getGem(gemStack);
+		if (gem == null) return Collections.emptyList();
+		CompoundTag tag = gemStack.getOrCreateTag();
+		if (tag.contains(UUID_ARRAY)) {
+			ListTag list = tag.getList(UUID_ARRAY, Tag.TAG_INT_ARRAY);
+			List<UUID> ret = new ArrayList<>(list.size());
+			for (Tag t : list) {
+				ret.add(NbtUtils.loadUUID(t));
+			}
+			if (ret.size() <= gem.getNumberOfUUIDs()) return generateAndSave(ret, gem.getNumberOfUUIDs(), gemStack);
+			return ret;
+		}
+		return generateAndSave(new ArrayList<>(gem.getNumberOfUUIDs()), gem.getNumberOfUUIDs(), gemStack);
+	}
+
+	private static List<UUID> generateAndSave(List<UUID> base, int amount, ItemStack gemStack) {
+		int needed = amount - base.size();
+		for (int i = 0; i < needed; i++) {
+			base.add(UUID.randomUUID());
+		}
+		ListTag list = new ListTag();
+		for (UUID id : base) {
+			list.add(NbtUtils.createUUID(id));
+		}
+		gemStack.getOrCreateTag().put(UUID_ARRAY, list);
+		return base;
+	}
+
+	/**
+	 * Sets the ID of the gem stored in this gem stack.
+	 * @param gemStack The gem stack
+	 * @param gem The Gem to store
+	 */
+	public static void setGem(ItemStack gemStack, Gem gem) {
+		gemStack.getOrCreateTag().putString(GEM, gem.getId().toString());
+	}
+
+	/**
+	 * Retrieves the underlying Gem instance of this gem stack.
+	 * @param gem The gem stack
+	 * @returns The backing Gem, or null if the gem does not exist or is invalid.
+	 */
 	@Nullable
-	public static Pair<Attribute, AttributeModifier> getStoredBonus(ItemStack stack) {
-		CompoundTag tag = stack.getTagElement(MODIFIER);
-		if (tag == null) return null;
-		Attribute attrib = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(tag.getString("attribute")));
-		if (attrib == null) return null;
-		AttributeModifier modif = AttributeModifier.load(tag);
-		if (modif == null) return null;
-		return Pair.of(attrib, modif);
+	public static Gem getGem(ItemStack gem) {
+		if (gem.isEmpty()) return null;
+		var tag = gem.getOrCreateTag();
+		if (tag.contains(GEM)) return GemManager.INSTANCE.getValue(new ResourceLocation(tag.getString(GEM)));
+		return null;
 	}
 
-	public static void setStoredBonus(ItemStack stack, Attribute attrib, AttributeModifier modif) {
-		CompoundTag tag = modif.save();
-		tag.putString("attribute", ForgeRegistries.ATTRIBUTES.getKey(attrib).toString());
-		stack.getOrCreateTag().put(MODIFIER, tag);
+	/**
+	 * Retrieves the underlying Gem instance of this gem stack.
+	 * @param gem The gem stack
+	 * @returns The backing Gem instance, or the Legacy gem is no Gem NBT is specified.  Returns null if the gem nbt is specified but is invalid.
+	 */
+	@Nullable
+	public static Gem getGemOrLegacy(ItemStack gem) {
+		if (gem.isEmpty()) return null;
+		var tag = gem.getOrCreateTag();
+		if (tag.contains(GEM)) return GemManager.INSTANCE.getValue(new ResourceLocation(tag.getString(GEM)));
+		return Gems.LEGACY.get();
 	}
 
-	public static void setVariant(ItemStack stack, int variant) {
-		stack.getOrCreateTag().putInt("variant", variant);
+	public static void setVariant(ItemStack stack, GemVariant variant) {
+		stack.getOrCreateTag().putInt("variant", variant.id());
 	}
 
 	public static int getVariant(ItemStack stack) {
 		return stack.hasTag() ? stack.getTag().getInt("variant") : 0;
 	}
 
-	public static void setPurity(ItemStack stack, float purity) {
-		stack.getOrCreateTag().putFloat("purity", purity);
+	public static void setFacets(ItemStack stack, int facets) {
+		stack.getOrCreateTag().putInt("facets", facets);
 	}
 
-	public static float getPurity(ItemStack stack) {
-		return stack.hasTag() ? stack.getTag().getFloat("purity") : 0;
+	public static int getFacets(ItemStack stack) {
+		return stack.hasTag() ? stack.getTag().getInt("facets") : 0;
 	}
 
-	public static ItemStack fromGem(Gem gem, RandomSource rand) {
-		ItemStack stack = new ItemStack(Apoth.Items.GEM.get());
-		setVariant(stack, gem.getVariant());
-		float level = rand.nextFloat();
-		float purity = gem.value.get(level) / gem.value.get(1);
-		setStoredBonus(stack, gem.attribute, new AttributeModifier("GemBonus_" + gem.getId(), gem.value.get(level), gem.operation));
-		setPurity(stack, purity);
-		return stack;
+	public static void setLootRarity(ItemStack stack, LootRarity rarity) {
+		stack.getOrCreateTag().putString(AffixHelper.RARITY, rarity.id());
+	}
+
+	@Nullable
+	public static LootRarity getLootRarity(ItemStack stack) {
+		return LootRarity.COMMON.max(AffixHelper.getRarity(stack.getTag()));
 	}
 
 	@Override

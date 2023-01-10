@@ -31,7 +31,6 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
-import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 @JeiPlugin
 public class AdventureJEIPlugin implements IModPlugin {
@@ -44,10 +43,11 @@ public class AdventureJEIPlugin implements IModPlugin {
 	}
 
 	@Override
+	@SuppressWarnings("removal")
 	public void registerRecipes(IRecipeRegistration reg) {
-		if(!Apotheosis.enableAdventure) return;
+		if (!Apotheosis.enableAdventure) return;
 		ItemStack gem = new ItemStack(Apoth.Items.GEM.get());
-		GemItem.setStoredBonus(gem, Attributes.LUCK, new AttributeModifier("debug", 9999, Operation.ADDITION));
+		shadows.apotheosis.adventure.affix.socket.gem.LegacyGem.setStoredBonus(gem, Attributes.LUCK, new AttributeModifier("debug", 9999, Operation.ADDITION));
 		reg.addIngredientInfo(gem, VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.socketing"));
 
 		reg.addIngredientInfo(new ItemStack(Apoth.Items.GEM_DUST.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_crushing"));
@@ -60,7 +60,7 @@ public class AdventureJEIPlugin implements IModPlugin {
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration reg) {
-		if(!Apotheosis.enableAdventure) return;
+		if (!Apotheosis.enableAdventure) return;
 		reg.addRecipeCategories(new ApothSmithingCategory(reg.getJeiHelpers().getGuiHelper()));
 	}
 

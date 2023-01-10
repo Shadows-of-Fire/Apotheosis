@@ -1,15 +1,25 @@
 package shadows.apotheosis.adventure.affix.socket.gem;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
@@ -28,6 +38,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -35,56 +46,115 @@ import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
-public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional {
+public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped {
 
-	protected final int variant;
+	protected final GemVariant variant;
 	protected final int weight;
 	protected final float quality;
 	protected final Set<ResourceLocation> dimensions;
 	protected final Set<LootCategory> types;
+	protected final Set<EquipmentSlot> armorTypes;
+	@Nullable
+	protected LootRarity minRarity;
+	@Nullable
+	protected LootRarity maxRarity;
 
-	public Gem(int variant, int weight, float quality, Set<ResourceLocation> dimensions, Set<LootCategory> types) {
-		this.variant = variant;
-		this.weight = weight;
-		this.quality = quality;
-		this.dimensions = dimensions;
-		this.types = types;
+	public Gem(GemStub stub) {
+		this.variant = stub.variant;
+		this.weight = stub.weight;
+		this.quality = stub.quality;
+		this.dimensions = stub.dimensions;
+		this.types = stub.types;
+		this.armorTypes = stub.armorTypes;
+		this.minRarity = stub.minRarity;
+		this.maxRarity = stub.maxRarity;
 	}
 
-	public int getVariant() {
+	public GemVariant getVariant() {
 		return this.variant;
 	}
 
 	/**
-	 * Retrieve the modifiers from this affix to be applied to the itemstack.
-	 * @param stack The stack the affix is on.
-	 * @param level The level of this affix.
-	 * @param type The slot type for modifiers being gathered.
-	 * @param map The destination for generated attribute modifiers.
+	 * Returns the number of UUIDs that need to be generated for this Gem to operate properly.<br>
+	 * This should be equal to the maximum amount of attribute modifiers that need to be generated for proper usage.
 	 */
-	public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
+	public int getNumberOfUUIDs() {
+		return 1;
+	}
+
+	@Override
+	public LootRarity getMaxRarity() {
+		return this.maxRarity;
+	}
+
+	@Override
+	public LootRarity getMinRarity() {
+		return this.minRarity;
 	}
 
 	/**
-	 * Adds all tooltip data from this affix to the given stack's tooltip list.
-	 * This consumer will insert tooltips immediately after enchantment tooltips, or after the name if none are present.
-	 * @param stack The stack the affix is on.
-	 * @param level The level of this affix.
+	 * Retrieve the modifiers from this affix to be applied to the itemstack.
+	 * @param stack  The stack the affix is on.
+	 * @param purity The purity of this gem.
+	 * @param type   The slot type for modifiers being gathered.
+	 * @param map    The destination for generated attribute modifiers.
+	 */
+	public void addModifiers(ItemStack stack, LootRarity rarity, int facets, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map, ItemStack gem) {
+	}
+
+	/**
+	 * Adds all tooltip data from this gem to the gem stack.
+	 * @param gem      The gem stack.
+	 * @param purity   The purity of this gem.
 	 * @param tooltips The destination for tooltips.
 	 */
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-
+	public void addInformation(ItemStack gem, LootRarity rarity, int facets, Consumer<Component> list) {
+		list.accept(Component.translatable("text.apotheosis.facets", 4 + facets).withStyle(Style.EMPTY.withColor(0xAEA2D6)));
+		list.accept(CommonComponents.EMPTY);
+		Style style = Style.EMPTY.withColor(0x0AFF0A);
+		list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
+		if (types != null && !types.isEmpty()) {
+			for (LootCategory l : this.types) {
+				if (l == LootCategory.ARMOR && !this.armorTypes.isEmpty()) {
+					for (EquipmentSlot s : this.armorTypes) {
+						list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.category." + s.getName() + ".plural")).withStyle(style));
+					}
+				} else {
+					list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable(l.getDescIdPlural())).withStyle(style));
+				}
+			}
+		} else {
+			list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
+		}
+		list.accept(CommonComponents.EMPTY);
+		list.accept(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
+		list.accept(this.getSocketBonusTooltip(gem, rarity, facets));
 	}
+
+	/**
+	 * Adds the one-line socket bonus tooltip.  This will automatically be called in the correct place.<br>
+	 * If you want to override the entire tooltip as shown on the gem item, override {@link Gem#addInformation} 
+	 * @param gem      The gem stack.
+	 * @param purity   The purity of this gem.
+	 * @param tooltips The destination for tooltips.
+	 */
+	public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets);
+
+	/**
+	 * Returns the max number of facets available for this gem.<br>
+	 * Facets are a user-facing wrapper on the purity (level), because most gems do not change on specify purity percentages.
+	 */
+	public abstract int getMaxFacets(ItemStack gem, LootRarity rarity);
 
 	/**
 	 * Calculates the protection value of this affix, with respect to the given damage source.<br>
 	 * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
 	 * Ench module overrides with {@link EnchHooks#getDamageAfterMagicAbsorb}<br>
-	 * @param level The level of this affix, if applicable.<br>
+	 * @param purity The purity of this gem. if applicable.<br>
 	 * @param source The damage source to compare against.<br>
 	 * @return How many protection points this affix is worth against this source.<br>
 	 */
-	public int getDamageProtection(ItemStack stack, LootRarity rarity, float level, DamageSource source) {
+	public int getDamageProtection(ItemStack stack, LootRarity rarity, int facets, DamageSource source, ItemStack gem) {
 		return 0;
 	}
 
@@ -92,31 +162,31 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * Calculates the additional damage this affix deals.
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
-	public float getDamageBonus(ItemStack stack, LootRarity rarity, float level, MobType creatureType) {
+	public float getDamageBonus(ItemStack stack, LootRarity rarity, int facets, MobType creatureType, ItemStack gem) {
 		return 0.0F;
 	}
 
 	/**
 	 * Called when someone attacks an entity with an item containing this affix.
 	 * More specifically, this is invoked whenever the user attacks a target, while having an item with this affix in either hand or any armor slot.
-	 * @param user The wielder of the weapon.  The weapon stack will be in their main hand.
+	 * @param user   The wielder of the weapon.  The weapon stack will be in their main hand.
 	 * @param target The target entity being attacked.
-	 * @param level The level of this affix, if applicable.
+	 * @param purity The purity of this gem. if applicable.
 	 */
-	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity target) {
+	public void doPostAttack(ItemStack stack, LootRarity rarity, int facets, LivingEntity user, @Nullable Entity target, ItemStack gem) {
 	}
 
 	/**
 	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
 	 * called.
 	 */
-	public void doPostHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity attacker) {
+	public void doPostHurt(ItemStack stack, LootRarity rarity, int facets, LivingEntity user, @Nullable Entity attacker, ItemStack gem) {
 	}
 
 	/**
 	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
 	 */
-	public void onArrowFired(ItemStack stack, LootRarity rarity, float level, LivingEntity user, AbstractArrow arrow) {
+	public void onArrowFired(ItemStack stack, LootRarity rarity, int facets, LivingEntity user, AbstractArrow arrow, ItemStack gem) {
 	}
 
 	/**
@@ -124,14 +194,14 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * Return null to not impact the original result type.
 	 */
 	@Nullable
-	public InteractionResult onItemUse(ItemStack stack, LootRarity rarity, float level, UseOnContext ctx) {
+	public InteractionResult onItemUse(ItemStack stack, LootRarity rarity, int facets, UseOnContext ctx, ItemStack gem) {
 		return null;
 	}
 
 	/**
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
-	public void onArrowImpact(LootRarity rarity, float level, AbstractArrow arrow, HitResult res, HitResult.Type type) {
+	public void onArrowImpact(LootRarity rarity, int facets, AbstractArrow arrow, HitResult res, HitResult.Type type, ItemStack gem) {
 	}
 
 	/**
@@ -139,10 +209,10 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param entity The blocking entity.
 	 * @param source The damage source being blocked.
 	 * @param amount The amount of damage blocked.
-	 * @param level  The level of this affix.
+	 * @param purity The purity of this gem.
 	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
 	 */
-	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
+	public float onShieldBlock(ItemStack stack, LootRarity rarity, int facets, LivingEntity entity, DamageSource source, float amount, ItemStack gem) {
 		return amount;
 	}
 
@@ -153,7 +223,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param pos    The position of the block.
 	 * @param state  The state that was broken.
 	 */
-	public void onBlockBreak(ItemStack stack, LootRarity rarity, float level, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+	public void onBlockBreak(ItemStack stack, LootRarity rarity, int facets, Player player, LevelAccessor world, BlockPos pos, BlockState state, ItemStack gem) {
 
 	}
 
@@ -162,17 +232,13 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		return String.format("Gem: %s", this.getId());
 	}
 
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return this.types.isEmpty() || this.types.contains(LootCategory.forItem(stack));
-	}
-
-	public static MutableComponent loreComponent(String text, Object... args) {
-		return Component.translatable(text, args).withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_PURPLE);
+	public boolean canApplyTo(ItemStack stack, LootRarity rarity, ItemStack gem) {
+		LootCategory cat = LootCategory.forItem(stack);
+		return this.types.isEmpty() || this.types.contains(cat) && (cat != LootCategory.ARMOR || this.armorTypes.isEmpty() || this.armorTypes.contains(cat.getSlots(stack)[0]));
 	}
 
 	public static String fmt(float f) {
-		if (f == (long) f) return String.format("%d", (long) f);
-		else return ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(f);
+		return Affix.fmt(f);
 	}
 
 	@Override
@@ -198,5 +264,100 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	@Override
 	public Set<ResourceLocation> getDimensions() {
 		return this.dimensions;
+	}
+
+	/**
+	 * Bouncer class holding all the base gem data.
+	 * Useful for automatic de/serialization.
+	 * I would make it a record, but GSON has the big stupid.
+	 */
+	public static class GemStub {
+		protected GemVariant variant;
+		protected int weight;
+		protected float quality;
+		protected Set<ResourceLocation> dimensions = Collections.emptySet();
+		protected Set<LootCategory> types = Collections.emptySet();
+		@SerializedName("armor_types")
+		protected Set<EquipmentSlot> armorTypes = Collections.emptySet();
+		@Nullable
+		@SerializedName("min_rarity")
+		protected LootRarity minRarity;
+		@Nullable
+		@SerializedName("max_rarity")
+		protected LootRarity maxRarity;
+
+		public static void write(FriendlyByteBuf buf, Gem gem) {
+			buf.writeEnum(gem.variant);
+			buf.writeShort(gem.weight);
+			buf.writeFloat(gem.quality);
+			// Dimensions do not need to be synced
+			buf.writeByte(gem.types.size());
+			gem.types.forEach(c -> buf.writeEnum(c));
+			buf.writeByte(gem.armorTypes.size());
+			gem.armorTypes.forEach(c -> buf.writeEnum(c));
+			// Min/Max rarities also do not need to be synced, they're only used at generation time which is SS-only.
+		}
+
+		public static GemStub read(FriendlyByteBuf buf) {
+			GemStub stub = new GemStub();
+			stub.variant = buf.readEnum(GemVariant.class);
+			stub.weight = buf.readShort();
+			stub.quality = buf.readFloat();
+			stub.dimensions = Collections.emptySet();
+			int size = buf.readByte();
+			stub.types = new HashSet<>(size);
+			for (int i = 0; i < size; i++) {
+				stub.types.add(buf.readEnum(LootCategory.class));
+			}
+			size = buf.readByte();
+			stub.armorTypes = new HashSet<>(size);
+			for (int i = 0; i < size; i++) {
+				stub.armorTypes.add(buf.readEnum(EquipmentSlot.class));
+			}
+			return stub;
+		}
+	}
+
+	public static enum GemVariant {
+		@SerializedName("parity")
+		PARITY("parity", 0),
+		@SerializedName("arcane")
+		ARCANE("arcane", 1),
+		@SerializedName("splendor")
+		SPLENDOR("splendor", 2),
+		@SerializedName("breach")
+		BREACH("breach", 3),
+		@SerializedName("guardian")
+		GUARDIAN("guardian", 4),
+		@SerializedName("chaotic")
+		CHAOTIC("chaotic", 5),
+		@SerializedName("necrotic")
+		NECROTIC("necrotic", 6),
+		@SerializedName("mirror")
+		MIRROR("mirror", 7),
+		@SerializedName("geometric")
+		GEOMETRIC("geometric", 8),
+		@SerializedName("valence")
+		VALENCE("valence", 9),
+		@SerializedName("endersurge")
+		ENDERSURGE("endersurge", 10);
+
+		public static final Map<String, GemVariant> BY_ID = Arrays.stream(GemVariant.values()).collect(Collectors.toMap(GemVariant::key, Function.identity()));
+
+		private final String key;
+		private final int id;
+
+		private GemVariant(String key, int id) {
+			this.key = key;
+			this.id = id;
+		}
+
+		public String key() {
+			return this.key;
+		}
+
+		public int id() {
+			return this.id;
+		}
 	}
 }

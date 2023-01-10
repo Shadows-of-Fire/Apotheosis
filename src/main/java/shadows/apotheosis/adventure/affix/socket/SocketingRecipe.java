@@ -13,8 +13,9 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 public class SocketingRecipe extends ApothUpgradeRecipe {
 
@@ -29,7 +30,9 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 	 */
 	@Override
 	public boolean matches(Container pInv, Level pLevel) {
-		return SocketHelper.getEmptySockets(pInv.getItem(0)) > 0 && pInv.getItem(1).getItem() == Apoth.Items.GEM.get();
+		ItemStack gemStack = pInv.getItem(1);
+		Gem gem = GemItem.getGemOrLegacy(gemStack);
+		return SocketHelper.getEmptySockets(pInv.getItem(0)) > 0 && gem != null && gem.canApplyTo(pInv.getItem(0), GemItem.getLootRarity(gemStack), gemStack);
 	}
 
 	/**

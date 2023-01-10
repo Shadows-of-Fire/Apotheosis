@@ -14,6 +14,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -23,7 +24,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
-import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
@@ -35,11 +35,12 @@ public class GemCommand {
 
 	public static final SuggestionProvider<CommandSourceStack> SUGGEST_GEM = (ctx, builder) -> SharedSuggestionProvider.suggest(GemManager.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
 
+	@SuppressWarnings("removal")
 	public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
 		root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {
 			Gem gem = GemManager.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));
 			Player p = c.getSource().getPlayerOrException();
-			ItemStack stack = GemItem.fromGem(gem, p.random);
+			ItemStack stack = GemManager.createGemStack(gem, p.random, null, p.getLuck());
 			p.addItem(stack);
 			return 0;
 		}))).then(Commands.literal("custom").then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(SUGGEST_ATTRIB).then(Commands.argument("op", StringArgumentType.word()).suggests(SUGGEST_OP).then(Commands.argument("value", FloatArgumentType.floatArg()).then(Commands.argument("variant", IntegerArgumentType.integer(0, 11)).executes(c -> {
@@ -51,12 +52,13 @@ public class GemCommand {
 			Operation op = Operation.valueOf(c.getArgument("op", String.class).toUpperCase(Locale.ROOT));
 			float value = c.getArgument("value", Float.class);
 			var modif = new AttributeModifier("cmd-generated-modif", value, op);
-			GemItem.setStoredBonus(gem, attrib, modif);
+			shadows.apotheosis.adventure.affix.socket.gem.LegacyGem.setStoredBonus(gem, attrib, modif);
 			p.addItem(gem);
+			c.getSource().sendSystemMessage(Component.literal("Custom Gems will be removed in a future release."));
 			return 0;
 		})))))).then(Commands.literal("random").executes(c -> {
 			Player p = c.getSource().getPlayerOrException();
-			ItemStack gem = GemManager.getRandomGemStack(p.random, p.getLuck(), IDimensional.matches(p.level));
+			ItemStack gem = GemManager.createRandomGemStack(p.random, null, p.getLuck(), IDimensional.matches(p.level));
 			p.addItem(gem);
 			return 0;
 		})));

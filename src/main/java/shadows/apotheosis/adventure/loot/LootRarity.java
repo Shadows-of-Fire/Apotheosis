@@ -56,7 +56,7 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 1),
 			new LootRule(AffixType.STAT, 0.45F, new LootRule(AffixType.ABILITY, 0.25F)),
-			new LootRule(AffixType.SOCKET, 0.2F)
+			new LootRule(AffixType.SOCKET, 0.45F)
 	));
 
 	public static final LootRarity RARE = new LootRarity(150, "rare", 0x5555FF, ImmutableList.of(
@@ -65,7 +65,8 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 			new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.25F)),
 			new LootRule(AffixType.ABILITY, 1),
 			new LootRule(AffixType.ABILITY, 0.33F),
-			new LootRule(AffixType.SOCKET, 0.33F),
+			new LootRule(AffixType.SOCKET, 0.65F),
+			new LootRule(AffixType.SOCKET, 0.45F),
 			new LootRule(AffixType.DURABILITY, 0.1F)
 	));
 
@@ -76,8 +77,9 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 			new LootRule(AffixType.STAT, 0.5F, new LootRule(AffixType.ABILITY, 0.33F)),
 			new LootRule(AffixType.ABILITY, 1),
 			new LootRule(AffixType.ABILITY, 0.65F),
-			new LootRule(AffixType.SOCKET, 0.5F),
-			new LootRule(AffixType.SOCKET, 0.33F),
+			new LootRule(AffixType.SOCKET, 0.85F),
+			new LootRule(AffixType.SOCKET, 0.65F),
+			new LootRule(AffixType.SOCKET, 0.45F),
 			new LootRule(AffixType.DURABILITY, 0.3F)
 	));
 
@@ -89,9 +91,9 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 			new LootRule(AffixType.ABILITY, 1),
 			new LootRule(AffixType.ABILITY, 1),
 			new LootRule(AffixType.ABILITY, 0.3F),
-			new LootRule(AffixType.SOCKET, 0.5F),
-			new LootRule(AffixType.SOCKET, 0.45F),
-			new LootRule(AffixType.SOCKET, 0.4F),
+			new LootRule(AffixType.SOCKET, 1F),
+			new LootRule(AffixType.SOCKET, 0.85F),
+			new LootRule(AffixType.SOCKET, 0.65F),
 			new LootRule(AffixType.DURABILITY, 0.5F)
 	));
 	//Formatter::on
@@ -149,7 +151,7 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	 * @param upperBound The maximum valid rarity
 	 * @return This, if this is within the bounds, or the min or max if it exceeded that bound.
 	 */
-	public LootRarity clamp(LootRarity lowerBound, LootRarity upperBound) {
+	public LootRarity clamp(@Nullable LootRarity lowerBound, @Nullable LootRarity upperBound) {
 		return this.min(upperBound).max(lowerBound);
 	}
 

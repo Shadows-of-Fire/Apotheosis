@@ -1,0 +1,33 @@
+{
+	"type": "apotheosis:stat",
+	"variant": "chaotic",
+	"weight": 10,
+	"quality": 0.4,
+	"dimensions": [
+		"minecraft:overworld"
+	],
+	"types": [
+		"SWORD", "TRIDENT", "HEAVY_WEAPON"
+	],
+	"min_rarity": "common",
+	"max_rarity": "rare",
+	"attribute": "minecraft:generic.attack_speed",
+	"operation": "MULTIPLY_TOTAL",
+	"values": {
+		"common": {
+			"min": 0.05,
+			"steps": 3,
+			"step": 0.025
+		},
+		"uncommon": {
+			"min": 0.1,
+			"steps": 4,
+			"step": 0.025
+		},
+		"rare": {
+			"min": 0.15,
+			"steps": 5,
+			"step": 0.025
+		}
+	}
+}

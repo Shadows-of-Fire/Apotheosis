@@ -24,7 +24,6 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
-import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.placebo.json.ListenerCallback;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
@@ -58,7 +57,7 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 			gem = GemManager.INSTANCE.getRandomItem(ctx.getRandom(), ctx.getLuck(), IDimensional.matches(ctx.getLevel()));
 		}
 
-		ItemStack stack = GemItem.fromGem(gem, ctx.getRandom());
+		ItemStack stack = GemManager.createGemStack(gem, ctx.getRandom(), null, ctx.getLuck());
 		list.accept(stack);
 	}
 

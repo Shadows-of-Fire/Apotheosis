@@ -2,8 +2,6 @@ package shadows.apotheosis.adventure.client;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
@@ -17,11 +15,10 @@ import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 public class SocketTooltipRenderer implements ClientTooltipComponent {
@@ -77,10 +74,10 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 		}
 	}
 
-	public static Component getSocketDesc(ItemStack gem) {
-		Pair<Attribute, AttributeModifier> data = GemItem.getStoredBonus(gem);
-		if (data == null) return Component.translatable("socket.apotheosis.empty");
-		return GemItem.toComponent(data.getLeft(), data.getRight());
+	public static Component getSocketDesc(ItemStack gemStack) {
+		Gem gem = GemItem.getGemOrLegacy(gemStack);
+		if (gem == null) return Component.translatable("socket.apotheosis.empty");
+		return gem.getSocketBonusTooltip(gemStack, GemItem.getLootRarity(gemStack), GemItem.getFacets(gemStack));
 	}
 
 	public static record SocketComponent(List<ItemStack> gems) implements TooltipComponent {

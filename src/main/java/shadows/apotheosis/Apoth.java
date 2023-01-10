@@ -27,6 +27,7 @@ import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.ench.anvil.AnvilTile;
@@ -280,6 +281,12 @@ public class Apoth {
 		public static final DynamicRegistryObject<TelepathicAffix> TELEPATHIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("telepathic"));
 		public static final DynamicRegistryObject<OmneticAffix> OMNETIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("breaker/special/omnetic"));
 		public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("breaker/special/radial"));
+	}
+
+	public static final class Gems {
+		// Implicit
+		@SuppressWarnings("removal")
+		public static final DynamicRegistryObject<shadows.apotheosis.adventure.affix.socket.gem.LegacyGem> LEGACY = GemManager.INSTANCE.makeObj(Apotheosis.loc("legacy"));
 	}
 
 	public static final class Tags {

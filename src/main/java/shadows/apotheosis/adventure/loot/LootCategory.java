@@ -23,24 +23,31 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 import shadows.apotheosis.adventure.AdventureConfig;
 
 public enum LootCategory {
-	NONE(Predicates.alwaysFalse(), s -> new EquipmentSlot[0]),
-	BOW(s -> s.getItem() instanceof BowItem, s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND)),
-	CROSSBOW(s -> s.getItem() instanceof CrossbowItem, s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND)),
+	NONE("none", Predicates.alwaysFalse(), s -> new EquipmentSlot[0]),
+	BOW("bow", s -> s.getItem() instanceof BowItem, s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND)),
+	CROSSBOW(
+			"crossbow",
+			s -> s.getItem() instanceof CrossbowItem,
+			s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND)),
 	BREAKER(
+			"breaker",
 			s -> s.canPerformAction(ToolActions.PICKAXE_DIG) || s.canPerformAction(ToolActions.SHOVEL_DIG),
 			s -> arr(EquipmentSlot.MAINHAND)),
-	HEAVY_WEAPON(new ShieldBreakerTest(), s -> arr(EquipmentSlot.MAINHAND)),
-	ARMOR(s -> s.getItem() instanceof ArmorItem, s -> arr(((ArmorItem) s.getItem()).getSlot())),
-	SHIELD(s -> s.canPerformAction(ToolActions.SHIELD_BLOCK), s -> arr(EquipmentSlot.OFFHAND)),
-	TRIDENT(s -> s.getItem() instanceof TridentItem, s -> arr(EquipmentSlot.MAINHAND)),
+	HEAVY_WEAPON("heavy_weapon", new ShieldBreakerTest(), s -> arr(EquipmentSlot.MAINHAND)),
+	ARMOR("armor", s -> s.getItem() instanceof ArmorItem, s -> arr(((ArmorItem) s.getItem()).getSlot())),
+	SHIELD("shield", s -> s.canPerformAction(ToolActions.SHIELD_BLOCK), s -> arr(EquipmentSlot.OFFHAND)),
+	TRIDENT("trident", s -> s.getItem() instanceof TridentItem, s -> arr(EquipmentSlot.MAINHAND)),
 	SWORD(
+			"sword",
 			s -> s.canPerformAction(ToolActions.SWORD_DIG) || s.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, s).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0),
 			s -> arr(EquipmentSlot.MAINHAND));
 
+	private final String name;
 	private final Predicate<ItemStack> validator;
 	private final Function<ItemStack, EquipmentSlot[]> slotGetter;
 
-	LootCategory(Predicate<ItemStack> validator, Function<ItemStack, EquipmentSlot[]> slotGetter) {
+	LootCategory(String name, Predicate<ItemStack> validator, Function<ItemStack, EquipmentSlot[]> slotGetter) {
+		this.name = name;
 		this.validator = validator;
 		this.slotGetter = slotGetter;
 	}
@@ -58,6 +65,14 @@ public enum LootCategory {
 			if (c.isValid(item)) return c;
 		}
 		return NONE;
+	}
+
+	public String getDescId() {
+		return "text.apotheosis.category." + this.name;
+	}
+
+	public String getDescIdPlural() {
+		return this.getDescId() + ".plural";
 	}
 
 	/**
