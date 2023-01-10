@@ -1,8 +1,21 @@
 ## 6.1.0
-* Config files have been updated to be more user-friendly.
+* Gems have been rewritten! Gems are now backed by an all new system that allows for far more customization than before.
+  * New Gems have been added, with all sorts of new features and stat ranges. Old gems will be marked with [Legacy] and will function as they used to, but will not have rarities or be upgradable.
+  * Purity has been replaced by Facets, a value indicating the number of cuts in the gem. A Fully-Faceted Gem will be referred to as a "Flawless" Gem and will Glow.
+  * Gems now have individual rarities, indicated by name color.  Gems of a higher rarity will typically be stronger.
+  * Gems are now able to be dimensionally-locked. Higher rarity gems will be found in the nether and end, by default.
+  * Gems may be locked to a specific type of item, allowing for the creation of stronger gems that cannot be spammed across every item.
+  * [NYI] Gems can now be upgraded in the Gem Cutting Table, allowing for increasing the number of Facets.
+  * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
+* The quality value (weight increase per point of luck) of bee and goat bosses has been significantly reduced.
+* The rarity of bee and goat bosses has been reduced to epic (was mythic).
 
 ## 6.0.2
 * Forward-Ported all changes from 5.7.6.
+* Config files have been updated to be more user-friendly.
+* Splitting and Obliteration will now work properly.
+* The Adventure Module can now be disabled again.
+* RiggZh: Updated Chinese Translation
 
 ## 6.0.1
 * Forward-Ported all changes from 5.7.1-5.7.4
