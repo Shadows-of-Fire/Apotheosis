@@ -6,7 +6,6 @@
     "count": 1,
     "nbt": "{Damage:0}"
   },
-  "type": "BREAKER",
   "dimensions": [
     "minecraft:the_end"
   ],

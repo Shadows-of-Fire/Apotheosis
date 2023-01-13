@@ -19,18 +19,16 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 	protected int weight;
 	protected float quality;
 	protected ItemStack stack;
-	protected LootCategory type;
 	protected Set<ResourceLocation> dimensions;
 	@SerializedName("min_rarity")
 	protected LootRarity minRarity;
 	@SerializedName("max_rarity")
 	protected LootRarity maxRarity;
 
-	public AffixLootEntry(int weight, float quality, ItemStack stack, LootCategory type, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max) {
+	public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max) {
 		this.weight = weight;
 		this.quality = quality;
 		this.stack = stack;
-		this.type = type;
 		this.dimensions = dimensions;
 		this.minRarity = min;
 		this.maxRarity = max;
@@ -50,10 +48,6 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 		return this.stack.copy();
 	}
 
-	public LootCategory getType() {
-		return this.type;
-	}
-
 	@Override
 	public Set<ResourceLocation> getDimensions() {
 		return this.dimensions;
@@ -67,6 +61,10 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 	@Override
 	public LootRarity getMaxRarity() {
 		return this.maxRarity;
+	}
+
+	public LootCategory getType() {
+		return LootCategory.forItem(this.stack);
 	}
 
 }

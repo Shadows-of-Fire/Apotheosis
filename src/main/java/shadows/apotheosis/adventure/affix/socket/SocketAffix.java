@@ -103,7 +103,7 @@ public final class SocketAffix extends Affix {
 	}
 
 	private static Stream<Pair<Gem, ItemStack>> gems(ItemStack stack) {
-		return SocketHelper.getGems(stack).stream().map(gemStack -> Pair.of(GemItem.getGemOrLegacy(gemStack), gemStack)).filter(pair -> pair.getLeft() != null);
+		return SocketHelper.getGems(stack).stream().map(gemStack -> Pair.of(GemItem.getGemOrLegacy(gemStack), gemStack)).filter(pair -> pair.getLeft() != null && pair.getLeft().canApplyTo(stack, GemItem.getLootRarity(pair.getRight()), pair.getRight()));
 	}
 
 	private static Stream<Pair<Gem, ItemStack>> gems(AbstractArrow arrow) {

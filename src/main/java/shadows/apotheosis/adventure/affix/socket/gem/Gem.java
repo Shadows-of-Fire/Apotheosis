@@ -1,8 +1,10 @@
 package shadows.apotheosis.adventure.affix.socket.gem;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -12,6 +14,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.ChatFormatting;
@@ -53,7 +57,6 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 	protected final float quality;
 	protected final Set<ResourceLocation> dimensions;
 	protected final Set<LootCategory> types;
-	protected final Set<EquipmentSlot> armorTypes;
 	@Nullable
 	protected LootRarity minRarity;
 	@Nullable
@@ -65,7 +68,6 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 		this.quality = stub.quality;
 		this.dimensions = stub.dimensions;
 		this.types = stub.types;
-		this.armorTypes = stub.armorTypes;
 		this.minRarity = stub.minRarity;
 		this.maxRarity = stub.maxRarity;
 	}
@@ -115,30 +117,25 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 		list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
 		if (types != null && !types.isEmpty()) {
 			for (LootCategory l : this.types) {
-				if (l == LootCategory.ARMOR && !this.armorTypes.isEmpty()) {
-					for (EquipmentSlot s : this.armorTypes) {
-						list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.category." + s.getName() + ".plural")).withStyle(style));
-					}
-				} else {
-					list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable(l.getDescIdPlural())).withStyle(style));
-				}
+				list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable(l.getDescIdPlural())).withStyle(style));
 			}
 		} else {
 			list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
 		}
 		list.accept(CommonComponents.EMPTY);
 		list.accept(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
-		list.accept(this.getSocketBonusTooltip(gem, rarity, facets));
+		list.accept(this.getSocketBonusTooltip(ItemStack.EMPTY, gem, rarity, facets));
 	}
 
 	/**
 	 * Adds the one-line socket bonus tooltip.  This will automatically be called in the correct place.<br>
 	 * If you want to override the entire tooltip as shown on the gem item, override {@link Gem#addInformation} 
+	 * @param socketed The item the gem is socketed into. May be empty if this is being called from {@link Gem#addInformation}
 	 * @param gem      The gem stack.
 	 * @param purity   The purity of this gem.
 	 * @param tooltips The destination for tooltips.
 	 */
-	public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets);
+	public abstract Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity, int facets);
 
 	/**
 	 * Returns the max number of facets available for this gem.<br>
@@ -234,7 +231,7 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity, ItemStack gem) {
 		LootCategory cat = LootCategory.forItem(stack);
-		return this.types.isEmpty() || this.types.contains(cat) && (cat != LootCategory.ARMOR || this.armorTypes.isEmpty() || this.armorTypes.contains(cat.getSlots(stack)[0]));
+		return !cat.isNone() && this.types.isEmpty() || this.types.contains(cat);
 	}
 
 	public static String fmt(float f) {
@@ -277,8 +274,6 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 		protected float quality;
 		protected Set<ResourceLocation> dimensions = Collections.emptySet();
 		protected Set<LootCategory> types = Collections.emptySet();
-		@SerializedName("armor_types")
-		protected Set<EquipmentSlot> armorTypes = Collections.emptySet();
 		@Nullable
 		@SerializedName("min_rarity")
 		protected LootRarity minRarity;
@@ -293,8 +288,6 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 			// Dimensions do not need to be synced
 			buf.writeByte(gem.types.size());
 			gem.types.forEach(c -> buf.writeEnum(c));
-			buf.writeByte(gem.armorTypes.size());
-			gem.armorTypes.forEach(c -> buf.writeEnum(c));
 			// Min/Max rarities also do not need to be synced, they're only used at generation time which is SS-only.
 		}
 
@@ -310,11 +303,15 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 				stub.types.add(buf.readEnum(LootCategory.class));
 			}
 			size = buf.readByte();
-			stub.armorTypes = new HashSet<>(size);
-			for (int i = 0; i < size; i++) {
-				stub.armorTypes.add(buf.readEnum(EquipmentSlot.class));
-			}
 			return stub;
+		}
+
+		public GemStub validate() {
+			Preconditions.checkNotNull(this.variant);
+			Preconditions.checkArgument(this.weight >= 0);
+			Preconditions.checkArgument(this.quality >= 0);
+			Preconditions.checkArgument(maxRarity.ordinal() >= minRarity.ordinal());
+			return this;
 		}
 	}
 
@@ -358,6 +355,51 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 
 		public int id() {
 			return this.id;
+		}
+	}
+
+	/**
+	 * A Gem Class is the set of types of items it may be applied to.
+	 * This comes in the form of a named group of LootCategories.
+	 */
+	public static class GemClass {
+
+		private final String key;
+		private final Set<LootCategory> types;
+
+		public GemClass(String key, Set<LootCategory> types) {
+			this.key = key;
+			this.types = types;
+		}
+
+		public String key() {
+			return this.key;
+		}
+
+		public Set<LootCategory> types() {
+			return this.types;
+		}
+
+		public GemClass validate() {
+			Preconditions.checkNotNull(this.key, "Invalid GemClass with null key");
+			Preconditions.checkArgument(this.types != null && !this.types.isEmpty(), "Invalid GemClass with null or empty types");
+			return this;
+		}
+
+		public void write(FriendlyByteBuf buf) {
+			buf.writeUtf(this.key);
+			buf.writeByte(this.types.size());
+			types.forEach(c -> buf.writeEnum(c));
+		}
+
+		public static GemClass read(FriendlyByteBuf buf) {
+			String key = buf.readUtf();
+			int size = buf.readByte();
+			List<LootCategory> list = new ArrayList<>(size);
+			for (int i = 0; i < size; i++) {
+				list.add(buf.readEnum(LootCategory.class));
+			}
+			return new GemClass(key, ImmutableSet.copyOf(list));
 		}
 	}
 }

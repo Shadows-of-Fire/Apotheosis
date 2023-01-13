@@ -34,7 +34,7 @@ public final class StatGem extends Gem {
 	}
 
 	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
+	public Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity, int facets) {
 		return GemItem.toComponent(attribute, read(gem, rarity, facets));
 	}
 

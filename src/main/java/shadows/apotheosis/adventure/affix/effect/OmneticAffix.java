@@ -26,6 +26,7 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
+// TODO: Add items other than pickaxe/axe/shovel like hoe/sword for specific items.
 public class OmneticAffix extends Affix {
 
 	protected final Map<LootRarity, OmneticData> values;
@@ -37,7 +38,7 @@ public class OmneticAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.BREAKER && values.containsKey(rarity);
+		return LootCategory.forItem(stack).isBreaker() && values.containsKey(rarity);
 	}
 
 	@Override

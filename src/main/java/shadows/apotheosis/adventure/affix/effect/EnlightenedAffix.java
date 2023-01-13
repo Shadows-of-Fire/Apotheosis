@@ -32,7 +32,7 @@ public class EnlightenedAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.BREAKER && values.containsKey(rarity);
+		return LootCategory.forItem(stack).isBreaker() && values.containsKey(rarity);
 	}
 
 	@Override

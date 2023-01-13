@@ -11,9 +11,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -23,7 +21,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
@@ -39,13 +36,11 @@ public class AttributeAffix extends Affix {
 
 	protected final Map<LootRarity, ModifierInst> modifiers;
 	protected final Set<LootCategory> types;
-	protected final Set<EquipmentSlot> armorTypes;
 
-	public AttributeAffix(Attribute attr, Operation op, Map<LootRarity, StepFunction> values, Set<LootCategory> types, Set<EquipmentSlot> armorTypes) {
+	public AttributeAffix(Attribute attr, Operation op, Map<LootRarity, StepFunction> values, Set<LootCategory> types) {
 		super(AffixType.STAT);
 		this.modifiers = values.entrySet().stream().map(entry -> Pair.of(entry.getKey(), new ModifierInst(attr, op, entry.getValue(), new HashMap<>()))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
 		this.types = types;
-		this.armorTypes = armorTypes;
 	}
 
 	@Override
@@ -75,7 +70,7 @@ public class AttributeAffix extends Affix {
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat.isNone()) return false;
-		return (this.types.isEmpty() || this.types.contains(cat)) && (cat != LootCategory.ARMOR || this.armorTypes.isEmpty() || this.armorTypes.contains(((ArmorItem) stack.getItem()).getSlot())) && this.modifiers.containsKey(rarity);
+		return (this.types.isEmpty() || this.types.contains(cat)) && this.modifiers.containsKey(rarity);
 	};
 
 	public record ModifierInst(Attribute attr, Operation op, StepFunction valueFactory, Map<EquipmentSlot, UUID> cache) {
@@ -90,9 +85,7 @@ public class AttributeAffix extends Affix {
 		Operation op = Operation.valueOf(GsonHelper.getAsString(obj, "operation"));
 		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
 		var types = AffixHelper.readTypes(GsonHelper.getAsJsonArray(obj, "types"));
-		Set<EquipmentSlot> armorTypes = GSON.fromJson(GsonHelper.getAsJsonArray(obj, "armor_types", new JsonArray()), new TypeToken<Set<EquipmentSlot>>() {
-		}.getType());
-		return new AttributeAffix(attr, op, values, types, armorTypes);
+		return new AttributeAffix(attr, op, values, types);
 	}
 
 	public JsonObject write() {
@@ -106,8 +99,6 @@ public class AttributeAffix extends Affix {
 		buf.writeMap(this.modifiers, (b, key) -> b.writeUtf(key.id()), (b, modif) -> modif.valueFactory.write(b));
 		buf.writeByte(this.types.size());
 		this.types.forEach(c -> buf.writeEnum(c));
-		buf.writeByte(this.armorTypes.size());
-		this.armorTypes.forEach(c -> buf.writeEnum(c));
 	}
 
 	public static AttributeAffix read(FriendlyByteBuf buf) {
@@ -115,16 +106,11 @@ public class AttributeAffix extends Affix {
 		Operation op = buf.readEnum(Operation.class);
 		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
 		Set<LootCategory> types = new HashSet<>();
-		Set<EquipmentSlot> armorTypes = new HashSet<>();
 		int size = buf.readByte();
 		for (int i = 0; i < size; i++) {
 			types.add(buf.readEnum(LootCategory.class));
 		}
-		size = buf.readByte();
-		for (int i = 0; i < size; i++) {
-			armorTypes.add(buf.readEnum(EquipmentSlot.class));
-		}
-		return new AttributeAffix(attr, op, values, types, armorTypes);
+		return new AttributeAffix(attr, op, values, types);
 	}
 
 }

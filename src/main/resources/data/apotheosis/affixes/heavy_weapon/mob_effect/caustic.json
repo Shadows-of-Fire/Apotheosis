@@ -37,6 +37,6 @@
 		}
 	},
 	"types": [
-		"HEAVY_WEAPON"
+		"heavy_weapon"
 	]
 }

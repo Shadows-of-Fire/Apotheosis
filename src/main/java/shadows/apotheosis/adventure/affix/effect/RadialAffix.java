@@ -53,7 +53,7 @@ public class RadialAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.BREAKER && this.values.containsKey(rarity);
+		return LootCategory.forItem(stack).isBreaker() && this.values.containsKey(rarity);
 	}
 
 	@Override

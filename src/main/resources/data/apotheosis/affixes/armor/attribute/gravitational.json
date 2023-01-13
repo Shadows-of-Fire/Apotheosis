@@ -35,10 +35,6 @@
 		}
 	},
 	"types": [
-		"ARMOR"
-	],
-	"armor_types": [
-		"CHEST",
-		"LEGS"
+		"chestplate", "leggings"
 	]
 }

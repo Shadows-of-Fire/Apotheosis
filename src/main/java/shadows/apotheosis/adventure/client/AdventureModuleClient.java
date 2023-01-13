@@ -207,7 +207,7 @@ public class AdventureModuleClient {
 		}
 		if (rmvIdx == -1) return;
 		int size = (int) socket.level();
-		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(SocketHelper.getGems(e.getItemStack(), size))));
+		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack(), size))));
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)

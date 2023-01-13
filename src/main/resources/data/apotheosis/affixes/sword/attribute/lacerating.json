@@ -35,7 +35,7 @@
 		}
 	},
 	"types": [
-		"SWORD",
-		"TRIDENT"
+		"sword",
+		"trident"
 	]
 }

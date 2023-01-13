@@ -86,12 +86,12 @@ public class AdventureConfig {
 		}
 
 		TYPE_OVERRIDES.clear();
-		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|SWORD" }, "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.  Types are SWORD, TRIDENT, SHIELD, HEAVY_WEAPON, BREAKER, CROSSBOW, BOW");
+		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|sword", "minecraft:shulker_shell|none" }, "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.\nValid types are: none, sword, trident, shield, heavy_weapon, pickaxe, shovel, crossbow, bow");
 		for (String s : overrides) {
 			String[] split = s.split("\\|");
 			try {
-				LootCategory type = LootCategory.valueOf(split[1].toUpperCase(Locale.ROOT));
-				if (type == LootCategory.ARMOR) throw new UnsupportedOperationException("Cannot override an item to type ARMOR!");
+				LootCategory type = LootCategory.byId(split[1].toLowerCase(Locale.ROOT));
+				if (type.isArmor()) throw new UnsupportedOperationException("Cannot override an item to an armor type.");
 				TYPE_OVERRIDES.put(new ResourceLocation(split[0]), type);
 			} catch (Exception e) {
 				AdventureModule.LOGGER.error("Invalid type override entry: " + s + " will be ignored!");

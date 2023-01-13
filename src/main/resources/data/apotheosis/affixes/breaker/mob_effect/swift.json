@@ -49,6 +49,6 @@
 		}
 	},
 	"types": [
-		"BREAKER"
+		"pickaxe", "shovel"
 	]
 }

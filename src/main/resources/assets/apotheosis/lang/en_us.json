@@ -255,7 +255,16 @@
 
 	"socket.apotheosis.empty": "Empty Socket",
     "item.modifiers.socket": "When Socketed:",
+    "item.modifiers.socket_in": "When Socketed in:",
+    "item.modifiers.socket_typed": "When Socketed in %s:",
 	"info.apotheosis.socketing": "Gems can be socketed with a Smithing Table. Item on the left, gem on the right.\n\nChoose wisely, as removing a socketed gem is costly.",
+
+	"gem_class.melee_weapon": "A Melee Weapon",
+	"gem_class.ranged_weapon": "A Ranged Weapon",
+
+	"gem_class.armor": "An Armor Piece",
+	"gem_class.shield": "A Shield",
+	"gem_class.breaker": "A Mining Tool",
 
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.cracked": "Cracked %s",

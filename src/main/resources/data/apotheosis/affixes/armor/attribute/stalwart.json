@@ -30,7 +30,7 @@
 		}
 	},
 	"types": [
-		"ARMOR",
-		"SHIELD"
+		"helmet", "chestplate", "leggings", "boots",
+		"shield"
 	]
 }

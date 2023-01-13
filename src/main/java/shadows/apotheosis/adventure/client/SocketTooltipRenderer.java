@@ -41,7 +41,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	public int getWidth(Font font) {
 		int maxWidth = 0;
 		for (ItemStack gem : this.comp.gems) {
-			maxWidth = Math.max(maxWidth, font.width(getSocketDesc(gem)) + 12);
+			maxWidth = Math.max(maxWidth, font.width(getSocketDesc(this.comp.socketed, gem)) + 12);
 		}
 		return maxWidth;
 	}
@@ -70,17 +70,17 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	@Override
 	public void renderText(Font pFont, int pX, int pY, Matrix4f pMatrix4f, BufferSource pBufferSource) {
 		for (int i = 0; i < this.comp.gems.size(); i++) {
-			pFont.drawInBatch(getSocketDesc(this.comp.gems.get(i)), pX + 12, pY + 1 + this.spacing * i, 0xAABBCC, true, pMatrix4f, pBufferSource, false, 0, 15728880);
+			pFont.drawInBatch(getSocketDesc(this.comp.socketed, this.comp.gems.get(i)), pX + 12, pY + 1 + this.spacing * i, 0xAABBCC, true, pMatrix4f, pBufferSource, false, 0, 15728880);
 		}
 	}
 
-	public static Component getSocketDesc(ItemStack gemStack) {
+	public static Component getSocketDesc(ItemStack socketed, ItemStack gemStack) {
 		Gem gem = GemItem.getGemOrLegacy(gemStack);
 		if (gem == null) return Component.translatable("socket.apotheosis.empty");
-		return gem.getSocketBonusTooltip(gemStack, GemItem.getLootRarity(gemStack), GemItem.getFacets(gemStack));
+		return gem.getSocketBonusTooltip(socketed, gemStack, GemItem.getLootRarity(gemStack), GemItem.getFacets(gemStack));
 	}
 
-	public static record SocketComponent(List<ItemStack> gems) implements TooltipComponent {
+	public static record SocketComponent(ItemStack socketed, List<ItemStack> gems) implements TooltipComponent {
 	}
 
 }

@@ -36,6 +36,7 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 	protected void registerBuiltinSerializers() {
 		this.registerSerializer(Apotheosis.loc("stat"), PSerializer.autoRegister("Stat Gem", StatGem.class));
 		this.registerSerializer(Apotheosis.loc("legacy"), PSerializer.builtin("Legacy Gem", () -> LegacyGem.INSTANCE));
+		this.registerSerializer(Apotheosis.loc("multi_stat"), PSerializer.autoRegister("Multi Stat Gem", MultiStatGem.class));
 	}
 
 	@Override

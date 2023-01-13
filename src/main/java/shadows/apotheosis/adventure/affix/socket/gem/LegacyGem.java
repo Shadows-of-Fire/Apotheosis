@@ -30,7 +30,7 @@ public final class LegacyGem extends Gem {
 	public static final String MODIFIER = "modifier";
 
 	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
+	public Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity, int facets) {
 		var bonus = getStoredBonus(gem);
 		return GemItem.toComponent(bonus.getKey(), bonus.getValue());
 	}
