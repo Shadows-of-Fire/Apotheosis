@@ -1,0 +1,161 @@
+{
+	"type": "apotheosis:multi_stat",
+	"variant": "splendor",
+	"weight": 10,
+	"quality": 0.33,
+	"dimensions": [
+	],
+	"types": [],
+	"min_rarity": "common",
+	"max_rarity": "mythic",
+	"values": [{
+			"gem_class": {
+				"key": "light_weapon",
+				"types": [
+					"sword",
+					"trident"
+				]
+			},
+			"attribute": "apotheosis:crit_chance",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 2,
+					"step": 0.025
+				},
+				"uncommon": {
+					"min": 0.075,
+					"steps": 3,
+					"step": 0.025
+				},
+				"rare": {
+					"min": 0.1,
+					"steps": 4,
+					"step": 0.025
+				},
+				"epic": {
+					"min": 0.15,
+					"steps": 5,
+					"step": 0.025
+				},
+				"mythic": {
+					"min": 0.2,
+					"steps": 6,
+					"step": 0.025
+				}
+			}
+		},
+		{
+			"gem_class": {
+				"key": "armor",
+				"types": [
+					"helmet", "chestplate", "leggings", "boots"
+				]
+			},
+			"attribute": "minecraft:generic.luck",
+			"operation": "ADDITION",
+			"values": {
+				"common": {
+					"min": 0.25,
+					"steps": 2,
+					"step": 0.25
+				},
+				"uncommon": {
+					"min": 0.5,
+					"steps": 3,
+					"step": 0.25
+				},
+				"rare": {
+					"min": 1.25,
+					"steps": 4,
+					"step": 0.25
+				},
+				"epic": {
+					"min": 1.75,
+					"steps": 5,
+					"step": 0.25
+				},
+				"mythic": {
+					"min": 2.25,
+					"steps": 6,
+					"step": 0.25
+				}
+			}
+		},
+		{
+			"gem_class": {
+				"key": "ranged_weapon",
+				"types": [
+					"bow", "crossbow"
+				]
+			},
+			"attribute": "minecraft:generic.movement_speed",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 2,
+					"step": 0.025
+				},
+				"uncommon": {
+					"min": 0.10,
+					"steps": 3,
+					"step": 0.025
+				},
+				"rare": {
+					"min": 0.15,
+					"steps": 4,
+					"step": 0.05
+				},
+				"epic": {
+					"min": 0.20,
+					"steps": 5,
+					"step": 0.05
+				},
+				"mythic": {
+					"min": 0.30,
+					"steps": 6,
+					"step": 0.075
+				}
+			}
+		},
+		{
+			"gem_class": {
+				"key": "heavy_weapon",
+				"types": [
+					"heavy_weapon"
+				]
+			},
+			"attribute": "apotheosis:crit_damage",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.075,
+					"steps": 2,
+					"step": 0.025
+				},
+				"uncommon": {
+					"min": 0.1,
+					"steps": 3,
+					"step": 0.025
+				},
+				"rare": {
+					"min": 0.15,
+					"steps": 4,
+					"step": 0.025
+				},
+				"epic": {
+					"min": 0.20,
+					"steps": 5,
+					"step": 0.03
+				},
+				"mythic": {
+					"min": 0.25,
+					"steps": 6,
+					"step": 0.05
+				}
+			}
+		}
+	]
+}

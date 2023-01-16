@@ -52,14 +52,7 @@ public final class MultiStatGem extends Gem {
 		list.accept(CommonComponents.EMPTY);
 		Style style = Style.EMPTY.withColor(0x0AFF0A);
 		list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
-		if (types != null && !types.isEmpty()) {
-			for (LootCategory l : this.types) {
-				list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable(l.getDescIdPlural())).withStyle(style));
-			}
-		} else {
-			list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
-		}
-
+		addTypeInfo(list, this.dataExploded.keySet().toArray());
 		list.accept(CommonComponents.EMPTY);
 		list.accept(Component.translatable("item.modifiers.socket_in").withStyle(ChatFormatting.GOLD));
 		for (MultiStatGem.Data d : data) {

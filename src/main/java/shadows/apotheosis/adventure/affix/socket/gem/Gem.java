@@ -113,15 +113,7 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 	public void addInformation(ItemStack gem, LootRarity rarity, int facets, Consumer<Component> list) {
 		list.accept(Component.translatable("text.apotheosis.facets", 4 + facets).withStyle(Style.EMPTY.withColor(0xAEA2D6)));
 		list.accept(CommonComponents.EMPTY);
-		Style style = Style.EMPTY.withColor(0x0AFF0A);
-		list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
-		if (types != null && !types.isEmpty()) {
-			for (LootCategory l : this.types) {
-				list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable(l.getDescIdPlural())).withStyle(style));
-			}
-		} else {
-			list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
-		}
+		addTypeInfo(list, this.types.toArray());
 		list.accept(CommonComponents.EMPTY);
 		list.accept(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
 		list.accept(this.getSocketBonusTooltip(ItemStack.EMPTY, gem, rarity, facets));
@@ -263,6 +255,28 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 		return this.dimensions;
 	}
 
+	public static void addTypeInfo(Consumer<Component> list, Object... types) {
+		Arrays.sort(types, (c1, c2) -> ((LootCategory) c1).getName().compareTo(((LootCategory) c2).getName()));
+		Style style = Style.EMPTY.withColor(0x0AFF0A);
+		if (types.length != LootCategory.BY_ID.size() - 1) {
+			StringBuilder sb = new StringBuilder();
+			int i = 0;
+			while (i < types.length) {
+				int rem = Math.min(3, types.length - i);
+				Object[] args = new Object[rem];
+				for (int r = 0; r < rem; r++) {
+					sb.append("%s, ");
+					args[r] = Component.translatable(((LootCategory) types[i + r]).getDescIdPlural());
+				}
+				list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable(sb.substring(0, sb.length() - 2), args)).withStyle(style));
+				sb.setLength(0);
+				i += rem;
+			}
+		} else {
+			list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
+		}
+	}
+
 	/**
 	 * Bouncer class holding all the base gem data.
 	 * Useful for automatic de/serialization.
@@ -302,7 +316,6 @@ public abstract class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, 
 			for (int i = 0; i < size; i++) {
 				stub.types.add(buf.readEnum(LootCategory.class));
 			}
-			size = buf.readByte();
 			return stub;
 		}
 

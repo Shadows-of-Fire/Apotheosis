@@ -20,5 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The assets located at src/main/resources/assets/textures/items/gems (gem_0 - gem_10) are Copyright (c) malcomriley, used under the terms of CC-BY-4.0
+The following assets in src/main/resources/assets/textures/ 
+* All files in /items/gems/
+* All files in /items/vial/
+* The file /items/rune_base.png
+* The file /items/sigil_of_enhancement.png
+* The file /items/sigil_of_socketing.png
+* The file /items/book.png
+are Copyright (c) malcomriley, used under the terms of CC-BY-4.0
 https://github.com/malcolmriley/unused-textures/blob/master/LICENSE
