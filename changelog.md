@@ -9,6 +9,12 @@
   * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
 * The quality value (weight increase per point of luck) of bee and goat bosses has been significantly reduced.
 * The rarity of bee and goat bosses has been reduced to epic (was mythic).
+* The cooldown field now works properly for HURT_SELF and ATTACK_SELF potion affixes.
+* The default boss spawn cooldown has been increased to 1800 ticks (from 400).
+
+## 6.0.3
+* Fixed potion affixes not spawning.
+* Fixed an issue where a crash could occur if you walked into a dimension with no adventure module entries (gems/affixes/bosses).
 
 ## 6.0.2
 * Forward-Ported all changes from 5.7.6.

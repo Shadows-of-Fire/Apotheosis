@@ -207,8 +207,8 @@ public class AdventureModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 4.0D).setSyncable(true), "draw_speed",
-				new RangedAttribute("apotheosis:crit_chance", 1.0D, 1.0D, 1024.0D).setSyncable(true), "crit_chance",
-				new RangedAttribute("apotheosis:crit_damage", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
+				new RangedAttribute("apotheosis:crit_chance", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_chance",
+				new RangedAttribute("apotheosis:crit_damage", 1.0D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
 				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "cold_damage",
 				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "fire_damage",
 				new RangedAttribute("apotheosis:life_steal", 1.0D, 1.0D, 1024.0D).setSyncable(true), "life_steal",
@@ -218,7 +218,8 @@ public class AdventureModule {
 				new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1024.0D).setSyncable(true), "ghost_health",
 				new RangedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true), "mining_speed",
 				new RangedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_damage",
-				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity"
+				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity",
+				new RangedAttribute("apotheosis:ore_exp", 1.0D, 0.0D, 1024.0D).setSyncable(true), "ore_exp"
 		);
 		//Formatter::on
 	}
@@ -240,7 +241,8 @@ public class AdventureModule {
 					Apoth.Attributes.GHOST_HEALTH,
 					Apoth.Attributes.MINING_SPEED,
 					Apoth.Attributes.ARROW_DAMAGE,
-					Apoth.Attributes.ARROW_VELOCITY);
+					Apoth.Attributes.ARROW_VELOCITY,
+					Apoth.Attributes.ORE_EXP);
 			//Formatter::on
 		});
 	}

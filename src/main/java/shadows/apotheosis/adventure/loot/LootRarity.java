@@ -24,10 +24,14 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.ListCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
@@ -37,6 +41,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.color.GradientColor;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
@@ -45,6 +50,19 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	public static final List<LootRarity> LIST;
 	public static final Map<String, LootRarity> BY_ID;
 	public static final Map<LootRarity, float[]> WEIGHTS = new HashMap<>();
+	//Formatter::off
+	public static final Codec<LootRarity> DIRECT_CODEC = RecordCodecBuilder.create(inst -> 
+		inst.group(
+			Codec.INT.fieldOf("default_weight").forGetter(LootRarity::defaultWeight),
+			Codec.STRING.fieldOf("id").forGetter(LootRarity::id),
+			TextColor.CODEC.fieldOf("color").forGetter(LootRarity::color),
+			new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(LootRarity::rules),
+			Codec.INT.fieldOf("ordinal").forGetter(LootRarity::ordinal))
+			.apply(inst, LootRarity::new)
+		);
+	//Formatter::on
+
+	public static final Codec<LootRarity> DISPATCH_CODEC = ExtraCodecs.stringResolverCodec(LootRarity::id, LootRarity::byId);
 
 	//Formatter::off
 	public static final LootRarity COMMON = new LootRarity(400, "common", 0x808080, ImmutableList.of(
@@ -191,6 +209,16 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	}
 
 	public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
+
+		//Formatter::off
+		public static final Codec<LootRule> CODEC = RecordCodecBuilder.create(inst -> 
+			inst.group(
+				new EnumCodec<>(AffixType.class).fieldOf("type").forGetter(LootRule::type),
+				Codec.FLOAT.fieldOf("chance").forGetter(LootRule::chance),
+				ExtraCodecs.lazyInitializedCodec(() -> LootRule.CODEC).optionalFieldOf("backup", null).forGetter(LootRule::backup))
+				.apply(inst, LootRule::new)
+			);
+		//Formatter::on
 
 		private static Random jRand = new Random();
 

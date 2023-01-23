@@ -8,8 +8,6 @@ import java.util.UUID;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -58,8 +56,8 @@ import shadows.apotheosis.Apotheosis.ApotheosisCommandEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
-import shadows.apotheosis.adventure.affix.AffixManager;
 import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
+import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
 import shadows.apotheosis.adventure.commands.GemCommand;
@@ -69,7 +67,6 @@ import shadows.apotheosis.adventure.commands.RarityCommand;
 import shadows.apotheosis.adventure.commands.SocketCommand;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
-import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.DamageSourceUtil;
 import shadows.placebo.events.AnvilLandEvent;
 import shadows.placebo.events.ItemUseEvent;
@@ -136,13 +133,10 @@ public class AdventureEvents {
 			if (shooter instanceof LivingEntity living) {
 				ItemStack bow = living.getMainHandItem();
 				Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(bow);
-				CompoundTag nbt = new CompoundTag();
 				affixes.values().forEach(a -> {
 					a.onArrowFired(living, arrow);
-					nbt.putFloat(a.affix().getId().toString(), a.level());
-					nbt.putString(AffixHelper.RARITY, a.rarity().id());
 				});
-				arrow.getPersistentData().put("apoth.affixes", nbt);
+				AffixHelper.copyFrom(bow, arrow);
 			}
 		}
 	}
@@ -153,15 +147,8 @@ public class AdventureEvents {
 	@SubscribeEvent
 	public void impact(ProjectileImpactEvent e) {
 		if (e.getProjectile() instanceof AbstractArrow arrow) {
-			CompoundTag nbt = arrow.getPersistentData().getCompound("apoth.affixes");
-			LootRarity rarity = AffixHelper.getRarity(nbt);
-			for (String s : nbt.getAllKeys()) {
-				Affix a = AffixManager.INSTANCE.getValue(new ResourceLocation(s));
-				if (a != null) {
-					a.onArrowImpact(rarity, nbt.getFloat(s), arrow, e.getRayTraceResult(), e.getRayTraceResult().getType());
-				}
-			}
-
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(arrow);
+			affixes.values().forEach(inst -> inst.onArrowImpact(arrow, e.getRayTraceResult(), e.getRayTraceResult().getType()));
 		}
 	}
 
@@ -218,7 +205,9 @@ public class AdventureEvents {
 		if (e.getEntity().level.isClientSide) return;
 		if (noRecurse) return;
 		noRecurse = true;
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
+		Entity direct = e.getSource().getDirectEntity();
+		direct = direct instanceof AbstractArrow arr ? arr.getOwner() : direct;
+		if (direct instanceof LivingEntity attacker && !e.getSource().isMagic()) {
 			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE.get()) - 1;
 			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE.get());
 			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE.get());
@@ -306,6 +295,8 @@ public class AdventureEvents {
 
 	@SubscribeEvent
 	public void blockBreak(BreakEvent e) {
+		double oreXp = e.getPlayer().getAttributeValue(Apoth.Attributes.ORE_EXP.get());
+		e.setExpToDrop((int) (e.getExpToDrop() * oreXp));
 		ItemStack stack = e.getPlayer().getMainHandItem();
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 		for (AffixInstance inst : affixes.values()) {
@@ -350,7 +341,7 @@ public class AdventureEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void dropsLowest(LivingDropsEvent e) {
-		Apoth.Affixes.TELEPATHIC.ifPresent(afx -> afx.drops(e));
+		TelepathicAffix.drops(e);
 	}
 
 	@SubscribeEvent

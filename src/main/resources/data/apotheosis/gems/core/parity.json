@@ -1,14 +1,13 @@
 {
-	"type": "apotheosis:multi_stat",
 	"variant": "parity",
 	"weight": 10,
 	"quality": 0.25,
 	"dimensions": [
 	],
-	"types": [],
 	"min_rarity": "common",
 	"max_rarity": "mythic",
-	"values": [{
+	"bonuses": [{
+			"type": "apotheosis:attribute",
 			"gem_class": {
 				"key": "melee_weapon",
 				"types": [
@@ -48,6 +47,7 @@
 			}
 		},
 		{
+			"type": "apotheosis:attribute",
 			"gem_class": {
 				"key": "armor",
 				"types": [
@@ -85,6 +85,7 @@
 			}
 		},
 		{
+			"type": "apotheosis:attribute",
 			"gem_class": {
 				"key": "shield",
 				"types": [
@@ -122,6 +123,7 @@
 			}
 		},
 		{
+			"type": "apotheosis:attribute",
 			"gem_class": {
 				"key": "ranged_weapon",
 				"types": [
@@ -159,6 +161,7 @@
 			}
 		},
 		{
+			"type": "apotheosis:attribute",
 			"gem_class": {
 				"key": "breaker",
 				"types": [

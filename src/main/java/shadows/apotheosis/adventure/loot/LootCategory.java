@@ -10,8 +10,10 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicates;
 import com.google.gson.annotations.SerializedName;
+import com.mojang.serialization.Codec;
 
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -75,6 +77,7 @@ public enum LootCategory {
 			s -> arr(EquipmentSlot.MAINHAND));
 
 	public static final Map<String, LootCategory> BY_ID = Arrays.stream(LootCategory.values()).collect(Collectors.toMap(LootCategory::getName, Function.identity()));
+	public static final Codec<LootCategory> CODEC = ExtraCodecs.stringResolverCodec(LootCategory::getName, LootCategory::byId);
 
 	private final String name;
 	private final Predicate<ItemStack> validator;

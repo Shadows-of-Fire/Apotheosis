@@ -1,13 +1,18 @@
 package shadows.apotheosis.adventure.affix.socket.gem;
 
+import java.util.Collections;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -21,13 +26,23 @@ import shadows.placebo.json.PSerializer;
 @Deprecated(forRemoval = true, since = "6.1.0")
 public final class LegacyGem extends Gem {
 
-	public static final LegacyGem INSTANCE = new LegacyGem(new GemStub());
+	public static final LegacyGem INSTANCE = new LegacyGem();
 
-	public LegacyGem(GemStub stub) {
-		super(stub);
+	public LegacyGem() {
+		super(GemVariant.PARITY, 0, 0, Collections.emptySet(), null, null, Collections.emptyList());
 	}
 
 	public static final String MODIFIER = "modifier";
+
+	@Override
+	public void addInformation(ItemStack gem, LootRarity rarity, int facets, Consumer<Component> list) {
+		Style style = Style.EMPTY.withColor(0x0AFF0A);
+		list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
+		list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
+		list.accept(CommonComponents.EMPTY);
+		list.accept(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
+		list.accept(this.getSocketBonusTooltip(ItemStack.EMPTY, gem, rarity, facets));
+	}
 
 	@Override
 	public Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity, int facets) {
@@ -36,7 +51,7 @@ public final class LegacyGem extends Gem {
 	}
 
 	@Override
-	public void addModifiers(ItemStack stack, LootRarity rarity, int facets, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map, ItemStack gem) {
+	public void addModifiers(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(stack);
 		for (EquipmentSlot s : cat.getSlots(stack)) {
 			if (s == type) {

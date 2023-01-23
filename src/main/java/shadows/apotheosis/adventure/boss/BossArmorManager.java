@@ -55,7 +55,7 @@ public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 
 		List<Wrapper<GearSet>> list = new ArrayList<>(valid.size());
 		valid.stream().map(l -> l.<GearSet>wrap(luck)).forEach(list::add);
-		return WeightedRandom.getRandomItem(rand, list).get().getData();
+		return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).orElse(null);
 	}
 
 	@Override

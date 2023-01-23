@@ -19,10 +19,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.AffixHelper;
-import shadows.apotheosis.adventure.affix.AffixInstance;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
@@ -56,13 +54,15 @@ public class ItemStackMixin {
 		if (Apotheosis.enableAdventure) list.add(Component.literal("APOTH_REMOVE_MARKER_2"));
 	}
 
-	// Actually applies the above, since mixin can't write back to params
+	/**
+	 * Injects before the first call to {@link ItemStack#getDamageValue()} inside of {@link ItemStack#hurt(int, RandomSource, ServerPlayer)} to reduce durability damage.
+	 * Modifies the pAmount parameter, reducing it by the result of randomly rolling each point of damage against the block chance.
+	 */
 	@ModifyVariable(at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getDamageValue()I"), method = "hurt", argsOnly = true, ordinal = 0)
 	public int swapDura(int amount, int amountCopy, RandomSource pRandom, @Nullable ServerPlayer pUser) {
 		int blocked = 0;
-		AffixInstance inst = AffixHelper.getAffixes((ItemStack) (Object) this).get(Affixes.DURABLE.get());
-		if (inst != null) {
-			float chance = inst.level();
+		double chance = AffixHelper.getAffixes((ItemStack) (Object) this).values().stream().mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser)).sum();
+		if (chance > 0) {
 			for (int i = 0; i < amount; i++) {
 				if (pRandom.nextFloat() <= chance) blocked++;
 			}

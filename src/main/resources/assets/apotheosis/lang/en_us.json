@@ -25,6 +25,7 @@
 	"apotheosis:mining_speed": "Mining Speed",
 	"apotheosis:arrow_damage": "Arrow Damage",
 	"apotheosis:arrow_velocity": "Arrow Velocity",
+	"apotheosis:ore_exp": "Experience From Ores",
 	
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",
@@ -52,6 +53,9 @@
 
 	"affix.apotheosis:breaker/attribute/lengthy": "Lengthy",
     "affix.apotheosis:breaker/attribute/lengthy.suffix": "of Grasping",
+
+	"affix.apotheosis:breaker/attribute/experienced": "Experienced",
+    "affix.apotheosis:breaker/attribute/experienced.suffix": "of the Scholar",
 
 	"affix.apotheosis:sword/attribute/elongated": "Elongated",
     "affix.apotheosis:sword/attribute/elongated.suffix": "of Distant Battles",
@@ -223,7 +227,7 @@
 	"misc.apotheosis.fire": "Fire",
 	"misc.apotheosis.fall": "Fall",
 	"misc.apotheosis.explosion": "Explosive",
-    "affix.apotheosis:damage_reduction.desc": "• %s damage taken is reduced by %s%%.",
+    "affix.apotheosis:damage_reduction.desc": "• %s damage taken is reduced by %s%%",
 	
 	"affix.apotheosis:armor/dmg_reduction/blockading": "Blockading",
     "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "of the Blockade",
@@ -249,6 +253,7 @@
 	"affix.apotheosis.target.arrow_target": "• On arrow hit, inflict %s",
 	"affix.apotheosis.target.block_self": "• Upon blocking, gain %s",
 	"affix.apotheosis.target.block_attacker": "• Upon blocking, inflict %s",
+	"affix.apotheosis.cooldown": "[⌛ %s]",
 
 	"affix.apotheosis:durable.desc": "• This item ignores %s%% of durability damage.",
 	"affix.apotheosis:socket.desc": "• Socketed (%s)",
@@ -272,6 +277,8 @@
 	"gem_class.boots": "Boots",
 	"gem_class.shield": "Shields",
 	"gem_class.heavy_weapon": "Heavy Weapons",
+
+	"gem_bonus.apotheosis:durability.desc": "Ignores %s%% of durability damage",
 
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.cracked": "Cracked %s",

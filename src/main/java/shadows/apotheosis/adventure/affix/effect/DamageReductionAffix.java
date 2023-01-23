@@ -42,7 +42,7 @@ public class DamageReductionAffix extends Affix {
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
-		return !cat.isNone() && this.types.isEmpty() || this.types.contains(cat);
+		return !cat.isNone() && (this.types.isEmpty() || this.types.contains(cat)) && this.values.containsKey(rarity);
 	}
 
 	@Override

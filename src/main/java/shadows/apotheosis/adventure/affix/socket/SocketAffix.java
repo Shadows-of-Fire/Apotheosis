@@ -5,11 +5,10 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.base.Predicates;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -41,73 +40,81 @@ public final class SocketAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) != null;
+	public boolean canApplyTo(ItemStack socketed, LootRarity rarity) {
+		return LootCategory.forItem(socketed) != null;
 	}
 
 	@Override
-	public void addModifiers(ItemStack stack, LootRarity itemRarity, float numSockets, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
-		LootCategory cat = LootCategory.forItem(stack);
+	public void addModifiers(ItemStack socketed, LootRarity itemRarity, float numSockets, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
+		LootCategory cat = LootCategory.forItem(socketed);
 		if (cat.isNone()) {
-			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getId(), stack.getHoverName().getString());
+			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getId(), socketed.getHoverName().getString());
 			return;
 		}
 
-		gems(stack).forEach(pair -> pair.getLeft().addModifiers(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), type, map, pair.getRight()));
+		gems(socketed).forEach(pair -> pair.gem().addModifiers(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), type, map));
 	}
 
 	@Override
-	public int getDamageProtection(ItemStack stack, LootRarity itemRarity, float numSockets, DamageSource source) {
-		return gems(stack).map(pair -> pair.getLeft().getDamageProtection(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), source, pair.getRight())).reduce(0, Integer::sum);
+	public int getDamageProtection(ItemStack socketed, LootRarity itemRarity, float numSockets, DamageSource source) {
+		return gems(socketed).map(pair -> pair.gem().getDamageProtection(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), source)).reduce(0, Integer::sum);
 	}
 
 	@Override
-	public float getDamageBonus(ItemStack stack, LootRarity itemRarity, float numSockets, MobType creatureType) {
-		return gems(stack).map(pair -> pair.getLeft().getDamageBonus(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), creatureType, pair.getRight())).reduce(Float::sum).orElse(0F);
+	public float getDamageBonus(ItemStack socketed, LootRarity itemRarity, float numSockets, MobType creatureType) {
+		return gems(socketed).map(pair -> pair.gem().getDamageBonus(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), creatureType)).reduce(Float::sum).orElse(0F);
 	}
 
 	@Override
-	public void doPostAttack(ItemStack stack, LootRarity itemRarity, float numSockets, LivingEntity user, Entity target) {
-		gems(stack).forEach(pair -> pair.getLeft().doPostAttack(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), user, target, pair.getRight()));
+	public void doPostAttack(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, Entity target) {
+		gems(socketed).forEach(pair -> pair.gem().doPostAttack(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), user, target));
 	}
 
 	@Override
-	public void doPostHurt(ItemStack stack, LootRarity itemRarity, float numSockets, LivingEntity user, Entity attacker) {
-		gems(stack).forEach(pair -> pair.getLeft().doPostHurt(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), user, attacker, pair.getRight()));
+	public void doPostHurt(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, Entity attacker) {
+		gems(socketed).forEach(pair -> pair.gem().doPostHurt(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), user, attacker));
 	}
 
 	@Override
-	public void onArrowFired(ItemStack stack, LootRarity itemRarity, float numSockets, LivingEntity user, AbstractArrow arrow) {
-		gems(stack).forEach(pair -> pair.getLeft().onArrowFired(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), user, arrow, pair.getRight()));
+	public void onArrowFired(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, AbstractArrow arrow) {
+		gems(socketed).forEach(pair -> pair.gem().onArrowFired(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), user, arrow));
 	}
 
 	@Override
 	@Nullable
-	public InteractionResult onItemUse(ItemStack stack, LootRarity itemRarity, float numSockets, UseOnContext ctx) {
-		return gems(stack).map(pair -> pair.getLeft().onItemUse(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), ctx, pair.getRight())).filter(Predicates.notNull()).max(InteractionResult::compareTo).orElse(null);
+	public InteractionResult onItemUse(ItemStack socketed, LootRarity itemRarity, float numSockets, UseOnContext ctx) {
+		return gems(socketed).map(pair -> pair.gem().onItemUse(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), ctx)).filter(Predicates.notNull()).max(InteractionResult::compareTo).orElse(null);
 	}
 
 	@Override
-	public void onArrowImpact(LootRarity itemRarity, float numSockets, AbstractArrow arrow, HitResult res, Type type) {
-		gems(arrow).forEach(pair -> pair.getLeft().onArrowImpact(GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), arrow, res, type, pair.getRight()));
+	public void onArrowImpact(AbstractArrow arrow, LootRarity itemRarity, float numSockets, HitResult res, Type type) {
+		gems(arrow).forEach(pair -> pair.gem().onArrowImpact(arrow, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), res, type));
 	}
 
 	@Override
-	public float onShieldBlock(ItemStack stack, LootRarity itemRarity, float numSockets, LivingEntity entity, DamageSource source, float amount) {
-		return gems(stack).map(pair -> pair.getLeft().onShieldBlock(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), entity, source, amount, pair.getRight())).max(Float::compareTo).orElse(amount);
+	public float onShieldBlock(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity entity, DamageSource source, float amount) {
+		return gems(socketed).map(pair -> pair.gem().onShieldBlock(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), entity, source, amount)).max(Float::compareTo).orElse(amount);
 	}
 
 	@Override
-	public void onBlockBreak(ItemStack stack, LootRarity itemRarity, float numSockets, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		gems(stack).forEach(pair -> pair.getLeft().onBlockBreak(stack, GemItem.getLootRarity(pair.getRight()), GemItem.getFacets(pair.getRight()), player, world, pos, state, pair.getRight()));
+	public void onBlockBreak(ItemStack socketed, LootRarity itemRarity, float numSockets, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+		gems(socketed).forEach(pair -> pair.gem().onBlockBreak(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), player, world, pos, state));
 	}
 
-	private static Stream<Pair<Gem, ItemStack>> gems(ItemStack stack) {
-		return SocketHelper.getGems(stack).stream().map(gemStack -> Pair.of(GemItem.getGemOrLegacy(gemStack), gemStack)).filter(pair -> pair.getLeft() != null && pair.getLeft().canApplyTo(stack, GemItem.getLootRarity(pair.getRight()), pair.getRight()));
+	@Override
+	public float getDurabilityBonusPercentage(ItemStack socketed, LootRarity rarity, float level, ServerPlayer user) {
+		return (float) gems(socketed).mapToDouble(pair -> pair.gem().getDurabilityBonusPercentage(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack()), GemItem.getFacets(pair.gemStack()), user)).sum();
 	}
 
-	private static Stream<Pair<Gem, ItemStack>> gems(AbstractArrow arrow) {
+	private static Stream<GemAndStack> gems(ItemStack socketed) {
+		return SocketHelper.getGems(socketed).stream().map(gemStack -> new GemAndStack(GemItem.getGemOrLegacy(gemStack), gemStack)).filter(pair -> pair.gem() != null && pair.gem().canApplyTo(socketed, pair.gemStack(), GemItem.getLootRarity(pair.gemStack())));
+	}
+
+	private static Stream<GemAndStack> gems(AbstractArrow arrow) {
 		return Stream.empty(); // TODO: Implement
+	}
+
+	private static record GemAndStack(Gem gem, ItemStack gemStack) {
 	}
 
 }

@@ -2,7 +2,7 @@
 	"type": "apotheosis:mob_effect",
 	"mob_effect": "minecraft:instant_health",
 	"target": "HURT_SELF",
-	"cooldown": 60,
+	"cooldown": 200,
 	"values": {
 		"epic": {
 			"duration": 1,

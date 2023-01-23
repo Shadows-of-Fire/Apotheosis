@@ -15,6 +15,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -46,7 +47,7 @@ public class PotionAffix extends Affix {
 	protected final int cooldown;
 
 	public PotionAffix(Map<LootRarity, EffectInst> effects, Set<LootCategory> types, Target target, int cooldown) {
-		super(AffixType.POTION);
+		super(AffixType.ABILITY);
 		this.effects = effects;
 		this.types = types;
 		this.target = target;
@@ -56,7 +57,12 @@ public class PotionAffix extends Affix {
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		MobEffectInstance inst = this.effects.get(rarity).build(level);
-		list.accept(this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW));
+		if (this.cooldown != 0) {
+			Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(this.cooldown));
+			list.accept(Component.translatable("%s %s", this.target.toComponent(toComponent(inst)), cd).withStyle(ChatFormatting.YELLOW));
+		} else {
+			list.accept(this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW));
+		}
 	}
 
 	@Override
@@ -69,7 +75,7 @@ public class PotionAffix extends Affix {
 	@Override
 	public void doPostHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity attacker) {
 		EffectInst inst = this.effects.get(rarity);
-		if (this.target == Target.HURT_SELF) user.addEffect(inst.build(level));
+		if (this.target == Target.HURT_SELF) applyEffect(user, inst, level);
 		else if (this.target == Target.HURT_ATTACKER) {
 			if (attacker instanceof LivingEntity tLiving) {
 				applyEffect(tLiving, inst, level);
@@ -80,7 +86,7 @@ public class PotionAffix extends Affix {
 	@Override
 	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
 		EffectInst inst = this.effects.get(rarity);
-		if (this.target == Target.ATTACK_SELF) user.addEffect(inst.build(level));
+		if (this.target == Target.ATTACK_SELF) applyEffect(user, inst, level);
 		else if (this.target == Target.ATTACK_TARGET) {
 			if (target instanceof LivingEntity tLiving) {
 				applyEffect(tLiving, inst, level);
@@ -97,7 +103,7 @@ public class PotionAffix extends Affix {
 	}
 
 	@Override
-	public void onArrowImpact(LootRarity rarity, float level, AbstractArrow arrow, HitResult res, Type type) {
+	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, float level, HitResult res, Type type) {
 		EffectInst inst = this.effects.get(rarity);
 		if (this.target == Target.ARROW_SELF) {
 			if (arrow.getOwner() instanceof LivingEntity owner) {

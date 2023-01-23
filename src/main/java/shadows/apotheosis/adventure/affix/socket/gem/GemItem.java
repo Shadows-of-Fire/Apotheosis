@@ -27,7 +27,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import shadows.apotheosis.Apoth.Gems;
 import shadows.apotheosis.adventure.affix.AffixHelper;
-import shadows.apotheosis.adventure.affix.socket.gem.Gem.GemVariant;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.AttributeHelper;
 
@@ -89,7 +88,7 @@ public class GemItem extends Item {
 	 */
 	public static List<UUID> getUUIDs(ItemStack gemStack) {
 		Gem gem = getGem(gemStack);
-		if (gem == null) return Collections.emptyList();
+		if (gem == null || gem.getNumberOfUUIDs() == 0) return Collections.emptyList();
 		CompoundTag tag = gemStack.getOrCreateTag();
 		if (tag.contains(UUID_ARRAY)) {
 			ListTag list = tag.getList(UUID_ARRAY, Tag.TAG_INT_ARRAY);

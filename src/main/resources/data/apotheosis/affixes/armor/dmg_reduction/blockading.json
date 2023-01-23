@@ -17,5 +17,8 @@
 			"steps": 10,
 			"step": 0.01
 		}
-	}
+	},
+	"types": [
+		"helmet", "chestplate", "leggings", "boots"
+	]
 }

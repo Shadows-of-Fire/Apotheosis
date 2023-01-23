@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -121,7 +122,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	}
 
 	/**
-	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
+	 * Whenever an entity that has this affix on one of its associated items is damaged this method will be
 	 * called.
 	 */
 	public void doPostHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity attacker) {
@@ -145,7 +146,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	/**
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
-	public void onArrowImpact(LootRarity rarity, float level, AbstractArrow arrow, HitResult res, HitResult.Type type) {
+	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, float level, HitResult res, HitResult.Type type) {
 	}
 
 	/**
@@ -169,6 +170,22 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	 */
 	public void onBlockBreak(ItemStack stack, LootRarity rarity, float level, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
 
+	}
+
+	/**
+	 * Allows an affix to reduce durability damage to an item.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param user    The user of the item, if applicable.
+	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
+	 */
+	public float getDurabilityBonusPercentage(ItemStack stack, LootRarity rarity, float level, @Nullable ServerPlayer user) {
+		return 0;
+	}
+
+	public boolean enablesTelepathy() {
+		return false;
 	}
 
 	@Override

@@ -1,11 +1,11 @@
 package shadows.apotheosis.adventure.affix.effect;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 import com.google.gson.JsonObject;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,6 +18,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -50,14 +51,19 @@ public class TelepathicAffix extends Affix {
 		list.accept(Component.translatable("affix." + this.getId() + ".desc." + type).withStyle(ChatFormatting.YELLOW));
 	}
 
+	@Override
+	public boolean enablesTelepathy() {
+		return true;
+	}
+
 	// EventPriority.LOWEST
-	public void drops(LivingDropsEvent e) {
+	public static void drops(LivingDropsEvent e) {
 		DamageSource src = e.getSource();
 		boolean canTeleport = false;
 		Vec3 targetPos = null;
 		if (src.getDirectEntity() instanceof AbstractArrow arrow && arrow.getOwner() != null) {
-			CompoundTag affixes = src.getDirectEntity().getPersistentData().getCompound("apoth.affixes");
-			canTeleport = Affixes.TELEPATHIC.isPresent() && affixes.contains(Affixes.TELEPATHIC.getId().toString());
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(arrow);
+			canTeleport = affixes.values().stream().anyMatch(AffixInstance::enablesTelepathy);
 			targetPos = arrow.getOwner().position();
 		} else if (src.getDirectEntity() instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
