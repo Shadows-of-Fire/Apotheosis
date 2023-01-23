@@ -11,6 +11,7 @@
 * The rarity of bee and goat bosses has been reduced to epic (was mythic).
 * The cooldown field now works properly for HURT_SELF and ATTACK_SELF potion affixes.
 * The default boss spawn cooldown has been increased to 1800 ticks (from 400).
+* Potentially fixed earlier - NBT tags that were appearing on random mob drops will no longer appear.
 
 ## 6.0.3
 * Fixed potion affixes not spawning.

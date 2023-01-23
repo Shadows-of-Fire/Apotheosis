@@ -25,6 +25,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -59,7 +60,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	public static final Codec<Gem> CODEC = RecordCodecBuilder.create(inst -> 
 		inst.group(
 			GemVariant.CODEC.fieldOf("variant").forGetter(Gem::getVariant),
-			Codec.INT.fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
+			ExtraCodecs.NON_NEGATIVE_INT.fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
 			Codec.FLOAT.fieldOf("quality").forGetter(ILuckyWeighted::getQuality),
 			PlaceboCodecs.setCodec(ResourceLocation.CODEC).optionalFieldOf("dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
 			LootRarity.DISPATCH_CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(LootRarity.Clamped::getMinRarity),
@@ -74,22 +75,18 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	protected final int weight;
 	protected final float quality;
 	protected final Set<ResourceLocation> dimensions;
-	@Nullable
-	protected LootRarity minRarity;
-	@Nullable
-	protected LootRarity maxRarity;
 
 	protected final List<GemBonus> bonuses;
+
 	protected transient final Map<LootCategory, GemBonus> bonusMap;
 	protected transient final int uuidsNeeded;
+	protected transient final LootRarity minRarity, maxRarity;
 
 	public Gem(GemVariant variant, int weight, float quality, Set<ResourceLocation> dimensions, @Nullable LootRarity minRarity, @Nullable LootRarity maxRarity, List<GemBonus> bonuses) {
 		this.variant = variant;
 		this.weight = weight;
 		this.quality = quality;
 		this.dimensions = dimensions;
-		this.minRarity = minRarity;
-		this.maxRarity = maxRarity;
 		this.bonuses = bonuses;
 		this.bonusMap = bonuses.stream().<Pair<LootCategory, GemBonus>>mapMulti((gemData, mapper) -> {
 			for (LootCategory c : gemData.getGemClass().types()) {
@@ -97,6 +94,12 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 			}
 		}).collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
 		this.uuidsNeeded = this.bonuses.stream().mapToInt(GemBonus::getNumberOfUUIDs).max().orElse(0);
+		if (!this.bonuses.isEmpty()) {
+			this.minRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).min(LootRarity::compareTo).get();
+			this.maxRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).max(LootRarity::compareTo).get();
+		} else {
+			this.minRarity = this.maxRarity = LootRarity.COMMON;
+		}
 	}
 
 	/**
@@ -334,11 +337,14 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	}
 
 	public Gem validate() {
-		Preconditions.checkNotNull(this.variant);
-		Preconditions.checkArgument(this.weight >= 0);
-		Preconditions.checkArgument(this.quality >= 0);
+		Preconditions.checkNotNull(this.variant, "Gem " + this.getId() + " has a null variant");
+		Preconditions.checkArgument(this.weight >= 0, "Gem " + this.getId() + " has a negative weight");
+		Preconditions.checkArgument(this.quality >= 0, "Gem " + this.getId() + " has a negative quality");
 		Preconditions.checkNotNull(this.dimensions);
 		Preconditions.checkArgument(maxRarity.ordinal() >= minRarity.ordinal());
+		LootRarity.values().stream().filter(r -> r.isAtLeast(this.minRarity) && r.isAtMost(this.maxRarity)).forEach(r -> {
+			Preconditions.checkArgument(this.bonuses.stream().allMatch(b -> b.supports(r)));
+		});
 		return this;
 	}
 

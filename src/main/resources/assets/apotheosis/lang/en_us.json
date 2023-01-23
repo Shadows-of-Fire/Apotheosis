@@ -280,6 +280,9 @@
 
 	"gem_bonus.apotheosis:durability.desc": "Ignores %s%% of durability damage",
 
+	"item.apotheosis.gem.apotheosis:core/guardian": "Guardian Gem",
+	"item.apotheosis.gem.apotheosis:core/ballast": "Ballast Gem",
+
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.cracked": "Cracked %s",
 	"item.apotheosis.gem.flawless": "Flawless %s",
@@ -342,7 +345,7 @@
 	"text.apotheosis.category.breaker": "Mining Tool",
 	"text.apotheosis.category.breaker.plural": "Mining Tools",
 	"text.apotheosis.category.pickaxe": "Pickaxe",
-	"text.apotheosis.category.pickaxe.plural": Pickaxes",
+	"text.apotheosis.category.pickaxe.plural": "Pickaxes",
 	"text.apotheosis.category.shovel": "Shovel",
 	"text.apotheosis.category.shovel.plural": "Shovels",
 	"text.apotheosis.category.heavy_weapon": "Heavy Weapon",

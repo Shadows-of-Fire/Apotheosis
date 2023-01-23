@@ -270,9 +270,9 @@ public class Apoth {
 		 */
 		public static final RegistryObject<Attribute> ARROW_VELOCITY = R.attribute("ARROW_VELOCITY");
 		/**
-		 * Experience From Ores. Base value = (1.0) = 100% xp gained from ores.
+		 * Experience mulitplier, from killing mobs or breaking ores. Base value = (1.0) = 100% xp gained from ores.
 		 */
-		public static final RegistryObject<Attribute> ORE_EXP = R.attribute("ore_exp");
+		public static final RegistryObject<Attribute> EXPERIENCE_GAINED = R.attribute("experience_gained");
 	}
 
 	public static final class Affixes {

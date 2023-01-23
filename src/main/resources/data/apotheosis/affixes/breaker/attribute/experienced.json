@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:ore_exp",
+	"attribute": "apotheosis:experience_gained",
 	"operation": "MULTIPLY_BASE",
 	"values": {
 		"common": {

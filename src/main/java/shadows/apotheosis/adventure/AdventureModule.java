@@ -219,7 +219,7 @@ public class AdventureModule {
 				new RangedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true), "mining_speed",
 				new RangedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_damage",
 				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity",
-				new RangedAttribute("apotheosis:ore_exp", 1.0D, 0.0D, 1024.0D).setSyncable(true), "ore_exp"
+				new RangedAttribute("apotheosis:experience_gained", 1.0D, 0.0D, 1024.0D).setSyncable(true), "experience_gained"
 		);
 		//Formatter::on
 	}
@@ -242,7 +242,7 @@ public class AdventureModule {
 					Apoth.Attributes.MINING_SPEED,
 					Apoth.Attributes.ARROW_DAMAGE,
 					Apoth.Attributes.ARROW_VELOCITY,
-					Apoth.Attributes.ORE_EXP);
+					Apoth.Attributes.EXPERIENCE_GAINED);
 			//Formatter::on
 		});
 	}

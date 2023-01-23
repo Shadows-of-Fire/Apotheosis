@@ -39,6 +39,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
@@ -295,13 +296,21 @@ public class AdventureEvents {
 
 	@SubscribeEvent
 	public void blockBreak(BreakEvent e) {
-		double oreXp = e.getPlayer().getAttributeValue(Apoth.Attributes.ORE_EXP.get());
-		e.setExpToDrop((int) (e.getExpToDrop() * oreXp));
+		double xpMult = e.getPlayer().getAttributeValue(Apoth.Attributes.EXPERIENCE_GAINED.get());
+		e.setExpToDrop((int) (e.getExpToDrop() * xpMult));
 		ItemStack stack = e.getPlayer().getMainHandItem();
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 		for (AffixInstance inst : affixes.values()) {
 			inst.onBlockBreak(e.getPlayer(), e.getLevel(), e.getPos(), e.getState());
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void mobXp(LivingExperienceDropEvent e) {
+		Player player = e.getAttackingPlayer();
+		if (player == null) return;
+		double xpMult = e.getAttackingPlayer().getAttributeValue(Apoth.Attributes.EXPERIENCE_GAINED.get());
+		e.setDroppedExperience((int) (e.getDroppedExperience() * xpMult));
 	}
 
 	@SubscribeEvent

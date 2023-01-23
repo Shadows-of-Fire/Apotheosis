@@ -66,10 +66,14 @@ public class GemItem extends Item {
 	}
 
 	@Override
+	@SuppressWarnings("removal")
 	public String getDescriptionId(ItemStack pStack) {
-		int variant = getVariant(pStack);
-		if (variant >= GemVariant.BY_ID.size()) return super.getDescriptionId(pStack);
-		return super.getDescriptionId(pStack) + "." + GemVariant.values()[variant].key();
+		Gem gem = getGemOrLegacy(pStack);
+		if (gem == null) return super.getDescriptionId();
+		if (gem == LegacyGem.INSTANCE) {
+			return super.getDescriptionId() + "." + GemVariant.BY_ID.getOrDefault(getVariant(pStack), GemVariant.PARITY);
+		}
+		return super.getDescriptionId(pStack) + "." + gem.getId();
 	}
 
 	@Override
