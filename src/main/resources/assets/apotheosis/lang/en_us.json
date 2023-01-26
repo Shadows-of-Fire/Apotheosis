@@ -282,6 +282,9 @@
 
 	"item.apotheosis.gem.apotheosis:core/guardian": "Guardian Gem",
 	"item.apotheosis.gem.apotheosis:core/ballast": "Ballast Gem",
+	"item.apotheosis.gem.apotheosis:core/solar": "Solar Gem",
+	"item.apotheosis.gem.apotheosis:core/lunar": "Lunar Gem",
+
 
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.cracked": "Cracked %s",
