@@ -1,5 +1,7 @@
 package shadows.apotheosis.ench.enchantments.corrupted;
 
+import java.util.List;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -10,6 +12,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.fml.ModList;
+import shadows.apotheosis.adventure.compat.AdventureCuriosCompat;
 
 public class LifeMendingEnchant extends Enchantment {
 
@@ -49,20 +53,32 @@ public class LifeMendingEnchant extends Enchantment {
 
 	private static final EquipmentSlot[] SLOTS = EquipmentSlot.values();
 
+	private boolean lifeMend(LivingHealEvent e, ItemStack stack) {
+		if (!stack.isEmpty() && stack.isDamaged()) {
+			int level = stack.getEnchantmentLevel(this);
+			if (level <= 0) return false;
+			float cost = 1.0F / (1 << level - 1);
+			int maxRestore = Math.min(Mth.floor(e.getAmount() / cost), stack.getDamageValue());
+			e.setAmount(e.getAmount() - maxRestore * cost);
+			stack.setDamageValue(stack.getDamageValue() - maxRestore);
+			return true;
+		}
+		return false;
+	}
+
 	public void lifeMend(LivingHealEvent e) {
 		if (e.getEntity().level.isClientSide) return;
 		float amt = e.getAmount();
 		if (amt <= 0F) return;
 		for (EquipmentSlot slot : SLOTS) {
 			ItemStack stack = e.getEntity().getItemBySlot(slot);
-			if (!stack.isEmpty() && stack.isDamaged()) {
-				int level = stack.getEnchantmentLevel(this);
-				if (level <= 0) continue;
-				float cost = 1.0F / (1 << level - 1);
-				int maxRestore = Math.min(Mth.floor(amt / cost), stack.getDamageValue());
-				e.setAmount(e.getAmount() - maxRestore * cost);
-				stack.setDamageValue(stack.getDamageValue() - maxRestore);
-				return;
+			if (lifeMend(e, stack)) return;
+
+		}
+		if (ModList.get().isLoaded("curios")) {
+			List<ItemStack> stacks = AdventureCuriosCompat.getLifeMendingCurios(e.getEntity());
+			for (ItemStack stack : stacks) {
+				if (lifeMend(e, stack)) return;
 			}
 		}
 	}
