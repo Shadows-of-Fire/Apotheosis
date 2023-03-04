@@ -25,7 +25,7 @@
 	"apotheosis:mining_speed": "Mining Speed",
 	"apotheosis:arrow_damage": "Arrow Damage",
 	"apotheosis:arrow_velocity": "Arrow Velocity",
-	"apotheosis:ore_exp": "Experience From Ores",
+	"apotheosis:experience_gained": "Experience Gained",
 	
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",
@@ -268,8 +268,11 @@
 	"gem_class.ranged_weapon": "Ranged Weapons",
 	"gem_class.light_weapon": "Light Weapons",
 	"gem_class.core_armor": "Core Armor",
+	"gem_class.lower_armor": "Lower Armor",
 	"gem_class.armor": "Armor",
 	"gem_class.breaker": "Mining Tools",
+	"gem_class.light_ranged": "Light or Ranged Weapons",
+	"gem_class.weapons_or_tools": "Weapons or Tools",
 
 	"gem_class.helmet": "Helmets",
 	"gem_class.chestplate": "Chestplates",
@@ -284,6 +287,14 @@
 	"item.apotheosis.gem.apotheosis:core/ballast": "Ballast Gem",
 	"item.apotheosis.gem.apotheosis:core/solar": "Solar Gem",
 	"item.apotheosis.gem.apotheosis:core/lunar": "Lunar Gem",
+	"item.apotheosis.gem.apotheosis:core/samurai": "Gem of the Samurai",
+	"item.apotheosis.gem.apotheosis:core/warlord": "Gem of the Warlord",
+	"item.apotheosis.gem.apotheosis:core/splendor": "Splendor Gem",
+	"item.apotheosis.gem.apotheosis:core/tyrannical": "Tyrannical Gem",
+	"item.apotheosis.gem.apotheosis:core/breach": "Breach Gem",
+	"item.apotheosis.gem.apotheosis:core/lightning": "Lightning Gem",
+	"item.apotheosis.gem.apotheosis:core/slipstream": "Slipstream Gem",
+	"item.apotheosis.gem.apotheosis:core/brawler": "Brawler's Gem",
 
 
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
@@ -971,6 +982,7 @@
     "item.apotheosis.potion_charm.desc3": "Source: %s",
     "item.apotheosis.potion_charm.enabled": "Enabled",
     "item.apotheosis.potion_charm.disabled": "Disabled",
+	"item.apotheosis.potion_charm.curios_only": "Only works in a Curios slot",
     
     "comment_id": "/Anvil Module",
     "info.apotheosis.anvil": "Can be enchanted.",
