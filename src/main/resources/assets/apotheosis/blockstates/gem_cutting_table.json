@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "apotheosis:block/gem_cutting_table",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "apotheosis:block/gem_cutting_table",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "apotheosis:block/gem_cutting_table",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "apotheosis:block/gem_cutting_table",
+      "y": 0
+    }
+  }
+}

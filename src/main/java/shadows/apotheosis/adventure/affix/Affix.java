@@ -32,6 +32,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.json.ItemAdapter;
@@ -182,6 +183,21 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	 */
 	public float getDurabilityBonusPercentage(ItemStack stack, LootRarity rarity, float level, @Nullable ServerPlayer user) {
 		return 0;
+	}
+
+	/**
+	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
+	 * If the value is set to zero or below, the event will be cancelled.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param src     The Damage Source of the attack.
+	 * @param ent     The entity being attacked.
+	 * @param amount  The amount of damage that is to be taken.
+	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
+	 */
+	public float onHurt(ItemStack stack, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
+		return amount;
 	}
 
 	public boolean enablesTelepathy() {

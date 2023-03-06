@@ -1,0 +1,182 @@
+{
+	"variant": "tyrannical",
+	"weight": 10,
+	"quality": 0,
+	"unique": true,
+	"dimensions": [
+	],
+	"bonuses": [{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "heavy_weapon",
+				"types": [
+					"heavy_weapon"
+				]
+			},
+			"attribute": "apotheosis:current_hp_damage",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.03,
+					"steps": 3,
+					"step": 0.01
+				},
+				"uncommon": {
+					"min": 0.06,
+					"steps": 4,
+					"step": 0.01
+				},
+				"rare": {
+					"min": 0.10,
+					"steps": 5,
+					"step": 0.01
+				},
+				"epic": {
+					"min": 0.15,
+					"steps": 6,
+					"step": 0.005
+				},
+				"mythic": {
+					"min": 0.22,
+					"steps": 7,
+					"step": 0.005
+				},
+				"ancient": {
+					"min": 0.3,
+					"steps": 10,
+					"step": 0.01
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "light_weapon",
+				"types": [
+					"sword",
+					"trident"
+				]
+			},
+			"attribute": "minecraft:generic.attack_knockback",
+			"operation": "ADDITION",
+			"values": {
+				"common": {
+					"min": 0.2,
+					"steps": 3,
+					"step": 0.1
+				},
+				"uncommon": {
+					"min": 0.5,
+					"steps": 4,
+					"step": 0.1
+				},
+				"rare": {
+					"min": 1.0,
+					"steps": 5,
+					"step": 0.1
+				},
+				"epic": {
+					"min": 1.5,
+					"steps": 6,
+					"step": 0.1
+				},
+				"mythic": {
+					"min": 2.25,
+					"steps": 7,
+					"step": 0.1
+				},
+				"ancient": {
+					"min": 3,
+					"steps": 10,
+					"step": 0.1
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "core_armor",
+				"types": [
+					"chestplate", "leggings"
+				]
+			},
+			"attribute": "minecraft:generic.armor_toughness",
+			"operation": "ADDITION",
+			"values": {
+				"common": {
+					"min": 0.5,
+					"steps": 3,
+					"step": 0.25
+				},
+				"uncommon": {
+					"min": 1.5,
+					"steps": 4,
+					"step": 0.25
+				},
+				"rare": {
+					"min": 2.5,
+					"steps": 5,
+					"step": 0.25
+				},
+				"epic": {
+					"min": 3.9,
+					"steps": 6,
+					"step": 0.1
+				},
+				"mythic": {
+					"min": 4.5,
+					"steps": 7,
+					"step": 0.1
+				},
+				"ancient": {
+					"min": 6,
+					"steps": 10,
+					"step": 0.1
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "shield",
+				"types": [
+					"shield"
+				]
+			},
+			"attribute": "minecraft:generic.armor_toughness",
+			"operation": "MULTIPLY_TOTAL",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 3,
+					"step": 0.02
+				},
+				"uncommon": {
+					"min": 0.11,
+					"steps": 4,
+					"step": 0.02
+				},
+				"rare": {
+					"min": 0.20,
+					"steps": 5,
+					"step": 0.02
+				},
+				"epic": {
+					"min": 0.30,
+					"steps": 6,
+					"step": 0.01
+				},
+				"mythic": {
+					"min": 0.36,
+					"steps": 7,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.45,
+					"steps": 10,
+					"step": 0.01
+				}
+			}
+		}
+	]
+}

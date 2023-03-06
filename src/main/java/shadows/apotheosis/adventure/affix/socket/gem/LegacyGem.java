@@ -29,7 +29,7 @@ public final class LegacyGem extends Gem {
 	public static final LegacyGem INSTANCE = new LegacyGem();
 
 	public LegacyGem() {
-		super(GemVariant.PARITY, 0, 0, Collections.emptySet(), null, null, Collections.emptyList());
+		super(0, 0, Collections.emptySet(), null, null, Collections.emptyList(), false);
 	}
 
 	public static final String MODIFIER = "modifier";
@@ -89,7 +89,7 @@ public final class LegacyGem extends Gem {
 	}
 
 	@Override
-	public int getMaxFacets(ItemStack gem, LootRarity rarity) {
+	public int getMaxFacets(LootRarity rarity) {
 		return 0;
 	}
 

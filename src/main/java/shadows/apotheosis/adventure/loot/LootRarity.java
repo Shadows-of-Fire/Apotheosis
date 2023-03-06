@@ -41,7 +41,6 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
-import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
 import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.color.GradientColor;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
@@ -159,6 +158,16 @@ public record LootRarity(int defaultWeight, String id, TextColor color, List<Loo
 	@Override
 	public int getWeight() {
 		return (int) WEIGHTS.get(this)[0];
+	}
+
+	public LootRarity prev() {
+		if (this == COMMON) return this;
+		return LIST.get(this.ordinal - 1);
+	}
+
+	public LootRarity next() {
+		if (this == ANCIENT) return this;
+		return LIST.get(this.ordinal + 1);
 	}
 
 	/**

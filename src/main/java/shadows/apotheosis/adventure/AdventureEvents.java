@@ -57,7 +57,6 @@ import shadows.apotheosis.Apotheosis.ApotheosisCommandEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
-import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
@@ -174,7 +173,16 @@ public class AdventureEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onDamage(LivingHurtEvent e) {
 		Apoth.Affixes.MAGICAL.ifPresent(afx -> afx.onHurt(e));
-		DamageReductionAffix.onHurt(e);
+		DamageSource src = e.getSource();
+		LivingEntity ent = e.getEntity();
+		float amount = e.getAmount();
+		for (ItemStack s : ent.getAllSlots()) {
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
+			for (AffixInstance inst : affixes.values()) {
+				amount = inst.onHurt(src, ent, amount);
+			}
+		}
+		e.setAmount(amount);
 	}
 
 	/**

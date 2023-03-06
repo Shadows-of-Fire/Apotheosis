@@ -24,6 +24,7 @@ import shadows.apotheosis.Apoth.Gems;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.DamageReductionBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.DurabilityBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -55,6 +56,7 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 	protected void registerBonusCodecs() {
 		this.registerBonusCodec(Apotheosis.loc("attribute"), AttributeBonus.CODEC);
 		this.registerBonusCodec(Apotheosis.loc("durability"), DurabilityBonus.CODEC);
+		this.registerBonusCodec(Apotheosis.loc("damage_reduction"), DamageReductionBonus.CODEC);
 	}
 
 	@Override
@@ -86,10 +88,9 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 	public static ItemStack createGemStack(Gem gem, RandomSource rand, @Nullable LootRarity rarity, float luck) {
 		ItemStack stack = new ItemStack(Apoth.Items.GEM.get());
 		GemItem.setGem(stack, gem);
-		GemItem.setVariant(stack, gem.getVariant());
 		if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
 		GemItem.setLootRarity(stack, rarity);
-		int facets = rand.nextInt(gem.getMaxFacets(stack, rarity) + 1);
+		int facets = rand.nextInt(gem.getMaxFacets(rarity) + 1);
 		GemItem.setFacets(stack, facets);
 		return stack;
 	}

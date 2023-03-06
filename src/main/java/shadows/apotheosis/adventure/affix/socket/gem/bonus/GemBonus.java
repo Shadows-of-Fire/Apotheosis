@@ -4,8 +4,10 @@ import java.util.function.BiConsumer;
 
 import javax.annotation.Nullable;
 
+import com.mojang.datafixers.kinds.App;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Keyable;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mojang.serialization.codecs.SimpleMapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -28,6 +30,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -59,7 +62,7 @@ public abstract class GemBonus {
 	 * Returns the max number of facets available for this gem.<br>
 	 * Facets are a user-facing wrapper on the purity (level), because most gems do not change on specify purity percentages.
 	 */
-	public abstract int getMaxFacets(ItemStack gem, LootRarity rarity);
+	public abstract int getMaxFacets(LootRarity rarity);
 
 	/**
 	 * Validates that this gem bonus has been deserialized into a valid state.
@@ -181,8 +184,23 @@ public abstract class GemBonus {
 	 * @param user    The user of the item, if applicable.
 	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
 	 */
-	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity lootRarity, int facets, ServerPlayer user) {
+	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, int facets, ServerPlayer user) {
 		return 0;
+	}
+
+	/**
+	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
+	 * If the value is set to zero or below, the event will be cancelled.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param src     The Damage Source of the attack.
+	 * @param ent     The entity being attacked.
+	 * @param amount  The amount of damage that is to be taken.
+	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
+	 */
+	public float onHurt(ItemStack gem, LootRarity rarity, int facets, DamageSource src, LivingEntity ent, float amount) {
+		return amount;
 	}
 
 	public ResourceLocation getId() {
@@ -191,6 +209,10 @@ public abstract class GemBonus {
 
 	public GemClass getGemClass() {
 		return this.gemClass;
+	}
+
+	protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {
+		return GemClass.CODEC.fieldOf("gem_class").forGetter(gem -> gem.getGemClass());
 	}
 
 }

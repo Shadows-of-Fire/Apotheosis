@@ -57,7 +57,7 @@ public class GemItem extends Item {
 		if (gem == null || rarity == null) return super.getName(pStack);
 		MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
 		int facets = GemItem.getFacets(pStack);
-		if (facets > 0 && facets == gem.getMaxFacets(pStack, rarity)) {
+		if (facets > 0 && facets == gem.getMaxFacets(rarity)) {
 			comp = Component.translatable("item.apotheosis.gem.flawless", comp);
 		} else if (facets == 0 && gem != Gems.LEGACY.get()) {
 			comp = Component.translatable("item.apotheosis.gem.cracked", comp);
@@ -66,13 +66,9 @@ public class GemItem extends Item {
 	}
 
 	@Override
-	@SuppressWarnings("removal")
 	public String getDescriptionId(ItemStack pStack) {
 		Gem gem = getGemOrLegacy(pStack);
 		if (gem == null) return super.getDescriptionId();
-		if (gem == LegacyGem.INSTANCE) {
-			return super.getDescriptionId() + "." + GemVariant.BY_ID.getOrDefault(getVariant(pStack), GemVariant.PARITY);
-		}
 		return super.getDescriptionId(pStack) + "." + gem.getId();
 	}
 
@@ -82,7 +78,7 @@ public class GemItem extends Item {
 		LootRarity rarity = getLootRarity(pStack);
 		if (gem == null || rarity == null) return super.isFoil(pStack);
 		int facets = GemItem.getFacets(pStack);
-		return facets > 0 && facets == gem.getMaxFacets(pStack, rarity);
+		return facets > 0 && facets == gem.getMaxFacets(rarity);
 	}
 
 	/**
@@ -152,14 +148,6 @@ public class GemItem extends Item {
 		var tag = gem.getOrCreateTag();
 		if (tag.contains(GEM)) return GemManager.INSTANCE.getValue(new ResourceLocation(tag.getString(GEM)));
 		return Gems.LEGACY.get();
-	}
-
-	public static void setVariant(ItemStack stack, GemVariant variant) {
-		stack.getOrCreateTag().putInt("variant", variant.id());
-	}
-
-	public static int getVariant(ItemStack stack) {
-		return stack.hasTag() ? stack.getTag().getInt("variant") : 0;
 	}
 
 	public static void setFacets(ItemStack stack, int facets) {

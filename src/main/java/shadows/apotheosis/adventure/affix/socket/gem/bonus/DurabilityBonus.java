@@ -20,7 +20,7 @@ public class DurabilityBonus extends GemBonus {
 	//Formatter::off
 	public static Codec<DurabilityBonus> CODEC = RecordCodecBuilder.create(inst -> inst
 		.group(
-			GemClass.CODEC.fieldOf("gem_class").forGetter(a -> a.gemClass),
+			gemClass(),
 			VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
 			.apply(inst, DurabilityBonus::new)
 		);
@@ -40,7 +40,7 @@ public class DurabilityBonus extends GemBonus {
 	}
 
 	@Override
-	public int getMaxFacets(ItemStack gem, LootRarity rarity) {
+	public int getMaxFacets(LootRarity rarity) {
 		return this.values.get(rarity).steps();
 	}
 

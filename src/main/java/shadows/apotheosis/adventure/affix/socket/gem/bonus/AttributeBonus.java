@@ -25,7 +25,7 @@ public class AttributeBonus extends GemBonus {
 	//Formatter::off
 	public static Codec<AttributeBonus> CODEC = RecordCodecBuilder.create(inst -> inst
 		.group(
-			GemClass.CODEC.fieldOf("gem_class").forGetter(a -> a.gemClass),
+			gemClass(),
 			ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(a -> a.attribute),
 			new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
 			VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
@@ -55,7 +55,7 @@ public class AttributeBonus extends GemBonus {
 	}
 
 	@Override
-	public int getMaxFacets(ItemStack gem, LootRarity rarity) {
+	public int getMaxFacets(LootRarity rarity) {
 		return this.values.get(rarity).steps();
 	}
 

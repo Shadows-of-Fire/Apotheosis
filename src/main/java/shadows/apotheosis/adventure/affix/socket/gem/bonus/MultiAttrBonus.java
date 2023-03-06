@@ -28,7 +28,7 @@ public class MultiAttrBonus extends GemBonus {
 	//Formatter::off
 	public static Codec<MultiAttrBonus> CODEC = RecordCodecBuilder.create(inst -> inst
 		.group(
-			GemClass.CODEC.fieldOf("gem_class").forGetter(a -> a.gemClass),
+			gemClass(),
 			ModifierInst.CODEC.listOf().fieldOf("modifiers").forGetter(a -> a.modifiers),
 			Codec.STRING.fieldOf("desc").forGetter(a -> a.desc))
 			.apply(inst, MultiAttrBonus::new)
@@ -64,7 +64,7 @@ public class MultiAttrBonus extends GemBonus {
 	}
 
 	@Override
-	public int getMaxFacets(ItemStack gem, LootRarity rarity) {
+	public int getMaxFacets(LootRarity rarity) {
 		return this.modifiers.stream().mapToInt(m -> m.values.get(rarity).steps()).max().orElse(0);
 	}
 

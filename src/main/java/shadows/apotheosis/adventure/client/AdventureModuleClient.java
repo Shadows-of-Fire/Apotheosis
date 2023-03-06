@@ -37,7 +37,8 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -90,6 +91,7 @@ import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingScreen;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import shadows.apotheosis.util.ItemAccess;
@@ -100,9 +102,9 @@ public class AdventureModuleClient {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(AdventureModuleClient.class);
-		ItemProperties.register(Apoth.Items.GEM.get(), new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
 		MenuScreens.register(Apoth.Menus.REFORGING.get(), ReforgingScreen::new);
 		MenuScreens.register(Apoth.Menus.SALVAGE.get(), SalvagingScreen::new);
+		MenuScreens.register(Apoth.Menus.GEM_CUTTING.get(), GemCuttingScreen::new);
 		BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
 	}
 
@@ -126,6 +128,24 @@ public class AdventureModuleClient {
 		@SubscribeEvent
 		public static void tooltipComps(RegisterClientTooltipComponentFactoriesEvent e) {
 			e.register(SocketComponent.class, SocketTooltipRenderer::new);
+		}
+
+		@SubscribeEvent
+		public static void addGemModels(ModelEvent.RegisterAdditional e) {
+			Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> loc.getNamespace().equals(Apotheosis.MODID) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json")).keySet();
+			for (ResourceLocation s : locs) {
+				String path = s.getPath().substring("models/".length(), s.getPath().length() - ".json".length());
+				e.register(new ResourceLocation(Apotheosis.MODID, path));
+			}
+		}
+
+		@SubscribeEvent
+		public static void replaceGemModel(ModelEvent.BakingCompleted e) {
+			ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
+			BakedModel oldModel = e.getModels().get(key);
+			if (oldModel != null) {
+				e.getModels().put(key, new GemModel(oldModel, e.getModelBakery()));
+			}
 		}
 	}
 

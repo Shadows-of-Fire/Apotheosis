@@ -32,7 +32,9 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 	public boolean matches(Container pInv, Level pLevel) {
 		ItemStack gemStack = pInv.getItem(1);
 		Gem gem = GemItem.getGemOrLegacy(gemStack);
-		return SocketHelper.getEmptySockets(pInv.getItem(0)) > 0 && gem != null && gem.canApplyTo(pInv.getItem(0), gemStack, GemItem.getLootRarity(gemStack));
+		if (gem == null) return false;
+		if (SocketHelper.getEmptySockets(pInv.getItem(0)) == 0) return false;
+		return gem.canApplyTo(pInv.getItem(0), gemStack, GemItem.getLootRarity(gemStack));
 	}
 
 	/**

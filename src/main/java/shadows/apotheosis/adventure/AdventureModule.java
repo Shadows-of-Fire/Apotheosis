@@ -58,9 +58,12 @@ import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
+import shadows.apotheosis.adventure.affix.socket.GemUpgradeRecipe;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import shadows.apotheosis.adventure.boss.BossArmorManager;
 import shadows.apotheosis.adventure.boss.BossDungeonFeature;
 import shadows.apotheosis.adventure.boss.BossDungeonFeature2;
@@ -117,6 +120,7 @@ public class AdventureModule {
 			f.addRecipe(new SocketingRecipe());
 			f.addRecipe(new ExpulsionRecipe());
 			f.addRecipe(new ExtractionRecipe());
+			f.addRecipe(new GemUpgradeRecipe());
 			Item g = Apoth.Items.GEM_DUST.get();
 			f.addShaped(Apoth.Items.VIAL_OF_EXPULSION, 3, 3, g, Items.MAGMA_CREAM, g, Items.BLAZE_ROD, Apotheosis.potionIngredient(Potions.THICK), Items.BLAZE_ROD, g, Items.LAVA_BUCKET, g);
 			f.addShaped(Apoth.Items.VIAL_OF_EXTRACTION, 3, 3, g, Items.AMETHYST_SHARD, g, Items.ENDER_PEARL, Apotheosis.potionIngredient(Potions.THICK), Items.ENDER_PEARL, g, Items.WATER_BUCKET, g);
@@ -126,6 +130,7 @@ public class AdventureModule {
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
 			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());
+			LootSystem.defaultBlockTable(Apoth.Blocks.GEM_CUTTING_TABLE.get());
 			AdventureGeneration.init();
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
@@ -157,6 +162,7 @@ public class AdventureModule {
 		}
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "reforging_table");
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "salvaging_table");
+		e.getRegistry().register(new BlockItem(Apoth.Blocks.GEM_CUTTING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_cutting_table");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sigil_of_socketing");
 		e.getRegistry().register(new GlowyItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "superior_sigil_of_socketing");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sigil_of_enhancement");
@@ -168,6 +174,7 @@ public class AdventureModule {
 		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable()), "boss_spawner");
 		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5, 1000F)), "reforging_table");
 		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "salvaging_table");
+		e.getRegistry().register(new GemCuttingBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "gem_cutting_table");
 	}
 
 	@SubscribeEvent
@@ -200,6 +207,7 @@ public class AdventureModule {
 	public void containers(Register<MenuType<?>> e) {
 		e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new), "reforging");
 		e.getRegistry().register(new MenuType<>(SalvagingMenu::new), "salvage");
+		e.getRegistry().register(new MenuType<>(GemCuttingMenu::new), "gem_cutting");
 	}
 
 	@SubscribeEvent

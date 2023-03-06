@@ -43,8 +43,10 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
+import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -59,35 +61,34 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	//Formatter::off
 	public static final Codec<Gem> CODEC = RecordCodecBuilder.create(inst -> 
 		inst.group(
-			GemVariant.CODEC.fieldOf("variant").forGetter(Gem::getVariant),
 			ExtraCodecs.NON_NEGATIVE_INT.fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
 			Codec.FLOAT.fieldOf("quality").forGetter(ILuckyWeighted::getQuality),
 			PlaceboCodecs.setCodec(ResourceLocation.CODEC).optionalFieldOf("dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
 			LootRarity.DISPATCH_CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(LootRarity.Clamped::getMinRarity),
 			LootRarity.DISPATCH_CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(LootRarity.Clamped::getMaxRarity),
-			GemManager.gemBonusCodec().listOf().fieldOf("bonuses").forGetter(Gem::getBonuses))
+			GemManager.gemBonusCodec().listOf().fieldOf("bonuses").forGetter(Gem::getBonuses),
+			Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique))
 			.apply(inst, Gem::new)
 		);
 	
 	//Formatter::on
 
-	protected final GemVariant variant;
 	protected final int weight;
 	protected final float quality;
 	protected final Set<ResourceLocation> dimensions;
-
 	protected final List<GemBonus> bonuses;
+	protected final boolean unique;
 
 	protected transient final Map<LootCategory, GemBonus> bonusMap;
 	protected transient final int uuidsNeeded;
 	protected transient final LootRarity minRarity, maxRarity;
 
-	public Gem(GemVariant variant, int weight, float quality, Set<ResourceLocation> dimensions, @Nullable LootRarity minRarity, @Nullable LootRarity maxRarity, List<GemBonus> bonuses) {
-		this.variant = variant;
+	public Gem(int weight, float quality, Set<ResourceLocation> dimensions, @Nullable LootRarity minRarity, @Nullable LootRarity maxRarity, List<GemBonus> bonuses, boolean unique) {
 		this.weight = weight;
 		this.quality = quality;
 		this.dimensions = dimensions;
 		this.bonuses = bonuses;
+		this.unique = unique;
 		this.bonusMap = bonuses.stream().<Pair<LootCategory, GemBonus>>mapMulti((gemData, mapper) -> {
 			for (LootCategory c : gemData.getGemClass().types()) {
 				mapper.accept(Pair.of(c, gemData));
@@ -137,6 +138,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack gem, LootRarity rarity, int facets, Consumer<Component> list) {
+		if (this.isUnique()) list.accept(Component.translatable("text.apotheosis.unique").withStyle(Style.EMPTY.withColor(0xC73912)));
 		list.accept(Component.translatable("text.apotheosis.facets", 4 + facets).withStyle(Style.EMPTY.withColor(0xAEA2D6)));
 		list.accept(CommonComponents.EMPTY);
 		Style style = Style.EMPTY.withColor(0x0AFF0A);
@@ -167,8 +169,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * Returns the max number of facets available for this gem.<br>
 	 * Facets are a user-facing wrapper on the purity (level), because most gems do not change on specify purity percentages.
 	 */
-	public int getMaxFacets(ItemStack gem, LootRarity rarity) {
-		return bonuses.stream().mapToInt(b -> b.getMaxFacets(gem, rarity)).max().orElse(0);
+	public int getMaxFacets(LootRarity rarity) {
+		return bonuses.stream().mapToInt(b -> b.getMaxFacets(rarity)).max().orElse(0);
 	}
 
 	/**
@@ -180,6 +182,10 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 */
 	public boolean canApplyTo(ItemStack stack, ItemStack gem, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
+		if (this.isUnique()) {
+			List<Gem> gems = SocketHelper.getActiveGems(stack);
+			if (gems.contains(this)) return false;
+		}
 		return !cat.isNone() && bonusMap.containsKey(cat) && bonusMap.get(cat).supports(rarity);
 	}
 
@@ -280,6 +286,21 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		return getBonus(socketed).map(b -> b.getDurabilityBonusPercentage(gemStack, lootRarity, facets, user)).orElse(0F);
 	}
 
+	/**
+	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
+	 * If the value is set to zero or below, the event will be cancelled.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param src     The Damage Source of the attack.
+	 * @param ent     The entity being attacked.
+	 * @param amount  The amount of damage that is to be taken.
+	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
+	 */
+	public float onHurt(ItemStack socketed, ItemStack gemStack, LootRarity rarity, int facets, DamageSource src, LivingEntity ent, float amount) {
+		return getBonus(socketed).map(b -> b.onHurt(gemStack, rarity, facets, src, ent, amount)).orElse(amount);
+	}
+
 	protected Optional<GemBonus> getBonus(ItemStack stack) {
 		return Optional.ofNullable(this.bonusMap.get(LootCategory.forItem(stack)));
 	}
@@ -301,10 +322,6 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	@Override
 	public int hashCode() {
 		return this.getId().hashCode();
-	}
-
-	public GemVariant getVariant() {
-		return this.variant;
 	}
 
 	@Override
@@ -336,8 +353,11 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		return this.bonuses;
 	}
 
+	public boolean isUnique() {
+		return this.unique;
+	}
+
 	public Gem validate() {
-		Preconditions.checkNotNull(this.variant, "Gem " + this.getId() + " has a null variant");
 		Preconditions.checkArgument(this.weight >= 0, "Gem " + this.getId() + " has a negative weight");
 		Preconditions.checkArgument(this.quality >= 0, "Gem " + this.getId() + " has a negative quality");
 		Preconditions.checkNotNull(this.dimensions);

@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.mojang.serialization.Codec;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,13 +18,12 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
-import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
@@ -47,23 +47,16 @@ public class DamageReductionAffix extends Affix {
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(Component.translatable("affix.apotheosis:damage_reduction.desc", Component.translatable("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level))).withStyle(ChatFormatting.YELLOW));
+		var comp = Component.translatable("affix.apotheosis:damage_reduction.desc", Component.translatable("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level)));
+		comp = Component.translatable("text.apotheosis.dot_prefix", comp).withStyle(ChatFormatting.YELLOW);
+		list.accept(comp);
 	}
 
-	public static void onHurt(LivingHurtEvent e) {
-		DamageSource src = e.getSource();
-		if (src.isBypassInvul() || src.isBypassMagic()) return;
-		LivingEntity ent = e.getEntity();
-		float amount = e.getAmount();
-		for (ItemStack s : ent.getArmorSlots()) {
-			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
-			for (AffixInstance inst : affixes.values()) {
-				if (inst.affix() instanceof DamageReductionAffix dmg && dmg.type.test(src)) {
-					amount *= 1 - dmg.getTrueLevel(inst.rarity(), inst.level());
-				}
-			}
-		}
-		e.setAmount(amount);
+	@Override
+	public float onHurt(ItemStack stack, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
+		if (src.isBypassInvul() || src.isBypassMagic()) return amount;
+		if (this.type.test(src)) return amount * (1 - this.getTrueLevel(rarity, level));
+		return super.onHurt(stack, rarity, level, src, ent, amount);
 	}
 
 	private float getTrueLevel(LootRarity rarity, float level) {
@@ -76,6 +69,8 @@ public class DamageReductionAffix extends Affix {
 		FIRE("fire", DamageSource::isFire),
 		FALL("fall", DamageSource::isFall),
 		EXPLOSION("explosion", DamageSource::isExplosion);
+
+		public static Codec<DamageType> CODEC = new EnumCodec<>(DamageType.class);
 
 		private final String id;
 		private final Predicate<DamageSource> predicate;

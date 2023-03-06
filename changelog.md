@@ -1,17 +1,20 @@
 ## 6.1.0
 * Gems have been rewritten! Gems are now backed by an all new system that allows for far more customization than before.
-  * New Gems have been added, with all sorts of new features and stat ranges. Old gems will be marked with [Legacy] and will function as they used to, but will not have rarities or be upgradable.
+  * New Gems have been added, with all sorts of new features and stat ranges. Old gems will be referred to as Legacy Gems, and will not have rarities nor be upgradable.
   * Purity has been replaced by Facets, a value indicating the number of cuts in the gem. A Fully-Faceted Gem will be referred to as a "Flawless" Gem and will Glow.
-  * Gems now have individual rarities, indicated by name color.  Gems of a higher rarity will typically be stronger.
+  * Gems now have individual rarities, indicated by name color.  Gems of a higher rarity will be stronger.
   * Gems are now able to be dimensionally-locked. Higher rarity gems will be found in the nether and end, by default.
-  * Gems may be locked to a specific type of item, allowing for the creation of stronger gems that cannot be spammed across every item.
-  * [NYI] Gems can now be upgraded in the Gem Cutting Table, allowing for increasing the number of Facets.
+  * Gems may now provide different bonuses when socketed into different types of items.
+  * You can increase the number of facets that a gem has in the Gem Cutting Table.
+  * Two Flawless (Max-Facet) gems of the same type and rarity can be upgraded to the next rarity in the Gem Cutting Table.
   * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
-* The quality value (weight increase per point of luck) of bee and goat bosses has been significantly reduced.
-* The rarity of bee and goat bosses has been reduced to epic (was mythic).
+* Bee and Goat bosses have been removed. Those had a good run, but were ultimately not good for anything.
 * The cooldown field now works properly for HURT_SELF and ATTACK_SELF potion affixes.
 * The default boss spawn cooldown has been increased to 1800 ticks (from 400).
 * Potentially fixed earlier - NBT tags that were appearing on random mob drops will no longer appear.
+* Life Mending will now work on curios.
+* Potion Charms can be set to only function in curios slots.
+* Fixed an issue where the Enchantment Library would not display certain applicable enchantments (like sharpness on axes).
 
 ## 6.0.3
 * Fixed potion affixes not spawning.
