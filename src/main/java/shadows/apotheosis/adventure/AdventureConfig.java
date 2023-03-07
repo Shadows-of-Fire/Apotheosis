@@ -7,7 +7,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -73,17 +72,6 @@ public class AdventureConfig {
 
 	public static void load(Configuration c) {
 		c.setTitle("Apotheosis Adventure Module Config");
-		for (LootRarity r : LootRarity.values()) {
-			if (r != LootRarity.ANCIENT) {
-				int weight = c.getInt(r.id() + " weight", "rarities", r.defaultWeight(), 0, 10000, "The weight of this rarity.  The chance of this rarity appearing is <weight>/<total weight>.");
-				float quality = c.getFloat(r.id() + " quality", "rarities", r.ordinal() * 1.5F, 0, 100, "The quality of this rarity.  Each point of luck increases the weight of this rarity by the quality value.");
-				LootRarity.WEIGHTS.put(r, new float[] { weight, quality });
-			}
-			LootRarity.WEIGHTS.put(LootRarity.ANCIENT, new float[] { 0, 0 });
-		}
-		if (LootRarity.WEIGHTS.values().stream().collect(Collectors.summarizingInt(arr -> (int) arr[0])).getSum() <= 0) {
-			throw new RuntimeException("The total loot rarity weight may not be zero!");
-		}
 
 		TYPE_OVERRIDES.clear();
 		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|sword", "minecraft:shulker_shell|none" }, "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.\nValid types are: none, sword, trident, shield, heavy_weapon, pickaxe, shovel, crossbow, bow");

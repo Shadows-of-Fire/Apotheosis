@@ -1,0 +1,85 @@
+{
+	"weight": 0,
+	"quality": 7.5,
+	"rules": [{
+			"type": "ancient",
+			"chance": 1.0
+		},
+		{
+			"type": "stat",
+			"chance": 1.0
+		},
+		{
+			"type": "stat",
+			"chance": 1.0,
+			"backup": {
+				"type": "ability",
+				"chance": 0.7
+			}
+		},
+		{
+			"type": "stat",
+			"chance": 1.0,
+			"backup": {
+				"type": "ability",
+				"chance": 0.6
+			}
+		},
+		{
+			"type": "stat",
+			"chance": 1.0,
+			"backup": {
+				"type": "ability",
+				"chance": 0.5
+			}
+		},
+		{
+			"type": "stat",
+			"chance": 1.0,
+			"backup": {
+				"type": "ability",
+				"chance": 0.4
+			}
+		},
+		{
+			"type": "ability",
+			"chance": 1.0
+		},
+		{
+			"type": "ability",
+			"chance": 1.0
+		},
+		{
+			"type": "ability",
+			"chance": 0.75
+		},
+		{
+			"type": "ability",
+			"chance": 0.45
+		},
+		{
+			"type": "socket",
+			"chance": 1.0
+		},
+		{
+			"type": "socket",
+			"chance": 0.85
+		},
+		{
+			"type": "socket",
+			"chance": 0.65
+		},
+		{
+			"type": "socket",
+			"chance": 0.45
+		},
+		{
+			"type": "socket",
+			"chance": 0.25
+		},
+		{
+			"type": "durability",
+			"chance": 0.75
+		}
+	]
+}

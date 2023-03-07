@@ -39,7 +39,7 @@ import shadows.placebo.util.StepFunction;
 
 public abstract class GemBonus {
 
-	public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = Codec.simpleMap(LootRarity.DISPATCH_CODEC, StepFunction.CODEC, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
+	public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = Codec.simpleMap(LootRarity.CODEC, StepFunction.CODEC, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
 
 	protected final ResourceLocation id;
 	protected final GemClass gemClass;

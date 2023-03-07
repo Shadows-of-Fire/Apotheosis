@@ -64,8 +64,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 			ExtraCodecs.NON_NEGATIVE_INT.fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
 			Codec.FLOAT.fieldOf("quality").forGetter(ILuckyWeighted::getQuality),
 			PlaceboCodecs.setCodec(ResourceLocation.CODEC).optionalFieldOf("dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
-			LootRarity.DISPATCH_CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(LootRarity.Clamped::getMinRarity),
-			LootRarity.DISPATCH_CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(LootRarity.Clamped::getMaxRarity),
+			LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(LootRarity.Clamped::getMinRarity),
+			LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(LootRarity.Clamped::getMaxRarity),
 			GemManager.gemBonusCodec().listOf().fieldOf("bonuses").forGetter(Gem::getBonuses),
 			Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique))
 			.apply(inst, Gem::new)

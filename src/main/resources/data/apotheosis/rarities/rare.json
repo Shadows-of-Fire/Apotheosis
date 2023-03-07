@@ -1,0 +1,42 @@
+{
+
+	"weight": 150,
+	"quality": 3,
+	"rules": [{
+			"type": "stat",
+			"chance": 1.0
+		},
+		{
+			"type": "stat",
+			"chance": 1.0
+		},
+		{
+			"type": "stat",
+			"chance": 1.0,
+			"backup": {
+				"type": "ability",
+				"chance": 0.25
+			}
+		},
+		{
+			"type": "ability",
+			"chance": 1.0
+		},
+		{
+			"type": "ability",
+			"chance": 0.33
+		},
+		{
+			"type": "socket",
+			"chance": 0.65
+		},
+		{
+			"type": "socket",
+			"chance": 0.45
+		},
+		{
+			"type": "durability",
+			"chance": 0.1
+		}
+	]
+}

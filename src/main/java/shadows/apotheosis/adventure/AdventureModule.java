@@ -81,10 +81,10 @@ import shadows.apotheosis.adventure.loot.AffixLootPoolEntry;
 import shadows.apotheosis.adventure.loot.GemLootModifier;
 import shadows.apotheosis.adventure.loot.GemLootPoolEntry;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.adventure.loot.LootRarityManager;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
 import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
-import shadows.apotheosis.util.MiscDatagenCode;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.block_entity.TickingBlockEntityType;
 import shadows.placebo.config.Configuration;
@@ -116,6 +116,7 @@ public class AdventureModule {
 		BossArmorManager.INSTANCE.registerToBus();
 		BossItemManager.INSTANCE.registerToBus();
 		RandomSpawnerManager.INSTANCE.registerToBus();
+		LootRarityManager.INSTANCE.registerToBus();
 		Apotheosis.HELPER.registerProvider(f -> {
 			f.addRecipe(new SocketingRecipe());
 			f.addRecipe(new ExpulsionRecipe());
@@ -134,7 +135,6 @@ public class AdventureModule {
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
 		});
-		MiscDatagenCode.genRarities();
 	}
 
 	@SubscribeEvent
