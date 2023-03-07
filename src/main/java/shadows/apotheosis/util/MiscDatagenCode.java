@@ -8,6 +8,8 @@ import java.util.function.BiConsumer;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
@@ -23,6 +25,20 @@ import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class MiscDatagenCode {
+
+	public static void genRarities() {
+		Gson gson = AffixLootManager.GSON;
+		for (LootRarity r : LootRarity.LIST) {
+			File file = new File(FMLPaths.GAMEDIR.get().toFile(), "datagen/rarities/" + r.id() + ".json");
+			file.getParentFile().mkdirs();
+			try (FileWriter writer = new FileWriter(file)) {
+				JsonElement json = LootRarity.DIRECT_CODEC.encodeStart(JsonOps.INSTANCE, r).get().left().get();
+				gson.toJson(json, writer);
+			} catch (IOException ex) {
+
+			}
+		}
+	}
 
 	public static void genAffixLootItems() {
 		Gson gson = AffixLootManager.GSON;
