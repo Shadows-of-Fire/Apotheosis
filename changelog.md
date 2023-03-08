@@ -1,3 +1,6 @@
+## Future
+* [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
+
 ## 6.1.0
 * Gems have been rewritten! Gems are now backed by an all new system that allows for far more customization than before.
   * New Gems have been added, with all sorts of new features and stat ranges. Old gems will be referred to as Legacy Gems, and will not have rarities nor be upgradable.
@@ -7,7 +10,6 @@
   * Gems may now provide different bonuses when socketed into different types of items.
   * You can increase the number of facets that a gem has in the Gem Cutting Table.
   * Two Flawless (Max-Facet) gems of the same type and rarity can be upgraded to the next rarity in the Gem Cutting Table.
-  * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
 * Bee and Goat bosses have been removed. Those had a good run, but were ultimately not good for anything.
 * The cooldown field now works properly for HURT_SELF and ATTACK_SELF potion affixes.
 * The default boss spawn cooldown has been increased to 1800 ticks (from 400).

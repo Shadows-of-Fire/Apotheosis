@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A $(9)Gem$() is a crystal of condensed strength.$(p)When socketed into an affix item, a Gem will provide a powerful attribute bonus whenever the item normally would."
+            "text": "A $(9)Gem$() is a crystal of condensed strength.$(p)When socketed into an affix item, a Gem will provide a powerful bonus.$(p)Gems may give different bonuses in different items, and can be upgraded."
         },
 		{
 			"type": "patchouli:text",
