@@ -18,6 +18,7 @@
 * Potion Charms can be set to only function in curios slots.
 * Fixed an issue where the Enchantment Library would not display certain applicable enchantments (like sharpness on axes).
 * The particular loot rules for each rarity may now be adjusted. This means you can set the number of affixes, sockets, and durability reduction for each rarity.
+* Eugene: Added Ukranian translation.
 
 ## 6.0.3
 * Fixed potion affixes not spawning.
