@@ -3,20 +3,19 @@ package shadows.apotheosis.adventure.affix.effect;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.StepFunction;
@@ -25,6 +24,14 @@ import shadows.placebo.util.StepFunction;
  * When blocking an explosion, gain great power.
  */
 public class CatalyzingAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<CatalyzingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+			.apply(inst, CatalyzingAffix::new)
+		);
+	//Formatter::on
 
 	protected final Map<LootRarity, StepFunction> values;
 
@@ -52,24 +59,6 @@ public class CatalyzingAffix extends Affix {
 		}
 
 		return super.onShieldBlock(stack, rarity, level, entity, source, amount);
-	}
-
-	public static CatalyzingAffix read(JsonObject obj) {
-		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
-		return new CatalyzingAffix(values);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
-	}
-
-	public static CatalyzingAffix read(FriendlyByteBuf buf) {
-		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
-		return new CatalyzingAffix(values);
 	}
 
 }

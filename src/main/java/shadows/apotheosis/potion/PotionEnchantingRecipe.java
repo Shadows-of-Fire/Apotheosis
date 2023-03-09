@@ -3,10 +3,11 @@ package shadows.apotheosis.potion;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -71,12 +72,8 @@ public class PotionEnchantingRecipe extends EnchantingRecipe {
 
 		@Override
 		public PotionEnchantingRecipe fromJson(ResourceLocation id, JsonObject obj) {
-			Stats stats = GSON.fromJson(obj.get("requirements"), Stats.class);
-			Stats maxStats = obj.has("max_requirements") ? GSON.fromJson(obj.get("max_requirements"), Stats.class) : NO_MAX;
-			if (maxStats.eterna != -1 && stats.eterna > maxStats.eterna) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max eterna bounds (min > max).");
-			if (maxStats.quanta != -1 && stats.quanta > maxStats.quanta) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max quanta bounds (min > max).");
-			if (maxStats.arcana != -1 && stats.arcana > maxStats.arcana) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max arcana bounds (min > max).");
-			return new PotionEnchantingRecipe(stats, maxStats);
+			Pair<Stats, Stats> requirements = readStats(id, obj);
+			return new PotionEnchantingRecipe(requirements.getLeft(), requirements.getRight());
 		}
 
 		@Override

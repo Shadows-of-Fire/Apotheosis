@@ -1,14 +1,14 @@
 package shadows.apotheosis.adventure.affix.effect;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
@@ -26,8 +26,15 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
-// TODO: Add items other than pickaxe/axe/shovel like hoe/sword for specific items.
 public class OmneticAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<OmneticAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			LootRarity.mapCodec(OmneticData.CODEC).fieldOf("values").forGetter(a -> a.values))
+			.apply(inst, OmneticAffix::new)
+		);
+	//Formatter::on
 
 	protected final Map<LootRarity, OmneticData> values;
 
@@ -51,8 +58,8 @@ public class OmneticAffix extends Affix {
 		if (!stack.isEmpty()) {
 			AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
 			if (inst != null) {
-				for (int i = 0; i < 3; i++) {
-					ItemStack item = values.get(inst.rarity()).getArray()[i];
+				OmneticData data = values.get(inst.rarity());
+				for (ItemStack item : data.items()) {
 					if (item.isCorrectToolForDrops(e.getTargetBlock())) {
 						e.setCanHarvest(true);
 						return;
@@ -69,8 +76,8 @@ public class OmneticAffix extends Affix {
 			AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
 			if (inst != null) {
 				float speed = e.getOriginalSpeed();
-				for (int i = 0; i < 3; i++) {
-					ItemStack item = values.get(inst.rarity()).getArray()[i];
+				OmneticData data = values.get(inst.rarity());
+				for (ItemStack item : data.items()) {
 					speed = Math.max(getBaseSpeed(e.getEntity(), item, e.getState(), e.getPosition().orElse(BlockPos.ZERO)), speed);
 				}
 				e.setNewSpeed(speed);
@@ -78,52 +85,16 @@ public class OmneticAffix extends Affix {
 		}
 	}
 
-	static class OmneticData {
-		final String name;
-		final ItemStack axe, shovel, pickaxe;
-		transient ItemStack[] _arr;
+	static record OmneticData(String name, ItemStack[] items) {
 
-		public OmneticData(String name, ItemStack axe, ItemStack shovel, ItemStack pickaxe) {
-			this.name = name;
-			this.axe = axe;
-			this.shovel = shovel;
-			this.pickaxe = pickaxe;
-		}
-
-		public ItemStack[] getArray() {
-			if (_arr == null) _arr = new ItemStack[] { axe, shovel, pickaxe };
-			return _arr;
-		}
-
-		public void write(FriendlyByteBuf buf) {
-			buf.writeUtf(name);
-			buf.writeItem(axe);
-			buf.writeItem(shovel);
-			buf.writeItem(pickaxe);
-		}
-
-		public static OmneticData read(FriendlyByteBuf buf) {
-			return new OmneticData(buf.readUtf(), buf.readItem(), buf.readItem(), buf.readItem());
-		}
-	}
-
-	public static Affix read(JsonObject obj) {
-		Map<LootRarity, OmneticData> values = GSON.fromJson(obj.get("values"), new TypeToken<Map<LootRarity, OmneticData>>() {
-		}.getType());
-		return new OmneticAffix(values);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
-	}
-
-	public static Affix read(FriendlyByteBuf buf) {
-		Map<LootRarity, OmneticData> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> OmneticData.read(b));
-		return new OmneticAffix(values);
+		//Formatter::off
+		public static Codec<OmneticData> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+				Codec.STRING.fieldOf("name").forGetter(OmneticData::name),
+				Codec.list(ItemStack.CODEC).xmap(l -> l.toArray(new ItemStack[0]), Arrays::asList).fieldOf("items").forGetter(OmneticData::items))
+				.apply(inst, OmneticData::new)
+			);
+		//Formatter::on
 	}
 
 	static float getBaseSpeed(Player player, ItemStack tool, BlockState state, BlockPos pos) {

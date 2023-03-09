@@ -1,21 +1,22 @@
 package shadows.apotheosis.ench.table;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -41,9 +42,8 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, PSerializer.autoRegister("Enchanting Stats", BlockStats.class));
+		this.registerSerializer(DEFAULT, PSerializer.fromCodec("Enchanting Stats", BlockStats.CODEC));
 	}
 
 	@Override
@@ -148,18 +148,20 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 	 * Quanta is the quanta provided (1F == 1%)
 	 * Arcana is the arcana provided (1F == 1%)
 	 */
-	public static class Stats {
-		public final float maxEterna, eterna, quanta, arcana, rectification;
-		public final int clues;
+	public static record Stats(float maxEterna, float eterna, float quanta, float arcana, float rectification, int clues) {
 
-		public Stats(float maxEterna, float eterna, float quanta, float arcana, float rectification, int clues) {
-			this.maxEterna = maxEterna;
-			this.eterna = eterna;
-			this.quanta = quanta;
-			this.arcana = arcana;
-			this.rectification = rectification;
-			this.clues = clues;
-		}
+		//Formatter::off
+		public static Codec<Stats> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+				Codec.FLOAT.optionalFieldOf("maxEterna", 15F).forGetter(Stats::maxEterna),
+				Codec.FLOAT.optionalFieldOf("eterna", 0F).forGetter(Stats::eterna),
+				Codec.FLOAT.optionalFieldOf("quanta", 0F).forGetter(Stats::quanta),
+				Codec.FLOAT.optionalFieldOf("arcana", 0F).forGetter(Stats::arcana),
+				Codec.FLOAT.optionalFieldOf("rectification", 0F).forGetter(Stats::rectification),
+				Codec.INT.optionalFieldOf("clues", 0).forGetter(Stats::clues))
+				.apply(inst, Stats::new)
+			);
+		//Formatter::on
 
 		public void write(FriendlyByteBuf buf) {
 			buf.writeFloat(this.maxEterna);
@@ -177,45 +179,31 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 
 	public static class BlockStats extends TypeKeyedBase<BlockStats> {
 
+		//Formatter::off
+		public static Codec<BlockStats> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+				Codec.list(ForgeRegistries.BLOCKS.getCodec()).optionalFieldOf("blocks", Collections.emptyList()).forGetter(bs -> bs.blocks),
+				TagKey.codec(Registry.BLOCK_REGISTRY).optionalFieldOf("tag").forGetter(bs -> Optional.empty()),
+				ForgeRegistries.BLOCKS.getCodec().optionalFieldOf("block").forGetter(bs -> Optional.empty()),
+				Stats.CODEC.fieldOf("stats").forGetter(bs -> bs.stats))
+				.apply(inst, BlockStats::new)
+			);
+		//Formatter::on
+
 		public final List<Block> blocks;
 		public final Stats stats;
 
-		public BlockStats(List<Block> blocks, Stats stats) {
-			this.blocks = blocks;
-			this.stats = stats;
-		}
-
-		public static BlockStats read(JsonObject obj) {
-			Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
-			List<Block> blocks = new ArrayList<>();
-			if (obj.has("tag")) {
-				TagKey<Block> tag = BlockTags.create(new ResourceLocation(obj.get("tag").getAsString()));
-				EnchantingStatManager.INSTANCE.getContext().getTag(tag).stream().map(Holder::value).forEach(blocks::add);
+		public BlockStats(List<Block> blocks, Optional<TagKey<Block>> tag, Optional<Block> block, Stats stats) {
+			if (!blocks.isEmpty() && tag.isEmpty() && block.isEmpty()) {
+				this.blocks = blocks;
+			} else if (blocks.isEmpty() && !tag.isEmpty() && block.isEmpty()) {
+				this.blocks = EnchantingStatManager.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList();
+			} else if (blocks.isEmpty() && tag.isEmpty() && !block.isEmpty()) {
+				this.blocks = Arrays.asList(block.get());
 			} else {
-				Block b = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(obj.get("block").getAsString()));
-				blocks.add(b);
+				throw new IllegalArgumentException("Improper arguments to BlockStats - only one of \"blocks\", \"tag\", and \"block\" may be provided!");
 			}
-			return new BlockStats(blocks, stats);
-		}
-
-		public JsonObject write() {
-			return new JsonObject();
-		}
-
-		@SuppressWarnings("deprecation")
-		public void write(FriendlyByteBuf buf) {
-			buf.writeInt(this.blocks.size());
-			this.blocks.forEach(b -> buf.writeInt(Registry.BLOCK.getId(b)));
-			this.stats.write(buf);
-		}
-
-		@SuppressWarnings("deprecation")
-		public static BlockStats read(FriendlyByteBuf buf) {
-			int size = buf.readInt();
-			List<Block> blocks = new ArrayList<>();
-			for (int i = 0; i < size; i++)
-				blocks.add(Registry.BLOCK.byId(buf.readInt()));
-			return new BlockStats(blocks, Stats.read(buf));
+			this.stats = stats;
 		}
 
 	}

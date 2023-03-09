@@ -5,8 +5,6 @@ import java.util.function.BiConsumer;
 import javax.annotation.Nullable;
 
 import com.mojang.datafixers.kinds.App;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mojang.serialization.codecs.SimpleMapCodec;
 
@@ -39,7 +37,7 @@ import shadows.placebo.util.StepFunction;
 
 public abstract class GemBonus {
 
-	public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = Codec.simpleMap(LootRarity.CODEC, StepFunction.CODEC, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
+	public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
 
 	protected final ResourceLocation id;
 	protected final GemClass gemClass;

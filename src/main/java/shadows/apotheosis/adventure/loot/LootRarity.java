@@ -25,8 +25,10 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.ListCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.codecs.SimpleMapCodec;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -265,6 +267,10 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 	public static LootRarity random(RandomSource rand, float luck, @Nullable LootRarity min, @Nullable LootRarity max) {
 		List<Wrapper<LootRarity>> list = LIST.stream().filter(r -> r.clamp(min, max) == r).map(r -> r.<LootRarity>wrap(luck)).toList();
 		return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).get();
+	}
+
+	public static <T> SimpleMapCodec<LootRarity, T> mapCodec(Codec<T> codec) {
+		return Codec.simpleMap(LootRarity.CODEC, codec, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
 	}
 
 	public static class RarityStub extends TypeKeyedBase<RarityStub> {

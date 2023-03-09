@@ -1,8 +1,8 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -13,6 +13,14 @@ import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class MagicalArrowAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<MagicalArrowAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
+			.apply(inst, MagicalArrowAffix::new)
+		);
+	//Formatter::on
 
 	protected LootRarity minRarity;
 
@@ -33,22 +41,6 @@ public class MagicalArrowAffix extends Affix {
 				e.getSource().setMagic();
 			}
 		}
-	}
-
-	public static Affix read(JsonObject obj) {
-		return new MagicalArrowAffix(GSON.fromJson(obj.get("min_rarity"), LootRarity.class));
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeUtf(this.minRarity.id());
-	}
-
-	public static Affix read(FriendlyByteBuf buf) {
-		return new MagicalArrowAffix(LootRarity.byId(buf.readUtf()));
 	}
 
 }

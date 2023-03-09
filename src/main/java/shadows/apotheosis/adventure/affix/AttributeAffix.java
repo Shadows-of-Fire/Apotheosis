@@ -1,7 +1,6 @@
 package shadows.apotheosis.adventure.affix;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -11,12 +10,11 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -24,9 +22,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.placebo.json.JsonUtil;
+import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.util.StepFunction;
 
 /**
@@ -34,13 +33,31 @@ import shadows.placebo.util.StepFunction;
  */
 public class AttributeAffix extends Affix {
 
-	protected final Map<LootRarity, ModifierInst> modifiers;
+	//Formatter::off
+	public static final Codec<AttributeAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(a -> a.attribute),
+			new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
+			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
+			LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
+			.apply(inst, AttributeAffix::new)
+		);
+	//Formatter::on
+
+	protected final Attribute attribute;
+	protected final Operation operation;
+	protected final Map<LootRarity, StepFunction> values;
 	protected final Set<LootCategory> types;
+
+	protected transient final Map<LootRarity, ModifierInst> modifiers;
 
 	public AttributeAffix(Attribute attr, Operation op, Map<LootRarity, StepFunction> values, Set<LootCategory> types) {
 		super(AffixType.STAT);
-		this.modifiers = values.entrySet().stream().map(entry -> Pair.of(entry.getKey(), new ModifierInst(attr, op, entry.getValue(), new HashMap<>()))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+		this.attribute = attr;
+		this.operation = op;
+		this.values = values;
 		this.types = types;
+		this.modifiers = values.entrySet().stream().map(entry -> Pair.of(entry.getKey(), new ModifierInst(attr, op, entry.getValue(), new HashMap<>()))).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
 	}
 
 	@Override
@@ -78,39 +95,6 @@ public class AttributeAffix extends Affix {
 		public AttributeModifier build(EquipmentSlot slot, ResourceLocation id, float level) {
 			return new AttributeModifier(this.cache.computeIfAbsent(slot, k -> UUID.randomUUID()), "affix:" + id, this.valueFactory.get(level), this.op);
 		}
-	}
-
-	public static AttributeAffix read(JsonObject obj) {
-		Attribute attr = JsonUtil.getRegistryObject(obj, "attribute", ForgeRegistries.ATTRIBUTES);
-		Operation op = Operation.valueOf(GsonHelper.getAsString(obj, "operation"));
-		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
-		var types = AffixHelper.readTypes(GsonHelper.getAsJsonArray(obj, "types"));
-		return new AttributeAffix(attr, op, values, types);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		ModifierInst inst = this.modifiers.values().stream().findFirst().get();
-		buf.writeRegistryId(ForgeRegistries.ATTRIBUTES, inst.attr);
-		buf.writeEnum(inst.op);
-		buf.writeMap(this.modifiers, (b, key) -> b.writeUtf(key.id()), (b, modif) -> modif.valueFactory.write(b));
-		buf.writeByte(this.types.size());
-		this.types.forEach(c -> buf.writeEnum(c));
-	}
-
-	public static AttributeAffix read(FriendlyByteBuf buf) {
-		Attribute attr = buf.readRegistryIdSafe(Attribute.class);
-		Operation op = buf.readEnum(Operation.class);
-		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
-		Set<LootCategory> types = new HashSet<>();
-		int size = buf.readByte();
-		for (int i = 0; i < size; i++) {
-			types.add(buf.readEnum(LootCategory.class));
-		}
-		return new AttributeAffix(attr, op, values, types);
 	}
 
 }

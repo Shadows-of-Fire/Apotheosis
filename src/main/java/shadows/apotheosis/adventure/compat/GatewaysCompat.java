@@ -27,6 +27,7 @@ import shadows.gateways.gate.Reward;
 import shadows.gateways.gate.WaveEntity;
 import shadows.placebo.json.PSerializer;
 
+@SuppressWarnings("removal")
 public class GatewaysCompat {
 
 	public static void register() {

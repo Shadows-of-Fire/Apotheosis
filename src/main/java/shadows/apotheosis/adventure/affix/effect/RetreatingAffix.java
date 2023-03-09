@@ -1,8 +1,8 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +17,14 @@ import shadows.apotheosis.adventure.loot.LootRarity;
  * Disengage
  */
 public class RetreatingAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<RetreatingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
+			.apply(inst, RetreatingAffix::new)
+		);
+	//Formatter::on
 
 	protected LootRarity minRarity;
 
@@ -40,22 +48,6 @@ public class RetreatingAffix extends Affix {
 			entity.setOnGround(false);
 		}
 		return super.onShieldBlock(stack, rarity, level, entity, source, amount);
-	}
-
-	public static Affix read(JsonObject obj) {
-		return new RetreatingAffix(GSON.fromJson(obj.get("min_rarity"), LootRarity.class));
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeUtf(this.minRarity.id());
-	}
-
-	public static Affix read(FriendlyByteBuf buf) {
-		return new RetreatingAffix(LootRarity.byId(buf.readUtf()));
 	}
 
 }

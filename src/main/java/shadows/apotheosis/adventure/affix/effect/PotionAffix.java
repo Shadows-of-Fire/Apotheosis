@@ -1,20 +1,22 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.collect.ImmutableMap;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.Keyable;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -32,26 +34,56 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.placebo.json.JsonUtil;
+import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.util.StepFunction;
 
 public class PotionAffix extends Affix {
 
-	protected final Map<LootRarity, EffectInst> effects;
-	protected final Set<LootCategory> types;
-	protected final Target target;
-	protected final int cooldown;
+	//Formatter::off
+	private static Codec<Pair<StepFunction, StepFunction>> STEP_PAIR_CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			StepFunction.CODEC.fieldOf("duration").forGetter(Pair::getLeft),
+			StepFunction.CODEC.fieldOf("amplifier").forGetter(Pair::getRight))
+			.apply(inst, Pair::of)
+		);
+	
+	private static MapCodec<Map<LootRarity, Pair<StepFunction, StepFunction>>> VALUES_CODEC = Codec.simpleMap(LootRarity.CODEC, STEP_PAIR_CODEC, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
+	
+	public static final Codec<PotionAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
+			Target.CODEC.fieldOf("target").forGetter(a -> a.target),
+			VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
+			Codec.INT.optionalFieldOf("cooldown", 0).forGetter(a -> a.cooldown),
+			LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
+			.apply(inst, PotionAffix::new)
+		);
+	//Formatter::on
 
-	public PotionAffix(Map<LootRarity, EffectInst> effects, Set<LootCategory> types, Target target, int cooldown) {
+	protected final MobEffect effect;
+	protected final Target target;
+	protected final Map<LootRarity, Pair<StepFunction, StepFunction>> values;
+	protected final int cooldown;
+	protected final Set<LootCategory> types;
+
+	protected transient final Map<LootRarity, EffectInst> effects;
+
+	public PotionAffix(MobEffect effect, Target target, Map<LootRarity, Pair<StepFunction, StepFunction>> values, int cooldown, Set<LootCategory> types) {
 		super(AffixType.ABILITY);
-		this.effects = effects;
-		this.types = types;
+		this.effect = effect;
 		this.target = target;
+		this.values = values;
 		this.cooldown = cooldown;
+		this.types = types;
+
+		var builder = ImmutableMap.<LootRarity, EffectInst>builder();
+		values.forEach((rarity, pair) -> {
+			builder.put(rarity, new EffectInst(this.effect, pair.getLeft(), pair.getRight()));
+		});
+		this.effects = builder.build();
 	}
 
 	@Override
@@ -168,52 +200,6 @@ public class PotionAffix extends Affix {
 		}
 	}
 
-	public static PotionAffix read(JsonObject obj) {
-		MobEffect effect = JsonUtil.getRegistryObject(obj, "mob_effect", ForgeRegistries.MOB_EFFECTS);
-		Target target = Target.valueOf(GsonHelper.getAsString(obj, "target"));
-		JsonObject valueMap = GsonHelper.getAsJsonObject(obj, "values");
-		Map<LootRarity, EffectInst> effects = new HashMap<>();
-		for (String s : valueMap.keySet()) {
-			LootRarity rarity = LootRarity.byId(s);
-			JsonObject child = valueMap.get(s).getAsJsonObject();
-			JsonElement dur = child.get("duration");
-			StepFunction duration = dur.isJsonObject() ? GSON.fromJson(dur, StepFunction.class) : StepFunction.constant(dur.getAsInt());
-			JsonElement amp = child.get("amplifier");
-			StepFunction amplifier = amp.isJsonObject() ? GSON.fromJson(amp, StepFunction.class) : StepFunction.constant(amp.getAsInt());
-			effects.put(rarity, new EffectInst(effect, duration, amplifier));
-		}
-		var types = AffixHelper.readTypes(GsonHelper.getAsJsonArray(obj, "types"));
-		int cooldown = GsonHelper.getAsInt(obj, "cooldown", 0);
-		return new PotionAffix(effects, types, target, cooldown);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		EffectInst inst = this.effects.values().stream().findFirst().get();
-		buf.writeRegistryId(ForgeRegistries.MOB_EFFECTS, inst.effect);
-		buf.writeMap(this.effects, (b, key) -> b.writeUtf(key.id()), (b, modif) -> modif.write(b));
-		buf.writeByte(this.types.size());
-		this.types.forEach(c -> buf.writeEnum(c));
-		buf.writeEnum(this.target);
-		buf.writeInt(this.cooldown);
-	}
-
-	public static PotionAffix read(FriendlyByteBuf buf) {
-		MobEffect effect = buf.readRegistryIdSafe(MobEffect.class);
-		Map<LootRarity, EffectInst> effects = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> EffectInst.read(effect, b));
-		Set<LootCategory> types = new HashSet<>();
-		int size = buf.readByte();
-		for (int i = 0; i < size; i++) {
-			types.add(buf.readEnum(LootCategory.class));
-		}
-		Target target = buf.readEnum(Target.class);
-		int cooldown = buf.readInt();
-		return new PotionAffix(effects, types, target, cooldown);
-	}
-
 	/**
 	 * This enum is used to specify when a potion is applied.
 	 * The naming scheme is "<event>_<target>", so attack_self applies to yourself when you attack.
@@ -228,6 +214,8 @@ public class PotionAffix extends Affix {
 		ARROW_TARGET("arrow_target"),
 		BLOCK_SELF("block_self"),
 		BLOCK_ATTACKER("block_attacker");
+
+		public static final Codec<Target> CODEC = new EnumCodec<>(Target.class);
 
 		private final String id;
 

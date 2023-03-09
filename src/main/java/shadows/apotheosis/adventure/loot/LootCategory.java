@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure.loot;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import shadows.apotheosis.adventure.AdventureConfig;
+import shadows.placebo.codec.PlaceboCodecs;
 
 public enum LootCategory {
 	@SerializedName("none")
@@ -78,6 +80,7 @@ public enum LootCategory {
 
 	public static final Map<String, LootCategory> BY_ID = Arrays.stream(LootCategory.values()).collect(Collectors.toMap(LootCategory::getName, Function.identity()));
 	public static final Codec<LootCategory> CODEC = ExtraCodecs.stringResolverCodec(LootCategory::getName, LootCategory::byId);
+	public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setCodec(CODEC);
 
 	private final String name;
 	private final Predicate<ItemStack> validator;

@@ -1,6 +1,11 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
 
+## 6.1.2
+* Converted Affixes to use Codecs for serialization, which produces better error reporting.
+* Added new nether-exclusive gems.
+* Omnetic items will now also work as a Hoe and Sword.
+
 ## 6.1.1
 * Hotfix that fixes common items always having four sockets.
 

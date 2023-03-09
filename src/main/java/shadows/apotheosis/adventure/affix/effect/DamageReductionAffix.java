@@ -1,32 +1,37 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<DamageReductionAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			DamageType.CODEC.fieldOf("damage_type").forGetter(a -> a.type),
+			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
+			LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
+			.apply(inst, DamageReductionAffix::new)
+		);
+	//Formatter::on
 
 	protected final DamageType type;
 	protected final Map<LootRarity, StepFunction> values;
@@ -88,36 +93,6 @@ public class DamageReductionAffix extends Affix {
 		public boolean test(DamageSource t) {
 			return this.predicate.test(t);
 		}
-	}
-
-	public static DamageReductionAffix read(JsonObject obj) {
-		DamageType type = DamageType.valueOf(GsonHelper.getAsString(obj, "damage_type"));
-		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
-		Set<LootCategory> types = GSON.fromJson(GsonHelper.getAsJsonArray(obj, "types", new JsonArray()), new TypeToken<Set<LootCategory>>() {
-		}.getType());
-		return new DamageReductionAffix(type, values, types);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeEnum(this.type);
-		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
-		buf.writeByte(this.types.size());
-		this.types.forEach(c -> buf.writeEnum(c));
-	}
-
-	public static DamageReductionAffix read(FriendlyByteBuf buf) {
-		DamageType type = buf.readEnum(DamageType.class);
-		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
-		Set<LootCategory> types = new HashSet<>();
-		int size = buf.readByte();
-		for (int i = 0; i < size; i++) {
-			types.add(buf.readEnum(LootCategory.class));
-		}
-		return new DamageReductionAffix(type, values, types);
 	}
 
 }

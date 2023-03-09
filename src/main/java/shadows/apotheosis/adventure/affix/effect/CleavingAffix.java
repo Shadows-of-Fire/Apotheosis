@@ -5,13 +5,11 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import com.google.common.base.Predicate;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -29,6 +27,14 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.StepFunction;
 
 public class CleavingAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<CleavingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			LootRarity.mapCodec(CleaveValues.CODEC).fieldOf("values").forGetter(a -> a.values))
+			.apply(inst, CleavingAffix::new)
+		);
+	//Formatter::on
 
 	protected final Map<LootRarity, CleaveValues> values;
 
@@ -90,6 +96,9 @@ public class CleavingAffix extends Affix {
 	}
 
 	static class CleaveValues {
+
+		public static final Codec<CleaveValues> CODEC = RecordCodecBuilder.create(inst -> inst.group(StepFunction.CODEC.fieldOf("chance").forGetter(c -> c.chance), StepFunction.CODEC.fieldOf("targets").forGetter(c -> c.targets)).apply(inst, CleaveValues::new));
+
 		final StepFunction chance;
 		final StepFunction targets;
 
@@ -97,28 +106,6 @@ public class CleavingAffix extends Affix {
 			this.chance = chance;
 			this.targets = targets;
 		}
-	}
-
-	public static CleavingAffix read(JsonObject obj) {
-		Map<LootRarity, CleaveValues> values = Affix.GSON.fromJson(GsonHelper.getAsJsonObject(obj, "values"), new TypeToken<Map<LootRarity, CleaveValues>>() {
-		}.getType());
-		return new CleavingAffix(values);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, pair) -> {
-			pair.chance.write(buf);
-			pair.targets.write(buf);
-		});
-	}
-
-	public static CleavingAffix read(FriendlyByteBuf buf) {
-		Map<LootRarity, CleaveValues> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> new CleaveValues(StepFunction.read(b), StepFunction.read(b)));
-		return new CleavingAffix(values);
 	}
 
 }

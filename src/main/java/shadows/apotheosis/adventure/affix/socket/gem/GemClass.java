@@ -11,7 +11,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.network.FriendlyByteBuf;
 import shadows.apotheosis.adventure.loot.LootCategory;
-import shadows.placebo.codec.PlaceboCodecs;
 
 /**
  * A Gem Class is the set of types of items it may be applied to.
@@ -23,7 +22,7 @@ public record GemClass(String key, Set<LootCategory> types) {
 	public static Codec<GemClass> CODEC = RecordCodecBuilder.create(inst -> 
 		inst.group(
 			Codec.STRING.fieldOf("key").forGetter(GemClass::key),
-			PlaceboCodecs.setCodec(LootCategory.CODEC).fieldOf("types").forGetter(GemClass::types))
+			LootCategory.SET_CODEC.fieldOf("types").forGetter(GemClass::types))
 			.apply(inst, GemClass::new)
 		);
 	//Formatter::on

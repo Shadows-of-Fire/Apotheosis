@@ -3,6 +3,8 @@ package shadows.apotheosis.adventure.boss;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -25,7 +27,10 @@ public class BossSummonerItem extends Item {
 			pos = pos.above();
 			if (!world.noCollision(item.getSize().move(pos))) return InteractionResult.FAIL;
 		}
-		world.addFreshEntity(item.createBoss((ServerLevel) world, pos, world.getRandom(), ctx.getPlayer().getLuck()));
+		Player player = ctx.getPlayer();
+		Mob boss = item.createBoss((ServerLevel) world, pos, world.getRandom(), player.getLuck());
+		boss.setTarget(player);
+		world.addFreshEntity(boss);
 		ctx.getItemInHand().shrink(1);
 		return InteractionResult.SUCCESS;
 	}
