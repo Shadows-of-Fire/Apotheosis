@@ -8,22 +8,6 @@
 		{
 			"type": "stat",
 			"chance": 0.25
-		},
-		{
-			"type": "socket",
-			"chance": 1
-		},
-		{
-			"type": "socket",
-			"chance": 1
-		},
-		{
-			"type": "socket",
-			"chance": 1
-		},
-		{
-			"type": "socket",
-			"chance": 1
 		}
 	]
 }

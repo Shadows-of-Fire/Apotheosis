@@ -1,12 +1,16 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
 
+## 6.1.1
+* Hotfix that fixes common items always having four sockets.
+
 ## 6.1.0
 * Gems have been rewritten! Gems are now backed by an all new system that allows for far more customization than before.
   * New Gems have been added, with all sorts of new features and stat ranges. Old gems will be referred to as Legacy Gems, and will not have rarities nor be upgradable.
   * Purity has been replaced by Facets, a value indicating the number of cuts in the gem. A Fully-Faceted Gem will be referred to as a "Flawless" Gem and will Glow.
   * Gems now have individual rarities, indicated by name color.  Gems of a higher rarity will be stronger.
-  * Gems are now able to be dimensionally-locked. Higher rarity gems will be found in the nether and end, by default.
+  * Gems are now able to be dimensionally-locked. [NYI] Stronger gems will be found in the nether and end, by default.
+  * Gems may also now be Unique, meaning you can only insert one of those gems into any given item. (You may still use more than one overall, but only one per item).
   * Gems may now provide different bonuses when socketed into different types of items.
   * You can increase the number of facets that a gem has in the Gem Cutting Table.
   * Two Flawless (Max-Facet) gems of the same type and rarity can be upgraded to the next rarity in the Gem Cutting Table.
