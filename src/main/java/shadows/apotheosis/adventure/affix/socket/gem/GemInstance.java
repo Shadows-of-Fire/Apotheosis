@@ -19,7 +19,7 @@ public record GemInstance(ItemStack gemStack, Gem gem, LootRarity rarity, int fa
 	}
 
 	public boolean isValidIn(ItemStack socketed) {
-		return isValid() && this.gem.canApplyTo(socketed, gemStack, rarity);
+		return isValid() && this.gem.isValidIn(socketed, gemStack, rarity);
 	}
 
 	public int maxFacets() {

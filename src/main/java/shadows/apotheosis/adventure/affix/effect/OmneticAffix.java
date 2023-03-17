@@ -25,6 +25,7 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.ItemAdapter;
 
 public class OmneticAffix extends Affix {
 
@@ -91,7 +92,7 @@ public class OmneticAffix extends Affix {
 		public static Codec<OmneticData> CODEC = RecordCodecBuilder.create(inst -> inst
 			.group(
 				Codec.STRING.fieldOf("name").forGetter(OmneticData::name),
-				Codec.list(ItemStack.CODEC).xmap(l -> l.toArray(new ItemStack[0]), Arrays::asList).fieldOf("items").forGetter(OmneticData::items))
+				Codec.list(ItemAdapter.CODEC).xmap(l -> l.toArray(new ItemStack[0]), Arrays::asList).fieldOf("items").forGetter(OmneticData::items))
 				.apply(inst, OmneticData::new)
 			);
 		//Formatter::on

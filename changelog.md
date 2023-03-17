@@ -3,8 +3,14 @@
 
 ## 6.1.2
 * Converted Affixes to use Codecs for serialization, which produces better error reporting.
-* Added new nether-exclusive gems.
+* Added a few additional dimension-specific gems.
 * Omnetic items will now also work as a Hoe and Sword.
+* Increased the performance of ShieldBreakerTest by not reconstructing the context zombies.
+* Fixed Legacy Gems not working.
+* Fixed an issue that caused Unique gems to not provide their bonuses.
+* Increased the performance of LootCategory.forItem which is a fairly hot path.
+* Fixed a crash that could happen if a legacy gem with no nbt showed up.
+* Reduced required forge version to 43.2.0
 
 ## 6.1.1
 * Hotfix that fixes common items always having four sockets.

@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix.socket.gem.bonus;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 import javax.annotation.Nullable;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
@@ -33,6 +35,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.util.StepFunction;
 
 public abstract class GemBonus {
@@ -79,9 +82,7 @@ public abstract class GemBonus {
 	 * Returns the number of UUIDs that need to be generated for this Gem to operate properly.<br>
 	 * This should be equal to the maximum amount of attribute modifiers that need to be generated for proper usage.
 	 */
-	public int getNumberOfUUIDs() {
-		return 1;
-	}
+	public abstract int getNumberOfUUIDs();
 
 	/**
 	 * Retrieve the modifiers from this affix to be applied to the itemstack.
@@ -199,6 +200,17 @@ public abstract class GemBonus {
 	 */
 	public float onHurt(ItemStack gem, LootRarity rarity, int facets, DamageSource src, LivingEntity ent, float amount) {
 		return amount;
+	}
+
+	/**
+	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
+	 * @param gemStack  The stack representing this gem.
+	 * @param rarity    The rarity of the item.
+	 * @param level     The level of the affix.
+	 * @param ench      The enchantment being queried for.
+	 * @return          The bonus level to be added to the current enchantment.
+	 */
+	public void getEnchantmentLevels(ItemStack gemStack, LootRarity rarity, int facets, Map<Enchantment, Integer> enchantments) {
 	}
 
 	public ResourceLocation getId() {

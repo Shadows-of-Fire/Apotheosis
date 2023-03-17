@@ -61,7 +61,6 @@ public class AttributeBonus extends GemBonus {
 
 	@Override
 	public AttributeBonus validate() {
-		gemClass.validate();
 		Preconditions.checkNotNull(this.attribute, "Invalid AttributeBonus with null attribute");
 		Preconditions.checkNotNull(this.operation, "Invalid AttributeBonus with null operation");
 		Preconditions.checkNotNull(this.values, "Invalid AttributeBonus with null values");
@@ -73,6 +72,11 @@ public class AttributeBonus extends GemBonus {
 		return this.values.containsKey(rarity);
 	}
 
+	@Override
+	public int getNumberOfUUIDs() {
+		return 1;
+	}
+	
 	public AttributeModifier read(ItemStack gem, LootRarity rarity, int facets) {
 		return new AttributeModifier(GemItem.getUUIDs(gem).get(0), "apoth.gem_modifier", this.values.get(rarity).getForStep(facets), this.operation);
 	}

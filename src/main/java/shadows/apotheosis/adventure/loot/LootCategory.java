@@ -165,13 +165,17 @@ public enum LootCategory {
 
 	private static class ShieldBreakerTest implements Predicate<ItemStack> {
 
+		private Zombie attacker, holder;
+
 		@Override
 		public boolean test(ItemStack t) {
 			try {
 				ItemStack shield = new ItemStack(Items.SHIELD);
 				MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-				Zombie attacker = server != null ? new Zombie(server.getLevel(Level.OVERWORLD)) : null;
-				Zombie holder = server != null ? new Zombie(server.getLevel(Level.OVERWORLD)) : null;
+				if (attacker == null && server != null) {
+					attacker = new Zombie(server.getLevel(Level.OVERWORLD));
+					holder = new Zombie(server.getLevel(Level.OVERWORLD));
+				}
 				if (holder != null) holder.setItemInHand(InteractionHand.OFF_HAND, shield);
 				return t.canDisableShield(shield, holder, attacker);
 			} catch (Exception ex) {

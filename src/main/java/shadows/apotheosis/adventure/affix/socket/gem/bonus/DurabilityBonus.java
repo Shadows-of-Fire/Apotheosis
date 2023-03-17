@@ -36,7 +36,7 @@ public class DurabilityBonus extends GemBonus {
 	@Override
 	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
 		float level = this.values.get(rarity).getForStep(facets);
-		return Component.translatable("gem_bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(Style.EMPTY.withColor(rarity.color()));
+		return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(Style.EMPTY.withColor(rarity.color()));
 	}
 
 	@Override
@@ -46,7 +46,6 @@ public class DurabilityBonus extends GemBonus {
 
 	@Override
 	public GemBonus validate() {
-		this.gemClass.validate();
 		Preconditions.checkNotNull(this.values, "Invalid AttributeBonus with null values");
 		return this;
 	}
@@ -54,6 +53,11 @@ public class DurabilityBonus extends GemBonus {
 	@Override
 	public boolean supports(LootRarity rarity) {
 		return this.values.containsKey(rarity);
+	}
+	
+	@Override
+	public int getNumberOfUUIDs() {
+		return 0;
 	}
 
 }

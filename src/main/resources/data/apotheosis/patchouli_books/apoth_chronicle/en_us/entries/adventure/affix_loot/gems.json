@@ -17,7 +17,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "Socketing Gems",
-			"text": "To socket a gem into an item, combine the two in a Smithing Table.$(p)Place the item on the left, and the gem on the right.$(p)Gems do not need to be placed into a necessarily \"correct\" item, and will always provide their bonuses while the item is in use."
+			"text": "To socket a gem into an item, combine the two in a Smithing Table.$(p)Each gem states which items it may fit in.$(p)Some gems are $(#C73912)Unique$(), meaning that only one copy of that gem may be socketed in an item."
 		},
 		{
 			"type": "patchouli:text",

@@ -370,7 +370,8 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 
 		public LootRarity getMaxRarity();
 
-		default LootRarity clamp(LootRarity rarity) {
+		default LootRarity clamp(@Nullable LootRarity rarity) {
+			if (rarity == null) return getMinRarity();
 			return rarity.clamp(getMinRarity(), getMaxRarity());
 		}
 

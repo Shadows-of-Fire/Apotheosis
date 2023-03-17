@@ -47,7 +47,13 @@ public final class LegacyGem extends Gem {
 	@Override
 	public Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity, int facets) {
 		var bonus = getStoredBonus(gem);
+		if (bonus == null) return Component.empty();
 		return GemItem.toComponent(bonus.getKey(), bonus.getValue());
+	}
+
+	@Override
+	public boolean canApplyTo(ItemStack stack, ItemStack gem, LootRarity rarity) {
+		return true;
 	}
 
 	@Override
@@ -91,6 +97,11 @@ public final class LegacyGem extends Gem {
 	@Override
 	public int getMaxFacets(LootRarity rarity) {
 		return 0;
+	}
+
+	@Override
+	public int getNumberOfUUIDs() {
+		return 1;
 	}
 
 }

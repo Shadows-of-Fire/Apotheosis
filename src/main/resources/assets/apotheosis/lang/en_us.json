@@ -281,7 +281,13 @@
 	"gem_class.shield": "Shields",
 	"gem_class.heavy_weapon": "Heavy Weapons",
 
-	"gem_bonus.apotheosis:durability.desc": "Ignores %s%% of durability damage",
+	"bonus.apotheosis:durability.desc": "Ignores %s%% of durability damage",
+	"bonus.apotheosis:enchantment.desc": "+%s %s to %s",
+	"bonus.apotheosis:enchantment.desc.mustExist": "+%s %s to existing %s",
+	"bonus.apotheosis:enchantment.desc.global": "+%s %s to all existing enchantments",
+
+	"misc.apotheosis.level": "level",
+	"misc.apotheosis.level.many": "levels",
 
 	"item.apotheosis.gem.apotheosis:legacy": "Legacy Gem",
 	"item.apotheosis.gem.apotheosis:core/guardian": "Guardian Gem",
@@ -297,6 +303,10 @@
 	"item.apotheosis.gem.apotheosis:core/slipstream": "Slipstream Gem",
 	"item.apotheosis.gem.apotheosis:core/brawlers": "Brawler's Gem",
 	"item.apotheosis.gem.apotheosis:core/combatant": "Gem of the Combatant",
+	"item.apotheosis.gem.apotheosis:overworld/earth": "Gem of the Earth",
+	"item.apotheosis.gem.apotheosis:the_end/endersurge": "Endersurge Gem",
+	"item.apotheosis.gem.apotheosis:the_nether/inferno": "Gem of the Incandescent Inferno",
+	"item.apotheosis.gem.apotheosis:the_nether/inferno_noench": "Gem of the Incandescent Inferno",
 
 	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.cracked": "Cracked %s",
@@ -318,7 +328,7 @@
 	"item.apotheosis.superior_sigil_of_enhancement": "[NYI] Superior Sigil of Enhancement",
 	
 	"block.apotheosis.gem_cutting_table": "Gem Cutting Table",
-	"block.apotheosis.gem_cutting_table.desc": "Used to cut additional facets into Gems",
+	"block.apotheosis.gem_cutting_table.desc": "Uses Gem Dust and Rarity Materials to upgrade Gems",
 	"block.apotheosis.salvaging_table": "Salvaging Table",
 	"block.apotheosis.salvaging_table.desc": "Breaks down Affix Items into Rarity Materials",
 	"block.apotheosis.reforging_table": "Reforging Table",

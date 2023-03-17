@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -27,10 +28,11 @@ public record GemClass(String key, Set<LootCategory> types) {
 		);
 	//Formatter::on
 
-	public GemClass validate() {
-		Preconditions.checkNotNull(this.key, "Invalid GemClass with null key");
+	public GemClass(String key, Set<LootCategory> types) {
+		this.key = key;
+		this.types = types;
+		Preconditions.checkArgument(!Strings.isNullOrEmpty(this.key), "Invalid GemClass with null key");
 		Preconditions.checkArgument(this.types != null && !this.types.isEmpty(), "Invalid GemClass with null or empty types");
-		return this;
 	}
 
 	public void write(FriendlyByteBuf buf) {

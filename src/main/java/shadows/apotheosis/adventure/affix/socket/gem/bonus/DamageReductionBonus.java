@@ -31,7 +31,7 @@ public class DamageReductionBonus extends GemBonus {
 			.apply(inst, DamageReductionBonus::new)
 		);
 	//Formatter::on
-	
+
 	public DamageReductionBonus(GemClass gemClass, DamageType type, Map<LootRarity, StepFunction> values) {
 		super(Apotheosis.loc("damage_reduction"), gemClass);
 		this.type = type;
@@ -51,7 +51,6 @@ public class DamageReductionBonus extends GemBonus {
 
 	@Override
 	public GemBonus validate() {
-		gemClass.validate();
 		Preconditions.checkNotNull(this.type, "Invalid DamageReductionBonus with null type");
 		Preconditions.checkNotNull(this.values, "Invalid DamageReductionBonus with null values");
 		Preconditions.checkArgument(this.values.entrySet().stream().mapMulti((entry, consumer) -> {
@@ -64,6 +63,11 @@ public class DamageReductionBonus extends GemBonus {
 	@Override
 	public boolean supports(LootRarity rarity) {
 		return this.values.containsKey(rarity);
+	}
+	
+	@Override
+	public int getNumberOfUUIDs() {
+		return 0;
 	}
 
 }

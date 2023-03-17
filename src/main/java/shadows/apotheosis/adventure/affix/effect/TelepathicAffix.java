@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import java.util.Map;
 import java.util.function.Consumer;
 
 import com.google.gson.JsonObject;
@@ -17,7 +16,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
@@ -37,7 +35,7 @@ public class TelepathicAffix extends Affix {
 			.apply(inst, TelepathicAffix::new)
 		);
 	//Formatter::on
-	
+
 	public static Vec3 blockDropTargetPos = null;
 
 	protected LootRarity minRarity;
@@ -72,12 +70,11 @@ public class TelepathicAffix extends Affix {
 		boolean canTeleport = false;
 		Vec3 targetPos = null;
 		if (src.getDirectEntity() instanceof AbstractArrow arrow && arrow.getOwner() != null) {
-			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(arrow);
-			canTeleport = affixes.values().stream().anyMatch(AffixInstance::enablesTelepathy);
+			canTeleport = AffixHelper.streamAffixes(arrow).anyMatch(AffixInstance::enablesTelepathy);
 			targetPos = arrow.getOwner().position();
 		} else if (src.getDirectEntity() instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
-			canTeleport = AffixHelper.getAffixes(weapon).containsKey(Affixes.TELEPATHIC.get());
+			canTeleport = AffixHelper.streamAffixes(weapon).anyMatch(AffixInstance::enablesTelepathy);
 			targetPos = living.position();
 		}
 

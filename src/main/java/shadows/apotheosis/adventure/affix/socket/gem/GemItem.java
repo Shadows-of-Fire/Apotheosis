@@ -1,6 +1,7 @@
 package shadows.apotheosis.adventure.affix.socket.gem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -40,9 +41,10 @@ public class GemItem extends Item {
 	}
 
 	@Override
+	@SuppressWarnings("removal")
 	public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
 		Gem gem = getGemOrLegacy(pStack);
-		if (gem == null) {
+		if (gem == null || (gem == LegacyGem.INSTANCE && LegacyGem.getStoredBonus(pStack) == null)) {
 			tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
 			return;
 		}
@@ -86,9 +88,11 @@ public class GemItem extends Item {
 	 * @param gem The gem stack
 	 * @returns The stored UUID(s), creating them if they do not exist.
 	 */
+	@SuppressWarnings("removal")
 	public static List<UUID> getUUIDs(ItemStack gemStack) {
-		Gem gem = getGem(gemStack);
+		Gem gem = getGemOrLegacy(gemStack);
 		if (gem == null || gem.getNumberOfUUIDs() == 0) return Collections.emptyList();
+		if (gem == Gems.LEGACY.get()) { return Arrays.asList(LegacyGem.getStoredBonus(gemStack).getValue().getId()); }
 		CompoundTag tag = gemStack.getOrCreateTag();
 		if (tag.contains(UUID_ARRAY)) {
 			ListTag list = tag.getList(UUID_ARRAY, Tag.TAG_INT_ARRAY);
@@ -164,7 +168,8 @@ public class GemItem extends Item {
 
 	@Nullable
 	public static LootRarity getLootRarity(ItemStack stack) {
-		return LootRarity.COMMON.max(AffixHelper.getRarity(stack.getTag()));
+		Gem gem = getGemOrLegacy(stack);
+		return gem == null ? null : gem.clamp(AffixHelper.getRarity(stack.getTag()));
 	}
 
 	@Override

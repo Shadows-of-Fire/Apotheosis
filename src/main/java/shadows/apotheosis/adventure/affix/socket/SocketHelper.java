@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure.affix.socket;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -40,7 +41,7 @@ public class SocketHelper {
 	}
 
 	public static List<Gem> getActiveGems(ItemStack stack) {
-		return getGems(stack).stream().filter(i -> !i.isEmpty()).map(GemItem::getGem).toList();
+		return getGems(stack).stream().map(GemItem::getGem).filter(Objects::nonNull).toList();
 	}
 
 	public static void setGems(ItemStack stack, List<ItemStack> gems) {

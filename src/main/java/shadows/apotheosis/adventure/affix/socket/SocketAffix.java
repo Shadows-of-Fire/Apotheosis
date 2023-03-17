@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix.socket;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
@@ -112,6 +114,11 @@ public final class SocketAffix extends Affix {
 		MutableFloat mFloat = new MutableFloat(amount);
 		gems(socketed).forEachOrdered(ctx -> mFloat.setValue(ctx.gem().onHurt(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), src, ent, mFloat.getValue())));
 		return mFloat.getValue();
+	}
+
+	@Override
+	public void getEnchantmentLevels(ItemStack socketed, LootRarity rarity, float level, Map<Enchantment, Integer> enchantments) {
+		gems(socketed).forEach(ctx -> ctx.gem().getEnchantmentLevels(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), enchantments));
 	}
 
 	private static Stream<GemInstance> gems(ItemStack socketed) {

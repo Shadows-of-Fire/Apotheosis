@@ -26,7 +26,9 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.DamageReductionBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.DurabilityBonus;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.EnchantmentBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.MultiAttrBonus;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.codec.PlaceboCodecs;
 import shadows.placebo.json.JsonUtil;
@@ -55,8 +57,10 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 
 	protected void registerBonusCodecs() {
 		this.registerBonusCodec(Apotheosis.loc("attribute"), AttributeBonus.CODEC);
+		this.registerBonusCodec(Apotheosis.loc("multi_attribute"), MultiAttrBonus.CODEC);
 		this.registerBonusCodec(Apotheosis.loc("durability"), DurabilityBonus.CODEC);
 		this.registerBonusCodec(Apotheosis.loc("damage_reduction"), DamageReductionBonus.CODEC);
+		this.registerBonusCodec(Apotheosis.loc("enchantment"), EnchantmentBonus.CODEC);
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
@@ -52,6 +53,7 @@ import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.codec.PlaceboCodecs;
+import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
@@ -145,11 +147,16 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
 		addTypeInfo(list, this.bonusMap.keySet().toArray());
 		list.accept(CommonComponents.EMPTY);
-		list.accept(Component.translatable("item.modifiers.socket_in").withStyle(ChatFormatting.GOLD));
-		for (GemBonus bonus : this.bonuses) {
-			Component modifComp = bonus.getSocketBonusTooltip(gem, rarity, facets);
-			Component sum = Component.translatable("text.apotheosis.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
-			list.accept(sum);
+		if (this.bonuses.size() == 1) {
+			list.accept(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
+			list.accept(this.bonuses.get(0).getSocketBonusTooltip(gem, rarity, facets));
+		} else {
+			list.accept(Component.translatable("item.modifiers.socket_in").withStyle(ChatFormatting.GOLD));
+			for (GemBonus bonus : this.bonuses) {
+				Component modifComp = bonus.getSocketBonusTooltip(gem, rarity, facets);
+				Component sum = Component.translatable("text.apotheosis.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
+				list.accept(sum);
+			}
 		}
 	}
 
@@ -174,18 +181,29 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	}
 
 	/**
-	 * Checks if this gem can be applied to an item.
+	 * Checks if this gem can be applied to an item, preventing more than one unique.
 	 * @param stack The target item.
 	 * @param rarity The rarity of the gem.
 	 * @param gem The gem
 	 * @return If this gem can be socketed into the item.
 	 */
 	public boolean canApplyTo(ItemStack stack, ItemStack gem, LootRarity rarity) {
-		LootCategory cat = LootCategory.forItem(stack);
 		if (this.isUnique()) {
 			List<Gem> gems = SocketHelper.getActiveGems(stack);
 			if (gems.contains(this)) return false;
 		}
+		return isValidIn(stack, gem, rarity);
+	}
+
+	/**
+	 * Checks if this gem is legally socketed into an item.  Does not validate uniques
+	 * @param stack The target item.
+	 * @param rarity The rarity of the gem.
+	 * @param gem The gem
+	 * @return If this gem can be socketed into the item.
+	 */
+	public boolean isValidIn(ItemStack stack, ItemStack gem, LootRarity rarity) {
+		LootCategory cat = LootCategory.forItem(stack);
 		return !cat.isNone() && bonusMap.containsKey(cat) && bonusMap.get(cat).supports(rarity);
 	}
 
@@ -299,6 +317,18 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 */
 	public float onHurt(ItemStack socketed, ItemStack gemStack, LootRarity rarity, int facets, DamageSource src, LivingEntity ent, float amount) {
 		return getBonus(socketed).map(b -> b.onHurt(gemStack, rarity, facets, src, ent, amount)).orElse(amount);
+	}
+
+	/**
+	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param ench    The enchantment being queried for.
+	 * @return        The bonus level to be added to the current enchantment.
+	 */
+	public void getEnchantmentLevels(ItemStack socketed, ItemStack gemStack, LootRarity rarity, int facets, Map<Enchantment, Integer> enchantments) {
+		getBonus(socketed).ifPresent(b -> b.getEnchantmentLevels(gemStack, rarity, facets, enchantments));
 	}
 
 	protected Optional<GemBonus> getBonus(ItemStack stack) {

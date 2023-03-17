@@ -70,7 +70,6 @@ public class MultiAttrBonus extends GemBonus {
 
 	@Override
 	public MultiAttrBonus validate() {
-		gemClass.validate();
 		Preconditions.checkNotNull(this.modifiers, "Invalid AttributeBonus with null values");
 		return this;
 	}

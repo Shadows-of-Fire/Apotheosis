@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -22,12 +23,14 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.placebo.events.GetEnchantmentLevelEvent;
 
 public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarity, float level) {
 
@@ -173,5 +176,15 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	 */
 	public float onHurt(DamageSource src, LivingEntity ent, float amount) {
 		return this.affix.onHurt(stack, rarity, level, src, ent, amount);
+	}
+
+	/**
+	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
+	 * @param ench     The enchantment being queried for.
+	 * @param oldLevel The original level of the enchantment, before modification.
+	 * @return         The bonus level to be added to the current enchantment.
+	 */
+	public void getEnchantmentLevels(Map<Enchantment, Integer> enchantments) {
+		this.affix.getEnchantmentLevels(stack, rarity, level, enchantments);
 	}
 }

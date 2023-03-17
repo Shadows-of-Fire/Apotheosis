@@ -69,6 +69,7 @@ import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.util.DamageSourceUtil;
 import shadows.placebo.events.AnvilLandEvent;
+import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.events.ItemUseEvent;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
@@ -403,6 +404,11 @@ public class AdventureEvents {
 				ent.setItem(new ItemStack(Apoth.Items.GEM_DUST.get(), stack.getCount()));
 			}
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void enchLevels(GetEnchantmentLevelEvent e) {
+		AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));
 	}
 
 }

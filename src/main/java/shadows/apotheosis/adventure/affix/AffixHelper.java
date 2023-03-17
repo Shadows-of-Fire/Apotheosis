@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
@@ -81,6 +82,10 @@ public class AffixHelper {
 		return map;
 	}
 
+	public static Stream<AffixInstance> streamAffixes(ItemStack stack) {
+		return getAffixes(stack).values().stream();
+	}
+
 	public static boolean hasAffixes(ItemStack stack) {
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
 		return afxData != null && !afxData.getCompound(AFFIXES).isEmpty();
@@ -124,6 +129,10 @@ public class AffixHelper {
 			}
 		}
 		return map;
+	}
+
+	public static Stream<AffixInstance> streamAffixes(Entity entity) {
+		return getAffixes(entity).values().stream();
 	}
 
 	@Nullable
