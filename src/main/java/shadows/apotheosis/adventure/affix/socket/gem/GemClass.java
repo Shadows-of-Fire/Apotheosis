@@ -38,7 +38,7 @@ public record GemClass(String key, Set<LootCategory> types) {
 	public void write(FriendlyByteBuf buf) {
 		buf.writeUtf(this.key);
 		buf.writeByte(this.types.size());
-		types.forEach(c -> buf.writeEnum(c));
+		types.forEach(c -> buf.writeUtf(c.getName()));
 	}
 
 	public static GemClass read(FriendlyByteBuf buf) {
@@ -46,7 +46,7 @@ public record GemClass(String key, Set<LootCategory> types) {
 		int size = buf.readByte();
 		List<LootCategory> list = new ArrayList<>(size);
 		for (int i = 0; i < size; i++) {
-			list.add(buf.readEnum(LootCategory.class));
+			list.add(LootCategory.byId(buf.readUtf()));
 		}
 		return new GemClass(key, ImmutableSet.copyOf(list));
 	}
