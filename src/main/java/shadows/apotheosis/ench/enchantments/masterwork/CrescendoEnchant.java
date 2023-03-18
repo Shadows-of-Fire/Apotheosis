@@ -43,6 +43,21 @@ public class CrescendoEnchant extends Enchantment {
 		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_GREEN);
 	}
 
+	private static ThreadLocal<ListTag> nbt = new ThreadLocal<>();
+
+	/**
+	 * Early hook for the Crescendo of Bolts enchantment.
+	 * This is required to retain the ammunition's nbt data, as it is thrown away before {@link EnchHooks#onArrowFired}.
+	 * Injected by {@link CrossbowItemMixin}
+	 */
+	public static void preArrowFired(ItemStack crossbow) {
+		if (!Apotheosis.enableEnch) return;
+		int level = crossbow.getEnchantmentLevel(Apoth.Enchantments.CRESCENDO.get());
+		if (level > 0) {
+			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Tag.TAG_COMPOUND).copy());
+		}
+	}
+
 	/**
 	 * Handles the usage of the Crescendo of Bolts enchantment.
 	 * The enchantment gives the crossbow extra shots per charge, one per enchantment level.
@@ -62,21 +77,6 @@ public class CrescendoEnchant extends Enchantment {
 				crossbow.getTag().remove("shots");
 			}
 			nbt.set(null);
-		}
-	}
-
-	private static ThreadLocal<ListTag> nbt = new ThreadLocal<>();
-
-	/**
-	 * Early hook for the Crescendo of Bolts enchantment.
-	 * This is required to retain the ammunition's nbt data, as it is thrown away before {@link EnchHooks#onArrowFired}.
-	 * Injected by {@link CrossbowItemMixin}
-	 */
-	public static void preArrowFired(ItemStack crossbow) {
-		if (!Apotheosis.enableEnch) return;
-		int level = crossbow.getEnchantmentLevel(Apoth.Enchantments.CRESCENDO.get());
-		if (level > 0) {
-			nbt.set(crossbow.getTag().getList("ChargedProjectiles", Tag.TAG_COMPOUND).copy());
 		}
 	}
 
