@@ -62,10 +62,10 @@ public class EnchantmentBonus extends GemBonus {
 		int level = this.values.get(rarity);
 		if (this.global) {
 			for (Enchantment e : enchantments.keySet()) {
-				enchantments.computeIfPresent(e, (key, val) -> val + level);
+				enchantments.computeIfPresent(e, (key, val) -> val > 0 ? val + level : 0);
 			}
 		} else if (this.mustExist) {
-			enchantments.computeIfPresent(this.ench, (key, val) -> val + level);
+			enchantments.computeIfPresent(this.ench, (key, val) -> val > 0 ? val + level : 0);
 		} else {
 			enchantments.merge(this.ench, level, Integer::sum);
 		}
