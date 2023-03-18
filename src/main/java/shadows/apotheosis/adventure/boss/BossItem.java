@@ -179,7 +179,6 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(s);
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
-			else entity.setDropChance(s, 0.03F);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck, rarity));
 				entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
