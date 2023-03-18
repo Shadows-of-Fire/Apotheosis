@@ -26,9 +26,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 
@@ -36,6 +38,7 @@ import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 public class AdventureJEIPlugin implements IModPlugin {
 
 	public static final RecipeType<UpgradeRecipe> APO_SMITHING = RecipeType.create(Apotheosis.MODID, "smithing", ApothUpgradeRecipe.class);
+	public static final RecipeType<SalvagingRecipe> SALVAGING = RecipeType.create(Apotheosis.MODID, "salvaging", SalvagingRecipe.class);
 
 	@Override
 	public ResourceLocation getPluginUid() {
@@ -56,12 +59,14 @@ public class AdventureJEIPlugin implements IModPlugin {
 		reg.addIngredientInfo(AdventureModule.RARITY_MATERIALS.values().stream().map(ItemStack::new).toList(), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.salvaging"));
 		ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
 		reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ApothUpgradeRecipe).toList());
+		reg.addRecipes(SALVAGING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));
 	}
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration reg) {
 		if (!Apotheosis.enableAdventure) return;
 		reg.addRecipeCategories(new ApothSmithingCategory(reg.getJeiHelpers().getGuiHelper()));
+		reg.addRecipeCategories(new SalvagingCategory(reg.getJeiHelpers().getGuiHelper()));
 	}
 
 	private static final List<ItemStack> DUMMY_INPUTS = Arrays.asList(Items.GOLDEN_SWORD, Items.DIAMOND_PICKAXE, Items.STONE_AXE, Items.IRON_CHESTPLATE, Items.TRIDENT).stream().map(ItemStack::new).toList();

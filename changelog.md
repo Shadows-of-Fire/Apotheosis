@@ -1,6 +1,10 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
-* Adjusted the Salvaging Table to be recipe-backed, allowing for easier configuration and extensibility.
+* [NYI] Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
+
+## 6.1.3
+* Adjusted the Salvaging Table to be recipe-backed, allowing for easier conitfiguration and extensibility.
+* Gems can now be processed in the Salvaging Table, yielding 1-2 dust each.
 
 ## 6.1.2
 * Converted Affixes to use Codecs for serialization, which produces better error reporting.
@@ -22,7 +26,7 @@
   * New Gems have been added, with all sorts of new features and stat ranges. Old gems will be referred to as Legacy Gems, and will not have rarities nor be upgradable.
   * Purity has been replaced by Facets, a value indicating the number of cuts in the gem. A Fully-Faceted Gem will be referred to as a "Flawless" Gem and will Glow.
   * Gems now have individual rarities, indicated by name color.  Gems of a higher rarity will be stronger.
-  * Gems are now able to be dimensionally-locked. [NYI] Stronger gems will be found in the nether and end, by default.
+  * Gems are now able to be dimensionally-locked.
   * Gems may also now be Unique, meaning you can only insert one of those gems into any given item. (You may still use more than one overall, but only one per item).
   * Gems may now provide different bonuses when socketed into different types of items.
   * You can increase the number of facets that a gem has in the Gem Cutting Table.

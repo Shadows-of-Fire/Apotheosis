@@ -54,6 +54,7 @@ import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvageItem;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
@@ -189,6 +190,7 @@ public class AdventureModule {
 		e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE, "expulsion");
 		e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE, "extraction");
 		e.getRegistry().register(AddSocketsRecipe.Serializer.INSTANCE, "add_sockets");
+		e.getRegistry().register(SalvagingRecipe.Serializer.INSTANCE, "salvaging");
 	}
 
 	@SubscribeEvent

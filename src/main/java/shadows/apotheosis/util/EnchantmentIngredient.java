@@ -15,12 +15,13 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.common.crafting.AbstractIngredient;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import shadows.placebo.util.PlaceboUtil;
 
-public class EnchantmentIngredient extends Ingredient {
+public class EnchantmentIngredient extends AbstractIngredient {
 
 	protected final ItemLike item;
 	protected final Enchantment enchantment;

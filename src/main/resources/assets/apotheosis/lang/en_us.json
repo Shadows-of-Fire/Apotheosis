@@ -355,6 +355,7 @@
 	"text.apotheosis.rarity_up_cost": "Rarity Upgrade Cost",
 	"text.apotheosis.cut_cost": "Gem Cutting Cost",
 	"title.apotheosis.smithing": "Apotheotic Smithing",
+	"title.apotheosis.salvaging": "Salvaging",
 
 	"text.apotheosis.anything": "Anything",
 	"text.apotheosis.category.none": "Nothing",
@@ -387,7 +388,7 @@
 	"text.apotheosis.category.leggings.plural": "Leggings",
 	"text.apotheosis.category.boots": "Boots",
 	"text.apotheosis.category.boots.plural": "Boots",
-	
+	"text.apotheosis.any_x_item": "Any %s Affix Item",
 
 	"info.apotheosis.boss_spawn": "%s has awoken nearby!",
 	"info.apotheosis.boss": "%s Apotheotic Boss",
