@@ -6,8 +6,8 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
@@ -36,7 +36,7 @@ public class DurabilityBonus extends GemBonus {
 	@Override
 	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
 		float level = this.values.get(rarity).getForStep(facets);
-		return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(Style.EMPTY.withColor(rarity.color()));
+		return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(ChatFormatting.YELLOW);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class DurabilityBonus extends GemBonus {
 	public boolean supports(LootRarity rarity) {
 		return this.values.containsKey(rarity);
 	}
-	
+
 	@Override
 	public int getNumberOfUUIDs() {
 		return 0;

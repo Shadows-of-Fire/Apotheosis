@@ -120,7 +120,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 	@Override
 	public boolean clickMenuButton(Player player, int id) {
 		if (id == 0) {
-			salvageAll(LootRarity.COMMON);
+			salvageAll();
 			player.level.playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 0.99F, this.level.random.nextFloat() * 0.25F + 1F);
 			player.level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.BLOCKS, 0.34F, this.level.random.nextFloat() * 0.2F + 0.8F);
 			player.level.playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.45F, this.level.random.nextFloat() * 0.5F + 0.75F);
@@ -140,7 +140,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 		}
 	}
 
-	protected void salvageAll(LootRarity target) {
+	protected void salvageAll() {
 		for (int i = 0; i < 15; i++) {
 			Slot s = this.getSlot(i);
 			ItemStack stack = s.getItem();

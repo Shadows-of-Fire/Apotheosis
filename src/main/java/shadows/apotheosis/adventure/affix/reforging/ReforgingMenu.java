@@ -8,6 +8,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +17,7 @@ import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
@@ -22,7 +25,7 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.container.BlockEntityContainer;
 import shadows.placebo.container.ContainerUtil;
 
-public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
+public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> implements ContainerListener {
 
 	protected final Player player;
 	protected SimpleContainer itemInv = new SimpleContainer(1) {
@@ -35,6 +38,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 	};
 	protected final RandomSource random = new XoroshiroRandomSource(0);
 	protected final int[] seed = new int[2];
+	protected final int[] costs = new int[3];
 	protected DataSlot needsReset = DataSlot.standalone();
 
 	public ReforgingMenu(int id, Inventory inv, BlockPos pos) {
@@ -69,6 +73,13 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 		this.addDataSlot(needsReset);
 		this.addDataSlot(DataSlot.shared(seed, 0));
 		this.addDataSlot(DataSlot.shared(seed, 1));
+		this.addDataSlot(DataSlot.shared(costs, 0));
+		this.addDataSlot(DataSlot.shared(costs, 1));
+		this.addDataSlot(DataSlot.shared(costs, 2));
+
+		if (!player.level.isClientSide) {
+			this.addSlotListener(this);
+		}
 	}
 
 	@Override
@@ -88,20 +99,21 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 	}
 
 	@Override
-	public boolean clickMenuButton(Player player, int id) {
-		if (id >= 0 && id < 3) {
+	public boolean clickMenuButton(Player player, int slot) {
+		if (slot >= 0 && slot < 3) {
 
 			ItemStack input = this.getSlot(0).getItem();
 			LootRarity rarity = this.getRarity();
 			if (rarity == null || input.isEmpty() || this.needsReset()) return false;
 
 			int dust = this.getDustCount();
+			int dustCost = this.getDustCost(slot, rarity);
 			int mats = this.getMatCount();
-			int cost = (id + 1) * 2;
+			int matCost = this.getMatCost(slot, rarity);
 			int levels = this.player.experienceLevel;
-			int levelCost = this.getLevelCost(id, rarity);
+			int levelCost = this.getLevelCost(slot, rarity);
 
-			if ((dust < cost || mats < cost || levels < levelCost) && !player.isCreative()) return false;
+			if ((dust < dustCost || mats < matCost || levels < levelCost) && !player.isCreative()) return false;
 
 			if (!player.level.isClientSide) {
 				ItemStack[] choices = new ItemStack[3];
@@ -112,13 +124,13 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 					choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
 				}
 
-				ItemStack out = choices[id];
+				ItemStack out = choices[slot];
 				this.getSlot(0).set(out);
 				if (!player.isCreative()) {
-					this.getSlot(1).getItem().shrink(cost);
-					this.getSlot(2).getItem().shrink(cost);
+					this.getSlot(1).getItem().shrink(matCost);
+					this.getSlot(2).getItem().shrink(dustCost);
 				}
-				player.onEnchantmentPerformed(out, cost);
+				player.onEnchantmentPerformed(out, 3 * ++slot);
 				updateSeed();
 				this.needsReset.set(1);
 			}
@@ -128,7 +140,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 			player.playSound(SoundEvents.SMITHING_TABLE_USE, 0.45F, this.level.random.nextFloat() * 0.5F + 0.75F);
 			return true;
 		}
-		return super.clickMenuButton(player, id);
+		return super.clickMenuButton(player, slot);
 	}
 
 	public static boolean isRarityMat(ItemStack stack) {
@@ -151,19 +163,32 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 	}
 
 	public int getDustCost(int slot, LootRarity rarity) {
-		return (1 + rarity.ordinal()) + Math.max(1, rarity.ordinal() / 2) * slot;
+		return costs[0] * ++slot;
 	}
 
 	public int getMatCost(int slot, LootRarity rarity) {
-		return (1 + rarity.ordinal()) + Math.max(1, rarity.ordinal() / 2) * slot;
+		return costs[1] * ++slot;
 	}
 
 	public int getLevelCost(int slot, LootRarity rarity) {
-		return (1 + rarity.ordinal()) * ++slot * 5;
+		return costs[2] * ++slot;
 	}
 
 	public boolean needsReset() {
 		return this.needsReset.get() != 0;
+	}
+
+	@Override
+	public void slotChanged(AbstractContainerMenu pContainerToSend, int pDataSlotIndex, ItemStack pStack) {
+		LootRarity rarity = getRarity();
+		if (rarity == null) return;
+		this.costs[0] = AdventureConfig.reforgeCosts.get(rarity).dustCost();
+		this.costs[1] = AdventureConfig.reforgeCosts.get(rarity).matCost();
+		this.costs[2] = AdventureConfig.reforgeCosts.get(rarity).levelCost();
+	}
+
+	@Override
+	public void dataChanged(AbstractContainerMenu pContainerMenu, int pDataSlotIndex, int pValue) {
 	}
 
 }

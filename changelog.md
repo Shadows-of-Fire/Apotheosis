@@ -1,5 +1,6 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
+* Adjusted the Salvaging Table to be recipe-backed, allowing for easier configuration and extensibility.
 
 ## 6.1.2
 * Converted Affixes to use Codecs for serialization, which produces better error reporting.
@@ -11,6 +12,7 @@
 * Increased the performance of LootCategory.forItem which is a fairly hot path.
 * Fixed a crash that could happen if a legacy gem with no nbt showed up.
 * Reduced required forge version to 43.2.0
+* Made Reforging Costs configurable.
 
 ## 6.1.1
 * Hotfix that fixes common items always having four sockets.
