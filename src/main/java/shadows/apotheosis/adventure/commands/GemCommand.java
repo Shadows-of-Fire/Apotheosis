@@ -25,6 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemCommand {
@@ -56,7 +57,7 @@ public class GemCommand {
 			return 0;
 		})))))).then(Commands.literal("random").executes(c -> {
 			Player p = c.getSource().getPlayerOrException();
-			ItemStack gem = GemManager.createRandomGemStack(p.random, null, p.getLuck(), IDimensional.matches(p.level));
+			ItemStack gem = GemManager.createRandomGemStack(p.random, null, p.getLuck(), IDimensional.matches(p.level), IStaged.matches(p));
 			p.addItem(gem);
 			return 0;
 		})));

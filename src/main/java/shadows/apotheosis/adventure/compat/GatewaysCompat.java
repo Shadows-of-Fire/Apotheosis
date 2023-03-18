@@ -19,6 +19,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.adventure.boss.BossItem;
 import shadows.apotheosis.adventure.boss.BossItemManager;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -26,6 +27,7 @@ import shadows.gateways.entity.GatewayEntity;
 import shadows.gateways.gate.Reward;
 import shadows.gateways.gate.WaveEntity;
 import shadows.placebo.json.PSerializer;
+import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 @SuppressWarnings("removal")
 public class GatewaysCompat {
@@ -100,7 +102,7 @@ public class GatewaysCompat {
 
 		@Override
 		public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-			list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck()).getStack(), rarity, level.random));
+			list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), rarity, level.random));
 		}
 
 		@Override

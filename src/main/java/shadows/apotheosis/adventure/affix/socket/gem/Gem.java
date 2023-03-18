@@ -49,6 +49,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -58,7 +59,7 @@ import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
-public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped {
+public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
 	//Formatter::off
 	public static final Codec<Gem> CODEC = RecordCodecBuilder.create(inst -> 
@@ -69,7 +70,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 			LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(LootRarity.Clamped::getMinRarity),
 			LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(LootRarity.Clamped::getMaxRarity),
 			GemManager.gemBonusCodec().listOf().fieldOf("bonuses").forGetter(Gem::getBonuses),
-			Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique))
+			Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique),
+			PlaceboCodecs.setCodec(Codec.STRING).optionalFieldOf("stages").forGetter(gem -> Optional.ofNullable(gem.getStages())))
 			.apply(inst, Gem::new)
 		);
 	
@@ -80,17 +82,19 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	protected final Set<ResourceLocation> dimensions;
 	protected final List<GemBonus> bonuses;
 	protected final boolean unique;
+	protected final @Nullable Set<String> stages;
 
 	protected transient final Map<LootCategory, GemBonus> bonusMap;
 	protected transient final int uuidsNeeded;
 	protected transient final LootRarity minRarity, maxRarity;
 
-	public Gem(int weight, float quality, Set<ResourceLocation> dimensions, @Nullable LootRarity minRarity, @Nullable LootRarity maxRarity, List<GemBonus> bonuses, boolean unique) {
+	public Gem(int weight, float quality, Set<ResourceLocation> dimensions, @Nullable LootRarity minRarity, @Nullable LootRarity maxRarity, List<GemBonus> bonuses, boolean unique, Optional<Set<String>> stages) {
 		this.weight = weight;
 		this.quality = quality;
 		this.dimensions = dimensions;
 		this.bonuses = bonuses;
 		this.unique = unique;
+		this.stages = stages.orElse(null);
 		this.bonusMap = bonuses.stream().<Pair<LootCategory, GemBonus>>mapMulti((gemData, mapper) -> {
 			for (LootCategory c : gemData.getGemClass().types()) {
 				mapper.accept(Pair.of(c, gemData));
@@ -398,6 +402,11 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		return this;
 	}
 
+	@Override
+	public Set<String> getStages() {
+		return this.stages;
+	}
+
 	public static void addTypeInfo(Consumer<Component> list, Object... types) {
 		Arrays.sort(types, (c1, c2) -> ((LootCategory) c1).getName().compareTo(((LootCategory) c2).getName()));
 		Style style = Style.EMPTY.withColor(0x0AFF0A);
@@ -419,4 +428,5 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 			list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
 		}
 	}
+
 }

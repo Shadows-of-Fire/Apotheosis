@@ -5,6 +5,8 @@
 ## 6.1.3
 * Adjusted the Salvaging Table to be recipe-backed, allowing for easier conitfiguration and extensibility.
 * Gems can now be processed in the Salvaging Table, yielding 1-2 dust each.
+* Added support for GameStages.
+* Fixed Endersurge gems applying +2 levels to everything instead of only existing enchantments.
 
 ## 6.1.2
 * Converted Affixes to use Codecs for serialization, which produces better error reporting.

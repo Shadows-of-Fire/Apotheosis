@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.function.Consumer;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Predicates;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -16,15 +18,18 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.placebo.json.ListenerCallback;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
@@ -54,7 +59,9 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 		if (!this.resolvedGems.isEmpty()) {
 			gem = WeightedRandom.getRandomItem(ctx.getRandom(), this.resolvedGems.stream().map(g -> g.<Gem>wrap(ctx.getLuck())).toList()).get().getData();
 		} else {
-			gem = GemManager.INSTANCE.getRandomItem(ctx.getRandom(), ctx.getLuck(), IDimensional.matches(ctx.getLevel()));
+			var player = GemLootPoolEntry.findPlayer(ctx);
+			if (player == null) return;
+			gem = GemManager.INSTANCE.getRandomItem(ctx.getRandom(), ctx.getLuck(), IDimensional.matches(ctx.getLevel()), IStaged.matches(player));
 		}
 
 		ItemStack stack = GemManager.createGemStack(gem, ctx.getRandom(), null, ctx.getLuck());
@@ -73,6 +80,15 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 	private <T> T printErrorOnNull(T t, ResourceLocation id) {
 		if (t == null) AdventureModule.LOGGER.error("A GemLootPoolEntry failed to resolve the Gem {}!", id);
 		return t;
+	}
+
+	@Nullable
+	public static Player findPlayer(LootContext ctx) {
+		if (ctx.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
+		if (ctx.getParamOrNull(LootContextParams.DIRECT_KILLER_ENTITY) instanceof Player p) return p;
+		if (ctx.getParamOrNull(LootContextParams.KILLER_ENTITY) instanceof Player p) return p;
+		if (ctx.getParamOrNull(LootContextParams.LAST_DAMAGE_PLAYER) instanceof Player p) return p;
+		return null;
 	}
 
 	public static class Serializer extends LootPoolSingletonContainer.Serializer<GemLootPoolEntry> {

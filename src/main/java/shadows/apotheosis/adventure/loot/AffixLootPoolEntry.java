@@ -46,14 +46,16 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 		super(weight, quality, conditions, functions);
 		this.rarity = rarity;
 		this.entries = entries;
-		if(!this.entries.isEmpty()) awaitingLoad.add(this);
+		if (!this.entries.isEmpty()) awaitingLoad.add(this);
 	}
 
 	@Override
 	protected void createItemStack(Consumer<ItemStack> list, LootContext ctx) {
 		ItemStack stack;
 		if (this.resolvedEntries.isEmpty()) {
-			stack = LootController.createRandomLootItem(ctx.getRandom(), this.rarity, ctx.getLuck(), ctx.getLevel());
+			var player = GemLootPoolEntry.findPlayer(ctx);
+			if (player == null) return;
+			stack = LootController.createRandomLootItem(ctx.getRandom(), this.rarity, player, ctx.getLevel());
 		} else {
 			AffixLootEntry entry = WeightedRandom.getRandomItem(ctx.getRandom(), this.resolvedEntries.stream().map(e -> e.<AffixLootEntry>wrap(ctx.getLuck())).toList()).get().getData();
 			stack = LootController.createLootItem(entry.getStack().copy(), this.rarity == null ? LootRarity.random(ctx.getRandom(), ctx.getLuck(), entry) : this.rarity, ctx.getRandom());
@@ -71,7 +73,7 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 	}
 
 	private <T> T printErrorOnNull(T t, ResourceLocation id) {
-		if(t == null) AdventureModule.LOGGER.error("An AffixLootPoolEntry failed to resolve the Affix Entry {}!", id);
+		if (t == null) AdventureModule.LOGGER.error("An AffixLootPoolEntry failed to resolve the Affix Entry {}!", id);
 		return t;
 	}
 
@@ -80,7 +82,8 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 		@Override
 		protected AffixLootPoolEntry deserialize(JsonObject obj, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] lootConditions, LootItemFunction[] lootFunctions) {
 			LootRarity rarity = LootRarity.byId(GsonHelper.getAsString(obj, "rarity", ""));
-			List<String> entries = context.deserialize(GsonHelper.getAsJsonArray(obj, "entries", new JsonArray()), new TypeToken<List<String>>() {}.getType());
+			List<String> entries = context.deserialize(GsonHelper.getAsJsonArray(obj, "entries", new JsonArray()), new TypeToken<List<String>>() {
+			}.getType());
 			return new AffixLootPoolEntry(rarity, entries.stream().map(ResourceLocation::new).toList(), weight, quality, lootConditions, lootFunctions);
 		}
 

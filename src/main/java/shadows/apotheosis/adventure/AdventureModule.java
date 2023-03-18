@@ -99,6 +99,8 @@ public class AdventureModule {
 
 	public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
 
+	public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
+
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
 		ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 40D, "f_22308_");

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class BossSummonerItem extends Item {
@@ -20,14 +21,14 @@ public class BossSummonerItem extends Item {
 	public InteractionResult useOn(UseOnContext ctx) {
 		Level world = ctx.getLevel();
 		if (world.isClientSide) return InteractionResult.SUCCESS;
-		BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer().getLuck(), IDimensional.matches(world));
+		Player player = ctx.getPlayer();
+		BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer().getLuck(), IDimensional.matches(world), IStaged.matches(player));
 		if (item == null) return InteractionResult.FAIL;
 		BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
 		if (!world.noCollision(item.getSize().move(pos))) {
 			pos = pos.above();
 			if (!world.noCollision(item.getSize().move(pos))) return InteractionResult.FAIL;
 		}
-		Player player = ctx.getPlayer();
 		Mob boss = item.createBoss((ServerLevel) world, pos, world.getRandom(), player.getLuck());
 		boss.setTarget(player);
 		world.addFreshEntity(boss);

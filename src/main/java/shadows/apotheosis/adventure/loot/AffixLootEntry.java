@@ -2,10 +2,13 @@ package shadows.apotheosis.adventure.loot;
 
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
@@ -14,7 +17,7 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
  * A loot entry represents a possible item that can come out of a loot roll.
  * It is classified into a type, which is used to determine possible affixes.
  */
-public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements ILuckyWeighted, IDimensional, LootRarity.Clamped {
+public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
 	protected int weight;
 	protected float quality;
@@ -24,6 +27,7 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 	protected LootRarity minRarity;
 	@SerializedName("max_rarity")
 	protected LootRarity maxRarity;
+	protected @Nullable Set<String> stages;
 
 	public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max) {
 		this.weight = weight;
@@ -65,6 +69,11 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 
 	public LootCategory getType() {
 		return LootCategory.forItem(this.stack);
+	}
+
+	@Override
+	public Set<String> getStages() {
+		return this.stages;
 	}
 
 }

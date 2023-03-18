@@ -13,6 +13,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemLootModifier extends LootModifier {
@@ -29,8 +30,10 @@ public class GemLootModifier extends LootModifier {
 		for (LootPatternMatcher m : AdventureConfig.AFFIX_ITEM_LOOT_RULES) {
 			if (m.matches(context.getQueriedLootTableId())) {
 				if (context.getRandom().nextFloat() <= m.chance()) {
+					var player = GemLootPoolEntry.findPlayer(context);
+					if (player == null) return generatedLoot;
 					float luck = context.getLuck();
-					ItemStack gem = GemManager.createRandomGemStack(context.getRandom(), null, luck, IDimensional.matches(context.getLevel()));
+					ItemStack gem = GemManager.createRandomGemStack(context.getRandom(), null, luck, IDimensional.matches(context.getLevel()), IStaged.matches(player));
 					generatedLoot.add(gem);
 				}
 				break;

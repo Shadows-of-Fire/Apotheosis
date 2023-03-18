@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
@@ -39,6 +41,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -52,7 +55,7 @@ import shadows.placebo.json.RandomAttributeModifier;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
-public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped {
+public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
@@ -61,6 +64,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	protected EntityType<?> entity;
 	protected AABB size;
 	protected Map<LootRarity, BossStats> stats;
+	protected @Nullable Set<String> stages;
 
 	@SerializedName("valid_gear_sets")
 	protected List<SetPredicate> armorSets;
@@ -252,6 +256,11 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	@Override
 	public Set<ResourceLocation> getDimensions() {
 		return this.dimensions;
+	}
+
+	@Override
+	public Set<String> getStages() {
+		return this.stages;
 	}
 
 }

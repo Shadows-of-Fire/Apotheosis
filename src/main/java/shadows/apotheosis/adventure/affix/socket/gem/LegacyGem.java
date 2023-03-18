@@ -1,6 +1,7 @@
 package shadows.apotheosis.adventure.affix.socket.gem;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -29,7 +30,7 @@ public final class LegacyGem extends Gem {
 	public static final LegacyGem INSTANCE = new LegacyGem();
 
 	public LegacyGem() {
-		super(0, 0, Collections.emptySet(), null, null, Collections.emptyList(), false);
+		super(0, 0, Collections.emptySet(), null, null, Collections.emptyList(), false, Optional.empty());
 	}
 
 	public static final String MODIFIER = "modifier";

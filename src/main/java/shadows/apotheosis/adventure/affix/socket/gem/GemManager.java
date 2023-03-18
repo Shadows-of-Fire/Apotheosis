@@ -83,7 +83,8 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 	 * @param filter The filter
 	 * @return A gem item, or an empty ItemStack if no entries were available for the dimension.
 	 */
-	public static ItemStack createRandomGemStack(RandomSource rand, @Nullable LootRarity rarity, float luck, Predicate<Gem> filter) {
+	@SafeVarargs
+	public static ItemStack createRandomGemStack(RandomSource rand, @Nullable LootRarity rarity, float luck, Predicate<Gem>... filter) {
 		Gem gem = GemManager.INSTANCE.getRandomItem(rand, luck, filter);
 		if (gem == null) return ItemStack.EMPTY;
 		return createGemStack(gem, rand, rarity, luck);

@@ -65,6 +65,7 @@ import shadows.apotheosis.adventure.commands.LootifyCommand;
 import shadows.apotheosis.adventure.commands.ModifierCommand;
 import shadows.apotheosis.adventure.commands.RarityCommand;
 import shadows.apotheosis.adventure.commands.SocketCommand;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.util.DamageSourceUtil;
@@ -342,7 +343,7 @@ public class AdventureEvents {
 			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
 			if (p.random.nextFloat() <= chance) {
 				Entity ent = e.getEntity();
-				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.createRandomGemStack(p.random, null, p.getLuck(), IDimensional.matches(p.getLevel())), 0, 0, 0));
+				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.createRandomGemStack(p.random, null, p.getLuck(), IDimensional.matches(p.getLevel()), IStaged.matches(p)), 0, 0, 0));
 			}
 		}
 	}
@@ -381,9 +382,9 @@ public class AdventureEvents {
 	public void special(SpecialSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getLevel().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
 			e.setCanceled(true);
-			Player nearest = e.getEntity().level.getNearestPlayer(e.getEntity(), 32);
-			float luck = nearest != null ? nearest.getLuck() : 0;
-			ItemStack affixItem = LootController.createRandomLootItem(e.getLevel().getRandom(), null, luck, (ServerLevel) e.getEntity().level);
+			Player player = e.getLevel().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
+			if (player == null) return;
+			ItemStack affixItem = LootController.createRandomLootItem(e.getLevel().getRandom(), null, player, (ServerLevel) e.getEntity().level);
 			if (affixItem.isEmpty()) return;
 			affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);
