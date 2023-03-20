@@ -54,7 +54,7 @@ public final class LegacyGem extends Gem {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, ItemStack gem, LootRarity rarity) {
-		return true;
+		return getStoredBonus(gem) != null;
 	}
 
 	@Override

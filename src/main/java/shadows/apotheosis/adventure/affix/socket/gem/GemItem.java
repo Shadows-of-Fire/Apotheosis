@@ -91,7 +91,7 @@ public class GemItem extends Item {
 	@SuppressWarnings("removal")
 	public static List<UUID> getUUIDs(ItemStack gemStack) {
 		Gem gem = getGemOrLegacy(gemStack);
-		if (gem == null || gem.getNumberOfUUIDs() == 0) return Collections.emptyList();
+		if (gem == null || gem.getNumberOfUUIDs() == 0 || !gemStack.hasTag()) return Collections.emptyList();
 		if (gem == Gems.LEGACY.get()) { return Arrays.asList(LegacyGem.getStoredBonus(gemStack).getValue().getId()); }
 		CompoundTag tag = gemStack.getOrCreateTag();
 		if (tag.contains(UUID_ARRAY)) {
