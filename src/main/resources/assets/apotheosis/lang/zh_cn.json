@@ -259,7 +259,7 @@
 	"gem_class.melee_weapon": "近战武器",
 	"gem_class.ranged_weapon": "远程武器",
 	"gem_class.light_weapon": "轻型武器（例如剑）",
-	"gem_class.core_armor": "核心装甲（胸甲）",
+	"gem_class.core_armor": "核心装甲（胸甲和护腿）",
 	"gem_class.lower_armor": "下身装甲（护腿和靴子）",
 	"gem_class.armor": "护甲",
 	"gem_class.breaker": "挖掘工具",
