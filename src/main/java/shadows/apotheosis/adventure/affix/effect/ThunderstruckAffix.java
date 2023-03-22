@@ -28,10 +28,10 @@ import shadows.placebo.util.StepFunction;
 public class ThunderstruckAffix extends Affix {
 
 	//Formatter::off
-	public static final Codec<PsychicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+	public static final Codec<ThunderstruckAffix> CODEC = RecordCodecBuilder.create(inst -> inst
 		.group(
 			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, PsychicAffix::new)
+			.apply(inst, ThunderstruckAffix::new)
 		);
 	//Formatter::on
 
