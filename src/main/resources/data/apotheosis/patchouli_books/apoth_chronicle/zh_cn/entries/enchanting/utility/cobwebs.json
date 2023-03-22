@@ -1,0 +1,17 @@
+{
+    "name": "蜘蛛网",
+    "icon": "minecraft:cobweb",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "蜘蛛网可以与铁砧中的物品结合，以移除所有魔咒。$(p)海晶蜘蛛网可以与铁砧中的物品结合，以移除所有诅咒魔咒。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:cobweb",
+			"recipe2": "apotheosis:prismatic_web"
+		}
+	]
+}

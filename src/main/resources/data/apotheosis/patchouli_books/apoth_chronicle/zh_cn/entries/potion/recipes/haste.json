@@ -1,0 +1,19 @@
+{
+    "name": "急迫",
+    "icon": "minecraft:textures/mob_effect/haste.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)急迫$()是另一个有用的效果，在原版中没有配方。$(p)每级提高20%挖掘速度。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "酿造配方",
+			"item": "minecraft:mushroom_stew",
+            "text": "这种药水可以用粗制的药水和蘑菇煲酿造。$(p)它可以被延长、加强，或者用通常的材料变成喷溅药水。"
+        }
+	]
+}

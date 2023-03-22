@@ -1,0 +1,17 @@
+{
+    "name": "岁月学识",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)岁月学识$()是一个极品魔咒，可以应用在剑上。$(p)当你杀死一个生物时，所有的掉落物都会转化为经验。$(p)每个单独的物品都价值相同的经验。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "这使得杀死掉落大量物品的生物最为有效。$(p)每件物品的经验随着魔咒等级的提高而增加。$(p)作为预防措施，杀死一位玩家将不会转化他们的物品。"
+		}
+	]
+}

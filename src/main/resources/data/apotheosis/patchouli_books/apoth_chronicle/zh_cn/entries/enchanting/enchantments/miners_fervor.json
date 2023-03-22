@@ -1,0 +1,17 @@
+{
+    "name": "矿工热忱",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(5)矿工热忱$()是一个扭曲魔咒，可以应用于所有工具。$(p)它能使你很快地破坏方块，但绝不会瞬间破坏。$(p)它与$(9)效率$()互斥。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "尽管有速度上限，但每级的提升要比$(9)效率$()高得多。$(p)这使得它成为基础速度较慢的工具的理想选择。"
+        }
+	]
+}

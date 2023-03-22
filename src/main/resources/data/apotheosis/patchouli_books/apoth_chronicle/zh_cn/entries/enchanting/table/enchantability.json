@@ -1,0 +1,12 @@
+{
+    "name": "物品附魔能力",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "在原版中，一件物品的附魔能力有助于你的$(#CC00CC)最终威力$()。$(p)神化将其改为提供直接的$(#A800A8)阿卡那$()提升。$(p)$(#A800A8)阿卡那$()按物品附魔能力的50%提升。"
+        }
+	]
+}

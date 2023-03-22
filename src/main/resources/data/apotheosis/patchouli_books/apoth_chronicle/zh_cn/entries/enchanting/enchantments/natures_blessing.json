@@ -1,0 +1,13 @@
+{
+    "name": "自然祝福",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)自然祝福$()是一个锄魔咒。$(p)它允许一把锄被用作骨粉，但要付出耐久的代价。"
+        }
+	]
+}

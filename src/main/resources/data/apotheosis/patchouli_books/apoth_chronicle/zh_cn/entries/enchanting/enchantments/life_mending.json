@@ -1,0 +1,17 @@
+{
+    "name": "生命修补",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(4)生命修补$()是一个腐化魔咒，适用于所有可损坏的物品。$(p)$(9)经验修补$()将收到的经验转化为耐久度，而$(4)生命修补$()将收到的治疗转化为耐久度。$(p)每点生命值恢复的耐久度随等级增加。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "此外，这个魔咒可以在附魔台中发现。"
+        }
+	]
+}

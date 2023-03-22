@@ -1,0 +1,7 @@
+{
+    "name": "属性",
+    "description": "除了原版属性，神化还加入了大量新属性。$(p)本章节将详细介绍所有这些属性。",
+    "icon": "minecraft:diamond_chestplate",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

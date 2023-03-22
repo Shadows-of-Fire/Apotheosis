@@ -1,0 +1,17 @@
+{
+    "name": "击退抗性",
+    "icon": "minecraft:shulker_shell",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)击退抗性$()是你对被攻击击退的抵抗力。在最大值时，你对击退免疫。$(p)通常由盔甲或盾牌提供。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()0$(p)$(9)$(n)最大值：$()1$(p)注意：提供这个数值的系数说它们提供的是实际提供的10倍，所以+1击退抗性实际上是+0.1。"
+		}
+	]
+}

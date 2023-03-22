@@ -1,0 +1,28 @@
+{
+    "name": "宝石切割",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+			"text": "$(9)宝石切割台$()用于升级$(l:apotheosis:adventure/affix_loot/gems)宝石$()。宝石可以通过提高其稀有度或增加刻面数量来升级。"
+		},
+		{
+			"title": "稀有度",
+            "type": "patchouli:text",
+            "text": "和词缀物品一样，每个宝石都有一个$(l:apotheosis:adventure/affix_loot/rarities)稀有度$()。稀有度和刻面数量决定了宝石的强度。$(p)宝石的稀有度可以通过组合两个相同稀有度的$(9)无瑕$()宝石来升级。"
+        },
+		{
+			"title": "刻面",
+            "type": "patchouli:text",
+            "text": "每颗宝石都有$(9)刻面$()，这是衡量一颗宝石的相对强度。可以使用珍宝材料切割宝石，增加刻面的数量。$(p)一个拥有最少刻面的宝石被称为$(7)碎裂的$()，而一个拥有最多刻面的宝石则被称为$(9)无暇的$()。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "一颗宝石可能拥有的最大刻面数量因宝石和稀有度而异，但任何宝石可能拥有的最小刻面数量为四个。"
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "锋利",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)锋利$()不再与其他伤害魔咒互斥。$(p)这意味着你现在可以拥有$(9)锋利$()和另一个通常是互斥的伤害魔咒。"
+        }
+	]
+}

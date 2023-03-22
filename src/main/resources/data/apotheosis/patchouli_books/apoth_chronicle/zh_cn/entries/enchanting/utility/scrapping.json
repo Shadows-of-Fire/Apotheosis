@@ -1,0 +1,18 @@
+{
+    "name": "拆解宝典",
+    "icon": "apotheosis:scrap_tome",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "拆解宝典是一种从物品中获取魔咒的方法。$(p)在铁砧中把它和另一件物品结合起来，会销毁另一件物品，并随机制造出一本带有一些魔咒的书。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:scrap_tome",
+			"text": "你总会获得一半数量的魔咒（向上取整）。$(p)选择的魔咒是基于你的$(l:apotheosis:enchanting/table/seed)附魔种子$()。"
+		}
+	]
+}
