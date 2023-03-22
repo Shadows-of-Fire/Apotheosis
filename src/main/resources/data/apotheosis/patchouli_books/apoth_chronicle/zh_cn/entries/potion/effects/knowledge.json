@@ -1,0 +1,17 @@
+{
+    "name": "古代知识",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)古代知识$()药水是一种增益效果。$(p)在它的作用下，你杀死的生物产生的任何经验都会成倍增加。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "在I级，它的经验会四倍掉落。$(p)而在II级则是八倍。"
+        }
+	]
+}

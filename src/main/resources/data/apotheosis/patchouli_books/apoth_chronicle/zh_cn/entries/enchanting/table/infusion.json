@@ -1,0 +1,20 @@
+{
+    "name": "灌注附魔",
+    "icon": "apotheosis:infused_hellshelf",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)灌注附魔$()是一种通过附魔台进行合成的新方法。$(p)每个灌注配方都有一个物品输入和三个状态要求。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "每个状态的要求通常至少需要一些数值，并可选择有一个最大值。$(p)灌注附魔只使用第三个选项，并会让你过度花费经验。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "要进行灌注附魔，只需将物品放在格子中。$(p)如果你有正确的状态，第三个选项会点亮，点击它就可以进行灌注。"
+		}
+	]
+}

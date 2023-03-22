@@ -1,0 +1,17 @@
+{
+    "name": "台阶高度",
+    "icon": "minecraft:iron_boots",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)台阶高度$()改变你可以自动走上方块的高度。$(p)只发现于靴子。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()0$(p)$(9)$(n)最大值：$()512$(p)注意：这个值不是你的总台阶高度，而是在你的隐性基数0.5的基础上加上的一个值。"
+		}
+	]
+}

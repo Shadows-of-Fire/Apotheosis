@@ -1,0 +1,19 @@
+{
+    "name": "捕捉",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "刷怪笼可以使用$(9)刷怪蛋$()改变刷出的实体。$(p)通常情况下，这些是无法获得的。为了弥补这一点，神化为剑加入了$(9)捕捉$()魔咒。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "minecraft:cow_spawn_egg",
+			"title": "刷怪蛋",
+            "text": "每级$(9)捕捉$()魔咒都会给予你0.4%的几率让实体在死亡时掉落它们的刷怪蛋。$(p)没有刷怪蛋物品的实体（见JEI）不会掉落刷怪蛋。"
+        }
+	]
+}

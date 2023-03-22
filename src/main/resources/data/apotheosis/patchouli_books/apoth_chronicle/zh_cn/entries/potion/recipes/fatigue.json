@@ -1,0 +1,19 @@
+{
+    "name": "挖掘疲劳",
+    "icon": "minecraft:textures/mob_effect/mining_fatigue.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)挖掘疲劳$()是一个通常只有远古守卫者者才能施加的负面效果。$(p)当激活时，你的挖掘速度每级降低20%。$(p)它与$(9)急迫$()直接相反。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "酿造配方",
+			"item": "minecraft:fermented_spider_eye",
+            "text": "这种药水可以用$(9)急迫药水$()和发酵蛛眼酿造。$(p)它可以被延长、加强，或者用通常的材料变成喷溅药水。"
+        }
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "流血",
+    "icon": "apotheosis:textures/mob_effect/bleeding.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)流血$()是由$(l:apotheosis:village/fletching#broadhead)宽头箭$()应用的负面效果。$(p)它使你每两秒受到一次伤害。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "伤害随着$(c)流血$()的等级增加。$(p)来自$(c)流血$()的伤害会无视盔甲。"
+        }
+	]
+}

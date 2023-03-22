@@ -1,0 +1,64 @@
+{
+    "name": "信息菜单",
+    "icon": "apotheosis:textures/gui/book/question_mark.png",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "附魔台有一个实用界面，让你了解有哪些魔咒可用。$(p)要访问它，把一个物品放在附魔台中，然后点击右上方的问号。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "本章的目的是介绍这个界面，并帮助你浏览它。$(p)如果你对它有充分的了解，你就不会再被附魔所迷惑。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "选项选择",
+			"images": [
+				"apotheosis:textures/gui/book/slot_selector.png"
+			],
+			"text": "这可以让你选择查看哪个附魔选项。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "当前选择的选项将被高亮显示，而不可用的选项将以灰色显示。$(p)悬停选项将显示等级、$(4)最小威力$()和$(9)最大威力$()。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "魔咒窗口",
+			"images": [
+				"apotheosis:textures/gui/book/enchantments_window.png"
+			],
+			"text": "这将为你显示有哪些魔咒可用。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "考虑到当前物品，以及当前选择的威力等级，有一定的魔咒序列可以使用。$(p)这个窗口显示每个魔咒、它们的等级、稀有度和被选中的机会。$(p)它还会显示哪些魔咒是互斥的。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "威力滑块",
+			"images": [
+				"apotheosis:textures/gui/book/power_slider.png"
+			],
+			"text": "这可以让你改变模拟的威力。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "当你选择一个选项时，威力滑块会自动选择威力范围内的直接威力等级。$(p)滑块只能下到当前选项的$(4)最小威力$()，上到$(9)最大威力$()。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "稀有度权重",
+			"images": [
+				"apotheosis:textures/gui/book/weights.png"
+			],
+			"text": "这显示了每种稀有度的权重。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "每个魔咒都有一个稀有度，每个稀有度都有一个权重。$(p)选择一个魔咒的几率是其单独的权重除以总池（所有可用魔咒的权重）。$(p)$(#A800A8)阿卡那$()可以改变稀有度权重。"
+		}
+	]
+}

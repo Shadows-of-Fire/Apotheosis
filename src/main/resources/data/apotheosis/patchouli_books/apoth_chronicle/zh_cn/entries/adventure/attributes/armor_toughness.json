@@ -1,0 +1,17 @@
+{
+    "name": "盔甲韧性",
+    "icon": "minecraft:netherite_chestplate",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)盔甲韧性$()是一个调整你的盔甲对高伤害攻击效果的统计数字$(p)通常由盔甲和一些盾牌提供。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()0$(p)$(9)$(n)最大值：$()30$(p)注意：在原版中，最大值是20。神化将上限提高到30，同时也改变了盔甲的计算方法。"
+		}
+	]
+}

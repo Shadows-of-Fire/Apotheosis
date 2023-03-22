@@ -1,0 +1,36 @@
+{
+    "name": "魔咒图书馆",
+    "icon": "apotheosis:library",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "魔咒图书馆是魔咒的储存系统。$(p)只需放入附魔书，书上的每一个魔咒都会被储存为点数。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "每个图书馆都有一个$(6)等级容量$()，代表它能储存的最高等级的魔咒。$(p)多余的魔咒不会存进去。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "点击一个已储存的魔咒将提取该魔咒的一个等级。$(p)Shift-点击一个已储存的魔咒将提取尽可能多的等级。$(p)根据需要，书会在输出格中生成。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "你也可以在输出格中放置一本书，向其中添加魔咒。$(p)图书馆记录了每个魔咒曾经被放入的最高等级，并且只能提取至该等级。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:library",
+			"text": "标准$(9)魔咒图书馆$()的$(6)等级容量$()为16级（XVI）。"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "apotheosis:ender_library",
+			"link_recipe": true,
+			"text": "$(9)亚历山大图书馆$()的$(6)等级容量$()为31级（XXXI）。$(p)它不能直接合成，必须用$(l:apotheosis:enchanting/table/infusion)灌注附魔$()合成。"
+		}
+	]
+}

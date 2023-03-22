@@ -1,0 +1,13 @@
+{
+    "name": "色差",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)色差$()是对剪刀的一种魔咒。$(p)它使任何被剪下的羊毛变成一种随机的颜色。"
+        }
+	]
+}

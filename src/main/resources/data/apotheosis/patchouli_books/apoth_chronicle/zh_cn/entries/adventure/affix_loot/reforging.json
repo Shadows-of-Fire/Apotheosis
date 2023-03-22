@@ -1,0 +1,49 @@
+{
+    "name": "重铸",
+    "icon": "apotheosis:reforging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 4,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:reforging_table",
+			"text": "$(9)重铸台$()被用来给一个物品注入新的生命，抹去任何词缀并赋予全新的词缀。"
+		},
+		{
+            "type": "patchouli:text",
+            "text": "通过$(9)珍宝材料$()的原始潜力和$(9)宝石粉$()的多功能性，现在可以用全新的词缀重铸一件物品。$(p)重铸不限于已经有词缀的物品，可以用任何有效的物品进行。"
+        },
+		{
+            "type": "patchouli:image",
+			"title": "输入格",
+			"images": [
+				"apotheosis:textures/gui/book/reforge_slots.png"
+			],
+			"text": "重铸台有三个输入格"
+        },
+		{
+			"type": "patchouli:text",
+			"title": "输入格",
+			"text": "最上面的格子里放置你想重铸的物品。$(p)左边的格子放置$(9)珍宝材料$()。$(p)右边的格子放置宝石粉。$(p)所有的格子都必须被放置才能成功重铸。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "重铸",
+			"images": [
+				"apotheosis:textures/gui/book/reforge_menu.png"
+			],
+			"text": "与附魔台类似，你有三项选择。"
+        },
+		{
+			"type": "patchouli:text",
+			"title": "重铸",
+			"text": "每项选择都代表了被重铸物品的一种潜在的新形式。每项选择的花费不同，分别需要2/4/6个宝石粉、珍宝材料和经验等级。$(p)要重铸你的物品，只需点击所需的选择。"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "注意",
+			"text": "物品可以被多次重铸，但你必须先拿起并替换该物品。$(p)没有任何选择在本质上比其他的强。$(p)重铸台使用你的附魔随机种子来决定选择。"
+		}
+	]
+}

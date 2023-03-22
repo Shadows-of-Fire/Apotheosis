@@ -1,0 +1,13 @@
+{
+    "name": "叉鱼",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)叉鱼$()是一个三叉戟魔咒。$(p)它能使投掷该三叉戟的玩家每级有3.5%的几率掉落一些随机的鱼。"
+        }
+	]
+}

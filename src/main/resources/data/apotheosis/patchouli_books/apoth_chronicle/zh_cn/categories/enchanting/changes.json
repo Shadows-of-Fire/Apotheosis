@@ -1,0 +1,7 @@
+{
+    "name": "原版改动",
+    "description": "本章节涵盖了新的可附魔物品，以及机制改动。$(p)如果发生任何小的内容改动，它们会在这里被指出。",
+    "icon": "minecraft:trident",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

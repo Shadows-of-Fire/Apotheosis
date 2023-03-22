@@ -1,0 +1,17 @@
+{
+    "name": "稳定立足",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)稳定立足$()是靴子的魔咒。$(p)它使飞行的破坏速度惩罚被逆转。$(p)这包括所有不站在地面上的惩罚。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "当与$(9)水下速掘$()结合时，你可以在游泳时拥有和陆地上一样的破坏速度。"
+		}
+	]
+}

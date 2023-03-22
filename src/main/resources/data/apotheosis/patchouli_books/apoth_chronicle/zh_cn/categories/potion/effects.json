@@ -1,0 +1,7 @@
+{
+    "name": "新状态效果",
+	"parent": "apotheosis:potion/potion",
+    "description": "本章节详细介绍了由神化加入的新状态效果。",
+    "icon": "minecraft:experience_bottle",
+	"flag": "apotheosis:potion"
+}

@@ -1,0 +1,17 @@
+{
+    "name": "冰霜伤害",
+    "icon": "minecraft:blue_ice",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)冰霜伤害$()是应用于近战攻击的额外魔法伤害。它也适用于取决于伤害强度的减速。$(p)发现于近战武器。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()0$(p)$(9)$(n)最大值：$()1024$(p)"
+		}
+	]
+}

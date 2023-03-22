@@ -1,0 +1,17 @@
+{
+    "name": "防御反击",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)防御反击$()是一个盾牌魔咒。$(p)它使所有被格挡的攻击对攻击者造成部分伤害。$(p)更确切地说，被格挡的伤害有15%被反弹回来。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "反弹的伤害会转化为魔法伤害。$(p)足够高的$(9)防御反击$()等级会造成比原来更多的伤害。"
+        }
+	]
+}

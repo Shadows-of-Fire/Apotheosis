@@ -1,0 +1,17 @@
+{
+    "name": "清道夫",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)清道夫$()是剑的极品魔咒。$(p)当你杀死一个生物时，它每级有2.5%的几率滚动掉落战利品。$(p)当成功时，就像你刚杀死两个相同的实体一样。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "这个魔咒对所有实体都有效，包括像$(8)凋灵$()这样的Boss。它还能与$(9)抢夺$()叠加。"
+        }
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "盔甲",
+    "icon": "minecraft:iron_chestplate",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)盔甲$()是衡量你对物理伤害的抵抗力。$(p)通常由盔甲和一些盾牌提供。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()0$(p)$(9)$(n)最大值：$()40$(p)注意：在原版中，最大值是30。神化将上限提高到40，同时也改变了盔甲的计算方法。"
+		}
+	]
+}

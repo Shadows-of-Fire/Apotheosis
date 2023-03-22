@@ -1,0 +1,17 @@
+{
+    "name": "挖掘速度",
+    "icon": "minecraft:netherite_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "提高你的$(9)挖掘速度$()可以提高你破坏方块的速度。在基础值为1.0时，你会像平常样破坏方块。$(p)发现于镐和锹。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()1$(p)$(9)$(n)最大值：$()1024$(p)"
+		}
+	]
+}

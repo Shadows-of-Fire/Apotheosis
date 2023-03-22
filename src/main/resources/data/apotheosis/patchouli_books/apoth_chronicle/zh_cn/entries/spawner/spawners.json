@@ -1,0 +1,17 @@
+{
+    "name": "刷怪笼",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)刷怪笼$()是一个神奇的方块，可以从虚空中输送实体。$(p)但你已经了解了，所以让我们开始新的东西。$(p)在神化中，刷怪笼可以用$(9)精准采集$()拾取。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "以这种方式获得刷怪笼会带来额外的耐久消耗。$(p)刷怪笼有一系列的$(l:apotheosis:spawner/stats)刷怪笼状态$()来控制其功能。$(p)这些状态可以通过$(l:apotheosis:spawner/modifiers)刷怪笼调节$()来改变。"
+        }
+	]
+}
