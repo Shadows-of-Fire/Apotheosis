@@ -12,6 +12,9 @@
     "attribute.modifier.apotheosis.take.1": "-%s%% Base %s",
     "attribute.modifier.apotheosis.take.2": "-%s%% Total %s",
 	
+	"misc.apotheosis.affix_name.two": "%s %s",
+	"misc.apotheosis.affix_name.three": "%s %s %s",
+	
 	"apotheosis:draw_speed": "Draw Speed",
 	"apotheosis:crit_chance": "Crit Chance",
 	"apotheosis:crit_damage": "Crit Damage",

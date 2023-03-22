@@ -66,6 +66,9 @@ public class LootController {
 			loaded.put(a, inst);
 			nameList.add(inst);
 		}
+		if (nameList.size() == 0) {
+			throw new RuntimeException(String.format("Failed to locate any affixes for %s{%s} with category %s and rarity %s.", stack.getItem(), stack.getTag(), cat, rarity));
+		}
 
 		// Socket and Durability handling, which is non-standard.
 		if (sockets.intValue() > 0) {
@@ -78,7 +81,8 @@ public class LootController {
 
 		jRand.setSeed(rand.nextLong());
 		Collections.shuffle(nameList, jRand);
-		MutableComponent name = Component.translatable(nameList.size() > 1 ? "%s %s %s" : "%s %s", nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()));
+		String key = nameList.size() > 1 ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.two";
+		MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()));
 
 		AffixHelper.setRarity(stack, rarity);
 		AffixHelper.setAffixes(stack, loaded);

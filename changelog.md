@@ -8,6 +8,10 @@
 * Added support for GameStages.
 * Fixed Endersurge gems applying +2 levels to everything instead of only existing enchantments.
 * Fixed a crash that happened when trying to upgrade socketed items in a smithing table (ex diamond->netherite).
+* Fixed the Thunderstruck (damage to nearby enemies) affix.
+* mc-kaishixiaxue: Updated Chinese translation, including the Chronicle of Shadows.
+* SKZGx: Updated Ukranian translation.
+* Made the translation keys for top-level affix naming configurable (https://github.com/Shadows-of-Fire/Apotheosis/issues/818)
 
 ## 6.1.2
 * Converted Affixes to use Codecs for serialization, which produces better error reporting.
