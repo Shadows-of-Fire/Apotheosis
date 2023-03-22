@@ -1,0 +1,20 @@
+{
+    "name": "幸运",
+    "icon": "minecraft:textures/mob_effect/luck.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(6)幸运$()是一个非常奇特的效果。$(p)拥有更高的幸运意味着你可以从某些来源获得更好的战利品。$(p)不幸的是，没有办法知道哪些战利品来源会受到$(6)幸运$()的影响。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "酿造配方",
+			"item": "apotheosis:lucky_foot",
+			"link_recipe": true,
+            "text": "这种药水可以用粗制的药水和幸运兔子脚酿造。$(p)幸运兔子脚由兔子少量掉落。"
+        }
+	]
+}

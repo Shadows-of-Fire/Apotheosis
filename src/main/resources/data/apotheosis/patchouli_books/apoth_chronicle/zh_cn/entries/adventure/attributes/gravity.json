@@ -1,0 +1,17 @@
+{
+    "name": "重力",
+    "icon": "minecraft:elytra",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)重力$()是指你坠落的加速度，单位是方块每平方秒。$(p)可以在任何东西上找到，或者什么都没有，谁知道呢。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()0.08$(p)$(9)$(n)最大值：$()8$(p)注意：重力可以变成负值。在负的重力作用下，你会向上飘浮。"
+		}
+	]
+}

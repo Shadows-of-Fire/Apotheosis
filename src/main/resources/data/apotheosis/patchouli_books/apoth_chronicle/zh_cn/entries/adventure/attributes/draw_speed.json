@@ -1,0 +1,17 @@
+{
+    "name": "蓄力速度",
+    "icon": "minecraft:bow",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)蓄力速度$()是你蓄力远程武器的速度，相对于原始速度。1=100%，2=200%，等等。$(p)发现于弓或弩。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()1$(p)$(9)$(n)最大值：$()4$(p)"
+		}
+	]
+}

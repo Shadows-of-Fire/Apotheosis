@@ -1,0 +1,17 @@
+{
+    "name": "攻击伤害",
+    "icon": "minecraft:diamond_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)攻击伤害$()是控制你的攻击能造成多少伤害的属性。$(p)通常情况下，武器会提供这个属性。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()1$(p)$(9)$(n)最大值：$()1024"
+		}
+	]
+}

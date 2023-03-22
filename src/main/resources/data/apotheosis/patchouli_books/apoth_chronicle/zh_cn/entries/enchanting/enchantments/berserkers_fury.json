@@ -1,0 +1,17 @@
+{
+    "name": "狂战士之怒",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(4)狂战士之怒$()是一个可以应用于胸甲的腐化魔咒。$(p)在使用这个魔咒时，如果你受到伤害，你会受到额外的伤害并获得抗性提升、速度和力量。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "所受到的伤害和药水的强度基于魔咒等级。"
+		}
+	]
+}

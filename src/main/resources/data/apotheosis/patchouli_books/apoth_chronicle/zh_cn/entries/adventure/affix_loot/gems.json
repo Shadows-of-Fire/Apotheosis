@@ -1,0 +1,40 @@
+{
+    "name": "宝石",
+    "icon": "apotheosis:gem",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)宝石$()是凝结力量的晶体。$(p)当镶入一个词缀物品时，宝石将提供一个强大的加成。$(p)宝石在不同的物品中可能提供不同的加成，并且可以被升级。"
+        },
+		{
+			"type": "patchouli:text",
+			"title": "获取宝石",
+			"text": "宝石可以在箱子的战利品中找到，也可能在杀怪时少量找到。然而，要掉落宝石，击杀者必须是真正的玩家，而不是机器或其他自动化来源。$(p)宝石更有可能从Boss那里掉落。"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "镶嵌宝石",
+			"text": "要将宝石镶嵌到一个物品中，请将两者结合到锻造台中。$(p)每个宝石都说明了它适用于哪些物品。$(p)有些宝石是$(#C73912)独一无二的$()，意味着一个物品中只能镶嵌一个该宝石的副本。"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "取出宝石",
+			"text": "从物品中取出宝石是一个困难的过程，但一些聪明的炼金术士想出了办法。$(p)他们的笔记在接下来的几页中详细介绍。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:vial_of_expulsion",
+			"title": "灼热驱逐",
+			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)灼热驱逐剂$()结合以取下宝石，并在此过程中销毁它们。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:vial_of_extraction",
+			"title": "奥术提取",
+			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)奥术提取剂$()结合以取回宝石，并在此过程中销毁该物品。"
+		}
+	]
+}

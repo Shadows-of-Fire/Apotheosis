@@ -1,0 +1,6 @@
+{
+    "name": "冒险模块",
+    "description": "冒险模块的前身是$(4)致命模块$()，它允许你用程序生成的战利品装备自己，这些战利品具有强大的加成。$(p)但要小心，新的敌人也出现了。",
+    "icon": "minecraft:netherite_sword",
+	"flag": "apotheosis:adventure"
+}

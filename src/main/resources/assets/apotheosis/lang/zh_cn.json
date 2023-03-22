@@ -1,37 +1,38 @@
 {
     "comment_id": "/冒险模块",
-    
+
     "info.apotheosis.affix_item": "神化词缀物品",
     "item.modifiers.both_hands": "在任意手时：",
-    
-	"death.attack.apotheosis.execute": "%s被%s处决了",
-	"death.attack.apotheosis.execute.item": "%s被%s用%s处决了",
-    
-    "attribute.modifier.apotheosis.plus.1": "+%s%% 基础%s",
-    "attribute.modifier.apotheosis.plus.2": "+%s%% 总%s",
-    "attribute.modifier.apotheosis.take.1": "-%s%% 基础%s",
-    "attribute.modifier.apotheosis.take.2": "-%s%% 总%s",
 
-	"apotheosis:draw_speed": "蓄力速度",
-	"apotheosis:crit_chance": "暴击率",
-	"apotheosis:crit_damage": "暴击伤害",
-	"apotheosis:cold_damage": "冰霜伤害",
-	"apotheosis:fire_damage": "火焰伤害",
-	"apotheosis:life_steal": "生命偷取",
-	"apotheosis:piercing": "护甲穿透",
-	"apotheosis:current_hp_damage": "当前生命值伤害",
-	"apotheosis:overheal": "过量治疗",
-	"apotheosis:ghost_health": "虚假生命",
-	"apotheosis:mining_speed": "挖掘速度",
-	"apotheosis:arrow_damage": "弹射物伤害",
-	"apotheosis:arrow_velocity": "弹射物速度",
-    
+    "death.attack.apotheosis.execute": "%s被%s处决了",
+    "death.attack.apotheosis.execute.item": "%s被%s用%s处决了",
+
+    "attribute.modifier.apotheosis.plus.1": "+%s%%基础%s",
+    "attribute.modifier.apotheosis.plus.2": "+%s%%总%s",
+    "attribute.modifier.apotheosis.take.1": "-%s%%基础%s",
+    "attribute.modifier.apotheosis.take.2": "-%s%%总%s",
+
+    "apotheosis:draw_speed": "蓄力速度",
+    "apotheosis:crit_chance": "暴击率",
+    "apotheosis:crit_damage": "暴击伤害",
+    "apotheosis:cold_damage": "冰霜伤害",
+    "apotheosis:fire_damage": "火焰伤害",
+    "apotheosis:life_steal": "生命偷取",
+    "apotheosis:piercing": "护甲穿透",
+    "apotheosis:current_hp_damage": "当前生命值伤害",
+    "apotheosis:overheal": "过量治疗",
+    "apotheosis:ghost_health": "虚假生命",
+    "apotheosis:mining_speed": "挖掘速度",
+    "apotheosis:arrow_damage": "弹射物伤害",
+    "apotheosis:arrow_velocity": "弹射物速度",
+    "apotheosis:experience_gained": "经验获取",
+
     "affix.apotheosis:armor/attribute/blessed": "祝福的",
     "affix.apotheosis:armor/attribute/blessed.suffix": "（生命）",
-    
+
     "affix.apotheosis:armor/attribute/ironforged": "铁铸的",
     "affix.apotheosis:armor/attribute/ironforged.suffix": "（铁）",
-    
+
     "affix.apotheosis:sword/attribute/violent": "暴力的",
     "affix.apotheosis:sword/attribute/violent.suffix": "（杀戮）",
 
@@ -47,272 +48,357 @@
     "affix.apotheosis:armor/attribute/aquatic": "水行的",
     "affix.apotheosis:armor/attribute/aquatic.suffix": "（大海）",
 
-	"affix.apotheosis:armor/attribute/gravitational": "重力的",
+    "affix.apotheosis:armor/attribute/gravitational": "重力的",
     "affix.apotheosis:armor/attribute/gravitational.suffix": "（重力）",
 
-	"affix.apotheosis:breaker/attribute/lengthy": "伸长的",
+    "affix.apotheosis:breaker/attribute/lengthy": "伸长的",
     "affix.apotheosis:breaker/attribute/lengthy.suffix": "（抓握）",
 
-	"affix.apotheosis:sword/attribute/elongated": "延展的",
+    "affix.apotheosis:breaker/attribute/experienced": "经验的",
+    "affix.apotheosis:breaker/attribute/experienced.suffix": "（学者）",
+
+    "affix.apotheosis:sword/attribute/elongated": "延展的",
     "affix.apotheosis:sword/attribute/elongated.suffix": "（远战）",
 
-	"affix.apotheosis:ranged/attribute/agile": "敏捷的",
+    "affix.apotheosis:ranged/attribute/agile": "敏捷的",
     "affix.apotheosis:ranged/attribute/agile.suffix": "（迅敏）",
 
-	"affix.apotheosis:armor/attribute/steel_touched": "钢触的",
+    "affix.apotheosis:armor/attribute/steel_touched": "钢触的",
     "affix.apotheosis:armor/attribute/steel_touched.suffix": "（捍卫者）",
 
-	"affix.apotheosis:armor/attribute/stalwart": "坚定的",
+    "affix.apotheosis:armor/attribute/stalwart": "坚定的",
     "affix.apotheosis:armor/attribute/stalwart.suffix": "（顽固）",
 
-	"affix.apotheosis:armor/attribute/elastic": "灵活的",
+    "affix.apotheosis:armor/attribute/elastic": "灵活的",
     "affix.apotheosis:armor/attribute/elastic.suffix": "（攀爬）",
 
-	"affix.apotheosis:armor/attribute/fortunate": "幸运的",
+    "affix.apotheosis:armor/attribute/fortunate": "幸运的",
     "affix.apotheosis:armor/attribute/fortunate.suffix": "（四叶草）",
 
-	"affix.apotheosis:sword/attribute/intricate": "复杂的",
+    "affix.apotheosis:sword/attribute/intricate": "复杂的",
     "affix.apotheosis:sword/attribute/intricate.suffix": "（批判性思维）",
 
-	"affix.apotheosis:sword/attribute/lacerating": "撕裂的",
+    "affix.apotheosis:sword/attribute/lacerating": "撕裂的",
     "affix.apotheosis:sword/attribute/lacerating.suffix": "（精准打击）",
 
-	"affix.apotheosis:sword/attribute/glacial": "冰川的",
+    "affix.apotheosis:sword/attribute/glacial": "冰川的",
     "affix.apotheosis:sword/attribute/glacial.suffix": "（冻土）",
 
-	"affix.apotheosis:sword/attribute/infernal": "地狱的",
+    "affix.apotheosis:sword/attribute/infernal": "地狱的",
     "affix.apotheosis:sword/attribute/infernal.suffix": "（太阳）",
 
-	"affix.apotheosis:sword/attribute/vampiric": "吸血的",
+    "affix.apotheosis:sword/attribute/vampiric": "吸血的",
     "affix.apotheosis:sword/attribute/vampiric.suffix": "（放血）",
 
-	"affix.apotheosis:heavy_weapon/attribute/shredding": "粉碎的",
+    "affix.apotheosis:heavy_weapon/attribute/shredding": "粉碎的",
     "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "（穿刺）",
 
-	"affix.apotheosis:heavy_weapon/attribute/giant_slaying": "爆杀的",
+    "affix.apotheosis:heavy_weapon/attribute/giant_slaying": "爆杀的",
     "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "（巨人打击）",
 
-	"affix.apotheosis:heavy_weapon/attribute/berserking": "狂暴的",
+    "affix.apotheosis:heavy_weapon/attribute/berserking": "狂暴的",
     "affix.apotheosis:heavy_weapon/attribute/berserking.suffix": "（狂战士）",
 
-	"affix.apotheosis:breaker/attribute/destructive": "破坏的",
+    "affix.apotheosis:breaker/attribute/destructive": "破坏的",
     "affix.apotheosis:breaker/attribute/destructive.suffix": "（凿岩机）",
 
-	"affix.apotheosis:ranged/attribute/elven": "精灵的",
+    "affix.apotheosis:ranged/attribute/elven": "精灵的",
     "affix.apotheosis:ranged/attribute/elven.suffix": "（冠军射手）",
 
-	"affix.apotheosis:ranged/attribute/streamlined": "流线型",
+    "affix.apotheosis:ranged/attribute/streamlined": "流线型",
     "affix.apotheosis:ranged/attribute/streamlined.suffix": "（狙击手）",
-	
-	"affix.apotheosis:sword/mob_effect/elusive": "灵巧的",
+
+    "affix.apotheosis:sword/mob_effect/elusive": "灵巧的",
     "affix.apotheosis:sword/mob_effect/elusive.suffix": "（闪避）",
 
-	"affix.apotheosis:breaker/mob_effect/swift": "迅捷的",
+    "affix.apotheosis:breaker/mob_effect/swift": "迅捷的",
     "affix.apotheosis:breaker/mob_effect/swift.suffix": "（粉碎）",
 
-	"affix.apotheosis:ranged/mob_effect/ensnaring": "诱捕的",
+    "affix.apotheosis:ranged/mob_effect/ensnaring": "诱捕的",
     "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "（捕食者）",
 
-	"affix.apotheosis:shield/mob_effect/venomous": "淬毒的",
+    "affix.apotheosis:shield/mob_effect/venomous": "淬毒的",
     "affix.apotheosis:shield/mob_effect/venomous.suffix": "（毒蛇）",
 
-	"affix.apotheosis:ranged/mob_effect/fleeting": "疾驰的", 
+    "affix.apotheosis:ranged/mob_effect/fleeting": "疾驰的",
     "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "（游侠）",
 
-	"affix.apotheosis:sword/mob_effect/weakening": "弱化的",
+    "affix.apotheosis:sword/mob_effect/weakening": "弱化的",
     "affix.apotheosis:sword/mob_effect/weakening.suffix": "（虚弱）",
 
-	"affix.apotheosis:armor/mob_effect/bolstering": "支撑的",
+    "affix.apotheosis:armor/mob_effect/bolstering": "支撑的",
     "affix.apotheosis:armor/mob_effect/bolstering.suffix": "（坚韧）",
 
-	"affix.apotheosis:armor/mob_effect/revitalizing": "新生的",
+    "affix.apotheosis:armor/mob_effect/revitalizing": "新生的",
     "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "（源泉）",
 
-	"affix.apotheosis:ranged/mob_effect/shulkers": "潜影的",
+    "affix.apotheosis:ranged/mob_effect/shulkers": "潜影的",
     "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "（飘浮）",
 
-	"affix.apotheosis:shield/mob_effect/withering": "凋零的",
+    "affix.apotheosis:shield/mob_effect/withering": "凋零的",
     "affix.apotheosis:shield/mob_effect/withering.suffix": "（黑暗骷髅）",
 
-	"affix.apotheosis:ranged/mob_effect/ivy_laced": "藤绕的",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced": "藤绕的",
     "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "（自然毒素）",
 
-	"affix.apotheosis:ranged/mob_effect/satanic": "邪恶的",
+    "affix.apotheosis:ranged/mob_effect/satanic": "邪恶的",
     "affix.apotheosis:ranged/mob_effect/satanic.suffix": "（诅咒）",
-	
-	"affix.apotheosis:ranged/special/spectral": "光灵的",
+
+    "affix.apotheosis:ranged/special/spectral": "光灵的",
     "affix.apotheosis:ranged/special/spectral.suffix": "（被遗弃者）",
-    "affix.apotheosis:ranged/special/spectral.desc": "• 发射时有%s%%概率附带一支光灵箭",
-	
-	"affix.apotheosis:ranged/special/magical": "魔法的",
+    "affix.apotheosis:ranged/special/spectral.desc": "• 你有%s%%的概率发射第二支箭",
+
+    "affix.apotheosis:ranged/special/magical": "魔法的",
     "affix.apotheosis:ranged/special/magical.suffix": "（奥秘）",
-    "affix.apotheosis:ranged/special/magical.desc": "• 弹射物将造成魔法伤害",
-	
-	"affix.apotheosis:sword/special/festive": "节庆的",
+    "affix.apotheosis:ranged/special/magical.desc": "• 你射出的箭矢将会造成魔法伤害",
+
+    "affix.apotheosis:sword/special/festive": "节庆的",
     "affix.apotheosis:sword/special/festive.suffix": "（派对）",
     "affix.apotheosis:sword/special/festive.desc": "• 杀死敌人有%s%%概率触发战利品大爆发",
-	
-	"affix.apotheosis:sword/special/thunderstruck": "雷鸣的",
+
+    "affix.apotheosis:sword/special/thunderstruck": "雷鸣的",
     "affix.apotheosis:sword/special/thunderstruck.suffix": "（风暴）",
     "affix.apotheosis:sword/special/thunderstruck.desc": "• 攻击对周围敌人造成%s点伤害",
-	
-	"affix.apotheosis:shield/special/retreating": "后撤的",
+
+    "affix.apotheosis:shield/special/retreating": "后撤的",
     "affix.apotheosis:shield/special/retreating.suffix": "（弄臣）",
     "affix.apotheosis:shield/special/retreating.desc": "• 格挡近战攻击时，进行一次后跳",
-	
-	"affix.apotheosis:telepathic": "念动的",
+
+    "affix.apotheosis:telepathic": "念动的",
     "affix.apotheosis:telepathic.suffix": "（时空）",
     "affix.apotheosis:telepathic.desc.weapon": "• 生物的掉落物将传送到物品栏",
     "affix.apotheosis:telepathic.desc.tool": "• 挖掘的掉落物将传送到物品栏",
 
-	"affix.apotheosis:heavy_weapon/special/executing": "行刑的",
+    "affix.apotheosis:heavy_weapon/special/executing": "行刑的",
     "affix.apotheosis:heavy_weapon/special/executing.suffix": "（刽子手）",
     "affix.apotheosis:heavy_weapon/special/executing.desc": "• 生命值低于%s%%的敌人将会被直接处决",
-	
-	"affix.apotheosis:heavy_weapon/special/cleaving": "挥劈的",
+
+    "affix.apotheosis:heavy_weapon/special/cleaving": "挥劈的",
     "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "（屠夫）",
     "affix.apotheosis:heavy_weapon/special/cleaving.desc": "• 攻击有%s%%概率同时施加到周围至多%s名敌人",
 
-	"affix.apotheosis:breaker/special/enlightened": "启明的",
+    "affix.apotheosis:breaker/special/enlightened": "启明的",
     "affix.apotheosis:breaker/special/enlightened.suffix": "（携光者）",
     "affix.apotheosis:breaker/special/enlightened.desc": "• 该工具可消耗%s点耐久放置一根火把",
 
-	"affix.apotheosis:shield/special/psychic": "通灵的",
+    "affix.apotheosis:shield/special/psychic": "通灵的",
     "affix.apotheosis:shield/special/psychic.suffix": "（睚眦）",
     "affix.apotheosis:shield/special/psychic.desc": "• 格挡弹射物时，会对伤害来源造成%s%%伤害",
 
-	"affix.apotheosis:shield/special/catalyzing": "催化的",
+    "affix.apotheosis:shield/special/catalyzing": "催化的",
     "affix.apotheosis:shield/special/catalyzing.suffix": "（转化）",
     "affix.apotheosis:shield/special/catalyzing.desc": "• 格挡爆炸会给你带来巨大的力量效果",
 
-	"affix.apotheosis:heavy_weapon/attribute/annihilating": "歼灭的",
+    "affix.apotheosis:heavy_weapon/attribute/annihilating": "歼灭的",
     "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "（泰坦）",
 
-	"affix.apotheosis:heavy_weapon/attribute/decimating": "屠戮的",
+    "affix.apotheosis:heavy_weapon/attribute/decimating": "屠戮的",
     "affix.apotheosis:heavy_weapon/attribute/decimating.suffix": "（神王）",
-	
-	"affix.apotheosis:heavy_weapon/attribute/murderous": "凶残的",
-    "affix.apotheosis:heavy_weapon/attribute/murderous.suffix": "（弥诺陶洛斯）",
-	
-	"affix.apotheosis:ranged/mob_effect/acidic": "酸蚀的",
+
+    "affix.apotheosis:heavy_weapon/attribute/murderous": "凶残的",
+    "affix.apotheosis:heavy_weapon/attribute/murderous.suffix": "（米诺陶）",
+
+    "affix.apotheosis:ranged/mob_effect/acidic": "酸蚀的",
     "affix.apotheosis:ranged/mob_effect/acidic.suffix": "（侵蚀）",
 
-	"affix.apotheosis:heavy_weapon/mob_effect/caustic": "腐蚀的",
+    "affix.apotheosis:heavy_weapon/mob_effect/caustic": "腐蚀的",
     "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "（腐蚀领域）",
 
-	"affix.apotheosis:sword/mob_effect/sophisticated": "老练的",
+    "affix.apotheosis:sword/mob_effect/sophisticated": "老练的",
     "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "（古代图书馆）",
 
-	"affix.apotheosis:shield/mob_effect/devilish": "残忍的",
+    "affix.apotheosis:shield/mob_effect/devilish": "残忍的",
     "affix.apotheosis:shield/mob_effect/devilish.suffix": "（老兵）",
 
-	"affix.apotheosis:breaker/special/radial": "范围的",
+    "affix.apotheosis:breaker/special/radial": "范围的",
     "affix.apotheosis:breaker/special/radial.suffix": "（裂地者）",
     "affix.apotheosis:breaker/special/radial.desc": "• 该工具可破坏%sx%s范围的方块",
 
-	"misc.apotheosis.iron": "铁",
-	"misc.apotheosis.diamond": "钻石",
-	"misc.apotheosis.netherite": "下界合金",
-    
-	"affix.apotheosis:breaker/special/omnetic": "全能的",
+    "misc.apotheosis.iron": "铁",
+    "misc.apotheosis.diamond": "钻石",
+    "misc.apotheosis.netherite": "下界合金",
+
+    "affix.apotheosis:breaker/special/omnetic": "全能的",
     "affix.apotheosis:breaker/special/omnetic.suffix": "（奇点）",
     "affix.apotheosis:breaker/special/omnetic.desc": "• 该工具对所有方块均有%s级的效能",
-	
-	"misc.apotheosis.physical": "物理",
-	"misc.apotheosis.magic": "魔法",
-	"misc.apotheosis.fire": "火焰",
-	"misc.apotheosis.fall": "摔落",
-	"misc.apotheosis.explosion": "爆炸",
-    "affix.apotheosis:damage_reduction.desc": "• 受到的%s伤害减少%s%%",
-	
-	"affix.apotheosis:armor/dmg_reduction/blockading": "封锁的",
+
+    "misc.apotheosis.physical": "物理",
+    "misc.apotheosis.magic": "魔法",
+    "misc.apotheosis.fire": "火焰",
+    "misc.apotheosis.fall": "摔落",
+    "misc.apotheosis.explosion": "爆炸",
+    "affix.apotheosis:damage_reduction.desc": "受到的%s伤害减少%s%%",
+
+    "affix.apotheosis:armor/dmg_reduction/blockading": "封锁的",
     "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "（屏障）",
-    
-	"affix.apotheosis:armor/dmg_reduction/runed": "符文的",
+
+    "affix.apotheosis:armor/dmg_reduction/runed": "符文的",
     "affix.apotheosis:armor/dmg_reduction/runed.suffix": "（咒法监守）",
 
-	"affix.apotheosis:armor/dmg_reduction/blast_forged": "爆诞的",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged": "爆诞的",
     "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "（锻造之神）",
-    
-	"affix.apotheosis:armor/dmg_reduction/dwarven": "矮人",
+
+    "affix.apotheosis:armor/dmg_reduction/dwarven": "矮人",
     "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "（火山）",
-	
-	"affix.apotheosis:armor/dmg_reduction/feathery": "覆羽的",
+
+    "affix.apotheosis:armor/dmg_reduction/feathery": "覆羽的",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "（鹰）",
-    
-	"socket.apotheosis.empty": "空镶孔",
+
+    "affix.apotheosis.target.attack_self": "• 击中目标时，获得%s",
+    "affix.apotheosis.target.attack_target": "• 击中目标时，造成%s",
+    "affix.apotheosis.target.hurt_self": "• 受到攻击时，获得%s",
+    "affix.apotheosis.target.hurt_attacker": "• 受到攻击时，造成%s",
+    "affix.apotheosis.target.break_self": "• 破坏方块时，获得%s",
+    "affix.apotheosis.target.arrow_self": "• 弹射物击中目标时，获得%s",
+    "affix.apotheosis.target.arrow_target": "• 弹射物击中目标时，造成%s",
+    "affix.apotheosis.target.block_self": "• 格挡时，获得%s",
+    "affix.apotheosis.target.block_attacker": "• 格挡时，造成%s",
+    "affix.apotheosis.cooldown": "[⌛ %s]",
+
+    "affix.apotheosis:durable.desc": "• 该物品无视%s%%耐久损耗",
+    "affix.apotheosis:socket.desc": "• 已开镶孔（%s）",
+
+    "socket.apotheosis.empty": "空镶孔",
     "item.modifiers.socket": "镶嵌时：",
-	"info.apotheosis.socketing": "使用锻造台来镶嵌宝石。物品放在左侧栏位，宝石放在右侧栏位。\n\n宝石镶嵌后无法被移除。",
-	
-	"affix.apotheosis:durable.desc": "• 无视%s%%耐久损耗",
+    "item.modifiers.socket_in": "镶嵌时：",
+    "item.modifiers.socket_typed": "镶嵌在%s时：",
+    "info.apotheosis.socketing": "使用锻造台来镶嵌宝石。物品放在左侧栏位，宝石放在右侧栏位。\n\n宝石镶嵌后无法被移除。",
+
+    "gem_class.melee_weapon": "近战武器",
+    "gem_class.ranged_weapon": "远程武器",
+    "gem_class.light_weapon": "轻型武器",
+    "gem_class.core_armor": "高等盔甲",
+    "gem_class.lower_armor": "低等盔甲",
+    "gem_class.armor": "盔甲",
+    "gem_class.breaker": "挖掘工具",
+    "gem_class.light_ranged": "轻型或远程武器",
+    "gem_class.weapons_or_tools": "武器或工具",
+
+    "gem_class.helmet": "头盔",
+    "gem_class.chestplate": "胸甲",
+    "gem_class.leggings": "护腿",
+    "gem_class.boots": "靴子",
+    "gem_class.shield": "盾牌",
+    "gem_class.heavy_weapon": "重型武器",
+
+    "bonus.apotheosis:durability.desc": "无视%s%%耐久损耗",
+    "bonus.apotheosis:enchantment.desc": "+%s%s%s",
+    "bonus.apotheosis:enchantment.desc.mustExist": "+%s%s至现有的%s",
+    "bonus.apotheosis:enchantment.desc.global": "+%s%s至所有现有魔咒",
+
+    "misc.apotheosis.level": "级",
+    "misc.apotheosis.level.many": "级",
+
+    "item.apotheosis.gem.apotheosis:legacy": "远古宝石",
+    "item.apotheosis.gem.apotheosis:core/guardian": "护卫宝石",
+    "item.apotheosis.gem.apotheosis:core/ballast": "压载宝石",
+    "item.apotheosis.gem.apotheosis:core/solar": "太阳宝石",
+    "item.apotheosis.gem.apotheosis:core/lunar": "月亮宝石",
+    "item.apotheosis.gem.apotheosis:core/samurai": "武士宝石",
+    "item.apotheosis.gem.apotheosis:core/warlord": "军阀宝石",
+    "item.apotheosis.gem.apotheosis:core/splendor": "辉煌宝石",
+    "item.apotheosis.gem.apotheosis:core/tyrannical": "暴政宝石",
+    "item.apotheosis.gem.apotheosis:core/breach": "破坏宝石",
+    "item.apotheosis.gem.apotheosis:core/lightning": "闪电宝石",
+    "item.apotheosis.gem.apotheosis:core/slipstream": "气流宝石",
+    "item.apotheosis.gem.apotheosis:core/brawlers": "斗殴者宝石",
+    "item.apotheosis.gem.apotheosis:core/combatant": "战士宝石",
+    "item.apotheosis.gem.apotheosis:overworld/earth": "地球宝石",
+    "item.apotheosis.gem.apotheosis:the_end/endersurge": "影激宝石",
+    "item.apotheosis.gem.apotheosis:the_nether/inferno": "炽热炼狱宝石",
+    "item.apotheosis.gem.apotheosis:the_nether/inferno_noench": "炽热炼狱宝石",
 
     "item.apotheosis.boss_summoner": "神化Boss召唤器",
-	"item.apotheosis.gem.0": "宇称宝石",
-	"item.apotheosis.gem.1": "神秘宝石",
-	"item.apotheosis.gem.2": "光辉宝石",
-	"item.apotheosis.gem.3": "破坏宝石",
-	"item.apotheosis.gem.4": "护卫宝石",
-	"item.apotheosis.gem.5": "混沌宝石",
-	"item.apotheosis.gem.6": "暗蚀宝石",
-	"item.apotheosis.gem.7": "镜面宝石",
-	"item.apotheosis.gem.8": "几何宝石",
-	"item.apotheosis.gem.9": "效价宝石",
-	"item.apotheosis.gem.10": "影激宝石",
-	"item.apotheosis.vial_of_extraction": "奥术提取剂",
-	"item.apotheosis.vial_of_extraction.desc": "剥离宝石的精华液",
-	"item.apotheosis.vial_of_expulsion": "灼热驱逐剂",
-	"item.apotheosis.vial_of_expulsion.desc": "剥离宝石的精华液",
-	"item.apotheosis.gem_dust": "宝石粉",
-	"item.apotheosis.gem_dust.desc": "碾碎后的神化宝石",
-	"item.apotheosis.common_material": "神秘废金属",
-	"item.apotheosis.uncommon_material": "陈旧布匹",
-	"item.apotheosis.rare_material": "发光水晶碎片",
-	"item.apotheosis.epic_material": "玄奥沙",
-	"item.apotheosis.mythic_material": "神铸珍珠",
-	"item.apotheosis.sigil_of_socketing": "镶孔符石",
-	"item.apotheosis.superior_sigil_of_socketing": "高级镶孔符石",
-	"item.apotheosis.sigil_of_enhancement": "[NYI]强化符石",
-	"item.apotheosis.superior_sigil_of_enhancement": "[NYI]高级强化符石",
-	
-	"block.apotheosis.salvaging_table": "回收台",
-	"block.apotheosis.salvaging_table.desc": "将带有词缀的物品回收为珍宝材料",
-	"block.apotheosis.reforging_table": "重铸台",
-	"block.apotheosis.reforging_table.desc": "使用宝石粉和珍宝材料来改变物品词缀",
-	
-	"button.apotheosis.salvage": "回收物品",
-	"button.apotheosis.no_salvage": "未放入物品",
-	"button.apotheosis.no_salvage_all": "物品栏中没有可回收的物品",
+    "item.apotheosis.gem.cracked": "碎裂的%s",
+    "item.apotheosis.gem.flawless": "无暇的%s",
+    "item.apotheosis.vial_of_extraction": "奥术提取剂",
+    "item.apotheosis.vial_of_extraction.desc": "剥离宝石的精华液",
+    "item.apotheosis.vial_of_expulsion": "灼热驱逐剂",
+    "item.apotheosis.vial_of_expulsion.desc": "剥离宝石的精华液",
+    "item.apotheosis.gem_dust": "宝石粉",
+    "item.apotheosis.gem_dust.desc": "碾碎后的神化宝石",
+    "item.apotheosis.common_material": "神秘废金属",
+    "item.apotheosis.uncommon_material": "陈旧布匹",
+    "item.apotheosis.rare_material": "发光水晶碎片",
+    "item.apotheosis.epic_material": "玄奥沙",
+    "item.apotheosis.mythic_material": "神铸珍珠",
+    "item.apotheosis.sigil_of_socketing": "镶孔符石",
+    "item.apotheosis.superior_sigil_of_socketing": "高级镶孔符石",
+    "item.apotheosis.sigil_of_enhancement": "[NYI]强化符石",
+    "item.apotheosis.superior_sigil_of_enhancement": "[NYI]高级强化符石",
 
-	"container.apotheosis.salvage": "回收",
-	"container.apotheosis.reforge": "重铸",
-	"text.apotheosis.dust_cost": "%s %s",
-	"text.apotheosis.mat_cost": "%s %s",
-	"text.apotheosis.reforge_cost": "重铸花费",
-	"text.apotheosis.salvage_results": "回收结果",
-	"text.apotheosis.results": "结果",
-	"text.apotheosis.purity": "纯度：%s",
-	"text.apotheosis.socket_limit": "镶孔最多应用: %s",
-	"title.apotheosis.smithing": "神化锻造",
+    "block.apotheosis.gem_cutting_table": "宝石切割台",
+    "block.apotheosis.gem_cutting_table.desc": "使用宝石粉和稀有材料来升级宝石",
+    "block.apotheosis.salvaging_table": "回收台",
+    "block.apotheosis.salvaging_table.desc": "将带有词缀的物品回收为珍宝材料",
+    "block.apotheosis.reforging_table": "重铸台",
+    "block.apotheosis.reforging_table.desc": "使用宝石粉和珍宝材料来改变物品词缀",
 
-	"affix.apotheosis.target.attack_self": "• 击中目标时，获得%s",
-	"affix.apotheosis.target.attack_target": "• 击中目标时，造成%s",
-	"affix.apotheosis.target.hurt_self": "• 受到攻击时，获得%s",
-	"affix.apotheosis.target.hurt_attacker": "• 受到攻击时，造成%s",
-	"affix.apotheosis.target.break_self": "• 破坏方块时，获得%s",
-	"affix.apotheosis.target.arrow_self": "• 弹射物击中目标时，获得%s",
-	"affix.apotheosis.target.arrow_target": "• 弹射物击中目标时，造成%s",
-	"affix.apotheosis.target.block_self": "• 格挡时，获得%s",
-	"affix.apotheosis.target.block_attacker": "• 格挡时，造成%s",
-	
-	"info.apotheosis.boss_spawn": "%s在附近苏醒了！",
-	"info.apotheosis.boss": "神化Boss（%s）",
-	"info.apotheosis.boss_item": "将掉落：%s",
-	"info.apotheosis.boss_modifiers": "Boss属性：",
-	"info.apotheosis.rarity_material": "珍宝材料（%s）",
-	"info.apotheosis.gem_crushing": "宝石粉通过下落的铁砧砸中任意神话宝石获得。",
-	"info.apotheosis.gem_extraction": "在锻造台中使用以取出神化宝石。\n\n该物品将在此过程中被销毁。",
-	"info.apotheosis.gem_expulsion": "在锻造台中使用以取出神化宝石。\n\n镶嵌的宝石将在此过程中被销毁。",
-	"info.apotheosis.salvaging": "珍宝材料通过回收台回收带有词缀的物品获得。",
+    "button.apotheosis.salvage": "回收物品",
+    "button.apotheosis.no_salvage": "未放入物品",
+    "button.apotheosis.no_salvage_all": "物品栏中没有可回收的物品",
+
+    "menu.apotheosis.gem_cutting": "宝石切割",
+    "container.apotheosis.salvage": "回收",
+    "container.apotheosis.reforge": "重铸",
+    "text.apotheosis.dust_cost": "%s个%s",
+    "text.apotheosis.mat_cost": "%s个%s",
+    "text.apotheosis.reforge_cost": "重铸花费",
+    "text.apotheosis.salvage_results": "回收结果",
+    "text.apotheosis.unique": "独一无二",
+    "text.apotheosis.results": "结果",
+    "text.apotheosis.facets": "刻面：%s",
+    "text.apotheosis.socketable_into": "适用于：",
+    "text.apotheosis.dot_prefix": "• %s",
+    "text.apotheosis.socket_limit": "镶孔最多应用：%s",
+    "text.apotheosis.no_upgrade": "无法升级",
+    "text.apotheosis.rarity_up_cost": "稀有度升级花费",
+    "text.apotheosis.cut_cost": "宝石切割花费",
+    "title.apotheosis.smithing": "神化锻造",
+    "title.apotheosis.salvaging": "回收",
+
+    "text.apotheosis.anything": "任何",
+    "text.apotheosis.category.none": "无",
+    "text.apotheosis.category.none.plural": "无",
+    "text.apotheosis.category.bow": "弓",
+    "text.apotheosis.category.bow.plural": "弓",
+    "text.apotheosis.category.crossbow": "弩",
+    "text.apotheosis.category.crossbow.plural": "弩",
+    "text.apotheosis.category.breaker": "挖掘工具",
+    "text.apotheosis.category.breaker.plural": "挖掘工具",
+    "text.apotheosis.category.pickaxe": "镐",
+    "text.apotheosis.category.pickaxe.plural": "镐",
+    "text.apotheosis.category.shovel": "锹",
+    "text.apotheosis.category.shovel.plural": "锹",
+    "text.apotheosis.category.heavy_weapon": "重型武器",
+    "text.apotheosis.category.heavy_weapon.plural": "重型武器",
+    "text.apotheosis.category.armor": "盔甲",
+    "text.apotheosis.category.armor.plural": "盔甲",
+    "text.apotheosis.category.shield": "盾牌",
+    "text.apotheosis.category.shield.plural": "盾牌",
+    "text.apotheosis.category.trident": "三叉戟",
+    "text.apotheosis.category.trident.plural": "三叉戟",
+    "text.apotheosis.category.sword": "剑",
+    "text.apotheosis.category.sword.plural": "剑",
+    "text.apotheosis.category.helmet": "头盔",
+    "text.apotheosis.category.helmet.plural": "头盔",
+    "text.apotheosis.category.chestplate": "胸甲",
+    "text.apotheosis.category.chestplate.plural": "胸甲",
+    "text.apotheosis.category.leggings": "护腿",
+    "text.apotheosis.category.leggings.plural": "护腿",
+    "text.apotheosis.category.boots": "靴子",
+    "text.apotheosis.category.boots.plural": "靴子",
+    "text.apotheosis.any_x_item": "任意%s词缀物品",
+
+    "info.apotheosis.boss_spawn": "%s在附近苏醒了！",
+    "info.apotheosis.boss": "神化Boss（%s）",
+    "info.apotheosis.boss_item": "将掉落：%s",
+    "info.apotheosis.boss_modifiers": "Boss属性：",
+    "info.apotheosis.rarity_material": "珍宝材料（%s）",
+    "info.apotheosis.gem_crushing": "宝石粉通过下落的铁砧砸中任意神化宝石获得。",
+    "info.apotheosis.gem_extraction": "在锻造台中使用以取出神化宝石。\n\n该物品将在此过程中被销毁。",
+    "info.apotheosis.gem_expulsion": "在锻造台中使用以取出神化宝石。\n\n镶嵌的宝石将在此过程中被销毁。",
+    "info.apotheosis.salvaging": "珍宝材料通过回收台回收带有词缀的物品获得。",
 
     "rarity.apoth.common": "普通",
     "rarity.apoth.uncommon": "罕见",
@@ -326,16 +412,16 @@
     "death.attack.apoth.execute": "%s被处决了。",
     "death.attack.apoth.execute.player": "%s被%s处决了。",
 
-	"comment_id": "/Adventure + Gateways Compat",
+    "comment_id": "/Adventure + Gateways Compat",
 
-	"misc.apotheosis.boss": "%s神化Boss",
-	"misc.apotheosis.random": "随机",
-	"reward.apotheosis.affix": "%s词缀物品",
-	"reward.apotheosis.random_affix": "随机词缀物品",
-	"apotheosis.boss_gate_small": "小型神化Boss传送门",
+    "misc.apotheosis.boss": "%s神化Boss",
+    "misc.apotheosis.random": "随机",
+    "reward.apotheosis.affix": "%s词缀物品",
+    "reward.apotheosis.random_affix": "随机词缀物品",
+    "apotheosis.boss_gate_small": "小型神化Boss传送门",
 
     "comment_id": "/进度",
-    
+
     "advancements.apotheosis.enchantment": "神秘的附魔台",
     "advancements.apotheosis.enchantment.desc": "建造并放置一座附魔台，开始揭开魔法的奥秘。",
     "advancements.apotheosis.30ench": "基础理论",
@@ -375,9 +461,9 @@
     "advancements.apotheosis.splitting": "魔咒分解者",
     "advancements.apotheosis.splitting.desc": "成功地使用附有拆分魔咒的铁砧拆分一本有多种魔咒的附魔书。",
     "advancements.apotheosis.sharp10": "削铁如泥",
-    "advancements.apotheosis.sharp10.desc": "附魔出一把锋利 X或更高等级的武器。",
+    "advancements.apotheosis.sharp10.desc": "附魔出一把锋利X或更高等级的武器。",
     "advancements.apotheosis.level20": "超限之力",
-    "advancements.apotheosis.level20.desc": "获得一个魔咒等级 XX或更高等级的物品。",
+    "advancements.apotheosis.level20.desc": "获得一个魔咒等级XX或更高等级的物品。",
     "advancements.apotheosis.enchanting_stats": "位阶，量子化，阿卡那",
     "advancements.apotheosis.enchanting_stats.desc": "在位阶、量子化与阿卡那都达到 10% 的附魔台上附魔一个物品。",
     "advancements.apotheosis.quanta0": "滚开，不确定性",
@@ -396,7 +482,7 @@
     "advancements.apotheosis.max_stable.desc": "在位阶、阿卡那全满但量子化为 0% 的附魔台上附魔一个物品。",
     "advancements.apotheosis.max_rectified": "精益求精",
     "advancements.apotheosis.max_rectified.desc": "在位阶、量子化、阿卡那与校准全满的附魔台上附魔一个物品。",
-    
+
     "advancements.apotheosis.affix": "惊人词缀",
     "advancements.apotheosis.affix.desc": "找到一个带有神化模组词缀的物品。",
     "advancements.apotheosis.common": "敝帚自珍",
@@ -419,11 +505,11 @@
     "advancements.apotheosis.merchant.desc": "从流浪商人那里购买一个带有词缀的物品。",
     "advancements.apotheosis.random": "你怎么会有这个？",
     "advancements.apotheosis.random.desc": "从一个随机怪物那里获得一个带有词缀的物品。",
-	"advancements.apotheosis.gem": "古老水晶",
+    "advancements.apotheosis.gem": "古老水晶",
     "advancements.apotheosis.gem.desc": "找到一个可镶嵌的宝石。",
-   	"advancements.apotheosis.socket": "珠宝匠",
+    "advancements.apotheosis.socket": "珠宝匠",
     "advancements.apotheosis.socket.desc": "使用锻造台镶嵌一个宝石。",
-    
+
     "advancements.apotheosis.spawner.root": "神化刷怪笼",
     "advancements.apotheosis.spawner.root.desc": "刷怪笼可以被收集并调节属性，更多信息可以在JEI中查看。",
     "advancements.apotheosis.spawner": "神化刷怪笼",
@@ -455,17 +541,17 @@
     "advancements.apotheosis.noai": "脑力外流",
     "advancements.apotheosis.noai.desc": "禁用刷怪笼刷出实体的AI。",
     "advancements.apotheosis.ultimate_spawner": "究极刷怪笼",
-    "advancements.apotheosis.ultimate_spawner.desc": "放置并调节出一个刷怪延迟最小、能用红石控制、无AI、忽略生成环境与玩家的刷怪笼。",
-    
+    "advancements.apotheosis.ultimate_spawner.desc": "放置并调节出一个刷怪延迟最小、能用红石控制、无AI、无视刷怪条件与玩家的刷怪笼。",
+
     "comment_id": "/刷怪笼模块",
 
     "item.apotheosis.spawner": "%s刷怪笼",
 
-    "enchantment.apotheosis.capturing": "捕捉", 
+    "enchantment.apotheosis.capturing": "捕捉",
     "enchantment.apotheosis.capturing.desc": "使生物死亡时有概率掉落自身刷怪蛋。",
-    
+
     "misc.apotheosis.concat": "%s %s",
-    "misc.apotheosis.value_concat": "%s: %s",
+    "misc.apotheosis.value_concat": "%s：%s",
     "misc.apotheosis.min_value": "此调节器不能将其减少至%s之下",
     "misc.apotheosis.max_value": "此调节器不能将其增加至%s之上",
     "misc.apotheosis.mainhand": "拿在主手",
@@ -476,20 +562,20 @@
     "misc.apotheosis.shift_stats": "按住Shift查看数据",
     "misc.apotheosis.ctrl_stats": "按住Ctrl查看数据",
     "misc.apotheosis.banned": "无法在刷怪笼上使用",
-    
+
     "stat.apotheosis.min_delay": "最小刷怪延迟",
     "stat.apotheosis.max_delay": "最大刷怪延迟",
     "stat.apotheosis.spawn_count": "刷怪数量",
     "stat.apotheosis.max_nearby_entities": "最大实体数量",
     "stat.apotheosis.req_player_range": "激活范围",
     "stat.apotheosis.spawn_range": "刷怪范围",
-    "stat.apotheosis.ignore_players": "忽略玩家",
-    "stat.apotheosis.ignore_conditions": "忽略生物群系",
+    "stat.apotheosis.ignore_players": "无视玩家",
+    "stat.apotheosis.ignore_conditions": "无视刷怪条件",
     "stat.apotheosis.redstone_control": "红石控制",
-    "stat.apotheosis.ignore_light": "忽略光照",
+    "stat.apotheosis.ignore_light": "无视亮度",
     "stat.apotheosis.no_ai": "无AI",
     "stat.apotheosis.silent": "静音",
-    
+
     "stat.apotheosis.min_delay.desc": "刷怪间隔的最少游戏刻",
     "stat.apotheosis.max_delay.desc": "刷怪间隔的最大游戏刻",
     "stat.apotheosis.spawn_count.desc": "单次生成的实体数",
@@ -497,18 +583,18 @@
     "stat.apotheosis.req_player_range.desc": "玩家离开多远刷怪笼不再刷怪",
     "stat.apotheosis.spawn_range.desc": "刷怪半径（以方块为单位）",
     "stat.apotheosis.ignore_players.desc": "刷怪笼附近不需要玩家",
-    "stat.apotheosis.ignore_conditions.desc": "刷怪笼忽略生物群系限制",
+    "stat.apotheosis.ignore_conditions.desc": "刷怪笼无视刷怪条件限制",
     "stat.apotheosis.redstone_control.desc": "刷怪笼需要红石激活",
-    "stat.apotheosis.ignore_light.desc": "刷怪笼忽略光照等级",
+    "stat.apotheosis.ignore_light.desc": "刷怪笼无视亮度等级",
     "stat.apotheosis.no_ai.desc": "刷怪笼生成的生物无AI",
     "stat.apotheosis.silent.desc": "使刷怪笼生成的生物静音",
-    
+
     "title.apotheosis.spawner": "刷怪笼调节",
     "info.apotheosis.spawner": "可以利用%s魔咒收集刷怪笼，并使用各种物品调节刷怪笼的属性。",
     "info.apotheosis.spawner.no_silk": "可以使用各种物品调节刷怪笼的属性，但当前使用精准采集获得刷怪笼被禁止。",
     "info.apotheosis.spawner.always_drop": "可以使用各种物品调节刷怪笼的属性，并且破坏后能够掉落。",
-    "info.apotheosis.capturing": "利用捕捉魔咒能使生物死亡时有概率掉落自身刷怪蛋。\\n \\n掉落概率：0.4%%每级",
-    
+    "info.apotheosis.capturing": "利用捕捉魔咒能使生物死亡时有概率掉落自身刷怪蛋。\\n \\n掉落概率：等级×0.4%%",
+
     "comment_id": "/附魔模块",
     "block.apotheosis.hellshelf": "下界书架",
     "block.apotheosis.blazing_hellshelf": "炽热下界书架",
@@ -521,7 +607,7 @@
     "block.apotheosis.draconic_endshelf": "巨龙末地书架",
     "block.apotheosis.beeshelf": "蜂蜜书架",
     "block.apotheosis.melonshelf": "西瓜书架",
-    "info.apotheosis.ench_power": "提供%s附魔等级。",
+    "info.apotheosis.ench_power": "提供%s附魔威力。",
     "info.apotheosis.cobweb": "能够用来移除魔咒。",
     "info.apotheosis.masterwork": "极品",
     "info.apotheosis.twisted": "扭曲",
@@ -544,22 +630,22 @@
     "info.apotheosis.rectification.p": " - 校准：+%s%%",
     "info.apotheosis.clues.p": " - 魔咒线索：+%s",
     "info.apotheosis.eterna.t": "位阶：%s/%s",
-	"info.apotheosis.quanta.t": "量子化：%s%%",
-	"info.apotheosis.arcana.t": "阿卡那：%s%%",
-	"info.apotheosis.rectification.t": "校准：%s%%",
-	"info.apotheosis.clues.t": "魔咒线索：%s",
+    "info.apotheosis.quanta.t": "量子化：%s%%",
+    "info.apotheosis.arcana.t": "阿卡那：%s%%",
+    "info.apotheosis.rectification.t": "校准：%s%%",
+    "info.apotheosis.clues.t": "魔咒线索：%s",
     "gui.apotheosis.enchant.eterna.desc": " - 魔法能量",
-    "gui.apotheosis.enchant.eterna.desc2": "决定附魔台的最大附魔等级。",
+    "gui.apotheosis.enchant.eterna.desc2": "决定可用魔咒等级。",
     "gui.apotheosis.enchant.eterna.desc3": "当前值：%s/%s",
     "gui.apotheosis.enchant.quanta.desc": " - 原初的混沌",
-    "gui.apotheosis.enchant.quanta.desc2": "决定附魔台的最终附魔等级波动范围。",
-    "gui.apotheosis.enchant.quanta.desc3": "校准能减少量子化带来的负面影响。",
+    "gui.apotheosis.enchant.quanta.desc2": "调节威力范围，",
+    "gui.apotheosis.enchant.quanta.desc3": "减少负面效果。",
     "gui.apotheosis.enchant.quanta.desc4": "当前值：%s%%",
     "gui.apotheosis.enchant.arcana.desc": " - 无形的纯粹之物",
-    "gui.apotheosis.enchant.arcana.desc2": "使稀有度高的魔咒更加常见，",
+    "gui.apotheosis.enchant.arcana.desc2": "使珍贵魔咒更加常见，",
     "gui.apotheosis.enchant.arcana.desc3": "同时增加魔咒数量。",
-    "gui.apotheosis.enchant.arcana.desc4": "当前值：%s%%",
-    "gui.apotheosis.enchant.arcana.desc5": "总体值: %s%%",
+    "gui.apotheosis.enchant.arcana.desc4": "基础值：%s%%",
+    "gui.apotheosis.enchant.arcana.desc5": "总体值：%s%%",
     "ingredient.apotheosis.ench": "最少需要 %s",
     "info.apotheosis.gui_rectification": "校准：%s%%",
     "info.apotheosis.quanta_buff": "量子扭曲",
@@ -579,37 +665,37 @@
     "info.apotheosis.eterna_exact": "精确需求：%s/%s",
     "info.apotheosis.percent_exact": "精确需求：%s%%",
     "apotheosis.recipes.enchanting": "灌注附魔",
-    
+
     "enchantment.apotheosis.infusion": "灌注",
     "enchantment.apotheosis.infusion.desc": "用于制造灌注书架。",
-    
+
     "enchantment.apotheosis.mounted_strike": "骑砍",
     "enchantment.apotheosis.mounted_strike.desc": "在骑乘时攻击能造成额外伤害。",
-    
+
     "enchantment.apotheosis.miners_fervor": "矿工热忱",
     "enchantment.apotheosis.miners_fervor.desc": "极大提高玩家挖掘效率，但是不能瞬间挖掉方块。",
-    
+
     "enchantment.apotheosis.stable_footing": "稳定立足",
     "enchantment.apotheosis.stable_footing.desc": "取消飞行时的挖掘速度惩罚。",
-    
+
     "enchantment.apotheosis.scavenger": "清道夫",
     "enchantment.apotheosis.scavenger.desc": "击杀生物有概率掉落两次战利品。",
-    
+
     "enchantment.apotheosis.life_mending": "生命修补",
     "enchantment.apotheosis.life_mending.desc": "治疗的生命值将会转化为物品的耐久度。",
-    
+
     "enchantment.apotheosis.icy_thorns": "冰霜荆棘",
     "enchantment.apotheosis.icy_thorns.desc": "使攻击者受到缓慢效果。",
-    
+
     "enchantment.apotheosis.bane_of_illagers": "灾厄村民杀手",
     "enchantment.apotheosis.bane_of_illagers.desc": "对灾厄村民（掠夺者、卫道士、唤魔者、幻术师和劫掠兽）能造成额外伤害。",
-    
-    "death.attack.apoth_corrupted": "%s被腐化附魔榨干了。",
+
+    "death.attack.apoth_corrupted": "%s被腐化了。",
     "death.attack.apoth_corrupted.player": "%s被%s腐化了。",
-    
-    "item.apotheosis.prismatic_web": "棱镜蜘蛛网",
+
+    "item.apotheosis.prismatic_web": "海晶蜘蛛网",
     "info.apotheosis.prismatic_cobweb": "能够用来移除诅咒型魔咒。",
-    
+
     "item.apotheosis.inert_trident": "惰性三叉戟",
     "item.apotheosis.other_tome": "其他宝典",
     "item.apotheosis.helmet_tome": "头盔宝典",
@@ -633,61 +719,61 @@
     "info.apotheosis.bow_tome": "仅接受适用于弓的魔咒。",
     "info.apotheosis.scrap_tome": "能够移除魔咒，并将随机一部分魔咒转移到一本附魔书上。",
     "info.apotheosis.scrap_tome2": "移除后，被移除物品与拆解宝典都将被消耗。",
-    
+
     "enchantment.apotheosis.tempting": "引诱",
     "enchantment.apotheosis.tempting.desc": "吸引附近的动物。",
-    
+
     "enchantment.apotheosis.shield_bash": "盾击",
     "enchantment.apotheosis.shield_bash.desc": "增加盾牌造成的伤害。",
-    
+
     "enchantment.apotheosis.reflective": "防御反击",
     "enchantment.apotheosis.reflective.desc": "格挡攻击有概率对攻击者造成伤害。",
-    
+
     "enchantment.apotheosis.berserkers_fury": "狂战士之怒",
     "enchantment.apotheosis.berserkers_fury.desc": "受到伤害后狂怒。",
-    
+
     "enchantment.apotheosis.knowledge": "岁月学识",
     "enchantment.apotheosis.knowledge.desc": "将敌人的掉落物直接转化为经验。",
-    
+
     "enchantment.apotheosis.splitting": "拆分",
     "enchantment.apotheosis.splitting.desc": "铁砧砸中多魔咒附魔书后，能将其拆分成多本单一魔咒的附魔书。",
-    
+
     "enchantment.apotheosis.obliteration": "分裂",
     "enchantment.apotheosis.obliteration.desc": "铁砧砸中单魔咒附魔书后，能将其拆分成两本次级魔咒的附魔书。",
-    
+
     "enchantment.apotheosis.natures_blessing": "自然祝福",
     "enchantment.apotheosis.natures_blessing.desc": "锄头右击可以直接对作物施加肥料。",
-    
+
     "enchantment.apotheosis.rebounding": "弹飞",
     "enchantment.apotheosis.rebounding.desc": "被近距离攻击后，击退攻击者。",
-    
+
     "enchantment.apotheosis.magic_protection": "厌魔者",
     "enchantment.apotheosis.magic_protection.desc": "减少使用者造成与受到的魔法伤害。",
-    
+
     "enchantment.apotheosis.crescendo": "叠装弩箭",
     "enchantment.apotheosis.crescendo.desc": "弩装填后可额外进行多次射击。",
-    
+
     "enchantment.apotheosis.chromatic": "色差",
     "enchantment.apotheosis.chromatic.desc": "剪羊毛能获得随机颜色的羊毛。",
-    
+
     "enchantment.apotheosis.exploitation": "剥削",
     "enchantment.apotheosis.exploitation.desc": "剪羊毛能获得双倍的羊毛，但会使绵羊受到伤害。",
-    
+
     "enchantment.apotheosis.growth_serum": "生长血清",
     "enchantment.apotheosis.growth_serum.desc": "剪羊毛后，绵羊有50%概率立即长出羊毛。",
-    
+
     "enchantment.apotheosis.earths_boon": "地球恩惠",
     "enchantment.apotheosis.earths_boon.desc": "挖掘石头时有概率获得矿石。",
-    
+
     "enchantment.apotheosis.chainsaw": "链锯",
     "enchantment.apotheosis.chainsaw.desc": "能够直接砍倒整棵树。",
-    
+
     "enchantment.apotheosis.spearfishing": "叉鱼",
     "enchantment.apotheosis.spearfishing.desc": "使用三叉戟投掷杀死敌人后可能掉落鱼。",
-    
+
     "enchantment.apotheosis.endless_quiver": "无尽箭袋",
     "enchantment.apotheosis.endless_quiver.desc": "射击时不会消耗所有种类的箭。",
-    
+
     "comment_id": "/原版",
     "generic.reachDistance": "触及距离",
     "forge.swimSpeed": "游泳速度",
@@ -811,12 +897,12 @@
     "enchantment.level.125": "CXXV",
     "enchantment.level.126": "CXXVI",
     "enchantment.level.127": "CXXVII",
-    
-    
+
+
     "block.apotheosis.library": "魔咒图书馆",
     "block.apotheosis.ender_library": "亚历山大图书馆",
     "apotheosis.ench.library": "魔咒图书馆",
-    "tooltip.enchlib.capacity": "附魔等级容量：%s",
+    "tooltip.enchlib.capacity": "等级容量：%s",
     "tooltip.enchlib.max_lvl": "可用最大魔咒等级：%s",
     "tooltip.enchlib.points": "储存点数：%s/%s",
     "tooltip.enchlib.unavailable": "无法达到下一魔咒等级",
@@ -833,70 +919,70 @@
     "info.apotheosis.weights_changed": "稀有度权重改变",
     "info.apotheosis.min_enchants": "最少附有%s种魔咒",
     "info.apotheosis.ench_at": "在 %s 级附魔",
-    "info.apotheosis.xp_cost": "初始经验消耗：%s（%s 等级）",
-    "info.apotheosis.power_range": "附魔等级范围：%s至%s",
+    "info.apotheosis.xp_cost": "初始经验花费：%s（%s级）",
+    "info.apotheosis.power_range": "威力范围：%s~%s",
     "info.apotheosis.item_ench": "物品附魔能力：%s",
     "info.apotheosis.num_clues": "魔咒线索：%s",
     "block.apotheosis.sightshelf": "视界书架",
     "block.apotheosis.sightshelf_t2": "精湛视界书架",
-    "block.apotheosis.rectifier": "海之层流书架",
-    "block.apotheosis.rectifier_t2": "下界束缚书架",
-    "block.apotheosis.rectifier_t3": "末地聚合书架",
+    "block.apotheosis.rectifier": "海洋束缚校准书架",
+    "block.apotheosis.rectifier_t2": "下界束缚校准书架",
+    "block.apotheosis.rectifier_t3": "末地聚合校准书架",
     "block.apotheosis.infused_seashelf": "灌注海洋书架",
     "block.apotheosis.infused_hellshelf": "灌注下界书架",
-    
-    "info.apotheosis.slider_power": "附魔等级：%s",
-    "info.apotheosis.enchinfo_level": "附魔等级：%s",
+
+    "info.apotheosis.slider_power": "威力：%s",
+    "info.apotheosis.enchinfo_level": "等级：%s",
     "info.apotheosis.enchinfo_rarity": "稀有度：%s",
     "info.apotheosis.enchinfo_chance": "概率：%s",
     "info.apotheosis.enchinfo_slot": "附魔选项 %s",
-    "info.apotheosis.enchinfo_minpow": "最小附魔等级：%s",
-    "info.apotheosis.enchinfo_maxpow": "最大附魔等级：%s",
+    "info.apotheosis.enchinfo_minpow": "最小威力：%s",
+    "info.apotheosis.enchinfo_maxpow": "最大威力：%s",
     "info.apotheosis.enchinfo_title": "可用魔咒",
     "info.apotheosis.weights": "权重",
     "info.apotheosis.all_available": "浏览所有可出现的魔咒",
-    
+
     "comment_id": "/药水模块",
-    
+
     "item.minecraft.potion.effect.resistance": "抗性药水",
     "item.minecraft.splash_potion.effect.resistance": "喷溅型抗性药水",
     "item.minecraft.lingering_potion.effect.resistance": "滞留型抗性药水",
     "item.minecraft.tipped_arrow.effect.resistance": "抗性之箭",
-    
+
     "item.minecraft.potion.effect.absorption": "伤害吸收药水",
     "item.minecraft.splash_potion.effect.absorption": "喷溅型伤害吸收药水",
     "item.minecraft.lingering_potion.effect.absorption": "滞留型伤害吸收药水",
     "item.minecraft.tipped_arrow.effect.absorption": "伤害吸收之箭",
-    
+
     "item.minecraft.potion.effect.haste": "急迫药水",
     "item.minecraft.splash_potion.effect.haste": "喷溅型急迫药水",
     "item.minecraft.lingering_potion.effect.haste": "滞留型急迫药水",
     "item.minecraft.tipped_arrow.effect.haste": "急迫之箭",
-    
+
     "item.minecraft.potion.effect.fatigue": "挖掘疲劳药水",
     "item.minecraft.splash_potion.effect.fatigue": "喷溅型挖掘疲劳药水",
     "item.minecraft.lingering_potion.effect.fatigue": "滞留型挖掘疲劳药水",
     "item.minecraft.tipped_arrow.effect.fatigue": "挖掘疲劳之箭",
-    
+
     "item.minecraft.potion.effect.wither": "凋零药水",
     "item.minecraft.splash_potion.effect.wither": "喷溅型凋零药水",
     "item.minecraft.lingering_potion.effect.wither": "滞留型凋零药水",
     "item.minecraft.tipped_arrow.effect.wither": "凋零之箭",
-    
+
     "effect.apotheosis.sundering": "破甲",
     "item.minecraft.potion.effect.sundering": "破甲药水",
     "item.minecraft.splash_potion.effect.sundering": "喷溅型破甲药水",
     "item.minecraft.lingering_potion.effect.sundering": "滞留型破甲药水",
     "item.minecraft.tipped_arrow.effect.sundering": "破甲之箭",
-    
-    "effect.apotheosis.knowledge": "阅历",
+
+    "effect.apotheosis.knowledge": "古代知识",
     "item.minecraft.potion.effect.knowledge": "古代知识药水",
     "item.minecraft.splash_potion.effect.knowledge": "喷溅型古代知识药水",
     "item.minecraft.lingering_potion.effect.knowledge": "滞留型古代知识药水",
     "item.minecraft.tipped_arrow.effect.knowledge": "古代知识之箭",
-    
+
     "item.apotheosis.lucky_foot": "幸运兔子脚",
-    
+
     "item.apotheosis.potion_charm_broke": "无效的药水护符",
     "item.apotheosis.potion_charm": "%s护符",
     "item.apotheosis.potion_charm.desc": "启用并放入物品栏将持续施加%s状态效果。",
@@ -904,16 +990,17 @@
     "item.apotheosis.potion_charm.desc3": "状态效果：%s",
     "item.apotheosis.potion_charm.enabled": "已启用",
     "item.apotheosis.potion_charm.disabled": "已禁用",
-    
+    "item.apotheosis.potion_charm.curios_only": "只能在饰品栏位工作",
+
     "comment_id": "/铁砧模块",
     "info.apotheosis.anvil": "可以被附魔。",
-    
+
     "comment_id": "/花园模块",
     "item.apotheosis.ender_lead": "末影拴绳",
     "info.apotheosis.noentity": "拴有实体：无",
     "info.apotheosis.containedentity": "拴有实体：%s",
     "info.apotheosis.ender_lead": "末影拴绳是一种可以用来移动动物的物品。鼠标左击捕捉动物，鼠标右击释放动物。末影拴绳仅能捕捉动物。",
-    
+
     "comment_id": "/村民模块",
     "name.apotheosis.merch_sword": "奴役狂梦",
     "name.apotheosis.merch_pick": "碎石机",
@@ -932,21 +1019,21 @@
     "info.apotheosis.broadhead_arrow": "流血（0:15）",
     "item.apotheosis.explosive_arrow": "爆炸箭",
     "info.apotheosis.explosive_arrow": "爆炸范围：2",
-    "item.apotheosis.iron_mining_arrow": "铁头采矿箭",
-    "item.apotheosis.diamond_mining_arrow": "钻石头采矿箭",
+    "item.apotheosis.iron_mining_arrow": "铁采矿箭",
+    "item.apotheosis.diamond_mining_arrow": "钻石采矿箭",
     "info.apotheosis.mining_arrow.iron": "射出的箭会像铁镐一样挖掘方块",
     "info.apotheosis.mining_arrow.diamond": "射出的箭会像钻石镐一样挖掘方块",
     "effect.apotheosis.bleeding": "流血",
-    "death.attack.apotheosis.bleeding": "%s失血过多。",
-    
+    "death.attack.apotheosis.bleeding": "%s失血过多了。",
+
     "comment_id": "/杂项",
     "generic.reachDistance": "触及距离",
     "info.apoth.modifier_disabled": "该调节器已被禁用",
     "itemGroup.apotheosis": "神化",
     "config.jade.plugin_apotheosis.spawner": "神化刷怪笼模块",
-	"config.jade.plugin_apotheosis.ench": "神化附魔模块",
-	"config.jade.plugin_apotheosis.adventure": "神化成就模块",
-    
+    "config.jade.plugin_apotheosis.ench": "神化附魔模块",
+    "config.jade.plugin_apotheosis.adventure": "神化成就模块",
+
     "comment_id": "指南书",
     "book.apotheosis.name": "阴影编年史",
     "book.apotheosis.subtitle": "神化指南",

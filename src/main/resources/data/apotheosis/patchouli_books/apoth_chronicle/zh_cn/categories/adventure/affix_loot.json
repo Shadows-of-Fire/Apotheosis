@@ -1,0 +1,7 @@
+{
+    "name": "词缀战利品",
+    "description": "在冒险过程中，你可能会遇到具有各种加成的物品。$(p)这些都是词缀物品，是过去的遗物，拥有不同程度的力量。",
+    "icon": "minecraft:chest",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

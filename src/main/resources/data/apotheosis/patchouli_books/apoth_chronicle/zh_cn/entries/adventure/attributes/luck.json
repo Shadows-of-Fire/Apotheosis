@@ -1,0 +1,17 @@
+{
+    "name": "幸运",
+    "icon": "minecraft:rabbit_foot",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)幸运$()使你感到幸运！好吧，也就是说，它提高了你获得更好的战利品掉落几率。$(p)一切都可以赋予幸运。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()0$(p)$(9)$(n)最大值：$()1024$(p)注意：你可以有负的幸运，这使得更好的战利品掉落更难得到。"
+		}
+	]
+}

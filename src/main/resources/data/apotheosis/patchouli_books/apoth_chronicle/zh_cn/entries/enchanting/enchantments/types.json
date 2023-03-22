@@ -1,0 +1,28 @@
+{
+    "name": "魔咒类型",
+    "icon": "minecraft:emerald",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "你可能会注意到，有些魔咒有不同颜色的名称。$(p)这是因为神化引入了三个新的魔咒类别。$(p)每个子类别都有一些强加于它们的规则。"
+        },
+		{
+            "type": "patchouli:text",
+			"title": "极品",
+            "text": "$(2)极品$()魔咒代表最强和最稀有的魔咒。$(p)它们总是需要至少55点$(#CC00CC)最终威力$()来接受。"
+        },
+		{
+            "type": "patchouli:text",
+			"title": "扭曲",
+            "text": "$(5)扭曲$()魔咒总是有一个好的和一个坏的效果。$(p)它们总是需要至少45点$(#CC00CC)最终威力$()来接受。"
+        },
+		{
+            "type": "patchouli:text",
+			"title": "腐化",
+            "text": "$(4)腐化$()魔咒有一个与它们的效果相关的生命代价。$(p)它们总是需要至少65点$(#CC00CC)最终威力$()来接受。$(p)它们被认为是$(c)诅咒$()。"
+        }
+	]
+}
