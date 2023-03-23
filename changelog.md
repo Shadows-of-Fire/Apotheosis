@@ -3,13 +3,15 @@
 * [NYI] Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
 
 ## 6.1.3
-* Adjusted the Salvaging Table to be recipe-backed, allowing for easier conitfiguration and extensibility.
+* Adjusted the Salvaging Table to be recipe-backed, allowing for easier configuration and extensibility.
+* The Salvaging Table now has JEI Support!
 * Gems can now be processed in the Salvaging Table, yielding 1-2 dust each.
 * Added support for GameStages.
 * Fixed Endersurge gems applying +2 levels to everything instead of only existing enchantments.
 * Fixed a crash that happened when trying to upgrade socketed items in a smithing table (ex diamond->netherite).
 * Fixed the Thunderstruck (damage to nearby enemies) affix.
 * mc-kaishixiaxue: Updated Chinese translation, including the Chronicle of Shadows.
+* rtxyd: Also updated Chinese translation.
 * SKZGx: Updated Ukranian translation.
 * Made the translation keys for top-level affix naming configurable (https://github.com/Shadows-of-Fire/Apotheosis/issues/818)
 * Added dimensional rarity rules for Gems.

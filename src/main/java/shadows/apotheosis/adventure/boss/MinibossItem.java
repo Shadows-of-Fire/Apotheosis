@@ -5,19 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -27,16 +22,11 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
@@ -55,16 +45,16 @@ import shadows.placebo.json.RandomAttributeModifier;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
-public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
-
-	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
+public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements ILuckyWeighted, IDimensional, IStaged {
 
 	protected int weight;
 	protected float quality;
-	protected EntityType<?> entity;
-	protected AABB size;
-	protected Map<LootRarity, BossStats> stats;
+	protected String name;
+	protected Set<EntityType<?>> entities;
+	protected BossStats stats;
 	protected @Nullable Set<String> stages;
+	protected Set<ResourceLocation> dimensions;
+	protected boolean affixed;
 
 	@SerializedName("valid_gear_sets")
 	protected List<SetPredicate> armorSets;
@@ -72,15 +62,12 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	@SerializedName("nbt")
 	protected CompoundTag customNbt;
 
-	protected Set<ResourceLocation> dimensions;
+	@SerializedName("supporting_entities")
+	protected List<SupportingEntity> supportingEntities;
 
-	@SerializedName("min_rarity")
-	protected LootRarity minRarity;
+	protected SupportingEntity mount;
 
-	@SerializedName("max_rarity")
-	protected LootRarity maxRarity;
-
-	public BossItem() {
+	public MinibossItem() {
 		// No ctor, not meant to be created via code
 	}
 
@@ -94,22 +81,8 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		return this.quality;
 	}
 
-	@Override
-	public LootRarity getMinRarity() {
-		return this.minRarity;
-	}
-
-	@Override
-	public LootRarity getMaxRarity() {
-		return this.maxRarity;
-	}
-
-	public AABB getSize() {
-		return this.size;
-	}
-
-	public EntityType<?> getEntity() {
-		return this.entity;
+	public Set<EntityType<?>> getEntities() {
+		return this.entities;
 	}
 
 	/**
@@ -119,47 +92,42 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	 * @param random A random, used for selection of boss stats.
 	 * @return The newly created boss.
 	 */
-	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
-		Mob entity = (Mob) this.entity.create(world.getLevel());
-		if (this.customNbt != null) entity.load(this.customNbt);
-		this.initBoss(random, entity, luck);
+	public void transform(Mob mob, RandomSource random, float luck) {
+		if (this.customNbt != null) mob.load(this.customNbt);
+		this.initBoss(random, mob, luck);
 		// Re-read here so we can apply certain things after the boss has been modified
 		// But only mob-specific things, not a full load()
-		if (this.customNbt != null) entity.readAdditionalSaveData(this.customNbt);
-		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
-		return entity;
+		if (this.customNbt != null) mob.readAdditionalSaveData(this.customNbt);
 	}
 
 	/**
 	 * Initializes an entity as a boss, based on the stats of this BossItem.
 	 * @param rand
-	 * @param entity
+	 * @param mob
 	 */
-	public void initBoss(RandomSource rand, Mob entity, float luck) {
-		LootRarity rarity = LootRarity.random(rand, luck, this);
-		BossStats stats = this.stats.get(rarity);
-		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
+	public void initBoss(RandomSource rand, Mob mob, float luck) {
+		int duration = mob instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
 		for (ChancedEffectInstance inst : stats.effects) {
 			if (rand.nextFloat() <= inst.getChance()) {
-				entity.addEffect(inst.createInstance(rand, duration));
+				mob.addEffect(inst.createInstance(rand, duration));
 			}
 		}
 
 		for (RandomAttributeModifier modif : stats.modifiers) {
-			modif.apply(rand, entity);
+			modif.apply(rand, mob);
 		}
 
-		entity.goalSelector.availableGoals.removeIf(IS_VILLAGER_ATTACK);
-		String name = NameHelper.setEntityName(rand, entity);
+		mob.goalSelector.availableGoals.removeIf(BossItem.IS_VILLAGER_ATTACK);
+		String name = NameHelper.setEntityName(rand, mob);
 
 		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.armorSets);
-		set.apply(entity);
+		set.apply(mob);
 
 		boolean anyValid = false;
 
 		for (EquipmentSlot t : EquipmentSlot.values()) {
-			ItemStack s = entity.getItemBySlot(t);
+			ItemStack s = mob.getItemBySlot(t);
 			if (!s.isEmpty() && !LootCategory.forItem(s).isNone()) {
 				anyValid = true;
 				break;
@@ -170,27 +138,27 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
 		int guaranteed = rand.nextInt(6);
 
-		ItemStack temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
+		ItemStack temp = mob.getItemBySlot(EquipmentSlot.values()[guaranteed]);
 		while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategory.NONE) {
 			guaranteed = rand.nextInt(6);
-			temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
+			temp = mob.getItemBySlot(EquipmentSlot.values()[guaranteed]);
 		}
 
 		for (EquipmentSlot s : EquipmentSlot.values()) {
-			ItemStack stack = entity.getItemBySlot(s);
-			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
+			ItemStack stack = mob.getItemBySlot(s);
+			if (s.ordinal() == guaranteed) mob.setDropChance(s, 2F);
 			if (s.ordinal() == guaranteed) {
-				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck, rarity));
-				entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
+				//mob.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck, rarity));
+				//mob.setCustomName(((MutableComponent) mob.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
 			} else if (rand.nextFloat() < stats.enchantChance) {
 				enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[0] : stats.enchLevels[1], true);
-				entity.setItemSlot(s, stack);
+				mob.setItemSlot(s, stack);
 			}
 		}
-		entity.getPersistentData().putBoolean("apoth.boss", true);
-		entity.getPersistentData().putString("apoth.rarity", rarity.id());
-		entity.setHealth(entity.getMaxHealth());
-		entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
+		mob.getPersistentData().putBoolean("apoth.boss", true);
+		//mob.getPersistentData().putString("apoth.rarity", rarity.id());
+		mob.setHealth(mob.getMaxHealth());
+		mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
 	}
 
 	public void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {
@@ -201,7 +169,6 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	}
 
 	public ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity) {
-		BossStats stats = this.stats.get(rarity);
 		enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[2] : stats.enchLevels[3], true);
 
 		NameHelper.setItemName(rand, stack);
@@ -237,7 +204,8 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	 * Ensures that this boss item does not have null or empty fields that would cause a crash.
 	 * @return this
 	 */
-	public BossItem validate() {
+	public MinibossItem validate() {
+		/*
 		Preconditions.checkArgument(this.weight >= 0, "Boss Item " + this.id + " has a negative weight!");
 		Preconditions.checkArgument(this.quality >= 0, "Boss Item " + this.id + " has a negative quality!");
 		Preconditions.checkNotNull(this.entity, "Boss Item " + this.id + " has null entity type!");
@@ -248,12 +216,13 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		if (this.maxRarity != null) {
 			Preconditions.checkArgument(this.minRarity == null || this.maxRarity.isAtLeast(this.minRarity));
 		}
-		LootRarity r = LootRarity.max(LootRarity.COMMON, this.minRarity);
+		LootRarity r = LootRarity.COMMON.max(this.minRarity);
 		while (r != LootRarity.ANCIENT) {
 			Preconditions.checkNotNull(this.stats.get(r));
 			if (r == this.maxRarity) break;
 			r = LootRarity.LIST.get(r.ordinal() + 1);
 		}
+		*/
 		return this;
 	}
 
@@ -265,6 +234,12 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	@Override
 	public Set<String> getStages() {
 		return this.stages;
+	}
+
+	public static class SupportingEntity {
+		EntityType<?> entity;
+		CompoundTag nbt;
+		int x, y, z;
 	}
 
 }
