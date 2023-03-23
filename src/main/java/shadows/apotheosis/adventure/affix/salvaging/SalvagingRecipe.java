@@ -66,7 +66,7 @@ public class SalvagingRecipe implements Recipe<Container> {
 	@Override
 	@Deprecated
 	public ItemStack getResultItem() {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
