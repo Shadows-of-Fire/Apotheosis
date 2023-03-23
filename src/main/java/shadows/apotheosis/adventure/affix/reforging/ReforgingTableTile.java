@@ -60,7 +60,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 		} else if (time == 4 && !step1) {
 			Random rand = pLevel.random;
 			for (int i = 0; i < 6; i++) {
-				pLevel.addParticle(ParticleTypes.CRIT, pPos.getX() + 0.5 + 0.2 * rand.nextDouble(), pPos.getY() + 13 / 16D, pPos.getZ() + 0.5 + 0.2 * rand.nextDouble(), 0, 0, 0);
+				pLevel.addParticle(ParticleTypes.CRIT, pPos.getX() + 0.5 - 0.1 * rand.nextDouble(), pPos.getY() + 13 / 16D, pPos.getZ() + 0.5 + 0.1 * rand.nextDouble(), 0, 0, 0);
 			}
 			pLevel.playLocalSound(pPos.getX(), pPos.getY(), pPos.getZ(), SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.03F, 1.7F + rand.nextFloat() * 0.2F, true);
 			step1 = true;
