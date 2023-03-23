@@ -58,6 +58,11 @@ public final class LegacyGem extends Gem {
 	}
 
 	@Override
+	public boolean isValidIn(ItemStack stack, ItemStack gem, LootRarity rarity) {
+		return getStoredBonus(gem) != null;
+	}
+
+	@Override
 	public void addModifiers(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(stack);
 		for (EquipmentSlot s : cat.getSlots(stack)) {

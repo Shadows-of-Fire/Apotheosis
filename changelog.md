@@ -10,6 +10,8 @@
 * Fixed an issue where boss names were failing to translate.
 * Fixed an issue with the salvaging recipe returning a null itemstack.
 * Reforging no longer uses the enchanting seed.
+* Fixed Legacy Gems not providing any bonuses (again).
+  * Legacy Gems will be permanently removed in 6.2.0.
 
 ## 6.1.4
 * Fixed a network encoding error in SalvagingRecipe$OutputData.
