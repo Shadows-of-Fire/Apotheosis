@@ -207,10 +207,17 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		NameHelper.setItemName(rand, stack);
 		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
 
-		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName) + " ";
+		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName);
 		Component name = AffixHelper.getName(stack);
 		if (name.getContents() instanceof TranslatableContents tc) {
-			Component copy = Component.translatable(bossOwnerName + tc.getKey(), tc.getArgs()).withStyle(name.getStyle());
+			String oldKey = tc.getKey();
+			String newKey = oldKey.equals("misc.apotheosis.affix_name.two") ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
+			Object[] newArgs = new Object[tc.getArgs().length + 1];
+			newArgs[0] = bossOwnerName;
+			for (int i = 1; i < newArgs.length; i++) {
+				newArgs[i] = tc.getArgs()[i - 1];
+			}
+			Component copy = Component.translatable(newKey, newArgs).withStyle(name.getStyle().withItalic(false));
 			AffixHelper.setName(stack, copy);
 		}
 
