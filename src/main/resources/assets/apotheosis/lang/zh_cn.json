@@ -341,8 +341,8 @@
     "menu.apotheosis.gem_cutting": "宝石切割",
     "container.apotheosis.salvage": "回收",
     "container.apotheosis.reforge": "重铸",
-    "text.apotheosis.dust_cost": "%s个%s",
-    "text.apotheosis.mat_cost": "%s个%s",
+    "text.apotheosis.dust_cost": "%s %s",
+    "text.apotheosis.mat_cost": "%s %s",
     "text.apotheosis.reforge_cost": "重铸花费",
     "text.apotheosis.salvage_results": "回收结果",
     "text.apotheosis.unique": "独一无二",
@@ -596,6 +596,7 @@
     "info.apotheosis.capturing": "利用捕捉魔咒能使生物死亡时有概率掉落自身刷怪蛋。\\n \\n掉落概率：等级×0.4%%",
 
     "comment_id": "/附魔模块",
+    "Exclusive With: %s" : "与%s冲突",
     "block.apotheosis.hellshelf": "下界书架",
     "block.apotheosis.blazing_hellshelf": "炽热下界书架",
     "block.apotheosis.glowing_hellshelf": "耀光下界书架",
@@ -897,7 +898,6 @@
     "enchantment.level.125": "CXXV",
     "enchantment.level.126": "CXXVI",
     "enchantment.level.127": "CXXVII",
-
 
     "block.apotheosis.library": "魔咒图书馆",
     "block.apotheosis.ender_library": "亚历山大图书馆",
