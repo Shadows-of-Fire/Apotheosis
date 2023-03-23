@@ -26,6 +26,7 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
@@ -64,7 +65,8 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 			gem = GemManager.INSTANCE.getRandomItem(ctx.getRandom(), ctx.getLuck(), IDimensional.matches(ctx.getLevel()), IStaged.matches(player));
 		}
 
-		ItemStack stack = GemManager.createGemStack(gem, ctx.getRandom(), null, ctx.getLuck());
+		LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(ctx.getLevel().dimension().location());
+		ItemStack stack = GemManager.createGemStack(gem, ctx.getRandom(), gem.clamp(LootRarity.random(ctx.getRandom(), ctx.getLuck(), clamp)), ctx.getLuck());
 		list.accept(stack);
 	}
 
@@ -87,7 +89,7 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
 		if (ctx.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Player p) return p;
 		if (ctx.getParamOrNull(LootContextParams.DIRECT_KILLER_ENTITY) instanceof Player p) return p;
 		if (ctx.getParamOrNull(LootContextParams.KILLER_ENTITY) instanceof Player p) return p;
-		if (ctx.getParamOrNull(LootContextParams.LAST_DAMAGE_PLAYER) instanceof Player p) return p;
+		if (ctx.getParamOrNull(LootContextParams.LAST_DAMAGE_PLAYER) != null) return ctx.getParamOrNull(LootContextParams.LAST_DAMAGE_PLAYER);
 		return null;
 	}
 

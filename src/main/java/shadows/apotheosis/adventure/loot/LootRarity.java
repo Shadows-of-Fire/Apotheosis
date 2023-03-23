@@ -203,19 +203,19 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 	}
 
 	/**
-	 * Returns the minimum (worst) rarity between this and other.
+	 * Returns the minimum (worst) rarity between a and b.
 	 */
-	public LootRarity min(@Nullable LootRarity other) {
-		if (other == null) return this;
-		return this.ordinal <= other.ordinal ? this : other;
+	public static LootRarity min(LootRarity a, @Nullable LootRarity b) {
+		if (b == null) return a;
+		return a.ordinal <= b.ordinal ? a : b;
 	}
 
 	/**
-	 * Returns the maximum (best) rarity between this and other.
+	 * Returns the maximum (best) rarity between a and b.
 	 */
-	public LootRarity max(@Nullable LootRarity other) {
-		if (other == null) return this;
-		return this.ordinal >= other.ordinal ? this : other;
+	public static LootRarity max(LootRarity a, @Nullable LootRarity b) {
+		if (b == null) return a;
+		return a.ordinal >= b.ordinal ? a : b;
 	}
 
 	/**
@@ -225,7 +225,7 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 	 * @return This, if this is within the bounds, or the min or max if it exceeded that bound.
 	 */
 	public LootRarity clamp(@Nullable LootRarity lowerBound, @Nullable LootRarity upperBound) {
-		return this.min(upperBound).max(lowerBound);
+		return LootRarity.max(LootRarity.min(this, upperBound), lowerBound);
 	}
 
 	public Component toComponent() {
@@ -373,6 +373,20 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 		default LootRarity clamp(@Nullable LootRarity rarity) {
 			if (rarity == null) return getMinRarity();
 			return rarity.clamp(getMinRarity(), getMaxRarity());
+		}
+
+		public static record Impl(LootRarity min, LootRarity max) implements Clamped {
+
+			@Override
+			public LootRarity getMinRarity() {
+				return min;
+			}
+
+			@Override
+			public LootRarity getMaxRarity() {
+				return max;
+			}
+
 		}
 
 	}

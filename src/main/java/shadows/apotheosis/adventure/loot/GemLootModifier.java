@@ -33,7 +33,7 @@ public class GemLootModifier extends LootModifier {
 					var player = GemLootPoolEntry.findPlayer(context);
 					if (player == null) return generatedLoot;
 					float luck = context.getLuck();
-					ItemStack gem = GemManager.createRandomGemStack(context.getRandom(), null, luck, IDimensional.matches(context.getLevel()), IStaged.matches(player));
+					ItemStack gem = GemManager.createRandomGemStack(context.getRandom(), context.getLevel(), luck, IDimensional.matches(context.getLevel()), IStaged.matches(player));
 					generatedLoot.add(gem);
 				}
 				break;

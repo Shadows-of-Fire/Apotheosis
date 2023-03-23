@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -22,6 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.Gems;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.AttributeBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.DamageReductionBonus;
@@ -84,9 +86,11 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 	 * @return A gem item, or an empty ItemStack if no entries were available for the dimension.
 	 */
 	@SafeVarargs
-	public static ItemStack createRandomGemStack(RandomSource rand, @Nullable LootRarity rarity, float luck, Predicate<Gem>... filter) {
+	public static ItemStack createRandomGemStack(RandomSource rand, ServerLevel level, float luck, Predicate<Gem>... filter) {
 		Gem gem = GemManager.INSTANCE.getRandomItem(rand, luck, filter);
 		if (gem == null) return ItemStack.EMPTY;
+		LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(level.dimension().location());
+		LootRarity rarity = gem.clamp(LootRarity.random(rand, luck, clamp));
 		return createGemStack(gem, rand, rarity, luck);
 	}
 

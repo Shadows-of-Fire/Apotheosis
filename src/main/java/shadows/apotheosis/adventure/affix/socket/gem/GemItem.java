@@ -26,6 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.Gems;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -135,7 +136,7 @@ public class GemItem extends Item {
 	 */
 	@Nullable
 	public static Gem getGem(ItemStack gem) {
-		if (gem.isEmpty()) return null;
+		if (gem.getItem() != Apoth.Items.GEM.get()) return null;
 		var tag = gem.getOrCreateTag();
 		if (tag.contains(GEM)) return GemManager.INSTANCE.getValue(new ResourceLocation(tag.getString(GEM)));
 		return null;
@@ -148,7 +149,7 @@ public class GemItem extends Item {
 	 */
 	@Nullable
 	public static Gem getGemOrLegacy(ItemStack gem) {
-		if (gem.isEmpty()) return null;
+		if (gem.getItem() != Apoth.Items.GEM.get()) return null;
 		var tag = gem.getOrCreateTag();
 		if (tag.contains(GEM)) return GemManager.INSTANCE.getValue(new ResourceLocation(tag.getString(GEM)));
 		return Gems.LEGACY.get();

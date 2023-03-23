@@ -12,6 +12,7 @@
 * mc-kaishixiaxue: Updated Chinese translation, including the Chronicle of Shadows.
 * SKZGx: Updated Ukranian translation.
 * Made the translation keys for top-level affix naming configurable (https://github.com/Shadows-of-Fire/Apotheosis/issues/818)
+* Added dimensional rarity rules for Gems.
 
 ## 6.1.2
 * Converted Affixes to use Codecs for serialization, which produces better error reporting.

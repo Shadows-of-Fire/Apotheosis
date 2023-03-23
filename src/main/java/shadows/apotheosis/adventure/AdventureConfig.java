@@ -40,6 +40,7 @@ public class AdventureConfig {
 	 */
 	public static final List<LootPatternMatcher> AFFIX_ITEM_LOOT_RULES = new ArrayList<>();
 	public static final List<LootPatternMatcher> GEM_LOOT_RULES = new ArrayList<>();
+	public static final Map<ResourceLocation, LootRarity.Clamped> GEM_DIM_RARITIES = new HashMap<>();
 
 	/**
 	 * Loot table matchers and dimensional rarities for affix conversion rules.
@@ -134,7 +135,7 @@ public class AdventureConfig {
 			}
 		}
 
-		String[] convertRarities = c.getStringList("Affix Convert Rarities", "affixes", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimenaional rarities for affix conversion (see \"Affix Convert Loot Rules\"), in the form of dimension|min|max. A dimension not listed uses all rarities.");
+		String[] convertRarities = c.getStringList("Affix Convert Rarities", "affixes", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimensional rarities for affix conversion (see \"Affix Convert Loot Rules\"), in the form of dimension|min|max. A dimension not listed uses all rarities.");
 		AFFIX_CONVERT_RARITIES.clear();
 		for (String s : convertRarities) {
 			try {
@@ -142,22 +143,24 @@ public class AdventureConfig {
 				ResourceLocation dim = new ResourceLocation(split[0]);
 				LootRarity min = LootRarity.byId(split[1]);
 				LootRarity max = LootRarity.byId(split[2]);
-				LootRarity.Clamped clamp = new LootRarity.Clamped() {
-
-					@Override
-					public LootRarity getMinRarity() {
-						return min;
-					}
-
-					@Override
-					public LootRarity getMaxRarity() {
-						return max;
-					}
-
-				};
-				AFFIX_CONVERT_RARITIES.put(dim, clamp);
+				AFFIX_CONVERT_RARITIES.put(dim, new LootRarity.Clamped.Impl(min, max));
 			} catch (Exception e) {
 				AdventureModule.LOGGER.error("Invalid Affix Convert Rarity: " + s + " will be ignored");
+				e.printStackTrace();
+			}
+		}
+
+		String[] gemDimRarities = c.getStringList("Gem Dimensional Rarities", "gems", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimensional rarities for gem drops, in the form of dimension|min|max. A dimension not listed uses all rarities.");
+		GEM_DIM_RARITIES.clear();
+		for (String s : gemDimRarities) {
+			try {
+				String[] split = s.split("\\|");
+				ResourceLocation dim = new ResourceLocation(split[0]);
+				LootRarity min = LootRarity.byId(split[1]);
+				LootRarity max = LootRarity.byId(split[2]);
+				GEM_DIM_RARITIES.put(dim, new LootRarity.Clamped.Impl(min, max));
+			} catch (Exception e) {
+				AdventureModule.LOGGER.error("Invalid Gem Dimensional Rarity: " + s + " will be ignored");
 				e.printStackTrace();
 			}
 		}
