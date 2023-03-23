@@ -27,6 +27,8 @@ import shadows.placebo.container.ContainerUtil;
 
 public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> implements ContainerListener {
 
+	public static final String REFORGE_SEED = "apoth_reforge_seed";
+
 	protected final Player player;
 	protected SimpleContainer itemInv = new SimpleContainer(1) {
 		@Override
@@ -89,7 +91,11 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 	}
 
 	protected void updateSeed() {
-		int seed = player.getEnchantmentSeed();
+		int seed = player.getPersistentData().getInt(REFORGE_SEED);
+		if (seed == 0) {
+			seed = player.random.nextInt();
+			player.getPersistentData().putInt(REFORGE_SEED, seed);
+		}
 		this.seed[0] = ContainerUtil.split(seed, false);
 		this.seed[1] = ContainerUtil.split(seed, true);
 	}
@@ -130,7 +136,8 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 					this.getSlot(1).getItem().shrink(matCost);
 					this.getSlot(2).getItem().shrink(dustCost);
 				}
-				player.onEnchantmentPerformed(out, 3 * ++slot);
+				player.giveExperienceLevels(-3 * ++slot);
+				player.getPersistentData().putInt(REFORGE_SEED, player.random.nextInt());
 				updateSeed();
 				this.needsReset.set(1);
 			}

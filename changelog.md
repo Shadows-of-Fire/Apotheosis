@@ -1,10 +1,15 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
 * [NYI] Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
+* [NYI] Added additional tiers of reforging table, which limits the rarities that can be reforged into.
+* [NYI] Added a Healing Reduction potion to the potion module.
+* [NYI] Added a method of upgrading rarity materials to the next tier.
+* [NYI] Added the Vial of Unnaming, which can be used to remove the extra name pieces of an affixed item.
 
 ## 6.1.5
 * Fixed an issue where boss names were failing to translate.
 * Fixed an issue with the salvaging recipe returning a null itemstack.
+* Reforging no longer uses the enchanting seed.
 
 ## 6.1.4
 * Fixed a network encoding error in SalvagingRecipe$OutputData.
