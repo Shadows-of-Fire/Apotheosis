@@ -2,6 +2,9 @@
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
 * [NYI] Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
 
+## 6.1.4
+* Fixed a network encoding error in SalvagingRecipe$OutputData.
+
 ## 6.1.3
 * Adjusted the Salvaging Table to be recipe-backed, allowing for easier configuration and extensibility.
 * The Salvaging Table now has JEI Support!
