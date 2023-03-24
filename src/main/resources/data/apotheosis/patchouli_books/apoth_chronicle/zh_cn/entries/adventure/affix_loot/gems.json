@@ -28,13 +28,13 @@
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:vial_of_expulsion",
 			"title": "灼热驱逐",
-			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)灼热驱逐剂$()结合以取下宝石，并在此过程中销毁它们。"
+			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)灼热驱逐剂$()结合以取下宝石，此过程会销毁镶孔上的宝石。"
 		},
 		{
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:vial_of_extraction",
 			"title": "奥术提取",
-			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)奥术提取剂$()结合以取回宝石，并在此过程中销毁该物品。"
+			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)奥术提取剂$()结合以取回宝石（所有宝石会被同时取下），此过程会销毁该物品。"
 		}
 	]
 }
