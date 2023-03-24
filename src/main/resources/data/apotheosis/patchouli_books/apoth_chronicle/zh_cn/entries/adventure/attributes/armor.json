@@ -1,5 +1,5 @@
 {
-    "name": "盔甲",
+    "name": "护甲",
     "icon": "minecraft:iron_chestplate",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)盔甲$()是衡量你对物理伤害的抵抗力。$(p)通常由盔甲和一些盾牌提供。"
+            "text": "$(9)护甲$()衡量你对物理伤害的抵抗力。$(p)通常由盔甲和一些盾牌提供。"
         },
 		{
 			"type": "patchouli:text",
