@@ -1,6 +1,6 @@
 {
-    "name": "新附魔",
-    "description": "本章节中的每个条目都详细介绍了本模块添加的新附魔。$(p)其他模块添加的附魔将不在这里介绍。",
+    "name": "新魔咒",
+    "description": "本章节中的每个条目都详细介绍了本模块添加的新魔咒。$(p)其他模块添加的魔咒将不在这里介绍。",
     "icon": "minecraft:enchanted_book",
 	"flag": "apotheosis:enchanting",
 	"parent": "apotheosis:enchanting/enchanting"
