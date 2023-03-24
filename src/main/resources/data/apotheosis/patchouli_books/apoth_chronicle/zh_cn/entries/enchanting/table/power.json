@@ -10,7 +10,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "首先，我们来看看如何选择魔咒。$(p)每个魔咒都有一个$(5)附魔能力函数$()，它控制$(#CC00CC)最终附魔能力$()会使一个特定的等级可用。$(p)一旦所有可用的魔咒被收集，一些会根据其权重随机选择。"
+            "text": "首先，我们来看看如何选择魔咒。$(p)每个魔咒都有一个$(5)附魔能力函数$()，它控制着需要多少$(#CC00CC)最终附魔能力$(),才能使一个特定的附魔等级可用。$(p)一旦所有可用的魔咒都被程序收集，系统会根据其权重随机选择其中一些魔咒。"
         },
 		{
 			"type": "patchouli:text",
@@ -18,7 +18,7 @@
 		},
 		{
 			"type": "patchouli:text",
-			"text": "每个属性如何修正你$(6)基础附魔能力$()的细节可以在$(l:apotheosis:enchanting/table/stats#quanta)$(#FC5454)量子化$()和$(l:apotheosis:enchanting/table/stats#rectification)校准$()条目中找到。$(p)通常，更高的$(#CC00CC)最终附魔能力$()会让你获得更高等级的魔咒。"
+			"text": "每个属性如何调整你$(6)基础附魔能力$()的细节可以在$(l:apotheosis:enchanting/table/stats#quanta)$(#FC5454)量子化$()和$(l:apotheosis:enchanting/table/stats#rectification)校准$()条目中找到。$(p)通常，更高的$(#CC00CC)最终附魔能力$()会让你获得更高等级的魔咒。"
 		}
 	]
 }
