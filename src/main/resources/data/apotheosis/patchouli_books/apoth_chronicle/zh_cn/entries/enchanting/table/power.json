@@ -1,24 +1,24 @@
 {
-    "name": "附魔威力",
+    "name": "附魔能力",
     "icon": "minecraft:experience_bottle",
     "category": "apotheosis:enchanting/table",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "在附魔过程中，你要花费经验和青金石来附魔一件物品。$(p)但如何选择魔咒？$(p)这个问题的答案是“附魔威力”。"
+            "text": "在附魔过程中，你要花费经验和青金石来附魔一件物品。$(p)但如何选择魔咒？$(p)这个问题的答案是“附魔能力”。"
         },
 		{
             "type": "patchouli:text",
-            "text": "首先，我们来看看如何选择魔咒。$(p)每个魔咒都有一个$(5)威力函数$()，它控制$(#CC00CC)最终威力$()会使一个特定的等级可用。$(p)一旦所有可用的魔咒被收集，一些会根据其权重随机选择。"
+            "text": "首先，我们来看看如何选择魔咒。$(p)每个魔咒都有一个$(5)附魔能力函数$()，它控制$(#CC00CC)最终附魔能力$()会使一个特定的等级可用。$(p)一旦所有可用的魔咒被收集，一些会根据其权重随机选择。"
         },
 		{
 			"type": "patchouli:text",
-			"text": "但$(#CC00CC)最终威力$()是如何计算的？嗯，这需要一些数学。$(p)首先，你有一个$(6)基础威力$()，这是你在附魔时花费的等级。$(p)然后，$(#FC5454)量子化$()和校准修正你的$(6)基础威力$()，得到你的$(#CC00CC)最终威力$()。"
+			"text": "但$(#CC00CC)最终附魔能力$()是如何计算的？嗯，这需要一些数学。$(p)首先，你有一个$(6)基础附魔能力$()，这是你在附魔时花费的等级。$(p)然后，$(#FC5454)量子化$()和校准修正你的$(6)基础附魔能力$()，得到你的$(#CC00CC)最终附魔能力$()。"
 		},
 		{
 			"type": "patchouli:text",
-			"text": "每个状态如何修正你$(6)基础威力$()的细节可以在$(l:apotheosis:enchanting/table/stats#quanta)$(#FC5454)量子化$()和$(l:apotheosis:enchanting/table/stats#rectification)校准$()条目中找到。$(p)通常，更高的$(#CC00CC)最终威力$()会让你获得更高等级的魔咒。"
+			"text": "每个属性如何修正你$(6)基础附魔能力$()的细节可以在$(l:apotheosis:enchanting/table/stats#quanta)$(#FC5454)量子化$()和$(l:apotheosis:enchanting/table/stats#rectification)校准$()条目中找到。$(p)通常，更高的$(#CC00CC)最终附魔能力$()会让你获得更高等级的魔咒。"
 		}
 	]
 }
