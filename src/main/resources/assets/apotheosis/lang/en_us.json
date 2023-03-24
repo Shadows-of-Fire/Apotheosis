@@ -14,6 +14,7 @@
 	
 	"misc.apotheosis.affix_name.two": "%s %s",
 	"misc.apotheosis.affix_name.three": "%s %s %s",
+	"misc.apotheosis.affix_name.four": "%s %s %s %s",
 	
 	"apotheosis:draw_speed": "Draw Speed",
 	"apotheosis:crit_chance": "Crit Chance",

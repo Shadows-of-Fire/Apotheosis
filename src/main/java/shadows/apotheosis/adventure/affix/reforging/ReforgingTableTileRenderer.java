@@ -33,11 +33,6 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
 		matrix.mulPose(Vector3f.YP.rotationDegrees(45));
 		matrix.mulPose(Vector3f.XP.rotationDegrees(90));
 
-		//tile.time = 0;
-		//tile.step1 = true;
-		//tile.time = Math.min(tile.time, 59);
-		//tile.time = 10;
-
 		if (tile.step1) {
 			float factor = tile.time % 60 + partials;
 			float sin = Mth.sin(factor * Mth.PI / 120);
@@ -53,13 +48,6 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
 			matrix.translate(0.125 * sinSq, -0, -0.15 * sinSq);
 			matrix.mulPose(Vector3f.YN.rotationDegrees(45 * sinSq));
 		}
-		/*
-		float sin = Mth.sin(factor * 2 * Mth.PI / 120);
-		float sinSq = sin * sin;
-		
-		matrix.translate(0.125 * sinSq, -0, -0.15 * sinSq);
-		matrix.mulPose(Vector3f.YN.rotationDegrees(45 * sinSq));
-		**/
 		MultiBufferSource.BufferSource src = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 		irenderer.renderModelLists(base, ItemStack.EMPTY, light, overlay, matrix, ItemRenderer.getFoilBufferDirect(src, ItemBlockRenderTypes.getRenderType(tile.getBlockState(), true), true, false));
 		src.endBatch();

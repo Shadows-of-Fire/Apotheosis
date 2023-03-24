@@ -7,20 +7,36 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.registries.ForgeRegistries;
+import shadows.placebo.util.StepFunction;
 
 /**
  * Represents a potion with a chance to receive this potion.
 */
 public class ChancedEffectInstance {
+
+	//Formatter::off
+	public static Codec<ChancedEffectInstance> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			Codec.FLOAT.fieldOf("chance").forGetter(a -> a.chance),
+			ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("effect").forGetter(a -> a.effect),
+			StepFunction.CODEC.fieldOf("amplifier").forGetter(a -> a.amp),
+			Codec.BOOL.optionalFieldOf("ambient", true).forGetter(a -> a.ambient),
+			Codec.BOOL.optionalFieldOf("visible", false).forGetter(a -> a.visible))
+			.apply(inst, ChancedEffectInstance::new)
+		);
+	//Formatter::on
+
 	protected final float chance;
 	protected final MobEffect effect;
-	protected final RandomIntRange amp;
+	protected final StepFunction amp;
 	protected final boolean ambient;
 	protected final boolean visible;
 
@@ -30,7 +46,7 @@ public class ChancedEffectInstance {
 	 * @param effect The effect.
 	 * @param amp A random range of possible amplifiers.
 	 */
-	public ChancedEffectInstance(float chance, MobEffect effect, RandomIntRange amp, boolean ambient, boolean visible) {
+	public ChancedEffectInstance(float chance, MobEffect effect, StepFunction amp, boolean ambient, boolean visible) {
 		this.chance = chance;
 		this.effect = effect;
 		this.amp = amp;
@@ -47,7 +63,7 @@ public class ChancedEffectInstance {
 	}
 
 	public MobEffectInstance createInstance(RandomSource rand, int duration) {
-		return new MobEffectInstance(this.effect, duration, this.amp.generateInt(rand), this.ambient, this.visible);
+		return new MobEffectInstance(this.effect, duration, this.amp.getInt(rand.nextFloat()), this.ambient, this.visible);
 	}
 
 	public static class Deserializer implements JsonDeserializer<ChancedEffectInstance> {
@@ -65,9 +81,10 @@ public class ChancedEffectInstance {
 				JsonObject range = obj.get("amplifier").getAsJsonObject();
 				int min = range.get("min").getAsInt();
 				int max = range.get("max").getAsInt();
-				return new ChancedEffectInstance(chance, effect, new RandomIntRange(min, max), ambient, visible);
+				StepFunction func = min == max ? StepFunction.constant(min) : new StepFunction(min, max - min, 1);
+				return new ChancedEffectInstance(chance, effect, func, ambient, visible);
 			}
-			return new ChancedEffectInstance(chance, effect, RandomIntRange.ZERO, ambient, visible);
+			return new ChancedEffectInstance(chance, effect, StepFunction.constant(0), ambient, visible);
 		}
 	}
 }

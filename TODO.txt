@@ -1,6 +1,3 @@
-Add Enchantment Level Gems, or explore a way that affixes can provide Enchantment Levels.
- * Should be possible to add a hook in IForgeItemStack#getEnchantmentLevel(Enchantment).  Note that Interface hooks require JS Coremods.
-
 Gem Dust as a catalyst in brewing, increasing potion levels by +1 above normal.
 
 Healing Reduction potion for the potion module. Also add an affix once the effect is added.

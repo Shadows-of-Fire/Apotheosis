@@ -10,6 +10,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -65,7 +66,7 @@ public class SalvagingRecipe implements Recipe<Container> {
 	@Override
 	@Deprecated
 	public ItemStack getResultItem() {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
@@ -99,14 +100,17 @@ public class SalvagingRecipe implements Recipe<Container> {
 
 		@Override
 		public SalvagingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-			var outputs = OutputData.LIST_CODEC.decode(NbtOps.INSTANCE, buf.readNbt()).result().get().getFirst();
+			var outputs = OutputData.LIST_CODEC.decode(NbtOps.INSTANCE, buf.readNbt().get("outputs")).result().get().getFirst();
 			Ingredient input = Ingredient.fromNetwork(buf);
 			return new SalvagingRecipe(id, outputs, input);
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buf, SalvagingRecipe recipe) {
-			buf.writeNbt((CompoundTag) OutputData.LIST_CODEC.encodeStart(NbtOps.INSTANCE, recipe.outputs).get().left().get());
+			Tag outputs = OutputData.LIST_CODEC.encodeStart(NbtOps.INSTANCE, recipe.outputs).get().left().get();
+			CompoundTag netWrapper = new CompoundTag();
+			netWrapper.put("outputs", outputs);
+			buf.writeNbt(netWrapper);
 			recipe.input.toNetwork(buf);
 		}
 
