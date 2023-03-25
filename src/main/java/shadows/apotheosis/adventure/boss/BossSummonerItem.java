@@ -31,7 +31,7 @@ public class BossSummonerItem extends Item {
 		}
 		Mob boss = item.createBoss((ServerLevel) world, pos, world.getRandom(), player.getLuck());
 		boss.setTarget(player);
-		world.addFreshEntity(boss);
+		((ServerLevel) world).addFreshEntityWithPassengers(boss);
 		ctx.getItemInHand().shrink(1);
 		return InteractionResult.SUCCESS;
 	}

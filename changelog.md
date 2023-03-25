@@ -6,6 +6,9 @@
 * [NYI] Added a method of upgrading rarity materials to the next tier.
 * [NYI] Added the Vial of Unnaming, which can be used to remove the extra name pieces of an affixed item.
 
+## 6.1.6
+* Bosses now have a `mount` field.
+
 ## 6.1.5
 * Fixed an issue where boss names were failing to translate.
 * Fixed an issue with the salvaging recipe returning a null itemstack.

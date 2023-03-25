@@ -19,6 +19,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
@@ -239,7 +241,14 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 	public static class SupportingEntity {
 		EntityType<?> entity;
 		CompoundTag nbt;
-		int x, y, z;
+		double x, y, z;
+
+		public Entity create(Level level, double x, double y, double z) {
+			Entity ent = this.entity.create(level);
+			if (this.nbt != null) ent.deserializeNBT(this.nbt);
+			ent.setPos(this.x + x, this.y + y, this.z + z);
+			return ent;
+		}
 	}
 
 }

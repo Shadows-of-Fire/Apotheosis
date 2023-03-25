@@ -39,7 +39,7 @@ public class MultiAttrBonus extends GemBonus {
 	protected final String desc;
 
 	public MultiAttrBonus(GemClass gemClass, List<ModifierInst> modifiers, String desc) {
-		super(Apotheosis.loc("attribute"), gemClass);
+		super(Apotheosis.loc("multi_attribute"), gemClass);
 		this.modifiers = modifiers;
 		this.desc = desc;
 	}

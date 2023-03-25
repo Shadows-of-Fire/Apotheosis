@@ -41,6 +41,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.boss.MinibossItem.SupportingEntity;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
@@ -80,6 +81,8 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	@SerializedName("max_rarity")
 	protected LootRarity maxRarity;
 
+	protected SupportingEntity mount;
+
 	public BossItem() {
 		// No ctor, not meant to be created via code
 	}
@@ -117,7 +120,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	 * @param world The world to create the entity in.
 	 * @param pos The location to place the entity.  Will be centered (+0.5, +0.5).
 	 * @param random A random, used for selection of boss stats.
-	 * @return The newly created boss.
+	 * @return The newly created boss, or it's mount, if it had one.
 	 */
 	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
 		Mob entity = (Mob) this.entity.create(world.getLevel());
@@ -126,6 +129,13 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		// Re-read here so we can apply certain things after the boss has been modified
 		// But only mob-specific things, not a full load()
 		if (this.customNbt != null) entity.readAdditionalSaveData(this.customNbt);
+
+		if (this.mount != null) {
+			Mob mountedEntity = (Mob) this.mount.create(world.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+			entity.startRiding(mountedEntity);
+			entity = mountedEntity;
+		}
+
 		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
 		return entity;
 	}
@@ -254,6 +264,9 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		}
 		if (this.maxRarity != null) {
 			Preconditions.checkArgument(this.minRarity == null || this.maxRarity.isAtLeast(this.minRarity));
+		}
+		if (this.mount != null) {
+			Preconditions.checkNotNull(this.mount.entity, "Boss Item " + this.id + " has an invalid mount");
 		}
 		LootRarity r = LootRarity.max(LootRarity.COMMON, this.minRarity);
 		while (r != LootRarity.ANCIENT) {

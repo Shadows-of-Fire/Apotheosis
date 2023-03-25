@@ -61,7 +61,7 @@ public class BossEvents {
 					Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
 					boss.setTarget(player);
 					if (canSpawn(sLevel, boss, player.distanceToSqr(boss))) {
-						sLevel.addFreshEntity(boss);
+						sLevel.addFreshEntityWithPassengers(boss);
 						e.setResult(Result.DENY);
 						AdventureModule.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());
 						sLevel.players().forEach(p -> {

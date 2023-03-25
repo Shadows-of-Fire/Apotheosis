@@ -53,7 +53,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 					Mob entity = bossItem.createBoss((ServerLevel) this.level, pos, this.level.getRandom(), player.getLuck());
 					entity.setTarget(player);
 					entity.setPersistenceRequired();
-					this.level.addFreshEntity(entity);
+					((ServerLevel) this.level).addFreshEntityWithPassengers(entity);
 				});
 			}
 		}
