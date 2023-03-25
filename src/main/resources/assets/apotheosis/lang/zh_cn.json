@@ -12,6 +12,10 @@
     "attribute.modifier.apotheosis.take.1": "-%s%%基础%s",
     "attribute.modifier.apotheosis.take.2": "-%s%%总%s",
 
+    "misc.apotheosis.affix_name.two": "%s %s",
+    "misc.apotheosis.affix_name.three": "%s %s %s",
+    "misc.apotheosis.affix_name.four": "%s %s %s %s",
+
     "apotheosis:draw_speed": "蓄力速度",
     "apotheosis:crit_chance": "暴击率",
     "apotheosis:crit_damage": "暴击伤害",
