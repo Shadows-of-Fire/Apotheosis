@@ -55,4 +55,10 @@ public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 		this.registerSerializer(DEFAULT, new SerializerBuilder<GearSet>("Boss Gear Set").withJsonDeserializer(obj -> GSON.fromJson(obj, GearSet.class)));
 	}
 
+	@Override
+	protected <T extends GearSet> void validateItem(T item) {
+		super.validateItem(item);
+		item.validate();
+	}
+
 }
