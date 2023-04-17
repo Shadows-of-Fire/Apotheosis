@@ -1,0 +1,139 @@
+{
+	"variant": "combatant",
+	"weight": 10,
+	"quality": 0,
+	"dimensions": [
+	],
+	"unique": true,
+	"bonuses": [{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "ranged_weapon",
+				"types": [
+					"trident",
+					"bow",
+					"crossbow"
+				]
+			},
+			"attribute": "apotheosis:arrow_damage",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 3,
+					"step": 0.01
+				},
+				"uncommon": {
+					"min": 0.08,
+					"steps": 3,
+					"step": 0.01
+				},
+				"rare": {
+					"min": 0.11,
+					"steps": 4,
+					"step": 0.01
+				},
+				"epic": {
+					"min": 0.15,
+					"steps": 4,
+					"step": 0.02
+				},
+				"mythic": {
+					"min": 0.25,
+					"steps": 5,
+					"step": 0.02
+				},
+				"ancient": {
+					"min": 0.4,
+					"steps": 5,
+					"step": 0.03
+				}
+			}
+		},
+		{
+			"type": "apotheosis:damage_reduction",
+			"gem_class": {
+				"key": "core_armor",
+				"types": [
+					"chestplate",
+					"leggings"
+				]
+			},
+			"damage_type": "physical",
+			"values": {
+				"common": {
+					"min": 0.03,
+					"steps": 3,
+					"step": 0.01
+				},
+				"uncommon": {
+					"min": 0.06,
+					"steps": 3,
+					"step": 0.02
+				},
+				"rare": {
+					"min": 0.12,
+					"steps": 4,
+					"step": 0.01
+				},
+				"epic": {
+					"min": 0.16,
+					"steps": 4,
+					"step": 0.01
+				},
+				"mythic": {
+					"min": 0.20,
+					"steps": 5,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.25,
+					"steps": 5,
+					"step": 0.01
+				}
+			}
+		},
+		{
+			"type": "apotheosis:durability",
+			"gem_class": {
+				"key": "melee_weapon",
+				"types": [
+					"sword",
+					"heavy_weapon"
+				]
+			},
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 3,
+					"step": 0.025
+				},
+				"uncommon": {
+					"min": 0.125,
+					"steps": 4,
+					"step": 0.025
+				},
+				"rare": {
+					"min": 0.225,
+					"steps": 5,
+					"step": 0.025
+				},
+				"epic": {
+					"min": 0.35,
+					"steps": 6,
+					"step": 0.01
+				},
+				"mythic": {
+					"min": 0.41,
+					"steps": 7,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.475,
+					"steps": 10,
+					"step": 0.025
+				}
+			}
+		}
+	]
+}

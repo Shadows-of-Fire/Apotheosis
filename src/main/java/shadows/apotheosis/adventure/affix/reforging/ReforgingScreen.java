@@ -77,25 +77,29 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 
 		int dust = this.menu.getDustCount();
 		int mats = this.menu.getMatCount();
+		int levels = this.menu.player.experienceLevel;
 		LootRarity rarity = this.menu.getRarity();
 
 		for (int slot = 0; slot < 3; ++slot) {
 			ItemStack choice = this.choices[slot];
 			if (choice.isEmpty() || this.menu.needsReset()) continue;
-			int cost = (slot + 1) * 2;
 			List<Component> tooltips = new ArrayList<>();
+
+			int dustCost = this.menu.getDustCost(slot, rarity);
+			int matCost = this.menu.getMatCost(slot, rarity);
+			int levelCost = this.menu.getLevelCost(slot, rarity);
 
 			tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
 			tooltips.add(CommonComponents.EMPTY);
-			tooltips.add(Component.translatable("%s %s", cost, Apoth.Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
-			tooltips.add(Component.translatable("%s %s", cost, this.menu.getSlot(1).getItem().getHoverName()).withStyle(mats < cost ? ChatFormatting.RED : ChatFormatting.GRAY));
+			if (dustCost > 0) {
+				tooltips.add(Component.translatable("%s %s", dustCost, Apoth.Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < dustCost ? ChatFormatting.RED : ChatFormatting.GRAY));
+			}
+			if (matCost > 0) {
+				tooltips.add(Component.translatable("%s %s", matCost, this.menu.getSlot(1).getItem().getHoverName()).withStyle(mats < matCost ? ChatFormatting.RED : ChatFormatting.GRAY));
+			}
+			String key = levels >= levelCost ? levelCost == 1 ? "container.enchant.level.one" : "container.enchant.level.many" : "container.enchant.level.requirement";
 
-			int levels = this.minecraft.player.experienceLevel;
-			int levelReq = this.menu.getLevelCost(slot, rarity);
-
-			String key = levels >= levelReq ? "container.enchant.level.many" : "container.enchant.level.requirement";
-
-			tooltips.add(Component.translatable(key, levels >= levelReq ? cost : levelReq).withStyle(levels < levelReq ? ChatFormatting.RED : ChatFormatting.GRAY));
+			tooltips.add(Component.translatable(key, levelCost).withStyle(levels < levelCost ? ChatFormatting.RED : ChatFormatting.GRAY));
 
 			int k2 = x - (xCenter + 60);
 			int l2 = y - (yCenter + 14 + 19 * slot);
@@ -114,54 +118,81 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, TEXTURE);
 		int xCenter = (this.width - this.imageWidth) / 2;
+		int slotsX = xCenter + 60;
 		int yCenter = (this.height - this.imageHeight) / 2;
 		this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
 
+		LootRarity rarity = this.menu.getRarity();
+
+		if (this.menu.getSlot(0).getItem().isEmpty() || rarity == null || this.menu.needsReset()) {
+			for (int slot = 0; slot < 3; ++slot) {
+				this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
+			}
+			return;
+		}
+
 		int dust = this.menu.getDustCount();
 		int mats = this.menu.getMatCount();
-		LootRarity rarity = this.menu.getRarity();
+		int levels = this.menu.player.experienceLevel;
 
 		EnchantmentNames.getInstance().initSeed(this.menu.getSeed());
 		for (int slot = 0; slot < 3; ++slot) {
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.setShaderTexture(0, TEXTURE);
-			int j1 = xCenter + 60;
-			int k1 = j1 + 20;
 
-			ItemStack choice = this.choices[slot];
-			if (choice.isEmpty() || this.menu.needsReset()) {
-				this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
+			int dustCost = this.menu.getDustCost(slot, rarity);
+			int matCost = this.menu.getMatCost(slot, rarity);
+			int levelCost = this.menu.getLevelCost(slot, rarity);
+			int maxCost = this.menu.getMatCost(2, rarity);
+
+			String levelStr = "" + levelCost;
+			String costStr = "" + matCost;
+			int width = 86 - this.font.width(levelStr + maxCost);
+			int randTextX = slotsX + 15 + this.font.width("" + maxCost);
+			FormattedText randText = EnchantmentNames.getInstance().getRandomName(this.font, width);
+			int color = 0x515151;
+			if ((dust < dustCost || levels < levelCost || mats < matCost) && !this.minecraft.player.getAbilities().instabuild) {
+				this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
+				blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
+				this.font.drawWordWrap(randText, randTextX, yCenter + 16 + 19 * slot, width, color);
+				color = darken(rarity.color().getValue(), 2);
 			} else {
-				int cost = (slot + 1) * 2;
-
-				int level = this.menu.getLevelCost(slot, rarity);
-				String levelStr = "" + level;
-				int width = 86 - this.font.width(levelStr);
-				FormattedText randText = EnchantmentNames.getInstance().getRandomName(this.font, width);
-				int color = 0xcdcdcd;
-				if ((dust < cost || this.minecraft.player.experienceLevel < level || mats < cost) && !this.minecraft.player.getAbilities().instabuild) {
-					this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
-					blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
-					this.font.drawWordWrap(randText, k1, yCenter + 16 + 19 * slot, width, 0x515151);
-					color = 0x7F7172;
+				int k2 = x - (xCenter + 60);
+				int l2 = y - (yCenter + 14 + 19 * slot);
+				if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
+					this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 38, 108, 19);
+					color = 0xFFFF80;
 				} else {
-					int k2 = x - (xCenter + 60);
-					int l2 = y - (yCenter + 14 + 19 * slot);
-					if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-						this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166 + 38, 108, 19);
-						color = 16777088;
-					} else {
-						this.blit(stack, j1, yCenter + 14 + 19 * slot, 0, 166, 108, 19);
-					}
-					blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
-
-					this.font.drawWordWrap(randText, k1, yCenter + 16 + 19 * slot, width, color);
-					color = 0xE6C6C8;
+					this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166, 108, 19);
+					color = 0xCDCDCD;
 				}
-				this.font.drawShadow(stack, levelStr, k1 + 86 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color);
+				blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
+
+				this.font.drawWordWrap(randText, randTextX, yCenter + 16 + 19 * slot, width, color);
+				color = rarity.color().getValue();
 			}
+			drawBorderedString(stack, costStr, slotsX + 10, yCenter + 21 + 19 * slot, color, darken(color, 4));
+			drawBorderedString(stack, levelStr, slotsX + 106 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color, darken(color, 4));
 		}
+	}
+
+	protected int darken(int rColor, int factor) {
+		int r = rColor >> 16 & 0xFF, g = rColor >> 8 & 0xFF, b = rColor & 0xFF;
+		r /= factor;
+		g /= factor;
+		b /= factor;
+		int shadowColor = r << 16 | g << 8 | b;
+		return shadowColor;
+	}
+
+	protected void drawBorderedString(PoseStack stack, String str, int x, int y, int color, int shadowColor) {
+		Component comp = Component.literal(str);
+		this.font.draw(stack, comp, x, y - 1, shadowColor);
+		this.font.draw(stack, comp, x - 1, y, shadowColor);
+		this.font.draw(stack, comp, x, y + 1, shadowColor);
+		this.font.draw(stack, comp, x + 1, y, shadowColor);
+		this.font.draw(stack, comp, x, y, color);
 	}
 
 	@Override

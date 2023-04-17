@@ -1,0 +1,185 @@
+{
+	"variant": "warlord",
+	"weight": 10,
+	"quality": 0,
+	"dimensions": [
+	],
+	"unique": true,
+	"bonuses": [{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "light_ranged",
+				"types": [
+					"sword",
+					"trident",
+					"bow",
+					"crossbow"
+				]
+			},
+			"attribute": "apotheosis:crit_damage",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 3,
+					"step": 0.005
+				},
+				"uncommon": {
+					"min": 0.07,
+					"steps": 3,
+					"step": 0.005
+				},
+				"rare": {
+					"min": 0.08,
+					"steps": 4,
+					"step": 0.005
+				},
+				"epic": {
+					"min": 0.12,
+					"steps": 4,
+					"step": 0.01
+				},
+				"mythic": {
+					"min": 0.16,
+					"steps": 5,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.25,
+					"steps": 5,
+					"step": 0.02
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "heavy_weapon",
+				"types": [
+					"heavy_weapon"
+				]
+			},
+			"attribute": "apotheosis:crit_damage",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 3,
+					"step": 0.01
+				},
+				"uncommon": {
+					"min": 0.08,
+					"steps": 3,
+					"step": 0.01
+				},
+				"rare": {
+					"min": 0.14,
+					"steps": 4,
+					"step": 0.01
+				},
+				"epic": {
+					"min": 0.20,
+					"steps": 4,
+					"step": 0.02
+				},
+				"mythic": {
+					"min": 0.30,
+					"steps": 5,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.35,
+					"steps": 5,
+					"step": 0.02
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "core_armor",
+				"types": [
+					"leggings",
+					"chestplate"
+				]
+			},
+			"attribute": "minecraft:generic.max_health",
+			"operation": "ADDITION",
+			"values": {
+				"common": {
+					"min": 2,
+					"steps": 3,
+					"step": 0.5
+				},
+				"uncommon": {
+					"min": 3.5,
+					"steps": 3,
+					"step": 0.5
+				},
+				"rare": {
+					"min": 5,
+					"steps": 4,
+					"step": 0.5
+				},
+				"epic": {
+					"min": 8,
+					"steps": 4,
+					"step": 0.5
+				},
+				"mythic": {
+					"min": 10,
+					"steps": 5,
+					"step": 1
+				},
+				"ancient": {
+					"min": 15,
+					"steps": 5,
+					"step": 1
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "helmet",
+				"types": [
+					"helmet"
+				]
+			},
+			"attribute": "minecraft:generic.attack_damage",
+			"operation": "MULTIPLY_TOTAL",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 3,
+					"step": 0.01
+				},
+				"uncommon": {
+					"min": 0.10,
+					"steps": 3,
+					"step": 0.02
+				},
+				"rare": {
+					"min": 0.20,
+					"steps": 4,
+					"step": 0.02
+				},
+				"epic": {
+					"min": 0.30,
+					"steps": 4,
+					"step": 0.02
+				},
+				"mythic": {
+					"min": 0.40,
+					"steps": 5,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.45,
+					"steps": 5,
+					"step": 0.01
+				}
+			}
+		}
+	]
+}

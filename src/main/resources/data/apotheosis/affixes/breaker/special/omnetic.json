@@ -3,51 +3,79 @@
 	"values": {
 		"rare": {
 			"name": "iron",
-			"axe": {
-				"item": "minecraft:iron_axe"
-			},
-			"shovel": {
-				"item": "minecraft:iron_shovel"
-			},
-			"pickaxe": {
-				"item": "minecraft:iron_pickaxe"
-			}
+			"items": [{
+					"item": "minecraft:iron_axe"
+				},
+				{
+					"item": "minecraft:iron_shovel"
+				},
+				{
+					"item": "minecraft:iron_pickaxe"
+				},
+				{
+					"item": "minecraft:iron_sword"
+				},
+				{
+					"item": "minecraft:iron_hoe"
+				}
+			]
 		},
 		"epic": {
 			"name": "diamond",
-			"axe": {
-				"item": "minecraft:diamond_axe"
-			},
-			"shovel": {
-				"item": "minecraft:diamond_shovel"
-			},
-			"pickaxe": {
-				"item": "minecraft:diamond_pickaxe"
-			}
+			"items": [{
+					"item": "minecraft:diamond_axe"
+				},
+				{
+					"item": "minecraft:diamond_shovel"
+				},
+				{
+					"item": "minecraft:diamond_pickaxe"
+				},
+				{
+					"item": "minecraft:diamond_sword"
+				},
+				{
+					"item": "minecraft:diamond_hoe"
+				}
+			]
 		},
 		"mythic": {
 			"name": "netherite",
-			"axe": {
-				"item": "minecraft:netherite_axe"
-			},
-			"shovel": {
-				"item": "minecraft:netherite_shovel"
-			},
-			"pickaxe": {
-				"item": "minecraft:netherite_pickaxe"
-			}
+			"items": [{
+					"item": "minecraft:netherite_axe"
+				},
+				{
+					"item": "minecraft:netherite_shovel"
+				},
+				{
+					"item": "minecraft:netherite_pickaxe"
+				},
+				{
+					"item": "minecraft:netherite_sword"
+				},
+				{
+					"item": "minecraft:netherite_hoe"
+				}
+			]
 		},
 		"ancient": {
 			"name": "netherite",
-			"axe": {
-				"item": "minecraft:netherite_axe"
-			},
-			"shovel": {
-				"item": "minecraft:netherite_shovel"
-			},
-			"pickaxe": {
-				"item": "minecraft:netherite_pickaxe"
-			}
+			"items": [{
+					"item": "minecraft:netherite_axe"
+				},
+				{
+					"item": "minecraft:netherite_shovel"
+				},
+				{
+					"item": "minecraft:netherite_pickaxe"
+				},
+				{
+					"item": "minecraft:netherite_sword"
+				},
+				{
+					"item": "minecraft:netherite_hoe"
+				}
+			]
 		}
 	}
 }

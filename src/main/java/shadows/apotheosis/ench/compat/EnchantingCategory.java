@@ -102,7 +102,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 		font.draw(stack, I18n.get("gui.apotheosis.enchant.eterna"), 16, 26, 0x3DB53D);
 		font.draw(stack, I18n.get("gui.apotheosis.enchant.quanta"), 16, 36, 0xFC5454);
 		font.draw(stack, I18n.get("gui.apotheosis.enchant.arcana"), 16, 46, 0xA800A8);
-		int level = (int) (stats.eterna * 2);
+		int level = (int) (stats.eterna() * 2);
 
 		String s = "" + level;
 		int width = 86 - font.width(s);
@@ -116,25 +116,25 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, TEXTURES);
-		int[] pos = { (int) (stats.eterna / EnchantingStatManager.getAbsoluteMaxEterna() * 110), (int) (stats.quanta / 100 * 110), (int) (stats.arcana / 100 * 110) };
-		if (stats.eterna > 0) {
+		int[] pos = { (int) (stats.eterna() / EnchantingStatManager.getAbsoluteMaxEterna() * 110), (int) (stats.quanta() / 100 * 110), (int) (stats.arcana() / 100 * 110) };
+		if (stats.eterna() > 0) {
 			GuiComponent.blit(stack, 56, 27, 0, 56, pos[0], 5, 256, 256);
 		}
-		if (stats.quanta > 0) {
+		if (stats.quanta() > 0) {
 			GuiComponent.blit(stack, 56, 37, 0, 61, pos[1], 5, 256, 256);
 		}
-		if (stats.arcana > 0) {
+		if (stats.arcana() > 0) {
 			GuiComponent.blit(stack, 56, 47, 0, 66, pos[2], 5, 256, 256);
 		}
 		RenderSystem.enableBlend();
-		if (maxStats.eterna > 0) {
-			GuiComponent.blit(stack, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna - stats.eterna) / EnchantingStatManager.getAbsoluteMaxEterna() * 110), 5, 256, 256);
+		if (maxStats.eterna() > 0) {
+			GuiComponent.blit(stack, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna() - stats.eterna()) / EnchantingStatManager.getAbsoluteMaxEterna() * 110), 5, 256, 256);
 		}
-		if (maxStats.quanta > 0) {
-			GuiComponent.blit(stack, 56 + pos[1], 37, pos[1], 95, (int) ((maxStats.quanta - stats.quanta) / 100 * 110), 5, 256, 256);
+		if (maxStats.quanta() > 0) {
+			GuiComponent.blit(stack, 56 + pos[1], 37, pos[1], 95, (int) ((maxStats.quanta() - stats.quanta()) / 100 * 110), 5, 256, 256);
 		}
-		if (maxStats.arcana > 0) {
-			GuiComponent.blit(stack, 56 + pos[2], 47, pos[2], 100, (int) ((maxStats.arcana - stats.arcana) / 100 * 110), 5, 256, 256);
+		if (maxStats.arcana() > 0) {
+			GuiComponent.blit(stack, 56 + pos[2], 47, pos[2], 100, (int) ((maxStats.arcana() - stats.arcana()) / 100 * 110), 5, 256, 256);
 		}
 		RenderSystem.disableBlend();
 		Screen scn = Minecraft.getInstance().screen;
@@ -146,31 +146,31 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 26 && mouseY <= 27 + 5) {
 			List<Component> list = new ArrayList<>();
 			list.add(Component.translatable("gui.apotheosis.enchant.eterna").withStyle(ChatFormatting.GREEN));
-			if (maxStats.eterna == stats.eterna) {
-				list.add(Component.translatable("info.apotheosis.eterna_exact", stats.eterna, EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
+			if (maxStats.eterna() == stats.eterna()) {
+				list.add(Component.translatable("info.apotheosis.eterna_exact", stats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
 			} else {
-				list.add(Component.translatable("info.apotheosis.eterna_at_least", stats.eterna, EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
-				if (maxStats.eterna > -1) list.add(Component.translatable("info.apotheosis.eterna_at_most", maxStats.eterna, EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
+				list.add(Component.translatable("info.apotheosis.eterna_at_least", stats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
+				if (maxStats.eterna() > -1) list.add(Component.translatable("info.apotheosis.eterna_at_most", maxStats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
 			}
 			scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
 		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 36 && mouseY <= 37 + 5) {
 			List<Component> list = new ArrayList<>();
 			list.add(Component.translatable("gui.apotheosis.enchant.quanta").withStyle(ChatFormatting.RED));
-			if (maxStats.quanta == stats.quanta) {
-				list.add(Component.translatable("info.apotheosis.percent_exact", stats.quanta).withStyle(ChatFormatting.GRAY));
+			if (maxStats.quanta() == stats.quanta()) {
+				list.add(Component.translatable("info.apotheosis.percent_exact", stats.quanta()).withStyle(ChatFormatting.GRAY));
 			} else {
-				list.add(Component.translatable("info.apotheosis.percent_at_least", stats.quanta).withStyle(ChatFormatting.GRAY));
-				if (maxStats.quanta > -1) list.add(Component.translatable("info.apotheosis.percent_at_most", maxStats.quanta).withStyle(ChatFormatting.GRAY));
+				list.add(Component.translatable("info.apotheosis.percent_at_least", stats.quanta()).withStyle(ChatFormatting.GRAY));
+				if (maxStats.quanta() > -1) list.add(Component.translatable("info.apotheosis.percent_at_most", maxStats.quanta()).withStyle(ChatFormatting.GRAY));
 			}
 			scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
 		} else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 46 && mouseY <= 47 + 5) {
 			List<Component> list = new ArrayList<>();
 			list.add(Component.translatable("gui.apotheosis.enchant.arcana").withStyle(ChatFormatting.DARK_PURPLE));
-			if (maxStats.arcana == stats.arcana) {
-				list.add(Component.translatable("info.apotheosis.percent_exact", stats.arcana).withStyle(ChatFormatting.GRAY));
+			if (maxStats.arcana() == stats.arcana()) {
+				list.add(Component.translatable("info.apotheosis.percent_exact", stats.arcana()).withStyle(ChatFormatting.GRAY));
 			} else {
-				list.add(Component.translatable("info.apotheosis.percent_at_least", stats.arcana).withStyle(ChatFormatting.GRAY));
-				if (maxStats.arcana > -1) list.add(Component.translatable("info.apotheosis.percent_at_most", maxStats.arcana).withStyle(ChatFormatting.GRAY));
+				list.add(Component.translatable("info.apotheosis.percent_at_least", stats.arcana()).withStyle(ChatFormatting.GRAY));
+				if (maxStats.arcana() > -1) list.add(Component.translatable("info.apotheosis.percent_at_most", maxStats.arcana()).withStyle(ChatFormatting.GRAY));
 			}
 			scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
 		}

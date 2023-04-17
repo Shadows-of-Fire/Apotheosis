@@ -12,6 +12,9 @@
 	"dimensions": [
 		"minecraft:overworld"
 	],
+	"mount": {
+		"entity": "spider"
+	},
 	"min_rarity": "uncommon",
 	"max_rarity": "rare",
 	"stats": {

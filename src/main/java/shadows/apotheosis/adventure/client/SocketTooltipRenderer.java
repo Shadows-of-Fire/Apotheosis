@@ -2,8 +2,6 @@ package shadows.apotheosis.adventure.client;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
@@ -17,12 +15,11 @@ import net.minecraft.client.renderer.MultiBufferSource.BufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 public class SocketTooltipRenderer implements ClientTooltipComponent {
 
@@ -44,7 +41,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	public int getWidth(Font font) {
 		int maxWidth = 0;
 		for (ItemStack gem : this.comp.gems) {
-			maxWidth = Math.max(maxWidth, font.width(getSocketDesc(gem)) + 12);
+			maxWidth = Math.max(maxWidth, font.width(getSocketDesc(this.comp.socketed, gem)) + 12);
 		}
 		return maxWidth;
 	}
@@ -73,17 +70,17 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	@Override
 	public void renderText(Font pFont, int pX, int pY, Matrix4f pMatrix4f, BufferSource pBufferSource) {
 		for (int i = 0; i < this.comp.gems.size(); i++) {
-			pFont.drawInBatch(getSocketDesc(this.comp.gems.get(i)), pX + 12, pY + 1 + this.spacing * i, 0xAABBCC, true, pMatrix4f, pBufferSource, false, 0, 15728880);
+			pFont.drawInBatch(getSocketDesc(this.comp.socketed, this.comp.gems.get(i)), pX + 12, pY + 1 + this.spacing * i, 0xAABBCC, true, pMatrix4f, pBufferSource, false, 0, 15728880);
 		}
 	}
 
-	public static Component getSocketDesc(ItemStack gem) {
-		Pair<Attribute, AttributeModifier> data = GemItem.getStoredBonus(gem);
-		if (data == null) return Component.translatable("socket.apotheosis.empty");
-		return GemItem.toComponent(data.getLeft(), data.getRight());
+	public static Component getSocketDesc(ItemStack socketed, ItemStack gemStack) {
+		Gem gem = GemItem.getGemOrLegacy(gemStack);
+		if (gem == null) return Component.translatable("socket.apotheosis.empty");
+		return gem.getSocketBonusTooltip(socketed, gemStack, GemItem.getLootRarity(gemStack), GemItem.getFacets(gemStack));
 	}
 
-	public static record SocketComponent(List<ItemStack> gems) implements TooltipComponent {
+	public static record SocketComponent(ItemStack socketed, List<ItemStack> gems) implements TooltipComponent {
 	}
 
 }

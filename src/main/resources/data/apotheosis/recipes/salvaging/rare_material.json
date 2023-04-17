@@ -1,0 +1,18 @@
+{
+	"type": "apotheosis:salvaging",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"type": "apotheosis:rarity",
+		"rarity": "rare"
+	},
+	"outputs": [{
+		"min_count": 1,
+		"max_count": 4,
+		"stack": {
+			"item": "apotheosis:rare_material"
+		}
+	}]
+}

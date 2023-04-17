@@ -1,0 +1,13 @@
+{
+    "name": "盾击",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)盾击$()是一个盾牌魔咒。$(p)它让使用该盾牌的近战攻击造成额外的伤害。$(p)然而，用$(9)盾击$()进行攻击会带来额外的耐久损耗。"
+        }
+	]
+}

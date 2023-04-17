@@ -1,3 +1,15 @@
+Gem Dust as a catalyst in brewing, increasing potion levels by +1 above normal.
+
+Healing Reduction potion for the potion module. Also add an affix once the effect is added.
+
+Wooden (and potentially Ender) Reforging Table, effectively tiering the levels of reforging that can be done.
+
+Recipes for upgrading Rarity Materials into the next tier.
+
+Vial for removing affix names.
+
+Automated Gem Dusting and Salvaging.
+
 Review anvil level math at higher levels, as well as repair costs.
 
 Add additional tomes to account for new enchantment types, and clarify usage in tooltips.

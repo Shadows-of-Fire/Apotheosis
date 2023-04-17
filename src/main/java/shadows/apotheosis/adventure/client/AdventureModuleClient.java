@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure.client;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,7 +37,8 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -61,6 +61,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -75,6 +76,7 @@ import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -89,8 +91,9 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingScreen;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingScreen;
 import shadows.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import shadows.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import shadows.apotheosis.util.ItemAccess;
@@ -101,9 +104,9 @@ public class AdventureModuleClient {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(AdventureModuleClient.class);
-		ItemProperties.register(Apoth.Items.GEM.get(), new ResourceLocation(Apotheosis.MODID, "gem_variant"), (stack, level, entity, seed) -> GemItem.getVariant(stack));
 		MenuScreens.register(Apoth.Menus.REFORGING.get(), ReforgingScreen::new);
 		MenuScreens.register(Apoth.Menus.SALVAGE.get(), SalvagingScreen::new);
+		MenuScreens.register(Apoth.Menus.GEM_CUTTING.get(), GemCuttingScreen::new);
 		BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
 	}
 
@@ -127,6 +130,24 @@ public class AdventureModuleClient {
 		@SubscribeEvent
 		public static void tooltipComps(RegisterClientTooltipComponentFactoriesEvent e) {
 			e.register(SocketComponent.class, SocketTooltipRenderer::new);
+		}
+
+		@SubscribeEvent
+		public static void addGemModels(ModelEvent.RegisterAdditional e) {
+			Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> loc.getNamespace().equals(Apotheosis.MODID) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json")).keySet();
+			for (ResourceLocation s : locs) {
+				String path = s.getPath().substring("models/".length(), s.getPath().length() - ".json".length());
+				e.register(new ResourceLocation(Apotheosis.MODID, path));
+			}
+		}
+
+		@SubscribeEvent
+		public static void replaceGemModel(ModelEvent.BakingCompleted e) {
+			ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
+			BakedModel oldModel = e.getModels().get(key);
+			if (oldModel != null) {
+				e.getModels().put(key, new GemModel(oldModel, e.getModelBakery()));
+			}
 		}
 	}
 
@@ -164,28 +185,29 @@ public class AdventureModuleClient {
 	public static void tooltips(ItemTooltipEvent e) {
 		ItemStack stack = e.getItemStack();
 		List<Component> list = e.getToolTip();
-		int rmvIdx = -1, rmvIdx2 = -1;
+		int markIdx1 = -1, markIdx2 = -1;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getContents() instanceof LiteralContents tc) {
 				if (tc.text().equals("APOTH_REMOVE_MARKER")) {
-					rmvIdx = i;
+					markIdx1 = i;
 				}
 				if (tc.text().equals("APOTH_REMOVE_MARKER_2")) {
-					rmvIdx2 = i;
+					markIdx2 = i;
 					break;
 				}
 			}
 		}
-		if (rmvIdx == -1 || rmvIdx2 == -1) return;
-		list.removeAll(list.subList(rmvIdx, rmvIdx2 + 1));
-		int flags = getHideFlags(stack);
-		int fRmvIdx = rmvIdx;
-		int oldSize = list.size();
-		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
-			applyModifierTooltips(e.getEntity(), stack, c -> list.add(Math.min(fRmvIdx, list.size()), c));
-			Collections.reverse(list.subList(rmvIdx, Math.min(list.size(), rmvIdx + list.size() - oldSize)));
+		if (markIdx1 == -1 || markIdx2 == -1) return;
+		var it = list.listIterator(markIdx1);
+		for (int i = markIdx1; i < markIdx2 + 1; i++) {
+			it.next();
+			it.remove();
 		}
-		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) list.add(Math.min(list.size(), rmvIdx + list.size() - oldSize), Component.literal("APOTH_REMOVE_MARKER"));
+		int flags = getHideFlags(stack);
+		if (shouldShowInTooltip(flags, TooltipPart.MODIFIERS)) {
+			applyModifierTooltips(e.getEntity(), stack, it::add);
+		}
+		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) it.add(Component.literal("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent
@@ -207,7 +229,7 @@ public class AdventureModuleClient {
 		}
 		if (rmvIdx == -1) return;
 		int size = (int) socket.level();
-		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(SocketHelper.getGems(e.getItemStack(), size))));
+		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack(), size))));
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
@@ -218,6 +240,16 @@ public class AdventureModuleClient {
 			List<Component> components = new ArrayList<>();
 			affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().getType().ordinal())).forEach(inst -> inst.addInformation(components::add));
 			e.getToolTip().addAll(1, components);
+		}
+
+		if (stack.getItem() == Items.ENCHANTED_BOOK && !ModList.get().isLoaded("enchdesc")) {
+			var enchMap = EnchantmentHelper.getEnchantments(stack);
+			if (enchMap.size() == 1) {
+				var ench = enchMap.keySet().iterator().next();
+				if (ForgeRegistries.ENCHANTMENTS.getKey(ench).getNamespace().equals(Apotheosis.MODID)) {
+					e.getToolTip().add(Component.translatable(ench.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+				}
+			}
 		}
 	}
 
@@ -270,8 +302,7 @@ public class AdventureModuleClient {
 		Set<UUID> skips = new HashSet<>();
 		if (sockets > 0) {
 			for (ItemStack gem : SocketHelper.getGems(stack, sockets)) {
-				var modif = GemItem.getStoredBonus(gem);
-				if (modif != null) skips.add(modif.getValue().getId());
+				skips.addAll(GemItem.getUUIDs(gem));
 			}
 		}
 
@@ -377,7 +408,7 @@ public class AdventureModuleClient {
 					for (int i = 0; i < 3; i++) {
 						if (sums[i] == 0) continue;
 						String key = "attribute.modifier." + (sums[i] < 0 ? "take." : "plus.") + i;
-						if (i != 0) key = "attribute.modifier.apotheosis" + (sums[i] < 0 ? "take." : "plus.") + i;
+						if (i != 0) key = "attribute.modifier.apotheosis." + (sums[i] < 0 ? "take." : "plus.") + i;
 						Style style;
 						if (merged[i]) style = sums[i] < 0 ? Style.EMPTY.withColor(TextColor.fromRgb(0xF93131)) : Style.EMPTY.withColor(TextColor.fromRgb(0x7A7AF9));
 						else style = sums[i] < 0 ? Style.EMPTY.withColor(ChatFormatting.RED) : Style.EMPTY.withColor(ChatFormatting.BLUE);

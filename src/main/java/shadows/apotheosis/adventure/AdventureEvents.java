@@ -8,8 +8,6 @@ import java.util.UUID;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -41,6 +39,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
@@ -58,20 +57,20 @@ import shadows.apotheosis.Apotheosis.ApotheosisCommandEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
-import shadows.apotheosis.adventure.affix.AffixManager;
-import shadows.apotheosis.adventure.affix.effect.DamageReductionAffix;
-import shadows.apotheosis.adventure.affix.socket.GemManager;
+import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
 import shadows.apotheosis.adventure.commands.GemCommand;
 import shadows.apotheosis.adventure.commands.LootifyCommand;
 import shadows.apotheosis.adventure.commands.ModifierCommand;
 import shadows.apotheosis.adventure.commands.RarityCommand;
 import shadows.apotheosis.adventure.commands.SocketCommand;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
-import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.DamageSourceUtil;
 import shadows.placebo.events.AnvilLandEvent;
+import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.events.ItemUseEvent;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
@@ -136,13 +135,10 @@ public class AdventureEvents {
 			if (shooter instanceof LivingEntity living) {
 				ItemStack bow = living.getMainHandItem();
 				Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(bow);
-				CompoundTag nbt = new CompoundTag();
 				affixes.values().forEach(a -> {
 					a.onArrowFired(living, arrow);
-					nbt.putFloat(a.affix().getId().toString(), a.level());
-					nbt.putString(AffixHelper.RARITY, a.rarity().id());
 				});
-				arrow.getPersistentData().put("apoth.affixes", nbt);
+				AffixHelper.copyFrom(bow, arrow);
 			}
 		}
 	}
@@ -153,15 +149,8 @@ public class AdventureEvents {
 	@SubscribeEvent
 	public void impact(ProjectileImpactEvent e) {
 		if (e.getProjectile() instanceof AbstractArrow arrow) {
-			CompoundTag nbt = arrow.getPersistentData().getCompound("apoth.affixes");
-			LootRarity rarity = AffixHelper.getRarity(nbt);
-			for (String s : nbt.getAllKeys()) {
-				Affix a = AffixManager.INSTANCE.getValue(new ResourceLocation(s));
-				if (a != null) {
-					a.onArrowImpact(rarity, nbt.getFloat(s), arrow, e.getRayTraceResult(), e.getRayTraceResult().getType());
-				}
-			}
-
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(arrow);
+			affixes.values().forEach(inst -> inst.onArrowImpact(arrow, e.getRayTraceResult(), e.getRayTraceResult().getType()));
 		}
 	}
 
@@ -186,7 +175,16 @@ public class AdventureEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onDamage(LivingHurtEvent e) {
 		Apoth.Affixes.MAGICAL.ifPresent(afx -> afx.onHurt(e));
-		DamageReductionAffix.onHurt(e);
+		DamageSource src = e.getSource();
+		LivingEntity ent = e.getEntity();
+		float amount = e.getAmount();
+		for (ItemStack s : ent.getAllSlots()) {
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
+			for (AffixInstance inst : affixes.values()) {
+				amount = inst.onHurt(src, ent, amount);
+			}
+		}
+		e.setAmount(amount);
 	}
 
 	/**
@@ -218,7 +216,9 @@ public class AdventureEvents {
 		if (e.getEntity().level.isClientSide) return;
 		if (noRecurse) return;
 		noRecurse = true;
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
+		Entity direct = e.getSource().getDirectEntity();
+		direct = direct instanceof AbstractArrow arr ? arr.getOwner() : direct;
+		if (direct instanceof LivingEntity attacker && !e.getSource().isMagic()) {
 			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE.get()) - 1;
 			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE.get());
 			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE.get());
@@ -306,11 +306,21 @@ public class AdventureEvents {
 
 	@SubscribeEvent
 	public void blockBreak(BreakEvent e) {
+		double xpMult = e.getPlayer().getAttributeValue(Apoth.Attributes.EXPERIENCE_GAINED.get());
+		e.setExpToDrop((int) (e.getExpToDrop() * xpMult));
 		ItemStack stack = e.getPlayer().getMainHandItem();
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 		for (AffixInstance inst : affixes.values()) {
 			inst.onBlockBreak(e.getPlayer(), e.getLevel(), e.getPos(), e.getState());
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void mobXp(LivingExperienceDropEvent e) {
+		Player player = e.getAttackingPlayer();
+		if (player == null) return;
+		double xpMult = e.getAttackingPlayer().getAttributeValue(Apoth.Attributes.EXPERIENCE_GAINED.get());
+		e.setDroppedExperience((int) (e.getDroppedExperience() * xpMult));
 	}
 
 	@SubscribeEvent
@@ -333,7 +343,7 @@ public class AdventureEvents {
 			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
 			if (p.random.nextFloat() <= chance) {
 				Entity ent = e.getEntity();
-				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck(), IDimensional.matches(p.getLevel())), 0, 0, 0));
+				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.createRandomGemStack(p.random, (ServerLevel) p.level, p.getLuck(), IDimensional.matches(p.getLevel()), IStaged.matches(p)), 0, 0, 0));
 			}
 		}
 	}
@@ -350,7 +360,7 @@ public class AdventureEvents {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void dropsLowest(LivingDropsEvent e) {
-		Apoth.Affixes.TELEPATHIC.ifPresent(afx -> afx.drops(e));
+		TelepathicAffix.drops(e);
 	}
 
 	@SubscribeEvent
@@ -372,9 +382,9 @@ public class AdventureEvents {
 	public void special(SpecialSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getLevel().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
 			e.setCanceled(true);
-			Player nearest = e.getEntity().level.getNearestPlayer(e.getEntity(), 32);
-			float luck = nearest != null ? nearest.getLuck() : 0;
-			ItemStack affixItem = LootController.createRandomLootItem(e.getLevel().getRandom(), null, luck, (ServerLevel) e.getEntity().level);
+			Player player = e.getLevel().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
+			if (player == null) return;
+			ItemStack affixItem = LootController.createRandomLootItem(e.getLevel().getRandom(), null, player, (ServerLevel) e.getEntity().level);
 			if (affixItem.isEmpty()) return;
 			affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);
@@ -395,6 +405,11 @@ public class AdventureEvents {
 				ent.setItem(new ItemStack(Apoth.Items.GEM_DUST.get(), stack.getCount()));
 			}
 		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void enchLevels(GetEnchantmentLevelEvent e) {
+		AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));
 	}
 
 }

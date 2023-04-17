@@ -27,8 +27,9 @@ public class AffixLootModifier extends LootModifier {
 		for (LootPatternMatcher m : AdventureConfig.AFFIX_ITEM_LOOT_RULES) {
 			if (m.matches(context.getQueriedLootTableId())) {
 				if (context.getRandom().nextFloat() <= m.chance()) {
-					float luck = context.getLuck();
-					ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), null, luck, context.getLevel());
+					var player = GemLootPoolEntry.findPlayer(context);
+					if (player == null) return generatedLoot;
+					ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), null, player, context.getLevel());
 					if (affixItem.isEmpty()) break;
 					affixItem.getTag().putBoolean("apoth_rchest", true);
 					generatedLoot.add(affixItem);

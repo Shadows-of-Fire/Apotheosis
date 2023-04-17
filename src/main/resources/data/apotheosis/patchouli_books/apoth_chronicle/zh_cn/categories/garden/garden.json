@@ -1,0 +1,6 @@
+{
+    "name": "花园模块",
+    "description": "花园模块负责改动关于植物的随机事件。",
+    "icon": "minecraft:sugar_cane",
+	"flag": "apotheosis:garden"
+}

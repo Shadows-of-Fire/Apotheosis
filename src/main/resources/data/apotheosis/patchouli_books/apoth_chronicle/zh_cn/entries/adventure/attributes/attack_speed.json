@@ -1,0 +1,17 @@
+{
+    "name": "攻击速度",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)攻击速度$()控制你的攻击频率。如果你的攻击速度为2，那么你每秒可以攻击两次。$(p)各种物品可以增加你的攻击速度。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()4$(p)$(9)$(n)最大值：$()1024$(p)注意：武器通常会指定自己的攻击速度，忽略4这个基础值。"
+		}
+	]
+}

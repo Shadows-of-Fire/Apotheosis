@@ -1,0 +1,17 @@
+{
+    "name": "不毁护符",
+    "icon": "minecraft:enchanting_table",
+    "category": "apotheosis:potion/charms",
+	"flag": "&apotheosis:potion,apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "通过$(l:apotheosis:enchanting/table/infusion)灌注附魔$()，可以使护符变得无法破坏。$(p)通过这个，你可以拥有无限时长的任何药水效果。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "不毁护符的灌注配方相当困难。$(p)你需要充分理解$(l:apotheosis:enchanting/table/stats)附魔状态$()才能完成它。"
+        }
+	]
+}

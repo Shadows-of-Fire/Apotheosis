@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.JsonOps;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -50,8 +53,8 @@ public class EnchantingRecipe implements Recipe<Container> {
 	}
 
 	public boolean matches(ItemStack input, float eterna, float quanta, float arcana) {
-		if (this.maxRequirements.eterna > -1 && eterna > this.maxRequirements.eterna || this.maxRequirements.quanta > -1 && quanta > this.maxRequirements.quanta || this.maxRequirements.arcana > -1 && arcana > this.maxRequirements.arcana) return false;
-		return this.input.test(input) && eterna >= this.requirements.eterna && quanta >= this.requirements.quanta && arcana >= this.requirements.arcana;
+		if (this.maxRequirements.eterna() > -1 && eterna > this.maxRequirements.eterna() || this.maxRequirements.quanta() > -1 && quanta > this.maxRequirements.quanta() || this.maxRequirements.arcana() > -1 && arcana > this.maxRequirements.arcana()) return false;
+		return this.input.test(input) && eterna >= this.requirements.eterna() && quanta >= this.requirements.quanta() && arcana >= this.requirements.arcana();
 	}
 
 	public Stats getRequirements() {
@@ -108,6 +111,15 @@ public class EnchantingRecipe implements Recipe<Container> {
 		return RecipeTypes.INFUSION;
 	}
 
+	protected static Pair<Stats, Stats> readStats(ResourceLocation id, JsonObject obj) {
+		Stats stats = Stats.CODEC.decode(JsonOps.INSTANCE, obj.get("requirements")).get().left().get().getFirst();
+		Stats maxStats = obj.has("max_requirements") ? Stats.CODEC.decode(JsonOps.INSTANCE, obj.get("max_requirements")).get().left().get().getFirst() : NO_MAX;
+		if (maxStats.eterna() != -1 && stats.eterna() > maxStats.eterna()) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max eterna bounds (min > max).");
+		if (maxStats.quanta() != -1 && stats.quanta() > maxStats.quanta()) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max quanta bounds (min > max).");
+		if (maxStats.arcana() != -1 && stats.arcana() > maxStats.arcana()) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max arcana bounds (min > max).");
+		return Pair.of(stats, maxStats);
+	}
+
 	public static class Serializer implements RecipeSerializer<EnchantingRecipe> {
 
 		protected static final Gson GSON = new GsonBuilder().create();
@@ -116,12 +128,8 @@ public class EnchantingRecipe implements Recipe<Container> {
 		public EnchantingRecipe fromJson(ResourceLocation id, JsonObject obj) {
 			ItemStack output = CraftingHelper.getItemStack(obj.get("result").getAsJsonObject(), true, true);
 			Ingredient input = Ingredient.fromJson(obj.get("input"));
-			Stats stats = GSON.fromJson(obj.get("requirements"), Stats.class);
-			Stats maxStats = obj.has("max_requirements") ? GSON.fromJson(obj.get("max_requirements"), Stats.class) : NO_MAX;
-			if (maxStats.eterna != -1 && stats.eterna > maxStats.eterna) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max eterna bounds (min > max).");
-			if (maxStats.quanta != -1 && stats.quanta > maxStats.quanta) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max quanta bounds (min > max).");
-			if (maxStats.arcana != -1 && stats.arcana > maxStats.arcana) throw new JsonParseException("An enchanting recipe (" + id + ") has invalid min/max arcana bounds (min > max).");
-			return new EnchantingRecipe(id, output, input, stats, maxStats);
+			Pair<Stats, Stats> requirements = readStats(id, obj);
+			return new EnchantingRecipe(id, output, input, requirements.getLeft(), requirements.getRight());
 		}
 
 		@Override
@@ -149,7 +157,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 	@Nullable
 	public static EnchantingRecipe findMatch(Level level, ItemStack input, float eterna, float quanta, float arcana) {
 		List<EnchantingRecipe> recipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(RecipeTypes.INFUSION));
-		recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna, r2.requirements.eterna));
+		recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna(), r2.requirements.eterna()));
 		for (EnchantingRecipe r : recipes)
 			if (r.matches(input, eterna, quanta, arcana)) return r;
 		return null;

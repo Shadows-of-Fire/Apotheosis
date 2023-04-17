@@ -1,0 +1,131 @@
+{
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"weight": 12,
+	"quality": 0.75,
+	"dimensions": [
+		"the_nether"
+	],
+	"unique": true,
+	"min_rarity": "rare",
+	"bonuses": [
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "heavy_weapon",
+				"types": [
+					"heavy_weapon"
+				]
+			},
+			"attribute": "apotheosis:fire_damage",
+			"operation": "ADDITION",
+			"values": {
+				"rare": {
+					"min": 6.0,
+					"steps": 3,
+					"step": 0.5
+				},
+				"epic": {
+					"min": 8.0,
+					"steps": 3,
+					"step": 0.5
+				},
+				"mythic": {
+					"min": 10.0,
+					"steps": 4,
+					"step": 0.5
+				},
+				"ancient": {
+					"min": 13.5,
+					"steps": 6,
+					"step": 0.5
+				}
+			}
+		},
+		{
+			"type": "apotheosis:enchantment",
+			"gem_class": {
+				"key": "light_weapon",
+				"types": [
+					"sword",
+					"trident"
+				]
+			},
+			"enchantment": "fire_aspect",
+			"values": {
+				"rare": 1,
+				"epic": 2,
+				"mythic": 3,
+				"ancient": 4
+			}
+		},
+		{
+			"type": "apotheosis:enchantment",
+			"gem_class": {
+				"key": "chestplate",
+				"types": [
+					"chestplate"
+				]
+			},
+			"enchantment": "apotheosis:berserkers_fury",
+			"values": {
+				"rare": 1,
+				"epic": 1,
+				"mythic": 2,
+				"ancient": 3
+			}
+		},
+		{
+			"type": "apotheosis:enchantment",
+			"gem_class": {
+				"key": "breaker",
+				"types": [
+					"shovel",
+					"pickaxe"
+				]
+			},
+			"enchantment": "efficiency",
+			"values": {
+				"rare": 1,
+				"epic": 2,
+				"mythic": 3,
+				"ancient": 4
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "helmet",
+				"types": [
+					"helmet"
+				]
+			},
+			"attribute": "apotheosis:fire_damage",
+			"operation": "MULTIPLY_TOTAL",
+			"values": {
+				"rare": {
+					"min": 0.50,
+					"steps": 3,
+					"step": 0.025
+				},
+				"epic": {
+					"min": 0.60,
+					"steps": 3,
+					"step": 0.025
+				},
+				"mythic": {
+					"min": 0.75,
+					"steps": 4,
+					"step": 0.025
+				},
+				"ancient": {
+					"min": 0.90,
+					"steps": 5,
+					"step": 0.02
+				}
+			}
+		}
+	]
+}

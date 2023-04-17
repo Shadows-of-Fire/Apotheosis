@@ -33,7 +33,7 @@ public class AffixConvertLootModifier extends LootModifier {
 				RandomSource rand = context.getRandom();
 				float luck = context.getLuck();
 				for (ItemStack s : generatedLoot) {
-					if (LootCategory.forItem(s) != LootCategory.NONE && AffixHelper.getAffixes(s).isEmpty() && rand.nextFloat() <= m.chance()) {
+					if (!LootCategory.forItem(s).isNone() && AffixHelper.getAffixes(s).isEmpty() && rand.nextFloat() <= m.chance()) {
 						LootController.createLootItem(s, LootRarity.random(rand, luck, rarities), rand);
 					}
 				}

@@ -235,7 +235,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
 	private boolean isAllowedByItem(Entry<Enchantment> e) {
 		ItemStack stack = this.menu.ioInv.getItem(2);
-		return stack.isEmpty() || e.getKey().canApplyAtEnchantingTable(stack);
+		return stack.isEmpty() || e.getKey().canEnchant(stack);
 	}
 
 	private boolean isAllowedBySearch(Entry<Enchantment> e) {

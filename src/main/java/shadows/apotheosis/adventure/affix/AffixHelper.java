@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
@@ -17,6 +18,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -64,11 +66,11 @@ public class AffixHelper {
 
 	public static Map<Affix, AffixInstance> getAffixes(ItemStack stack) {
 		Map<Affix, AffixInstance> map = new HashMap<>();
-		if (stack.isEmpty()) return map;
+		if (!hasAffixes(stack)) return map;
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
 		if (afxData != null && afxData.contains(AFFIXES)) {
 			CompoundTag affixes = afxData.getCompound(AFFIXES);
-			LootRarity rarity = getRarity(stack);
+			LootRarity rarity = getRarity(afxData);
 			if (rarity == null) rarity = LootRarity.COMMON;
 			for (String key : affixes.getAllKeys()) {
 				Affix affix = AffixManager.INSTANCE.getValue(new ResourceLocation(key));
@@ -78,6 +80,10 @@ public class AffixHelper {
 			}
 		}
 		return map;
+	}
+
+	public static Stream<AffixInstance> streamAffixes(ItemStack stack) {
+		return getAffixes(stack).values().stream();
 	}
 
 	public static boolean hasAffixes(ItemStack stack) {
@@ -98,6 +104,35 @@ public class AffixHelper {
 		afxData.putString(NAME, Component.Serializer.toJson(comp));
 		//if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack, Component.translatable("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
 		afxData.putString(RARITY, rarity.id());
+	}
+
+	public static void copyFrom(ItemStack stack, Entity entity) {
+		if (hasAffixes(stack)) {
+			CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
+			entity.getPersistentData().put(AFFIX_DATA, afxData.copy());
+		}
+	}
+
+	public static Map<Affix, AffixInstance> getAffixes(Entity entity) {
+		Map<Affix, AffixInstance> map = new HashMap<>();
+		if (entity == null) return map;
+		CompoundTag afxData = entity.getPersistentData().getCompound(AFFIX_DATA);
+		if (afxData != null && afxData.contains(AFFIXES)) {
+			CompoundTag affixes = afxData.getCompound(AFFIXES);
+			LootRarity rarity = getRarity(afxData);
+			if (rarity == null) rarity = LootRarity.COMMON;
+			for (String key : affixes.getAllKeys()) {
+				Affix affix = AffixManager.INSTANCE.getValue(new ResourceLocation(key));
+				if (affix == null) continue;
+				float lvl = affixes.getFloat(key);
+				map.put(affix, new AffixInstance(affix, ItemStack.EMPTY, rarity, lvl));
+			}
+		}
+		return map;
+	}
+
+	public static Stream<AffixInstance> streamAffixes(Entity entity) {
+		return getAffixes(entity).values().stream();
 	}
 
 	@Nullable

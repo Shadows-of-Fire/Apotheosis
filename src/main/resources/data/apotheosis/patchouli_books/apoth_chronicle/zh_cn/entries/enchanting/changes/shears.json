@@ -1,0 +1,13 @@
+{
+    "name": "剪刀",
+    "icon": "minecraft:shears",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "除了新的魔咒之外，剪刀现在也可以获得$(9)耐久$()、$(9)效率$()和$(9)时运$()。"
+        }
+	]
+}

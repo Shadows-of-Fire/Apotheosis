@@ -1,5 +1,83 @@
+## Future
+* [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
+* [NYI] Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
+* [NYI] Added additional tiers of reforging table, which limits the rarities that can be reforged into.
+* [NYI] Added a Healing Reduction potion to the potion module.
+* [NYI] Added a method of upgrading rarity materials to the next tier.
+* [NYI] Added the Vial of Unnaming, which can be used to remove the extra name pieces of an affixed item.
+
+## 6.1.6
+* Bosses now have a `mount` field.
+
+## 6.1.5
+* Fixed an issue where boss names were failing to translate.
+* Fixed an issue with the salvaging recipe returning a null itemstack.
+* Reforging no longer uses the enchanting seed.
+* Fixed Legacy Gems not providing any bonuses (again).
+  * Legacy Gems will be permanently removed in 6.2.0.
+
+## 6.1.4
+* Fixed a network encoding error in SalvagingRecipe$OutputData.
+
+## 6.1.3
+* Adjusted the Salvaging Table to be recipe-backed, allowing for easier configuration and extensibility.
+* The Salvaging Table now has JEI Support!
+* Gems can now be processed in the Salvaging Table, yielding 1-2 dust each.
+* Added support for GameStages.
+* Fixed Endersurge gems applying +2 levels to everything instead of only existing enchantments.
+* Fixed a crash that happened when trying to upgrade socketed items in a smithing table (ex diamond->netherite).
+* Fixed the Thunderstruck (damage to nearby enemies) affix.
+* mc-kaishixiaxue: Updated Chinese translation, including the Chronicle of Shadows.
+* rtxyd: Also updated Chinese translation.
+* SKZGx: Updated Ukranian translation.
+* Made the translation keys for top-level affix naming configurable (https://github.com/Shadows-of-Fire/Apotheosis/issues/818)
+* Added dimensional rarity rules for Gems.
+
+## 6.1.2
+* Converted Affixes to use Codecs for serialization, which produces better error reporting.
+* Added a few additional dimension-specific gems.
+* Omnetic items will now also work as a Hoe and Sword.
+* Increased the performance of ShieldBreakerTest by not reconstructing the context zombies.
+* Fixed Legacy Gems not working.
+* Fixed an issue that caused Unique gems to not provide their bonuses.
+* Increased the performance of LootCategory.forItem which is a fairly hot path.
+* Fixed a crash that could happen if a legacy gem with no nbt showed up.
+* Reduced required forge version to 43.2.0
+* Made Reforging Costs configurable.
+
+## 6.1.1
+* Hotfix that fixes common items always having four sockets.
+
+## 6.1.0
+* Gems have been rewritten! Gems are now backed by an all new system that allows for far more customization than before.
+  * New Gems have been added, with all sorts of new features and stat ranges. Old gems will be referred to as Legacy Gems, and will not have rarities nor be upgradable.
+  * Purity has been replaced by Facets, a value indicating the number of cuts in the gem. A Fully-Faceted Gem will be referred to as a "Flawless" Gem and will Glow.
+  * Gems now have individual rarities, indicated by name color.  Gems of a higher rarity will be stronger.
+  * Gems are now able to be dimensionally-locked.
+  * Gems may also now be Unique, meaning you can only insert one of those gems into any given item. (You may still use more than one overall, but only one per item).
+  * Gems may now provide different bonuses when socketed into different types of items.
+  * You can increase the number of facets that a gem has in the Gem Cutting Table.
+  * Two Flawless (Max-Facet) gems of the same type and rarity can be upgraded to the next rarity in the Gem Cutting Table.
+* Bee and Goat bosses have been removed. Those had a good run, but were ultimately not good for anything.
+* The cooldown field now works properly for HURT_SELF and ATTACK_SELF potion affixes.
+* The default boss spawn cooldown has been increased to 1800 ticks (from 400).
+* Potentially fixed earlier - NBT tags that were appearing on random mob drops will no longer appear.
+* Life Mending will now work on curios.
+* Potion Charms can be set to only function in curios slots.
+* Fixed an issue where the Enchantment Library would not display certain applicable enchantments (like sharpness on axes).
+* The particular loot rules for each rarity may now be adjusted. This means you can set the number of affixes, sockets, and durability reduction for each rarity.
+* Eugene: Added Ukranian translation.
+
+## 6.0.3
+* Fixed potion affixes not spawning.
+* Fixed an issue where a crash could occur if you walked into a dimension with no adventure module entries (gems/affixes/bosses).
+
 ## 6.0.2
 * Forward-Ported all changes from 5.7.6.
+* Config files have been updated to be more user-friendly.
+* Splitting and Obliteration will now work properly.
+* The Adventure Module can now be disabled again.
+* RiggZh: Updated Chinese Translation
 
 ## 6.0.1
 * Forward-Ported all changes from 5.7.1-5.7.4

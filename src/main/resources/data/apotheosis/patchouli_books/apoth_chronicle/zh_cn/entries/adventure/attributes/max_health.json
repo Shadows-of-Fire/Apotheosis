@@ -1,0 +1,17 @@
+{
+    "name": "最大生命值",
+    "icon": "minecraft:apple",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)最大生命值$()控制你拥有的生命值（HP）。1点是半颗心。$(p)通常由盔甲或盾牌提供。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()20$(p)$(9)$(n)最大值：$()1024"
+		}
+	]
+}

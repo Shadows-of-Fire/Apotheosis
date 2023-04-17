@@ -30,9 +30,6 @@
 		}
 	},
 	"types": [
-		"ARMOR"
-	],
-	"armor_types": [
-		"FEET"
+		"boots"
 	]
 }

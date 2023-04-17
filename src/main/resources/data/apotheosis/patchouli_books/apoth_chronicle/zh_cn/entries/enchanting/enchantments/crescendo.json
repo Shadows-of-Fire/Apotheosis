@@ -1,0 +1,13 @@
+{
+    "name": "叠装弩箭",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)叠装弩箭$()是一个对弩的极品魔咒。$(p)这个魔咒的每一级，你都能在每次装填时获得额外的射击。$(p)额外的射击不消耗弹药。"
+        }
+	]
+}

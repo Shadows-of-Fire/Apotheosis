@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "what",
+  "pattern": [
+    "TST",
+    "PGP",
+    "P P"
+  ],
+  "key": {
+    "T": {
+      "item": "minecraft:smooth_stone"
+    },
+	"S": {
+      "item": "minecraft:shears"
+    },
+	"P": {
+      "tag": "planks"
+    },
+	"G": {
+      "item": "apotheosis:gem_dust"
+    }
+  },
+  "result": {
+    "item": "apotheosis:gem_cutting_table",
+    "count": 1
+  }
+}

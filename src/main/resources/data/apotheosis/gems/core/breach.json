@@ -1,0 +1,140 @@
+{
+	"variant": "breach",
+	"weight": 10,
+	"quality": 0,
+	"dimensions": [
+	],
+	"unique": true,
+	"bonuses": [{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "light_weapon",
+				"types": [
+					"sword",
+					"trident"
+				]
+			},
+			"attribute": "forge:attack_range",
+			"operation": "ADDITION",
+			"values": {
+				"common": {
+					"min": 0.25,
+					"steps": 3,
+					"step": 0.125
+				},
+				"uncommon": {
+					"min": 0.65,
+					"steps": 3,
+					"step": 0.125
+				},
+				"rare": {
+					"min": 1.0,
+					"steps": 4,
+					"step": 0.1
+				},
+				"epic": {
+					"min": 1.6,
+					"steps": 4,
+					"step": 0.1
+				},
+				"mythic": {
+					"min": 2.5,
+					"steps": 5,
+					"step": 0.1
+				},
+				"ancient": {
+					"min": 3.0,
+					"steps": 5,
+					"step": 0.2
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "heavy_weapon",
+				"types": [
+					"heavy_weapon"
+				]
+			},
+			"attribute": "apotheosis:piercing",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 3,
+					"step": 0.03
+				},
+				"uncommon": {
+					"min": 0.15,
+					"steps": 3,
+					"step": 0.03
+				},
+				"rare": {
+					"min": 0.25,
+					"steps": 4,
+					"step": 0.03
+				},
+				"epic": {
+					"min": 0.40,
+					"steps": 4,
+					"step": 0.03
+				},
+				"mythic": {
+					"min": 0.65,
+					"steps": 5,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.70,
+					"steps": 5,
+					"step": 0.02
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "breaker",
+				"types": [
+					"shovel",
+					"pickaxe"
+				]
+			},
+			"attribute": "forge:reach_distance",
+			"operation": "ADDITION",
+			"values": {
+				"common": {
+					"min": 0.25,
+					"steps": 3,
+					"step": 0.125
+				},
+				"uncommon": {
+					"min": 0.65,
+					"steps": 3,
+					"step": 0.125
+				},
+				"rare": {
+					"min": 1.0,
+					"steps": 4,
+					"step": 0.1
+				},
+				"epic": {
+					"min": 1.6,
+					"steps": 4,
+					"step": 0.1
+				},
+				"mythic": {
+					"min": 2.5,
+					"steps": 5,
+					"step": 0.1
+				},
+				"ancient": {
+					"min": 3.0,
+					"steps": 5,
+					"step": 0.2
+				}
+			}
+		}
+	]
+}

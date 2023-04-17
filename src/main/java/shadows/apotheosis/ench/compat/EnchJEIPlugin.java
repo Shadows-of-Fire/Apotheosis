@@ -68,7 +68,7 @@ public class EnchJEIPlugin implements IModPlugin {
 		reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.enchanting"));
 		reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.library"));
 		List<EnchantingRecipe> recipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(shadows.apotheosis.Apoth.RecipeTypes.INFUSION));
-		recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
+		recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna(), r2.getRequirements().eterna()));
 		reg.addRecipes(EnchantingCategory.TYPE, recipes);
 	}
 

@@ -42,6 +42,7 @@ import shadows.apotheosis.spawn.SpawnerModule;
 import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
+import shadows.apotheosis.util.RarityIngredient;
 import shadows.apotheosis.village.VillageModule;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.network.MessageHelper;
@@ -127,6 +128,7 @@ public class Apotheosis {
 		e.enqueueWork(AdvancementTriggers::init);
 		CraftingHelper.register(new ModuleCondition.Serializer());
 		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
+		CraftingHelper.register(new ResourceLocation(MODID, "rarity"), RarityIngredient.Serializer.INSTANCE);
 	}
 
 	@SubscribeEvent

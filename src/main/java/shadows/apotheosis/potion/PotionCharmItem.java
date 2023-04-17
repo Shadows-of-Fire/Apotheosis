@@ -50,6 +50,7 @@ public class PotionCharmItem extends Item {
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
 		if (!hasPotion(stack)) return;
+		if (PotionModule.charmsInCuriosOnly && slot != -1) return;
 		if (stack.getOrCreateTag().getBoolean("charm_enabled") && entity instanceof ServerPlayer) {
 			Potion p = PotionUtils.getPotion(stack);
 			MobEffectInstance contained = p.getEffects().get(0);
@@ -95,6 +96,9 @@ public class PotionCharmItem extends Item {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
+		if (PotionModule.charmsInCuriosOnly) {
+			tooltip.add(Component.translatable(this.getDescriptionId() + ".curios_only").withStyle(ChatFormatting.RED));
+		}
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotion(stack);
 			MobEffectInstance effect = p.getEffects().get(0);

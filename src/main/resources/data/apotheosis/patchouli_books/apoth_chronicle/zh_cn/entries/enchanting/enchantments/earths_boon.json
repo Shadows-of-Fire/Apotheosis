@@ -1,0 +1,13 @@
+{
+    "name": "地球恩惠",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)地球恩惠$()是镐的极品魔咒。$(p)挖掘简单的石头时，有机会掉落一个矿石方块。"
+        }
+	]
+}

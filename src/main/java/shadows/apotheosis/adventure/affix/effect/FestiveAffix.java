@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,6 +27,7 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.StepFunction;
@@ -34,6 +37,14 @@ import shadows.placebo.util.StepFunction;
  */
 public class FestiveAffix extends Affix {
 
+	//Formatter::off
+	public static Codec<FestiveAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+			.apply(inst, FestiveAffix::new)
+		);
+	//Formatter::on
+	
 	protected final Map<LootRarity, StepFunction> values;
 
 	public FestiveAffix(Map<LootRarity, StepFunction> values) {

@@ -37,8 +37,8 @@
 		}
 	},
 	"types": [
-		"BOW",
-		"CROSSBOW",
-		"TRIDENT"
+		"bow",
+		"crossbow",
+		"trident"
 	]
 }

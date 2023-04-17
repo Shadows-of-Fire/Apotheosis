@@ -3,9 +3,10 @@ package shadows.apotheosis.adventure.affix.effect;
 import java.util.function.Consumer;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,9 +16,9 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -26,6 +27,14 @@ import shadows.apotheosis.adventure.loot.LootRarity;
  * Teleport Drops
  */
 public class TelepathicAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<TelepathicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
+			.apply(inst, TelepathicAffix::new)
+		);
+	//Formatter::on
 
 	public static Vec3 blockDropTargetPos = null;
 
@@ -39,8 +48,8 @@ public class TelepathicAffix extends Affix {
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
-		if (cat == LootCategory.NONE) return false;
-		return (cat.isRanged() || cat.isLightWeapon() || cat == LootCategory.BREAKER) && rarity.isAtLeast(minRarity);
+		if (cat.isNone()) return false;
+		return (cat.isRanged() || cat.isLightWeapon() || cat.isBreaker()) && rarity.isAtLeast(minRarity);
 	}
 
 	@Override
@@ -50,18 +59,22 @@ public class TelepathicAffix extends Affix {
 		list.accept(Component.translatable("affix." + this.getId() + ".desc." + type).withStyle(ChatFormatting.YELLOW));
 	}
 
+	@Override
+	public boolean enablesTelepathy() {
+		return true;
+	}
+
 	// EventPriority.LOWEST
-	public void drops(LivingDropsEvent e) {
+	public static void drops(LivingDropsEvent e) {
 		DamageSource src = e.getSource();
 		boolean canTeleport = false;
 		Vec3 targetPos = null;
 		if (src.getDirectEntity() instanceof AbstractArrow arrow && arrow.getOwner() != null) {
-			CompoundTag affixes = src.getDirectEntity().getPersistentData().getCompound("apoth.affixes");
-			canTeleport = Affixes.TELEPATHIC.isPresent() && affixes.contains(Affixes.TELEPATHIC.getId().toString());
+			canTeleport = AffixHelper.streamAffixes(arrow).anyMatch(AffixInstance::enablesTelepathy);
 			targetPos = arrow.getOwner().position();
 		} else if (src.getDirectEntity() instanceof LivingEntity living) {
 			ItemStack weapon = living.getMainHandItem();
-			canTeleport = AffixHelper.getAffixes(weapon).containsKey(Affixes.TELEPATHIC.get());
+			canTeleport = AffixHelper.streamAffixes(weapon).anyMatch(AffixInstance::enablesTelepathy);
 			targetPos = living.position();
 		}
 

@@ -10,7 +10,7 @@
     "count": 1,
     "nbt": "{Damage:0}"
   },
-  "type": "HEAVY_WEAPON",
+  "type": "heavy_weapon",
   "dimensions": [
     "twilightforest:twilight_forest"
   ],

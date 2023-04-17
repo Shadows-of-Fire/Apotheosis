@@ -1,0 +1,17 @@
+{
+    "name": "无尽箭袋",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)无尽箭袋$()是对弓的极品魔咒。$(p)当发射箭矢时，无论什么类型的箭都不会被消耗。$(p)它被认为是$(9)无限$()的直接升级。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "这个魔咒甚至应该使其他模组的箭矢变得无限。"
+        }
+	]
+}

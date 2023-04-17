@@ -1,0 +1,44 @@
+{
+    "name": "回收",
+    "icon": "apotheosis:salvaging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"text": "$(9)回收台$()用于将词缀物品分解为其相应的$(9)珍宝材料$()。"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:common_material",
+			"link_recipe": true,
+            "text": "一块形状怪异且无法辨认的金属。$(p)这种材料是在回收普通物品时获得的。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:uncommon_material",
+			"link_recipe": true,
+            "text": "一种非常耐用的布匹，经过无数次的岁月磨砺，它没有一丝撕裂。$(p)在回收罕见物品时发现。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:rare_material",
+			"link_recipe": true,
+            "text": "一块有史以来最明亮的水晶。虽然它只是一块碎片，但它包含了强大的魔力。$(p)回收珍贵物品获得。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:epic_material",
+			"link_recipe": true,
+            "text": "来自魔界的沙子，那里的奥术魔法扭曲了所有的生命。$(p)回收史诗物品就会把它们还原成这种形式。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:mythic_material",
+			"link_recipe": true,
+            "text": "一颗净化过的超神珍珠。封存在其中的强大力量使它相当不稳定。$(p)这些非凡的创造物只能通过回收神话物品获得。"
+        }
+	]
+}

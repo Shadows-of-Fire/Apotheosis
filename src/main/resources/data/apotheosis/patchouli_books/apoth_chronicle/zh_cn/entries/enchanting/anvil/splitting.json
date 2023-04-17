@@ -1,0 +1,17 @@
+{
+    "name": "拆分",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/anvil",
+	"flag": "apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)拆分$()是一个全新的铁砧专属魔咒。$(p)拆分铁砧能将带有多个魔咒的附魔书“拆分”成一系列单独的书。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "要使用拆分铁砧，请将一本附魔书扔在地上，然后放置铁砧使其砸在书上。$(p)一本拥有锋利III和抢夺II的书被拆分后会变成两本书，一本拥有锋利III，另一本拥有抢夺II。"
+		}
+	]
+}

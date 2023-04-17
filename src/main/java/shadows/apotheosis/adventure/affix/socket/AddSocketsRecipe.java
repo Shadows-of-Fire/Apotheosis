@@ -31,7 +31,7 @@ public class AddSocketsRecipe extends ApothUpgradeRecipe {
 	@Override
 	public boolean matches(Container pInv, Level pLevel) {
 		ItemStack in = pInv.getItem(0);
-		return LootCategory.forItem(in) != LootCategory.NONE && SocketHelper.getSockets(in) < this.getMaxSockets() && this.getInput().test(pInv.getItem(1));
+		return !LootCategory.forItem(in).isNone() && SocketHelper.getSockets(in) < this.getMaxSockets() && this.getInput().test(pInv.getItem(1));
 	}
 
 	/**

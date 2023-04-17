@@ -1,0 +1,139 @@
+{
+	"variant": "lightning",
+	"weight": 10,
+	"quality": 0,
+	"dimensions": [
+	],
+	"bonuses": [{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "ranged_weapon",
+				"types": [
+					"bow",
+					"crossbow"
+				]
+			},
+			"attribute": "apotheosis:arrow_velocity",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 2,
+					"step": 0.05
+				},
+				"uncommon": {
+					"min": 0.15,
+					"steps": 3,
+					"step": 0.05
+				},
+				"rare": {
+					"min": 0.30,
+					"steps": 4,
+					"step": 0.02
+				},
+				"epic": {
+					"min": 0.40,
+					"steps": 4,
+					"step": 0.02
+				},
+				"mythic": {
+					"min": 0.50,
+					"steps": 5,
+					"step": 0.01
+				},
+				"ancient": {
+					"min": 0.55,
+					"steps": 5,
+					"step": 0.02
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "breaker",
+				"types": [
+					"shovel",
+					"pickaxe"
+				]
+			},
+			"attribute": "apotheosis:mining_speed",
+			"operation": "MULTIPLY_BASE",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 2,
+					"step": 0.05
+				},
+				"uncommon": {
+					"min": 0.15,
+					"steps": 3,
+					"step": 0.05
+				},
+				"rare": {
+					"min": 0.30,
+					"steps": 4,
+					"step": 0.05
+				},
+				"epic": {
+					"min": 0.50,
+					"steps": 4,
+					"step": 0.03
+				},
+				"mythic": {
+					"min": 0.65,
+					"steps": 5,
+					"step": 0.02
+				},
+				"ancient": {
+					"min": 0.75,
+					"steps": 5,
+					"step": 0.02
+				}
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "lower_armor",
+				"types": [
+					"boots", "leggings"
+				]
+			},
+			"attribute": "minecraft:generic.movement_speed",
+			"operation": "MULTIPLY_TOTAL",
+			"values": {
+				"common": {
+					"min": 0.05,
+					"steps": 2,
+					"step": 0.025
+				},
+				"uncommon": {
+					"min": 0.1,
+					"steps": 2,
+					"step": 0.05
+				},
+				"rare": {
+					"min": 0.2,
+					"steps": 3,
+					"step": 0.05
+				},
+				"epic": {
+					"min": 0.35,
+					"steps": 3,
+					"step": 0.075
+				},
+				"mythic": {
+					"min": 0.60,
+					"steps": 4,
+					"step": 0.05
+				},
+				"ancient": {
+					"min": 0.80,
+					"steps": 6,
+					"step": 0.05
+				}
+			}
+		}
+	]
+}

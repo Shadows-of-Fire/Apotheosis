@@ -3,6 +3,8 @@ package shadows.apotheosis.util;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.google.gson.JsonDeserializationContext;
@@ -12,12 +14,14 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
@@ -38,6 +42,8 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 	protected final List<WeightedItemStack> chestplates;
 	protected final List<WeightedItemStack> helmets;
 	protected final List<String> tags = new ArrayList<>();
+
+	protected transient Map<EquipmentSlot, List<WeightedItemStack>> slotToStacks;
 
 	public GearSet(int weight, float quality, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets) {
 		this.weight = weight;
@@ -64,30 +70,48 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 	 * Makes the entity wear this armor set.  Returns the entity for convenience.
 	 */
 	public LivingEntity apply(LivingEntity entity) {
-		entity.setItemSlot(EquipmentSlot.MAINHAND, getRandomStack(this.mainhands, entity.random));
-		entity.setItemSlot(EquipmentSlot.OFFHAND, getRandomStack(this.offhands, entity.random));
-		entity.setItemSlot(EquipmentSlot.FEET, getRandomStack(this.boots, entity.random));
-		entity.setItemSlot(EquipmentSlot.LEGS, getRandomStack(this.leggings, entity.random));
-		entity.setItemSlot(EquipmentSlot.CHEST, getRandomStack(this.chestplates, entity.random));
-		entity.setItemSlot(EquipmentSlot.HEAD, getRandomStack(this.helmets, entity.random));
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			getRandomStack(getPotentials(slot), entity.random).ifPresent(s -> s.apply(entity, slot));
+		}
 		return entity;
+	}
+
+	public List<WeightedItemStack> getPotentials(EquipmentSlot slot) {
+		switch (slot) {
+		case MAINHAND:
+			return this.mainhands;
+		case OFFHAND:
+			return this.offhands;
+		case FEET:
+			return this.boots;
+		case LEGS:
+			return this.leggings;
+		case CHEST:
+			return this.chestplates;
+		case HEAD:
+			return this.helmets;
+		}
+		throw new RuntimeException("invalid slot");
 	}
 
 	/**
 	 * Returns a copy of a random itemstack in this list of stacks.
 	 */
-	public static ItemStack getRandomStack(List<WeightedItemStack> stacks, RandomSource random) {
-		if (stacks.isEmpty()) return ItemStack.EMPTY;
-		return WeightedRandom.getRandomItem(random, stacks).get().getStack().copy();
+	public static Optional<WeightedItemStack> getRandomStack(List<WeightedItemStack> stacks, RandomSource random) {
+		if (stacks.isEmpty()) return Optional.empty();
+		return Optional.of(WeightedRandom.getRandomItem(random, stacks).get());
 	}
 
 	public static class WeightedItemStack extends Weighted {
 
 		final ItemStack stack;
+		@SerializedName("drop_chance")
+		final float dropChance;
 
-		public WeightedItemStack(ItemStack stack, int weight) {
+		public WeightedItemStack(ItemStack stack, int weight, float dropChance) {
 			super(weight);
 			this.stack = stack;
+			this.dropChance = dropChance;
 		}
 
 		public ItemStack getStack() {
@@ -97,6 +121,13 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 		@Override
 		public String toString() {
 			return "Stack: " + this.stack.toString() + " @ Weight: " + this.weight;
+		}
+
+		public void apply(LivingEntity entity, EquipmentSlot slot) {
+			entity.setItemSlot(slot, this.stack.copy());
+			if (entity instanceof Mob mob) {
+				mob.setDropChance(slot, this.dropChance);
+			}
 		}
 	}
 

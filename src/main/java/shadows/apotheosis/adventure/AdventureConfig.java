@@ -7,7 +7,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -41,6 +40,7 @@ public class AdventureConfig {
 	 */
 	public static final List<LootPatternMatcher> AFFIX_ITEM_LOOT_RULES = new ArrayList<>();
 	public static final List<LootPatternMatcher> GEM_LOOT_RULES = new ArrayList<>();
+	public static final Map<ResourceLocation, LootRarity.Clamped> GEM_DIM_RARITIES = new HashMap<>();
 
 	/**
 	 * Loot table matchers and dimensional rarities for affix conversion rules.
@@ -71,27 +71,18 @@ public class AdventureConfig {
 	public static Supplier<Item> torchItem = () -> Items.TORCH;
 	public static boolean cleaveHitsPlayers = false;
 
+	public static Map<LootRarity, ReforgeData> reforgeCosts = new HashMap<>();
+
 	public static void load(Configuration c) {
 		c.setTitle("Apotheosis Adventure Module Config");
-		for (LootRarity r : LootRarity.values()) {
-			if (r != LootRarity.ANCIENT) {
-				int weight = c.getInt(r.id() + " weight", "rarities", r.defaultWeight(), 0, 10000, "The weight of this rarity.  The chance of this rarity appearing is <weight>/<total weight>.");
-				float quality = c.getFloat(r.id() + " quality", "rarities", r.ordinal() * 1.5F, 0, 100, "The quality of this rarity.  Each point of luck increases the weight of this rarity by the quality value.");
-				LootRarity.WEIGHTS.put(r, new float[] { weight, quality });
-			}
-			LootRarity.WEIGHTS.put(LootRarity.ANCIENT, new float[] { 0, 0 });
-		}
-		if (LootRarity.WEIGHTS.values().stream().collect(Collectors.summarizingInt(arr -> (int) arr[0])).getSum() <= 0) {
-			throw new RuntimeException("The total loot rarity weight may not be zero!");
-		}
 
 		TYPE_OVERRIDES.clear();
-		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|SWORD" }, "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.  Types are SWORD, TRIDENT, SHIELD, HEAVY_WEAPON, BREAKER, CROSSBOW, BOW");
+		String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|sword", "minecraft:shulker_shell|none" }, "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.\nValid types are: none, sword, trident, shield, heavy_weapon, pickaxe, shovel, crossbow, bow");
 		for (String s : overrides) {
 			String[] split = s.split("\\|");
 			try {
-				LootCategory type = LootCategory.valueOf(split[1].toUpperCase(Locale.ROOT));
-				if (type == LootCategory.ARMOR) throw new UnsupportedOperationException("Cannot override an item to type ARMOR!");
+				LootCategory type = LootCategory.byId(split[1].toLowerCase(Locale.ROOT));
+				if (type.isArmor()) throw new UnsupportedOperationException("Cannot override an item to an armor type.");
 				TYPE_OVERRIDES.put(new ResourceLocation(split[0]), type);
 			} catch (Exception e) {
 				AdventureModule.LOGGER.error("Invalid type override entry: " + s + " will be ignored!");
@@ -144,7 +135,7 @@ public class AdventureConfig {
 			}
 		}
 
-		String[] convertRarities = c.getStringList("Affix Convert Rarities", "affixes", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimenaional rarities for affix conversion (see \"Affix Convert Loot Rules\"), in the form of dimension|min|max. A dimension not listed uses all rarities.");
+		String[] convertRarities = c.getStringList("Affix Convert Rarities", "affixes", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimensional rarities for affix conversion (see \"Affix Convert Loot Rules\"), in the form of dimension|min|max. A dimension not listed uses all rarities.");
 		AFFIX_CONVERT_RARITIES.clear();
 		for (String s : convertRarities) {
 			try {
@@ -152,22 +143,24 @@ public class AdventureConfig {
 				ResourceLocation dim = new ResourceLocation(split[0]);
 				LootRarity min = LootRarity.byId(split[1]);
 				LootRarity max = LootRarity.byId(split[2]);
-				LootRarity.Clamped clamp = new LootRarity.Clamped() {
-
-					@Override
-					public LootRarity getMinRarity() {
-						return min;
-					}
-
-					@Override
-					public LootRarity getMaxRarity() {
-						return max;
-					}
-
-				};
-				AFFIX_CONVERT_RARITIES.put(dim, clamp);
+				AFFIX_CONVERT_RARITIES.put(dim, new LootRarity.Clamped.Impl(min, max));
 			} catch (Exception e) {
 				AdventureModule.LOGGER.error("Invalid Affix Convert Rarity: " + s + " will be ignored");
+				e.printStackTrace();
+			}
+		}
+
+		String[] gemDimRarities = c.getStringList("Gem Dimensional Rarities", "gems", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimensional rarities for gem drops, in the form of dimension|min|max. A dimension not listed uses all rarities.");
+		GEM_DIM_RARITIES.clear();
+		for (String s : gemDimRarities) {
+			try {
+				String[] split = s.split("\\|");
+				ResourceLocation dim = new ResourceLocation(split[0]);
+				LootRarity min = LootRarity.byId(split[1]);
+				LootRarity max = LootRarity.byId(split[2]);
+				GEM_DIM_RARITIES.put(dim, new LootRarity.Clamped.Impl(min, max));
+			} catch (Exception e) {
+				AdventureModule.LOGGER.error("Invalid Gem Dimensional Rarity: " + s + " will be ignored");
 				e.printStackTrace();
 			}
 		}
@@ -189,7 +182,7 @@ public class AdventureConfig {
 		bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", 96, 0, 1024, "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.");
 		bossAnnounceVolume = c.getFloat("Boss Announce Volume", "bosses", bossAnnounceVolume, 0, 1, "The volume of the boss announcement sound. 0 to disable. This control is clientside.");
 		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", true, "If the boss announcement range ignores y-level.");
-		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 400, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
+		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 1800, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
 
 		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.02|NEEDS_SKY", "minecraft:the_nether|0.03|ANY", "minecraft:the_end|0.02|NEEDS_SURFACE", "twilightforest:twilight_forest|0.05|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();
@@ -228,6 +221,20 @@ public class AdventureConfig {
 		rogueSpawnerAttempts = c.getInt("Rogue Spawner Attempts", "worldgen", 4, 0, 256, "The number of rogue spawner generation attempts per-chunk.");
 
 		spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
+
+		reforgeCosts.clear();
+		int num = 1;
+		for (LootRarity r : LootRarity.values()) {
+			int matCost = c.getInt("Material Cost", "reforging." + r.id(), 2, 0, 64, "The amount of rarity materials it costs to reforge at this rarity.");
+			int dustCost = c.getInt("Gem Dust Cost", "reforging." + r.id(), 2, 0, 64, "The amount of gem dust it costs to reforge at this rarity.");
+			int levelCost = c.getInt("XP Level Cost", "reforging." + r.id(), num * 5, 0, 65536, "The amount of xp levels it costs to reforge at this rarity.");
+			reforgeCosts.put(r, new ReforgeData(matCost, dustCost, levelCost));
+			num++;
+		}
+
+	}
+
+	public record ReforgeData(int matCost, int dustCost, int levelCost) {
 	}
 
 	public static boolean canGenerateIn(WorldGenLevel world) {

@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -14,6 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -28,11 +30,14 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.json.ItemAdapter;
 import shadows.placebo.json.JsonUtil;
 import shadows.placebo.json.NBTAdapter;
@@ -121,7 +126,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	}
 
 	/**
-	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
+	 * Whenever an entity that has this affix on one of its associated items is damaged this method will be
 	 * called.
 	 */
 	public void doPostHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, @Nullable Entity attacker) {
@@ -145,7 +150,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	/**
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
-	public void onArrowImpact(LootRarity rarity, float level, AbstractArrow arrow, HitResult res, HitResult.Type type) {
+	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, float level, HitResult res, HitResult.Type type) {
 	}
 
 	/**
@@ -169,6 +174,52 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	 */
 	public void onBlockBreak(ItemStack stack, LootRarity rarity, float level, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
 
+	}
+
+	/**
+	 * Allows an affix to reduce durability damage to an item.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param user    The user of the item, if applicable.
+	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
+	 */
+	public float getDurabilityBonusPercentage(ItemStack stack, LootRarity rarity, float level, @Nullable ServerPlayer user) {
+		return 0;
+	}
+
+	/**
+	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
+	 * If the value is set to zero or below, the event will be cancelled.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param src     The Damage Source of the attack.
+	 * @param ent     The entity being attacked.
+	 * @param amount  The amount of damage that is to be taken.
+	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
+	 */
+	public float onHurt(ItemStack stack, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
+		return amount;
+	}
+
+	/**
+	 * Returns true if this affix enables telepathy.
+	 */
+	public boolean enablesTelepathy() {
+		return false;
+	}
+
+	/**
+	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
+	 * @param stack    The stack with the affix.
+	 * @param rarity   The rarity of the item.
+	 * @param level    The level of the affix.
+	 * @param ench     The enchantment being queried for.
+	 * @param oldLevel The original level, before modification.
+	 * @return         The bonus level to be added to the current enchantment.
+	 */
+	public void getEnchantmentLevels(ItemStack stack, LootRarity rarity, float level, Map<Enchantment, Integer> enchantments) {
 	}
 
 	@Override

@@ -1,0 +1,28 @@
+{
+    "name": "Gem Cutting",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+			"text": "The $(9)Gem Cutting Table$() is used to upgrade $(l:apotheosis:adventure/affix_loot/gems)Gems$(). Gems can be upgraded by increasing their rarity or increasing the number of facets."
+		},
+		{
+			"title": "Rarity",
+            "type": "patchouli:text",
+            "text": "Like an Affix Item, each gem has a $(l:apotheosis:adventure/affix_loot/rarities)rarity$(). The rarity, alongside the number of facets, determines the strength of the gem.$(p)The rarity of a gem can be upgraded by combining two $(9)Flawless$() gems of the same rarity."
+        },
+		{
+			"title": "Facets",
+            "type": "patchouli:text",
+            "text": "Every gem has $(9)Facets$(), a measure of the relative strength for a gem. A gem can be cut, increasing the number of facets, with rarity materials.$(p)A gem with the minimum number of facets is referred to as $(7)Cracked$(), while a gem with the maximum amount is known as $(9)Flawless$()."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "The maximum number of facets a gem may have varies by gem and by rarity, but the minimum number of facets that any gem may have is four."
+		}
+	]
+}

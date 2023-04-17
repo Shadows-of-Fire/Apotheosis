@@ -1,0 +1,13 @@
+{
+    "name": "冰霜荆棘",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)冰霜荆棘$()是一个胸甲魔咒。$(p)它对攻击者施加缓慢效果。持续时间和强度随魔咒等级而变化。$(p)它与$(9)荆棘$()互斥。"
+        }
+	]
+}

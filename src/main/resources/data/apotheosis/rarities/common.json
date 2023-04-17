@@ -1,0 +1,13 @@
+{
+	"weight": 400,
+	"quality": 0,
+	"rules": [{
+			"type": "stat",
+			"chance": 1.0
+		},
+		{
+			"type": "stat",
+			"chance": 0.25
+		}
+	]
+}

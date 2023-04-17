@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -8,18 +7,16 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Vec3i;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -42,6 +39,14 @@ import shadows.placebo.util.PlaceboUtil;
 
 public class RadialAffix extends Affix {
 
+	//Formatter::off
+	public static final Codec<RadialAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			LootRarity.mapCodec(Codec.list(RadialData.CODEC)).fieldOf("values").forGetter(a -> a.values))
+			.apply(inst, RadialAffix::new)
+		);
+	//Formatter::on
+
 	private static Set<UUID> breakers = new HashSet<>();
 
 	protected final Map<LootRarity, List<RadialData>> values;
@@ -53,7 +58,7 @@ public class RadialAffix extends Affix {
 
 	@Override
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.BREAKER && this.values.containsKey(rarity);
+		return LootCategory.forItem(stack).isBreaker() && this.values.containsKey(rarity);
 	}
 
 	@Override
@@ -81,52 +86,17 @@ public class RadialAffix extends Affix {
 		return list.get(Math.min(list.size() - 1, (int) Mth.lerp(level, 0, list.size())));
 	}
 
-	static class RadialData {
-		final int x, y, xOff, yOff;
-
-		public RadialData(int x, int y, int xOff, int yOff) {
-			this.x = x;
-			this.y = y;
-			this.xOff = xOff;
-			this.yOff = yOff;
-		}
-
-		public void write(FriendlyByteBuf buf) {
-			buf.writeVarIntArray(new int[] { x, y, xOff, yOff });
-		}
-
-		public static RadialData read(FriendlyByteBuf buf) {
-			int[] arr = buf.readVarIntArray();
-			return new RadialData(arr[0], arr[1], arr[2], arr[3]);
-		}
-	}
-
-	public static Affix read(JsonObject obj) {
-		Map<LootRarity, List<RadialData>> values = GSON.fromJson(GsonHelper.getAsJsonObject(obj, "values"), new TypeToken<Map<LootRarity, List<RadialData>>>() {
-		}.getType());
-		return new RadialAffix(values);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, list) -> {
-			b.writeByte(list.size());
-			list.forEach(d -> d.write(b));
-		});
-	}
-
-	public static Affix read(FriendlyByteBuf buf) {
-		Map<LootRarity, List<RadialData>> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> {
-			int size = b.readByte();
-			List<RadialData> list = new ArrayList<>();
-			for (int i = 0; i < size; i++)
-				list.add(RadialData.read(b));
-			return list;
-		});
-		return new RadialAffix(values);
+	static record RadialData(int x, int y, int xOff, int yOff) {
+		//Formatter::off
+		public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+				Codec.INT.fieldOf("x").forGetter(RadialData::x),
+				Codec.INT.fieldOf("y").forGetter(RadialData::y),
+				Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
+				Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
+				.apply(inst, RadialData::new)
+			);
+		//Formatter::on
 	}
 
 	/**

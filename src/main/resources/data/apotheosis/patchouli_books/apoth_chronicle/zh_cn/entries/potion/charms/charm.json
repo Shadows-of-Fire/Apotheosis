@@ -1,0 +1,28 @@
+{
+    "name": "药水护符",
+    "icon": "apotheosis:potion_charm",
+    "category": "apotheosis:potion/charms",
+	"flag": "apotheosis:potion",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)药水护符$()是一个全新的物品，可以帮助你充分利用你的药水。$(p)看，虽然普通的药水需要你喝下它并一次性使用整个效果，但$(9)药水护符$()可以让你错开它。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:potion_charm",
+			"title": "药水护符合成",
+            "text": "护符由三瓶同样的药水和一些烈焰粉组成。$(p)单个护符的持续时间比三瓶药水加起来还要长。"
+        },
+		{
+            "type": "patchouli:text",
+			"title": "使用药水护符",
+            "text": "$(9)药水护符$()只有在启用时才会被激活。$(p)要启用一个护符，只需拿在手里右击。$(p)启用的护符将会开始发光。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "只要护符处于激活状态并在你的物品栏中，它就会给你施加药水效果并消耗耐久度。$(p)护符每次只能施加几秒钟的药水效果。$(p)当护符的耐久度耗尽时，它就会损坏。"
+        }
+	]
+}

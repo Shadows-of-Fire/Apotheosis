@@ -1,0 +1,13 @@
+{
+    "name": "弹飞",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)弹飞$()是一种用于胸甲和护腿的魔咒。$(p)它使所有近战攻击者被击飞到远离装备者的地方。$(p)更高等级会增加距离。"
+        }
+	]
+}

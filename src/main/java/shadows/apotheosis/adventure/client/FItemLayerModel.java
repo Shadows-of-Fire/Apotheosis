@@ -116,7 +116,7 @@ public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
 			var renderTypes = renderTypeName != null ? context.getRenderType(renderTypeName) : null;
 			builder.addQuads(renderTypes != null ? renderTypes : normalRenderTypes, quads);
 		}
-
+		
 		return builder.build();
 	}
 

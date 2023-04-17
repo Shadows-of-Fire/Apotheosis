@@ -8,7 +8,7 @@
 	"stack": {
 		"item": "twilightforest:ice_bow"
 	},
-	"type": "BOW",
+	"type": "bow",
   "min_rarity": "uncommon",
   "max_rarity": "epic",
   "dimensions": [

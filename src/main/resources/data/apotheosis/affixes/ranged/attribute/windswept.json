@@ -35,9 +35,9 @@
 		}
 	},
 	"types": [
-		"BOW",
-		"CROSSBOW",
-		"TRIDENT",
-		"ARMOR"
+		"bow",
+		"crossbow",
+		"trident",
+		"helmet", "chestplate", "leggings", "boots"
 	]
 }

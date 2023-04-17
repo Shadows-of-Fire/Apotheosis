@@ -1,0 +1,13 @@
+{
+    "name": "引诱",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)引诱$()是一个锄魔咒。$(p)当拿着带有这个魔咒的锄时，所有的动物都会像拿着它们的繁殖物品一样跟着你。"
+        }
+	]
+}

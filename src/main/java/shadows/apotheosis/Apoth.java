@@ -25,8 +25,12 @@ import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.ench.anvil.AnvilTile;
@@ -107,6 +111,7 @@ public class Apoth {
 		public static final RegistryObject<BossSpawnerBlock> BOSS_SPAWNER = R.block("BOSS_SPAWNER");
 		public static final RegistryObject<ReforgingTableBlock> REFORGING_TABLE = R.block("REFORGING_TABLE");
 		public static final RegistryObject<SalvagingTableBlock> SALVAGING_TABLE = R.block("SALVAGING_TABLE");
+		public static final RegistryObject<GemCuttingBlock> GEM_CUTTING_TABLE = R.block("gem_cutting_table");
 	}
 
 	public static final class Items {
@@ -193,17 +198,18 @@ public class Apoth {
 	}
 
 	public static final class Effects {
-		public static final RegistryObject<SunderingEffect> SUNDERING = R.effect("SUNDERING");
-		public static final RegistryObject<KnowledgeEffect> KNOWLEDGE = R.effect("KNOWLEDGE");
-		public static final RegistryObject<MobEffect> BLEEDING = R.effect("BLEEDING");
+		public static final RegistryObject<SunderingEffect> SUNDERING = R.effect("sundering");
+		public static final RegistryObject<KnowledgeEffect> KNOWLEDGE = R.effect("knowledge");
+		public static final RegistryObject<MobEffect> BLEEDING = R.effect("bleeding");
 	}
 
 	public static final class Menus {
-		public static final RegistryObject<MenuType<FletchingContainer>> FLETCHING = R.menu("FLETCHING");
-		public static final RegistryObject<MenuType<EnchLibraryContainer>> LIBRARY = R.menu("LIBRARY");
-		public static final RegistryObject<MenuType<ApothEnchantContainer>> ENCHANTING_TABLE = R.menu("ENCHANTING_TABLE");
-		public static final RegistryObject<MenuType<ReforgingMenu>> REFORGING = R.menu("REFORGING");
-		public static final RegistryObject<MenuType<SalvagingMenu>> SALVAGE = R.menu("SALVAGE");
+		public static final RegistryObject<MenuType<FletchingContainer>> FLETCHING = R.menu("fletching");
+		public static final RegistryObject<MenuType<EnchLibraryContainer>> LIBRARY = R.menu("library");
+		public static final RegistryObject<MenuType<ApothEnchantContainer>> ENCHANTING_TABLE = R.menu("enchanting_table");
+		public static final RegistryObject<MenuType<ReforgingMenu>> REFORGING = R.menu("reforging");
+		public static final RegistryObject<MenuType<SalvagingMenu>> SALVAGE = R.menu("salvage");
+		public static final RegistryObject<MenuType<GemCuttingMenu>> GEM_CUTTING = R.menu("gem_cutting");
 	}
 
 	public static final class Tiles {
@@ -268,6 +274,10 @@ public class Apoth {
 		 * Arrow Velocity. Base value = (1.0) = 100% default arrow velocity
 		 */
 		public static final RegistryObject<Attribute> ARROW_VELOCITY = R.attribute("ARROW_VELOCITY");
+		/**
+		 * Experience mulitplier, from killing mobs or breaking ores. Base value = (1.0) = 100% xp gained.
+		 */
+		public static final RegistryObject<Attribute> EXPERIENCE_GAINED = R.attribute("experience_gained");
 	}
 
 	public static final class Affixes {
@@ -282,6 +292,12 @@ public class Apoth {
 		public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("breaker/special/radial"));
 	}
 
+	public static final class Gems {
+		// Implicit
+		@SuppressWarnings("removal")
+		public static final DynamicRegistryObject<shadows.apotheosis.adventure.affix.socket.gem.LegacyGem> LEGACY = GemManager.INSTANCE.makeObj(Apotheosis.loc("legacy"));
+	}
+
 	public static final class Tags {
 		public static final TagKey<Item> BOON_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "boon_drops"));
 		public static final TagKey<Item> SPEARFISHING_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"));
@@ -291,6 +307,7 @@ public class Apoth {
 		public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType("apotheosis:fletching");
 		public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
 		public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
+		public static final RecipeType<SalvagingRecipe> SALVAGING = PlaceboUtil.makeRecipeType("apotheosis:salvaging");
 	}
 
 	public static final class LootTables {

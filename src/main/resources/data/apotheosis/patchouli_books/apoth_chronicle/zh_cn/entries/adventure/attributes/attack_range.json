@@ -1,0 +1,17 @@
+{
+    "name": "攻击范围",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "你的$(9)攻击范围$()是你可以用近战武器攻击目标的最大距离。$(p)通常发现于武器。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)基础值：$()3.0$(p)$(9)$(n)最大值：$()1024$(p)"
+		}
+	]
+}

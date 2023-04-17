@@ -1,0 +1,19 @@
+{
+    "name": "伤害吸收",
+    "icon": "minecraft:textures/mob_effect/absorption.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)伤害吸收$()是一个有趣的效果。$(p)每级给予2颗额外的临时心。$(p)然而，这些心在持续期间不会刷新，所以还是使用$(l:apotheosis:potion/charms/charm)药水护符$()比较好。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "酿造配方",
+			"item": "minecraft:golden_apple",
+            "text": "这种药水可以用粗制的药水和金苹果酿造。$(p)它可以被延长、加强，或者用通常的材料变成喷溅药水。"
+        }
+	]
+}

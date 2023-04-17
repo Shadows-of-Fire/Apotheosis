@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -7,6 +8,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,10 +23,14 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.placebo.events.GetEnchantmentLevelEvent;
 
 public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarity, float level) {
 
@@ -126,8 +132,59 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 		return this.affix.onShieldBlock(this.stack, this.rarity, this.level, entity, source, amount);
 	}
 
+	/**
+	 * Called when a player with this affix breaks a block.
+	 * @param player The breaking player.
+	 * @param world  The level the block was broken in.
+	 * @param pos    The position of the block.
+	 * @param state  The state that was broken.
+	 */
 	public void onBlockBreak(Player player, LevelAccessor world, BlockPos pos, BlockState state) {
 		this.affix.onBlockBreak(this.stack, this.rarity, this.level, player, world, pos, state);
 	}
 
+	/**
+	 * Allows an affix to reduce durability damage to an item.
+	 * @param stack   The stack with the affix.
+	 * @param rarity  The rarity of the item.
+	 * @param level   The level of the affix.
+	 * @param user    The user of the item, if applicable.
+	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
+	 */
+	public float getDurabilityBonusPercentage(@Nullable ServerPlayer user) {
+		return this.affix.getDurabilityBonusPercentage(this.stack, this.rarity, this.level, user);
+	}
+
+	/**
+	 * Called when an arrow that was marked with this affix hits a target.
+	 */
+	public void onArrowImpact(AbstractArrow arrow, HitResult res, HitResult.Type type) {
+		this.affix.onArrowImpact(arrow, rarity, level, res, type);
+	}
+
+	public boolean enablesTelepathy() {
+		return this.affix.enablesTelepathy();
+	}
+
+	/**
+	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
+	 * If the value is set to zero or below, the event will be cancelled.
+	 * @param src     The Damage Source of the attack.
+	 * @param ent     The entity being attacked.
+	 * @param amount  The amount of damage that is to be taken.
+	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
+	 */
+	public float onHurt(DamageSource src, LivingEntity ent, float amount) {
+		return this.affix.onHurt(stack, rarity, level, src, ent, amount);
+	}
+
+	/**
+	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
+	 * @param ench     The enchantment being queried for.
+	 * @param oldLevel The original level of the enchantment, before modification.
+	 * @return         The bonus level to be added to the current enchantment.
+	 */
+	public void getEnchantmentLevels(Map<Enchantment, Integer> enchantments) {
+		this.affix.getEnchantmentLevels(stack, rarity, level, enchantments);
+	}
 }

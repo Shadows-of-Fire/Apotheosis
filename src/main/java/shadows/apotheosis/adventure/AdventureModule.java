@@ -54,13 +54,16 @@ import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvageItem;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
-import shadows.apotheosis.adventure.affix.socket.GemItem;
-import shadows.apotheosis.adventure.affix.socket.GemManager;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
+import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import shadows.apotheosis.adventure.boss.BossArmorManager;
 import shadows.apotheosis.adventure.boss.BossDungeonFeature;
 import shadows.apotheosis.adventure.boss.BossDungeonFeature2;
@@ -79,6 +82,7 @@ import shadows.apotheosis.adventure.loot.AffixLootPoolEntry;
 import shadows.apotheosis.adventure.loot.GemLootModifier;
 import shadows.apotheosis.adventure.loot.GemLootPoolEntry;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.adventure.loot.LootRarityManager;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
 import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
@@ -94,6 +98,8 @@ public class AdventureModule {
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
 
 	public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
+
+	public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
@@ -113,6 +119,7 @@ public class AdventureModule {
 		BossArmorManager.INSTANCE.registerToBus();
 		BossItemManager.INSTANCE.registerToBus();
 		RandomSpawnerManager.INSTANCE.registerToBus();
+		LootRarityManager.INSTANCE.registerToBus();
 		Apotheosis.HELPER.registerProvider(f -> {
 			f.addRecipe(new SocketingRecipe());
 			f.addRecipe(new ExpulsionRecipe());
@@ -126,6 +133,7 @@ public class AdventureModule {
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
 			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());
+			LootSystem.defaultBlockTable(Apoth.Blocks.GEM_CUTTING_TABLE.get());
 			AdventureGeneration.init();
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
@@ -157,6 +165,7 @@ public class AdventureModule {
 		}
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "reforging_table");
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "salvaging_table");
+		e.getRegistry().register(new BlockItem(Apoth.Blocks.GEM_CUTTING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_cutting_table");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sigil_of_socketing");
 		e.getRegistry().register(new GlowyItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "superior_sigil_of_socketing");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sigil_of_enhancement");
@@ -168,6 +177,7 @@ public class AdventureModule {
 		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable()), "boss_spawner");
 		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5, 1000F)), "reforging_table");
 		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "salvaging_table");
+		e.getRegistry().register(new GemCuttingBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "gem_cutting_table");
 	}
 
 	@SubscribeEvent
@@ -182,6 +192,7 @@ public class AdventureModule {
 		e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE, "expulsion");
 		e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE, "extraction");
 		e.getRegistry().register(AddSocketsRecipe.Serializer.INSTANCE, "add_sockets");
+		e.getRegistry().register(SalvagingRecipe.Serializer.INSTANCE, "salvaging");
 	}
 
 	@SubscribeEvent
@@ -200,6 +211,7 @@ public class AdventureModule {
 	public void containers(Register<MenuType<?>> e) {
 		e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new), "reforging");
 		e.getRegistry().register(new MenuType<>(SalvagingMenu::new), "salvage");
+		e.getRegistry().register(new MenuType<>(GemCuttingMenu::new), "gem_cutting");
 	}
 
 	@SubscribeEvent
@@ -218,7 +230,8 @@ public class AdventureModule {
 				new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1024.0D).setSyncable(true), "ghost_health",
 				new RangedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true), "mining_speed",
 				new RangedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_damage",
-				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity"
+				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity",
+				new RangedAttribute("apotheosis:experience_gained", 1.0D, 0.0D, 1024.0D).setSyncable(true), "experience_gained"
 		);
 		//Formatter::on
 	}
@@ -240,7 +253,8 @@ public class AdventureModule {
 					Apoth.Attributes.GHOST_HEALTH,
 					Apoth.Attributes.MINING_SPEED,
 					Apoth.Attributes.ARROW_DAMAGE,
-					Apoth.Attributes.ARROW_VELOCITY);
+					Apoth.Attributes.ARROW_VELOCITY,
+					Apoth.Attributes.EXPERIENCE_GAINED);
 			//Formatter::on
 		});
 	}

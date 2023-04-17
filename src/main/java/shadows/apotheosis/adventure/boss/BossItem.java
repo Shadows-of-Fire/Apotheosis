@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Preconditions;
 import com.google.gson.annotations.SerializedName;
 
@@ -39,6 +41,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.affix.AffixHelper;
+import shadows.apotheosis.adventure.boss.MinibossItem.SupportingEntity;
+import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -52,7 +56,7 @@ import shadows.placebo.json.RandomAttributeModifier;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
-public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped {
+public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
 	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
@@ -61,6 +65,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	protected EntityType<?> entity;
 	protected AABB size;
 	protected Map<LootRarity, BossStats> stats;
+	protected @Nullable Set<String> stages;
 
 	@SerializedName("valid_gear_sets")
 	protected List<SetPredicate> armorSets;
@@ -75,6 +80,8 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
 	@SerializedName("max_rarity")
 	protected LootRarity maxRarity;
+
+	protected SupportingEntity mount;
 
 	public BossItem() {
 		// No ctor, not meant to be created via code
@@ -113,7 +120,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	 * @param world The world to create the entity in.
 	 * @param pos The location to place the entity.  Will be centered (+0.5, +0.5).
 	 * @param random A random, used for selection of boss stats.
-	 * @return The newly created boss.
+	 * @return The newly created boss, or it's mount, if it had one.
 	 */
 	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
 		Mob entity = (Mob) this.entity.create(world.getLevel());
@@ -122,6 +129,13 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		// Re-read here so we can apply certain things after the boss has been modified
 		// But only mob-specific things, not a full load()
 		if (this.customNbt != null) entity.readAdditionalSaveData(this.customNbt);
+
+		if (this.mount != null) {
+			Mob mountedEntity = (Mob) this.mount.create(world.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+			entity.startRiding(mountedEntity);
+			entity = mountedEntity;
+		}
+
 		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
 		return entity;
 	}
@@ -156,7 +170,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
 		for (EquipmentSlot t : EquipmentSlot.values()) {
 			ItemStack s = entity.getItemBySlot(t);
-			if (!s.isEmpty() && LootCategory.forItem(s) != LootCategory.NONE) {
+			if (!s.isEmpty() && !LootCategory.forItem(s).isNone()) {
 				anyValid = true;
 				break;
 			}
@@ -175,13 +189,11 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(s);
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
-			else entity.setDropChance(s, 0.03F);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck, rarity));
 				entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
 			} else if (rand.nextFloat() < stats.enchantChance) {
-				List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[0] : stats.enchLevels[1], true);
-				EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max, HashMap::new)), stack);
+				enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[0] : stats.enchLevels[1], true);
 				entity.setItemSlot(s, stack);
 			}
 		}
@@ -191,18 +203,31 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
 	}
 
+	public void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {
+		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, level, treasure);
+		var map = ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max));
+		map.putAll(EnchantmentHelper.getEnchantments(stack));
+		EnchantmentHelper.setEnchantments(map, stack);
+	}
+
 	public ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity) {
 		BossStats stats = this.stats.get(rarity);
-		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[2] : stats.enchLevels[3], true);
-		EnchantmentHelper.setEnchantments(ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max)), stack);
+		enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels[2] : stats.enchLevels[3], true);
 
 		NameHelper.setItemName(rand, stack);
 		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
 
-		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName) + " ";
+		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName);
 		Component name = AffixHelper.getName(stack);
 		if (name.getContents() instanceof TranslatableContents tc) {
-			Component copy = Component.translatable(bossOwnerName + tc.getKey(), tc.getArgs()).withStyle(name.getStyle());
+			String oldKey = tc.getKey();
+			String newKey = oldKey.equals("misc.apotheosis.affix_name.two") ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
+			Object[] newArgs = new Object[tc.getArgs().length + 1];
+			newArgs[0] = bossOwnerName;
+			for (int i = 1; i < newArgs.length; i++) {
+				newArgs[i] = tc.getArgs()[i - 1];
+			}
+			Component copy = Component.translatable(newKey, newArgs).withStyle(name.getStyle().withItalic(false));
 			AffixHelper.setName(stack, copy);
 		}
 
@@ -240,7 +265,10 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		if (this.maxRarity != null) {
 			Preconditions.checkArgument(this.minRarity == null || this.maxRarity.isAtLeast(this.minRarity));
 		}
-		LootRarity r = LootRarity.COMMON.max(this.minRarity);
+		if (this.mount != null) {
+			Preconditions.checkNotNull(this.mount.entity, "Boss Item " + this.id + " has an invalid mount");
+		}
+		LootRarity r = LootRarity.max(LootRarity.COMMON, this.minRarity);
 		while (r != LootRarity.ANCIENT) {
 			Preconditions.checkNotNull(this.stats.get(r));
 			if (r == this.maxRarity) break;
@@ -252,6 +280,11 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	@Override
 	public Set<ResourceLocation> getDimensions() {
 		return this.dimensions;
+	}
+
+	@Override
+	public Set<String> getStages() {
+		return this.stages;
 	}
 
 }

@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
-import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.StepFunction;
@@ -27,6 +26,14 @@ import shadows.placebo.util.StepFunction;
  * Damage Chain
  */
 public class ThunderstruckAffix extends Affix {
+
+	//Formatter::off
+	public static final Codec<ThunderstruckAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+			.apply(inst, ThunderstruckAffix::new)
+		);
+	//Formatter::on
 
 	protected final Map<LootRarity, StepFunction> values;
 
@@ -58,24 +65,6 @@ public class ThunderstruckAffix extends Affix {
 
 	private float getTrueLevel(LootRarity rarity, float level) {
 		return this.values.get(rarity).get(level);
-	}
-
-	public static Affix read(JsonObject obj) {
-		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
-		return new ThunderstruckAffix(values);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
-	}
-
-	public static Affix read(FriendlyByteBuf buf) {
-		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
-		return new ThunderstruckAffix(values);
 	}
 
 }

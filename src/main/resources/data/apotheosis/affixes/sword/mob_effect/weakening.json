@@ -45,8 +45,8 @@
 		}
 	},
 	"types": [
-		"SWORD",
-		"TRIDENT",
-		"HEAVY_WEAPON"
+		"sword",
+		"trident",
+		"heavy_weapon"
 	]
 }
