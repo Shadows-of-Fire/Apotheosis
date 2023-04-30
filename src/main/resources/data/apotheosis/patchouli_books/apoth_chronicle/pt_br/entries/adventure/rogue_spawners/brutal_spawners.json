@@ -1,0 +1,17 @@
+{
+    "name": "Brutal Spawners",
+    "icon": "minecraft:zombie_head",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A brutal spawner is a subtype of rogue spawner that spawns mobs that are stronger than usual.$(p)These mobs will have higher health, armor, and damage than their typical counterparts, and are resistant to fire."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "The only upside is that these spawners have a significant delay before summoning reinforcements."
+        }
+	]
+}

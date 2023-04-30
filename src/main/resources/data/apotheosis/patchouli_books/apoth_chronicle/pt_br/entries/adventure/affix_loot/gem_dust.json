@@ -1,0 +1,15 @@
+{
+    "name": "Gem Dust",
+    "icon": "apotheosis:gem_dust",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:gem_dust",
+			"link_recipe": true,
+            "text": "All Apotheotic Gems can be reduced to $(9)Gem Dust$() via crushing.$(p)Specifically, they must be crushed with an anvil in-world."
+        }
+	]
+}

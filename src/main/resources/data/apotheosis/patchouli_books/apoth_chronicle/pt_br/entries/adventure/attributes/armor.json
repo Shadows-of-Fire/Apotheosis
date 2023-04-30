@@ -1,0 +1,17 @@
+{
+    "name": "Armor",
+    "icon": "minecraft:iron_chestplate",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Armor$() is a measure of how resistant you are to physical damage.$(p)Usually provided by armor, and some shields."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 40$(p)Note: In vanilla, the max value is 30.  Apotheosis raises the cap to 40, and also changes armor math."
+		}
+	]
+}

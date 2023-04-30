@@ -1,0 +1,17 @@
+{
+    "name": "Attack Damage",
+    "icon": "minecraft:diamond_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Attack Damage$() is the attribute that controls how much damage your attacks do.$(p)Typically, weapons will provide this stat."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024"
+		}
+	]
+}

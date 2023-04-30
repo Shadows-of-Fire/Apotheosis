@@ -1,0 +1,40 @@
+{
+    "name": "Gems",
+    "icon": "apotheosis:gem",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A $(9)Gem$() is a crystal of condensed strength.$(p)When socketed into an affix item, a Gem will provide a powerful bonus.$(p)Gems may give different bonuses in different items, and can be upgraded."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Obtaining Gems",
+			"text": "Gems can be found in chest loot, and may rarely be found when killing mobs. However, for a gem to drop, the killer must be a real player, not a machine or other automation source.$(p)Gems are more likely to drop from Bosses."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Socketing Gems",
+			"text": "To socket a gem into an item, combine the two in a Smithing Table.$(p)Each gem states which items it may fit in.$(p)Some gems are $(#C73912)Unique$(), meaning that only one copy of that gem may be socketed in an item."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Removing Gems",
+			"text": "Removing gems from an item was a difficult process, but some clever alchemists figured out how to do it.$(p)Their notes are detailed on the next couple pages."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:vial_of_expulsion",
+			"title": "Searing Expulsion",
+			"text": "Combine a socketed item with a $(9)Vial of Searing Expulsion$() in a smithing table to remove the gems, destroying them in the process."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:vial_of_extraction",
+			"title": "Arcane Extraction",
+			"text": "Combine a socketed item with a $(9)Vial of Arcane Extraction$() in a smithing table to retrieve the gems, destroying the item in the process."
+		}
+	]
+}

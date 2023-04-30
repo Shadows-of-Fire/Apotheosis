@@ -1,0 +1,7 @@
+{
+    "name": "Utility Items",
+    "description": "This section details all the random tools used to make enchanting easier.",
+    "icon": "apotheosis:library",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

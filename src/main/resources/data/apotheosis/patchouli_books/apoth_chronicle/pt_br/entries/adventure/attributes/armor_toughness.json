@@ -1,0 +1,17 @@
+{
+    "name": "Armor Toughness",
+    "icon": "minecraft:netherite_chestplate",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Armor Toughness$() is a stat that adjusts how effective your armor is against higher damaging attacks.$(p)Usually provided by armor, and some shields."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 30$(p)Note: In vanilla, the max value is 20.  Apotheosis raises the cap to 30, and also changes armor math."
+		}
+	]
+}

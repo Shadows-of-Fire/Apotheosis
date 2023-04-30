@@ -1,0 +1,17 @@
+{
+    "name": "Max Health",
+    "icon": "minecraft:apple",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Max Health$() controls the number of health points (HP) you have. One point is half a heart.$(p)Usually provided by armor or shields."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 20$(p)$(9)$(n)Max Value:$() 1024"
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Crit Damage",
+    "icon": "minecraft:netherite_axe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Crit Damage$() is the amount of damage your critical strikes do, relative to a normal attack. A value of 2 = 2x normal damage.$(p)Jump crits are boosted by this amount when they occur.$(p)Found on melee weapons."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024$(p)"
+		}
+	]
+}

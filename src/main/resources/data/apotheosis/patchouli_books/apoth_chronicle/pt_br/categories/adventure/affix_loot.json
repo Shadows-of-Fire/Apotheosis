@@ -1,0 +1,7 @@
+{
+    "name": "Saque de afixo",
+    "description": "Enquanto estiver se aventurando, você pode encontrar itens com vários bônus.$(p)Esses são itens de afixo, relíquias do passado com vários graus de poder.",
+    "icon": "minecraft:chest",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

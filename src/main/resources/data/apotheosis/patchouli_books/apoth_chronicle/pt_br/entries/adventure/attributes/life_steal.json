@@ -1,0 +1,17 @@
+{
+    "name": "Life Steal",
+    "icon": "apotheosis:textures/mob_effect/bleeding.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Your $(9)Life Steal$() is the percentage of your physical damage dealt that is added directly to your health.$(p)Generally, only weapons provide this stat."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024$(p)Note: A value of 1.0 is actually 0% life steal, but if the base was zero, percentage modifiers would have no effect, and flat modifiers don't convey the bonus correctly."
+		}
+	]
+}

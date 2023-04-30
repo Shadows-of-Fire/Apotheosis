@@ -1,0 +1,17 @@
+{
+    "name": "Boss Items",
+    "icon": "minecraft:ender_chest",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Every boss is empowered with exactly one affix item, alongside the rest of their fully enchanted gear.$(p)This affix item is guaranteed to be dropped on death, and has a higher chance to be of a higher rarity than other sources of affix loot."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "This item alone is the trophy you will take from slaying a boss, and it is likely to be worth it.$(p)As a memento of the original owner, every boss item will have the boss's name prefixed to the item's name."
+		}
+	]
+}

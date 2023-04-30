@@ -1,0 +1,25 @@
+{
+    "name": "Protection",
+    "icon": "minecraft:netherite_chestplate",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+		{
+            "type": "patchouli:text",
+            "text": "$(9)Protection$() is no longer exclusive with the subtypes of protection.$(p)This means you can now have $(9)Protection$() and one other defensive enchantment that is normally exclusive."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "To account for this, the effectiveness of protection enchantments is modified slightly.$(p)Understanding how means learning a bit about how protection works, and some math.$(p)To begin, we introduce the concept of a Damage Reduction (DR) point, which is the stat that all defensive enchantments benefit."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "The $(9)Protection$() enchant provides 1 point against all damage types.$(p)Specialized enchants provide 2 points against one specific type.$(p)$(9)Feather Falling$() provides 3 points against fall damage."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "The first 20 points provide 4% DR each, up to 80% total.$(p)In Vanilla, 20 points is the max, and any extra have no effect.$(p)With Apotheosis, the next 45 points provide an additional 0.33% each, up to 95% total (at 65 points).$(p)Armor is applied before enchantments."
+        }
+	]
+}

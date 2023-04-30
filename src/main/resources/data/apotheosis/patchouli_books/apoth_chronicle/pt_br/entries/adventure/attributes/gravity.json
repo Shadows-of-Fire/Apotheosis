@@ -1,0 +1,17 @@
+{
+    "name": "Gravity",
+    "icon": "minecraft:elytra",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Gravity$() is how fast you fall down, in blocks per second squared.$(p)Could be found on anything, or nothing, who knows."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 0.08$(p)$(9)$(n)Max Value:$() 8$(p)Note: Gravity can go negative. With negative gravity, you float upwards."
+		}
+	]
+}

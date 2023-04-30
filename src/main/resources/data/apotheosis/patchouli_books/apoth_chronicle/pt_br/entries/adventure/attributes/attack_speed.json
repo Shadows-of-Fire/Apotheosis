@@ -1,0 +1,17 @@
+{
+    "name": "Attack Speed",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Attack Speed$() controls how frequently you can attack. If your attack speed is 2, you can attack twice per second.$(p)Various items can increase your attack speed."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 4$(p)$(9)$(n)Max Value:$() 1024$(p)Note: Weapons will usually specify their own attack speed, ignoring the base value of 4."
+		}
+	]
+}

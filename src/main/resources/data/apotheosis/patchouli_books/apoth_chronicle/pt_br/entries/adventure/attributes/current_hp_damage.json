@@ -1,0 +1,17 @@
+{
+    "name": "Current HP Damage",
+    "icon": "minecraft:dragon_head",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Current HP Damage$() is a type of on-hit damage.  Every hit, you will deal a percentage of the target's current health as additional damage.$(p)This stat is only found on heavy weapons."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024$(p)Note: A value of 1.0 is actually 0% current hp damage, but if the base was zero, percentage modifiers would have no effect, and flat modifiers don't convey the bonus correctly."
+		}
+	]
+}

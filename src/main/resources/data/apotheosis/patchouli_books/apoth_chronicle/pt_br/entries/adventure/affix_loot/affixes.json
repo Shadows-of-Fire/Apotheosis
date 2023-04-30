@@ -1,0 +1,38 @@
+{
+    "name": "Affixes",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "An $(6)Affix$() is the driving force behind Affix Items. Each affix is very similar to an enchantment, providing a specific bonus to the item it is attached to.$(p)This book will not list all the affixes, as that is for you to figure out, but it will help explain them."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Affix Types",
+			"text": "There are a few different types of affixes, each type having a specific set of functionality it can provide.$(p)What types of affixes are applied to an item are dependent on the item's $(l:apotheosis:adventure/affix_loot/rarities)Rarity$()."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Stat Affixes",
+			"text": "The most common type of affixes are stat affixes. These affixes provide a simple bonus to a specific attribute, and are available across all rarities.  Higher rarities receive additional stat affixes."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Effect Affixes",
+			"text": "Effect affixes are the most interesting type of affix. They have free range to add all sorts of additional functionality to your items, ranging from simple utility bonuses to strong combat effects.$(p)These can only be found on Rare+ items."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Sockets",
+			"text": "A Socket is a special type of affix that simply provides a vessel for a $(l:apotheosis:adventure/affix_loot/gems)Gem$().$(p)Gems can convey great bonuses, but can be difficult to find."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "The Durability Affix",
+			"text": "The Durability Affix makes an item more resistant to damage, and is present on all Rare+ items.$(p)It applies after all other damage resistances, making it multiplicative with Unbreaking."
+		}
+	]
+}

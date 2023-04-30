@@ -1,0 +1,17 @@
+{
+    "name": "Reach Distance",
+    "icon": "minecraft:iron_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Your $(9)Reach Distance$() is the maximum distance at which you can reach an object. When you can reach an object, you can interact with it, or break it, if it's a block.$(p)Usually found on tools that break blocks, since it isn't useful for weapons."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Base Value:$() 4.5$(p)$(9)$(n)Max Value:$() 1024$(p)"
+		}
+	]
+}
