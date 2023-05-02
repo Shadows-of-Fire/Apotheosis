@@ -40,26 +40,63 @@ import shadows.placebo.config.Configuration;
  */
 public class NameHelper {
 
+	//Formatter::off
 	/**
 	 * List of all possible full names.
 	*/
-	private static String[] names = { "Michael Morbius", "Morbius", "Arun", "Panez", "Doomsday", "Vanamar", "WhatTheDrunk", "Lothrazar", "Chelly", "Chelicia", "Darsh", "Dariush", "Cheese E Piloza", "Bing", "Royal", "NoWayHere", "SwankyStella", "Isosahedron", "Asfalis", "CloWn", "Biz", "Icicle", "Darko", "Shadows", "Kat", "Jank", "Albert", "Andrew", "Anderson", "Andy", "Allan", "Arthur", "Aaron", "Allison", "Arielle", "Amanda", "Anne", "Annie", "Amy", "Alana", "Brandon", "Brady", "Bernard", "Ben", "Benjamin", "Bob", "Bobette", "Brooke", "Brandy", "Beatrice", "Bea", "Bella", "Becky", "Carlton", "Carl", "Calvin", "Cameron", "Carson", "Chase", "Cassandra", "Cassie", "Cas", "Carol", "Carly", "Cherise", "Charlotte", "Cheryl", "Chasity", "Danny", "Drake", "Daniel", "Derrel", "David", "Dave", "Donovan", "Don", "Donald", "Drew", "Derrick", "Darla", "Donna", "Dora", "Danielle", "Edward", "Elliot", "Ed", "Edson", "Elton", "Eddison", "Earl", "Eric", "Ericson", "Eddie", "Ediovany", "Emma", "Elizabeth", "Eliza", "Esperanza", "Esper", "Esmeralda", "Emi", "Emily", "Elaine", "Fernando", "Ferdinand", "Fred", "Feddie", "Fredward", "Frank", "Franklin", "Felix", "Felicia", "Fran", "Greg", "Gregory", "George", "Gerald", "Gina", "Geraldine", "Gabby", "Hendrix", "Henry", "Hobbes", "Herbert", "Heath", "Henderson", "Helga", "Hera", "Helen", "Helena", "Hannah", "Ike", "Issac", "Israel", "Ismael", "Irlanda", "Isabelle", "Irene", "Irenia", "Jimmy", "Jim", "Justin", "Jacob", "Jake", "Jon", "Johnson", "Jonny", "Jonathan", "Josh", "Joshua", "Julian", "Jesus", "Jericho", "Jeb", "Jess", "Joan", "Jill", "Jillian", "Jessica", "Jennifer", "Jenny", "Jen", "Judy", "Kenneth", "Kenny", "Ken", "Keith", "Kevin", "Karen", "Kassandra", "Kassie", "Leonard", "Leo", "Leroy", "Lee", "Lenny", "Luke", "Lucas", "Liam", "Lorraine", "Latasha", "Lauren", "Laquisha", "Livia", "Lydia", "Lila", "Lilly", "Lillian", "Lilith", "Lana", "Mason", "Mike", "Mickey", "Mario", "Manny", "Mark", "Marcus", "Martin", "Marty", "Matthew", "Matt", "Max", "Maximillian", "Marth", "Mia", "Marriah", "Maddison", "Maddie", "Marissa", "Miranda", "Mary", "Martha", "Melonie", "Melody", "Mel", "Minnie", "Nathan", "Nathaniel", "Nate", "Ned", "Nick", "Norman", "Nicholas", "Natasha", "Nicki", "Nora", "Nelly", "Nina", "Orville", "Oliver", "Orlando", "Owen", "Olsen", "Odin", "Olaf", "Ortega", "Olivia", "Patrick", "Pat", "Paul", "Perry", "Pinnochio", "Patrice", "Patricia", "Pennie", "Petunia", "Patti", "Pernelle", "Quade", "Quincy", "Quentin", "Quinn", "Roberto", "Robbie", "Rob", "Robert", "Roy", "Roland", "Ronald", "Richard", "Rick", "Ricky", "Rose", "Rosa", "Rhonda", "Rebecca", "Roberta", "Sparky", "Shiloh", "Stephen", "Steve", "Saul", "Sheen", "Shane", "Sean", "Sampson", "Samuel", "Sammy", "Stefan", "Sasha", "Sam", "Susan", "Suzy", "Shelby", "Samantha", "Sheila", "Sharon", "Sally", "Stephanie", "Sandra", "Sandy", "Sage", "Tim", "Thomas", "Thompson", "Tyson", "Tyler", "Tom", "Tyrone", "Timmothy", "Tamara", "Tabby", "Tabitha", "Tessa", "Tiara", "Tyra", "Uriel", "Ursala", "Uma", "Victor", "Vincent", "Vince", "Vance", "Vinny", "Velma", "Victoria", "Veronica", "Wilson", "Wally", "Wallace", "Will", "Wilard", "William", "Wilhelm", "Xavier", "Xandra", "Young", "Yvonne", "Yolanda", "Zach", "Zachary" };
+	private static String[] names = { "Prim", "Tyrael", "Bajorno", "Michael Morbius", "Morbius", "Arun", "Panez", "Doomsday", "Vanamar", "WhatTheDrunk", 
+			"Lothrazar", "Chelly", "Chelicia", "Darsh", "Dariush", "Cheese E Piloza", "Bing", "Royal", "NoWayHere", "SwankyStella", "Isosahedron",
+			"Asfalis", "Biz", "Icicle", "Darko", "Shadows", "Katarina", "Faellynna", "Diliviel", "Jank", "Albert", "Andrew", "Anderson", "Andy", "Allan",
+			"Arthur", "Aaron", "Allison", "Arielle", "Amanda", "Anne", "Annie", "Amy", "Alana", "Brandon", "Brady", "Bernard", "Ben", "Benjamin", "Bob", 
+			"Bobette", "Brooke", "Brandy", "Beatrice", "Bea", "Bella", "Becky", "Carlton", "Carl", "Calvin", "Cameron", "Carson", "Chase", "Cassandra", 
+			"Cassie", "Cas", "Carol", "Carly", "Cherise", "Charlotte", "Cheryl", "Chasity", "Danny", "Drake", "Daniel", "Derrel", "David", "Dave", "Donovan",
+			"Don", "Donald", "Drew", "Derrick", "Darla", "Donna", "Dora", "Danielle", "Edward", "Elliot", "Ed", "Edson", "Elton", "Eddison", "Earl", "Eric", 
+			"Ericson", "Eddie", "Ediovany", "Emma", "Elizabeth", "Eliza", "Esperanza", "Esper", "Esmeralda", "Emi", "Emily", "Elaine", "Fernando", "Ferdinand", 
+			"Fred", "Feddie", "Fredward", "Frank", "Franklin", "Felix", "Felicia", "Fran", "Greg", "Gregory", "George", "Gerald", "Gina", "Geraldine", "Gabby", 
+			"Hendrix", "Henry", "Hobbes", "Herbert", "Heath", "Henderson", "Helga", "Hera", "Helen", "Helena", "Hannah", "Ike", "Issac", "Israel", "Ismael", "Irlanda", 
+			"Isabelle", "Irene", "Irenia", "Jimmy", "Jim", "Justin", "Jacob", "Jake", "Jon", "Johnson", "Jonny", "Jonathan", "Josh", "Joshua", "Julian", "Jesus", 
+			"Jericho", "Jeb", "Jess", "Joan", "Jill", "Jillian", "Jessica", "Jennifer", "Jenny", "Jen", "Judy", "Kenneth", "Kenny", "Ken", "Keith", "Kevin", "Karen",
+			"Kassandra", "Kassie", "Leonard", "Leo", "Leroy", "Lee", "Lenny", "Luke", "Lucas", "Liam", "Lorraine", "Latasha", "Lauren", "Laquisha", "Livia", 
+			"Lydia", "Lila", "Lilly", "Lillian", "Lilith", "Lana", "Mason", "Mike", "Mickey", "Mario", "Manny", "Mark", "Marcus", "Martin", "Marty", "Matthew", 
+			"Matt", "Max", "Maximillian", "Marth", "Mia", "Marriah", "Maddison", "Maddie", "Marissa", "Miranda", "Mary", "Martha", "Melonie", "Melody", "Mel", 
+			"Minnie", "Nathan", "Nathaniel", "Nate", "Ned", "Nick", "Norman", "Nicholas", "Natasha", "Nicki", "Nora", "Nelly", "Nina", "Orville", "Oliver", 
+			"Orlando", "Owen", "Olsen", "Odin", "Olaf", "Ortega", "Olivia", "Patrick", "Pat", "Paul", "Perry", "Pinnochio", "Patrice", "Patricia", "Pennie", 
+			"Petunia", "Patti", "Pernelle", "Quade", "Quincy", "Quentin", "Quinn", "Roberto", "Robbie", "Rob", "Robert", "Roy", "Roland", "Ronald", "Richard", 
+			"Rick", "Ricky", "Rose", "Rosa", "Rhonda", "Rebecca", "Roberta", "Sparky", "Shiloh", "Stephen", "Steve", "Saul", "Sheen", "Shane", "Sean", "Sampson", 
+			"Samuel", "Sammy", "Stefan", "Sasha", "Sam", "Susan", "Suzy", "Shelby", "Samantha", "Sheila", "Sharon", "Sally", "Stephanie", "Sandra", "Sandy", 
+			"Sage", "Tim", "Thomas", "Thompson", "Tyson", "Tyler", "Tom", "Tyrone", "Timmothy", "Tamara", "Tabby", "Tabitha", "Tessa", "Tiara", "Tyra", "Uriel", 
+			"Ursala", "Uma", "Victor", "Vincent", "Vince", "Vance", "Vinny", "Velma", "Victoria", "Veronica", "Wilson", "Wally", "Wallace", "Will", "Wilard", 
+			"William", "Wilhelm", "Xavier", "Xandra", "Young", "Yvonne", "Yolanda", "Zach", "Zachary" };
 
 	/**
 	 * List of all name parts.
 	 */
-	private static String[] nameParts = { "Morb", "Ius", "Chel", "Bing", "Darsh", "Jank", "Dark", "Osto", "Grab", "Thar", "Ger", "Ald", "Mas", "On", "O", "Din", "Thor", "Jon", "Ath", "Burb", "En", "A", "E", "I", "U", "Hab", "Bloo", "Ena", "Dit", "Aph", "Ern", "Bor", "Dav", "Id", "Toast", "Son", "Dottir", "Kinky", "Crow", "For", "Wen", "Lob", "Ed", "Die", "Van", "Y", "Zap", "Ear", "Ben", "Don", "Bran", "Gro", "Jen", "Bob", "Ette", "Ere", "Man", "Qua", "Bro", "Cree", "Per", "Skel", "Ton", "Zom", "Bie", "Wolf", "End", "Er", "Pig", "Sil", "Ver", "Fish", "Cow", "Chic", "Ken", "Sheep", "Squid", "Hell" };
+	private static String[] nameParts = { "Prim", "Morb", "Ius", "Kat", "Chel", "Bing", "Darsh", "Jank", "Dark", "Osto", "Grab", "Thar", 
+			"Ger", "Ald", "Mas", "On", "O", "Din", "Thor", "Jon", "Ath", "Burb", "En", "A", "E", "I", "U", "Hab", "Bloo", "Ena", 
+			"Dit", "Aph", "Ern", "Bor", "Dav", "Id", "Toast", "Son", "For", "Wen", "Lob", "Van", "Zap", "Ear", "Ben", "Don", "Bran",
+			"Gro", "Jen", "Bob", "Ette", "Ere", "Man", "Qua", "Bro", "Cree", "Per", "Skel", "Ton", "Zom", "Bie", "Wolf", "End", "Er", 
+			"Pig", "Sil", "Ver", "Fish", "Cow", "Chic", "Ken", "Sheep", "Squid", "Hell" };
 
 	/**
 	 * List of prefixes, that are optionally applied to names.
 	 */
-	private static String[] prefixes = { "Dr. Michael", "Sir", "Mister", "Madam", "Doctor", "Father", "Mother", "Poppa", "Lord", "Lady", "Overseer", "Professor" };
+	private static String[] prefixes = { "Dr. Michael", "Sir", "Mister", "Madam", "Doctor", "Father", "Mother", "Poppa", "Lord", "Lady", "Overseer", "Professor", 
+			"Mr.", "Mr. President", "Duke", "Duchess", "Dame", "The Honorable", "Chancellor", "Vice-Chancellor", "His Holiness", "Reverend", "Count", "Viscount",
+			"Earl", "Captain", "Major", "General", "Senpai" };
 
 	/**
 	 * List of suffixes, that are optionally applied to names.  A suffix will always be preceeded by "the"
 	 * That is, selecting "Mighty" from this list would incur the addition of "The Mighty" to the name.
 	 */
-	private static String[] suffixes = { "Morbius", "Dragonborn", "Rejected", "Mighty", "Supreme", "Superior", "Ultimate", "Lame", "Wimpy", "Curious", "Sneaky", "Pathetic", "Crying", "Eagle", "Errant", "Unholy", "Questionable", "Mean", "Hungry", "Thirsty", "Feeble", "Wise", "Sage", "Magical", "Mythical", "Legendary", "Not Very Nice", "Jerk", "Doctor", "Misunderstood", "Angry", "Knight", "Bishop", "Godly", "Special", "Toasty", "Shiny", "Shimmering", "Light", "Dark", "Odd-Smelling", "Funky", "Rock Smasher", "Son of Herobrine", "Cracked", "Sticky", "\u00a7kAlien\u00a7r", "Baby", "Manly", "Rough", "Scary", "Undoubtable", "Honest", "Non-Suspicious", "Boring", "Odd", "Lazy", "Super", "Nifty", "Ogre Slayer", "Pig Thief", "Dirt Digger", "Really Cool", "Doominator", "... Something", "Extra-Fishy", "Gorilla Slaughterer", "Marbles Winner" };
+	private static String[] suffixes = { "Morbius", "Dragonborn", "Rejected", "Mighty", "Supreme", "Superior", "Ultimate", "Lame", "Wimpy", "Curious", "Sneaky", 
+			"Pathetic", "Crying", "Eagle", "Errant", "Unholy", "Questionable", "Mean", "Hungry", "Thirsty", "Feeble", "Wise", "Sage", "Magical", "Mythical", 
+			"Legendary", "Not Very Nice", "Jerk", "Doctor", "Misunderstood", "Angry", "Knight", "Bishop", "Godly", "Special", "Toasty", "Shiny", "Shimmering", 
+			"Light", "Dark", "Odd-Smelling", "Funky", "Rock Smasher", "Son of Herobrine", "Cracked", "Sticky", "\u00a7kAlien\u00a7r", "Baby", "Manly", "Rough", 
+			"Scary", "Undoubtable", "Honest", "Non-Suspicious", "Boring", "Odd", "Lazy", "Super", "Nifty", "Ogre Slayer", "Pig Thief", "Dirt Digger", "Really Cool", 
+			"Doominator", "... Something", "Extra-Fishy", "Gorilla Slaughterer", "Marbles Winner", "AC Rizzlord", "President", "Burger Chef", "Professional Animator", 
+			"Cheese Sprayer", "Happiness Advocate", "Ghost Hunter", "Head of Potatoes", "Ninja", "Warrior", "Pyromancer"
+			};
+	//Formatter::on
 
 	/**
 	 * Possible primary names for helmets.
@@ -162,10 +199,10 @@ public class NameHelper {
 	 */
 	public static String nameFromParts(RandomSource random) {
 		String name = NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)] + NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
-		if (random.nextFloat() <= 0.75F) {
+		if (random.nextFloat() < 0.4F) {
 			name += NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
 		}
-		if (random.nextBoolean()) {
+		if (random.nextFloat() < 0.15F) {
 			name += NameHelper.nameParts[random.nextInt(NameHelper.nameParts.length)].toLowerCase();
 		}
 		return name;
@@ -182,7 +219,7 @@ public class NameHelper {
 		String root;
 
 		if (names.length > 0 && nameParts.length > 0) {
-			root = rand.nextBoolean() ? NameHelper.names[rand.nextInt(NameHelper.names.length)] : NameHelper.nameFromParts(rand);
+			root = rand.nextFloat() < 0.8F ? NameHelper.names[rand.nextInt(NameHelper.names.length)] : NameHelper.nameFromParts(rand);
 		} else if (names.length > 0) {
 			root = NameHelper.names[rand.nextInt(NameHelper.names.length)];
 		} else {
@@ -190,8 +227,10 @@ public class NameHelper {
 		}
 
 		String name = root;
-		if (rand.nextBoolean() && prefixes.length > 0) name = NameHelper.prefixes[rand.nextInt(NameHelper.prefixes.length)] + " " + name;
-		if (rand.nextFloat() <= 0.8F && suffixes.length > 0) {
+		if (rand.nextFloat() < 0.3F && prefixes.length > 0) {
+			name = NameHelper.prefixes[rand.nextInt(NameHelper.prefixes.length)] + " " + name;
+		}
+		if (rand.nextFloat() < 0.8F && suffixes.length > 0) {
 			name = String.format(suffixFormat, name, NameHelper.suffixes[rand.nextInt(NameHelper.suffixes.length)]);
 		}
 		entity.setCustomName(Component.literal(name));

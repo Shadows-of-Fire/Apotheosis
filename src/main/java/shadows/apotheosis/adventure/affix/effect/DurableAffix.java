@@ -8,8 +8,11 @@ import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 
 public class DurableAffix extends Affix {
+
+	public static final PSerializer<DurableAffix> SERIALIZER = PSerializer.builtin("Durability Affix", DurableAffix::new);
 
 	public DurableAffix() {
 		super(AffixType.DURABILITY);
@@ -28,6 +31,11 @@ public class DurableAffix extends Affix {
 	@Override
 	public float getDurabilityBonusPercentage(ItemStack stack, LootRarity rarity, float level, ServerPlayer user) {
 		return level;
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

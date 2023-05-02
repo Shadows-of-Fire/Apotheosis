@@ -26,6 +26,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.codec.EnumCodec;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 /**
@@ -43,6 +44,7 @@ public class AttributeAffix extends Affix {
 			.apply(inst, AttributeAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<AttributeAffix> SERIALIZER = PSerializer.fromCodec("Attribute Affix", CODEC);
 
 	protected final Attribute attribute;
 	protected final Operation operation;
@@ -89,6 +91,11 @@ public class AttributeAffix extends Affix {
 		if (cat.isNone()) return false;
 		return (this.types.isEmpty() || this.types.contains(cat)) && this.modifiers.containsKey(rarity);
 	};
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
+	}
 
 	public record ModifierInst(Attribute attr, Operation op, StepFunction valueFactory, Map<EquipmentSlot, UUID> cache) {
 

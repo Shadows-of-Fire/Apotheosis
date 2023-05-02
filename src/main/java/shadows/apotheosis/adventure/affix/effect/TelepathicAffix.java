@@ -22,6 +22,7 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 
 /**
  * Teleport Drops
@@ -35,6 +36,7 @@ public class TelepathicAffix extends Affix {
 			.apply(inst, TelepathicAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<TelepathicAffix> SERIALIZER = PSerializer.fromCodec("Telepathic Affix", CODEC);
 
 	public static Vec3 blockDropTargetPos = null;
 
@@ -62,6 +64,11 @@ public class TelepathicAffix extends Affix {
 	@Override
 	public boolean enablesTelepathy() {
 		return true;
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 	// EventPriority.LOWEST

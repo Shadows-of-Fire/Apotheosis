@@ -36,6 +36,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.boss.MinibossManager.IEntityMatch;
 import shadows.apotheosis.adventure.client.BossSpawnMessage;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
@@ -45,7 +46,7 @@ public class BossEvents {
 
 	public Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
 
-	@SubscribeEvent(priority = EventPriority.HIGH)
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void naturalBosses(LivingSpawnEvent.SpecialSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL || e.getSpawnReason() == MobSpawnType.CHUNK_GENERATION) {
 			LivingEntity entity = e.getEntity();
@@ -78,6 +79,22 @@ public class BossEvents {
 						bossCooldowns.put(entity.level.dimension().location(), AdventureConfig.bossSpawnCooldown);
 					}
 				}
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void minibosses(LivingSpawnEvent.SpecialSpawn e) {
+		LivingEntity entity = e.getEntity();
+		RandomSource rand = e.getLevel().getRandom();
+		if (!e.getLevel().isClientSide() && entity instanceof Mob mob && e.getResult() != Result.DENY) {
+			ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
+			Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
+			if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
+			MinibossItem item = MinibossManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
+			if (item != null && !item.isExcluded(mob, sLevel, e.getSpawnReason())) {
+				item.transformMiniboss(sLevel, mob, rand, player.getLuck());
+				e.setCanceled(true);
 			}
 		}
 	}

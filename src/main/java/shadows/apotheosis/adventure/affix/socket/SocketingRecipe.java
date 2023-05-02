@@ -31,9 +31,9 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 	@Override
 	public boolean matches(Container pInv, Level pLevel) {
 		ItemStack gemStack = pInv.getItem(1);
-		Gem gem = GemItem.getGemOrLegacy(gemStack);
+		Gem gem = GemItem.getGem(gemStack);
 		if (gem == null) return false;
-		if (SocketHelper.getEmptySockets(pInv.getItem(0)) == 0) return false;
+		if (!SocketHelper.hasEmptySockets(pInv.getItem(0))) return false;
 		return gem.canApplyTo(pInv.getItem(0), gemStack, GemItem.getLootRarity(gemStack));
 	}
 
@@ -44,10 +44,16 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 	public ItemStack assemble(Container pInv) {
 		ItemStack out = pInv.getItem(0).copy();
 		if (out.isEmpty()) return ItemStack.EMPTY;
+		out.setCount(1);
 		int sockets = SocketHelper.getSockets(out);
-		int free = SocketHelper.getEmptySockets(out);
 		List<ItemStack> gems = SocketHelper.getGems(out, sockets);
-		gems.set(sockets - free, pInv.getItem(1));
+		for (int idx = 0; idx < gems.size(); idx++) {
+			Gem gem = GemItem.getGem(gems.get(idx));
+			if (gem == null) {
+				gems.set(idx, pInv.getItem(1));
+				break;
+			}
+		}
 		SocketHelper.setGems(out, gems);
 		return out;
 	}

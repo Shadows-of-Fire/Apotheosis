@@ -12,6 +12,7 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 
 /**
  * Disengage
@@ -25,6 +26,7 @@ public class RetreatingAffix extends Affix {
 			.apply(inst, RetreatingAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<RetreatingAffix> SERIALIZER = PSerializer.fromCodec("Retreating Affix", CODEC);
 
 	protected LootRarity minRarity;
 
@@ -48,6 +50,11 @@ public class RetreatingAffix extends Affix {
 			entity.setOnGround(false);
 		}
 		return super.onShieldBlock(stack, rarity, level, entity, source, amount);
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

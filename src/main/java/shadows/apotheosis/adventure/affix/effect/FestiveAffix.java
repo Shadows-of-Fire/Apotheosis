@@ -30,6 +30,7 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 /**
@@ -44,6 +45,7 @@ public class FestiveAffix extends Affix {
 			.apply(inst, FestiveAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<FestiveAffix> SERIALIZER = PSerializer.fromCodec("Festive Affix", CODEC);
 	
 	protected final Map<LootRarity, StepFunction> values;
 
@@ -119,6 +121,11 @@ public class FestiveAffix extends Affix {
 
 	public void write(FriendlyByteBuf buf) {
 		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 	public static Affix read(FriendlyByteBuf buf) {

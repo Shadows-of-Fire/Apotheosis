@@ -31,7 +31,6 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
-import shadows.apotheosis.adventure.affix.socket.gem.LegacyGem;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.util.RarityIngredient;
@@ -113,7 +112,7 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
 			builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
 		} else {
 			if (input.size() == 1 && !input.get(0).hasTag() && input.get(0).getItem() == Apoth.Items.GEM.get()) {
-				input = GemManager.INSTANCE.getValues().stream().filter(g -> g != LegacyGem.INSTANCE).map(gem -> GemManager.createGemStack(gem, new LegacyRandomSource(0), null, 0)).toList();
+				input = GemManager.INSTANCE.getValues().stream().map(gem -> GemManager.createGemStack(gem, new LegacyRandomSource(0), null, 0)).toList();
 			}
 			builder.addSlot(RecipeIngredientRole.INPUT, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
 		}

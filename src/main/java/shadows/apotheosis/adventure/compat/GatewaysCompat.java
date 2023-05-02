@@ -1,13 +1,14 @@
 package shadows.apotheosis.adventure.compat;
 
+import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-import javax.annotation.Nullable;
-
-import com.google.gson.JsonObject;
+import com.google.common.base.Suppliers;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.boss.BossItem;
 import shadows.apotheosis.adventure.boss.BossItemManager;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
@@ -26,42 +28,48 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.gateways.entity.GatewayEntity;
 import shadows.gateways.gate.Reward;
 import shadows.gateways.gate.WaveEntity;
-import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
-@SuppressWarnings("removal")
 public class GatewaysCompat {
 
 	public static void register() {
-		WaveEntity.SERIALIZERS.put(new ResourceLocation("apotheosis:boss"), BossWaveEntity.SERIALIZER);
-		Reward.SERIALIZERS.put("apotheosis:affix", PSerializer.autoRegister("Rarity Affix Reward", RarityAffixItemReward.class).build(true));
+		WaveEntity.CODECS.put(Apotheosis.loc("boss"), BossWaveEntity.CODEC);
+		Reward.CODECS.put(Apotheosis.loc("affix"), RarityAffixItemReward.CODEC);
 	}
 
 	public static class BossWaveEntity implements WaveEntity {
 
-		static final PSerializer<WaveEntity> SERIALIZER = PSerializer.<WaveEntity>autoRegister("Boss Wave Entity", BossWaveEntity.class).build(true);
+		//Formatter::off
+		public static Codec<BossWaveEntity> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+				ResourceLocation.CODEC.optionalFieldOf("boss").forGetter(b -> b.bossId))
+				.apply(inst, BossWaveEntity::new)
+			);
+		//Formatter::on
 
-		private final @Nullable BossItem boss;
+		private final Optional<ResourceLocation> bossId;
+		private final Supplier<BossItem> boss;
 
-		public BossWaveEntity(@Nullable BossItem boss) {
-			this.boss = boss;
+		public BossWaveEntity(Optional<ResourceLocation> bossId) {
+			this.bossId = bossId;
+			this.boss = Suppliers.memoize(() -> bossId.map(BossItemManager.INSTANCE::getValue).orElse(null));
 		}
 
 		@Override
 		public LivingEntity createEntity(Level level) {
-			BossItem realBoss = this.boss == null ? BossItemManager.INSTANCE.getRandomItem(level.random) : this.boss;
+			BossItem realBoss = this.bossId.isEmpty() ? BossItemManager.INSTANCE.getRandomItem(level.random) : this.boss.get();
 			if (realBoss == null) return null; // error condition
 			return realBoss.createBoss((ServerLevelAccessor) level, BlockPos.ZERO, level.random, 0);
 		}
 
 		@Override
 		public Component getDescription() {
-			return Component.translatable("misc.apotheosis.boss", Component.translatable(this.boss == null ? "misc.apotheosis.random" : boss.getEntity().getDescriptionId()));
+			return Component.translatable("misc.apotheosis.boss", Component.translatable(this.bossId.isEmpty() ? "misc.apotheosis.random" : boss.get().getEntity().getDescriptionId()));
 		}
 
 		@Override
 		public AABB getAABB(double x, double y, double z) {
-			return this.boss == null ? new AABB(0, 0, 0, 2, 2, 2).move(x, y, z) : this.boss.getSize();
+			return this.bossId.isEmpty() ? new AABB(0, 0, 0, 2, 2, 2).move(x, y, z) : this.boss.get().getSize();
 		}
 
 		@Override
@@ -70,28 +78,8 @@ public class GatewaysCompat {
 		}
 
 		@Override
-		public PSerializer<WaveEntity> getSerializer() {
-			return SERIALIZER;
-		}
-
-		public JsonObject write() {
-			JsonObject entityData = new JsonObject();
-			if (this.boss != null) entityData.addProperty("boss", boss.getId().toString());
-			return entityData;
-		}
-
-		public static WaveEntity read(JsonObject obj) {
-			BossItem boss = obj.has("boss") ? BossItemManager.INSTANCE.getValue(new ResourceLocation(obj.get("boss").getAsString())) : null;
-			return new BossWaveEntity(boss);
-		}
-
-		public void write(FriendlyByteBuf buf) {
-			buf.writeResourceLocation(this.boss == null ? new ResourceLocation("null", "null") : this.boss.getId());
-		}
-
-		public static WaveEntity read(FriendlyByteBuf buf) {
-			BossItem boss = BossItemManager.INSTANCE.getValue(buf.readResourceLocation());
-			return new BossWaveEntity(boss);
+		public Codec<? extends WaveEntity> getCodec() {
+			return CODEC;
 		}
 	}
 
@@ -100,40 +88,28 @@ public class GatewaysCompat {
 	 */
 	public static record RarityAffixItemReward(LootRarity rarity) implements Reward {
 
+		//Formatter::off
+		public static Codec<RarityAffixItemReward> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+				LootRarity.CODEC.fieldOf("rarity").forGetter(RarityAffixItemReward::rarity))
+				.apply(inst, RarityAffixItemReward::new)
+			);
+		//Formatter::on
+
 		@Override
 		public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
 			list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), rarity, level.random));
 		}
 
 		@Override
-		public JsonObject write() {
-			JsonObject obj = Reward.super.write();
-			obj.addProperty("rarity", rarity.id());
-			return obj;
-		}
-
-		public static RarityAffixItemReward read(JsonObject obj) {
-			return new RarityAffixItemReward(LootRarity.byId(obj.get("rarity").getAsString()));
-		}
-
-		@Override
-		public void write(FriendlyByteBuf buf) {
-			Reward.super.write(buf);
-			buf.writeUtf(this.rarity.id());
-		}
-
-		public static RarityAffixItemReward read(FriendlyByteBuf buf) {
-			return new RarityAffixItemReward(LootRarity.byId(buf.readUtf()));
-		}
-
-		@Override
-		public String getName() {
-			return "apotheosis:affix";
-		}
-
-		@Override
 		public void appendHoverText(Consumer<Component> list) {
 			list.accept(Component.translatable("reward.apotheosis.affix", this.rarity.toComponent()));
 		}
+
+		@Override
+		public Codec<? extends Reward> getCodec() {
+			return CODEC;
+		}
+
 	}
 }

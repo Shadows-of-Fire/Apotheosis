@@ -27,7 +27,7 @@ public class SocketHelper {
 
 	public static List<ItemStack> getGems(ItemStack stack, int size) {
 		List<ItemStack> gems = NonNullList.withSize(size, ItemStack.EMPTY);
-		if (size == 0) return gems;
+		if (size == 0 || stack.isEmpty()) return gems;
 		int i = 0;
 		CompoundTag afxData = stack.getTagElement(AffixHelper.AFFIX_DATA);
 		if (afxData != null && afxData.contains(GEMS)) {
@@ -65,8 +65,8 @@ public class SocketHelper {
 		AffixHelper.setAffixes(stack, affixes);
 	}
 
-	public static int getEmptySockets(ItemStack stack) {
-		return (int) getGems(stack).stream().filter(ItemStack::isEmpty).count();
+	public static boolean hasEmptySockets(ItemStack stack) {
+		return getGems(stack).stream().map(GemItem::getGem).anyMatch(Objects::isNull);
 	}
 
 }

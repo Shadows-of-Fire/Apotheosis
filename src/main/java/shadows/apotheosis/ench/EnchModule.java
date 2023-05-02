@@ -85,7 +85,9 @@ import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import shadows.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
+import shadows.apotheosis.ench.objects.ExtractionTomeItem;
 import shadows.apotheosis.ench.objects.GlowyBlockItem;
+import shadows.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
@@ -313,7 +315,9 @@ public class EnchModule {
 				new BlockItem(Apoth.Blocks.SIGHTSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sightshelf",
 				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sightshelf_t2",
 				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "inert_trident",
-				new BlockItem(Apoth.Blocks.ENDER_LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "ender_library"
+				new BlockItem(Apoth.Blocks.ENDER_LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "ender_library",
+				new ImprovedScrappingTomeItem(), "improved_scrap_tome",
+				new ExtractionTomeItem(), "extraction_tome"
 				);
 		//Formatter::on
 	}

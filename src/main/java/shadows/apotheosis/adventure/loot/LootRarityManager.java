@@ -6,21 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
-import com.google.gson.Gson;
 
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.loot.LootRarity.RarityStub;
 import shadows.placebo.json.DynamicRegistryObject;
-import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.PlaceboJsonReloadListener;
 
 /**
  * Handles loading the configurable portion of rarities.
  */
 public class LootRarityManager extends PlaceboJsonReloadListener<RarityStub> {
-
-	public static final Gson GSON = AffixLootManager.GSON;
 
 	public static final LootRarityManager INSTANCE = new LootRarityManager();
 
@@ -48,7 +44,7 @@ public class LootRarityManager extends PlaceboJsonReloadListener<RarityStub> {
 		Preconditions.checkArgument(MYTHIC.get() != null, "Mythic rarity not registered!");
 		Preconditions.checkArgument(ANCIENT.get() != null, "Ancient rarity not registered!");
 		Preconditions.checkArgument(this.registry.size() == 6, "Registration of additional rarity levels is not supported!");
-		Preconditions.checkArgument(this.registry.values().stream().mapToInt(RarityStub::weight).sum() > 0, "The total weight of all rarities must be above 0");
+		Preconditions.checkArgument(this.registry.values().stream().mapToInt(RarityStub::getWeight).sum() > 0, "The total weight of all rarities must be above 0");
 
 		LootRarity.COMMON.update(COMMON.get());
 		LootRarity.UNCOMMON.update(UNCOMMON.get());
@@ -60,14 +56,14 @@ public class LootRarityManager extends PlaceboJsonReloadListener<RarityStub> {
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, PSerializer.fromCodec("Rarity Stub", RarityStub.CODEC));
+		this.registerSerializer(DEFAULT, RarityStub.SERIALIZER);
 	}
 
 	@Override
 	protected void validateItem(RarityStub item) {
 		super.validateItem(item);
-		Preconditions.checkArgument(item.weight() >= 0, "A rarity may not have negative weight!");
-		Preconditions.checkArgument(item.quality() >= 0, "A rarity may not have negative quality!");
+		Preconditions.checkArgument(item.getWeight() >= 0, "A rarity may not have negative weight!");
+		Preconditions.checkArgument(item.getQuality() >= 0, "A rarity may not have negative quality!");
 		Preconditions.checkArgument(!item.rules().isEmpty(), "A rarity may not have no rules!");
 	}
 

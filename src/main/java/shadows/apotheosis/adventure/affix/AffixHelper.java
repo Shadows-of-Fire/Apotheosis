@@ -20,11 +20,15 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.util.CachedObject.CachedObjectSource;
 import shadows.placebo.util.StepFunction;
 
 public class AffixHelper {
+
+	public static final ResourceLocation AFFIX_CACHED_OBJECT = Apotheosis.loc("affixes");
 
 	public static final String DISPLAY = "display";
 	public static final String LORE = "Lore";
@@ -59,12 +63,22 @@ public class AffixHelper {
 
 	@Nullable
 	public static Component getName(ItemStack stack) {
+		if (!stack.hasTag()) return null;
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
 		if (afxData == null) return null;
 		return Component.Serializer.fromJson(afxData.getString(NAME));
 	}
 
+	/**
+	 * Gets the affixes of an item. Changes to this map will not write-back to the affixes on the itemstack.
+	 * @param stack The stack being queried.
+	 * @return A Map of all affixes on the stack, or an empty map if none were found.
+	 */
 	public static Map<Affix, AffixInstance> getAffixes(ItemStack stack) {
+		return CachedObjectSource.getOrCreate(stack, AFFIX_CACHED_OBJECT, AffixHelper::getAffixesImpl);
+	}
+
+	public static Map<Affix, AffixInstance> getAffixesImpl(ItemStack stack) {
 		Map<Affix, AffixInstance> map = new HashMap<>();
 		if (!hasAffixes(stack)) return map;
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
@@ -87,8 +101,7 @@ public class AffixHelper {
 	}
 
 	public static boolean hasAffixes(ItemStack stack) {
-		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
-		return afxData != null && !afxData.getCompound(AFFIXES).isEmpty();
+		return stack.hasTag() && !stack.getTag().getCompound(AFFIX_DATA).getCompound(AFFIXES).isEmpty();
 	}
 
 	public static void addLore(ItemStack stack, Component lore) {
@@ -137,6 +150,7 @@ public class AffixHelper {
 
 	@Nullable
 	public static LootRarity getRarity(ItemStack stack) {
+		if (!stack.hasTag()) return null;
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
 		return getRarity(afxData);
 	}

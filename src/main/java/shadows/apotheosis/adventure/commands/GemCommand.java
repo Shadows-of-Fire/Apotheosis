@@ -1,11 +1,7 @@
 package shadows.apotheosis.adventure.commands;
 
 import java.util.Arrays;
-import java.util.Locale;
 
-import com.mojang.brigadier.arguments.FloatArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 
@@ -13,16 +9,11 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
@@ -42,20 +33,7 @@ public class GemCommand {
 			ItemStack stack = GemManager.createGemStack(gem, p.random, null, p.getLuck());
 			p.addItem(stack);
 			return 0;
-		}))).then(Commands.literal("custom").then(Commands.argument("attribute", ResourceLocationArgument.id()).suggests(SUGGEST_ATTRIB).then(Commands.argument("op", StringArgumentType.word()).suggests(SUGGEST_OP).then(Commands.argument("value", FloatArgumentType.floatArg()).then(Commands.argument("variant", IntegerArgumentType.integer(0, 11)).executes(c -> {
-			Player p = c.getSource().getPlayerOrException();
-			ItemStack gem = new ItemStack(Apoth.Items.GEM.get());
-			CompoundTag tag = gem.getOrCreateTag();
-			tag.putFloat("variant", c.getArgument("variant", Integer.class));
-			Attribute attrib = ForgeRegistries.ATTRIBUTES.getValue(c.getArgument("attribute", ResourceLocation.class));
-			Operation op = Operation.valueOf(c.getArgument("op", String.class).toUpperCase(Locale.ROOT));
-			float value = c.getArgument("value", Float.class);
-			var modif = new AttributeModifier("cmd-generated-modif", value, op);
-			shadows.apotheosis.adventure.affix.socket.gem.LegacyGem.setStoredBonus(gem, attrib, modif);
-			p.addItem(gem);
-			c.getSource().sendSystemMessage(Component.literal("Custom Gems will be removed in a future release."));
-			return 0;
-		})))))).then(Commands.literal("random").executes(c -> {
+		}))).then(Commands.literal("random").executes(c -> {
 			Player p = c.getSource().getPlayerOrException();
 			ItemStack gem = GemManager.createRandomGemStack(p.random, c.getSource().getLevel(), p.getLuck(), IDimensional.matches(p.level), IStaged.matches(p));
 			p.addItem(gem);

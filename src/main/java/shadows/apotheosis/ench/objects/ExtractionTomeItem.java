@@ -1,14 +1,15 @@
 package shadows.apotheosis.ench.objects;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.google.common.collect.Lists;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,14 +22,14 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import shadows.apotheosis.Apotheosis;
 
-public class ScrappingTomeItem extends BookItem {
+public class ExtractionTomeItem extends BookItem {
 
 	static Random rand = new Random();
 
-	public ScrappingTomeItem() {
+	public ExtractionTomeItem() {
 		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 	}
 
@@ -41,39 +42,46 @@ public class ScrappingTomeItem extends BookItem {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.isEnchanted()) return;
-		tooltip.add(Component.translatable("info.apotheosis.scrap_tome").withStyle(ChatFormatting.GRAY));
-		tooltip.add(Component.translatable("info.apotheosis.scrap_tome2").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("info.apotheosis.extraction_tome").withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("info.apotheosis.extraction_tome2").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
 	public Rarity getRarity(ItemStack stack) {
-		return Rarity.UNCOMMON;
+		return Rarity.EPIC;
 	}
 
 	public static boolean updateAnvil(AnvilUpdateEvent ev) {
 		ItemStack weapon = ev.getLeft();
 		ItemStack book = ev.getRight();
-		if (!(book.getItem() instanceof ScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
+		if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
 
 		Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
-		int size = Mth.ceil(wepEnch.size() / 2D);
-		List<Enchantment> keys = Lists.newArrayList(wepEnch.keySet());
-		long seed = 1831;
-		for (Enchantment e : keys) {
-			seed ^= ForgeRegistries.ENCHANTMENTS.getKey(e).hashCode();
-		}
-		seed ^= ev.getPlayer().getEnchantmentSeed();
-		rand.setSeed(seed);
-		while (wepEnch.keySet().size() > size) {
-			Enchantment lost = keys.get(rand.nextInt(keys.size()));
-			wepEnch.remove(lost);
-			keys.remove(lost);
-		}
 		ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
 		EnchantmentHelper.setEnchantments(wepEnch, out);
 		ev.setMaterialCost(1);
-		ev.setCost(wepEnch.size() * 6);
+		ev.setCost(wepEnch.size() * 16);
 		ev.setOutput(out);
+		return true;
+	}
+
+	protected static void giveItem(Player player, ItemStack stack) {
+		if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
+			player.drop(stack, false);
+		} else {
+			Inventory inventory = player.getInventory();
+			if (inventory.player instanceof ServerPlayer) {
+				inventory.placeItemBackInInventory(stack);
+			}
+		}
+	}
+
+	public static boolean updateRepair(AnvilRepairEvent ev) {
+		ItemStack weapon = ev.getLeft();
+		ItemStack book = ev.getRight();
+		if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
+		EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
+		giveItem(ev.getEntity(), weapon);
 		return true;
 	}
 }

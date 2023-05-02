@@ -19,6 +19,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.codec.EnumCodec;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
@@ -32,6 +33,7 @@ public class DamageReductionAffix extends Affix {
 			.apply(inst, DamageReductionAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<DamageReductionAffix> SERIALIZER = PSerializer.fromCodec("Damage Reduction Affix", CODEC);
 
 	protected final DamageType type;
 	protected final Map<LootRarity, StepFunction> values;
@@ -66,6 +68,11 @@ public class DamageReductionAffix extends Affix {
 
 	private float getTrueLevel(LootRarity rarity, float level) {
 		return this.values.get(rarity).get(level);
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 	public static enum DamageType implements Predicate<DamageSource> {

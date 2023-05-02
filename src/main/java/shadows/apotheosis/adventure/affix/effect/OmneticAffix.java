@@ -26,6 +26,7 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.json.ItemAdapter;
+import shadows.placebo.json.PSerializer;
 
 public class OmneticAffix extends Affix {
 
@@ -36,6 +37,7 @@ public class OmneticAffix extends Affix {
 			.apply(inst, OmneticAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<OmneticAffix> SERIALIZER = PSerializer.fromCodec("Omnetic Affix", CODEC);
 
 	protected final Map<LootRarity, OmneticData> values;
 
@@ -84,6 +86,11 @@ public class OmneticAffix extends Affix {
 				e.setNewSpeed(speed);
 			}
 		}
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 	static record OmneticData(String name, ItemStack[] items) {

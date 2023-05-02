@@ -6,8 +6,25 @@
 * [NYI] Added a method of upgrading rarity materials to the next tier.
 * [NYI] Added the Vial of Unnaming, which can be used to remove the extra name pieces of an affixed item.
 
-## 6.1.6
+## 6.2.0
+* Legacy Gems have now been removed!
+  * All legacy gems will transition to an errored state, and will only be usable for gem dust.
+  * Items with legacy gems will swap to having empty sockets.
+* Updated to Placebo 7.2.0.
+  * This means everything uses codecs now, so error logging and validation should be way better.
 * Bosses now have a `mount` field.
+* Added the Improved Tome of Scrapping and the Tome of Extraction
+  * The Improved Tome of Scrapping will pull all enchantments.
+  * The Tome of Extraction will pull all enchantments and will not destroy the source item.
+  * The XP Cost of the basic Tome of Scrapping has been reduced. The higher tier tomes will have increased costs.
+* Increased the output of the Vial of Extraction and Vial of Expulsion to 2 per craft (recipe unchanged).
+* Reduced the frequency at which the name parts list is used.
+* Resolved a dupe issue with sockets.
+* Added minibosses, a method of converting normal mob spawns to empowered variants.
+* Creative players will no longer trigger boss spawner blocks.
+* Updated the name list for the adventure module. Regenerate names.cfg to get the updates.
+* Affix data now uses the Placebo CachedObject system, which should improve performance substantially.
+* All Gems will now be shown in JEI. The ones shown will be at max rarity and max facets.
 
 ## 6.1.5
 * Fixed an issue where boss names were failing to translate.

@@ -19,7 +19,6 @@ import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.SpawnData;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.placebo.json.NBTAdapter;
-import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem> {
@@ -41,7 +40,7 @@ public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new PSerializer.Builder<SpawnerItem>("Apotheosis Spawner").withJsonDeserializer(obj -> GSON.fromJson(obj, SpawnerItem.class)));
+		this.registerSerializer(DEFAULT, SpawnerItem.SERIALIZER);
 	}
 
 	private static class SpawnDataListAdapter implements JsonDeserializer<SimpleWeightedRandomList<SpawnData>>, JsonSerializer<SimpleWeightedRandomList<SpawnData>> {

@@ -84,6 +84,11 @@ public class MultiAttrBonus extends GemBonus {
 		return this.modifiers.size();
 	}
 
+	@Override
+	public Codec<? extends GemBonus> getCodec() {
+		return CODEC;
+	}
+
 	protected static record ModifierInst(Attribute attr, Operation op, Map<LootRarity, StepFunction> values) {
 
 		//Formatter::off

@@ -22,8 +22,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.UpgradeRecipe;
@@ -62,6 +60,7 @@ import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
 import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import shadows.apotheosis.adventure.boss.BossArmorManager;
@@ -72,6 +71,8 @@ import shadows.apotheosis.adventure.boss.BossItemManager;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import shadows.apotheosis.adventure.boss.BossSummonerItem;
+import shadows.apotheosis.adventure.boss.Exclusion;
+import shadows.apotheosis.adventure.boss.MinibossManager;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.apotheosis.adventure.compat.AdventureTOPPlugin;
 import shadows.apotheosis.adventure.compat.GatewaysCompat;
@@ -120,13 +121,11 @@ public class AdventureModule {
 		BossItemManager.INSTANCE.registerToBus();
 		RandomSpawnerManager.INSTANCE.registerToBus();
 		LootRarityManager.INSTANCE.registerToBus();
+		MinibossManager.INSTANCE.registerToBus();
 		Apotheosis.HELPER.registerProvider(f -> {
 			f.addRecipe(new SocketingRecipe());
 			f.addRecipe(new ExpulsionRecipe());
 			f.addRecipe(new ExtractionRecipe());
-			Item g = Apoth.Items.GEM_DUST.get();
-			f.addShaped(Apoth.Items.VIAL_OF_EXPULSION, 3, 3, g, Items.MAGMA_CREAM, g, Items.BLAZE_ROD, Apotheosis.potionIngredient(Potions.THICK), Items.BLAZE_ROD, g, Items.LAVA_BUCKET, g);
-			f.addShaped(Apoth.Items.VIAL_OF_EXTRACTION, 3, 3, g, Items.AMETHYST_SHARD, g, Items.ENDER_PEARL, Apotheosis.potionIngredient(Potions.THICK), Items.ENDER_PEARL, g, Items.WATER_BUCKET, g);
 		});
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
@@ -137,6 +136,8 @@ public class AdventureModule {
 			AdventureGeneration.init();
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
 			Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
+			Exclusion.initSerializers();
+			GemBonus.initCodecs();
 		});
 	}
 

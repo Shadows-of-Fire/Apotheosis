@@ -24,6 +24,7 @@ import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 public class CleavingAffix extends Affix {
@@ -35,6 +36,7 @@ public class CleavingAffix extends Affix {
 			.apply(inst, CleavingAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<CleavingAffix> SERIALIZER = PSerializer.fromCodec("Cleaving Affix", CODEC);
 
 	protected final Map<LootRarity, CleaveValues> values;
 
@@ -84,6 +86,11 @@ public class CleavingAffix extends Affix {
 			}
 			cleaving = false;
 		}
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 	public static Predicate<Entity> cleavePredicate(Entity user, Entity target) {

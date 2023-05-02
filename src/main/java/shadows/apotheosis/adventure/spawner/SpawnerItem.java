@@ -17,11 +17,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.util.SpawnerStats;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.PSerializer;
+import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 import shadows.placebo.util.ChestBuilder;
 
 public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWeighted {
+
+	public static final PSerializer<SpawnerItem> SERIALIZER = PSerializer.basic("Rogue Spawner", obj -> RandomSpawnerManager.GSON.fromJson(obj, SpawnerItem.class));
 
 	public static final Block[] FILLER_BLOCKS = new Block[] { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
@@ -64,6 +67,11 @@ public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWei
 				world.setBlock(pos.relative(f), Blocks.VINE.defaultBlockState().setValue(side, true), 2);
 			}
 		}
+	}
+
+	@Override
+	public PSerializer<? extends SpawnerItem> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

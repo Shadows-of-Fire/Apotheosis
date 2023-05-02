@@ -60,7 +60,7 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 			AffixLootEntry entry = WeightedRandom.getRandomItem(ctx.getRandom(), this.resolvedEntries.stream().map(e -> e.<AffixLootEntry>wrap(ctx.getLuck())).toList()).get().getData();
 			stack = LootController.createLootItem(entry.getStack().copy(), this.rarity == null ? LootRarity.random(ctx.getRandom(), ctx.getLuck(), entry) : this.rarity, ctx.getRandom());
 		}
-		list.accept(stack);
+		if (!stack.isEmpty()) list.accept(stack);
 	}
 
 	@Override

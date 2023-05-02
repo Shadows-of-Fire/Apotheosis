@@ -70,4 +70,9 @@ public class DamageReductionBonus extends GemBonus {
 		return 0;
 	}
 
+	@Override
+	public Codec<? extends GemBonus> getCodec() {
+		return CODEC;
+	}
+
 }
