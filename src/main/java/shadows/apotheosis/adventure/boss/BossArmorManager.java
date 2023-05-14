@@ -33,7 +33,11 @@ public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 				if (f.test(e)) return true;
 			return false;
 		}).collect(Collectors.toList());
-		if (valid.isEmpty()) return this.getRandomItem(rand, luck);
+		if (valid.isEmpty()) {
+			AdventureModule.LOGGER.error("Failed to locate any gear sets matching the following predicates: ");
+			armorSets.forEach(s -> AdventureModule.LOGGER.error(s.toString()));
+			return this.getRandomItem(rand, luck);
+		}
 
 		List<Wrapper<GearSet>> list = new ArrayList<>(valid.size());
 		valid.stream().map(l -> l.<GearSet>wrap(luck)).forEach(list::add);

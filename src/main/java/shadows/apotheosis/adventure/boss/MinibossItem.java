@@ -25,8 +25,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -70,7 +68,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 			Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
 			Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
 			ExtraCodecs.POSITIVE_FLOAT.fieldOf("chance").forGetter(a -> a.chance),
-			Codec.STRING.optionalFieldOf("name", NAME_GEN).forGetter(a -> a.name),
+			Codec.STRING.optionalFieldOf("name", "").forGetter(a -> a.name),
 			PlaceboCodecs.setCodec(ForgeRegistries.ENTITY_TYPES.getCodec()).fieldOf("entities").forGetter(a -> a.entities),
 			BossStats.CODEC.fieldOf("stats").forGetter(a -> a.stats),
 			PlaceboCodecs.setCodec(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)),
@@ -249,7 +247,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 			mob.setCustomName(Component.translatable(this.name));
 		}
 
-		mob.setCustomNameVisible(true);
+		if (mob.hasCustomName()) mob.setCustomNameVisible(true);
 
 		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.gearSets);
 		Preconditions.checkNotNull(set, String.format("Failed to find a valid gear set for the miniboss %s.", this.getId()));
@@ -292,7 +290,6 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 		}
 		mob.getPersistentData().putBoolean("apoth.miniboss", true);
 		mob.setHealth(mob.getMaxHealth());
-		mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
 	}
 
 	public void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {

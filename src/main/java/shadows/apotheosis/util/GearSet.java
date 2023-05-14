@@ -182,5 +182,10 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 			return this.internal.test(t);
 		}
 
+		@Override
+		public String toString() {
+			return "SetPredicate[" + this.key + "]";
+		}
+
 	}
 }

@@ -39,7 +39,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
-import shadows.gateways.codec.GatewayCodecs;
+import shadows.placebo.codec.PlaceboCodecs;
 import shadows.placebo.codec.PlaceboCodecs.CodecProvider;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.util.StepFunction;
@@ -48,7 +48,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
 	public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
 	public static final BiMap<ResourceLocation, Codec<? extends GemBonus>> CODECS = HashBiMap.create();
-	public static final Codec<GemBonus> CODEC = GatewayCodecs.mapBacked("Gem Bonus", CODECS);
+	public static final Codec<GemBonus> CODEC = PlaceboCodecs.mapBacked("Gem Bonus", CODECS);
 
 	protected final ResourceLocation id;
 	protected final GemClass gemClass;
