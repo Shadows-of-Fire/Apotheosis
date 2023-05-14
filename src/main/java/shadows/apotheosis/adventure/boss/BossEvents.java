@@ -60,7 +60,7 @@ public class BossEvents {
 					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
 					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
 					Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
-					if (AdventureConfig.bossForceAggro) {
+					if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
 						boss.setTarget(player);
 					}
 					if (canSpawn(sLevel, boss, player.distanceToSqr(boss))) {

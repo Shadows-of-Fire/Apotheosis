@@ -27,6 +27,9 @@
 * All Gems will now be shown in JEI. The ones shown will be at max rarity and max facets.
 * Fixed an issue where reading affixes from NBT could trigger an infinite loop.
 * Fixed an issue where the Cleaving affix could hit dead targets, killing them twice.
+* rtxyd: Updated chinese translation.
+* Anim Mallon: Added a config to disable boss auto-aggro.
+* Boss auto-aggro has been disabled by default, and when enabled, will no longer target creative players.
 
 ## 6.1.5
 * Fixed an issue where boss names were failing to translate.

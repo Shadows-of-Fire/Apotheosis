@@ -54,7 +54,7 @@ public class AdventureConfig {
 	public static float bossAnnounceVolume = 0.75F;
 	public static boolean bossAnnounceIgnoreY = false;
 	public static int bossSpawnCooldown = 400;
-	public static boolean bossForceAggro = true;
+	public static boolean bossAutoAggro = false;
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
@@ -184,7 +184,7 @@ public class AdventureConfig {
 		bossAnnounceVolume = c.getFloat("Boss Announce Volume", "bosses", bossAnnounceVolume, 0, 1, "The volume of the boss announcement sound. 0 to disable. This control is clientside.");
 		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", true, "If the boss announcement range ignores y-level.");
 		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 1800, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
-		bossForceAggro = c.getBoolean("Boss Force Aggro", "bosses", true, "If the boss should aggro on the closest player on spawn.");
+		bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", true, "If true, invading bosses will automatically target the closest player.");
 
 		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.02|NEEDS_SKY", "minecraft:the_nether|0.03|ANY", "minecraft:the_end|0.02|NEEDS_SURFACE", "twilightforest:twilight_forest|0.05|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();
