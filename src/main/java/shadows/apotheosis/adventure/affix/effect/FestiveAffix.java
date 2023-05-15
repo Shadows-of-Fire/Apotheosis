@@ -46,7 +46,7 @@ public class FestiveAffix extends Affix {
 		);
 	//Formatter::on
 	public static final PSerializer<FestiveAffix> SERIALIZER = PSerializer.fromCodec("Festive Affix", CODEC);
-	
+
 	protected final Map<LootRarity, StepFunction> values;
 
 	public FestiveAffix(Map<LootRarity, StepFunction> values) {
@@ -72,6 +72,7 @@ public class FestiveAffix extends Affix {
 
 	// EventPriority.LOW
 	public void markEquipment(LivingDeathEvent e) {
+		if (e.getEntity() instanceof Player) return;
 		e.getEntity().getAllSlots().forEach(i -> {
 			if (!i.isEmpty()) i.getOrCreateTag().putBoolean(MARKER, true);
 		});
