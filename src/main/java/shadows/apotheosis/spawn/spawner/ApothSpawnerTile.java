@@ -160,7 +160,6 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 							return;
 						}
 
-						tag.remove("NoAI"); // TODO: Remove, bugfix for extra nbt tag that was erroneously added.
 						ListTag listtag = tag.getList("Pos", 6);
 						int j = listtag.size();
 						double d0 = j >= 1 ? listtag.getDouble(0) : pPos.getX() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * this.spawnRange + 0.5D;
@@ -214,7 +213,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 								net.minecraftforge.eventbus.api.Event.Result res = net.minecraftforge.event.ForgeEventFactory.canEntitySpawn(mob, useLiar ? liar : pServerLevel, (float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), this, MobSpawnType.SPAWNER);
 								if (res == net.minecraftforge.eventbus.api.Event.Result.DENY) continue;
 								if (res == net.minecraftforge.eventbus.api.Event.Result.DEFAULT) {
-									if (!ApothSpawnerTile.this.ignoresConditions && (this.nextSpawnData.getCustomSpawnRules().isEmpty() && !mob.checkSpawnRules(pServerLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(pServerLevel))) {
+									if (!ApothSpawnerTile.this.ignoresConditions && (this.nextSpawnData.getCustomSpawnRules().isEmpty() && !mob.checkSpawnRules(useLiar ? liar : pServerLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(useLiar ? liar : pServerLevel))) {
 										continue;
 									}
 								}
