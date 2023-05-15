@@ -32,6 +32,7 @@
 * Entities from a NoAI Spawner will no longer be able to teleport.
 * Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
 * Epic bosses will no longer spawn in the Overworld, and Mythic bosses will no longer spawn in the Nether or Twilight.
+* Apoth worldgen will no longer spawn in the Deep Dark.
 
 ## 6.1.5
 * Fixed an issue where boss names were failing to translate.
