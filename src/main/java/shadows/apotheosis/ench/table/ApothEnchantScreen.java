@@ -271,7 +271,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 					if (!this.clues.get(slot).isEmpty()) {
 						list.add(new TranslatableComponent("info.apotheosis.runes" + (this.hasAllClues[slot] ? "_all" : "")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
 						for (EnchantmentInstance i : this.clues.get(slot)) {
-							list.add(new TranslatableComponent(i.enchantment.getFullname(i.level).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+							list.add((i.enchantment.getFullname(i.level)));
 						}
 					} else {
 						list.add(new TranslatableComponent("info.apotheosis.no_clue").withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));

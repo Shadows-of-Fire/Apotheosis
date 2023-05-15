@@ -28,10 +28,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -64,6 +66,7 @@ public class SpawnerModule {
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
 		MinecraftForge.EVENT_BUS.addListener(this::handleTooltips);
 		MinecraftForge.EVENT_BUS.addListener(this::tickDumbMobs);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::dumbMobsCantTeleport);
 		this.reload(null);
 		ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, CreativeModeTab.TAB_MISC, "f_41377_");
 		if (ModList.get().isLoaded("theoneprobe")) SpawnerTOPPlugin.register();
@@ -120,6 +123,12 @@ public class SpawnerModule {
 				mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
 				mob.setNoAi(true);
 			}
+		}
+	}
+
+	public void dumbMobsCantTeleport(EntityTeleportEvent e) {
+		if (e.getEntity().getPersistentData().getBoolean("apotheosis:movable")) {
+			e.setCanceled(true);
 		}
 	}
 

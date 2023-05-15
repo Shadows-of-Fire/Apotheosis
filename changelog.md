@@ -22,6 +22,7 @@
   * Updated the name list for the adventure module. Regenerate names.cfg to get the updates.
   * Increased the output of the Vial of Extraction and Vial of Expulsion to 2 per craft (recipe unchanged).
   * Fixed an issue where the Cleaving affix could hit dead targets, killing them twice.
+  * Fixed Piercing not working properly on Tridents.
 
 
 ## 5.7.7
