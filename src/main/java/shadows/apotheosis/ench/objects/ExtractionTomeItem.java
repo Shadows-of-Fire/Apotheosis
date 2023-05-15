@@ -51,6 +51,11 @@ public class ExtractionTomeItem extends BookItem {
 		return Rarity.EPIC;
 	}
 
+	@Override
+	public boolean isFoil(ItemStack pStack) {
+		return true;
+	}
+
 	public static boolean updateAnvil(AnvilUpdateEvent ev) {
 		ItemStack weapon = ev.getLeft();
 		ItemStack book = ev.getRight();
