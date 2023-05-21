@@ -5,18 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -72,7 +69,7 @@ public class FestiveAffix extends Affix {
 
 	// EventPriority.LOW
 	public void markEquipment(LivingDeathEvent e) {
-		if (e.getEntity() instanceof Player) return;
+		if (e.getEntity() instanceof Player && e.getEntity().getPersistentData().getBoolean("apoth.no_pinata")) return;
 		e.getEntity().getAllSlots().forEach(i -> {
 			if (!i.isEmpty()) i.getOrCreateTag().putBoolean(MARKER, true);
 		});
@@ -81,7 +78,8 @@ public class FestiveAffix extends Affix {
 	// EventPriority.LOW
 	public void drops(LivingDropsEvent e) {
 		LivingEntity dead = e.getEntity();
-		if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty() && !(e.getEntity() instanceof Player)) {
+		if (dead instanceof Player && dead.getPersistentData().getBoolean("apoth.no_pinata")) return;
+		if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
 			AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(this);
 			if (inst != null && player.level.random.nextFloat() < getTrueLevel(inst.rarity(), inst.level())) {
 				player.level.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (player.level.random.nextFloat() - player.level.random.nextFloat()) * 0.2F) * 0.7F);
@@ -111,26 +109,8 @@ public class FestiveAffix extends Affix {
 		});
 	}
 
-	public static Affix read(JsonObject obj) {
-		var values = AffixHelper.readValues(GsonHelper.getAsJsonObject(obj, "values"));
-		return new FestiveAffix(values);
-	}
-
-	public JsonObject write() {
-		return new JsonObject();
-	}
-
-	public void write(FriendlyByteBuf buf) {
-		buf.writeMap(this.values, (b, key) -> b.writeUtf(key.id()), (b, func) -> func.write(b));
-	}
-
 	@Override
 	public PSerializer<? extends Affix> getSerializer() {
 		return SERIALIZER;
-	}
-
-	public static Affix read(FriendlyByteBuf buf) {
-		Map<LootRarity, StepFunction> values = buf.readMap(b -> LootRarity.byId(b.readUtf()), b -> StepFunction.read(b));
-		return new FestiveAffix(values);
 	}
 }

@@ -35,6 +35,7 @@
 * Fixed passengers not working on bosses.
 * Added the Simple Reforging Table, allowing reforging Rare or weaker items pre-netherite.
 * Added the Vial of Unnaming, which can remove the affix name components from an item.
+* Loot Pinata will no longer work on Gateways.
 
 ### Enchanting Module
 * Added the Improved Tome of Scrapping and the Tome of Extraction
