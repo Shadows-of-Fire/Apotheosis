@@ -20,26 +20,25 @@ import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolderRegistry;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.potion.compat.CuriosCompat;
+import shadows.apotheosis.potion.potions.GreviousEffect;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.SunderingEffect;
+import shadows.apotheosis.potion.potions.VitalityEffect;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.RegistryEvent.Register;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -49,15 +48,16 @@ public class PotionModule {
 	public static final Logger LOG = LogManager.getLogger("Apotheosis : Potion");
 	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
-	static int knowledgeMult = 4;
+	public static int knowledgeMult = 4;
 	static boolean charmsInCuriosOnly = false;
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
 		this.reload(null);
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-			FMLJavaModLoadingContext.get().getModEventBus().register(new PotionModuleClient());
-		});
+		if (FMLEnvironment.dist.isClient()) {
+			FMLJavaModLoadingContext.get().getModEventBus().register(PotionModuleClient.class);
+			MinecraftForge.EVENT_BUS.register(new PotionModuleClient());
+		}
 		InterModComms.sendTo("curios", "REGISTER_TYPE", () -> new SlotTypeMessage.Builder("charm").size(1).build());
 
 	}
@@ -99,6 +99,16 @@ public class PotionModule {
 			PotionBrewing.addMix(Apoth.Potions.KNOWLEDGE.get(), Items.EXPERIENCE_BOTTLE, Apoth.Potions.STRONG_KNOWLEDGE.get());
 
 			PotionBrewing.addMix(Potions.AWKWARD, Apoth.Items.LUCKY_FOOT.get(), Potions.LUCK);
+
+			PotionBrewing.addMix(Potions.AWKWARD, Items.SWEET_BERRIES, Apoth.Potions.VITALITY.get());
+			PotionBrewing.addMix(Apoth.Potions.VITALITY.get(), Items.REDSTONE, Apoth.Potions.LONG_VITALITY.get());
+			PotionBrewing.addMix(Apoth.Potions.VITALITY.get(), Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_VITALITY.get());
+
+			PotionBrewing.addMix(Apoth.Potions.VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.GREVIOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.LONG_VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LONG_GREVIOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.STRONG_VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_GREVIOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.GREVIOUS.get(), Items.REDSTONE, Apoth.Potions.LONG_GREVIOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.GREVIOUS.get(), Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_GREVIOUS.get());
 		});
 		Apotheosis.HELPER.registerProvider(factory -> {
 			Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
@@ -109,8 +119,10 @@ public class PotionModule {
 		});
 
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
-		MinecraftForge.EVENT_BUS.addListener(this::xp);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
+		MinecraftForge.EVENT_BUS.register(Apoth.Effects.GREVIOUS.get());
+		MinecraftForge.EVENT_BUS.register(Apoth.Effects.VITALITY.get());
+		MinecraftForge.EVENT_BUS.register(Apoth.Effects.KNOWLEDGE.get());
 	}
 
 	@SubscribeEvent
@@ -142,7 +154,13 @@ public class PotionModule {
 				new Potion("sundering", new MobEffectInstance(Apoth.Effects.SUNDERING.get(), 1800, 1)), "strong_sundering",
 				new Potion("knowledge", new MobEffectInstance(Apoth.Effects.KNOWLEDGE.get(), 2400)), "knowledge",
 				new Potion("knowledge", new MobEffectInstance(Apoth.Effects.KNOWLEDGE.get(), 4800)), "long_knowledge",
-				new Potion("knowledge", new MobEffectInstance(Apoth.Effects.KNOWLEDGE.get(), 1200, 1)), "strong_knowledge");
+				new Potion("knowledge", new MobEffectInstance(Apoth.Effects.KNOWLEDGE.get(), 1200, 1)), "strong_knowledge",
+				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 4800)), "vitality",
+				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 14400)), "long_vitality",
+				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 3600, 1)), "strong_vitality",
+				new Potion("grevious", new MobEffectInstance(Apoth.Effects.GREVIOUS.get(), 4800)), "grevious",
+				new Potion("grevious", new MobEffectInstance(Apoth.Effects.GREVIOUS.get(), 14400)), "long_grevious",
+				new Potion("grevious", new MobEffectInstance(Apoth.Effects.GREVIOUS.get(), 3600, 1)), "strong_grevious");
 		//Formatter::on
 	}
 
@@ -150,7 +168,8 @@ public class PotionModule {
 	public void potions(Register<MobEffect> e) {
 		e.getRegistry().register(new SunderingEffect(), "sundering");
 		e.getRegistry().register(new KnowledgeEffect(), "knowledge");
-		ObjectHolderRegistry.applyObjectHolders(r -> r.getNamespace().equals(Apotheosis.MODID) && (r.getPath().equals("sundering") || r.getPath().equals("knowledge")));
+		e.getRegistry().register(new VitalityEffect(), "vitality");
+		e.getRegistry().register(new GreviousEffect(), "grevious");
 	}
 
 	@SubscribeEvent
@@ -170,15 +189,6 @@ public class PotionModule {
 				e.getDrops().clear();
 				e.getDrops().add(new ItemEntity(rabbit.level, rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(Apoth.Items.LUCKY_FOOT.get())));
 			}
-		}
-	}
-
-	public void xp(LivingExperienceDropEvent e) {
-		if (e.getAttackingPlayer() != null && e.getAttackingPlayer().getEffect(Apoth.Effects.KNOWLEDGE.get()) != null) {
-			int level = e.getAttackingPlayer().getEffect(Apoth.Effects.KNOWLEDGE.get()).getAmplifier() + 1;
-			int curXp = e.getDroppedExperience();
-			int newXp = curXp + e.getOriginalExperience() * level * knowledgeMult;
-			e.setDroppedExperience(newXp);
 		}
 	}
 

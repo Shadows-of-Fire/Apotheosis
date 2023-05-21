@@ -18,6 +18,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.block_entity.TickingBlockEntity;
 
 public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity {
@@ -28,7 +29,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 	protected ItemStackHandler inv = new ItemStackHandler(2) {
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
-			if (slot == 0) return ReforgingMenu.isRarityMat(stack);
+			if (slot == 0) return isValidRarityMat(stack);
 			return stack.is(Apoth.Items.GEM_DUST.get());
 		};
 
@@ -40,6 +41,15 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
 	public ReforgingTableTile(BlockPos pWorldPosition, BlockState pBlockState) {
 		super(Apoth.Tiles.REFORGING_TABLE.get(), pWorldPosition, pBlockState);
+	}
+
+	public LootRarity getMaxRarity() {
+		return ((ReforgingTableBlock) this.getBlockState().getBlock()).getMaxRarity();
+	}
+
+	public boolean isValidRarityMat(ItemStack stack) {
+		LootRarity rarity = LootRarity.getMaterialRarity(stack);
+		return rarity != null && this.getMaxRarity().isAtLeast(rarity);
 	}
 
 	@Override

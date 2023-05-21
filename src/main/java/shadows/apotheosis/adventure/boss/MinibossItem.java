@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -25,6 +27,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -38,6 +41,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.boss.MinibossManager.IEntityMatch;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
@@ -74,7 +78,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 			PlaceboCodecs.setCodec(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)),
 			PlaceboCodecs.setCodec(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
 			Codec.BOOL.optionalFieldOf("affixed", false).forGetter(a -> a.affixed),
-			SetPredicate.CODEC.listOf().fieldOf("valid_gear_sets").forGetter(a -> a.gearSets),
+			SetPredicate.CODEC.listOf().optionalFieldOf("valid_gear_sets", Collections.emptyList()).forGetter(a -> a.gearSets),
 			NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
 			SupportingEntity.CODEC.listOf().optionalFieldOf("supporting_entities", Collections.emptyList()).forGetter(a -> a.support),
 			SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)),
@@ -188,6 +192,10 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 		return this.quality;
 	}
 
+	public float getChance() {
+		return this.chance;
+	}
+
 	@Override
 	public Set<EntityType<?>> getEntities() {
 		return this.entities;
@@ -201,7 +209,18 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 	 */
 	public void transformMiniboss(ServerLevelAccessor level, Mob mob, RandomSource random, float luck) {
 		var pos = mob.getPosition(0);
-		if (this.nbt != null) mob.load(this.nbt);
+		if (this.nbt != null) {
+			mob.load(this.nbt);
+			if (this.nbt.contains(Entity.PASSENGERS_TAG)) {
+				ListTag passengers = this.nbt.getList(Entity.PASSENGERS_TAG, 10);
+				for (int i = 0; i < passengers.size(); ++i) {
+					Entity entity = EntityType.loadEntityRecursive(passengers.getCompound(i), level.getLevel(), Function.identity());
+					if (entity != null) {
+						entity.startRiding(mob, true);
+					}
+				}
+			}
+		}
 		mob.setPos(pos);
 		this.initBoss(random, mob, luck);
 		// Re-read here so we can apply certain things after the boss has been modified
@@ -210,7 +229,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
 		if (this.mount != null) {
 			Mob mountedEntity = this.mount.create(mob.getLevel(), mob.getX() + 0.5, mob.getY(), mob.getZ() + 0.5);
-			mob.startRiding(mountedEntity);
+			mob.startRiding(mountedEntity, true);
 			level.addFreshEntity(mountedEntity);
 		}
 
@@ -228,6 +247,8 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 	 * @param mob
 	 */
 	public void initBoss(RandomSource rand, Mob mob, float luck) {
+		mob.getPersistentData().putBoolean("apoth.miniboss", true);
+
 		int duration = mob instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
 		for (ChancedEffectInstance inst : stats.effects()) {
@@ -249,9 +270,11 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
 		if (mob.hasCustomName()) mob.setCustomNameVisible(true);
 
-		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.gearSets);
-		Preconditions.checkNotNull(set, String.format("Failed to find a valid gear set for the miniboss %s.", this.getId()));
-		set.apply(mob);
+		if (!this.gearSets.isEmpty()) {
+			GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.gearSets);
+			Preconditions.checkNotNull(set, String.format("Failed to find a valid gear set for the miniboss %s.", this.getId()));
+			set.apply(mob);
+		}
 
 		int guaranteed = -1;
 		if (this.affixed) {
@@ -265,7 +288,10 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 				}
 			}
 
-			if (!anyValid) throw new RuntimeException("Attempted to apply boss gear set " + set.getId() + " but it had no valid affix loot items generated.");
+			if (!anyValid) {
+				AdventureModule.LOGGER.error("Attempted to affix a miniboss with ID " + this.getId() + " but it is not wearing any affixable items!");
+				return;
+			}
 
 			guaranteed = rand.nextInt(6);
 
@@ -283,12 +309,11 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
 		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = mob.getItemBySlot(s);
-			if (s.ordinal() != guaranteed && rand.nextFloat() < stats.enchantChance()) {
+			if (!stack.isEmpty() && s.ordinal() != guaranteed && rand.nextFloat() < stats.enchantChance()) {
 				enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[0] : stats.enchLevels()[1], true);
 				mob.setItemSlot(s, stack);
 			}
 		}
-		mob.getPersistentData().putBoolean("apoth.miniboss", true);
 		mob.setHealth(mob.getMaxHealth());
 	}
 

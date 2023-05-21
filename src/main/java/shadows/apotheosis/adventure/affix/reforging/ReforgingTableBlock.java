@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import shadows.apotheosis.Apoth;
+import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.block_entity.TickingEntityBlock;
 import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.container.SimplerMenuProvider;
@@ -28,8 +30,15 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 	public static final Component TITLE = Component.translatable("container.apotheosis.reforge");
 	public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
-	public ReforgingTableBlock(BlockBehaviour.Properties p_56420_) {
-		super(p_56420_);
+	protected final LootRarity maxRarity;
+
+	public ReforgingTableBlock(BlockBehaviour.Properties properties, LootRarity maxRarity) {
+		super(properties);
+		this.maxRarity = maxRarity;
+	}
+
+	public LootRarity getMaxRarity() {
+		return this.maxRarity;
 	}
 
 	@Override
@@ -54,7 +63,8 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 
 	@Override
 	public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
-		list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+		list.add(Component.translatable(Apoth.Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+		if (this.maxRarity != LootRarity.ANCIENT) list.add(Component.translatable(Apoth.Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc2", this.getMaxRarity().toComponent()).withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

@@ -58,6 +58,7 @@ import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
 import shadows.apotheosis.adventure.affix.socket.SocketingRecipe;
+import shadows.apotheosis.adventure.affix.socket.UnnamingRecipe;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
@@ -126,10 +127,12 @@ public class AdventureModule {
 			f.addRecipe(new SocketingRecipe());
 			f.addRecipe(new ExpulsionRecipe());
 			f.addRecipe(new ExtractionRecipe());
+			f.addRecipe(new UnnamingRecipe());
 		});
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
+			LootSystem.defaultBlockTable(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.GEM_CUTTING_TABLE.get());
@@ -158,12 +161,14 @@ public class AdventureModule {
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_dust");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_extraction");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_expulsion");
+		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_unnaming");
 		for (LootRarity r : LootRarity.values()) {
 			if (r == LootRarity.ANCIENT) continue;
 			Item material = new SalvageItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
 			e.getRegistry().register(material, r.id() + "_material");
 			RARITY_MATERIALS.put(r, material);
 		}
+		e.getRegistry().register(new BlockItem(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "simple_reforging_table");
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "reforging_table");
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "salvaging_table");
 		e.getRegistry().register(new BlockItem(Apoth.Blocks.GEM_CUTTING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_cutting_table");
@@ -176,7 +181,8 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void blocks(Register<Block> e) {
 		e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable()), "boss_spawner");
-		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5, 1000F)), "reforging_table");
+		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2, 20F), LootRarity.RARE), "simple_reforging_table");
+		e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(4, 1000F), LootRarity.MYTHIC), "reforging_table");
 		e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "salvaging_table");
 		e.getRegistry().register(new GemCuttingBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "gem_cutting_table");
 	}
@@ -184,7 +190,7 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void tiles(Register<BlockEntityType<?>> e) {
 		e.getRegistry().register(new TickingBlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(Apoth.Blocks.BOSS_SPAWNER.get()), false, true), "boss_spawner");
-		e.getRegistry().register(new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Apoth.Blocks.REFORGING_TABLE.get()), true, false), "reforging_table");
+		e.getRegistry().register(new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get(), Apoth.Blocks.REFORGING_TABLE.get()), true, false), "reforging_table");
 	}
 
 	@SubscribeEvent
@@ -192,6 +198,7 @@ public class AdventureModule {
 		e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE, "socketing");
 		e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE, "expulsion");
 		e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE, "extraction");
+		e.getRegistry().register(UnnamingRecipe.Serializer.INSTANCE, "unnaming");
 		e.getRegistry().register(AddSocketsRecipe.Serializer.INSTANCE, "add_sockets");
 		e.getRegistry().register(SalvagingRecipe.Serializer.INSTANCE, "salvaging");
 	}

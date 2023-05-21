@@ -19,9 +19,9 @@ public class SupportingEntity {
 		.group(
 			ForgeRegistries.ENTITY_TYPES.getCodec().fieldOf("entity").forGetter(t -> t.entity),
 			NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(t -> Optional.ofNullable(t.nbt)),
-			Codec.DOUBLE.fieldOf("x").forGetter(t -> t.x),
-			Codec.DOUBLE.fieldOf("y").forGetter(t -> t.y),
-			Codec.DOUBLE.fieldOf("z").forGetter(t -> t.z))
+			Codec.DOUBLE.optionalFieldOf("x", 0D).forGetter(t -> t.x),
+			Codec.DOUBLE.optionalFieldOf("y", 0D).forGetter(t -> t.y),
+			Codec.DOUBLE.optionalFieldOf("z", 0D).forGetter(t -> t.z))
 			.apply(inst, SupportingEntity::new)
 		);
 	//Formatter::on

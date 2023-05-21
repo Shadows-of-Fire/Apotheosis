@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -15,7 +14,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 
@@ -55,38 +53,6 @@ public class ExtractionRecipe extends ApothUpgradeRecipe implements IExtUpgradeR
 				if (!player.addItem(stack)) Block.popResource(player.level, player.blockPosition(), stack);
 			}
 		}
-	}
-
-	@Override
-	public NonNullList<ItemStack> getRemainingItems(Container pContainer) {
-		return super.getRemainingItems(pContainer);
-	}
-
-	/**
-	 * Used to determine if this recipe can fit in a grid of the given width/height
-	 */
-	@Override
-	public boolean canCraftInDimensions(int pWidth, int pHeight) {
-		return pWidth * pHeight >= 2;
-	}
-
-	/**
-	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
-	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
-	 */
-	@Override
-	public ItemStack getResultItem() {
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public ItemStack getToastSymbol() {
-		return new ItemStack(Blocks.SMITHING_TABLE);
-	}
-
-	@Override
-	public ResourceLocation getId() {
-		return ID;
 	}
 
 	@Override

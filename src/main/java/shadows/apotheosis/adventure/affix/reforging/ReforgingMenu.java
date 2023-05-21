@@ -66,7 +66,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 		this.addSlot(new SlotItemHandler(this.tile.inv, 1, 35, 45));
 		this.addPlayerSlots(inv, 8, 84);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && !LootCategory.forItem(stack).isNone(), 0, 1);
-		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isRarityMat(stack), 1, 2);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.tile.isValidRarityMat(stack), 1, 2);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 2, 3);
 		this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
 		this.registerInvShuffleRules();
@@ -148,10 +148,6 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 			return true;
 		}
 		return super.clickMenuButton(player, slot);
-	}
-
-	public static boolean isRarityMat(ItemStack stack) {
-		return AdventureModule.RARITY_MATERIALS.containsValue(stack.getItem());
 	}
 
 	public int getMatCount() {

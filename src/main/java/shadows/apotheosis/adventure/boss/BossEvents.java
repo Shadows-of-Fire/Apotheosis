@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -28,6 +29,7 @@ import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent.LevelTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -57,7 +59,7 @@ public class BossEvents {
 				if (rules == null) return;
 				if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, new BlockPos(e.getX(), e.getY(), e.getZ()))) {
 					Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
-					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
+					if (player == null) return; // Spawns require player context
 					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
 					Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
 					if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
@@ -92,11 +94,25 @@ public class BossEvents {
 		if (!e.getLevel().isClientSide() && entity instanceof Mob mob && e.getResult() != Result.DENY) {
 			ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
 			Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
-			if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
+			if (player == null) return; // Spawns require player context
 			MinibossItem item = MinibossManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
-			if (item != null && !item.isExcluded(mob, sLevel, e.getSpawnReason())) {
-				item.transformMiniboss(sLevel, mob, rand, player.getLuck());
+			if (item != null && !item.isExcluded(mob, sLevel, e.getSpawnReason()) && sLevel.getRandom().nextFloat() <= item.getChance()) {
+				mob.getPersistentData().putString("apoth.miniboss", item.getId().toString());
+				mob.getPersistentData().putFloat("apoth.miniboss.luck", player.getLuck());
 				e.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void delayedMinibosses(EntityJoinLevelEvent e) {
+		if (!e.getLevel().isClientSide && e.getEntity() instanceof Mob mob) {
+			String key = mob.getPersistentData().getString("apoth.miniboss");
+			if (key != null) {
+				MinibossItem item = MinibossManager.INSTANCE.getValue(new ResourceLocation(key));
+				if (item != null) {
+					item.transformMiniboss((ServerLevel) e.getLevel(), mob, e.getLevel().getRandom(), mob.getPersistentData().getFloat("apoth.miniboss.luck"));
+				}
 			}
 		}
 	}

@@ -12,20 +12,20 @@
   ],
   "key": {
     "N": {
-      "tag": "forge:ingots/netherite"
+      "tag": "forge:ingots/iron"
     },
 	"G": {
-      "item": "apotheosis:epic_material"
+      "item": "apotheosis:gem_dust"
     },
 	"E": {
-      "item": "apotheosis:simple_reforging_table"
+      "item": "minecraft:enchanting_table"
     },
 	"B": {
-      "item": "minecraft:nether_bricks"
+      "item": "minecraft:smooth_stone"
     }
   },
   "result": {
-    "item": "apotheosis:reforging_table",
+    "item": "apotheosis:simple_reforging_table",
     "count": 1
   }
 }

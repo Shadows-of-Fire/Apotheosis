@@ -376,7 +376,6 @@ public class AdventureEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void special(SpecialSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getLevel().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
-			e.setCanceled(true);
 			Player player = e.getLevel().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
 			if (player == null) return;
 			ItemStack affixItem = LootController.createRandomLootItem(e.getLevel().getRandom(), null, player, (ServerLevel) e.getEntity().level);

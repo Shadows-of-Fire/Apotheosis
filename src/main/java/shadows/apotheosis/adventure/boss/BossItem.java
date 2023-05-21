@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -170,7 +171,9 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	 * @return The newly created boss, or it's mount, if it had one.
 	 */
 	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
-		Mob entity = (Mob) this.entity.create(world.getLevel());
+		CompoundTag fakeNbt = this.nbt == null ? new CompoundTag() : this.nbt;
+		fakeNbt.putString("id", EntityType.getKey(this.entity).toString());
+		Mob entity = (Mob) EntityType.loadEntityRecursive(fakeNbt, world.getLevel(), Function.identity());
 		if (this.nbt != null) entity.load(this.nbt);
 		this.initBoss(random, entity, luck);
 		// Re-read here so we can apply certain things after the boss has been modified
@@ -179,7 +182,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
 		if (this.mount != null) {
 			Mob mountedEntity = (Mob) this.mount.create(world.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			entity.startRiding(mountedEntity);
+			entity.startRiding(mountedEntity, true);
 			entity = mountedEntity;
 		}
 
@@ -235,6 +238,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
 		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(s);
+			if (stack.isEmpty()) continue;
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			if (s.ordinal() == guaranteed) {
 				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck, rarity));

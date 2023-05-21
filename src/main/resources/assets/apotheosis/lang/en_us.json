@@ -1,7 +1,7 @@
 {
     "comment_id": "/Adventure Module",
 
-    "info.apotheosis.affix_item": "Apotheotic Affix Item",
+    "info.apotheosis.affix_item": "Apothic Affix Item",
     "item.modifiers.both_hands": "When in Either Hand:",
 	
 	"death.attack.apotheosis.execute": "%s was executed by %s",
@@ -312,15 +312,14 @@
 	"item.apotheosis.gem.apotheosis:the_nether/inferno": "Gem of the Incandescent Inferno",
 	"item.apotheosis.gem.apotheosis:the_nether/inferno_noench": "Gem of the Incandescent Inferno",
 
-	"item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
+	"item.apotheosis.boss_summoner": "Apothic Boss Summoner",
 	"item.apotheosis.gem.cracked": "Cracked %s",
 	"item.apotheosis.gem.flawless": "Flawless %s",
 	"item.apotheosis.vial_of_extraction": "Vial of Arcane Extraction",
-	"item.apotheosis.vial_of_extraction.desc": "Gem Removal Serum",
 	"item.apotheosis.vial_of_expulsion": "Vial of Searing Expulsion",
-	"item.apotheosis.vial_of_expulsion.desc": "Gem Removal Serum",
+	"item.apotheosis.vial_of_unnaming": "Vial of Unnaming",
 	"item.apotheosis.gem_dust": "Gem Dust",
-	"item.apotheosis.gem_dust.desc": "A Crushed Apotheotic Gemstone",
+	"item.apotheosis.gem_dust.desc": "A Crushed Apothic Gemstone",
 	"item.apotheosis.common_material": "Mysterious Scrap Metal",
 	"item.apotheosis.uncommon_material": "Timeworn Fabric",
 	"item.apotheosis.rare_material": "Luminous Crystal Shard",
@@ -335,9 +334,11 @@
 	"block.apotheosis.gem_cutting_table.desc": "Uses Gem Dust and Rarity Materials to upgrade Gems",
 	"block.apotheosis.salvaging_table": "Salvaging Table",
 	"block.apotheosis.salvaging_table.desc": "Breaks down Affix Items into Rarity Materials",
+	"block.apotheosis.simple_reforging_table": "Simple Reforging Table",
 	"block.apotheosis.reforging_table": "Reforging Table",
 	"block.apotheosis.reforging_table.desc": "Uses Gem Dust and Rarity Materials to reroll affixes",
-	
+	"block.apotheosis.reforging_table.desc2": "Max Rarity: %s",
+
 	"button.apotheosis.salvage": "Salvage Items",
 	"button.apotheosis.no_salvage": "No items selected",
 	"button.apotheosis.no_salvage_all": "No valid items in inventory",
@@ -358,7 +359,7 @@
 	"text.apotheosis.no_upgrade": "Cannot be Upgraded",
 	"text.apotheosis.rarity_up_cost": "Rarity Upgrade Cost",
 	"text.apotheosis.cut_cost": "Gem Cutting Cost",
-	"title.apotheosis.smithing": "Apotheotic Smithing",
+	"title.apotheosis.smithing": "Apothic Smithing",
 	"title.apotheosis.salvaging": "Salvaging",
 
 	"text.apotheosis.anything": "Anything",
@@ -395,13 +396,14 @@
 	"text.apotheosis.any_x_item": "Any %s Affix Item",
 
 	"info.apotheosis.boss_spawn": "%s has awoken nearby!",
-	"info.apotheosis.boss": "%s Apotheotic Boss",
+	"info.apotheosis.boss": "%s Apothic Boss",
 	"info.apotheosis.boss_item": "Will Drop: %s",
 	"info.apotheosis.boss_modifiers": "Boss Modifiers:",
 	"info.apotheosis.rarity_material": "Rarity Material (%s)",
-	"info.apotheosis.gem_crushing": "Gem Dust is obtained by dropping any Apotheotic Gem the in world, and making an Anvil block fall onto it.",
-	"info.apotheosis.gem_extraction": "Used in a Smithing Table to unsocket Apotheotic Gems.\n\nThe item will be destroyed in the process.",
-	"info.apotheosis.gem_expulsion": "Used in a Smithing Table to unsocket Apotheotic Gems.\n\nThe gems will be destroyed in the process.",
+	"info.apotheosis.gem_crushing": "Gem Dust is obtained by dropping any Apothic Gem the in world, and making an Anvil block fall onto it.",
+	"info.apotheosis.gem_extraction": "Used in a Smithing Table to unsocket Apothic Gems.\n\nThe item will be destroyed in the process.",
+	"info.apotheosis.gem_expulsion": "Used in a Smithing Table to unsocket Apothic Gems.\n\nThe gems will be destroyed in the process.",
+	"info.apotheosis.unnaming": "Used in a Smithing Table to remove the affix components from an item's name.",
 	"info.apotheosis.salvaging": "Rarity Materials are obtained by salvaging Affix Items in a Salvaging Table.",
 	
     "rarity.apoth.common": "Common",
@@ -418,11 +420,11 @@
 
 	"comment_id": "/Adventure + Gateways Compat",
 
-	"misc.apotheosis.boss": "%s Apotheotic Boss",
+	"misc.apotheosis.boss": "%s Apothic Boss",
 	"misc.apotheosis.random": "Random",
 	"reward.apotheosis.affix": "%s Affix Item",
 	"reward.apotheosis.random_affix": "Random Affix Item",
-	"apotheosis.boss_gate_small": "Small Apotheotic Boss Gate",
+	"apotheosis.boss_gate_small": "Small Apothic Boss Gate",
 
     "comment_id": "/Advancements",
 
@@ -488,7 +490,7 @@
     "advancements.apotheosis.max_rectified.desc": "Enchant an item with max stats and max rectification.",
     
     "advancements.apotheosis.affix": "A Stunning Fixation",
-    "advancements.apotheosis.affix.desc": "Find an item with an Apotheotic Affix.",
+    "advancements.apotheosis.affix.desc": "Find an item with an Apothic Affix.",
     "advancements.apotheosis.common": "One Man's Trash",
     "advancements.apotheosis.common.desc": "Find a common affix item.",
     "advancements.apotheosis.uncommon": "Not Quite Common",
@@ -502,7 +504,7 @@
     "advancements.apotheosis.ancient": "Lost Treasures of the Gods",
     "advancements.apotheosis.ancient.desc": "Find an Ancient item.",
     "advancements.apotheosis.boss": "He Wasn't So Strong",
-    "advancements.apotheosis.boss.desc": "Slay an Apotheotic Boss, and retrieve their affix item.",
+    "advancements.apotheosis.boss.desc": "Slay an Apothic Boss, and retrieve their affix item.",
     "advancements.apotheosis.chests": "I Found It Underground",
     "advancements.apotheosis.chests.desc": "Find an affix item in a chest.",
     "advancements.apotheosis.merchant": "I Got Deals",
@@ -516,7 +518,7 @@
 	
     "advancements.apotheosis.spawner.root": "Apotheosis Spawners",
     "advancements.apotheosis.spawner.root.desc": "Spawners can be collected and modified, see JEI for info.",
-    "advancements.apotheosis.spawner": "Apotheotic Spawners",
+    "advancements.apotheosis.spawner": "Apothic Spawners",
     "advancements.apotheosis.spawner.desc": "Collect a mob spawner using Silk Touch.",
     "advancements.apotheosis.capturing": "Captured!",
     "advancements.apotheosis.capturing.desc": "Get a spawn egg from a mob using the Capturing enchantment",
@@ -980,16 +982,32 @@
     "item.minecraft.tipped_arrow.effect.wither": "Arrow of Wither",
 
     "effect.apotheosis.sundering": "Sundering",
+    "effect.apotheosis.sundering.desc": "Increases damage received",
     "item.minecraft.potion.effect.sundering": "Potion of Sundering",
     "item.minecraft.splash_potion.effect.sundering": "Splash Potion of Sundering",
     "item.minecraft.lingering_potion.effect.sundering": "Lingering Potion of Sundering",
     "item.minecraft.tipped_arrow.effect.sundering": "Arrow of Sundering",
 
-    "effect.apotheosis.knowledge": "Knowledge",
+    "effect.apotheosis.knowledge": "Ancient Knowledge",
+    "effect.apotheosis.knowledge.desc": "Increases experience gained from kills and blocks",
     "item.minecraft.potion.effect.knowledge": "Potion of Ancient Knowledge",
     "item.minecraft.splash_potion.effect.knowledge": "Splash Potion of Ancient Knowledge",
     "item.minecraft.lingering_potion.effect.knowledge": "Lingering Potion of Ancient Knowledge",
     "item.minecraft.tipped_arrow.effect.knowledge": "Arrow of Ancient Knowledge",
+
+    "effect.apotheosis.vitality": "Bursting Vitality",
+    "effect.apotheosis.vitality.desc": "Increases healing received",
+    "item.minecraft.potion.effect.vitality": "Potion of Healing Boost",
+    "item.minecraft.splash_potion.effect.vitality": "Splash Potion of Healing Boost",
+    "item.minecraft.lingering_potion.effect.vitality": "Lingering Potion of Healing Boost",
+    "item.minecraft.tipped_arrow.effect.vitality": "Arrow of Healing Boost",
+
+    "effect.apotheosis.grevious": "Grevious Wounds",
+    "effect.apotheosis.grevious.desc": "Decreases healing received",
+    "item.minecraft.potion.effect.grevious": "Potion of Healing Reduction",
+    "item.minecraft.splash_potion.effect.grevious": "Splash Potion of Healing Reduction",
+    "item.minecraft.lingering_potion.effect.grevious": "Lingering Potion of Healing Reduction",
+    "item.minecraft.tipped_arrow.effect.grevious": "Arrow of Healing Reduction",
 
     "item.apotheosis.lucky_foot": "Lucky Rabbit's Foot",
 
@@ -1046,6 +1064,6 @@
 	
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",
-    "book.apotheosis.subtitle": "Apotheotic Guide",
+    "book.apotheosis.subtitle": "Guide to Apotheosis",
     "book.apotheosis.landing": "Welcome to the world of Apotheosis.$(br2)Apotheosis is organized into $(#8080FF)Modules$(), and so is the content of this book.$(br2)Disabled modules are hidden."
 }

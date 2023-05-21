@@ -56,7 +56,7 @@
 		{
 			"entities": [{
 				"type": "apotheosis:boss",
-				"boss": "apotheosis:enderman"
+				"boss": "apotheosis:the_end/enderman"
 			}],
 			"modifiers": [{
 					"attribute": "generic.max_health",

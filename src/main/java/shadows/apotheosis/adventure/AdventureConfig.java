@@ -28,7 +28,6 @@ import shadows.placebo.config.Configuration;
 public class AdventureConfig {
 
 	public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
-	public static final List<ResourceLocation> BIOME_BLACKLIST = new ArrayList<>();
 	public static final Map<ResourceLocation, LootCategory> TYPE_OVERRIDES = new HashMap<>();
 	public static final Map<ResourceLocation, Pair<Float, BossSpawnRules>> BOSS_SPAWN_RULES = new HashMap<>();
 
@@ -65,7 +64,7 @@ public class AdventureConfig {
 	public static float spawnerValueChance = 0.11F;
 
 	// Affix
-	public static float randomAffixItem = 0.24F;
+	public static float randomAffixItem = 0.075F;
 	public static float gemDropChance = 0.045F;
 	public static float gemBossBonus = 0.33F;
 	public static boolean disableQuarkOnAffixItems = true;
@@ -205,16 +204,6 @@ public class AdventureConfig {
 				DIM_WHITELIST.add(new ResourceLocation(s.trim()));
 			} catch (ResourceLocationException e) {
 				AdventureModule.LOGGER.error("Invalid dim whitelist entry: " + s + " will be ignored");
-			}
-		}
-
-		String[] biomes = c.getStringList("Generation Biome Blacklist", "worldgen", new String[] { "minecraft:warm_ocean", "minecraft:lukewarm_ocean", "minecraft:cold_ocean", "minecraft:frozen_ocean", "minecraft:deep_warm_ocean", "minecraft:deep_frozen_ocean", "minecraft:deep_lukewarm_ocean", "minecraft:deep_cold_ocean", "minecraft:ocean", "minecraft:deep_ocean" }, "The biomes that the deadly module will not generate in.");
-		BIOME_BLACKLIST.clear();
-		for (String s : biomes) {
-			try {
-				BIOME_BLACKLIST.add(new ResourceLocation(s.trim()));
-			} catch (ResourceLocationException e) {
-				AdventureModule.LOGGER.error("Invalid biome blacklist entry: " + s + " will be ignored!");
 			}
 		}
 

@@ -212,6 +212,22 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 	}
 
 	/**
+	 * Returns true if the passed item is a rarity material.
+	 */
+	public static boolean isRarityMat(ItemStack stack) {
+		return AdventureModule.RARITY_MATERIALS.containsValue(stack.getItem());
+	}
+
+	@Nullable
+	public static LootRarity getMaterialRarity(ItemStack stack) {
+		return AdventureModule.RARITY_MATERIALS.inverse().get(stack.getItem());
+	}
+
+	public ItemStack getMaterial() {
+		return new ItemStack(AdventureModule.RARITY_MATERIALS.get(this));
+	}
+
+	/**
 	 * Clamps a loot rarity to within a min/max bound.
 	 * @param lowerBound The minimum valid rarity
 	 * @param upperBound The maximum valid rarity

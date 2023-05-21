@@ -61,8 +61,6 @@ import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.garden.EnderLeadItem;
 import shadows.apotheosis.potion.LuckyFootItem;
 import shadows.apotheosis.potion.PotionCharmItem;
-import shadows.apotheosis.potion.potions.KnowledgeEffect;
-import shadows.apotheosis.potion.potions.SunderingEffect;
 import shadows.apotheosis.spawn.enchantment.CapturingEnchant;
 import shadows.apotheosis.spawn.modifiers.SpawnerModifier;
 import shadows.apotheosis.village.fletching.FletchingContainer;
@@ -108,6 +106,7 @@ public class Apoth {
 		public static final RegistryObject<Block> SIGHTSHELF_T2 = R.block("SIGHTSHELF_T2");
 		public static final RegistryObject<EnchLibraryBlock> ENDER_LIBRARY = R.block("ENDER_LIBRARY");
 		public static final RegistryObject<BossSpawnerBlock> BOSS_SPAWNER = R.block("BOSS_SPAWNER");
+		public static final RegistryObject<ReforgingTableBlock> SIMPLE_REFORGING_TABLE = R.block("SIMPLE_REFORGING_TABLE");
 		public static final RegistryObject<ReforgingTableBlock> REFORGING_TABLE = R.block("REFORGING_TABLE");
 		public static final RegistryObject<SalvagingTableBlock> SALVAGING_TABLE = R.block("SALVAGING_TABLE");
 		public static final RegistryObject<GemCuttingBlock> GEM_CUTTING_TABLE = R.block("gem_cutting_table");
@@ -137,6 +136,7 @@ public class Apoth {
 		public static final RegistryObject<Item> GEM_DUST = R.item("GEM_DUST");
 		public static final RegistryObject<Item> VIAL_OF_EXPULSION = R.item("VIAL_OF_EXPULSION");
 		public static final RegistryObject<Item> VIAL_OF_EXTRACTION = R.item("VIAL_OF_EXTRACTION");
+		public static final RegistryObject<Item> VIAL_OF_UNNAMING = R.item("VIAL_OF_UNNAMING");
 
 		public static final RegistryObject<Item> SKULL_FRAGMENT = RegistryObject.create(new ResourceLocation("wstweaks", "fragment"), ForgeRegistries.ITEMS);
 	}
@@ -187,6 +187,12 @@ public class Apoth {
 		public static final RegistryObject<Potion> WITHER = R.potion("WITHER");
 		public static final RegistryObject<Potion> LONG_WITHER = R.potion("LONG_WITHER");
 		public static final RegistryObject<Potion> STRONG_WITHER = R.potion("STRONG_WITHER");
+		public static final RegistryObject<Potion> VITALITY = R.potion("VITALITY");
+		public static final RegistryObject<Potion> LONG_VITALITY = R.potion("LONG_VITALITY");
+		public static final RegistryObject<Potion> STRONG_VITALITY = R.potion("STRONG_VITALITY");
+		public static final RegistryObject<Potion> GREVIOUS = R.potion("GREVIOUS");
+		public static final RegistryObject<Potion> LONG_GREVIOUS = R.potion("LONG_GREVIOUS");
+		public static final RegistryObject<Potion> STRONG_GREVIOUS = R.potion("STRONG_GREVIOUS");
 	}
 
 	public static final class Entities {
@@ -197,8 +203,11 @@ public class Apoth {
 	}
 
 	public static final class Effects {
-		public static final RegistryObject<SunderingEffect> SUNDERING = R.effect("sundering");
-		public static final RegistryObject<KnowledgeEffect> KNOWLEDGE = R.effect("knowledge");
+		public static final RegistryObject<MobEffect> SUNDERING = R.effect("sundering");
+		public static final RegistryObject<MobEffect> KNOWLEDGE = R.effect("knowledge");
+		public static final RegistryObject<MobEffect> VITALITY = R.effect("vitality");
+		public static final RegistryObject<MobEffect> GREVIOUS = R.effect("grevious");
+
 		public static final RegistryObject<MobEffect> BLEEDING = R.effect("bleeding");
 	}
 

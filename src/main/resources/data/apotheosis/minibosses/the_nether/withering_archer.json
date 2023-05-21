@@ -1,0 +1,63 @@
+{
+	"weight": 100,
+	"quality": 0,
+	"name": "Withering Archer",
+	"chance": 0.02,
+	"entities": [
+		"minecraft:wither_skeleton",
+		"minecraft:skeleton"
+	],
+	"valid_gear_sets": [
+		"#the_nether_bow"
+	],
+	"dimensions": [
+		"minecraft:the_nether"
+	],
+	"affixed": false,
+	"nbt": {
+		"Passengers": [{
+			"id": "minecraft:area_effect_cloud",
+			"Potion": "apotheosis:wither",
+			"Duration": 200000,
+			"Radius": 2.5,
+			"ReapplicationDelay": 20,
+			"Particle": "minecraft:entity_effect",
+			"WaitTime": 0
+		}]
+	},
+	"stats": {
+		"enchant_chance": 0.35,
+		"enchantment_levels": [12, 8, 20, 14],
+		"effects": [{
+			"effect": "minecraft:fire_resistance",
+			"chance": 1.0
+		}],
+		"attribute_modifiers": [{
+				"attribute": "minecraft:generic.max_health",
+				"operation": "ADDITION",
+				"value": 20
+			},
+			{
+				"attribute": "minecraft:generic.movement_speed",
+				"operation": "MULTIPLY_BASE",
+				"value": 0.10
+			},
+			{
+				"attribute": "apotheosis:arrow_damage",
+				"operation": "MULTIPLY_BASE",
+				"value": 0.25
+			},
+			{
+				"attribute": "minecraft:generic.knockback_resistance",
+				"operation": "ADDITION",
+				"value": 0.5
+			}
+		]
+	},
+	"exclusions": [{
+		"type": "apotheosis:spawn_type",
+		"spawn_types": [
+			"spawn_egg", "spawner", "mob_summoned"
+		]
+	}]
+}

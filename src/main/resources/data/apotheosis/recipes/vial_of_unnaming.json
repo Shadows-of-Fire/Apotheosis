@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"group": "what",
+	"ingredients": [{
+			"item": "minecraft:sweet_berries"
+		},
+		{
+			"item": "minecraft:honey_bottle"
+		}
+	],
+	"result": {
+		"item": "apotheosis:vial_of_unnaming",
+		"count": 1
+	}
+}
