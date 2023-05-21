@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -72,8 +73,9 @@ public class BossEvents {
 						sLevel.players().forEach(p -> {
 							Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
 							if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
-								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", boss.getCustomName(), (int) boss.getX(), (int) boss.getY())));
-								if (boss.getCustomName() == null || boss.getCustomName().getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
+								Component name = getName(boss);
+								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
+								if (name == null || name.getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
 								else {
 									TextColor color = boss.getCustomName().getStyle().getColor();
 									PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()), player);
@@ -85,6 +87,10 @@ public class BossEvents {
 				}
 			}
 		}
+	}
+
+	private Component getName(Mob boss) {
+		return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains("apoth.boss")).findFirst().map(Entity::getCustomName).orElse(null);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
