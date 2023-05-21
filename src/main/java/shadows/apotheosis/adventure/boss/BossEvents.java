@@ -2,6 +2,8 @@ package shadows.apotheosis.adventure.boss;
 
 import java.util.function.BiPredicate;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -77,7 +79,7 @@ public class BossEvents {
 								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
 								if (name == null || name.getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
 								else {
-									TextColor color = boss.getCustomName().getStyle().getColor();
+									TextColor color = name.getStyle().getColor();
 									PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()), player);
 								}
 							}
@@ -89,6 +91,7 @@ public class BossEvents {
 		}
 	}
 
+	@Nullable
 	private Component getName(Mob boss) {
 		return boss.getSelfAndPassengers().filter(e -> e.getPersistentData().contains("apoth.boss")).findFirst().map(Entity::getCustomName).orElse(null);
 	}

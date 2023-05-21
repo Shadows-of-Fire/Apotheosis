@@ -2,6 +2,10 @@
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 * [NYI] Buffed values of common and uncommon affixes.
 * [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
+* [NYI] Higher rarity gems will provide more gem dust when salvaged.
+
+## 6.2.1
+* Fixed an issue with mounted bosses causing a crash.
 
 ## 6.2.0
 
