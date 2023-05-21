@@ -39,6 +39,7 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 		ItemStack stdItem = affixItem.copy();
 		stdItem.setTag(null);
 		LootRarity rarity = AffixHelper.getRarity(affixItem);
+		if (rarity == null) return null;
 		ItemStack emeralds = new ItemStack(Items.EMERALD, 8 + rarity.ordinal() * 8);
 		if (rarity.isAtLeast(LootRarity.MYTHIC)) {
 			emeralds = new ItemStack(Items.EMERALD_BLOCK, 20 + (rarity == LootRarity.ANCIENT ? 30 : 0));
