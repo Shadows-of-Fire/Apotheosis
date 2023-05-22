@@ -1,3 +1,8 @@
+## 5.8.0
+* Merged all features from 5.7.J into 5.8.0
+  * Added GameStages support for Affix Items, Bosses, and Gems.
+  * Improved validation on GearSet parsing.
+
 ## 5.7.7
 * Fixed a crash that happened when resolving tooltips.
 

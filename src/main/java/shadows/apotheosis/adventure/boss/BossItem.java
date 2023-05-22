@@ -75,6 +75,8 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 	@SerializedName("max_rarity")
 	protected LootRarity maxRarity;
 
+	protected Set<String> stages;
+
 	public BossItem() {
 		// No ctor, not meant to be created via code
 	}

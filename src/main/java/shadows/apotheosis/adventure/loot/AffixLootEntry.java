@@ -24,6 +24,7 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 	protected LootRarity minRarity;
 	@SerializedName("max_rarity")
 	protected LootRarity maxRarity;
+	protected Set<String> stages;
 
 	public AffixLootEntry(int weight, float quality, ItemStack stack, LootCategory type, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max) {
 		this.weight = weight;

@@ -91,9 +91,10 @@ import shadows.placebo.loot.LootSystem;
 public class AdventureModule {
 
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
-
 	public static final BiMap<LootRarity, IRegistryDelegate<Item>> RARITY_MATERIALS = HashBiMap.create();
 
+	public static boolean stages = ModList.get().isLoaded("gamestages");
+	
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
 		ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 40D, "f_22308_");

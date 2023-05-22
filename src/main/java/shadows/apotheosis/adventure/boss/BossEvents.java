@@ -54,7 +54,7 @@ public class BossEvents {
 				if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, new BlockPos(e.getX(), e.getY(), e.getZ()))) {
 					Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
 					if (player == null) return; //Should never be null, but we check anyway since nothing makes sense around here.
-					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player.getLuck(), sLevel);
+					BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player, sLevel);
 					Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
 					if (canSpawn(sLevel, boss, player.distanceToSqr(boss))) {
 						sLevel.addFreshEntity(boss);

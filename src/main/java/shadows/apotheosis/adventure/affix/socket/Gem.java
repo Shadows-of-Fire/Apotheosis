@@ -18,6 +18,7 @@ public final class Gem extends TypeKeyedBase<Gem> implements IDimWeighted {
 	protected Operation operation;
 	protected StepFunction value;
 	protected Set<ResourceLocation> dimensions;
+	public Set<String> stages;
 
 	Gem() {
 

@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -26,8 +27,9 @@ public class AffixLootModifier extends LootModifier {
 		for (LootPatternMatcher m : AdventureConfig.AFFIX_ITEM_LOOT_RULES) {
 			if (m.matches(context.getQueriedLootTableId())) {
 				if (context.getRandom().nextFloat() <= m.chance()) {
-					float luck = context.getLuck();
-					ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), null, luck, context.getLevel());
+					Player player = AffixLootPoolEntry.getPlayer(context);
+					if (player == null) break;
+					ItemStack affixItem = LootController.createRandomLootItem(context.getRandom(), null, player, context.getLevel());
 					if (affixItem.isEmpty()) break;
 					affixItem.getTag().putBoolean("apoth_rchest", true);
 					generatedLoot.add(affixItem);

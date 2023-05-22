@@ -333,7 +333,7 @@ public class AdventureEvents {
 			float chance = AdventureConfig.gemDropChance + (e.getEntity().getPersistentData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
 			if (p.random.nextFloat() <= chance) {
 				Entity ent = e.getEntity();
-				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p.getLuck(), p.getLevel()), 0, 0, 0));
+				e.getDrops().add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.getRandomGemStack(p.random, p, p.getLevel()), 0, 0, 0));
 			}
 		}
 	}
@@ -372,9 +372,9 @@ public class AdventureEvents {
 	public void special(SpecialSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getWorld().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
 			e.setCanceled(true);
-			Player nearest = e.getEntity().level.getNearestPlayer(e.getEntity(), 32);
-			float luck = nearest != null ? nearest.getLuck() : 0;
-			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), null, luck, (ServerLevel) e.getEntity().level);
+			Player nearest = e.getEntity().level.getNearestPlayer(e.getEntity(), 128);
+			if (nearest == null) return;
+			ItemStack affixItem = LootController.createRandomLootItem(e.getWorld().getRandom(), null, nearest, (ServerLevel) e.getEntity().level);
 			if (affixItem.isEmpty()) return;
 			affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);

@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 
 public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -117,15 +115,7 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
 			}
 
 			world.setBlock(pos, Apoth.Blocks.BOSS_SPAWNER.defaultBlockState(), 2);
-			BlockEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof BossSpawnerTile) {
-				((BossSpawnerTile) tileentity).setBossItem(BossItemManager.INSTANCE.getRandomItem(rand, world));
-			} else {
-				AdventureModule.LOGGER.error("Failed to fetch boss spawner entity at ({}, {}, {})", pos.getX(), pos.getY(), pos.getZ());
-			}
-
 			AdventureModule.debugLog(pos, "Boss Dungeon");
-
 			return true;
 		} else {
 			return false;

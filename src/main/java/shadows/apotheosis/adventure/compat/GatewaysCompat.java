@@ -100,7 +100,7 @@ public class GatewaysCompat {
 
 		@Override
 		public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-			list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck()).getStack(), rarity, level.random));
+			list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner, level).getStack(), rarity, level.random));
 		}
 
 		@Override

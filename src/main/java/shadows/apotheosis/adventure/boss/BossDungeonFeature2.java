@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -22,7 +21,6 @@ import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 
 /**
  * Boss Dungeon Feature (Variant 2) - Credit to BigAl607 on discord for the structure.
@@ -92,12 +90,6 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
 			RandomizableContainerBlockEntity.setLootTable(world, rand, chest2, BuiltInLootTables.SIMPLE_DUNGEON);
 
 			world.setBlock(pos, Apoth.Blocks.BOSS_SPAWNER.defaultBlockState(), 2);
-			BlockEntity tileentity = world.getBlockEntity(pos);
-			if (tileentity instanceof BossSpawnerTile) {
-				((BossSpawnerTile) tileentity).setBossItem(BossItemManager.INSTANCE.getRandomItem(rand, world));
-			} else {
-				AdventureModule.LOGGER.error("Failed to fetch boss spawner entity at ({}, {}, {})", pos.getX(), pos.getY(), pos.getZ());
-			}
 			AdventureModule.debugLog(pos, "Boss Dungeon (Variant 2)");
 			return true;
 		}

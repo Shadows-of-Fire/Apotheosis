@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
 
+import com.google.common.base.Preconditions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -79,6 +80,22 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 	public static ItemStack getRandomStack(List<WeightedItemStack> stacks, Random random) {
 		if (stacks.isEmpty()) return ItemStack.EMPTY;
 		return WeightedRandom.getRandomItem(random, stacks).get().getStack().copy();
+	}
+
+	public void validate() {
+		validateList(mainhands, "Mainhands");
+		validateList(offhands, "Offhands");
+		validateList(boots, "Boots");
+		validateList(leggings, "Leggings");
+		validateList(chestplates, "Chestplates");
+		validateList(helmets, "Helmets");
+	}
+
+	private static void validateList(List<WeightedItemStack> list, String name) {
+		Preconditions.checkNotNull(list, "Null " + name + " list.");
+		list.forEach(w -> {
+			Preconditions.checkNotNull(w.stack, "Null itemstack in " + name + " list.");
+		});
 	}
 
 	public static class WeightedItemStack extends Weighted {
