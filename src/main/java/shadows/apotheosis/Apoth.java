@@ -190,9 +190,9 @@ public class Apoth {
 		public static final RegistryObject<Potion> VITALITY = R.potion("VITALITY");
 		public static final RegistryObject<Potion> LONG_VITALITY = R.potion("LONG_VITALITY");
 		public static final RegistryObject<Potion> STRONG_VITALITY = R.potion("STRONG_VITALITY");
-		public static final RegistryObject<Potion> GREVIOUS = R.potion("GREVIOUS");
-		public static final RegistryObject<Potion> LONG_GREVIOUS = R.potion("LONG_GREVIOUS");
-		public static final RegistryObject<Potion> STRONG_GREVIOUS = R.potion("STRONG_GREVIOUS");
+		public static final RegistryObject<Potion> GRIEVOUS = R.potion("GRIEVOUS");
+		public static final RegistryObject<Potion> LONG_GRIEVOUS = R.potion("LONG_GRIEVOUS");
+		public static final RegistryObject<Potion> STRONG_GRIEVOUS = R.potion("STRONG_GRIEVOUS");
 	}
 
 	public static final class Entities {
@@ -206,7 +206,7 @@ public class Apoth {
 		public static final RegistryObject<MobEffect> SUNDERING = R.effect("sundering");
 		public static final RegistryObject<MobEffect> KNOWLEDGE = R.effect("knowledge");
 		public static final RegistryObject<MobEffect> VITALITY = R.effect("vitality");
-		public static final RegistryObject<MobEffect> GREVIOUS = R.effect("grevious");
+		public static final RegistryObject<MobEffect> GRIEVOUS = R.effect("grievous");
 
 		public static final RegistryObject<MobEffect> BLEEDING = R.effect("bleeding");
 	}

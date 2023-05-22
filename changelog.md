@@ -6,6 +6,9 @@
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.
+* Fixed misspelling of Grievous.
+* Added the miniboss exclusion `"apotheosis:surface_type"`, allowing restricting certain minibosses to areas with surface / sky view.
+* Added a config for bosses receiving the glowing effect.
 
 ## 6.2.0
 

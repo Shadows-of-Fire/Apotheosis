@@ -251,7 +251,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		entity.getPersistentData().putBoolean("apoth.boss", true);
 		entity.getPersistentData().putString("apoth.rarity", rarity.id());
 		entity.setHealth(entity.getMaxHealth());
-		entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
+		if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
 	}
 
 	public void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {

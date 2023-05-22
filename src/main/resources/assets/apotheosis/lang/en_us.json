@@ -1002,12 +1002,12 @@
     "item.minecraft.lingering_potion.effect.vitality": "Lingering Potion of Healing Boost",
     "item.minecraft.tipped_arrow.effect.vitality": "Arrow of Healing Boost",
 
-    "effect.apotheosis.grevious": "Grevious Wounds",
-    "effect.apotheosis.grevious.desc": "Decreases healing received",
-    "item.minecraft.potion.effect.grevious": "Potion of Healing Reduction",
-    "item.minecraft.splash_potion.effect.grevious": "Splash Potion of Healing Reduction",
-    "item.minecraft.lingering_potion.effect.grevious": "Lingering Potion of Healing Reduction",
-    "item.minecraft.tipped_arrow.effect.grevious": "Arrow of Healing Reduction",
+    "effect.apotheosis.grievous": "Grievous Wounds",
+    "effect.apotheosis.grievous.desc": "Decreases healing received",
+    "item.minecraft.potion.effect.grievous": "Potion of Healing Reduction",
+    "item.minecraft.splash_potion.effect.grievous": "Splash Potion of Healing Reduction",
+    "item.minecraft.lingering_potion.effect.grievous": "Lingering Potion of Healing Reduction",
+    "item.minecraft.tipped_arrow.effect.grievous": "Arrow of Healing Reduction",
 
     "item.apotheosis.lucky_foot": "Lucky Rabbit's Foot",
 

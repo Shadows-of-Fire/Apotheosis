@@ -52,8 +52,9 @@ public class AdventureConfig {
 	public static float bossAnnounceRange = 96;
 	public static float bossAnnounceVolume = 0.75F;
 	public static boolean bossAnnounceIgnoreY = false;
-	public static int bossSpawnCooldown = 400;
+	public static int bossSpawnCooldown = 2400;
 	public static boolean bossAutoAggro = false;
+	public static boolean bossGlowOnSpawn = true;
 
 	//Generation Chances
 	public static int bossDungeonAttempts = 8;
@@ -178,12 +179,13 @@ public class AdventureConfig {
 			}
 		};
 
-		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", false, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
-		bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", 96, 0, 1024, "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.");
+		curseBossItems = c.getBoolean("Curse Boss Items", "bosses", curseBossItems, "If boss items are always cursed.  Enable this if you want bosses to be less overpowered by always giving them a negative effect.");
+		bossAnnounceRange = c.getFloat("Boss Announce Range", "bosses", bossAnnounceRange, 0, 1024, "The range at which boss spawns will be announced.  If you are closer than this number of blocks (ignoring y-level), you will receive the announcement.");
 		bossAnnounceVolume = c.getFloat("Boss Announce Volume", "bosses", bossAnnounceVolume, 0, 1, "The volume of the boss announcement sound. 0 to disable. This control is clientside.");
-		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", true, "If the boss announcement range ignores y-level.");
-		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", 1800, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
-		bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", true, "If true, invading bosses will automatically target the closest player.");
+		bossAnnounceIgnoreY = c.getBoolean("Boss Announce Ignore Y", "bosses", bossAnnounceIgnoreY, "If the boss announcement range ignores y-level.");
+		bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", bossSpawnCooldown, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
+		bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.");
+		bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, invading bosses will automatically target the closest player.");
 
 		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.02|NEEDS_SKY", "minecraft:the_nether|0.03|ANY", "minecraft:the_end|0.02|NEEDS_SURFACE", "twilightforest:twilight_forest|0.05|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
 		BOSS_SPAWN_RULES.clear();

@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.boss.BossEvents.BossSpawnRules;
 import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.codec.PlaceboCodecs;
 import shadows.placebo.codec.PlaceboCodecs.CodecProvider;
@@ -35,6 +36,7 @@ public interface Exclusion extends CodecProvider<Exclusion> {
 	public static void initSerializers() {
 		register("spawn_type", SpawnTypeExclusion.CODEC);
 		register("nbt", NbtExclusion.CODEC);
+		register("surface_type", SurfaceTypeExclusion.CODEC);
 		register("and", AndExclusion.CODEC);
 	}
 
@@ -96,6 +98,37 @@ public interface Exclusion extends CodecProvider<Exclusion> {
 		@Override
 		public boolean requiresNbtAccess() {
 			return true;
+		}
+
+	}
+
+	/**
+	 * A surface type exclusion will exclude the entity unlesss it matches the specific boss spawn rule.
+	 * This is technically a "requirement", not an "exclusion", but it should be understandable.
+	 */
+	public static record SurfaceTypeExclusion(BossSpawnRules rule) implements Exclusion {
+
+		//Formatter::off
+		public static Codec<SurfaceTypeExclusion> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+                BossSpawnRules.CODEC.fieldOf("rule").forGetter(SurfaceTypeExclusion::rule))
+				.apply(inst, SurfaceTypeExclusion::new)
+			);
+		//Formatter::on
+
+		@Override
+		public Codec<? extends Exclusion> getCodec() {
+			return CODEC;
+		}
+
+		@Override
+		public boolean isExcluded(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
+			return !rule.test(level, mob.blockPosition());
+		}
+
+		@Override
+		public boolean requiresNbtAccess() {
+			return false;
 		}
 
 	}

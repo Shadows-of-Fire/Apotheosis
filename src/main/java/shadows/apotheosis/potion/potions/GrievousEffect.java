@@ -7,9 +7,9 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class GreviousEffect extends MobEffect {
+public class GrievousEffect extends MobEffect {
 
-	public GreviousEffect() {
+	public GrievousEffect() {
 		super(MobEffectCategory.HARMFUL, ChatFormatting.DARK_RED.getColor());
 	}
 

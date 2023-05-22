@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.mojang.serialization.Codec;
+
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -44,6 +46,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.boss.MinibossManager.IEntityMatch;
 import shadows.apotheosis.adventure.client.BossSpawnMessage;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.network.PacketDistro;
 
@@ -72,18 +75,18 @@ public class BossEvents {
 						sLevel.addFreshEntityWithPassengers(boss);
 						e.setResult(Result.DENY);
 						AdventureModule.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());
-						sLevel.players().forEach(p -> {
-							Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
-							if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
-								Component name = getName(boss);
-								((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
-								if (name == null || name.getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a colored name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
-								else {
+						Component name = getName(boss);
+						if (name == null || name.getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a custom name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
+						else {
+							sLevel.players().forEach(p -> {
+								Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
+								if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
+									((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
 									TextColor color = name.getStyle().getColor();
 									PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()), player);
 								}
-							}
-						});
+							});
+						}
 						bossCooldowns.put(entity.level.dimension().location(), AdventureConfig.bossSpawnCooldown);
 					}
 				}
@@ -113,7 +116,7 @@ public class BossEvents {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void delayedMinibosses(EntityJoinLevelEvent e) {
 		if (!e.getLevel().isClientSide && e.getEntity() instanceof Mob mob) {
 			String key = mob.getPersistentData().getString("apoth.miniboss");
@@ -173,6 +176,8 @@ public class BossEvents {
 		NEEDS_SURFACE(
 				(level, pos) -> pos.getY() >= level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ())),
 		ANY((level, pos) -> true);
+
+		public static final Codec<BossSpawnRules> CODEC = new EnumCodec<>(BossSpawnRules.class);
 
 		BiPredicate<ServerLevelAccessor, BlockPos> pred;
 

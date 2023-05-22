@@ -1,13 +1,13 @@
 {
-    "name": "Grevious Wounds",
-    "icon": "apotheosis:textures/mob_effect/grevious.png",
+    "name": "Grievous Wounds",
+    "icon": "apotheosis:textures/mob_effect/grievous.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
 	"sortnum": 0,
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Potion of $(c)Grevious Wounds$() is a negative effect.$(p)While under its effects, all healing received is reduced."
+            "text": "The Potion of $(c)Grievous Wounds$() is a negative effect.$(p)While under its effects, all healing received is reduced."
         },
 		{
             "type": "patchouli:text",

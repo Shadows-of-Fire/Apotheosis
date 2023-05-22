@@ -35,7 +35,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.potion.compat.CuriosCompat;
-import shadows.apotheosis.potion.potions.GreviousEffect;
+import shadows.apotheosis.potion.potions.GrievousEffect;
 import shadows.apotheosis.potion.potions.KnowledgeEffect;
 import shadows.apotheosis.potion.potions.SunderingEffect;
 import shadows.apotheosis.potion.potions.VitalityEffect;
@@ -104,11 +104,11 @@ public class PotionModule {
 			PotionBrewing.addMix(Apoth.Potions.VITALITY.get(), Items.REDSTONE, Apoth.Potions.LONG_VITALITY.get());
 			PotionBrewing.addMix(Apoth.Potions.VITALITY.get(), Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_VITALITY.get());
 
-			PotionBrewing.addMix(Apoth.Potions.VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.GREVIOUS.get());
-			PotionBrewing.addMix(Apoth.Potions.LONG_VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LONG_GREVIOUS.get());
-			PotionBrewing.addMix(Apoth.Potions.STRONG_VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_GREVIOUS.get());
-			PotionBrewing.addMix(Apoth.Potions.GREVIOUS.get(), Items.REDSTONE, Apoth.Potions.LONG_GREVIOUS.get());
-			PotionBrewing.addMix(Apoth.Potions.GREVIOUS.get(), Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_GREVIOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.GRIEVOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.LONG_VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LONG_GRIEVOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.STRONG_VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_GRIEVOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.GRIEVOUS.get(), Items.REDSTONE, Apoth.Potions.LONG_GRIEVOUS.get());
+			PotionBrewing.addMix(Apoth.Potions.GRIEVOUS.get(), Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_GRIEVOUS.get());
 		});
 		Apotheosis.HELPER.registerProvider(factory -> {
 			Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
@@ -120,7 +120,7 @@ public class PotionModule {
 
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
-		MinecraftForge.EVENT_BUS.register(Apoth.Effects.GREVIOUS.get());
+		MinecraftForge.EVENT_BUS.register(Apoth.Effects.GRIEVOUS.get());
 		MinecraftForge.EVENT_BUS.register(Apoth.Effects.VITALITY.get());
 		MinecraftForge.EVENT_BUS.register(Apoth.Effects.KNOWLEDGE.get());
 	}
@@ -158,9 +158,9 @@ public class PotionModule {
 				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 4800)), "vitality",
 				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 14400)), "long_vitality",
 				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 3600, 1)), "strong_vitality",
-				new Potion("grevious", new MobEffectInstance(Apoth.Effects.GREVIOUS.get(), 4800)), "grevious",
-				new Potion("grevious", new MobEffectInstance(Apoth.Effects.GREVIOUS.get(), 14400)), "long_grevious",
-				new Potion("grevious", new MobEffectInstance(Apoth.Effects.GREVIOUS.get(), 3600, 1)), "strong_grevious");
+				new Potion("grievous", new MobEffectInstance(Apoth.Effects.GRIEVOUS.get(), 4800)), "grievous",
+				new Potion("grievous", new MobEffectInstance(Apoth.Effects.GRIEVOUS.get(), 14400)), "long_grievous",
+				new Potion("grievous", new MobEffectInstance(Apoth.Effects.GRIEVOUS.get(), 3600, 1)), "strong_grievous");
 		//Formatter::on
 	}
 
@@ -169,7 +169,7 @@ public class PotionModule {
 		e.getRegistry().register(new SunderingEffect(), "sundering");
 		e.getRegistry().register(new KnowledgeEffect(), "knowledge");
 		e.getRegistry().register(new VitalityEffect(), "vitality");
-		e.getRegistry().register(new GreviousEffect(), "grevious");
+		e.getRegistry().register(new GrievousEffect(), "grievous");
 	}
 
 	@SubscribeEvent

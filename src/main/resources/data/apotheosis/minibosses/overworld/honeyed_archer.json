@@ -75,6 +75,10 @@
 			"spawn_types": [
 				"spawn_egg", "spawner", "mob_summoned", "conversion"
 			]
+		},
+		{
+			"type": "apotheosis:surface_type",
+			"rule": "needs_surface"
 		}
 	]
 }
