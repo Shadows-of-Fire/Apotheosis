@@ -24,7 +24,7 @@ public class BossSummonerItem extends Item {
 			pos = pos.above();
 			if (!world.noCollision(item.getSize().move(pos))) return InteractionResult.FAIL;
 		}
-		world.addFreshEntity(item.createBoss((ServerLevel) world, pos, world.getRandom(), ctx.getPlayer().getLuck()));
+		((ServerLevel) world).addFreshEntityWithPassengers(item.createBoss((ServerLevel) world, pos, world.getRandom(), ctx.getPlayer().getLuck()));
 		ctx.getItemInHand().shrink(1);
 		return InteractionResult.SUCCESS;
 	}
