@@ -285,8 +285,8 @@
 
 	"container.apotheosis.salvage": "回收",
 	"container.apotheosis.reforge": "重铸",
-	"text.apotheosis.dust_cost": "%s %s",
-	"text.apotheosis.mat_cost": "%s %s",
+	"text.apotheosis.dust_cost": "%s个%s",
+	"text.apotheosis.mat_cost": "%s个%s",
 	"text.apotheosis.reforge_cost": "重铸花费",
 	"text.apotheosis.salvage_results": "回收结果",
 	"text.apotheosis.results": "结果",
@@ -309,7 +309,7 @@
 	"info.apotheosis.boss_item": "将掉落：%s",
 	"info.apotheosis.boss_modifiers": "Boss属性：",
 	"info.apotheosis.rarity_material": "珍宝材料（%s）",
-	"info.apotheosis.gem_crushing": "宝石粉通过下落的铁砧砸中任意神话宝石获得。",
+	"info.apotheosis.gem_crushing": "宝石粉通过下落的铁砧砸中任意神化宝石获得。",
 	"info.apotheosis.gem_extraction": "在锻造台中使用以取出神化宝石。\n\n该物品将在此过程中被销毁。",
 	"info.apotheosis.gem_expulsion": "在锻造台中使用以取出神化宝石。\n\n镶嵌的宝石将在此过程中被销毁。",
 	"info.apotheosis.salvaging": "珍宝材料通过回收台回收带有词缀的物品获得。",
@@ -393,7 +393,7 @@
     "advancements.apotheosis.max_stats": "登峰造极",
     "advancements.apotheosis.max_stats.desc": "在位阶、量子化与阿卡那全满的附魔台上附魔一个物品。",
     "advancements.apotheosis.max_stable": "恒稳力量",
-    "advancements.apotheosis.max_stable.desc": "在位阶、量子化全满但阿卡那为 0% 的附魔台上附魔一个物品。",
+    "advancements.apotheosis.max_stable.desc": "在位阶、阿卡那全满但量子化为0%的附魔台上附魔一个物品。",
     "advancements.apotheosis.max_rectified": "精益求精",
     "advancements.apotheosis.max_rectified.desc": "在位阶、量子化、阿卡那与校准全满的附魔台上附魔一个物品。",
     
@@ -556,7 +556,7 @@
     "gui.apotheosis.enchant.quanta.desc3": "校准能减少量子化带来的负面影响。",
     "gui.apotheosis.enchant.quanta.desc4": "当前值：%s%%",
     "gui.apotheosis.enchant.arcana.desc": " - 无形的纯粹之物",
-    "gui.apotheosis.enchant.arcana.desc2": "使稀有度高的魔咒更加常见，",
+    "gui.apotheosis.enchant.arcana.desc2": "使稀有度高的魔咒更加常见。",
     "gui.apotheosis.enchant.arcana.desc3": "同时增加魔咒数量。",
     "gui.apotheosis.enchant.arcana.desc4": "当前值：%s%%",
     "gui.apotheosis.enchant.arcana.desc5": "总体值: %s%%",
@@ -607,7 +607,7 @@
     "death.attack.apoth_corrupted": "%s被腐化附魔榨干了。",
     "death.attack.apoth_corrupted.player": "%s被%s腐化了。",
     
-    "item.apotheosis.prismatic_web": "棱镜蜘蛛网",
+    "item.apotheosis.prismatic_web": "海晶蜘蛛网",
     "info.apotheosis.prismatic_cobweb": "能够用来移除诅咒型魔咒。",
     
     "item.apotheosis.inert_trident": "惰性三叉戟",
