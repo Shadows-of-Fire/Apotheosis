@@ -19,16 +19,17 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import shadows.apotheosis.ench.EnchModuleEvents.TridentGetter;
 
+/**
+ * Mixin to tridents to enable Piercing to work.
+ */
 @Mixin(ThrownTrident.class)
 public abstract class ThrownTridentMixin extends AbstractArrow implements TridentGetter {
 
 	int pierces = 0;
 	Vec3 oldVel = null;
+
 	@Shadow
 	private boolean dealtDamage;
-	{
-		this.piercingIgnoreEntityIds = new IntOpenHashSet();
-	}
 
 	protected ThrownTridentMixin(EntityType<? extends AbstractArrow> type, Level level) {
 		super(type, level);
@@ -38,19 +39,32 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
 	@Accessor
 	public abstract ItemStack getTridentItem();
 
-	@Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true)
-	public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
-		this.oldVel = this.getDeltaMovement();
-		if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
+	@Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V", at = @At("TAIL"), require = 1, remap = false)
+	private void init(CallbackInfo ci) {
+		this.setPierceLevel((byte) EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, getTridentItem()));
 	}
 
-	@Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true)
+	@Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true, require = 1)
+	public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
+		if (this.getPierceLevel() > 0) {
+			if (this.piercingIgnoreEntityIds == null) {
+				this.piercingIgnoreEntityIds = new IntOpenHashSet(this.getPierceLevel());
+			}
+			if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
+		}
+
+		this.oldVel = this.getDeltaMovement();
+	}
+
+	@Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true, require = 1)
 	public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
-		int pierceLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem());
-		if (this.pierces++ < pierceLevel) {
-			this.dealtDamage = false;
-			this.setDeltaMovement(this.oldVel);
+		if (this.getPierceLevel() > 0) {
 			this.piercingIgnoreEntityIds.add(res.getEntity().getId());
+
+			if (this.piercingIgnoreEntityIds.size() <= this.getPierceLevel()) {
+				this.dealtDamage = false;
+				this.setDeltaMovement(this.oldVel);
+			}
 		}
 	}
 

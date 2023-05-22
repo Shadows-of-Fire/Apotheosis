@@ -52,7 +52,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 
 	public EnchantingCategory(IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(TEXTURES, 0, 0, 170, 56);
-		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.ENCHANTING_TABLE));
+		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.ENCHANTING_TABLE));
 		this.localizedName = new TranslatableComponent("apotheosis.recipes.enchanting");
 	}
 
@@ -93,8 +93,8 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 		Extension<?> ext = EXTENSIONS.get(recipe.getClass());
 		if (ext != null) ext.setRecipe(builder, input, output, recipe, focuses);
 		else {
-			input.addIngredients(VanillaTypes.ITEM, Arrays.asList(recipe.getInput().getItems()));
-			output.addIngredient(VanillaTypes.ITEM, recipe.getResultItem());
+			input.addIngredients(VanillaTypes.ITEM_STACK, Arrays.asList(recipe.getInput().getItems()));
+			output.addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
 		}
 	}
 

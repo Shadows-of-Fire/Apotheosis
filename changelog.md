@@ -23,7 +23,12 @@
   * Increased the output of the Vial of Extraction and Vial of Expulsion to 2 per craft (recipe unchanged).
   * Fixed an issue where the Cleaving affix could hit dead targets, killing them twice.
   * Fixed Piercing not working properly on Tridents.
-
+  * NoAI Spawner mobs will no longer be able to teleport.).
+  * Epic bosses will no longer spawn in the Overworld, and Mythic bosses will no longer spawn in the Nether or Twilight.
+  * Fixed an issue with "Ignore Light" spawners not working in all cases.
+  * Fixed passengers not working on bosses.
+  * Fixed a potential crash from the affix trade.
+* Updated to JEI 10.
 
 ## 5.7.7
 * Fixed a crash that happened when resolving tooltips.

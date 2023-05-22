@@ -124,7 +124,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 					this.getSlot(2).getItem().shrink(cost);
 				}
 
-				player.giveExperienceLevels(-3 * ++slot);
+				player.giveExperienceLevels(-3 * ++id);
 				player.getPersistentData().putInt(REFORGE_SEED, player.random.nextInt());
 				updateSeed();
 				this.needsReset.set(1);

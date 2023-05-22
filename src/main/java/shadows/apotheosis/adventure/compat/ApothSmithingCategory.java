@@ -14,7 +14,6 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.category.extensions.IRecipeCategoryExtension;
-import mezz.jei.config.Constants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +25,8 @@ import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 
 public class ApothSmithingCategory implements IRecipeCategory<UpgradeRecipe> {
 
+	public static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
+
 	private static final Map<Class<? extends UpgradeRecipe>, Extension<UpgradeRecipe>> EXTENSIONS = new IdentityHashMap<>();
 	private static final ResourceLocation UID = Apotheosis.loc("fakesmith");
 
@@ -34,8 +35,8 @@ public class ApothSmithingCategory implements IRecipeCategory<UpgradeRecipe> {
 	private final IDrawable icon;
 
 	public ApothSmithingCategory(IGuiHelper guiHelper) {
-		background = guiHelper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
-		icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.SMITHING_TABLE));
+		background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
+		icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SMITHING_TABLE));
 	}
 
 	@Override

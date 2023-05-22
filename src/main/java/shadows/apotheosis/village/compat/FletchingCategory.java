@@ -32,7 +32,7 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 	public FletchingCategory(IGuiHelper guiHelper) {
 		ResourceLocation location = FletchingScreen.TEXTURES;
 		this.background = guiHelper.createDrawable(location, 6, 16, 139, 54);
-		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.FLETCHING_TABLE));
+		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.FLETCHING_TABLE));
 		this.localizedName = new TranslatableComponent("apotheosis.recipes.fletching");
 	}
 
@@ -70,9 +70,9 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
 	public void setRecipe(IRecipeLayoutBuilder builder, FletchingRecipe recipe, IFocusGroup focuses) {
 		List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(i -> Arrays.asList(i.getItems())).toList();
 		for (int i = 0; i < 3; i++) {
-			builder.addSlot(RecipeIngredientRole.INPUT, 42, 1 + i * 18).addIngredients(VanillaTypes.ITEM, inputs.get(i));
+			builder.addSlot(RecipeIngredientRole.INPUT, 42, 1 + i * 18).addIngredients(VanillaTypes.ITEM_STACK, inputs.get(i));
 		}
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 19).addIngredient(VanillaTypes.ITEM, recipe.getResultItem());
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 19).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
 	}
 
 }

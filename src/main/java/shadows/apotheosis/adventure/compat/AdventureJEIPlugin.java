@@ -50,12 +50,12 @@ public class AdventureJEIPlugin implements IModPlugin {
 		if (!Apotheosis.enableAdventure) return;
 		ItemStack gem = new ItemStack(Apoth.Items.GEM);
 		GemItem.setStoredBonus(gem, Attributes.LUCK, new AttributeModifier("debug", 9999, Operation.ADDITION));
-		reg.addIngredientInfo(gem, VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.socketing"));
+		reg.addIngredientInfo(gem, VanillaTypes.ITEM_STACK, new TranslatableComponent("info.apotheosis.socketing"));
 
-		reg.addIngredientInfo(new ItemStack(Apoth.Items.GEM_DUST), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.gem_crushing"));
-		reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXTRACTION), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.gem_extraction"));
-		reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXPULSION), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.gem_expulsion"));
-		reg.addIngredientInfo(AdventureModule.RARITY_MATERIALS.values().stream().map(IRegistryDelegate::get).map(ItemStack::new).toList(), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.salvaging"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.GEM_DUST), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.apotheosis.gem_crushing"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXTRACTION), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.apotheosis.gem_extraction"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXPULSION), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.apotheosis.gem_expulsion"));
+		reg.addIngredientInfo(AdventureModule.RARITY_MATERIALS.values().stream().map(IRegistryDelegate::get).map(ItemStack::new).toList(), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.apotheosis.salvaging"));
 		ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
 		reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ApothUpgradeRecipe).toList());
 	}
@@ -76,7 +76,7 @@ public class AdventureJEIPlugin implements IModPlugin {
 
 		@Override
 		public void setRecipe(IRecipeLayoutBuilder builder, AddSocketsRecipe recipe, IFocusGroup focuses) {
-			builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(VanillaTypes.ITEM, DUMMY_INPUTS);
+			builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(VanillaTypes.ITEM_STACK, DUMMY_INPUTS);
 
 			builder.addSlot(RecipeIngredientRole.INPUT, 50, 1).addIngredients(recipe.getInput());
 

@@ -17,7 +17,7 @@
 		"twilightforest:twilight_forest"
 	],
 	"min_rarity": "epic",
-	"max_rarity": "mythic",
+	"max_rarity": "epic",
 	"stats": {
 		"epic": {
 			"enchant_chance": 0.75,

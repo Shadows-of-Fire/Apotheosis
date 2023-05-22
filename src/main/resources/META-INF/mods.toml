@@ -36,3 +36,10 @@ description='''${desc}'''
     versionRange="[${placeboDep},)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.${modid}]]
+    modId="jei"
+    mandatory=false
+    versionRange="[10,)"
+    ordering="NONE"
+    side="BOTH"

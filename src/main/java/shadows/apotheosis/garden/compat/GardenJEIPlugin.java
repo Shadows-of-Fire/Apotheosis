@@ -16,7 +16,7 @@ public class GardenJEIPlugin implements IModPlugin {
 	@Override
 	public void registerRecipes(IRecipeRegistration reg) {
 		if (!Apotheosis.enableGarden) return;
-		reg.addIngredientInfo(new ItemStack(Apoth.Items.ENDER_LEAD), VanillaTypes.ITEM, new TranslatableComponent("info.apotheosis.ender_lead"));
+		reg.addIngredientInfo(new ItemStack(Apoth.Items.ENDER_LEAD), VanillaTypes.ITEM_STACK, new TranslatableComponent("info.apotheosis.ender_lead"));
 	}
 
 	@Override

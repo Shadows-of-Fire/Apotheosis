@@ -46,7 +46,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 
 	public SpawnerCategory(IGuiHelper helper) {
 		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 169, 75).build();
-		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Items.SPAWNER));
+		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Items.SPAWNER));
 		this.title = new TranslatableComponent("title.apotheosis.spawner");
 	}
 
@@ -74,8 +74,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 	public void setRecipe(IRecipeLayoutBuilder builder, SpawnerModifier recipe, IFocusGroup focuses) {
 		builder.addSlot(RecipeIngredientRole.INPUT, 11, 11).addIngredients(recipe.getMainhandInput());
 		if (recipe.getOffhandInput() != Ingredient.EMPTY) builder.addSlot(RecipeIngredientRole.INPUT, 11, 48).addIngredients(recipe.getOffhandInput());
-		builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.SPAWNER));
-		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addIngredient(VanillaTypes.ITEM, new ItemStack(Blocks.SPAWNER));
+		builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
+		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -117,7 +118,9 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 	 * @return The newly created boss.
 	 */
 	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, Random rand, float luck) {
-		Mob entity = (Mob) this.entity.create(world.getLevel());
+		CompoundTag fakeNbt = this.customNbt == null ? new CompoundTag() : this.customNbt;
+		fakeNbt.putString("id", EntityType.getKey(this.entity).toString());
+		Mob entity = (Mob) EntityType.loadEntityRecursive(fakeNbt, world.getLevel(), Function.identity());
 		if (this.customNbt != null) entity.load(this.customNbt);
 		this.initBoss(rand, entity, luck);
 		// Re-read here so we can apply certain things after the boss has been modified
@@ -175,6 +178,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements IDimWeigh
 
 		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(s);
+			if (stack.isEmpty()) continue;
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			else entity.setDropChance(s, 0.03F);
 			if (s.ordinal() == guaranteed) {

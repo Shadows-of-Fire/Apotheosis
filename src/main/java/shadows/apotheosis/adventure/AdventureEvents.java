@@ -34,7 +34,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -76,10 +75,6 @@ import shadows.placebo.events.AnvilLandEvent;
 import shadows.placebo.events.ItemUseEvent;
 
 public class AdventureEvents {
-
-	@SubscribeEvent
-	public void reloads(AddReloadListenerEvent e) {
-	}
 
 	@SubscribeEvent
 	public void cmds(ApotheosisCommandEvent e) {
