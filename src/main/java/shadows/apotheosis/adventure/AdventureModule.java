@@ -94,7 +94,7 @@ public class AdventureModule {
 	public static final BiMap<LootRarity, IRegistryDelegate<Item>> RARITY_MATERIALS = HashBiMap.create();
 
 	public static boolean stages = ModList.get().isLoaded("gamestages");
-	
+
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
 		ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 40D, "f_22308_");
@@ -118,8 +118,8 @@ public class AdventureModule {
 			f.addRecipe(new ExpulsionRecipe());
 			f.addRecipe(new ExtractionRecipe());
 			Item g = Apoth.Items.GEM_DUST;
-			f.addShaped(Apoth.Items.VIAL_OF_EXPULSION, 3, 3, g, Items.MAGMA_CREAM, g, Items.BLAZE_ROD, Apotheosis.potionIngredient(Potions.THICK), Items.BLAZE_ROD, g, Items.LAVA_BUCKET, g);
-			f.addShaped(Apoth.Items.VIAL_OF_EXTRACTION, 3, 3, g, Items.AMETHYST_SHARD, g, Items.ENDER_PEARL, Apotheosis.potionIngredient(Potions.THICK), Items.ENDER_PEARL, g, Items.WATER_BUCKET, g);
+			f.addShaped(new ItemStack(Apoth.Items.VIAL_OF_EXPULSION, 2), 3, 3, g, Items.MAGMA_CREAM, g, Items.BLAZE_ROD, Apotheosis.potionIngredient(Potions.THICK), Items.BLAZE_ROD, g, Items.LAVA_BUCKET, g);
+			f.addShaped(new ItemStack(Apoth.Items.VIAL_OF_EXTRACTION, 2), 3, 3, g, Items.AMETHYST_SHARD, g, Items.ENDER_PEARL, Apotheosis.potionIngredient(Potions.THICK), Items.ENDER_PEARL, g, Items.WATER_BUCKET, g);
 		});
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();

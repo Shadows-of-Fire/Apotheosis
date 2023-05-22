@@ -2,13 +2,17 @@ package shadows.apotheosis.adventure.boss;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EntityType;
@@ -49,6 +53,14 @@ public class BossItemManager extends DimWeightedJsonReloadListener<BossItem> {
 
 	public BossItemManager() {
 		super(AdventureModule.LOGGER, "bosses", false, false);
+	}
+
+	@Override
+	protected Map<ResourceLocation, JsonElement> prepare(ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+		var map = super.prepare(pResourceManager, pProfiler);
+		// The author of Brutal Bosses continues to use my subkey, so, here we go doing stupid shit to work around it.
+		map.keySet().removeIf(r -> r.getNamespace().equals("brutalbosses"));
+		return map;
 	}
 
 	@Override

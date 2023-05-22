@@ -16,6 +16,12 @@
   * Eugene: Added Ukranian translation.
   * Increased the performance of ShieldBreakerTest by not reconstructing the context zombies.
   * Enchantment Descriptions for apotheosis enchantments will be shown even if Enchantment Descriptions is disabled.
+  * Reforging no longer uses the enchanting seed.
+  * Boss Spawners are no longer triggered by creative players.
+  * Reduced the frequency at which the name parts list is used.
+  * Updated the name list for the adventure module. Regenerate names.cfg to get the updates.
+  * Increased the output of the Vial of Extraction and Vial of Expulsion to 2 per craft (recipe unchanged).
+  * Fixed an issue where the Cleaving affix could hit dead targets, killing them twice.
 
 
 ## 5.7.7

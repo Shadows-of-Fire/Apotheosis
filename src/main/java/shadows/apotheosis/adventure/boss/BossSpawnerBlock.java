@@ -43,7 +43,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 		@Override
 		public void serverTick(Level pLevel, BlockPos pPos, BlockState pState) {
 			if (this.ticks++ % 40 == 0) {
-				Optional<Player> opt = this.level.getEntities(EntityType.PLAYER, new AABB(this.worldPosition).inflate(8, 8, 8), EntitySelector.NO_SPECTATORS).stream().findFirst();
+				Optional<Player> opt = this.level.getEntities(EntityType.PLAYER, new AABB(this.worldPosition).inflate(8, 8, 8), EntitySelector.NO_CREATIVE_OR_SPECTATOR).stream().findFirst();
 				opt.ifPresent(player -> {
 					this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
 					BlockPos pos = this.worldPosition;
