@@ -72,7 +72,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mcVersion}-${forgeVersion}"
 	if(project.mixin.toBoolean()) annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
-	if(project.hasProperty('jeiVersion')) implementation fg.deobf("mezz.jei:jei-${jeiVersion}")
+	if(project.hasProperty('jeiVersion')) implementation fg.deobf("mezz.jei:jei-${mcVersion}-forge:${jeiVersion}")
 	if(project.hasProperty('jadeFileId')) implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
 	if(project.hasProperty('curiosVer'))  implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVer}")
 	if(project.hasProperty('topVersion')) implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {

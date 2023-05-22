@@ -49,6 +49,7 @@ public class PotionModule {
 	public static final ResourceLocation POTION_TEX = new ResourceLocation(Apotheosis.MODID, "textures/potions.png");
 
 	static int knowledgeMult = 4;
+	static boolean charmsInCuriosOnly = false;
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
@@ -184,6 +185,7 @@ public class PotionModule {
 	public void reload(ApotheosisReloadEvent e) {
 		Configuration config = new Configuration(new File(Apotheosis.configDir, "potion.cfg"));
 		knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
+		charmsInCuriosOnly = config.getBoolean("Restrict Charms to Curios", "general", charmsInCuriosOnly, "If Potion Charms will only work when in a curios slot, instead of in the inventory.");
 
 		String[] defExt = new String[] { MobEffects.NIGHT_VISION.getRegistryName().toString(), MobEffects.HEALTH_BOOST.getRegistryName().toString() };
 		String[] names = config.getStringList("Extended Potion Charms", "general", defExt, "A list of effects that, when as charms, will be applied and reapplied at a longer threshold to avoid issues at low durations, like night vision.");

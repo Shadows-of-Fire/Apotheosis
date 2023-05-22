@@ -255,6 +255,7 @@
 	"affix.apotheosis.target.arrow_target": "• On arrow hit, inflict %s",
 	"affix.apotheosis.target.block_self": "• Upon blocking, gain %s",
 	"affix.apotheosis.target.block_attacker": "• Upon blocking, inflict %s",
+	"affix.apotheosis.cooldown": "[⌛ %s]",
 
     "item.apotheosis.boss_summoner": "Apotheotic Boss Summoner",
 	"item.apotheosis.gem.0": "Parity Gem",
@@ -904,6 +905,7 @@
     "item.apotheosis.potion_charm.desc3": "Source: %s",
     "item.apotheosis.potion_charm.enabled": "Enabled",
     "item.apotheosis.potion_charm.disabled": "Disabled",
+	"item.apotheosis.potion_charm.curios_only": "Only works in a Curios slot",
     
     "comment_id": "/Anvil Module",
     "info.apotheosis.anvil": "Can be enchanted.",

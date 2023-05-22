@@ -129,7 +129,7 @@ public class AdventureEvents {
 	 * This event handler allows affixes to react to arrows being fired to trigger additional actions.
 	 * Arrows marked as "apoth.generated" will not trigger the affix hook, so affixes can fire arrows without recursion.
 	 */
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void fireArrow(EntityJoinWorldEvent e) {
 		if (e.getEntity() instanceof AbstractArrow arrow && !arrow.getPersistentData().getBoolean("apoth.generated")) {
 			Entity shooter = arrow.getOwner();

@@ -2,6 +2,21 @@
 * Merged all features from 5.7.J into 5.8.0
   * Added GameStages support for Affix Items, Bosses, and Gems.
   * Improved validation on GearSet parsing.
+* Backported all bugfixes up through 6.2.1. Features will not be backported.
+  * Fixed an issue where Loot Pinata caused player items to receive extra nbt when keepInventory was enabled.
+  * Fixed an issue where vanilla enchantments were always run with 0 quanta (should be 15).
+  * Fixed Crit Chance and Crit Damage having incorrect base values. This fix is not retroactive and must be corrected by commands in existing worlds!
+  * Fixed the HURT_SELF and ATTACK_SELF potion affix types having no cooldown. Notably, this includes revitalizing (instant health on hit).
+  * Increased the cooldown of the Revitalizing affix (instant health on hit) to 300 ticks (was 0 ticks due to bug above).
+  * Removed the Bee, Goat, and Knight Phantom bosses.
+  * Life Mending will now work on curios.
+  * Potion Charms can be set to only function in curios slots.
+  * Fixed an issue where the Enchantment Library would not display certain applicable enchantments (like sharpness on axes).
+  * Fixed Village Module JEI compat being registered when the module was disabled.
+  * Eugene: Added Ukranian translation.
+  * Increased the performance of ShieldBreakerTest by not reconstructing the context zombies.
+  * Enchantment Descriptions for apotheosis enchantments will be shown even if Enchantment Descriptions is disabled.
+
 
 ## 5.7.7
 * Fixed a crash that happened when resolving tooltips.
