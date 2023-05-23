@@ -39,9 +39,11 @@ public class ObsidianArrowEntity extends AbstractArrow {
 	}
 
 	@Override
-	protected void onHitEntity(EntityHitResult p_213868_1_) {
-		this.setBaseDamage(this.getBaseDamage() * 1.2F);
-		super.onHitEntity(p_213868_1_);
+	protected void onHitEntity(EntityHitResult res) {
+		double base = this.getBaseDamage();
+		this.setBaseDamage(base * 1.2F);
+		super.onHitEntity(res);
+		this.setBaseDamage(base);
 	}
 
 }

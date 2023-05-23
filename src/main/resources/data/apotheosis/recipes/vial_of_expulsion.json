@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "what",
+  "pattern": [
+    "GMG",
+    "BPB",
+    "GLG"
+  ],
+  "key": {
+    "G": {
+      "item": "apotheosis:gem_dust"
+    },
+	"M": {
+      "item": "minecraft:magma_cream"
+    },
+	"B": {
+      "item": "minecraft:blaze_rod"
+    },
+	"P": {
+	  "type": "forge:partial_nbt",
+      "item": "minecraft:potion",
+	  "nbt": "{Potion: \"minecraft:thick\"}"
+    },
+	"L": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "result": {
+    "item": "apotheosis:vial_of_expulsion",
+    "count": 2
+  }
+}

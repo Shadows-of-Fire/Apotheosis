@@ -35,8 +35,11 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 
 public final class SocketAffix extends Affix {
+
+	public static final PSerializer<SocketAffix> SERIALIZER = PSerializer.builtin("Socket Affix", SocketAffix::new);
 
 	public SocketAffix() {
 		super(AffixType.SOCKET);
@@ -55,7 +58,7 @@ public final class SocketAffix extends Affix {
 			return;
 		}
 
-		legacyGems(socketed).forEach(ctx -> ctx.gem().addModifiers(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), type, map));
+		gems(socketed).forEach(ctx -> ctx.gem().addModifiers(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), type, map));
 	}
 
 	@Override
@@ -121,12 +124,13 @@ public final class SocketAffix extends Affix {
 		gems(socketed).forEach(ctx -> ctx.gem().getEnchantmentLevels(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), enchantments));
 	}
 
-	private static Stream<GemInstance> gems(ItemStack socketed) {
-		return SocketHelper.getGems(socketed).stream().map(GemInstance::new).filter(ctx -> ctx.isValidIn(socketed));
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
-	private static Stream<GemInstance> legacyGems(ItemStack socketed) {
-		return SocketHelper.getGems(socketed).stream().map(GemInstance::orLegacy).filter(ctx -> ctx.isValidIn(socketed));
+	private static Stream<GemInstance> gems(ItemStack socketed) {
+		return SocketHelper.getGems(socketed).stream().map(GemInstance::new).filter(ctx -> ctx.isValidIn(socketed));
 	}
 
 	private static Stream<GemInstance> gems(AbstractArrow arrow) {

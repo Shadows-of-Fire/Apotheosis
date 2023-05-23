@@ -13,7 +13,7 @@
 		"minecraft:overworld"
 	],
 	"min_rarity": "rare",
-	"max_rarity": "epic",
+	"max_rarity": "rare",
 	"stats": {
 		"rare": {
 			"enchant_chance": 0.5,

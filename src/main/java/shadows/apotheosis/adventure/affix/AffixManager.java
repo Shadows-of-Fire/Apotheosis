@@ -24,7 +24,6 @@ import shadows.apotheosis.adventure.affix.effect.SpectralShotAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
-import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.PlaceboJsonReloadListener;
 
 public class AffixManager extends PlaceboJsonReloadListener<Affix> {
@@ -54,24 +53,24 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(Apotheosis.loc("attribute"), PSerializer.fromCodec("Attribute Affix", AttributeAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("mob_effect"), PSerializer.fromCodec("Potion Affix", PotionAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("damage_reduction"), PSerializer.fromCodec("Damage Reduction Affix", DamageReductionAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("catalyzing"), PSerializer.fromCodec("Catalyzing Affix", CatalyzingAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("cleaving"), PSerializer.fromCodec("Cleaving Affix", CleavingAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("enlightened"), PSerializer.fromCodec("Enlightened Affix", EnlightenedAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("executing"), PSerializer.fromCodec("Executing Affix", ExecutingAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("festive"), PSerializer.fromCodec("Festive Affix", FestiveAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("magical"), PSerializer.fromCodec("Magical Affix", MagicalArrowAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("omnetic"), PSerializer.fromCodec("Omnetic Affix", OmneticAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("psychic"), PSerializer.fromCodec("Psychic Affix", PsychicAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("radial"), PSerializer.fromCodec("Radial Affix", RadialAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("retreating"), PSerializer.fromCodec("Retreating Affix", RetreatingAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("spectral"), PSerializer.fromCodec("Spectral Affix", SpectralShotAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("telepathic"), PSerializer.fromCodec("Telepathic Affix", TelepathicAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("thunderstruck"), PSerializer.fromCodec("Thunderstruck Affix", ThunderstruckAffix.CODEC));
-		this.registerSerializer(Apotheosis.loc("socket"), PSerializer.builtin("Socket Affix", SocketAffix::new));
-		this.registerSerializer(Apotheosis.loc("durable"), PSerializer.builtin("Durable Affix", DurableAffix::new));
+		this.registerSerializer(Apotheosis.loc("attribute"), AttributeAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("mob_effect"), PotionAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("damage_reduction"), DamageReductionAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("catalyzing"), CatalyzingAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("cleaving"), CleavingAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("enlightened"), EnlightenedAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("executing"), ExecutingAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("festive"), FestiveAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("magical"), MagicalArrowAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("omnetic"), OmneticAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("psychic"), PsychicAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("radial"), RadialAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("retreating"), RetreatingAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("spectral"), SpectralShotAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("telepathic"), TelepathicAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("thunderstruck"), ThunderstruckAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("socket"), SocketAffix.SERIALIZER);
+		this.registerSerializer(Apotheosis.loc("durable"), DurableAffix.SERIALIZER);
 	}
 
 	public Multimap<AffixType, Affix> getTypeMap() {

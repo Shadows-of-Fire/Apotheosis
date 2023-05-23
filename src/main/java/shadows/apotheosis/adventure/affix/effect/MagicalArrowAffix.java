@@ -11,6 +11,7 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 
 public class MagicalArrowAffix extends Affix {
 
@@ -21,6 +22,7 @@ public class MagicalArrowAffix extends Affix {
 			.apply(inst, MagicalArrowAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<MagicalArrowAffix> SERIALIZER = PSerializer.fromCodec("Magical Arrow Affix", CODEC);
 
 	protected LootRarity minRarity;
 
@@ -41,6 +43,11 @@ public class MagicalArrowAffix extends Affix {
 				e.getSource().setMagic();
 			}
 		}
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

@@ -15,10 +15,10 @@
       "tag": "forge:ingots/netherite"
     },
 	"G": {
-      "item": "apotheosis:gem_dust"
+      "item": "apotheosis:epic_material"
     },
 	"E": {
-      "item": "minecraft:enchanting_table"
+      "item": "apotheosis:simple_reforging_table"
     },
 	"B": {
       "item": "minecraft:nether_bricks"

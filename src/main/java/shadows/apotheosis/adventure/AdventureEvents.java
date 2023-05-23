@@ -31,7 +31,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -75,10 +74,6 @@ import shadows.placebo.events.ItemUseEvent;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class AdventureEvents {
-
-	@SubscribeEvent
-	public void reloads(AddReloadListenerEvent e) {
-	}
 
 	@SubscribeEvent
 	public void cmds(ApotheosisCommandEvent e) {
@@ -381,7 +376,6 @@ public class AdventureEvents {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void special(SpecialSpawn e) {
 		if (e.getSpawnReason() == MobSpawnType.NATURAL && e.getLevel().getRandom().nextFloat() <= AdventureConfig.randomAffixItem && e.getEntity() instanceof Monster) {
-			e.setCanceled(true);
 			Player player = e.getLevel().getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
 			if (player == null) return;
 			ItemStack affixItem = LootController.createRandomLootItem(e.getLevel().getRandom(), null, player, (ServerLevel) e.getEntity().level);

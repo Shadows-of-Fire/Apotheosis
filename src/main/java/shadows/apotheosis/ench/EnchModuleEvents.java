@@ -28,6 +28,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.ench.anvil.AnvilTile;
+import shadows.apotheosis.ench.objects.ExtractionTomeItem;
+import shadows.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 
 public class EnchModuleEvents {
@@ -62,6 +64,13 @@ public class EnchModuleEvents {
 			return;
 		}
 		if (ScrappingTomeItem.updateAnvil(e)) return;
+		if (ImprovedScrappingTomeItem.updateAnvil(e)) return;
+		if (ExtractionTomeItem.updateAnvil(e)) return;
+	}
+
+	@SubscribeEvent
+	public void repairEvent(AnvilRepairEvent e) {
+		if (ExtractionTomeItem.updateRepair(e)) return;
 	}
 
 	Method dropLoot;

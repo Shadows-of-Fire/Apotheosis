@@ -1,29 +1,24 @@
 package shadows.apotheosis.util;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import com.google.gson.annotations.SerializedName;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.ItemAdapter;
+import shadows.placebo.json.PSerializer;
+import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 /**
@@ -33,6 +28,23 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
  */
 public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 
+	//Formatter::off
+	public static final Codec<GearSet> CODEC = RecordCodecBuilder.create(inst -> 
+		inst.group(
+			Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
+			Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+			WeightedItemStack.LIST_CODEC.fieldOf("mainhands").forGetter(g -> g.mainhands),
+			WeightedItemStack.LIST_CODEC.fieldOf("offhands").forGetter(g -> g.offhands),
+			WeightedItemStack.LIST_CODEC.fieldOf("boots").forGetter(g -> g.boots),
+			WeightedItemStack.LIST_CODEC.fieldOf("leggings").forGetter(g -> g.leggings),
+			WeightedItemStack.LIST_CODEC.fieldOf("chestplates").forGetter(g -> g.chestplates),
+			WeightedItemStack.LIST_CODEC.fieldOf("helmets").forGetter(g -> g.helmets),
+			Codec.STRING.listOf().fieldOf("tags").forGetter(g -> g.tags))
+		.apply(inst, GearSet::new)
+	);
+	//Formatter::on
+	public static final PSerializer<GearSet> SERIALIZER = PSerializer.fromCodec("Gear Set", CODEC);
+
 	protected final int weight;
 	protected final float quality;
 	protected final List<WeightedItemStack> mainhands;
@@ -41,11 +53,11 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 	protected final List<WeightedItemStack> leggings;
 	protected final List<WeightedItemStack> chestplates;
 	protected final List<WeightedItemStack> helmets;
-	protected final List<String> tags = new ArrayList<>();
+	protected final List<String> tags;
 
 	protected transient Map<EquipmentSlot, List<WeightedItemStack>> slotToStacks;
 
-	public GearSet(int weight, float quality, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets) {
+	public GearSet(int weight, float quality, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets, List<String> tags) {
 		this.weight = weight;
 		this.quality = quality;
 		this.mainhands = mainhands;
@@ -54,6 +66,7 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 		this.leggings = leggings;
 		this.chestplates = chestplates;
 		this.helmets = helmets;
+		this.tags = tags;
 	}
 
 	@Override
@@ -94,6 +107,11 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 		throw new RuntimeException("invalid slot");
 	}
 
+	@Override
+	public PSerializer<? extends GearSet> getSerializer() {
+		return SERIALIZER;
+	}
+
 	/**
 	 * Returns a copy of a random itemstack in this list of stacks.
 	 */
@@ -104,8 +122,18 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 
 	public static class WeightedItemStack extends Weighted {
 
+		//Formatter::off
+		public static final Codec<WeightedItemStack> CODEC = RecordCodecBuilder.create(inst -> 
+			inst.group(
+				ItemAdapter.CODEC.fieldOf("stack").forGetter(w -> w.stack),
+				Codec.INT.fieldOf("weight").forGetter(w -> w.weight),
+				Codec.FLOAT.optionalFieldOf("drop_chance", -1F).forGetter(w -> w.dropChance))
+			.apply(inst, WeightedItemStack::new)
+		);
+		//Formatter::on
+		public static final Codec<List<WeightedItemStack>> LIST_CODEC = CODEC.listOf();
+
 		final ItemStack stack;
-		@SerializedName("drop_chance")
 		final float dropChance;
 
 		public WeightedItemStack(ItemStack stack, int weight, float dropChance) {
@@ -125,13 +153,15 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 
 		public void apply(LivingEntity entity, EquipmentSlot slot) {
 			entity.setItemSlot(slot, this.stack.copy());
-			if (entity instanceof Mob mob) {
+			if (this.dropChance >= 0 && entity instanceof Mob mob) {
 				mob.setDropChance(slot, this.dropChance);
 			}
 		}
 	}
 
 	public static class SetPredicate implements Predicate<GearSet> {
+
+		public static final Codec<SetPredicate> CODEC = ExtraCodecs.stringResolverCodec(s -> s.key, SetPredicate::new);
 
 		protected final String key;
 		protected final Predicate<GearSet> internal;
@@ -152,18 +182,9 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 			return this.internal.test(t);
 		}
 
-	}
-
-	public static class SetPredicateAdapter implements JsonDeserializer<SetPredicate>, JsonSerializer<SetPredicate> {
-
 		@Override
-		public JsonElement serialize(SetPredicate src, Type typeOfSrc, JsonSerializationContext context) {
-			return new JsonPrimitive(src.key);
-		}
-
-		@Override
-		public SetPredicate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-			return new SetPredicate(json.getAsString());
+		public String toString() {
+			return "SetPredicate[" + this.key + "]";
 		}
 
 	}

@@ -1,13 +1,63 @@
 ## Future
-* [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems.
-* [NYI] Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
-* [NYI] Added additional tiers of reforging table, which limits the rarities that can be reforged into.
-* [NYI] Added a Healing Reduction potion to the potion module.
-* [NYI] Added a method of upgrading rarity materials to the next tier.
-* [NYI] Added the Vial of Unnaming, which can be used to remove the extra name pieces of an affixed item.
+* [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
+* [NYI] Buffed values of common and uncommon affixes.
+* [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
+* [NYI] Higher rarity gems will provide more gem dust when salvaged.
 
-## 6.1.6
-* Bosses now have a `mount` field.
+## 6.2.1
+* Fixed an issue with mounted bosses causing a crash.
+* Fixed misspelling of Grievous.
+* Added the miniboss exclusion `"apotheosis:surface_type"`, allowing restricting certain minibosses to areas with surface / sky view.
+* Added a config for bosses receiving the glowing effect.
+
+## 6.2.0
+
+### General
+* Updated to Placebo 7.2.0.
+  * This means everything uses codecs now, so error logging and validation should be way better.
+* rtxyd: Updated chinese translation.
+
+### Adventure Module
+* Legacy Gems have now been removed!
+  * All legacy gems will transition to an errored state, and will only be usable for gem dust.
+  * Items with legacy gems will swap to having empty sockets.
+* Bosses now have a `"mount"` field.
+* Increased the output of the Vial of Extraction and Vial of Expulsion to 2 per craft (recipe unchanged).
+* Reduced the frequency at which the name parts list is used.
+* Resolved a dupe issue with sockets.
+* Added minibosses, a method of converting normal mob spawns to empowered variants.
+* Creative players will no longer trigger boss spawner blocks.
+* Updated the name list for the adventure module. Regenerate names.cfg to get the updates.
+* Affix data now uses the Placebo CachedObject system, which should improve performance substantially.
+* All Gems will now be shown in JEI. The ones shown will be at max rarity and max facets.
+* Fixed an issue where reading affixes from NBT could trigger an infinite loop.
+* Fixed an issue where the Cleaving affix could hit dead targets, killing them twice.
+* Anim Mallon: Added a config to disable boss auto-aggro.
+* Boss auto-aggro has been disabled by default, and when enabled, will no longer target creative players.
+* Fixed Piercing not working properly on Tridents.
+* Gem rarities are now configurable on a per-dimension basis, meaning gems of certain rarities can be locked (without locking the entire gem to another dimension).
+* Epic bosses will no longer spawn in the Overworld, and Mythic bosses will no longer spawn in the Nether or Twilight.
+* Apoth worldgen will no longer spawn in the Deep Dark.
+* Fixed an issue caused by Loot Pinata and Keep Inventory.
+* Fixed passengers not working on bosses.
+* Added the Simple Reforging Table, allowing reforging Rare or weaker items pre-netherite.
+* Added the Vial of Unnaming, which can remove the affix name components from an item.
+* Loot Pinata will no longer work on Gateways.
+
+### Enchanting Module
+* Added the Improved Tome of Scrapping and the Tome of Extraction
+  * The Improved Tome of Scrapping will pull all enchantments.
+  * The Tome of Extraction will pull all enchantments and will not destroy the source item.
+  * The XP Cost of the basic Tome of Scrapping has been reduced. The higher tier tomes will have increased costs.
+
+### Spawner Module
+* Entities from a NoAI Spawner will no longer be able to teleport.
+
+### Potion Module
+* Added Bursting Vitality, a potion effect which increases healing received by 20% per level.
+* Added Grevious Wounds, a potion effect which decreases healing received by 40% per level.
+* Apotheosis potion items will now show a tooltip displaying their effects.
+  * Might move this to a separate mod akin to Enchantment Descriptions. (Yes, I know JEED exists).
 
 ## 6.1.5
 * Fixed an issue where boss names were failing to translate.

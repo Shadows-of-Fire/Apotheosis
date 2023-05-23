@@ -5,7 +5,10 @@ import java.util.function.BiConsumer;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.mojang.datafixers.kinds.App;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mojang.serialization.codecs.SimpleMapCodec;
 
@@ -31,16 +34,21 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.placebo.codec.PlaceboCodecs;
+import shadows.placebo.codec.PlaceboCodecs.CodecProvider;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.util.StepFunction;
 
-public abstract class GemBonus {
+public abstract class GemBonus implements CodecProvider<GemBonus> {
 
 	public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
+	public static final BiMap<ResourceLocation, Codec<? extends GemBonus>> CODECS = HashBiMap.create();
+	public static final Codec<GemBonus> CODEC = PlaceboCodecs.mapBacked("Gem Bonus", CODECS);
 
 	protected final ResourceLocation id;
 	protected final GemClass gemClass;
@@ -223,6 +231,18 @@ public abstract class GemBonus {
 
 	protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {
 		return GemClass.CODEC.fieldOf("gem_class").forGetter(gem -> gem.getGemClass());
+	}
+
+	public static void initCodecs() {
+		register("attribute", AttributeBonus.CODEC);
+		register("multi_attribute", MultiAttrBonus.CODEC);
+		register("durability", DurabilityBonus.CODEC);
+		register("damage_reduction", DamageReductionBonus.CODEC);
+		register("enchantment", EnchantmentBonus.CODEC);
+	}
+
+	private static void register(String id, Codec<? extends GemBonus> codec) {
+		CODECS.put(Apotheosis.loc(id), codec);
 	}
 
 }

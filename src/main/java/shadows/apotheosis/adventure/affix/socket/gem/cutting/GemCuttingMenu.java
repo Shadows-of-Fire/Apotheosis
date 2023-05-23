@@ -19,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -100,8 +99,8 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 		if (first.isEmpty()) return false;
 		GemInstance inst = new GemInstance(first);
 		if (!inst.isMaxed()) {
-			LootRarity rarity = AdventureModule.RARITY_MATERIALS.inverse().get(stack.getItem());
-			return ReforgingMenu.isRarityMat(stack) && (rarity == inst.rarity() || rarity == inst.rarity().prev());
+			LootRarity rarity = LootRarity.getMaterialRarity(stack);
+			return rarity != null && (rarity == inst.rarity() || rarity == inst.rarity().prev());
 		} else {
 			GemInstance otherInst = new GemInstance(stack);
 			return otherInst.isValid() && otherInst.isMaxed() && otherInst.gem() == inst.gem();

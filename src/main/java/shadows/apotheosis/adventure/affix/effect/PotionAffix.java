@@ -38,6 +38,7 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.codec.EnumCodec;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 public class PotionAffix extends Affix {
@@ -62,6 +63,7 @@ public class PotionAffix extends Affix {
 			.apply(inst, PotionAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<PotionAffix> SERIALIZER = PSerializer.fromCodec("Potion Affix", CODEC);
 
 	protected final MobEffect effect;
 	protected final Target target;
@@ -167,6 +169,11 @@ public class PotionAffix extends Affix {
 		}
 		target.addEffect(mei);
 		target.getPersistentData().putLong("apoth.affix_cooldown." + this.getId().toString(), target.level.getGameTime());
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 	public static Component toComponent(MobEffectInstance inst) {

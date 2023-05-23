@@ -20,6 +20,7 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 /**
@@ -34,6 +35,7 @@ public class ThunderstruckAffix extends Affix {
 			.apply(inst, ThunderstruckAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<ThunderstruckAffix> SERIALIZER = PSerializer.fromCodec("Thunderstruck Affix", CODEC);
 
 	protected final Map<LootRarity, StepFunction> values;
 
@@ -65,6 +67,11 @@ public class ThunderstruckAffix extends Affix {
 
 	private float getTrueLevel(LootRarity rarity, float level) {
 		return this.values.get(rarity).get(level);
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

@@ -1,23 +1,32 @@
 package shadows.apotheosis.adventure.boss;
 
+import java.util.Arrays;
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.placebo.json.RandomAttributeModifier;
 
-public class BossStats {
+/**
+ * Boss Stats, aka everything that a boss might need to buff itself.
+ * @param enchantChance Specifies the chance that boss items (aside from the affix item) are enchanted.
+ * @param enchLevels Array of enchantment levels to use for the boss's items. Order is {<Generic with EnchModule>, <Generic without>, <Affix with>, <Affix without>}. Must have four entries.
+ * @param effects List of effects that could be applied to this boss. May be empty, but may not be null.
+ * @param modifiers List of attribute modifiers to apply to this boss when spawned. May be empty, but may not be null.
+ */
+public record BossStats(float enchantChance, int[] enchLevels, List<ChancedEffectInstance> effects, List<RandomAttributeModifier> modifiers) {
 
-	@SerializedName("enchant_chance")
-	protected float enchantChance;
-
-	@SerializedName("enchantment_levels")
-	protected int[] enchLevels;
-
-	protected List<ChancedEffectInstance> effects;
-
-	@SerializedName("attribute_modifiers")
-	protected List<RandomAttributeModifier> modifiers;
+	//Formatter::off
+	public static final Codec<BossStats> CODEC = RecordCodecBuilder.create(inst -> inst
+		.group(
+			Codec.FLOAT.fieldOf("enchant_chance").forGetter(BossStats::enchantChance),
+			Codec.INT.listOf().xmap(l -> l.stream().mapToInt(Integer::intValue).toArray(), arr -> Arrays.stream(arr).boxed().toList()).fieldOf("enchantment_levels").forGetter(BossStats::enchLevels),
+			ChancedEffectInstance.CODEC.listOf().fieldOf("effects").forGetter(BossStats::effects),
+			RandomAttributeModifier.CODEC.listOf().fieldOf("attribute_modifiers").forGetter(BossStats::modifiers))
+			.apply(inst, BossStats::new)
+		);
+	//Formatter::on
 
 }

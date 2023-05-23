@@ -47,7 +47,7 @@ public class ScrappingTomeItem extends BookItem {
 
 	@Override
 	public Rarity getRarity(ItemStack stack) {
-		return !stack.isEnchanted() ? super.getRarity(stack) : Rarity.UNCOMMON;
+		return Rarity.UNCOMMON;
 	}
 
 	public static boolean updateAnvil(AnvilUpdateEvent ev) {
@@ -72,7 +72,7 @@ public class ScrappingTomeItem extends BookItem {
 		ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
 		EnchantmentHelper.setEnchantments(wepEnch, out);
 		ev.setMaterialCost(1);
-		ev.setCost(wepEnch.size() * 10);
+		ev.setCost(wepEnch.size() * 6);
 		ev.setOutput(out);
 		return true;
 	}

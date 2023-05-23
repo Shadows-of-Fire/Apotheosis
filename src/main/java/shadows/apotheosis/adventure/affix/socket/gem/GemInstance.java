@@ -9,11 +9,6 @@ public record GemInstance(ItemStack gemStack, Gem gem, LootRarity rarity, int fa
 		this(gemStack, GemItem.getGem(gemStack), GemItem.getLootRarity(gemStack), GemItem.getFacets(gemStack));
 	}
 
-	// TODO: Remove
-	public static GemInstance orLegacy(ItemStack gemStack) {
-		return new GemInstance(gemStack, GemItem.getGemOrLegacy(gemStack), GemItem.getLootRarity(gemStack), GemItem.getFacets(gemStack));
-	}
-
 	public boolean isValid() {
 		return this.gem != null && this.rarity != null && facets >= 0 && facets <= this.gem.getMaxFacets(rarity);
 	}

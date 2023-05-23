@@ -1,0 +1,35 @@
+{
+	"parent": "block/block",
+	"render_type": "cutout",
+    "textures": {
+        "particle": "minecraft:block/smooth_stone",
+        "bottom": "minecraft:block/smooth_stone",
+        "top": "apotheosis:blocks/reforging/simple_table_top",
+        "side": "apotheosis:blocks/reforging/simple_table_side",
+        "lit": "apotheosis:blocks/reforging/simple_table_lit"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 12, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
+                "north": { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "north" },
+                "south": { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "south" },
+                "west":  { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "west" },
+                "east":  { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "east" }
+            }
+        },
+		{   "from": [ 0, 12, 0 ],
+            "to": [ 16, 12, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#lit", "emissivity": 15},
+                "north": { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "north" },
+                "south": { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "south" },
+                "west":  { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "west" },
+                "east":  { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "east" }
+            }
+        }
+    ]
+}

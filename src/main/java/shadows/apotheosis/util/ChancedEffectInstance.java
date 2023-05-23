@@ -27,7 +27,7 @@ public class ChancedEffectInstance {
 		.group(
 			Codec.FLOAT.fieldOf("chance").forGetter(a -> a.chance),
 			ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("effect").forGetter(a -> a.effect),
-			StepFunction.CODEC.fieldOf("amplifier").forGetter(a -> a.amp),
+			StepFunction.CODEC.optionalFieldOf("amplifier", StepFunction.constant(0)).forGetter(a -> a.amp),
 			Codec.BOOL.optionalFieldOf("ambient", true).forGetter(a -> a.ambient),
 			Codec.BOOL.optionalFieldOf("visible", false).forGetter(a -> a.visible))
 			.apply(inst, ChancedEffectInstance::new)

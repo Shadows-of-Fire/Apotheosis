@@ -1,0 +1,28 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	},
+	{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"item": "apotheosis:scrap_tome"
+	},
+	"requirements": {
+		"eterna": 22.5,
+		"quanta": 25,
+		"arcana": 35
+	},
+	"max_requirements": {
+		"eterna": -1,
+		"quanta": 50,
+		"arcana": -1
+	},
+	"result": {
+		"item": "apotheosis:improved_scrap_tome",
+		"count": 4
+	}
+}

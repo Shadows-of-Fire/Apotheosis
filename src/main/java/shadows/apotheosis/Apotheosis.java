@@ -39,7 +39,6 @@ import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
 import shadows.apotheosis.potion.PotionModule;
 import shadows.apotheosis.spawn.SpawnerModule;
-import shadows.apotheosis.util.EnchantmentIngredient;
 import shadows.apotheosis.util.ModuleCondition;
 import shadows.apotheosis.util.ParticleMessage;
 import shadows.apotheosis.util.RarityIngredient;
@@ -125,10 +124,11 @@ public class Apotheosis {
 		MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
 		MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage(null, 0));
 		MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage(0, null, false));
-		e.enqueueWork(AdvancementTriggers::init);
-		CraftingHelper.register(new ModuleCondition.Serializer());
-		CraftingHelper.register(new ResourceLocation(MODID, "enchantment"), EnchantmentIngredient.Serializer.INSTANCE);
-		CraftingHelper.register(new ResourceLocation(MODID, "rarity"), RarityIngredient.Serializer.INSTANCE);
+		e.enqueueWork(() -> {
+			AdvancementTriggers.init();
+			CraftingHelper.register(new ModuleCondition.Serializer());
+			CraftingHelper.register(new ResourceLocation(MODID, "rarity"), RarityIngredient.Serializer.INSTANCE);
+		});
 	}
 
 	@SubscribeEvent

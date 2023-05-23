@@ -19,6 +19,7 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 /**
@@ -33,6 +34,7 @@ public class PsychicAffix extends Affix {
 			.apply(inst, PsychicAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<PsychicAffix> SERIALIZER = PSerializer.fromCodec("Psychic Affix", CODEC);
 
 	protected final Map<LootRarity, StepFunction> values;
 
@@ -65,6 +67,11 @@ public class PsychicAffix extends Affix {
 
 	private float getTrueLevel(LootRarity rarity, float level) {
 		return this.values.get(rarity).get(level);
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

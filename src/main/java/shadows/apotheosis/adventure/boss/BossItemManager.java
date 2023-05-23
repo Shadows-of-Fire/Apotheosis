@@ -1,46 +1,29 @@
 package shadows.apotheosis.adventure.boss;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.util.Map;
 
-import net.minecraft.nbt.CompoundTag;
+import com.google.gson.JsonElement;
+
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.phys.AABB;
-import net.minecraftforge.coremod.api.ASMAPI;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.profiling.ProfilerFiller;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.util.AxisAlignedBBDeserializer;
-import shadows.apotheosis.util.ChancedEffectInstance;
-import shadows.apotheosis.util.GearSet.SetPredicate;
-import shadows.apotheosis.util.GearSet.SetPredicateAdapter;
-import shadows.placebo.json.JsonUtil;
-import shadows.placebo.json.NBTAdapter;
-import shadows.placebo.json.PSerializer;
-import shadows.placebo.json.RandomAttributeModifier;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
-
-	//Formatter::off
-	public static final Gson GSON = new GsonBuilder()
-			.setPrettyPrinting()
-			.registerTypeAdapter(EntityType.class, JsonUtil.makeSerializer(ForgeRegistries.ENTITY_TYPES))
-			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-			.registerTypeAdapter(SetPredicate.class, new SetPredicateAdapter())
-			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName())
-			.registerTypeAdapter(ChancedEffectInstance.class, new ChancedEffectInstance.Deserializer())
-			.registerTypeAdapter(RandomAttributeModifier.class, new RandomAttributeModifier.Deserializer())
-			.registerTypeAdapter(AABB.class, new AxisAlignedBBDeserializer())
-			.registerTypeAdapter(LootRarity.class, new LootRarity.Serializer())
-			.registerTypeAdapter(CompoundTag.class, new NBTAdapter()).create();
-	//Formatter::on
 
 	public static final BossItemManager INSTANCE = new BossItemManager();
 
 	public BossItemManager() {
 		super(AdventureModule.LOGGER, "bosses", false, false);
+	}
+
+	@Override
+	protected Map<ResourceLocation, JsonElement> prepare(ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+		var map = super.prepare(pResourceManager, pProfiler);
+		// The author of Brutal Bosses continues to use my subkey, so, here we go doing stupid shit to work around it.
+		map.keySet().removeIf(r -> r.getNamespace().equals("brutalbosses"));
+		return map;
 	}
 
 	@Override
@@ -51,7 +34,7 @@ public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new PSerializer.Builder<BossItem>("Apotheosis Boss").withJsonDeserializer(obj -> GSON.fromJson(obj, BossItem.class)));
+		this.registerSerializer(DEFAULT, BossItem.SERIALIZER);
 	}
 
 }

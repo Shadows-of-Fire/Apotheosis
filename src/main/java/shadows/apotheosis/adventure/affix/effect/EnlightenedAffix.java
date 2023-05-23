@@ -18,6 +18,7 @@ import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 public class EnlightenedAffix extends Affix {
@@ -29,6 +30,7 @@ public class EnlightenedAffix extends Affix {
 			.apply(inst, EnlightenedAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<EnlightenedAffix> SERIALIZER = PSerializer.fromCodec("Enlightened Affix", CODEC);
 
 	protected final Map<LootRarity, StepFunction> values;
 
@@ -56,6 +58,11 @@ public class EnlightenedAffix extends Affix {
 			return InteractionResult.SUCCESS;
 		}
 		return super.onItemUse(stack, rarity, level, ctx);
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

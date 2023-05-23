@@ -41,7 +41,7 @@ import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.json.ItemAdapter;
 import shadows.placebo.json.JsonUtil;
 import shadows.placebo.json.NBTAdapter;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 
 /**
  * An affix is a construct very similar to an enchantment, providing bonuses to arbitrary items.

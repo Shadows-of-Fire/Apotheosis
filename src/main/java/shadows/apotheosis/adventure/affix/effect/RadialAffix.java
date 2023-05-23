@@ -35,6 +35,7 @@ import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.PlaceboUtil;
 
 public class RadialAffix extends Affix {
@@ -46,6 +47,7 @@ public class RadialAffix extends Affix {
 			.apply(inst, RadialAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<RadialAffix> SERIALIZER = PSerializer.fromCodec("Radial Affix", CODEC);
 
 	private static Set<UUID> breakers = new HashSet<>();
 
@@ -84,6 +86,11 @@ public class RadialAffix extends Affix {
 	private RadialData getTrueLevel(LootRarity rarity, float level) {
 		var list = this.values.get(rarity);
 		return list.get(Math.min(list.size() - 1, (int) Mth.lerp(level, 0, list.size())));
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 	static record RadialData(int x, int y, int xOff, int yOff) {

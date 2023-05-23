@@ -25,7 +25,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
@@ -55,7 +54,8 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.codec.PlaceboCodecs;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.PSerializer;
+import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
@@ -64,18 +64,18 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	//Formatter::off
 	public static final Codec<Gem> CODEC = RecordCodecBuilder.create(inst -> 
 		inst.group(
-			ExtraCodecs.NON_NEGATIVE_INT.fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-			Codec.FLOAT.fieldOf("quality").forGetter(ILuckyWeighted::getQuality),
+			Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
+			Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
 			PlaceboCodecs.setCodec(ResourceLocation.CODEC).optionalFieldOf("dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
 			LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(LootRarity.Clamped::getMinRarity),
 			LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(LootRarity.Clamped::getMaxRarity),
-			GemManager.gemBonusCodec().listOf().fieldOf("bonuses").forGetter(Gem::getBonuses),
+			GemBonus.CODEC.listOf().fieldOf("bonuses").forGetter(Gem::getBonuses),
 			Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique),
 			PlaceboCodecs.setCodec(Codec.STRING).optionalFieldOf("stages").forGetter(gem -> Optional.ofNullable(gem.getStages())))
 			.apply(inst, Gem::new)
 		);
-	
 	//Formatter::on
+	public static final PSerializer<Gem> SERIALIZER = PSerializer.fromCodec("Gem", CODEC);
 
 	protected final int weight;
 	protected final float quality;
@@ -405,6 +405,11 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	@Override
 	public Set<String> getStages() {
 		return this.stages;
+	}
+
+	@Override
+	public PSerializer<? extends Gem> getSerializer() {
+		return SERIALIZER;
 	}
 
 	public static void addTypeInfo(Consumer<Component> list, Object... types) {

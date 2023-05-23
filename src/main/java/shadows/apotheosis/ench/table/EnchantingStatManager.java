@@ -1,6 +1,6 @@
 package shadows.apotheosis.ench.table;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import shadows.apotheosis.ench.objects.IEnchantingBlock;
 import shadows.apotheosis.ench.table.EnchantingStatManager.BlockStats;
 import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.PlaceboJsonReloadListener;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 
 public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats> {
 
@@ -43,7 +43,7 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, PSerializer.fromCodec("Enchanting Stats", BlockStats.CODEC));
+		this.registerSerializer(DEFAULT, BlockStats.SERIALIZER);
 	}
 
 	@Override
@@ -190,20 +190,22 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 			);
 		//Formatter::on
 
+		public static final PSerializer<BlockStats> SERIALIZER = PSerializer.fromCodec("Enchanting Stats", CODEC);
+
 		public final List<Block> blocks;
 		public final Stats stats;
 
 		public BlockStats(List<Block> blocks, Optional<TagKey<Block>> tag, Optional<Block> block, Stats stats) {
-			if (!blocks.isEmpty() && tag.isEmpty() && block.isEmpty()) {
-				this.blocks = blocks;
-			} else if (blocks.isEmpty() && !tag.isEmpty() && block.isEmpty()) {
-				this.blocks = EnchantingStatManager.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList();
-			} else if (blocks.isEmpty() && tag.isEmpty() && !block.isEmpty()) {
-				this.blocks = Arrays.asList(block.get());
-			} else {
-				throw new IllegalArgumentException("Improper arguments to BlockStats - only one of \"blocks\", \"tag\", and \"block\" may be provided!");
-			}
+			this.blocks = new ArrayList<>();
+			if (!blocks.isEmpty()) this.blocks.addAll(blocks);
+			if (tag.isPresent()) this.blocks.addAll(EnchantingStatManager.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList());
+			if (block.isPresent()) this.blocks.add(block.get());
 			this.stats = stats;
+		}
+
+		@Override
+		public PSerializer<? extends BlockStats> getSerializer() {
+			return SERIALIZER;
 		}
 
 	}

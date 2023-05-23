@@ -7,7 +7,8 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorItem;
@@ -19,13 +20,12 @@ import net.minecraft.world.item.Tiers;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.loot.AffixLootEntry;
-import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.json.ItemAdapter;
 
 public class MiscDatagenCode {
 
 	public static void genAffixLootItems() {
-		Gson gson = AffixLootManager.GSON;
 		Set<ResourceLocation> overworld = ImmutableSet.of(new ResourceLocation("overworld"));
 		Set<ResourceLocation> nether = ImmutableSet.of(new ResourceLocation("the_nether"));
 		Set<ResourceLocation> end = ImmutableSet.of(new ResourceLocation("the_end"));
@@ -35,7 +35,8 @@ public class MiscDatagenCode {
 			File file = new File(FMLPaths.GAMEDIR.get().toFile(), "datagen/" + dim + "/" + ForgeRegistries.ITEMS.getKey(entry.getStack().getItem()).getPath() + ".json");
 			file.getParentFile().mkdirs();
 			try (FileWriter writer = new FileWriter(file)) {
-				gson.toJson(entry, writer);
+				JsonElement json = AffixLootEntry.CODEC.encodeStart(JsonOps.INSTANCE, entry).get().left().get();
+				ItemAdapter.ITEM_READER.toJson(json, writer);
 			} catch (IOException ex) {
 
 			}

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    " N ",
+    "GEG",
+    "BBB"
+  ],
+  "key": {
+    "N": {
+      "tag": "forge:ingots/iron"
+    },
+	"G": {
+      "item": "apotheosis:gem_dust"
+    },
+	"E": {
+      "item": "minecraft:enchanting_table"
+    },
+	"B": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "apotheosis:simple_reforging_table",
+    "count": 1
+  }
+}

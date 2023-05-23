@@ -1,6 +1,5 @@
 package shadows.apotheosis.adventure.loot;
 
-import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -17,13 +16,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.ListCodec;
@@ -45,7 +37,8 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixType;
 import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.color.GradientColor;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.PSerializer;
+import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
@@ -219,6 +212,22 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 	}
 
 	/**
+	 * Returns true if the passed item is a rarity material.
+	 */
+	public static boolean isRarityMat(ItemStack stack) {
+		return AdventureModule.RARITY_MATERIALS.containsValue(stack.getItem());
+	}
+
+	@Nullable
+	public static LootRarity getMaterialRarity(ItemStack stack) {
+		return AdventureModule.RARITY_MATERIALS.inverse().get(stack.getItem());
+	}
+
+	public ItemStack getMaterial() {
+		return new ItemStack(AdventureModule.RARITY_MATERIALS.get(this));
+	}
+
+	/**
 	 * Clamps a loot rarity to within a min/max bound.
 	 * @param lowerBound The minimum valid rarity
 	 * @param upperBound The maximum valid rarity
@@ -273,16 +282,17 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 		return Codec.simpleMap(LootRarity.CODEC, codec, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
 	}
 
-	public static class RarityStub extends TypeKeyedBase<RarityStub> {
+	public static class RarityStub extends TypeKeyedBase<RarityStub> implements ILuckyWeighted {
 		//Formatter::off
 		public static final Codec<RarityStub> CODEC = RecordCodecBuilder.create(inst -> 
 			inst.group(
-				Codec.INT.fieldOf("weight").forGetter(RarityStub::weight),
-				Codec.FLOAT.fieldOf("quality").forGetter(RarityStub::quality),
+				Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
+				Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
 				new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(RarityStub::rules))
 				.apply(inst, RarityStub::new)
 			);
 		//Formatter::on
+		public static final PSerializer<RarityStub> SERIALIZER = PSerializer.fromCodec("Loot Rarity", CODEC);
 
 		int weight;
 		float quality;
@@ -294,16 +304,23 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 			this.rules = rules;
 		}
 
-		public int weight() {
+		@Override
+		public int getWeight() {
 			return this.weight;
 		}
 
-		public float quality() {
+		@Override
+		public float getQuality() {
 			return this.quality;
 		}
 
 		public List<LootRule> rules() {
 			return this.rules;
+		}
+
+		@Override
+		public PSerializer<? extends RarityStub> getSerializer() {
+			return SERIALIZER;
 		}
 
 	}
@@ -348,20 +365,6 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 				currentAffixes.add(available.get(0));
 			}
 		}
-	}
-
-	public static class Serializer implements JsonSerializer<LootRarity>, JsonDeserializer<LootRarity> {
-
-		@Override
-		public LootRarity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-			return LootRarity.byId(json.getAsString());
-		}
-
-		@Override
-		public JsonElement serialize(LootRarity src, Type typeOfSrc, JsonSerializationContext context) {
-			return new JsonPrimitive(src.id);
-		}
-
 	}
 
 	public static interface Clamped {

@@ -1,0 +1,17 @@
+{
+    "name": "Minibosses",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Occasionally, you may see named or empowered mobs throughout your world.$(p)These are likely $(9)Apothic Minibosses$()."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "These mobs will appear randomly in place of their normal counterparts.$(p)Be on your guard."
+		}
+	]
+}

@@ -21,6 +21,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.mixin.LivingEntityInvoker;
+import shadows.placebo.json.PSerializer;
 import shadows.placebo.util.StepFunction;
 
 public class ExecutingAffix extends Affix {
@@ -32,6 +33,7 @@ public class ExecutingAffix extends Affix {
 			.apply(inst, ExecutingAffix::new)
 		);
 	//Formatter::on
+	public static final PSerializer<ExecutingAffix> SERIALIZER = PSerializer.fromCodec("Executing Affix", CODEC);
 
 	protected final Map<LootRarity, StepFunction> values;
 
@@ -71,6 +73,11 @@ public class ExecutingAffix extends Affix {
 				}
 			}
 		}
+	}
+
+	@Override
+	public PSerializer<? extends Affix> getSerializer() {
+		return SERIALIZER;
 	}
 
 }

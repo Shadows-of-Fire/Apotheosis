@@ -7,33 +7,15 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.coremod.api.ASMAPI;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.util.GearSet;
 import shadows.apotheosis.util.GearSet.SetPredicate;
-import shadows.placebo.json.ItemAdapter;
-import shadows.placebo.json.NBTAdapter;
-import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
-
-	//Formatter::off
-	public static final Gson GSON = new GsonBuilder().setPrettyPrinting()
-			.registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE)
-			.registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
-			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-			.setFieldNamingStrategy(f -> f.getName().equals(ASMAPI.mapField("field_76292_a")) ? "weight" : f.getName()).create();
-	//Formatter::on
 
 	public static final BossArmorManager INSTANCE = new BossArmorManager();
 
@@ -51,7 +33,11 @@ public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 				if (f.test(e)) return true;
 			return false;
 		}).collect(Collectors.toList());
-		if (valid.isEmpty()) return this.getRandomItem(rand, luck);
+		if (valid.isEmpty()) {
+			AdventureModule.LOGGER.error("Failed to locate any gear sets matching the following predicates: ");
+			armorSets.forEach(s -> AdventureModule.LOGGER.error(s.toString()));
+			return this.getRandomItem(rand, luck);
+		}
 
 		List<Wrapper<GearSet>> list = new ArrayList<>(valid.size());
 		valid.stream().map(l -> l.<GearSet>wrap(luck)).forEach(list::add);
@@ -60,7 +46,7 @@ public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 
 	@Override
 	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, new PSerializer.Builder<GearSet>("Boss Gear Set").withJsonDeserializer(obj -> GSON.fromJson(obj, GearSet.class)));
+		this.registerSerializer(DEFAULT, GearSet.SERIALIZER);
 	}
 
 }

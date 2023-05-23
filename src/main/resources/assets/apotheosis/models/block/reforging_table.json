@@ -2,11 +2,11 @@
 	"parent": "block/block",
 	"render_type": "cutout",
     "textures": {
-        "particle": "apotheosis:blocks/reforging_table_bottom",
-        "bottom": "apotheosis:blocks/reforging_table_bottom",
-        "top": "apotheosis:blocks/reforging_table_top",
-        "side": "apotheosis:blocks/reforging_table_side",
-        "lit": "apotheosis:blocks/reforging_table_lit"
+        "particle": "minecraft:block/nether_bricks",
+        "bottom": "minecraft:block/nether_bricks",
+        "top": "apotheosis:blocks/reforging/table_top",
+        "side": "apotheosis:blocks/reforging/table_side",
+        "lit": "apotheosis:blocks/reforging/table_lit"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

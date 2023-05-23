@@ -1,0 +1,81 @@
+{
+	"_comment": "This file serves as an example of the miniboss system.",
+	"weight": 10,
+	"quality": 0,
+	"name": "Craig the Eternal",
+	"chance": 0.0005,
+	"entities": [
+		"minecraft:goat"
+	],
+	"valid_gear_sets": [
+		"#overworld"
+	],
+	"dimensions": [
+		"minecraft:overworld"
+	],
+	"affixed": false,
+	"nbt": {
+		"IsScreamingGoat": true,
+		"HasLeftHorn": true,
+		"HasRightHorn": true
+	},
+	"stats": {
+		"enchant_chance": 0.25,
+		"enchantment_levels": [12, 8, 20, 14],
+		"effects": [{
+			"effect": "minecraft:fire_resistance",
+			"chance": 1.0
+		}],
+		"attribute_modifiers": [{
+				"attribute": "minecraft:generic.max_health",
+				"operation": "ADDITION",
+				"value": 4096
+			},
+			{
+				"attribute": "minecraft:generic.movement_speed",
+				"operation": "MULTIPLY_BASE",
+				"value": {
+					"min": 0.05,
+					"steps": 5,
+					"step": 0.01
+				}
+			},
+			{
+				"attribute": "minecraft:generic.attack_damage",
+				"operation": "MULTIPLY_BASE",
+				"value": {
+					"min": 0.2,
+					"steps": 20,
+					"step": 0.01
+				}
+			},
+			{
+				"attribute": "minecraft:generic.knockback_resistance",
+				"operation": "ADDITION",
+				"value": 0.3
+			}
+		]
+	},
+	"supporting_entities": [{
+		"entity": "minecraft:sheep",
+		"nbt": {
+			"CustomName": "{\"text\":\"jeb_\"}"
+		},
+		"x": 1,
+		"y": 0,
+		"z": 1
+	}],
+	"exclusions": [{
+			"type": "apotheosis:spawn_type",
+			"spawn_types": [
+				"spawn_egg"
+			]
+		},
+		{
+			"type": "apotheosis:nbt",
+			"nbt": {
+				"Spaghetti": "sauced"
+			}
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Bursting Vitality",
+    "icon": "apotheosis:textures/mob_effect/vitality.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "The Potion of $(9)Bursting Vitality$() is a beneficial effect.$(p)While under its effects, all healing received is increased."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "The healing increase is equal to 20% per level."
+        }
+	]
+}

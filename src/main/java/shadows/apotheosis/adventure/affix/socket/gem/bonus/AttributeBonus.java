@@ -76,9 +76,14 @@ public class AttributeBonus extends GemBonus {
 	public int getNumberOfUUIDs() {
 		return 1;
 	}
-	
+
 	public AttributeModifier read(ItemStack gem, LootRarity rarity, int facets) {
 		return new AttributeModifier(GemItem.getUUIDs(gem).get(0), "apoth.gem_modifier", this.values.get(rarity).getForStep(facets), this.operation);
+	}
+
+	@Override
+	public Codec<? extends GemBonus> getCodec() {
+		return CODEC;
 	}
 
 }

@@ -30,6 +30,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -269,7 +270,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 					if (!this.clues.get(slot).isEmpty()) {
 						list.add(Component.translatable("info.apotheosis.runes" + (this.hasAllClues[slot] ? "_all" : "")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
 						for (EnchantmentInstance i : this.clues.get(slot)) {
-							list.add(Component.translatable(i.enchantment.getFullname(i.level).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+							list.add(((MutableComponent) i.enchantment.getFullname(i.level)));
 						}
 					} else {
 						list.add(Component.translatable("info.apotheosis.no_clue").withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));

@@ -13,9 +13,13 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.village.wanderer.JsonTrade;
-import shadows.placebo.json.PlaceboJsonReloadListener.TypeKeyedBase;
+import shadows.placebo.json.ItemAdapter;
+import shadows.placebo.json.PSerializer;
+import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 
 public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
+
+	public static final PSerializer<AffixTrade> SERIALIZER = PSerializer.basic("Affix Trade", obj -> ItemAdapter.ITEM_READER.fromJson(obj, AffixTrade.class));
 
 	protected final boolean rare;
 
@@ -30,10 +34,12 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 		Player nearest = pTrader.level.getNearestPlayer(pTrader, -1);
 		if (nearest == null) return null;
 		ItemStack affixItem = LootController.createRandomLootItem(pRand, null, nearest, (ServerLevel) pTrader.level);
+		if (affixItem.isEmpty()) return null;
 		affixItem.getTag().putBoolean("apoth_merchant", true);
 		ItemStack stdItem = affixItem.copy();
 		stdItem.setTag(null);
 		LootRarity rarity = AffixHelper.getRarity(affixItem);
+		if (rarity == null) return null;
 		ItemStack emeralds = new ItemStack(Items.EMERALD, 8 + rarity.ordinal() * 8);
 		if (rarity.isAtLeast(LootRarity.MYTHIC)) {
 			emeralds = new ItemStack(Items.EMERALD_BLOCK, 20 + (rarity == LootRarity.ANCIENT ? 30 : 0));
@@ -44,6 +50,11 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 	@Override
 	public boolean isRare() {
 		return this.rare;
+	}
+
+	@Override
+	public PSerializer<? extends JsonTrade> getSerializer() {
+		return SERIALIZER;
 	}
 
 }
