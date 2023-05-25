@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -401,9 +402,18 @@ public class AdventureEvents {
 		}
 	}
 
+	/**
+	 * {@link AffixHelper#getAffixesImpl} can cause infinite loops when doing validation that ends up depending on the enchantments of an item.<br>
+	 * We use this to disable enchantment level boosting when recurring (it shouldn't be relevant for these cases anyway).
+	 */
+	private static ThreadLocal<AtomicBoolean> reentrantLock = ThreadLocal.withInitial(() -> new AtomicBoolean(false));
+
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void enchLevels(GetEnchantmentLevelEvent e) {
+		boolean isReentrant = reentrantLock.get().getAndSet(true);
+		if (isReentrant) return;
 		AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));
+		reentrantLock.get().set(false);
 	}
 
 }
