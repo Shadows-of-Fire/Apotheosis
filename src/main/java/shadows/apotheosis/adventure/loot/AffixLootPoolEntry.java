@@ -38,11 +38,11 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 	}
 
 	@Nullable
-	private final LootRarity rarity;
+	private final LootRarity.Clamped rarity;
 	private final List<ResourceLocation> entries;
 	private List<AffixLootEntry> resolvedEntries = Collections.emptyList();
 
-	public AffixLootPoolEntry(@Nullable LootRarity rarity, List<ResourceLocation> entries, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions) {
+	public AffixLootPoolEntry(@Nullable LootRarity.Clamped rarity, List<ResourceLocation> entries, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions) {
 		super(weight, quality, conditions, functions);
 		this.rarity = rarity;
 		this.entries = entries;
@@ -55,10 +55,12 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 		if (this.resolvedEntries.isEmpty()) {
 			var player = GemLootPoolEntry.findPlayer(ctx);
 			if (player == null) return;
-			stack = LootController.createRandomLootItem(ctx.getRandom(), this.rarity, player, ctx.getLevel());
+			LootRarity selectedRarity = LootRarity.random(ctx.getRandom(), ctx.getLuck(), this.rarity);
+			stack = LootController.createRandomLootItem(ctx.getRandom(), selectedRarity, player, ctx.getLevel());
 		} else {
 			AffixLootEntry entry = WeightedRandom.getRandomItem(ctx.getRandom(), this.resolvedEntries.stream().map(e -> e.<AffixLootEntry>wrap(ctx.getLuck())).toList()).get().getData();
-			stack = LootController.createLootItem(entry.getStack().copy(), this.rarity == null ? LootRarity.random(ctx.getRandom(), ctx.getLuck(), entry) : this.rarity, ctx.getRandom());
+			LootRarity selectedRarity = LootRarity.random(ctx.getRandom(), ctx.getLuck(), this.rarity == null ? entry : this.rarity);
+			stack = LootController.createLootItem(entry.getStack().copy(), selectedRarity, ctx.getRandom());
 		}
 		if (!stack.isEmpty()) list.accept(stack);
 	}
@@ -81,7 +83,18 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 
 		@Override
 		protected AffixLootPoolEntry deserialize(JsonObject obj, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] lootConditions, LootItemFunction[] lootFunctions) {
-			LootRarity rarity = LootRarity.byId(GsonHelper.getAsString(obj, "rarity", ""));
+			LootRarity.Clamped rarity;
+			if (obj.has("rarity")) {
+				LootRarity lRarity = LootRarity.byId(GsonHelper.getAsString(obj, "rarity"));
+				rarity = new LootRarity.Clamped.Impl(lRarity, lRarity);
+				AdventureModule.LOGGER.error("Use of the \"rarity\" key in affix loot pool entries is deprecated and will be removed in a future release.");
+			} else if (obj.has("min_rarity") || obj.has("max_rarity")) {
+				LootRarity minRarity = LootRarity.byId(GsonHelper.getAsString(obj, "min_rarity", "common"));
+				LootRarity maxRarity = LootRarity.byId(GsonHelper.getAsString(obj, "max_rarity", "mythic"));
+				rarity = new LootRarity.Clamped.Impl(minRarity, maxRarity);
+			} else {
+				rarity = null;
+			}
 			List<String> entries = context.deserialize(GsonHelper.getAsJsonArray(obj, "entries", new JsonArray()), new TypeToken<List<String>>() {
 			}.getType());
 			return new AffixLootPoolEntry(rarity, entries.stream().map(ResourceLocation::new).toList(), weight, quality, lootConditions, lootFunctions);
@@ -89,7 +102,10 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 
 		@Override
 		public void serializeCustom(JsonObject object, AffixLootPoolEntry e, JsonSerializationContext ctx) {
-			if (e.rarity != null) object.addProperty("rarity", e.rarity.id());
+			if (e.rarity != null) {
+				object.addProperty("min_rarity", e.rarity.getMinRarity().id());
+				object.addProperty("max_rarity", e.rarity.getMaxRarity().id());
+			}
 			object.add("entries", ctx.serialize(e.entries));
 			super.serializeCustom(object, e, ctx);
 		}
