@@ -252,6 +252,7 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 		return "LootRarity{" + this.id + "}";
 	}
 
+	@Nullable
 	public static LootRarity byId(String id) {
 		return BY_ID.get(id.toLowerCase(Locale.ROOT));
 	}

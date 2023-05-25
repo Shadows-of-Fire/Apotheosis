@@ -114,7 +114,7 @@ public class RadialAffix extends Affix {
 	 * @param level The level of this affix, in this case, the mode of operation.
 	 */
 	public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
-		if (!breakers.add(player.getUUID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.ew
+		if (!breakers.add(player.getUUID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.
 		if (!player.isShiftKeyDown()) try {
 			breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
 		} catch (Exception e) {
