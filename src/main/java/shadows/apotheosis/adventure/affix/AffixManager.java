@@ -25,6 +25,7 @@ import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.placebo.json.PlaceboJsonReloadListener;
+import shadows.placebo.util.CachedObject;
 
 public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 
@@ -39,6 +40,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 	@Override
 	protected void beginReload() {
 		super.beginReload();
+		this.byType = ImmutableMultimap.of();
 	}
 
 	@Override
@@ -49,6 +51,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 		byType = builder.build();
 		Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
 		Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
+		CachedObject.invalidateAll(AffixHelper.AFFIX_CACHED_OBJECT);
 	}
 
 	@Override
