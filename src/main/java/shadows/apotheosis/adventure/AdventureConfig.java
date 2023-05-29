@@ -96,7 +96,7 @@ public class AdventureConfig {
 		gemBossBonus = c.getFloat("Gem Boss Bonus", "affixes", gemBossBonus, 0, 1, "The flat bonus chance that bosses have to drop a gem, added to Gem Drop Chance. 0 = 0%, 1 = 100%");
 		cleaveHitsPlayers = c.getBoolean("Cleave Players", "affixes", cleaveHitsPlayers, "If affixes that cleave can hit players (excluding the user).");
 
-		String[] lootRules = c.getStringList("Affix Item Loot Rules", "affixes", new String[] { "minecraft:chests.*|0.5", ".*chests.*|0.35", "twilightforest:structures.*|0.4" },
+		String[] lootRules = c.getStringList("Affix Item Loot Rules", "affixes", new String[] { "minecraft:chests.*|0.35", ".*chests.*|0.3", "twilightforest:structures.*|0.3" },
 		//Formatter::off
 			"Loot Rules, in the form of Loot Table Matchers, permitting affix items to spawn in loot tables." 
 		  + "\nThe format for these is domain:pattern|chance and domain is optional.  Domain is a modid, pattern is a regex string, and chance is a float 0..1 chance for the item to spawn in any matched tables." 
@@ -114,7 +114,7 @@ public class AdventureConfig {
 			}
 		}
 
-		lootRules = c.getStringList("Gem Loot Rules", "gems", new String[] { "minecraft:chests.*|0.30", ".*chests.*|0.15", "twilightforest:structures.*|0.20" }, "Loot Rules, in the form of Loot Table Matchers, permitting gems to spawn in loot tables.  See comment on \"Affix Item Loot Rules\" for description.");
+		lootRules = c.getStringList("Gem Loot Rules", "gems", new String[] { "minecraft:chests.*|0.25", ".*chests.*|0.20", "twilightforest:structures.*|0.20" }, "Loot Rules, in the form of Loot Table Matchers, permitting gems to spawn in loot tables.  See comment on \"Affix Item Loot Rules\" for description.");
 		GEM_LOOT_RULES.clear();
 		for (String s : lootRules) {
 			try {
@@ -125,7 +125,7 @@ public class AdventureConfig {
 			}
 		}
 
-		lootRules = c.getStringList("Affix Convert Loot Rules", "affixes", new String[] { ".*blocks.*|0", ".*|0.85" }, "Loot Rules, in the form of Loot Table Matchers, permitting affixes to be added to any valid item. Here, the chance refers to the chance an item receives affixes. See comment on \"Affix Item Loot Rules\" for description.");
+		lootRules = c.getStringList("Affix Convert Loot Rules", "affixes", new String[] { ".*blocks.*|0", ".*|0.35" }, "Loot Rules, in the form of Loot Table Matchers, permitting affixes to be added to any valid item. Here, the chance refers to the chance an item receives affixes. See comment on \"Affix Item Loot Rules\" for description.");
 		AFFIX_CONVERT_LOOT_RULES.clear();
 		for (String s : lootRules) {
 			try {

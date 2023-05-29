@@ -27,7 +27,7 @@ public class GemLootModifier extends LootModifier {
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (!Apotheosis.enableAdventure) return generatedLoot;
-		for (LootPatternMatcher m : AdventureConfig.AFFIX_ITEM_LOOT_RULES) {
+		for (LootPatternMatcher m : AdventureConfig.GEM_LOOT_RULES) {
 			if (m.matches(context.getQueriedLootTableId())) {
 				if (context.getRandom().nextFloat() <= m.chance()) {
 					var player = GemLootPoolEntry.findPlayer(context);
