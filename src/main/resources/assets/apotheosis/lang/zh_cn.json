@@ -998,10 +998,10 @@
 
     "effect.apotheosis.vitality": "活力四射",
     "effect.apotheosis.vitality.desc": "增加受到的治疗效果",
-    "item.minecraft.potion.effect.vitality": "活力四射药水",
-    "item.minecraft.splash_potion.effect.vitality": "喷溅型活力四射药水",
-    "item.minecraft.lingering_potion.effect.vitality": "滞留型活力四射药水",
-    "item.minecraft.tipped_arrow.effect.vitality": "活力四射之箭",
+    "item.minecraft.potion.effect.vitality": "治疗提升药水",
+    "item.minecraft.splash_potion.effect.vitality": "喷溅型治疗提升药水",
+    "item.minecraft.lingering_potion.effect.vitality": "滞留型治疗提升药水",
+    "item.minecraft.tipped_arrow.effect.vitality": "治疗提升之箭",
 
     "effect.apotheosis.grievous": "重伤",
     "effect.apotheosis.grievous.desc": "减少受到的治疗效果",
