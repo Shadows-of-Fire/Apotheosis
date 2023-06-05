@@ -8,13 +8,13 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicates;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,14 +23,13 @@ import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
 import shadows.placebo.cap.InternalItemHandler;
+import shadows.placebo.container.BlockEntityContainer;
 import shadows.placebo.container.FilteredSlot;
-import shadows.placebo.container.PlaceboContainerMenu;
 
-public class SalvagingMenu extends PlaceboContainerMenu {
+public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
 
 	protected final Player player;
-	protected final ContainerLevelAccess access;
-	protected final InternalItemHandler invSlots = new InternalItemHandler(21) {
+	protected final InternalItemHandler inputInv = new InternalItemHandler(15) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			if (SalvagingMenu.this.updateCallback != null) SalvagingMenu.this.updateCallback.run();
@@ -38,16 +37,11 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 	};
 	protected Runnable updateCallback;
 
-	public SalvagingMenu(int id, Inventory inv) {
-		this(id, inv, ContainerLevelAccess.NULL);
-	}
-
-	public SalvagingMenu(int id, Inventory inv, ContainerLevelAccess access) {
-		super(Apoth.Menus.SALVAGE.get(), id, inv);
+	public SalvagingMenu(int id, Inventory inv, BlockPos pos) {
+		super(Apoth.Menus.SALVAGE.get(), id, inv, pos);
 		this.player = inv.player;
-		this.access = access;
 		for (int i = 0; i < 15; i++) {
-			this.addSlot(new FilteredSlot(this.invSlots, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(level, s) != null) {
+			this.addSlot(new FilteredSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(level, s) != null) {
 
 				@Override
 				public int getMaxStackSize() {
@@ -62,7 +56,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 		}
 
 		for (int i = 0; i < 6; i++) {
-			this.addSlot(new FilteredSlot(this.invSlots, 15 + i, 134 + i % 2 * 18, 17 + i / 2 * 18, Predicates.alwaysFalse()));
+			this.addSlot(new FilteredSlot(this.tile.output, i, 134 + i % 2 * 18, 17 + i / 2 * 18, Predicates.alwaysFalse()));
 		}
 
 		this.addPlayerSlots(inv, 8, 84);
@@ -76,16 +70,17 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 	}
 
 	@Override
-	public boolean stillValid(Player pPlayer) {
-		return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get(), true);
+	public boolean stillValid(Player player) {
+		if (level.isClientSide) return true;
+		return level.getBlockState(pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get();
 	}
 
 	@Override
 	public void removed(Player pPlayer) {
 		super.removed(pPlayer);
-		this.access.execute((level, pos) -> {
-			this.clearContainer(pPlayer, new RecipeWrapper(this.invSlots));
-		});
+		if (!this.level.isClientSide) {
+			this.clearContainer(pPlayer, new RecipeWrapper(this.inputInv));
+		}
 	}
 
 	@Override
@@ -118,9 +113,9 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 			List<ItemStack> outputs = salvageItem(this.level, stack);
 			s.set(ItemStack.EMPTY);
 			for (ItemStack out : outputs) {
-				for (int outSlot = 15; outSlot < 21; outSlot++) {
+				for (int outSlot = 0; outSlot < 6; outSlot++) {
 					if (out.isEmpty()) break;
-					out = this.invSlots.insertItem(outSlot, out, false);
+					out = this.tile.output.insertItem(outSlot, out, false);
 				}
 				if (!out.isEmpty()) giveItem(this.player, out);
 			}
@@ -147,6 +142,18 @@ public class SalvagingMenu extends PlaceboContainerMenu {
 		for (OutputData d : recipe.getOutputs()) {
 			ItemStack out = d.stack.copy();
 			out.setCount(getSalvageCount(d, stack, level.random));
+			outputs.add(out);
+		}
+		return outputs;
+	}
+
+	public static List<ItemStack> getBestPossibleSalvageResults(Level level, ItemStack stack) {
+		var recipe = findMatch(level, stack);
+		if (recipe == null) return Collections.emptyList();
+		List<ItemStack> outputs = new ArrayList<>();
+		for (OutputData d : recipe.getOutputs()) {
+			ItemStack out = d.stack.copy();
+			out.setCount(getSalvageCounts(d, stack)[1]);
 			outputs.add(out);
 		}
 		return outputs;

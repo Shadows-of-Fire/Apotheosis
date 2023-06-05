@@ -8,6 +8,8 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -31,13 +33,14 @@ import shadows.apotheosis.adventure.client.WrappedRTBuffer;
 
 public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 
+	public static final Component TITLE = Component.translatable("container.apotheosis.salvage");
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage.png");
 
 	protected List<OutputData> results = new ArrayList<>();
 	protected SimpleTexButton salvageBtn;
 
 	public SalvagingScreen(SalvagingMenu menu, Inventory inv, Component title) {
-		super(menu, inv, title);
+		super(menu, inv, TITLE);
 		this.menu.setCallback(this::computeResults);
 		this.titleLabelX--;
 		this.inventoryLabelX--;
@@ -110,10 +113,26 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		int maxDisplay = Math.min(6, this.results.size());
 		var itemRenderer = Minecraft.getInstance().getItemRenderer();
 
+		IntSet skipSlots = new IntOpenHashSet();
 		for (int i = 0; i < maxDisplay; i++) {
 			ItemStack display = this.results.get(i).stack;
+			// Search for an empty slot to draw the ghost item on.
+			// Skip drawing the item if it already exists in the output inventory.
+			int displaySlot = -1;
+			for (int slot = 0; slot < 6; slot++) {
+				if (skipSlots.contains(slot)) continue;
+				ItemStack outStack = this.menu.slots.get(15 + slot).getItem();
+				if (outStack.isEmpty()) {
+					displaySlot = slot;
+					skipSlots.add(slot);
+					break;
+				} else if (outStack.is(display.getItem())) {
+					break;
+				}
+			}
+			if (displaySlot == -1) continue;
 			var model = itemRenderer.getModel(display, null, null, 0);
-			renderGuiItem(display, left + 134 + i % 2 * 18, top + 17 + i / 2 * 18, model);
+			renderGuiItem(display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, model);
 		}
 
 		this.renderTooltip(stack, pMouseX, pMouseY);

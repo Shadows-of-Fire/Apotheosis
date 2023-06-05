@@ -1,0 +1,24 @@
+{
+	"type": "apotheosis:salvaging",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"item": "minecraft:golden_horse_armor"
+	},
+	"outputs": [{
+		"min_count": 1,
+		"max_count": 2,
+		"stack": {
+			"item": "minecraft:leather"
+		}
+	},
+	{
+		"min_count": 2,
+		"max_count": 4,
+		"stack": {
+			"item": "minecraft:gold_ingot"
+		}
+	}]
+}

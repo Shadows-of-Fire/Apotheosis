@@ -54,6 +54,7 @@ import shadows.apotheosis.adventure.affix.salvaging.SalvageItem;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExpulsionRecipe;
 import shadows.apotheosis.adventure.affix.socket.ExtractionRecipe;
@@ -191,6 +192,7 @@ public class AdventureModule {
 	public void tiles(Register<BlockEntityType<?>> e) {
 		e.getRegistry().register(new TickingBlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(Apoth.Blocks.BOSS_SPAWNER.get()), false, true), "boss_spawner");
 		e.getRegistry().register(new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get(), Apoth.Blocks.REFORGING_TABLE.get()), true, false), "reforging_table");
+		e.getRegistry().register(new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Apoth.Blocks.SALVAGING_TABLE.get()), null), "salvaging_table");
 	}
 
 	@SubscribeEvent
@@ -218,7 +220,7 @@ public class AdventureModule {
 	@SubscribeEvent
 	public void containers(Register<MenuType<?>> e) {
 		e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new), "reforging");
-		e.getRegistry().register(new MenuType<>(SalvagingMenu::new), "salvage");
+		e.getRegistry().register(ContainerUtil.makeType(SalvagingMenu::new), "salvage");
 		e.getRegistry().register(new MenuType<>(GemCuttingMenu::new), "gem_cutting");
 	}
 
@@ -227,8 +229,8 @@ public class AdventureModule {
 		//Formatter::off
 		e.getRegistry().registerAll(
 				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 4.0D).setSyncable(true), "draw_speed",
-				new RangedAttribute("apotheosis:crit_chance", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_chance",
-				new RangedAttribute("apotheosis:crit_damage", 1.0D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
+				new RangedAttribute("apotheosis:crit_chance", 1.0D, 1.0D, 1024.0D).setSyncable(true), "crit_chance",
+				new RangedAttribute("apotheosis:crit_damage", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
 				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "cold_damage",
 				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "fire_damage",
 				new RangedAttribute("apotheosis:life_steal", 1.0D, 1.0D, 1024.0D).setSyncable(true), "life_steal",
