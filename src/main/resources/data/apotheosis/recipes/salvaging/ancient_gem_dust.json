@@ -1,0 +1,21 @@
+{
+	"type": "apotheosis:salvaging",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"type": "forge:partial_nbt",
+		"item": "apotheosis:gem",
+		"nbt": {
+			"rarity": "ancient"
+		}
+	},
+	"outputs": [{
+		"min_count": 4,
+		"max_count": 10,
+		"stack": {
+			"item": "apotheosis:gem_dust"
+		}
+	}]
+}

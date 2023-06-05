@@ -1,6 +1,8 @@
 package shadows.apotheosis.adventure.compat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -35,6 +37,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
 import shadows.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
@@ -71,7 +74,9 @@ public class AdventureJEIPlugin implements IModPlugin {
 		reg.addIngredientInfo(AdventureModule.RARITY_MATERIALS.values().stream().map(ItemStack::new).toList(), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.salvaging"));
 		ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
 		reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ApothUpgradeRecipe).toList());
-		reg.addRecipes(SALVAGING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));
+		List<SalvagingRecipe> salvagingRecipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));
+		salvagingRecipes.sort(Comparator.comparingInt(recipe -> recipe.getOutputs().stream().mapToInt(OutputData::getMax).max().orElse(0)));
+		reg.addRecipes(SALVAGING, salvagingRecipes);
 	}
 
 	@Override
@@ -105,9 +110,7 @@ public class AdventureJEIPlugin implements IModPlugin {
 		@Override
 		public void setRecipe(IRecipeLayoutBuilder builder, AddSocketsRecipe recipe, IFocusGroup focuses) {
 			builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(VanillaTypes.ITEM_STACK, DUMMY_INPUTS);
-
 			builder.addSlot(RecipeIngredientRole.INPUT, 50, 1).addIngredients(recipe.getInput());
-
 			builder.addSlot(RecipeIngredientRole.OUTPUT, 108, 1).addItemStacks(DUMMY_OUTPUTS);
 		}
 
@@ -120,15 +123,17 @@ public class AdventureJEIPlugin implements IModPlugin {
 
 	}
 
+	/**
+	 * A Gem Stack is unique to JEI based on the Gem's ID and Rarity.
+	 */
 	static class GemSubtypes implements IIngredientSubtypeInterpreter<ItemStack> {
 
 		@Override
 		public String apply(ItemStack stack, UidContext context) {
 			Gem gem = GemItem.getGem(stack);
 			LootRarity rarity = GemItem.getLootRarity(stack);
-			int facets = GemItem.getFacets(stack);
 			if (gem == null) return ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-			return gem.getId() + "@" + rarity.id() + "@" + facets;
+			return gem.getId() + "@" + rarity.id();
 		}
 
 	}
