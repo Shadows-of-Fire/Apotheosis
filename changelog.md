@@ -2,7 +2,21 @@
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 * [NYI] Buffed values of common and uncommon affixes.
 * [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
-* [NYI] Higher rarity gems will provide more gem dust when salvaged.
+
+## 6.2.2
+* Time for balance changes™
+* Instant Health on Hit max level III => II. Chance of receiving level II reduced from 50% to 20%, and is also locked to mythic.
+  * Instant Health III was too strong at all thresholds, and Instant Health II was too common.
+* Endersurge Gem level boost reduced from 1/2/3 to 1/1/2.
+  * Endersurge gems are extremely powerful, and +3 to all enchantments is a bit over the top.
+  * Epic rarity is being left enabled to make the combine cost up to Ancient a bit more expensive.
+* Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
+* Affix Item and Gem drop chances have been reduced across the board.
+* Fixed the crit chance / crit damage default value issue once again (was reintroduced in 6.2.0).
+* The Salvaging Table can now be automated!
+  * Inserted items will be automatically salvaged and placed in the output inventory.
+  * The output inventory can be extracted from.
+* Salvaging now yields a different amount of gem dust per rarity.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.
