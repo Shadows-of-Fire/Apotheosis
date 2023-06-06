@@ -1,0 +1,17 @@
+{
+	"type": "apotheosis:salvaging",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"item": "minecraft:leather_horse_armor"
+	},
+	"outputs": [{
+		"min_count": 3,
+		"max_count": 5,
+		"stack": {
+			"item": "minecraft:leather"
+		}
+	}]
+}

@@ -23,8 +23,8 @@
 			"global": true,
 			"values": {
 				"epic": 1,
-				"mythic": 2,
-				"ancient": 3
+				"mythic": 1,
+				"ancient": 2
 			}
 		}
 	]

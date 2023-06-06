@@ -6,25 +6,22 @@
 	"values": {
 		"epic": {
 			"duration": 1,
-			"amplifier": {
-				"min": 0,
-				"steps": 1,
-				"step": 1
-			}
+			"amplifier": 0
 		},
 		"mythic": {
 			"duration": 1,
+			"_comment": "This weird amplifier setup gives a 20% chance of Instant Health II being granted",
 			"amplifier": {
 				"min": 0,
-				"steps": 2,
-				"step": 1
+				"steps": 4,
+				"step": 0.3
 			}
 		},
 		"ancient": {
 			"duration": 1,
 			"amplifier": {
 				"min": 1,
-				"steps": 3,
+				"steps": 1,
 				"step": 1
 			}
 		}

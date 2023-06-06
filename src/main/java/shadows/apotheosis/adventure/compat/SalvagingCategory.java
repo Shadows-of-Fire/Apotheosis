@@ -111,8 +111,10 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
 			input = displayItems.computeIfAbsent(ri.getRarity(), this::createFakeDisplayItems);
 			builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
 		} else {
-			if (input.size() == 1 && !input.get(0).hasTag() && input.get(0).getItem() == Apoth.Items.GEM.get()) {
-				input = GemManager.INSTANCE.getValues().stream().map(gem -> GemManager.createGemStack(gem, new LegacyRandomSource(0), null, 0)).toList();
+			if (input.size() == 1 && input.get(0).getItem() == Apoth.Items.GEM.get()) {
+				LootRarity rarity = AffixHelper.getRarity(input.get(0).getTag());
+				RandomSource rand = new LegacyRandomSource(0);
+				input = GemManager.INSTANCE.getValues().stream().filter(gem -> rarity == null || gem.clamp(rarity) == rarity).map(gem -> GemManager.createGemStack(gem, rand, rarity, 0)).toList();
 			}
 			builder.addSlot(RecipeIngredientRole.INPUT, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
 		}

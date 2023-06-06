@@ -27,6 +27,7 @@ import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
+import shadows.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
 import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
 import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
@@ -226,6 +227,7 @@ public class Apoth {
 		public static final RegistryObject<BlockEntityType<EnchLibraryTile>> ENDER_LIBRARY = R.blockEntity("ENDER_LIBRARY");
 		public static final RegistryObject<BlockEntityType<BossSpawnerTile>> BOSS_SPAWNER = R.blockEntity("BOSS_SPAWNER");
 		public static final RegistryObject<BlockEntityType<ReforgingTableTile>> REFORGING_TABLE = R.blockEntity("REFORGING_TABLE");
+		public static final RegistryObject<BlockEntityType<SalvagingTableTile>> SALVAGING_TABLE = R.blockEntity("SALVAGING_TABLE");
 	}
 
 	public static final class Attributes {
