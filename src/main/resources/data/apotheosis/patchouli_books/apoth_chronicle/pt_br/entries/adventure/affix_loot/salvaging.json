@@ -1,5 +1,5 @@
 {
-    "name": "Restauração",
+    "name": "Desmontagem",
     "icon": "apotheosis:salvaging_table",
     "category": "apotheosis:adventure/affix_loot",
 	"flag": "apotheosis:adventure",
@@ -8,37 +8,37 @@
         {
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:salvaging_table",
-			"text": "A $(9)bancada de restauração$() é usada para separar itens de afixo para seus $(9)materiais raros$() correspondentes."
+			"text": "A $(9)bancada de desmontagem$() é usada para separar itens de afixo para seus $(9)materiais raros$() correspondentes."
 		},
 		{
             "type": "patchouli:spotlight",
 			"item": "apotheosis:common_material",
 			"link_recipe": true,
-            "text": "Uma peça de forma estranha de um metal não identificável.$(p)Este material é obtido ao restaurar itens comuns."
+            "text": "Uma peça de forma estranha de um metal não identificável.$(p)Este material é obtido ao desmontar itens comuns."
         },
 		{
             "type": "patchouli:spotlight",
 			"item": "apotheosis:uncommon_material",
 			"link_recipe": true,
-            "text": "Um tecido incrivelmente durável, desgastado por muitas eras. Não se orgulha de uma única lágrima.$(p)Encontrado ao restaurar itens incomuns."
+            "text": "Um tecido incrivelmente durável, desgastado por muitas eras. Não se orgulha de uma única lágrima.$(p)Encontrado ao desmontar itens incomuns."
         },
 		{
             "type": "patchouli:spotlight",
 			"item": "apotheosis:rare_material",
 			"link_recipe": true,
-            "text": "Um pedaço do cristal mais brilhante que já existiu. Embora seja apenas um fragmento, ele contém um forte poder mágico.$(p)Adquirido ao restaurar itens raros."
+            "text": "Um pedaço do cristal mais brilhante que já existiu. Embora seja apenas um fragmento, ele contém um forte poder mágico.$(p)Adquirido ao desmontar itens raros."
         },
 		{
             "type": "patchouli:spotlight",
 			"item": "apotheosis:epic_material",
 			"link_recipe": true,
-            "text": "Grãos de areia de um reino mágico, onde a magia arcana deforma toda a vida.$(p)Restaurar um item épico os reduz a esta forma."
+            "text": "Grãos de areia de um reino mágico, onde a magia arcana deforma toda a vida.$(p)Desmontar um item épico o reduz a esta forma."
         },
 		{
             "type": "patchouli:spotlight",
 			"item": "apotheosis:mythic_material",
 			"link_recipe": true,
-            "text": "Uma pérola de energia divina purificada. O imenso poder selado dentro dele o torna bastante volátil.$(p)Essas criações extraordinárias só podem ser obtidas através da restauração de itens míticos."
+            "text": "Uma pérola de energia divina purificada. O imenso poder selado dentro dele o torna bastante volátil.$(p)Essas criações extraordinárias só podem ser obtidas através da desmontagem de itens míticos."
         }
 	]
 }
