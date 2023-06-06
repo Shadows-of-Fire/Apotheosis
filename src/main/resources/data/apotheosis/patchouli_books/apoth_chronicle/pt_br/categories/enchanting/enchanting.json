@@ -1,6 +1,6 @@
 {
-    "name": "Enchanting Module",
-    "description": "The Enchanting Module is responsible for all the changes to the enchanting system.$(p)There's a lot of content, so look around.",
+    "name": "Módulo de encantamento",
+    "description": "O módulo de encantamento é responsável por todas as mudanças no sistema de encantamento.$(p)Há muito conteúdo, então dê uma olhada.",
     "icon": "minecraft:enchanting_table",
 	"flag": "apotheosis:enchanting"
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Armor",
+    "name": "Armadura",
     "icon": "minecraft:iron_chestplate",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Armor$() is a measure of how resistant you are to physical damage.$(p)Usually provided by armor, and some shields."
+            "text": "$(9)Armadura$() é uma medida de quão resistente você é a danos físicos.$(p)Geralmente fornecida por armaduras e alguns escudos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 40$(p)Note: In vanilla, the max value is 30.  Apotheosis raises the cap to 40, and also changes armor math."
+			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 40$(p)Nota: No vanilla, o valor máximo é 30. O Apotheosis eleva o limite para 40 e também muda o cálculo de armadura."
 		}
 	]
 }

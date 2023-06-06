@@ -1,5 +1,5 @@
 {
-    "name": "Gem Cutting",
+    "name": "Lapidação de gema",
     "icon": "apotheosis:gem_cutting_table",
     "category": "apotheosis:adventure/affix_loot",
 	"flag": "apotheosis:adventure",
@@ -8,21 +8,21 @@
         {
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:gem_cutting_table",
-			"text": "The $(9)Gem Cutting Table$() is used to upgrade $(l:apotheosis:adventure/affix_loot/gems)Gems$(). Gems can be upgraded by increasing their rarity or increasing the number of facets."
+			"text": "A $(9)bancada de lapidação de gema$() é usada para melhorar $(l:apotheosis:adventure/affix_loot/gems)gemas$(). Gemas podem ser melhoradas aumentando sua raridade ou aumentando o número de facetas."
 		},
 		{
-			"title": "Rarity",
+			"title": "Raridade",
             "type": "patchouli:text",
-            "text": "Like an Affix Item, each gem has a $(l:apotheosis:adventure/affix_loot/rarities)rarity$(). The rarity, alongside the number of facets, determines the strength of the gem.$(p)The rarity of a gem can be upgraded by combining two $(9)Flawless$() gems of the same rarity."
+            "text": "Como um item de afixo, cada gema tem uma $(l:apotheosis:adventure/affix_loot/rarities)raridade$(). A raridade, juntamente com o número de facetas, determina a força da gema.$(p)A raridade de uma gema pode ser melhorada combinando duas gemas $(9)impecáveis$() da mesma raridade."
         },
 		{
-			"title": "Facets",
+			"title": "Facetas",
             "type": "patchouli:text",
-            "text": "Every gem has $(9)Facets$(), a measure of the relative strength for a gem. A gem can be cut, increasing the number of facets, with rarity materials.$(p)A gem with the minimum number of facets is referred to as $(7)Cracked$(), while a gem with the maximum amount is known as $(9)Flawless$()."
+            "text": "Cada gema tem $(9)facetas$(), uma medida da força relativa para uma gema. Uma gema pode ser cortada, aumentando o número de facetas, com materiais de raridade.$(p)Uma gema com o número mínimo de facetas é referida como $(7)rachada$(), enquanto uma gema com a quantidade máxima é conhecida como $(9)impecável$()."
         },
 		{
 			"type": "patchouli:text",
-			"text": "The maximum number of facets a gem may have varies by gem and by rarity, but the minimum number of facets that any gem may have is four."
+			"text": "O número máximo de facetas que uma gema pode ter varia de acordo com a gema e a raridade, mas o número mínimo de facetas que qualquer gema pode ter é quatro."
 		}
 	]
 }

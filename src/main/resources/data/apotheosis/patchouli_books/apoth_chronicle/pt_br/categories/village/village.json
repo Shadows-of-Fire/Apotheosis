@@ -1,6 +1,6 @@
 {
-    "name": "Village Module",
-    "description": "The Village Module adds various village and villager related things.",
+    "name": "Módulo de vila",
+    "description": "O módulo de vila adiciona várias coisas relacionadas a vilas e aldeões.",
     "icon": "minecraft:textures/mob_effect/hero_of_the_village.png",
 	"flag": "apotheosis:village"
 }

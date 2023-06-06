@@ -1,5 +1,5 @@
 {
-    "name": "Swim Speed",
+    "name": "Velocidade de natação",
     "icon": "minecraft:kelp",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Swim Speed$() is a modifier to your actual swim speed, which is based on your movement speed.  If your swim speed was 2.0, you would swim twice as fast.$(p)Only found on boots."
+            "text": "$(9)Velocidade de nataçãoo$() é um modificador para sua velocidade real de natação, que é baseada na sua velocidade de movimento.  Você nadará duas vezes mais rápido se sua velocidade de natação for 2,0.$(p)Encontrado apenas em botas."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024$(p)"
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
 		}
 	]
 }

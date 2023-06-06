@@ -1,5 +1,5 @@
 {
-    "name": "Boon of the Earth",
+    "name": "Benção da Terra",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Boon of the Earth$() is a Masterwork enchantment for pickaxes.$(p)When mining simple stones, there is a chance for an ore block to be dropped."
+            "text": "$(2)Benção da Terra$() é um encantamento de obra-prima para picaretas.$(p)Ao minerar pedras simples, há uma chance de cair um bloco de minério."
         }
 	]
 }

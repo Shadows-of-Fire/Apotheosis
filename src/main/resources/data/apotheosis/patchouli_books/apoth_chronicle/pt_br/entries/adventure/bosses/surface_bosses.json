@@ -1,5 +1,5 @@
 {
-    "name": "Invading Bosses",
+    "name": "Chefes invasores",
     "icon": "minecraft:beacon",
     "category": "apotheosis:adventure/bosses",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A strange noise, a peculiar message, and a giant beam of light from the sky...$(p)All signs point to a Boss, actively invading your world."
+            "text": "Um barulho estranho, uma mensagem peculiar e um raio gigante de luz do céu...$(p)Todos os sinais apontam para um chefe, invadindo seu mundo."
         },
 		{
 			"type": "patchouli:text",
-			"text": "As opposed to bosses that are found in dungeons, invading bosses may rarely show up on the surface where mobs can normally spawn.$(p)Their arrival will be marked by a loud noise, a status message, and a beacon that briefly emanates from their spawn point."
+			"text": "Ao contrário dos chefes encontrados nas masmorras, os chefes invasores raramente aparecem na superfície onde os mobs podem normalmente aparecer.$(p)Sua chegada será marcada por um barulho alto, uma mensagem e um farol que emana brevemente do seu ponto de geração."
 		}
 	]
 }

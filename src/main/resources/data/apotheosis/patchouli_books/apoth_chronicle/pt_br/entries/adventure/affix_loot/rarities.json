@@ -1,5 +1,5 @@
 {
-    "name": "Rarities",
+    "name": "Raridades",
     "icon": "minecraft:nether_star",
     "category": "apotheosis:adventure/affix_loot",
 	"flag": "apotheosis:adventure",
@@ -7,37 +7,37 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Every affix item has a $(9)Rarity$() associated with it. The rarity of the item determines how strong it will be, and what affixes will be applied to it.$(p)A higher rarity is always stronger than the last."
+            "text": "Todo item de afixo tem uma $(9)raridade$() associada a ele. A raridade do item determina o quão forte será e quais afixos serão aplicados a ele.$(p)Uma raridade mais alta é sempre mais forte que a anterior."
         },
 		{
 			"type": "patchouli:text",
-			"title": "Common",
-			"text": "A $(#808080)Common$() item is the most basic type of affix item.  Each one will always have a single stat bonus, and has a low chance to gain a second."
+			"title": "Comum",
+			"text": "Um item $(#808080)comum$() é o tipo mais básico de item de afixo. Cada um sempre terá um único bônus de status e terá uma baixa chance de ganhar outro."
 		},
 		{
 			"type": "patchouli:text",
-			"title": "Uncommon",
-			"text": "An $(#33FF33)Uncommon$() item is a step up from a common item, but still doesn't get any unique effects. These items always have two stat bonuses, and may receive a third.$(p)They may also receive a single socket."
+			"title": "Incomum",
+			"text": "Um item $(#33FF33)incomum$() é um passo acima de um item comum, mas ainda não recebe efeitos únicos. Estes itens sempre têm dois bônus de status e podem receber um terceiro.$(p)Eles também podem receber um único encaixe."
 		},
 		{
 			"type": "patchouli:text",
-			"title": "Rare",
-			"text": "$(#5555FF)Rare$() items are where affixes begin to shine. These items receive three stat bonuses and a special effect, and may receive a second effect.$(p)They may also receive a socket, and always have a slight durability bonus."
+			"title": "Raro",
+			"text": "Itens $(#5555FF)raros$() estão onde os afixos começam a se destacar. Estes itens recebem três bônus de status e um efeito especial e podem receber um segundo efeito.$(p)Eles também podem receber um encaixe e sempre têm um pequeno bônus de durabilidade."
 		},
 		{
 			"type": "patchouli:text",
-			"title": "Epic",
-			"text": "$(#BB00BB)Epic$() items are on the cusp of greatness. They receive three stats and an effect, and may receive a fourth stat and second effect.$(p)They may also receive up to two sockets, and have a stronger durability bonus."
+			"title": "Épico",
+			"text": "Itens $(#BB00BB)épicos$() estão à beira da grandeza. Eles recebem três status e um efeito e podem receber um quarto status e um segundo efeito.$(p)Eles também podem receber até dois encaixes e ter um bônus de durabilidade mais forte."
 		},
 		{
 			"type": "patchouli:text",
-			"title": "Mythic",
-			"text": "$(#ED7014)Mythic$() items were forged by a lost entity of great power. They receive four stats and two effects, and may receive a third effect as well as three sockets.$(p)They also carry a significant durability bonus."
+			"title": "Mítico",
+			"text": "Itens $(#ED7014)míticos$() foram forjados por uma entidade perdida de grande poder. Eles recebem quatro status e dois efeitos e podem receber um terceiro efeito, além de três soquetes.$(p)Eles também levam um bônus de durabilidade significativo."
 		},
 		{
 			"type": "patchouli:text",
-			"title": "Ancient",
-			"text": "An $(b)Ancient$() item is the pinnacle of creation, an unimaginable concentration of power bestowed only to the luckiest.$(p)They're so rare, some might say they aren't even implemented yet..."
+			"title": "Ancestrak",
+			"text": "Um item $(b)ancestral$() é o auge da criação, uma concentração inimaginável de energia concedida apenas ao mais sortudo.$(p)Eles são tão raros que alguns podem dizer que na verdade nem foram criados..."
 		}
 	]
 }

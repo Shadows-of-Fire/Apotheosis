@@ -1,5 +1,5 @@
 {
-    "name": "Shears",
+    "name": "Tesoura",
     "icon": "minecraft:shears",
     "category": "apotheosis:enchanting/changes",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Alongside the new enchantments, Shears may now also receive $(9)Unbreaking$(), $(9)Efficiency$(), and $(9)Fortune$()."
+            "text": "Juntamente com os novos encantamentos, tesouras agora também podem receber $(9)durabilidade$(), $(9)eficiência$() e $(9)fortuna$()."
         }
 	]
 }

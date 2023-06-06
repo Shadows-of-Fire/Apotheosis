@@ -1,5 +1,5 @@
 {
-    "name": "Tridents",
+    "name": "Tridentes",
     "icon": "minecraft:trident",
     "category": "apotheosis:enchanting/changes",
 	"flag": "apotheosis:enchanting",
@@ -7,14 +7,14 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Alongside the new enchantments, Tridents may now also receive $(9)Sharpness$(), $(9)Looting$(), and $(9)Piercing$().$(p)Sharpness and Looting function as they do on swords.$(p)Piercing causes thrown tridents to be able to hit additional enemies."
+            "text": "Juntamente com os novos encantamentos, tridentes agora também podem receber $(9)afiação$(), $(9)saque$() e $(9)perfuração$().$(p)Afiação e saque funcionam da mesma forma que nas espadas.$(p)Perfuração faz com que os tridentes lançados sejam capazes de atingir inimigos adicionais."
         },
 		{
             "type": "patchouli:spotlight",
 			"title": "Making Tridents",
 			"item": "apotheosis:inert_trident",
 			"link_recipe": true,
-            "text": "Apotheosis also adds a method of creating tridents.$(p)Simply create an $(9)Inert Trident$() and upgrade it through $(l:apotheosis:enchanting/table/infusion)Infusion Enchanting$()."
+            "text": "O Apotheosis também adiciona um método de criar tridentes.$(p)Basta criar um $(9)tridente inerte$() e melhora-lo por meio de $(l:apotheosis:enchanting/table/infusion)encantamento de infusão$()."
         }
 	]
 }

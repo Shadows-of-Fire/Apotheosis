@@ -1,6 +1,6 @@
 {
-    "name": "The Enchanting Table",
-    "description": "This section goes over the changes to the Enchanting Table.",
+    "name": "A mesa de encantamentos",
+    "description": "Esta seção aborda as mudanças na mesa de encantamentos.",
     "icon": "minecraft:enchanting_table",
 	"flag": "apotheosis:enchanting",
 	"parent": "apotheosis:enchanting/enchanting",

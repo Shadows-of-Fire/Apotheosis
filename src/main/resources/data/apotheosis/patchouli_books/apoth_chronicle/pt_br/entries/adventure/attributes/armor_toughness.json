@@ -1,5 +1,5 @@
 {
-    "name": "Armor Toughness",
+    "name": "Resistência da armadura",
     "icon": "minecraft:netherite_chestplate",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Armor Toughness$() is a stat that adjusts how effective your armor is against higher damaging attacks.$(p)Usually provided by armor, and some shields."
+            "text": "$(9)Resisência da armadura$() é um status que ajusta a eficácia da sua armadura contra ataques de maior dano.$(p)Geralmente fornecido por armaduras e alguns escudos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 30$(p)Note: In vanilla, the max value is 20.  Apotheosis raises the cap to 30, and also changes armor math."
+			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 30$(p)Nota: No vanilla, o valor máximo é 20.  O Apotheosis aumenta o limite para 30 e também altera o cálculo da armadura."
 		}
 	]
 }

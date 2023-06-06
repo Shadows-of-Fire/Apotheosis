@@ -1,7 +1,7 @@
 {
-    "name": "New Effects",
+    "name": "Novos efeitos",
 	"parent": "apotheosis:potion/potion",
-    "description": "This section details the new potion effects added by Apotheosis.",
+    "description": "Esta seção detalha os novos efeitos de poção adicionados pela Apotheosis.",
     "icon": "minecraft:experience_bottle",
 	"flag": "apotheosis:potion"
 }

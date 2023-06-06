@@ -1,5 +1,5 @@
 {
-    "name": "Boss Items",
+    "name": "Itens de chefe",
     "icon": "minecraft:ender_chest",
     "category": "apotheosis:adventure/bosses",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Every boss is empowered with exactly one affix item, alongside the rest of their fully enchanted gear.$(p)This affix item is guaranteed to be dropped on death, and has a higher chance to be of a higher rarity than other sources of affix loot."
+            "text": "Cada chefe é empoderado com exatamente um item de afixo, juntamente com o restante de seu equipamento encantado.$(p)Este item de afixo é garantido ao morrer e tem uma chance maior de ser de raridade maior do que outras fontes de saque de afixos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "This item alone is the trophy you will take from slaying a boss, and it is likely to be worth it.$(p)As a memento of the original owner, every boss item will have the boss's name prefixed to the item's name."
+			"text": "Este item por si só é o troféu que você receberá ao matar um chefe, e provavelmente valerá a pena.$(p)Como lembrança do proprietário original, cada item de chefe terá o nome do chefe prefixado ao nome do item."
 		}
 	]
 }

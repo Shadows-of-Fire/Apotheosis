@@ -1,5 +1,5 @@
 {
-    "name": "Max Health",
+    "name": "Vida máxima",
     "icon": "minecraft:apple",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Max Health$() controls the number of health points (HP) you have. One point is half a heart.$(p)Usually provided by armor or shields."
+            "text": "$(9)Vida máximo$() controla o número de pontos de vida (PV) que você tem. Um ponto é a metade de um coração.$(p)Geralmente fornecido por armaduras e escudos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 20$(p)$(9)$(n)Max Value:$() 1024"
+			"text": "$(9)$(n)Valor base:$() 20$(p)$(9)$(n)Valor máximo:$() 1024"
 		}
 	]
 }

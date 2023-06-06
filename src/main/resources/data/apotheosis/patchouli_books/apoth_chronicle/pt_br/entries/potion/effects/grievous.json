@@ -1,0 +1,17 @@
+{
+    "name": "Grievous Wounds",
+    "icon": "apotheosis:textures/mob_effect/grievous.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "The Potion of $(c)Grievous Wounds$() is a negative effect.$(p)While under its effects, all healing received is reduced."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "The healing reduction is equal to 40% per level.$(p)While at level III or above, all healing is prevented."
+        }
+	]
+}

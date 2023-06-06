@@ -1,6 +1,6 @@
 {
-    "name": "Potion Module",
-    "description": "The Potion Module is responsible for new potions and new potion recipes.$(p)Pretty much all things potions.",
+    "name": "Módulo de poção",
+    "description": "O módulo de poções é responsável por novas poções e novas receitas de poções.$(p)Praticamente tudo sobre poções.",
     "icon": "minecraft:potion",
 	"flag": "apotheosis:potion"
 }

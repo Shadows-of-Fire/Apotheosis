@@ -1,5 +1,5 @@
 {
-    "name": "Current HP Damage",
+    "name": "Dano pelo PV atual",
     "icon": "minecraft:dragon_head",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Current HP Damage$() is a type of on-hit damage.  Every hit, you will deal a percentage of the target's current health as additional damage.$(p)This stat is only found on heavy weapons."
+            "text": "$(9)Dano pelo PV atual$() é um tipo de dano ao contato.  A cada acerto, você causa uma porcentagem da vida atual do alvo como dano adicional.$(p)Este atributo só é encontrado em armas pesadas."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024$(p)Note: A value of 1.0 is actually 0% current hp damage, but if the base was zero, percentage modifiers would have no effect, and flat modifiers don't convey the bonus correctly."
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: Um valor de 1,0 é na verdade 0% de dano pelo PV atual, mas se a base for zero, os modificadores de porcentagem não terão efeito e os modificadores de valores absolutos não darão o bônus corretamente."
 		}
 	]
 }

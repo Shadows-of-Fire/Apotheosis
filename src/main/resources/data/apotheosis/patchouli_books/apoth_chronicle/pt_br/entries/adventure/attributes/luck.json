@@ -1,5 +1,5 @@
 {
-    "name": "Luck",
+    "name": "Sorte",
     "icon": "minecraft:rabbit_foot",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Luck$() makes you lucky!  Well, that is, it increases the likelihood you receive better loot drops.$(p)Everything can grant luck."
+            "text": "$(9)Sorte$() torna você sortudo!  Bem, isto é, aumenta a probabilidade de você receber saques melhores.$(p)Tudo pode fornecer sorte."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 1024$(p)Note: You can have negative luck, which makes better loot drops even harder to get."
+			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: Você pode ter sorte negativa, o que torna saques melhores ainda mais difíceis de serem obtidos."
 		}
 	]
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Chainsaw",
+    "name": "Motosserra",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Chainsaw$() is a Masterwork enchantment that can be applied to axes.$(p)When breaking a tree, the entire tree will be harvested.$(p)This uses durability from the axe."
+            "text": "$(2)Motosserra$() é um encantamento de obra-prima que pode ser aplicado a machados.$(p)Ao quebrar uma árvore, toda a árvore será colhida.$(p)Isso usa a durabilidade do machado."
         }
 	]
 }

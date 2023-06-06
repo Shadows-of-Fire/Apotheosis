@@ -1,5 +1,5 @@
 {
-    "name": "Cold Damage",
+    "name": "Dano gélido",
     "icon": "minecraft:blue_ice",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Cold Damage$() is bonus magic damage applied to melee attacks. It also applies a slow dependent on the strength of the damage.$(p)Found on melee weapons."
+            "text": "$(9)Dano gélido$() é um dano mágico bônus aplicado a ataques corpo a corpo. Também aplica uma lentidão dependente da força do dano.$(p)Encontrado em armas corpo a corpo."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 1024$(p)"
+			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
 		}
 	]
 }

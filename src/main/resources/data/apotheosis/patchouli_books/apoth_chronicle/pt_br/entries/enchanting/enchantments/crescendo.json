@@ -1,5 +1,5 @@
 {
-    "name": "Crescendo of Bolts",
+    "name": "Chuva de virotes",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Crescendo of Bolts$() is a Masterwork enchantment for crossbows.$(p)For every level of this enchantment, you get an extra shot per reload.$(p)Additional shots do not cost ammo."
+            "text": "$(2)Chuva de virotes$() é um encantamento de obra-prima para bestas.$(p)Para cada nível deste encantamento, você ganha um tiro extra por recarga.$(p)Tiros adicionais não custam munição."
         }
 	]
 }

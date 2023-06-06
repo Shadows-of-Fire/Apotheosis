@@ -1,5 +1,5 @@
 {
-    "name": "Fire Damage",
+    "name": "Dano de fogo",
     "icon": "minecraft:blaze_powder",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Fire Damage$() is bonus magic damage applied to melee attacks. It also sets the target on fire for a short time. Higher damage increases the fire duration.$(p)Found on melee weapons."
+            "text": "$(9)Dano de fogo$() é um dano mágico bônus aplicado a ataques corpo a corpo. Ele também incendeia o alvo por um curto período. Danos mais altos aumentam a duração do incêndio.$(p)Encontrado em armas corpo a corpo."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 1024$(p)"
+			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
 		}
 	]
 }

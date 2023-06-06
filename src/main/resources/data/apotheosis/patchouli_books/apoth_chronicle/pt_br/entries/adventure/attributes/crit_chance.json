@@ -1,5 +1,5 @@
 {
-    "name": "Crit Chance",
+    "name": "Chance de crítico",
     "icon": "minecraft:netherite_sword",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Crit Chance$() is the chance that an attack (or arrow) becomes a critical strike, compounding with jump crits. Values over 100% allow you to perform multicrits.$(p)Found on weapons."
+            "text": "$(9)Chance de crítico$() é a chance de um ataque (ou flecha) se tornar um acerto crítico, combinando com críticos ao saltar. Valores acima de 100% permitem realizar críticos multiplas vezes.$(p)Found on weapons."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 5$(p)Note: A value of 1.0 is actually 0% crit chance, but if the base was zero, percentage modifiers would have no effect, and flat modifiers don't convey the bonus correctly."
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 5$(p)Nota: Um valor de 1,0 é na verdade 0% de chance crítica, mas se a base for zero, os modificadores de porcentagem não terão efeito e os modificadores absolutos não darão o bônus corretamente."
 		}
 	]
 }

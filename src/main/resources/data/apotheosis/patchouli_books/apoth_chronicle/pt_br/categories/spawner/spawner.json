@@ -1,6 +1,6 @@
 {
-    "name": "Spawner Module",
-    "description": "The Spawner Module allows you to move and modify $(9)Mob Spawners$().",
+    "name": "Módulo de gerador",
+    "description": "O módulo de gerador permite que você mova e modifique $(9)geradores de criatura$().",
     "icon": "minecraft:spawner",
 	"flag": "apotheosis:spawner"
 }

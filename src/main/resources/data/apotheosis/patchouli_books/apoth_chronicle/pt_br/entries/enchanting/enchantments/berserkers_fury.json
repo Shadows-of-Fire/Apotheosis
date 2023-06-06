@@ -1,5 +1,5 @@
 {
-    "name": "Berserker's Fury",
+    "name": "Fúria do berserker",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(4)Berserker's Fury$() is a Corrupted enchantment that can be applied to chestplates.$(p)While using this enchantment, if you take damage, you will take additional damage and receive Resistance, Speed, and Strength."
+            "text": "$(4)Fúria do berserker$() é um encantamento corrompido que pode ser aplicado a peitorais.$(p)Ao usar este encantamento, se você receber dano, receberá dano adicional e receberá resistência, velocidade e força."
         },
 		{
 			"type": "patchouli:text",
-			"text": "The damage taken and potion strength are based on the enchantment level."
+			"text": "O dano recebido e a força da poção são baseados no nível de encantamento."
 		}
 	]
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Attack Speed",
+    "name": "Velocidade de ataque",
     "icon": "minecraft:golden_sword",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Attack Speed$() controls how frequently you can attack. If your attack speed is 2, you can attack twice per second.$(p)Various items can increase your attack speed."
+            "text": "$(9)Velocidade de ataque$() controla com que frequência você pode atacar. Se sua velocidade de ataque for 2, você pode atacar duas vezes por segundo.$(p)Vários itens podem aumentar sua velocidade de ataque."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 4$(p)$(9)$(n)Max Value:$() 1024$(p)Note: Weapons will usually specify their own attack speed, ignoring the base value of 4."
+			"text": "$(9)$(n)Valor base:$() 4$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: As armas geralmente especificam sua própria velocidade de ataque, ignorando o valor base de 4."
 		}
 	]
 }

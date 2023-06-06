@@ -1,5 +1,5 @@
 {
-    "name": "Overheal",
+    "name": "Sobrecura",
     "icon": "minecraft:experience_bottle",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Having $(9)Overheal$() means that part of your physical damage dealt will be gained as an absorption shield. As opposed to lifesteal, Overheal works when you are at full health.$(p)This stat is only found on heavy weapons."
+            "text": "Ao ter $(9)sobrecura$() significa que parte do seu dano físico causado será obtido como um escudo de absorção. Ao contrário do roubo de vida, a sobrecura funciona quando você está com a vida cheia.$(p)Este atributo é encontrado apenas em armas pesadas."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 1024$(p)Note: A value of 1.0 is actually 0% current hp damage, but if the base was zero, percentage modifiers would have no effect, and flat modifiers don't convey the bonus correctly."
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: Um valor de 1,0 é na verdade 0% de dano pelo PV atual, mas se a base for zero, os modificadores de porcentagem não terão efeito e os modificadores de valores absolutos não darão o bônus corretamente."
 		}
 	]
 }

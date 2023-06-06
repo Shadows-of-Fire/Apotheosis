@@ -1,5 +1,5 @@
 {
-    "name": "Attack Knockback",
+    "name": "Impacto de ataque",
     "icon": "minecraft:piston",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Attack Knockback$() is how far you knockback enemies when you attack them.$(p)Each point will cause hit enemies to be pushed half a block away.$(p)Weapons and shields may provide this stat."
+            "text": "$(9)Impacto de ataque$() é o quão longe você empurra quando você ataca.$(p)Cada ponto fará com que os inimigos sejam jogados a meio bloco de distância.$(p)Armas e escudos podem fornecer este atributo."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 5$(p)Note: The Knockback enchantment provides a bonus equivalent to this stat, but it doesn't count towards the max value cap."
+			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 5$(p)Nota: O encantamento impacto fornece um bônus equivalente a este atributo, mas não conta para o valor máximo"
 		}
 	]
 }

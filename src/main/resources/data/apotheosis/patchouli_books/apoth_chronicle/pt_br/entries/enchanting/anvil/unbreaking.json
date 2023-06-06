@@ -1,5 +1,5 @@
 {
-    "name": "Unbreaking",
+    "name": "Durabilidade",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/anvil",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Unbreaking$() can now be applied to Anvils.$(p)Each level of unbreaking reduces the chance of the anvil being damaged when used (or dropped)."
+            "text": "$(9)Durabilidade$() agora pode ser aplicado a bigornas.$(p)Cada nível de durabilidade reduz a chance da bigorna ser danificada quando usada (ou derrubada)."
         }
 	]
 }
