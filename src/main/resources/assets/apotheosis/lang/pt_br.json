@@ -12,8 +12,8 @@
     "attribute.modifier.apotheosis.take.1": "-%s%% de %s base",
     "attribute.modifier.apotheosis.take.2": "-%s%% de %s total",
 	
-    "misc.apotheosis.affix_name.two": "%s TESTE1 %s",
-	"misc.apotheosis.affix_name.three": "%s TESTE1 %s TESTE2 %s",
+    "misc.apotheosis.affix_name.two": "%s %s",
+	"misc.apotheosis.affix_name.three": "%s %s %s",
 	"misc.apotheosis.affix_name.four": "%3$s %2$s %4$s de %1$s",
 
 	"apotheosis:draw_speed": "Velocidade da puxada",
@@ -23,7 +23,7 @@
 	"apotheosis:fire_damage": "Dano de fogo",
 	"apotheosis:life_steal": "Roubo de vida",
 	"apotheosis:piercing": "Perfuração de armadura",
-	"apotheosis:current_hp_damage": "Dano pelo HP atual",
+	"apotheosis:current_hp_damage": "Dano pelo PV atual",
 	"apotheosis:overheal": "Sobrecura",
 	"apotheosis:ghost_health": "Vida fantasma",
 	"apotheosis:mining_speed": "Velocidade de mineração",
@@ -62,12 +62,12 @@
     "affix.apotheosis:breaker/attribute/experienced.suffix": "do Erudito",
 
 	"affix.apotheosis:sword/attribute/elongated": "Alongado",
-    "affix.apotheosis:sword/attribute/elongated.suffix": "das Batalhas Distantes",
+    "affix.apotheosis:sword/attribute/elongated.suffix": "das Batalhas distantes",
 
 	"affix.apotheosis:ranged/attribute/agile": "Ágil",
     "affix.apotheosis:ranged/attribute/agile.suffix": "da Destreza",
 
-	"affix.apotheosis:armor/attribute/steel_touched": "Tocado pelo Aço",
+	"affix.apotheosis:armor/attribute/steel_touched": "Tocado pelo aço",
     "affix.apotheosis:armor/attribute/steel_touched.suffix": "do Defensor",
 
 	"affix.apotheosis:armor/attribute/stalwart": "Robusto",
@@ -77,16 +77,16 @@
     "affix.apotheosis:armor/attribute/elastic.suffix": "da Escalada",
 
 	"affix.apotheosis:armor/attribute/fortunate": "Afortunado",
-    "affix.apotheosis:armor/attribute/fortunate.suffix": "do Trevo-de-Quatro-Folhas",
+    "affix.apotheosis:armor/attribute/fortunate.suffix": "do Trevo-de-quatro-folhas",
 
 	"affix.apotheosis:sword/attribute/intricate": "Confuso",
-    "affix.apotheosis:sword/attribute/intricate.suffix": "do Pensamento Crítico",
+    "affix.apotheosis:sword/attribute/intricate.suffix": "do Pensamento crítico",
 
 	"affix.apotheosis:sword/attribute/lacerating": "Lacerante",
-    "affix.apotheosis:sword/attribute/lacerating.suffix": "da Precisão Cirúrgica",
+    "affix.apotheosis:sword/attribute/lacerating.suffix": "da Precisão cirúrgica",
 
 	"affix.apotheosis:sword/attribute/glacial": "Glacial",
-    "affix.apotheosis:sword/attribute/glacial.suffix": "das Terras Congeladas",
+    "affix.apotheosis:sword/attribute/glacial.suffix": "das Terras congeladas",
 
 	"affix.apotheosis:sword/attribute/infernal": "Infernal",
     "affix.apotheosis:sword/attribute/infernal.suffix": "do Sol",
@@ -97,8 +97,8 @@
 	"affix.apotheosis:heavy_weapon/attribute/shredding": "Retalhador",
     "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "da Penetração",
 
-	"affix.apotheosis:heavy_weapon/attribute/giant_slaying": "Matança de Gigantes",
-    "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "dos Golpes Colossais",
+	"affix.apotheosis:heavy_weapon/attribute/giant_slaying": "Assassino de gigantes",
+    "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "dos Golpes colossais",
 
 	"affix.apotheosis:heavy_weapon/attribute/berserking": "Furioso",
     "affix.apotheosis:heavy_weapon/attribute/berserking.suffix": "do Berserker",
@@ -107,7 +107,7 @@
     "affix.apotheosis:breaker/attribute/destructive.suffix": "das Pedreiras",
 
 	"affix.apotheosis:ranged/attribute/elven": "Élfico",
-    "affix.apotheosis:ranged/attribute/elven.suffix": "do Arqueiro Primordial",
+    "affix.apotheosis:ranged/attribute/elven.suffix": "do Arqueiro primordial",
 
 	"affix.apotheosis:ranged/attribute/streamlined": "Aerodinâmico",
     "affix.apotheosis:ranged/attribute/streamlined.suffix": "do Atirador",
@@ -266,7 +266,7 @@
     "item.modifiers.socket": "Quando encaixado:",
     "item.modifiers.socket_in": "Quando encaixado em:",
     "item.modifiers.socket_typed": "Quando encaixado em %s:",
-	"info.apotheosis.socketing": "Gemas podem ser encaixadas com uma Bigorna. O item fica à esquerda e a gema à direita.\n\nEscolha com sabedoria, pois remover uma gema é caro.",
+	"info.apotheosis.socketing": "Gemas podem ser encaixadas com uma bigorna. O item fica à esquerda e a gema à direita.\n\nEscolha com sabedoria, pois remover uma gema é caro.",
 
     "gem_class.melee_weapon": "Armas corpo a corpo",
 	"gem_class.ranged_weapon": "Armas de longo alcance",
@@ -422,7 +422,7 @@
 
 	"misc.apotheosis.boss": "Chefe apótico %s",
 	"misc.apotheosis.random": "Aleatório",
-	"reward.apotheosis.affix": "%s Item de afixo",
+	"reward.apotheosis.affix": "Item de afixo %s",
 	"reward.apotheosis.random_affix": "Item de afixo aleatório",
 	"apotheosis.boss_gate_small": "Portão de chefe apótico pequeno",
 
