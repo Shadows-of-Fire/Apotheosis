@@ -6,10 +6,11 @@
 	}],
 	"mob_effect": "apotheosis:bleeding",
 	"target": "BLOCK_ATTACKER",
+	"stack_on_reapply": true,
 	"values": {
 		"rare": {
 			"duration": {
-				"min": 10,
+				"min": 40,
 				"steps": 2,
 				"step": 20
 			},
@@ -17,35 +18,31 @@
 		},
 		"epic": {
 			"duration": {
-				"min": 60,
+				"min": 40,
+				"steps": 3,
+				"step": 20
+			},
+			"amplifier": 0
+		},
+		"mythic": {
+			"duration": {
+				"min": 40,
 				"steps": 3,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 1,
-				"step": 1
-			}
-		},
-		"mythic": {
-			"duration": {
-				"min": 80,
-				"steps": 6,
-				"step": 20
-			},
-			"amplifier": {
-				"min": 1,
-				"steps": 1,
-				"step": 1
+				"steps": 4,
+				"step": 0.26
 			}
 		},
 		"ancient": {
 			"duration": {
-				"min": 100,
-				"steps": 8,
+				"min": 40,
+				"steps": 3,
 				"step": 20
 			},
-			"amplifier": 3
+			"amplifier": 1
 		}
 	},
 	"types": [

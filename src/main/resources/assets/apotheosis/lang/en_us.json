@@ -151,6 +151,12 @@
 	"affix.apotheosis:shield/mob_effect/withering": "Withering",
     "affix.apotheosis:shield/mob_effect/withering.suffix": "of the Dark Skeleton",
 
+    "affix.apotheosis:shield/attribute/ironforged": "Ironforged",
+    "affix.apotheosis:shield/attribute/ironforged.suffix": "of Iron",
+
+	"affix.apotheosis:shield/attribute/steel_touched": "Steel Touched",
+    "affix.apotheosis:shield/attribute/steel_touched.suffix": "of the Defender",
+
 	"affix.apotheosis:ranged/mob_effect/ivy_laced": "Ivy Laced",
     "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "of Natural Toxins",
 

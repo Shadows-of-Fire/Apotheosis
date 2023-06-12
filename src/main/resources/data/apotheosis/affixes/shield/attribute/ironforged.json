@@ -1,8 +1,18 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "minecraft:generic.armor_toughness",
+	"attribute": "minecraft:generic.armor",
 	"operation": "MULTIPLY_BASE",
 	"values": {
+		"common": {
+			"min": 0.10,
+			"steps": 5,
+			"step": 0.01
+		},
+		"uncommon": {
+			"min": 0.10,
+			"steps": 5,
+			"step": 0.01
+		},
 		"rare": {
 			"min": 0.15,
 			"steps": 5,
@@ -19,7 +29,7 @@
 			"step": 0.01
 		},
 		"ancient": {
-			"min": 0.15,
+			"min": 0.25,
 			"steps": 5,
 			"step": 0.01
 		}
