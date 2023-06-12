@@ -2,23 +2,28 @@
 	"type": "apotheosis:damage_reduction",
 	"damage_type": "MAGIC",
 	"values": {
+		"rare": {
+			"min": 0.05,
+			"steps": 5,
+			"step": 0.01
+		},
 		"epic": {
 			"min": 0.05,
-			"steps": 7,
+			"steps": 5,
 			"step": 0.01
 		},
 		"mythic": {
-			"min": 0.10,
-			"steps": 7,
+			"min": 0.05,
+			"steps": 10,
 			"step": 0.01
 		},
 		"ancient": {
 			"min": 0.15,
-			"steps": 10,
+			"steps": 5,
 			"step": 0.01
 		}
 	},
 	"types": [
-		"helmet", "chestplate", "leggings", "boots"
+		"helmet", "chestplate", "leggings"
 	]
 }

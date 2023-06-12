@@ -12,11 +12,7 @@
 		},
 		{
 			"type": "stat",
-			"chance": 1.0,
-			"backup": {
-				"type": "ability",
-				"chance": 0.25
-			}
+			"chance": 1.0
 		},
 		{
 			"type": "ability",
@@ -28,11 +24,11 @@
 		},
 		{
 			"type": "socket",
-			"chance": 0.65
+			"chance": 0.85
 		},
 		{
 			"type": "socket",
-			"chance": 0.45
+			"chance": 0.65
 		},
 		{
 			"type": "durability",

@@ -136,6 +136,12 @@
 	"affix.apotheosis:armor/mob_effect/revitalizing": "Revitalizing",
     "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "of the Wellspring",
 
+	"affix.apotheosis:ranged/mob_effect/nimble": "Nimble",
+    "affix.apotheosis:ranged/mob_effect/nimble.suffix": "of the Fox",
+
+	"affix.apotheosis:ranged/mob_effect/blinding": "Blinding",
+    "affix.apotheosis:ranged/mob_effect/blinding.suffix": "of Darkness",
+
 	"affix.apotheosis:ranged/mob_effect/shulkers": "Shulk-Touched",
     "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "of Levitation",
 
@@ -146,8 +152,8 @@
     "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "of Natural Toxins",
 
 	"affix.apotheosis:ranged/mob_effect/satanic": "Satanic",
-    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "of the Curse",
-	
+    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "of the Burning Hells",
+
 	"affix.apotheosis:ranged/special/spectral": "Spectral",
     "affix.apotheosis:ranged/special/spectral.suffix": "of the Forlorn",
     "affix.apotheosis:ranged/special/spectral.desc": "• You have a %s%% chance to shoot a second arrow.",

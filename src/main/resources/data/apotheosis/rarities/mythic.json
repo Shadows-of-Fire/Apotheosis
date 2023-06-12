@@ -11,11 +11,7 @@
 		},
 		{
 			"type": "stat",
-			"chance": 1.0,
-			"backup": {
-				"type": "ability",
-				"chance": 0.5
-			}
+			"chance": 1.0
 		},
 		{
 			"type": "stat",
@@ -51,7 +47,7 @@
 		},
 		{
 			"type": "durability",
-			"chance": 0.5
+			"chance": 0.35
 		}
 	]
 }

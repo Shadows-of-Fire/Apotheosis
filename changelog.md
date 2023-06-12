@@ -1,22 +1,34 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
-* [NYI] Buffed values of common and uncommon affixes.
 * [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
 
-## 6.2.2
-* Time for balance changes™
+## 6.3.0
+### Balance Changes
 * Instant Health on Hit max level III => II. Chance of receiving level II reduced from 50% to 20%, and is also locked to mythic.
   * Instant Health III was too strong at all thresholds, and Instant Health II was too common.
 * Endersurge Gem level boost reduced from 1/2/3 to 1/1/2.
   * Endersurge gems are extremely powerful, and +3 to all enchantments is a bit over the top.
   * Epic rarity is being left enabled to make the combine cost up to Ancient a bit more expensive.
+* Most affixes have had their values rebalanced.
+  * Common Items should no longer feel underwhelming or that their bonuses are irrelevant.
+  * Uncommon to Rare items should feel similarly strong to how they were before.
+  * Epic and Mythic items should feel weaker than before, and without such substantial power jumps from the prior rarities.
+* The Blessed Affix (Max Health) can no longer be found on shields.
+* The Gravitational Affix can no longer be found on leggings.
+* The Stalwart (Knockback Resist) Affix will be stronger on shields.
+  
+### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
-* Affix Item and Gem drop chances have been reduced across the board.
+* Affix Item and Gem drop chances have been reduced.
+  * The chance for a random affix item to be added to an entity was erroneously at 24%, it has been reduced to 7.5%.
+  * The "literal" Gem drop chances have not been changed, but the "effective" chance was reduced as a side effect of fixing the config.
+* All gems will now be shown in JEI. The shown versions will be at max rarity with max facets.
 * Fixed the crit chance / crit damage default value issue once again (was reintroduced in 6.2.0).
 * The Salvaging Table can now be automated!
   * Inserted items will be automatically salvaged and placed in the output inventory.
   * The output inventory can be extracted from.
 * Salvaging now yields a different amount of gem dust per rarity.
+  * The `U` key (recipe lookup button) now works properly for gems.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.

@@ -3,33 +3,38 @@
 	"attribute": "minecraft:generic.knockback_resistance",
 	"operation": "ADDITION",
 	"values": {
+		"common": {
+			"min": 0.10,
+			"steps": 10,
+			"step": 0.01
+		},
 		"uncommon": {
-			"min": 0.05,
-			"steps": 5,
+			"min": 0.10,
+			"steps": 10,
 			"step": 0.01
 		},
 		"rare": {
-			"min": 0.05,
-			"steps": 5,
+			"min": 0.20,
+			"steps": 10,
 			"step": 0.01
 		},
 		"epic": {
-			"min": 0.15,
-			"steps": 5,
+			"min": 0.20,
+			"steps": 10,
 			"step": 0.01
 		},
 		"mythic": {
-			"min": 0.15,
-			"steps": 5,
+			"min": 0.25,
+			"steps": 10,
 			"step": 0.01
 		},
 		"ancient": {
-			"min": 0.25,
-			"steps": 5,
+			"min": 0.30,
+			"steps": 15,
 			"step": 0.01
 		}
 	},
 	"types": [
-		"helmet", "chestplate", "leggings", "boots"
+		"shield"
 	]
 }

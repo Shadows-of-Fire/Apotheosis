@@ -3,10 +3,15 @@
 	"attribute": "forge:step_height_addition",
 	"operation": "ADDITION",
 	"values": {
-		"uncommon": {
-			"min": 0.25,
+		"common": {
+			"min": 0.5,
 			"steps": 1,
-			"step": 0.25
+			"step": 0
+		},
+		"uncommon": {
+			"min": 0.5,
+			"steps": 1,
+			"step": 0
 		},
 		"rare": {
 			"min": 0.5,
@@ -14,18 +19,18 @@
 			"step": 0.25
 		},
 		"epic": {
-			"min": 0.75,
+			"min": 0.5,
 			"steps": 3,
 			"step": 0.25
 		},
 		"mythic": {
 			"min": 1,
-			"steps": 4,
-			"step": 0.25
+			"steps": 1,
+			"step": 0.5
 		},
 		"ancient": {
 			"min": 1.5,
-			"steps": 5,
+			"steps": 3,
 			"step": 0.25
 		}
 	},

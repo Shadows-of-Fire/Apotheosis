@@ -4,17 +4,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Keyable;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.StringUtil;
@@ -44,20 +38,11 @@ import shadows.placebo.util.StepFunction;
 public class PotionAffix extends Affix {
 
 	//Formatter::off
-	private static Codec<Pair<StepFunction, StepFunction>> STEP_PAIR_CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			StepFunction.CODEC.fieldOf("duration").forGetter(Pair::getLeft),
-			StepFunction.CODEC.fieldOf("amplifier").forGetter(Pair::getRight))
-			.apply(inst, Pair::of)
-		);
-	
-	private static MapCodec<Map<LootRarity, Pair<StepFunction, StepFunction>>> VALUES_CODEC = Codec.simpleMap(LootRarity.CODEC, STEP_PAIR_CODEC, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
-	
 	public static final Codec<PotionAffix> CODEC = RecordCodecBuilder.create(inst -> inst
 		.group(
 			ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
 			Target.CODEC.fieldOf("target").forGetter(a -> a.target),
-			VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
+			LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
 			Codec.INT.optionalFieldOf("cooldown", 0).forGetter(a -> a.cooldown),
 			LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
 			.apply(inst, PotionAffix::new)
@@ -67,32 +52,26 @@ public class PotionAffix extends Affix {
 
 	protected final MobEffect effect;
 	protected final Target target;
-	protected final Map<LootRarity, Pair<StepFunction, StepFunction>> values;
+	protected final Map<LootRarity, EffectData> values;
+	@Deprecated(forRemoval = true, since = "6.3.0")
 	protected final int cooldown;
 	protected final Set<LootCategory> types;
 
-	protected transient final Map<LootRarity, EffectInst> effects;
-
-	public PotionAffix(MobEffect effect, Target target, Map<LootRarity, Pair<StepFunction, StepFunction>> values, int cooldown, Set<LootCategory> types) {
+	public PotionAffix(MobEffect effect, Target target, Map<LootRarity, EffectData> values, int cooldown, Set<LootCategory> types) {
 		super(AffixType.ABILITY);
 		this.effect = effect;
 		this.target = target;
 		this.values = values;
 		this.cooldown = cooldown;
 		this.types = types;
-
-		var builder = ImmutableMap.<LootRarity, EffectInst>builder();
-		values.forEach((rarity, pair) -> {
-			builder.put(rarity, new EffectInst(this.effect, pair.getLeft(), pair.getRight()));
-		});
-		this.effects = builder.build();
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		MobEffectInstance inst = this.effects.get(rarity).build(level);
-		if (this.cooldown != 0) {
-			Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(this.cooldown));
+		MobEffectInstance inst = this.values.get(rarity).build(this.effect, level);
+		int cooldown = this.getCooldown(rarity);
+		if (cooldown != 0) {
+			Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(cooldown));
 			list.accept(Component.translatable("%s %s", this.target.toComponent(toComponent(inst)), cd).withStyle(ChatFormatting.YELLOW));
 		} else {
 			list.accept(this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW));
@@ -103,71 +82,73 @@ public class PotionAffix extends Affix {
 	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
 		LootCategory cat = LootCategory.forItem(stack);
 		if (cat.isNone()) return false;
-		return (this.types.isEmpty() || this.types.contains(cat)) && this.effects.containsKey(rarity);
+		return (this.types.isEmpty() || this.types.contains(cat)) && this.values.containsKey(rarity);
 	};
 
 	@Override
 	public void doPostHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity attacker) {
-		EffectInst inst = this.effects.get(rarity);
-		if (this.target == Target.HURT_SELF) applyEffect(user, inst, level);
+		if (this.target == Target.HURT_SELF) applyEffect(user, rarity, level);
 		else if (this.target == Target.HURT_ATTACKER) {
 			if (attacker instanceof LivingEntity tLiving) {
-				applyEffect(tLiving, inst, level);
+				applyEffect(tLiving, rarity, level);
 			}
 		}
 	}
 
 	@Override
 	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
-		EffectInst inst = this.effects.get(rarity);
-		if (this.target == Target.ATTACK_SELF) applyEffect(user, inst, level);
+		if (this.target == Target.ATTACK_SELF) applyEffect(user, rarity, level);
 		else if (this.target == Target.ATTACK_TARGET) {
 			if (target instanceof LivingEntity tLiving) {
-				applyEffect(tLiving, inst, level);
+				applyEffect(tLiving, rarity, level);
 			}
 		}
 	}
 
 	@Override
 	public void onBlockBreak(ItemStack stack, LootRarity rarity, float level, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		EffectInst inst = this.effects.get(rarity);
 		if (this.target == Target.BREAK_SELF) {
-			applyEffect(player, inst, level);
+			applyEffect(player, rarity, level);
 		}
 	}
 
 	@Override
 	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, float level, HitResult res, Type type) {
-		EffectInst inst = this.effects.get(rarity);
 		if (this.target == Target.ARROW_SELF) {
 			if (arrow.getOwner() instanceof LivingEntity owner) {
-				applyEffect(owner, inst, level);
+				applyEffect(owner, rarity, level);
 			}
 		} else if (this.target == Target.ARROW_TARGET) {
 			if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-				applyEffect(target, inst, level);
+				applyEffect(target, rarity, level);
 			}
 		}
 	}
 
 	@Override
 	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
-		EffectInst inst = this.effects.get(rarity);
 		if (this.target == Target.BLOCK_SELF) {
-			applyEffect(entity, inst, level);
+			applyEffect(entity, rarity, level);
 		} else if (this.target == Target.BLOCK_ATTACKER && source.getDirectEntity() instanceof LivingEntity target) {
-			applyEffect(target, inst, level);
+			applyEffect(target, rarity, level);
 		}
 		return amount;
 	}
 
-	private void applyEffect(LivingEntity target, EffectInst inst, float level) {
-		MobEffectInstance mei = inst.build(level);
-		if (this.cooldown != 0) {
+	protected int getCooldown(LootRarity rarity) {
+		EffectData data = this.values.get(rarity);
+		if (data.cooldown != -1) return data.cooldown;
+		return this.cooldown;
+	}
+
+	private void applyEffect(LivingEntity target, LootRarity rarity, float level) {
+		int cooldown = this.getCooldown(rarity);
+		if (cooldown != 0) {
 			long lastApplied = target.getPersistentData().getLong("apoth.affix_cooldown." + this.getId().toString());
-			if (lastApplied != 0 && lastApplied + this.cooldown >= target.level.getGameTime()) return;
+			if (lastApplied != 0 && lastApplied + cooldown >= target.level.getGameTime()) return;
 		}
-		target.addEffect(mei);
+		EffectData data = this.values.get(rarity);
+		target.addEffect(data.build(this.effect, level));
 		target.getPersistentData().putLong("apoth.affix_cooldown." + this.getId().toString(), target.level.getGameTime());
 	}
 
@@ -191,19 +172,20 @@ public class PotionAffix extends Affix {
 		return mutablecomponent.withStyle(mobeffect.getCategory().getTooltipFormatting());
 	}
 
-	public static record EffectInst(MobEffect effect, StepFunction duration, StepFunction amplifier) {
+	public static record EffectData(StepFunction duration, StepFunction amplifier, int cooldown) {
 
-		public MobEffectInstance build(float level) {
-			return new MobEffectInstance(this.effect, this.duration.getInt(level), this.amplifier.getInt(level));
-		}
+		//Formatter::off
+		private static Codec<EffectData> CODEC = RecordCodecBuilder.create(inst -> inst
+			.group(
+				StepFunction.CODEC.fieldOf("duration").forGetter(EffectData::duration),
+				StepFunction.CODEC.fieldOf("amplifier").forGetter(EffectData::amplifier),
+				Codec.INT.optionalFieldOf("cooldown", -1).forGetter(EffectData::cooldown))
+				.apply(inst, EffectData::new)
+			);
+		//Formatter::on
 
-		public void write(FriendlyByteBuf buf) {
-			this.duration.write(buf);
-			this.amplifier.write(buf);
-		}
-
-		public static EffectInst read(MobEffect effect, FriendlyByteBuf buf) {
-			return new EffectInst(effect, StepFunction.read(buf), StepFunction.read(buf));
+		public MobEffectInstance build(MobEffect effect, float level) {
+			return new MobEffectInstance(effect, this.duration.getInt(level), this.amplifier.getInt(level));
 		}
 	}
 

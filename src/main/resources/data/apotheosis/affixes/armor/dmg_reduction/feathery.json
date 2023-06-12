@@ -3,22 +3,22 @@
 	"damage_type": "FALL",
 	"values": {
 		"rare": {
-			"min": 0.05,
+			"min": 0.15,
 			"steps": 10,
 			"step": 0.01
 		},
 		"epic": {
-			"min": 0.20,
+			"min": 0.15,
 			"steps": 10,
 			"step": 0.01
 		},
 		"mythic": {
-			"min": 0.30,
+			"min": 0.15,
 			"steps": 15,
 			"step": 0.01
 		},
 		"ancient": {
-			"min": 0.50,
+			"min": 0.25,
 			"steps": 15,
 			"step": 0.01
 		}

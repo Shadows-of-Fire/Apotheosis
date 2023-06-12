@@ -1,46 +1,46 @@
 {
 	"type": "apotheosis:mob_effect",
-	"mob_effect": "minecraft:resistance",
+	"mob_effect": "minecraft:speed",
 	"target": "HURT_SELF",
 	"values": {
 		"rare": {
 			"duration": {
-				"min": 80,
-				"steps": 2,
+				"min": 200,
+				"steps": 10,
 				"step": 20
 			},
 			"amplifier": 0,
-			"cooldown": 300
+			"cooldown": 800
 		},
 		"epic": {
 			"duration": {
-				"min": 80,
-				"steps": 3,
+				"min": 200,
+				"steps": 10,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 5,
-				"step": 0.2
+				"steps": 8,
+				"step": 0.25
 			},
-			"cooldown": 260
+			"cooldown": 700
 		},
 		"mythic": {
 			"duration": {
-				"min": 80,
-				"steps": 3,
+				"min": 200,
+				"steps": 10,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 2,
+				"steps": 4,
 				"step": 0.5
 			},
-			"cooldown": 240
+			"cooldown": 600
 		},
 		"ancient": {
 			"duration": {
-				"min": 100,
+				"min": 200,
 				"steps": 10,
 				"step": 40
 			},
@@ -49,10 +49,10 @@
 				"steps": 4,
 				"step": 0.5
 			},
-			"cooldown": 160
+			"cooldown": 600
 		}
 	},
 	"types": [
-		"chestplate", "leggings"
+		"boots"
 	]
 }

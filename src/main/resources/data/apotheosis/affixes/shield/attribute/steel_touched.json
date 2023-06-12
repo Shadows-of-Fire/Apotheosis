@@ -1,30 +1,31 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "minecraft:generic.luck",
+	"attribute": "minecraft:generic.armor_toughness",
 	"operation": "ADDITION",
 	"values": {
 		"rare": {
-			"min": 0.5,
+			"min": 1,
+			"steps": 1,
+			"step": 0
+		},
+		"epic": {
+			"min": 2,
 			"steps": 2,
 			"step": 0.5
 		},
-		"epic": {
-			"min": 0.5,
-			"steps": 3,
-			"step": 0.5
-		},
 		"mythic": {
-			"min": 1,
+			"min": 2,
 			"steps": 4,
 			"step": 0.5
 		},
 		"ancient": {
 			"min": 2,
-			"steps": 6,
+			"steps": 8,
 			"step": 0.5
 		}
 	},
 	"types": [
-		"helmet", "chestplate", "leggings", "boots"
+		"helmet", "chestplate", "leggings", "boots",
+		"shield"
 	]
 }
