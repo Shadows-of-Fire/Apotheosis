@@ -1,11 +1,11 @@
 {
 	"type": "apotheosis:mob_effect",
-	"mob_effect": "minecraft:haste",
+	"mob_effect": "minecraft:speed",
 	"target": "BREAK_SELF",
 	"values": {
 		"rare": {
 			"duration": {
-				"min": 200,
+				"min": 300,
 				"steps": 5,
 				"step": 20
 			},
@@ -14,7 +14,7 @@
 		},
 		"epic": {
 			"duration": {
-				"min": 200,
+				"min": 300,
 				"steps": 6,
 				"step": 20
 			},
@@ -27,7 +27,7 @@
 		},
 		"mythic": {
 			"duration": {
-				"min": 240,
+				"min": 300,
 				"steps": 6,
 				"step": 20
 			},
@@ -40,8 +40,8 @@
 		},
 		"ancient": {
 			"duration": {
-				"min": 240,
-				"steps": 6,
+				"min": 300,
+				"steps": 8,
 				"step": 20
 			},
 			"amplifier": {

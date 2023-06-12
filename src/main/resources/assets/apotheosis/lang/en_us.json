@@ -118,6 +118,9 @@
 	"affix.apotheosis:breaker/mob_effect/swift": "Swift",
     "affix.apotheosis:breaker/mob_effect/swift.suffix": "of Smashing",
 
+	"affix.apotheosis:breaker/mob_effect/spelunkers": "Spelunker's",
+    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "of Cave Exploration",
+
 	"affix.apotheosis:ranged/mob_effect/ensnaring": "Ensnaring",
     "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "of the Predator",
 
@@ -136,11 +139,11 @@
 	"affix.apotheosis:armor/mob_effect/revitalizing": "Revitalizing",
     "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "of the Wellspring",
 
-	"affix.apotheosis:ranged/mob_effect/nimble": "Nimble",
-    "affix.apotheosis:ranged/mob_effect/nimble.suffix": "of the Fox",
+	"affix.apotheosis:armor/mob_effect/nimble": "Nimble",
+    "affix.apotheosis:armor/mob_effect/nimble.suffix": "of the Fox",
 
-	"affix.apotheosis:ranged/mob_effect/blinding": "Blinding",
-    "affix.apotheosis:ranged/mob_effect/blinding.suffix": "of Darkness",
+	"affix.apotheosis:armor/mob_effect/blinding": "Blinding",
+    "affix.apotheosis:armor/mob_effect/blinding.suffix": "of Darkness",
 
 	"affix.apotheosis:ranged/mob_effect/shulkers": "Shulk-Touched",
     "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "of Levitation",

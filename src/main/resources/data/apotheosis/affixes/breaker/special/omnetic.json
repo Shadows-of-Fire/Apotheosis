@@ -1,4 +1,5 @@
 {
+	"_comment": "Omnitool - Any tool in the list will be tried against the block being broken.",
 	"type": "apotheosis:omnetic",
 	"values": {
 		"rare": {

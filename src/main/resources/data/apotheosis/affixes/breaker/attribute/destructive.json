@@ -4,12 +4,12 @@
 	"operation": "MULTIPLY_BASE",
 	"values": {
 		"common": {
-			"min": 0.05,
-			"steps": 5,
+			"min": 0.15,
+			"steps": 10,
 			"step": 0.01
 		},
 		"uncommon": {
-			"min": 0.10,
+			"min": 0.15,
 			"steps": 10,
 			"step": 0.01
 		},
@@ -24,13 +24,13 @@
 			"step": 0.01
 		},
 		"mythic": {
-			"min": 0.30,
+			"min": 0.20,
 			"steps": 15,
 			"step": 0.01
 		},
 		"ancient": {
 			"min": 0.35,
-			"steps": 30,
+			"steps": 15,
 			"step": 0.01
 		}
 	},
