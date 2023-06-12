@@ -208,7 +208,6 @@ public class Apoth {
 		public static final RegistryObject<MobEffect> KNOWLEDGE = R.effect("knowledge");
 		public static final RegistryObject<MobEffect> VITALITY = R.effect("vitality");
 		public static final RegistryObject<MobEffect> GRIEVOUS = R.effect("grievous");
-
 		public static final RegistryObject<MobEffect> BLEEDING = R.effect("bleeding");
 	}
 

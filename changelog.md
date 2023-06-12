@@ -16,6 +16,7 @@
 * The Blessed Affix (Max Health) can no longer be found on shields.
 * The Gravitational Affix can no longer be found on leggings.
 * The Stalwart (Knockback Resist) Affix will be stronger on shields.
+* Heavy Weapons AS Reduction will no longer reduce attack speed below 0.4.
   
 ### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).

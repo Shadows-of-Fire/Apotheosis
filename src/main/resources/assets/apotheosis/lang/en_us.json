@@ -214,6 +214,9 @@
 	"affix.apotheosis:ranged/mob_effect/acidic": "Acidic",
     "affix.apotheosis:ranged/mob_effect/acidic.suffix": "of Corrosion",
 
+	"affix.apotheosis:heavy_weapon/mob_effect/bloodletting": "Caustic",
+    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting.suffix": "of the Slayer",
+
 	"affix.apotheosis:heavy_weapon/mob_effect/caustic": "Caustic",
     "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "of the Caustic Realm",
 
@@ -267,6 +270,7 @@
 	"affix.apotheosis.target.block_self": "• Upon blocking, gain %s",
 	"affix.apotheosis.target.block_attacker": "• Upon blocking, inflict %s",
 	"affix.apotheosis.cooldown": "[⌛ %s]",
+	"affix.apotheosis.stacking": "[Stacking]",
 
 	"affix.apotheosis:durable.desc": "• This item ignores %s%% of durability damage.",
 	"affix.apotheosis:socket.desc": "• Socketed (%s)",

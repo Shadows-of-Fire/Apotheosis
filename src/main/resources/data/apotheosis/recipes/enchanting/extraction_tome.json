@@ -3,10 +3,6 @@
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
-	},
-	{
-		"type": "apotheosis:module",
-		"module": "adventure"
 	}],
 	"input": {
 		"item": "apotheosis:improved_scrap_tome"

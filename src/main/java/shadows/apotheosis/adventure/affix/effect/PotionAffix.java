@@ -44,7 +44,8 @@ public class PotionAffix extends Affix {
 			Target.CODEC.fieldOf("target").forGetter(a -> a.target),
 			LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
 			Codec.INT.optionalFieldOf("cooldown", 0).forGetter(a -> a.cooldown),
-			LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
+			LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types),
+			Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
 			.apply(inst, PotionAffix::new)
 		);
 	//Formatter::on
@@ -56,26 +57,31 @@ public class PotionAffix extends Affix {
 	@Deprecated(forRemoval = true, since = "6.3.0")
 	protected final int cooldown;
 	protected final Set<LootCategory> types;
+	protected final boolean stackOnReapply;
 
-	public PotionAffix(MobEffect effect, Target target, Map<LootRarity, EffectData> values, int cooldown, Set<LootCategory> types) {
+	public PotionAffix(MobEffect effect, Target target, Map<LootRarity, EffectData> values, int cooldown, Set<LootCategory> types, boolean stackOnReapply) {
 		super(AffixType.ABILITY);
 		this.effect = effect;
 		this.target = target;
 		this.values = values;
 		this.cooldown = cooldown;
 		this.types = types;
+		this.stackOnReapply = stackOnReapply;
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		MobEffectInstance inst = this.values.get(rarity).build(this.effect, level);
+		MutableComponent comp = this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW);
 		int cooldown = this.getCooldown(rarity);
 		if (cooldown != 0) {
 			Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(cooldown));
-			list.accept(Component.translatable("%s %s", this.target.toComponent(toComponent(inst)), cd).withStyle(ChatFormatting.YELLOW));
-		} else {
-			list.accept(this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW));
+			comp = comp.append(" ").append(cd);
 		}
+		if (this.stackOnReapply) {
+			comp = comp.append(" ").append(Component.translatable("affix.apotheosis.stacking"));
+		}
+		list.accept(comp);
 	}
 
 	@Override
@@ -148,7 +154,15 @@ public class PotionAffix extends Affix {
 			if (lastApplied != 0 && lastApplied + cooldown >= target.level.getGameTime()) return;
 		}
 		EffectData data = this.values.get(rarity);
-		target.addEffect(data.build(this.effect, level));
+		var inst = target.getEffect(this.effect);
+		if (this.stackOnReapply && inst != null) {
+			if (inst != null) {
+				var newInst = new MobEffectInstance(this.effect, (int) Math.max(inst.getDuration(), data.duration.get(level)), (int) (inst.getAmplifier() + 1 + data.amplifier.get(level)));
+				target.addEffect(newInst);
+			}
+		} else {
+			target.addEffect(data.build(this.effect, level));
+		}
 		target.getPersistentData().putLong("apoth.affix_cooldown." + this.getId().toString(), target.level.getGameTime());
 	}
 

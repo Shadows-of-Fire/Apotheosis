@@ -2,45 +2,51 @@
 	"type": "apotheosis:mob_effect",
 	"conditions": [{
 		"type": "apotheosis:module",
-		"module": "potion"
+		"module": "village"
 	}],
-	"mob_effect": "apotheosis:sundering",
+	"mob_effect": "apotheosis:bleeding",
 	"target": "ATTACK_TARGET",
+	"stack_on_reapply": true,
 	"values": {
+		"rare": {
+			"duration": 100,
+			"amplifier": 0,
+			"cooldown": 80
+		},
 		"epic": {
 			"duration": {
 				"min": 100,
-				"steps": 5,
+				"steps": 1,
 				"step": 20
 			},
 			"amplifier": 0,
-			"cooldown": 300
+			"cooldown": 80
 		},
 		"mythic": {
 			"duration": {
 				"min": 100,
-				"steps": 5,
-				"step": 20
-			},
-			"amplifier": {
-				"min": 0,
-				"steps": 4,
-				"step": 0.26
-			},
-			"cooldown": 300
-		},
-		"ancient": {
-			"duration": {
-				"min": 200,
-				"steps": 10,
+				"steps": 1,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
 				"steps": 8,
-				"step": 0.26
+				"step": 0.126
 			},
-			"cooldown": 500
+			"cooldown": 80
+		},
+		"ancient": {
+			"duration": {
+				"min": 100,
+				"steps": 2,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 16,
+				"step": 0.126
+			},
+			"cooldown": 80
 		}
 	},
 	"types": [

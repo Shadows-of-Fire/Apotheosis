@@ -69,6 +69,7 @@ import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.util.DamageSourceUtil;
+import shadows.apotheosis.util.ItemAccess;
 import shadows.placebo.events.AnvilLandEvent;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.events.ItemUseEvent;
@@ -96,6 +97,14 @@ public class AdventureEvents {
 			affixes.forEach((afx, inst) -> inst.addModifiers(e.getSlotType(), e::addModifier));
 			if (AffixHelper.getRarity(stack) != null && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
 				double amt = -0.15 - 0.10 * (AffixHelper.getRarity(stack).ordinal());
+				AttributeModifier baseAS = e.getModifiers().get(Attributes.ATTACK_SPEED).stream().filter(a -> ItemAccess.getBaseAS() == a.getId()).findFirst().orElse(null);
+				if (baseAS != null) {
+					// Try to not reduce attack speed below 0.4 if possible.
+					double value = 4 + baseAS.getAmount();
+					double clampedAmt = 0.4F / value - 1;
+					amt = Math.max(amt, clampedAmt);
+					if (amt >= 0) return;
+				}
 				e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(HEAVY_WEAPON_AS, "Heavy Weapon AS", amt, Operation.MULTIPLY_TOTAL));
 			}
 		}
