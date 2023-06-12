@@ -2,11 +2,8 @@ package shadows.apotheosis.adventure;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -110,8 +107,6 @@ public class AdventureEvents {
 		}
 	}
 
-	private static final Set<Float> values = ImmutableSet.of(0.1F, 0.2F, 0.25F, 0.33F, 0.5F, 1.0F, 1.1F, 1.2F, 1.25F, 1.33F, 1.5F, 2.0F, 2.1F, 2.25F, 2.33F, 2.5F, 3F);
-
 	/**
 	 * This event handler makes the Draw Speed attribute work as intended.
 	 * Modifiers targetting this attribute should use the MULTIPLY_BASE operation.
@@ -121,11 +116,19 @@ public class AdventureEvents {
 		if (e.getEntity() instanceof Player player) {
 			double t = player.getAttribute(Apoth.Attributes.DRAW_SPEED.get()).getValue() - 1;
 			if (t == 0 || !LootCategory.forItem(e.getItem()).isRanged()) return;
-			float clamped = values.stream().filter(f -> f >= t).min(Float::compareTo).orElse(3F);
-			while (clamped > 0) {
-				if (e.getEntity().tickCount % (int) Math.floor(1 / Math.min(1, t)) == 0) e.setDuration(e.getDuration() - 1);
-				clamped--;
+			while (t > 1) { // Every 100% triggers an immediate extra tick
+				e.setDuration(e.getDuration() - 1);
+				t--;
 			}
+
+			if (t > 0.5F) { // Special case 0.5F so that values in (0.5, 1) don't round to 1.
+				if (e.getEntity().tickCount % 2 == 0) e.setDuration(e.getDuration() - 1);
+				t -= 0.5F;
+			}
+
+			int mod = (int) Math.floor(1 / Math.min(1, t));
+			if (e.getEntity().tickCount % mod == 0) e.setDuration(e.getDuration() - 1);
+			t--;
 		}
 	}
 

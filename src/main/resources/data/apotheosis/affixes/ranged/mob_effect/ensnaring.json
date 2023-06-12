@@ -9,31 +9,34 @@
 				"steps": 2,
 				"step": 20
 			},
-			"amplifier": 0
+			"amplifier": 0,
+			"cooldown": 100
 		},
 		"epic": {
 			"duration": {
-				"min": 60,
-				"steps": 4,
+				"min": 40,
+				"steps": 3,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 1,
-				"step": 1
-			}
+				"steps": 4,
+				"step": 0.26
+			},
+			"cooldown": 160
 		},
 		"mythic": {
 			"duration": {
-				"min": 80,
-				"steps": 6,
+				"min": 40,
+				"steps": 3,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 2,
-				"step": 1
-			}
+				"steps": 4,
+				"step": 0.26
+			},
+			"cooldown": 160
 		},
 		"ancient": {
 			"duration": {
@@ -41,7 +44,8 @@
 				"steps": 6,
 				"step": 40
 			},
-			"amplifier": 5
+			"amplifier": 5,
+			"cooldown": 400
 		}
 	},
 	"types": [

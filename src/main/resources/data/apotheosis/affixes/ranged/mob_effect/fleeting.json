@@ -13,26 +13,26 @@
 		},
 		"epic": {
 			"duration": {
-				"min": 60,
+				"min": 40,
 				"steps": 4,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 1,
-				"step": 1
+				"steps": 4,
+				"step": 0.26
 			}
 		},
 		"mythic": {
 			"duration": {
-				"min": 80,
-				"steps": 4,
+				"min": 40,
+				"steps": 5,
 				"step": 20
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 2,
-				"step": 1
+				"steps": 8,
+				"step": 0.26
 			}
 		},
 		"ancient": {

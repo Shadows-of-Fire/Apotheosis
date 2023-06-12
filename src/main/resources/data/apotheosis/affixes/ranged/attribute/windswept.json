@@ -4,28 +4,28 @@
 	"operation": "MULTIPLY_TOTAL",
 	"values": {
 		"common": {
-			"min": 0.05,
+			"min": 0.15,
 			"steps": 2,
 			"step": 0.05
 		},
 		"uncommon": {
-			"min": 0.05,
+			"min": 0.15,
 			"steps": 3,
 			"step": 0.05
 		},
 		"rare": {
-			"min": 0.10,
+			"min": 0.15,
 			"steps": 3,
 			"step": 0.05
 		},
 		"epic": {
 			"min": 0.15,
-			"steps": 3,
+			"steps": 4,
 			"step": 0.05
 		},
 		"mythic": {
 			"min": 0.15,
-			"steps": 3,
+			"steps": 4,
 			"step": 0.05
 		},
 		"ancient": {

@@ -11,17 +11,19 @@
 			},
 			"amplifier": {
 				"min": 0,
-				"steps": 3,
-				"step": 1
-			}
+				"steps": 12,
+				"step": 0.26
+			},
+			"cooldown": 300
 		},
 		"ancient": {
 			"duration": {
-				"min": 180,
+				"min": 100,
 				"steps": 4,
 				"step": 40
 			},
-			"amplifier": 4
+			"amplifier": 2,
+			"cooldown": 300
 		}
 	},
 	"types": [
