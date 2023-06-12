@@ -8,12 +8,12 @@
 		},
 		"epic": {
 			"min": 3,
-			"steps": 5,
+			"steps": 4,
 			"step": 1
 		},
 		"mythic": {
 			"min": 4,
-			"steps": 6,
+			"steps": 4,
 			"step": 1
 		},
 		"ancient": {

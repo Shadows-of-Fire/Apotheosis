@@ -4,7 +4,7 @@
 	"operation": "ADDITION",
 	"values": {
 		"common": {
-			"min": 0.25,
+			"min": 0.5,
 			"steps": 3,
 			"step": 0.25
 		},
@@ -15,22 +15,22 @@
 		},
 		"rare": {
 			"min": 0.75,
-			"steps": 4,
+			"steps": 3,
 			"step": 0.25
 		},
 		"epic": {
 			"min": 1,
-			"steps": 6,
+			"steps": 3,
 			"step": 0.25
 		},
 		"mythic": {
-			"min": 1.5,
-			"steps": 6,
+			"min": 1.25,
+			"steps": 3,
 			"step": 0.25
 		},
 		"ancient": {
-			"min": 2.5,
-			"steps": 10,
+			"min": 1.5,
+			"steps": 3,
 			"step": 0.25
 		}
 	},
