@@ -9,12 +9,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.event.GetItemSocketsEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class SocketHelper {
@@ -54,9 +56,18 @@ public class SocketHelper {
 	}
 
 	public static int getSockets(ItemStack stack) {
-		var inst = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
-		if (inst == null) return 0;
-		return (int) inst.level();
+		var socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
+		var sockets = 0;
+		if (socketAffix != null) {
+			sockets = (int) socketAffix.level();
+		}
+		var event = new GetItemSocketsEvent(stack, sockets);
+		MinecraftForge.EVENT_BUS.post(event);
+		if (sockets != event.getSockets()) {
+			sockets = event.getSockets();
+			setSockets(stack, sockets);
+		}
+		return sockets;
 	}
 
 	public static void setSockets(ItemStack stack, int sockets) {
