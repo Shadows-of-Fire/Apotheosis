@@ -79,5 +79,14 @@ public class SocketHelper {
 	public static boolean hasEmptySockets(ItemStack stack) {
 		return getGems(stack).stream().map(GemItem::getGem).anyMatch(Objects::isNull);
 	}
+	
+	public static int getEmptySocket(ItemStack stack) {
+		var gems = getGems(stack, getSockets(stack));
+		for (int socket = 0; socket < gems.size(); socket++) {
+			var gem = GemItem.getGem(gems.get(socket));
+			if (gem == null) return socket;
+		}
+		return 0;
+	}
 
 }
