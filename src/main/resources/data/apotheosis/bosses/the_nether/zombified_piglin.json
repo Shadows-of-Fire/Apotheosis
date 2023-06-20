@@ -25,7 +25,7 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 60,
+						"min": 40,
 						"steps": 40,
 						"step": 2
 					}
@@ -34,8 +34,8 @@
 					"attribute": "minecraft:generic.movement_speed",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.10,
-						"steps": 12,
+						"min": 0.15,
+						"steps": 15,
 						"step": 0.01
 					}
 				},
@@ -66,8 +66,8 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 90,
-						"steps": 60,
+						"min": 60,
+						"steps": 40,
 						"step": 2
 					}
 				},
@@ -75,8 +75,8 @@
 					"attribute": "minecraft:generic.movement_speed",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.10,
-						"steps": 22,
+						"min": 0.15,
+						"steps": 20,
 						"step": 0.01
 					}
 				},
@@ -84,7 +84,7 @@
 					"attribute": "minecraft:generic.attack_damage",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.25,
+						"min": 0.30,
 						"steps": 35,
 						"step": 0.01
 					}
@@ -97,12 +97,12 @@
 				{
 					"attribute": "minecraft:generic.armor",
 					"operation": "ADDITION",
-					"value": 8
+					"value": 4
 				},
 				{
 					"attribute": "minecraft:generic.armor_toughness",
 					"operation": "ADDITION",
-					"value": 4.5
+					"value": 2
 				}
 			]
 		}

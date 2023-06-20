@@ -164,18 +164,27 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	}
 
 	/**
+	 * @see #createBoss(ServerLevelAccessor, BlockPos, RandomSource, float, LootRarity)
+	 */
+	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
+		return createBoss(world, pos, random, luck, null);
+	}
+
+	/**
 	 * Generates (but does not spawn) the result of this BossItem.
 	 * @param world The world to create the entity in.
 	 * @param pos The location to place the entity.  Will be centered (+0.5, +0.5).
 	 * @param random A random, used for selection of boss stats.
+	 * @param luck The player's luck value.
+	 * @param rarity A rarity override. This will be clamped to a valid rarity, and randomly generated if null.
 	 * @return The newly created boss, or it's mount, if it had one.
 	 */
-	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
+	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck, @Nullable LootRarity rarity) {
 		CompoundTag fakeNbt = this.nbt == null ? new CompoundTag() : this.nbt;
 		fakeNbt.putString("id", EntityType.getKey(this.entity).toString());
 		Mob entity = (Mob) EntityType.loadEntityRecursive(fakeNbt, world.getLevel(), Function.identity());
 		if (this.nbt != null) entity.load(this.nbt);
-		this.initBoss(random, entity, luck);
+		this.initBoss(random, entity, luck, rarity);
 		// Re-read here so we can apply certain things after the boss has been modified
 		// But only mob-specific things, not a full load()
 		if (this.nbt != null) entity.readAdditionalSaveData(this.nbt);
@@ -195,8 +204,9 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 	 * @param rand
 	 * @param entity
 	 */
-	public void initBoss(RandomSource rand, Mob entity, float luck) {
-		LootRarity rarity = LootRarity.random(rand, luck, this);
+	public void initBoss(RandomSource rand, Mob entity, float luck, @Nullable LootRarity rarity) {
+		if (rarity == null) rarity = LootRarity.random(rand, luck, this);
+		rarity = this.clamp(rarity);
 		BossStats stats = this.stats.get(rarity);
 		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
@@ -251,7 +261,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		entity.getPersistentData().putBoolean("apoth.boss", true);
 		entity.getPersistentData().putString("apoth.rarity", rarity.id());
 		entity.setHealth(entity.getMaxHealth());
-		if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 2400));
+		if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3600));
 	}
 
 	public void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {

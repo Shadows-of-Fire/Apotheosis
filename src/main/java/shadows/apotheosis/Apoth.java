@@ -287,6 +287,10 @@ public class Apoth {
 		 * Experience mulitplier, from killing mobs or breaking ores. Base value = (1.0) = 100% xp gained.
 		 */
 		public static final RegistryObject<Attribute> EXPERIENCE_GAINED = R.attribute("experience_gained");
+		/**
+		 * Adjusts all healing received. Base value = (1.0) = 100% xp gained.
+		 */
+		public static final RegistryObject<Attribute> HEALING_RECEIVED = R.attribute("HEALING_RECEIVED");
 	}
 
 	public static final class Affixes {

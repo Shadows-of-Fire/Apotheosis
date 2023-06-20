@@ -37,6 +37,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
@@ -56,6 +57,7 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.commands.BossCommand;
 import shadows.apotheosis.adventure.commands.CategoryCheckCommand;
 import shadows.apotheosis.adventure.commands.GemCommand;
 import shadows.apotheosis.adventure.commands.LootifyCommand;
@@ -82,6 +84,7 @@ public class AdventureEvents {
 		ModifierCommand.register(e.getRoot());
 		GemCommand.register(e.getRoot());
 		SocketCommand.register(e.getRoot());
+		BossCommand.register(e.getRoot());
 	}
 
 	private static final UUID HEAVY_WEAPON_AS = UUID.fromString("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454");
@@ -426,6 +429,12 @@ public class AdventureEvents {
 		if (isReentrant) return;
 		AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));
 		reentrantLock.get().set(false);
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void heal(LivingHealEvent e) {
+		float factor = (float) e.getEntity().getAttributeValue(Apoth.Attributes.HEALING_RECEIVED.get());
+		e.setAmount(e.getAmount() * factor);
 	}
 
 }

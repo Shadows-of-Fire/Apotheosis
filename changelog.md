@@ -18,6 +18,7 @@
 * The Stalwart (Knockback Resist) Affix will be stronger on shields.
 * Heavy Weapons AS Reduction will no longer reduce attack speed below 0.4.
 * Fixed a bug with Draw Speed that caused all values to be rounded up to the nearest 100 percent.
+* Bosses will be significantly less tankier, but will do more damage and be faster.
   
 ### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
@@ -31,6 +32,7 @@
   * The output inventory can be extracted from.
 * Salvaging now yields a different amount of gem dust per rarity.
   * The `U` key (recipe lookup button) now works properly for gems.
+* Added the `apotheosis:healing_received` attribute.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.

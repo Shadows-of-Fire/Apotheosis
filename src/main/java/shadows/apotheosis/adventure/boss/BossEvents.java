@@ -175,6 +175,9 @@ public class BossEvents {
 		NEEDS_SKY((level, pos) -> level.canSeeSky(pos)),
 		NEEDS_SURFACE(
 				(level, pos) -> pos.getY() >= level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ())),
+		BELOW_SURFACE(
+				(level, pos) -> pos.getY() < level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ())),
+		CANNOT_SEE_SKY((level, pos) -> !level.canSeeSky(pos)),
 		ANY((level, pos) -> true);
 
 		public static final Codec<BossSpawnRules> CODEC = new EnumCodec<>(BossSpawnRules.class);

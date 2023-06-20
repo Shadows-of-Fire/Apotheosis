@@ -26,8 +26,8 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 120,
-						"steps": 75,
+						"min": 100,
+						"steps": 20,
 						"step": 2
 					}
 				},
@@ -44,7 +44,7 @@
 					"attribute": "minecraft:generic.attack_damage",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.32,
+						"min": 0.35,
 						"steps": 35,
 						"step": 0.01
 					}
@@ -52,77 +52,17 @@
 				{
 					"attribute": "minecraft:generic.knockback_resistance",
 					"operation": "ADDITION",
-					"value": 0.55
+					"value": 0.85
 				},
 				{
 					"attribute": "minecraft:generic.armor",
-					"operation": "ADDITION",
-					"value": 8
-				},
-				{
-					"attribute": "minecraft:generic.armor_toughness",
-					"operation": "ADDITION",
-					"value": 4.5
-				}
-			]
-		},
-		"mythic": {
-			"enchant_chance": 0.85,
-			"enchantment_levels": [30, 25, 48, 35],
-			"effects": [{
-				"effect": "minecraft:fire_resistance",
-				"chance": 1.0
-			}],
-			"attribute_modifiers": [{
-					"attribute": "minecraft:generic.max_health",
-					"operation": "ADDITION",
-					"value": {
-						"min": 180,
-						"steps": 75,
-						"step": 2
-					}
-				},
-				{
-					"attribute": "minecraft:generic.movement_speed",
-					"operation": "MULTIPLY_BASE",
-					"value": {
-						"min": 0.15,
-						"steps": 35,
-						"step": 0.01
-					}
-				},
-				{
-					"attribute": "minecraft:generic.flying_speed",
-					"operation": "MULTIPLY_BASE",
-					"value": {
-						"min": 0.15,
-						"steps": 35,
-						"step": 0.01
-					}
-				},
-				{
-					"attribute": "minecraft:generic.attack_damage",
-					"operation": "MULTIPLY_BASE",
-					"value": {
-						"min": 0.32,
-						"steps": 35,
-						"step": 0.01
-					}
-				},
-				{
-					"attribute": "minecraft:generic.knockback_resistance",
-					"operation": "ADDITION",
-					"value": 0.65
-				},
-				{
-					"attribute": "minecraft:generic.armor",
-					"operation": "ADDITION",
-					"value": 10
-				},
-				{
-					"attribute": "minecraft:generic.armor_toughness",
 					"operation": "ADDITION",
 					"value": 6
+				},
+				{
+					"attribute": "minecraft:generic.armor_toughness",
+					"operation": "ADDITION",
+					"value": 3
 				}
 			]
 		}

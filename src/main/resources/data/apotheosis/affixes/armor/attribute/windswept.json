@@ -4,12 +4,12 @@
 	"operation": "MULTIPLY_TOTAL",
 	"values": {
 		"common": {
-			"min": 0.15,
+			"min": 0.10,
 			"steps": 2,
 			"step": 0.05
 		},
 		"uncommon": {
-			"min": 0.15,
+			"min": 0.10,
 			"steps": 3,
 			"step": 0.05
 		},
@@ -35,8 +35,6 @@
 		}
 	},
 	"types": [
-		"bow",
-		"crossbow",
-		"trident"
+		"leggings", "boots"
 	]
 }

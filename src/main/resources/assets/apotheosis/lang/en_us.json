@@ -30,9 +30,13 @@
 	"apotheosis:arrow_damage": "Arrow Damage",
 	"apotheosis:arrow_velocity": "Arrow Velocity",
 	"apotheosis:experience_gained": "Experience Gained",
+	"apotheosis:healing_received": "Healing Receieved",
 	
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",
+
+    "affix.apotheosis:armor/attribute/windswept": "Windswept",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "of the Current",
 
     "affix.apotheosis:armor/attribute/ironforged": "Ironforged",
     "affix.apotheosis:armor/attribute/ironforged.suffix": "of Iron",

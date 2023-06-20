@@ -62,13 +62,13 @@ public class AdventureGeneration {
 	 *
 	 * Probably not valid in 1.18+
 	 */
-	public static record BlackistModifier(HolderSet<Biome> blacklistedBiomes, Holder<PlacedFeature> feature) implements BiomeModifier {
+	public static record BlacklistModifier(HolderSet<Biome> blacklistedBiomes, Holder<PlacedFeature> feature) implements BiomeModifier {
 
 		//Formatter::off
-		public static final Codec<BlackistModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-													Biome.LIST_CODEC.fieldOf("blacklisted_biomes").forGetter(BlackistModifier::blacklistedBiomes), 
-													PlacedFeature.CODEC.fieldOf("feature").forGetter(BlackistModifier::feature))
-													.apply(builder, BlackistModifier::new));
+		public static final Codec<BlacklistModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+									Biome.LIST_CODEC.fieldOf("blacklisted_biomes").forGetter(BlacklistModifier::blacklistedBiomes), 
+									PlacedFeature.CODEC.fieldOf("feature").forGetter(BlacklistModifier::feature))
+									.apply(builder, BlacklistModifier::new));
 		//Formatter::on
 
 		@Override
