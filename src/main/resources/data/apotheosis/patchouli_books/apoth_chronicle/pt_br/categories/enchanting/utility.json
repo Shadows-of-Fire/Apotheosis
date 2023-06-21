@@ -1,0 +1,7 @@
+{
+    "name": "Itens utilitários",
+    "description": "Esta seção detalha todas as ferramentas usadas para tornar o encantamento mais fácil.",
+    "icon": "apotheosis:library",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

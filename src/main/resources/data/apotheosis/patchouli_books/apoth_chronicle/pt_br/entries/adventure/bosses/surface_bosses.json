@@ -1,0 +1,17 @@
+{
+    "name": "Chefes invasores",
+    "icon": "minecraft:beacon",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Um barulho estranho, uma mensagem peculiar e um raio gigante de luz do céu...$(p)Todos os sinais apontam para um chefe, invadindo seu mundo."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Ao contrário dos chefes encontrados nas masmorras, os chefes invasores raramente aparecem na superfície onde os mobs podem normalmente aparecer.$(p)Sua chegada será marcada por um barulho alto, uma mensagem e um farol que emana brevemente do seu ponto de geração."
+		}
+	]
+}

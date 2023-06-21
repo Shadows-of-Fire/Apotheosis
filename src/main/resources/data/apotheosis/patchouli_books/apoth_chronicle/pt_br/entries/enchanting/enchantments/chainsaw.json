@@ -1,0 +1,13 @@
+{
+    "name": "Motosserra",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Motosserra$() é um encantamento de obra-prima que pode ser aplicado a machados.$(p)Ao quebrar uma árvore, toda a árvore será colhida.$(p)Isso usa a durabilidade do machado."
+        }
+	]
+}

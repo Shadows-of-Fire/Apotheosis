@@ -1,0 +1,7 @@
+{
+    "name": "Atributos",
+    "description": "Além dos atributos originais, o Apotheosis adiciona uma variedade de novos atributos.$(p)Esta seção detalha todos eles.",
+    "icon": "minecraft:diamond_chestplate",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

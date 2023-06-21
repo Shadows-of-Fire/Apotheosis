@@ -1,0 +1,55 @@
+{
+    "name": "Status de encantamento",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/table",
+    "flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Com o Apotheosis, o encantamento depende de mais do que apenas níveis.$(p)Atualmente, existem cinco novos status de encantamento.$(p)Blocos que fornecem status de encantamento os exibirão em suas descrições."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Eterna",
+            "text": "$(eterna) é o status principal do encantamento.$(p)Cada ponto de $(eterna) aumenta o nível máximo de encantamento em dois.$(p)Alguns blocos só podem fornecer $(eterna) até um certo valor máximo."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Quanta",
+            "anchor": "quanta",
+            "text": "$(quanta) é um status secundário. Ela controla a variação dos encantamentos.$(p)Durante o encantamento, você tem um $(6)poder base(), que é o nível que você gastou para encantar, e então um $(#CC00CC)poder final(), após todas as modificações.$(p)$(quanta) é um dos fatores do processo de modificação."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Um valor é selecionado entre $(4)1 - Quanta$() e $(9)1 + Quanta$().$(p)Seu $(#CC00CC)poder final() é igual a esse valor multiplicado pelo seu $(6)poder base().$(p)Valores mais altos de $(quanta) aumentam a faixa de poder, o que significa que seus encantamentos são menos consistentes em seu $(#CC00CC)poder final()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Arcana",
+            "text": "$(arcana) é um status secundário. Ela controla os pesos de raridade e, em certos níveis, garantirá encantamentos adicionais.$(p)Com 25% de $(arcana), você sempre receberá pelo menos dois encantamentos. Com 75%, você sempre receberá três."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Por padrão, as raridades têm os seguintes pesos:$(p)Comum: 10$(br)Incomum: 5$(br)Raro: 3$(br)Muito Raro: 1$(p)A cada 10% de $(arcana), os pesos mudam, eventualmente se invertendo completamente.$(p)Ao passar o mouse sobre a barra de $(arcana), você verá os pesos atuais."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Retificação",
+            "anchor": "rectification",
+            "text": "Retificação é um status terciário. Ela afeta diretamente o limite inferior das modificações de $(quanta).$(p)Lembre-se de que seu $(4)poder mínimo$() é igual a $(4)1 - Quanta$().$(p)Com Retificação (R), seu $(4)Poder Mínimo$() é igual a $(4)1 - (1 - R) * Quanta$()."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Se isso não faz muito sentido, não se preocupe com isso.$(p)Saiba apenas que valores mais altos de retificação são sempre bons.$(p)Você também pode ter retificação negativa, o que é sempre ruim."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Pistas",
+            "text": "As pistas são outro status terciário.$(p)Cada pista permite que você veja um item adicional na janela de visualização.$(p)Quando você pode ver todos os encantamentos disponíveis, o texto mudará ligeiramente."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Você também pode ter zero pistas e não conseguir ver nada."
+        }
+    ]
+}

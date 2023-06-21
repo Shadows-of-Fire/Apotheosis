@@ -1,0 +1,7 @@
+{
+    "name": "Receitas de poções",
+	"parent": "apotheosis:potion/potion",
+    "description": "Esta seção detalha todas as novas receitas de poções do vanilla que foram adicionadas.",
+    "icon": "minecraft:nether_wart",
+	"flag": "apotheosis:potion"
+}

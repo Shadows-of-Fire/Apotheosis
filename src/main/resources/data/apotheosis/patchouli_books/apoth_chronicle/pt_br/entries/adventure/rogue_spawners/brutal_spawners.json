@@ -1,0 +1,17 @@
+{
+    "name": "Geradores brutais",
+    "icon": "minecraft:zombie_head",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Um gerador brutal é um subtipo de gerador traiçoeiro que gera mobs que são mais fortes do que o normal.$(p)Essas criaturas terão maior saúde, armadura e dano do que suas contrapartes típicas e são resistentes ao fogo."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "A única vantagem é que esses geradores têm um atraso significativo antes de convocar reforços."
+        }
+	]
+}

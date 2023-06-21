@@ -1,0 +1,17 @@
+{
+    "name": "Velocidade de natação",
+    "icon": "minecraft:kelp",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Velocidade de nataçãoo$() é um modificador para sua velocidade real de natação, que é baseada na sua velocidade de movimento.  Você nadará duas vezes mais rápido se sua velocidade de natação for 2,0.$(p)Encontrado apenas em botas."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
+		}
+	]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Módulo de aventura",
+    "description": "Anteriormente conhecido como o $(4)módulo mortal$(), o módulo de aventura permite que você se equipe com itens gerados proceduralmente que possuem bônus poderosos.$(p)Mas tenha cuidado, novos inimigos também estão presentes.",
+    "icon": "minecraft:netherite_sword",
+	"flag": "apotheosis:adventure"
+}

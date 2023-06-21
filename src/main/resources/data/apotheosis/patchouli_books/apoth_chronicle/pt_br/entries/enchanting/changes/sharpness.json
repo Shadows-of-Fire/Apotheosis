@@ -1,0 +1,13 @@
+{
+    "name": "Afiação",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Afiação$() não é mais exclusivo de outros encantamentos de dano.$(p)Isso significa que agora você pode ter $(9)afiação() e outro encantamento de dano que normalmente é exclusivo."
+        }
+	]
+}

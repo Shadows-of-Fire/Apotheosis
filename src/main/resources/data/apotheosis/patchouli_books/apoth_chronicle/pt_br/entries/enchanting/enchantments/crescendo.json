@@ -1,0 +1,13 @@
+{
+    "name": "Chuva de virotes",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Chuva de virotes$() é um encantamento de obra-prima para bestas.$(p)Para cada nível deste encantamento, você ganha um tiro extra por recarga.$(p)Tiros adicionais não custam munição."
+        }
+	]
+}

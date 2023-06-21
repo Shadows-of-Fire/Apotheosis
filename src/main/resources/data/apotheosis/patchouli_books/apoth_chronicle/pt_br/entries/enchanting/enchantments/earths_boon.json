@@ -1,0 +1,13 @@
+{
+    "name": "Benção da Terra",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Benção da Terra$() é um encantamento de obra-prima para picaretas.$(p)Ao minerar pedras simples, há uma chance de cair um bloco de minério."
+        }
+	]
+}

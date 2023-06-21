@@ -1,0 +1,49 @@
+{
+    "name": "Reforja",
+    "icon": "apotheosis:reforging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 4,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:reforging_table",
+			"text": "A $(9)bancada de reforja$() é usada para dar uma nova vida a um item, limpando quaisquer afixos e concedendo outros completamente novos."
+		},
+		{
+            "type": "patchouli:text",
+            "text": "Através do potencial bruto de $(9)materiais de raridade$() e da versatilidade do $(9)pó de gema$(), agora é possível refazer um item com novos afixos.$(p)A reforja não se limita a itens que já possuem afixos e pode ser feita com qualquer item válido."
+        },
+		{
+            "type": "patchouli:image",
+			"title": "Slots de entrada",
+			"images": [
+				"apotheosis:textures/gui/book/reforge_slots.png"
+			],
+			"text": "A a bancada de reforja tem três slots de entrada."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Slots de entrada",
+			"text": "O slot superior segura o item que você deseja refazer.$(p)O slot da esquerda aceita $(9)materiais de raridade$().$(p)O slot da direita é para pó de gema.$(p)Todos os slots devem ser preenchidos para uma reforja bem-sucedida."
+		},
+		{
+            "type": "patchouli:image",
+			"title": "Reforja",
+			"images": [
+				"apotheosis:textures/gui/book/reforge_menu.png"
+			],
+			"text": "Semelhante a uma mesa de encantamentos, você tem três escolhas."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Reforja",
+			"text": "Cada escolha representa uma nova forma potencial do item que está sendo forjado. O custo varia de acordo com a escolha, exigindo 2/4/6 pós de gema, materiais de raridade e níveis de experiência respectivamente.$(p)Para reforjar seu item, basta clicar na opção desejada."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Notas",
+			"text": "Os itens podem ser reforjados várias vezes, mas você deve pegar e substituir o item primeiro.$(p)Nenhuma escolha é intrinsecamente mais forte que os outros.$(p)A bancada de reforja usa sua seed de encantamento para determinar as opções."
+		}
+	]
+}

@@ -1,0 +1,28 @@
+{
+    "name": "Lapidação de gema",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+			"text": "A $(9)bancada de lapidação de gema$() é usada para melhorar $(l:apotheosis:adventure/affix_loot/gems)gemas$(). Gemas podem ser melhoradas aumentando sua raridade ou aumentando o número de facetas."
+		},
+		{
+			"title": "Raridade",
+            "type": "patchouli:text",
+            "text": "Como um item de afixo, cada gema tem uma $(l:apotheosis:adventure/affix_loot/rarities)raridade$(). A raridade, juntamente com o número de facetas, determina a força da gema.$(p)A raridade de uma gema pode ser melhorada combinando duas gemas $(9)impecáveis$() da mesma raridade."
+        },
+		{
+			"title": "Facetas",
+            "type": "patchouli:text",
+            "text": "Cada gema tem $(9)facetas$(), uma medida da força relativa para uma gema. Uma gema pode ser cortada, aumentando o número de facetas, com materiais de raridade.$(p)Uma gema com o número mínimo de facetas é referida como $(7)rachada$(), enquanto uma gema com a quantidade máxima é conhecida como $(9)impecável$()."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "O número máximo de facetas que uma gema pode ter varia de acordo com a gema e a raridade, mas o número mínimo de facetas que qualquer gema pode ter é quatro."
+		}
+	]
+}

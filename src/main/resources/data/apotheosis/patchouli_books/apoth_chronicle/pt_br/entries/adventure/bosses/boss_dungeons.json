@@ -1,0 +1,17 @@
+{
+    "name": "Masmorras de chefe",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Localizados profundamente nas cavernas antigas da terra, há estruturas ocultas, abrigando o poder incalculável dos afixos. Seria uma surpresa bem-vinda se esse poder fosse gratuito para a tomada, mas, infelizmente, é defendido por um chefe."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Encontradas no subsolo, são algumas variantes diferentes de estruturas conhecidas como masmorras de chefe.  Cada masmorra contém um gerador de chefe e alguns baús de saque. O spawner será acionado ao se aproximar dele, liberando o chefe contido."
+		}
+	]
+}
