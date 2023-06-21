@@ -34,6 +34,7 @@ import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.client.BossSpawnMessage;
 import shadows.apotheosis.compat.PatchouliCompat;
+import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
@@ -102,6 +103,10 @@ public class Apotheosis {
 	public Apotheosis() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
+		// Library modules - Mandatory 
+		bus.register(new AttributesLib());
+
+		// Real modules
 		if (enableEnch) bus.register(new EnchModule());
 		if (enableSpawner) bus.register(new SpawnerModule());
 		if (enableGarden) bus.register(new GardenModule());

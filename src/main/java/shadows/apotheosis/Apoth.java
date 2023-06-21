@@ -5,7 +5,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
@@ -227,70 +226,6 @@ public class Apoth {
 		public static final RegistryObject<BlockEntityType<BossSpawnerTile>> BOSS_SPAWNER = R.blockEntity("BOSS_SPAWNER");
 		public static final RegistryObject<BlockEntityType<ReforgingTableTile>> REFORGING_TABLE = R.blockEntity("REFORGING_TABLE");
 		public static final RegistryObject<BlockEntityType<SalvagingTableTile>> SALVAGING_TABLE = R.blockEntity("SALVAGING_TABLE");
-	}
-
-	public static final class Attributes {
-		/**
-		 * Bonus to how fast a ranged weapon is charged. Base Value = (1.0) = 100%
-		 */
-		public static final RegistryObject<Attribute> DRAW_SPEED = R.attribute("DRAW_SPEED");
-		/**
-		 * Chance that a non-jump-attack will critically strike.  Base value = (1.0) = 0%
-		 */
-		public static final RegistryObject<Attribute> CRIT_CHANCE = R.attribute("CRIT_CHANCE");
-		/**
-		 * Amount of damage caused by critical strikes. Base value = (1.0) = 100%
-		 * Not related to vanilla critical strikes.
-		 */
-		public static final RegistryObject<Attribute> CRIT_DAMAGE = R.attribute("CRIT_DAMAGE");
-		/**
-		 * Bonus magic damage that slows enemies hit. Base value = (0.0) = 0 damage
-		 */
-		public static final RegistryObject<Attribute> COLD_DAMAGE = R.attribute("COLD_DAMAGE");
-		/**
-		 * Bonus magic damage that burns enemies hit. Base value = (0.0) = 0 damage
-		 */
-		public static final RegistryObject<Attribute> FIRE_DAMAGE = R.attribute("FIRE_DAMAGE");
-		/**
-		 * Percent of physical damage converted to health. Base value = (1.0) = 0%
-		 */
-		public static final RegistryObject<Attribute> LIFE_STEAL = R.attribute("LIFE_STEAL");
-		/**
-		 * Percent of physical damage that bypasses armor. Base value = (1.0) = 0%
-		 */
-		public static final RegistryObject<Attribute> PIERCING = R.attribute("PIERCING");
-		/**
-		 * Bonus physical damage dealt equal to enemy's current health. Base value = (1.0) = 0%
-		 */
-		public static final RegistryObject<Attribute> CURRENT_HP_DAMAGE = R.attribute("CURRENT_HP_DAMAGE");
-		/**
-		 * Percent of physical damage converted to absorption hearts. Base value = (1.0) = 0%
-		 */
-		public static final RegistryObject<Attribute> OVERHEAL = R.attribute("OVERHEAL");
-		/**
-		 * Extra health that regenerates when not taking damage. Base value = (0.0) = 0 damage
-		 */
-		public static final RegistryObject<Attribute> GHOST_HEALTH = R.attribute("GHOST_HEALTH");
-		/**
-		 * Mining Speed. Base value = (1.0) = 100% default break speed
-		 */
-		public static final RegistryObject<Attribute> MINING_SPEED = R.attribute("MINING_SPEED");
-		/**
-		 * Arrow Damage. Base value = (1.0) = 100% default arrow damage
-		 */
-		public static final RegistryObject<Attribute> ARROW_DAMAGE = R.attribute("ARROW_DAMAGE");
-		/**
-		 * Arrow Velocity. Base value = (1.0) = 100% default arrow velocity
-		 */
-		public static final RegistryObject<Attribute> ARROW_VELOCITY = R.attribute("ARROW_VELOCITY");
-		/**
-		 * Experience mulitplier, from killing mobs or breaking ores. Base value = (1.0) = 100% xp gained.
-		 */
-		public static final RegistryObject<Attribute> EXPERIENCE_GAINED = R.attribute("experience_gained");
-		/**
-		 * Adjusts all healing received. Base value = (1.0) = 100% xp gained.
-		 */
-		public static final RegistryObject<Attribute> HEALING_RECEIVED = R.attribute("HEALING_RECEIVED");
 	}
 
 	public static final class Affixes {

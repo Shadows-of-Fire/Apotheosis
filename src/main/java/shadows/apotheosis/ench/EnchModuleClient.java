@@ -11,8 +11,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -21,7 +23,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.library.EnchLibraryScreen;
 import shadows.apotheosis.ench.table.ApothEnchantScreen;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
@@ -78,6 +83,15 @@ public class EnchModuleClient {
 			}
 			if (clues != 0) {
 				e.getToolTip().add(Component.translatable("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+			}
+		} else if (i == Items.ENCHANTED_BOOK && !ModList.get().isLoaded("enchdesc")) {
+			ItemStack stack = e.getItemStack();
+			var enchMap = EnchantmentHelper.getEnchantments(stack);
+			if (enchMap.size() == 1) {
+				var ench = enchMap.keySet().iterator().next();
+				if (ForgeRegistries.ENCHANTMENTS.getKey(ench).getNamespace().equals(Apotheosis.MODID)) {
+					e.getToolTip().add(Component.translatable(ench.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+				}
 			}
 		}
 	}

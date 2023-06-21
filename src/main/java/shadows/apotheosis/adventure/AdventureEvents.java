@@ -8,12 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,25 +28,18 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisCommandEvent;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
@@ -67,7 +56,6 @@ import shadows.apotheosis.adventure.commands.SocketCommand;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
-import shadows.apotheosis.util.DamageSourceUtil;
 import shadows.apotheosis.util.ItemAccess;
 import shadows.placebo.events.AnvilLandEvent;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
@@ -111,31 +99,6 @@ public class AdventureEvents {
 	}
 
 	/**
-	 * This event handler makes the Draw Speed attribute work as intended.
-	 * Modifiers targetting this attribute should use the MULTIPLY_BASE operation.
-	 */
-	@SubscribeEvent
-	public void drawSpeed(LivingEntityUseItemEvent.Tick e) {
-		if (e.getEntity() instanceof Player player) {
-			double t = player.getAttribute(Apoth.Attributes.DRAW_SPEED.get()).getValue() - 1;
-			if (t == 0 || !LootCategory.forItem(e.getItem()).isRanged()) return;
-			while (t > 1) { // Every 100% triggers an immediate extra tick
-				e.setDuration(e.getDuration() - 1);
-				t--;
-			}
-
-			if (t > 0.5F) { // Special case 0.5F so that values in (0.5, 1) don't round to 1.
-				if (e.getEntity().tickCount % 2 == 0) e.setDuration(e.getDuration() - 1);
-				t -= 0.5F;
-			}
-
-			int mod = (int) Math.floor(1 / Math.min(1, t));
-			if (e.getEntity().tickCount % mod == 0) e.setDuration(e.getDuration() - 1);
-			t--;
-		}
-	}
-
-	/**
 	 * This event handler allows affixes to react to arrows being fired to trigger additional actions.
 	 * Arrows marked as "apoth.generated" will not trigger the affix hook, so affixes can fire arrows without recursion.
 	 */
@@ -165,24 +128,6 @@ public class AdventureEvents {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void pierce(LivingHurtEvent e) {
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker) {
-			if (!e.getSource().isBypassArmor() && !e.getSource().isMagic()) {
-				LivingEntity target = e.getEntity();
-				float pierce = (float) (attacker.getAttributeValue(Apoth.Attributes.PIERCING.get()) - 1);
-				if (pierce > 0.001) {
-					float pierceDmg = e.getAmount() * pierce;
-					e.setAmount(e.getAmount() - pierceDmg);
-					int time = target.invulnerableTime;
-					target.invulnerableTime = 0;
-					target.hurt(DamageSourceUtil.copy(e.getSource()).bypassArmor(), pierceDmg);
-					target.invulnerableTime = time;
-				}
-			}
-		}
-	}
-
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onDamage(LivingHurtEvent e) {
 		Apoth.Affixes.MAGICAL.ifPresent(afx -> afx.onHurt(e));
@@ -196,99 +141,6 @@ public class AdventureEvents {
 			}
 		}
 		e.setAmount(amount);
-	}
-
-	/**
-	 * This event handler manages the Life Steal and Overheal attributes.
-	 */
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void afterDamage(LivingHurtEvent e) {
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
-			float lifesteal = (float) attacker.getAttributeValue(Apoth.Attributes.LIFE_STEAL.get()) - 1;
-			float dmg = Math.min(e.getAmount(), e.getEntity().getHealth());
-			if (lifesteal > 0.001) {
-				attacker.heal(dmg * lifesteal);
-			}
-			float overheal = (float) attacker.getAttributeValue(Apoth.Attributes.OVERHEAL.get()) - 1;
-			if (overheal > 0 && attacker.getAbsorptionAmount() < 20) {
-				attacker.setAbsorptionAmount(Math.min(20, attacker.getAbsorptionAmount() + dmg * overheal));
-			}
-		}
-
-		if (e.getSource() == DamageSource.IN_WALL && e.getEntity().getPersistentData().contains("apoth.boss")) {
-			e.setCanceled(true);
-		}
-	}
-
-	private static boolean noRecurse = false;
-
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void attack(LivingAttackEvent e) {
-		if (e.getEntity().level.isClientSide) return;
-		if (noRecurse) return;
-		noRecurse = true;
-		Entity direct = e.getSource().getDirectEntity();
-		direct = direct instanceof AbstractArrow arr ? arr.getOwner() : direct;
-		if (direct instanceof LivingEntity attacker && !e.getSource().isMagic()) {
-			float hpDmg = (float) attacker.getAttributeValue(Apoth.Attributes.CURRENT_HP_DAMAGE.get()) - 1;
-			float fireDmg = (float) attacker.getAttributeValue(Apoth.Attributes.FIRE_DAMAGE.get());
-			float coldDmg = (float) attacker.getAttributeValue(Apoth.Attributes.COLD_DAMAGE.get());
-			LivingEntity target = e.getEntity();
-			int time = target.invulnerableTime;
-			target.invulnerableTime = 0;
-			if (hpDmg > 0.001 && Apotheosis.localAtkStrength >= 0.85F) {
-				target.hurt(src(attacker), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
-			}
-			target.invulnerableTime = 0;
-			if (fireDmg > 0.001 && Apotheosis.localAtkStrength >= 0.45F) {
-				target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * fireDmg);
-				target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (15 * fireDmg)));
-			}
-			target.invulnerableTime = 0;
-			if (coldDmg > 0.001 && Apotheosis.localAtkStrength >= 0.45F) {
-				target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * coldDmg);
-				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
-			}
-			target.invulnerableTime = time;
-		}
-		noRecurse = false;
-	}
-
-	private static DamageSource src(LivingEntity entity) {
-		return entity instanceof Player p ? DamageSource.playerAttack(p) : DamageSource.mobAttack(entity);
-	}
-
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void crit(CriticalHitEvent e) {
-		double critChance = e.getEntity().getAttributeValue(Apoth.Attributes.CRIT_CHANCE.get()) - 1;
-		float critDmg = (float) e.getEntity().getAttributeValue(Apoth.Attributes.CRIT_DAMAGE.get());
-		float overcritMult = Math.max(1.5F, critDmg - 1.5F);
-		RandomSource rand = e.getEntity().random;
-		if (e.isVanillaCritical() && critChance >= 0.5F) {
-			critChance -= 0.5F;
-			critDmg *= 1.5F;
-		}
-
-		// Roll once to determine if the attack should become a crit.
-		if (rand.nextFloat() <= critChance || critChance >= 1) {
-			e.setResult(Result.ALLOW);
-		}
-		// Reduce the chance since this roll "consumes" 1 point.
-		critChance--;
-
-		// Roll for overcrit
-		while (rand.nextFloat() <= critChance) {
-			e.setResult(Result.ALLOW);
-			critChance--;
-			critDmg *= overcritMult;
-		}
-
-		e.setDamageModifier(critDmg);
-	}
-
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void breakSpd(BreakSpeed e) {
-		e.setNewSpeed(e.getNewSpeed() * (float) e.getEntity().getAttributeValue(Apoth.Attributes.MINING_SPEED.get()));
 	}
 
 	@SubscribeEvent
@@ -317,33 +169,10 @@ public class AdventureEvents {
 
 	@SubscribeEvent
 	public void blockBreak(BreakEvent e) {
-		double xpMult = e.getPlayer().getAttributeValue(Apoth.Attributes.EXPERIENCE_GAINED.get());
-		e.setExpToDrop((int) (e.getExpToDrop() * xpMult));
 		ItemStack stack = e.getPlayer().getMainHandItem();
 		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 		for (AffixInstance inst : affixes.values()) {
 			inst.onBlockBreak(e.getPlayer(), e.getLevel(), e.getPos(), e.getState());
-		}
-	}
-
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void mobXp(LivingExperienceDropEvent e) {
-		Player player = e.getAttackingPlayer();
-		if (player == null) return;
-		double xpMult = e.getAttackingPlayer().getAttributeValue(Apoth.Attributes.EXPERIENCE_GAINED.get());
-		e.setDroppedExperience((int) (e.getDroppedExperience() * xpMult));
-	}
-
-	@SubscribeEvent
-	public void arrow(EntityJoinLevelEvent e) {
-		if (e.getEntity() instanceof AbstractArrow arrow) {
-			if (arrow.level.isClientSide || arrow.getPersistentData().getBoolean("apoth.attrib.done")) return;
-			if (arrow.getOwner() instanceof LivingEntity le) {
-				arrow.setBaseDamage(arrow.getBaseDamage() * le.getAttributeValue(Apoth.Attributes.ARROW_DAMAGE.get()));
-				arrow.setDeltaMovement(arrow.getDeltaMovement().scale(le.getAttributeValue(Apoth.Attributes.ARROW_VELOCITY.get())));
-				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(Apoth.Attributes.CRIT_CHANCE.get()) - 1);
-			}
-			arrow.getPersistentData().putBoolean("apoth.attrib.done", true);
 		}
 	}
 
@@ -429,12 +258,6 @@ public class AdventureEvents {
 		if (isReentrant) return;
 		AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));
 		reentrantLock.get().set(false);
-	}
-
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void heal(LivingHealEvent e) {
-		float factor = (float) e.getEntity().getAttributeValue(Apoth.Attributes.HEALING_RECEIVED.get());
-		e.setAmount(e.getAmount() * factor);
 	}
 
 }
