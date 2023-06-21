@@ -1,0 +1,8 @@
+{
+    "name": "Amuletos de poção",
+	"parent": "apotheosis:potion/potion",
+    "description": "Esta seção detalha os $(9)amuletos de poção$() e todos os seus usos e nuances.$(p)Se outros módulos estiverem desativados ou alguns mods não estiverem instalados, esta seção pode estar um pouco vazia.",
+    "icon": "apotheosis:potion_charm",
+	"flag": "apotheosis:potion",
+	"sortnum": 1
+}

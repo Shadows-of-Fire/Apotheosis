@@ -1,0 +1,13 @@
+{
+    "name": "Geradores de enxame",
+    "icon": "minecraft:spider_eye",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Um gerador de enxame é um subtipo vil de gerador traiçoeiro que irá gerar mobs em grandes quantidades rapidamente.$(p)Normalmente, eles são limitados a mobs mais fracos, geralmente da variedade aracnídea, portanto, não são terrivelmente opressores."
+        }
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Aljava infinda",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Aljava infinda$() é um encantamento de obra-prima para arcos.$(p)Ao disparar um arco, as flechas não são consumidas, não importa o tipo.$(p)É considerado uma melhoria direta de $(9)infinidade$()."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Esse encantamento deve até tornar as flechas de outros mods infinitas."
+        }
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Sorte",
+    "icon": "minecraft:rabbit_foot",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Sorte$() torna você sortudo!  Bem, isto é, aumenta a probabilidade de você receber saques melhores.$(p)Tudo pode fornecer sorte."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: Você pode ter sorte negativa, o que torna saques melhores ainda mais difíceis de serem obtidos."
+		}
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Dano pelo PV atual",
+    "icon": "minecraft:dragon_head",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Dano pelo PV atual$() é um tipo de dano ao contato.  A cada acerto, você causa uma porcentagem da vida atual do alvo como dano adicional.$(p)Este atributo só é encontrado em armas pesadas."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: Um valor de 1,0 é na verdade 0% de dano pelo PV atual, mas se a base for zero, os modificadores de porcentagem não terão efeito e os modificadores de valores absolutos não darão o bônus corretamente."
+		}
+	]
+}

@@ -1,0 +1,43 @@
+{
+    "name": "Raridades",
+    "icon": "minecraft:nether_star",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Todo item de afixo tem uma $(9)raridade$() associada a ele. A raridade do item determina o quão forte será e quais afixos serão aplicados a ele.$(p)Uma raridade mais alta é sempre mais forte que a anterior."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Comum",
+			"text": "Um item $(#808080)comum$() é o tipo mais básico de item de afixo. Cada um sempre terá um único bônus de status e terá uma baixa chance de ganhar outro."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Incomum",
+			"text": "Um item $(#33FF33)incomum$() é um passo acima de um item comum, mas ainda não recebe efeitos únicos. Estes itens sempre têm dois bônus de status e podem receber um terceiro.$(p)Eles também podem receber um único encaixe."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Raro",
+			"text": "Itens $(#5555FF)raros$() estão onde os afixos começam a se destacar. Estes itens recebem três bônus de status e um efeito especial e podem receber um segundo efeito.$(p)Eles também podem receber um encaixe e sempre têm um pequeno bônus de durabilidade."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Épico",
+			"text": "Itens $(#BB00BB)épicos$() estão à beira da grandeza. Eles recebem três status e um efeito e podem receber um quarto status e um segundo efeito.$(p)Eles também podem receber até dois encaixes e ter um bônus de durabilidade mais forte."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Mítico",
+			"text": "Itens $(#ED7014)míticos$() foram forjados por uma entidade perdida de grande poder. Eles recebem quatro status e dois efeitos e podem receber um terceiro efeito, além de três soquetes.$(p)Eles também levam um bônus de durabilidade significativo."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Ancestrak",
+			"text": "Um item $(b)ancestral$() é o auge da criação, uma concentração inimaginável de energia concedida apenas ao mais sortudo.$(p)Eles são tão raros que alguns podem dizer que na verdade nem foram criados..."
+		}
+	]
+}

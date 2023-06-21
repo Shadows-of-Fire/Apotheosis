@@ -1,0 +1,13 @@
+{
+    "name": "Tesoura",
+    "icon": "minecraft:shears",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Juntamente com os novos encantamentos, tesouras agora também podem receber $(9)durabilidade$(), $(9)eficiência$() e $(9)fortuna$()."
+        }
+	]
+}

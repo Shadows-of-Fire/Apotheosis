@@ -1,0 +1,6 @@
+{
+    "name": "Módulo de gerador",
+    "description": "O módulo de gerador permite que você mova e modifique $(9)geradores de criatura$().",
+    "icon": "minecraft:spawner",
+	"flag": "apotheosis:spawner"
+}

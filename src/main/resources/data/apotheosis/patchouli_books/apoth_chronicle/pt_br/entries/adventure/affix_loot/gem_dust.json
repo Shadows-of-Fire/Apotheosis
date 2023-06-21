@@ -1,0 +1,15 @@
+{
+    "name": "Pó de gema",
+    "icon": "apotheosis:gem_dust",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:gem_dust",
+			"link_recipe": true,
+            "text": "Todas as gemas apoteóticas podem ser reduzidas a $(9)pó de gema$() pelo esmagamento.$(p)Especificamente, elas devem ser esmagadas com uma bigorna no mundo."
+        }
+	]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Módulo de encantamento",
+    "description": "O módulo de encantamento é responsável por todas as mudanças no sistema de encantamento.$(p)Há muito conteúdo, então dê uma olhada.",
+    "icon": "minecraft:enchanting_table",
+	"flag": "apotheosis:enchanting"
+}

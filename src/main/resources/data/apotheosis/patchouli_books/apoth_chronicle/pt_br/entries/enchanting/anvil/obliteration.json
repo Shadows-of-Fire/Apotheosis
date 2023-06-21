@@ -1,0 +1,17 @@
+{
+    "name": "Obliteração",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/anvil",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Obliteração$() é outro novo encantamento exclusivo da bigorna.$(p)Uma bigorna com obliteração pode converter um livro encantado com exatamente um encantamento em dois livros encantados, cada um de nível inferior."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Para usar uma bigorna de obliteração, jogue um livro encantado no mundo e coloque a bigorna de forma que ela caia em cima do livro.$(p)Um livro com afiação III que é obliterado se tornaria dois livros, cada um com obliteração II."
+		}
+	]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Módulo de jardim",
+    "description": "O módulo de jardim é responsável por mudar algumas coisas sobre as plantas.",
+    "icon": "minecraft:sugar_cane",
+	"flag": "apotheosis:garden"
+}
