@@ -1,5 +1,7 @@
 package shadows.apotheosis.adventure.affix.socket;
 
+import java.util.List;
+
 import com.google.gson.JsonObject;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -42,18 +44,18 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 	 */
 	@Override
 	public ItemStack assemble(Container inventory) {
-		var result = inventory.getItem(0).copy();
+		ItemStack result = inventory.getItem(0).copy();
 		if (result.isEmpty()) return ItemStack.EMPTY;
 		result.setCount(1);
-		var sockets = SocketHelper.getSockets(result);
-		var gems = SocketHelper.getGems(result, sockets);
-		var gemStack = inventory.getItem(1).copy();
+		int sockets = SocketHelper.getSockets(result);
+		List<ItemStack> gems = SocketHelper.getGems(result, sockets);
+		ItemStack gemStack = inventory.getItem(1).copy();
 		var event = new ItemSocketingEvent(result, gemStack);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) return ItemStack.EMPTY;
 		result = event.getItemStack();
 		gemStack = event.getGemStack();
-		var socket = SocketHelper.getEmptySocket(result);
+		int socket = SocketHelper.getFirstEmptySocket(result);
 		gems.set(socket, gemStack);
 		SocketHelper.setGems(result, gems);
 		return result;

@@ -57,7 +57,7 @@ public class SocketHelper {
 
 	public static int getSockets(ItemStack stack) {
 		var socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
-		var sockets = 0;
+		int sockets = 0;
 		if (socketAffix != null) {
 			sockets = (int) socketAffix.level();
 		}
@@ -65,7 +65,6 @@ public class SocketHelper {
 		MinecraftForge.EVENT_BUS.post(event);
 		if (sockets != event.getSockets()) {
 			sockets = event.getSockets();
-			setSockets(stack, sockets);
 		}
 		return sockets;
 	}
@@ -80,10 +79,10 @@ public class SocketHelper {
 		return getGems(stack).stream().map(GemItem::getGem).anyMatch(Objects::isNull);
 	}
 	
-	public static int getEmptySocket(ItemStack stack) {
-		var gems = getGems(stack, getSockets(stack));
+	public static int getFirstEmptySocket(ItemStack stack) {
+		List<ItemStack> gems = getGems(stack, getSockets(stack));
 		for (int socket = 0; socket < gems.size(); socket++) {
-			var gem = GemItem.getGem(gems.get(socket));
+			Gem gem = GemItem.getGem(gems.get(socket));
 			if (gem == null) return socket;
 		}
 		return 0;

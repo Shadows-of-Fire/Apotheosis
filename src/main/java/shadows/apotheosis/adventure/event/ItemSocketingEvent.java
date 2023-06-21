@@ -8,8 +8,8 @@ import net.minecraftforge.eventbus.api.Event;
 /**
  * Fired when a gem is being inserted into an item. <br>
  * <br>
- * {@link #itemStack} contains ItemStack copy of an item that is being socketed with a gem. <br>
- * {@link #gemStack} contains ItemStack copy of a gem that is being inserted into an item. <br>
+ * {@link #getItemStack} contains ItemStack copy of an item that is being socketed with a gem. <br>
+ * {@link #getGemStack} contains ItemStack copy of a gem that is being inserted into an item. <br>
  * <br>
  * This event is {@link Cancelable}.<br>
  * Canceling this event will prevent the item from being socketed with the gem. <br>
@@ -30,11 +30,19 @@ public class ItemSocketingEvent extends Event {
 		this.gemStack = gemStack;
 	}
 
-	public ItemStack getItemStack() { return itemStack; }
-	
-	public void setItemStack(ItemStack itemStack) { this.itemStack = itemStack; }
+	public ItemStack getItemStack() {
+		return itemStack;
+	}
 
-	public ItemStack getGemStack() { return gemStack; }
-	
-	public void setGemStack(ItemStack gemStack) { this.gemStack = gemStack; }
+	public void setItemStack(ItemStack itemStack) {
+		this.itemStack = itemStack;
+	}
+
+	public ItemStack getGemStack() {
+		return gemStack;
+	}
+
+	public void setGemStack(ItemStack gemStack) {
+		this.gemStack = gemStack;
+	}
 }
