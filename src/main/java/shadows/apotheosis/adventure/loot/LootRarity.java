@@ -355,7 +355,7 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 					sockets.add(1);
 					return;
 				}
-				List<Affix> available = AffixHelper.byType(this.type).stream().filter(a -> a.canApplyTo(stack, rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
+				List<Affix> available = AffixHelper.byType(this.type).stream().filter(a -> a.canApplyTo(stack, LootCategory.forItem(stack), rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
 				if (available.size() == 0) {
 					if (backup != null) backup.execute(stack, rarity, currentAffixes, sockets, rand);
 					else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", ForgeRegistries.ITEMS.getKey(stack.getItem()), rarity.id(), this.type, this.chance);

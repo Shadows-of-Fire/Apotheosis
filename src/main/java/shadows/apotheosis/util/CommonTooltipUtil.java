@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
@@ -31,6 +32,7 @@ public class CommonTooltipUtil {
 		LootRarity rarity = LootRarity.byId(entity.getPersistentData().getString("apoth.rarity"));
 		if (rarity == null) return;
 		tooltip.accept(Component.translatable("info.apotheosis.boss", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
+		if (FMLEnvironment.production) return;
 		tooltip.accept(CommonComponents.EMPTY);
 		tooltip.accept(Component.translatable("info.apotheosis.boss_modifiers").withStyle(ChatFormatting.GRAY));
 		AttributeMap map = entity.getAttributes();

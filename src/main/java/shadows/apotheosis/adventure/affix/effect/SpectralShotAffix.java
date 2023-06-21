@@ -41,8 +41,8 @@ public class SpectralShotAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack).isRanged() && this.values.containsKey(rarity);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+		return cat.isRanged() && this.values.containsKey(rarity);
 	}
 
 	@Override

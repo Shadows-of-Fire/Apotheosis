@@ -53,7 +53,7 @@ public class EnchantmentBonus extends GemBonus {
 		}
 		var enchName = Component.translatable(this.ench.getDescriptionId());
 		var style = this.ench.getFullname(0).getStyle();
-		if (style.getColor().getValue() != ChatFormatting.GRAY.getColor()) enchName.withStyle(style);
+		if (style.getColor() != null && style.getColor().getValue() != ChatFormatting.GRAY.getColor()) enchName.withStyle(style);
 		return Component.translatable(desc, level, Component.translatable("misc.apotheosis.level" + (level > 1 ? ".many" : "")), enchName).withStyle(ChatFormatting.GREEN);
 	}
 

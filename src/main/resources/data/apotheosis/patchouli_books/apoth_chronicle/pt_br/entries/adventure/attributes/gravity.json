@@ -1,0 +1,17 @@
+{
+    "name": "Gravidade",
+    "icon": "minecraft:elytra",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Gravidade$() é o quão rápido você cai, em blocos por segundo quadrado.$(p)Pode ser encontrado em qualquer coisa, ou nada, quem sabe."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Valor base:$() 0,08$(p)$(9)$(n)Valor máximo:$() 8$(p)Nota: A gravidade pode ser negativa. Com gravidade negativa, você flutua para cima."
+		}
+	]
+}

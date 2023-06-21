@@ -75,6 +75,10 @@
 		{
 			"id": "apotheosis:reforging_table",
 			"required": false
+		},
+		{
+			"id": "apotheosis:simple_reforging_table",
+			"required": false
 		}
 	]
 }

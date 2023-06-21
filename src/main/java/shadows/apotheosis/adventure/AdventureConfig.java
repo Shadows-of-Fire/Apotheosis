@@ -52,7 +52,7 @@ public class AdventureConfig {
 	public static float bossAnnounceRange = 96;
 	public static float bossAnnounceVolume = 0.75F;
 	public static boolean bossAnnounceIgnoreY = false;
-	public static int bossSpawnCooldown = 2400;
+	public static int bossSpawnCooldown = 3600;
 	public static boolean bossAutoAggro = false;
 	public static boolean bossGlowOnSpawn = true;
 

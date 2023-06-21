@@ -18,10 +18,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +26,6 @@ import net.minecraft.world.level.Level;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.placebo.util.AttributeHelper;
 
 public class GemItem extends Item {
 
@@ -173,29 +168,6 @@ public class GemItem extends Item {
 				setFacets(stack, gem.getMaxFacets(gem.getMaxRarity()));
 				items.add(stack);
 			});
-		}
-	}
-
-	/**
-	 * Copy of {@link AttributeHelper#toComponent(Attribute, AttributeModifier)}
-	 * Uses Apoth-specific translation keys that differentiate between +%Base and +%Total
-	 */
-	public static Component toComponent(Attribute attr, AttributeModifier modif) {
-		double amt = modif.getAmount();
-
-		if (modif.getOperation() == Operation.ADDITION) {
-			if (attr == Attributes.KNOCKBACK_RESISTANCE) amt *= 10.0D;
-		} else {
-			amt *= 100.0D;
-		}
-
-		int code = modif.getOperation().ordinal();
-		String key = code == 0 ? "attribute.modifier." : "attribute.modifier.apotheosis.";
-		if (amt > 0.0D) {
-			return Component.translatable(key + "plus." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
-		} else {
-			amt *= -1.0D;
-			return Component.translatable(key + "take." + code, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
 		}
 	}
 

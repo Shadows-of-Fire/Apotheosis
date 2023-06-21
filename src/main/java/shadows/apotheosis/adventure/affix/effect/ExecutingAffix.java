@@ -43,8 +43,8 @@ public class ExecutingAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && values.containsKey(rarity);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+		return cat == LootCategory.HEAVY_WEAPON && values.containsKey(rarity);
 	}
 
 	@Override

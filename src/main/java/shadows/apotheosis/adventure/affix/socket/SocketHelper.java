@@ -56,7 +56,7 @@ public class SocketHelper {
 	}
 
 	public static int getSockets(ItemStack stack) {
-		var socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
+		AffixInstance socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
 		int sockets = 0;
 		if (socketAffix != null) {
 			sockets = (int) socketAffix.level();

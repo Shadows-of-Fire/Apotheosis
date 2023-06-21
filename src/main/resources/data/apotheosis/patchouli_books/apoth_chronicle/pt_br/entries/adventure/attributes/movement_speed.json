@@ -1,0 +1,17 @@
+{
+    "name": "Velocidade de movimento",
+    "icon": "minecraft:leather_boots",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Sua $(9)velocidade de movimento$() é o quão rápido você se move em blocos por segundo.$(p)Este atributo pode ser fornecido por quase qualquer item."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Valor base:$() 0,7$(p)$(9)$(n)Valor máximo:$() 1024"
+		}
+	]
+}

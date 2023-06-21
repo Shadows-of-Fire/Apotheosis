@@ -1,7 +1,6 @@
 package shadows.apotheosis.adventure;
 
 import java.io.File;
-import java.util.function.BiConsumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,9 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -34,7 +30,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -43,7 +38,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
-import net.minecraftforge.registries.RegistryObject;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
@@ -216,7 +210,7 @@ public class AdventureModule {
 			e.getForgeRegistry().register("affix_conversion", AffixConvertLootModifier.CODEC);
 		}
 		if (e.getForgeRegistry() == (Object) ForgeRegistries.BIOME_MODIFIER_SERIALIZERS.get()) {
-			e.getForgeRegistry().register("blacklist", AdventureGeneration.BlackistModifier.CODEC);
+			e.getForgeRegistry().register("blacklist", AdventureGeneration.BlacklistModifier.CODEC);
 		}
 	}
 
@@ -225,57 +219,6 @@ public class AdventureModule {
 		e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new), "reforging");
 		e.getRegistry().register(ContainerUtil.makeType(SalvagingMenu::new), "salvage");
 		e.getRegistry().register(new MenuType<>(GemCuttingMenu::new), "gem_cutting");
-	}
-
-	@SubscribeEvent
-	public void attribs(Register<Attribute> e) {
-		//Formatter::off
-		e.getRegistry().registerAll(
-				new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 4.0D).setSyncable(true), "draw_speed",
-				new RangedAttribute("apotheosis:crit_chance", 1.0D, 1.0D, 1024.0D).setSyncable(true), "crit_chance",
-				new RangedAttribute("apotheosis:crit_damage", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
-				new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "cold_damage",
-				new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "fire_damage",
-				new RangedAttribute("apotheosis:life_steal", 1.0D, 1.0D, 1024.0D).setSyncable(true), "life_steal",
-				new RangedAttribute("apotheosis:piercing", 1.0D, 1.0D, 2.0D).setSyncable(true), "piercing",
-				new RangedAttribute("apotheosis:current_hp_damage", 1.0D, 1.0D, 2.0D).setSyncable(true), "current_hp_damage",
-				new RangedAttribute("apotheosis:overheal", 1.0D, 0.0D, 1024.0D).setSyncable(true), "overheal",
-				new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1024.0D).setSyncable(true), "ghost_health",
-				new RangedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true), "mining_speed",
-				new RangedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_damage",
-				new RangedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity",
-				new RangedAttribute("apotheosis:experience_gained", 1.0D, 0.0D, 1024.0D).setSyncable(true), "experience_gained"
-		);
-		//Formatter::on
-	}
-
-	@SubscribeEvent
-	public void applyAttribs(EntityAttributeModificationEvent e) {
-		e.getTypes().forEach(type -> {
-			//Formatter::off
-			addAll(type, e::add,
-					Apoth.Attributes.DRAW_SPEED,
-					Apoth.Attributes.CRIT_CHANCE,
-					Apoth.Attributes.CRIT_DAMAGE,
-					Apoth.Attributes.COLD_DAMAGE,
-					Apoth.Attributes.FIRE_DAMAGE,
-					Apoth.Attributes.LIFE_STEAL,
-					Apoth.Attributes.PIERCING,
-					Apoth.Attributes.CURRENT_HP_DAMAGE,
-					Apoth.Attributes.OVERHEAL,
-					Apoth.Attributes.GHOST_HEALTH,
-					Apoth.Attributes.MINING_SPEED,
-					Apoth.Attributes.ARROW_DAMAGE,
-					Apoth.Attributes.ARROW_VELOCITY,
-					Apoth.Attributes.EXPERIENCE_GAINED);
-			//Formatter::on
-		});
-	}
-
-	@SafeVarargs
-	private static void addAll(EntityType<? extends LivingEntity> type, BiConsumer<EntityType<? extends LivingEntity>, Attribute> add, RegistryObject<Attribute>... attribs) {
-		for (RegistryObject<Attribute> a : attribs)
-			add.accept(type, a.get());
 	}
 
 	@SubscribeEvent

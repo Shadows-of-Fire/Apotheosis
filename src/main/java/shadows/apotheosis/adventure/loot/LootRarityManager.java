@@ -7,8 +7,13 @@ import java.util.Map;
 
 import com.google.common.base.Preconditions;
 
+import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.affix.Affix;
+import shadows.apotheosis.adventure.affix.AffixManager;
+import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.loot.LootRarity.LootRule;
 import shadows.apotheosis.adventure.loot.LootRarity.RarityStub;
 import shadows.placebo.json.DynamicRegistryObject;
 import shadows.placebo.json.PlaceboJsonReloadListener;
@@ -52,6 +57,31 @@ public class LootRarityManager extends PlaceboJsonReloadListener<RarityStub> {
 		LootRarity.EPIC.update(EPIC.get());
 		LootRarity.MYTHIC.update(MYTHIC.get());
 		// LootRarity.ANCIENT.update(ANCIENT.get()); Ancient is NYI, so changes should not be reflected.
+
+		for (LootRarity rarity : LootRarity.values()) {
+			if (rarity == LootRarity.ANCIENT) continue;
+			Map<AffixType, List<LootRule>> sorted = new HashMap<>();
+			rarity.rules().stream().filter(r -> r.type().needsValidation()).forEach(rule -> {
+				sorted.computeIfAbsent(rule.type(), r -> new ArrayList<>());
+				sorted.get(rule.type()).add(rule);
+			});
+			sorted.forEach((type, rules) -> {
+				for (LootCategory cat : LootCategory.VALUES) {
+					if (cat.isNone()) continue;
+					List<Affix> affixes = AffixManager.INSTANCE.getValues().stream().filter(a -> a.canApplyTo(ItemStack.EMPTY, cat, rarity) && a.getType() == type).toList();
+
+					if (affixes.size() < rules.size()) {
+						var errMsg = new StringBuilder();
+						errMsg.append("Insufficient number of affixes to satisfy the loot rules of rarity (ignoring backup rules)" + rarity.id() + " for category " + cat.getName() + "!\n");
+						errMsg.append("Required number of affixes: " + rules.size() + "\n");
+						errMsg.append("Provided number of affixes: " + affixes.size() + "\n");
+						errMsg.append("The following affixes exist for this category/rarity combination: ");
+						affixes.forEach(a -> errMsg.append(a.getId() + " "));
+						AdventureModule.LOGGER.error(errMsg.toString());
+					}
+				}
+			});
+		}
 	}
 
 	@Override

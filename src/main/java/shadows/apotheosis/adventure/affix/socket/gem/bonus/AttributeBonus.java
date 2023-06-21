@@ -17,6 +17,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
 import shadows.placebo.codec.EnumCodec;
 import shadows.placebo.util.StepFunction;
 
@@ -51,7 +52,7 @@ public class AttributeBonus extends GemBonus {
 
 	@Override
 	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
-		return GemItem.toComponent(this.attribute, read(gem, rarity, facets));
+		return IFormattableAttribute.toComponent(this.attribute, read(gem, rarity, facets));
 	}
 
 	@Override

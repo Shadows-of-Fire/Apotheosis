@@ -1,6 +1,6 @@
 {
 	"entity": "minecraft:enderman",
-	"weight": 100,
+	"weight": 80,
 	"size": {
 		"width": 1,
 		"height": 3
@@ -25,8 +25,8 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 160,
-						"steps": 75,
+						"min": 100,
+						"steps": 40,
 						"step": 2
 					}
 				},
@@ -34,7 +34,7 @@
 					"attribute": "minecraft:generic.movement_speed",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.16,
+						"min": 0.20,
 						"steps": 25,
 						"step": 0.01
 					}
@@ -51,17 +51,17 @@
 				{
 					"attribute": "minecraft:generic.knockback_resistance",
 					"operation": "ADDITION",
-					"value": 0.6
+					"value": 0.85
 				},
 				{
 					"attribute": "minecraft:generic.armor",
 					"operation": "ADDITION",
-					"value": 8
+					"value": 4
 				},
 				{
 					"attribute": "minecraft:generic.armor_toughness",
 					"operation": "ADDITION",
-					"value": 4.5
+					"value": 2
 				}
 			]
 		},
@@ -76,8 +76,8 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 220,
-						"steps": 90,
+						"min": 140,
+						"steps": 40,
 						"step": 2
 					}
 				},
@@ -85,7 +85,7 @@
 					"attribute": "minecraft:generic.movement_speed",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.2,
+						"min": 0.3,
 						"steps": 35,
 						"step": 0.01
 					}
@@ -94,7 +94,7 @@
 					"attribute": "minecraft:generic.attack_damage",
 					"operation": "MULTIPLY_BASE",
 					"value": {
-						"min": 0.9,
+						"min": 0.7,
 						"steps": 35,
 						"step": 0.01
 					}
@@ -102,17 +102,17 @@
 				{
 					"attribute": "minecraft:generic.knockback_resistance",
 					"operation": "ADDITION",
-					"value": 1
+					"value": 0.95
 				},
 				{
 					"attribute": "minecraft:generic.armor",
 					"operation": "ADDITION",
-					"value": 14
+					"value": 6
 				},
 				{
 					"attribute": "minecraft:generic.armor_toughness",
 					"operation": "ADDITION",
-					"value": 10
+					"value": 3
 				}
 			]
 		}

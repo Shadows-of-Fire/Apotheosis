@@ -1,0 +1,17 @@
+{
+    "name": "Velocidade da puxada",
+    "icon": "minecraft:bow",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Velocidade da puxada$() é o quão rápido você pode realizar uma puxada em uma arma à distância em relação à velocidade original. 1 = 100%, 2 = 200%, e etc.$(p)Encontrado em arcos e bestas."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 4$(p)"
+		}
+	]
+}

@@ -1,7 +1,7 @@
 {
 	"entity": "minecraft:phantom",
 	"weight": 50,
-	"quality": 3,
+	"quality": 0,
 	"size": {
 		"width": 2.5,
 		"height": 1
@@ -26,8 +26,8 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 160,
-						"steps": 75,
+						"min": 80,
+						"steps": 40,
 						"step": 2
 					}
 				},
@@ -62,16 +62,6 @@
 					"attribute": "minecraft:generic.knockback_resistance",
 					"operation": "ADDITION",
 					"value": 0.6
-				},
-				{
-					"attribute": "minecraft:generic.armor",
-					"operation": "ADDITION",
-					"value": 8
-				},
-				{
-					"attribute": "minecraft:generic.armor_toughness",
-					"operation": "ADDITION",
-					"value": 4.5
 				}
 			]
 		},
@@ -86,8 +76,8 @@
 					"attribute": "minecraft:generic.max_health",
 					"operation": "ADDITION",
 					"value": {
-						"min": 220,
-						"steps": 90,
+						"min": 100,
+						"steps": 40,
 						"step": 2
 					}
 				},
@@ -122,16 +112,6 @@
 					"attribute": "minecraft:generic.knockback_resistance",
 					"operation": "ADDITION",
 					"value": 1
-				},
-				{
-					"attribute": "minecraft:generic.armor",
-					"operation": "ADDITION",
-					"value": 14
-				},
-				{
-					"attribute": "minecraft:generic.armor_toughness",
-					"operation": "ADDITION",
-					"value": 10
 				}
 			]
 		}

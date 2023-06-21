@@ -1,16 +1,23 @@
 {
-    "comment_id": "/Adventure Module",
+    "comment_id": "/Attributes Lib",
+
+    "attributeslib.adv.addition": "[Addition: %s]",
+    "attributeslib.adv.multiply_base": "[Mult Base: %s]",
+    "attributeslib.adv.multiply_total": "[Mult Total: %s]",
+
+	"attributeslib.value.flat": "%s",
+	"attributeslib.value.percent": "%s%%",
+
+    "attributeslib.modifier.plus": "+%s %s",
+    "attributeslib.modifier.take": "-%s %s",
+
+	"comment_id": "/Adventure Module",
 
     "info.apotheosis.affix_item": "Apothic Affix Item",
     "item.modifiers.both_hands": "When in Either Hand:",
 	
 	"death.attack.apotheosis.execute": "%s was executed by %s",
 	"death.attack.apotheosis.execute.item": "%s was executed by %s using %s",
-
-    "attribute.modifier.apotheosis.plus.1": "+%s%% Base %s",
-    "attribute.modifier.apotheosis.plus.2": "+%s%% Total %s",
-    "attribute.modifier.apotheosis.take.1": "-%s%% Base %s",
-    "attribute.modifier.apotheosis.take.2": "-%s%% Total %s",
 	
 	"misc.apotheosis.affix_name.two": "%s %s",
 	"misc.apotheosis.affix_name.three": "%s %s %s",
@@ -30,9 +37,13 @@
 	"apotheosis:arrow_damage": "Arrow Damage",
 	"apotheosis:arrow_velocity": "Arrow Velocity",
 	"apotheosis:experience_gained": "Experience Gained",
+	"apotheosis:healing_received": "Healing Receieved",
 	
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",
+
+    "affix.apotheosis:armor/attribute/windswept": "Windswept",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "of the Current",
 
     "affix.apotheosis:armor/attribute/ironforged": "Ironforged",
     "affix.apotheosis:armor/attribute/ironforged.suffix": "of Iron",

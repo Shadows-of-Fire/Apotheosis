@@ -1,0 +1,17 @@
+{
+    "name": "Dano de acerto crítico",
+    "icon": "minecraft:netherite_axe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Dano de acerto crítico$() é a quantidade de dano que seus ataques críticos causam, em relação a um ataque normal. Um valor de 2 é igual a duas vezes o dano normal.$(p)Críticos de salto são aumentados por este valor quando ocorrem.$(p)Encontrado em armas corpo a corpo."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
+		}
+	]
+}

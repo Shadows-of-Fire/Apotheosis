@@ -47,8 +47,8 @@ public class OmneticAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack).isBreaker() && values.containsKey(rarity);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+		return cat.isBreaker() && values.containsKey(rarity);
 	}
 
 	@Override

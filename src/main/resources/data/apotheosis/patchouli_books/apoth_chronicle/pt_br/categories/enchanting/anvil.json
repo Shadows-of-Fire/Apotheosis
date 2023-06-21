@@ -1,0 +1,7 @@
+{
+    "name": "Bigornas",
+    "description": "Esta seção detalha todas as mudancas da bigorna.$(p)Bigornas agora são encantáveis, não tem limite de nível, e podem ser reparadas (em uma bigorna) com blocos de ferro.",
+    "icon": "minecraft:anvil",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}
