@@ -35,6 +35,6 @@
 		}
 	},
 	"types": [
-		"pickaxe"
+		"pickaxe", "shovel"
 	]
 }

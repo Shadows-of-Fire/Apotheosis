@@ -35,6 +35,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
@@ -231,7 +232,14 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 		return this.type;
 	}
 
-	public abstract boolean canApplyTo(ItemStack stack, LootRarity rarity);
+	/**
+	 * Checks if this affix can be applied to an item.
+	 * @param stack The item being checked against.
+	 * @param cat The LootCategory of the item.
+	 * @param rarity The rarity of the item.
+	 * @return If this affix can be applied to the item at the specified rarity.
+	 */
+	public abstract boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity);
 
 	public static MutableComponent loreComponent(String text, Object... args) {
 		return Component.translatable(text, args).withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_PURPLE);

@@ -46,8 +46,8 @@ public final class SocketAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack socketed, LootRarity rarity) {
-		return LootCategory.forItem(socketed) != null;
+	public boolean canApplyTo(ItemStack socketed, LootCategory cat, LootRarity rarity) {
+		return !cat.isNone();
 	}
 
 	@Override

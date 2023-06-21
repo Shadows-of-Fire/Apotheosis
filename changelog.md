@@ -33,6 +33,8 @@
 * Salvaging now yields a different amount of gem dust per rarity.
   * The `U` key (recipe lookup button) now works properly for gems.
 * Added the `apotheosis:healing_received` attribute.
+* Added a validator that ensures the proper number of affixes exist for any given category/rarity combination.
+* Fixed a crash with boss spawners in invalid dimensions.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.

@@ -36,8 +36,8 @@ public class RetreatingAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.SHIELD && rarity.isAtLeast(minRarity);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+		return cat == LootCategory.SHIELD && rarity.isAtLeast(minRarity);
 	}
 
 	@Override

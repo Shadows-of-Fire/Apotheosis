@@ -7,4 +7,8 @@ public enum AffixType {
 	ANCIENT,
 	SOCKET,
 	DURABILITY;
+
+	public boolean needsValidation() {
+		return this == STAT || this == POTION || this == ABILITY;
+	}
 }

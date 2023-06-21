@@ -85,9 +85,7 @@ public class PotionAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		LootCategory cat = LootCategory.forItem(stack);
-		if (cat.isNone()) return false;
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
 		return (this.types.isEmpty() || this.types.contains(cat)) && this.values.containsKey(rarity);
 	};
 

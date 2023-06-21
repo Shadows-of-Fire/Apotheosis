@@ -88,7 +88,7 @@ public class AffixHelper {
 			if (rarity == null) rarity = LootRarity.COMMON;
 			for (String key : affixes.getAllKeys()) {
 				Affix affix = AffixManager.INSTANCE.getValue(new ResourceLocation(key));
-				if (affix == null || !affix.canApplyTo(stack, rarity)) continue;
+				if (affix == null || !affix.canApplyTo(stack, LootCategory.forItem(stack), rarity)) continue;
 				float lvl = affixes.getFloat(key);
 				map.put(affix, new AffixInstance(affix, stack, rarity, lvl));
 			}

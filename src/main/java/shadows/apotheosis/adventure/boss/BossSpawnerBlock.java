@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.placebo.block_entity.TickingBlockEntity;
 import shadows.placebo.block_entity.TickingEntityBlock;
@@ -50,6 +51,10 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 					this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
 					BlockPos pos = this.worldPosition;
 					BossItem bossItem = this.item == null ? BossItemManager.INSTANCE.getRandomItem(this.level.getRandom(), player.getLuck(), IDimensional.matches(this.level), IStaged.matches(player)) : this.item;
+					if (bossItem == null) {
+						AdventureModule.LOGGER.error("A boss spawner attempted to spawn a boss at {} in {}, but no bosses were available!", this.getBlockPos(), this.level.dimension().location());
+						return;
+					}
 					Mob entity = bossItem.createBoss((ServerLevel) this.level, pos, this.level.getRandom(), player.getLuck());
 					entity.setTarget(player);
 					entity.setPersistenceRequired();

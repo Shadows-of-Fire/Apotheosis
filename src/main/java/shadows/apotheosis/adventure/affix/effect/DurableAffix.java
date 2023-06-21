@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixType;
+import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.json.PSerializer;
 
@@ -19,7 +20,7 @@ public class DurableAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
 		return stack.isDamageableItem();
 	}
 

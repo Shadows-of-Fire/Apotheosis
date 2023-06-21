@@ -48,8 +48,8 @@ public class CatalyzingAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack) == LootCategory.SHIELD && this.values.containsKey(rarity);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+		return cat == LootCategory.SHIELD && this.values.containsKey(rarity);
 	}
 
 	@Override

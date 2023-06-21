@@ -32,8 +32,8 @@ public class MagicalArrowAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack).isRanged() && rarity.isAtLeast(minRarity);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+		return cat.isRanged() && rarity.isAtLeast(minRarity);
 	}
 
 	// EventPriority.HIGH

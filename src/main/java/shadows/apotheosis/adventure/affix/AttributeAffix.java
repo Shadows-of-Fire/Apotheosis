@@ -86,8 +86,7 @@ public class AttributeAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		LootCategory cat = LootCategory.forItem(stack);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
 		if (cat.isNone()) return false;
 		return (this.types.isEmpty() || this.types.contains(cat)) && this.modifiers.containsKey(rarity);
 	};

@@ -57,8 +57,8 @@ public class FestiveAffix extends Affix {
 	}
 
 	@Override
-	public boolean canApplyTo(ItemStack stack, LootRarity rarity) {
-		return LootCategory.forItem(stack).isLightWeapon() && this.values.containsKey(rarity);
+	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+		return cat.isLightWeapon() && this.values.containsKey(rarity);
 	}
 
 	private float getTrueLevel(LootRarity rarity, float level) {
