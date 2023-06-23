@@ -19,7 +19,21 @@
 * Heavy Weapons AS Reduction will no longer reduce attack speed below 0.4.
 * Fixed a bug with Draw Speed that caused all values to be rounded up to the nearest 100 percent.
 * Bosses will be significantly less tankier, but will do more damage and be faster.
-  
+* Overheal will now have a max value equal to half of your max health, instead of 20.
+* Crit Chance will no longer trigger a vanilla (jump) crit, and will now roll on all damage.
+  * Crit Damage will still impact vanilla (jump) crits.
+* Armor Calculations have been changed.
+  * Vanilla Calculations are: DR = clamp(armor - damage / (2 + toughness / 4), armor / 5, 20) / 25.
+  * Old Apoth Calculations were: DR = clamp(1.25 * armor - damage / (2 + toughness / 4), armor * (.25 + toughness/200), 20) / 25.
+  * New Apoth Calculations are: DR = 10 / (10 + armor).
+  * Armor Toughness will now reduce Armor Bypass (both Armor Shred and Armor Pierce) by 0.5%/point, but no longer impacts damage calculations.
+* Protection Calculations have been changed.
+  * Vanilla Calculations are: DR = 4% * prot points, up to 80%.
+  * Old Apoth Calculations were: DR = 4% * prot points, up to 80%, then an additional 0.33% * prot points, up to 95%.
+  * New Apoth Calculations are: DR = 2.5% * prot points, up to 85%.
+* Four new attributes for bypassing damage reduction were added: Armor Shred, Armor Pierce, Protection Shred, and Protection Pierce.
+  * These are Percentage and Flat reductions for Armor and Protection, respectively.
+
 ### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
 * Affix Item and Gem drop chances have been reduced.

@@ -38,6 +38,10 @@
 	"apotheosis:arrow_velocity": "Arrow Velocity",
 	"apotheosis:experience_gained": "Experience Gained",
 	"apotheosis:healing_received": "Healing Receieved",
+	"apotheosis:armor_pierce": "Armor Pierce",
+	"apotheosis:armor_shred": "Armor Shred",
+	"apotheosis:prot_pierce": "Protection Pierce",
+	"apotheosis:prot_shred": "Protection Shred",
 	
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",

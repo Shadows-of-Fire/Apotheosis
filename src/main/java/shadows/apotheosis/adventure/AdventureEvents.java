@@ -98,6 +98,13 @@ public class AdventureEvents {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void preventBossSuffocate(LivingHurtEvent e) {
+		if (e.getSource() == DamageSource.IN_WALL && e.getEntity().getPersistentData().contains("apoth.boss")) {
+			e.setCanceled(true);
+		}
+	}
+
 	/**
 	 * This event handler allows affixes to react to arrows being fired to trigger additional actions.
 	 * Arrows marked as "apoth.generated" will not trigger the affix hook, so affixes can fire arrows without recursion.
