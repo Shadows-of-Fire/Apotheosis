@@ -87,15 +87,16 @@ public class ALCombatRules {
 
 	/**
 	 * Computes the damage reduction factor of the given armor level.<br>
-	 * Armor reduces a percentage of incoming damage equal to <code>10 / (10 + armor)</code>.
+	 * Armor reduces a percentage of incoming damage equal to <code>50 / (50 + armor)</code>.
 	 * <p>
 	 * Armor Toughness no longer impacts this calculation.
 	 * <p>
 	 * The vanilla calculation is <code>DR = clamp(armor - damage / (2 + toughness / 4), armor / 5, 20) / 25</code>
-	 * 
+	 * <p>
+	 * For comparisons, see https://i.imgur.com/3yEnTyi.png
 	 * @see #getDamageAfterArmor(LivingEntity, DamageSource, float, float, float)
 	 */
 	public static float getArmorDamageReduction(float armor) {
-		return 10 / (10 + armor);
+		return 50 / (50 + armor);
 	}
 }

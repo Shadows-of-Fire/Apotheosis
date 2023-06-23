@@ -25,8 +25,9 @@
 * Armor Calculations have been changed.
   * Vanilla Calculations are: DR = clamp(armor - damage / (2 + toughness / 4), armor / 5, 20) / 25.
   * Old Apoth Calculations were: DR = clamp(1.25 * armor - damage / (2 + toughness / 4), armor * (.25 + toughness/200), 20) / 25.
-  * New Apoth Calculations are: DR = 10 / (10 + armor).
+  * New Apoth Calculations are: DR = 50 / (50 + armor).
   * Armor Toughness will now reduce Armor Bypass (both Armor Shred and Armor Pierce) by 0.5%/point, but no longer impacts damage calculations.
+  * Comparisons: https://i.imgur.com/3yEnTyi.png
 * Protection Calculations have been changed.
   * Vanilla Calculations are: DR = 4% * prot points, up to 80%.
   * Old Apoth Calculations were: DR = 4% * prot points, up to 80%, then an additional 0.33% * prot points, up to 95%.
