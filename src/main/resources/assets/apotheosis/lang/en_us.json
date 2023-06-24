@@ -4,6 +4,8 @@
     "attributeslib.adv.addition": "[Addition: %s]",
     "attributeslib.adv.multiply_base": "[Mult Base: %s]",
     "attributeslib.adv.multiply_total": "[Mult Total: %s]",
+    "attributeslib.adv.base": "[Entity Base: %s | Item Base: %s]",
+    "attributeslib.adv.sharpness_bonus": "[Sharpness: %s]",
 
 	"attributeslib.value.flat": "%s",
 	"attributeslib.value.percent": "%s%%",

@@ -1,6 +1,7 @@
 package shadows.apotheosis.core.attributeslib.impl;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +24,7 @@ public class PercentBasedAttribute extends RangedAttribute implements IFormattab
 	}
 
 	@Override
-	public Component valueToComponent(AttributeModifier modif, double formattedValue, TooltipFlag flag) {
+	public MutableComponent valueToComponent(AttributeModifier modif, double formattedValue, TooltipFlag flag) {
 		return Component.translatable("attributeslib.value.percent", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(formattedValue));
 	}
 

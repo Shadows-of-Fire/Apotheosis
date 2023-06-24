@@ -1,13 +1,29 @@
 package shadows.apotheosis.core.attributeslib.api;
 
+import java.util.UUID;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import shadows.apotheosis.util.ItemAccess;
 import shadows.placebo.Placebo;
 
 public class AttributeHelper {
+
+	/**
+	 * UUID of the base modifier for Attack Damage
+	 */
+	public static final UUID BASE_ATTACK_DAMAGE = ItemAccess.getBaseAD();
+
+	/**
+	 * UUID of the base modifier for Attack Speed
+	 */
+	public static final UUID BASE_ATTACK_SPEED = ItemAccess.getBaseAS();
 
 	/**
 	 * A brief explanation of {@link Operation} and Attribute calculations:
@@ -61,5 +77,12 @@ public class AttributeHelper {
 	 */
 	public static void multiplyFinal(LivingEntity entity, Attribute attribute, String name, double modifier) {
 		modify(entity, attribute, name, modifier, Operation.MULTIPLY_TOTAL);
+	}
+
+	/**
+	 * Creates a mutable component starting with the char used to represent a drop-down list.
+	 */
+	public static MutableComponent list() {
+		return Component.literal(" \u2507 ").withStyle(ChatFormatting.GRAY);
 	}
 }
