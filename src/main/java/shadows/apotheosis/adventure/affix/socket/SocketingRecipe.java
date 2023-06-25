@@ -49,15 +49,14 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 		result.setCount(1);
 		int sockets = SocketHelper.getSockets(result);
 		List<ItemStack> gems = SocketHelper.getGems(result, sockets);
-		ItemStack gemStack = inventory.getItem(1).copy();
-		var event = new ItemSocketingEvent(result, gemStack);
-		MinecraftForge.EVENT_BUS.post(event);
-		if (event.isCanceled()) return ItemStack.EMPTY;
-		result = event.getItemStack();
-		gemStack = event.getGemStack();
+		ItemStack gem = inventory.getItem(1).copy();
 		int socket = SocketHelper.getFirstEmptySocket(result);
-		gems.set(socket, gemStack);
+		gems.set(socket, gem);
 		SocketHelper.setGems(result, gems);
+		ItemStack input = inventory.getItem(0).copy();
+		var event = new ItemSocketingEvent(input, gem, result);
+		MinecraftForge.EVENT_BUS.post(event);
+		result = event.getOutputStack();
 		return result;
 	}
 
