@@ -8,41 +8,51 @@ import net.minecraftforge.eventbus.api.Event;
 /**
  * Fired when a gem is being inserted into an item. <br>
  * <br>
- * {@link #getItemStack} contains ItemStack copy of an item that is being socketed with a gem. <br>
  * {@link #getGemStack} contains ItemStack copy of a gem that is being inserted into an item. <br>
  * <br>
- * This event is {@link Cancelable}.<br>
- * Canceling this event will prevent the item from being socketed with the gem. <br>
+ * This event is not {@link Cancelable}.<br>
  * <br>
  * This event does not have a result. {@link HasResult}<br>
  * <br>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
- * 
- * @author Daripher
  */
-@Cancelable
 public class ItemSocketingEvent extends Event {
-	private ItemStack itemStack;
-	private ItemStack gemStack;
+	private ItemStack inputStack;
+	private ItemStack inputGem;
+	private ItemStack outputStack;
 
-	public ItemSocketingEvent(ItemStack itemStack, ItemStack gemStack) {
-		this.itemStack = itemStack;
-		this.gemStack = gemStack;
+	public ItemSocketingEvent(ItemStack inputStack, ItemStack inputGem, ItemStack outputStack) {
+		this.inputStack = inputStack;
+		this.inputGem = inputGem;
+		this.outputStack = outputStack;
 	}
 
-	public ItemStack getItemStack() {
-		return itemStack;
+	/**
+	 * @return Copy of an item that is being socketed with a gem.
+	 */
+	public ItemStack getInputStack() {
+		return inputStack;
 	}
 
-	public void setItemStack(ItemStack itemStack) {
-		this.itemStack = itemStack;
+	/**
+	 * @return Copy of a gem that is being inserted into an item.
+	 */
+	public ItemStack getInputGem() {
+		return inputGem;
 	}
 
-	public ItemStack getGemStack() {
-		return gemStack;
+	/**
+	 * @return The result item after the gem has been inserted into it.
+	 */
+	public ItemStack getOutputStack() {
+		return outputStack;
 	}
-
-	public void setGemStack(ItemStack gemStack) {
-		this.gemStack = gemStack;
+	
+	/**
+	 * Sets the output item to a given itemstack.
+	 * @param outputStack The stack to change the output to.
+	 */
+	public void setOutputStack(ItemStack outputStack) {
+		this.outputStack = outputStack;
 	}
 }
