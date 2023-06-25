@@ -57,15 +57,10 @@ public class SocketHelper {
 
 	public static int getSockets(ItemStack stack) {
 		AffixInstance socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
-		int sockets = 0;
-		if (socketAffix != null) {
-			sockets = (int) socketAffix.level();
-		}
+		int sockets = socketAffix != null ? (int) socketAffix.level() : 0;
 		var event = new GetItemSocketsEvent(stack, sockets);
 		MinecraftForge.EVENT_BUS.post(event);
-		if (sockets != event.getSockets()) {
-			sockets = event.getSockets();
-		}
+		sockets = event.getSockets();
 		return sockets;
 	}
 
