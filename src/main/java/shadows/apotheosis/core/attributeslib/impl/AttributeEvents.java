@@ -5,7 +5,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -21,12 +20,11 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.core.attributeslib.api.ALAttributes;
-import shadows.apotheosis.util.DamageSourceUtil;
+import shadows.apotheosis.core.attributeslib.util.AttributesUtil;
 
 public class AttributeEvents {
 
@@ -61,45 +59,21 @@ public class AttributeEvents {
 	}
 
 	/**
-	 * This event handler is the implementation for {@link ALAttributes#PIERCING}.<br>
-	 */
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void piercing(LivingHurtEvent e) {
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker) {
-			if (!e.getSource().isBypassArmor() && !e.getSource().isMagic()) {
-				LivingEntity target = e.getEntity();
-				float pierce = (float) (attacker.getAttributeValue(ALAttributes.PIERCING.get()) - 1);
-				if (pierce > 0.001) {
-					float pierceDmg = e.getAmount() * pierce;
-					e.setAmount(e.getAmount() - pierceDmg);
-					int time = target.invulnerableTime;
-					target.invulnerableTime = 0;
-					target.hurt(DamageSourceUtil.copy(e.getSource()).bypassArmor(), pierceDmg);
-					target.invulnerableTime = time;
-				}
-			}
-		}
-	}
-
-	/**
 	 * This event handler manages the Life Steal and Overheal attributes.
 	 */
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void lifeStealOverheal(LivingHurtEvent e) {
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
-			float lifesteal = (float) attacker.getAttributeValue(ALAttributes.LIFE_STEAL.get()) - 1;
+		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && AttributesUtil.isPhysicalDamage(e.getSource())) {
+			float lifesteal = (float) attacker.getAttributeValue(ALAttributes.LIFE_STEAL.get());
 			float dmg = Math.min(e.getAmount(), e.getEntity().getHealth());
 			if (lifesteal > 0.001) {
 				attacker.heal(dmg * lifesteal);
 			}
-			float overheal = (float) attacker.getAttributeValue(ALAttributes.OVERHEAL.get()) - 1;
-			if (overheal > 0 && attacker.getAbsorptionAmount() < 20) {
-				attacker.setAbsorptionAmount(Math.min(20, attacker.getAbsorptionAmount() + dmg * overheal));
+			float overheal = (float) attacker.getAttributeValue(ALAttributes.OVERHEAL.get());
+			float maxOverheal = attacker.getMaxHealth() * 0.5F;
+			if (overheal > 0 && attacker.getAbsorptionAmount() < maxOverheal) {
+				attacker.setAbsorptionAmount(Math.min(maxOverheal, attacker.getAbsorptionAmount() + dmg * overheal));
 			}
-		}
-
-		if (e.getSource() == DamageSource.IN_WALL && e.getEntity().getPersistentData().contains("ALboss")) {
-			e.setCanceled(true);
 		}
 	}
 
@@ -122,10 +96,8 @@ public class AttributeEvents {
 		if (e.getEntity().level.isClientSide) return;
 		if (noRecurse) return;
 		noRecurse = true;
-		Entity direct = e.getSource().getDirectEntity();
-		direct = direct instanceof AbstractArrow arr ? arr.getOwner() : direct;
-		if (direct instanceof LivingEntity attacker && !e.getSource().isMagic()) {
-			float hpDmg = (float) attacker.getAttributeValue(ALAttributes.CURRENT_HP_DAMAGE.get()) - 1;
+		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && AttributesUtil.isPhysicalDamage(e.getSource())) {
+			float hpDmg = (float) attacker.getAttributeValue(ALAttributes.CURRENT_HP_DAMAGE.get());
 			float fireDmg = (float) attacker.getAttributeValue(ALAttributes.FIRE_DAMAGE.get());
 			float coldDmg = (float) attacker.getAttributeValue(ALAttributes.COLD_DAMAGE.get());
 			LivingEntity target = e.getEntity();
@@ -135,12 +107,12 @@ public class AttributeEvents {
 				target.hurt(src(attacker), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
 			}
 			target.invulnerableTime = 0;
-			if (fireDmg > 0.001 && Apotheosis.localAtkStrength >= 0.45F) {
+			if (fireDmg > 0.001 && Apotheosis.localAtkStrength >= 0.55F) {
 				target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * fireDmg);
-				target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (15 * fireDmg)));
+				target.setRemainingFireTicks(target.getRemainingFireTicks() + (int) (15 * fireDmg));
 			}
 			target.invulnerableTime = 0;
-			if (coldDmg > 0.001 && Apotheosis.localAtkStrength >= 0.45F) {
+			if (coldDmg > 0.001 && Apotheosis.localAtkStrength >= 0.55F) {
 				target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * coldDmg);
 				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
 			}
@@ -157,31 +129,36 @@ public class AttributeEvents {
 	 * Handles {@link ALAttributes#CRIT_CHANCE} and {@link ALAttributes#CRIT_DAMAGE}
 	 */
 	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void crit(CriticalHitEvent e) {
-		double critChance = e.getEntity().getAttributeValue(ALAttributes.CRIT_CHANCE.get()) - 1;
+	public void apothCriticalStrike(LivingHurtEvent e) {
+		double critChance = e.getEntity().getAttributeValue(ALAttributes.CRIT_CHANCE.get());
 		float critDmg = (float) e.getEntity().getAttributeValue(ALAttributes.CRIT_DAMAGE.get());
-		float overcritMult = Math.max(1.5F, critDmg - 1.5F);
+
 		RandomSource rand = e.getEntity().random;
-		if (e.isVanillaCritical() && critChance >= 0.5F) {
-			critChance -= 0.5F;
-			critDmg *= 1.5F;
-		}
 
-		// Roll once to determine if the attack should become a crit.
-		if (rand.nextFloat() <= critChance || critChance >= 1) {
-			e.setResult(Result.ALLOW);
-		}
-		// Reduce the chance since this roll "consumes" 1 point.
-		critChance--;
+		float critMult = 1.0F;
 
-		// Roll for overcrit
-		while (rand.nextFloat() <= critChance) {
-			e.setResult(Result.ALLOW);
+		// Roll for crits. Each overcrit reduces the effectiveness by 15%
+		// We stop rolling when crit chance fails or the crit damage would reduce the total damage dealt.
+		while (rand.nextFloat() <= critChance && critDmg > 1.0F) {
 			critChance--;
-			critDmg *= overcritMult;
+			critMult *= critDmg;
+			critDmg *= 0.85F;
 		}
 
-		e.setDamageModifier(critDmg);
+		e.setAmount(e.getAmount() * critMult);
+
+		//TODO: Add some sort of effect that triggers on crit.
+	}
+
+	/**
+	 * Handles {@link ALAttributes#CRIT_DAMAGE}'s interactions with vanilla critical strikes.
+	 */
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void vanillaCritDmg(CriticalHitEvent e) {
+		float critDmg = (float) e.getEntity().getAttributeValue(ALAttributes.CRIT_DAMAGE.get());
+		if (e.isVanillaCritical()) {
+			e.setDamageModifier(Math.max(e.getDamageModifier(), critDmg));
+		}
 	}
 
 	/**
@@ -224,13 +201,13 @@ public class AttributeEvents {
 	@SubscribeEvent
 	public void arrow(EntityJoinLevelEvent e) {
 		if (e.getEntity() instanceof AbstractArrow arrow) {
-			if (arrow.level.isClientSide || arrow.getPersistentData().getBoolean("ALattrib.done")) return;
+			if (arrow.level.isClientSide || arrow.getPersistentData().getBoolean("attributeslib.arrow.done")) return;
 			if (arrow.getOwner() instanceof LivingEntity le) {
 				arrow.setBaseDamage(arrow.getBaseDamage() * le.getAttributeValue(ALAttributes.ARROW_DAMAGE.get()));
 				arrow.setDeltaMovement(arrow.getDeltaMovement().scale(le.getAttributeValue(ALAttributes.ARROW_VELOCITY.get())));
-				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(ALAttributes.CRIT_CHANCE.get()) - 1);
+				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(ALAttributes.CRIT_CHANCE.get()));
 			}
-			arrow.getPersistentData().putBoolean("ALattrib.done", true);
+			arrow.getPersistentData().putBoolean("attributeslib.arrow.done", true);
 		}
 	}
 }

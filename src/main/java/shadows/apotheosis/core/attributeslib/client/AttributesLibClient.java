@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,31 +21,28 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.AddAttributeTooltipsEvent;
+import shadows.apotheosis.core.attributeslib.api.AttributeHelper;
 import shadows.apotheosis.core.attributeslib.api.GatherSkippedAttributeTooltipsEvent;
 import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
-import shadows.apotheosis.util.ItemAccess;
 
 public class AttributesLibClient {
 
@@ -141,8 +139,13 @@ public class AttributesLibClient {
 	}
 
 	private static MutableComponent list() {
-		return Component.literal(" \u2507 ").withStyle(ChatFormatting.GRAY);
+		return AttributeHelper.list();
 	}
+
+	private static record BaseModifier(AttributeModifier base, List<AttributeModifier> children) {
+	}
+
+	private static final UUID FAKE_MERGED_UUID = UUID.fromString("a6b0ac71-e435-416e-a991-7623eaa129a4");
 
 	private static void applyTextFor(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, Multimap<Attribute, AttributeModifier> modifierMap, String group, Set<UUID> skips, TooltipFlag flag) {
 		if (!modifierMap.isEmpty()) {
@@ -153,67 +156,54 @@ public class AttributesLibClient {
 
 			if (modifierMap.isEmpty()) return;
 
-			AttributeModifier baseAD = null, baseAS = null;
-			List<AttributeModifier> dmgModifs = new ArrayList<>(), spdModifs = new ArrayList<>();
+			Map<Attribute, BaseModifier> baseModifs = new IdentityHashMap<>();
 
-			for (AttributeModifier modif : modifierMap.get(Attributes.ATTACK_DAMAGE)) {
-				if (modif.getId() == ItemAccess.getBaseAD()) baseAD = modif;
-				else dmgModifs.add(modif);
-			}
+			modifierMap.forEach((attr, modif) -> {
+				if (modif.getId().equals(((IFormattableAttribute) attr).getBaseUUID())) {
+					baseModifs.put(attr, new BaseModifier(modif, new ArrayList<>()));
+				}
+			});
 
-			for (AttributeModifier modif : modifierMap.get(Attributes.ATTACK_SPEED)) {
-				if (modif.getId() == ItemAccess.getBaseAS()) baseAS = modif;
-				else spdModifs.add(modif);
-			}
+			modifierMap.forEach((attr, modif) -> {
+				BaseModifier base = baseModifs.get(attr);
+				if (base != null && base.base != modif) {
+					base.children.add(modif);
+				}
+			});
 
-			if (baseAD != null) {
-				double base = baseAD.getAmount() + (player == null ? 0 : player.getAttributeBaseValue(Attributes.ATTACK_DAMAGE));
-				double rawBase = base;
+			for (Map.Entry<Attribute, BaseModifier> entry : baseModifs.entrySet()) {
+				Attribute attr = entry.getKey();
+				BaseModifier baseModif = entry.getValue();
+				double entityBase = player == null ? 0 : player.getAttributeBaseValue(attr);
+				double base = baseModif.base.getAmount() + entityBase;
+				final double rawBase = base;
 				double amt = base;
-				for (AttributeModifier modif : dmgModifs) {
+				double baseBonus = ((IFormattableAttribute) attr).getBonusBaseValue(stack);
+				for (AttributeModifier modif : baseModif.children) {
 					if (modif.getOperation() == Operation.ADDITION) base = amt = amt + modif.getAmount();
 					else if (modif.getOperation() == Operation.MULTIPLY_BASE) amt += modif.getAmount() * base;
 					else amt *= 1 + modif.getAmount();
 				}
-				amt += EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
-				MutableComponent text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId()));
-				tooltip.accept(padded(" ", text).withStyle(dmgModifs.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
-				if (Screen.hasShiftDown() && !dmgModifs.isEmpty()) {
-					text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId()));
+				amt += baseBonus;
+				MutableComponent text = IFormattableAttribute.toBaseComponent(attr, base, entityBase, !baseModif.children.isEmpty(), flag);
+				tooltip.accept(padded(" ", text).withStyle(baseModif.children.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
+				if (Screen.hasShiftDown() && !baseModif.children.isEmpty()) {
+					// Display the raw base value, and then all children modifiers.
+					text = IFormattableAttribute.toBaseComponent(attr, rawBase, entityBase, false, flag);
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
-					for (AttributeModifier modifier : dmgModifs) {
-						tooltip.accept(list().append(IFormattableAttribute.toComponent(Attributes.ATTACK_DAMAGE, modifier, flag)));
+					for (AttributeModifier modifier : baseModif.children) {
+						tooltip.accept(list().append(IFormattableAttribute.toComponent(attr, modifier, flag)));
 					}
-					float bonus = EnchantmentHelper.getDamageBonus(stack, MobType.UNDEFINED);
-					if (bonus > 0) {
-						tooltip.accept(list().append(Component.translatable("attribute.modifier.plus.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(bonus), Component.translatable(Attributes.ATTACK_DAMAGE.getDescriptionId())).withStyle(ChatFormatting.BLUE)));
-					}
-				}
-			}
-
-			if (baseAS != null) {
-				double base = baseAS.getAmount() + (player == null ? 0 : player.getAttributeBaseValue(Attributes.ATTACK_SPEED));
-				double rawBase = base;
-				double amt = base;
-				for (AttributeModifier modif : spdModifs) {
-					if (modif.getOperation() == Operation.ADDITION) base = amt = amt + modif.getAmount();
-					else if (modif.getOperation() == Operation.MULTIPLY_BASE) amt += modif.getAmount() * base;
-					else amt *= 1 + modif.getAmount();
-				}
-				MutableComponent text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amt), Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()));
-				tooltip.accept(Component.literal(" ").append(text).withStyle(spdModifs.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
-				if (Screen.hasShiftDown() && !spdModifs.isEmpty()) {
-					text = Component.translatable("attribute.modifier.equals.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(rawBase), Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()));
-					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));
-					for (AttributeModifier modifier : spdModifs) {
-						tooltip.accept(list().append(IFormattableAttribute.toComponent(Attributes.ATTACK_SPEED, modifier, flag)));
+					if (baseBonus > 0) {
+						((IFormattableAttribute) attr).addBonusTooltips(stack, tooltip, flag);
 					}
 				}
 			}
 
 			for (Attribute attr : modifierMap.keySet()) {
-				if ((baseAD != null && attr == Attributes.ATTACK_DAMAGE) || (baseAS != null && attr == Attributes.ATTACK_SPEED)) continue;
+				if (baseModifs.containsKey(attr)) continue;
 				Collection<AttributeModifier> modifs = modifierMap.get(attr);
+				// Initiate merged-tooltip logic if we have more than one modifier for a given attribute.
 				if (modifs.size() > 1) {
 					double[] sums = new double[3];
 					boolean[] merged = new boolean[3];
@@ -224,18 +214,21 @@ public class AttributesLibClient {
 						sums[modifier.getOperation().ordinal()] += modifier.getAmount();
 						shiftExpands.computeIfAbsent(modifier.getOperation(), k -> new LinkedList<>()).add(modifier);
 					}
-					for (int i = 0; i < 3; i++) {
+					for (Operation op : Operation.values()) {
+						int i = op.ordinal();
 						if (sums[i] == 0) continue;
-						String key = "attribute.modifier." + (sums[i] < 0 ? "take." : "plus.") + i;
-						if (i != 0) key = "attribute.modifier.apotheosis." + (sums[i] < 0 ? "take." : "plus.") + i;
-						Style style;
-						if (merged[i]) style = sums[i] < 0 ? Style.EMPTY.withColor(TextColor.fromRgb(0xF93131)) : Style.EMPTY.withColor(TextColor.fromRgb(0x7A7AF9));
-						else style = sums[i] < 0 ? Style.EMPTY.withColor(ChatFormatting.RED) : Style.EMPTY.withColor(ChatFormatting.BLUE);
-						if (sums[i] < 0) sums[i] *= -1;
-						if (attr == Attributes.KNOCKBACK_RESISTANCE) sums[i] *= 10;
-						tooltip.accept(Component.translatable(key, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(sums[i]), Component.translatable(attr.getDescriptionId())).withStyle(style));
-						if (merged[i] && Screen.hasShiftDown()) {
-							shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(IFormattableAttribute.toComponent(attr, modif, flag))));
+						if (merged[i]) {
+							TextColor color = sums[i] < 0 ? TextColor.fromRgb(0xF93131) : TextColor.fromRgb(0x7A7AF9);
+							if (sums[i] < 0) sums[i] *= -1;
+							var fakeModif = new AttributeModifier(FAKE_MERGED_UUID, () -> AttributesLib.MODID + ":merged", sums[i], op);
+							MutableComponent comp = IFormattableAttribute.toComponent(attr, fakeModif, flag);
+							tooltip.accept(comp.withStyle(comp.getStyle().withColor(color)));
+							if (merged[i] && Screen.hasShiftDown()) {
+								shiftExpands.get(Operation.fromValue(i)).forEach(modif -> tooltip.accept(list().append(IFormattableAttribute.toComponent(attr, modif, flag))));
+							}
+						} else {
+							var fakeModif = new AttributeModifier(FAKE_MERGED_UUID, () -> AttributesLib.MODID + ":merged", sums[i], op);
+							tooltip.accept(IFormattableAttribute.toComponent(attr, fakeModif, flag));
 						}
 					}
 				} else modifs.forEach(m -> {
