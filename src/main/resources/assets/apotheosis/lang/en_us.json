@@ -13,6 +13,85 @@
     "attributeslib.modifier.plus": "+%s %s",
     "attributeslib.modifier.take": "-%s %s",
 
+	"attributeslib.gui.attributes": "Attributes",
+	"attributeslib.gui.current": "Current: %s",
+	"attributeslib.gui.base": "Base: %s",
+	"attributeslib.gui.min": "Min: %s",
+	"attributeslib.gui.max": "Max: %s",
+	"attributeslib.gui.show_attributes": "Show Attributes",
+
+	"minecraft:generic.armor.desc": "Increases physical damage reduction.",
+	"minecraft:generic.armor_toughness.desc": "Reduces the effectiveness of enemy armor reduction.",
+	"minecraft:generic.attack_damage.desc": "Physical damage dealt with a fully charged attack.",
+	"minecraft:generic.attack_knockback.desc": "How far your melee attacks knock back foes, in half-blocks.",
+	"minecraft:generic.attack_speed.desc": "How many fully charged attacks you can execute per second.",
+	"minecraft:generic.knockback_resistance.desc": "How much knockback you ignore.",
+	"minecraft:generic.luck.desc": "Increases the likelihood of good things happening.",
+	"minecraft:generic.max_health.desc": "How many hit points you can have.",
+	"minecraft:generic.movement_speed.desc": "Movement speed while walking.",
+
+	"forge:attack_range.desc": "How far your melee attacks reach, in blocks.",
+	"forge:entity_gravity.desc": "Acceleration towrds the ground, in blocks/s²",
+	"forge:nametag_distance.desc": "How far away another player must be to see your name.",
+	"forge:reach_distance.desc": "How far your interactions reach, in blocks.",
+	"forge:step_height_addition.desc": "How many blocks you may step up without jumping.",
+
+	"apotheosis:draw_speed": "Draw Speed",
+	"apotheosis:draw_speed.desc": "How fast you draw ranged weapons, such as bows, crossbows, or tridents.",
+
+	"apotheosis:crit_chance": "Crit Chance",
+	"apotheosis:crit_chance.desc": "Chance for any damage to deal extra damage, based on your Crit Damage.",
+
+	"apotheosis:crit_damage": "Crit Damage",
+	"apotheosis:crit_damage.desc": "Damage multiplier for critical hits, including vanilla jump crits.",
+
+	"apotheosis:cold_damage": "Cold Damage",
+	"apotheosis:cold_damage.desc": "Bonus magic damage applied on melee attacks, and slows enemies hit.",
+
+	"apotheosis:fire_damage": "Fire Damage",
+	"apotheosis:fire_damage.desc": "Bonus magic damage applied on melee attacks, and burns enemies hit.",
+
+	"apotheosis:life_steal": "Life Steal",
+	"apotheosis:life_steal.desc": "Percentage of post-mitigation damage which will heal you.",
+
+	"apotheosis:current_hp_damage": "Current HP Damage",
+	"apotheosis:current_hp_damage.desc": "Bonus physical damage applied on melee attacks, based on the target's health.",
+
+	"apotheosis:overheal": "Overheal",
+	"apotheosis:overheal.desc": "Percentage of post-mitigation damage which will grant you an absorption shield.",
+
+	"apotheosis:ghost_health": "Ghost Health",
+
+	"apotheosis:mining_speed": "Mining Speed",
+	"apotheosis:mining_speed.desc": "How fast you mine blocks, compared to normal.",
+
+	"apotheosis:arrow_damage": "Arrow Damage",
+	"apotheosis:arrow_damage.desc": "Damage multiplier for arrows. Tridents are arrows.",
+
+	"apotheosis:arrow_velocity": "Arrow Velocity",
+	"apotheosis:arrow_velocity.desc": "Speed multiplier for arrows. Arrow damage scales with velocity.",
+
+	"apotheosis:experience_gained": "Experience Gained",
+	"apotheosis:experience_gained.desc": "Multiplier on how much experience you gain from breaking blocks and killing mobs.",
+
+	"apotheosis:healing_received": "Healing Receieved",
+	"apotheosis:healing_received.desc": "Multiplier on all incoming healing.",
+
+	"apotheosis:armor_pierce": "Armor Pierce",
+	"apotheosis:armor_pierce.desc": "Flat reduction to the target's armor value.",
+
+	"apotheosis:armor_shred": "Armor Shred",
+	"apotheosis:armor_shred.desc": "Percentage reduction to the target's armor value.",
+
+	"apotheosis:prot_pierce": "Protection Pierce",
+	"apotheosis:prot_pierce.desc": "Flat reduction to the target's protection point total.",
+
+	"apotheosis:prot_shred": "Protection Shred",
+	"apotheosis:prot_shred.desc": "Percentage reduction to the target's protection point total.",
+
+	"apotheosis:dodge_chance": "Dodge Chance",
+	"apotheosis:dodge_chance.desc": "Chance to dodge a melee attack or a projectile.",
+
 	"comment_id": "/Adventure Module",
 
     "info.apotheosis.affix_item": "Apothic Affix Item",
@@ -24,26 +103,6 @@
 	"misc.apotheosis.affix_name.two": "%s %s",
 	"misc.apotheosis.affix_name.three": "%s %s %s",
 	"misc.apotheosis.affix_name.four": "%s %s %s %s",
-	
-	"apotheosis:draw_speed": "Draw Speed",
-	"apotheosis:crit_chance": "Crit Chance",
-	"apotheosis:crit_damage": "Crit Damage",
-	"apotheosis:cold_damage": "Cold Damage",
-	"apotheosis:fire_damage": "Fire Damage",
-	"apotheosis:life_steal": "Life Steal",
-	"apotheosis:piercing": "Armor Piercing",
-	"apotheosis:current_hp_damage": "Current HP Damage",
-	"apotheosis:overheal": "Overheal",
-	"apotheosis:ghost_health": "Ghost Health",
-	"apotheosis:mining_speed": "Mining Speed",
-	"apotheosis:arrow_damage": "Arrow Damage",
-	"apotheosis:arrow_velocity": "Arrow Velocity",
-	"apotheosis:experience_gained": "Experience Gained",
-	"apotheosis:healing_received": "Healing Receieved",
-	"apotheosis:armor_pierce": "Armor Pierce",
-	"apotheosis:armor_shred": "Armor Shred",
-	"apotheosis:prot_pierce": "Protection Pierce",
-	"apotheosis:prot_shred": "Protection Shred",
 	
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",

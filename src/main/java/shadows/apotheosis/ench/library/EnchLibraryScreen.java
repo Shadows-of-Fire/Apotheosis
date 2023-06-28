@@ -254,16 +254,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		return null;
 	}
 
-	private static class LibrarySlot {
-		protected final Enchantment ench;
-		protected final int points;
-		protected final int maxLvl;
-
-		private LibrarySlot(Enchantment ench, int points, int maxLvl) {
-			this.ench = ench;
-			this.points = points;
-			this.maxLvl = maxLvl;
-		}
+	private static record LibrarySlot(Enchantment ench, int points, int maxLvl) {
 	}
 
 	private static DecimalFormat f = new DecimalFormat("##.#");

@@ -3,25 +3,37 @@ package shadows.apotheosis.core.attributeslib;
 import java.util.function.BiConsumer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.core.attributeslib.api.ALAttributes;
 import shadows.apotheosis.core.attributeslib.client.AttributesLibClient;
 import shadows.apotheosis.core.attributeslib.impl.AttributeEvents;
 import shadows.apotheosis.core.attributeslib.impl.PercentBasedAttribute;
+import shadows.placebo.util.RegObjHelper;
 import shadows.placebo.util.RegistryEvent.Register;
 
 public class AttributesLib {
 
 	public static final String MODID = "attributeslib";
+	// TODO: 1.20 Breaking Change - Re-namespace to Attributes Lib
+	public static final RegObjHelper REG_OBJS = new RegObjHelper(Apotheosis.MODID);
+
+	public static final RegistryObject<SoundEvent> DODGE_SOUND = REG_OBJS.sound("dodge");
 
 	public AttributesLib() {
 		MinecraftForge.EVENT_BUS.register(new AttributeEvents());
@@ -48,12 +60,18 @@ public class AttributesLib {
 			new PercentBasedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity",
 			new PercentBasedAttribute("apotheosis:experience_gained", 1.0D, 0.0D, 1024.0D).setSyncable(true), "experience_gained",
 			new PercentBasedAttribute("apotheosis:healing_received", 1.0D, 0.0D, 1024.0D).setSyncable(true), "healing_received",
-			new RangedAttribute("apotheosis:armor_piercing", 0.0D, 0.0D, 1024.0D).setSyncable(true), "armor_pierce",
+			new RangedAttribute("apotheosis:armor_pierce", 0.0D, 0.0D, 1024.0D).setSyncable(true), "armor_pierce",
 			new PercentBasedAttribute("apotheosis:armor_shred", 0.0D, 0.0D, 1.0D).setSyncable(true), "armor_shred",
-			new RangedAttribute("apotheosis:prot_piercing", 0.0D, 0.0D, 1024.0D).setSyncable(true), "prot_pierce",
-			new PercentBasedAttribute("apotheosis:prot_shred", 0.0D, 0.0D, 1.0D).setSyncable(true), "prot_shred"
+			new RangedAttribute("apotheosis:prot_pierce", 0.0D, 0.0D, 1024.0D).setSyncable(true), "prot_pierce",
+			new PercentBasedAttribute("apotheosis:prot_shred", 0.0D, 0.0D, 1.0D).setSyncable(true), "prot_shred",
+			new PercentBasedAttribute("apotheosis:dodge_chance", 0.0D, 0.0D, 1.0D).setSyncable(true), "dodge_chance"
 		);
 		//Formatter::on
+	}
+
+	@SubscribeEvent
+	public void sounds(Register<SoundEvent> e) {
+		e.getRegistry().register(new SoundEvent(Apotheosis.loc("dodge")), "dodge");
 	}
 
 	// TODO - Update impls to reflect new default values.
@@ -79,16 +97,30 @@ public class AttributesLib {
 					ALAttributes.ARMOR_PIERCE,
 					ALAttributes.ARMOR_SHRED,
 					ALAttributes.PROT_PIERCE,
-					ALAttributes.PROT_SHRED
+					ALAttributes.PROT_SHRED,
+					ALAttributes.DODGE_CHANCE
 					);
 			//Formatter::on
 		});
+		// Change the base value of Step Height to reflect the real base value of a Player.
+		// The alternative is a bunch of special casing in the display.
+		// This is course-corrected in IForgeEntityMixin.
+		e.add(EntityType.PLAYER, ForgeMod.STEP_HEIGHT_ADDITION.get(), 0.6);
 	}
 
 	@SafeVarargs
 	private static void addAll(EntityType<? extends LivingEntity> type, BiConsumer<EntityType<? extends LivingEntity>, Attribute> add, RegistryObject<Attribute>... attribs) {
 		for (RegistryObject<Attribute> a : attribs)
 			add.accept(type, a.get());
+	}
+
+	@SubscribeEvent
+	@SuppressWarnings("deprecation")
+	public void setup(FMLCommonSetupEvent e) {
+		AttributeSupplier playerAttribs = ForgeHooks.getAttributesView().get(EntityType.PLAYER);
+		for (Attribute attr : ForgeRegistries.ATTRIBUTES.getValues()) {
+			if (playerAttribs.hasAttribute(attr)) attr.setSyncable(true);
+		}
 	}
 
 	public static TooltipFlag getTooltipFlag() {

@@ -5,10 +5,7 @@ import javax.annotation.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.Surrogate;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -69,13 +66,14 @@ public abstract class LivingEntityMixin extends Entity {
 	@Shadow
 	public abstract MobEffectInstance getEffect(MobEffect ef);
 
-	@Surrogate
-	@Inject(at = @At(value = "RETURN"), method = "getTeamColor()I")
-	public void apoth_applyBossGlowingColor(CallbackInfoReturnable<Integer> cir) {
-		if (cir.getReturnValueI() == 16777215) {
+	@Override
+	public int getTeamColor() {
+		int color = super.getTeamColor();
+		if (color == 16777215) {
 			Component name = this.getCustomName();
-			if (name != null && name.getStyle().getColor() != null) cir.setReturnValue(name.getStyle().getColor().getValue());
+			if (name != null && name.getStyle().getColor() != null) color = name.getStyle().getColor().getValue();
 		}
+		return color;
 	}
 
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/damagesource/CombatRules;getDamageAfterAbsorb(FFF)F"), method = "getDamageAfterArmorAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F", require = 1)

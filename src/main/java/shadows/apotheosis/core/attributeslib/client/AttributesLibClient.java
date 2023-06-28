@@ -15,15 +15,14 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
-import com.google.common.collect.TreeMultimap;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.LiteralContents;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -32,11 +31,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.AddAttributeTooltipsEvent;
@@ -75,21 +74,19 @@ public class AttributesLibClient {
 		MinecraftForge.EVENT_BUS.post(new AddAttributeTooltipsEvent(stack, e.getEntity(), list, it, e.getFlags()));
 	}
 
-	public static Multimap<Attribute, AttributeModifier> sortedMap() {
-		return TreeMultimap.create((k1, k2) -> id(k1).compareTo(id(k2)), (v1, v2) -> {
-			int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
-			int compValue = Double.compare(v2.getAmount(), v1.getAmount());
-			return compOp == 0 ? compValue == 0 ? v1.getId().compareTo(v2.getId()) : compValue : compOp;
-		});
-	}
-
-	private static ResourceLocation id(Attribute attr) {
-		return ForgeRegistries.ATTRIBUTES.getKey(attr);
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void addAttribComponent(ScreenEvent.Init.Post e) {
+		if (e.getScreen() instanceof InventoryScreen scn) {
+			var atrComp = new AttributesGui(scn);
+			e.addListener(atrComp);
+			e.addListener(atrComp.button);
+			if (AttributesGui.wasOpen) atrComp.toggleVisibility();
+		}
 	}
 
 	public static Multimap<Attribute, AttributeModifier> getSortedModifiers(ItemStack stack, EquipmentSlot slot) {
 		var unsorted = stack.getAttributeModifiers(slot);
-		Multimap<Attribute, AttributeModifier> map = sortedMap();
+		Multimap<Attribute, AttributeModifier> map = AttributeHelper.sortedMap();
 		for (Map.Entry<Attribute, AttributeModifier> ent : unsorted.entries()) {
 			if (ent.getKey() != null && ent.getValue() != null) map.put(ent.getKey(), ent.getValue());
 			else AdventureModule.LOGGER.debug("Detected broken attribute modifier entry on item {}.  Attr={}, Modif={}", stack, ent.getKey(), ent.getValue());
@@ -108,16 +105,16 @@ public class AttributesLibClient {
 	private static void applyModifierTooltips(@Nullable Player player, ItemStack stack, Consumer<Component> tooltip, TooltipFlag flag) {
 		Multimap<Attribute, AttributeModifier> mainhand = getSortedModifiers(stack, EquipmentSlot.MAINHAND);
 		Multimap<Attribute, AttributeModifier> offhand = getSortedModifiers(stack, EquipmentSlot.OFFHAND);
-		Multimap<Attribute, AttributeModifier> dualHand = sortedMap();
+		Multimap<Attribute, AttributeModifier> dualHand = AttributeHelper.sortedMap();
 		for (Attribute atr : mainhand.keys()) {
 			Collection<AttributeModifier> modifMh = mainhand.get(atr);
 			Collection<AttributeModifier> modifOh = offhand.get(atr);
-			modifMh.stream().filter(a1 -> modifOh.stream().anyMatch(a2 -> a1.getName().equals(a2.getName()))).forEach(modif -> dualHand.put(atr, modif));
+			modifMh.stream().filter(a1 -> modifOh.stream().anyMatch(a2 -> a1.getId().equals(a2.getId()))).forEach(modif -> dualHand.put(atr, modif));
 		}
 
 		dualHand.values().forEach(m -> {
 			mainhand.values().remove(m);
-			offhand.values().removeIf(m1 -> m1.getName().equals(m.getName()));
+			offhand.values().removeIf(m1 -> m1.getId().equals(m.getId()));
 		});
 
 		Set<UUID> skips = new HashSet<>();
@@ -185,9 +182,10 @@ public class AttributesLibClient {
 					else amt *= 1 + modif.getAmount();
 				}
 				amt += baseBonus;
-				MutableComponent text = IFormattableAttribute.toBaseComponent(attr, base, entityBase, !baseModif.children.isEmpty(), flag);
-				tooltip.accept(padded(" ", text).withStyle(baseModif.children.isEmpty() ? ChatFormatting.DARK_GREEN : ChatFormatting.GOLD));
-				if (Screen.hasShiftDown() && !baseModif.children.isEmpty()) {
+				boolean isMerged = (!baseModif.children.isEmpty() || baseBonus != 0);
+				MutableComponent text = IFormattableAttribute.toBaseComponent(attr, amt, entityBase, isMerged, flag);
+				tooltip.accept(padded(" ", text).withStyle(isMerged ? ChatFormatting.GOLD : ChatFormatting.DARK_GREEN));
+				if (Screen.hasShiftDown() && isMerged) {
 					// Display the raw base value, and then all children modifiers.
 					text = IFormattableAttribute.toBaseComponent(attr, rawBase, entityBase, false, flag);
 					tooltip.accept(list().append(text.withStyle(ChatFormatting.DARK_GREEN)));

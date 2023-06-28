@@ -18,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.ForgeMod;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
 
 /**
@@ -30,34 +31,26 @@ public interface IFormattableAttribute {
 	 * Converts the value of an attribute modifier to the value that will be displayed.<p>
 	 * For multiplication modifiers, this method is responsible for converting the value to percentage form.<br>
 	 * The only vanilla attribute which performs value formatting is Knockback Resistance.<br>
-	 * @param modif The Attribute Modifier whose value is being formatted.
-	 * @param flag The tooltip flag.
-	 * @return The formatted attribute modifier value.
-	 */
-	default double formatValue(AttributeModifier modif, TooltipFlag flag) {
-		double value = modif.getAmount();
-
-		if (modif.getOperation() == Operation.ADDITION) {
-			// Knockback Resist displays addition modifiers as 10x higher than the real value.
-			if (this == Attributes.KNOCKBACK_RESISTANCE) value *= 10.0D;
-		} else {
-			// Multiplication modifiers display the value as a percentage.
-			value *= 100.0D;
-		}
-
-		return value;
-	}
-
-	/**
-	 * Converts the formatted value of an attribute modifier into a Component.
-	 * @param modif The Attribute Modifier whose value is being formatted.
-	 * @param formattedValue The formatted value, from {@link #formatValue(AttributeModifier, TooltipFlag)}
+	 * @param op The operation of the modifier.
+	 * @param value The value of the modifier.
 	 * @param flag The tooltip flag.
 	 * @return The component form of the formatted value.
 	 */
-	default MutableComponent valueToComponent(AttributeModifier modif, double formattedValue, TooltipFlag flag) {
-		String key = modif.getOperation() == Operation.ADDITION ? "attributeslib.value.flat" : "attributeslib.value.percent";
-		return Component.translatable(key, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(formattedValue));
+	default MutableComponent toValueComponent(Operation op, double value, TooltipFlag flag) {
+		// Knockback Resistance and Swim Speed are percent-based attributes, but we can't registry replace attributes, so we do this here.
+		// For Knockback Resistance, vanilla hardcodes a multiplier of 10 for addition values to hide numbers lower than 1, 
+		// but percent-based is the real desire.
+		// For Swim Speed, the implementation is percent-based, but no additional tricks are performed.
+		if (this == Attributes.KNOCKBACK_RESISTANCE || this == ForgeMod.SWIM_SPEED.get()) {
+			return Component.translatable("attributeslib.value.percent", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(value * 100));
+		}
+		// Speed has no metric, so displaying everything as percent works better for the user.
+		// However, Speed also operates in that the default is 0.1, not 1, so we have to special-case it instead of including it above.
+		if (this == Attributes.MOVEMENT_SPEED && op == Operation.ADDITION) {
+			return Component.translatable("attributeslib.value.percent", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(value * 1000));
+		}
+		String key = op == Operation.ADDITION ? "attributeslib.value.flat" : "attributeslib.value.percent";
+		return Component.translatable(key, ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(op == Operation.ADDITION ? value : value * 100));
 	}
 
 	/**
@@ -69,7 +62,7 @@ public interface IFormattableAttribute {
 	 */
 	default MutableComponent toComponent(AttributeModifier modif, TooltipFlag flag) {
 		Attribute attr = ths();
-		double value = formatValue(modif, flag);
+		double value = modif.getAmount();
 
 		Component debugInfo = CommonComponents.EMPTY;
 
@@ -81,10 +74,10 @@ public interface IFormattableAttribute {
 		MutableComponent comp;
 
 		if (value > 0.0D) {
-			comp = Component.translatable("attributeslib.modifier.plus", valueToComponent(modif, value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
+			comp = Component.translatable("attributeslib.modifier.plus", toValueComponent(modif.getOperation(), value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
 		} else {
 			value *= -1.0D;
-			comp = Component.translatable("attributeslib.modifier.take", valueToComponent(modif, value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
+			comp = Component.translatable("attributeslib.modifier.take", toValueComponent(modif.getOperation(), value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
 		}
 
 		return comp.append(debugInfo);
@@ -100,6 +93,7 @@ public interface IFormattableAttribute {
 	default UUID getBaseUUID() {
 		if (this == Attributes.ATTACK_DAMAGE) return AttributeHelper.BASE_ATTACK_DAMAGE;
 		else if (this == Attributes.ATTACK_SPEED) return AttributeHelper.BASE_ATTACK_SPEED;
+		else if (this == ForgeMod.ATTACK_RANGE.get()) return AttributeHelper.BASE_ATTACK_RANGE;
 		return null;
 	}
 
@@ -126,8 +120,8 @@ public interface IFormattableAttribute {
 	}
 
 	/**
-	 * Certain attributes, such as Attack Damage and Projectile Damage, are increased by an Enchantment that
-	 * doesn't actually apply an attribute modifier.<br>
+	 * Certain attributes, such as Attack Damage, are increased by an Enchantment that doesn't actually apply 
+	 * an attribute modifier.<br>
 	 * This method allows for including certain additional variables in the computation of "base" attribute values.
 	 * @param stack The stack in question.
 	 * @return Any bonus value to be applied to the attribute's value, after all modifiers have been applied.

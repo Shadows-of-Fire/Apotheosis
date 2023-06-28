@@ -3,6 +3,18 @@
 * [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
 
 ## 6.3.0
+### New Content
+* Converted all Attributes content to the new AttributesLib submodule.
+  * This will eventually be pulled out as an API/Library (likely in 1.20).
+* Added an Attributes Menu, accessible via the Sword Button in the top right of the player view.
+  * This menu displays all of your attributes, a description, and all modifiers to those stats.
+  * It also displays the base, min, and max values of those stats.
+* Added six new attributes:
+  * `apotheosis:armor_pierce`, `apotheosis:armor_shred`, `apotheosis:prot_pierce`, and `apotheosis:prot_shred` can reduce the target's defensive stats.
+  * These are flat-value and percentage reductions for Armor and Protection, respectively.
+  * `apotheosis:healing_received` modifies all incoming healing.
+  * `apotheosis:dodge_chance` gives a chance to negate incoming melee or projectile damage.
+
 ### Balance Changes
 * Instant Health on Hit max level III => II. Chance of receiving level II reduced from 50% to 20%, and is also locked to mythic.
   * Instant Health III was too strong at all thresholds, and Instant Health II was too common.
@@ -32,8 +44,6 @@
   * Vanilla Calculations are: DR = 4% * prot points, up to 80%.
   * Old Apoth Calculations were: DR = 4% * prot points, up to 80%, then an additional 0.33% * prot points, up to 95%.
   * New Apoth Calculations are: DR = 2.5% * prot points, up to 85%.
-* Four new attributes for bypassing damage reduction were added: Armor Shred, Armor Pierce, Protection Shred, and Protection Pierce.
-  * These are Percentage and Flat reductions for Armor and Protection, respectively.
 
 ### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
@@ -47,9 +57,9 @@
   * The output inventory can be extracted from.
 * Salvaging now yields a different amount of gem dust per rarity.
   * The `U` key (recipe lookup button) now works properly for gems.
-* Added the `apotheosis:healing_received` attribute.
 * Added a validator that ensures the proper number of affixes exist for any given category/rarity combination.
 * Fixed a crash with boss spawners in invalid dimensions.
+* The Thunderstruck Affix (Light Weapon AOE damage) now properly does player damage.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.

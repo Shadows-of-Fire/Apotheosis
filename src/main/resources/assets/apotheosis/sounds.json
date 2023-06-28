@@ -1,2 +1,6 @@
 {
+	"dodge": {
+		"subtitle": "apotheosis.subtitle.dodge",
+		"sounds": ["apotheosis:dodge"]
+	}
 }

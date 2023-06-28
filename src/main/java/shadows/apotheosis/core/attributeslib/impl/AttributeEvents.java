@@ -1,17 +1,39 @@
 package shadows.apotheosis.core.attributeslib.impl;
 
+import java.util.Map.Entry;
+import java.util.Random;
+
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
@@ -19,14 +41,32 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.ALAttributes;
+import shadows.apotheosis.core.attributeslib.api.AttributeHelper;
+import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
 import shadows.apotheosis.core.attributeslib.util.AttributesUtil;
 
 public class AttributeEvents {
+
+	// Fixes attributes which had their base values changed.
+	// TODO: Remove 6.4.0
+	@SubscribeEvent
+	@SuppressWarnings("deprecation")
+	public void fixChangedAttributes(PlayerLoggedInEvent e) {
+		AttributeMap map = e.getEntity().getAttributes();
+		for (Entry<ResourceKey<Attribute>, Attribute> entry : Registry.ATTRIBUTE.entrySet()) {
+			if (entry.getKey().location().getNamespace().equals(Apotheosis.MODID)) {
+				map.getInstance(entry.getValue()).setBaseValue(((RangedAttribute) entry.getValue()).getDefaultValue());
+			}
+		}
+		map.getInstance(ForgeMod.STEP_HEIGHT_ADDITION.get()).setBaseValue(0.6);
+	}
 
 	private boolean canBenefitFromDrawSpeed(ItemStack stack) {
 		return stack.getItem() instanceof ProjectileWeaponItem || stack.getItem() instanceof TridentItem;
@@ -208,6 +248,95 @@ public class AttributeEvents {
 				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(ALAttributes.CRIT_CHANCE.get()));
 			}
 			arrow.getPersistentData().putBoolean("attributeslib.arrow.done", true);
+		}
+	}
+
+	/**
+	 * Copied from {@link MeleeAttackGoal#getAttackReachSqr}
+	 */
+	private static double getAttackReachSqr(Entity attacker, LivingEntity pAttackTarget) {
+		return (double) (attacker.getBbWidth() * 2.0F * attacker.getBbWidth() * 2.0F + pAttackTarget.getBbWidth());
+	}
+
+	/**
+	 * Random used for dodge calculations.<br>
+	 * This random is seeded with the target entity's tick count before use.
+	 */
+	private static Random dodgeRand = new Random();
+
+	/**
+	 * Handles {@link ALAttributes#DODGE_CHANCE} for melee attacks.
+	 */
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void dodge(LivingAttackEvent e) {
+		LivingEntity target = e.getEntity();
+		if (target.level.isClientSide) return;
+		Entity attacker = e.getSource().getDirectEntity();
+		if (attacker instanceof LivingEntity) {
+			double dodgeChance = target.getAttributeValue(ALAttributes.DODGE_CHANCE.get());
+			double atkRangeSqr = attacker instanceof Player p ? p.getAttackRange() * p.getAttackRange() : getAttackReachSqr(attacker, target);
+			dodgeRand.setSeed(target.tickCount);
+			if (attacker.distanceToSqr(target) <= atkRangeSqr && dodgeRand.nextFloat() <= dodgeChance) {
+				onDodge(target);
+				e.setCanceled(true);
+			}
+		}
+	}
+
+	/**
+	 * Handles {@link ALAttributes#DODGE_CHANCE} for projectiles.
+	 */
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void dodge(ProjectileImpactEvent e) {
+		Entity target = e.getRayTraceResult() instanceof EntityHitResult entRes ? entRes.getEntity() : null;
+		if (target instanceof LivingEntity lvTarget) {
+			double dodgeChance = lvTarget.getAttributeValue(ALAttributes.DODGE_CHANCE.get());
+			// We can skip the distance check for projectiles, as "Projectile Impact" means the projectile is on the target.
+			dodgeRand.setSeed(target.tickCount);
+			if (dodgeRand.nextFloat() <= dodgeChance) {
+				onDodge(lvTarget);
+				e.setCanceled(true);
+			}
+		}
+	}
+
+	private void onDodge(LivingEntity target) {
+		target.level.playSound(null, target, AttributesLib.DODGE_SOUND.get(), SoundSource.NEUTRAL, 1, 0.7F + target.random.nextFloat() * 0.3F);
+		if (target.level instanceof ServerLevel sl) {
+			double height = target.getBbHeight();
+			double width = target.getBbWidth();
+			sl.sendParticles(ParticleTypes.LARGE_SMOKE, target.getX() - width / 4, target.getY(), target.getZ() - width / 4, 6, -width / 4, height / 8, -width / 4, 0);
+		}
+	}
+
+	/**
+	 * Fix for https://github.com/MinecraftForge/MinecraftForge/issues/9370
+	 */
+	@SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+	public void fixMCF9370(ProjectileImpactEvent e) {
+		if (e.isCanceled()) {
+			Entity target = e.getRayTraceResult() instanceof EntityHitResult entRes ? entRes.getEntity() : null;
+			Projectile proj = e.getProjectile();
+			if (target != null && proj instanceof AbstractArrow arrow && arrow.getPierceLevel() > 0) {
+				if (arrow.piercingIgnoreEntityIds == null) {
+					arrow.piercingIgnoreEntityIds = new IntOpenHashSet(arrow.getPierceLevel());
+				}
+				arrow.piercingIgnoreEntityIds.add(target.getId());
+			}
+		}
+	}
+
+	/**
+	 * Adds a fake modifier to show Attack Range to weapons with Attack Damage.
+	 */
+	@SubscribeEvent
+	public void affixModifiers(ItemAttributeModifierEvent e) {
+		boolean hasBaseAD = e.getModifiers().get(Attributes.ATTACK_DAMAGE).stream().filter(m -> ((IFormattableAttribute) Attributes.ATTACK_DAMAGE).getBaseUUID().equals(m.getId())).findAny().isPresent();
+		if (hasBaseAD) {
+			boolean hasBaseAR = e.getModifiers().get(ForgeMod.ATTACK_RANGE.get()).stream().filter(m -> ((IFormattableAttribute) ForgeMod.ATTACK_RANGE.get()).getBaseUUID().equals(m.getId())).findAny().isPresent();
+			if (!hasBaseAR) {
+				e.addModifier(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier(AttributeHelper.BASE_ATTACK_RANGE, () -> "attributeslib:fake_base_range", 0, Operation.ADDITION));
+			}
 		}
 	}
 }

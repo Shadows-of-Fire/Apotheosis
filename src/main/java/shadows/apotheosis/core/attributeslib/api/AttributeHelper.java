@@ -1,8 +1,13 @@
 package shadows.apotheosis.core.attributeslib.api;
 
+import java.util.Comparator;
 import java.util.UUID;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
+
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import shadows.apotheosis.util.Comparators;
 import shadows.apotheosis.util.ItemAccess;
 import shadows.placebo.Placebo;
 
@@ -24,6 +30,11 @@ public class AttributeHelper {
 	 * UUID of the base modifier for Attack Speed
 	 */
 	public static final UUID BASE_ATTACK_SPEED = ItemAccess.getBaseAS();
+
+	/**
+	 * UUID of the base modifier for Attack Range
+	 */
+	public static final UUID BASE_ATTACK_RANGE = UUID.fromString("89689aa7-c577-4d97-a03e-791fde1798d4");
 
 	/**
 	 * A brief explanation of {@link Operation} and Attribute calculations:
@@ -77,6 +88,21 @@ public class AttributeHelper {
 	 */
 	public static void multiplyFinal(LivingEntity entity, Attribute attribute, String name, double modifier) {
 		modify(entity, attribute, name, modifier, Operation.MULTIPLY_TOTAL);
+	}
+
+	@SuppressWarnings("deprecation")
+	public static Multimap<Attribute, AttributeModifier> sortedMap() {
+		return TreeMultimap.create(Comparators.idComparator(Registry.ATTRIBUTE), modifierComparator());
+	}
+
+	public static Comparator<AttributeModifier> modifierComparator() {
+		//Formatter::off
+		return Comparators.chained(
+			Comparator.comparing(AttributeModifier::getOperation),
+			Comparator.comparing(AttributeModifier::getAmount),
+			Comparator.comparing(AttributeModifier::getId)
+		);
+		//Formatter::on
 	}
 
 	/**
