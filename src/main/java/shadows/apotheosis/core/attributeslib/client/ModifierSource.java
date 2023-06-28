@@ -14,6 +14,7 @@ import net.minecraft.client.resources.MobEffectTextureManager;
 import net.minecraft.core.Registry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.util.Comparators;
 
@@ -53,7 +54,7 @@ public abstract class ModifierSource<T> implements Comparable<ModifierSource<T>>
 	}
 
 	@Override
-	public final int compareTo(ModifierSource<T> o) {
+	public int compareTo(ModifierSource<T> o) {
 		return this.comparator.compare(this.getData(), o.getData());
 	}
 
@@ -61,7 +62,7 @@ public abstract class ModifierSource<T> implements Comparable<ModifierSource<T>>
 
 		@SuppressWarnings("deprecation")
 		public ItemModifierSource(ItemStack data) {
-			super(ModifierSourceType.ITEM, Comparator.comparing(ItemStack::getItem, Comparators.idComparator(Registry.ITEM)), data);
+			super(ModifierSourceType.ITEM, Comparator.comparing(LivingEntity::getEquipmentSlotForItem).reversed().thenComparing(Comparator.comparing(ItemStack::getItem, Comparators.idComparator(Registry.ITEM))), data);
 		}
 
 		@Override
