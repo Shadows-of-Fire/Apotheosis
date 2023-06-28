@@ -3,23 +3,14 @@ package shadows.apotheosis.potion.potions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import shadows.apotheosis.core.attributeslib.api.ALAttributes;
 
 public class GrievousEffect extends MobEffect {
 
 	public GrievousEffect() {
 		super(MobEffectCategory.HARMFUL, ChatFormatting.DARK_RED.getColor());
-	}
-
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void heal(LivingHealEvent e) {
-		if (e.getEntity().hasEffect(this)) {
-			int level = e.getEntity().getEffect(this).getAmplifier() + 1;
-			e.setAmount(e.getAmount() * Math.max(0, 1 - level * 0.4F));
-			if (e.getAmount() <= 0.001F) e.setCanceled(true);
-		}
+		this.addAttributeModifier(ALAttributes.HEALING_RECEIVED.get(), "e04b0b87-5722-4841-bb87-98c6a4632c6f", -0.4, Operation.ADDITION);
 	}
 
 }

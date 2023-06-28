@@ -233,6 +233,7 @@ public class AttributeEvents {
 	public void heal(LivingHealEvent e) {
 		float factor = (float) e.getEntity().getAttributeValue(ALAttributes.HEALING_RECEIVED.get());
 		e.setAmount(e.getAmount() * factor);
+		if (e.getAmount() <= 0) e.setCanceled(true);
 	}
 
 	/**
