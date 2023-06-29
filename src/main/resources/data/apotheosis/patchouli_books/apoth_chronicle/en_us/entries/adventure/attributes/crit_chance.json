@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Crit Chance$() is the chance that an attack (or arrow) becomes a critical strike, compounding with jump crits. Values over 100% allow you to perform multicrits.$(p)Found on weapons."
+            "text": "$(9)Crit Chance$() is the chance that any damage you deal becomes a critical strike. Values over 100% allow you to perform multicrits.$(p)Found on weapons."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 1$(p)$(9)$(n)Max Value:$() 5$(p)Note: A value of 1.0 is actually 0% crit chance, but if the base was zero, percentage modifiers would have no effect, and flat modifiers don't convey the bonus correctly."
+			"text": "The amount of damage your critical strikes deal is dependent on your $(l:apotheosis:adventure/attributes/crit_damage)Crit Damage$()."
 		}
 	]
 }

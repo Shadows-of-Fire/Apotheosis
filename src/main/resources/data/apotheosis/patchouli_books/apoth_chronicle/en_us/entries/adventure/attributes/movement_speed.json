@@ -7,11 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Your $(9)Movement Speed$() is how fast you move, in blocks per second.$(p)This stat can be provided by nearly any item."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0.7$(p)$(9)$(n)Max Value:$() 1024"
-		}
+            "text": "Your $(9)Movement Speed$() is how fast you move, relative to the normal walking speed of a player.$(p)This stat can be provided by nearly any item."
+        }
 	]
 }

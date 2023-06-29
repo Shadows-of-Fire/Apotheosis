@@ -19,7 +19,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "The first 20 points provide 4% DR each, up to 80% total.$(p)In Vanilla, 20 points is the max, and any extra have no effect.$(p)With Apotheosis, the next 45 points provide an additional 0.33% each, up to 95% total (at 65 points).$(p)Armor is applied before enchantments."
+            "text": "In Apotheosis, each Protection point provides 2.5% damage reduction, up to 85%.$(p)In vanilla, each point provides 4% damage reduction, up to 80%."
         }
 	]
 }

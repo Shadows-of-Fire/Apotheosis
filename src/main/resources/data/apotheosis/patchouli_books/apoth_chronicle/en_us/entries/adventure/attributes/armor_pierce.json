@@ -1,0 +1,13 @@
+{
+    "name": "Armor Pierce",
+    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Armor Pierce$() allows you to ignore a flat amount of your target's armor when attacking.$(p)Extra Armor Pierce can cause your target to have negative armor."
+        }
+	]
+}

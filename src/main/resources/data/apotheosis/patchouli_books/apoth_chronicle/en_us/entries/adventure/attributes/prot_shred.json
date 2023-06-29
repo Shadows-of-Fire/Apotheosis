@@ -1,0 +1,13 @@
+{
+    "name": "Prot Shred",
+    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Prot Shred$() allows you to ignore a percentage of your target's protection points when attacking.$(p)$(9)Prot Shred$() is applied before $(9)Prot Pierce$()."
+        }
+	]
+}

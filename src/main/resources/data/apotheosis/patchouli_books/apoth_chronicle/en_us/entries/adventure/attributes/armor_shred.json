@@ -1,0 +1,13 @@
+{
+    "name": "Armor Shred",
+    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Armor Shred$() allows you to ignore a percentage of your target's armor when attacking.$(p)$(9)Armor Shred$() is applied before $(9)Armor Pierce$()."
+        }
+	]
+}

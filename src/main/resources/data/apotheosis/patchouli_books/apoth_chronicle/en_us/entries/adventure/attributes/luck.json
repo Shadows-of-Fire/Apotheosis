@@ -11,7 +11,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Base Value:$() 0$(p)$(9)$(n)Max Value:$() 1024$(p)Note: You can have negative luck, which makes better loot drops even harder to get."
+			"text": "You can have negative luck, which makes better loot drops even harder to get."
 		}
 	]
 }

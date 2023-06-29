@@ -246,7 +246,6 @@ public class AttributeEvents {
 			if (arrow.getOwner() instanceof LivingEntity le) {
 				arrow.setBaseDamage(arrow.getBaseDamage() * le.getAttributeValue(ALAttributes.ARROW_DAMAGE.get()));
 				arrow.setDeltaMovement(arrow.getDeltaMovement().scale(le.getAttributeValue(ALAttributes.ARROW_VELOCITY.get())));
-				if (!arrow.isCritArrow()) arrow.setCritArrow(arrow.random.nextFloat() <= le.getAttributeValue(ALAttributes.CRIT_CHANCE.get()));
 			}
 			arrow.getPersistentData().putBoolean("attributeslib.arrow.done", true);
 		}
