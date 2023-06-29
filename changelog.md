@@ -44,6 +44,8 @@
   * Vanilla Calculations are: DR = 4% * prot points, up to 80%.
   * Old Apoth Calculations were: DR = 4% * prot points, up to 80%, then an additional 0.33% * prot points, up to 95%.
   * New Apoth Calculations are: DR = 2.5% * prot points, up to 85%.
+* Gem values have been updated, some stats on gems have been changed.
+* I really can't list everything, so take this list as non-exhaustive.
 
 ### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).

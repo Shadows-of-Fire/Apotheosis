@@ -162,11 +162,14 @@ public class GemItem extends Item {
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 		if (group == CreativeModeTab.TAB_SEARCH) {
 			GemManager.INSTANCE.getValues().stream().sorted((g1, g2) -> g1.getId().compareTo(g2.getId())).forEach(gem -> {
-				ItemStack stack = new ItemStack(this);
-				setGem(stack, gem);
-				setLootRarity(stack, gem.getMaxRarity());
-				setFacets(stack, gem.getMaxFacets(gem.getMaxRarity()));
-				items.add(stack);
+				for (LootRarity rarity : LootRarity.values()) {
+					if (gem.clamp(rarity) != rarity) continue;
+					ItemStack stack = new ItemStack(this);
+					setGem(stack, gem);
+					setLootRarity(stack, rarity);
+					setFacets(stack, gem.getMaxFacets(rarity));
+					items.add(stack);
+				}
 			});
 		}
 	}

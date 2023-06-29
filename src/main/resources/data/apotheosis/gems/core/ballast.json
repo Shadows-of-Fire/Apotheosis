@@ -42,7 +42,7 @@
 					"step": 0.25
 				},
 				"ancient": {
-					"min": 10,
+					"min": 7,
 					"steps": 10,
 					"step": 0.25
 				}
@@ -85,7 +85,7 @@
 					"step": 0.25
 				},
 				"ancient": {
-					"min": 11,
+					"min": 9,
 					"steps": 10,
 					"step": 0.25
 				}
@@ -129,7 +129,7 @@
 				"ancient": {
 					"min": 0.475,
 					"steps": 10,
-					"step": 0.025
+					"step": 0.01
 				}
 			}
 		},

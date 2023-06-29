@@ -13,7 +13,7 @@
 					"leggings"
 				]
 			},
-			"attribute": "minecraft:generic.armor",
+			"attribute": "minecraft:generic.armor_toughness",
 			"operation": "ADDITION",
 			"values": {
 				"common": {
@@ -42,7 +42,7 @@
 					"step": 0.25
 				},
 				"ancient": {
-					"min": 5,
+					"min": 3.5,
 					"steps": 10,
 					"step": 0.25
 				}
@@ -83,12 +83,12 @@
 				"mythic": {
 					"min": 0.30,
 					"steps": 7,
-					"step": 0.02
+					"step": 0.01
 				},
 				"ancient": {
-					"min": 0.80,
+					"min": 0.40,
 					"steps": 10,
-					"step": 0.02
+					"step": 0.01
 				}
 			}
 		},
@@ -126,12 +126,12 @@
 				"mythic": {
 					"min": 0.32,
 					"steps": 7,
-					"step": 0.02
+					"step": 0.01
 				},
 				"ancient": {
-					"min": 0.75,
+					"min": 0.40,
 					"steps": 10,
-					"step": 0.02
+					"step": 0.01
 				}
 			}
 		},
@@ -172,7 +172,7 @@
 					"step": 0.01
 				},
 				"ancient": {
-					"min": 0.50,
+					"min": 0.40,
 					"steps": 10,
 					"step": 0.01
 				}
