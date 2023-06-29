@@ -1,7 +1,7 @@
 {
 	"type": "apotheosis:attribute",
 	"attribute": "apotheosis:mining_speed",
-	"operation": "MULTIPLY_BASE",
+	"operation": "ADDITION",
 	"values": {
 		"common": {
 			"min": 0.15,

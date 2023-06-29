@@ -47,10 +47,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
+import shadows.placebo.PlaceboClient;
 
 public class AttributesGui extends GuiComponent implements Widget, GuiEventListener {
 
-	public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/attributes.png");
+	public static final ResourceLocation TEXTURES = Apotheosis.loc("textures/gui/attributes_gui.png");
 	public static final int ENTRY_HEIGHT = 22;
 	public static final int MAX_ENTRIES = 6;
 	public static final int WIDTH = 131;
@@ -59,13 +60,16 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 	// It isn't persistent through sessions, but that's not a huge issue.
 	public static boolean wasOpen = false;
 	// Similar to the above, we use a static field to record where the scroll bar was.
-	protected static float scrollOffset;
+	protected static float scrollOffset = 0;
+	// Ditto.
+	protected static boolean hideUnchanged = false;
 
 	protected final InventoryScreen parent;
 	protected final Player player;
 	protected final Font font = Minecraft.getInstance().font;
-	protected final ImageButton button;
+	protected final ImageButton toggleBtn;
 	protected final ImageButton recipeBookButton;
+	protected final HideUnchangedButton hideUnchangedBtn;
 
 	protected int leftPos, topPos;
 	protected boolean scrolling;
@@ -74,22 +78,32 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 	@Nullable
 	protected AttributeInstance selected = null;
 	protected boolean open = false;
+	protected long lastRenderTick = -1;
 
 	public AttributesGui(InventoryScreen parent) {
 		this.parent = parent;
 		this.player = Minecraft.getInstance().player;
-		ForgeRegistries.ATTRIBUTES.getValues().stream().map(player::getAttribute).filter(Objects::nonNull).forEach(data::add);
-		this.data.sort(this::compareAttrs);
+		this.refreshData();
 		this.leftPos = parent.getGuiLeft() - WIDTH;
 		this.topPos = parent.getGuiTop();
-		button = new ImageButton(parent.getGuiLeft() + 63, parent.getGuiTop() + 10, 10, 10, 0, 0, 10, Apotheosis.loc("textures/gui/attributes_button.png"), 10, 20, btn -> {
+		this.toggleBtn = new ImageButton(parent.getGuiLeft() + 63, parent.getGuiTop() + 10, 10, 10, WIDTH, 0, 10, TEXTURES, 256, 256, btn -> {
 			this.toggleVisibility();
 		}, Component.translatable("attributeslib.gui.show_attributes"));
-		this.startIndex = (int) (scrollOffset * this.getOffScreenRows() + 0.5D);
 		if (this.parent.children().size() > 1) {
 			GuiEventListener btn = this.parent.children().get(0);
 			this.recipeBookButton = btn instanceof ImageButton imgBtn ? imgBtn : null;
 		} else this.recipeBookButton = null;
+		this.hideUnchangedBtn = new HideUnchangedButton(0, 0);
+	}
+
+	public void refreshData() {
+		this.data.clear();
+		ForgeRegistries.ATTRIBUTES.getValues().stream().map(player::getAttribute).filter(Objects::nonNull).filter(ai -> {
+			if (!hideUnchanged) return true;
+			return ai.getBaseValue() != ai.getValue();
+		}).forEach(data::add);
+		this.data.sort(this::compareAttrs);
+		this.startIndex = (int) (scrollOffset * this.getOffScreenRows() + 0.5D);
 	}
 
 	public void toggleVisibility() {
@@ -97,6 +111,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 		if (this.open && parent.getRecipeBookComponent().isVisible()) {
 			parent.getRecipeBookComponent().toggleVisibility();
 		}
+		this.hideUnchangedBtn.visible = this.open;
 
 		int newLeftPos;
 		if (this.open && parent.width >= 379) {
@@ -110,6 +125,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 		this.topPos = parent.getGuiTop();
 
 		if (this.recipeBookButton != null) this.recipeBookButton.setPosition(parent.getGuiLeft() + 104, parent.height / 2 - 22);
+		this.hideUnchangedBtn.setPosition(this.leftPos + 7, this.topPos + 151);
 	}
 
 	protected int compareAttrs(AttributeInstance a1, AttributeInstance a2) {
@@ -126,12 +142,17 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
 	@Override
 	public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-		this.button.x = this.parent.getGuiLeft() + 63;
-		this.button.y = this.parent.getGuiTop() + 10;
+		this.toggleBtn.x = this.parent.getGuiLeft() + 63;
+		this.toggleBtn.y = this.parent.getGuiTop() + 10;
 		if (this.parent.getRecipeBookComponent().isVisible()) this.open = false;
 		wasOpen = this.open;
-
 		if (!open) return;
+
+		if (this.lastRenderTick != PlaceboClient.ticks) {
+			this.lastRenderTick = PlaceboClient.ticks;
+			this.refreshData();
+		}
+
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, TEXTURES);
@@ -147,6 +168,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 		}
 		this.renderTooltip(stack, mouseX, mouseY);
 		this.font.draw(stack, Component.translatable("attributeslib.gui.attributes"), this.leftPos + 8, this.topPos + 5, 0x404040);
+		this.font.draw(stack, Component.literal("Hide Unchanged"), this.leftPos + 20, this.topPos + 152, 0x404040);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -344,7 +366,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 	}
 
 	protected int getOffScreenRows() {
-		return this.data.size() - MAX_ENTRIES;
+		return Math.max(0, this.data.size() - MAX_ENTRIES);
 	}
 
 	@Nullable
@@ -373,6 +395,37 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 		if (log == 5) return f.format(n / 1000D) + "K";
 		if (log <= 8) return f.format(n / 1000000D) + "M";
 		else return f.format(n / 1000000000D) + "B";
+	}
+
+	public class HideUnchangedButton extends ImageButton {
+
+		public HideUnchangedButton(int pX, int pY) {
+			super(pX, pY, 10, 10, 131, 20, 10, TEXTURES, 256, 256, null, Component.literal("Hide Unchanged Attributes"));
+			this.visible = false;
+		}
+
+		@Override
+		public void onPress() {
+			hideUnchanged = !hideUnchanged;
+		}
+
+		@Override
+		public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+			RenderSystem.setShader(GameRenderer::getPositionTexShader);
+			RenderSystem.setShaderTexture(0, TEXTURES);
+			int u = 131, v = 20;
+			int vOffset = hideUnchanged ? 0 : 10;
+			if (this.isHovered) {
+				vOffset += 20;
+			}
+
+			RenderSystem.enableDepthTest();
+			pPoseStack.pushPose();
+			pPoseStack.translate(0, 0, 100);
+			blit(pPoseStack, this.x, this.y, u, v + vOffset, 10, 10, 256, 256);
+			pPoseStack.popPose();
+		}
+
 	}
 
 }

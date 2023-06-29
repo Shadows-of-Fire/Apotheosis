@@ -1,7 +1,7 @@
 {
 	"type": "apotheosis:attribute",
 	"attribute": "apotheosis:experience_gained",
-	"operation": "MULTIPLY_BASE",
+	"operation": "ADDITION",
 	"values": {
 		"common": {
 			"min": 0.25,

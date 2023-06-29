@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2018 Brennan Ward
+Copyright (c) 2023 Brennan Ward
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The following assets in src/main/resources/assets/textures/ 
-* All files in /items/gems/
+The following assets in src/main/resources/assets/textures/  
 * All files in /items/vial/
 * The file /items/rune_base.png
 * The file /items/sigil_of_enhancement.png
 * The file /items/sigil_of_socketing.png
 * The file /items/book.png
-are Copyright (c) malcomriley, used under the terms of CC-BY-4.0
+are Copyright (c) malcomriley, used under the terms of CC-BY-4.0  
 https://github.com/malcolmriley/unused-textures/blob/master/LICENSE

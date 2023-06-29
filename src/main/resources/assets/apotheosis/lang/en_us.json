@@ -35,6 +35,7 @@
 	"forge:nametag_distance.desc": "How far away another player must be to see your name.",
 	"forge:reach_distance.desc": "How far your interactions reach, in blocks.",
 	"forge:step_height_addition.desc": "How many blocks you may step up without jumping.",
+	"forge:swim_speed.desc": "How fast you swim, relative to normal.",
 
 	"apotheosis:draw_speed": "Draw Speed",
 	"apotheosis:draw_speed.desc": "How fast you draw ranged weapons, such as bows, crossbows, or tridents.",

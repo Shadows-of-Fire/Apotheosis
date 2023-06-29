@@ -79,7 +79,8 @@ public class AttributesLibClient {
 		if (e.getScreen() instanceof InventoryScreen scn) {
 			var atrComp = new AttributesGui(scn);
 			e.addListener(atrComp);
-			e.addListener(atrComp.button);
+			e.addListener(atrComp.toggleBtn);
+			e.addListener(atrComp.hideUnchangedBtn);
 			if (AttributesGui.wasOpen) atrComp.toggleVisibility();
 		}
 	}

@@ -2,6 +2,8 @@ package shadows.apotheosis.adventure.affix;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
@@ -98,8 +100,15 @@ public class AttributeAffix extends Affix {
 
 	public record ModifierInst(Attribute attr, Operation op, StepFunction valueFactory, Map<EquipmentSlot, UUID> cache) {
 
+		private static Random rand = new Random();
+
+		private static UUID getHashedUUID(EquipmentSlot slot, ResourceLocation id) {
+			rand.setSeed(Objects.hash(slot, id));
+			return new UUID(rand.nextLong(), rand.nextLong());
+		}
+
 		public AttributeModifier build(EquipmentSlot slot, ResourceLocation id, float level) {
-			return new AttributeModifier(this.cache.computeIfAbsent(slot, k -> UUID.randomUUID()), "affix:" + id, this.valueFactory.get(level), this.op);
+			return new AttributeModifier(this.cache.computeIfAbsent(slot, s -> getHashedUUID(s, id)), "affix:" + id, this.valueFactory.get(level), this.op);
 		}
 	}
 

@@ -1,16 +1,16 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:piercing",
-	"operation": "MULTIPLY_BASE",
+	"attribute": "apotheosis:armor_shred",
+	"operation": "ADDITION",
 	"values": {
 		"common": {
 			"min": 0.15,
-			"steps": 10,
+			"steps": 5,
 			"step": 0.01
 		},
 		"uncommon": {
 			"min": 0.15,
-			"steps": 10,
+			"steps": 5,
 			"step": 0.01
 		},
 		"rare": {
@@ -24,13 +24,13 @@
 			"step": 0.01
 		},
 		"mythic": {
-			"min": 0.30,
+			"min": 0.25,
 			"steps": 15,
 			"step": 0.01
 		},
 		"ancient": {
-			"min": 0.50,
-			"steps": 20,
+			"min": 0.40,
+			"steps": 10,
 			"step": 0.01
 		}
 	},
