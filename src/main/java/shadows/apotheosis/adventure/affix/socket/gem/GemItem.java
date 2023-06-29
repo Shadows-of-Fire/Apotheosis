@@ -44,8 +44,7 @@ public class GemItem extends Item {
 			tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
 			return;
 		}
-		int facets = getFacets(pStack);
-		gem.addInformation(pStack, getLootRarity(pStack), facets, tooltip::add);
+		gem.addInformation(pStack, getLootRarity(pStack), tooltip::add);
 	}
 
 	@Override
@@ -54,12 +53,7 @@ public class GemItem extends Item {
 		LootRarity rarity = getLootRarity(pStack);
 		if (gem == null || rarity == null) return super.getName(pStack);
 		MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
-		int facets = GemItem.getFacets(pStack);
-		if (facets > 0 && facets == gem.getMaxFacets(rarity)) {
-			comp = Component.translatable("item.apotheosis.gem.flawless", comp);
-		} else if (facets == 0) {
-			comp = Component.translatable("item.apotheosis.gem.cracked", comp);
-		}
+		comp = Component.translatable("item.apotheosis.gem." + rarity.id(), comp);
 		return comp.withStyle(Style.EMPTY.withColor(rarity.color()));
 	}
 
@@ -75,8 +69,7 @@ public class GemItem extends Item {
 		Gem gem = getGem(pStack);
 		LootRarity rarity = getLootRarity(pStack);
 		if (gem == null || rarity == null) return super.isFoil(pStack);
-		int facets = GemItem.getFacets(pStack);
-		return facets > 0 && facets == gem.getMaxFacets(rarity);
+		return gem.getMaxRarity() == rarity;
 	}
 
 	/**
@@ -135,14 +128,6 @@ public class GemItem extends Item {
 		return null;
 	}
 
-	public static void setFacets(ItemStack stack, int facets) {
-		stack.getOrCreateTag().putInt("facets", facets);
-	}
-
-	public static int getFacets(ItemStack stack) {
-		return stack.hasTag() ? stack.getTag().getInt("facets") : 0;
-	}
-
 	public static void setLootRarity(ItemStack stack, LootRarity rarity) {
 		stack.getOrCreateTag().putString(AffixHelper.RARITY, rarity.id());
 	}
@@ -167,7 +152,6 @@ public class GemItem extends Item {
 					ItemStack stack = new ItemStack(this);
 					setGem(stack, gem);
 					setLootRarity(stack, rarity);
-					setFacets(stack, gem.getMaxFacets(rarity));
 					items.add(stack);
 				}
 			});

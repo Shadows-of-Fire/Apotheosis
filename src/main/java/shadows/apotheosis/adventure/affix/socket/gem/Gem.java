@@ -124,7 +124,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param type      The slot type for modifiers being gathered.
 	 * @param map       The destination for generated attribute modifiers.
 	 */
-	public void addModifiers(ItemStack socketed, ItemStack gem, LootRarity rarity, int facets, EquipmentSlot slot, BiConsumer<Attribute, AttributeModifier> map) {
+	public void addModifiers(ItemStack socketed, ItemStack gem, LootRarity rarity, EquipmentSlot slot, BiConsumer<Attribute, AttributeModifier> map) {
 		LootCategory cat = LootCategory.forItem(socketed);
 		if (cat.isNone()) {
 			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getId(), socketed.getHoverName().getString());
@@ -132,7 +132,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		}
 		for (EquipmentSlot itemSlot : cat.getSlots(socketed)) {
 			if (itemSlot == slot) {
-				getBonus(socketed).ifPresent(b -> b.addModifiers(gem, rarity, facets, map));
+				getBonus(socketed).ifPresent(b -> b.addModifiers(gem, rarity, map));
 			}
 		}
 	}
@@ -143,9 +143,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param purity   The purity of this gem.
 	 * @param tooltips The destination for tooltips.
 	 */
-	public void addInformation(ItemStack gem, LootRarity rarity, int facets, Consumer<Component> list) {
+	public void addInformation(ItemStack gem, LootRarity rarity, Consumer<Component> list) {
 		if (this.isUnique()) list.accept(Component.translatable("text.apotheosis.unique").withStyle(Style.EMPTY.withColor(0xC73912)));
-		list.accept(Component.translatable("text.apotheosis.facets", 4 + facets).withStyle(Style.EMPTY.withColor(0xAEA2D6)));
 		list.accept(CommonComponents.EMPTY);
 		Style style = Style.EMPTY.withColor(0x0AFF0A);
 		list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
@@ -153,11 +152,11 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		list.accept(CommonComponents.EMPTY);
 		if (this.bonuses.size() == 1) {
 			list.accept(Component.translatable("item.modifiers.socket").withStyle(ChatFormatting.GOLD));
-			list.accept(this.bonuses.get(0).getSocketBonusTooltip(gem, rarity, facets));
+			list.accept(this.bonuses.get(0).getSocketBonusTooltip(gem, rarity));
 		} else {
 			list.accept(Component.translatable("item.modifiers.socket_in").withStyle(ChatFormatting.GOLD));
 			for (GemBonus bonus : this.bonuses) {
-				Component modifComp = bonus.getSocketBonusTooltip(gem, rarity, facets);
+				Component modifComp = bonus.getSocketBonusTooltip(gem, rarity);
 				Component sum = Component.translatable("text.apotheosis.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
 				list.accept(sum);
 			}
@@ -172,16 +171,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param purity   The purity of this gem.
 	 * @param tooltips The destination for tooltips.
 	 */
-	public Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity, int facets) {
-		return getBonus(socketed).map(b -> b.getSocketBonusTooltip(gem, rarity, facets)).orElse(Component.literal("Invalid Gem Category"));
-	}
-
-	/**
-	 * Returns the max number of facets available for this gem.<br>
-	 * Facets are a user-facing wrapper on the purity (level), because most gems do not change on specify purity percentages.
-	 */
-	public int getMaxFacets(LootRarity rarity) {
-		return bonuses.stream().mapToInt(b -> b.getMaxFacets(rarity)).max().orElse(0);
+	public Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity) {
+		return getBonus(socketed).map(b -> b.getSocketBonusTooltip(gem, rarity)).orElse(Component.literal("Invalid Gem Category"));
 	}
 
 	/**
@@ -219,16 +210,16 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param source The damage source to compare against.<br>
 	 * @return How many protection points this affix is worth against this source.<br>
 	 */
-	public int getDamageProtection(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, DamageSource source) {
-		return getBonus(stack).map(b -> b.getDamageProtection(gem, rarity, facets, source)).orElse(0);
+	public int getDamageProtection(ItemStack stack, ItemStack gem, LootRarity rarity, DamageSource source) {
+		return getBonus(stack).map(b -> b.getDamageProtection(gem, rarity, source)).orElse(0);
 	}
 
 	/**
 	 * Calculates the additional damage this affix deals.
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
-	public float getDamageBonus(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, MobType creatureType) {
-		return getBonus(stack).map(b -> b.getDamageBonus(gem, rarity, facets, creatureType)).orElse(0F);
+	public float getDamageBonus(ItemStack stack, ItemStack gem, LootRarity rarity, MobType creatureType) {
+		return getBonus(stack).map(b -> b.getDamageBonus(gem, rarity, creatureType)).orElse(0F);
 	}
 
 	/**
@@ -238,23 +229,23 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param target The target entity being attacked.
 	 * @param purity The purity of this gem. if applicable.
 	 */
-	public void doPostAttack(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, LivingEntity user, @Nullable Entity target) {
-		getBonus(stack).ifPresent(b -> b.doPostAttack(gem, rarity, facets, user, target));
+	public void doPostAttack(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity target) {
+		getBonus(stack).ifPresent(b -> b.doPostAttack(gem, rarity, user, target));
 	}
 
 	/**
 	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
 	 * called.
 	 */
-	public void doPostHurt(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, LivingEntity user, @Nullable Entity attacker) {
-		getBonus(stack).ifPresent(b -> b.doPostHurt(gem, rarity, facets, user, attacker));
+	public void doPostHurt(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity attacker) {
+		getBonus(stack).ifPresent(b -> b.doPostHurt(gem, rarity, user, attacker));
 	}
 
 	/**
 	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
 	 */
-	public void onArrowFired(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, LivingEntity user, AbstractArrow arrow) {
-		getBonus(stack).ifPresent(b -> b.onArrowFired(gem, rarity, facets, user, arrow));
+	public void onArrowFired(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {
+		getBonus(stack).ifPresent(b -> b.onArrowFired(gem, rarity, user, arrow));
 	}
 
 	/**
@@ -262,15 +253,15 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * Return null to not impact the original result type.
 	 */
 	@Nullable
-	public InteractionResult onItemUse(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, UseOnContext ctx) {
-		return getBonus(stack).map(b -> b.onItemUse(gem, rarity, facets, ctx)).orElse(null);
+	public InteractionResult onItemUse(ItemStack stack, ItemStack gem, LootRarity rarity, UseOnContext ctx) {
+		return getBonus(stack).map(b -> b.onItemUse(gem, rarity, ctx)).orElse(null);
 	}
 
 	/**
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
-	public void onArrowImpact(AbstractArrow arrow, ItemStack gem, LootRarity rarity, int facets, HitResult res, HitResult.Type type) {
-		//TODO: getBonus(arrow).ifPresent(b -> b.onArrowImpact(gem, facets, arrow, res, type));
+	public void onArrowImpact(AbstractArrow arrow, ItemStack gem, LootRarity rarity, HitResult res, HitResult.Type type) {
+		//TODO: getBonus(arrow).ifPresent(b -> b.onArrowImpact(gem, arrow, res, type));
 	}
 
 	/**
@@ -281,8 +272,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param purity The purity of this gem.
 	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
 	 */
-	public float onShieldBlock(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, LivingEntity entity, DamageSource source, float amount) {
-		return getBonus(stack).map(b -> b.onShieldBlock(gem, rarity, facets, entity, source, amount)).orElse(amount);
+	public float onShieldBlock(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
+		return getBonus(stack).map(b -> b.onShieldBlock(gem, rarity, entity, source, amount)).orElse(amount);
 	}
 
 	/**
@@ -292,8 +283,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param pos    The position of the block.
 	 * @param state  The state that was broken.
 	 */
-	public void onBlockBreak(ItemStack stack, ItemStack gem, LootRarity rarity, int facets, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		getBonus(stack).ifPresent(b -> b.onBlockBreak(gem, rarity, facets, player, world, pos, state));
+	public void onBlockBreak(ItemStack stack, ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+		getBonus(stack).ifPresent(b -> b.onBlockBreak(gem, rarity, player, world, pos, state));
 	}
 
 	/**
@@ -304,8 +295,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param user    The user of the item, if applicable.
 	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
 	 */
-	public float getDurabilityBonusPercentage(ItemStack socketed, ItemStack gemStack, LootRarity lootRarity, int facets, ServerPlayer user) {
-		return getBonus(socketed).map(b -> b.getDurabilityBonusPercentage(gemStack, lootRarity, facets, user)).orElse(0F);
+	public float getDurabilityBonusPercentage(ItemStack socketed, ItemStack gemStack, LootRarity lootRarity, ServerPlayer user) {
+		return getBonus(socketed).map(b -> b.getDurabilityBonusPercentage(gemStack, lootRarity, user)).orElse(0F);
 	}
 
 	/**
@@ -319,8 +310,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param amount  The amount of damage that is to be taken.
 	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
 	 */
-	public float onHurt(ItemStack socketed, ItemStack gemStack, LootRarity rarity, int facets, DamageSource src, LivingEntity ent, float amount) {
-		return getBonus(socketed).map(b -> b.onHurt(gemStack, rarity, facets, src, ent, amount)).orElse(amount);
+	public float onHurt(ItemStack socketed, ItemStack gemStack, LootRarity rarity, DamageSource src, LivingEntity ent, float amount) {
+		return getBonus(socketed).map(b -> b.onHurt(gemStack, rarity, src, ent, amount)).orElse(amount);
 	}
 
 	/**
@@ -331,8 +322,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 * @param ench    The enchantment being queried for.
 	 * @return        The bonus level to be added to the current enchantment.
 	 */
-	public void getEnchantmentLevels(ItemStack socketed, ItemStack gemStack, LootRarity rarity, int facets, Map<Enchantment, Integer> enchantments) {
-		getBonus(socketed).ifPresent(b -> b.getEnchantmentLevels(gemStack, rarity, facets, enchantments));
+	public void getEnchantmentLevels(ItemStack socketed, ItemStack gemStack, LootRarity rarity, Map<Enchantment, Integer> enchantments) {
+		getBonus(socketed).ifPresent(b -> b.getEnchantmentLevels(gemStack, rarity, enchantments));
 	}
 
 	protected Optional<GemBonus> getBonus(ItemStack stack) {

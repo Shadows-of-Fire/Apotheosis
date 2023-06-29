@@ -16,6 +16,7 @@
   * `apotheosis:dodge_chance` gives a chance to negate incoming melee or projectile damage.
 
 ### Balance Changes
+* This list is (unfortunately) non-exhaustive. There are a ton of changes in this update!
 * Instant Health on Hit max level III => II. Chance of receiving level II reduced from 50% to 20%, and is also locked to mythic.
   * Instant Health III was too strong at all thresholds, and Instant Health II was too common.
 * Endersurge Gem level boost reduced from 1/2/3 to 1/1/2.
@@ -44,8 +45,9 @@
   * Vanilla Calculations are: DR = 4% * prot points, up to 80%.
   * Old Apoth Calculations were: DR = 4% * prot points, up to 80%, then an additional 0.33% * prot points, up to 95%.
   * New Apoth Calculations are: DR = 2.5% * prot points, up to 85%.
-* Gem values have been updated, some stats on gems have been changed.
-* I really can't list everything, so take this list as non-exhaustive.
+* Gem Facets have been removed. Gem stats will now be strictly tied to their rarity level.
+  * As a side effect, most gems have been updated.
+* Many new gems have been added!
 
 ### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).

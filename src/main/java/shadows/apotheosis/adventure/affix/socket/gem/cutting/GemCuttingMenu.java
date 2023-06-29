@@ -14,7 +14,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import shadows.apotheosis.Apoth;
@@ -31,8 +30,6 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 	public static final List<GemCuttingRecipe> RECIPES = new ArrayList<>();
 
 	static {
-		RECIPES.add(new StandardCut());
-		RECIPES.add(new PrevRarityCut());
 		RECIPES.add(new RarityUpgrade());
 	}
 
@@ -98,13 +95,8 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 		ItemStack first = this.getSlot(1).getItem();
 		if (first.isEmpty()) return false;
 		GemInstance inst = new GemInstance(first);
-		if (!inst.isMaxed()) {
-			LootRarity rarity = LootRarity.getMaterialRarity(stack);
-			return rarity != null && (rarity == inst.rarity() || rarity == inst.rarity().prev());
-		} else {
-			GemInstance otherInst = new GemInstance(stack);
-			return otherInst.isValid() && otherInst.isMaxed() && otherInst.gem() == inst.gem();
-		}
+		GemInstance otherInst = new GemInstance(stack);
+		return otherInst.isValid() && otherInst.gem() == inst.gem();
 	}
 
 	protected void onCraft() {
@@ -156,66 +148,6 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
 	}
 
-	public static class StandardCut implements GemCuttingRecipe {
-
-		@Override
-		public int getDustCost() {
-			return 1;
-		}
-
-		@Override
-		public boolean matches(ItemStack gem, ItemStack catalyst) {
-			GemInstance g = new GemInstance(gem);
-			Item rarityMat = catalyst.getItem();
-			LootRarity matRarity = AdventureModule.RARITY_MATERIALS.inverse().get(rarityMat);
-			return g.isValid() && !g.isMaxed() && matRarity != null && matRarity == g.rarity();
-		}
-
-		@Override
-		public ItemStack getResult(ItemStack gem, ItemStack catalyst) {
-			ItemStack out = gem.copy();
-			GemItem.setFacets(out, GemItem.getFacets(out) + 1);
-			return out;
-		}
-
-		@Override
-		public void decrementInputs(ItemStack gem, ItemStack catalyst) {
-			gem.shrink(1);
-			catalyst.shrink(1);
-		}
-
-	}
-
-	public static class PrevRarityCut implements GemCuttingRecipe {
-
-		@Override
-		public int getDustCost() {
-			return 1;
-		}
-
-		@Override
-		public boolean matches(ItemStack gem, ItemStack catalyst) {
-			GemInstance g = new GemInstance(gem);
-			Item rarityMat = catalyst.getItem();
-			LootRarity matRarity = AdventureModule.RARITY_MATERIALS.inverse().get(rarityMat);
-			return g.isValid() && !g.isMaxed() && matRarity != null && matRarity == g.rarity().prev() && catalyst.getCount() >= 4;
-		}
-
-		@Override
-		public ItemStack getResult(ItemStack gem, ItemStack catalyst) {
-			ItemStack out = gem.copy();
-			GemItem.setFacets(out, GemItem.getFacets(out) + 1);
-			return out;
-		}
-
-		@Override
-		public void decrementInputs(ItemStack gem, ItemStack catalyst) {
-			gem.shrink(1);
-			catalyst.shrink(4);
-		}
-
-	}
-
 	public static class RarityUpgrade implements GemCuttingRecipe {
 
 		@Override
@@ -227,13 +159,12 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 		public boolean matches(ItemStack gem, ItemStack catalyst) {
 			GemInstance g = new GemInstance(gem);
 			GemInstance c = new GemInstance(catalyst);
-			return g.isValid() && g.isMaxed() && c.isValid() && c.isMaxed() && g.rarity() != LootRarity.ANCIENT && g.gem() == c.gem() && g.rarity() == c.rarity();
+			return g.isValid() && c.isValid() && g.rarity() != LootRarity.ANCIENT && g.gem() == c.gem() && g.rarity() == c.rarity();
 		}
 
 		@Override
 		public ItemStack getResult(ItemStack gem, ItemStack catalyst) {
 			ItemStack out = gem.copy();
-			GemItem.setFacets(out, 0);
 			GemItem.setLootRarity(out, GemItem.getLootRarity(out).next());
 			return out;
 		}

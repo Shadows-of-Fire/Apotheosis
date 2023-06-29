@@ -39,8 +39,8 @@ public class DamageReductionBonus extends GemBonus {
 	}
 
 	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
-		float level = this.values.get(rarity).getForStep(facets);
+	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+		float level = this.values.get(rarity).get(0);
 		return Component.translatable("affix.apotheosis:damage_reduction.desc", Component.translatable("misc.apotheosis." + this.type.getId()), Affix.fmt(100 * level)).withStyle(ChatFormatting.YELLOW);
 	}
 

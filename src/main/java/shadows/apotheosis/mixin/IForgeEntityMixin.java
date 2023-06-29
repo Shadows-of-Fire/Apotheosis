@@ -20,7 +20,7 @@ public interface IForgeEntityMixin {
 	 * @author Shadows
 	 * @reason Ensuring that, for players, the value of the Step Height attribute matches the true step height value.
 	 */
-	@Overwrite
+	@Overwrite(remap = false)
 	@SuppressWarnings("deprecation")
 	default float getStepHeight() {
 		float legacyStep = ((Entity) (Object) this).maxUpStep;

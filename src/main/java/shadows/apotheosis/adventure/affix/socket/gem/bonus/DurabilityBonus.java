@@ -34,8 +34,8 @@ public class DurabilityBonus extends GemBonus {
 	}
 
 	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
-		float level = this.values.get(rarity).getForStep(facets);
+	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+		float level = this.values.get(rarity).get(0);
 		return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(ChatFormatting.YELLOW);
 	}
 

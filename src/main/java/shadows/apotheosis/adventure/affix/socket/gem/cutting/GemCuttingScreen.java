@@ -13,11 +13,9 @@ import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth.Items;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.screen.PlaceboContainerScreen;
@@ -47,35 +45,12 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
 		List<Component> list = new ArrayList<>();
 		if (gem.isValid()) {
 			int dust = this.menu.getSlot(0).getItem().getCount();
-
-			if (gem.isMaxed()) {
-				if (gem.rarity() == LootRarity.ANCIENT) {
-					list.add(Component.translatable("text.apotheosis.no_upgrade").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
-				} else {
-					list.add(Component.translatable("text.apotheosis.rarity_up_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
-					list.add(Component.translatable("text.apotheosis.dust_cost", "4x", Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < 4 ? ChatFormatting.RED : ChatFormatting.GRAY));
-					list.add(Component.translatable("text.apotheosis.mat_cost", "1x", gemStack.getHoverName()).withStyle(dust < 4 ? ChatFormatting.RED : ChatFormatting.GRAY));
-				}
+			if (gem.rarity() == LootRarity.ANCIENT) {
+				list.add(Component.translatable("text.apotheosis.no_upgrade").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
 			} else {
-				list.add(Component.translatable("text.apotheosis.cut_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
-				list.add(Component.translatable("text.apotheosis.dust_cost", "1x", Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < 1 ? ChatFormatting.RED : ChatFormatting.GRAY));
-				list.add(Component.empty());
-				if (gem.rarity() == LootRarity.ANCIENT) {
-					list.add(Component.translatable("text.apotheosis.mat_cost", "1x", Component.literal("Manifestation of Infinity").withStyle(ChatFormatting.OBFUSCATED)).withStyle(ChatFormatting.RED));
-				} else {
-					Item rarityMat = AdventureModule.RARITY_MATERIALS.get(gem.rarity());
-					ItemStack slotMat = this.menu.getSlot(2).getItem();
-					boolean hasMats = slotMat.getItem() == rarityMat;
-					list.add(Component.translatable("text.apotheosis.mat_cost", "1x", rarityMat.getName(ItemStack.EMPTY)).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.GRAY));
-				}
-
-				if (gem.rarity() != LootRarity.COMMON) {
-					list.add(Component.literal("or").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-					Item rarityMat = AdventureModule.RARITY_MATERIALS.get(gem.rarity().prev());
-					ItemStack slotMat = this.menu.getSlot(2).getItem();
-					boolean hasMats = slotMat.getItem() == rarityMat;
-					list.add(Component.translatable("text.apotheosis.mat_cost", "4x", rarityMat.getName(ItemStack.EMPTY)).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.GRAY));
-				}
+				list.add(Component.translatable("text.apotheosis.rarity_up_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+				list.add(Component.translatable("text.apotheosis.dust_cost", "4x", Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < 4 ? ChatFormatting.RED : ChatFormatting.GRAY));
+				list.add(Component.translatable("text.apotheosis.mat_cost", "1x", gemStack.getHoverName()).withStyle(dust < 4 ? ChatFormatting.RED : ChatFormatting.GRAY));
 			}
 		}
 		drawOnLeft(poseStack, list, this.getGuiTop() + 30);

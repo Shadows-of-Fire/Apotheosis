@@ -65,7 +65,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param purity   The purity of this gem.
 	 * @param tooltips The destination for tooltips.
 	 */
-	public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets);
+	public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity);
 
 	/**
 	 * Returns the max number of facets available for this gem.<br>
@@ -99,7 +99,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param type   The slot type for modifiers being gathered.
 	 * @param map    The destination for generated attribute modifiers.
 	 */
-	public void addModifiers(ItemStack gem, LootRarity rarity, int facets, BiConsumer<Attribute, AttributeModifier> map) {
+	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
 	}
 
 	/**
@@ -110,7 +110,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param source The damage source to compare against.<br>
 	 * @return How many protection points this affix is worth against this source.<br>
 	 */
-	public int getDamageProtection(ItemStack gem, LootRarity rarity, int facets, DamageSource source) {
+	public int getDamageProtection(ItemStack gem, LootRarity rarity, DamageSource source) {
 		return 0;
 	}
 
@@ -118,7 +118,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * Calculates the additional damage this affix deals.
 	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
 	 */
-	public float getDamageBonus(ItemStack gem, LootRarity rarity, int facets, MobType creatureType) {
+	public float getDamageBonus(ItemStack gem, LootRarity rarity, MobType creatureType) {
 		return 0.0F;
 	}
 
@@ -129,20 +129,20 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param target The target entity being attacked.
 	 * @param purity The purity of this gem. if applicable.
 	 */
-	public void doPostAttack(ItemStack gem, LootRarity rarity, int facets, LivingEntity user, @Nullable Entity target) {
+	public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity target) {
 	}
 
 	/**
 	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
 	 * called.
 	 */
-	public void doPostHurt(ItemStack gem, LootRarity rarity, int facets, LivingEntity user, @Nullable Entity attacker) {
+	public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity attacker) {
 	}
 
 	/**
 	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
 	 */
-	public void onArrowFired(ItemStack gem, LootRarity rarity, int facets, LivingEntity user, AbstractArrow arrow) {
+	public void onArrowFired(ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {
 	}
 
 	/**
@@ -150,14 +150,14 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * Return null to not impact the original result type.
 	 */
 	@Nullable
-	public InteractionResult onItemUse(ItemStack gem, LootRarity rarity, int facets, UseOnContext ctx) {
+	public InteractionResult onItemUse(ItemStack gem, LootRarity rarity, UseOnContext ctx) {
 		return null;
 	}
 
 	/**
 	 * Called when an arrow that was marked with this affix hits a target.
 	 */
-	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, int facets, HitResult res, HitResult.Type type) {
+	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, HitResult.Type type) {
 	}
 
 	/**
@@ -168,7 +168,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param purity The purity of this gem.
 	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
 	 */
-	public float onShieldBlock(ItemStack gem, LootRarity rarity, int facets, LivingEntity entity, DamageSource source, float amount) {
+	public float onShieldBlock(ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
 		return amount;
 	}
 
@@ -179,7 +179,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param pos    The position of the block.
 	 * @param state  The state that was broken.
 	 */
-	public void onBlockBreak(ItemStack gem, LootRarity rarity, int facets, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+	public void onBlockBreak(ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
 
 	}
 
@@ -191,7 +191,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param user    The user of the item, if applicable.
 	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
 	 */
-	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, int facets, ServerPlayer user) {
+	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, ServerPlayer user) {
 		return 0;
 	}
 
@@ -206,7 +206,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param amount  The amount of damage that is to be taken.
 	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
 	 */
-	public float onHurt(ItemStack gem, LootRarity rarity, int facets, DamageSource src, LivingEntity ent, float amount) {
+	public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity ent, float amount) {
 		return amount;
 	}
 
@@ -218,7 +218,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param ench      The enchantment being queried for.
 	 * @return          The bonus level to be added to the current enchantment.
 	 */
-	public void getEnchantmentLevels(ItemStack gemStack, LootRarity rarity, int facets, Map<Enchantment, Integer> enchantments) {
+	public void getEnchantmentLevels(ItemStack gemStack, LootRarity rarity, Map<Enchantment, Integer> enchantments) {
 	}
 
 	public ResourceLocation getId() {

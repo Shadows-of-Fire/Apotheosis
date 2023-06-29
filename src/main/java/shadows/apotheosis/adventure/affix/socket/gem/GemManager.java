@@ -48,8 +48,6 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 		GemItem.setGem(stack, gem);
 		if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
 		GemItem.setLootRarity(stack, rarity);
-		int facets = rand.nextInt(gem.getMaxFacets(rarity) + 1);
-		GemItem.setFacets(stack, facets);
 		return stack;
 	}
 

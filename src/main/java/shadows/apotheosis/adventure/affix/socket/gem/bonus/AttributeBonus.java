@@ -47,13 +47,13 @@ public class AttributeBonus extends GemBonus {
 	}
 
 	@Override
-	public void addModifiers(ItemStack gem, LootRarity rarity, int facets, BiConsumer<Attribute, AttributeModifier> map) {
-		map.accept(this.attribute, read(gem, rarity, facets));
+	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
+		map.accept(this.attribute, read(gem, rarity));
 	}
 
 	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
-		return IFormattableAttribute.toComponent(this.attribute, read(gem, rarity, facets), AttributesLib.getTooltipFlag());
+	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+		return IFormattableAttribute.toComponent(this.attribute, read(gem, rarity), AttributesLib.getTooltipFlag());
 	}
 
 	@Override
@@ -79,8 +79,8 @@ public class AttributeBonus extends GemBonus {
 		return 1;
 	}
 
-	public AttributeModifier read(ItemStack gem, LootRarity rarity, int facets) {
-		return new AttributeModifier(GemItem.getUUIDs(gem).get(0), "apoth.gem_modifier", this.values.get(rarity).getForStep(facets), this.operation);
+	public AttributeModifier read(ItemStack gem, LootRarity rarity) {
+		return new AttributeModifier(GemItem.getUUIDs(gem).get(0), "apoth.gem_modifier", this.values.get(rarity).get(0), this.operation);
 	}
 
 	@Override

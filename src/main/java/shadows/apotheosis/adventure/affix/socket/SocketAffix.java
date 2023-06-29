@@ -58,70 +58,70 @@ public final class SocketAffix extends Affix {
 			return;
 		}
 
-		gems(socketed).forEach(ctx -> ctx.gem().addModifiers(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), type, map));
+		gems(socketed).forEach(ctx -> ctx.gem().addModifiers(socketed, ctx.gemStack(), ctx.rarity(), type, map));
 	}
 
 	@Override
 	public int getDamageProtection(ItemStack socketed, LootRarity itemRarity, float numSockets, DamageSource source) {
-		return gems(socketed).map(ctx -> ctx.gem().getDamageProtection(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), source)).reduce(0, Integer::sum);
+		return gems(socketed).map(ctx -> ctx.gem().getDamageProtection(socketed, ctx.gemStack(), ctx.rarity(), source)).reduce(0, Integer::sum);
 	}
 
 	@Override
 	public float getDamageBonus(ItemStack socketed, LootRarity itemRarity, float numSockets, MobType creatureType) {
-		return gems(socketed).map(ctx -> ctx.gem().getDamageBonus(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), creatureType)).reduce(Float::sum).orElse(0F);
+		return gems(socketed).map(ctx -> ctx.gem().getDamageBonus(socketed, ctx.gemStack(), ctx.rarity(), creatureType)).reduce(Float::sum).orElse(0F);
 	}
 
 	@Override
 	public void doPostAttack(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, Entity target) {
-		gems(socketed).forEach(ctx -> ctx.gem().doPostAttack(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), user, target));
+		gems(socketed).forEach(ctx -> ctx.gem().doPostAttack(socketed, ctx.gemStack(), ctx.rarity(), user, target));
 	}
 
 	@Override
 	public void doPostHurt(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, Entity attacker) {
-		gems(socketed).forEach(ctx -> ctx.gem().doPostHurt(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), user, attacker));
+		gems(socketed).forEach(ctx -> ctx.gem().doPostHurt(socketed, ctx.gemStack(), ctx.rarity(), user, attacker));
 	}
 
 	@Override
 	public void onArrowFired(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, AbstractArrow arrow) {
-		gems(socketed).forEach(ctx -> ctx.gem().onArrowFired(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), user, arrow));
+		gems(socketed).forEach(ctx -> ctx.gem().onArrowFired(socketed, ctx.gemStack(), ctx.rarity(), user, arrow));
 	}
 
 	@Override
 	@Nullable
 	public InteractionResult onItemUse(ItemStack socketed, LootRarity itemRarity, float numSockets, UseOnContext useCtx) {
-		return gems(socketed).map(ctx -> ctx.gem().onItemUse(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), useCtx)).filter(Predicates.notNull()).max(InteractionResult::compareTo).orElse(null);
+		return gems(socketed).map(ctx -> ctx.gem().onItemUse(socketed, ctx.gemStack(), ctx.rarity(), useCtx)).filter(Predicates.notNull()).max(InteractionResult::compareTo).orElse(null);
 	}
 
 	@Override
 	public void onArrowImpact(AbstractArrow arrow, LootRarity itemRarity, float numSockets, HitResult res, Type type) {
-		gems(arrow).forEach(ctx -> ctx.gem().onArrowImpact(arrow, ctx.gemStack(), ctx.rarity(), ctx.facets(), res, type));
+		gems(arrow).forEach(ctx -> ctx.gem().onArrowImpact(arrow, ctx.gemStack(), ctx.rarity(), res, type));
 	}
 
 	@Override
 	public float onShieldBlock(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity entity, DamageSource source, float amount) {
-		return gems(socketed).map(ctx -> ctx.gem().onShieldBlock(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), entity, source, amount)).max(Float::compareTo).orElse(amount);
+		return gems(socketed).map(ctx -> ctx.gem().onShieldBlock(socketed, ctx.gemStack(), ctx.rarity(), entity, source, amount)).max(Float::compareTo).orElse(amount);
 	}
 
 	@Override
 	public void onBlockBreak(ItemStack socketed, LootRarity itemRarity, float numSockets, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		gems(socketed).forEach(ctx -> ctx.gem().onBlockBreak(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), player, world, pos, state));
+		gems(socketed).forEach(ctx -> ctx.gem().onBlockBreak(socketed, ctx.gemStack(), ctx.rarity(), player, world, pos, state));
 	}
 
 	@Override
 	public float getDurabilityBonusPercentage(ItemStack socketed, LootRarity rarity, float level, ServerPlayer user) {
-		return (float) gems(socketed).mapToDouble(ctx -> ctx.gem().getDurabilityBonusPercentage(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), user)).sum();
+		return (float) gems(socketed).mapToDouble(ctx -> ctx.gem().getDurabilityBonusPercentage(socketed, ctx.gemStack(), ctx.rarity(), user)).sum();
 	}
 
 	@Override
 	public float onHurt(ItemStack socketed, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
 		MutableFloat mFloat = new MutableFloat(amount);
-		gems(socketed).forEachOrdered(ctx -> mFloat.setValue(ctx.gem().onHurt(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), src, ent, mFloat.getValue())));
+		gems(socketed).forEachOrdered(ctx -> mFloat.setValue(ctx.gem().onHurt(socketed, ctx.gemStack(), ctx.rarity(), src, ent, mFloat.getValue())));
 		return mFloat.getValue();
 	}
 
 	@Override
 	public void getEnchantmentLevels(ItemStack socketed, LootRarity rarity, float level, Map<Enchantment, Integer> enchantments) {
-		gems(socketed).forEach(ctx -> ctx.gem().getEnchantmentLevels(socketed, ctx.gemStack(), ctx.rarity(), ctx.facets(), enchantments));
+		gems(socketed).forEach(ctx -> ctx.gem().getEnchantmentLevels(socketed, ctx.gemStack(), ctx.rarity(), enchantments));
 	}
 
 	@Override

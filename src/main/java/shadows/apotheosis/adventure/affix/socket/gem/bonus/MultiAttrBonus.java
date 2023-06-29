@@ -45,20 +45,20 @@ public class MultiAttrBonus extends GemBonus {
 	}
 
 	@Override
-	public void addModifiers(ItemStack gem, LootRarity rarity, int facets, BiConsumer<Attribute, AttributeModifier> map) {
+	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
 		List<UUID> uuids = GemItem.getUUIDs(gem);
 		int i = 0;
 		for (ModifierInst modifier : modifiers) {
-			map.accept(modifier.attr, modifier.build(uuids.get(i++), rarity, facets));
+			map.accept(modifier.attr, modifier.build(uuids.get(i++), rarity));
 		}
 	}
 
 	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
+	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
 		Object[] values = new Object[modifiers.size()];
 		int i = 0;
 		for (ModifierInst modif : modifiers) {
-			values[i++] = Affix.fmt(modif.values.get(rarity).getForStep(facets));
+			values[i++] = Affix.fmt(modif.values.get(rarity).get(0));
 		}
 		return Component.translatable(this.desc, values);
 	}
@@ -101,8 +101,8 @@ public class MultiAttrBonus extends GemBonus {
 			);
 		//Formatter::on
 
-		public AttributeModifier build(UUID id, LootRarity rarity, int facets) {
-			return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity).getForStep(facets), this.op);
+		public AttributeModifier build(UUID id, LootRarity rarity) {
+			return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity).get(0), this.op);
 		}
 
 	}

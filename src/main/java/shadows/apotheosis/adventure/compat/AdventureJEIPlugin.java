@@ -64,7 +64,6 @@ public class AdventureJEIPlugin implements IModPlugin {
 		Gem gemObj = GemManager.INSTANCE.getRandomItem(new LegacyRandomSource(1854));
 		GemItem.setGem(gem, gemObj);
 		GemItem.setLootRarity(gem, gemObj.getMaxRarity());
-		GemItem.setFacets(gem, gemObj.getMaxFacets(gemObj.getMaxRarity()));
 		reg.addIngredientInfo(gem, VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.socketing"));
 
 		reg.addIngredientInfo(new ItemStack(Apoth.Items.GEM_DUST.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_crushing"));

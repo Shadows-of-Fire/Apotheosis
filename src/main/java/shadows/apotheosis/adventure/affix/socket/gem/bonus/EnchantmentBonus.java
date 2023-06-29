@@ -43,7 +43,7 @@ public class EnchantmentBonus extends GemBonus {
 	}
 
 	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity, int facets) {
+	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
 		int level = this.values.get(rarity);
 		String desc = "bonus." + this.getId() + ".desc";
 		if (global) {
@@ -58,7 +58,7 @@ public class EnchantmentBonus extends GemBonus {
 	}
 
 	@Override
-	public void getEnchantmentLevels(ItemStack gemStack, LootRarity rarity, int facets, Map<Enchantment, Integer> enchantments) {
+	public void getEnchantmentLevels(ItemStack gemStack, LootRarity rarity, Map<Enchantment, Integer> enchantments) {
 		int level = this.values.get(rarity);
 		if (this.global) {
 			for (Enchantment e : enchantments.keySet()) {
