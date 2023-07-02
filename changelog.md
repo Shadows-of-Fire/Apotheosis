@@ -64,6 +64,7 @@
 * Added a validator that ensures the proper number of affixes exist for any given category/rarity combination.
 * Fixed a crash with boss spawners in invalid dimensions.
 * The Thunderstruck Affix (Light Weapon AOE damage) now properly does player damage.
+* Potential fix for duplicated Gem UUIDs causing exact copies to not function.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.

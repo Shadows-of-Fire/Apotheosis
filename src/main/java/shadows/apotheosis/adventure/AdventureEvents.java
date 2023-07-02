@@ -114,7 +114,7 @@ public class AdventureEvents {
 		if (e.getEntity() instanceof AbstractArrow arrow && !arrow.getPersistentData().getBoolean("apoth.generated")) {
 			Entity shooter = arrow.getOwner();
 			if (shooter instanceof LivingEntity living) {
-				ItemStack bow = living.getMainHandItem();
+				ItemStack bow = living.getUseItem();
 				Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(bow);
 				affixes.values().forEach(a -> {
 					a.onArrowFired(living, arrow);
@@ -234,7 +234,7 @@ public class AdventureEvents {
 			if (affixItem.isEmpty()) return;
 			affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
 			LootCategory cat = LootCategory.forItem(affixItem);
-			EquipmentSlot slot = cat.getSlots(affixItem)[0];
+			EquipmentSlot slot = cat.getSlots()[0];
 			e.getEntity().setItemSlot(slot, affixItem);
 			e.getEntity().setGuaranteedDrop(slot);
 		}

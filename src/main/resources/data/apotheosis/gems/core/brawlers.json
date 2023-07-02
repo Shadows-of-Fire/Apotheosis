@@ -16,36 +16,12 @@
 			"attribute": "minecraft:generic.attack_speed",
 			"operation": "MULTIPLY_BASE",
 			"values": {
-				"common": {
-					"min": 0.05,
-					"steps": 2,
-					"step": 0.025
-				},
-				"uncommon": {
-					"min": 0.10,
-					"steps": 3,
-					"step": 0.025
-				},
-				"rare": {
-					"min": 0.20,
-					"steps": 4,
-					"step": 0.025
-				},
-				"epic": {
-					"min": 0.35,
-					"steps": 4,
-					"step": 0.02
-				},
-				"mythic": {
-					"min": 0.45,
-					"steps": 5,
-					"step": 0.01
-				},
-				"ancient": {
-					"min": 0.50,
-					"steps": 5,
-					"step": 0.02
-				}
+				"common": 0.10,
+				"uncommon": 0.15,
+				"rare": 0.20,
+				"epic": 0.25,
+				"mythic": 0.35,
+				"ancient": 0.50
 			}
 		},
 		{
@@ -60,36 +36,12 @@
 			"attribute": "minecraft:generic.max_health",
 			"operation": "ADDITION",
 			"values": {
-				"common": {
-					"min": 1,
-					"steps": 2,
-					"step": 0.5
-				},
-				"uncommon": {
-					"min": 2.25,
-					"steps": 3,
-					"step": 0.25
-				},
-				"rare": {
-					"min": 3.5,
-					"steps": 4,
-					"step": 0.25
-				},
-				"epic": {
-					"min": 5,
-					"steps": 4,
-					"step": 0.25
-				},
-				"mythic": {
-					"min": 6.5,
-					"steps": 5,
-					"step": 0.5
-				},
-				"ancient": {
-					"min": 10,
-					"steps": 5,
-					"step": 0.5
-				}
+				"common": 1,
+				"uncommon": 2,
+				"rare": 4,
+				"epic": 6,
+				"mythic": 8,
+				"ancient": 10
 			}
 		},
 		{
@@ -103,36 +55,12 @@
 			"attribute": "apotheosis:armor_pierce",
 			"operation": "ADDITION",
 			"values": {
-				"common": {
-					"min": 1,
-					"steps": 2,
-					"step": 0.5
-				},
-				"uncommon": {
-					"min": 2,
-					"steps": 3,
-					"step": 0.5
-				},
-				"rare": {
-					"min": 4,
-					"steps": 4,
-					"step": 0.25
-				},
-				"epic": {
-					"min": 6,
-					"steps": 4,
-					"step": 0.5
-				},
-				"mythic": {
-					"min": 8,
-					"steps": 5,
-					"step": 0.25
-				},
-				"ancient": {
-					"min": 12,
-					"steps": 5,
-					"step": 0.25
-				}
+				"common": 1,
+				"uncommon": 2.5,
+				"rare": 5,
+				"epic": 7,
+				"mythic": 9,
+				"ancient": 14
 			}
 		},
 		{
@@ -144,38 +72,14 @@
 				]
 			},
 			"attribute": "minecraft:generic.max_health",
-			"operation": "MULTIPLY_BASE",
+			"operation": "MULTIPLY_TOTAL",
 			"values": {
-				"common": {
-					"min": 0.03,
-					"steps": 2,
-					"step": 0.01
-				},
-				"uncommon": {
-					"min": 0.05,
-					"steps": 3,
-					"step": 0.01
-				},
-				"rare": {
-					"min": 0.08,
-					"steps": 4,
-					"step": 0.01
-				},
-				"epic": {
-					"min": 0.12,
-					"steps": 4,
-					"step": 0.01
-				},
-				"mythic": {
-					"min": 0.18,
-					"steps": 5,
-					"step": 0.01
-				},
-				"ancient": {
-					"min": 0.24,
-					"steps": 5,
-					"step": 0.01
-				}
+				"common": 0.05,
+				"uncommon": 0.10,
+				"rare": 0.15,
+				"epic": 0.20,
+				"mythic": 0.25,
+				"ancient": 0.30
 			}
 		}
 	]

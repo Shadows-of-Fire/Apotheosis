@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
@@ -56,7 +55,7 @@ public class TelepathicAffix extends Affix {
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		LootCategory cat = LootCategory.forItem(stack);
 		String type = cat.isRanged() || cat.isWeapon() ? "weapon" : "tool";
-		list.accept(Component.translatable("affix." + this.getId() + ".desc." + type).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc." + type));
 	}
 
 	@Override

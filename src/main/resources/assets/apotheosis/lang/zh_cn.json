@@ -150,48 +150,48 @@
 
     "affix.apotheosis:ranged/special/spectral": "光灵的",
     "affix.apotheosis:ranged/special/spectral.suffix": "（被遗弃者）",
-    "affix.apotheosis:ranged/special/spectral.desc": "• 你有%s%%的概率发射第二支箭",
+    "affix.apotheosis:ranged/special/spectral.desc": "你有%s%%的概率发射第二支箭",
 
     "affix.apotheosis:ranged/special/magical": "魔法的",
     "affix.apotheosis:ranged/special/magical.suffix": "（奥秘）",
-    "affix.apotheosis:ranged/special/magical.desc": "• 你射出的箭矢将会造成魔法伤害",
+    "affix.apotheosis:ranged/special/magical.desc": "你射出的箭矢将会造成魔法伤害",
 
     "affix.apotheosis:sword/special/festive": "节庆的",
     "affix.apotheosis:sword/special/festive.suffix": "（派对）",
-    "affix.apotheosis:sword/special/festive.desc": "• 杀死敌人有%s%%概率触发战利品大爆发",
+    "affix.apotheosis:sword/special/festive.desc": "杀死敌人有%s%%概率触发战利品大爆发",
 
     "affix.apotheosis:sword/special/thunderstruck": "雷鸣的",
     "affix.apotheosis:sword/special/thunderstruck.suffix": "（风暴）",
-    "affix.apotheosis:sword/special/thunderstruck.desc": "• 攻击对周围敌人造成%s点伤害",
+    "affix.apotheosis:sword/special/thunderstruck.desc": "攻击对周围敌人造成%s点伤害",
 
     "affix.apotheosis:shield/special/retreating": "后撤的",
     "affix.apotheosis:shield/special/retreating.suffix": "（弄臣）",
-    "affix.apotheosis:shield/special/retreating.desc": "• 格挡近战攻击时，进行一次后跳",
+    "affix.apotheosis:shield/special/retreating.desc": "格挡近战攻击时，进行一次后跳",
 
     "affix.apotheosis:telepathic": "念动的",
     "affix.apotheosis:telepathic.suffix": "（时空）",
-    "affix.apotheosis:telepathic.desc.weapon": "• 生物的掉落物将传送到物品栏",
-    "affix.apotheosis:telepathic.desc.tool": "• 挖掘的掉落物将传送到物品栏",
+    "affix.apotheosis:telepathic.desc.weapon": "生物的掉落物将传送到物品栏",
+    "affix.apotheosis:telepathic.desc.tool": "挖掘的掉落物将传送到物品栏",
 
     "affix.apotheosis:heavy_weapon/special/executing": "行刑的",
     "affix.apotheosis:heavy_weapon/special/executing.suffix": "（刽子手）",
-    "affix.apotheosis:heavy_weapon/special/executing.desc": "• 生命值低于%s%%的敌人将会被直接处决",
+    "affix.apotheosis:heavy_weapon/special/executing.desc": "生命值低于%s%%的敌人将会被直接处决",
 
     "affix.apotheosis:heavy_weapon/special/cleaving": "挥劈的",
     "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "（屠夫）",
-    "affix.apotheosis:heavy_weapon/special/cleaving.desc": "• 攻击有%s%%概率同时施加到周围至多%s名敌人",
+    "affix.apotheosis:heavy_weapon/special/cleaving.desc": "攻击有%s%%概率同时施加到周围至多%s名敌人",
 
     "affix.apotheosis:breaker/special/enlightened": "启明的",
     "affix.apotheosis:breaker/special/enlightened.suffix": "（携光者）",
-    "affix.apotheosis:breaker/special/enlightened.desc": "• 该工具可消耗%s点耐久放置一根火把",
+    "affix.apotheosis:breaker/special/enlightened.desc": "该工具可消耗%s点耐久放置一根火把",
 
     "affix.apotheosis:shield/special/psychic": "通灵的",
     "affix.apotheosis:shield/special/psychic.suffix": "（睚眦）",
-    "affix.apotheosis:shield/special/psychic.desc": "• 格挡弹射物时，会对伤害来源造成%s%%伤害",
+    "affix.apotheosis:shield/special/psychic.desc": "格挡弹射物时，会对伤害来源造成%s%%伤害",
 
     "affix.apotheosis:shield/special/catalyzing": "催化的",
     "affix.apotheosis:shield/special/catalyzing.suffix": "（转化）",
-    "affix.apotheosis:shield/special/catalyzing.desc": "• 格挡爆炸会给你带来巨大的力量效果",
+    "affix.apotheosis:shield/special/catalyzing.desc": "格挡爆炸会给你带来巨大的力量效果",
 
     "affix.apotheosis:heavy_weapon/attribute/annihilating": "歼灭的",
     "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "（泰坦）",
@@ -216,7 +216,7 @@
 
     "affix.apotheosis:breaker/special/radial": "范围的",
     "affix.apotheosis:breaker/special/radial.suffix": "（裂地者）",
-    "affix.apotheosis:breaker/special/radial.desc": "• 该工具可破坏%sx%s范围的方块",
+    "affix.apotheosis:breaker/special/radial.desc": "该工具可破坏%sx%s范围的方块",
 
     "misc.apotheosis.iron": "铁",
     "misc.apotheosis.diamond": "钻石",
@@ -224,7 +224,7 @@
 
     "affix.apotheosis:breaker/special/omnetic": "全能的",
     "affix.apotheosis:breaker/special/omnetic.suffix": "（奇点）",
-    "affix.apotheosis:breaker/special/omnetic.desc": "• 该工具对所有方块均有%s级的效能",
+    "affix.apotheosis:breaker/special/omnetic.desc": "该工具对所有方块均有%s级的效能",
 
     "misc.apotheosis.physical": "物理",
     "misc.apotheosis.magic": "魔法",
@@ -248,19 +248,19 @@
     "affix.apotheosis:armor/dmg_reduction/feathery": "覆羽的",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "（鹰）",
 
-    "affix.apotheosis.target.attack_self": "• 击中目标时，获得%s",
-    "affix.apotheosis.target.attack_target": "• 击中目标时，造成%s",
-    "affix.apotheosis.target.hurt_self": "• 受到攻击时，获得%s",
-    "affix.apotheosis.target.hurt_attacker": "• 受到攻击时，造成%s",
-    "affix.apotheosis.target.break_self": "• 破坏方块时，获得%s",
-    "affix.apotheosis.target.arrow_self": "• 弹射物击中目标时，获得%s",
-    "affix.apotheosis.target.arrow_target": "• 弹射物击中目标时，造成%s",
-    "affix.apotheosis.target.block_self": "• 格挡时，获得%s",
-    "affix.apotheosis.target.block_attacker": "• 格挡时，造成%s",
+    "affix.apotheosis.target.attack_self": "击中目标时，获得%s",
+    "affix.apotheosis.target.attack_target": "击中目标时，造成%s",
+    "affix.apotheosis.target.hurt_self": "受到攻击时，获得%s",
+    "affix.apotheosis.target.hurt_attacker": "受到攻击时，造成%s",
+    "affix.apotheosis.target.break_self": "破坏方块时，获得%s",
+    "affix.apotheosis.target.arrow_self": "弹射物击中目标时，获得%s",
+    "affix.apotheosis.target.arrow_target": "弹射物击中目标时，造成%s",
+    "affix.apotheosis.target.block_self": "格挡时，获得%s",
+    "affix.apotheosis.target.block_attacker": "格挡时，造成%s",
     "affix.apotheosis.cooldown": "[⌛ %s]",
 
-    "affix.apotheosis:durable.desc": "• 该物品无视%s%%耐久损耗",
-    "affix.apotheosis:socket.desc": "• 已开镶孔（%s）",
+    "affix.apotheosis:durable.desc": "该物品无视%s%%耐久损耗",
+    "affix.apotheosis:socket.desc": "已开镶孔（%s）",
 
     "socket.apotheosis.empty": "空镶孔",
     "item.modifiers.socket": "镶嵌时：",
@@ -355,7 +355,6 @@
     "text.apotheosis.results": "结果",
     "text.apotheosis.facets": "刻面：%s",
     "text.apotheosis.socketable_into": "适用于：",
-    "text.apotheosis.dot_prefix": "• %s",
     "text.apotheosis.socket_limit": "镶孔最多应用：%s",
     "text.apotheosis.no_upgrade": "无法升级",
     "text.apotheosis.rarity_up_cost": "稀有度升级花费",

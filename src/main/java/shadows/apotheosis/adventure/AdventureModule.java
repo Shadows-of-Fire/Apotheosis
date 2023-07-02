@@ -75,6 +75,7 @@ import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.apotheosis.adventure.compat.AdventureTOPPlugin;
 import shadows.apotheosis.adventure.compat.GatewaysCompat;
 import shadows.apotheosis.adventure.loot.AffixConvertLootModifier;
+import shadows.apotheosis.adventure.loot.AffixHookLootModifier;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
 import shadows.apotheosis.adventure.loot.AffixLootModifier;
 import shadows.apotheosis.adventure.loot.AffixLootPoolEntry;
@@ -102,8 +103,8 @@ public class AdventureModule {
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
-		ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 40D, "f_22308_");
-		ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR_TOUGHNESS, 30D, "f_22308_");
+		ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 200D, "f_22308_");
+		ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR_TOUGHNESS, 100D, "f_22308_");
 	}
 
 	@SubscribeEvent
@@ -208,6 +209,7 @@ public class AdventureModule {
 			e.getForgeRegistry().register("gems", GemLootModifier.CODEC);
 			e.getForgeRegistry().register("affix_loot", AffixLootModifier.CODEC);
 			e.getForgeRegistry().register("affix_conversion", AffixConvertLootModifier.CODEC);
+			e.getForgeRegistry().register("affix_hook", AffixHookLootModifier.CODEC);
 		}
 		if (e.getForgeRegistry() == (Object) ForgeRegistries.BIOME_MODIFIER_SERIALIZERS.get()) {
 			e.getForgeRegistry().register("blacklist", AdventureGeneration.BlacklistModifier.CODEC);

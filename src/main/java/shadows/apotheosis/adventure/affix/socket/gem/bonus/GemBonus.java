@@ -12,12 +12,12 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mojang.serialization.codecs.SimpleMapCodec;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,13 +32,18 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.AllStatsBonus;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.BloodyArrowBonus;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.DropTransformBonus;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.LeechBlockBonus;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.MageSlayerBonus;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.codec.PlaceboCodecs;
 import shadows.placebo.codec.PlaceboCodecs.CodecProvider;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
@@ -59,21 +64,6 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	}
 
 	/**
-	 * Gets the one-line socket bonus tooltip.  This will automatically be called in the correct place.<br>
-	 * If you want to override the entire tooltip as shown on the gem item, override {@link Gem#addInformation} 
-	 * @param gem      The gem stack.
-	 * @param purity   The purity of this gem.
-	 * @param tooltips The destination for tooltips.
-	 */
-	public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity);
-
-	/**
-	 * Returns the max number of facets available for this gem.<br>
-	 * Facets are a user-facing wrapper on the purity (level), because most gems do not change on specify purity percentages.
-	 */
-	public abstract int getMaxFacets(LootRarity rarity);
-
-	/**
 	 * Validates that this gem bonus has been deserialized into a valid state.
 	 * If not, throws an error.
 	 * @return this
@@ -82,7 +72,10 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	public abstract GemBonus validate();
 
 	/**
-	 * Returns true if this gem bonus is valid at the specified rarity.
+	 * Checks if this bonus supports the rarity.
+	 * @param rarity The rarity being checked.
+	 * @return True, if this bonus contains values for the specified rarity.
+	 * @apiNote Other methods in this class will throw an exception if the bonus does not support the rarity.
 	 */
 	public abstract boolean supports(LootRarity rarity);
 
@@ -93,48 +86,63 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	public abstract int getNumberOfUUIDs();
 
 	/**
-	 * Retrieve the modifiers from this affix to be applied to the itemstack.
-	 * @param stack  The stack the affix is on.
-	 * @param purity The purity of this gem.
-	 * @param type   The slot type for modifiers being gathered.
+	 * Gets the one-line socket bonus tooltip.
+	 * @param gem    The gem stack.
+	 * @param rarity The rarity of the gem.
+	 */
+	public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity);
+
+	/**
+	 * Retrieve the modifiers from this bonus to be applied to the socketed stack.<br>
+	 * This method will be called once for each slot based on the category this bonus is for.
+	 * <p>
+	 * For modifiers created here, they should use the UUIDs from {@link GemItem.getUUIDs(gem)}
+	 * @param gem    The gem stack.
+	 * @param rarity The rarity of the gem.
 	 * @param map    The destination for generated attribute modifiers.
 	 */
 	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
 	}
 
 	/**
-	 * Calculates the protection value of this affix, with respect to the given damage source.<br>
-	 * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
-	 * Ench module overrides with {@link EnchHooks#getDamageAfterMagicAbsorb}<br>
-	 * @param purity The purity of this gem. if applicable.<br>
-	 * @param source The damage source to compare against.<br>
-	 * @return How many protection points this affix is worth against this source.<br>
+	 * Calculates the protection value of this bonus, with respect to the given damage source.
+	 * @param gem    The gem stack.
+	 * @param rarity The rarity of the gem.
+	 * @param source The damage source to compare against.
+	 * @return How many protection points this affix is worth against this source.
 	 */
 	public int getDamageProtection(ItemStack gem, LootRarity rarity, DamageSource source) {
 		return 0;
 	}
 
 	/**
-	 * Calculates the additional damage this affix deals.
-	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
+	 * Calculates the additional damage this bonus provides.
+	 * This damage is dealt as player physical damage.
+	 * @param gem    The gem stack.
+	 * @param rarity The rarity of the gem.
+	 * @param type   The type of the mob.
 	 */
-	public float getDamageBonus(ItemStack gem, LootRarity rarity, MobType creatureType) {
+	public float getDamageBonus(ItemStack gem, LootRarity rarity, MobType type) {
 		return 0.0F;
 	}
 
 	/**
-	 * Called when someone attacks an entity with an item containing this affix.
-	 * More specifically, this is invoked whenever the user attacks a target, while having an item with this affix in either hand or any armor slot.
-	 * @param user   The wielder of the weapon.  The weapon stack will be in their main hand.
+	 * Called when someone attacks an entity with an item that has this bonus.<br>
+	 * Specifically, this is invoked whenever the user attacks a target, while having an item with this bonus in either hand or any armor slot.
+	 * @param gem    The gem stack.
+	 * @param rarity The rarity of the gem.
+	 * @param user   The wielder of the weapon. The weapon stack will be in their main hand.
 	 * @param target The target entity being attacked.
-	 * @param purity The purity of this gem. if applicable.
 	 */
 	public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity target) {
 	}
 
 	/**
-	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
-	 * called.
+	 * Called when an entity that has this bonus on one of its armor items is damaged.
+	 * @param gem      The gem stack.
+	 * @param rarity   The rarity of the gem.
+	 * @param user     The entity wearing an itme with this bonus.
+	 * @param attacker The entity attacking the user.
 	 */
 	public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity attacker) {
 	}
@@ -185,7 +193,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
 	/**
 	 * Allows an affix to reduce durability damage to an item.
-	 * @param stack   The stack with the affix.
+	 * @param gem     The stack representing this gem.
 	 * @param rarity  The rarity of the item.
 	 * @param level   The level of the affix.
 	 * @param user    The user of the item, if applicable.
@@ -198,27 +206,37 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	/**
 	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
 	 * If the value is set to zero or below, the event will be cancelled.
-	 * @param stack   The stack with the affix.
+	 * @param gem     The stack representing this gem.
 	 * @param rarity  The rarity of the item.
 	 * @param level   The level of the affix.
 	 * @param src     The Damage Source of the attack.
-	 * @param ent     The entity being attacked.
+	 * @param user    The entity being attacked.
 	 * @param amount  The amount of damage that is to be taken.
-	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
+	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other bonuses.
 	 */
-	public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity ent, float amount) {
+	public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity user, float amount) {
 		return amount;
 	}
 
 	/**
 	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
-	 * @param gemStack  The stack representing this gem.
+	 * @param gem       The stack representing this gem.
 	 * @param rarity    The rarity of the item.
 	 * @param level     The level of the affix.
 	 * @param ench      The enchantment being queried for.
 	 * @return          The bonus level to be added to the current enchantment.
 	 */
-	public void getEnchantmentLevels(ItemStack gemStack, LootRarity rarity, Map<Enchantment, Integer> enchantments) {
+	public void getEnchantmentLevels(ItemStack gem, LootRarity rarity, Map<Enchantment, Integer> enchantments) {
+	}
+
+	/**
+	 * Fires from {@link LootModifier#apply(ObjectArrayList, LootContext)} when this bonus is active on the tool given by the context.
+	 * @param gem      The gem itemstack.
+	 * @param rarity   The rarity of the gem.
+	 * @param loot     The generated loot.
+	 * @param ctx      The loot context.
+	 */
+	public void modifyLoot(ItemStack gem, LootRarity rarity, ObjectArrayList<ItemStack> loot, LootContext ctx) {
 	}
 
 	public ResourceLocation getId() {
@@ -239,6 +257,12 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 		register("durability", DurabilityBonus.CODEC);
 		register("damage_reduction", DamageReductionBonus.CODEC);
 		register("enchantment", EnchantmentBonus.CODEC);
+		register("bloody_arrow", BloodyArrowBonus.CODEC);
+		register("leech_block", LeechBlockBonus.CODEC);
+		register("all_stats", AllStatsBonus.CODEC);
+		register("drop_transform", DropTransformBonus.CODEC);
+		register("mageslayer", MageSlayerBonus.CODEC);
+		register("mob_effect", PotionBonus.CODEC);
 	}
 
 	private static void register(String id, Codec<? extends GemBonus> codec) {

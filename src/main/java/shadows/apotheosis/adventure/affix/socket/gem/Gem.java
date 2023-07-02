@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -19,41 +18,18 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.CombatRules;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.placebo.codec.PlaceboCodecs;
-import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
@@ -66,12 +42,12 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		inst.group(
 			Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
 			Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
-			PlaceboCodecs.setCodec(ResourceLocation.CODEC).optionalFieldOf("dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
-			LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(LootRarity.Clamped::getMinRarity),
-			LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(LootRarity.Clamped::getMaxRarity),
+			PlaceboCodecs.setOf(ResourceLocation.CODEC).optionalFieldOf("dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
+			LootRarity.CODEC.optionalFieldOf("min_rarity").forGetter(g -> Optional.of(g.getMinRarity())),
+			LootRarity.CODEC.optionalFieldOf("max_rarity").forGetter(g -> Optional.of(g.getMaxRarity())),
 			GemBonus.CODEC.listOf().fieldOf("bonuses").forGetter(Gem::getBonuses),
 			Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique),
-			PlaceboCodecs.setCodec(Codec.STRING).optionalFieldOf("stages").forGetter(gem -> Optional.ofNullable(gem.getStages())))
+			PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(gem -> Optional.ofNullable(gem.getStages())))
 			.apply(inst, Gem::new)
 		);
 	//Formatter::on
@@ -88,25 +64,34 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	protected transient final int uuidsNeeded;
 	protected transient final LootRarity minRarity, maxRarity;
 
-	public Gem(int weight, float quality, Set<ResourceLocation> dimensions, @Nullable LootRarity minRarity, @Nullable LootRarity maxRarity, List<GemBonus> bonuses, boolean unique, Optional<Set<String>> stages) {
+	public Gem(int weight, float quality, Set<ResourceLocation> dimensions, Optional<LootRarity> minRarity, Optional<LootRarity> maxRarity, List<GemBonus> bonuses, boolean unique, Optional<Set<String>> stages) {
 		this.weight = weight;
 		this.quality = quality;
 		this.dimensions = dimensions;
 		this.bonuses = bonuses;
 		this.unique = unique;
 		this.stages = stages.orElse(null);
+		Preconditions.checkArgument(!bonuses.isEmpty(), "No bonuses were provided.");
 		this.bonusMap = bonuses.stream().<Pair<LootCategory, GemBonus>>mapMulti((gemData, mapper) -> {
 			for (LootCategory c : gemData.getGemClass().types()) {
 				mapper.accept(Pair.of(c, gemData));
 			}
 		}).collect(Collectors.toMap(Pair::getLeft, Pair::getRight));
 		this.uuidsNeeded = this.bonuses.stream().mapToInt(GemBonus::getNumberOfUUIDs).max().orElse(0);
-		if (!this.bonuses.isEmpty()) {
-			this.minRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).min(LootRarity::compareTo).get();
-			this.maxRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).max(LootRarity::compareTo).get();
+
+		if (minRarity.isPresent()) {
+			this.minRarity = minRarity.get();
 		} else {
-			this.minRarity = this.maxRarity = LootRarity.COMMON;
+			this.minRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).min(LootRarity::compareTo).get();
 		}
+
+		if (maxRarity.isPresent()) {
+			this.maxRarity = maxRarity.get();
+		} else {
+			this.maxRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).max(LootRarity::compareTo).get();
+		}
+
+		Preconditions.checkArgument(this.minRarity.ordinal() <= this.maxRarity.ordinal(), "The min rarity must be <= the max rarity.");
 	}
 
 	/**
@@ -115,26 +100,6 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 */
 	public int getNumberOfUUIDs() {
 		return this.uuidsNeeded;
-	}
-
-	/**
-	 * Retrieve the modifiers from this affix to be applied to the itemstack.
-	 * @param socketed  The stack the gem is sockted into.
-	 * @param purity    The purity of this gem.
-	 * @param type      The slot type for modifiers being gathered.
-	 * @param map       The destination for generated attribute modifiers.
-	 */
-	public void addModifiers(ItemStack socketed, ItemStack gem, LootRarity rarity, EquipmentSlot slot, BiConsumer<Attribute, AttributeModifier> map) {
-		LootCategory cat = LootCategory.forItem(socketed);
-		if (cat.isNone()) {
-			AdventureModule.LOGGER.debug("Attempted to apply the attributes of affix {} on item {}, but it is not an affix-compatible item!", this.getId(), socketed.getHoverName().getString());
-			return;
-		}
-		for (EquipmentSlot itemSlot : cat.getSlots(socketed)) {
-			if (itemSlot == slot) {
-				getBonus(socketed).ifPresent(b -> b.addModifiers(gem, rarity, map));
-			}
-		}
 	}
 
 	/**
@@ -164,170 +129,34 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	}
 
 	/**
-	 * Gets the one-line socket bonus tooltip.  This will automatically be called in the correct place.<br>
-	 * If you want to override the entire tooltip as shown on the gem item, override {@link Gem#addInformation} 
-	 * @param socketed The item the gem is socketed into.
-	 * @param gem      The gem stack.
-	 * @param purity   The purity of this gem.
-	 * @param tooltips The destination for tooltips.
-	 */
-	public Component getSocketBonusTooltip(ItemStack socketed, ItemStack gem, LootRarity rarity) {
-		return getBonus(socketed).map(b -> b.getSocketBonusTooltip(gem, rarity)).orElse(Component.literal("Invalid Gem Category"));
-	}
-
-	/**
 	 * Checks if this gem can be applied to an item, preventing more than one unique.
-	 * @param stack The target item.
+	 * @param socketed The target item.
 	 * @param rarity The rarity of the gem.
 	 * @param gem The gem
 	 * @return If this gem can be socketed into the item.
 	 */
-	public boolean canApplyTo(ItemStack stack, ItemStack gem, LootRarity rarity) {
+	public boolean canApplyTo(ItemStack socketed, ItemStack gem, LootRarity rarity) {
 		if (this.isUnique()) {
-			List<Gem> gems = SocketHelper.getActiveGems(stack);
+			List<Gem> gems = SocketHelper.getActiveGems(socketed);
 			if (gems.contains(this)) return false;
 		}
-		return isValidIn(stack, gem, rarity);
+		return isValidIn(socketed, gem, rarity);
 	}
 
 	/**
 	 * Checks if this gem is legally socketed into an item.  Does not validate uniques
-	 * @param stack The target item.
+	 * @param socketed The target item.
 	 * @param rarity The rarity of the gem.
 	 * @param gem The gem
 	 * @return If this gem can be socketed into the item.
 	 */
-	public boolean isValidIn(ItemStack stack, ItemStack gem, LootRarity rarity) {
-		LootCategory cat = LootCategory.forItem(stack);
+	public boolean isValidIn(ItemStack socketed, ItemStack gem, LootRarity rarity) {
+		LootCategory cat = LootCategory.forItem(socketed);
 		return !cat.isNone() && bonusMap.containsKey(cat) && bonusMap.get(cat).supports(rarity);
 	}
 
-	/**
-	 * Calculates the protection value of this affix, with respect to the given damage source.<br>
-	 * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
-	 * Ench module overrides with {@link EnchHooks#getDamageAfterMagicAbsorb}<br>
-	 * @param purity The purity of this gem. if applicable.<br>
-	 * @param source The damage source to compare against.<br>
-	 * @return How many protection points this affix is worth against this source.<br>
-	 */
-	public int getDamageProtection(ItemStack stack, ItemStack gem, LootRarity rarity, DamageSource source) {
-		return getBonus(stack).map(b -> b.getDamageProtection(gem, rarity, source)).orElse(0);
-	}
-
-	/**
-	 * Calculates the additional damage this affix deals.
-	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
-	 */
-	public float getDamageBonus(ItemStack stack, ItemStack gem, LootRarity rarity, MobType creatureType) {
-		return getBonus(stack).map(b -> b.getDamageBonus(gem, rarity, creatureType)).orElse(0F);
-	}
-
-	/**
-	 * Called when someone attacks an entity with an item containing this affix.
-	 * More specifically, this is invoked whenever the user attacks a target, while having an item with this affix in either hand or any armor slot.
-	 * @param user   The wielder of the weapon.  The weapon stack will be in their main hand.
-	 * @param target The target entity being attacked.
-	 * @param purity The purity of this gem. if applicable.
-	 */
-	public void doPostAttack(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity target) {
-		getBonus(stack).ifPresent(b -> b.doPostAttack(gem, rarity, user, target));
-	}
-
-	/**
-	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
-	 * called.
-	 */
-	public void doPostHurt(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity attacker) {
-		getBonus(stack).ifPresent(b -> b.doPostHurt(gem, rarity, user, attacker));
-	}
-
-	/**
-	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
-	 */
-	public void onArrowFired(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {
-		getBonus(stack).ifPresent(b -> b.onArrowFired(gem, rarity, user, arrow));
-	}
-
-	/**
-	 * Called when {@link Item#onItemUse(ItemUseContext)} would be called for an item with this affix.
-	 * Return null to not impact the original result type.
-	 */
-	@Nullable
-	public InteractionResult onItemUse(ItemStack stack, ItemStack gem, LootRarity rarity, UseOnContext ctx) {
-		return getBonus(stack).map(b -> b.onItemUse(gem, rarity, ctx)).orElse(null);
-	}
-
-	/**
-	 * Called when an arrow that was marked with this affix hits a target.
-	 */
-	public void onArrowImpact(AbstractArrow arrow, ItemStack gem, LootRarity rarity, HitResult res, HitResult.Type type) {
-		//TODO: getBonus(arrow).ifPresent(b -> b.onArrowImpact(gem, arrow, res, type));
-	}
-
-	/**
-	 * Called when a shield with this affix blocks some amount of damage.
-	 * @param entity The blocking entity.
-	 * @param source The damage source being blocked.
-	 * @param amount The amount of damage blocked.
-	 * @param purity The purity of this gem.
-	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
-	 */
-	public float onShieldBlock(ItemStack stack, ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
-		return getBonus(stack).map(b -> b.onShieldBlock(gem, rarity, entity, source, amount)).orElse(amount);
-	}
-
-	/**
-	 * Called when a player with this affix breaks a block.
-	 * @param player The breaking player.
-	 * @param world  The level the block was broken in.
-	 * @param pos    The position of the block.
-	 * @param state  The state that was broken.
-	 */
-	public void onBlockBreak(ItemStack stack, ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		getBonus(stack).ifPresent(b -> b.onBlockBreak(gem, rarity, player, world, pos, state));
-	}
-
-	/**
-	 * Allows an affix to reduce durability damage to an item.
-	 * @param stack   The stack with the affix.
-	 * @param rarity  The rarity of the item.
-	 * @param level   The level of the affix.
-	 * @param user    The user of the item, if applicable.
-	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
-	 */
-	public float getDurabilityBonusPercentage(ItemStack socketed, ItemStack gemStack, LootRarity lootRarity, ServerPlayer user) {
-		return getBonus(socketed).map(b -> b.getDurabilityBonusPercentage(gemStack, lootRarity, user)).orElse(0F);
-	}
-
-	/**
-	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
-	 * If the value is set to zero or below, the event will be cancelled.
-	 * @param stack   The stack with the affix.
-	 * @param rarity  The rarity of the item.
-	 * @param level   The level of the affix.
-	 * @param src     The Damage Source of the attack.
-	 * @param ent     The entity being attacked.
-	 * @param amount  The amount of damage that is to be taken.
-	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
-	 */
-	public float onHurt(ItemStack socketed, ItemStack gemStack, LootRarity rarity, DamageSource src, LivingEntity ent, float amount) {
-		return getBonus(socketed).map(b -> b.onHurt(gemStack, rarity, src, ent, amount)).orElse(amount);
-	}
-
-	/**
-	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
-	 * @param stack   The stack with the affix.
-	 * @param rarity  The rarity of the item.
-	 * @param level   The level of the affix.
-	 * @param ench    The enchantment being queried for.
-	 * @return        The bonus level to be added to the current enchantment.
-	 */
-	public void getEnchantmentLevels(ItemStack socketed, ItemStack gemStack, LootRarity rarity, Map<Enchantment, Integer> enchantments) {
-		getBonus(socketed).ifPresent(b -> b.getEnchantmentLevels(gemStack, rarity, enchantments));
-	}
-
-	protected Optional<GemBonus> getBonus(ItemStack stack) {
-		return Optional.ofNullable(this.bonusMap.get(LootCategory.forItem(stack)));
+	public Optional<GemBonus> getBonus(LootCategory cat) {
+		return Optional.ofNullable(this.bonusMap.get(cat));
 	}
 
 	@Override

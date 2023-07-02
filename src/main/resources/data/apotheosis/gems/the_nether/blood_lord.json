@@ -1,0 +1,134 @@
+{
+	"weight": 8,
+	"quality": 0.5,
+	"dimensions": [ "minecraft:the_nether" ],
+	"unique": true,
+	"min_rarity": "rare",
+	"bonuses": [{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "light_weapon",
+				"types": [
+					"sword",
+					"trident"
+				]
+			},
+			"attribute": "apotheosis:life_steal",
+			"operation": "ADDITION",
+			"values": {
+				"common": 0.05,
+				"uncommon": 0.25,
+				"rare": 0.40,
+				"epic": 0.525,
+				"mythic": 0.65,
+				"ancient": 0.75
+			}
+		},
+		{
+			"type": "apotheosis:multi_attribute",
+			"desc": "bonus.apotheosis:multi_attr.desc.and",
+			"gem_class": {
+				"key": "heavy_weapon",
+				"types": [
+					"heavy_weapon"
+				]
+			},
+			"modifiers": [{
+					"attribute": "minecraft:generic.attack_damage",
+					"operation": "MULTIPLY_TOTAL",
+					"values": {
+						"uncommon": 0.15,
+						"rare": 0.25,
+						"epic": 0.35,
+						"mythic": 0.45,
+						"ancient": 0.5
+					}
+				},
+				{
+					"attribute": "minecraft:generic.max_health",
+					"operation": "MULTIPLY_TOTAL",
+					"values": {
+						"uncommon": -0.15,
+						"rare": -0.25,
+						"epic": -0.35,
+						"mythic": -0.45,
+						"ancient": -0.5
+					}
+				}
+			]
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "chestplate",
+				"types": [
+					"chestplate"
+				]
+			},
+			"attribute": "apotheosis:healing_received",
+			"operation": "ADDITION",
+			"values": {
+				"uncommon": 0.15,
+				"rare": 0.20,
+				"epic": 0.30,
+				"mythic": 0.40,
+				"ancient": 0.50
+			}
+		},
+		{
+			"type": "apotheosis:bloody_arrow",
+			"values": {
+				"uncommon": {
+					"health_cost": 0.10,
+					"damage_mult": 1.30,
+					"cooldown": 400
+				},
+				"rare": {
+					"health_cost": 0.20,
+					"damage_mult": 1.60,
+					"cooldown": 450
+				},
+				"epic": {
+					"health_cost": 0.30,
+					"damage_mult": 1.90,
+					"cooldown": 500
+				},
+				"mythic": {
+					"health_cost": 0.40,
+					"damage_mult": 2.20,
+					"cooldown": 550
+				},
+				"ancient": {
+					"health_cost": 0.50,
+					"damage_mult": 2.50,
+					"cooldown": 600
+				}
+			}
+		},
+		{
+			"type": "apotheosis:leech_block",
+			"values": {
+				"uncommon": {
+					"heal_factor": 0.15,
+					"cooldown": 400
+				},
+				"rare": {
+					"heal_factor": 0.25,
+					"cooldown": 650
+				},
+				"epic": {
+					"heal_factor": 0.40,
+					"cooldown": 800
+				},
+				"mythic": {
+					"heal_factor": 0.55,
+					"cooldown": 850
+				},
+				"ancient": {
+					"heal_factor": 0.65,
+					"cooldown": 1000
+				}
+			}
+		}
+	]
+}

@@ -102,17 +102,10 @@ public class CleavingAffix extends Affix {
 		};
 	}
 
-	static class CleaveValues {
+	static record CleaveValues(StepFunction chance, StepFunction targets) {
 
 		public static final Codec<CleaveValues> CODEC = RecordCodecBuilder.create(inst -> inst.group(StepFunction.CODEC.fieldOf("chance").forGetter(c -> c.chance), StepFunction.CODEC.fieldOf("targets").forGetter(c -> c.targets)).apply(inst, CleaveValues::new));
 
-		final StepFunction chance;
-		final StepFunction targets;
-
-		CleaveValues(StepFunction chance, StepFunction targets) {
-			this.chance = chance;
-			this.targets = targets;
-		}
 	}
 
 }

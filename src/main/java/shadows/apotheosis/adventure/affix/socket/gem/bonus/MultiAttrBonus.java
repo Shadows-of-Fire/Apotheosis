@@ -1,7 +1,10 @@
 package shadows.apotheosis.adventure.affix.socket.gem.bonus;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
@@ -9,6 +12,7 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -16,12 +20,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.core.attributeslib.AttributesLib;
+import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
 import shadows.placebo.codec.EnumCodec;
-import shadows.placebo.util.StepFunction;
 
 public class MultiAttrBonus extends GemBonus {
 
@@ -55,22 +59,27 @@ public class MultiAttrBonus extends GemBonus {
 
 	@Override
 	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-		Object[] values = new Object[modifiers.size()];
+		Object[] values = new Object[modifiers.size() * 2];
+		List<UUID> uuids = GemItem.getUUIDs(gem);
 		int i = 0;
-		for (ModifierInst modif : modifiers) {
-			values[i++] = Affix.fmt(modif.values.get(rarity).get(0));
+		for (ModifierInst modifier : modifiers) {
+			values[i] = IFormattableAttribute.toComponent(modifier.attr, modifier.build(uuids.get(i), rarity), AttributesLib.getTooltipFlag());
+			values[modifiers.size() + i] = IFormattableAttribute.toValueComponent(modifier.attr, modifier.op, i, AttributesLib.getTooltipFlag());
+			i++;
 		}
-		return Component.translatable(this.desc, values);
-	}
-
-	@Override
-	public int getMaxFacets(LootRarity rarity) {
-		return this.modifiers.stream().mapToInt(m -> m.values.get(rarity).steps()).max().orElse(0);
+		return Component.translatable(this.desc, values).withStyle(ChatFormatting.YELLOW);
 	}
 
 	@Override
 	public MultiAttrBonus validate() {
 		Preconditions.checkNotNull(this.modifiers, "Invalid AttributeBonus with null values");
+		List<Set<LootRarity>> rarityChecks = new ArrayList<>();
+		for (ModifierInst inst : modifiers) {
+			var set = new HashSet<LootRarity>();
+			LootRarity.values().stream().filter(r -> inst.values.containsKey(r)).forEach(set::add);
+			rarityChecks.add(set);
+		}
+		Preconditions.checkArgument(rarityChecks.stream().mapToInt(Set::size).allMatch(size -> size == rarityChecks.get(0).size()));
 		return this;
 	}
 
@@ -89,20 +98,20 @@ public class MultiAttrBonus extends GemBonus {
 		return CODEC;
 	}
 
-	protected static record ModifierInst(Attribute attr, Operation op, Map<LootRarity, StepFunction> values) {
+	protected static record ModifierInst(Attribute attr, Operation op, Map<LootRarity, Float> values) {
 
 		//Formatter::off
 		public static Codec<ModifierInst> CODEC = RecordCodecBuilder.create(inst -> inst
 			.group(
 				ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(ModifierInst::attr),
 				new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(ModifierInst::op),
-				VALUES_CODEC.fieldOf("values").forGetter(ModifierInst::values))
+				LootRarity.mapCodec(Codec.FLOAT).fieldOf("values").forGetter(ModifierInst::values))
 				.apply(inst, ModifierInst::new)
 			);
 		//Formatter::on
 
 		public AttributeModifier build(UUID id, LootRarity rarity) {
-			return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity).get(0), this.op);
+			return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity), this.op);
 		}
 
 	}

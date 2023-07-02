@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "apotheosis:items/gems/inferno"
+        "layer0": "apotheosis:items/gems/mageslayer"
     }
 }

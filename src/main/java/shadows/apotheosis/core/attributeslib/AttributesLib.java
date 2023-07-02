@@ -46,7 +46,7 @@ public class AttributesLib {
 	public void attribs(Register<Attribute> e) {
 		//Formatter::off
 		e.getRegistry().registerAll(
-			new PercentBasedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 4.0D).setSyncable(true), "draw_speed",
+			new PercentBasedAttribute("apotheosis:draw_speed", 1.0D, 0.0D, 4.0D).setSyncable(true), "draw_speed",
 			new PercentBasedAttribute("apotheosis:crit_chance", 0.05D, 0.0D, 1024.0D).setSyncable(true), "crit_chance",
 			new PercentBasedAttribute("apotheosis:crit_damage", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
 			new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "cold_damage",

@@ -72,11 +72,6 @@ public class EnchantmentBonus extends GemBonus {
 	}
 
 	@Override
-	public int getMaxFacets(LootRarity rarity) {
-		return 3;
-	}
-
-	@Override
 	public GemBonus validate() {
 		Preconditions.checkNotNull(this.ench, "Invalid DamageReductionBonus with null type");
 		Preconditions.checkNotNull(this.values, "Invalid DamageReductionBonus with null values");

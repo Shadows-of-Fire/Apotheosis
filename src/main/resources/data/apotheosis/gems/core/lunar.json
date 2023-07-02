@@ -16,36 +16,12 @@
 			"attribute": "apotheosis:cold_damage",
 			"operation": "ADDITION",
 			"values": {
-				"common": {
-					"min": 0.25,
-					"steps": 2,
-					"step": 0.25
-				},
-				"uncommon": {
-					"min": 0.75,
-					"steps": 2,
-					"step": 0.25
-				},
-				"rare": {
-					"min": 1.25,
-					"steps": 3,
-					"step": 0.5
-				},
-				"epic": {
-					"min": 2.75,
-					"steps": 3,
-					"step": 0.5
-				},
-				"mythic": {
-					"min": 4.25,
-					"steps": 4,
-					"step": 0.5
-				},
-				"ancient": {
-					"min": 6.25,
-					"steps": 6,
-					"step": 0.25
-				}
+				"common": 1,
+				"uncommon": 1.5,
+				"rare": 2.5,
+				"epic": 4,
+				"mythic": 6,
+				"ancient": 8
 			}
 		},
 		{
@@ -59,36 +35,12 @@
 			"attribute": "forge:entity_gravity",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
-				"common": {
-					"min": -0.02,
-					"steps": 2,
-					"step": -0.02
-				},
-				"uncommon": {
-					"min": -0.06,
-					"steps": 2,
-					"step": -0.03
-				},
-				"rare": {
-					"min": -0.12,
-					"steps": 3,
-					"step": -0.04
-				},
-				"epic": {
-					"min": -0.24,
-					"steps": 3,
-					"step": -0.05
-				},
-				"mythic": {
-					"min": -0.40,
-					"steps": 4,
-					"step": -0.05
-				},
-				"ancient": {
-					"min": -0.80,
-					"steps": 6,
-					"step": -0.04
-				}
+				"common": -0.10,
+				"uncommon": -0.25,
+				"rare": -0.45,
+				"epic": -0.65,
+				"mythic": -0.85,
+				"ancient": -1.04
 			}
 		},
 		{
@@ -102,36 +54,12 @@
 			"attribute": "forge:swim_speed",
 			"operation": "MULTIPLY_BASE",
 			"values": {
-				"common": {
-					"min": 0.05,
-					"steps": 2,
-					"step": 0.025
-				},
-				"uncommon": {
-					"min": 0.1,
-					"steps": 2,
-					"step": 0.05
-				},
-				"rare": {
-					"min": 0.2,
-					"steps": 3,
-					"step": 0.05
-				},
-				"epic": {
-					"min": 0.35,
-					"steps": 3,
-					"step": 0.075
-				},
-				"mythic": {
-					"min": 0.60,
-					"steps": 4,
-					"step": 0.05
-				},
-				"ancient": {
-					"min": 0.80,
-					"steps": 6,
-					"step": 0.05
-				}
+				"common": 0.10,
+				"uncommon": 0.20,
+				"rare": 0.30,
+				"epic": 0.45,
+				"mythic": 0.60,
+				"ancient": 0.80
 			}
 		}
 	]

@@ -18,8 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.affix.socket.gem.Gem;
-import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 
 public class SocketTooltipRenderer implements ClientTooltipComponent {
 
@@ -75,9 +74,9 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 	}
 
 	public static Component getSocketDesc(ItemStack socketed, ItemStack gemStack) {
-		Gem gem = GemItem.getGem(gemStack);
-		if (gem == null) return Component.translatable("socket.apotheosis.empty");
-		return gem.getSocketBonusTooltip(socketed, gemStack, GemItem.getLootRarity(gemStack));
+		GemInstance inst = new GemInstance(socketed, gemStack);
+		if (!inst.isValid()) return Component.translatable("socket.apotheosis.empty");
+		return inst.getSocketBonusTooltip();
 	}
 
 	public static record SocketComponent(ItemStack socketed, List<ItemStack> gems) implements TooltipComponent {

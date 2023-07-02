@@ -49,7 +49,7 @@ public interface Exclusion extends CodecProvider<Exclusion> {
 		//Formatter::off
 		public static Codec<SpawnTypeExclusion> CODEC = RecordCodecBuilder.create(inst -> inst
 			.group(
-				PlaceboCodecs.setCodec(new EnumCodec<>(MobSpawnType.class)).fieldOf("spawn_types").forGetter(SpawnTypeExclusion::types))
+				PlaceboCodecs.setOf(new EnumCodec<>(MobSpawnType.class)).fieldOf("spawn_types").forGetter(SpawnTypeExclusion::types))
 				.apply(inst, SpawnTypeExclusion::new)
 			);
 		//Formatter::on

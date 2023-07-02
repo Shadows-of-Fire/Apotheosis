@@ -30,10 +30,10 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 			Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
 			Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
 			ItemAdapter.CODEC.fieldOf("stack").forGetter(a -> a.stack),
-			PlaceboCodecs.setCodec(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
+			PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
 			LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(a -> a.minRarity),
 			LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(a -> a.maxRarity),
-			PlaceboCodecs.setCodec(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)))
+			PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)))
 		.apply(inst, AffixLootEntry::new)
 	);
 	//Formatter::on

@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -66,7 +65,7 @@ public class RadialAffix extends Affix {
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		RadialData data = this.getTrueLevel(rarity, level);
-		list.accept(Component.translatable("affix." + this.getId() + ".desc", data.x, data.y).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc", data.x, data.y));
 	}
 
 	// EventPriority.LOW

@@ -57,11 +57,6 @@ public class AttributeBonus extends GemBonus {
 	}
 
 	@Override
-	public int getMaxFacets(LootRarity rarity) {
-		return this.values.get(rarity).steps();
-	}
-
-	@Override
 	public AttributeBonus validate() {
 		Preconditions.checkNotNull(this.attribute, "Invalid AttributeBonus with null attribute");
 		Preconditions.checkNotNull(this.operation, "Invalid AttributeBonus with null operation");

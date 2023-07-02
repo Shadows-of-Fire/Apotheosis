@@ -151,7 +151,7 @@ public class AdventureConfig {
 			}
 		}
 
-		String[] gemDimRarities = c.getStringList("Gem Dimensional Rarities", "gems", new String[] { "overworld|common|rare", "the_nether|uncommon|epic", "the_end|rare|mythic", "twilightforest:twilight_forest|uncommon|epic" }, "Dimensional rarities for gem drops, in the form of dimension|min|max. A dimension not listed uses all rarities.");
+		String[] gemDimRarities = c.getStringList("Gem Dimensional Rarities", "gems", new String[] { "overworld|common|mythic", "the_nether|uncommon|mythic", "the_end|rare|ancient", "twilightforest:twilight_forest|uncommon|mythic" }, "Dimensional rarities for gem drops, in the form of dimension|min|max. A dimension not listed uses all rarities.");
 		GEM_DIM_RARITIES.clear();
 		for (String s : gemDimRarities) {
 			try {

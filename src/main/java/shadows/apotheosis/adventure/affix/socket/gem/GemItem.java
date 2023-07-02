@@ -18,6 +18,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,6 +30,7 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class GemItem extends Item {
 
+	public static final String HAS_REFRESHED = "has_refreshed";
 	public static final String UUID_ARRAY = "uuids";
 	public static final String GEM = "gem";
 
@@ -72,28 +74,71 @@ public class GemItem extends Item {
 		return gem.getMaxRarity() == rarity;
 	}
 
+	@Override
+	public boolean canBeHurtBy(DamageSource src) {
+		return super.canBeHurtBy(src) && src != DamageSource.ANVIL;
+	}
+
+	@Override
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+		if (group == CreativeModeTab.TAB_SEARCH) {
+			GemManager.INSTANCE.getValues().stream().sorted((g1, g2) -> g1.getId().compareTo(g2.getId())).forEach(gem -> {
+				for (LootRarity rarity : LootRarity.values()) {
+					if (gem.clamp(rarity) != rarity) continue;
+					ItemStack stack = new ItemStack(this);
+					setGem(stack, gem);
+					setLootRarity(stack, rarity);
+					items.add(stack);
+				}
+			});
+		}
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+		CompoundTag tag = stack.getOrCreateTag();
+		if (!tag.getBoolean(HAS_REFRESHED)) {
+			// To attempt to solve the "duplicated UUIDs problem that is introduced by duplicating gems, we refresh the UUIDs on first inventory tick.
+			Gem gem = getGem(stack);
+			if (gem == null) return;
+			generateAndSave(new ArrayList<>(), gem.getNumberOfUUIDs(), tag);
+			tag.putBoolean(HAS_REFRESHED, true);
+		}
+	}
+
 	/**
-	 * Retrieves the attribute modifier UUID(s) from a gem itemstack.
+	 * Retrieves cached attribute modifier UUID(s) from a gem itemstack.<br>
+	 * This method simply invokes {@link #getUUIDs(CompoundTag, int)} with the root tag
+	 * and the {@linkplain Gem#getNumberOfUUIDs() Gem's requested UUID count}.
 	 * @param gem The gem stack
 	 * @returns The stored UUID(s), creating them if they do not exist.
 	 */
 	public static List<UUID> getUUIDs(ItemStack gemStack) {
 		Gem gem = getGem(gemStack);
-		if (gem == null || gem.getNumberOfUUIDs() == 0) return Collections.emptyList();
-		CompoundTag tag = gemStack.getOrCreateTag();
+		if (gem == null) return Collections.emptyList();
+		return getUUIDs(gemStack.getOrCreateTag(), gem.getNumberOfUUIDs());
+	}
+
+	/**
+	 * Retrieves cached attribute modifier UUID(s) from an itemstack.
+	 * @param gem The gem stack
+	 * @returns The stored UUID(s), creating them if they do not exist.
+	 */
+	public static List<UUID> getUUIDs(CompoundTag tag, int numUUIDs) {
+		if (numUUIDs == 0) return Collections.emptyList();
 		if (tag.contains(UUID_ARRAY)) {
 			ListTag list = tag.getList(UUID_ARRAY, Tag.TAG_INT_ARRAY);
 			List<UUID> ret = new ArrayList<>(list.size());
 			for (Tag t : list) {
 				ret.add(NbtUtils.loadUUID(t));
 			}
-			if (ret.size() <= gem.getNumberOfUUIDs()) return generateAndSave(ret, gem.getNumberOfUUIDs(), gemStack);
+			if (ret.size() < numUUIDs) return generateAndSave(ret, numUUIDs, tag);
 			return ret;
 		}
-		return generateAndSave(new ArrayList<>(gem.getNumberOfUUIDs()), gem.getNumberOfUUIDs(), gemStack);
+		return generateAndSave(new ArrayList<>(numUUIDs), numUUIDs, tag);
 	}
 
-	private static List<UUID> generateAndSave(List<UUID> base, int amount, ItemStack gemStack) {
+	private static List<UUID> generateAndSave(List<UUID> base, int amount, CompoundTag tag) {
 		int needed = amount - base.size();
 		for (int i = 0; i < needed; i++) {
 			base.add(UUID.randomUUID());
@@ -102,7 +147,7 @@ public class GemItem extends Item {
 		for (UUID id : base) {
 			list.add(NbtUtils.createUUID(id));
 		}
-		gemStack.getOrCreateTag().put(UUID_ARRAY, list);
+		tag.put(UUID_ARRAY, list);
 		return base;
 	}
 
@@ -136,26 +181,6 @@ public class GemItem extends Item {
 	public static LootRarity getLootRarity(ItemStack stack) {
 		Gem gem = getGem(stack);
 		return gem == null ? null : gem.clamp(AffixHelper.getRarity(stack.getTag()));
-	}
-
-	@Override
-	public boolean canBeHurtBy(DamageSource src) {
-		return super.canBeHurtBy(src) && src != DamageSource.ANVIL;
-	}
-
-	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		if (group == CreativeModeTab.TAB_SEARCH) {
-			GemManager.INSTANCE.getValues().stream().sorted((g1, g2) -> g1.getId().compareTo(g2.getId())).forEach(gem -> {
-				for (LootRarity rarity : LootRarity.values()) {
-					if (gem.clamp(rarity) != rarity) continue;
-					ItemStack stack = new ItemStack(this);
-					setGem(stack, gem);
-					setLootRarity(stack, rarity);
-					items.add(stack);
-				}
-			});
-		}
 	}
 
 }

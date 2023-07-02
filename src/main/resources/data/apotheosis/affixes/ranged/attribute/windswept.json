@@ -1,7 +1,7 @@
 {
 	"type": "apotheosis:attribute",
 	"attribute": "minecraft:generic.movement_speed",
-	"operation": "ADDITION",
+	"operation": "MULTIPLY_BASE",
 	"values": {
 		"common": {
 			"min": 0.15,

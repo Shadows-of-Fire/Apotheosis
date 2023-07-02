@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -18,6 +19,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
 import com.mojang.math.Vector3f;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -202,7 +204,10 @@ public class AdventureModuleClient {
 		if (stack.hasTag()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
 			List<Component> components = new ArrayList<>();
-			affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().getType().ordinal())).forEach(inst -> inst.addInformation(components::add));
+			Consumer<Component> dotPrefixer = afxComp -> {
+				components.add(Component.translatable("text.apotheosis.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
+			};
+			affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().getType().ordinal())).forEach(inst -> inst.addInformation(dotPrefixer));
 			e.getToolTip().addAll(1, components);
 		}
 	}

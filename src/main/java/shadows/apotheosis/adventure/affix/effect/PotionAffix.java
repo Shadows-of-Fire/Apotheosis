@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -72,7 +71,7 @@ public class PotionAffix extends Affix {
 	@Override
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
 		MobEffectInstance inst = this.values.get(rarity).build(this.effect, level);
-		MutableComponent comp = this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW);
+		MutableComponent comp = this.target.toComponent(toComponent(inst));
 		int cooldown = this.getCooldown(rarity);
 		if (cooldown != 0) {
 			Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(cooldown));
@@ -147,10 +146,7 @@ public class PotionAffix extends Affix {
 
 	private void applyEffect(LivingEntity target, LootRarity rarity, float level) {
 		int cooldown = this.getCooldown(rarity);
-		if (cooldown != 0) {
-			long lastApplied = target.getPersistentData().getLong("apoth.affix_cooldown." + this.getId().toString());
-			if (lastApplied != 0 && lastApplied + cooldown >= target.level.getGameTime()) return;
-		}
+		if (cooldown != 0 && isOnCooldown(this.getId(), cooldown, target)) return;
 		EffectData data = this.values.get(rarity);
 		var inst = target.getEffect(this.effect);
 		if (this.stackOnReapply && inst != null) {
@@ -161,7 +157,7 @@ public class PotionAffix extends Affix {
 		} else {
 			target.addEffect(data.build(this.effect, level));
 		}
-		target.getPersistentData().putLong("apoth.affix_cooldown." + this.getId().toString(), target.level.getGameTime());
+		startCooldown(this.getId(), target);
 	}
 
 	@Override

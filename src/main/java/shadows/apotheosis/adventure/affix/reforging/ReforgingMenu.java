@@ -35,7 +35,6 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 		public void setChanged() {
 			super.setChanged();
 			ReforgingMenu.this.slotsChanged(this);
-			if (ReforgingMenu.this.needsReset()) ReforgingMenu.this.needsReset.set(0);
 		}
 	};
 	protected final RandomSource random = new XoroshiroRandomSource(0);
@@ -182,12 +181,13 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 	}
 
 	@Override
-	public void slotChanged(AbstractContainerMenu pContainerToSend, int pDataSlotIndex, ItemStack pStack) {
+	public void slotChanged(AbstractContainerMenu pContainerToSend, int idx, ItemStack pStack) {
 		LootRarity rarity = getRarity();
 		if (rarity == null) return;
 		this.costs[0] = AdventureConfig.reforgeCosts.get(rarity).dustCost();
 		this.costs[1] = AdventureConfig.reforgeCosts.get(rarity).matCost();
 		this.costs[2] = AdventureConfig.reforgeCosts.get(rarity).levelCost();
+		if (idx < 3 && ReforgingMenu.this.needsReset()) ReforgingMenu.this.needsReset.set(0);
 	}
 
 	@Override

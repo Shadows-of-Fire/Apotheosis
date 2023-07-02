@@ -72,11 +72,11 @@ public class LootRarityManager extends PlaceboJsonReloadListener<RarityStub> {
 
 					if (affixes.size() < rules.size()) {
 						var errMsg = new StringBuilder();
-						errMsg.append("Insufficient number of affixes to satisfy the loot rules (ignoring backup rules) of rarity " + rarity.id() + " for category " + cat.getName() + "!\n");
-						errMsg.append("Required number of affixes: " + rules.size() + "\n");
-						errMsg.append("Provided number of affixes: " + affixes.size() + "\n");
-						errMsg.append("The following affixes exist for this category/rarity combination: ");
-						affixes.forEach(a -> errMsg.append(a.getId() + " "));
+						errMsg.append("Insufficient number of affixes to satisfy the loot rules (ignoring backup rules) of rarity " + rarity.id() + " for category " + cat.getName());
+						errMsg.append("Required: " + rules.size());
+						errMsg.append("; Provided: " + affixes.size());
+						//errMsg.append("The following affixes exist for this category/rarity combination: ");
+						//affixes.forEach(a -> errMsg.append(a.getId() + " "));
 						AdventureModule.LOGGER.error(errMsg.toString());
 					}
 				}

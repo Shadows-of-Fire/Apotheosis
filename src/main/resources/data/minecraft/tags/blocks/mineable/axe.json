@@ -11,6 +11,10 @@
 		{
 			"id": "apotheosis:salvaging_table",
 			"required": false
+		},
+		{
+			"id": "apotheosis:gem_cutting_table",
+			"required": false
 		}
 	]
 }

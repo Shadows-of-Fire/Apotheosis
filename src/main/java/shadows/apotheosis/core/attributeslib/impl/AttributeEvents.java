@@ -82,18 +82,26 @@ public class AttributeEvents {
 		if (e.getEntity() instanceof Player player) {
 			double t = player.getAttribute(ALAttributes.DRAW_SPEED.get()).getValue() - 1;
 			if (t == 0 || !canBenefitFromDrawSpeed(e.getItem())) return;
+
+			// Handle negative draw speed.
+			int offset = -1;
+			if (t < 0) {
+				offset = 1;
+				t = -t;
+			}
+
 			while (t > 1) { // Every 100% triggers an immediate extra tick
-				e.setDuration(e.getDuration() - 1);
+				e.setDuration(e.getDuration() + offset);
 				t--;
 			}
 
 			if (t > 0.5F) { // Special case 0.5F so that values in (0.5, 1) don't round to 1.
-				if (e.getEntity().tickCount % 2 == 0) e.setDuration(e.getDuration() - 1);
+				if (e.getEntity().tickCount % 2 == 0) e.setDuration(e.getDuration() + offset);
 				t -= 0.5F;
 			}
 
 			int mod = (int) Math.floor(1 / Math.min(1, t));
-			if (e.getEntity().tickCount % mod == 0) e.setDuration(e.getDuration() - 1);
+			if (e.getEntity().tickCount % mod == 0) e.setDuration(e.getDuration() + offset);
 			t--;
 		}
 	}

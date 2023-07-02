@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
@@ -49,6 +50,13 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 		if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
 		GemItem.setLootRarity(stack, rarity);
 		return stack;
+	}
+
+	/**
+	 * Public bouncer for gem bonus tag resolution.
+	 */
+	public final ICondition.IContext _getContext() {
+		return getContext();
 	}
 
 }

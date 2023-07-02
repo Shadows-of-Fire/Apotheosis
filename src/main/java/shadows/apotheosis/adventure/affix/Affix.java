@@ -9,11 +9,10 @@ import javax.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import net.minecraft.ChatFormatting;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -33,7 +32,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -84,7 +85,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	 * @param tooltips The destination for tooltips.
 	 */
 	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(level)).withStyle(ChatFormatting.YELLOW));
+		list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(level)));
 	}
 
 	/**
@@ -223,6 +224,17 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	public void getEnchantmentLevels(ItemStack stack, LootRarity rarity, float level, Map<Enchantment, Integer> enchantments) {
 	}
 
+	/**
+	 * Fires from {@link LootModifier#apply(ObjectArrayList, LootContext)} when this affix is on the tool given by the context.
+	 * @param stack    The stack with the affix.
+	 * @param rarity   The rarity of the item.
+	 * @param level    The level of the affix.
+	 * @param loot     The generated loot.
+	 * @param ctx      The loot context.
+	 */
+	public void modifyLoot(ItemStack stack, LootRarity rarity, float level, ObjectArrayList<ItemStack> loot, LootContext ctx) {
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Affix: %s", this.getId());
@@ -241,8 +253,19 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 	 */
 	public abstract boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity);
 
-	public static MutableComponent loreComponent(String text, Object... args) {
-		return Component.translatable(text, args).withStyle(ChatFormatting.ITALIC, ChatFormatting.DARK_PURPLE);
+	/**
+	 * Checks if the affix is still on cooldown, if a cooldown was set via {@link #startCooldown(Affix, int, LivingEntity)}
+	 */
+	public static boolean isOnCooldown(ResourceLocation id, int cooldown, LivingEntity entity) {
+		long lastApplied = entity.getPersistentData().getLong("apoth.affix_cooldown." + id.toString());
+		return lastApplied != 0 && lastApplied + cooldown >= entity.level.getGameTime();
+	}
+
+	/**
+	 * Records the current time as a cooldown tracker. Used in conjunction with {@link #isOnCooldown(Affix, int, LivingEntity)}
+	 */
+	public static void startCooldown(ResourceLocation id, LivingEntity entity) {
+		entity.getPersistentData().putLong("apoth.affix_cooldown." + id.toString(), entity.level.getGameTime());
 	}
 
 	public static String fmt(float f) {

@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import shadows.apotheosis.ench.EnchModule;
+import shadows.apotheosis.Apotheosis;
 
 public class BerserkersFuryEnchant extends Enchantment {
 
@@ -54,7 +54,7 @@ public class BerserkersFuryEnchant extends Enchantment {
 			int level = EnchantmentHelper.getEnchantmentLevel(this, user);
 			if (level > 0) {
 				user.invulnerableTime = 0;
-				user.hurt(EnchModule.CORRUPTED, level * level);
+				user.hurt(Apotheosis.CORRUPTED, level * level);
 				user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200 * level, level - 1));
 				user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 200 * level, level - 1));
 				user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 200 * level, level - 1));

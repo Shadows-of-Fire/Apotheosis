@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -42,30 +41,30 @@ public final class LootCategory {
 	public static final Map<String, LootCategory> BY_ID = Collections.unmodifiableMap(BY_ID_INTERNAL);
 	public static final List<LootCategory> VALUES = Collections.unmodifiableList(VALUES_INTERNAL);
 	public static final Codec<LootCategory> CODEC = ExtraCodecs.stringResolverCodec(LootCategory::getName, LootCategory::byId);
-	public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setCodec(CODEC);
+	public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setOf(CODEC);
 
-	public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem, s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
-	public static final LootCategory CROSSBOW = register("crossbow", s -> s.getItem() instanceof CrossbowItem, s -> arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
-	public static final LootCategory PICKAXE = register("pickaxe", s -> s.canPerformAction(ToolActions.PICKAXE_DIG), s -> arr(EquipmentSlot.MAINHAND));
-	public static final LootCategory SHOVEL = register("shovel", s -> s.canPerformAction(ToolActions.SHOVEL_DIG), s -> arr(EquipmentSlot.MAINHAND));
-	public static final LootCategory HEAVY_WEAPON = register("heavy_weapon", new ShieldBreakerTest(), s -> arr(EquipmentSlot.MAINHAND));
-	public static final LootCategory HELMET = register("helmet", armorSlot(EquipmentSlot.HEAD), s -> arr(EquipmentSlot.HEAD));
-	public static final LootCategory CHESTPLATE = register("chestplate", armorSlot(EquipmentSlot.CHEST), s -> arr(EquipmentSlot.CHEST));
-	public static final LootCategory LEGGINGS = register("leggings", armorSlot(EquipmentSlot.LEGS), s -> arr(EquipmentSlot.LEGS));
-	public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), s -> arr(EquipmentSlot.FEET));
-	public static final LootCategory SHIELD = register("shield", s -> s.canPerformAction(ToolActions.SHIELD_BLOCK), s -> arr(EquipmentSlot.OFFHAND));
-	public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, s -> arr(EquipmentSlot.MAINHAND));
-	public static final LootCategory SWORD = register("sword", s -> s.canPerformAction(ToolActions.SWORD_DIG) || s.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, s).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0), s -> arr(EquipmentSlot.MAINHAND));
-	public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), s -> new EquipmentSlot[0]);
+	public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem, arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
+	public static final LootCategory CROSSBOW = register("crossbow", s -> s.getItem() instanceof CrossbowItem, arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
+	public static final LootCategory PICKAXE = register("pickaxe", s -> s.canPerformAction(ToolActions.PICKAXE_DIG), arr(EquipmentSlot.MAINHAND));
+	public static final LootCategory SHOVEL = register("shovel", s -> s.canPerformAction(ToolActions.SHOVEL_DIG), arr(EquipmentSlot.MAINHAND));
+	public static final LootCategory HEAVY_WEAPON = register("heavy_weapon", new ShieldBreakerTest(), arr(EquipmentSlot.MAINHAND));
+	public static final LootCategory HELMET = register("helmet", armorSlot(EquipmentSlot.HEAD), arr(EquipmentSlot.HEAD));
+	public static final LootCategory CHESTPLATE = register("chestplate", armorSlot(EquipmentSlot.CHEST), arr(EquipmentSlot.CHEST));
+	public static final LootCategory LEGGINGS = register("leggings", armorSlot(EquipmentSlot.LEGS), arr(EquipmentSlot.LEGS));
+	public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), arr(EquipmentSlot.FEET));
+	public static final LootCategory SHIELD = register("shield", s -> s.canPerformAction(ToolActions.SHIELD_BLOCK), arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
+	public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, arr(EquipmentSlot.MAINHAND));
+	public static final LootCategory SWORD = register("sword", s -> s.canPerformAction(ToolActions.SWORD_DIG) || s.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, s).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0), arr(EquipmentSlot.MAINHAND));
+	public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), new EquipmentSlot[0]);
 
 	private final String name;
 	private final Predicate<ItemStack> validator;
-	private final Function<ItemStack, EquipmentSlot[]> slotGetter;
+	private final EquipmentSlot[] slots;
 
-	private LootCategory(String name, Predicate<ItemStack> validator, Function<ItemStack, EquipmentSlot[]> slotGetter) {
+	private LootCategory(String name, Predicate<ItemStack> validator, EquipmentSlot[] slots) {
 		this.name = Preconditions.checkNotNull(name);
 		this.validator = Preconditions.checkNotNull(validator);
-		this.slotGetter = Preconditions.checkNotNull(slotGetter);
+		this.slots = Preconditions.checkNotNull(slots);
 	}
 
 	public String getDescId() {
@@ -84,8 +83,8 @@ public final class LootCategory {
 	 * Returns the relevant equipment slot for this item.
 	 * The passed item should be of the type this category represents.
 	 */
-	public EquipmentSlot[] getSlots(ItemStack stack) {
-		return this.slotGetter.apply(stack);
+	public EquipmentSlot[] getSlots() {
+		return this.slots;
 	}
 
 	public boolean isValid(ItemStack stack) {
@@ -141,14 +140,14 @@ public final class LootCategory {
 
 	/**
 	 * Registers a new loot category, adding it to the BY_ID and VALUES collections so that it will be found by the rest of the universe.
-	 * @param orderRef An existing LootCategory, to determine where in the order of precedence this new category will go.
+	 * @param orderRef An existing category for ordering. The new category will be placed before the reference category.
 	 * @param name The name of this category.  May not be an existing name.
 	 * @param validator A predicate that checks if an item stack matches this loot category.
 	 * @param slotGetter A function that provides the loot categories that bonuses will be active for, if an item is of this category.
 	 * @return A new loot category, which should be stored in a public static final field.
 	 */
-	public static final LootCategory register(@Nullable LootCategory orderRef, String name, Predicate<ItemStack> validator, Function<ItemStack, EquipmentSlot[]> slotGetter) {
-		var cat = new LootCategory(name, validator, slotGetter);
+	public static final LootCategory register(@Nullable LootCategory orderRef, String name, Predicate<ItemStack> validator, EquipmentSlot[] slots) {
+		var cat = new LootCategory(name, validator, slots);
 		if (BY_ID_INTERNAL.containsKey(name)) throw new IllegalArgumentException("Cannot register a loot category with a duplicate name.");
 		BY_ID_INTERNAL.put(name, cat);
 
@@ -213,7 +212,7 @@ public final class LootCategory {
 		return (stack) -> stack.getItem() instanceof ArmorItem arm && arm.getSlot() == slot;
 	}
 
-	static final LootCategory register(String name, Predicate<ItemStack> validator, Function<ItemStack, EquipmentSlot[]> slotGetter) {
-		return register(null, name, validator, slotGetter);
+	static final LootCategory register(String name, Predicate<ItemStack> validator, EquipmentSlot[] slots) {
+		return register(null, name, validator, slots);
 	}
 }

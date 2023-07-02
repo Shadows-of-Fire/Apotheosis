@@ -6,11 +6,11 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,99 +20,79 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.ench.asm.EnchHooks;
-import shadows.placebo.events.GetEnchantmentLevelEvent;
 
-public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarity, float level) {
+/**
+ * An Affix Instance is a wrapper around the necessary parameters for all affix methods.<br>
+ * Prefer using this over directly invoking methods on {@link Affix}.
+ */
+public record AffixInstance(Affix affix, ItemStack stack, LootRarity rarity, float level) {
 
 	/**
-	 * Retrieve the modifiers from this affix to be applied to the itemstack.
-	 * @param stack The stack the affix is on.
-	 * @param level The level of this affix.
-	 * @param type The slot type for modifiers being gathered.
-	 * @param map The destination for generated attribute modifiers.
+	 * @see Affix#addModifiers(ItemStack, LootRarity, float, EquipmentSlot, BiConsumer)
 	 */
 	public void addModifiers(EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
 		this.affix.addModifiers(this.stack, this.rarity, this.level, type, map);
 	}
 
 	/**
-	 * Adds all tooltip data from this affix to the given stack's tooltip list.
-	 * This consumer will insert tooltips immediately after enchantment tooltips, or after the name if none are present.
-	 * @param stack The stack the affix is on.
-	 * @param level The level of this affix.
-	 * @param tooltips The destination for tooltips.
+	 * @see Affix#addInformation(ItemStack, LootRarity, float, Consumer)
 	 */
 	public void addInformation(Consumer<Component> list) {
 		this.affix.addInformation(this.stack, this.rarity, this.level, list);
 	}
 
 	/**
-	 * Get a component representing an addition of this affix to the item's name.
-	 * @return The name part, prefix or suffix, as requested.
+	 * @see Affix#getName(ItemStack, LootRarity, float, boolean)
 	 */
 	public Component getName(boolean prefix) {
 		return this.affix.getName(this.stack, this.rarity, this.level, prefix);
 	}
 
 	/**
-	 * Calculates the protection value of this affix, with respect to the given damage source.<br>
-	 * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
-	 * Ench module overrides with {@link EnchHooks#getDamageAfterMagicAbsorb}<br>
-	 * @param level The level of this affix, if applicable.<br>
-	 * @param source The damage source to compare against.<br>
-	 * @return How many protection points this affix is worth against this source.<br>
+	 * @see Affix#getDamageProtection(ItemStack, LootRarity, float, DamageSource)
 	 */
 	public int getDamageProtection(DamageSource source) {
 		return this.affix.getDamageProtection(this.stack, this.rarity, this.level, source);
 	}
 
 	/**
-	 * Calculates the additional damage this affix deals.
-	 * This damage is dealt as player physical damage, and is not impacted by critical strikes.
+	 * @see Affix#getDamageBonus(ItemStack, LootRarity, float, MobType)
 	 */
 	public float getDamageBonus(MobType creatureType) {
 		return this.affix.getDamageBonus(this.stack, this.rarity, this.level, creatureType);
 	}
 
 	/**
-	 * Called when someone attacks an entity with an item containing this affix.
-	 * More specifically, this is invoked whenever the user attacks a target, while having an item with this affix in either hand or any armor slot.
-	 * @param user The wielder of the weapon.  The weapon stack will be in their main hand.
-	 * @param target The target entity being attacked.
-	 * @param level The level of this affix, if applicable.
+	 * @see Affix#doPostAttack(ItemStack, LootRarity, float, LivingEntity, Entity)
 	 */
 	public void doPostAttack(LivingEntity user, @Nullable Entity target) {
 		this.affix.doPostAttack(this.stack, this.rarity, this.level, user, target);
 	}
 
 	/**
-	 * Whenever an entity that has this enchantment on one of its associated items is damaged this method will be
-	 * called.
+	 * @see Affix#doPostHurt(ItemStack, LootRarity, float, LivingEntity, Entity)
 	 */
 	public void doPostHurt(LivingEntity user, @Nullable Entity attacker) {
 		this.affix.doPostHurt(this.stack, this.rarity, this.level, user, attacker);
 	}
 
 	/**
-	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
+	 * @see Affix#onArrowFired(ItemStack, LootRarity, float, LivingEntity, AbstractArrow)
 	 */
 	public void onArrowFired(LivingEntity user, AbstractArrow arrow) {
 		this.affix.onArrowFired(this.stack, this.rarity, this.level, user, arrow);
 	}
 
 	/**
-	 * Called when {@link Item#onItemUse(ItemUseContext)} would be called for an item with this affix.
-	 * Return null to not impact the original result type.
+	 * @see Affix#onItemUse(ItemStack, LootRarity, float, UseOnContext)
 	 */
 	@Nullable
 	public InteractionResult onItemUse(UseOnContext ctx) {
@@ -120,71 +100,58 @@ public final record AffixInstance(Affix affix, ItemStack stack, LootRarity rarit
 	}
 
 	/**
-	 * Called when a shield with this affix blocks some amount of damage.
-	 * @param entity The blocking entity.
-	 * @param stack  The shield itemstack the affix is on .
-	 * @param source The damage source being blocked.
-	 * @param amount The amount of damage blocked.
-	 * @param level  The level of this affix.
-	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
+	 * @see Affix#onShieldBlock(ItemStack, LootRarity, float, LivingEntity, DamageSource, float)
 	 */
 	public float onShieldBlock(LivingEntity entity, DamageSource source, float amount) {
 		return this.affix.onShieldBlock(this.stack, this.rarity, this.level, entity, source, amount);
 	}
 
 	/**
-	 * Called when a player with this affix breaks a block.
-	 * @param player The breaking player.
-	 * @param world  The level the block was broken in.
-	 * @param pos    The position of the block.
-	 * @param state  The state that was broken.
+	 * @see Affix#onBlockBreak(ItemStack, LootRarity, float, Player, LevelAccessor, BlockPos, BlockState)
 	 */
 	public void onBlockBreak(Player player, LevelAccessor world, BlockPos pos, BlockState state) {
 		this.affix.onBlockBreak(this.stack, this.rarity, this.level, player, world, pos, state);
 	}
 
 	/**
-	 * Allows an affix to reduce durability damage to an item.
-	 * @param stack   The stack with the affix.
-	 * @param rarity  The rarity of the item.
-	 * @param level   The level of the affix.
-	 * @param user    The user of the item, if applicable.
-	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
+	 * @see Affix#getDurabilityBonusPercentage(ItemStack, LootRarity, float, ServerPlayer)
 	 */
 	public float getDurabilityBonusPercentage(@Nullable ServerPlayer user) {
 		return this.affix.getDurabilityBonusPercentage(this.stack, this.rarity, this.level, user);
 	}
 
 	/**
-	 * Called when an arrow that was marked with this affix hits a target.
+	 * @see Affix#onArrowImpact(AbstractArrow, LootRarity, float, HitResult, net.minecraft.world.phys.HitResult.Type)
 	 */
 	public void onArrowImpact(AbstractArrow arrow, HitResult res, HitResult.Type type) {
 		this.affix.onArrowImpact(arrow, rarity, level, res, type);
 	}
 
+	/**
+	 * @see Affix#enablesTelepathy()
+	 */
 	public boolean enablesTelepathy() {
 		return this.affix.enablesTelepathy();
 	}
 
 	/**
-	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
-	 * If the value is set to zero or below, the event will be cancelled.
-	 * @param src     The Damage Source of the attack.
-	 * @param ent     The entity being attacked.
-	 * @param amount  The amount of damage that is to be taken.
-	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other affixes.
+	 * @see Affix#onHurt(ItemStack, LootRarity, float, DamageSource, LivingEntity, float)
 	 */
 	public float onHurt(DamageSource src, LivingEntity ent, float amount) {
 		return this.affix.onHurt(stack, rarity, level, src, ent, amount);
 	}
 
 	/**
-	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
-	 * @param ench     The enchantment being queried for.
-	 * @param oldLevel The original level of the enchantment, before modification.
-	 * @return         The bonus level to be added to the current enchantment.
+	 * @see Affix#getEnchantmentLevels(ItemStack, LootRarity, float, Map)
 	 */
 	public void getEnchantmentLevels(Map<Enchantment, Integer> enchantments) {
 		this.affix.getEnchantmentLevels(stack, rarity, level, enchantments);
+	}
+
+	/**
+	 * @see Affix#modifyLoot(ItemStack, LootRarity, float, ObjectArrayList, LootContext)
+	 */
+	public void modifyLoot(ObjectArrayList<ItemStack> loot, LootContext ctx) {
+		this.affix.modifyLoot(stack, rarity, level, loot, ctx);
 	}
 }

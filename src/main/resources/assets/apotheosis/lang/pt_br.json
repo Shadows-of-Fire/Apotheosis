@@ -150,48 +150,48 @@
 	
 	"affix.apotheosis:ranged/special/spectral": "Espectral",
     "affix.apotheosis:ranged/special/spectral.suffix": "dos Desolados",
-    "affix.apotheosis:ranged/special/spectral.desc": "• Você tem uma chance de %s%% de disparar uma segunda flecha.",
+    "affix.apotheosis:ranged/special/spectral.desc": "Você tem uma chance de %s%% de disparar uma segunda flecha.",
 	
 	"affix.apotheosis:ranged/special/magical": "Mágico",
     "affix.apotheosis:ranged/special/magical.suffix": "do Arcano",
-    "affix.apotheosis:ranged/special/magical.desc": "• Suas flechas causam dano mágico adicional.",
+    "affix.apotheosis:ranged/special/magical.desc": "Suas flechas causam dano mágico adicional.",
 	
 	"affix.apotheosis:sword/special/festive": "Festivo",
     "affix.apotheosis:sword/special/festive.suffix": "da Festa",
-    "affix.apotheosis:sword/special/festive.desc": "• Inimigos abatidos têm uma chance de %s%% de se transformarem em uma Piñata de saque",
+    "affix.apotheosis:sword/special/festive.desc": "Inimigos abatidos têm uma chance de %s%% de se transformarem em uma Piñata de saque",
 	
 	"affix.apotheosis:sword/special/thunderstruck": "Estupefato",
     "affix.apotheosis:sword/special/thunderstruck.suffix": "da Tempestade",
-    "affix.apotheosis:sword/special/thunderstruck.desc": "• Seus ataques causam %s de dano para inimigos próximos.",
+    "affix.apotheosis:sword/special/thunderstruck.desc": "Seus ataques causam %s de dano para inimigos próximos.",
 	
 	"affix.apotheosis:shield/special/retreating": "Recuante",
     "affix.apotheosis:shield/special/retreating.suffix": "do Bobo da corte",
-    "affix.apotheosis:shield/special/retreating.desc": "• Você pulará para trás ao bloquear em combate corpo a corpo.",
+    "affix.apotheosis:shield/special/retreating.desc": "Você pulará para trás ao bloquear em combate corpo a corpo.",
 	
 	"affix.apotheosis:telepathic": "Telepático",
     "affix.apotheosis:telepathic.suffix": "do Tempo e espaço",
-    "affix.apotheosis:telepathic.desc.weapon": "• Saques de criatura se teletransportarão para você.",
-    "affix.apotheosis:telepathic.desc.tool": "• Saques de blocos se teletransportarão para você.",
+    "affix.apotheosis:telepathic.desc.weapon": "Saques de criatura se teletransportarão para você.",
+    "affix.apotheosis:telepathic.desc.tool": "Saques de blocos se teletransportarão para você.",
 
 	"affix.apotheosis:heavy_weapon/special/executing": "Execução",
     "affix.apotheosis:heavy_weapon/special/executing.suffix": "do Carrasco",
-    "affix.apotheosis:heavy_weapon/special/executing.desc": "• Inimigos abaixo de %s%% da vida máxima serão executados.",
+    "affix.apotheosis:heavy_weapon/special/executing.desc": "Inimigos abaixo de %s%% da vida máxima serão executados.",
 	
 	"affix.apotheosis:heavy_weapon/special/cleaving": "Dilacerante",
     "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "do Carniceiro",
-    "affix.apotheosis:heavy_weapon/special/cleaving.desc": "• Os ataques têm uma chance de %s%% de atingir também até %s inimigos próximos.",
+    "affix.apotheosis:heavy_weapon/special/cleaving.desc": "Os ataques têm uma chance de %s%% de atingir também até %s inimigos próximos.",
 
 	"affix.apotheosis:breaker/special/enlightened": "Iluminado",
     "affix.apotheosis:breaker/special/enlightened.suffix": "do Emissário da luz",
-    "affix.apotheosis:breaker/special/enlightened.desc": "• Esta ferramenta pode colocar uma tocha à custa de %s da durabilidade.",
+    "affix.apotheosis:breaker/special/enlightened.desc": "Esta ferramenta pode colocar uma tocha à custa de %s da durabilidade.",
 
 	"affix.apotheosis:shield/special/psychic": "Psíquico",
     "affix.apotheosis:shield/special/psychic.suffix": "do Vingativo",
-    "affix.apotheosis:shield/special/psychic.desc": "• Bloquear um projétil causa %s%% de dano ao atirador.",
+    "affix.apotheosis:shield/special/psychic.desc": "Bloquear um projétil causa %s%% de dano ao atirador.",
 
 	"affix.apotheosis:shield/special/catalyzing": "Catalizador",
     "affix.apotheosis:shield/special/catalyzing.suffix": "do Convertido",
-    "affix.apotheosis:shield/special/catalyzing.desc": "• Bloquear uma explosão lhe dará uma grande força.",
+    "affix.apotheosis:shield/special/catalyzing.desc": "Bloquear uma explosão lhe dará uma grande força.",
 
 	"affix.apotheosis:heavy_weapon/attribute/annihilating": "Aniquilador",
     "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "do Titã",
@@ -216,7 +216,7 @@
 
 	"affix.apotheosis:breaker/special/radial": "Radial",
     "affix.apotheosis:breaker/special/radial.suffix": "do Rompe-terra",
-    "affix.apotheosis:breaker/special/radial.desc": "• Esta ferramenta quebra em uma área %sx%s.",
+    "affix.apotheosis:breaker/special/radial.desc": "Esta ferramenta quebra em uma área %sx%s.",
 	
 	"misc.apotheosis.iron": "ferro",
 	"misc.apotheosis.diamond": "diamante",
@@ -224,7 +224,7 @@
 	
 	"affix.apotheosis:breaker/special/omnetic": "Omnético",
     "affix.apotheosis:breaker/special/omnetic.suffix": "da Singularidade",
-    "affix.apotheosis:breaker/special/omnetic.desc": "• Esta ferramenta tem efetividade de %s contra todos os blocos.",
+    "affix.apotheosis:breaker/special/omnetic.desc": "Esta ferramenta tem efetividade de %s contra todos os blocos.",
 	
 	"misc.apotheosis.physical": "físico",
 	"misc.apotheosis.magic": "mágico",
@@ -248,19 +248,19 @@
 	"affix.apotheosis:armor/dmg_reduction/feathery": "Emplumado",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "da Águia",
 
-	"affix.apotheosis.target.attack_self": "• Ao acertar, ganha %s",
-	"affix.apotheosis.target.attack_target": "• Ao acertar, infringe %s",
-	"affix.apotheosis.target.hurt_self": "• Ao ser atacado, ganha %s",
-	"affix.apotheosis.target.hurt_attacker": "• Ao ser atacado, infringe %s",
-	"affix.apotheosis.target.break_self": "• Ao quebrar bloco, ganha %s",
-	"affix.apotheosis.target.arrow_self": "• Ao acertar flecha, ganha %s",
-	"affix.apotheosis.target.arrow_target": "• Ao acertar flecha, infringe %s",
-	"affix.apotheosis.target.block_self": "• Ao bloquear, ganha %s",
-	"affix.apotheosis.target.block_attacker": "• Ao bloquear, infringe %s",
+	"affix.apotheosis.target.attack_self": "Ao acertar, ganha %s",
+	"affix.apotheosis.target.attack_target": "Ao acertar, infringe %s",
+	"affix.apotheosis.target.hurt_self": "Ao ser atacado, ganha %s",
+	"affix.apotheosis.target.hurt_attacker": "Ao ser atacado, infringe %s",
+	"affix.apotheosis.target.break_self": "Ao quebrar bloco, ganha %s",
+	"affix.apotheosis.target.arrow_self": "Ao acertar flecha, ganha %s",
+	"affix.apotheosis.target.arrow_target": "Ao acertar flecha, infringe %s",
+	"affix.apotheosis.target.block_self": "Ao bloquear, ganha %s",
+	"affix.apotheosis.target.block_attacker": "Ao bloquear, infringe %s",
     "affix.apotheosis.cooldown": "[⌛ %s]",
 
-	"affix.apotheosis:durable.desc": "• Este item ignora %s%% do dano de durabilidade.",
-    "affix.apotheosis:socket.desc": "• Encaixe (%s)",
+	"affix.apotheosis:durable.desc": "Este item ignora %s%% do dano de durabilidade.",
+    "affix.apotheosis:socket.desc": "Encaixe (%s)",
 
 	"socket.apotheosis.empty": "Encaixe vazio",
     "item.modifiers.socket": "Quando encaixado:",
@@ -354,7 +354,6 @@
 	"text.apotheosis.results": "Resultados",
 	"text.apotheosis.facets": "Facetas: %s",
 	"text.apotheosis.socketable_into": "Encaixa em:",
-	"text.apotheosis.dot_prefix": "• %s",
 	"text.apotheosis.socket_limit": "Máximo de encaixes aplicados: %s",
     "text.apotheosis.no_upgrade": "Não pode ser melhorado",
 	"text.apotheosis.rarity_up_cost": "Custo de melhoria de raridade",

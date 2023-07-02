@@ -1,6 +1,8 @@
 {
     "comment_id": "/Attributes Lib",
 
+    "item.modifiers.both_hands": "When Held:",
+
     "attributeslib.adv.addition": "[Addition: %s]",
     "attributeslib.adv.multiply_base": "[Mult Base: %s]",
     "attributeslib.adv.multiply_total": "[Mult Total: %s]",
@@ -41,7 +43,7 @@
 	"apotheosis:draw_speed.desc": "How fast you draw ranged weapons, such as bows, crossbows, or tridents.",
 
 	"apotheosis:crit_chance": "Crit Chance",
-	"apotheosis:crit_chance.desc": "Chance for any damage to deal extra damage, based on your Crit Damage.",
+	"apotheosis:crit_chance.desc": "The chance any damage you deal critically strikes, dealing extra damage based on your Crit Damage.",
 
 	"apotheosis:crit_damage": "Crit Damage",
 	"apotheosis:crit_damage.desc": "Damage multiplier for critical hits, including vanilla jump crits.",
@@ -96,7 +98,6 @@
 	"comment_id": "/Adventure Module",
 
     "info.apotheosis.affix_item": "Apothic Affix Item",
-    "item.modifiers.both_hands": "When in Either Hand:",
 	
 	"death.attack.apotheosis.execute": "%s was executed by %s",
 	"death.attack.apotheosis.execute.item": "%s was executed by %s using %s",
@@ -242,48 +243,48 @@
 
 	"affix.apotheosis:ranged/special/spectral": "Spectral",
     "affix.apotheosis:ranged/special/spectral.suffix": "of the Forlorn",
-    "affix.apotheosis:ranged/special/spectral.desc": "• You have a %s%% chance to shoot a second arrow.",
+    "affix.apotheosis:ranged/special/spectral.desc": "You have a %s%% chance to shoot a second arrow.",
 	
 	"affix.apotheosis:ranged/special/magical": "Magical",
     "affix.apotheosis:ranged/special/magical.suffix": "of the Arcane",
-    "affix.apotheosis:ranged/special/magical.desc": "• Your arrows deal magic damage.",
+    "affix.apotheosis:ranged/special/magical.desc": "Your arrows deal magic damage.",
 	
 	"affix.apotheosis:sword/special/festive": "Festive",
     "affix.apotheosis:sword/special/festive.suffix": "of Partying",
-    "affix.apotheosis:sword/special/festive.desc": "• Slain enemies have a %s%% chance to be a Loot Piñata",
+    "affix.apotheosis:sword/special/festive.desc": "Slain enemies have a %s%% chance to be a Loot Piñata",
 	
 	"affix.apotheosis:sword/special/thunderstruck": "Thunderstruck",
     "affix.apotheosis:sword/special/thunderstruck.suffix": "of the Storm",
-    "affix.apotheosis:sword/special/thunderstruck.desc": "• Your attacks deal %s damage to nearby enemies.",
+    "affix.apotheosis:sword/special/thunderstruck.desc": "Your attacks deal %s damage to nearby enemies.",
 	
 	"affix.apotheosis:shield/special/retreating": "Retreating",
     "affix.apotheosis:shield/special/retreating.suffix": "of the Jester",
-    "affix.apotheosis:shield/special/retreating.desc": "• You will leap back when blocking in melee.",
+    "affix.apotheosis:shield/special/retreating.desc": "You will leap back when blocking in melee.",
 	
 	"affix.apotheosis:telepathic": "Telepathic",
     "affix.apotheosis:telepathic.suffix": "of Space and Time",
-    "affix.apotheosis:telepathic.desc.weapon": "• Mob drops will teleport to you.",
-    "affix.apotheosis:telepathic.desc.tool": "• Block drops will teleport to you.",
+    "affix.apotheosis:telepathic.desc.weapon": "Mob drops will teleport to you.",
+    "affix.apotheosis:telepathic.desc.tool": "Block drops will teleport to you.",
 
 	"affix.apotheosis:heavy_weapon/special/executing": "Executing",
     "affix.apotheosis:heavy_weapon/special/executing.suffix": "of the Executioner",
-    "affix.apotheosis:heavy_weapon/special/executing.desc": "• Enemies below %s%% max health will be executed.",
+    "affix.apotheosis:heavy_weapon/special/executing.desc": "Enemies below %s%% max health will be executed.",
 	
 	"affix.apotheosis:heavy_weapon/special/cleaving": "Cleaving",
     "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "of the Butcher",
-    "affix.apotheosis:heavy_weapon/special/cleaving.desc": "• Attacks have a %s%% chance to also hit up to %s nearby enemies.",
+    "affix.apotheosis:heavy_weapon/special/cleaving.desc": "Attacks have a %s%% chance to also hit up to %s nearby enemies.",
 
 	"affix.apotheosis:breaker/special/enlightened": "Enlightened",
     "affix.apotheosis:breaker/special/enlightened.suffix": "of the Lightbringer",
-    "affix.apotheosis:breaker/special/enlightened.desc": "• This tool can place a torch at the cost of %s durability.",
+    "affix.apotheosis:breaker/special/enlightened.desc": "This tool can place a torch at the cost of %s durability.",
 
 	"affix.apotheosis:shield/special/psychic": "Psychic",
     "affix.apotheosis:shield/special/psychic.suffix": "of the Vengeful",
-    "affix.apotheosis:shield/special/psychic.desc": "• Blocking a projectile deals %s%% of the damage to the shooter.",
+    "affix.apotheosis:shield/special/psychic.desc": "Blocking a projectile deals %s%% of the damage to the shooter.",
 
 	"affix.apotheosis:shield/special/catalyzing": "Catalyzing",
     "affix.apotheosis:shield/special/catalyzing.suffix": "of the Converted",
-    "affix.apotheosis:shield/special/catalyzing.desc": "• Blocking an explosion will grant you great strength.",
+    "affix.apotheosis:shield/special/catalyzing.desc": "Blocking an explosion will grant you great strength.",
 
 	"affix.apotheosis:heavy_weapon/attribute/annihilating": "Annihilating",
     "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "of the Titan",
@@ -311,7 +312,7 @@
 
 	"affix.apotheosis:breaker/special/radial": "Radial",
     "affix.apotheosis:breaker/special/radial.suffix": "of the Earthbreaker",
-    "affix.apotheosis:breaker/special/radial.desc": "• This tool breaks in a %sx%s area.",
+    "affix.apotheosis:breaker/special/radial.desc": "This tool breaks in a %sx%s area.",
 	
 	"misc.apotheosis.iron": "iron",
 	"misc.apotheosis.diamond": "diamond",
@@ -319,7 +320,7 @@
 	
 	"affix.apotheosis:breaker/special/omnetic": "Omnetic",
     "affix.apotheosis:breaker/special/omnetic.suffix": "of the Singularity",
-    "affix.apotheosis:breaker/special/omnetic.desc": "• This tool has %s effectiveness against all blocks.",
+    "affix.apotheosis:breaker/special/omnetic.desc": "This tool has %s effectiveness against all blocks.",
 	
 	"misc.apotheosis.physical": "Physical",
 	"misc.apotheosis.magic": "Magic",
@@ -343,20 +344,20 @@
 	"affix.apotheosis:armor/dmg_reduction/feathery": "Feathery",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "of the Eagle",
 
-	"affix.apotheosis.target.attack_self": "• On hit, gain %s",
-	"affix.apotheosis.target.attack_target": "• On hit, inflict %s",
-	"affix.apotheosis.target.hurt_self": "• When attacked, gain %s",
-	"affix.apotheosis.target.hurt_attacker": "• When attacked, inflict %s",
-	"affix.apotheosis.target.break_self": "• On block break, gain %s",
-	"affix.apotheosis.target.arrow_self": "• On arrow hit, gain %s",
-	"affix.apotheosis.target.arrow_target": "• On arrow hit, inflict %s",
-	"affix.apotheosis.target.block_self": "• Upon blocking, gain %s",
-	"affix.apotheosis.target.block_attacker": "• Upon blocking, inflict %s",
+	"affix.apotheosis.target.attack_self": "On hit, gain %s",
+	"affix.apotheosis.target.attack_target": "On hit, inflict %s",
+	"affix.apotheosis.target.hurt_self": "When attacked, gain %s",
+	"affix.apotheosis.target.hurt_attacker": "When attacked, inflict %s",
+	"affix.apotheosis.target.break_self": "On block break, gain %s",
+	"affix.apotheosis.target.arrow_self": "On arrow hit, gain %s",
+	"affix.apotheosis.target.arrow_target": "On arrow hit, inflict %s",
+	"affix.apotheosis.target.block_self": "Upon blocking, gain %s",
+	"affix.apotheosis.target.block_attacker": "Upon blocking, inflict %s",
 	"affix.apotheosis.cooldown": "[⌛ %s]",
 	"affix.apotheosis.stacking": "[Stacking]",
 
-	"affix.apotheosis:durable.desc": "• This item ignores %s%% of durability damage.",
-	"affix.apotheosis:socket.desc": "• Socketed (%s)",
+	"affix.apotheosis:durable.desc": "This item ignores %s%% of durability damage.",
+	"affix.apotheosis:socket.desc": "Socketed (%s)",
 
 	"socket.apotheosis.empty": "Empty Socket",
     "item.modifiers.socket": "When Socketed:",
@@ -371,6 +372,7 @@
 	"gem_class.lower_armor": "Lower Armor",
 	"gem_class.armor": "Armor",
 	"gem_class.breaker": "Mining Tools",
+	"gem_class.pickaxe": "Pickaxes",
 	"gem_class.light_ranged": "Light or Ranged Weapons",
 	"gem_class.weapons_or_tools": "Weapons or Tools",
 
@@ -385,6 +387,13 @@
 	"bonus.apotheosis:enchantment.desc": "+%s %s to %s",
 	"bonus.apotheosis:enchantment.desc.mustExist": "+%s %s to existing %s",
 	"bonus.apotheosis:enchantment.desc.global": "+%s %s to all existing enchantments",
+	"bonus.apotheosis:multi_attr.desc.and": "%s and %s",
+	"bonus.apotheosis:multi_attr.desc.and_but": "%s and %s, but %s",
+	"bonus.apotheosis:bloody_arrow.desc": "When firing, you lose %s%% Max Health and deal %s%% damage. %s",
+	"bonus.apotheosis:leech_block.desc": "Blocking an attack heals you for %s%% of the damage. %s",
+	"bonus.apotheosis:all_stats.desc": "+%s%% to All Stats",
+	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Iron Ore has a %s%% chance to drop Raw Gold instead.",
+	"bonus.apotheosis:mageslayer.desc": "Ignore %s%% of magic damage and heal for the same amount.",
 
 	"misc.apotheosis.level": "level",
 	"misc.apotheosis.level.many": "levels",
@@ -404,9 +413,11 @@
 	"item.apotheosis.gem.apotheosis:core/brawlers": "Brawler's Gem",
 	"item.apotheosis.gem.apotheosis:core/combatant": "Gem of the Combatant",
 	"item.apotheosis.gem.apotheosis:overworld/earth": "Gem of the Earth",
-	"item.apotheosis.gem.apotheosis:the_end/endersurge": "Endersurge Gem",
+	"item.apotheosis.gem.apotheosis:overworld/royalty": "Gem of the Royal Family",
 	"item.apotheosis.gem.apotheosis:the_nether/inferno": "Gem of the Incandescent Inferno",
-	"item.apotheosis.gem.apotheosis:the_nether/inferno_noench": "Gem of the Incandescent Inferno",
+	"item.apotheosis.gem.apotheosis:the_nether/blood_lord": "Gem of the Ravenous Blood Lord",
+	"item.apotheosis.gem.apotheosis:the_end/endersurge": "Endersurge Gem",
+	"item.apotheosis.gem.apotheosis:the_end/mageslayer": "Gem of the Mageslayer",
 
 	"item.apotheosis.boss_summoner": "Apothic Boss Summoner",
 	"item.apotheosis.gem.common": "Cracked %s",

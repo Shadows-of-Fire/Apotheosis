@@ -94,9 +94,9 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 	protected boolean isValidSecondItem(ItemStack stack) {
 		ItemStack first = this.getSlot(1).getItem();
 		if (first.isEmpty()) return false;
-		GemInstance inst = new GemInstance(first);
-		GemInstance otherInst = new GemInstance(stack);
-		return otherInst.isValid() && otherInst.gem() == inst.gem();
+		GemInstance inst = GemInstance.unsocketed(first);
+		GemInstance otherInst = GemInstance.unsocketed(stack);
+		return otherInst.isValidUnsocketed() && otherInst.gem() == inst.gem();
 	}
 
 	protected void onCraft() {
@@ -157,9 +157,9 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
 		@Override
 		public boolean matches(ItemStack gem, ItemStack catalyst) {
-			GemInstance g = new GemInstance(gem);
-			GemInstance c = new GemInstance(catalyst);
-			return g.isValid() && c.isValid() && g.rarity() != LootRarity.ANCIENT && g.gem() == c.gem() && g.rarity() == c.rarity();
+			GemInstance g = GemInstance.unsocketed(gem);
+			GemInstance c = GemInstance.unsocketed(catalyst);
+			return g.isValidUnsocketed() && c.isValidUnsocketed() && g.rarity() != LootRarity.ANCIENT && g.gem() == c.gem() && g.rarity() == c.rarity();
 		}
 
 		@Override

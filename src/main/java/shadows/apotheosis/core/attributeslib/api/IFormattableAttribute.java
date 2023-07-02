@@ -163,6 +163,13 @@ public interface IFormattableAttribute {
 	}
 
 	/**
+	 * Helper method to invoke {@link #toValueComponent(Operation, double, TooltipFlag)}.
+	 */
+	public static MutableComponent toValueComponent(Attribute attr, Operation op, double value, TooltipFlag flag) {
+		return ((IFormattableAttribute) attr).toValueComponent(op, value, flag);
+	}
+
+	/**
 	 * Helper method to invoke {@link #toBaseComponent(double, double, boolean, TooltipFlag)}
 	 */
 	public static MutableComponent toBaseComponent(Attribute attr, double value, double entityBase, boolean merged, TooltipFlag flag) {

@@ -1,0 +1,102 @@
+{
+	"weight": 3,
+	"quality": 0.25,
+	"dimensions": ["minecraft:the_end"],
+	"unique": true,
+	"min_rarity": "epic",
+	"bonuses": [{
+			"type": "apotheosis:multi_attribute",
+			"desc": "bonus.apotheosis:multi_attr.desc.and",
+			"gem_class": {
+				"key": "light_weapon",
+				"types": [
+					"sword", "trident"
+				]
+			},
+			"modifiers": [{
+					"attribute": "apotheosis:prot_pierce",
+					"operation": "ADDITION",
+					"values": {
+						"epic": 6,
+						"mythic": 8,
+						"ancient": 12
+					}
+				},
+				{
+					"attribute": "apotheosis:armor_pierce",
+					"operation": "MULTIPLY_TOTAL",
+					"values": {
+						"epic": -0.15,
+						"mythic": -0.25,
+						"ancient": -0.35
+					}
+				}
+			]
+		},
+		{
+			"type": "apotheosis:multi_attribute",
+			"desc": "bonus.apotheosis:multi_attr.desc.and",
+			"gem_class": {
+				"key": "heavy_weapon",
+				"types": [
+					"heavy_weapon"
+				]
+			},
+			"modifiers": [{
+					"attribute": "apotheosis:prot_shred",
+					"operation": "ADDITION",
+					"values": {
+						"epic": 0.25,
+						"mythic": 0.375,
+						"ancient": 0.50
+					}
+				},
+				{
+					"attribute": "apotheosis:armor_shred",
+					"operation": "MULTIPLY_TOTAL",
+					"values": {
+						"epic": -0.15,
+						"mythic": -0.25,
+						"ancient": -0.35
+					}
+				}
+			]
+		},
+		{
+			"type": "apotheosis:mageslayer",
+			"values": {
+				"epic": 0.15,
+				"mythic": 0.225,
+				"ancient": 0.35
+			}
+		},
+		{
+			"type": "apotheosis:mob_effect",
+			"gem_class": {
+				"key": "shield",
+				"types": [
+					"shield"
+				]
+			},
+			"mob_effect": "minecraft:resistance",
+			"target": "BLOCK_SELF",
+			"values": {
+				"epic": {
+					"duration": 200,
+					"amplifier": 0,
+					"cooldown": 400
+				},
+				"mythic": {
+					"duration": 300,
+					"amplifier": 0,
+					"cooldown": 400
+				},
+				"ancient": {
+					"duration": 300,
+					"amplifier": 1,
+					"cooldown": 500
+				}
+			}
+		}
+	]
+}

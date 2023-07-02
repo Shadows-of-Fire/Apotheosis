@@ -312,7 +312,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
 	@Override
 	public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-		if (!open) return false;
+		if (!open || !this.isScrollBarActive()) return false;
 		this.scrolling = false;
 		int left = this.leftPos + 111;
 		int top = this.topPos + 15;

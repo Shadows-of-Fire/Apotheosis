@@ -45,11 +45,6 @@ public class DamageReductionBonus extends GemBonus {
 	}
 
 	@Override
-	public int getMaxFacets(LootRarity rarity) {
-		return this.values.get(rarity).steps();
-	}
-
-	@Override
 	public GemBonus validate() {
 		Preconditions.checkNotNull(this.type, "Invalid DamageReductionBonus with null type");
 		Preconditions.checkNotNull(this.values, "Invalid DamageReductionBonus with null values");

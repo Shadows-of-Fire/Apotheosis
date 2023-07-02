@@ -41,9 +41,9 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
 	@Override
 	protected void renderTooltip(PoseStack poseStack, int pX, int pY) {
 		ItemStack gemStack = this.menu.getSlot(1).getItem();
-		GemInstance gem = new GemInstance(gemStack);
+		GemInstance gem = GemInstance.unsocketed(gemStack);
 		List<Component> list = new ArrayList<>();
-		if (gem.isValid()) {
+		if (gem.isValidUnsocketed()) {
 			int dust = this.menu.getSlot(0).getItem().getCount();
 			if (gem.rarity() == LootRarity.ANCIENT) {
 				list.add(Component.translatable("text.apotheosis.no_upgrade").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));

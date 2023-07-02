@@ -1,0 +1,30 @@
+{
+	"type": "apotheosis:attribute",
+	"attribute": "minecraft:generic.luck",
+	"operation": "ADDITION",
+	"values": {
+		"rare": {
+			"min": 0.5,
+			"steps": 2,
+			"step": 0.5
+		},
+		"epic": {
+			"min": 0.5,
+			"steps": 3,
+			"step": 0.5
+		},
+		"mythic": {
+			"min": 1,
+			"steps": 4,
+			"step": 0.5
+		},
+		"ancient": {
+			"min": 2,
+			"steps": 6,
+			"step": 0.5
+		}
+	},
+	"types": [
+		"pickaxe", "shovel"
+	]
+}

@@ -11,7 +11,7 @@ import shadows.apotheosis.ench.EnchModule;
 public class ReboundingEnchant extends Enchantment {
 
 	public ReboundingEnchant() {
-		super(Rarity.RARE, EnchModule.ARMOR_CHEST_LEGS, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
+		super(Rarity.RARE, EnchModule.CORE_ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
 	}
 
 	@Override

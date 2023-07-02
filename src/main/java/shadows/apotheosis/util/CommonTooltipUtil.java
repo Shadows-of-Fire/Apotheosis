@@ -23,8 +23,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.core.attributeslib.AttributesLib;
+import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
-import shadows.placebo.util.AttributeHelper;
 
 public class CommonTooltipUtil {
 
@@ -39,7 +40,7 @@ public class CommonTooltipUtil {
 		ForgeRegistries.ATTRIBUTES.getValues().stream().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {
 			for (AttributeModifier modif : inst.getModifiers()) {
 				if (modif.getName().startsWith("placebo_random_modifier_")) {
-					tooltip.accept(AttributeHelper.toComponent(inst.getAttribute(), modif));
+					tooltip.accept(IFormattableAttribute.toComponent(inst.getAttribute(), modif, AttributesLib.getTooltipFlag()));
 				}
 			}
 		});
