@@ -15,8 +15,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import shadows.apotheosis.Apoth;
 import shadows.apotheosis.core.attributeslib.asm.ALCombatRules;
+import shadows.apotheosis.core.mobfx.api.MFEffects;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
@@ -35,8 +35,8 @@ public abstract class LivingEntityMixin extends Entity {
 	 */
 	@Redirect(at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), method = "getDamageAfterMagicAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F")
 	public float apoth_sunderingApplyEffect(float value, float max, DamageSource source, float damage) {
-		if (Apoth.Effects.SUNDERING.isPresent() && this.hasEffect(Apoth.Effects.SUNDERING.get()) && source != DamageSource.OUT_OF_WORLD) {
-			int level = this.getEffect(Apoth.Effects.SUNDERING.get()).getAmplifier() + 1;
+		if (this.hasEffect(MFEffects.SUNDERING.get()) && source != DamageSource.OUT_OF_WORLD) {
+			int level = this.getEffect(MFEffects.SUNDERING.get()).getAmplifier() + 1;
 			value += damage * level * 0.2F;
 		}
 		return Math.max(value, max);

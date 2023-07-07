@@ -38,7 +38,7 @@ public class ALCombatRules {
 
 	/**
 	 * Computes the damage reduction factor for the given amount of protection points.<br>
-	 * Each protection point reduces damage by 2.5%, up to 80%.
+	 * Each protection point reduces damage by 2.5%, up to 85%.
 	 * <p>
 	 * In vanilla, each protection point reduces damage by 4%, up to 80%.
 	 * 

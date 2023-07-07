@@ -1,4 +1,4 @@
-package shadows.apotheosis.potion.potions;
+package shadows.apotheosis.core.mobfx.potions;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.effect.MobEffect;

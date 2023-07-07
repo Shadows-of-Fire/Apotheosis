@@ -48,6 +48,11 @@
 * Gem Facets have been removed. Gem stats will now be strictly tied to their rarity level.
   * As a side effect, most gems have been updated.
 * Many new gems have been added!
+* Berserker's Fury has been adjusted:
+  * Potion effect duration is now 25s at all levels.
+  * Health cost is now 2.5^level instead of level * level.
+  * The effect now has a 45s cooldown between triggers.
+* Effects that ignore durability damage now have diminishing returns.
 
 ### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
@@ -65,6 +70,7 @@
 * Fixed a crash with boss spawners in invalid dimensions.
 * The Thunderstruck Affix (Light Weapon AOE damage) now properly does player damage.
 * Potential fix for duplicated Gem UUIDs causing exact copies to not function.
+* Fixed durability gems not applying.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.

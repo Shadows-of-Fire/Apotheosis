@@ -30,7 +30,6 @@ import shadows.placebo.util.RegistryEvent.Register;
 public class AttributesLib {
 
 	public static final String MODID = "attributeslib";
-	// TODO: 1.20 Breaking Change - Re-namespace to Attributes Lib
 	public static final RegObjHelper REG_OBJS = new RegObjHelper(Apotheosis.MODID);
 
 	public static final RegistryObject<SoundEvent> DODGE_SOUND = REG_OBJS.sound("dodge");
@@ -47,22 +46,22 @@ public class AttributesLib {
 		//Formatter::off
 		e.getRegistry().registerAll(
 			new PercentBasedAttribute("apotheosis:draw_speed", 1.0D, 0.0D, 4.0D).setSyncable(true), "draw_speed",
-			new PercentBasedAttribute("apotheosis:crit_chance", 0.05D, 0.0D, 1024.0D).setSyncable(true), "crit_chance",
-			new PercentBasedAttribute("apotheosis:crit_damage", 1.5D, 1.0D, 1024.0D).setSyncable(true), "crit_damage",
-			new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "cold_damage",
-			new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true), "fire_damage",
-			new PercentBasedAttribute("apotheosis:life_steal", 0.0D, 0.0D, 1024.0D).setSyncable(true), "life_steal",
-			new PercentBasedAttribute("apotheosis:current_hp_damage", 0.0D, 0.0D, 2.0D).setSyncable(true), "current_hp_damage",
-			new PercentBasedAttribute("apotheosis:overheal", 0.0D, 0.0D, 1024.0D).setSyncable(true), "overheal",
-			new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1024.0D).setSyncable(true), "ghost_health",
-			new PercentBasedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 1024.0D).setSyncable(true), "mining_speed",
-			new PercentBasedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_damage",
-			new PercentBasedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 1024.0D).setSyncable(true), "arrow_velocity",
-			new PercentBasedAttribute("apotheosis:experience_gained", 1.0D, 0.0D, 1024.0D).setSyncable(true), "experience_gained",
-			new PercentBasedAttribute("apotheosis:healing_received", 1.0D, 0.0D, 1024.0D).setSyncable(true), "healing_received",
-			new RangedAttribute("apotheosis:armor_pierce", 0.0D, 0.0D, 1024.0D).setSyncable(true), "armor_pierce",
-			new PercentBasedAttribute("apotheosis:armor_shred", 0.0D, 0.0D, 1.0D).setSyncable(true), "armor_shred",
-			new RangedAttribute("apotheosis:prot_pierce", 0.0D, 0.0D, 1024.0D).setSyncable(true), "prot_pierce",
+			new PercentBasedAttribute("apotheosis:crit_chance", 0.05D, 0.0D, 10.0D).setSyncable(true), "crit_chance",
+			new PercentBasedAttribute("apotheosis:crit_damage", 1.5D, 1.0D, 100.0D).setSyncable(true), "crit_damage",
+			new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1000.0D).setSyncable(true), "cold_damage",
+			new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1000.0D).setSyncable(true), "fire_damage",
+			new PercentBasedAttribute("apotheosis:life_steal", 0.0D, 0.0D, 10.0D).setSyncable(true), "life_steal",
+			new PercentBasedAttribute("apotheosis:current_hp_damage", 0.0D, 0.0D, 1.0D).setSyncable(true), "current_hp_damage",
+			new PercentBasedAttribute("apotheosis:overheal", 0.0D, 0.0D, 10.0D).setSyncable(true), "overheal",
+			new RangedAttribute("apotheosis:ghost_health", 0.0D, 0.0D, 1000.0D).setSyncable(true), "ghost_health",
+			new PercentBasedAttribute("apotheosis:mining_speed", 1.0D, 0.0D, 10.0D).setSyncable(true), "mining_speed",
+			new PercentBasedAttribute("apotheosis:arrow_damage", 1.0D, 0.0D, 10.0D).setSyncable(true), "arrow_damage",
+			new PercentBasedAttribute("apotheosis:arrow_velocity", 1.0D, 0.0D, 10.0D).setSyncable(true), "arrow_velocity",
+			new PercentBasedAttribute("apotheosis:experience_gained", 1.0D, 0.0D, 10.0D).setSyncable(true), "experience_gained",
+			new PercentBasedAttribute("apotheosis:healing_received", 1.0D, 0.0D, 10.0D).setSyncable(true), "healing_received",
+			new RangedAttribute("apotheosis:armor_pierce", 0.0D, 0.0D, 1000.0D).setSyncable(true), "armor_pierce",
+			new PercentBasedAttribute("apotheosis:armor_shred", 0.0D, 0.0D, 2.0D).setSyncable(true), "armor_shred",
+			new RangedAttribute("apotheosis:prot_pierce", 0.0D, 0.0D, 34.0D).setSyncable(true), "prot_pierce",
 			new PercentBasedAttribute("apotheosis:prot_shred", 0.0D, 0.0D, 1.0D).setSyncable(true), "prot_shred",
 			new PercentBasedAttribute("apotheosis:dodge_chance", 0.0D, 0.0D, 1.0D).setSyncable(true), "dodge_chance"
 		);

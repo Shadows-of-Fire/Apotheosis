@@ -10,8 +10,7 @@
 	],
 	"unique": true,
 	"min_rarity": "rare",
-	"bonuses": [
-		{
+	"bonuses": [{
 			"type": "apotheosis:attribute",
 			"gem_class": {
 				"key": "heavy_weapon",
@@ -29,7 +28,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:enchantment",
+			"type": "apotheosis:mob_effect",
 			"gem_class": {
 				"key": "light_weapon",
 				"types": [
@@ -37,12 +36,19 @@
 					"trident"
 				]
 			},
-			"enchantment": "fire_aspect",
+			"mob_effect": "apotheosis:detonation",
+			"target": "attack_target",
 			"values": {
-				"rare": 1,
-				"epic": 2,
-				"mythic": 3,
-				"ancient": 4
+				"mythic": {
+					"duration": 100,
+					"amplifier": 0,
+					"cooldown": 1200
+				},
+				"ancient": {
+					"duration": 100,
+					"amplifier": 1,
+					"cooldown": 1200
+				}
 			}
 		},
 		{
@@ -58,7 +64,7 @@
 				"rare": 1,
 				"epic": 1,
 				"mythic": 2,
-				"ancient": 3
+				"ancient": 2
 			}
 		},
 		{

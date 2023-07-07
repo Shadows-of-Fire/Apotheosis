@@ -73,6 +73,7 @@ import shadows.apotheosis.adventure.boss.Exclusion;
 import shadows.apotheosis.adventure.boss.MinibossManager;
 import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.apotheosis.adventure.compat.AdventureTOPPlugin;
+import shadows.apotheosis.adventure.compat.AdventureTwilightCompat;
 import shadows.apotheosis.adventure.compat.GatewaysCompat;
 import shadows.apotheosis.adventure.loot.AffixConvertLootModifier;
 import shadows.apotheosis.adventure.loot.AffixHookLootModifier;
@@ -130,6 +131,7 @@ public class AdventureModule {
 		e.enqueueWork(() -> {
 			if (ModList.get().isLoaded("gateways")) GatewaysCompat.register();
 			if (ModList.get().isLoaded("theoneprobe")) AdventureTOPPlugin.register();
+			if (ModList.get().isLoaded("twilightforest")) AdventureTwilightCompat.register();
 			LootSystem.defaultBlockTable(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE.get());
 			LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());

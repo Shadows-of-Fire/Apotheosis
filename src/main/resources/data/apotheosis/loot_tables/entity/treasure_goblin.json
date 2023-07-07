@@ -1,0 +1,271 @@
+{
+  "pools": [
+    {
+      "name": "placebo_code_pool_20",
+      "rolls": {
+        "min": 6.0,
+        "max": 12.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:strong_regeneration\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:strong_swiftness\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:long_fire_resistance\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:splash_potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:strong_healing\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:long_night_vision\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:long_strength\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:long_invisibility\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 2,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:potion",
+            "count": 1,
+            "nbt": "{Potion:\"minecraft:long_water_breathing\"}"
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 10,
+          "quality": 2,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:diamond",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 8,
+          "quality": 1.5,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:emerald",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 0,
+          "min": 1,
+          "max": 5,
+          "stack": {
+            "item": "minecraft:iron_ingot",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 1,
+          "min": 1,
+          "max": 5,
+          "stack": {
+            "item": "minecraft:gold_ingot",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 2.5,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:enchanted_golden_apple",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 0,
+          "min": 1,
+          "max": 2,
+          "stack": {
+            "item": "minecraft:name_tag",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 0,
+          "min": 1,
+          "max": 2,
+          "stack": {
+            "item": "minecraft:lead",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 5,
+          "quality": 0,
+          "min": 1,
+          "max": 2,
+          "stack": {
+            "item": "minecraft:saddle",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 10,
+          "quality": 0,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:diamond_horse_armor",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 40,
+          "quality": 0,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:book",
+            "count": 1
+          }
+        },
+        {
+          "type": "apotheosis:random_gem",
+		  "weight": 80,
+          "quality": 3
+        },
+        {
+          "type": "apotheosis:random_gem",
+		  "weight": 80,
+          "quality": 3
+        },
+        {
+          "type": "apotheosis:random_affix_item",
+		  "weight": 40,
+          "quality": 5,
+		  "rarity": "epic",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "apotheosis:random_affix_item",
+		  "weight": 60,
+          "quality": 4,
+		  "rarity": "rare",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "apotheosis:random_affix_item",
+		  "weight": 100,
+          "quality": 1.5,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        }
+      ],
+      "bonus_rolls": {
+        "min": 2.0,
+        "max": 5.0
+      }
+    }
+  ]
+}

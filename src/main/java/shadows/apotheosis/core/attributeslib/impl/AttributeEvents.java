@@ -157,7 +157,7 @@ public class AttributeEvents {
 			target.invulnerableTime = 0;
 			if (fireDmg > 0.001 && Apotheosis.localAtkStrength >= 0.55F) {
 				target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * fireDmg);
-				target.setRemainingFireTicks(target.getRemainingFireTicks() + (int) (15 * fireDmg));
+				target.setRemainingFireTicks(target.getRemainingFireTicks() + (int) (10 * fireDmg));
 			}
 			target.invulnerableTime = 0;
 			if (coldDmg > 0.001 && Apotheosis.localAtkStrength >= 0.55F) {

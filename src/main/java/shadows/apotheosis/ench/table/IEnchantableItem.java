@@ -2,6 +2,7 @@ package shadows.apotheosis.ench.table;
 
 import java.util.List;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
@@ -19,13 +20,18 @@ public interface IEnchantableItem {
 	 * @return The newly-enchanted itemstack.
 	 */
 	default ItemStack onEnchantment(ItemStack stack, List<EnchantmentInstance> enchantments) {
-		boolean flag = stack.getItem() == Items.BOOK;
-		if (flag) {
-			stack = new ItemStack(Items.ENCHANTED_BOOK);
+		boolean isBook = stack.is(Items.BOOK);
+		if (isBook) {
+			ItemStack enchBook = new ItemStack(Items.ENCHANTED_BOOK);
+			CompoundTag tag = stack.getTag();
+			if (tag != null) {
+				stack.setTag(tag.copy());
+			}
+			stack = enchBook;
 		}
 
 		for (EnchantmentInstance inst : enchantments) {
-			if (flag) {
+			if (isBook) {
 				EnchantedBookItem.addEnchantment(stack, inst);
 			} else {
 				stack.enchant(inst.enchantment, inst.level);

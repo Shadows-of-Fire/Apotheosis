@@ -27,7 +27,7 @@
 		{
 			"type": "apotheosis:attribute",
 			"gem_class": {
-				"key": "weapons_or_tools",
+				"key": "weapon_or_tool",
 				"types": [
 					"sword",
 					"trident",

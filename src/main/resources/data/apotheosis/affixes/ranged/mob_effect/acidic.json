@@ -1,9 +1,5 @@
 {
 	"type": "apotheosis:mob_effect",
-	"conditions": [{
-		"type": "apotheosis:module",
-		"module": "potion"
-	}],
 	"mob_effect": "apotheosis:sundering",
 	"target": "ARROW_TARGET",
 	"values": {

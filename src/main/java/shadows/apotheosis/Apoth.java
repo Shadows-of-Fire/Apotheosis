@@ -3,7 +3,6 @@ package shadows.apotheosis;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -82,7 +81,7 @@ import shadows.placebo.util.RegObjHelper;
  */
 public class Apoth {
 
-	private static final RegObjHelper R = new RegObjHelper(Apotheosis.MODID);
+	public static final RegObjHelper R = new RegObjHelper(Apotheosis.MODID);
 
 	public static final class Blocks {
 		public static final RegistryObject<EnchLibraryBlock> LIBRARY = R.block("LIBRARY");
@@ -200,14 +199,6 @@ public class Apoth {
 		public static final RegistryObject<EntityType<BroadheadArrowEntity>> BROADHEAD_ARROW = R.entity("BROADHEAD_ARROW");
 		public static final RegistryObject<EntityType<ExplosiveArrowEntity>> EXPLOSIVE_ARROW = R.entity("EXPLOSIVE_ARROW");
 		public static final RegistryObject<EntityType<MiningArrowEntity>> MINING_ARROW = R.entity("MINING_ARROW");
-	}
-
-	public static final class Effects {
-		public static final RegistryObject<MobEffect> SUNDERING = R.effect("sundering");
-		public static final RegistryObject<MobEffect> KNOWLEDGE = R.effect("knowledge");
-		public static final RegistryObject<MobEffect> VITALITY = R.effect("vitality");
-		public static final RegistryObject<MobEffect> GRIEVOUS = R.effect("grievous");
-		public static final RegistryObject<MobEffect> BLEEDING = R.effect("bleeding");
 	}
 
 	public static final class Menus {

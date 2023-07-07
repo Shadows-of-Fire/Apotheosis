@@ -1,9 +1,5 @@
 {
 	"type": "apotheosis:mob_effect",
-	"conditions": [{
-		"type": "apotheosis:module",
-		"module": "village"
-	}],
 	"mob_effect": "apotheosis:bleeding",
 	"target": "BLOCK_ATTACKER",
 	"stack_on_reapply": true,

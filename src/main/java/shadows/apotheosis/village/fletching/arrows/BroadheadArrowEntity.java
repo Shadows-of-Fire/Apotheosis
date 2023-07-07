@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.core.mobfx.api.MFEffects;
 
 public class BroadheadArrowEntity extends Arrow {
 
@@ -50,16 +51,16 @@ public class BroadheadArrowEntity extends Arrow {
 
 	@Override
 	protected void doPostHurtEffects(LivingEntity living) {
-		MobEffectInstance bleed = living.getEffect(Apoth.Effects.BLEEDING.get());
+		MobEffectInstance bleed = living.getEffect(MFEffects.BLEEDING.get());
 		if (bleed != null) {
-			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING.get(), bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+			living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), bleed.getDuration() + 60, bleed.getAmplifier() + 1));
 		} else {
-			living.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING.get(), 300));
+			living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
 		}
 	}
 
 	public BroadheadArrowEntity bleed() {
-		this.addEffect(new MobEffectInstance(Apoth.Effects.BLEEDING.get(), 300));
+		this.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
 		return this;
 	}
 }

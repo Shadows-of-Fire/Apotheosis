@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -31,7 +32,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -191,19 +191,19 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
 			list.add(CommonComponents.EMPTY);
 
-			int color = 0xFFFFFF;
+			ChatFormatting color = ChatFormatting.GRAY;
 			if (attr instanceof RangedAttribute ra) {
 				if (inst.getValue() > inst.getBaseValue()) {
-					color = 0x55DD55;
+					color = ChatFormatting.YELLOW;
 				} else if (inst.getValue() < inst.getBaseValue()) {
-					color = 0xFF6060;
+					color = ChatFormatting.RED;
 				}
 			}
-
 			MutableComponent valueComp = fAttr.toValueComponent(Operation.ADDITION, inst.getValue(), AttributesLib.getTooltipFlag());
-			list.add(Component.translatable("Current: %s", valueComp.withStyle(Style.EMPTY.withColor(color))).withStyle(ChatFormatting.GRAY));
+			list.add(Component.translatable("Current: %s", valueComp.withStyle(color)).withStyle(ChatFormatting.GRAY));
 
 			MutableComponent baseVal = fAttr.toValueComponent(Operation.ADDITION, inst.getBaseValue(), AttributesLib.getTooltipFlag());
+
 			baseVal = Component.translatable("attributeslib.gui.base", baseVal);
 			if (attr instanceof RangedAttribute ra) {
 				Component min = fAttr.toValueComponent(Operation.ADDITION, ra.getMinValue(), AttributesLib.getTooltipFlag());
@@ -215,43 +215,68 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 				list.add(baseVal.withStyle(ChatFormatting.GRAY));
 			}
 
-			Map<UUID, ModifierSource<?>> modifiersToSources = new HashMap<>();
-
-			for (ModifierSourceType<?> type : ModifierSourceType.getTypes()) {
-				type.extract(player, (modif, source) -> modifiersToSources.put(modif.getId(), source));
-			}
-
 			List<ClientTooltipComponent> finalTooltip = new ArrayList<>(list.size());
-			int maxWidth = this.leftPos - 16;
 			for (Component txt : list) {
-				if (txt == CommonComponents.EMPTY) {
-					finalTooltip.add(ClientTooltipComponent.create(txt.getVisualOrderText()));
-				} else {
-					for (FormattedText fTxt : this.font.getSplitter().splitLines(txt, maxWidth, txt.getStyle())) {
-						finalTooltip.add(ClientTooltipComponent.create(Language.getInstance().getVisualOrder(fTxt)));
-					}
-				}
+				addComp(txt, finalTooltip);
 			}
 
 			if (!inst.getModifiers().isEmpty()) {
-				list.add(CommonComponents.EMPTY);
-				list.add(Component.translatable("Modifiers").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80))));
+				addComp(CommonComponents.EMPTY, finalTooltip);
+				addComp(Component.translatable("attributeslib.gui.modifiers").withStyle(ChatFormatting.GOLD), finalTooltip);
+
+				Map<UUID, ModifierSource<?>> modifiersToSources = new HashMap<>();
+
+				for (ModifierSourceType<?> type : ModifierSourceType.getTypes()) {
+					type.extract(player, (modif, source) -> modifiersToSources.put(modif.getId(), source));
+				}
+
+				Component[] opValues = new Component[3];
+
 				for (Operation op : Operation.values()) {
 					List<AttributeModifier> modifiers = new ArrayList<>(inst.getModifiers(op));
-					modifiers.sort(ModifierSourceType.compareBySource(modifiersToSources));
+					double opValue = modifiers.stream().mapToDouble(AttributeModifier::getAmount).reduce(op == Operation.MULTIPLY_TOTAL ? 1 : 0, (res, elem) -> op == Operation.MULTIPLY_TOTAL ? res * (1 + elem) : res + elem);
 
+					modifiers.sort(ModifierSourceType.compareBySource(modifiersToSources));
 					for (AttributeModifier modif : modifiers) {
 						if (modif.getAmount() != 0) {
 							Component comp = fAttr.toComponent(modif, AttributesLib.getTooltipFlag());
 							var src = modifiersToSources.get(modif.getId());
-							finalTooltip.add(new AttributeModifierComponent(src, comp, font, maxWidth));
+							finalTooltip.add(new AttributeModifierComponent(src, comp, font, this.leftPos - 16));
 						}
+					}
+					color = ChatFormatting.GRAY;
+					double threshold = op == Operation.MULTIPLY_TOTAL ? 1.0005 : 0.0005;
+
+					if (opValue > threshold) {
+						color = ChatFormatting.YELLOW;
+					} else if (opValue < -threshold) {
+						color = ChatFormatting.RED;
+					}
+					Component valueComp2 = fAttr.toValueComponent(op, opValue, AttributesLib.getTooltipFlag()).withStyle(color);
+					Component comp = Component.translatable("attributeslib.gui." + op.name().toLowerCase(Locale.ROOT), valueComp2).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+					opValues[op.ordinal()] = comp;
+				}
+
+				if (AttributesLib.getTooltipFlag().isAdvanced()) {
+					addComp(CommonComponents.EMPTY, finalTooltip);
+					for (Component comp : opValues) {
+						addComp(comp, finalTooltip);
 					}
 				}
 			}
 
 			parent.renderTooltip(stack, List.of(), 0, 0); // This no-op call sets Screen#tooltipFont, which is used in renderTooltipInternal
 			parent.renderTooltipInternal(stack, finalTooltip, this.leftPos - 16 - finalTooltip.stream().map(c -> c.getWidth(font)).max(Integer::compare).get(), mouseY);
+		}
+	}
+
+	private void addComp(Component comp, List<ClientTooltipComponent> finalTooltip) {
+		if (comp == CommonComponents.EMPTY) {
+			finalTooltip.add(ClientTooltipComponent.create(comp.getVisualOrderText()));
+		} else {
+			for (FormattedText fTxt : this.font.getSplitter().splitLines(comp, this.leftPos - 16, comp.getStyle())) {
+				finalTooltip.add(ClientTooltipComponent.create(Language.getInstance().getVisualOrder(fTxt)));
+			}
 		}
 	}
 

@@ -121,6 +121,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 		} else {
 			list.accept(Component.translatable("item.modifiers.socket_in").withStyle(ChatFormatting.GOLD));
 			for (GemBonus bonus : this.bonuses) {
+				if (!bonus.supports(rarity)) continue;
 				Component modifComp = bonus.getSocketBonusTooltip(gem, rarity);
 				Component sum = Component.translatable("text.apotheosis.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
 				list.accept(sum);

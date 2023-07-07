@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.animal.Rabbit;
@@ -34,11 +33,8 @@ import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisConstruction;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
+import shadows.apotheosis.core.mobfx.api.MFEffects;
 import shadows.apotheosis.potion.compat.CuriosCompat;
-import shadows.apotheosis.potion.potions.GrievousEffect;
-import shadows.apotheosis.potion.potions.KnowledgeEffect;
-import shadows.apotheosis.potion.potions.SunderingEffect;
-import shadows.apotheosis.potion.potions.VitalityEffect;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.RegistryEvent.Register;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -120,9 +116,6 @@ public class PotionModule {
 
 		MinecraftForge.EVENT_BUS.addListener(this::drops);
 		MinecraftForge.EVENT_BUS.addListener(this::reload);
-		MinecraftForge.EVENT_BUS.register(Apoth.Effects.GRIEVOUS.get());
-		MinecraftForge.EVENT_BUS.register(Apoth.Effects.VITALITY.get());
-		MinecraftForge.EVENT_BUS.register(Apoth.Effects.KNOWLEDGE.get());
 	}
 
 	@SubscribeEvent
@@ -149,27 +142,19 @@ public class PotionModule {
 				new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 3600)), "wither",
 				new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 9600)), "long_wither",
 				new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 1800, 1)), "strong_wither",
-				new Potion("sundering", new MobEffectInstance(Apoth.Effects.SUNDERING.get(), 3600)), "sundering",
-				new Potion("sundering", new MobEffectInstance(Apoth.Effects.SUNDERING.get(), 9600)), "long_sundering",
-				new Potion("sundering", new MobEffectInstance(Apoth.Effects.SUNDERING.get(), 1800, 1)), "strong_sundering",
-				new Potion("knowledge", new MobEffectInstance(Apoth.Effects.KNOWLEDGE.get(), 2400)), "knowledge",
-				new Potion("knowledge", new MobEffectInstance(Apoth.Effects.KNOWLEDGE.get(), 4800)), "long_knowledge",
-				new Potion("knowledge", new MobEffectInstance(Apoth.Effects.KNOWLEDGE.get(), 1200, 1)), "strong_knowledge",
-				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 4800)), "vitality",
-				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 14400)), "long_vitality",
-				new Potion("vitality", new MobEffectInstance(Apoth.Effects.VITALITY.get(), 3600, 1)), "strong_vitality",
-				new Potion("grievous", new MobEffectInstance(Apoth.Effects.GRIEVOUS.get(), 4800)), "grievous",
-				new Potion("grievous", new MobEffectInstance(Apoth.Effects.GRIEVOUS.get(), 14400)), "long_grievous",
-				new Potion("grievous", new MobEffectInstance(Apoth.Effects.GRIEVOUS.get(), 3600, 1)), "strong_grievous");
+				new Potion("sundering", new MobEffectInstance(MFEffects.SUNDERING.get(), 3600)), "sundering",
+				new Potion("sundering", new MobEffectInstance(MFEffects.SUNDERING.get(), 9600)), "long_sundering",
+				new Potion("sundering", new MobEffectInstance(MFEffects.SUNDERING.get(), 1800, 1)), "strong_sundering",
+				new Potion("knowledge", new MobEffectInstance(MFEffects.KNOWLEDGE.get(), 2400)), "knowledge",
+				new Potion("knowledge", new MobEffectInstance(MFEffects.KNOWLEDGE.get(), 4800)), "long_knowledge",
+				new Potion("knowledge", new MobEffectInstance(MFEffects.KNOWLEDGE.get(), 1200, 1)), "strong_knowledge",
+				new Potion("vitality", new MobEffectInstance(MFEffects.VITALITY.get(), 4800)), "vitality",
+				new Potion("vitality", new MobEffectInstance(MFEffects.VITALITY.get(), 14400)), "long_vitality",
+				new Potion("vitality", new MobEffectInstance(MFEffects.VITALITY.get(), 3600, 1)), "strong_vitality",
+				new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 4800)), "grievous",
+				new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 14400)), "long_grievous",
+				new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 3600, 1)), "strong_grievous");
 		//Formatter::on
-	}
-
-	@SubscribeEvent
-	public void potions(Register<MobEffect> e) {
-		e.getRegistry().register(new SunderingEffect(), "sundering");
-		e.getRegistry().register(new KnowledgeEffect(), "knowledge");
-		e.getRegistry().register(new VitalityEffect(), "vitality");
-		e.getRegistry().register(new GrievousEffect(), "grievous");
 	}
 
 	@SubscribeEvent

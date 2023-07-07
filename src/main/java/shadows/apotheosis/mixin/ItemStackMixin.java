@@ -1,6 +1,7 @@
 package shadows.apotheosis.mixin;
 
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 import javax.annotation.Nullable;
 
@@ -62,10 +63,17 @@ public class ItemStackMixin {
 	@ModifyVariable(at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getDamageValue()I"), method = "hurt", argsOnly = true, ordinal = 0)
 	public int swapDura(int amount, int amountCopy, RandomSource pRandom, @Nullable ServerPlayer pUser) {
 		int blocked = 0;
-		double chance = AffixHelper.getAffixes((ItemStack) (Object) this).values().stream().mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser)).sum();
+		DoubleStream chances = AffixHelper.getAffixes((ItemStack) (Object) this).values().stream().mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser));
+		double chance = chances.reduce(0, (res, ele) -> res + (1 - res) * ele);
+		int delta = 1;
+		if (chance < 0) {
+			delta = -1;
+			chance = -chance;
+		}
+
 		if (chance > 0) {
 			for (int i = 0; i < amount; i++) {
-				if (pRandom.nextFloat() <= chance) blocked++;
+				if (pRandom.nextFloat() <= chance) blocked += delta;
 			}
 		}
 		return amount - blocked;

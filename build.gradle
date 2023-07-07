@@ -83,6 +83,7 @@ dependencies {
 	if(project.hasProperty('mmmFileId')) implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${mmmFileId}")
 	if(project.hasProperty('bookshelfVer')) compileOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${mcVersion}:${bookshelfVer}")
 	if(project.hasProperty('gamestagesVer')) compileOnly fg.deobf("net.darkhax.gamestages:GameStages-Forge-${mcVersion}:${gamestagesVer}")
+	implementation fg.deobf("curse.maven:the-twilight-forest-227639:4389567")
 }
 
 mixin {

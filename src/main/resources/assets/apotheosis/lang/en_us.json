@@ -16,10 +16,15 @@
     "attributeslib.modifier.take": "-%s %s",
 
 	"attributeslib.gui.attributes": "Attributes",
-	"attributeslib.gui.current": "Current: %s",
 	"attributeslib.gui.base": "Base: %s",
 	"attributeslib.gui.min": "Min: %s",
 	"attributeslib.gui.max": "Max: %s",
+	"attributeslib.gui.modifiers": "Modifiers",
+	"attributeslib.gui.addition": "Addition: %s",
+	"attributeslib.gui.multiply_base": "Multiply Base: %s",
+	"attributeslib.gui.multiply_total": "Multiply Total: %s",
+	"attributeslib.gui.press_shift": "Hold Shift for more info.",
+	"attributeslib.gui.current": "Current: %s",
 	"attributeslib.gui.show_attributes": "Show Attributes",
 
 	"minecraft:generic.armor.desc": "Increases physical damage reduction.",
@@ -64,6 +69,7 @@
 	"apotheosis:overheal.desc": "Percentage of post-mitigation damage which will grant you an absorption shield.",
 
 	"apotheosis:ghost_health": "Ghost Health",
+	"apotheosis:ghost_health.desc": "Not Yet Implemented",
 
 	"apotheosis:mining_speed": "Mining Speed",
 	"apotheosis:mining_speed.desc": "How fast you mine blocks, compared to normal.",
@@ -94,6 +100,28 @@
 
 	"apotheosis:dodge_chance": "Dodge Chance",
 	"apotheosis:dodge_chance.desc": "Chance to dodge a melee attack or a projectile.",
+
+	"comment_id": "/MobFx Lib",
+	
+    "effect.apotheosis.knowledge": "Ancient Knowledge",
+    "effect.apotheosis.knowledge.desc": "Increases experience gained from kills and blocks.",
+	
+    "effect.apotheosis.sundering": "Sundering",
+    "effect.apotheosis.sundering.desc": "Increases damage received.",
+	
+    "effect.apotheosis.vitality": "Bursting Vitality",
+    "effect.apotheosis.vitality.desc": "Increases healing received.",
+	
+    "effect.apotheosis.grievous": "Grievous Wounds",
+    "effect.apotheosis.grievous.desc": "Decreases healing received.",
+	
+    "effect.apotheosis.bleeding": "Bleeding",
+    "effect.apotheosis.bleeding.desc": "Inflicts damage every two seconds.",
+    "death.attack.apotheosis.bleeding": "%s bled out.",
+	
+    "effect.apotheosis.detonation": "Flaming Detonation",
+    "effect.apotheosis.detonation.desc": "On expiry, inflicts damage based on remaining fire ticks.",
+    "death.attack.apotheosis.detonation": "%s was detonated by flame.",
 
 	"comment_id": "/Adventure Module",
 
@@ -171,6 +199,9 @@
 
 	"affix.apotheosis:sword/attribute/vampiric": "Vampiric",
     "affix.apotheosis:sword/attribute/vampiric.suffix": "of Bloodletting",
+
+	"affix.apotheosis:sword/attribute/piercing": "Piercing",
+    "affix.apotheosis:sword/attribute/piercing.suffix": "of the Sunderer",
 
 	"affix.apotheosis:heavy_weapon/attribute/shredding": "Shredding",
     "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "of Penetration",
@@ -313,6 +344,9 @@
 	"affix.apotheosis:breaker/special/radial": "Radial",
     "affix.apotheosis:breaker/special/radial.suffix": "of the Earthbreaker",
     "affix.apotheosis:breaker/special/radial.desc": "This tool breaks in a %sx%s area.",
+
+	"affix.apotheosis:melee_weapon/mob_effect/detonating": "Detonating",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "of the Elemental Flame",
 	
 	"misc.apotheosis.iron": "iron",
 	"misc.apotheosis.diamond": "diamond",
@@ -374,7 +408,8 @@
 	"gem_class.breaker": "Mining Tools",
 	"gem_class.pickaxe": "Pickaxes",
 	"gem_class.light_ranged": "Light or Ranged Weapons",
-	"gem_class.weapons_or_tools": "Weapons or Tools",
+	"gem_class.weapon_or_tool": "Weapons or Tools",
+	"gem_class.weapon": "Weapons",
 
 	"gem_class.helmet": "Helmets",
 	"gem_class.chestplate": "Chestplates",
@@ -389,14 +424,19 @@
 	"bonus.apotheosis:enchantment.desc.global": "+%s %s to all existing enchantments",
 	"bonus.apotheosis:multi_attr.desc.and": "%s and %s",
 	"bonus.apotheosis:multi_attr.desc.and_but": "%s and %s, but %s",
+	"bonus.apotheosis:multi_attr.desc.but_and": "%s, but %s and %s",
 	"bonus.apotheosis:bloody_arrow.desc": "When firing, you lose %s%% Max Health and deal %s%% damage. %s",
 	"bonus.apotheosis:leech_block.desc": "Blocking an attack heals you for %s%% of the damage. %s",
 	"bonus.apotheosis:all_stats.desc": "+%s%% to All Stats",
 	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Iron Ore has a %s%% chance to drop Raw Gold instead.",
 	"bonus.apotheosis:mageslayer.desc": "Ignore %s%% of magic damage and heal for the same amount.",
+	"bonus.apotheosis:twilight_ore_magnet.desc": "Can be used as an Ore Magnet, costing an extra %s durability.",
+	"bonus.apotheosis:twilight_treasure_goblin.desc": "Attacking an entity has a %s%% chance to summon a Treasure Goblin. %s",
+	"bonus.apotheosis:twilight_fortification.desc": "Taking damage has a %s%% chance to fortify you with Twilight Shields. %s",
 
 	"misc.apotheosis.level": "level",
 	"misc.apotheosis.level.many": "levels",
+	"name.apotheosis.treasure_goblin": "Treasure Goblin",
 
 	"item.apotheosis.gem.apotheosis:legacy": "Legacy Gem",
 	"item.apotheosis.gem.apotheosis:core/guardian": "Guardian Gem",
@@ -418,6 +458,8 @@
 	"item.apotheosis.gem.apotheosis:the_nether/blood_lord": "Gem of the Ravenous Blood Lord",
 	"item.apotheosis.gem.apotheosis:the_end/endersurge": "Endersurge Gem",
 	"item.apotheosis.gem.apotheosis:the_end/mageslayer": "Gem of the Mageslayer",
+	"item.apotheosis.gem.apotheosis:twilight/forest": "Gem of the Twilight Forest",
+	"item.apotheosis.gem.apotheosis:twilight/queen": "Gem of the Frozen Queen",
 
 	"item.apotheosis.boss_summoner": "Apothic Boss Summoner",
 	"item.apotheosis.gem.common": "Cracked %s",
@@ -853,7 +895,7 @@
     "enchantment.apotheosis.reflective.desc": "Blocked attacks may harm the attacker.",
 
     "enchantment.apotheosis.berserkers_fury": "Berserker's Fury",
-    "enchantment.apotheosis.berserkers_fury.desc": "Become enraged when taking damage.",
+    "enchantment.apotheosis.berserkers_fury.desc": "Become enraged when taking damage. [⌛ 0:45]",
 
     "enchantment.apotheosis.knowledge": "Knowledge of the Ages",
     "enchantment.apotheosis.knowledge.desc": "Enemy drops are directly converted to experience.",
@@ -1092,29 +1134,21 @@
     "item.minecraft.lingering_potion.effect.wither": "Lingering Potion of Wither",
     "item.minecraft.tipped_arrow.effect.wither": "Arrow of Wither",
 
-    "effect.apotheosis.sundering": "Sundering",
-    "effect.apotheosis.sundering.desc": "Increases damage received",
     "item.minecraft.potion.effect.sundering": "Potion of Sundering",
     "item.minecraft.splash_potion.effect.sundering": "Splash Potion of Sundering",
     "item.minecraft.lingering_potion.effect.sundering": "Lingering Potion of Sundering",
     "item.minecraft.tipped_arrow.effect.sundering": "Arrow of Sundering",
 
-    "effect.apotheosis.knowledge": "Ancient Knowledge",
-    "effect.apotheosis.knowledge.desc": "Increases experience gained from kills and blocks",
     "item.minecraft.potion.effect.knowledge": "Potion of Ancient Knowledge",
     "item.minecraft.splash_potion.effect.knowledge": "Splash Potion of Ancient Knowledge",
     "item.minecraft.lingering_potion.effect.knowledge": "Lingering Potion of Ancient Knowledge",
     "item.minecraft.tipped_arrow.effect.knowledge": "Arrow of Ancient Knowledge",
 
-    "effect.apotheosis.vitality": "Bursting Vitality",
-    "effect.apotheosis.vitality.desc": "Increases healing received",
     "item.minecraft.potion.effect.vitality": "Potion of Healing Boost",
     "item.minecraft.splash_potion.effect.vitality": "Splash Potion of Healing Boost",
     "item.minecraft.lingering_potion.effect.vitality": "Lingering Potion of Healing Boost",
     "item.minecraft.tipped_arrow.effect.vitality": "Arrow of Healing Boost",
 
-    "effect.apotheosis.grievous": "Grievous Wounds",
-    "effect.apotheosis.grievous.desc": "Decreases healing received",
     "item.minecraft.potion.effect.grievous": "Potion of Healing Reduction",
     "item.minecraft.splash_potion.effect.grievous": "Splash Potion of Healing Reduction",
     "item.minecraft.lingering_potion.effect.grievous": "Lingering Potion of Healing Reduction",
@@ -1162,8 +1196,6 @@
     "item.apotheosis.diamond_mining_arrow": "Diamond Mining Arrow",
     "info.apotheosis.mining_arrow.iron": "Breaks blocks like an iron pickaxe",
     "info.apotheosis.mining_arrow.diamond": "Breaks blocks like a diamond pickaxe",
-    "effect.apotheosis.bleeding": "Bleeding",
-    "death.attack.apotheosis.bleeding": "%s bled out.",
     
     "comment_id": "/Misc",
     "generic.reachDistance": "Reach Distance",

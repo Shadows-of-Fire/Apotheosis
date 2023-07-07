@@ -1,4 +1,4 @@
-package shadows.apotheosis.village.fletching.effects;
+package shadows.apotheosis.core.mobfx.potions;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;

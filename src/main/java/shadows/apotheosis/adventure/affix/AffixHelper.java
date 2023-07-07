@@ -24,6 +24,7 @@ import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.CachedObject.CachedObjectSource;
+import shadows.placebo.util.CachedObject;
 import shadows.placebo.util.StepFunction;
 
 public class AffixHelper {
@@ -75,7 +76,7 @@ public class AffixHelper {
 	 * @return A Map of all affixes on the stack, or an empty map if none were found.
 	 */
 	public static Map<Affix, AffixInstance> getAffixes(ItemStack stack) {
-		return CachedObjectSource.getOrCreate(stack, AFFIX_CACHED_OBJECT, AffixHelper::getAffixesImpl);
+		return CachedObjectSource.getOrCreate(stack, AFFIX_CACHED_OBJECT, AffixHelper::getAffixesImpl, CachedObject.hashSubkey(AFFIX_DATA));
 	}
 
 	public static Map<Affix, AffixInstance> getAffixesImpl(ItemStack stack) {

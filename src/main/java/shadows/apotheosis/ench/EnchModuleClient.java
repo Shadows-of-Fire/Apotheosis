@@ -84,14 +84,18 @@ public class EnchModuleClient {
 			if (clues != 0) {
 				e.getToolTip().add(Component.translatable("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
 			}
-		} else if (i == Items.ENCHANTED_BOOK && !ModList.get().isLoaded("enchdesc")) {
+		} else if (i == Items.ENCHANTED_BOOK) {
 			ItemStack stack = e.getItemStack();
 			var enchMap = EnchantmentHelper.getEnchantments(stack);
 			if (enchMap.size() == 1) {
 				var ench = enchMap.keySet().iterator().next();
-				if (ForgeRegistries.ENCHANTMENTS.getKey(ench).getNamespace().equals(Apotheosis.MODID)) {
-					e.getToolTip().add(Component.translatable(ench.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+				if (!ModList.get().isLoaded("enchdesc")) {
+					if (ForgeRegistries.ENCHANTMENTS.getKey(ench).getNamespace().equals(Apotheosis.MODID)) {
+						e.getToolTip().add(Component.translatable(ench.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+					}
 				}
+				var enchInfo = EnchModule.getEnchInfo(ench);
+				
 			}
 		}
 	}

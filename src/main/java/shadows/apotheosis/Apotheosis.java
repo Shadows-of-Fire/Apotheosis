@@ -36,6 +36,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.client.BossSpawnMessage;
 import shadows.apotheosis.compat.PatchouliCompat;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
+import shadows.apotheosis.core.mobfx.MobFxLib;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.table.ClueMessage;
 import shadows.apotheosis.garden.GardenModule;
@@ -108,6 +109,7 @@ public class Apotheosis {
 
 		// Library modules - Mandatory 
 		bus.register(new AttributesLib());
+		bus.register(new MobFxLib());
 
 		// Real modules
 		if (enableEnch) bus.register(new EnchModule());

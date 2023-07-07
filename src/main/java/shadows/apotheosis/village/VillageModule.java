@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -38,7 +37,6 @@ import shadows.apotheosis.village.fletching.arrows.MiningArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.MiningArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
-import shadows.apotheosis.village.fletching.effects.BleedingEffect;
 import shadows.apotheosis.village.wanderer.WandererReplacements;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.PlaceboUtil;
@@ -151,10 +149,5 @@ public class VillageModule {
 	@SubscribeEvent
 	public void containers(Register<MenuType<?>> e) {
 		e.getRegistry().register(new MenuType<>(FletchingContainer::new), "fletching");
-	}
-
-	@SubscribeEvent
-	public void effects(Register<MobEffect> e) {
-		e.getRegistry().register(new BleedingEffect(), "bleeding");
 	}
 }

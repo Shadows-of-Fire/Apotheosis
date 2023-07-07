@@ -8,6 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
@@ -37,6 +38,11 @@ public class DurabilityBonus extends GemBonus {
 	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
 		float level = this.values.get(rarity).get(0);
 		return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(ChatFormatting.YELLOW);
+	}
+
+	@Override
+	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, ServerPlayer user) {
+		return this.values.get(rarity).min();
 	}
 
 	@Override

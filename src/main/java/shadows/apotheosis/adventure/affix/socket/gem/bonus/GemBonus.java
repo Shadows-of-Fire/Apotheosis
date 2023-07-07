@@ -199,7 +199,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 	 * @param user    The user of the item, if applicable.
 	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
 	 */
-	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, ServerPlayer user) {
+	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, @Nullable ServerPlayer user) {
 		return 0;
 	}
 
