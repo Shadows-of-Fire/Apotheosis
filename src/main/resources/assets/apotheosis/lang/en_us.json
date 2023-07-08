@@ -495,6 +495,8 @@
 	"button.apotheosis.salvage": "Salvage Items",
 	"button.apotheosis.no_salvage": "No items selected",
 	"button.apotheosis.no_salvage_all": "No valid items in inventory",
+	"button.apotheosis.upgrade": "Upgrade Gem",
+	"button.apotheosis.upgrade.no": "Missing Inputs",
 
 	"menu.apotheosis.gem_cutting": "Gem Cutting",
 	"container.apotheosis.salvage": "Salvage",
@@ -508,9 +510,9 @@
 	"text.apotheosis.socketable_into": "Fits In:",
 	"text.apotheosis.dot_prefix": "• %s",
 	"text.apotheosis.socket_limit": "Max Sockets Applied: %s",
-	"text.apotheosis.no_upgrade": "Cannot be Upgraded",
-	"text.apotheosis.rarity_up_cost": "Rarity Upgrade Cost",
+	"text.apotheosis.no_upgrade": "Max Upgrade Reached",
 	"text.apotheosis.cut_cost": "Gem Cutting Cost",
+	"text.apotheosis.one_rarity_mat": "Rarity Materials (1)",
 	"title.apotheosis.smithing": "Apothic Smithing",
 	"title.apotheosis.salvaging": "Salvaging",
 

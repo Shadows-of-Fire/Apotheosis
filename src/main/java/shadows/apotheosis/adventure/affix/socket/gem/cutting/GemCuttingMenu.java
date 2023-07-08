@@ -20,6 +20,10 @@ import shadows.placebo.container.PlaceboContainerMenu;
 
 public class GemCuttingMenu extends PlaceboContainerMenu {
 
+	public static final int NEXT_MAT_COST = 1;
+	public static final int STD_MAT_COST = 3;
+	public static final int PREV_MAT_COST = 9;
+
 	public static final List<GemCuttingRecipe> RECIPES = new ArrayList<>();
 
 	static {
@@ -81,7 +85,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 		var mainGem = GemInstance.unsocketed(this.inv.getStackInSlot(0));
 		if (!mainGem.isValidUnsocketed()) return false;
 		LootRarity rarity = LootRarity.getMaterialRarity(stack);
-		return rarity != null && (rarity == mainGem.rarity() || rarity == mainGem.rarity().prev());
+		return rarity != null && Math.abs(rarity.ordinal() - mainGem.rarity().ordinal()) <= 1;
 	}
 
 	protected boolean matchesMainGem(ItemStack stack) {
@@ -145,10 +149,12 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 			GemInstance g2 = GemInstance.unsocketed(bot);
 			if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem()) return false;
 			if (g.rarity() == LootRarity.ANCIENT) return false;
-			if (left.getItem() != Apoth.Items.GEM_DUST.get() || left.getCount() < 4) return false;
+			if (left.getItem() != Apoth.Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity())) return false;
 			LootRarity matRarity = LootRarity.getMaterialRarity(right);
 			LootRarity gemRarity = g.rarity();
-			return matRarity == gemRarity || right.getCount() >= 4 && matRarity == gemRarity.prev();
+			if (matRarity == gemRarity) return right.getCount() >= STD_MAT_COST;
+			else if (matRarity == gemRarity.next()) return right.getCount() >= NEXT_MAT_COST;
+			else return matRarity == gemRarity.prev() && right.getCount() >= PREV_MAT_COST;
 		}
 
 		@Override
@@ -163,9 +169,13 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 			LootRarity matRarity = LootRarity.getMaterialRarity(right);
 			LootRarity gemRarity = GemInstance.unsocketed(gem).rarity();
 			gem.shrink(1);
-			left.shrink(4);
+			left.shrink(getDustCost(gemRarity));
 			bot.shrink(1);
-			right.shrink(matRarity == gemRarity ? 1 : 4);
+			right.shrink(matRarity == gemRarity ? STD_MAT_COST : matRarity == gemRarity.next() ? NEXT_MAT_COST : PREV_MAT_COST);
 		}
+	}
+
+	public static int getDustCost(LootRarity gemRarity) {
+		return 1 + gemRarity.ordinal() * 2;
 	}
 }

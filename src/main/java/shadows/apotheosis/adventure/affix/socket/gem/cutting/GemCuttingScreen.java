@@ -34,6 +34,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu.GemC
 import shadows.apotheosis.adventure.client.GrayBufferSource;
 import shadows.apotheosis.adventure.client.SimpleTexButton;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.core.attributeslib.api.AttributeHelper;
 import shadows.placebo.screen.PlaceboContainerScreen;
 
 public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
@@ -99,7 +100,7 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
 		int xCenter = (this.width - this.imageWidth) / 2;
 		int yCenter = (this.height - this.imageHeight) / 2;
 		this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
-		if (hasItem(0)) {
+		if (hasItem(0) && GemItem.getLootRarity(this.menu.getSlot(0).getItem()) != LootRarity.ANCIENT) {
 			if (!hasItem(1)) {
 				renderItem(this.displayDust, this.menu.getSlot(1));
 			}
@@ -129,38 +130,37 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
 		List<Component> list = new ArrayList<>();
 		if (gem.isValidUnsocketed()) {
 			int dust = this.menu.getSlot(1).getItem().getCount();
-			if (gem.rarity() == LootRarity.ANCIENT) {
+			LootRarity rarity = gem.rarity();
+			if (rarity == LootRarity.ANCIENT) {
 				list.add(Component.translatable("text.apotheosis.no_upgrade").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
 			} else {
-				list.add(Component.translatable("text.apotheosis.rarity_up_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
+				list.add(Component.translatable("text.apotheosis.cut_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
 				list.add(CommonComponents.EMPTY);
-				boolean hasDust = dust > 4;
-				list.add(Component.translatable("text.apotheosis.cost", 4, Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
-				boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && gem.rarity() == secondary.rarity();
+				boolean hasDust = dust > GemCuttingMenu.getDustCost(rarity);
+				list.add(Component.translatable("text.apotheosis.cost", GemCuttingMenu.getDustCost(rarity), Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
+				boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
 				list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
-				Item rarityMat = gem.rarity().getMaterial().getItem();
-				ItemStack slotMat = this.menu.getSlot(3).getItem();
-				boolean hasMats = slotMat.getItem() == rarityMat;
-				list.add(Component.translatable("text.apotheosis.cost", 1, rarityMat.getName(ItemStack.EMPTY).getString()).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW));
-			}
-
-			if (gem.rarity() != LootRarity.COMMON) {
-				list.add(CommonComponents.EMPTY);
-				list.add(Component.literal("or").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.UNDERLINE, ChatFormatting.BOLD));
-				list.add(CommonComponents.EMPTY);
-				boolean hasDust = dust > 4;
-				list.add(Component.translatable("text.apotheosis.cost", 4, Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
-				boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && gem.rarity() == secondary.rarity();
-				list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
-				Item rarityMat = gem.rarity().prev().getMaterial().getItem();
-				ItemStack slotMat = this.menu.getSlot(3).getItem();
-				boolean hasMats = slotMat.getItem() == rarityMat;
-				list.add(Component.translatable("text.apotheosis.cost", 4, rarityMat.getName(ItemStack.EMPTY).getString()).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW));
+				list.add(Component.translatable("text.apotheosis.one_rarity_mat").withStyle(ChatFormatting.GRAY));
+				addMatTooltip(rarity.next(), GemCuttingMenu.NEXT_MAT_COST, list);
+				addMatTooltip(rarity, GemCuttingMenu.STD_MAT_COST, list);
+				if (rarity != LootRarity.COMMON) {
+					addMatTooltip(rarity.prev(), GemCuttingMenu.PREV_MAT_COST, list);
+				}
 			}
 		}
 		drawOnLeft(poseStack, list, this.getGuiTop() + 16);
-
 		super.renderTooltip(poseStack, pX, pY);
+	}
+
+	private void addMatTooltip(LootRarity rarity, int cost, List<Component> list) {
+		if (rarity == LootRarity.ANCIENT) {
+			list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", 1, Component.literal("Manifestation of Infinity").withStyle(ChatFormatting.OBFUSCATED)).withStyle(ChatFormatting.RED)));
+		} else {
+			Item rarityMat = rarity.getMaterial().getItem();
+			ItemStack slotMat = this.menu.getSlot(3).getItem();
+			boolean hasMats = slotMat.getItem() == rarityMat && slotMat.getCount() >= cost;
+			list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", cost, rarityMat.getName(ItemStack.EMPTY).getString()).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
+		}
 	}
 
 	public void drawOnLeft(PoseStack stack, List<Component> list, int y) {
