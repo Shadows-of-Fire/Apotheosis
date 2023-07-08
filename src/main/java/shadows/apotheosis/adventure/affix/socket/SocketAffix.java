@@ -60,38 +60,38 @@ public final class SocketAffix extends Affix {
 			return;
 		}
 
-		gems(socketed).forEach(inst -> inst.addModifiers(type, map));
+		SocketHelper.getGemInstances(socketed).forEach(inst -> inst.addModifiers(type, map));
 	}
 
 	@Override
 	public int getDamageProtection(ItemStack socketed, LootRarity itemRarity, float numSockets, DamageSource source) {
-		return gems(socketed).map(inst -> inst.getDamageProtection(source)).reduce(0, Integer::sum);
+		return SocketHelper.getGemInstances(socketed).map(inst -> inst.getDamageProtection(source)).reduce(0, Integer::sum);
 	}
 
 	@Override
 	public float getDamageBonus(ItemStack socketed, LootRarity itemRarity, float numSockets, MobType creatureType) {
-		return gems(socketed).map(inst -> inst.getDamageBonus(creatureType)).reduce(Float::sum).orElse(0F);
+		return SocketHelper.getGemInstances(socketed).map(inst -> inst.getDamageBonus(creatureType)).reduce(Float::sum).orElse(0F);
 	}
 
 	@Override
 	public void doPostAttack(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, Entity target) {
-		gems(socketed).forEach(inst -> inst.doPostAttack(user, target));
+		SocketHelper.getGemInstances(socketed).forEach(inst -> inst.doPostAttack(user, target));
 	}
 
 	@Override
 	public void doPostHurt(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, Entity attacker) {
-		gems(socketed).forEach(inst -> inst.doPostHurt(user, attacker));
+		SocketHelper.getGemInstances(socketed).forEach(inst -> inst.doPostHurt(user, attacker));
 	}
 
 	@Override
 	public void onArrowFired(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity user, AbstractArrow arrow) {
-		gems(socketed).forEach(inst -> inst.onArrowFired(user, arrow));
+		SocketHelper.getGemInstances(socketed).forEach(inst -> inst.onArrowFired(user, arrow));
 	}
 
 	@Override
 	@Nullable
 	public InteractionResult onItemUse(ItemStack socketed, LootRarity itemRarity, float numSockets, UseOnContext useinst) {
-		return gems(socketed).map(inst -> inst.onItemUse(useinst)).filter(Predicates.notNull()).max(InteractionResult::compareTo).orElse(null);
+		return SocketHelper.getGemInstances(socketed).map(inst -> inst.onItemUse(useinst)).filter(Predicates.notNull()).max(InteractionResult::compareTo).orElse(null);
 	}
 
 	@Override
@@ -101,43 +101,39 @@ public final class SocketAffix extends Affix {
 
 	@Override
 	public float onShieldBlock(ItemStack socketed, LootRarity itemRarity, float numSockets, LivingEntity entity, DamageSource source, float amount) {
-		return gems(socketed).map(inst -> inst.onShieldBlock(entity, source, amount)).max(Float::compareTo).orElse(amount);
+		return SocketHelper.getGemInstances(socketed).map(inst -> inst.onShieldBlock(entity, source, amount)).max(Float::compareTo).orElse(amount);
 	}
 
 	@Override
 	public void onBlockBreak(ItemStack socketed, LootRarity itemRarity, float numSockets, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		gems(socketed).forEach(inst -> inst.onBlockBreak(player, world, pos, state));
+		SocketHelper.getGemInstances(socketed).forEach(inst -> inst.onBlockBreak(player, world, pos, state));
 	}
 
 	@Override
 	public float getDurabilityBonusPercentage(ItemStack socketed, LootRarity rarity, float level, ServerPlayer user) {
-		return (float) gems(socketed).mapToDouble(inst -> inst.getDurabilityBonusPercentage(user)).sum();
+		return (float) SocketHelper.getGemInstances(socketed).mapToDouble(inst -> inst.getDurabilityBonusPercentage(user)).sum();
 	}
 
 	@Override
 	public float onHurt(ItemStack socketed, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
 		MutableFloat mFloat = new MutableFloat(amount);
-		gems(socketed).forEachOrdered(inst -> mFloat.setValue(inst.onHurt(src, ent, mFloat.getValue())));
+		SocketHelper.getGemInstances(socketed).forEachOrdered(inst -> mFloat.setValue(inst.onHurt(src, ent, mFloat.getValue())));
 		return mFloat.getValue();
 	}
 
 	@Override
 	public void getEnchantmentLevels(ItemStack socketed, LootRarity rarity, float level, Map<Enchantment, Integer> enchantments) {
-		gems(socketed).forEach(inst -> inst.getEnchantmentLevels(enchantments));
+		SocketHelper.getGemInstances(socketed).forEach(inst -> inst.getEnchantmentLevels(enchantments));
 	}
 
 	@Override
 	public void modifyLoot(ItemStack socketed, LootRarity rarity, float level, ObjectArrayList<ItemStack> loot, LootContext ctx) {
-		gems(socketed).forEach(inst -> inst.modifyLoot(loot, ctx));
+		SocketHelper.getGemInstances(socketed).forEach(inst -> inst.modifyLoot(loot, ctx));
 	}
 
 	@Override
 	public PSerializer<? extends Affix> getSerializer() {
 		return SERIALIZER;
-	}
-
-	private static Stream<GemInstance> gems(ItemStack socketed) {
-		return SocketHelper.getGems(socketed).stream().map(gemStack -> new GemInstance(socketed, gemStack)).filter(GemInstance::isValid);
 	}
 
 	private static Stream<GemInstance> gems(AbstractArrow arrow) {

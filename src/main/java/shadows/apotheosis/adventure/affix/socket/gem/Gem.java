@@ -138,7 +138,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 	 */
 	public boolean canApplyTo(ItemStack socketed, ItemStack gem, LootRarity rarity) {
 		if (this.isUnique()) {
-			List<Gem> gems = SocketHelper.getActiveGems(socketed);
+			List<Gem> gems = SocketHelper.getGemInstances(socketed).map(GemInstance::gem).toList();
 			if (gems.contains(this)) return false;
 		}
 		return isValidIn(socketed, gem, rarity);

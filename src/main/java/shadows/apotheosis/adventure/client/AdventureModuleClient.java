@@ -177,11 +177,8 @@ public class AdventureModuleClient {
 	@SubscribeEvent
 	public static void ignoreSocketUUIDS(GatherSkippedAttributeTooltipsEvent e) {
 		ItemStack stack = e.getStack();
-		int sockets = SocketHelper.getSockets(stack);
-		if (sockets > 0) {
-			for (ItemStack gem : SocketHelper.getGems(stack, sockets)) {
-				GemItem.getUUIDs(gem).forEach(e::skipUUID);
-			}
+		for (ItemStack gem : SocketHelper.getGems(stack)) {
+			GemItem.getUUIDs(gem).forEach(e::skipUUID);
 		}
 	}
 
@@ -202,7 +199,7 @@ public class AdventureModuleClient {
 			}
 		}
 		if (rmvIdx == -1) return;
-		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack(), sockets))));
+		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack()))));
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)

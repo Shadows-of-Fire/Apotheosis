@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.Event.Result;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
@@ -31,32 +32,38 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 	 * Used to check if a recipe matches current crafting inventory
 	 */
 	@Override
-	public boolean matches(Container pInv, Level pLevel) {
-		ItemStack gemStack = pInv.getItem(1);
+	public boolean matches(Container inv, Level pLevel) {
+		ItemStack input = inv.getItem(0);
+		ItemStack gemStack = inv.getItem(1);
 		Gem gem = GemItem.getGem(gemStack);
 		if (gem == null) return false;
-		if (!SocketHelper.hasEmptySockets(pInv.getItem(0))) return false;
-		return gem.canApplyTo(pInv.getItem(0), gemStack, GemItem.getLootRarity(gemStack));
+		if (!SocketHelper.hasEmptySockets(input)) return false;
+		var event = new ItemSocketingEvent.CanSocket(input, gemStack);
+		MinecraftForge.EVENT_BUS.post(event);
+		Result res = event.getResult();
+		return res == Result.ALLOW ? true : res == Result.DEFAULT && gem.canApplyTo(inv.getItem(0), gemStack, GemItem.getLootRarity(gemStack));
 	}
 
 	/**
 	 * Returns an Item that is the result of this recipe
 	 */
 	@Override
-	public ItemStack assemble(Container inventory) {
-		ItemStack result = inventory.getItem(0).copy();
-		if (result.isEmpty()) return ItemStack.EMPTY;
+	public ItemStack assemble(Container inv) {
+		ItemStack input = inv.getItem(0);
+		ItemStack gemStack = inv.getItem(1);
+		if (input.isEmpty()) return ItemStack.EMPTY; // This really should throw, but mods being mods, that might be a bad idea.
+
+		ItemStack result = input.copy();
 		result.setCount(1);
-		int sockets = SocketHelper.getSockets(result);
-		List<ItemStack> gems = SocketHelper.getGems(result, sockets);
-		ItemStack gem = inventory.getItem(1).copy();
+		List<ItemStack> gems = SocketHelper.getGems(result);
 		int socket = SocketHelper.getFirstEmptySocket(result);
-		gems.set(socket, gem);
+		gems.set(socket, gemStack.copy());
 		SocketHelper.setGems(result, gems);
-		ItemStack input = inventory.getItem(0).copy();
-		var event = new ItemSocketingEvent(input, gem, result);
+
+		var event = new ItemSocketingEvent.ModifyResult(input, gemStack, result);
 		MinecraftForge.EVENT_BUS.post(event);
-		result = event.getOutputStack();
+		result = event.getOutput();
+		if (result.isEmpty()) throw new IllegalArgumentException("ItemSocketingEvent$ModifyResult produced an empty output stack.");
 		return result;
 	}
 

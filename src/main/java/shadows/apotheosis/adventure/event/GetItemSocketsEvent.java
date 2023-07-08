@@ -2,37 +2,32 @@ package shadows.apotheosis.adventure.event;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.Event.HasResult;
+import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 
 /**
- * Fired when the number of sockets of an item is being calculated. <br>
- * <br>
- * This event is not {@link Cancelable}.<br>
- * <br>
- * This event does not have a result. {@link HasResult}<br>
- * <br>
+ * Fired from {@link SocketHelper#getSockets(ItemStack)} to allow modification of the number of sockets an item has.
+ * <p>
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  */
 public class GetItemSocketsEvent extends Event {
-	private final ItemStack itemStack;
-	private int sockets;
+	protected final ItemStack stack;
+	protected int sockets;
 
-	public GetItemSocketsEvent(ItemStack itemStack, int sockets) {
-		this.itemStack = itemStack;
+	public GetItemSocketsEvent(ItemStack stack, int sockets) {
+		this.stack = stack;
 		this.sockets = sockets;
 	}
 
 	/**
-	 * @return The original item whose socket number is being calculated.
+	 * @return The item whose socket value is being calculated.
 	 */
-	public ItemStack getItemStack() {
-		return itemStack;
+	public ItemStack getStack() {
+		return stack;
 	}
 
 	/**
-	 * @return The number of sockets the item will have after the event has been fired.
+	 * @return The (possibly event-modified) number of sockets this item has.
 	 */
 	public int getSockets() {
 		return sockets;
@@ -40,7 +35,7 @@ public class GetItemSocketsEvent extends Event {
 
 	/**
 	 * Sets the number of sockets the item will have to a given amount.
-	 * @param sockets The number of sockets the item will have.
+	 * @param sockets The new socket count.
 	 */
 	public void setSockets(int sockets) {
 		this.sockets = sockets;
