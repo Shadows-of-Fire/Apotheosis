@@ -1,8 +1,6 @@
 package shadows.apotheosis.village.fletching.arrows;
 
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -45,10 +43,7 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 	@Override
 	protected void doPostHurtEffects(LivingEntity living) {
 		if (!this.level.isClientSide) {
-			Entity shooter = this.getOwner();
-			LivingEntity explosionSource = null;
-			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, VillageModule.expArrowMode);
+			this.level.explode(this, living.getX(), living.getY(), living.getZ(), 2, false, VillageModule.expArrowMode);
 			this.discard();
 		}
 	}
@@ -58,10 +53,7 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 		super.onHitBlock(res);
 		Vec3 vec = res.getLocation();
 		if (!this.level.isClientSide) {
-			Entity shooter = this.getOwner();
-			LivingEntity explosionSource = null;
-			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, VillageModule.expArrowMode);
+			this.level.explode(this, vec.x(), vec.y(), vec.z(), 3, false, VillageModule.expArrowMode);
 			this.discard();
 		}
 	}

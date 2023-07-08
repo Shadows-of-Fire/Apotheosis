@@ -71,6 +71,8 @@
 * The Thunderstruck Affix (Light Weapon AOE damage) now properly does player damage.
 * Potential fix for duplicated Gem UUIDs causing exact copies to not function.
 * Fixed durability gems not applying.
+* Fixed an issue where the Catalyzing affix would give infinite durations of strength.
+* Added a mixin fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.
