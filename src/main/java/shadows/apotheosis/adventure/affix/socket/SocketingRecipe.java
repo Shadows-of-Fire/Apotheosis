@@ -13,9 +13,11 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.MinecraftForge;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.event.ItemSocketingEvent;
 
 public class SocketingRecipe extends ApothUpgradeRecipe {
 
@@ -41,21 +43,21 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
 	 * Returns an Item that is the result of this recipe
 	 */
 	@Override
-	public ItemStack assemble(Container pInv) {
-		ItemStack out = pInv.getItem(0).copy();
-		if (out.isEmpty()) return ItemStack.EMPTY;
-		out.setCount(1);
-		int sockets = SocketHelper.getSockets(out);
-		List<ItemStack> gems = SocketHelper.getGems(out, sockets);
-		for (int idx = 0; idx < gems.size(); idx++) {
-			Gem gem = GemItem.getGem(gems.get(idx));
-			if (gem == null) {
-				gems.set(idx, pInv.getItem(1));
-				break;
-			}
-		}
-		SocketHelper.setGems(out, gems);
-		return out;
+	public ItemStack assemble(Container inventory) {
+		ItemStack result = inventory.getItem(0).copy();
+		if (result.isEmpty()) return ItemStack.EMPTY;
+		result.setCount(1);
+		int sockets = SocketHelper.getSockets(result);
+		List<ItemStack> gems = SocketHelper.getGems(result, sockets);
+		ItemStack gem = inventory.getItem(1).copy();
+		int socket = SocketHelper.getFirstEmptySocket(result);
+		gems.set(socket, gem);
+		SocketHelper.setGems(result, gems);
+		ItemStack input = inventory.getItem(0).copy();
+		var event = new ItemSocketingEvent(input, gem, result);
+		MinecraftForge.EVENT_BUS.post(event);
+		result = event.getOutputStack();
+		return result;
 	}
 
 	/**

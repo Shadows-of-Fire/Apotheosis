@@ -9,12 +9,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
+import shadows.apotheosis.adventure.event.GetItemSocketsEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class SocketHelper {
@@ -54,9 +56,12 @@ public class SocketHelper {
 	}
 
 	public static int getSockets(ItemStack stack) {
-		var inst = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
-		if (inst == null) return 0;
-		return (int) inst.level();
+		AffixInstance socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
+		int sockets = socketAffix != null ? (int) socketAffix.level() : 0;
+		var event = new GetItemSocketsEvent(stack, sockets);
+		MinecraftForge.EVENT_BUS.post(event);
+		sockets = event.getSockets();
+		return sockets;
 	}
 
 	public static void setSockets(ItemStack stack, int sockets) {
@@ -67,6 +72,15 @@ public class SocketHelper {
 
 	public static boolean hasEmptySockets(ItemStack stack) {
 		return getGems(stack).stream().map(GemItem::getGem).anyMatch(Objects::isNull);
+	}
+	
+	public static int getFirstEmptySocket(ItemStack stack) {
+		List<ItemStack> gems = getGems(stack, getSockets(stack));
+		for (int socket = 0; socket < gems.size(); socket++) {
+			Gem gem = GemItem.getGem(gems.get(socket));
+			if (gem == null) return socket;
+		}
+		return 0;
 	}
 
 }

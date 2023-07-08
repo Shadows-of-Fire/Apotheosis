@@ -59,7 +59,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.affix.Affix;
@@ -171,7 +170,8 @@ public class AdventureModuleClient {
 	public static void tooltips(AddAttributeTooltipsEvent e) {
 		ItemStack stack = e.getStack();
 		ListIterator<Component> it = e.getAttributeTooltipIterator();
-		if (AffixHelper.getAffixes(stack).containsKey(Affixes.SOCKET.get())) it.add(Component.literal("APOTH_REMOVE_MARKER"));
+		int sockets = SocketHelper.getSockets(stack);
+		if (sockets > 0) it.add(Component.literal("APOTH_REMOVE_MARKER"));
 	}
 
 	@SubscribeEvent
@@ -187,9 +187,8 @@ public class AdventureModuleClient {
 
 	@SubscribeEvent
 	public static void comps(RenderTooltipEvent.GatherComponents e) {
-		AffixInstance socket = AffixHelper.getAffixes(e.getItemStack()).get(Affixes.SOCKET.get());
-		if (socket == null) return;
-
+		int sockets = SocketHelper.getSockets(e.getItemStack());
+		if (sockets == 0) return;
 		List<Either<FormattedText, TooltipComponent>> list = e.getTooltipElements();
 		int rmvIdx = -1;
 		for (int i = 0; i < list.size(); i++) {
@@ -203,8 +202,7 @@ public class AdventureModuleClient {
 			}
 		}
 		if (rmvIdx == -1) return;
-		int size = (int) socket.level();
-		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack(), size))));
+		e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack(), sockets))));
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
