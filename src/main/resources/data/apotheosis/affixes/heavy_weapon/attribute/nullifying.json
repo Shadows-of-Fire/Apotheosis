@@ -1,0 +1,30 @@
+{
+	"type": "apotheosis:attribute",
+	"attribute": "apotheosis:prot_shred",
+	"operation": "ADDITION",
+	"values": {
+		"rare": {
+			"min": 0.15,
+			"steps": 5,
+			"step": 0.01
+		},
+		"epic": {
+			"min": 0.20,
+			"steps": 10,
+			"step": 0.01
+		},
+		"mythic": {
+			"min": 0.30,
+			"steps": 10,
+			"step": 0.01
+		},
+		"ancient": {
+			"min": 0.40,
+			"steps": 10,
+			"step": 0.01
+		}
+	},
+	"types": [
+		"heavy_weapon"
+	]
+}

@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.client;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -7,8 +8,8 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -17,7 +18,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
-import com.mojang.math.Vector3f;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -26,6 +26,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.model.BakedModel;
@@ -38,7 +39,6 @@ import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -46,6 +46,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.client.event.RenderTooltipEvent;
@@ -125,6 +126,14 @@ public class AdventureModuleClient {
 			if (oldModel != null) {
 				e.getModels().put(key, new GemModel(oldModel, e.getModelBakery()));
 			}
+		}
+
+		@SubscribeEvent
+		public static void shaderRegistry(RegisterShadersEvent event) throws IOException {
+			// Adds a shader to the list, the callback runs when loading is complete.
+			event.registerShader(new ShaderInstance(event.getResourceManager(), new ResourceLocation("apotheosis:gray"), DefaultVertexFormat.NEW_ENTITY), shaderInstance -> {
+				CustomRenderTypes.grayShader = shaderInstance;
+			});
 		}
 	}
 
@@ -212,60 +221,42 @@ public class AdventureModuleClient {
 		}
 	}
 
-	// Unused, doesn't actually work to render beacons without depth.
-	private static abstract class CustomBeacon extends RenderStateShard {
+	// Accessor functon, ensures that you don't use the raw methods below unintentionally.
+	public static RenderType gray(ResourceLocation texture) {
+		return CustomRenderTypes.GRAY.apply(texture);
+	}
 
-		public CustomBeacon(String pName, Runnable pSetupState, Runnable pClearState) {
-			super(pName, pSetupState, pClearState);
+	// Keep private because this stuff isn't meant to be public
+	private static class CustomRenderTypes extends RenderType {
+		// Holds the object loaded via RegisterShadersEvent
+		private static ShaderInstance grayShader;
+
+		// Shader state for use in the render type, the supplier ensures it updates automatically with resource reloads
+		private static final ShaderStateShard RENDER_TYPE_GRAY = new ShaderStateShard(() -> grayShader);
+
+		// The memoize caches the output value for each input, meaning the expensive registration process doesn't have to rerun
+		public static Function<ResourceLocation, RenderType> GRAY = Util.memoize(CustomRenderTypes::gray);
+
+		// Defines the RenderType. Make sure the name is unique by including your MODID in the name.
+		private static RenderType gray(ResourceLocation loc) {
+			//Formatter::off
+            RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
+                    .setShaderState(RENDER_TYPE_GRAY)
+                    .setTextureState(new RenderStateShard.TextureStateShard(loc, false, false))
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setOutputState(ITEM_ENTITY_TARGET)
+                    .setLightmapState(LIGHTMAP).setOverlayState(OVERLAY)
+                    .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
+                    .createCompositeState(true);
+            return create("gray", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, false, rendertype$state);
+            //Formatter::on
 		}
 
-		//Formatter::off
-		static final BiFunction<ResourceLocation, Boolean, RenderType> BEACON_BEAM = Util.memoize((p_173224_, p_173225_) -> {
-			RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder()
-				.setShaderState(RENDERTYPE_BEACON_BEAM_SHADER)
-				.setTextureState(new RenderStateShard.TextureStateShard(p_173224_, false, false))
-				.setTransparencyState(p_173225_ ? TRANSLUCENT_TRANSPARENCY : NO_TRANSPARENCY)
-				.setWriteMaskState(p_173225_ ? COLOR_WRITE : COLOR_WRITE)
-				.setDepthTestState(NO_DEPTH_TEST)
-				.setCullState(NO_CULL)
-				.createCompositeState(false);
-			return RenderType.create("custom_beacon_beam", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, true, rendertype$compositestate);
-		});
-		//Formatter::on
-	}
-
-	static final RenderType beaconBeam(ResourceLocation tex, boolean color) {
-		return CustomBeacon.BEACON_BEAM.apply(tex, color);
-	}
-
-	public static void renderBeaconBeam(PoseStack pPoseStack, MultiBufferSource pBufferSource, ResourceLocation pBeamLocation, float pPartialTick, float pTextureScale, long pGameTime, int pYOffset, int pHeight, float[] pColors, float pBeamRadius, float pGlowRadius) {
-		int i = pYOffset + pHeight;
-		pPoseStack.pushPose();
-		pPoseStack.translate(0.5D, 0.0D, 0.5D);
-		float f = (float) Math.floorMod(pGameTime, 40) + pPartialTick;
-		float f1 = pHeight < 0 ? f : -f;
-		float f2 = Mth.frac(f1 * 0.2F - (float) Mth.floor(f1 * 0.1F));
-		float f3 = pColors[0];
-		float f4 = pColors[1];
-		float f5 = pColors[2];
-		pPoseStack.pushPose();
-		pPoseStack.mulPose(Vector3f.YP.rotationDegrees(f * 2.25F - 45.0F));
-		float f6 = 0.0F;
-		float f8 = 0.0F;
-		float f9 = -pBeamRadius;
-		float f12 = -pBeamRadius;
-		float f15 = -1.0F + f2;
-		float f16 = (float) pHeight * pTextureScale * (0.5F / pBeamRadius) + f15;
-		BeaconRenderer.renderPart(pPoseStack, pBufferSource.getBuffer(beaconBeam(pBeamLocation, false)), f3, f4, f5, 1.0F, pYOffset, i, 0.0F, pBeamRadius, pBeamRadius, 0.0F, f9, 0.0F, 0.0F, f12, 0.0F, 1.0F, f16, f15);
-		pPoseStack.popPose();
-		f6 = -pGlowRadius;
-		float f7 = -pGlowRadius;
-		f8 = -pGlowRadius;
-		f9 = -pGlowRadius;
-		f15 = -1.0F + f2;
-		f16 = (float) pHeight * pTextureScale + f15;
-		BeaconRenderer.renderPart(pPoseStack, pBufferSource.getBuffer(beaconBeam(pBeamLocation, true)), f3, f4, f5, 0.125F, pYOffset, i, f6, f7, pGlowRadius, f8, f9, pGlowRadius, pGlowRadius, pGlowRadius, 0.0F, 1.0F, f16, f15);
-		pPoseStack.popPose();
+		// Dummy constructor needed to make java happy
+		private CustomRenderTypes(String s, VertexFormat v, VertexFormat.Mode m, int i, boolean b, boolean b2, Runnable r, Runnable r2) {
+			super(s, v, m, i, b, b2, r, r2);
+			throw new IllegalStateException("This class is not meant to be constructed!");
+		}
 	}
 
 }

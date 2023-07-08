@@ -29,19 +29,13 @@ import shadows.placebo.container.FilteredSlot;
 public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
 
 	protected final Player player;
-	protected final InternalItemHandler inputInv = new InternalItemHandler(15) {
-		@Override
-		protected void onContentsChanged(int slot) {
-			if (SalvagingMenu.this.updateCallback != null) SalvagingMenu.this.updateCallback.run();
-		}
-	};
-	protected Runnable updateCallback;
+	protected final InternalItemHandler inputInv = new InternalItemHandler(15);
 
 	public SalvagingMenu(int id, Inventory inv, BlockPos pos) {
 		super(Apoth.Menus.SALVAGE.get(), id, inv, pos);
 		this.player = inv.player;
 		for (int i = 0; i < 15; i++) {
-			this.addSlot(new FilteredSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(level, s) != null) {
+			this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(level, s) != null) {
 
 				@Override
 				public int getMaxStackSize() {
@@ -63,10 +57,6 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && findMatch(level, stack) != null, 0, 15);
 		this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
 		this.registerInvShuffleRules();
-	}
-
-	public void setCallback(Runnable r) {
-		this.updateCallback = r;
 	}
 
 	@Override

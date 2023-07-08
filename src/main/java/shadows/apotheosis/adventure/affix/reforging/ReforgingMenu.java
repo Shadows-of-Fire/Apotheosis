@@ -18,7 +18,6 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureConfig;
-import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -161,7 +160,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 	public LootRarity getRarity() {
 		ItemStack s = this.getSlot(1).getItem();
 		if (s.isEmpty()) return null;
-		return AdventureModule.RARITY_MATERIALS.inverse().get(s.getItem());
+		return LootRarity.getMaterialRarity(s);
 	}
 
 	public int getDustCost(int slot, LootRarity rarity) {

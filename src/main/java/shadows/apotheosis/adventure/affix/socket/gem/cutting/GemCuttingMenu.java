@@ -2,27 +2,20 @@ package shadows.apotheosis.adventure.affix.socket.gem.cutting;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-
-import javax.annotation.Nullable;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.ResultContainer;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.cap.InternalItemHandler;
-import shadows.placebo.container.FilteredSlot;
 import shadows.placebo.container.PlaceboContainerMenu;
 
 public class GemCuttingMenu extends PlaceboContainerMenu {
@@ -35,79 +28,66 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
 	protected final Player player;
 	protected final ContainerLevelAccess access;
-	protected final InternalItemHandler invSlots = new InternalItemHandler(3);
-	protected final ResultContainer result = new ResultContainer();
-	protected GemCuttingRecipe recipe;
+	protected final InternalItemHandler inv = new InternalItemHandler(4);
 
-	public GemCuttingMenu(int id, Inventory inv) {
-		this(id, inv, ContainerLevelAccess.NULL);
+	public GemCuttingMenu(int id, Inventory playerInv) {
+		this(id, playerInv, ContainerLevelAccess.NULL);
 	}
 
-	public GemCuttingMenu(int id, Inventory inv, ContainerLevelAccess access) {
-		super(Apoth.Menus.GEM_CUTTING.get(), id, inv);
-		this.player = inv.player;
+	public GemCuttingMenu(int id, Inventory playerInv, ContainerLevelAccess access) {
+		super(Apoth.Menus.GEM_CUTTING.get(), id, playerInv);
+		this.player = playerInv.player;
 		this.access = access;
-		this.addSlot(new UpdatingSlot(this.invSlots, 0, 8, 35, stack -> stack.getItem() == Apoth.Items.GEM_DUST.get()));
-		this.addSlot(new UpdatingSlot(this.invSlots, 1, 44, 35, stack -> GemItem.getGem(stack) != null));
-		this.addSlot(new UpdatingSlot(this.invSlots, 2, 93, 35, this::isValidSecondItem));
-		this.addSlot(new Slot(this.result, 3, 151, 35) {
-			public void onTake(Player pPlayer, ItemStack pStack) {
-				super.onTake(pPlayer, pStack);
-				GemCuttingMenu.this.onCraft();
-			}
-		});
+		this.addSlot(new UpdatingSlot(this.inv, 0, 53, 25, stack -> GemItem.getGem(stack) != null));
+		this.addSlot(new UpdatingSlot(this.inv, 1, 12, 25, stack -> stack.getItem() == Apoth.Items.GEM_DUST.get()));
+		this.addSlot(new UpdatingSlot(this.inv, 2, 53, 68, this::matchesMainGem));
+		this.addSlot(new UpdatingSlot(this.inv, 3, 94, 25, this::isValidMaterial));
 
-		this.addPlayerSlots(inv, 8, 84);
-		this.mover.registerRule((stack, slot) -> slot == 3, this.playerInvStart, this.hotbarStart + 9);
-		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 0, 1);
-		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && GemItem.getGem(stack) != null && this.invSlots.getStackInSlot(1).isEmpty(), 1, 2);
-		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isValidSecondItem(stack), 2, 3);
+		this.addPlayerSlots(playerInv, 8, 98);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inv.getStackInSlot(0).isEmpty() && isValidMainGem(stack), 0, 1);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 1, 2);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && matchesMainGem(stack), 2, 3);
+		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isValidMaterial(stack), 3, 4);
 		this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
 		this.registerInvShuffleRules();
 	}
 
 	@Override
-	public void slotsChanged(@Nullable Container pContainer) {
-		int dust = this.invSlots.getStackInSlot(0).getCount();
-		ItemStack gem = this.invSlots.getStackInSlot(1);
-		ItemStack catalyst = this.invSlots.getStackInSlot(2);
-
-		for (GemCuttingRecipe r : RECIPES) {
-			if (dust >= r.getDustCost() && r.matches(gem, catalyst)) {
-				this.recipe = r;
-				this.result.setItem(0, r.getResult(gem, catalyst));
-				return;
+	public boolean clickMenuButton(Player player, int id) {
+		if (id == 0) {
+			ItemStack gem = this.inv.getStackInSlot(0);
+			ItemStack left = this.inv.getStackInSlot(1);
+			ItemStack bot = this.inv.getStackInSlot(2);
+			ItemStack right = this.inv.getStackInSlot(3);
+			for (GemCuttingRecipe r : RECIPES) {
+				if (r.matches(gem, left, bot, right)) {
+					ItemStack out = r.getResult(gem, left, bot, right);
+					r.decrementInputs(gem, left, bot, right);
+					this.inv.setStackInSlot(0, out);
+					this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
+					return true;
+				}
 			}
 		}
-		this.recipe = null;
-		this.result.setItem(0, ItemStack.EMPTY);
+		return false;
 	}
 
-	@Override
-	public void onQuickMove(ItemStack original, ItemStack remaining, Slot slot) {
-		super.onQuickMove(original, remaining, slot);
-		if (remaining.isEmpty() && slot.index == 3) {
-			this.onCraft();
-		}
+	protected boolean isValidMainGem(ItemStack stack) {
+		Gem gem = GemItem.getGem(stack);
+		return gem != null && GemItem.getLootRarity(stack) != LootRarity.ANCIENT;
 	}
 
-	protected boolean isValidSecondItem(ItemStack stack) {
-		ItemStack first = this.getSlot(1).getItem();
-		if (first.isEmpty()) return false;
-		GemInstance inst = GemInstance.unsocketed(first);
-		GemInstance otherInst = GemInstance.unsocketed(stack);
-		return otherInst.isValidUnsocketed() && otherInst.gem() == inst.gem();
+	protected boolean isValidMaterial(ItemStack stack) {
+		var mainGem = GemInstance.unsocketed(this.inv.getStackInSlot(0));
+		if (!mainGem.isValidUnsocketed()) return false;
+		LootRarity rarity = LootRarity.getMaterialRarity(stack);
+		return rarity != null && (rarity == mainGem.rarity() || rarity == mainGem.rarity().prev());
 	}
 
-	protected void onCraft() {
-		if (this.recipe != null) {
-			this.invSlots.getStackInSlot(0).shrink(this.recipe.getDustCost());
-			this.recipe.decrementInputs(this.invSlots.getStackInSlot(1), this.invSlots.getStackInSlot(2));
-			this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
-		} else {
-			AdventureModule.LOGGER.error("Took an output from the gem cutting table without a set recipe!");
-			Thread.dumpStack();
-		}
+	protected boolean matchesMainGem(ItemStack stack) {
+		var gem = GemInstance.unsocketed(stack);
+		var mainGem = GemInstance.unsocketed(this.inv.getStackInSlot(0));
+		return gem.isValidUnsocketed() && mainGem.isValidUnsocketed() && gem.gem() == mainGem.gem() && gem.rarity() == mainGem.rarity();
 	}
 
 	@Override
@@ -119,62 +99,73 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 	public void removed(Player pPlayer) {
 		super.removed(pPlayer);
 		this.access.execute((level, pos) -> {
-			this.clearContainer(pPlayer, new RecipeWrapper(this.invSlots));
+			this.clearContainer(pPlayer, new RecipeWrapper(this.inv));
 		});
-	}
-
-	protected class UpdatingSlot extends FilteredSlot {
-
-		public UpdatingSlot(InternalItemHandler handler, int index, int x, int y, Predicate<ItemStack> filter) {
-			super(handler, index, x, y, filter);
-		}
-
-		@Override
-		public void setChanged() {
-			super.setChanged();
-			GemCuttingMenu.this.slotsChanged(null);
-		}
 	}
 
 	public static interface GemCuttingRecipe {
 
-		int getDustCost();
+		/**
+		 * Checks if this recipe matches the inputs
+		 * @param gem The gem in the primary slot.
+		 * @param left The left input (Gem Dust).
+		 * @param bot The bottom input (Second Gem).
+		 * @param right The right input (Rarity Materials).
+		 * @return If this recipe is valid for the inputs.
+		 */
+		boolean matches(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right);
 
-		boolean matches(ItemStack gem, ItemStack catalyst);
+		/**
+		 * Generates the result of this recipe.<br>
+		 * Calling this method when {@link #matches} return false is undefined behavior.
+		 * @param gem The gem in the primary slot.
+		 * @param left The left input (Gem Dust).
+		 * @param bot The bottom input (Second Gem).
+		 * @param right The right input (Rarity Materials).
+		 * @return A new copy of the output itemstack.
+		 */
+		ItemStack getResult(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right);
 
-		ItemStack getResult(ItemStack gem, ItemStack catalyst);
-
-		void decrementInputs(ItemStack gem, ItemStack catalyst);
-
+		/**
+		 * Reduces the count of the inputs, based on how many items should be consumed.<br>
+		 * Calling this method when {@link #matches} return false is undefined behavior.
+		 * @param gem The gem in the primary slot.
+		 * @param left The left input (Gem Dust).
+		 * @param bot The bottom input (Second Gem).
+		 * @param right The right input (Rarity Materials).
+		 */
+		void decrementInputs(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right);
 	}
 
 	public static class RarityUpgrade implements GemCuttingRecipe {
 
 		@Override
-		public int getDustCost() {
-			return 4;
-		}
-
-		@Override
-		public boolean matches(ItemStack gem, ItemStack catalyst) {
+		public boolean matches(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
 			GemInstance g = GemInstance.unsocketed(gem);
-			GemInstance c = GemInstance.unsocketed(catalyst);
-			return g.isValidUnsocketed() && c.isValidUnsocketed() && g.rarity() != LootRarity.ANCIENT && g.gem() == c.gem() && g.rarity() == c.rarity();
+			GemInstance g2 = GemInstance.unsocketed(bot);
+			if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem()) return false;
+			if (g.rarity() == LootRarity.ANCIENT) return false;
+			if (left.getItem() != Apoth.Items.GEM_DUST.get() || left.getCount() < 4) return false;
+			LootRarity matRarity = LootRarity.getMaterialRarity(right);
+			LootRarity gemRarity = g.rarity();
+			return matRarity == gemRarity || right.getCount() >= 4 && matRarity == gemRarity.prev();
 		}
 
 		@Override
-		public ItemStack getResult(ItemStack gem, ItemStack catalyst) {
+		public ItemStack getResult(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
 			ItemStack out = gem.copy();
 			GemItem.setLootRarity(out, GemItem.getLootRarity(out).next());
 			return out;
 		}
 
 		@Override
-		public void decrementInputs(ItemStack gem, ItemStack catalyst) {
+		public void decrementInputs(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
+			LootRarity matRarity = LootRarity.getMaterialRarity(right);
+			LootRarity gemRarity = GemInstance.unsocketed(gem).rarity();
 			gem.shrink(1);
-			catalyst.shrink(1);
+			left.shrink(4);
+			bot.shrink(1);
+			right.shrink(matRarity == gemRarity ? 1 : 4);
 		}
-
 	}
-
 }

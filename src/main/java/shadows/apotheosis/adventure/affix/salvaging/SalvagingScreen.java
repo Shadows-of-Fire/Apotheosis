@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure.affix.salvaging;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
@@ -12,7 +13,6 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,10 +28,11 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
+import shadows.apotheosis.adventure.client.GhostVertexBuilder.GhostBufferSource;
 import shadows.apotheosis.adventure.client.SimpleTexButton;
-import shadows.apotheosis.adventure.client.WrappedRTBuffer;
+import shadows.placebo.screen.PlaceboContainerScreen;
 
-public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
+public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
 
 	public static final Component TITLE = Component.translatable("container.apotheosis.salvage");
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage.png");
@@ -41,7 +42,7 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 
 	public SalvagingScreen(SalvagingMenu menu, Inventory inv, Component title) {
 		super(menu, inv, TITLE);
-		this.menu.setCallback(this::computeResults);
+		this.menu.addSlotListener((id, stack) -> this.computeResults());
 		this.titleLabelX--;
 		this.inventoryLabelX--;
 		this.inventoryLabelY++;
@@ -53,9 +54,9 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		int left = this.getGuiLeft();
 		int top = this.getGuiTop();
 		//Formatter::off
-		salvageBtn = this.addRenderableWidget(
+		this.salvageBtn = this.addRenderableWidget(
 				new SimpleTexButton(left + 105, top + 33, 20, 20, 196, 0, TEXTURE, 256, 256, 
-						(btn) -> this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0), 
+						(btn) -> this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 0), 
 						Component.translatable("button.apotheosis.salvage"))
 						.setInactiveMessage(Component.translatable("button.apotheosis.no_salvage").withStyle(ChatFormatting.RED))
 				);
@@ -111,7 +112,6 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		RenderSystem.enableBlend();
 
 		int maxDisplay = Math.min(6, this.results.size());
-		var itemRenderer = Minecraft.getInstance().getItemRenderer();
 
 		IntSet skipSlots = new IntOpenHashSet();
 		for (int i = 0; i < maxDisplay; i++) {
@@ -132,13 +132,13 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 			}
 			if (displaySlot == -1) continue;
 			var model = itemRenderer.getModel(display, null, null, 0);
-			renderGuiItem(display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, model);
+			renderGuiItem(display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, model, GhostBufferSource::new);
 		}
 
 		this.renderTooltip(stack, pMouseX, pMouseY);
 	}
 
-	protected void renderGuiItem(ItemStack pStack, int pX, int pY, BakedModel pBakedModel) {
+	public static void renderGuiItem(ItemStack pStack, int pX, int pY, BakedModel pBakedModel, Function<MultiBufferSource, MultiBufferSource> wrapper) {
 		Minecraft.getInstance().textureManager.getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
 		RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
 		RenderSystem.enableBlend();
@@ -158,7 +158,7 @@ public class SalvagingScreen extends AbstractContainerScreen<SalvagingMenu> {
 		}
 
 		MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-		Minecraft.getInstance().getItemRenderer().render(pStack, ItemTransforms.TransformType.GUI, false, posestack1, new WrappedRTBuffer(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, pBakedModel);
+		Minecraft.getInstance().getItemRenderer().render(pStack, ItemTransforms.TransformType.GUI, false, posestack1, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, pBakedModel);
 		buffer.endBatch();
 		RenderSystem.enableDepthTest();
 		if (flag) {

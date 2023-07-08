@@ -2,6 +2,9 @@ package shadows.apotheosis.adventure.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+
 public class GhostVertexBuilder implements VertexConsumer {
 	private final VertexConsumer wrapped;
 	private final int alpha;
@@ -53,6 +56,21 @@ public class GhostVertexBuilder implements VertexConsumer {
 
 	@Override
 	public void unsetDefaultColor() {
+
+	}
+
+	public static class GhostBufferSource implements MultiBufferSource {
+
+		private final MultiBufferSource wrapped;
+
+		public GhostBufferSource(MultiBufferSource wrapped) {
+			this.wrapped = wrapped;
+		}
+
+		@Override
+		public VertexConsumer getBuffer(RenderType type) {
+			return new GhostVertexBuilder(this.wrapped.getBuffer(type), 0x99);
+		}
 
 	}
 
