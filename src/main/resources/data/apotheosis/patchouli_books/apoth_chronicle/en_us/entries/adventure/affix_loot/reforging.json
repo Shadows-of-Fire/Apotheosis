@@ -5,15 +5,15 @@
 	"flag": "apotheosis:adventure",
 	"sortnum": 4,
     "pages": [
-        {
-            "type": "patchouli:crafting",
-			"recipe": "apotheosis:reforging_table",
-			"text": "The $(9)Reforging Table$() is used to breathe new life into an item, wiping away any affixes and granting entirely new ones."
-		},
 		{
             "type": "patchouli:text",
             "text": "Through the raw potential of $(9)Rarity Materials$() and the versatility of $(9)Gem Dust$(), it is now possible to reforge an item with brand new affixes.$(p)Reforging is not limited to items that already have affixes, and can be performed with any valid item."
         },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:simple_reforging_table",
+			"text": "To begin reforging, craft a $(#5555FF)Simple Reforging Table$(), which allows you to reforge items up to $(#5555FF)Rare$() rarity."
+		},
 		{
             "type": "patchouli:image",
 			"title": "Input Slots",
@@ -40,10 +40,15 @@
 			"title": "Reforging",
 			"text": "Each choice represents a potential new form of the item being reforged. The cost varies per choice, requiring 2/4/6 Gem Dust, Rarity Materials, and Experience Levels respectively.$(p)To reforge your item, simply click the desired choice."
 		},
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:reforging_table",
+			"text": "To reforge items of $(#BB00BB)Epic$() rarity or higher, you'll need to upgrade your $(#5555FF)Simple Reforging Table$() into a $(#BB00BB)Reforging Table$()."
+		},
 		{
 			"type": "patchouli:text",
 			"title": "Notes",
-			"text": "Items can be reforged multiple times, but you must pick up and replace the item first.$(p)No choice is inherently stronger than the others.$(p)The Reforging Table uses your Enchantment Seed to determine the choices."
+			"text": "Items can be reforged multiple times, but you must pick up and replace the item first.$(p)No choice is inherently stronger than the others."
 		}
 	]
 }

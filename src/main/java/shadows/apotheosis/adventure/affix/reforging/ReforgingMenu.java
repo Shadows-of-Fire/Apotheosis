@@ -5,37 +5,29 @@ import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
-import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.cap.InternalItemHandler;
 import shadows.placebo.container.BlockEntityContainer;
 import shadows.placebo.container.ContainerUtil;
 
-public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> implements ContainerListener {
+public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 
 	public static final String REFORGE_SEED = "apoth_reforge_seed";
 
 	protected final Player player;
-	protected SimpleContainer itemInv = new SimpleContainer(1) {
-		@Override
-		public void setChanged() {
-			super.setChanged();
-			ReforgingMenu.this.slotsChanged(this);
-		}
-	};
+	protected InternalItemHandler itemInv = new InternalItemHandler(1);
 	protected final RandomSource random = new XoroshiroRandomSource(0);
 	protected final int[] seed = new int[2];
 	protected final int[] costs = new int[3];
@@ -44,7 +36,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 	public ReforgingMenu(int id, Inventory inv, BlockPos pos) {
 		super(Apoth.Menus.REFORGING.get(), id, inv, pos);
 		this.player = inv.player;
-		this.addSlot(new Slot(this.itemInv, 0, 25, 24) {
+		this.addSlot(new UpdatingSlot(this.itemInv, 0, 25, 24, stack -> !LootCategory.forItem(stack).isNone()) {
 			@Override
 			public int getMaxStackSize() {
 				return 1;
@@ -54,14 +46,9 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 			public int getMaxStackSize(ItemStack pStack) {
 				return 1;
 			}
-
-			@Override
-			public boolean mayPlace(ItemStack pStack) {
-				return !LootCategory.forItem(pStack).isNone();
-			}
 		});
-		this.addSlot(new SlotItemHandler(this.tile.inv, 0, 15, 45));
-		this.addSlot(new SlotItemHandler(this.tile.inv, 1, 35, 45));
+		this.addSlot(new UpdatingSlot(this.tile.inv, 0, 15, 45, this.tile::isValidRarityMat));
+		this.addSlot(new UpdatingSlot(this.tile.inv, 1, 35, 45, stack -> stack.getItem() == Apoth.Items.GEM_DUST.get()));
 		this.addPlayerSlots(inv, 8, 84);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && !LootCategory.forItem(stack).isNone(), 0, 1);
 		this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.tile.isValidRarityMat(stack), 1, 2);
@@ -76,16 +63,12 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 		this.addDataSlot(DataSlot.shared(costs, 0));
 		this.addDataSlot(DataSlot.shared(costs, 1));
 		this.addDataSlot(DataSlot.shared(costs, 2));
-
-		if (!player.level.isClientSide) {
-			this.addSlotListener(this);
-		}
 	}
 
 	@Override
 	public void removed(Player pPlayer) {
 		super.removed(pPlayer);
-		this.clearContainer(pPlayer, itemInv);
+		this.clearContainer(pPlayer, new RecipeWrapper(itemInv));
 	}
 
 	protected void updateSeed() {
@@ -180,17 +163,16 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> impl
 	}
 
 	@Override
-	public void slotChanged(AbstractContainerMenu pContainerToSend, int idx, ItemStack pStack) {
+	public void slotsChanged(Container pContainer) {
 		LootRarity rarity = getRarity();
 		if (rarity == null) return;
 		this.costs[0] = AdventureConfig.reforgeCosts.get(rarity).dustCost();
 		this.costs[1] = AdventureConfig.reforgeCosts.get(rarity).matCost();
 		this.costs[2] = AdventureConfig.reforgeCosts.get(rarity).levelCost();
-		if (idx < 3 && ReforgingMenu.this.needsReset()) ReforgingMenu.this.needsReset.set(0);
-	}
-
-	@Override
-	public void dataChanged(AbstractContainerMenu pContainerMenu, int pDataSlotIndex, int pValue) {
+		if (ReforgingMenu.this.needsReset()) {
+			ReforgingMenu.this.needsReset.set(0);
+		}
+		super.slotsChanged(pContainer);
 	}
 
 }

@@ -51,8 +51,6 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
 		this.menu.addSlotListener((id, stack) -> this.updateBtnStatus());
 		this.imageHeight = 180;
 		this.titleLabelY = 5;
-		//this.titleLabelX = 5;
-		//this.inventoryLabelX = 5;
 		this.inventoryLabelY = 86;
 	}
 

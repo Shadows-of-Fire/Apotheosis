@@ -10,6 +10,11 @@
             "text": "A $(9)Gem$() is a crystal of condensed strength.$(p)When socketed into an affix item, a Gem will provide a powerful bonus.$(p)Gems may give different bonuses in different items, and can be upgraded."
         },
 		{
+			"title": "Rarity",
+            "type": "patchouli:text",
+            "text": "Like an Affix Item, each gem has a $(l:apotheosis:adventure/affix_loot/rarities)Rarity$(). The rarity alone determines the strength of the gem, and higher rarity gems are more expensive to upgrade.$(p)Gems cannot be upgraded past Ancient rarity."
+        },
+		{
 			"type": "patchouli:text",
 			"title": "Obtaining Gems",
 			"text": "Gems can be found in chest loot, and may rarely be found when killing mobs. However, for a gem to drop, the killer must be a real player, not a machine or other automation source.$(p)Gems are more likely to drop from Bosses."

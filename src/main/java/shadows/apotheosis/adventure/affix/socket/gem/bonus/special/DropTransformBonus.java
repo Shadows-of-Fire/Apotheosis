@@ -1,5 +1,6 @@
 package shadows.apotheosis.adventure.affix.socket.gem.bonus.special;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraftforge.fml.util.thread.EffectiveSide;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
@@ -72,7 +74,9 @@ public class DropTransformBonus extends GemBonus {
 		this.output = output;
 		this.values = values;
 		this.descKey = descKey;
-		this.blocks = GemManager.INSTANCE._getContext().getTag(tag).stream().map(Holder::get).toList();
+		if (EffectiveSide.get().isServer()) {
+			this.blocks = GemManager.INSTANCE._getContext().getTag(tag).stream().map(Holder::get).toList();
+		} else this.blocks = Collections.emptyList();
 	}
 
 	@Override
