@@ -262,7 +262,7 @@ public class EnchModule {
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "pearl_endshelf",
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "draconic_endshelf",
 				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)), "beeshelf",
-				new Block(BlockBehaviour.Properties.of(Material.VEGETABLE).strength(1.5F).sound(SoundType.WOOD)), "melonshelf",
+				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)), "melonshelf",
 				new EnchLibraryBlock(BasicLibraryTile::new, 16), "library",
 				new EnchLibraryBlock(EnderLibraryTile::new, 31), "ender_library",
 				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "rectifier",

@@ -14,6 +14,7 @@
   * These are flat-value and percentage reductions for Armor and Protection, respectively.
   * `apotheosis:healing_received` modifies all incoming healing.
   * `apotheosis:dodge_chance` gives a chance to negate incoming melee or projectile damage.
+* The Gem Cutting Table has a brand new interface.
 
 ### Balance Changes
 * This list is (unfortunately) non-exhaustive. There are a ton of changes in this update!
@@ -72,7 +73,8 @@
 * Potential fix for duplicated Gem UUIDs causing exact copies to not function.
 * Fixed durability gems not applying.
 * Fixed an issue where the Catalyzing affix would give infinite durations of strength.
-* Added a mixin fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
+* Added a fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
+* Elytras (and potentially other non-armor equippable items) can now be affixed.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.

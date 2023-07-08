@@ -18,15 +18,17 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -209,7 +211,10 @@ public final class LootCategory {
 	}
 
 	private static Predicate<ItemStack> armorSlot(EquipmentSlot slot) {
-		return (stack) -> stack.getItem() instanceof ArmorItem arm && arm.getSlot() == slot;
+		return (stack) -> {
+			if (stack.is(Items.CARVED_PUMPKIN) || stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof AbstractSkullBlock) return false;
+			return LivingEntity.getEquipmentSlotForItem(stack) == slot;
+		};
 	}
 
 	static final LootCategory register(String name, Predicate<ItemStack> validator, EquipmentSlot[] slots) {
