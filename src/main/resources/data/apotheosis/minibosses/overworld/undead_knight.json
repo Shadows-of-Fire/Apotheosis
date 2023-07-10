@@ -4,8 +4,6 @@
 	"name": "Undead Knight",
 	"chance": 0.01,
 	"entities": [
-		"minecraft:zombie",
-		"minecraft:husk",
 		"minecraft:skeleton",
 		"minecraft:stray"
 	],

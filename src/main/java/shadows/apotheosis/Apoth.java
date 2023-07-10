@@ -143,6 +143,7 @@ public class Apoth {
 		public static final RegistryObject<Item> VIAL_OF_EXPULSION = R.item("VIAL_OF_EXPULSION");
 		public static final RegistryObject<Item> VIAL_OF_EXTRACTION = R.item("VIAL_OF_EXTRACTION");
 		public static final RegistryObject<Item> VIAL_OF_UNNAMING = R.item("VIAL_OF_UNNAMING");
+		public static final RegistryObject<Item> WARDEN_TENDRIL = R.item("WARDEN_TENDRIL");
 
 		public static final RegistryObject<Item> SKULL_FRAGMENT = RegistryObject.create(new ResourceLocation("wstweaks", "fragment"), ForgeRegistries.ITEMS);
 	}

@@ -1,6 +1,17 @@
 {
 	"replace": false,
 	"values": [
-		"#forge:ores_in_ground/stone"
+		{
+			"id": "apotheosis:infused_hellshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:infused_seashelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:deepshelf",
+			"required": false
+		}
 	]
 }

@@ -9,7 +9,13 @@
             "type": "patchouli:spotlight",
 			"item": "apotheosis:gem_dust",
 			"link_recipe": true,
-            "text": "All Apotheotic Gems can be reduced to $(9)Gem Dust$() via crushing.$(p)Specifically, they must be crushed with an anvil in-world."
+            "text": "All Apotheotic Gems can be reduced to $(br)$(9)Gem Dust$() via crushing.$(p)One method is crushing them with an anvil $(br)in-world."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"title": "Salvaging Gems",
+            "text": "Once you have crushed a few Gems with an anvil, you can create and use the $(9)Salvaging Table$() instead."
         }
 	]
 }

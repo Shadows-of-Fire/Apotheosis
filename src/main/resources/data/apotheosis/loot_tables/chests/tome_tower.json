@@ -1,0 +1,141 @@
+{
+  "pools": [
+    {
+      "name": "tome_tower_main",
+      "rolls": {
+        "min": 5.0,
+        "max": 9.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "placebo:stack_entry",
+          "weight": 30,
+          "quality": 1.5,
+          "min": 1,
+          "max": 3,
+          "stack": {
+            "item": "minecraft:diamond",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 30,
+          "quality": 2.5,
+          "min": 1,
+          "max": 5,
+          "stack": {
+            "item": "minecraft:emerald",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 100,
+          "quality": 0,
+          "min": 1,
+          "max": 5,
+          "stack": {
+            "item": "minecraft:iron_ingot",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 100,
+          "quality": 0.75,
+          "min": 1,
+          "max": 5,
+          "stack": {
+            "item": "minecraft:gold_ingot",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "min": 1,
+          "max": 2,
+          "stack": {
+            "item": "minecraft:name_tag",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "min": 1,
+          "max": 2,
+          "stack": {
+            "item": "minecraft:lead",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "quality": 1,
+          "min": 1,
+          "max": 2,
+          "stack": {
+            "item": "minecraft:saddle",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "min": 3,
+          "max": 6,
+          "stack": {
+            "item": "minecraft:slime_ball",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 20,
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:bucket",
+            "count": 1
+          }
+        },
+        {
+          "type": "placebo:stack_entry",
+          "weight": 350,
+          "quality": 0,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ],
+          "min": 1,
+          "max": 1,
+          "stack": {
+            "item": "minecraft:book",
+            "count": 1
+          }
+        },
+        {
+          "type": "apotheosis:random_gem",
+		  "weight": 80,
+          "quality": 5
+        },
+        {
+          "type": "apotheosis:random_affix_item",
+		  "weight": 80,
+          "quality": 5,
+		  "min_rarity": "uncommon",
+		  "max_rarity": "rare"
+        }
+      ],
+      "bonus_rolls": {
+        "min": 0.0,
+        "max": 3.0
+      }
+    }
+  ]
+}

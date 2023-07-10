@@ -49,6 +49,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
@@ -163,7 +164,6 @@ public class EnchModule {
 			factory.addShaped(Apoth.Blocks.DRACONIC_ENDSHELF.get(), 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF.get(), Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
 			factory.addShaped(Apoth.Blocks.BEESHELF.get(), 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
 			factory.addShaped(Apoth.Blocks.MELONSHELF.get(), 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
-			factory.addShaped(Apoth.Blocks.LIBRARY.get(), 3, 3, Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENCHANTING_TABLE, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENDER_CHEST, Apoth.Blocks.INFUSED_HELLSHELF.get(), Blocks.ENDER_CHEST);
 		});
 
 		LootSystem.defaultBlockTable(Apoth.Blocks.HELLSHELF.get());
@@ -206,6 +206,13 @@ public class EnchModule {
 	public void client(FMLClientSetupEvent e) {
 		MinecraftForge.EVENT_BUS.register(new EnchModuleClient());
 		e.enqueueWork(EnchModuleClient::init);
+	}
+
+	@SubscribeEvent
+	public void miscRegistration(RegisterEvent e) {
+		if (e.getForgeRegistry() == (Object) ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get()) {
+			e.getForgeRegistry().register("warden_tendril", WardenLootModifier.CODEC);
+		}
 	}
 
 	@SubscribeEvent
@@ -343,8 +350,8 @@ public class EnchModule {
 				new BlockItem(Apoth.Blocks.LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "library",
 				new BlockItem(Apoth.Blocks.ENDER_LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "ender_library",
 				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "inert_trident",
-				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "warden_tendril",
-				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP).rarity(net.minecraft.world.item.Rarity.EPIC)), "infused_breath"
+				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "warden_tendril",
+				new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP).rarity(net.minecraft.world.item.Rarity.EPIC)), "infused_breath"
 				);
 		//Formatter::on
 	}

@@ -1,6 +1,6 @@
 {
     "name": "Curios",
-    "icon": "curios:textures/item/empty_charm_slot.png",
+    "icon": "curios:textures/slot/empty_charm_slot.png",
     "category": "apotheosis:potion/charms",
 	"flag": "&apotheosis:potion,apotheosis:curiosloaded",
 	"sortnum": 1,

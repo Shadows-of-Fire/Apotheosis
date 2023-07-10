@@ -3,7 +3,10 @@
 * [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
 
 ## 6.3.0
-### New Content
+Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.
+
+### Adventure Module
+#### New Content
 * Converted all Attributes content to the new AttributesLib submodule.
   * This will eventually be pulled out as an API/Library (likely in 1.20).
 * Added an Attributes Menu, accessible via the Sword Button in the top right of the player view.
@@ -16,7 +19,7 @@
   * `apotheosis:dodge_chance` gives a chance to negate incoming melee or projectile damage.
 * The Gem Cutting Table has a brand new interface.
 
-### Balance Changes
+#### Balance Changes
 * This list is (unfortunately) non-exhaustive. There are a ton of changes in this update!
 * Instant Health on Hit max level III => II. Chance of receiving level II reduced from 50% to 20%, and is also locked to mythic.
   * Instant Health III was too strong at all thresholds, and Instant Health II was too common.
@@ -49,18 +52,14 @@
 * Gem Facets have been removed. Gem stats will now be strictly tied to their rarity level.
   * As a side effect, most gems have been updated.
 * Many new gems have been added!
-* Berserker's Fury has been adjusted:
-  * Potion effect duration is now 25s at all levels.
-  * Health cost is now 2.5^level instead of level * level.
-  * The effect now has a 45s cooldown between triggers.
 * Effects that ignore durability damage now have diminishing returns.
 
-### Other Changes
+#### Other Changes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
 * Affix Item and Gem drop chances have been reduced.
   * The chance for a random affix item to be added to an entity was erroneously at 24%, it has been reduced to 7.5%.
   * The "literal" Gem drop chances have not been changed, but the "effective" chance was reduced as a side effect of fixing the config.
-* All gems will now be shown in JEI. The shown versions will be at max rarity with max facets.
+* All gems will now be shown in JEI.
 * Fixed the crit chance / crit damage default value issue once again (was reintroduced in 6.2.0).
 * The Salvaging Table can now be automated!
   * Inserted items will be automatically salvaged and placed in the output inventory.
@@ -75,6 +74,32 @@
 * Fixed an issue where the Catalyzing affix would give infinite durations of strength.
 * Added a fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
 * Elytras (and potentially other non-armor equippable items) can now be affixed.
+
+### Enchanting Module
+* Added Deepshelves and Sculkshelves, new Deep-Dark based bookshelves that slot in before Endshelves.
+* The stats of many bookshelves have been updated.
+* Reworked the progression of the Enchantment Module.
+  * The goal of this change is to create a more interactive progression system that cannot just be skipped over by reaching The End.
+  * The basic stage (levels 1-30) is composed of vanilla bookshelves, skulls, candles, and amethyst clusters.
+  * The intermediate stage (levels 30-60) is composed of hellshelves or seashelves, sightshelves, and rectifiers.
+  * The advanced stage (levels 60-80) is composed of deepshelves and sculkshelves.
+  * The final stage is (levels 80-100) is composed of endshelves.
+  * You'll need access to the highest level of the previous stage before proceeding to the next stage.
+* The Enchantment Library can now be crafted with Infused Hellshelves, Infused Seashelves, and Deepshelves, instead of just Infused Hellshelves.
+* A chapter has been added to the Chronicle of Shadows detailing the progression.
+* The recipe for making Unbreakable Potion Charms has been updated.
+* Added the Stoneshelf, which can reduce your Arcana through its sheer mundane-ness.
+* Candles will now give more Arcana if stacked within a single block (up to 5% with 4 candles in one block).
+* Berserker's Fury has been adjusted:
+  * Potion effect duration is now 25s at all levels.
+  * Health cost is now 2.5^level instead of level * level.
+  * The effect now has a 45s cooldown between triggers.
+
+### Potion Module
+* The implementation of the effects have been moved to the MobFX core library.
+  * This means that the new effects are available even if the potion module is disabled.
+  * The potions for the effects are still part of the potion module.
+  * Note for non-technical users: An `Effect` is the actual effect (Strength, Speed, etc), while a `Potion` refers to an `Effect` + level + duration that can be applied to a potion item.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.
