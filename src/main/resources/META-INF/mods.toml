@@ -40,6 +40,6 @@ description='''${desc}'''
 [[dependencies.${modid}]]
     modId="jei"
     mandatory=false
-    versionRange="[10,)"
+    versionRange="[${jeiVersion},)"
     ordering="NONE"
     side="BOTH"

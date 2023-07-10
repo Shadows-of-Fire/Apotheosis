@@ -57,7 +57,7 @@ public class PotionJEIPlugin implements IModPlugin {
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration reg) {
 		if (!Apotheosis.enablePotion) return;
-		reg.registerSubtypeInterpreter(Apoth.Items.POTION_CHARM, new PotionCharmSubtypes());
+		reg.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, Apoth.Items.POTION_CHARM, new PotionCharmSubtypes());
 	}
 
 	@Override

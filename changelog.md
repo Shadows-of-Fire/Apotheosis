@@ -1,3 +1,6 @@
+## 5.8.1
+* Reduced required JEI version to JEI 9 due to lack of support from other mods.
+
 ## 5.8.0
 * Merged all features from 5.7.J into 5.8.0
   * Added GameStages support for Affix Items, Bosses, and Gems.
