@@ -1,0 +1,20 @@
+{
+    "name": "Levels 1 - 30",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 30",
+			"recipe": "minecraft:bookshelf",
+			"text": "Reaching Level 30 is done in the usual way, with fifteen bookshelves."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Other Stats",
+			"item": "minecraft:skeleton_skull",
+			"text": "At this stage, there are a few basic options for increasing other stats.$(p)you can use Candles to increase $(arcana), Skulls to increase $(quanta), and Amethyst Clusters to increase $(rectification)."
+		}
+	]
+}

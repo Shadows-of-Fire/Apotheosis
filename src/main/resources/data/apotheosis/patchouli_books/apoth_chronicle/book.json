@@ -11,6 +11,8 @@
 		"$(eterna)": "$(#3DB53D)Eterna$()",
 		"$(quanta)": "$(#FC5454)Quanta$()",
 		"$(arcana)": "$(#A800A8)Arcana$()",
+		"$(rectification)": "$(#CCCC33)Rectification$()",
+		"$(clues)": "$(#00AAAA)Enchanting Clues$()",
 		"$(fpower)": "$(#CC00CC)Final Power$()",
 		"$(bpower)": "$(6)Base Power$()"
 	}

@@ -4,5 +4,5 @@
     "icon": "minecraft:enchanting_table",
 	"flag": "apotheosis:enchanting",
 	"parent": "apotheosis:enchanting/enchanting",
-	"sortnum": -1
+	"sortnum": -2
 }

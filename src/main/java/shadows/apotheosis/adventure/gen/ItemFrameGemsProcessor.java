@@ -61,14 +61,6 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
 		// generate and set itemstack
 		ItemStack stack = GemManager.createRandomGemStack(world.getRandom(), world, 0, IDimensional.matches(world));
 		nbt.put("Item", stack.serializeNBT());
-
-		// determine direction
-		//		Direction oldFacing = Direction.byIndex(nbt.getByte("Facing"));
-		//		Direction newFacing = settings.getRotation().rotate(oldFacing);
-		//		newFacing = settings.getMirror().mirror(newFacing);
-		//		nbt.putByte("Facing", (byte)(newFacing.getIndex()));
-		//		
-		//		// set position
 		nbt.putInt("TileX", pos.getX());
 		nbt.putInt("TileY", pos.getY());
 		nbt.putInt("TileZ", pos.getZ());

@@ -1,0 +1,8 @@
+{
+    "name": "Level Progression",
+    "description": "This section gives an overview of how to upgrade your Enchanting Table.",
+    "icon": "apotheosis:dormant_deepshelf",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting",
+	"sortnum": -1
+}

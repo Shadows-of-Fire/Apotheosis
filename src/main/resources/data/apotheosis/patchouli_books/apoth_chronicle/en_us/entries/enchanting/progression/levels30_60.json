@@ -1,0 +1,44 @@
+{
+    "name": "Levels 30 - 60",
+    "icon": "apotheosis:hellshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 45",
+			"recipe": "apotheosis:hellshelf",
+			"text": "To reach level 45, you'll want to create some $(9)Hellshelves$(), and add them to your existing Bookshelves."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 45",
+			"recipe": "apotheosis:seashelf",
+			"text": "If you aren't fond of the Nether, you can also venture to the Ocean, and create $(9)Seashelves$() instead."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Reaching Level 60",
+			"item": "apotheosis:infused_hellshelf",
+			"text": "Once you reach Level 45, you'll need to explore $(l:apotheosis:enchanting/table/infusion)Infusion Enchanting$() to upgrade your shelves."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Reaching Level 60",
+			"item": "apotheosis:infused_seashelf",
+			"text": "Create a few more of the type of shelf you were using, infuse them, and upgrade them.$(p)These new shelves, on top of your old ones, will let you reach Level 60."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Other Stats",
+			"item": "apotheosis:sightshelf",
+			"text": "You now have access to better options for increasing other stats.$(p)On top of the bonuses from Hellshelves and Seashelves, you may now also create $(9)Sightshelves$() to increase your $(clues)."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Other Stats",
+			"recipe": "apotheosis:rectifier",
+			"text": "If you have a stable supply of Amethyst, you can also make $(9)Rectifiers$() to further increase your $(rectification)."
+		}
+	]
+}

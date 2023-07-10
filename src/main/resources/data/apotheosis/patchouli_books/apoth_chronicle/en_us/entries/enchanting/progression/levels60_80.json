@@ -1,0 +1,43 @@
+{
+    "name": "Levels 60 - 80",
+    "icon": "apotheosis:dormant_deepshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 70",
+			"recipe": "apotheosis:dormant_deepshelf",
+			"text": "Reaching Level 70 requires a Level 60 Enchanting Table and access to Deepslate."
+		},
+		{
+            "type": "patchouli:text",
+			"title": "Reaching Level 70",
+			"text": "Once you've crafted a $(9)Dormant Deepshelf$(), you need to infuse it.$(p)This infusion recipe will require some extra blocks to reach the stat threshold.$(p)Completing the infusion will yield a $(9)Deepshelf$(), which can get you to Level 70."
+		},
+		{
+            "type": "patchouli:text",
+			"title": "Reaching Level 75",
+			"text": "To hit level 75, you will need to upgrade your Deepshelves.$(p)Doing this requires materials only found in the $(9)Deep Dark$().$(p)$(9)Echo Shards$() may be looted from the Ancient City, and $(9)Sculk$() may be collected with Silk Touch."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 75",
+			"recipe": "apotheosis:echoing_deepshelf",
+			"recipe2": "apotheosis:soul_touched_deepshelf"
+		},
+		{
+            "type": "patchouli:entity",
+			"entity": "minecraft:warden",
+			"title": "Reaching Level 80",
+			"scale": 0.95,
+			"text": "The last step to Level 80 requires slaying the $(9)Warden$(), which allows crafting $(9)Sculkshelves$()."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 80",
+			"recipe": "apotheosis:echoing_sculkshelf",
+			"recipe2": "apotheosis:soul_touched_sculkshelf"
+		}
+	]
+}

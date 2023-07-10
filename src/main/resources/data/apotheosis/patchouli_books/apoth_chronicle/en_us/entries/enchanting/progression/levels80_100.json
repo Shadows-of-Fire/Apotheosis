@@ -1,0 +1,32 @@
+{
+    "name": "Levels 80 - 100",
+    "icon": "apotheosis:endshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"title": "Reaching Level 90",
+			"item": "apotheosis:infused_breath",
+			"text": "Accessing the penultimate tier requires a Level 80 table and access to $(9)Dragon's Breath$().$(p)With these, you can create $(9)Infused Dragon's Breath$(), a core component of $(9)Endshelves$()."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 90",
+			"recipe": "apotheosis:endshelf",
+			"recipe2": "apotheosis:pearl_endshelf"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Reaching Level 100",
+			"item": "minecraft:dragon_head",
+			"text": "The highest level an Enchanting Table can reach is Level 100, but only one shelf can provide this much power.$(p)Creating such a shelf requires venturing into the outer end to retrieve a $(9)Dragon Head$()."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Reaching Level 100",
+			"recipe": "apotheosis:draconic_endshelf",
+			"text": "A single $(9)Draconic Endshelf$() provides enough raw strength to boost a table from Level 90 to Level 100.$(p)However, it provides no other stat bonuses."
+		}
+	]
+}
