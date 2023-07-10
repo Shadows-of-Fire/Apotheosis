@@ -101,26 +101,32 @@
 	"apotheosis:dodge_chance": "Dodge Chance",
 	"apotheosis:dodge_chance.desc": "Chance to dodge a melee attack or a projectile.",
 
-	"comment_id": "/MobFx Lib",
-	
+	"comment_id": "/MobFx Lib - descriptions are duplicated for JEED support.",
+
     "effect.apotheosis.knowledge": "Ancient Knowledge",
     "effect.apotheosis.knowledge.desc": "Increases experience gained from kills and blocks.",
-	
+    "effect.apotheosis.knowledge.description": "Increases experience gained from kills and blocks.",
+
     "effect.apotheosis.sundering": "Sundering",
     "effect.apotheosis.sundering.desc": "Increases damage received.",
-	
+    "effect.apotheosis.sundering.description": "Increases damage received.",
+
     "effect.apotheosis.vitality": "Bursting Vitality",
     "effect.apotheosis.vitality.desc": "Increases healing received.",
-	
+    "effect.apotheosis.vitality.description": "Increases healing received.",
+
     "effect.apotheosis.grievous": "Grievous Wounds",
     "effect.apotheosis.grievous.desc": "Decreases healing received.",
-	
+    "effect.apotheosis.grievous.description": "Decreases healing received.",
+
     "effect.apotheosis.bleeding": "Bleeding",
     "effect.apotheosis.bleeding.desc": "Inflicts damage every two seconds.",
+    "effect.apotheosis.bleeding.description": "Inflicts damage every two seconds.",
     "death.attack.apotheosis.bleeding": "%s bled out.",
-	
+
     "effect.apotheosis.detonation": "Flaming Detonation",
     "effect.apotheosis.detonation.desc": "On expiry, inflicts damage based on remaining fire ticks.",
+    "effect.apotheosis.detonation.description": "On expiry, inflicts damage based on remaining fire ticks.",
     "death.attack.apotheosis.detonation": "%s was detonated by flame.",
 
 	"comment_id": "/Adventure Module",
@@ -756,17 +762,40 @@
     "info.apotheosis.capturing": "The capturing enchantment gives monsters a chance to drop their spawn egg.\\n \\nDrop Rate: 0.4%% per level",
 
     "comment_id": "/Enchantment Module",
+	
     "block.apotheosis.hellshelf": "Hellshelf",
+    "block.apotheosis.infused_hellshelf": "Infused Hellshelf",
     "block.apotheosis.blazing_hellshelf": "Blazing Hellshelf",
     "block.apotheosis.glowing_hellshelf": "Glowing Hellshelf",
+	
     "block.apotheosis.seashelf": "Seashelf",
+    "block.apotheosis.infused_seashelf": "Infused Seashelf",
     "block.apotheosis.crystal_seashelf": "Crystalline Seashelf",
     "block.apotheosis.heart_seashelf": "Heart-Forged Seashelf",
+
+	"block.apotheosis.dormant_deepshelf": "Dormant Deepshelf",
+    "block.apotheosis.deepshelf": "Deepshelf",
+    "block.apotheosis.echoing_deepshelf": "Echoing Deepshelf",
+    "block.apotheosis.soul_touched_deepshelf": "Soul-Touched Deepshelf",
+    "block.apotheosis.echoing_sculkshelf": "Echoing Sculkshelf",
+    "block.apotheosis.soul_touched_sculkshelf": "Soul-Touched Sculkshelf",
+	
     "block.apotheosis.endshelf": "Endshelf",
+    "block.apotheosis.infused_endshelf": "Infused Endshelf",
     "block.apotheosis.pearl_endshelf": "Pearlescent Endshelf",
     "block.apotheosis.draconic_endshelf": "Draconic Endshelf",
+	
     "block.apotheosis.beeshelf": "Beeshelf",
     "block.apotheosis.melonshelf": "Melonshelf",
+    "block.apotheosis.stoneshelf": "Stoneshelf",
+	
+    "block.apotheosis.sightshelf": "Shelf of Sight",
+    "block.apotheosis.sightshelf_t2": "Shelf of Masterful Sight",
+    "block.apotheosis.rectifier": "Shelf of Seabound Rectification",
+    "block.apotheosis.rectifier_t2": "Shelf of Hellbound Rectification",
+    "block.apotheosis.rectifier_t3": "Shelf of End-Fused Rectification",
+	
+	
     "info.apotheosis.ench_power": "Provides %s enchanting power.",
     "info.apotheosis.cobweb": "Can be used to remove enchantments.",
     "info.apotheosis.masterwork": "Masterwork",
@@ -878,6 +907,9 @@
     "item.apotheosis.scrap_tome": "Tome of Scrapping",
     "item.apotheosis.improved_scrap_tome": "Tome of Superior Scrapping",
     "item.apotheosis.extraction_tome": "Tome of Extraction",
+    "item.apotheosis.warden_tendril": "Warden Tendril",
+    "item.apotheosis.infused_breath": "Infused Dragon's Breath",
+
     "info.apotheosis.tome_error": "Bugged Item - Right click in the air to turn into an enchanted book.",
     "info.apotheosis.other_tome": "Accepts miscellaneous enchantments.",
     "info.apotheosis.helmet_tome": "Accepts helmet enchantments.",
@@ -1098,13 +1130,6 @@
     "info.apotheosis.power_range": "Power Range: %s to %s",
     "info.apotheosis.item_ench": "Item Enchantability: %s",
     "info.apotheosis.num_clues": "Enchanting Clues: %s",
-    "block.apotheosis.sightshelf": "Shelf of Sight",
-    "block.apotheosis.sightshelf_t2": "Shelf of Masterful Sight",
-    "block.apotheosis.rectifier": "Shelf of Seabound Rectification",
-    "block.apotheosis.rectifier_t2": "Shelf of Hellbound Rectification",
-    "block.apotheosis.rectifier_t3": "Shelf of End-Fused Rectification",
-    "block.apotheosis.infused_seashelf": "Infused Seashelf",
-    "block.apotheosis.infused_hellshelf": "Infused Hellshelf",
     
     "info.apotheosis.slider_power": "Power: %s",
     "info.apotheosis.enchinfo_level": "Level: %s",

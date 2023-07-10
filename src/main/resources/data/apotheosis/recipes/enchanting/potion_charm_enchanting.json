@@ -11,11 +11,11 @@
 	"requirements": {
 		"eterna": 50,
 		"quanta": 8.5,
-		"arcana": 85
+		"arcana": 32.5
 	},
 	"max_requirements": {
 		"eterna": 50,
 		"quanta": 13.5,
-		"arcana": 95
+		"arcana": 37.5
 	}
 }

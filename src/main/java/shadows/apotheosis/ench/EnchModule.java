@@ -159,7 +159,6 @@ public class EnchModule {
 			Ingredient maxSeashelf = Ingredient.of(Apoth.Blocks.INFUSED_SEASHELF.get());
 			factory.addShaped(Apoth.Blocks.CRYSTAL_SEASHELF.get(), 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
 			factory.addShaped(Apoth.Blocks.HEART_SEASHELF.get(), 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
-			factory.addShaped(Apoth.Blocks.ENDSHELF.get(), 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "forge:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
 			factory.addShaped(Apoth.Blocks.PEARL_ENDSHELF.get(), 3, 3, Items.END_ROD, null, Items.END_ROD, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF.get(), Items.ENDER_PEARL, Items.END_ROD, null, Items.END_ROD);
 			factory.addShaped(Apoth.Blocks.DRACONIC_ENDSHELF.get(), 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, Apoth.Blocks.ENDSHELF.get(), Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
 			factory.addShaped(Apoth.Blocks.BEESHELF.get(), 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
@@ -175,11 +174,18 @@ public class EnchModule {
 		LootSystem.defaultBlockTable(Apoth.Blocks.INFUSED_SEASHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.CRYSTAL_SEASHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.HEART_SEASHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.DORMANT_DEEPSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.DEEPSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.ECHOING_DEEPSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.SOUL_TOUCHED_DEEPSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.ECHOING_SCULKSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.SOUL_TOUCHED_SCULKSHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.ENDSHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.PEARL_ENDSHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.DRACONIC_ENDSHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.BEESHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.MELONSHELF.get());
+		LootSystem.defaultBlockTable(Apoth.Blocks.STONESHELF.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.LIBRARY.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER.get());
 		LootSystem.defaultBlockTable(Apoth.Blocks.RECTIFIER_T2.get());
@@ -250,29 +256,43 @@ public class EnchModule {
 				new ApothAnvilBlock(), new ResourceLocation("minecraft", "anvil"),
 				new ApothAnvilBlock(), new ResourceLocation("minecraft", "chipped_anvil"),
 				new ApothAnvilBlock(), new ResourceLocation("minecraft", "damaged_anvil"),
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "hellshelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "infused_hellshelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "blazing_hellshelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "glowing_hellshelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "seashelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "infused_seashelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "crystal_seashelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "heart_seashelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "endshelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "pearl_endshelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "draconic_endshelf",
-				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)), "beeshelf",
-				new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5F).sound(SoundType.WOOD)), "melonshelf",
+				shelf(Material.STONE, 1.5F), "hellshelf",
+				shelf(Material.STONE, 1.5F), "infused_hellshelf",
+				shelf(Material.STONE, 1.5F), "blazing_hellshelf",
+				shelf(Material.STONE, 1.5F), "glowing_hellshelf",
+				shelf(Material.STONE, 1.5F), "seashelf",
+				shelf(Material.STONE, 1.5F), "infused_seashelf",
+				shelf(Material.STONE, 1.5F), "crystal_seashelf",
+				shelf(Material.STONE, 1.5F), "heart_seashelf",
+				shelf(Material.STONE, 2.5F), "dormant_deepshelf",
+				shelf(Material.STONE, 2.5F), "deepshelf",
+				shelf(Material.STONE, 2.5F), "echoing_deepshelf",
+				shelf(Material.STONE, 2.5F), "soul_touched_deepshelf",
+				shelf(Material.STONE, 3.5F), "echoing_sculkshelf",
+				shelf(Material.STONE, 3.5F), "soul_touched_sculkshelf",
+				shelf(Material.STONE, 4.5F), "endshelf",
+				shelf(Material.STONE, 4.5F), "pearl_endshelf",
+				shelf(Material.STONE, 5F), "draconic_endshelf",
+				shelf(Material.WOOD, 0.75F), "beeshelf",
+				shelf(Material.WOOD, 0.75F), "melonshelf",
+				shelf(Material.STONE, 1.25F), "stoneshelf",
 				new EnchLibraryBlock(BasicLibraryTile::new, 16), "library",
 				new EnchLibraryBlock(EnderLibraryTile::new, 31), "ender_library",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "rectifier",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "rectifier_t2",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "rectifier_t3",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "sightshelf",
-				new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)), "sightshelf_t2"
+				shelf(Material.STONE, 1.5F), "rectifier",
+				shelf(Material.STONE, 1.5F), "rectifier_t2",
+				shelf(Material.STONE, 1.5F), "rectifier_t3",
+				shelf(Material.STONE, 1.5F), "sightshelf",
+				shelf(Material.STONE, 1.5F), "sightshelf_t2"
 				);
 		//Formatter::on
 		PlaceboUtil.registerOverride(Blocks.ENCHANTING_TABLE, new ApothEnchantBlock(), Apotheosis.MODID);
+	}
+
+	private static Block shelf(Material mat, float strength) {
+		var props = BlockBehaviour.Properties.of(mat).strength(strength);
+		props.sound(mat == Material.STONE ? SoundType.STONE : SoundType.WOOD);
+		if (mat == Material.STONE) props.requiresCorrectToolForDrops();
+		return new Block(props);
 	}
 
 	@SubscribeEvent
@@ -303,11 +323,18 @@ public class EnchModule {
 				new GlowyBlockItem(Apoth.Blocks.INFUSED_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "infused_seashelf",
 				new BlockItem(Apoth.Blocks.CRYSTAL_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "crystal_seashelf",
 				new BlockItem(Apoth.Blocks.HEART_SEASHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "heart_seashelf",
+				new BlockItem(Apoth.Blocks.DORMANT_DEEPSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "dormant_deepshelf",
+				new GlowyBlockItem(Apoth.Blocks.DEEPSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "deepshelf",
+				new BlockItem(Apoth.Blocks.ECHOING_DEEPSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "echoing_deepshelf",
+				new BlockItem(Apoth.Blocks.SOUL_TOUCHED_DEEPSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "soul_touched_deepshelf",
+				new BlockItem(Apoth.Blocks.ECHOING_SCULKSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "echoing_sculkshelf",
+				new BlockItem(Apoth.Blocks.SOUL_TOUCHED_SCULKSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "soul_touched_sculkshelf",
 				new BlockItem(Apoth.Blocks.ENDSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "endshelf",
 				new BlockItem(Apoth.Blocks.DRACONIC_ENDSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "draconic_endshelf",
 				new BlockItem(Apoth.Blocks.PEARL_ENDSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "pearl_endshelf",
 				new BlockItem(Apoth.Blocks.BEESHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "beeshelf",
 				new BlockItem(Apoth.Blocks.MELONSHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "melonshelf",
+				new BlockItem(Apoth.Blocks.STONESHELF.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "stoneshelf",
 				new BlockItem(Apoth.Blocks.RECTIFIER.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "rectifier",
 				new BlockItem(Apoth.Blocks.RECTIFIER_T2.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "rectifier_t2",
 				new BlockItem(Apoth.Blocks.RECTIFIER_T3.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "rectifier_t3",
@@ -315,7 +342,9 @@ public class EnchModule {
 				new BlockItem(Apoth.Blocks.SIGHTSHELF_T2.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sightshelf_t2",
 				new BlockItem(Apoth.Blocks.LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "library",
 				new BlockItem(Apoth.Blocks.ENDER_LIBRARY.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "ender_library",
-				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "inert_trident"
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "inert_trident",
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "warden_tendril",
+				new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP).rarity(net.minecraft.world.item.Rarity.EPIC)), "infused_breath"
 				);
 		//Formatter::on
 	}

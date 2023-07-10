@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "EEE",
+    "IBP",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:end_stone_bricks"
+    },
+	"I": {
+      "item": "apotheosis:infused_breath"
+    },
+	"B": {
+      "tag": "forge:bookshelves"
+    },
+	"P": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "apotheosis:endshelf",
+    "count": 1
+  }
+}

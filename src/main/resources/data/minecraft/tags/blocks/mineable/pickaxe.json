@@ -45,6 +45,46 @@
 			"required": false
 		},
 		{
+			"id": "apotheosis:dormant_deepshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:deepshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:echoing_deepshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:soul_touched_deepshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:echoing_sculkshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:soul_touched_sculkshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:endshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:draconic_endshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:pearl_endshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:stoneshelf",
+			"required": false
+		},
+		{
 			"id": "apotheosis:library",
 			"required": false
 		},

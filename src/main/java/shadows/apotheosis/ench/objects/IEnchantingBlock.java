@@ -20,7 +20,9 @@ public interface IEnchantingBlock extends IForgeBlock {
 	 * @return The amount of enchanting power this block produces.
 	 */
 	@Override
-	float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos);
+	default float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos) {
+		return IForgeBlock.super.getEnchantPowerBonus(state, world, pos);
+	}
 
 	/**
 	 * Determines the maximum enchanting power (Eterna) that this block may contribute up to.

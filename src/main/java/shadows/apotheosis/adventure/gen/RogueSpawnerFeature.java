@@ -1,4 +1,4 @@
-package shadows.apotheosis.adventure.spawner;
+package shadows.apotheosis.adventure.gen;
 
 import java.util.function.Predicate;
 
@@ -12,6 +12,8 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
+import shadows.apotheosis.adventure.spawner.SpawnerItem;
 
 public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
 

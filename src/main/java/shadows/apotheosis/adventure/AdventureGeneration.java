@@ -22,9 +22,9 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.boss.BossDungeonFeature;
-import shadows.apotheosis.adventure.boss.BossDungeonFeature2;
-import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
+import shadows.apotheosis.adventure.gen.BossDungeonFeature;
+import shadows.apotheosis.adventure.gen.BossDungeonFeature2;
+import shadows.apotheosis.adventure.gen.RogueSpawnerFeature;
 
 public class AdventureGeneration {
 	public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CF_BOSS_DUNGEON = register(BossDungeonFeature.INSTANCE, "boss_dungeon");

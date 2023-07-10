@@ -1,0 +1,15 @@
+{
+  "name": "apotheosis:tower_spruce",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "apotheosis:tower_spruce",
+        "projection": "rigid",
+        "processors": "apotheosis:item_frame_gems"
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    " E ",
+    " B ",
+    "CCC"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+	"B": {
+      "item": "apotheosis:deepshelf"
+    },
+	"C": {
+      "tag": "minecraft:candles"
+    }
+  },
+  "result": {
+    "item": "apotheosis:echoing_deepshelf",
+    "count": 1
+  }
+}

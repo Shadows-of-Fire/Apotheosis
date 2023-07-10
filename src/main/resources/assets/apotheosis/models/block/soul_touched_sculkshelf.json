@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "apotheosis:blocks/sculkshelf_top",
+        "side": "apotheosis:blocks/soul_touched_sculkshelf"
+    }
+}

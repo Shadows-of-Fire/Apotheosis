@@ -7,10 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -28,6 +30,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,8 +66,6 @@ import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
 import shadows.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import shadows.apotheosis.adventure.boss.BossArmorManager;
-import shadows.apotheosis.adventure.boss.BossDungeonFeature;
-import shadows.apotheosis.adventure.boss.BossDungeonFeature2;
 import shadows.apotheosis.adventure.boss.BossEvents;
 import shadows.apotheosis.adventure.boss.BossItemManager;
 import shadows.apotheosis.adventure.boss.BossSpawnerBlock;
@@ -75,6 +77,10 @@ import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.apotheosis.adventure.compat.AdventureTOPPlugin;
 import shadows.apotheosis.adventure.compat.AdventureTwilightCompat;
 import shadows.apotheosis.adventure.compat.GatewaysCompat;
+import shadows.apotheosis.adventure.gen.BossDungeonFeature;
+import shadows.apotheosis.adventure.gen.BossDungeonFeature2;
+import shadows.apotheosis.adventure.gen.ItemFrameGemsProcessor;
+import shadows.apotheosis.adventure.gen.RogueSpawnerFeature;
 import shadows.apotheosis.adventure.loot.AffixConvertLootModifier;
 import shadows.apotheosis.adventure.loot.AffixHookLootModifier;
 import shadows.apotheosis.adventure.loot.AffixLootManager;
@@ -85,7 +91,6 @@ import shadows.apotheosis.adventure.loot.GemLootPoolEntry;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.adventure.loot.LootRarityManager;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
-import shadows.apotheosis.adventure.spawner.RogueSpawnerFeature;
 import shadows.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import shadows.apotheosis.util.NameHelper;
 import shadows.placebo.block_entity.TickingBlockEntityType;
@@ -97,10 +102,10 @@ import shadows.placebo.util.RegistryEvent.Register;
 public class AdventureModule {
 
 	public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
-
 	public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
-
 	public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
+
+	public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
 
 	@SubscribeEvent
 	public void preInit(ApotheosisConstruction e) {
@@ -153,6 +158,8 @@ public class AdventureModule {
 		//e.getRegistry().register(TroveFeature.INSTANCE, "trove");
 		//e.getRegistry().register(TomeTowerFeature.INSTANCE, "tome_tower");
 		MinecraftForge.EVENT_BUS.register(AdventureGeneration.class);
+		Registry.register(Registry.STRUCTURE_PROCESSOR, "apotheosis:item_frame_gems", ITEM_FRAME_LOOT);
+		Registry.register(BuiltinRegistries.PROCESSOR_LIST, "apotheosis:item_frame_gems", new StructureProcessorList(ImmutableList.of(new ItemFrameGemsProcessor(new ResourceLocation("a")))));
 	}
 
 	@SubscribeEvent

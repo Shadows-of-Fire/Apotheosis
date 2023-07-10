@@ -1,6 +1,5 @@
 package shadows.apotheosis.ench;
 
-import java.lang.reflect.Method;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -72,8 +71,6 @@ public class EnchModuleEvents {
 	public void repairEvent(AnvilRepairEvent e) {
 		if (ExtractionTomeItem.updateRepair(e)) return;
 	}
-
-	Method dropLoot;
 
 	/**
 	 * Event handler for the Scavenger and Spearfishing enchantments.

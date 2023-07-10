@@ -1,0 +1,24 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "minecraft:dragon_breath"
+	},
+	"requirements": {
+		"eterna": 40,
+		"quanta": 15,
+		"arcana": 60
+	},
+	"max_requirements": {
+		"eterna": -1,
+		"quanta": 25,
+		"arcana": -1
+	},
+	"result": {
+		"item": "apotheosis:infused_breath",
+		"count": 3
+	}
+}

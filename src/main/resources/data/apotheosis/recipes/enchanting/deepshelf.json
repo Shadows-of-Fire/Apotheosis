@@ -1,0 +1,19 @@
+{
+	"type": "apotheosis:enchanting",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "apotheosis:dormant_deepshelf"
+	},
+	"requirements": {
+		"eterna": 30,
+		"quanta": 40,
+		"arcana": 40
+	},
+	"result": {
+		"item": "apotheosis:deepshelf",
+		"count": 1
+	}
+}

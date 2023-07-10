@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    "EEE",
+    "BBB",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:cracked_deepslate_tiles"
+    },
+	"B": {
+      "item": "minecraft:book"
+    }
+  },
+  "result": {
+    "item": "apotheosis:dormant_deepshelf",
+    "count": 1
+  }
+}

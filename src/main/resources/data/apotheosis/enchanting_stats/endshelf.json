@@ -1,9 +1,9 @@
 {
 	"block": "apotheosis:endshelf",
 	"stats": {
-		"maxEterna": 40,
-		"eterna": 3,
-		"quanta": 3.5,
-		"arcana": 3.5
+		"maxEterna": 45,
+		"eterna": 2.5,
+		"quanta": 5,
+		"arcana": 5
 	}
 }

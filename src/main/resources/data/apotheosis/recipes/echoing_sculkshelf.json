@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    " T ",
+    "SBS",
+    "SCS"
+  ],
+  "key": {
+    "T": {
+      "item": "apotheosis:warden_tendril"
+    },
+	"B": {
+      "item": "apotheosis:echoing_deepshelf"
+    },
+	"S": {
+      "item": "minecraft:sculk"
+    },
+	"C": {
+      "item": "minecraft:sculk_catalyst"
+    }
+  },
+  "result": {
+    "item": "apotheosis:echoing_sculkshelf",
+    "count": 1
+  }
+}

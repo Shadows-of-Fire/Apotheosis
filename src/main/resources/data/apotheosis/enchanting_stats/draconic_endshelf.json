@@ -2,7 +2,7 @@
 	"block": "apotheosis:draconic_endshelf",
 	"stats": {
 		"maxEterna": 50,
-		"eterna": 5,
+		"eterna": 10,
 		"quanta": 0,
 		"arcana": 0
 	}

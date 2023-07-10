@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -55,6 +56,7 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
 		this.minRarity = min;
 		this.maxRarity = max;
 		this.stages = stages.orElse(null);
+		Preconditions.checkArgument(min.ordinal() <= max.ordinal(), "The minimum rarity " + min + " must be lower or equal to the max rarity " + max);
 	}
 
 	public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max) {

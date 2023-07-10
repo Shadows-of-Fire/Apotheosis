@@ -1,4 +1,4 @@
-package shadows.apotheosis.adventure.boss;
+package shadows.apotheosis.adventure.gen;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
