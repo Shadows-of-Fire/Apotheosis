@@ -3,7 +3,9 @@
 * [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
 
 ## 6.3.0
-Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.
+Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  
+Before we begin, please reset your configs. The defaults have changed, and old files are not updated.  
+If you use AttributeFix, update and reset their config as well!  
 
 ### Adventure Module
 ![](https://i.imgur.com/2v0dDxm.png)
@@ -68,6 +70,8 @@ Welcome to the largest update to Apotheosis to date! There's a lot of changes he
 * Fixed an issue where the Catalyzing affix would give infinite durations of strength.
 * Added a fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
 * Horses spawned with Undead Knights will now burn in daylight. Not retroactive.
+* Bosses will no longer spawn on the main end island.
+  * This change can be reverted by changing the boss spawn rules for the end dimension.
 
 ### Enchanting Module
 ![](https://i.imgur.com/E24XAW3.png)

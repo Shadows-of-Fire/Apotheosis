@@ -187,7 +187,17 @@ public class AdventureConfig {
 		bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.");
 		bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.");
 
-		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", new String[] { "minecraft:overworld|0.02|NEEDS_SKY", "minecraft:the_nether|0.03|ANY", "minecraft:the_end|0.02|NEEDS_SURFACE", "twilightforest:twilight_forest|0.05|NEEDS_SURFACE" }, "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1.\nValid rules are NEEDS_SKY, NEEDS_SURFACE, and ANY");
+		//Formatter::off
+		String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses", 
+				new String[] {
+						"minecraft:overworld|0.018|NEEDS_SKY", 
+						"minecraft:the_nether|0.025|ANY", 
+						"minecraft:the_end|0.018|SURFACE_OUTER_END", 
+						"twilightforest:twilight_forest|0.05|NEEDS_SURFACE" 
+					}, 
+				"Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1."
+				+ "\nValid rules are visible here https://github.com/Shadows-of-Fire/Apotheosis/blob/1.19/src/main/java/shadows/apotheosis/adventure/boss/BossEvents.java#L174C27-L174C27");
+		//Formatter::on
 		BOSS_SPAWN_RULES.clear();
 		for (String s : dims) {
 			try {

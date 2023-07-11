@@ -31,12 +31,12 @@
 			{
 				"attribute": "minecraft:generic.movement_speed",
 				"operation": "MULTIPLY_BASE",
-				"value": 0.10
+				"value": 0.25
 			},
 			{
-				"attribute": "apotheosis:arrow_damage",
+				"attribute": "minecraft:generic.attack_damage",
 				"operation": "MULTIPLY_BASE",
-				"value": 0.25
+				"value": 0.10
 			},
 			{
 				"attribute": "minecraft:generic.knockback_resistance",

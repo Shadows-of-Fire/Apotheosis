@@ -187,6 +187,9 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 			if (I18n.exists(Registry.ATTRIBUTE.getKey(attr) + ".desc")) {
 				Component txt = Component.translatable(Registry.ATTRIBUTE.getKey(attr) + ".desc").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC);
 				list.add(txt);
+			} else if (AttributesLib.getTooltipFlag().isAdvanced()) {
+				Component txt = Component.literal(Registry.ATTRIBUTE.getKey(attr) + ".desc").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+				list.add(txt);
 			}
 
 			list.add(CommonComponents.EMPTY);
@@ -265,7 +268,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 				}
 			}
 
-			parent.renderTooltip(stack, List.of(), 0, 0); // This no-op call sets Screen#tooltipFont, which is used in renderTooltipInternal
+			parent.renderTooltip(stack, List.of(), 0, 0, font); // This no-op call sets Screen#tooltipFont, which is used in renderTooltipInternal
 			parent.renderTooltipInternal(stack, finalTooltip, this.leftPos - 16 - finalTooltip.stream().map(c -> c.getWidth(font)).max(Integer::compare).get(), mouseY);
 		}
 	}

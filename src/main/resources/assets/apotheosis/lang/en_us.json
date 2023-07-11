@@ -368,21 +368,41 @@
 	"misc.apotheosis.fall": "Fall",
 	"misc.apotheosis.explosion": "Explosive",
     "affix.apotheosis:damage_reduction.desc": "%s damage taken is reduced by %s%%",
-	
+
 	"affix.apotheosis:armor/dmg_reduction/blockading": "Blockading",
     "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "of the Blockade",
-	
+
 	"affix.apotheosis:armor/dmg_reduction/runed": "Runed",
     "affix.apotheosis:armor/dmg_reduction/runed.suffix": "of the Spellwarden",
-	
+
 	"affix.apotheosis:armor/dmg_reduction/blast_forged": "Blast-Forged",
     "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "of the Forge God",
-	
+
 	"affix.apotheosis:armor/dmg_reduction/dwarven": "Dwarven",
     "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "of the Volcano",
-	
+
 	"affix.apotheosis:armor/dmg_reduction/feathery": "Feathery",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "of the Eagle",
+
+	"affix.apotheosis:shield/attribute/stalwart": "Stalwart"
+	"affix.apotheosis:shield/attribute/stalwart.suffix": "of Stubbornness"
+
+	"affix.apotheosis:armor/attribute/spiritual": "Spiritual"
+	"affix.apotheosis:armor/attribute/spiritual.suffix": "of the Witch Doctor"
+	
+	"affix.apotheosis:breaker/attribute/lucky": "Lucky"
+	"affix.apotheosis:breaker/attribute/lucky.suffix": "of the Serendipitous"
+
+	"affix.apotheosis:heavy_weapon/attribute/nullifying": "Nullifying"
+	"affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "of the Magebreaker"
+
+	"affix.apotheosis:sword/attribute/spellbreaking": "Spellbreaking"
+	"affix.apotheosis:sword/attribute/spellbreaking.suffix": "of the Petricite Golem"
+	
+	"affix.apotheosis:socket": ""
+	"affix.apotheosis:socket.suffix": ""
+	"affix.apotheosis:durable": ""
+	"affix.apotheosis:durable.suffix": ""
 
 	"affix.apotheosis.target.attack_self": "On hit, gain %s",
 	"affix.apotheosis.target.attack_target": "On hit, inflict %s",

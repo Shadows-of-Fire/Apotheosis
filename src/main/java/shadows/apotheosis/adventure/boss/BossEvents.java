@@ -18,6 +18,7 @@ import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -178,6 +179,8 @@ public class BossEvents {
 		BELOW_SURFACE(
 				(level, pos) -> pos.getY() < level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ())),
 		CANNOT_SEE_SKY((level, pos) -> !level.canSeeSky(pos)),
+		SURFACE_OUTER_END(
+				(level, pos) -> NEEDS_SURFACE.test(level, pos) && (Mth.abs(pos.getX()) > 1024 || Mth.abs(pos.getZ()) > 1024)),
 		ANY((level, pos) -> true);
 
 		public static final Codec<BossSpawnRules> CODEC = new EnumCodec<>(BossSpawnRules.class);
