@@ -1,37 +1,38 @@
 {
-	"parent": "apotheosis:affix/common",
+	"parent": "apotheosis:affix/rare_gem",
 	"conditions": [{
 		"type": "apotheosis:module",
-		"module": "deadly"
+		"module": "adventure"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:stone_sword"
+			"item": "apotheosis:gem",
+			"nbt": "{gem:\"apotheosis:the_nether/blood_lord\"}"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.uncommon"
+			"translate": "advancements.apotheosis.mythic_gem"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.uncommon.desc"
+			"translate": "advancements.apotheosis.mythic_gem.desc"
 		},
-		"frame": "task",
+		"frame": "goal",
 		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {
-		"sword": {
+		"gem": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"apoth": {
-					"type": "rarity",
-					"rarity": "UNCOMMON"
+					"type": "gem_rarity",
+					"rarity": "mythic"
 				}
 			}
 		}
 	},
 	"requirements": [
 		[
-			"sword"
+			"gem"
 		]
 	]
 }

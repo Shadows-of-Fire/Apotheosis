@@ -1,42 +1,43 @@
 {
-	"parent": "apotheosis:enchanting/hellshelf",
+	"parent": "apotheosis:enchanting/deepshelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
 	}],
 	"display": {
 		"icon": {
-			"item": "apotheosis:blazing_hellshelf"
+			"item": "apotheosis:echoing_sculkshelf"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.upgrade_hellshelf"
+			"translate": "advancements.apotheosis.sculkshelf"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.upgrade_hellshelf.desc"
+			"translate": "advancements.apotheosis.sculkshelf.desc"
 		},
 		"frame": "task"
 	},
 	"criteria": {
-		"blazing": {
+		"echoing": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"items": ["apotheosis:blazing_hellshelf"]
+					"items": ["apotheosis:echoing_sculkshelf"]
 				}]
 			}
 		},
-		"glowing": {
+		"soul_touched": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"items": ["apotheosis:glowing_hellshelf"]
+					"items": ["apotheosis:soul_touched_sculkshelf"]
 				}]
 			}
 		}
 	},
 	"requirements": [
 		[
-			"blazing", "glowing"
+			"echoing",
+			"soul_touched"
 		]
 	]
 }

@@ -3,11 +3,11 @@
 
     "item.modifiers.both_hands": "When Held:",
 
-    "attributeslib.adv.addition": "[Addition: %s]",
-    "attributeslib.adv.multiply_base": "[Mult Base: %s]",
-    "attributeslib.adv.multiply_total": "[Mult Total: %s]",
-    "attributeslib.adv.base": "[Entity Base: %s | Item Base: %s]",
-    "attributeslib.adv.sharpness_bonus": "[Sharpness: %s]",
+    "attributeslib.adv.addition": "[Add: %s]",
+    "attributeslib.adv.multiply_base": "[MulB: %s]",
+    "attributeslib.adv.multiply_total": "[MulT: %s]",
+    "attributeslib.adv.base": "[EBase: %s | IBase: %s]",
+    "attributeslib.adv.sharpness_bonus": "[Sharp: +%s]",
 
 	"attributeslib.value.flat": "%s",
 	"attributeslib.value.percent": "%s%%",
@@ -590,34 +590,52 @@
 
     "advancements.apotheosis.enchantment": "The Secrets of Enchanting",
     "advancements.apotheosis.enchantment.desc": "Obtain an enchanting table, and begin to unveil the mystery.",
+	
     "advancements.apotheosis.30ench": "The Basics",
     "advancements.apotheosis.30ench.desc": "Enchant an item at level 30.",
-    "advancements.apotheosis.45ench": "Delving into Magic",
-    "advancements.apotheosis.45ench.desc": "Enchant an item at level 45.",
-    "advancements.apotheosis.60ench": "Sixty Percent Capacity!",
+	
+    "advancements.apotheosis.60ench": "Mastering Hell and Sea",
     "advancements.apotheosis.60ench.desc": "Enchant an item at level 60.",
-    "advancements.apotheosis.80ench": "End-Fueled",
+	
+    "advancements.apotheosis.80ench": "Enchantments from the Depths",
     "advancements.apotheosis.80ench.desc": "Enchant an item at level 80.",
+	
     "advancements.apotheosis.100ench": "Draconic Enchanting",
     "advancements.apotheosis.100ench.desc": "Enchant an item at level 100.",
+	
     "advancements.apotheosis.bookshelf": "Local Librarian",
     "advancements.apotheosis.bookshelf.desc": "Create a bookshelf.",
+	
     "advancements.apotheosis.hellshelf": "The Chaos of Hell",
-    "advancements.apotheosis.hellshelf.desc": "Obtain a Hellshelf",
-    "advancements.apotheosis.upgrade_hellshelf": "Whispers from the Depths",
+    "advancements.apotheosis.hellshelf.desc": "Obtain a Hellshelf.",
+	
+    "advancements.apotheosis.upgrade_hellshelf": "Mastering the Inferno",
     "advancements.apotheosis.upgrade_hellshelf.desc": "Upgrade an Infused Hellshelf.",
-    "advancements.apotheosis.endshelf": "The Strength of the End",
-    "advancements.apotheosis.endshelf.desc": "Obtain an Endshelf",
-    "advancements.apotheosis.upgrade_endshelf": "Limitless Potential",
-    "advancements.apotheosis.upgrade_endshelf.desc": "Upgrade an Endshelf.",
+	
+	"advancements.apotheosis.deepshelf": "Delving Into Darkness",
+    "advancements.apotheosis.deepshelf.desc": "Activate a Dormant Deepshelf.",
+	
+    "advancements.apotheosis.sculkshelf": "Embracing the Sculk",
+    "advancements.apotheosis.sculkshelf.desc": "Create a Sculkshelf using a Warden Tendril.",
+	
+    "advancements.apotheosis.endshelf": "Dragon-Slaying Enchanter",
+    "advancements.apotheosis.endshelf.desc": "Acquire Infused Dragon's Breath, and create an Endshelf.",
+	
+    "advancements.apotheosis.upgrade_endshelf": "The Final Bookshelf",
+    "advancements.apotheosis.upgrade_endshelf.desc": "Upgrade an Endshelf into a Draconic Endshelf.",
+	
     "advancements.apotheosis.seashelf": "The Purity of the Seas",
     "advancements.apotheosis.seashelf.desc": "Obtain a Seashelf",
+	
     "advancements.apotheosis.infuse_seashelf": "Sea Infusion",
     "advancements.apotheosis.infuse_seashelf.desc": "Obtain an Infused Seashelf through Infusion Enchanting.",
+	
     "advancements.apotheosis.upgrade_seashelf": "Sleeping in the Cold Below",
     "advancements.apotheosis.upgrade_seashelf.desc": "Upgrade an Infused Seashelf",
+	
     "advancements.apotheosis.infuse_hellshelf": "Hell Infusion",
     "advancements.apotheosis.infuse_hellshelf.desc": "Obtain an Infused Hellshelf through Infusion Enchanting.",
+	
     "advancements.apotheosis.anvilench": "Anvil Enchanter",
     "advancements.apotheosis.anvilench.desc": "Enchant an anvil",
     "advancements.apotheosis.shieldench": "Shield Enchanter",
@@ -649,20 +667,21 @@
     "advancements.apotheosis.max_rectified": "Only the Best",
     "advancements.apotheosis.max_rectified.desc": "Enchant an item with max stats and max rectification.",
     
-    "advancements.apotheosis.affix": "A Stunning Fixation",
+    "advancements.apotheosis.affix": "Apothic Affixes",
     "advancements.apotheosis.affix.desc": "Find an item with an Apothic Affix.",
-    "advancements.apotheosis.common": "One Man's Trash",
-    "advancements.apotheosis.common.desc": "Find a common affix item.",
-    "advancements.apotheosis.uncommon": "Not Quite Common",
-    "advancements.apotheosis.uncommon.desc": "Find an uncommon affix item.",
-    "advancements.apotheosis.rare": "It Certainly Seems Rare...",
+
+    "advancements.apotheosis.rare": "Worthy Equipment",
     "advancements.apotheosis.rare.desc": "Find a rare affix item.",
+
     "advancements.apotheosis.epic": "Epic!",
     "advancements.apotheosis.epic.desc": "Find an epic affix item.",
+
     "advancements.apotheosis.mythic": "Titan-Forged",
     "advancements.apotheosis.mythic.desc": "Find a mythic affix item.",
+
     "advancements.apotheosis.ancient": "Lost Treasures of the Gods",
     "advancements.apotheosis.ancient.desc": "Find an Ancient item.",
+
     "advancements.apotheosis.boss": "He Wasn't So Strong",
     "advancements.apotheosis.boss.desc": "Slay an Apothic Boss, and retrieve their affix item.",
     "advancements.apotheosis.chests": "I Found It Underground",
@@ -671,10 +690,24 @@
     "advancements.apotheosis.merchant.desc": "Purchase an affix item from the wandering trader.",
     "advancements.apotheosis.random": "How'd You Get This?",
     "advancements.apotheosis.random.desc": "Retrieve an affix item from a random monster.",
-	"advancements.apotheosis.gem": "An Ancient Crystal",
-    "advancements.apotheosis.gem.desc": "Find a socketable Gem.",
+	
+	"advancements.apotheosis.gem": "Not a Diamond",
+    "advancements.apotheosis.gem.desc": "Find a Apothic Gem, which can be socketed into Affix Items.",
+	
+	"advancements.apotheosis.rare_gem": "Far From Perfect",
+    "advancements.apotheosis.rare_gem.desc": "Acquire a Flawed Gem.",
+	
+	"advancements.apotheosis.mythic_gem": "Flawless Crystals",
+    "advancements.apotheosis.mythic_gem.desc": "Acquire a Flawless Gem.",
+	
+	"advancements.apotheosis.ancient_gem": "Infinity Stones",
+    "advancements.apotheosis.ancient_gem.desc": "Using the Gem Cutting Table, create a Perfect Gemstone.",
+	
    	"advancements.apotheosis.socket": "The Jeweler",
     "advancements.apotheosis.socket.desc": "Using a Smithing Table, socket a Gem into an item.",
+
+   	"advancements.apotheosis.gem_cut": "The Lapidary",
+    "advancements.apotheosis.gem_cut.desc": "Use the Gem Cutting Table to upgrade an Apothic Gem.",
 	
     "advancements.apotheosis.spawner.root": "Apotheosis Spawners",
     "advancements.apotheosis.spawner.root.desc": "Spawners can be collected and modified, see JEI for info.",

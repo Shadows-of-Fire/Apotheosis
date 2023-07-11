@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:affix/uncommon",
+	"parent": "apotheosis:affix/root",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "deadly"
@@ -14,7 +14,7 @@
 		"description": {
 			"translate": "advancements.apotheosis.rare.desc"
 		},
-		"frame": "task",
+		"frame": "goal",
 		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},

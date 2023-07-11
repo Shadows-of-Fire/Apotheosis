@@ -1,37 +1,38 @@
 {
-	"parent": "apotheosis:affix/root",
+	"parent": "apotheosis:affix/gem",
 	"conditions": [{
 		"type": "apotheosis:module",
-		"module": "deadly"
+		"module": "adventure"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:wooden_sword"
+			"item": "apotheosis:gem",
+			"nbt": "{gem:\"apotheosis:core/splendor\"}"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.common"
+			"translate": "advancements.apotheosis.rare_gem"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.common.desc"
+			"translate": "advancements.apotheosis.rare_gem.desc"
 		},
 		"frame": "task",
 		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {
-		"sword": {
+		"gem": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"apoth": {
-					"type": "rarity",
-					"rarity": "COMMON"
+					"type": "gem_rarity",
+					"rarity": "rare"
 				}
 			}
 		}
 	},
 	"requirements": [
 		[
-			"sword"
+			"gem"
 		]
 	]
 }

@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:enchanting/45ench",
+	"parent": "apotheosis:enchanting/30ench",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"

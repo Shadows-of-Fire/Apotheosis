@@ -1,34 +1,34 @@
 {
-	"parent": "apotheosis:enchanting/sculkshelf",
+	"parent": "apotheosis:enchanting/upgrade_hellshelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
 	}],
 	"display": {
 		"icon": {
-			"item": "apotheosis:endshelf"
+			"item": "apotheosis:dormant_deepshelf"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.endshelf"
+			"translate": "advancements.apotheosis.deepshelf"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.endshelf.desc"
+			"translate": "advancements.apotheosis.deepshelf.desc"
 		},
-		"frame": "goal"
+		"frame": "task"
 	},
 	"criteria": {
-		"endshelf": {
+		"deepshelf": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
-					"items": ["apotheosis:endshelf"]
+					"items": ["apotheosis:deepshelf"]
 				}]
 			}
 		}
 	},
 	"requirements": [
 		[
-			"endshelf"
+			"deepshelf"
 		]
 	]
 }

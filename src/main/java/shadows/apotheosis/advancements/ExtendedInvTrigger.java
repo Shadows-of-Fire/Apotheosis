@@ -24,8 +24,10 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.socket.SocketHelper;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
+// TODO: Replace with uses of forge's Custom ItemPredicate API. That's all this does anyway.
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
 	@Override
@@ -57,6 +59,10 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 		if (type.equals("rarity")) {
 			LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
 			return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
+		}
+		if (type.equals("gem_rarity")) {
+			LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
+			return new ItemPredicate[] { new TrueItemPredicate(s -> GemItem.getLootRarity(s) == rarity) };
 		}
 		if (type.equals("socket")) {
 			return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };

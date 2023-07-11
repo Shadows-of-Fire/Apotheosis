@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:affix/root",
+	"parent": "apotheosis:affix/mythic_gem",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "adventure"
@@ -7,25 +7,26 @@
 	"display": {
 		"icon": {
 			"item": "apotheosis:gem",
-			"nbt": "{gem:\"apotheosis:core/guardian\"}"
+			"nbt": "{gem:\"apotheosis:the_end/endersurge\"}"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.gem"
+			"translate": "advancements.apotheosis.ancient_gem"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.gem.desc"
+			"translate": "advancements.apotheosis.ancient_gem.desc"
 		},
-		"frame": "task",
+		"frame": "challenge",
 		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {
 		"gem": {
-			"trigger": "minecraft:inventory_changed",
+			"trigger": "apotheosis:gem_cutting",
 			"conditions": {
-				"items": [{
-					"items": ["apotheosis:gem"]
-				}]
+				"trigger": "apotheosis:gem_cutting",
+				"conditions": {
+					"rarity": "ancient"
+				}
 			}
 		}
 	},

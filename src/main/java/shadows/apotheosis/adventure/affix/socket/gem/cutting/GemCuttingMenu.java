@@ -3,6 +3,7 @@ package shadows.apotheosis.adventure.affix.socket.gem.cutting;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,6 +12,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
@@ -69,6 +71,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 					r.decrementInputs(gem, left, bot, right);
 					this.inv.setStackInSlot(0, out);
 					this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
+					AdvancementTriggers.GEM_CUT.trigger((ServerPlayer) player, out, GemItem.getLootRarity(out).id());
 					return true;
 				}
 			}

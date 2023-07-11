@@ -1,5 +1,5 @@
 {
-	"parent": "apotheosis:enchanting/infuse_seashelf",
+	"parent": "apotheosis:enchanting/seashelf",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "enchantment"
@@ -14,7 +14,7 @@
 		"description": {
 			"translate": "advancements.apotheosis.upgrade_seashelf.desc"
 		},
-		"frame": "goal"
+		"frame": "task"
 	},
 	"criteria": {
 		"heart": {

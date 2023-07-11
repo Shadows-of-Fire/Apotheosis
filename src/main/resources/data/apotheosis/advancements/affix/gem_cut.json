@@ -1,35 +1,31 @@
 {
+	"parent": "apotheosis:affix/socket",
 	"conditions": [{
 		"type": "apotheosis:module",
 		"module": "adventure"
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:iron_sword"
+			"item": "apotheosis:gem_cutting_table"
 		},
 		"title": {
-			"translate": "advancements.apotheosis.affix"
+			"translate": "advancements.apotheosis.gem_cut"
 		},
 		"description": {
-			"translate": "advancements.apotheosis.affix.desc"
+			"translate": "advancements.apotheosis.gem_cut.desc"
 		},
 		"frame": "task",
-		"hidden": false,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},
 	"criteria": {
-		"sword": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"apoth": {
-					"type": "affix"
-				}
-			}
+		"cut": {
+			"trigger": "apotheosis:gem_cutting",
+			"conditions": {}
 		}
 	},
 	"requirements": [
 		[
-			"sword"
+			"cut"
 		]
 	]
 }

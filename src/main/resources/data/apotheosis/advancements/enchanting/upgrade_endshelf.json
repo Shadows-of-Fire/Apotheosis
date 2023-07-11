@@ -17,26 +17,18 @@
 		"frame": "challenge"
 	},
 	"criteria": {
-		"blazing": {
+		"draconic": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [{
 					"items": ["apotheosis:draconic_endshelf"]
 				}]
 			}
-		},
-		"glowing": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [{
-					"items": ["apotheosis:pearl_endshelf"]
-				}]
-			}
 		}
 	},
 	"requirements": [
 		[
-			"blazing", "glowing"
+			"draconic"
 		]
 	]
 }

@@ -15,7 +15,7 @@
 		"description": {
 			"translate": "advancements.apotheosis.mythic.desc"
 		},
-		"frame": "goal",
+		"frame": "challenge",
 		"hidden": true,
 		"background": "apotheosis:textures/advancements/bg/apoth.png"
 	},

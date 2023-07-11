@@ -6,7 +6,7 @@
 	}],
 	"display": {
 		"icon": {
-			"item": "minecraft:diamond_sword",
+			"item": "minecraft:netherite_sword",
 			"nbt": "{Enchantments:[{id:\"apotheosis:hell_infusion\",lvl:1s}]}"
 		},
 		"title": {
