@@ -67,6 +67,7 @@ Welcome to the largest update to Apotheosis to date! There's a lot of changes he
 * Fixed durability gems not applying.
 * Fixed an issue where the Catalyzing affix would give infinite durations of strength.
 * Added a fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
+* Horses spawned with Undead Knights will now burn in daylight. Not retroactive.
 
 ### Enchanting Module
 ![](https://i.imgur.com/E24XAW3.png)
@@ -83,6 +84,7 @@ Welcome to the largest update to Apotheosis to date! There's a lot of changes he
 * The Enchantment Library can now be crafted with Infused Hellshelves, Infused Seashelves, and Deepshelves, instead of just Infused Hellshelves.
 * A chapter has been added to the Chronicle of Shadows detailing the progression.
 * Added the Stoneshelf, which can reduce your Arcana through its sheer mundane-ness.
+* Enchanted Books with 1 enchantment will now show some meta information about the enchantment, and more if f3+h is enabled.
 
 
 #### Balance Changes

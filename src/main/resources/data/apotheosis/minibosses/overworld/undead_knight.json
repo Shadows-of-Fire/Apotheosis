@@ -8,7 +8,7 @@
 		"minecraft:stray"
 	],
 	"valid_gear_sets": [
-		"#overworld"
+		"#overworld_bow"
 	],
 	"dimensions": [
 		"minecraft:overworld"
@@ -67,7 +67,10 @@
 					"Name": "generic.knockback_resistance",
 					"Base": 0.5
 				}
-			]
+			],
+			"ForgeData": {
+				"apoth.burns_in_sun": "true"
+			}
 		}
 	},
 	"exclusions": [{

@@ -30,6 +30,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
@@ -265,6 +266,23 @@ public class AdventureEvents {
 		if (isReentrant) return;
 		AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));
 		reentrantLock.get().set(false);
+	}
+
+	@SubscribeEvent
+	@SuppressWarnings("deprecation")
+	public void update(LivingTickEvent e) {
+		LivingEntity entity = e.getEntity();
+		if (entity.getPersistentData().contains("apoth.burns_in_sun")) {
+			// Copy of Mob#isSunBurnTick()
+			if (entity.level.isDay() && !entity.level.isClientSide) {
+				float f = entity.getLightLevelDependentMagicValue();
+				BlockPos blockpos = new BlockPos(entity.getX(), entity.getEyeY(), entity.getZ());
+				boolean flag = entity.isInWaterRainOrBubble() || entity.isInPowderSnow || entity.wasInPowderSnow;
+				if (f > 0.5F && entity.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && entity.level.canSeeSky(blockpos)) {
+					entity.setSecondsOnFire(8);
+				}
+			}
+		}
 	}
 
 }
