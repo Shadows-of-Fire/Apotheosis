@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ench.EnchModule;
-import shadows.apotheosis.ench.objects.IEnchantingBlock;
+import shadows.apotheosis.ench.api.IEnchantingBlock;
 import shadows.apotheosis.ench.table.EnchantingStatManager.BlockStats;
 import shadows.placebo.json.PSerializer;
 import shadows.placebo.json.PlaceboJsonReloadListener;
@@ -80,8 +80,7 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 	public static float getMaxEterna(BlockState state, Level world, BlockPos pos) {
 		Block block = state.getBlock();
 		if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).maxEterna;
-		if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getMaxEnchantingPower(state, world, pos);
-		return 15;
+		return ((IEnchantingBlock) block).getMaxEnchantingPower(state, world, pos);
 	}
 
 	/**

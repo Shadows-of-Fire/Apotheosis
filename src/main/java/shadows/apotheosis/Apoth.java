@@ -1,5 +1,6 @@
 package shadows.apotheosis;
 
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -257,6 +258,13 @@ public class Apoth {
 		public static final ResourceLocation SPAWNER_BRUTAL = Apotheosis.loc("chests/spawner_brutal");
 		public static final ResourceLocation SPAWNER_SWARM = Apotheosis.loc("chests/spawner_swarm");
 		public static final ResourceLocation TOME_TOWER = Apotheosis.loc("chests/tome_tower");
+	}
+
+	public static final class Particles {
+		public static final RegistryObject<SimpleParticleType> ENCHANT_FIRE = R.particle("enchant_fire");
+		public static final RegistryObject<SimpleParticleType> ENCHANT_WATER = R.particle("enchant_water");
+		public static final RegistryObject<SimpleParticleType> ENCHANT_SCULK = R.particle("enchant_sculk");
+		public static final RegistryObject<SimpleParticleType> ENCHANT_END = R.particle("enchant_end");
 	}
 
 }

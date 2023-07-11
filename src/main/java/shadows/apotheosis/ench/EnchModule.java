@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,10 @@ import com.google.common.collect.ImmutableSet;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.dispenser.ShearsDispenseItemBehavior;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
@@ -48,9 +53,12 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apoth.Particles;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import shadows.apotheosis.ench.EnchantmentInfo.PowerFunc;
@@ -90,6 +98,8 @@ import shadows.apotheosis.ench.objects.GlowyBlockItem;
 import shadows.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.TomeItem;
+import shadows.apotheosis.ench.objects.TypedShelfBlock;
+import shadows.apotheosis.ench.objects.WardenLootModifier;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
 import shadows.apotheosis.ench.replacements.DefenseEnchant;
 import shadows.apotheosis.ench.table.ApothEnchantBlock;
@@ -131,6 +141,12 @@ public class EnchModule {
 	public static final EnchantmentCategory AXE = EnchantmentCategory.create("AXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.AXE_DIG));
 	public static final EnchantmentCategory CORE_ARMOR = EnchantmentCategory.create("CORE_ARMOR", i -> EnchantmentCategory.ARMOR_CHEST.canEnchant(i) || EnchantmentCategory.ARMOR_LEGS.canEnchant(i));
 	static Configuration enchInfoConfig;
+
+	public EnchModule() {
+		if (FMLEnvironment.dist.isClient()) {
+			FMLJavaModLoadingContext.get().getModEventBus().register(EnchModuleClient.class);
+		}
+	}
 
 	@SubscribeEvent
 	public void init(FMLCommonSetupEvent e) {
@@ -236,6 +252,18 @@ public class EnchModule {
 		e.getRegistry().register(KeepNBTEnchantingRecipe.SERIALIZER, "keep_nbt_enchanting");
 	}
 
+	@SubscribeEvent
+	public void particles(Register<ParticleType<?>> e) {
+		//Formatter::off
+		e.getRegistry().registerAll(
+				new SimpleParticleType(false), "enchant_fire",
+				new SimpleParticleType(false), "enchant_water",
+				new SimpleParticleType(false), "enchant_sculk",
+				new SimpleParticleType(false), "enchant_end"
+			);
+		//Formatter::on
+	}
+
 	/**
 	 * This handles IMC events for the enchantment module. <br>
 	 * Currently only one type is supported. A mod may pass a single {@link EnchantmentInstance} indicating the hard capped max level for an enchantment. <br>
@@ -263,43 +291,47 @@ public class EnchModule {
 				new ApothAnvilBlock(), new ResourceLocation("minecraft", "anvil"),
 				new ApothAnvilBlock(), new ResourceLocation("minecraft", "chipped_anvil"),
 				new ApothAnvilBlock(), new ResourceLocation("minecraft", "damaged_anvil"),
-				shelf(Material.STONE, 1.5F), "hellshelf",
-				shelf(Material.STONE, 1.5F), "infused_hellshelf",
-				shelf(Material.STONE, 1.5F), "blazing_hellshelf",
-				shelf(Material.STONE, 1.5F), "glowing_hellshelf",
-				shelf(Material.STONE, 1.5F), "seashelf",
-				shelf(Material.STONE, 1.5F), "infused_seashelf",
-				shelf(Material.STONE, 1.5F), "crystal_seashelf",
-				shelf(Material.STONE, 1.5F), "heart_seashelf",
-				shelf(Material.STONE, 2.5F), "dormant_deepshelf",
-				shelf(Material.STONE, 2.5F), "deepshelf",
-				shelf(Material.STONE, 2.5F), "echoing_deepshelf",
-				shelf(Material.STONE, 2.5F), "soul_touched_deepshelf",
-				shelf(Material.STONE, 3.5F), "echoing_sculkshelf",
-				shelf(Material.STONE, 3.5F), "soul_touched_sculkshelf",
-				shelf(Material.STONE, 4.5F), "endshelf",
-				shelf(Material.STONE, 4.5F), "pearl_endshelf",
-				shelf(Material.STONE, 5F), "draconic_endshelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "hellshelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "infused_hellshelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "blazing_hellshelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "glowing_hellshelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_WATER), "seashelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_WATER), "infused_seashelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_WATER), "crystal_seashelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_WATER), "heart_seashelf",
+				shelf(Material.STONE, 2.5F, Particles.ENCHANT_SCULK), "dormant_deepshelf",
+				shelf(Material.STONE, 2.5F, Particles.ENCHANT_SCULK), "deepshelf",
+				shelf(Material.STONE, 2.5F, Particles.ENCHANT_SCULK), "echoing_deepshelf",
+				shelf(Material.STONE, 2.5F, Particles.ENCHANT_SCULK), "soul_touched_deepshelf",
+				shelf(Material.STONE, 3.5F, Particles.ENCHANT_SCULK), "echoing_sculkshelf",
+				shelf(Material.STONE, 3.5F, Particles.ENCHANT_SCULK), "soul_touched_sculkshelf",
+				shelf(Material.STONE, 4.5F, Particles.ENCHANT_END), "endshelf",
+				shelf(Material.STONE, 4.5F, Particles.ENCHANT_END), "pearl_endshelf",
+				shelf(Material.STONE, 5F, Particles.ENCHANT_END), "draconic_endshelf",
 				shelf(Material.WOOD, 0.75F), "beeshelf",
 				shelf(Material.WOOD, 0.75F), "melonshelf",
 				shelf(Material.STONE, 1.25F), "stoneshelf",
 				new EnchLibraryBlock(BasicLibraryTile::new, 16), "library",
 				new EnchLibraryBlock(EnderLibraryTile::new, 31), "ender_library",
-				shelf(Material.STONE, 1.5F), "rectifier",
-				shelf(Material.STONE, 1.5F), "rectifier_t2",
-				shelf(Material.STONE, 1.5F), "rectifier_t3",
-				shelf(Material.STONE, 1.5F), "sightshelf",
-				shelf(Material.STONE, 1.5F), "sightshelf_t2"
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_WATER), "rectifier",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "rectifier_t2",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_END), "rectifier_t3",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "sightshelf",
+				shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "sightshelf_t2"
 				);
 		//Formatter::on
 		PlaceboUtil.registerOverride(Blocks.ENCHANTING_TABLE, new ApothEnchantBlock(), Apotheosis.MODID);
 	}
 
 	private static Block shelf(Material mat, float strength) {
+		return shelf(mat, strength, () -> ParticleTypes.ENCHANT);
+	}
+
+	private static Block shelf(Material mat, float strength, Supplier<? extends ParticleOptions> particle) {
 		var props = BlockBehaviour.Properties.of(mat).strength(strength);
 		props.sound(mat == Material.STONE ? SoundType.STONE : SoundType.WOOD);
 		if (mat == Material.STONE) props.requiresCorrectToolForDrops();
-		return new Block(props);
+		return new TypedShelfBlock(props, particle);
 	}
 
 	@SubscribeEvent

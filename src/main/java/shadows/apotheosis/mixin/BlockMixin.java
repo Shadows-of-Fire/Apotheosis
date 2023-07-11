@@ -22,9 +22,10 @@ import net.minecraft.world.phys.Vec3;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
+import shadows.apotheosis.ench.api.IEnchantingBlock;
 
 @Mixin(Block.class)
-public class BlockMixin {
+public abstract class BlockMixin implements IEnchantingBlock {
 
 	@Inject(at = @At("HEAD"), method = "dropResources(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V")
 	private static void apoth_telepathicHead(BlockState pState, Level pLevel, BlockPos pPos, @Nullable BlockEntity pBlockEntity, Entity pEntity, ItemStack pTool, CallbackInfo ci) {

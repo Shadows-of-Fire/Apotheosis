@@ -7,7 +7,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractCandleBlock;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import shadows.apotheosis.ench.objects.IEnchantingBlock;
+import shadows.apotheosis.ench.api.IEnchantingBlock;
 
 @Mixin(CandleBlock.class)
 public abstract class CandleBlockMixin extends AbstractCandleBlock implements IEnchantingBlock {

@@ -3,7 +3,6 @@ package shadows.apotheosis.ench.table;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
@@ -21,6 +20,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import shadows.apotheosis.ench.api.IEnchantingBlock;
 import shadows.placebo.util.IReplacementBlock;
 
 public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplacementBlock {
@@ -77,25 +77,10 @@ public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplace
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-		for (int i = -2; i <= 2; ++i) {
-			for (int j = -2; j <= 2; ++j) {
-				if (i > -2 && i < 2 && j == -1) {
-					j = 2;
-				}
+		for (BlockPos offset : BOOKSHELF_OFFSETS) {
 
-				if (rand.nextInt(16) == 0) {
-					for (int k = 0; k <= 1; ++k) {
-						BlockPos blockpos = pos.offset(i, k, j);
-						if (EnchantingStatManager.getEterna(level.getBlockState(blockpos), level, blockpos) > 0) {
-							if (!level.isEmptyBlock(pos.offset(i / 2, 0, j / 2))) {
-								break;
-							}
-
-							level.addParticle(ParticleTypes.ENCHANT, pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, i + rand.nextFloat() - 0.5D, k - rand.nextFloat() - 1.0F, j + rand.nextFloat() - 0.5D);
-						}
-					}
-				}
-			}
+			BlockState shelfState = level.getBlockState(pos.offset(offset));
+			((IEnchantingBlock) shelfState.getBlock()).spawnTableParticle(shelfState, level, rand, pos, offset);
 		}
 
 	}

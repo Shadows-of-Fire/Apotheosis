@@ -1,4 +1,4 @@
-package shadows.apotheosis.ench;
+package shadows.apotheosis.ench.objects;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

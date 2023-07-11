@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.particle.EnchantmentTableParticle;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.core.BlockPos;
@@ -24,11 +25,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apoth.Particles;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.library.EnchLibraryScreen;
 import shadows.apotheosis.ench.table.ApothEnchantScreen;
@@ -125,5 +128,13 @@ public class EnchModuleClient {
 		BlockEntityRenderers.register(BlockEntityType.ENCHANTING_TABLE, EnchantTableRenderer::new);
 		MenuScreens.register(Apoth.Menus.ENCHANTING_TABLE.get(), ApothEnchantScreen::new);
 		MenuScreens.register(Apoth.Menus.LIBRARY.get(), EnchLibraryScreen::new);
+	}
+
+	@SubscribeEvent
+	public static void particleFactories(RegisterParticleProvidersEvent e) {
+		e.register(Particles.ENCHANT_FIRE.get(), EnchantmentTableParticle.Provider::new);
+		e.register(Particles.ENCHANT_WATER.get(), EnchantmentTableParticle.Provider::new);
+		e.register(Particles.ENCHANT_SCULK.get(), EnchantmentTableParticle.Provider::new);
+		e.register(Particles.ENCHANT_END.get(), EnchantmentTableParticle.Provider::new);
 	}
 }
