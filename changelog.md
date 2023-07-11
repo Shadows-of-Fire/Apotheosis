@@ -6,18 +6,19 @@
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.
 
 ### Adventure Module
+![](https://i.imgur.com/2v0dDxm.png)
 #### New Content
-* Converted all Attributes content to the new AttributesLib submodule.
-  * This will eventually be pulled out as an API/Library (likely in 1.20).
-* Added an Attributes Menu, accessible via the Sword Button in the top right of the player view.
-  * This menu displays all of your attributes, a description, and all modifiers to those stats.
-  * It also displays the base, min, and max values of those stats.
-* Added six new attributes:
-  * `apotheosis:armor_pierce`, `apotheosis:armor_shred`, `apotheosis:prot_pierce`, and `apotheosis:prot_shred` can reduce the target's defensive stats.
-  * These are flat-value and percentage reductions for Armor and Protection, respectively.
-  * `apotheosis:healing_received` modifies all incoming healing.
-  * `apotheosis:dodge_chance` gives a chance to negate incoming melee or projectile damage.
+* All gems have received a texture update, and there are many new gems as well!
+  * There are now at least two gems for each dimension, including the Twilight Forest.
 * The Gem Cutting Table has a brand new interface.
+* All gems will now be shown in JEI.
+* The Salvaging Table can now be automated!
+  * Inserted items will be automatically salvaged and placed in the output inventory.
+  * The output inventory can be extracted from.
+* Salvaging now yields a different amount of gem dust per rarity.
+  * The `U` key (recipe lookup button) now works properly for gems.
+* Elytras (and potentially other non-armor equippable items) can now be affixed.
+* Towers have returned, and now have more variants than just the default one.
 
 #### Balance Changes
 * This list is (unfortunately) non-exhaustive. There are a ton of changes in this update!
@@ -51,21 +52,14 @@ Welcome to the largest update to Apotheosis to date! There's a lot of changes he
   * New Apoth Calculations are: DR = 2.5% * prot points, up to 85%.
 * Gem Facets have been removed. Gem stats will now be strictly tied to their rarity level.
   * As a side effect, most gems have been updated.
-* Many new gems have been added!
 * Effects that ignore durability damage now have diminishing returns.
 
-#### Other Changes
+#### Other Changes / Bugfixes
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
 * Affix Item and Gem drop chances have been reduced.
   * The chance for a random affix item to be added to an entity was erroneously at 24%, it has been reduced to 7.5%.
   * The "literal" Gem drop chances have not been changed, but the "effective" chance was reduced as a side effect of fixing the config.
-* All gems will now be shown in JEI.
 * Fixed the crit chance / crit damage default value issue once again (was reintroduced in 6.2.0).
-* The Salvaging Table can now be automated!
-  * Inserted items will be automatically salvaged and placed in the output inventory.
-  * The output inventory can be extracted from.
-* Salvaging now yields a different amount of gem dust per rarity.
-  * The `U` key (recipe lookup button) now works properly for gems.
 * Added a validator that ensures the proper number of affixes exist for any given category/rarity combination.
 * Fixed a crash with boss spawners in invalid dimensions.
 * The Thunderstruck Affix (Light Weapon AOE damage) now properly does player damage.
@@ -73,9 +67,10 @@ Welcome to the largest update to Apotheosis to date! There's a lot of changes he
 * Fixed durability gems not applying.
 * Fixed an issue where the Catalyzing affix would give infinite durations of strength.
 * Added a fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
-* Elytras (and potentially other non-armor equippable items) can now be affixed.
 
 ### Enchanting Module
+![](https://i.imgur.com/E24XAW3.png)
+#### New Content
 * Added Deepshelves and Sculkshelves, new Deep-Dark based bookshelves that slot in before Endshelves.
 * The stats of many bookshelves have been updated.
 * Reworked the progression of the Enchantment Module.
@@ -87,19 +82,37 @@ Welcome to the largest update to Apotheosis to date! There's a lot of changes he
   * You'll need access to the highest level of the previous stage before proceeding to the next stage.
 * The Enchantment Library can now be crafted with Infused Hellshelves, Infused Seashelves, and Deepshelves, instead of just Infused Hellshelves.
 * A chapter has been added to the Chronicle of Shadows detailing the progression.
-* The recipe for making Unbreakable Potion Charms has been updated.
 * Added the Stoneshelf, which can reduce your Arcana through its sheer mundane-ness.
-* Candles will now give more Arcana if stacked within a single block (up to 5% with 4 candles in one block).
+
+
+#### Balance Changes
 * Berserker's Fury has been adjusted:
   * Potion effect duration is now 25s at all levels.
   * Health cost is now 2.5^level instead of level * level.
   * The effect now has a 45s cooldown between triggers.
+* The recipe for making Unbreakable Potion Charms has been updated.
+* Candles will now give more Arcana if stacked within a single block (up to 5% with 4 candles in one block).
 
-### Potion Module
+### Core Libraries
+Core libraries are parts of Apotheosis which contain content needed by multiple modules.  
+They cannot be disabled, and their content will always be enabled.
+#### MobFX
 * The implementation of the effects have been moved to the MobFX core library.
   * This means that the new effects are available even if the potion module is disabled.
   * The potions for the effects are still part of the potion module.
   * Note for non-technical users: An `Effect` is the actual effect (Strength, Speed, etc), while a `Potion` refers to an `Effect` + level + duration that can be applied to a potion item.
+
+#### Attributes Lib
+* Moved all Attributes from the Adventure Module to the AttributesLib core library.
+  * This will eventually be pulled out as an API/Library (likely in 1.20).
+* Added an Attributes Menu, accessible via the Sword Button in the top right of the player view.
+  * This menu displays all of your attributes, a description, and all modifiers to those stats.
+  * It also displays the base, min, and max values of those stats.
+* Added six new attributes:
+  * `apotheosis:armor_pierce`, `apotheosis:armor_shred`, `apotheosis:prot_pierce`, and `apotheosis:prot_shred` can reduce the target's defensive stats.
+  * These are flat-value and percentage reductions for Armor and Protection, respectively.
+  * `apotheosis:healing_received` modifies all incoming healing.
+  * `apotheosis:dodge_chance` gives a chance to negate incoming melee or projectile damage.
 
 ## 6.2.1
 * Fixed an issue with mounted bosses causing a crash.
