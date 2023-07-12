@@ -3,8 +3,8 @@
 		"type": "forge:mod_loaded",
 		"modid": "twilightforest"
 	}],
-	"weight": 4,
-	"quality": 1,
+	"weight": 5,
+	"quality": 1.5,
 	"dimensions": [
 		"twilightforest:twilight_forest"
 	],

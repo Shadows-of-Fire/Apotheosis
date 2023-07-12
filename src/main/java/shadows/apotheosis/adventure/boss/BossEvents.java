@@ -112,7 +112,7 @@ public class BossEvents {
 			if (item != null && !item.isExcluded(mob, sLevel, e.getSpawnReason()) && sLevel.getRandom().nextFloat() <= item.getChance()) {
 				mob.getPersistentData().putString("apoth.miniboss", item.getId().toString());
 				mob.getPersistentData().putFloat("apoth.miniboss.luck", player.getLuck());
-				e.setCanceled(true);
+				if (!item.shouldFinalize()) e.setCanceled(true);
 			}
 		}
 	}

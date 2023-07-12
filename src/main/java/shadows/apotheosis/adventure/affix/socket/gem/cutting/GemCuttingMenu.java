@@ -34,7 +34,12 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
 	protected final Player player;
 	protected final ContainerLevelAccess access;
-	protected final InternalItemHandler inv = new InternalItemHandler(4);
+	protected final InternalItemHandler inv = new InternalItemHandler(4) {
+		@Override
+		public int getSlotLimit(int slot) {
+			return slot == 0 ? 1 : super.getSlotLimit(slot);
+		};
+	};
 
 	public GemCuttingMenu(int id, Inventory playerInv) {
 		this(id, playerInv, ContainerLevelAccess.NULL);
@@ -150,7 +155,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 		public boolean matches(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
 			GemInstance g = GemInstance.unsocketed(gem);
 			GemInstance g2 = GemInstance.unsocketed(bot);
-			if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem()) return false;
+			if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem() || g.rarity() != g2.rarity()) return false;
 			if (g.rarity() == LootRarity.ANCIENT) return false;
 			if (left.getItem() != Apoth.Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity())) return false;
 			LootRarity matRarity = LootRarity.getMaterialRarity(right);

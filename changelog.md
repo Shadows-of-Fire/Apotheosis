@@ -1,6 +1,5 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
-* [NYI] Added affixes for Bursting Vitality and Grevious Wounds.
 
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  
@@ -57,6 +56,8 @@ If you use AttributeFix, update and reset their config as well!
 * Effects that ignore durability damage now have diminishing returns.
 
 #### Other Changes / Bugfixes
+* Gems can now stack up to 64, for gems of the same type and rarity.
+* Fixed exact duplicates of gems not working properly when having both socketed.
 * Fixed Gem Loot Rules not being applied at all (gem drops were using the Affix Loot Rules).
 * Affix Item and Gem drop chances have been reduced.
   * The chance for a random affix item to be added to an entity was erroneously at 24%, it has been reduced to 7.5%.
@@ -65,13 +66,13 @@ If you use AttributeFix, update and reset their config as well!
 * Added a validator that ensures the proper number of affixes exist for any given category/rarity combination.
 * Fixed a crash with boss spawners in invalid dimensions.
 * The Thunderstruck Affix (Light Weapon AOE damage) now properly does player damage.
-* Potential fix for duplicated Gem UUIDs causing exact copies to not function.
 * Fixed durability gems not applying.
 * Fixed an issue where the Catalyzing affix would give infinite durations of strength.
 * Added a fix for [MC-92017](https://bugs.mojang.com/browse/MC-92017), which means you can now block TNT.
 * Horses spawned with Undead Knights will now burn in daylight. Not retroactive.
 * Bosses will no longer spawn on the main end island.
   * This change can be reverted by changing the boss spawn rules for the end dimension.
+* Added the `finalize` field to minibosses, to allow Mob#finalizeSpawn to still be called.
 
 ### Enchanting Module
 ![](https://i.imgur.com/E24XAW3.png)

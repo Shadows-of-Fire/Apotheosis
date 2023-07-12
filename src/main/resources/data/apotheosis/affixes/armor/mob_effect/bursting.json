@@ -1,0 +1,33 @@
+{
+	"type": "apotheosis:mob_effect",
+	"mob_effect": "apotheosis:vitality",
+	"target": "HURT_SELF",
+	"values": {
+		"epic": {
+			"duration": 1,
+			"amplifier": 0,
+			"cooldown": 300
+		},
+		"mythic": {
+			"duration": 200,
+			"amplifier": {
+				"min": 0,
+				"steps": 4,
+				"step": 0.3
+			},
+			"cooldown": 600
+		},
+		"ancient": {
+			"duration": 200,
+			"amplifier": {
+				"min": 1,
+				"steps": 1,
+				"step": 1
+			},
+			"cooldown": 500
+		}
+	},
+	"types": [
+		"chestplate", "leggings"
+	]
+}

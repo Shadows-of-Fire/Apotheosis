@@ -3,8 +3,8 @@
 		"type": "apotheosis:module",
 		"module": "enchantment"
 	}],
-	"weight": 12,
-	"quality": 0.75,
+	"weight": 5,
+	"quality": 1.5,
 	"dimensions": [
 		"the_nether"
 	],

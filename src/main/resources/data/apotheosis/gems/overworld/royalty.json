@@ -1,6 +1,6 @@
 {
-	"weight": 8,
-	"quality": 0.5,
+	"weight": 5,
+	"quality": 1.5,
 	"dimensions": ["minecraft:overworld"],
 	"unique": true,
 	"min_rarity": "rare",

@@ -101,7 +101,7 @@ public class AttributeAffix extends Affix {
 
 		private static UUID getOrCreateUUID(ItemStack stack, ResourceLocation id) {
 			CompoundTag tag = stack.getTagElement(AffixHelper.AFFIX_DATA);
-			return GemItem.getUUIDs(tag, 1).get(0);
+			return GemItem.getOrCreateUUIDs(tag, 1).get(0);
 		}
 
 		public AttributeModifier build(ItemStack stack, ResourceLocation id, float level) {

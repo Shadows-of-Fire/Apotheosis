@@ -4,7 +4,7 @@
 		"modid": "twilightforest"
 	}],
 	"weight": 5,
-	"quality": 0.75,
+	"quality": 1.5,
 	"dimensions": [
 		"twilightforest:twilight_forest"
 	],
@@ -77,10 +77,10 @@
 				]
 			},
 			"values": {
-				"rare": 14,
-				"epic": 12,
-				"mythic": 10,
-				"ancient": 6
+				"rare": 24,
+				"epic": 20,
+				"mythic": 16,
+				"ancient": 12
 			}
 		},
 		{

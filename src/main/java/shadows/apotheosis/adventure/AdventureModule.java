@@ -164,7 +164,7 @@ public class AdventureModule {
 
 	@SubscribeEvent
 	public void items(Register<Item> e) {
-		e.getRegistry().register(new GemItem(new Item.Properties().stacksTo(1)), "gem");
+		e.getRegistry().register(new GemItem(new Item.Properties()), "gem");
 		e.getRegistry().register(new BossSummonerItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "boss_summoner");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_dust");
 		e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_extraction");

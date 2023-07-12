@@ -1,6 +1,6 @@
 {
-	"weight": 3,
-	"quality": 0.25,
+	"weight": 5,
+	"quality": 1.5,
 	"min_rarity": "epic",
 	"dimensions": [
 		"the_end"

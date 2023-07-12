@@ -96,14 +96,10 @@ public class GemItem extends Item {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-		CompoundTag tag = stack.getOrCreateTag();
-		if (!tag.getBoolean(HAS_REFRESHED)) {
-			// To attempt to solve the "duplicated UUIDs problem that is introduced by duplicating gems, we refresh the UUIDs on first inventory tick.
-			Gem gem = getGem(stack);
-			if (gem == null) return;
-			generateAndSave(new ArrayList<>(), gem.getNumberOfUUIDs(), tag);
-			tag.putBoolean(HAS_REFRESHED, true);
-		}
+		// TODO: Remove 6.4.0 - Gems of the same type and rarity should stack, and UUIDs should not be generated until socketing time.
+		// However, old gems will have their UUIDs encoded, and as such will need to be datafixed.
+		CompoundTag tag = stack.getTag();
+		if (tag != null) tag.remove(UUID_ARRAY);
 	}
 
 	/**
@@ -116,7 +112,7 @@ public class GemItem extends Item {
 	public static List<UUID> getUUIDs(ItemStack gemStack) {
 		Gem gem = getGem(gemStack);
 		if (gem == null) return Collections.emptyList();
-		return getUUIDs(gemStack.getOrCreateTag(), gem.getNumberOfUUIDs());
+		return getOrCreateUUIDs(gemStack.getOrCreateTag(), gem.getNumberOfUUIDs());
 	}
 
 	/**
@@ -124,7 +120,7 @@ public class GemItem extends Item {
 	 * @param gem The gem stack
 	 * @returns The stored UUID(s), creating them if they do not exist.
 	 */
-	public static List<UUID> getUUIDs(CompoundTag tag, int numUUIDs) {
+	public static List<UUID> getOrCreateUUIDs(CompoundTag tag, int numUUIDs) {
 		if (numUUIDs == 0) return Collections.emptyList();
 		if (tag.contains(UUID_ARRAY)) {
 			ListTag list = tag.getList(UUID_ARRAY, Tag.TAG_INT_ARRAY);

@@ -116,6 +116,13 @@ public class AdventureEvents {
 			Entity shooter = arrow.getOwner();
 			if (shooter instanceof LivingEntity living) {
 				ItemStack bow = living.getUseItem();
+				if (bow.isEmpty()) {
+					bow = living.getMainHandItem();
+					if (bow.isEmpty() || !LootCategory.forItem(bow).isRanged()) {
+						bow = living.getOffhandItem();
+					}
+				}
+				if (bow.isEmpty()) return;
 				Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(bow);
 				affixes.values().forEach(a -> {
 					a.onArrowFired(living, arrow);

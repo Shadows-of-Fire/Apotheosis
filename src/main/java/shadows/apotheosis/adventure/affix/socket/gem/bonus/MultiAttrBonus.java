@@ -60,10 +60,9 @@ public class MultiAttrBonus extends GemBonus {
 	@Override
 	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
 		Object[] values = new Object[modifiers.size() * 2];
-		List<UUID> uuids = GemItem.getUUIDs(gem);
 		int i = 0;
 		for (ModifierInst modifier : modifiers) {
-			values[i] = IFormattableAttribute.toComponent(modifier.attr, modifier.build(uuids.get(i), rarity), AttributesLib.getTooltipFlag());
+			values[i] = IFormattableAttribute.toComponent(modifier.attr, modifier.build(UUID.randomUUID(), rarity), AttributesLib.getTooltipFlag());
 			values[modifiers.size() + i] = IFormattableAttribute.toValueComponent(modifier.attr, modifier.op, i, AttributesLib.getTooltipFlag());
 			i++;
 		}

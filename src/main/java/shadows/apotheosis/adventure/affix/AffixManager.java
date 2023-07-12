@@ -56,7 +56,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 		CachedObject.invalidateAll(AffixHelper.AFFIX_CACHED_OBJECT);
 		if (!FMLEnvironment.production) {
 			StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
-			String json = "\"%s\": \"\"";
+			String json = "\"%s\": \"\",";
 			for (Affix a : this.getValues()) {
 				if (!I18n.exists("affix." + a.getId())) {
 					sb.append(json.formatted("affix." + a.getId()) + "\n");

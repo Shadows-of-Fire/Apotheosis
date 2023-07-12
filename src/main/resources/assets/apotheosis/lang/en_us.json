@@ -384,25 +384,31 @@
 	"affix.apotheosis:armor/dmg_reduction/feathery": "Feathery",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "of the Eagle",
 
-	"affix.apotheosis:shield/attribute/stalwart": "Stalwart"
-	"affix.apotheosis:shield/attribute/stalwart.suffix": "of Stubbornness"
+	"affix.apotheosis:shield/attribute/stalwart": "Stalwart",
+	"affix.apotheosis:shield/attribute/stalwart.suffix": "of Stubbornness",
 
-	"affix.apotheosis:armor/attribute/spiritual": "Spiritual"
-	"affix.apotheosis:armor/attribute/spiritual.suffix": "of the Witch Doctor"
+	"affix.apotheosis:armor/attribute/spiritual": "Spiritual",
+	"affix.apotheosis:armor/attribute/spiritual.suffix": "of the Witch Doctor",
 	
-	"affix.apotheosis:breaker/attribute/lucky": "Lucky"
-	"affix.apotheosis:breaker/attribute/lucky.suffix": "of the Serendipitous"
+	"affix.apotheosis:breaker/attribute/lucky": "Lucky",
+	"affix.apotheosis:breaker/attribute/lucky.suffix": "of the Serendipitous",
 
-	"affix.apotheosis:heavy_weapon/attribute/nullifying": "Nullifying"
-	"affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "of the Magebreaker"
+	"affix.apotheosis:heavy_weapon/attribute/nullifying": "Nullifying",
+	"affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "of the Magebreaker",
 
-	"affix.apotheosis:sword/attribute/spellbreaking": "Spellbreaking"
-	"affix.apotheosis:sword/attribute/spellbreaking.suffix": "of the Petricite Golem"
-	
-	"affix.apotheosis:socket": ""
-	"affix.apotheosis:socket.suffix": ""
-	"affix.apotheosis:durable": ""
-	"affix.apotheosis:durable.suffix": ""
+	"affix.apotheosis:sword/attribute/spellbreaking": "Spellbreaking",
+	"affix.apotheosis:sword/attribute/spellbreaking.suffix": "of the Petricite Golem",
+
+	"affix.apotheosis:ranged/mob_effect/grievous": "Grievous",
+	"affix.apotheosis:ranged/mob_effect/grievous.suffix": "of Wounding",
+
+	"affix.apotheosis:armor/mob_effect/bursting": "Bursting",
+	"affix.apotheosis:armor/mob_effect/bursting.suffix": "of Vitality",
+
+	"affix.apotheosis:socket": "",
+	"affix.apotheosis:socket.suffix": "",
+	"affix.apotheosis:durable": "",
+	"affix.apotheosis:durable.suffix": "",
 
 	"affix.apotheosis.target.attack_self": "On hit, gain %s",
 	"affix.apotheosis.target.attack_target": "On hit, inflict %s",

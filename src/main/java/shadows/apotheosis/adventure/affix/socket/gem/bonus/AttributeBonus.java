@@ -1,6 +1,7 @@
 package shadows.apotheosis.adventure.affix.socket.gem.bonus;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 import com.google.common.base.Preconditions;
@@ -48,12 +49,12 @@ public class AttributeBonus extends GemBonus {
 
 	@Override
 	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
-		map.accept(this.attribute, read(gem, rarity));
+		map.accept(this.attribute, read(gem, rarity, GemItem.getUUIDs(gem).get(0)));
 	}
 
 	@Override
 	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-		return IFormattableAttribute.toComponent(this.attribute, read(gem, rarity), AttributesLib.getTooltipFlag());
+		return IFormattableAttribute.toComponent(this.attribute, read(gem, rarity, UUID.randomUUID()), AttributesLib.getTooltipFlag());
 	}
 
 	@Override
@@ -74,8 +75,8 @@ public class AttributeBonus extends GemBonus {
 		return 1;
 	}
 
-	public AttributeModifier read(ItemStack gem, LootRarity rarity) {
-		return new AttributeModifier(GemItem.getUUIDs(gem).get(0), "apoth.gem_modifier", this.values.get(rarity).get(0), this.operation);
+	public AttributeModifier read(ItemStack gem, LootRarity rarity, UUID id) {
+		return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity).get(0), this.operation);
 	}
 
 	@Override

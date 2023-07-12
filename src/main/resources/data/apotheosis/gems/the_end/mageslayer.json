@@ -1,6 +1,6 @@
 {
-	"weight": 3,
-	"quality": 0.25,
+	"weight": 5,
+	"quality": 1.5,
 	"dimensions": ["minecraft:the_end"],
 	"unique": true,
 	"min_rarity": "epic",

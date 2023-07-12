@@ -38,6 +38,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
@@ -82,7 +83,8 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 			NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
 			SupportingEntity.CODEC.listOf().optionalFieldOf("supporting_entities", Collections.emptyList()).forGetter(a -> a.support),
 			SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)),
-			Exclusion.CODEC.listOf().optionalFieldOf("exclusions", Collections.emptyList()).forGetter(a -> a.exclusions))
+			Exclusion.CODEC.listOf().optionalFieldOf("exclusions", Collections.emptyList()).forGetter(a -> a.exclusions),
+			Codec.BOOL.optionalFieldOf("finalize", false).forGetter(a -> a.finalize))
 		.apply(inst, MinibossItem::new)
 	);
 	//Formatter::on
@@ -165,7 +167,18 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 	 */
 	protected final List<Exclusion> exclusions;
 
-	public MinibossItem(int weight, float quality, float chance, String name, Set<EntityType<?>> entities, BossStats stats, Optional<Set<String>> stages, Set<ResourceLocation> dimensions, boolean affixed, List<SetPredicate> gearSets, Optional<CompoundTag> nbt, List<SupportingEntity> support, Optional<SupportingEntity> mount, List<Exclusion> exclusions) {
+	/**
+	 * If true, the SpecialSpawn/FinalizeSpawn event is not cancelled, and {@link Mob#finalizeSpawn} will still be called.<br>
+	 * Finalization will happen before the miniboss data is applied, since miniboss data is delayed until {@link EntityJoinLevelEvent}.
+	 */
+	protected final boolean finalize;
+
+	//Formatter::off
+	public MinibossItem(int weight, float quality, float chance, 
+			String name, Set<EntityType<?>> entities, BossStats stats, 
+			Optional<Set<String>> stages, Set<ResourceLocation> dimensions, boolean affixed, 
+			List<SetPredicate> gearSets, Optional<CompoundTag> nbt, List<SupportingEntity> support, 
+			Optional<SupportingEntity> mount, List<Exclusion> exclusions, boolean finalize) {
 		this.weight = weight;
 		this.quality = quality;
 		this.chance = chance;
@@ -180,7 +193,9 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 		this.support = support;
 		this.mount = mount.orElse(null);
 		this.exclusions = exclusions;
+		this.finalize = finalize;
 	}
+	//Formatter::on
 
 	@Override
 	public int getWeight() {
@@ -390,6 +405,10 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 	public boolean isExcluded(Mob mob, ServerLevelAccessor level, MobSpawnType type) {
 		CompoundTag tag = requiresNbtAccess() ? mob.saveWithoutId(new CompoundTag()) : null;
 		return this.exclusions.stream().anyMatch(ex -> ex.isExcluded(mob, level, type, tag));
+	}
+
+	public boolean shouldFinalize() {
+		return this.finalize;
 	}
 
 }

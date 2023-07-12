@@ -1,0 +1,56 @@
+{
+	"type": "apotheosis:mob_effect",
+	"mob_effect": "apotheosis:grievous",
+	"target": "ARROW_TARGET",
+	"values": {
+		"rare": {
+			"duration": {
+				"min": 200,
+				"steps": 3,
+				"step": 20
+			},
+			"amplifier": 0,
+			"cooldown": 500
+		},
+		"epic": {
+			"duration": {
+				"min": 200,
+				"steps": 5,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 4,
+				"step": 0.26
+			},
+			"cooldown": 500
+		},
+		"mythic": {
+			"duration": {
+				"min": 200,
+				"steps": 5,
+				"step": 20
+			},
+			"amplifier": {
+				"min": 0,
+				"steps": 4,
+				"step": 0.26
+			},
+			"cooldown": 400
+		},
+		"ancient": {
+			"duration": {
+				"min": 100,
+				"steps": 5,
+				"step": 20
+			},
+			"amplifier": 2,
+			"cooldown": 400
+		}
+	},
+	"types": [
+		"bow",
+		"crossbow",
+		"trident"
+	]
+}
