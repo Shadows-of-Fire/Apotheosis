@@ -6,8 +6,8 @@
 	"values": {
 		"epic": {
 			"duration": {
-				"min": 60,
-				"steps": 4,
+				"min": 80,
+				"steps": 3,
 				"step": 20
 			},
 			"amplifier": {
@@ -15,12 +15,12 @@
 				"steps": 4,
 				"step": 0.26
 			},
-			"cooldown": 100
+			"cooldown": 40
 		},
 		"mythic": {
 			"duration": {
-				"min": 60,
-				"steps": 4,
+				"min": 80,
+				"steps": 3,
 				"step": 20
 			},
 			"amplifier": {
@@ -28,16 +28,16 @@
 				"steps": 4,
 				"step": 0.26
 			},
-			"cooldown": 100
+			"cooldown": 40
 		},
 		"ancient": {
 			"duration": {
-				"min": 40,
-				"steps": 4,
+				"min": 80,
+				"steps": 3,
 				"step": 20
 			},
 			"amplifier": 2,
-			"cooldown": 80
+			"cooldown": 40
 		}
 	},
 	"types": [

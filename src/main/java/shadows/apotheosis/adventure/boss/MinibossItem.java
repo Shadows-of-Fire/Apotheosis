@@ -225,7 +225,6 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 	public void transformMiniboss(ServerLevelAccessor level, Mob mob, RandomSource random, float luck) {
 		var pos = mob.getPosition(0);
 		if (this.nbt != null) {
-			mob.load(this.nbt);
 			if (this.nbt.contains(Entity.PASSENGERS_TAG)) {
 				ListTag passengers = this.nbt.getList(Entity.PASSENGERS_TAG, 10);
 				for (int i = 0; i < passengers.size(); ++i) {
@@ -238,8 +237,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 		}
 		mob.setPos(pos);
 		this.initBoss(random, mob, luck);
-		// Re-read here so we can apply certain things after the boss has been modified
-		// But only mob-specific things, not a full load()
+		// readAdditionalSaveData should leave unchanged any tags that are not in the NBT data.
 		if (this.nbt != null) mob.readAdditionalSaveData(this.nbt);
 
 		if (this.mount != null) {

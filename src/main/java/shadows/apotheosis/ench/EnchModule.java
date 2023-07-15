@@ -99,6 +99,7 @@ import shadows.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import shadows.apotheosis.ench.objects.ScrappingTomeItem;
 import shadows.apotheosis.ench.objects.TomeItem;
 import shadows.apotheosis.ench.objects.TypedShelfBlock;
+import shadows.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
 import shadows.apotheosis.ench.objects.WardenLootModifier;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
 import shadows.apotheosis.ench.replacements.DefenseEnchant;
@@ -303,8 +304,8 @@ public class EnchModule {
 				shelf(Material.STONE, 2.5F, Particles.ENCHANT_SCULK), "deepshelf",
 				shelf(Material.STONE, 2.5F, Particles.ENCHANT_SCULK), "echoing_deepshelf",
 				shelf(Material.STONE, 2.5F, Particles.ENCHANT_SCULK), "soul_touched_deepshelf",
-				shelf(Material.STONE, 3.5F, Particles.ENCHANT_SCULK), "echoing_sculkshelf",
-				shelf(Material.STONE, 3.5F, Particles.ENCHANT_SCULK), "soul_touched_sculkshelf",
+				sculkShelf(3.5F, Particles.ENCHANT_SCULK), "echoing_sculkshelf",
+				sculkShelf(3.5F, Particles.ENCHANT_SCULK), "soul_touched_sculkshelf",
 				shelf(Material.STONE, 4.5F, Particles.ENCHANT_END), "endshelf",
 				shelf(Material.STONE, 4.5F, Particles.ENCHANT_END), "pearl_endshelf",
 				shelf(Material.STONE, 5F, Particles.ENCHANT_END), "draconic_endshelf",
@@ -332,6 +333,11 @@ public class EnchModule {
 		props.sound(mat == Material.STONE ? SoundType.STONE : SoundType.WOOD);
 		if (mat == Material.STONE) props.requiresCorrectToolForDrops();
 		return new TypedShelfBlock(props, particle);
+	}
+
+	private static Block sculkShelf(float strength, Supplier<? extends ParticleOptions> particle) {
+		var props = BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(strength).randomTicks().requiresCorrectToolForDrops();
+		return new SculkShelfBlock(props, particle);
 	}
 
 	@SubscribeEvent
