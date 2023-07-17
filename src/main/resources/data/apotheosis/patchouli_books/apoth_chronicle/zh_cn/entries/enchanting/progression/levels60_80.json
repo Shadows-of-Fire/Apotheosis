@@ -1,0 +1,43 @@
+{
+    "name": "60-80级",
+    "icon": "apotheosis:dormant_deepshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "达到70级",
+			"recipe": "apotheosis:dormant_deepshelf",
+			"text": "达到70级需要60级附魔台和获得深板岩。"
+		},
+		{
+            "type": "patchouli:text",
+			"title": "达到70级",
+			"text": "一旦你合成了$(9)休眠深暗书架$()，你就需要灌注它。$(p)这个灌注配方将需要一些额外方块才能达到属性阈值。$(p)完成灌注将生成$(9)深暗书架$()，它可以让你升至70级。"
+		},
+		{
+            "type": "patchouli:text",
+			"title": "达到75级",
+			"text": "要达到75级，你需要升级你的深暗书架。$(p)这样做需要只能在$(9)深暗领域$()找到的材料。$(p)$(9)回响碎片$()可以从远古城市战利品箱子获得，$(9)幽匿块$()可以通过精准采集收集。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "达到75级",
+			"recipe": "apotheosis:echoing_deepshelf",
+			"recipe2": "apotheosis:soul_touched_deepshelf"
+		},
+		{
+            "type": "patchouli:entity",
+			"entity": "minecraft:warden",
+			"title": "达到80级",
+			"scale": 0.95,
+			"text": "达到80级的最后一步需要杀死$(9)监守者$()，它能合成$(9)幽匿书架$()。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "达到80级",
+			"recipe": "apotheosis:echoing_sculkshelf",
+			"recipe2": "apotheosis:soul_touched_sculkshelf"
+		}
+	]
+}
