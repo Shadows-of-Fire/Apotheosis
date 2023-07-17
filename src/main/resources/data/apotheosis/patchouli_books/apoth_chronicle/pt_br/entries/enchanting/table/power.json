@@ -1,24 +1,24 @@
 {
-    "name": "Enchanting Power",
+    "name": "Poder de encantamento",
     "icon": "minecraft:experience_bottle",
     "category": "apotheosis:enchanting/table",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "During the enchanting process, you spend experience and Lapis Lazuli to enchant an item.$(p)But how are the enchantments selected?$(p)The answer to that is Enchanting Power."
+            "text": "Durante o processo de encantamento, você gasta experiência e lápis-lazúli para encantar um item.$(p)Mas como os encantamentos são selecionados?$(p)A resposta para isso é poder de encantamento."
         },
 		{
             "type": "patchouli:text",
-            "text": "First, we'll go over how enchantments are selected.$(p)Each enchantment has a $(5)Power Function$(), which controls what $(fpower) will make a specific level available.$(p)Once all the available enchantments are gathered, some are selected randomly based on their weights."
+            "text": "Primeiro, veremos como os encantamentos são selecionados.$(p)Cada encantamento tem uma $(5)função de poder$(), que controla o que $(#CC00CC)poder final$() disponibilizará em um nível específico.$(p)Depois de tudo os encantamentos disponíveis são reunidos, alguns são selecionados aleatoriamente com base em seus pesos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "But how is $(fpower) calculated? Well, it takes some math.$(p)Intially, you have a $(bpower), which is the level you spent while enchanting.$(p)Then, $(quanta) and Rectification modify your $(bpower) to produce your $(fpower)."
+			"text": "Mas como $(#CC00CC)poder final$() é calculado? Bem, é preciso um pouco de matemática.$(p)Inicialmente, você tem um $(6)poder base$(), que é o nível que você gastou enquanto encantava.$(p)Então, $(#FC5454)quanta$() e a retificação modificam seu $(6)poder base$() para produzir seu $(#CC00CC)poder final$()."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "The specifics of how each stat modifies your $(bpower) can be found in the $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) and $(l:apotheosis:enchanting/table/stats#rectification)Rectification$() entries.$(p)Typically, a higher $(fpower) will get you access to higher level enchantments."
+			"text": "Os detalhes de como cada status modifica seu $(6)poder base$() podem ser encontrados em $(l:apotheosis:enchanting/table/stats#quanta)$(#FC5454)quanta$() e entradas de $(l:apotheosis:enchanting/table/stats#rectification)retificação$().$(p)Normalmente, um $(#CC00CC)poder final$() maior lhe dará acesso a encantamentos de nível superior."
 		}
 	]
 }

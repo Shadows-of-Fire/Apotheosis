@@ -1,5 +1,5 @@
 {
-    "name": "Tome of Scrapping",
+    "name": "Tomo de remoção",
     "icon": "apotheosis:scrap_tome",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
@@ -7,12 +7,23 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Tome of Scrapping is a way of retrieving enchantments from an item.$(p)Combining one with another item in an anvil will destroy the other item, and make a book with some of the enchantments at random."
+            "text": "O tomo de remoção é uma forma de recuperar encantamentos de um item.$(p)Combinar um com outro item em uma bigorna destruirá o outro item e fará um livro com alguns dos encantamentos aleatórios."
         },
 		{
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:scrap_tome",
-			"text": "You will always receive half of the enchantments (rounded up).$(p)The enchantments selected are based on your $(l:apotheosis:enchanting/table/seed)Enchanting Seed$()."
+			"text": "Você sempre receberá metade dos encantamentos (arredondado para cima).$(p)Os encantamentos selecionados são baseados em sua $(l:apotheosis:enchanting/table/seed)semente de encantamento$()."
+		},
+        {
+            "type": "patchouli:spotlight",
+			"title": "Remoção superior",
+			"item": "apotheosis:improved_scrap_tome",
+			"text": "O $(9)tomo de remoção superior$() é uma versão melhorada do tomo de remoção.$(p)Ele extrai todos os encantmentos do item, ao invés da metade deles."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:extraction_tome",
+			"text": "O $(9)tomo de extração$() é uma versão aperfeiçoada do tomo de remoção.$(p)Ele extrai todos os encantamentos de um item e não destrói o item no processo."
 		}
 	]
 }

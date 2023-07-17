@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Resisência da armadura$() é um status que ajusta a eficácia da sua armadura contra ataques de maior dano.$(p)Geralmente fornecido por armaduras e alguns escudos."
+            "text": "$(9)Resistência da armadura$() é uma status que reduz a eficácia da redução de armadura recebida.$(p)Geralmente fornecido por itens de armaduras ou escudos."
         },
 		{
 			"type": "patchouli:text",

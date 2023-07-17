@@ -1,5 +1,5 @@
 {
-    "name": "Life Mending",
+    "name": "Remendo de vida",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(4)Life Mending$() is a corrupted enchantment applicable to all damageable items.$(p)While $(9)Mending$() converts received experience to durability, $(4)Life Mending$() converts received healing to durability.$(p)The durability per health point increases with level."
+            "text": "$(4)Remendo de vida$() é um encantamento corrompido aplicável a todos os itens de dano.$(p)Enquanto $(9)remendo$() converte a experiência recebida em durabilidade, $(4)remendo de vida$() converte a cura recebida em durabilidade.$(p)A durabilidade por ponto de saúde aumenta com o nível."
         },
 		{
             "type": "patchouli:text",
-            "text": "Additionally, this enchantment can be found in the Enchanting Table."
+            "text": "Além disso, esse encantamento pode ser encontrado na mesa de encantamentos."
         }
 	]
 }

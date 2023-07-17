@@ -1,5 +1,5 @@
 {
-    "name": "Obliteration",
+    "name": "Obliteração",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "See $(l:apotheosis:enchanting/anvil/obliteration)Obliteration$()."
+            "text": "Veja $(l:apotheosis:enchanting/anvil/obliteration)obliteração$()."
         }
 	]
 }

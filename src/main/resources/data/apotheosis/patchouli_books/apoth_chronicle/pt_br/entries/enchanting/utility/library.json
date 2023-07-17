@@ -1,5 +1,5 @@
 {
-    "name": "Enchantment Library",
+    "name": "Biblioteca de encantamentos",
     "icon": "apotheosis:library",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
@@ -7,30 +7,30 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "An Enchantment Library is a storage system for Enchantments.$(p)Simply insert enchanted books, and every enchantment on the book will be stored as points."
+            "text": "Uma biblioteca de encantamentos é um sistema de armazenamento de encantamentos.$(p)Basta inserir livros encantados e todos os encantamentos do livro serão armazenados como pontos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "Each library has a $(6)Level Capacity$(), representing the highest level of enchantment it can store.$(p)Excess enchantments are voided."
+			"text": "Cada biblioteca tem uma $(6)capacidade de nível$(), representando o nível mais alto de encantamento que ela pode armazenar.$(p)Os encantamentos em excesso são anulados."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "Clicking on a stored enchantment will extract one level of that enchantment.$(p)Shift-clicking a stored enchantment will extract as many levels as possible.$(p)Books are generated in the output slot as necessary."
+			"text": "Clicar em um encantamento armazenado extrairá um nível desse encantamento.$(p)Clicar com a tecla shift pressionada em um encantamento armazenado extrairá tantos níveis quanto possível.$(p)Livros são gerados no encaixe de saída conforme necessário."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "You may also place a book in the output slot to add enchantments to it.$(p)The library records the max level that has ever been inserted for each enchantment, and can only extract up to that level."
+			"text": "Você também pode colocar um livro no encaixe de saída para adicionar encantamentos a ele. $(p)A biblioteca registra o nível máximo que já foi inserido para cada encantamento e só pode extrair até esse nível."
 		},
 		{
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:library",
-			"text": "The standard $(9)Enchantment Library$() has a $(6)Level Capacity$() of sixteen (XVI)."
+			"text": "A $(9)biblioteca de encantamentos$() padrão tem uma $(6)capacidade de nível$() de dezesseis (XVI)."
 		},
 		{
 			"type": "patchouli:spotlight",
 			"item": "apotheosis:ender_library",
 			"link_recipe": true,
-			"text": "The $(9)Library of Alexandria$() has a $(6)Level Capacity$() of thirty-one (XXXI).$(p)It cannot be crafted directly, and must be created using $(l:apotheosis:enchanting/table/infusion)Infusion Enchanting$()."
+			"text": "A $(9)Biblioteca de Alexandria$() tem $(6)capacidade de nível$() de trinta e um (XXXI).$(p)Não pode ser criada diretamente e deve ser criada usando $(l:apotheosis:enchanting/table/infusion)encantamento de infusão$()."
 		}
 	]
 }

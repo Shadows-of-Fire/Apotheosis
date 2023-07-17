@@ -1,0 +1,13 @@
+{
+    "name": "Perfuração de armadura",
+    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Perfuração de armadura$() permite que você ignore uma quantidade absoluta de armadura do seu alvo ao atacar.$(p)Perfuração de armadura extra pode fazer com que seu alvo tenha armadura negativa."
+        }
+	]
+}

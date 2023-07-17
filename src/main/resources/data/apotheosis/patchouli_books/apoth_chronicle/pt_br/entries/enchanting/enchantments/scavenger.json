@@ -1,5 +1,5 @@
 {
-    "name": "Scavenger",
+    "name": "Carniceiro",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Scavenger$() is a Masterwork enchantment for swords.$(p)It gives a 2.5% chance per level to roll loot drops twice when you kill a mob.$(p)When successful, it will be as if you had just killed two of the same entity."
+            "text": "$(2)Carniceiro$() é um encantamento de obra-prima para espadas.$(p)Dá uma chance de 2,5% por nível de itens caírem duas vezes quando você mata uma criatura.$(p)Quando bem-sucedido, será como se você tivesse matado duas entidades da mesma."
         },
 		{
             "type": "patchouli:text",
-            "text": "This enchantment works on all entities, including bosses like $(8)Withers$().$(p)It also stacks with $(9)Looting$()."
+            "text": "Este encantamento funciona em todas as entidades, incluindo chefes como o $(8)Wither$().$(p)Também acumula com $(9)saque$()."
         }
 	]
 }

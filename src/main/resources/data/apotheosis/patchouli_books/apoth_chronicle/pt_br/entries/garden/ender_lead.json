@@ -1,5 +1,5 @@
 {
-    "name": "Ender Lead",
+    "name": "Laço do ender",
     "icon": "apotheosis:ender_lead",
     "category": "apotheosis:garden/garden",
 	"flag": "apotheosis:garden",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Ender Lead is an item that allows you to capture farm animals.$(p)Punch an animal with the lead to capture it, and right click to release.$(p)Farm animals are usually only those that can be bred."
+            "text": "O laço do ender é um item que permite capturar animais de fazenda.$(p)Lace o animal para capturá-lo e clique com o botão direito para soltá-lo.$(p)Animais de fazenda geralmente são apenas aqueles que podem ser criados."
         },
 		{
             "type": "patchouli:crafting",

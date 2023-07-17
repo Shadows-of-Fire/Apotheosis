@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "When you have $(9)Curios$() installed, you can equip potion charms in the $(9)Charm$() slot.$(p)They'll work the same way they do in the inventory."
+            "text": "Quando você tiver o $(9)Curios$() instalado, poderá equipar amuletos de poção no slot de $(9)amuletos$(). $(p)Eles funcionarão da mesma forma que no inventário."
         }
 	]
 }

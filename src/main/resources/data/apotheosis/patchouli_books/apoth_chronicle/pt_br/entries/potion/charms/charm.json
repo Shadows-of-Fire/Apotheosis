@@ -7,22 +7,22 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A $(9)Potion Charm$() is a brand new item that helps you get the most out of your potions.$(p)See, while a normal potion requires you to drink it and use the whole effect at once, the $(9)Potion Charm$() lets you stagger it."
+            "text": "Um $(9)amuleto de poção$() é um novo item que ajuda você a tirar o máximo proveito de suas poções.$(p)Veja, enquanto uma poção normal exige que você a beba e use todo o efeito de uma vez, o $(9)amuleto de poção$() permite escaloná-lo."
         },
 		{
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:potion_charm",
-			"title": "Potion Charm Crafting",
-            "text": "A charm is made out of three potions of the same type, and some blaze powder.$(p)A single charm lasts longer than the three potions combined."
+			"title": "Criação de amuletos de poção",
+            "text": "Um amuleto é feito de três poções do mesmo tipo e um pouco de pó de chama.$(p)Um único amuleto dura mais do que as três poções combinadas."
         },
 		{
             "type": "patchouli:text",
-			"title": "Using Potion Charms",
-            "text": "A $(9)Potion Charm$() is only active when it is enabled.$(p)To enable a charm, simply right click with it in-hand.$(p)An enabled charm will start glowing."
+			"title": "Usando amuletos de poção",
+            "text": "Um $(9)amuleto de poção$() só fica ativo quando ativado.$(p)Para ativar um amuleto, basta clicar com o botão direito do mouse com ele na mão.$(p)Um Amuleto habilitado começará a brilhar."
         },
 		{
             "type": "patchouli:text",
-            "text": "As long as the charm is active and in your inventory, it will apply the potion to you, consuming durability.$(p)The charm will only apply a couple seconds of potion at a time.$(p)When the charm runs out of durability, it will break."
+            "text": "Enquanto o amuleto estiver ativo e em seu inventário, ele aplicará a poção em você, consumindo durabilidade.$(p)O amuleto só aplicará alguns segundos de poção por vez.$(p)Quando o amuleto acabar de durabilidade, ele vai quebrar."
         }
 	]
 }

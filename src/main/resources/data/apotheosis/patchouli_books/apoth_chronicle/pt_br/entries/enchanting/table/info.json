@@ -1,64 +1,64 @@
 {
-    "name": "The Info Menu",
+    "name": "O menu de informações",
     "icon": "apotheosis:textures/gui/book/question_mark.png",
     "category": "apotheosis:enchanting/table",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The enchanting table has a helpful screen to let you learn about what enchantments are available.$(p)To access it, place an item in the enchanting table, and click the question mark in the top right."
+            "text": "A mesa de encantamento tem uma tela útil para que você saiba quais encantamentos estão disponíveis.$(p)Para acessá-la, coloque um item na mesa de encantamento e clique no ponto de interrogação no canto superior direito."
         },
 		{
 			"type": "patchouli:text",
-			"text": "The purpose of this chapter is to introduce this screen, and help you navigate it.$(p)If you have a full understanding of it, you'll never be confused by enchanting again."
+			"text": "O objetivo deste capítulo é apresentar esta tela e ajudá-lo a navegar por ela.$(p)Se você tiver uma compreensão completa dela, nunca mais ficará confuso ao encantar."
 		},
 		{
             "type": "patchouli:image",
-			"title": "The Slot Selector",
+			"title": "O seletor de encaixe",
 			"images": [
 				"apotheosis:textures/gui/book/slot_selector.png"
 			],
-			"text": "This lets you select which enchanting slot to inspect."
+			"text": "Isso permite que você selecione qual encaixe de encantamento inspecionar."
         },
 		{
 			"type": "patchouli:text",
-			"text": "The currently selected slot will be highlighted, and slots that are not available will be grayed out.$(p)Hovering the slot will show you the level, the $(4)Min Power$() and the $(9)Max Power$()."
+			"text": "O encaixe atualmente selecionado será destacado e os slots que não estiverem disponíveis ficarão acinzentados.$(p)Passar o mouse sobre o encaixe mostrará o nível, o $(4)poder mínimo$() e o $(9)poder máximo$()."
 		},
 		{
             "type": "patchouli:image",
-			"title": "Enchantments Window",
+			"title": "Janela de encantamentos",
 			"images": [
 				"apotheosis:textures/gui/book/enchantments_window.png"
 			],
-			"text": "This shows you what enchantments are available."
+			"text": "Isso mostra quais encantamentos estão disponíveis."
         },
 		{
 			"type": "patchouli:text",
-			"text": "Given the current item, and the currently selected power level, a certain array of enchantments are available.$(p)This window shows you each enchantment, their level, rarity, and chance of being selected.$(p)It will also show what enchantments are exclusive with each other."
+			"text": "Dado o item atual e o nível de poder atualmente selecionado, uma certa variedade de encantamentos está disponível.$(p)Esta janela mostra cada encantamento, seu nível, raridade e chance de ser selecionado.$(p)Também mostrará quais encantamentos são exclusivos entre si."
 		},
 		{
             "type": "patchouli:image",
-			"title": "The Power Slider",
+			"title": "O controle deslizante de poder",
 			"images": [
 				"apotheosis:textures/gui/book/power_slider.png"
 			],
-			"text": "This lets you change the simulated power level."
+			"text": "Isso permite alterar o nível de poder simulado."
         },
 		{
 			"type": "patchouli:text",
-			"text": "When you select a slot, the Power Slider automatically selects the power level directly in the middle of the power range.$(p)The slider can only go down to the $(4)Min Power$() and up to the $(9)Max Power$() for the current slot."
+			"text": "Quando você seleciona um encaixe, o controle deslizante de poder seleciona automaticamente o nível de potência diretamente no meio da faixa de poder.$(p)O deslizador só pode descer até o $(4)poder mínimo$() e subir até o $(9)poder máximo$() para o encaixe atual."
 		},
 		{
             "type": "patchouli:image",
-			"title": "Rarity Weights",
+			"title": "Pesos de raridade",
 			"images": [
 				"apotheosis:textures/gui/book/weights.png"
 			],
-			"text": "This shows the weight of each rarity."
+			"text": "Isso mostra o peso de cada raridade."
         },
 		{
 			"type": "patchouli:text",
-			"text": "Every enchantment has a rarity, and each rarity has a weight.$(p)The chance of selecting an enchantment is its individual weight divided by the total pool (of the weights of all available enchantments).$(p)$(arcana) can change the rarity weights."
+			"text": "Cada encantamento tem uma raridade, e cada raridade tem um peso.$(p)A chance de selecionar um encantamento é seu peso individual dividido pelo conjunto total (dos pesos de todos os encantamentos disponíveis).$(p)$(arcana) pode alterar os pesos de raridade."
 		}
 	]
 }

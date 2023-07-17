@@ -1,5 +1,5 @@
 {
-    "name": "Shield Bash",
+    "name": "Golpe de escudo",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Shield Bash$() is a shield enchantment.$(p)It makes melee attacks with that shield do extra damage.$(p)However, attacking with $(9)Shield Bash$() causes additional durability damage."
+            "text": "$(9)Golpe de escudo$() é um encantamento de escudo.$(p)Faz com que ataques corpo a corpo com escudo causem dano extra.$(p)No entanto, atacar com $(9)golpe de escudo$() causa dano de durabilidade adicional."
         }
 	]
 }

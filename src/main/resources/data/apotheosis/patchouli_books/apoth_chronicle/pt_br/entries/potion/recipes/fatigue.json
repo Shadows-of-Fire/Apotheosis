@@ -1,5 +1,5 @@
 {
-    "name": "Mining Fatigue",
+    "name": "Exaustão",
     "icon": "minecraft:textures/mob_effect/mining_fatigue.png",
     "category": "apotheosis:potion/recipes",
 	"flag": "apotheosis:potion",
@@ -7,13 +7,13 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)Mining Fatigue$() is a negative effect that is normally only applied by Guardians.$(p)While active, your mining speed is reduced by 20% per level.$(p)It is the direct opposite of $(9)Haste$()."
+            "text": "$(c)Exaustão$() é um efeito negativo que normalmente só é aplicado por guardiões.$(p)Enquanto ativo, sua velocidade de mineração é reduzida em 20% por nível.$(p)É o oposto direto de $(9)pressa$()."
         },
 		{
             "type": "patchouli:spotlight",
-			"title": "Brewing Recipe",
+			"title": "Receita de fabricação de poção",
 			"item": "minecraft:fermented_spider_eye",
-            "text": "This potion can be crafted with a $(9)Potion of Haste$() and a Fermented Spider Eye.$(p)It can be extended, strengthend, or turned into a splash potion with the usual ingredients."
+            "text": "Esta poção pode ser criada com uma $(9)poção de aceleração$() e um olho de aranha fermentado.$(p)Ela pode ser estendida, fortalecida ou transformada em uma poção inicial com os ingredientes usuais."
         }
 	]
 }

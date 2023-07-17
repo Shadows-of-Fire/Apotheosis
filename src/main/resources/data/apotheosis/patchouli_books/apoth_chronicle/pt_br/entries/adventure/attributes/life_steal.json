@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "Seu $(9)roubo de vida$() é a porcentagem de seu dano físico causado que é adicionado diretamente à sua saúde.$(p)Geralmente, apenas armas fornecem este atributo."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: Um valor de 1,0 é na verdade 0% de roubo de vida, mas se a base for zero, os modificadores de porcentagem não terão efeito e os modificadores de valores absolutos não darão o bônus corretamente."
-		}
+        }
 	]
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Tempting",
+    "name": "Tentação",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Tempting$() is a hoe enchantment.$(p)When holding a hoe with this enchantment, all animals will follow you as if holding their breeding item."
+            "text": "$(9)Tentação$() é um encantamento de enxada.$(p)Ao segurar uma enxada com este encantamento, todos os animais o seguirão como se estivessem segurando seu item de reprodução."
         }
 	]
 }

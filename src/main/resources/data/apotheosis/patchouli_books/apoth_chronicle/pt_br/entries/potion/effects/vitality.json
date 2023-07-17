@@ -1,5 +1,5 @@
 {
-    "name": "Bursting Vitality",
+    "name": "Estouro de vitalidade",
     "icon": "apotheosis:textures/mob_effect/vitality.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Potion of $(9)Bursting Vitality$() is a beneficial effect.$(p)While under its effects, all healing received is increased."
+            "text": "A poção de $(9)estouro de vitalidade$() é um efeito benéfico.$(p)Enquanto estiver sob seus efeitos, toda a cura recebida é aumentada."
         },
 		{
             "type": "patchouli:text",
-            "text": "The healing increase is equal to 20% per level."
+            "text": "O aumento de cura é igual a 20% por nível."
         }
 	]
 }
