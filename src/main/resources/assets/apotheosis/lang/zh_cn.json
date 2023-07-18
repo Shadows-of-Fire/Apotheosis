@@ -440,7 +440,7 @@
     "gem_class.breaker": "挖掘工具",
     "gem_class.pickaxe": "镐",
     "gem_class.light_ranged": "轻型或远程武器",
-    "gem_class.weapons_or_tools": "武器或工具",
+    "gem_class.weapon_or_tool": "武器或工具",
     "gem_class.weapon": "武器",
 
     "gem_class.helmet": "头盔",
