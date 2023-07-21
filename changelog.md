@@ -16,6 +16,7 @@
 * Reduced the Enchantability of the Potion Charm to zero, which should make it easier to satisfy the recipe with less confusion.
   * Thinking about removing the change that defaults all enchantability values from 0 to 1, but no decision has been made yet.
 * Added missing translation for the Boss Spawner, and fixed culling issues.
+* Removed uses of non-api JEI Constants class.
 
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  
