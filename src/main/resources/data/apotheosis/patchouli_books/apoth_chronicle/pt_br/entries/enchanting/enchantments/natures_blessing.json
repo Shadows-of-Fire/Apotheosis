@@ -1,5 +1,5 @@
 {
-    "name": "Nature's Blessing",
+    "name": "Bênção da natureza",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Nature's Blessing$() is a hoe enchantment.$(p)It allows a hoe to be used as bonemeal, for a durability cost.$(p)Higher enchantment levels reduce the durability cost."
+            "text": "$(9)Bênção da natureza$() é um encantamento de enxada.$(p)Permite que uma enxada seja usada como farinha de ossos, por um custo de durabilidade.$(p)Níveis de encantamento mais altos reduzem o custo de durabilidade."
         }
 	]
 }

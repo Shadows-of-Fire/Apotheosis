@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "$(9)Altura do passo$() altera o quão alto você pode automaticamente andar nos blocos.$(p)Encontrado apenas em botas."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 512$(p)Nota: Este valor não é a altura total do passo, mas sim um valor adicionado à sua base implícita de 0,5."
-		}
+        }
 	]
 }

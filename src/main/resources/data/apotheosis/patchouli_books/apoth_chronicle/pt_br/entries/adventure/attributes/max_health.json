@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "$(9)Vida máximo$() controla o número de pontos de vida (PV) que você tem. Um ponto é a metade de um coração.$(p)Geralmente fornecido por armaduras e escudos."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 20$(p)$(9)$(n)Valor máximo:$() 1024"
-		}
+        }
 	]
 }

@@ -1,17 +1,17 @@
 {
-    "name": "Tomes",
+    "name": "Tomos",
     "icon": "apotheosis:other_tome",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Tomes are a special type of Book.$(p)A Tome can be enchanted just like a book, but can only receive specific enchantments.$(p)The exception is the $(l:apotheosis:enchanting/utility/scrapping)Tome of Scrapping$(), which has another purpose."
+            "text": "Tomos são um tipo especial de livro.$(p)Um Tomo pode ser encantado como um livro, mas só pode receber encantamentos específicos.$(p)A exceção é o $(l:apotheosis:enchanting/utility/scrapping)tomo de remoção$(), que tem outra finalidade."
         },
 		{
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:other_tome",
-			"text": "Once you enchant a tome, it will transform into an enchanted book."
+			"text": "Depois de encantar um tomo, ele se transformará em um livro encantado."
 		},
 		{
             "type": "patchouli:crafting",

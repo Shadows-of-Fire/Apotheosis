@@ -1,5 +1,5 @@
 {
-    "name": "Spawner Stats",
+    "name": "Status de gerador",
     "icon": "minecraft:writable_book",
     "category": "apotheosis:spawner/spawner",
 	"flag": "apotheosis:spawner",
@@ -7,61 +7,61 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Each Mob Spawner has $(9)Spawner Stats$(), which dictate their operation.$(p)How long between spawns, how many mobs are spawned, etc.$(p)This chapter details all of them."
+            "text": "Cada gerador tem $(9)status$(), que ditam sua operação.$(p)Quanto tempo entre as gerações, quantos mobs são gerados, etc.$(p)Este capítulo detalha todos eles."
         },
 		{
             "type": "patchouli:text",
-			"title": "Spawn Delay",
-            "text": "After a Mob Spawner spawns an entity, there is a delay until the next spawn.$(p)That delay is a random number between the $(9)Min Spawn Delay$() and the $(9)Max Spawn Delay$().$(p)If the Max Delay is ever below the Min Delay, the Min Delay is used."
+			"title": "Atraso na geração",
+            "text": "Após um gerador gerar uma entidade, há um atraso até a próxima geração.$(p)Esse atraso é um número aleatório entre o $(9)atraso mínimo de geração$() e o $(9)atraso máximo de geração$( ).$(p)Se o atraso máximo estiver sempre abaixo do atraso mínimo, o atraso mínimo é usado."
         },
 		{
             "type": "patchouli:text",
-			"title": "Spawn Count",
-            "text": "The $(9)Spawn Count$() dictates how many mobs are spawned at once.$(p)Not all spawns will succeed, so sometimes less entities will spawn.$(p)The spawn is counted as successful (and the delay reset) as long as one entity spawns."
+			"title": "Contagem de geração",
+            "text": "A $(9)contagem de geração$() determina quantos mobs são gerados de uma vez.$(p)Nem todas as gerações serão bem-sucedidas, então, às vezes, menos entidades irão aparecer.$(p)A geração é contada como bem-sucedida (e marcada como a reinicialização do atraso) desde que uma entidade apareça."
         },
 		{
             "type": "patchouli:text",
-			"title": "Max Entities",
-            "text": "Mob Spawners track the number of entities nearby.$(p)If that number ever exceeds the $(9)Max Entities$(), spawning stops.$(p)Only entities of the same type as the spawned one are counted."
+			"title": "Entidades máximas",
+            "text": "Geradores rastreiam o número de entidades próximas.$(p)Se esse número exceder o $(9)máximo de entidades$(), a geração para.$(p)Apenas entidades do mesmo tipo que a gerada são contadas."
         },
 		{
             "type": "patchouli:text",
-			"title": "Activation Range",
-            "text": "Mob Spawners require a nearby player to operate.$(p)That player must be within the $(9)Activation Range$(), which is a radius in blocks, for the spawner to run."
+			"title": "Alcance de ativação",
+            "text": "Geradores requerem um jogador próximo para operar.$(p)Esse jogador deve estar dentro do $(9)alcance de ativação$(), que é um raio em blocos, para a geração correr."
         },
 		{
             "type": "patchouli:text",
-			"title": "Spawn Range",
-            "text": "The $(9)Spawn Range$() is a radius in blocks of how far out entities may spawn.$(p)Try to make sure this area is suitable for entities, otherwise some spawns may fail."
+			"title": "Alcance de geração",
+            "text": "O $(9)alcance de geração$() é um raio em blocos de quão longe as entidades podem aparecer.$(p)Tente certificar-se de que esta área seja adequada para entidades, caso contrário, algumas gerações podem falhar."
         },
 		{
             "type": "patchouli:text",
-			"title": "Ignores Players",
-            "text": "A spawner that $(9)Ignores Players$() does not need a player within the $(9)Activation Range$().$(p)It will operate with or without one."
+			"title": "Ignora jogadores",
+            "text": "Um gerador que $(9)ignora jogadores$() não precisa de um jogador dentro do $(9)alcance de ativação$().$(p)Ele funcionará com ou sem um jogador próximo."
         },
 		{
             "type": "patchouli:text",
-			"title": "Ignores Conditions",
-            "text": "A spawner that $(9)Ignores Conditions$() will no longer require certain mob-specific spawn conditions.$(p)These include things like the grass requirement for animals.$(p)It will just need sufficient space, and a lack of nearby entities."
+			"title": "Ignora condições",
+            "text": "Um gerador que $(9)ignora condições$() não exigirá mais certas condições de desova específicas da criatura.$(p)Isso inclui coisas como a exigência de grama para animais.$(p)Ele só precisará de espaço suficiente e uma falta de entidades próximas."
         },
 		{
             "type": "patchouli:text",
-			"title": "Redstone Control",
-            "text": "A spawner with $(9)Redstone Control$() requires a redstone signal to operate.$(p)This lets you control when the spawner is operating."
+			"title": "Controle de Redstone",
+            "text": "Um gerador com $(9)controle de redstone$() requer um sinal redstone para operar.$(p)Isso permite que você controle quando o gerador estára operando."
         },
 		{
             "type": "patchouli:text",
-			"title": "Ignores Light",
-            "text": "A spawner that $(9)Ignores Light$() will work in all light levels.$(p)This means mobs can spawn in daylight.$(p)If it already $(9)Ignores Conditions$(), then this modifier does nothing."
+			"title": "Ignora a luz",
+            "text": "Um gerador que $(9)ignora a luz$() funcionará em todos os níveis de luz.$(p)Isso significa que os mobs podem aparecer à luz do dia.$(p)Se já $(9)ignorar condições$(), então este modificador não fará nada."
         },
 		{
             "type": "patchouli:text",
-			"title": "No AI",
-            "text": "A spawner with $(9)No AI$() enabled will spawn mobs without any AI.$(p)Normally, these mobs will just simply float there, immobile, doing nothing.$(p)However, the ones created by Apotheosis can still be moved."
+			"title": "Sem IA",
+            "text": "Um gerador $(9)sem IA$() habilitado gerará mobs sem qualquer IA.$(p)Normalmente, essas criaturas irão simplesmente ficar lá, imóveis, sem fazer nada.$(p)No entanto, os criados pelo Apotheosis ainda pode ser movidos."
         },
 		{
             "type": "patchouli:text",
-            "text": "If you are making large mob farms, you should always utilize the $(9)No AI$() upgrade.$(p)It causes significantly reduced server load, and it makes the mobs easier to control."
+            "text": "Se você estiver fazendo grandes fazendas de mobs, você deve sempre utilizar a melhoria $(9)sem IA$().$(p)Isso reduz significativamente a carga do servidor e torna as criaturas mais fáceis de controlar."
         }
 	]
 }

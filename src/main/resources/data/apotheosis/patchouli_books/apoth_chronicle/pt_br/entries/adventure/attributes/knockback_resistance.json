@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "$(9)Resistência a impacto$() é o quão resistente você é para ser derrubado por ataques. No valor máximo, você fica imune a impacto.$(p)Geralmente fornecido por armaduras ou escudos."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 1$(p)Nota: Modificadores que fornecem esse valor dizem que são 10 vezes mais o que eles realmente fornecem, então +1 resistência a impacto é na verdade +0,1."
-		}
+        }
 	]
 }

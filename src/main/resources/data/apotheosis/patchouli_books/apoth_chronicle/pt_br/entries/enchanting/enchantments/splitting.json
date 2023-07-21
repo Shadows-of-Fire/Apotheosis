@@ -1,5 +1,5 @@
 {
-    "name": "Splitting",
+    "name": "Divisão",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "See $(l:apotheosis:enchanting/anvil/splitting)Splitting$()."
+            "text": "Veja $(l:apotheosis:enchanting/anvil/splitting)divisão$()."
         }
 	]
 }

@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "Ao ter $(9)sobrecura$() significa que parte do seu dano físico causado será obtido como um escudo de absorção. Ao contrário do roubo de vida, a sobrecura funciona quando você está com a vida cheia.$(p)Este atributo é encontrado apenas em armas pesadas."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)Nota: Um valor de 1,0 é na verdade 0% de dano pelo PV atual, mas se a base for zero, os modificadores de porcentagem não terão efeito e os modificadores de valores absolutos não darão o bônus corretamente."
-		}
+        }
 	]
 }

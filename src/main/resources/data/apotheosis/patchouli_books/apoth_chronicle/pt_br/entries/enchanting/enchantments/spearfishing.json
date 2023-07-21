@@ -1,5 +1,5 @@
 {
-    "name": "Spearfishing",
+    "name": "Caça submarina",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Spearfishing$() is a trident enchantment.$(p)It gives kills with a thrown trident a 3.5% chance per level to drop a few random fish."
+            "text": "$(9)Caça submarina$() é um encantamento de tridente.$(p)Dá a abates com um tridente lançado uma chance de 3,5% por nível de derrubar alguns peixes aleatórios."
         }
 	]
 }
