@@ -3,6 +3,7 @@
 
 ## 6.3.1
 * Added missing Stoneshelf recipe.
+* Made gems remove the old `"facets"` tag, which should allow them to stack.
 
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  
