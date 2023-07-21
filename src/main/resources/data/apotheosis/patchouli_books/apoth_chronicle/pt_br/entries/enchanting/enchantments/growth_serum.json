@@ -1,5 +1,5 @@
 {
-    "name": "Growth Serum",
+    "name": "Soro de crescimento",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Growth Serum$() is a Masterwork enchantment for shears.$(p)It makes sheep have a 50% chance to immediately regrow their wool."
+            "text": "$(2)Soro de crescimento$() é um encantamento de obra-prima para tesouras.$(p)Faz com que as ovelhas tenham 50% de chance de regenerar a lã imediatamente."
         }
 	]
 }

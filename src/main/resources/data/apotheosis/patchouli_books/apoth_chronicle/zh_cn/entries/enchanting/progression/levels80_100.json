@@ -1,0 +1,32 @@
+{
+    "name": "80-100级",
+    "icon": "apotheosis:endshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"title": "达到90级",
+			"item": "apotheosis:infused_breath",
+			"text": "达到90级需要80级附魔台并获得$(9)龙息$()。$(p)有了这些，你就可以制作$(9)灌注龙息$()，是制作$(9)末地书架$()的核心材料。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "达到90级",
+			"recipe": "apotheosis:endshelf",
+			"recipe2": "apotheosis:pearl_endshelf"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "达到100级",
+			"item": "minecraft:dragon_head",
+			"text": "附魔台的最高等级为100级，但只有一种书架可以提供如此强大的力量。$(p)合成这种书架需要冒险进入末地外岛拿到$(9)龙首$()。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "达到100级",
+			"recipe": "apotheosis:draconic_endshelf",
+			"text": "单个$(9)巨龙末地书架$()提供了足够的原始力量，可以将附魔台从90级提升至100级。$(p)然而，它不提供其他属性加成。"
+		}
+	]
+}

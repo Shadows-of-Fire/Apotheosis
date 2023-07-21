@@ -1,5 +1,5 @@
 {
-    "name": "Wither",
+    "name": "Decomposição",
     "icon": "minecraft:textures/mob_effect/wither.png",
     "category": "apotheosis:potion/recipes",
 	"flag": "&apotheosis:potion,apotheosis:wstloaded",
@@ -7,13 +7,13 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)Wither$() is a hostile effect that can not normally be crafted.$(p)While inflicted with it, you will take damage every tick.$(p)Unlike Poison, this damage is lethal."
+            "text": "$(c)Decomposição$() é um efeito hostil que normalmente não pode ser criado.$(p)Enquanto infligido com ele, você receberá dano a cada tick.$(p)Ao contrário do veneno, esse dano é letal."
         },
 		{
             "type": "patchouli:spotlight",
-			"title": "Brewing Recipe",
+			"title": "Receita de fabricação de poção",
 			"item": "wstweaks:fragment",
-            "text": "This potion can be crafted with an Awkward Potion and a Wither Skull Fragment.$(p)It can be extended, strengthend, or turned into a splash potion with the usual ingredients."
+            "text": "Esta poção pode ser criada com uma poção estranha e um fragmento do crânio do wither.$(p)Ela pode ser estendida, fortalecida ou transformada em uma poção arremesável com os ingredientes usuais."
         }
 	]
 }

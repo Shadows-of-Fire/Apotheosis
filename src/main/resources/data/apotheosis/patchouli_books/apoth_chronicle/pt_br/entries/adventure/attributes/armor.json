@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Armadura$() é uma medida de quão resistente você é a danos físicos.$(p)Geralmente fornecida por armaduras e alguns escudos."
+            "text": "$(9)Armadura$() é uma medida de quão resistente você é a danos físicos.$(p)Geralmente fornecida por itens de armaduras e escudos.$(p)Seu dano físico sofrido é reduzido em $(9)50 / (50 + armadura)$()"
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 40$(p)Nota: No vanilla, o valor máximo é 30. O Apotheosis eleva o limite para 40 e também muda o cálculo de armadura."
+			"text": "A fórmula mencionada não é a usada pelo Minecraft vanilla, pois o Apotheosis a substitui."
 		}
 	]
 }

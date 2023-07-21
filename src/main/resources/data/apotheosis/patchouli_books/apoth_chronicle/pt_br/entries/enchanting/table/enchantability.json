@@ -1,12 +1,12 @@
 {
-    "name": "Item Enchantability",
+    "name": "Encantabilidade do item",
     "icon": "minecraft:golden_sword",
     "category": "apotheosis:enchanting/table",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "In vanilla, an item's enchantability contributes to your $(fpower).$(p)Apotheosis changes it to provide a direct $(arcana) boost instead.$(p)$(arcana) is increased by 50% of an item's enchantability."
+            "text": "No vanilla, a encantabilidade de um item contribui para seu $(#CC00CC)poder final$().$(p)O Apotheosis altera para fornecer um aumento direto de $(#A800A8)arcana$().$(p)$(#A800A8)Arcana$() aumenta em 50% a encantabilidade de um item."
         }
 	]
 }

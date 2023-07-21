@@ -1,12 +1,12 @@
 {
-    "name": "Cobwebs",
+    "name": "Teias de aranha",
     "icon": "minecraft:cobweb",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Cobwebs can be combined with an item in an anvil to remove all enchantments.$(p)Prismatic Cobwebs can be combined with an item in an anvil to remove all curses."
+            "text": "Teias de aranha podem ser combinadas com um item em uma bigorna para remover todos os encantamentos.$(p)Teias de aranha prismáticas podem ser combinadas com um item em uma bigorna para remover todas as maldições."
         },
 		{
             "type": "patchouli:crafting",

@@ -7,11 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Dano de acerto crítico$() é a quantidade de dano que seus ataques críticos causam, em relação a um ataque normal. Um valor de 2 é igual a duas vezes o dano normal.$(p)Críticos de salto são aumentados por este valor quando ocorrem.$(p)Encontrado em armas corpo a corpo."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
-		}
+            "text": "$(9)Dano de acerto crítico$() é o modificador de dano para seus acertos críticos.$(p)Críticos de salto também usam seu valor de dano crítico, em vez do multiplicador usual de 1,5x.$(p)Encontrado em armas."
+        }
 	]
 }

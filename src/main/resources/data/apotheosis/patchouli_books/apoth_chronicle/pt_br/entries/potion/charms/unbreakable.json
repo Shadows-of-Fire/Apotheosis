@@ -1,5 +1,5 @@
 {
-    "name": "Unbreakable Charms",
+    "name": "Amuletos inquebráveis",
     "icon": "minecraft:enchanting_table",
     "category": "apotheosis:potion/charms",
 	"flag": "&apotheosis:potion,apotheosis:enchanting",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Through $(l:apotheosis:enchanting/table/infusion)Infusion Enchanting$(), charms can be made Unbreakable.$(p)Through this, you can have unlimited duration of any potion effect."
+            "text": "Através de $(l:apotheosis:enchanting/table/infusion)encantamento de infusão$(), os amuletos podem se tornar inquebráveis.$(p)Através disso, você pode ter duração ilimitada de qualquer efeito de poção."
         },
 		{
             "type": "patchouli:text",
-            "text": "The infusion recipe for Unbreakable charms is rather difficult.$(p)You'll need a firm understanding of $(l:apotheosis:enchanting/table/stats)Enchanting Stats$() to be able to complete it."
+            "text": "A receita de infusão para amuletos inquebráveis é bastante difícil.$(p)Você precisará de um conhecimento firme de $(l:apotheosis:enchanting/table/stats)status de encantamento$() para poder completá-la."
         }
 	]
 }

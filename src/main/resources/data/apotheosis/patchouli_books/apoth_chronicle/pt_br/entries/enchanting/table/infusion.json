@@ -1,20 +1,20 @@
 {
-    "name": "Infusion Enchanting",
+    "name": "Encantamento de infusão",
     "icon": "apotheosis:infused_hellshelf",
     "category": "apotheosis:enchanting/table",
 	"flag": "apotheosis:enchanting",
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Infusion Enchanting$() is a new method of crafting through the Enchantment Table.$(p)Each infusion recipe has a single item input, and three stat requirements."
+            "text": "$(9)Encantamento de infusão$() é um novo método de criação através da mesa de encantamentos.$(p)Cada receita de infusão tem um único item de entrada e três requisitos de status."
         },
 		{
 			"type": "patchouli:text",
-			"text": "Each stat requirement will typically require at least some value, and will optionally have a maximum value.$(p)Infusion enchantments only use the third slot, and will let you over-spend experience."
+			"text": "Cada requisito de status normalmente requer pelo menos algum valor e, opcionalmente, terá um valor máximo.$(p)Encantamentos de infusão usam apenas o terceiro encaixe e permitem que você gaste mais experiência."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "To perform an infusion enchantment, just place the item in the slot.$(p)If you have the correct stats, the third slot will light up, and clicking it will perform the infusion."
+			"text": "Para realizar um encantamento de infusão, basta colocar o item no encaixe.$(p)Se você tiver os status corretas, o terceiro encaixe acenderá, e clicando nele, realizará a infusão."
 		}
 	]
 }

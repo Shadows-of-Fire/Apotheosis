@@ -1,5 +1,5 @@
 {
-    "name": "Rebounding",
+    "name": "Ricochete",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Rebounding$() is an enchantment for chestplates and leggings.$(p)It causes all melee attackers to be launched away from the user.$(p)Higher levels increase the distance."
+            "text": "$(9)Ricochete$() é um encantamento para peitorais e calças.$(p)Faz com que todos os atacantes corpo a corpo sejam lançados para longe do usuário.$(p)Níveis mais altos aumentam a distância."
         }
 	]
 }

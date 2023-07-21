@@ -1,5 +1,5 @@
 {
-    "name": "Enchantment Types",
+    "name": "Tipos de encantamento",
     "icon": "minecraft:emerald",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,22 +7,22 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "You may notice that some enchantments have different colored names.$(p)This is because Apotheosis introduces three new sub-categories of enchantments.$(p)Each sub-category has a a few rules imposed on them."
+            "text": "Você pode notar que alguns encantamentos têm diferentes nomes coloridos.$(p)Isso ocorre porque o Apotheosis introduz três novas subcategorias de encantamentos.$(p)Cada subcategoria tem algumas regras impostas a eles."
         },
 		{
             "type": "patchouli:text",
-			"title": "Masterwork",
-            "text": "$(2)Masterwork$() enchantments represent the strongest and rarest enchantments.$(p)They always require at least 55 $(fpower) to receive."
+			"title": "Obra-Prima",
+            "text": "Encantamentos do tipo $(2)obra-prima$() representam os encantamentos mais fortes e raros.$(p)Eles sempre requerem pelo menos 55 de $(#CC00CC)poder final$() para receber."
         },
 		{
             "type": "patchouli:text",
-			"title": "Twisted",
-            "text": "$(5)Twisted$() enchantments always have one good and one bad effect.$(p)They always require at least 45 $(fpower) to receive."
+			"title": "Distorcido",
+            "text": "Encantamentos $(5)distorcidos$() sempre têm um efeito bom e um ruim.$(p)Eles sempre requerem pelo menos 45 de $(#CC00CC)poder final$() para serem recebidos."
         },
 		{
             "type": "patchouli:text",
-			"title": "Corrupted",
-            "text": "$(4)Corrupted$() enchantments have a health cost associated with their effect.$(p)They always require at least 65 $(fpower) to receive.$(p)They are considered to be $(c)curses$()."
+			"title": "Corrompido",
+            "text": "Encantamentos $(4)corrompidos$() têm um custo de saúde associado ao seu efeito.$(p)Eles sempre requerem pelo menos 65 de $(#CC00CC)poder final$() para serem recebidos.$(p)Eles são considerados $(c)maldições$()."
         }
 	]
 }

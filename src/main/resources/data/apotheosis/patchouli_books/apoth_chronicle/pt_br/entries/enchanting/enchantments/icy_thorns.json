@@ -1,5 +1,5 @@
 {
-    "name": "Icy Thorns",
+    "name": "Espinhos gelados",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Icy Thorns$() is a chestplate enchantment.$(p)It applies slowness to attackers. The duration and strength scale with the enchantment level.$(p)It is exclusive with $(9)Thorns$()."
+            "text": "$(9)Espinhos gelados$() é um encantamento de peitoral.$(p)aplica lentidão aos atacantes. A duração e escala de força com o nível de encantamento.$(p)É exclusivo de $(9)espinhos$()."
         }
 	]
 }
