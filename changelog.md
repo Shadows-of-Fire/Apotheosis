@@ -9,6 +9,12 @@
 * Added curios support for modifier sources in the Attributes GUI.
 * Fixed missing translation key for the `Power Range` advanced tooltip on enchanted books.
 * Fixed being unable to disable the Adventure module.
+* t0piy: Updated Brazilian Portuguese translation.
+* mc-kaishixiaxue: Updated Chinese translation.
+* Infusion Recipes will now specify that the requirements are not met when attempting and failing.
+  * Note that this will not apply if there are enchantments that globally apply to all items, such certain Soulbound enchantments.
+* Reduced the Enchantability of the Potion Charm to zero, which should make it easier to satisfy the recipe with less confusion.
+  * Thinking about removing the change that defaults all enchantability values from 0 to 1, but no decision has been made yet.
 
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  

@@ -1189,6 +1189,7 @@
     "info.apotheosis.power_range": "Power Range: %s to %s",
     "info.apotheosis.item_ench": "Item Enchantability: %s",
     "info.apotheosis.num_clues": "Enchanting Clues: %s",
+	"info.apotheosis.infusion_failed": "Infusion Criteria Not Met",
     
     "info.apotheosis.slider_power": "Power: %s",
     "info.apotheosis.enchinfo_level": "Level: %s",

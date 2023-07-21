@@ -37,8 +37,6 @@ public class RealEnchantmentHelper {
 	 * @return The level that the table will use for this specific slot.
 	 */
 	public static int getEnchantmentCost(RandomSource rand, int num, float eterna, ItemStack stack) {
-		int ench = stack.getEnchantmentValue();
-		if (ench <= 0) return 0;
 		int level = Math.round(eterna * 2);
 		if (num == 2) return level;
 		float lowBound = 0.6F - 0.4F * (1 - num);
