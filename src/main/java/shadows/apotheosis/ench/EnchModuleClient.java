@@ -110,7 +110,7 @@ public class EnchModuleClient {
 				args[3] = boolComp("info.apotheosis.treasure", info.isTreasure());
 				if (e.getFlags().isAdvanced()) {
 					tooltip.add(Component.translatable("%s \u2507 %s \u2507 %s \u2507 %s", args[0], args[1], args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
-					tooltip.add(Component.translatable("Power Range: [%s, %s]", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
+					tooltip.add(Component.translatable("info.apotheosis.book_range", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
 				} else {
 					tooltip.add(Component.translatable("%s \u2507 %s", args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
 				}

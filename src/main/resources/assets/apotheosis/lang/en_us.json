@@ -83,7 +83,7 @@
 	"apotheosis:experience_gained": "Experience Gained",
 	"apotheosis:experience_gained.desc": "Multiplier on how much experience you gain from breaking blocks and killing mobs.",
 
-	"apotheosis:healing_received": "Healing Receieved",
+	"apotheosis:healing_received": "Healing Received",
 	"apotheosis:healing_received.desc": "Multiplier on all incoming healing.",
 
 	"apotheosis:armor_pierce": "Armor Pierce",
@@ -913,7 +913,7 @@
     "info.apotheosis.eterna_exact": "Requires exactly: %s/%s",
     "info.apotheosis.percent_exact": "Requires exactly: %s%%",
     "apotheosis.recipes.enchanting": "Infusion Enchanting",
-    "info.apotheosis.power_range": "Requires at least: %s%%",
+    "info.apotheosis.book_range": "Power Range: [%s, %s]",
     "info.apotheosis.discoverable": "Discoverable",
     "info.apotheosis.discoverable.not": "Not Discoverable",
     "info.apotheosis.lootable": "Lootable",
