@@ -28,7 +28,7 @@ public abstract class ModifierSourceType<T> {
 
 	private static final List<ModifierSourceType<?>> SOURCE_TYPES = new ArrayList<>();
 
-	public static final ModifierSourceType<ItemStack> ITEM = register(new ModifierSourceType<>() {
+	public static final ModifierSourceType<ItemStack> EQUIPMENT = register(new ModifierSourceType<>() {
 
 		@Override
 		public void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> map) {
@@ -60,7 +60,7 @@ public abstract class ModifierSourceType<T> {
 
 		@Override
 		public int getPriority() {
-			return 1;
+			return 100;
 		}
 
 	});

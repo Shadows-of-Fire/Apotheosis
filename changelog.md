@@ -6,6 +6,7 @@
 * Made gems remove the old `"facets"` tag, which should allow them to stack.
 * Fixed minibosses dropping affix items with invalid names.
 * Fixed a crash with Tower generation.
+* Added curios support for modifier sources in the Attributes GUI.
 
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  

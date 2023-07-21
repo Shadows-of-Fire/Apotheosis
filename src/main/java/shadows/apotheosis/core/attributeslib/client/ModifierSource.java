@@ -62,7 +62,7 @@ public abstract class ModifierSource<T> implements Comparable<ModifierSource<T>>
 
 		@SuppressWarnings("deprecation")
 		public ItemModifierSource(ItemStack data) {
-			super(ModifierSourceType.ITEM, Comparator.comparing(LivingEntity::getEquipmentSlotForItem).reversed().thenComparing(Comparator.comparing(ItemStack::getItem, Comparators.idComparator(Registry.ITEM))), data);
+			super(ModifierSourceType.EQUIPMENT, Comparator.comparing(LivingEntity::getEquipmentSlotForItem).reversed().thenComparing(Comparator.comparing(ItemStack::getItem, Comparators.idComparator(Registry.ITEM))), data);
 		}
 
 		@Override
