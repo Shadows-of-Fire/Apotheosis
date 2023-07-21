@@ -1,0 +1,20 @@
+{
+    "name": "1-30级",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "达到30级",
+			"recipe": "minecraft:bookshelf",
+			"text": "达到30级是在正常游玩过程中完成的，需要15个书架。"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "其他属性",
+			"item": "minecraft:skeleton_skull",
+			"text": "在这个阶段，有一些基本选项可以提高其他属性。$(p)你可以使用蜡烛提高$(#A800A8)阿卡那$()、头颅提高$(#FC5454)量子化$()、以及紫水晶簇提高$(#CCCC33)校准$()。"
+		}
+	]
+}

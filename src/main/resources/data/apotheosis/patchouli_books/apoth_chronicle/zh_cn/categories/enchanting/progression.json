@@ -1,0 +1,8 @@
+{
+    "name": "等级进展",
+    "description": "本章节概述了如何升级你的附魔台。",
+    "icon": "apotheosis:dormant_deepshelf",
+    "flag": "apotheosis:enchanting",
+    "parent": "apotheosis:enchanting/enchanting",
+    "sortnum": -1
+}
