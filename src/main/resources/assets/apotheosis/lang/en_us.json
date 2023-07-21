@@ -514,7 +514,8 @@
 	"item.apotheosis.superior_sigil_of_socketing": "Superior Sigil of Socketing",
 	"item.apotheosis.sigil_of_enhancement": "[NYI] Sigil of Enhancement",
 	"item.apotheosis.superior_sigil_of_enhancement": "[NYI] Superior Sigil of Enhancement",
-	
+
+	"block.apotheosis.boss_spawner": "Boss Spawner",
 	"block.apotheosis.gem_cutting_table": "Gem Cutting Table",
 	"block.apotheosis.gem_cutting_table.desc": "Uses Gem Dust and Rarity Materials to upgrade Gems",
 	"block.apotheosis.salvaging_table": "Salvaging Table",
