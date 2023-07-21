@@ -1,4 +1,8 @@
 {
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
   "pools": [
     {
       "name": "tome_tower_main",

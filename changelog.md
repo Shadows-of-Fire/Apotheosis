@@ -7,6 +7,8 @@
 * Fixed minibosses dropping affix items with invalid names.
 * Fixed a crash with Tower generation.
 * Added curios support for modifier sources in the Attributes GUI.
+* Fixed missing translation key for the `Power Range` advanced tooltip on enchanted books.
+* Fixed being unable to disable the Adventure module.
 
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  

@@ -1,4 +1,8 @@
 {
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
   "pools": [
     {
       "name": "placebo_code_pool_18",
