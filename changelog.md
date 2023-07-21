@@ -1,6 +1,9 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.3.1
+* Added missing Stoneshelf recipe.
+
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  
 Before we begin, please reset your configs. The defaults have changed, and old files are not updated.  
