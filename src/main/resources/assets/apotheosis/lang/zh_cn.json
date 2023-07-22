@@ -111,7 +111,7 @@
     "effect.apotheosis.sundering.desc": "增加受到的伤害。",
     "effect.apotheosis.sundering.description": "增加受到的伤害。",
 
-    "effect.apotheosis.vitality": "活力四射",
+    "effect.apotheosis.vitality": "活力迸发",
     "effect.apotheosis.vitality.desc": "增加受到的治疗效果。",
     "effect.apotheosis.vitality.description": "增加受到的治疗效果。",
 
@@ -402,7 +402,7 @@
     "affix.apotheosis:ranged/mob_effect/grievous": "重创的",
     "affix.apotheosis:ranged/mob_effect/grievous.suffix": "（伤口）",
 
-    "affix.apotheosis:armor/mob_effect/bursting": "爆发的",
+    "affix.apotheosis:armor/mob_effect/bursting": "迸发的",
     "affix.apotheosis:armor/mob_effect/bursting.suffix": "（活力）",
 
     "affix.apotheosis:socket": "",
@@ -515,6 +515,7 @@
     "item.apotheosis.sigil_of_enhancement": "[NYI]强化符石",
     "item.apotheosis.superior_sigil_of_enhancement": "[NYI]高级强化符石",
 
+    "block.apotheosis.boss_spawner": "Boss刷怪笼",
     "block.apotheosis.gem_cutting_table": "宝石切割台",
     "block.apotheosis.gem_cutting_table.desc": "使用宝石粉和珍宝材料来升级宝石",
     "block.apotheosis.salvaging_table": "回收台",
@@ -732,7 +733,7 @@
     "advancements.apotheosis.socket": "珠宝匠",
     "advancements.apotheosis.socket.desc": "使用锻造台镶嵌一个宝石。",
 
-    "advancements.apotheosis.gem_cut": "宝石厂",
+    "advancements.apotheosis.gem_cut": "宝石雕琢工",
     "advancements.apotheosis.gem_cut.desc": "使用宝石切割台升级神化宝石。",
 
     "advancements.apotheosis.spawner.root": "神化刷怪笼",
@@ -912,7 +913,7 @@
     "info.apotheosis.eterna_exact": "精确需求：%s/%s",
     "info.apotheosis.percent_exact": "精确需求：%s%%",
     "apotheosis.recipes.enchanting": "灌注附魔",
-    "info.apotheosis.power_range": "最少需要：%s%%",
+    "info.apotheosis.book_range": "威力范围：[%s, %s]",
     "info.apotheosis.discoverable": "可发现",
     "info.apotheosis.discoverable.not": "不可发现",
     "info.apotheosis.lootable": "战利品可得",
@@ -1187,6 +1188,7 @@
     "info.apotheosis.power_range": "威力范围：%s~%s",
     "info.apotheosis.item_ench": "物品附魔能力：%s",
     "info.apotheosis.num_clues": "魔咒线索：%s",
+    "info.apotheosis.infusion_failed": "不符合灌注条件",
 
     "info.apotheosis.slider_power": "威力：%s",
     "info.apotheosis.enchinfo_level": "等级：%s",
@@ -1290,7 +1292,6 @@
     "info.apotheosis.mining_arrow.diamond": "射出的箭会像钻石镐一样挖掘方块",
 
     "comment_id": "/杂项",
-    "generic.reachDistance": "触及距离",
     "info.apoth.modifier_disabled": "该调节器已被禁用",
     "itemGroup.apotheosis": "神化",
     "config.jade.plugin_apotheosis.spawner": "神化刷怪笼模块",

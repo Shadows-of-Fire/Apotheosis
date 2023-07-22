@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(c)流血$()是由$(l:apotheosis:village/fletching#broadhead)宽头箭$()应用的负面效果。$(p)它使你每两秒受到一次伤害。"
+            "text": "$(c)流血$()是由$(l:apotheosis:village/fletching#broadhead)宽头箭$()施加的负面效果。$(p)它使你每两秒受到一次伤害。"
         },
 		{
             "type": "patchouli:text",
