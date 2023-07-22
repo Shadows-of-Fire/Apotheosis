@@ -515,6 +515,7 @@
 	"item.apotheosis.sigil_of_enhancement": "[ANI] Signo de aprimoramento",
 	"item.apotheosis.superior_sigil_of_enhancement": "[ANI] Signo de aprimoramento superior",
 	
+    "block.apotheosis.boss_spawner": "Gerador de chefe",
     "block.apotheosis.gem_cutting_table": "Bancada de lapidação de gema",
 	"block.apotheosis.gem_cutting_table.desc": "Usa pó de gema materiais de raridade para melhorar gemas",
 	"block.apotheosis.salvaging_table": "Bancada de desmontagem",
@@ -1189,6 +1190,7 @@
     "info.apotheosis.power_range": "Faixa de poder: %s para %s",
     "info.apotheosis.item_ench": "Encantabilidade do item: %s",
     "info.apotheosis.num_clues": "Pistas de encantamento: %s",
+    "info.apotheosis.infusion_failed": "Critérios de infusão não atendidos",
     
     "info.apotheosis.slider_power": "Poder: %s",
     "info.apotheosis.enchinfo_level": "Nível: %s",
