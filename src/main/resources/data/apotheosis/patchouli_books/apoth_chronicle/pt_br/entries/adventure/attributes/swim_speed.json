@@ -7,11 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Velocidade de nataçãoo$() é um modificador para sua velocidade real de natação, que é baseada na sua velocidade de movimento.  Você nadará duas vezes mais rápido se sua velocidade de natação for 2,0.$(p)Encontrado apenas em botas."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
-		}
+            "text": "$(9)Velocidade de nataçãoo$() é um modificador para sua velocidade real de natação. Se sua velocidade de natação for 200%, você nadará duas vezes mais rápido.$(p)Encontrado apenas em botas."
+        }
 	]
 }

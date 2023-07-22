@@ -251,7 +251,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 			if (stack.isEmpty()) continue;
 			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
 			if (s.ordinal() == guaranteed) {
-				entity.setItemSlot(s, this.modifyBossItem(stack, rand, name, luck, rarity));
+				entity.setItemSlot(s, modifyBossItem(stack, rand, name, luck, rarity, stats));
 				entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
 			} else if (rand.nextFloat() < stats.enchantChance()) {
 				enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[0] : stats.enchLevels()[1], true);
@@ -264,17 +264,15 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 		if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3600));
 	}
 
-	public void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {
+	public static void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {
 		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, level, treasure);
 		var map = ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max));
 		map.putAll(EnchantmentHelper.getEnchantments(stack));
 		EnchantmentHelper.setEnchantments(map, stack);
 	}
 
-	public ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity) {
-		BossStats stats = this.stats.get(rarity);
+	public static ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity, BossStats stats) {
 		enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[2] : stats.enchLevels()[3], true);
-
 		NameHelper.setItemName(rand, stack);
 		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
 

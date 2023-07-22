@@ -1,5 +1,5 @@
 {
-    "name": "Miner's Fervor",
+    "name": "Fervor do mineiro",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(5)Miner's Fervor$() is a Twisted enchantment that can be applied to all tools.$(p)It causes you to break blocks very quickly, but never instantaneously.$(p)It is exclusive with $(9)Efficiency$()."
+            "text": "$(5)Fervor do mineiro$() é um encantamento distorcido que pode ser aplicado a todas as ferramentas.$(p)Faz com que você quebre blocos muito rapidamente, mas nunca instantaneamente.$(p)É exclusivo de $(9)eficiência$()."
         },
 		{
             "type": "patchouli:text",
-            "text": "Despite having a speed cap, the per-level boost is much higher than $(9)Efficiency$().$(p)This makes it an ideal choice for tools with a slow base speed."
+            "text": "Apesar de ter um limite de velocidade, o aumento por nível é muito maior do que o encantamento $(9)eficiência$().$(p)Isso o torna a escolha ideal para ferramentas com velocidade base lenta."
         }
 	]
 }

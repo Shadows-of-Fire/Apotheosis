@@ -1,38 +1,150 @@
 {
+    "comment_id": "/Attributes Lib",
+
+    "item.modifiers.both_hands": "Quando segurado:",
+
+    "attributeslib.adv.addition": "[Add: %s]",
+    "attributeslib.adv.multiply_base": "[MulB: %s]",
+    "attributeslib.adv.multiply_total": "[MulT: %s]",
+    "attributeslib.adv.base": "[EBase: %s | IBase: %s]",
+    "attributeslib.adv.sharpness_bonus": "[Sharp: +%s]",
+
+	"attributeslib.value.flat": "%s",
+	"attributeslib.value.percent": "%s%%",
+
+    "attributeslib.modifier.plus": "+%s %s",
+    "attributeslib.modifier.take": "-%s %s",
+
+	"attributeslib.gui.attributes": "Atributos",
+	"attributeslib.gui.base": "Base: %s",
+	"attributeslib.gui.min": "Mín.: %s",
+	"attributeslib.gui.max": "Máx.: %s",
+	"attributeslib.gui.modifiers": "Modificadores",
+	"attributeslib.gui.addition": "Adição: %s",
+	"attributeslib.gui.multiply_base": "Multiplicador base: %s",
+	"attributeslib.gui.multiply_total": "Multiplicador total: %s",
+	"attributeslib.gui.press_shift": "Segure shift para mais informações.",
+	"attributeslib.gui.current": "Atual: %s",
+	"attributeslib.gui.show_attributes": "Mostrar atributos",
+
+    "minecraft:generic.armor.desc": "Aumenta a redução de dano físico.",
+	"minecraft:generic.armor_toughness.desc": "Reduz a efetivide da redução de armadura do inimigo.",
+	"minecraft:generic.attack_damage.desc": "Dano físico causado com um ataque totalmente carregado.",
+	"minecraft:generic.attack_knockback.desc": "Quão longe seus ataques corpo a corpo repelem os inimigos, em meio bloco.",
+	"minecraft:generic.attack_speed.desc": "Quantos ataques totalmente carregados você consegue executar por segundo.",
+	"minecraft:generic.knockback_resistance.desc": "Quanto de repulsão você ignora.",
+	"minecraft:generic.luck.desc": "Aumenta a probabilidade de coisas boas acontecerem.",
+	"minecraft:generic.max_health.desc": "Quantos pontos de vida você pode ter.",
+	"minecraft:generic.movement_speed.desc": "Velocidade de movimento ao caminhar.",
+
+	"forge:attack_range.desc": "Até onde seus ataques corpo a corpo alcançam, em blocos.",
+	"forge:entity_gravity.desc": "Aceleração em direção ao solo, em blocos/s²",
+	"forge:nametag_distance.desc": "Quão longe outro jogador deve estar para ver seu nome.",
+	"forge:reach_distance.desc": "Até onde suas interações alcançam, em blocos.",
+	"forge:step_height_addition.desc": "Quantos blocos você pode subir sem pular.",
+	"forge:swim_speed.desc": "Quão rápido você nada, em relação ao normal.",
+
+    "apotheosis:draw_speed": "Velocidade da puxada",
+	"apotheosis:draw_speed.desc": "Quão rápido você puxa armas a distância, como arcos, bestas, ou tridentes.",
+
+	"apotheosis:crit_chance": "Chance de crítico",
+	"apotheosis:crit_chance.desc": "A chance de qualquer dano causado por você causar um acerto crítico, causando dano extra com base no seu dano crítico.",
+
+	"apotheosis:crit_damage": "Dano crítico",
+	"apotheosis:crit_damage.desc": "Multiplicador de dano para acertos críticos, incluindo críticos de salto de vanilla.",
+
+	"apotheosis:cold_damage": "Dano de gelo",
+	"apotheosis:cold_damage.desc": "Bônus de dano mágico aplicado em ataques corpo a corpo e reduz a velocidade dos inimigos atingidos.",
+
+	"apotheosis:fire_damage": "Dano de fogo",
+	"apotheosis:fire_damage.desc": "Bônus de dano mágico aplicado em ataques corpo a corpo e queima os inimigos atingidos.",
+
+	"apotheosis:life_steal": "Roubo de vida",
+	"apotheosis:life_steal.desc": "Porcentagem de dano pós-mitigação que irá curá-lo.",
+
+	"apotheosis:current_hp_damage": "Dano pelo PV atual",
+	"apotheosis:current_hp_damage.desc": "Bônus de dano físico aplicado em ataques corpo a corpo, com base na vida do alvo.",
+
+	"apotheosis:overheal": "Sobrecura",
+	"apotheosis:overheal.desc": "Porcentagem de dano pós-mitigação que concederá a você um escudo de absorção.",
+
+	"apotheosis:ghost_health": "Vida fantasma",
+	"apotheosis:ghost_health.desc": "Ainda não implementado",
+
+	"apotheosis:mining_speed": "Velocidade de mineração",
+	"apotheosis:mining_speed.desc": "Quão rápido você minera blocos, em comparação com o normal.",
+
+	"apotheosis:arrow_damage": "Dano de flecha",
+	"apotheosis:arrow_damage.desc": "Multiplicador de dano para flechas. Os tridentes são flechas.",
+
+	"apotheosis:arrow_velocity": "Velocidade da flecha",
+	"apotheosis:arrow_velocity.desc": "Multiplicador de velocidade para flechas. O dano da flecha aumenta com a velocidade.",
+
+    "apotheosis:experience_gained": "Experiência adquirida",
+	"apotheosis:experience_gained.desc": "Multiplicador de quanta experiência você ganha quebrando blocos e matando criaturas.",
+
+    "apotheosis:healing_received": "Cura recebida",
+	"apotheosis:healing_received.desc": "Multiplicador em todas as curas recebidas.",
+
+	"apotheosis:armor_pierce": "Perfuração de armadura",
+	"apotheosis:armor_pierce.desc": "Redução absoluta ao valor da armadura do alvo.",
+
+	"apotheosis:armor_shred": "Fragmentação de armadura",
+	"apotheosis:armor_shred.desc": "Porcentagem de redução ao valor da armadura do alvo.",
+
+	"apotheosis:prot_pierce": "Perfuração de proteção",
+	"apotheosis:prot_pierce.desc": "Redução absoluta ao total de pontos de proteção do alvo.",
+
+	"apotheosis:prot_shred": "Fragmentação de proteção",
+	"apotheosis:prot_shred.desc": "Porcentagem de redução ao total de pontos de proteção do alvo.",
+
+	"apotheosis:dodge_chance": "Chance de esquiva",
+	"apotheosis:dodge_chance.desc": "Chance de desviar de um ataque corpo a corpo ou de um projétil.",
+
+    "comment_id": "/MobFx Lib - descriptions are duplicated for JEED support.",
+
+    "effect.apotheosis.knowledge": "Conhecimento das eras",
+    "effect.apotheosis.knowledge.desc": "Aumenta a experiência adquirida com abates e blocos",
+    "effect.apotheosis.knowledge.description": "Aumenta a experiência adquirida com abates e blocos.",
+
+    "effect.apotheosis.sundering": "Ruptura",
+    "effect.apotheosis.sundering.desc": "Aumenta o dano recebido",
+    "effect.apotheosis.sundering.description": "Aumenta o dano recebido.",
+
+    "effect.apotheosis.vitality": "Estouro de vitalidade",
+    "effect.apotheosis.vitality.desc": "Aumenta a cura recebida",
+    "effect.apotheosis.vitality.description": "Aumenta a cura recebida.",
+
+    "effect.apotheosis.grievous": "Feridas dolorosas",
+    "effect.apotheosis.grievous.desc": "Diminui a cura recebida",
+    "effect.apotheosis.grievous.description": "Diminui a cura recebida.",
+
+    "effect.apotheosis.bleeding": "Sangramento",
+    "effect.apotheosis.bleeding.desc": "Inflige danos a cada dois segundos.",
+    "effect.apotheosis.bleeding.description": "Inflige danos a cada dois segundos.",
+    "death.attack.apotheosis.bleeding": "%s sangrou até a morte.",
+
+    "effect.apotheosis.detonation": "Detonação flamejante",
+    "effect.apotheosis.detonation.desc": "Ao expirar, inflige danos com base nos ticks de fogo restantes.",
+    "effect.apotheosis.detonation.description": "Ao expirar, inflige danos com base nos ticks de fogo restantes.",
+    "death.attack.apotheosis.detonation": "%s foi detonado por uma chama.",
+
     "comment_id": "/Adventure Module",
 
     "info.apotheosis.affix_item": "Item de afixo apótico",
-    "item.modifiers.both_hands": "Quando em qualquer mão:",
 	
 	"death.attack.apotheosis.execute": "%s foi executado por %s",
 	"death.attack.apotheosis.execute.item": "%s foi executado por %s usando %s",
-
-    "attribute.modifier.apotheosis.plus.1": "+%s%% de %s base ",
-    "attribute.modifier.apotheosis.plus.2": "+%s%% de %s total",
-    "attribute.modifier.apotheosis.take.1": "-%s%% de %s base",
-    "attribute.modifier.apotheosis.take.2": "-%s%% de %s total",
 	
-    "misc.apotheosis.affix_name.two": "%s %s",
-	"misc.apotheosis.affix_name.three": "%s %s %s",
+    "misc.apotheosis.affix_name.two": "%2$s %1$s",
+	"misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",
 	"misc.apotheosis.affix_name.four": "%3$s %2$s %4$s de %1$s",
-
-	"apotheosis:draw_speed": "Velocidade da puxada",
-	"apotheosis:crit_chance": "Chance de crítico",
-	"apotheosis:crit_damage": "Dano crítico",
-	"apotheosis:cold_damage": "Dano de gelo",
-	"apotheosis:fire_damage": "Dano de fogo",
-	"apotheosis:life_steal": "Roubo de vida",
-	"apotheosis:piercing": "Perfuração de armadura",
-	"apotheosis:current_hp_damage": "Dano pelo PV atual",
-	"apotheosis:overheal": "Sobrecura",
-	"apotheosis:ghost_health": "Vida fantasma",
-	"apotheosis:mining_speed": "Velocidade de mineração",
-	"apotheosis:arrow_damage": "Dano de flecha",
-	"apotheosis:arrow_velocity": "Velocidade da flecha",
-    "apotheosis:experience_gained": "Experiência adquirida",
 	
     "affix.apotheosis:armor/attribute/blessed": "Abençoado",
     "affix.apotheosis:armor/attribute/blessed.suffix": "da Saúde",
+
+    "affix.apotheosis:armor/attribute/windswept": "Levado pelo vento",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "da Corrente",
 
     "affix.apotheosis:armor/attribute/ironforged": "Ferroforjado",
     "affix.apotheosis:armor/attribute/ironforged.suffix": "do Ferro",
@@ -94,6 +206,9 @@
 	"affix.apotheosis:sword/attribute/vampiric": "Vampírico",
     "affix.apotheosis:sword/attribute/vampiric.suffix": "da Sangraria",
 
+    "affix.apotheosis:sword/attribute/piercing": "Perfurante",
+    "affix.apotheosis:sword/attribute/piercing.suffix": "do Ruptor",
+
 	"affix.apotheosis:heavy_weapon/attribute/shredding": "Retalhador",
     "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "da Penetração",
 
@@ -118,6 +233,9 @@
 	"affix.apotheosis:breaker/mob_effect/swift": "Veloz",
     "affix.apotheosis:breaker/mob_effect/swift.suffix": "do Esmagamento",
 
+    "affix.apotheosis:breaker/mob_effect/spelunkers": "de espeleólogo",
+    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "de Exploração de cavernas",
+
 	"affix.apotheosis:ranged/mob_effect/ensnaring": "Ilusório",
     "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "do Predador",
 
@@ -136,11 +254,23 @@
 	"affix.apotheosis:armor/mob_effect/revitalizing": "Revitalizante",
     "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "da Nascente",
 
+    "affix.apotheosis:armor/mob_effect/nimble": "Ligeiro",
+    "affix.apotheosis:armor/mob_effect/nimble.suffix": "da Raposa",
+
+	"affix.apotheosis:armor/mob_effect/blinding": "Ofuscante",
+    "affix.apotheosis:armor/mob_effect/blinding.suffix": "da Escuridão",
+
 	"affix.apotheosis:ranged/mob_effect/shulkers": "Tocado por shulker",
     "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "da Levitação",
 
 	"affix.apotheosis:shield/mob_effect/withering": "Murchador",
     "affix.apotheosis:shield/mob_effect/withering.suffix": "do Esqueleto das trevas",
+
+    "affix.apotheosis:shield/attribute/ironforged": "Ferroforjado",
+    "affix.apotheosis:shield/attribute/ironforged.suffix": "do Ferro",
+
+    "affix.apotheosis:shield/attribute/steel_touched": "Tocado pelo aço",
+    "affix.apotheosis:shield/attribute/steel_touched.suffix": "do Defensor",
 
 	"affix.apotheosis:ranged/mob_effect/ivy_laced": "Entrelaçado de Hera",
     "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "das Toxinas naturais",
@@ -205,19 +335,25 @@
 	"affix.apotheosis:ranged/mob_effect/acidic": "Ácido",
     "affix.apotheosis:ranged/mob_effect/acidic.suffix": "da Corrosão",
 
+    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting": "Cáustico",
+    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting.suffix": "do Matador",
+
 	"affix.apotheosis:heavy_weapon/mob_effect/caustic": "Cáustico",
     "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "do Reino cáustico",
 
 	"affix.apotheosis:sword/mob_effect/sophisticated": "Sofisticado",
     "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "da Biblioteca antiga",
 
-	"affix.apotheosis:shield/mob_effect/devilish": "Demoníaco",
+	"affix.apotheosis:shield/mob_effect/devilish": "Diabólico",
     "affix.apotheosis:shield/mob_effect/devilish.suffix": "do Veterano",
 
 	"affix.apotheosis:breaker/special/radial": "Radial",
     "affix.apotheosis:breaker/special/radial.suffix": "do Rompe-terra",
     "affix.apotheosis:breaker/special/radial.desc": "Esta ferramenta quebra em uma área %sx%s.",
 	
+    "affix.apotheosis:melee_weapon/mob_effect/detonating": "Fulminante",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "da Chama elemental",
+
 	"misc.apotheosis.iron": "ferro",
 	"misc.apotheosis.diamond": "diamante",
 	"misc.apotheosis.netherite": "netherita",
@@ -248,6 +384,32 @@
 	"affix.apotheosis:armor/dmg_reduction/feathery": "Emplumado",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "da Águia",
 
+    "affix.apotheosis:shield/attribute/stalwart": "Robusto",
+    "affix.apotheosis:shield/attribute/stalwart.suffix": "da Teimosia",
+
+    "affix.apotheosis:armor/attribute/spiritual": "Espiritual",
+	"affix.apotheosis:armor/attribute/spiritual.suffix": "do Feiticeiro",
+
+    "affix.apotheosis:breaker/attribute/lucky": "Sortudo",
+	"affix.apotheosis:breaker/attribute/lucky.suffix": "do Acaso",
+
+	"affix.apotheosis:heavy_weapon/attribute/nullifying": "Anulante",
+	"affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "do Destruidor de magos",
+
+	"affix.apotheosis:sword/attribute/spellbreaking": "Quebra-encantos",
+	"affix.apotheosis:sword/attribute/spellbreaking.suffix": "do Golem de petricita",
+
+	"affix.apotheosis:ranged/mob_effect/grievous": "Grave",
+	"affix.apotheosis:ranged/mob_effect/grievous.suffix": "do Ferimento",
+
+	"affix.apotheosis:armor/mob_effect/bursting": "Estrondoso",
+	"affix.apotheosis:armor/mob_effect/bursting.suffix": "da Vitalidade",
+
+    "affix.apotheosis:socket": "",
+	"affix.apotheosis:socket.suffix": "",
+	"affix.apotheosis:durable": "",
+	"affix.apotheosis:durable.suffix": "",
+
 	"affix.apotheosis.target.attack_self": "Ao acertar, ganha %s",
 	"affix.apotheosis.target.attack_target": "Ao acertar, infringe %s",
 	"affix.apotheosis.target.hurt_self": "Ao ser atacado, ganha %s",
@@ -258,6 +420,7 @@
 	"affix.apotheosis.target.block_self": "Ao bloquear, ganha %s",
 	"affix.apotheosis.target.block_attacker": "Ao bloquear, infringe %s",
     "affix.apotheosis.cooldown": "[⌛ %s]",
+    "affix.apotheosis.stacking": "[Acumulando]",
 
 	"affix.apotheosis:durable.desc": "Este item ignora %s%% do dano de durabilidade.",
     "affix.apotheosis:socket.desc": "Encaixe (%s)",
@@ -275,8 +438,10 @@
 	"gem_class.lower_armor": "Armadura inferior",
 	"gem_class.armor": "Armadura",
 	"gem_class.breaker": "Ferramentas de mineração",
+    "gem_class.pickaxe": "Picaretas",
 	"gem_class.light_ranged": "Armas leves ou de longo alcance",
 	"gem_class.weapons_or_tools": "Armas ou ferramentas",
+    "gem_class.weapon": "Armas",
 
 	"gem_class.helmet": "Capacetes",
 	"gem_class.chestplate": "Peitorais",
@@ -288,10 +453,22 @@
 	"bonus.apotheosis:durability.desc": "Ignora %s%% do dano de durabilidade",
 	"bonus.apotheosis:enchantment.desc": "+%s %s para %s",
 	"bonus.apotheosis:enchantment.desc.mustExist": "+%s %s aos %s existentes",
-	"bonus.apotheosis:enchantment.desc.global": "+%s %s para todas as encantamentos existentes",
+	"bonus.apotheosis:enchantment.desc.global": "+%s %s para todos os encantamentos existentes",
+    "bonus.apotheosis:multi_attr.desc.and": "%s e %s",
+	"bonus.apotheosis:multi_attr.desc.and_but": "%s e %s, mas %s",
+	"bonus.apotheosis:multi_attr.desc.but_and": "%s, mas %s e %s",
+	"bonus.apotheosis:bloody_arrow.desc": "Ao atirar, você perde %s%% da vida máxima e causa %s%% de dano. %s",
+	"bonus.apotheosis:leech_block.desc": "Cura você em %s%% do dano ao bloquear um ataque. %s",
+	"bonus.apotheosis:all_stats.desc": "+%s%% para todos os status",
+	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Quebrar minério de ferro tem uma chance de %s%% de derrubar ouro bruto no lugar.",
+	"bonus.apotheosis:mageslayer.desc": "Ignora %s%% do dano mágico e cura pela mesma quantidade.",
+	"bonus.apotheosis:twilight_ore_magnet.desc": "Pode ser usado como um imã de minério, custando %s extra de durabilidade.",
+	"bonus.apotheosis:twilight_treasure_goblin.desc": "Atacar uma entidade tem %s%% de chance de invocar um goblin do tesouro. %s",
+	"bonus.apotheosis:twilight_fortification.desc": "Levar dano tem %s%% de chance de fortificar você com escudos do Twilight. %s",
 
 	"misc.apotheosis.level": "nível",
 	"misc.apotheosis.level.many": "níveis",
+    "name.apotheosis.treasure_goblin": "Goblin do tesouro",
 
 	"item.apotheosis.gem.apotheosis:legacy": "Gema do legado",
 	"item.apotheosis.gem.apotheosis:core/guardian": "Gema do guardião",
@@ -308,16 +485,24 @@
 	"item.apotheosis.gem.apotheosis:core/brawlers": "Gema do lutador",
 	"item.apotheosis.gem.apotheosis:core/combatant": "Gema do combatente",
 	"item.apotheosis.gem.apotheosis:overworld/earth": "Gema da Terra",
-	"item.apotheosis.gem.apotheosis:the_end/endersurge": "Gema do enderfluxo",
+	"item.apotheosis.gem.apotheosis:overworld/royalty": "Gema da família real",
 	"item.apotheosis.gem.apotheosis:the_nether/inferno": "Gema do inferno incandescente",
-	"item.apotheosis.gem.apotheosis:the_nether/inferno_noench": "Gema do inferno incandescente",
-    
+	"item.apotheosis.gem.apotheosis:the_nether/blood_lord": "Gema do senhor do sangue voraz",
+	"item.apotheosis.gem.apotheosis:the_end/endersurge": "Gema do enderfluxo",
+	"item.apotheosis.gem.apotheosis:the_end/mageslayer": "Gema do matador de magos",
+    "item.apotheosis.gem.apotheosis:twilight/forest": "Gema da floresta do crepúsculo",
+	"item.apotheosis.gem.apotheosis:twilight/queen": "Gema da rainha congelada",
+
 	"item.apotheosis.boss_summoner": "Invocador de chefe apótico",
-    "item.apotheosis.gem.cracked": "%s rachada",
-	"item.apotheosis.gem.flawless": "%s impecável",
-	"item.apotheosis.vial_of_extraction": "Frasco da extração arcana",
-	"item.apotheosis.vial_of_expulsion": "Frasco da expulsão ardente",
-	"item.apotheosis.vial_of_unnaming": "Frasco da desnomeação",
+    "item.apotheosis.gem.common": "%s rachada",
+    "item.apotheosis.gem.uncommon": "%s lascada",
+    "item.apotheosis.gem.rare": "%s defeituosa",
+    "item.apotheosis.gem.epic": "%s",
+	"item.apotheosis.gem.mythic": "%s impecável",
+    "item.apotheosis.gem.ancient": "%s perfeita",
+	"item.apotheosis.vial_of_extraction": "Frasco de extração arcana",
+	"item.apotheosis.vial_of_expulsion": "Frasco de expulsão ardente",
+	"item.apotheosis.vial_of_unnaming": "Frasco de desnomeação",
 	"item.apotheosis.gem_dust": "Pó de gema",
 	"item.apotheosis.gem_dust.desc": "Uma pedra preciosa apotéica triturada",
 	"item.apotheosis.common_material": "Sucata de metal misteriosa",
@@ -342,22 +527,24 @@
 	"button.apotheosis.salvage": "Itens de desmontagem",
 	"button.apotheosis.no_salvage": "Nenhum item selecionado",
 	"button.apotheosis.no_salvage_all": "Nenhum item válido no inventário",
+    "button.apotheosis.upgrade": "Aprimorar gema",
+	"button.apotheosis.upgrade.no": "Entradas ausentes",
 
 	"menu.apotheosis.gem_cutting": "Lapidação de gema",
     "container.apotheosis.salvage": "Desmontar",
 	"container.apotheosis.reforge": "Reforjar",
-	"text.apotheosis.dust_cost": "%s %s",
-	"text.apotheosis.mat_cost": "%s %s",
+	"text.apotheosis.cost": "%sx %s",
 	"text.apotheosis.reforge_cost": "Custo de reforja",
 	"text.apotheosis.salvage_results": "Resultados da desmontagem",
 	"text.apotheosis.unique": "Único",
 	"text.apotheosis.results": "Resultados",
 	"text.apotheosis.facets": "Facetas: %s",
 	"text.apotheosis.socketable_into": "Encaixa em:",
+	"text.apotheosis.dot_prefix": "• %s",
 	"text.apotheosis.socket_limit": "Máximo de encaixes aplicados: %s",
     "text.apotheosis.no_upgrade": "Não pode ser melhorado",
-	"text.apotheosis.rarity_up_cost": "Custo de melhoria de raridade",
 	"text.apotheosis.cut_cost": "Custo de lapidação de gema",
+	"text.apotheosis.one_rarity_mat": "Materiais de raridade (1)",
 	"title.apotheosis.smithing": "Ferraria apótica",
     "title.apotheosis.salvaging": "Desmontagem",
 
@@ -405,12 +592,12 @@
 	"info.apotheosis.unnaming": "Usado em uma bancada de ferraria para remover os componentes de afixo do nome de um item.",
     "info.apotheosis.salvaging": "Materiais de raridade são obtidos ao desmontar itens de afixo em uma bancada de desmontagem.",
 	
-    "rarity.apoth.common": "Comum",
-    "rarity.apoth.uncommon": "Incomum",
-    "rarity.apoth.rare": "Raro",
-    "rarity.apoth.epic": "Épico",
-    "rarity.apoth.mythic": "Mítico",
-    "rarity.apoth.ancient": "Ancestral",
+    "rarity.apoth.common": "comum",
+    "rarity.apoth.uncommon": "incomum",
+    "rarity.apoth.rare": "raro",
+    "rarity.apoth.epic": "épico",
+    "rarity.apoth.mythic": "mítico",
+    "rarity.apoth.ancient": "ancestral",
     
     "death.attack.apoth.frozen_solid": "%s foi congelado.",
     "death.attack.apoth.frozen_solid.player": "%s foi congelado por %s.",
@@ -429,37 +616,55 @@
 
     "advancements.apotheosis.enchantment": "Os segredos do encantamento",
     "advancements.apotheosis.enchantment.desc": "Obtenha uma mesa de encantamentos e comece a desvendar o mistério.",
+    
     "advancements.apotheosis.30ench": "O básico",
     "advancements.apotheosis.30ench.desc": "Encante um item no nível 30.",
-    "advancements.apotheosis.45ench": "Explorando a magia",
-    "advancements.apotheosis.45ench.desc": "Encante um item no nível 45.",
-    "advancements.apotheosis.60ench": "Sessenta por cento de capacidade!",
+    
+    "advancements.apotheosis.60ench": "Dominando o mar e o inferno",
     "advancements.apotheosis.60ench.desc": "Encante um item no nível 60.",
-    "advancements.apotheosis.80ench": "Energia do fim",
+    
+    "advancements.apotheosis.80ench": "Encatamentos das profundezas",
     "advancements.apotheosis.80ench.desc": "Encante um item no nível 80.",
+    
     "advancements.apotheosis.100ench": "Encantamento dracônico",
     "advancements.apotheosis.100ench.desc": "Encante um item no nível 100.",
+    
     "advancements.apotheosis.bookshelf": "Bibliotecário local",
     "advancements.apotheosis.bookshelf.desc": "Crie uma estante de livros.",
+    
     "advancements.apotheosis.hellshelf": "O caos do inferno",
-    "advancements.apotheosis.hellshelf.desc": "Obtenha uma estante infernal infundida",
-    "advancements.apotheosis.upgrade_hellshelf": "Sussurros das profundezas",
+    "advancements.apotheosis.hellshelf.desc": "Obtenha uma estante infernal",
+    
+    "advancements.apotheosis.upgrade_hellshelf": "Dominando o inferno",
     "advancements.apotheosis.upgrade_hellshelf.desc": "Melhore uma estante infernal infundida.",
+    
+    "advancements.apotheosis.deepshelf": "Mergulhando nas trevas",
+    "advancements.apotheosis.deepshelf.desc": "Ative uma estante das profundezas dormente.",
+    
+    "advancements.apotheosis.sculkshelf": "Abraçando o sculk",
+    "advancements.apotheosis.sculkshelf.desc": "Crie uma estante sculk usando uma gavinha do defensor.",
+    
     "advancements.apotheosis.endshelf": "A força do End",
-    "advancements.apotheosis.endshelf.desc": "Obtenha uma estante do End",
-    "advancements.apotheosis.upgrade_endshelf": "Potencial ilimitado",
-    "advancements.apotheosis.upgrade_endshelf.desc": "Melhore uma estante do End.",
+    "advancements.apotheosis.endshelf.desc": "Obtenha um bafo de dragão infundido e crie uma estante do End",
+    
+    "advancements.apotheosis.upgrade_endshelf": "A última estante",
+    "advancements.apotheosis.upgrade_endshelf.desc": "Melhore uma estante do End em uma estante dracônica.",
+    
     "advancements.apotheosis.seashelf": "A pureza dos mares",
     "advancements.apotheosis.seashelf.desc": "Obtenha uma estante do mar.",
+    
     "advancements.apotheosis.infuse_seashelf": "Infusão do mar",
     "advancements.apotheosis.infuse_seashelf.desc": "Obtenha uma estante do mar infundida através do encantamento de infusão.",
+    
     "advancements.apotheosis.upgrade_seashelf": "Dormindo no frio abaixo",
     "advancements.apotheosis.upgrade_seashelf.desc": "Melhore uma estante do mar infundida",
+    
     "advancements.apotheosis.infuse_hellshelf": "Infusão infernal",
     "advancements.apotheosis.infuse_hellshelf.desc": "Obtenha uma estante infernal infundida através do encantamento de infusão.",
-    "advancements.apotheosis.anvilench": "Encantador de Bigorna",
+    
+    "advancements.apotheosis.anvilench": "Encantador de bigorna",
     "advancements.apotheosis.anvilench.desc": "Encante uma bigorna",
-    "advancements.apotheosis.shieldench": "Encantador de Escudo",
+    "advancements.apotheosis.shieldench": "Encantador de escudo",
     "advancements.apotheosis.shieldench.desc": "Encante um escudo",
     "advancements.apotheosis.altar": "Transformação Oceânica",
     "advancements.apotheosis.altar.desc": "Create an Altar of the Seas, which can turn unwanted enchanted items into a new book.",
@@ -482,7 +687,7 @@
     "advancements.apotheosis.arcana100": "Poder arcano",
     "advancements.apotheosis.arcana100.desc": "Encante um item com 100% de arcana.",
     "advancements.apotheosis.max_stats": "Força máxima",
-    "advancements.apotheosis.max_stats.desc": "Encante um item tendo todas as estatísticas no máximo.",
+    "advancements.apotheosis.max_stats.desc": "Encante um item tendo todos os status no máximo.",
     "advancements.apotheosis.max_stable": "Poder estável",
     "advancements.apotheosis.max_stable.desc": "Encante um item tendo eterna e arcana máximas, mas 0% de quanta.",
     "advancements.apotheosis.max_rectified": "Apenas o melhor",
@@ -490,18 +695,19 @@
     
     "advancements.apotheosis.affix": "Uma fixação impressionante",
     "advancements.apotheosis.affix.desc": "Encontre um item com um afixo apótico.",
-    "advancements.apotheosis.common": "Lixo de um homem",
-    "advancements.apotheosis.common.desc": "Encontre um item de afixo comum.",
-    "advancements.apotheosis.uncommon": "Não tão comum",
-    "advancements.apotheosis.uncommon.desc": "Encontre um item de afixo incomum.",
+
     "advancements.apotheosis.rare": "Certamente parece raro...",
     "advancements.apotheosis.rare.desc": "Encontre um item de afixo raro.",
+    
     "advancements.apotheosis.epic": "Épico!",
     "advancements.apotheosis.epic.desc": "Encontre um item de afixo épico.",
+    
     "advancements.apotheosis.mythic": "Forjado pelos titãs",
     "advancements.apotheosis.mythic.desc": "Encontre um item de afixo mítico.",
+    
     "advancements.apotheosis.ancient": "Tesouros perdidos dos deuses",
     "advancements.apotheosis.ancient.desc": "Encontre um item antigo.",
+    
     "advancements.apotheosis.boss": "Ele não era tão forte",
     "advancements.apotheosis.boss.desc": "Mate um chefe apótico e recupere o item de afixo dele.",
     "advancements.apotheosis.chests": "Eu encontrei isso embaixo da terra",
@@ -510,34 +716,48 @@
     "advancements.apotheosis.merchant.desc": "Compre um item de afixo do vendedor ambulante.",
     "advancements.apotheosis.random": "Como você conseguiu isso?",
     "advancements.apotheosis.random.desc": "Recupere um item de afixo de um monstro aleatório.",
+    
     "advancements.apotheosis.gem": "Um cristal antigo",
     "advancements.apotheosis.gem.desc": "Encontre uma gema encaixável.",
+
+    "advancements.apotheosis.rare_gem": "Longe de ser perfeito",
+    "advancements.apotheosis.rare_gem.desc": "Adquira uma gema defeituosa.",
+
+    "advancements.apotheosis.mythic_gem": "Cristais impecáveis",
+    "advancements.apotheosis.mythic_gem.desc": "Adquira uma gema impecável.",
+	
+	"advancements.apotheosis.ancient_gem": "Jóias do infinito",
+    "advancements.apotheosis.ancient_gem.desc": "Usando a bancada de lapidação de gema, crie uma gema perfeita.",
+
     "advancements.apotheosis.socket": "O joalheiro",
     "advancements.apotheosis.socket.desc": "Usando uma bancada de ferraria, encaixe uma gema em um item.",
+    
+    "advancements.apotheosis.gem_cut": "O lapidário",
+    "advancements.apotheosis.gem_cut.desc": "Use uma bancada de lapidação de gema para melhorar uma gema apótica.",
 	
     "advancements.apotheosis.spawner.root": "Geradores do Apotheosis",
     "advancements.apotheosis.spawner.root.desc": "Geradores podem ser coletados e modificados, consulte o JEI para obter informações.",
     "advancements.apotheosis.spawner": "Geradores apóticos",
     "advancements.apotheosis.spawner.desc": "Colete um gerador de mobs usando toque suave.",
     "advancements.apotheosis.capturing": "Capturado!",
-    "advancements.apotheosis.capturing.desc": "Obtenha um ovo gerador de um criatura usando o encantamento capturar.",
+    "advancements.apotheosis.capturing.desc": "Obtenha um ovo gerador de um criatura usando o encantamento captura.",
     "advancements.apotheosis.modifier": "Apenas algumas modificações...",
     "advancements.apotheosis.modifier.desc": "Use um modificador de gerador para alterar os status de um gerador.",
     "advancements.apotheosis.spawncount": "Olhe o tamanho do seu gerador!",
     "advancements.apotheosis.spawncount.desc": "Aumente a quantidade de surgimento de um gerador para 16.",
     "advancements.apotheosis.maxdelay": "Gerador temporal",
     "advancements.apotheosis.maxdelay.desc": "Diminua o atraso máximo de surgimento de um gerador para 20.",
-    "advancements.apotheosis.mindelay": "Eu Sou o Rápido",
+    "advancements.apotheosis.mindelay": "Eu sou a velocidade",
     "advancements.apotheosis.mindelay.desc": "Diminua o atraso mínimo de surgimento de um gerador para 20.",
     "advancements.apotheosis.nearbyents": "Criando uma horda",
     "advancements.apotheosis.nearbyents.desc": "Aumente o número máximo de entidades próximas de um gerador para 32.",
     "advancements.apotheosis.playerrange": "Longe da luta",
     "advancements.apotheosis.playerrange.desc": "Aumente o alcance de ativação do jogador de um gerador para 48.",
-    "advancements.apotheosis.spawnrange": "Monstros por quilômetros",
+    "advancements.apotheosis.spawnrange": "Criaturas por quilômetros",
     "advancements.apotheosis.spawnrange.desc": "Aumente o alcance de surgimento de um gerador para 32.",
     "advancements.apotheosis.conditions": "Geração sem verificação",
     "advancements.apotheosis.conditions.desc": "Desative as condições de surgimento para um gerador.",
-    "advancements.apotheosis.players": "Pronto para fábrica",
+    "advancements.apotheosis.players": "Pronto de fábrica",
     "advancements.apotheosis.players.desc": "Desative a necessidade de jogadores próximos para um gerador.",
     "advancements.apotheosis.redstone": "Adicionando um interruptor",
     "advancements.apotheosis.redstone.desc": "Habilite o controle por redstone para um gerador.",
@@ -552,7 +772,7 @@
 	
 	"item.apotheosis.spawner": "Gerador de %s",
 	
-    "enchantment.apotheosis.capturing": "Capturar",
+    "enchantment.apotheosis.capturing": "Captura",
     "enchantment.apotheosis.capturing.desc": "Faz com que os mobs tenham a chance de derrubar seu ovo de invocação.",
 
     "misc.apotheosis.concat": "%s %s",
@@ -594,24 +814,47 @@
     "stat.apotheosis.no_ai.desc": "As entidades geradas não terão IA",
 	"stat.apotheosis.silent.desc": "As entidades geradas não farão nenhum barulho",
 
-    "title.apotheosis.spawner": "Spawner Modification",
+    "title.apotheosis.spawner": "Modificação de gerador",
     "info.apotheosis.spawner": "Os geradores podem ser coletados com %s e podem ser modificados com vários itens.",
     "info.apotheosis.spawner.no_silk": "Os geradores podem ser modificados com vários itens, mas a coleta com o toque suave está atualmente desativada.",
     "info.apotheosis.spawner.always_drop": "Os geradores podem ser modificados com vários itens e sempre serão largados quando quebrados.",
     "info.apotheosis.capturing": "O encantamento de captura dá aos monstros a chance de soltar seu ovo de geração.\\n \\nTaxa de saque: 0,4%% por nível",
 
     "comment_id": "/Enchantment Module",
+
     "block.apotheosis.hellshelf": "Estante infernal",
+    "block.apotheosis.infused_hellshelf": "Estante infernal infundida",
     "block.apotheosis.blazing_hellshelf": "Estante infernal em chamas",
     "block.apotheosis.glowing_hellshelf": "Estante infernal brilhante",
+
     "block.apotheosis.seashelf": "Estante do mar",
+    "block.apotheosis.infused_seashelf": "Estante do mar infundida",
     "block.apotheosis.crystal_seashelf": "Estante do mar cristalina",
     "block.apotheosis.heart_seashelf": "Estante do mar forjada pelo coração",
+
+    "block.apotheosis.dormant_deepshelf": "Estante das profundezas dormente",
+    "block.apotheosis.deepshelf": "Estante das profundezas",
+    "block.apotheosis.echoing_deepshelf": "Estante das profundezas ecoante",
+    "block.apotheosis.soul_touched_deepshelf": "Estante das profundezas tocada pela alma",
+    "block.apotheosis.echoing_sculkshelf": "Estante sculk ecoante",
+    "block.apotheosis.soul_touched_sculkshelf": "Estante sculk tocada pela alma",
+
     "block.apotheosis.endshelf": "Estante do End",
+    "block.apotheosis.infused_endshelf": "Estante do End infundida",
     "block.apotheosis.pearl_endshelf": "Estante do End perolizada",
     "block.apotheosis.draconic_endshelf": "Estante do End dracônica",
+
     "block.apotheosis.beeshelf": "Estante de abelha",
     "block.apotheosis.melonshelf": "Estante de melancia",
+    "block.apotheosis.stoneshelf": "Estante pedregosa",
+
+    "block.apotheosis.sightshelf": "Estante da observação",
+    "block.apotheosis.sightshelf_t2": "Estante da observação mestra",
+    "block.apotheosis.rectifier": "Estante da retificação do mar",
+    "block.apotheosis.rectifier_t2": "Estante da retificação infernal",
+    "block.apotheosis.rectifier_t3": "Estante da retificação fundida do End",
+
+    
     "info.apotheosis.ench_power": "Fornece %s de poder de encantamento.",
     "info.apotheosis.cobweb": "Pode ser usada para remover encantamentos.",
     "info.apotheosis.masterwork": "Obra-prima",
@@ -670,6 +913,15 @@
     "info.apotheosis.eterna_exact": "Requer exatamente: %s/%s",
     "info.apotheosis.percent_exact": "Requer exatamente: %s%%",
     "apotheosis.recipes.enchanting": "Encatamento de infusão",
+    "info.apotheosis.power_range": "Requer pelo menos: %s%%",
+    "info.apotheosis.discoverable": "Encontrável",
+    "info.apotheosis.discoverable.not": "Não encontrável",
+    "info.apotheosis.lootable": "Saqueável",
+    "info.apotheosis.lootable.not": "Não saqueável",
+    "info.apotheosis.tradeable": "Trocável",
+    "info.apotheosis.tradeable.not": "Não trocável",
+    "info.apotheosis.treasure": "Tesouro",
+    "info.apotheosis.treasure.not": "Não é um tesouro",
 
     "enchantment.apotheosis.infusion": "Infusão",
     "enchantment.apotheosis.infusion.desc": "Espaço reservado para criação de encantamentos",
@@ -714,6 +966,9 @@
     "item.apotheosis.scrap_tome": "Tomo de remoção",
     "item.apotheosis.improved_scrap_tome": "Tomo de remoção superior",
     "item.apotheosis.extraction_tome": "Tomo de extração",
+    "item.apotheosis.warden_tendril": "Gavinha do defensor",
+    "item.apotheosis.infused_breath": "Bafo do dragão infundido",
+
     "info.apotheosis.tome_error": "Item com problema - Clique com o botão direito no ar para transformar em um livro encantado.",
     "info.apotheosis.other_tome": "Aceita diversos encantamentos.",
     "info.apotheosis.helmet_tome": "Aceita encantamentos de capacete.",
@@ -725,7 +980,7 @@
     "info.apotheosis.fishing_tome": "Aceita encantamentos de vara de pesca.",
     "info.apotheosis.bow_tome": "Aceita encantamentos de arco.",
     "info.apotheosis.scrap_tome": "Pode remover encantamentos, tomando alguns deles como seus próprios.",
-    "info.apotheosis.scrap_tome2": "Consumirá o item no processo.",
+    "info.apotheosis.scrap_tome2": "Destrói o item no processo.",
     "info.apotheosis.improved_scrap_tome": "Extrai todos os encantamentos de um item.",
     "info.apotheosis.improved_scrap_tome2": "Destrói o item no processo.",
     "info.apotheosis.extraction_tome": "Extrai todos os encantamentos de um item.",
@@ -934,13 +1189,6 @@
     "info.apotheosis.power_range": "Faixa de poder: %s para %s",
     "info.apotheosis.item_ench": "Encantabilidade do item: %s",
     "info.apotheosis.num_clues": "Pistas de encantamento: %s",
-    "block.apotheosis.sightshelf": "Estante da observação",
-    "block.apotheosis.sightshelf_t2": "Estante da observação mestra",
-    "block.apotheosis.rectifier": "Estante da retificação do mar",
-    "block.apotheosis.rectifier_t2": "Estante da retificação infernal",
-    "block.apotheosis.rectifier_t3": "Estante da retificação fundida do End",
-    "block.apotheosis.infused_seashelf": "Estante do mar infundida",
-    "block.apotheosis.infused_hellshelf": "Estante infernal infundida",
     
     "info.apotheosis.slider_power": "Poder: %s",
     "info.apotheosis.enchinfo_level": "Nível: %s",
@@ -980,29 +1228,21 @@
     "item.minecraft.lingering_potion.effect.wither": "Poção prolongada do Wither",
     "item.minecraft.tipped_arrow.effect.wither": "Flecha do Wither",
 
-    "effect.apotheosis.sundering": "Ruptura",
-    "effect.apotheosis.sundering.desc": "Aumenta o dano recebido",
     "item.minecraft.potion.effect.sundering": "Poção de ruptura",
     "item.minecraft.splash_potion.effect.sundering": "Poção arremessável de ruptura",
     "item.minecraft.lingering_potion.effect.sundering": "Poção prolongada de ruptura",
     "item.minecraft.tipped_arrow.effect.sundering": "Flecha de ruptura",
 
-    "effect.apotheosis.knowledge": "Conhecimento das eras",
-    "effect.apotheosis.knowledge.desc": "Aumenta a experiência adquirida com abates e blocos",
     "item.minecraft.potion.effect.knowledge": "Poção de conhecimento das eras",
     "item.minecraft.splash_potion.effect.knowledge": "Poção arremessável de conhecimento das eras",
     "item.minecraft.lingering_potion.effect.knowledge": "Poção prolongada de conhecimento das eras",
     "item.minecraft.tipped_arrow.effect.knowledge": "Flecha de conhecimento das eras",
 
-    "effect.apotheosis.vitality": "Aumento de cura",
-    "effect.apotheosis.vitality.desc": "Aumenta a cura recebida",
-    "item.minecraft.potion.effect.vitality": "Poção de aumento de cura",
-    "item.minecraft.splash_potion.effect.vitality": "Poção arremessável de aumento de cura",
-    "item.minecraft.lingering_potion.effect.vitality": "Poção prolongada de aumento de cura",
-    "item.minecraft.tipped_arrow.effect.vitality": "Flecha de aumento de cura",
+    "item.minecraft.potion.effect.vitality": "Poção de estouro de vitalidade",
+    "item.minecraft.splash_potion.effect.vitality": "Poção arremessável de estouro de vitalidade",
+    "item.minecraft.lingering_potion.effect.vitality": "Poção prolongada de estouro de vitalidade",
+    "item.minecraft.tipped_arrow.effect.vitality": "Flecha de estouro de vitalidade",
 
-    "effect.apotheosis.grievous": "Feridas dolorosas",
-    "effect.apotheosis.grievous.desc": "Diminui a cura recebida",
     "item.minecraft.potion.effect.grievous": "Poção de redução de cura",
     "item.minecraft.splash_potion.effect.grievous": "Poção arremessável de redução de cura",
     "item.minecraft.lingering_potion.effect.grievous": "Poção prolongada de redução de cura",
@@ -1039,7 +1279,7 @@
     "name.apotheosis.merch_legs": "Guarda-pernas forjado pelo trovão",
     "name.apotheosis.merch_boots": "Grevas forjadas com runas",
     "name.apotheosis.vigilance": "Vigília eterna",
-    "apotheosis.recipes.fletching": "Fabricação de flechas",
+    "apotheosis.recipes.fletching": "Flecharia",
     "item.apotheosis.obsidian_arrow": "Flecha obsidiana",
     "info.apotheosis.obsidian_arrow": "+20%% dano",
     "item.apotheosis.broadhead_arrow": "Flecha de ponta larga",
@@ -1050,8 +1290,6 @@
     "item.apotheosis.diamond_mining_arrow": "Flecha de mineração de diamante",
     "info.apotheosis.mining_arrow.iron": "Quebra blocos como uma picareta de ferro",
     "info.apotheosis.mining_arrow.diamond": "Quebra blocos como uma picareta de diamante",
-    "effect.apotheosis.bleeding": "Sangramento",
-    "death.attack.apotheosis.bleeding": "%s sangrou até a morte.",
     
     "comment_id": "/Misc",
     "generic.reachDistance": "Distância de alcance",
@@ -1062,7 +1300,7 @@
 	"config.jade.plugin_apotheosis.adventure": "Módulo de aventura apótico",
 	
     "comment_id": "Guidebook",
-    "book.apotheosis.name": "Crônica das Sombras",
+    "book.apotheosis.name": "Crônica das sombras",
     "book.apotheosis.subtitle": "Guia apoteótico",
     "book.apotheosis.landing": "Bem-vindo ao mundo do Apotheosis.$(br2)O Apotheosis é organizado em $(#8080FF)módulos$(), assim como o conteúdo deste livro.$(br2)Os módulos desabilitados estão ocultos."
 }

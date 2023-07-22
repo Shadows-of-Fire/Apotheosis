@@ -83,7 +83,7 @@
 	"apotheosis:experience_gained": "Experience Gained",
 	"apotheosis:experience_gained.desc": "Multiplier on how much experience you gain from breaking blocks and killing mobs.",
 
-	"apotheosis:healing_received": "Healing Receieved",
+	"apotheosis:healing_received": "Healing Received",
 	"apotheosis:healing_received.desc": "Multiplier on all incoming healing.",
 
 	"apotheosis:armor_pierce": "Armor Pierce",
@@ -514,7 +514,8 @@
 	"item.apotheosis.superior_sigil_of_socketing": "Superior Sigil of Socketing",
 	"item.apotheosis.sigil_of_enhancement": "[NYI] Sigil of Enhancement",
 	"item.apotheosis.superior_sigil_of_enhancement": "[NYI] Superior Sigil of Enhancement",
-	
+
+	"block.apotheosis.boss_spawner": "Boss Spawner",
 	"block.apotheosis.gem_cutting_table": "Gem Cutting Table",
 	"block.apotheosis.gem_cutting_table.desc": "Uses Gem Dust and Rarity Materials to upgrade Gems",
 	"block.apotheosis.salvaging_table": "Salvaging Table",
@@ -913,7 +914,7 @@
     "info.apotheosis.eterna_exact": "Requires exactly: %s/%s",
     "info.apotheosis.percent_exact": "Requires exactly: %s%%",
     "apotheosis.recipes.enchanting": "Infusion Enchanting",
-    "info.apotheosis.power_range": "Requires at least: %s%%",
+    "info.apotheosis.book_range": "Power Range: [%s, %s]",
     "info.apotheosis.discoverable": "Discoverable",
     "info.apotheosis.discoverable.not": "Not Discoverable",
     "info.apotheosis.lootable": "Lootable",
@@ -1189,6 +1190,7 @@
     "info.apotheosis.power_range": "Power Range: %s to %s",
     "info.apotheosis.item_ench": "Item Enchantability: %s",
     "info.apotheosis.num_clues": "Enchanting Clues: %s",
+	"info.apotheosis.infusion_failed": "Infusion Criteria Not Met",
     
     "info.apotheosis.slider_power": "Power: %s",
     "info.apotheosis.enchinfo_level": "Level: %s",

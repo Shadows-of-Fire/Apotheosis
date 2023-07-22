@@ -1,5 +1,5 @@
 {
-    "name": "Knowledge of the Ages",
+    "name": "Conhecimento das eras",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)Knowledge of the Ages$() is a Masterwork$(br)enchantment that can be applied to swords.$(p)When you kill a mob, all drops will be converted to experience.$(p)Each individual item is worth the same amount of experience."
+            "text": "$(2)Conhecimento das eras$() é um encantamento de$(br)obra-prima que pode ser aplicado a espadas.$(p)Quando você mata uma criatura, todos os saques são convertidas em experiência.$(p)Cada item individual vale a mesma quantidade de experiência."
         },
 		{
 			"type": "patchouli:text",
-			"text": "This makes it most efficient to kill mobs that drop a large volume of items.$(p)The experience per item increases with enchantment level.$(p)As a precaution, killing a player will not convert their items."
+			"text": "Isso torna mais eficiente matar criaturas que derrubam um grande volume de itens.$(p)A experiência por item aumenta com o nível de encantamento.$(p)Por precaução, matar um jogador não converterá seus itens."
 		}
 	]
 }

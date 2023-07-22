@@ -15,6 +15,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,6 +23,7 @@ import net.minecraftforge.registries.RegistryObject;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.core.attributeslib.api.ALAttributes;
 import shadows.apotheosis.core.attributeslib.client.AttributesLibClient;
+import shadows.apotheosis.core.attributeslib.compat.CuriosCompat;
 import shadows.apotheosis.core.attributeslib.impl.AttributeEvents;
 import shadows.apotheosis.core.attributeslib.impl.PercentBasedAttribute;
 import shadows.placebo.util.RegObjHelper;
@@ -119,6 +121,9 @@ public class AttributesLib {
 		AttributeSupplier playerAttribs = ForgeHooks.getAttributesView().get(EntityType.PLAYER);
 		for (Attribute attr : ForgeRegistries.ATTRIBUTES.getValues()) {
 			if (playerAttribs.hasAttribute(attr)) attr.setSyncable(true);
+		}
+		if (ModList.get().isLoaded("curios")) {
+			e.enqueueWork(CuriosCompat::init);
 		}
 	}
 

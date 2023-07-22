@@ -160,4 +160,9 @@ public class PotionCharmItem extends Item {
 		return ForgeRegistries.ITEMS.getKey(this).getNamespace();
 	}
 
+	@Override
+	public int getEnchantmentValue() {
+		return 0;
+	}
+
 }

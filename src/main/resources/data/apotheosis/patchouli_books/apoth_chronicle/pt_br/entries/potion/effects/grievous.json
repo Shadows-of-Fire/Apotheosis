@@ -1,5 +1,5 @@
 {
-    "name": "Grievous Wounds",
+    "name": "Feridas dolorosas",
     "icon": "apotheosis:textures/mob_effect/grievous.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Potion of $(c)Grievous Wounds$() is a negative effect.$(p)While under its effects, all healing received is reduced."
+            "text": "A poção de $(c)feridas dolorosas$() é um efeito negativo.$(p)Enquanto estiver sob seus efeitos, toda cura recebida é reduzida."
         },
 		{
             "type": "patchouli:text",
-            "text": "The healing reduction is equal to 40% per level.$(p)While at level III or above, all healing is prevented."
+            "text": "A redução de cura é igual a 40% por nível.$(p)Enquanto estiver no nível III ou acima, toda cura é impedida."
         }
 	]
 }

@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "$(9)Dano de ataque$() é o atributo que controla quanto dano seus ataques causam.$(p)Normalmente, as armas fornecerão este atributo."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 1$(p)$(9)$(n)Valor máximo:$() 1024"
-		}
+        }
 	]
 }

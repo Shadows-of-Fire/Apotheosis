@@ -1,5 +1,5 @@
 {
-    "name": "Sundering",
+    "name": "Ruptura",
     "icon": "apotheosis:textures/mob_effect/sundering.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "The Potion of $(c)Sundering$() is a negative effect.$(p)While under its effects, all damage received is increased by 20% per level."
+            "text": "A poção de $(c)ruptura$() é um efeito negativo.$(p)Enquanto estiver sob seus efeitos, todo dano recebido é aumentado em 20% por nível."
         },
 		{
             "type": "patchouli:text",
-            "text": "It serves as a direct counter to resistance, and is additive with resistance.$(p)If you had Sundering II and Resistance II, you would take normal damage."
+            "text": "Ele serve como um contra-ataque direto à resistência e é aditivo à resistência.$(p)Se você tivesse ruptura II e resistência II, receberia dano normal."
         }
 	]
 }

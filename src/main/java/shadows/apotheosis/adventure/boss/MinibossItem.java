@@ -1,14 +1,10 @@
 package shadows.apotheosis.adventure.boss;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -22,10 +18,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -34,22 +28,16 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
-import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.boss.MinibossManager.IEntityMatch;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
-import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.util.ChancedEffectInstance;
 import shadows.apotheosis.util.GearSet;
 import shadows.apotheosis.util.GearSet.SetPredicate;
@@ -315,7 +303,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 			}
 
 			var rarity = LootRarity.random(rand, luck, AdventureConfig.AFFIX_CONVERT_RARITIES.get(mob.level.dimension().location()));
-			this.modifyBossItem(temp, rand, name, luck, rarity);
+			BossItem.modifyBossItem(temp, rand, name, luck, rarity, stats);
 			mob.setCustomName(((MutableComponent) mob.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
 			mob.setDropChance(EquipmentSlot.values()[guaranteed], 2F);
 		}
@@ -323,50 +311,11 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 		for (EquipmentSlot s : EquipmentSlot.values()) {
 			ItemStack stack = mob.getItemBySlot(s);
 			if (!stack.isEmpty() && s.ordinal() != guaranteed && rand.nextFloat() < stats.enchantChance()) {
-				enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[0] : stats.enchLevels()[1], true);
+				BossItem.enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[0] : stats.enchLevels()[1], true);
 				mob.setItemSlot(s, stack);
 			}
 		}
 		mob.setHealth(mob.getMaxHealth());
-	}
-
-	public void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {
-		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, level, treasure);
-		var map = ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max));
-		map.putAll(EnchantmentHelper.getEnchantments(stack));
-		EnchantmentHelper.setEnchantments(map, stack);
-	}
-
-	public ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity) {
-		enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[2] : stats.enchLevels()[3], true);
-
-		NameHelper.setItemName(rand, stack);
-		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
-
-		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName) + " ";
-		Component name = AffixHelper.getName(stack);
-		if (name.getContents() instanceof TranslatableContents tc) {
-			Component copy = Component.translatable(bossOwnerName + tc.getKey(), tc.getArgs()).withStyle(name.getStyle());
-			AffixHelper.setName(stack, copy);
-		}
-
-		Map<Enchantment, Integer> enchMap = new HashMap<>();
-		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
-			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + rand.nextInt(2)));
-		}
-
-		if (AdventureConfig.curseBossItems) {
-			final ItemStack stk = stack; //Lambda rules require this instead of a direct reference to stack
-			List<Enchantment> curses = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter(e -> e.canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
-			if (!curses.isEmpty()) {
-				Enchantment curse = curses.get(rand.nextInt(curses.size()));
-				enchMap.put(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse)));
-			}
-		}
-
-		EnchantmentHelper.setEnchantments(enchMap, stack);
-		stack.getTag().putBoolean("apoth_boss", true);
-		return stack;
 	}
 
 	/**

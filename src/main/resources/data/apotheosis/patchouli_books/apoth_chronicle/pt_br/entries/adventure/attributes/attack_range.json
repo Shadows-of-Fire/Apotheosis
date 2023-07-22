@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "Seu $(9)alcance de ataque$() é a distância máxima na qual você consegue atacar alvos com uma arma corpo a corpo.$(p)Geralmente encontrado em armas."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 3,0$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
-		}
+        }
 	]
 }

@@ -1,6 +1,23 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.3.1
+* Added missing Stoneshelf recipe.
+* Made gems remove the old `"facets"` tag, which should allow them to stack.
+* Fixed minibosses dropping affix items with invalid names.
+* Fixed a crash with Tower generation.
+* Added curios support for modifier sources in the Attributes GUI.
+* Fixed missing translation key for the `Power Range` advanced tooltip on enchanted books.
+* Fixed being unable to disable the Adventure module.
+* t0piy: Updated Brazilian Portuguese translation.
+* mc-kaishixiaxue: Updated Chinese translation.
+* Infusion Recipes will now specify that the requirements are not met when attempting and failing.
+  * Note that this will not apply if there are enchantments that globally apply to all items, such certain Soulbound enchantments.
+* Reduced the Enchantability of the Potion Charm to zero, which should make it easier to satisfy the recipe with less confusion.
+  * Thinking about removing the change that defaults all enchantability values from 0 to 1, but no decision has been made yet.
+* Added missing translation for the Boss Spawner, and fixed culling issues.
+* Removed uses of non-api JEI Constants class.
+
 ## 6.3.0
 Welcome to the largest update to Apotheosis to date! There's a lot of changes here, and I may have missed some things.  
 Before we begin, please reset your configs. The defaults have changed, and old files are not updated.  

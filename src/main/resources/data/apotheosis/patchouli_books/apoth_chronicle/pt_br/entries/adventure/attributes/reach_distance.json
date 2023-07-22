@@ -8,10 +8,6 @@
         {
             "type": "patchouli:text",
             "text": "Sua $(9)distância de alcance$() é a distância máxima na qual você pode alcançar um objeto. Ao alcançar um objeto, você pode interagir com ele ou quebrá-lo, se for um bloco.$(p)Geralmente encontrado em ferramentas que quebram blocos, pois não é útil para armas."
-        },
-		{
-			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 4,5$(p)$(9)$(n)Valor máximo:$() 1024$(p)"
-		}
+        }
 	]
 }
