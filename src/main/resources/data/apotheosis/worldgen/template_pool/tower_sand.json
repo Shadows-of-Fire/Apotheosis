@@ -1,15 +1,17 @@
 {
-  "name": "apotheosis:tower_sand",
-  "fallback": "minecraft:empty",
-  "elements": [
-    {
-      "weight": 1,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "apotheosis:tower_sand",
-        "projection": "rigid",
-        "processors": "apotheosis:item_frame_gems"
-      }
-    }
-  ]
+	"forge:conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"name": "apotheosis:tower_sand",
+	"fallback": "minecraft:empty",
+	"elements": [{
+		"weight": 1,
+		"element": {
+			"element_type": "minecraft:single_pool_element",
+			"location": "apotheosis:tower_sand",
+			"projection": "rigid",
+			"processors": "apotheosis:item_frame_gems"
+		}
+	}]
 }

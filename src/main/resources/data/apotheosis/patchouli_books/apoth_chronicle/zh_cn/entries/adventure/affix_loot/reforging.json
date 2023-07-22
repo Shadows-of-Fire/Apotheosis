@@ -5,15 +5,15 @@
 	"flag": "apotheosis:adventure",
 	"sortnum": 4,
     "pages": [
-        {
-            "type": "patchouli:crafting",
-			"recipe": "apotheosis:reforging_table",
-			"text": "$(9)重铸台$()被用来给一个物品注入新的生命，抹去任何词缀并赋予全新的词缀。"
-		},
 		{
             "type": "patchouli:text",
             "text": "通过$(9)珍宝材料$()的原始潜力和$(9)宝石粉$()的多功能性，现在可以用全新的词缀重铸一件物品。$(p)重铸不限于已经有词缀的物品，可以用任何有效的物品进行。"
         },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:simple_reforging_table",
+			"text": "要开始重铸，合成一个$(#5555FF)简易重铸台$()，它允许你重铸稀有度高达$(#5555FF)珍贵$()的物品。"
+		},
 		{
             "type": "patchouli:image",
 			"title": "输入格",
@@ -40,10 +40,15 @@
 			"title": "重铸",
 			"text": "每项选择都代表了被重铸物品的一种潜在的新形式。每项选择的花费不同，分别需要2/4/6个宝石粉、珍宝材料和经验等级。$(p)要重铸你的物品，点击你想要的选项即可。"
 		},
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:reforging_table",
+			"text": "要重铸$(#BB00BB)史诗$()或更高稀有度的物品，你需要将你的$(#5555FF)简易重铸台$()升级为$(#BB00BB)重铸台$()。"
+		},
 		{
 			"type": "patchouli:text",
 			"title": "注意",
-			"text": "物品可以被多次重铸，但你必须先拿起并重新放回去。$(p)不存在某个选项在本质上比其余的强。$(p)(6.1.5之前)重铸台使用你的附魔随机种子来决定选择。"
+			"text": "物品可以被多次重铸，但你必须先拿起并重新放回去。$(p)不存在某个选项在本质上比其余的强。"
 		}
 	]
 }

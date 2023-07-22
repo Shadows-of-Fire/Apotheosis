@@ -39,7 +39,6 @@ public class GemItem extends Item {
 	}
 
 	@Override
-	@SuppressWarnings("removal")
 	public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
 		Gem gem = getGem(pStack);
 		if (gem == null) {
@@ -99,7 +98,10 @@ public class GemItem extends Item {
 		// TODO: Remove 6.4.0 - Gems of the same type and rarity should stack, and UUIDs should not be generated until socketing time.
 		// However, old gems will have their UUIDs encoded, and as such will need to be datafixed.
 		CompoundTag tag = stack.getTag();
-		if (tag != null) tag.remove(UUID_ARRAY);
+		if (tag != null) {
+			tag.remove(UUID_ARRAY);
+			tag.remove("facets");
+		}
 	}
 
 	/**

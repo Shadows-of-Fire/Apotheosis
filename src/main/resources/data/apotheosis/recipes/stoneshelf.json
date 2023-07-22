@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    "EEE",
+    "BBB",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:polished_andesite"
+    },
+	"B": {
+      "item": "minecraft:book"
+    }
+  },
+  "result": {
+    "item": "apotheosis:stoneshelf",
+    "count": 1
+  }
+}

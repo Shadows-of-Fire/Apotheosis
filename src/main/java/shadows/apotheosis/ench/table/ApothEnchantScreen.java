@@ -30,13 +30,13 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.ench.table.ApothEnchantContainer.Arcana;
 import shadows.placebo.util.EnchantmentUtils;
@@ -266,19 +266,26 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 			int cost = slot + 1;
 			if (this.isHovering(60, 14 + 19 * slot, 108, 17, mouseX, mouseY) && level > 0) {
 				List<Component> list = Lists.newArrayList();
+				boolean isFailedInfusion = slot == 2 && enchantment == null && EnchantingRecipe.findItemMatch(this.minecraft.level, this.menu.getSlot(0).getItem()) != null;
+
 				if (enchantment != null) {
 					if (!this.clues.get(slot).isEmpty()) {
 						list.add(Component.translatable("info.apotheosis.runes" + (this.hasAllClues[slot] ? "_all" : "")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
 						for (EnchantmentInstance i : this.clues.get(slot)) {
-							list.add(((MutableComponent) i.enchantment.getFullname(i.level)));
+							list.add(i.enchantment.getFullname(i.level));
 						}
 					} else {
 						list.add(Component.translatable("info.apotheosis.no_clue").withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));
 					}
-				} else list.add(Component.translatable("container.enchant.clue", "").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-				if (enchantment == null) {
+				} else if (isFailedInfusion) {
+					list.add(Apoth.Enchantments.INFUSION.get().getFullname(1).copy().withStyle(ChatFormatting.ITALIC));
+					Collections.addAll(list, Component.literal(""), Component.translatable("info.apotheosis.infusion_failed").withStyle(ChatFormatting.RED));
+				} else {
+					list.add(Component.translatable("container.enchant.clue", "").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 					Collections.addAll(list, Component.literal(""), Component.translatable("forge.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
-				} else if (!creative) {
+				}
+
+				if (enchantment != null && !creative) {
 					list.add(Component.literal(""));
 					if (this.minecraft.player.experienceLevel < level) {
 						list.add(Component.translatable("container.enchant.level.requirement", this.menu.costs[slot]).withStyle(ChatFormatting.RED));

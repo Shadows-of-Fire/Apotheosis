@@ -10,12 +10,15 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
@@ -25,6 +28,8 @@ import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 
+	private static final VoxelShape OCC_SHAPE = Shapes.box(0, 0, 0, 0, 15.99, 0);
+
 	public BossSpawnerBlock(Properties properties) {
 		super(properties);
 	}
@@ -32,6 +37,11 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
 		return new BossSpawnerTile(pPos, pState);
+	}
+
+	@Override
+	public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
+		return OCC_SHAPE;
 	}
 
 	public static class BossSpawnerTile extends BlockEntity implements TickingBlockEntity {
