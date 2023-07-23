@@ -23,19 +23,19 @@ public class GetItemSocketsEvent extends Event {
      * @return The item whose socket value is being calculated.
      */
     public ItemStack getStack() {
-        return stack;
+        return this.stack;
     }
 
     /**
      * @return The (possibly event-modified) number of sockets this item has.
      */
     public int getSockets() {
-        return sockets;
+        return this.sockets;
     }
 
     /**
      * Sets the number of sockets the item will have to a given amount.
-     * 
+     *
      * @param sockets The new socket count.
      */
     public void setSockets(int sockets) {

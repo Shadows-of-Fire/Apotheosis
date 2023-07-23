@@ -72,7 +72,7 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
     }
 
     private void resolve() {
-        this.resolvedEntries = this.entries.stream().map(id -> printErrorOnNull(AffixLootManager.INSTANCE.getValue(id), id)).filter(Predicates.notNull()).toList();
+        this.resolvedEntries = this.entries.stream().map(id -> this.printErrorOnNull(AffixLootManager.INSTANCE.getValue(id), id)).filter(Predicates.notNull()).toList();
     }
 
     private <T> T printErrorOnNull(T t, ResourceLocation id) {

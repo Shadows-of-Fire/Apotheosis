@@ -25,7 +25,6 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
  */
 public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
-    
     public static final Codec<AffixLootEntry> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
@@ -36,7 +35,7 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
             LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(a -> a.maxRarity),
             PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)))
         .apply(inst, AffixLootEntry::new));
-    
+
     public static final PSerializer<AffixLootEntry> SERIALIZER = PSerializer.fromCodec("Affix Loot Entry", CODEC);
 
     protected final int weight;

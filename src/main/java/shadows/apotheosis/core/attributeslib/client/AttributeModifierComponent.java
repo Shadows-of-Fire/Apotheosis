@@ -34,7 +34,7 @@ public class AttributeModifierComponent implements ClientTooltipComponent {
 
     @Override
     public int getHeight() {
-        return text.size() * 10;
+        return this.text.size() * 10;
     }
 
     @Override
@@ -47,17 +47,17 @@ public class AttributeModifierComponent implements ClientTooltipComponent {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        GuiComponent.blit(stack, x, y, pBlitOffset, source == null ? 9 : 0, 0, 9, 9, 18, 9);
-        if (source == null) return;
-        source.render(font, x, y, stack, itemRenderer, pBlitOffset);
+        GuiComponent.blit(stack, x, y, pBlitOffset, this.source == null ? 9 : 0, 0, 9, 9, 18, 9);
+        if (this.source == null) return;
+        this.source.render(font, x, y, stack, itemRenderer, pBlitOffset);
     }
 
     @Override
     public void renderText(Font font, int pX, int pY, Matrix4f pMatrix4f, BufferSource pBufferSource) {
-        var line = text.get(0);
+        var line = this.text.get(0);
         font.drawInBatch(line, pX + 12, pY, -1, true, pMatrix4f, pBufferSource, false, 0, 15728880);
-        for (int i = 1; i < text.size(); i++) {
-            line = text.get(i);
+        for (int i = 1; i < this.text.size(); i++) {
+            line = this.text.get(i);
             font.drawInBatch(line, pX, pY + i * (font.lineHeight + 1), -1, true, pMatrix4f, pBufferSource, false, 0, 15728880);
         }
     }

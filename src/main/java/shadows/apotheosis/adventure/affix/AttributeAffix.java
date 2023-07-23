@@ -35,7 +35,6 @@ import shadows.placebo.util.StepFunction;
  */
 public class AttributeAffix extends Affix {
 
-    
     public static final Codec<AttributeAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(a -> a.attribute),
@@ -43,7 +42,7 @@ public class AttributeAffix extends Affix {
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
             LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
         .apply(inst, AttributeAffix::new));
-    
+
     public static final PSerializer<AttributeAffix> SERIALIZER = PSerializer.fromCodec("Attribute Affix", CODEC);
 
     protected final Attribute attribute;
@@ -63,7 +62,7 @@ public class AttributeAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {};
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {}
 
     @Override
     public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {
@@ -88,7 +87,7 @@ public class AttributeAffix extends Affix {
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
         if (cat.isNone()) return false;
         return (this.types.isEmpty() || this.types.contains(cat)) && this.modifiers.containsKey(rarity);
-    };
+    }
 
     @Override
     public PSerializer<? extends Affix> getSerializer() {

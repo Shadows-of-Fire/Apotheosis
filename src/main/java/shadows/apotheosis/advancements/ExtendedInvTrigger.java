@@ -43,8 +43,8 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
     ItemPredicate[] deserializeApoth(JsonObject json) {
         String type = json.get("type").getAsString();
-        if (type.equals("spawn_egg")) return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SpawnEggItem) };
-        if (type.equals("enchanted")) {
+        if ("spawn_egg".equals(type)) return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SpawnEggItem) };
+        if ("enchanted".equals(type)) {
             Enchantment ench = json.has("enchantment") ? ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(json.get("enchantment").getAsString())) : null;
             Ints bound = Ints.fromJson(json.get("level"));
             return new ItemPredicate[] { new TrueItemPredicate(s -> {
@@ -53,21 +53,21 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
                 return enchMap.values().stream().anyMatch(bound::matches);
             }) };
         }
-        if (type.equals("affix")) {
+        if ("affix".equals(type)) {
             return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
         }
-        if (type.equals("rarity")) {
+        if ("rarity".equals(type)) {
             LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
             return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
         }
-        if (type.equals("gem_rarity")) {
+        if ("gem_rarity".equals(type)) {
             LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
             return new ItemPredicate[] { new TrueItemPredicate(s -> GemItem.getLootRarity(s) == rarity) };
         }
-        if (type.equals("socket")) {
+        if ("socket".equals(type)) {
             return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };
         }
-        if (type.equals("nbt")) {
+        if ("nbt".equals(type)) {
             CompoundTag tag;
             try {
                 tag = TagParser.parseTag(GsonHelper.convertToString(json.get("nbt"), "nbt"));

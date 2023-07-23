@@ -69,17 +69,15 @@ public class AdventureGeneration {
      */
     public static record BlacklistModifier(HolderSet<Biome> blacklistedBiomes, Holder<PlacedFeature> feature) implements BiomeModifier {
 
-        
         public static final Codec<BlacklistModifier> CODEC = RecordCodecBuilder.create(builder -> builder.group(
             Biome.LIST_CODEC.fieldOf("blacklisted_biomes").forGetter(BlacklistModifier::blacklistedBiomes),
             PlacedFeature.CODEC.fieldOf("feature").forGetter(BlacklistModifier::feature))
             .apply(builder, BlacklistModifier::new));
-        
 
         @Override
         public void modify(Holder<Biome> biome, Phase phase, Builder builder) {
-            if (phase == Phase.ADD && !blacklistedBiomes.contains(biome)) {
-                builder.getGenerationSettings().addFeature(Decoration.UNDERGROUND_STRUCTURES, feature);
+            if (phase == Phase.ADD && !this.blacklistedBiomes.contains(biome)) {
+                builder.getGenerationSettings().addFeature(Decoration.UNDERGROUND_STRUCTURES, this.feature);
             }
         }
 

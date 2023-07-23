@@ -125,7 +125,7 @@ public class PotionModule {
 
     @SubscribeEvent
     public void types(Register<Potion> e) {
-        
+
         e.getRegistry().registerAll(
             new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3600)), "resistance",
             new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 9600)), "long_resistance",
@@ -154,7 +154,7 @@ public class PotionModule {
             new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 4800)), "grievous",
             new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 14400)), "long_grievous",
             new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 3600, 1)), "strong_grievous");
-        
+
     }
 
     @SubscribeEvent
@@ -184,7 +184,7 @@ public class PotionModule {
             "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.\nServer-authoritative.");
         charmsInCuriosOnly = config.getBoolean("Restrict Charms to Curios", "general", charmsInCuriosOnly, "If Potion Charms will only work when in a curios slot, instead of in the inventory.");
 
-        String[] defExt = new String[] { ForgeRegistries.MOB_EFFECTS.getKey(MobEffects.NIGHT_VISION).toString(), ForgeRegistries.MOB_EFFECTS.getKey(MobEffects.HEALTH_BOOST).toString() };
+        String[] defExt = { ForgeRegistries.MOB_EFFECTS.getKey(MobEffects.NIGHT_VISION).toString(), ForgeRegistries.MOB_EFFECTS.getKey(MobEffects.HEALTH_BOOST).toString() };
         String[] names = config.getStringList("Extended Potion Charms", "general", defExt,
             "A list of effects that, when as charms, will be applied and reapplied at a longer threshold to avoid issues at low durations, like night vision.\nServer-authoritative.");
         PotionCharmItem.EXTENDED_POTIONS.clear();

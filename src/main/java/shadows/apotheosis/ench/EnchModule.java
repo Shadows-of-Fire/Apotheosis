@@ -247,13 +247,13 @@ public class EnchModule {
 
     @SubscribeEvent
     public void particles(Register<ParticleType<?>> e) {
-        
+
         e.getRegistry().registerAll(
             new SimpleParticleType(false), "enchant_fire",
             new SimpleParticleType(false), "enchant_water",
             new SimpleParticleType(false), "enchant_sculk",
             new SimpleParticleType(false), "enchant_end");
-        
+
     }
 
     /**
@@ -280,7 +280,7 @@ public class EnchModule {
 
     @SubscribeEvent
     public void blocks(Register<Block> e) {
-        
+
         e.getRegistry().registerAll(
             new ApothAnvilBlock(), new ResourceLocation("minecraft", "anvil"),
             new ApothAnvilBlock(), new ResourceLocation("minecraft", "chipped_anvil"),
@@ -312,7 +312,7 @@ public class EnchModule {
             shelf(Material.STONE, 1.5F, Particles.ENCHANT_END), "rectifier_t3",
             shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "sightshelf",
             shelf(Material.STONE, 1.5F, Particles.ENCHANT_FIRE), "sightshelf_t2");
-        
+
         PlaceboUtil.registerOverride(Blocks.ENCHANTING_TABLE, new ApothEnchantBlock(), Apotheosis.MODID);
     }
 
@@ -334,7 +334,7 @@ public class EnchModule {
 
     @SubscribeEvent
     public void items(Register<Item> e) {
-        
+
         e.getRegistry().registerAll(
             new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "prismatic_web",
             new ApothAnvilItem(Blocks.ANVIL), new ResourceLocation("minecraft", "anvil"),
@@ -382,12 +382,12 @@ public class EnchModule {
             new Item(new Item.Properties().stacksTo(1).tab(Apotheosis.APOTH_GROUP)), "inert_trident",
             new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "warden_tendril",
             new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP).rarity(net.minecraft.world.item.Rarity.EPIC)), "infused_breath");
-        
+
     }
 
     @SubscribeEvent
     public void enchants(Register<Enchantment> e) {
-        
+
         e.getRegistry().registerAll(
             new MinersFervorEnchant(), "miners_fervor",
             new StableFootingEnchant(), "stable_footing",
@@ -421,7 +421,7 @@ public class EnchModule {
             new EarthsBoonEnchant(), "earths_boon",
             new ChainsawEnchant(), "chainsaw",
             new SpearfishingEnchant(), "spearfishing");
-        
+
     }
 
     @SuppressWarnings("deprecation")

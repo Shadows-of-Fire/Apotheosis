@@ -22,14 +22,12 @@ public class DamageReductionBonus extends GemBonus {
     protected final DamageType type;
     protected final Map<LootRarity, StepFunction> values;
 
-    
     public static Codec<DamageReductionBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
             DamageType.CODEC.fieldOf("damage_type").forGetter(a -> a.type),
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, DamageReductionBonus::new));
-    
 
     public DamageReductionBonus(GemClass gemClass, DamageType type, Map<LootRarity, StepFunction> values) {
         super(Apotheosis.loc("damage_reduction"), gemClass);

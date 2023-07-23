@@ -27,14 +27,14 @@ public class GatherSkippedAttributeTooltipsEvent extends PlayerEvent {
      * Use to determine if the advanced information on item tooltips is being shown, toggled by F3+H.
      */
     public TooltipFlag getFlags() {
-        return flag;
+        return this.flag;
     }
 
     /**
      * The {@link ItemStack} with the tooltip.
      */
     public ItemStack getStack() {
-        return stack;
+        return this.stack;
     }
 
     /**

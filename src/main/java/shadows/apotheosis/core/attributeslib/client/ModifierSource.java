@@ -36,7 +36,7 @@ public abstract class ModifierSource<T> implements Comparable<ModifierSource<T>>
 
     /**
      * Render this ModifierSource as whatever visual representation it may take.
-     * 
+     *
      * @param font
      * @param x
      * @param y
@@ -73,7 +73,7 @@ public abstract class ModifierSource<T> implements Comparable<ModifierSource<T>>
             float scale = 0.5F;
             mvStack.scale(scale, scale, 1);
             mvStack.translate(1 + x / scale, 1 + y / scale, 0);
-            itemRenderer.renderAndDecorateFakeItem(data, 0, 0);
+            itemRenderer.renderAndDecorateFakeItem(this.data, 0, 0);
             mvStack.popPose();
             RenderSystem.applyModelViewMatrix();
         }
@@ -96,7 +96,7 @@ public abstract class ModifierSource<T> implements Comparable<ModifierSource<T>>
             // i += pYOffset;
             // continue;
             // }
-            MobEffect effect = data.getEffect();
+            MobEffect effect = this.data.getEffect();
             TextureAtlasSprite sprite = texMgr.get(effect);
             RenderSystem.setShaderTexture(0, sprite.atlas().location());
             float scale = 0.5F;

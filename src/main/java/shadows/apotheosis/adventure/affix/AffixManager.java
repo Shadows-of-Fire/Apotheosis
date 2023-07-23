@@ -50,7 +50,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
         super.onReload();
         ImmutableMultimap.Builder<AffixType, Affix> builder = ImmutableMultimap.builder();
         this.registry.values().forEach(a -> builder.put(a.type, a));
-        byType = builder.build();
+        this.byType = builder.build();
         Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
         Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
         CachedObject.invalidateAll(AffixHelper.AFFIX_CACHED_OBJECT);
@@ -92,7 +92,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
     }
 
     public Multimap<AffixType, Affix> getTypeMap() {
-        return byType;
+        return this.byType;
     }
 
 }

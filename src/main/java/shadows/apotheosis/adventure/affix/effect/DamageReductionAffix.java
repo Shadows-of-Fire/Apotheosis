@@ -23,14 +23,13 @@ import shadows.placebo.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
 
-    
     public static final Codec<DamageReductionAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             DamageType.CODEC.fieldOf("damage_type").forGetter(a -> a.type),
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
             LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
         .apply(inst, DamageReductionAffix::new));
-    
+
     public static final PSerializer<DamageReductionAffix> SERIALIZER = PSerializer.fromCodec("Damage Reduction Affix", CODEC);
 
     protected final DamageType type;

@@ -39,29 +39,17 @@ public class BossCommand {
             Commands.argument("pos", Vec3Argument.vec3())
                 .then(Commands.argument("boss", ResourceLocationArgument.id()).suggests(SUGGEST_BOSS)
                     .then(Commands.argument("rarity", StringArgumentType.word()).suggests(LootifyCommand.SUGGEST_RARITY)
-                        .executes(c -> {
-                            return spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), StringArgumentType.getString(c, "rarity"));
-                        }))
-                    .executes(c -> {
-                        return spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), null);
-                    }))
-                .executes(c -> {
-                    return spawnBoss(c, Vec3Argument.getVec3(c, "pos"), null, null);
-                }));
+                        .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), StringArgumentType.getString(c, "rarity"))))
+                    .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), ResourceLocationArgument.getId(c, "boss"), null)))
+                .executes(c -> spawnBoss(c, Vec3Argument.getVec3(c, "pos"), null, null)));
 
         builder.then(
             Commands.argument("entity", EntityArgument.entity())
                 .then(Commands.argument("boss", ResourceLocationArgument.id()).suggests(SUGGEST_BOSS)
                     .then(Commands.argument("rarity", StringArgumentType.word()).suggests(LootifyCommand.SUGGEST_RARITY)
-                        .executes(c -> {
-                            return spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), ResourceLocationArgument.getId(c, "boss"), StringArgumentType.getString(c, "rarity"));
-                        }))
-                    .executes(c -> {
-                        return spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), ResourceLocationArgument.getId(c, "boss"), null);
-                    }))
-                .executes(c -> {
-                    return spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), null, null);
-                }));
+                        .executes(c -> spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), ResourceLocationArgument.getId(c, "boss"), StringArgumentType.getString(c, "rarity"))))
+                    .executes(c -> spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), ResourceLocationArgument.getId(c, "boss"), null)))
+                .executes(c -> spawnBoss(c, EntityArgument.getEntity(c, "entity").position(), null, null)));
 
         root.then(builder);
     }

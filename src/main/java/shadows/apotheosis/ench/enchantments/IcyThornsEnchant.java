@@ -48,8 +48,7 @@ public class IcyThornsEnchant extends Enchantment {
     public void doPostHurt(LivingEntity user, Entity attacker, int level) {
         if (user == null) return;
         RandomSource rand = user.getRandom();
-        if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
-            LivingEntity ent = (LivingEntity) attacker;
+        if (attacker instanceof LivingEntity ent && !(attacker instanceof FakePlayer)) {
             ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
         }
     }

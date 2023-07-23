@@ -45,7 +45,7 @@ public class AttributesLib {
 
     @SubscribeEvent
     public void attribs(Register<Attribute> e) {
-        
+
         e.getRegistry().registerAll(
             new PercentBasedAttribute("apotheosis:draw_speed", 1.0D, 0.0D, 4.0D).setSyncable(true), "draw_speed",
             new PercentBasedAttribute("apotheosis:crit_chance", 0.05D, 0.0D, 10.0D).setSyncable(true), "crit_chance",
@@ -66,7 +66,7 @@ public class AttributesLib {
             new RangedAttribute("apotheosis:prot_pierce", 0.0D, 0.0D, 34.0D).setSyncable(true), "prot_pierce",
             new PercentBasedAttribute("apotheosis:prot_shred", 0.0D, 0.0D, 1.0D).setSyncable(true), "prot_shred",
             new PercentBasedAttribute("apotheosis:dodge_chance", 0.0D, 0.0D, 1.0D).setSyncable(true), "dodge_chance");
-        
+
     }
 
     @SubscribeEvent
@@ -78,7 +78,7 @@ public class AttributesLib {
     @SubscribeEvent
     public void applyAttribs(EntityAttributeModificationEvent e) {
         e.getTypes().forEach(type -> {
-            
+
             addAll(type, e::add,
                 ALAttributes.DRAW_SPEED,
                 ALAttributes.CRIT_CHANCE,
@@ -99,7 +99,7 @@ public class AttributesLib {
                 ALAttributes.PROT_PIERCE,
                 ALAttributes.PROT_SHRED,
                 ALAttributes.DODGE_CHANCE);
-            
+
         });
         // Change the base value of Step Height to reflect the real base value of a Player.
         // The alternative is a bunch of special casing in the display.

@@ -55,10 +55,10 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         this.addSlot(new UpdatingSlot(this.inv, 3, 94, 25, this::isValidMaterial));
 
         this.addPlayerSlots(playerInv, 8, 98);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inv.getStackInSlot(0).isEmpty() && isValidMainGem(stack), 0, 1);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inv.getStackInSlot(0).isEmpty() && this.isValidMainGem(stack), 0, 1);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 1, 2);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && matchesMainGem(stack), 2, 3);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && isValidMaterial(stack), 3, 4);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.matchesMainGem(stack), 2, 3);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.isValidMaterial(stack), 3, 4);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
         this.registerInvShuffleRules();
     }
@@ -104,7 +104,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.GEM_CUTTING_TABLE.get(), true);
+        return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.GEM_CUTTING_TABLE.get(), true);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
         /**
          * Checks if this recipe matches the inputs
-         * 
+         *
          * @param gem   The gem in the primary slot.
          * @param left  The left input (Gem Dust).
          * @param bot   The bottom input (Second Gem).
@@ -131,7 +131,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         /**
          * Generates the result of this recipe.<br>
          * Calling this method when {@link #matches} return false is undefined behavior.
-         * 
+         *
          * @param gem   The gem in the primary slot.
          * @param left  The left input (Gem Dust).
          * @param bot   The bottom input (Second Gem).
@@ -143,7 +143,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         /**
          * Reduces the count of the inputs, based on how many items should be consumed.<br>
          * Calling this method when {@link #matches} return false is undefined behavior.
-         * 
+         *
          * @param gem   The gem in the primary slot.
          * @param left  The left input (Gem Dust).
          * @param bot   The bottom input (Second Gem).

@@ -39,12 +39,11 @@ import shadows.placebo.util.PlaceboUtil;
 
 public class RadialAffix extends Affix {
 
-    
     public static final Codec<RadialAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.mapCodec(Codec.list(RadialData.CODEC)).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, RadialAffix::new));
-    
+
     public static final PSerializer<RadialAffix> SERIALIZER = PSerializer.fromCodec("Radial Affix", CODEC);
 
     private static Set<UUID> breakers = new HashSet<>();
@@ -76,7 +75,7 @@ public class RadialAffix extends Affix {
             AffixInstance inst = AffixHelper.getAffixes(tool).get(this);
             if (inst != null) {
                 float hardness = e.getState().getDestroySpeed(e.getLevel(), e.getPos());
-                breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, getTrueLevel(inst.rarity(), inst.level()), hardness);
+                breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, this.getTrueLevel(inst.rarity(), inst.level()), hardness);
             }
         }
     }
@@ -92,7 +91,7 @@ public class RadialAffix extends Affix {
     }
 
     static record RadialData(int x, int y, int xOff, int yOff) {
-        
+
         public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.INT.fieldOf("x").forGetter(RadialData::x),
@@ -100,12 +99,12 @@ public class RadialAffix extends Affix {
                 Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
                 Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
             .apply(inst, RadialData::new));
-        
+
     }
 
     /**
      * Performs the actual extra breaking of blocks
-     * 
+     *
      * @param player The player breaking the block
      * @param pos    The position of the originally broken block
      * @param tool   The tool being used (which has this affix on it)

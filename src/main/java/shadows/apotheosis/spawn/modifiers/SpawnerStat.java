@@ -20,7 +20,7 @@ public interface SpawnerStat<T> {
 
     /**
      * Applies this stat change to the selected spawner.
-     * 
+     *
      * @param value   The change in value being applied.
      * @param min     The minimum acceptable value.
      * @param max     The maximum acceptable value.

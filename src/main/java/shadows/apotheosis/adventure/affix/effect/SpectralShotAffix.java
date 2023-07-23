@@ -23,12 +23,11 @@ import shadows.placebo.util.StepFunction;
 
 public class SpectralShotAffix extends Affix {
 
-    
     public static final Codec<SpectralShotAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, SpectralShotAffix::new));
-    
+
     public static final PSerializer<SpectralShotAffix> SERIALIZER = PSerializer.fromCodec("Spectral Shot Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
@@ -45,12 +44,12 @@ public class SpectralShotAffix extends Affix {
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getTrueLevel(rarity, level))));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * this.getTrueLevel(rarity, level))));
     }
 
     @Override
     public void onArrowFired(ItemStack stack, LootRarity rarity, float level, LivingEntity user, AbstractArrow arrow) {
-        if (user.level.random.nextFloat() <= getTrueLevel(rarity, level)) {
+        if (user.level.random.nextFloat() <= this.getTrueLevel(rarity, level)) {
             if (!user.level.isClientSide) {
                 ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
                 AbstractArrow spectralArrow = arrowitem.createArrow(user.level, ItemStack.EMPTY, user);

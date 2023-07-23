@@ -22,7 +22,7 @@ public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
     protected Map<ResourceLocation, JsonElement> prepare(ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         var map = super.prepare(pResourceManager, pProfiler);
         // The author of Brutal Bosses continues to use my subkey, so, here we go doing stupid shit to work around it.
-        map.keySet().removeIf(r -> r.getNamespace().equals("brutalbosses"));
+        map.keySet().removeIf(r -> "brutalbosses".equals(r.getNamespace()));
         return map;
     }
 

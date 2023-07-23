@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure.affix.socket.gem;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public class GemItem extends Item {
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         if (group == CreativeModeTab.TAB_SEARCH) {
-            GemManager.INSTANCE.getValues().stream().sorted((g1, g2) -> g1.getId().compareTo(g2.getId())).forEach(gem -> {
+            GemManager.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
                 for (LootRarity rarity : LootRarity.values()) {
                     if (gem.clamp(rarity) != rarity) continue;
                     ItemStack stack = new ItemStack(this);
@@ -108,7 +109,7 @@ public class GemItem extends Item {
      * Retrieves cached attribute modifier UUID(s) from a gem itemstack.<br>
      * This method simply invokes {@link #getUUIDs(CompoundTag, int)} with the root tag
      * and the {@linkplain Gem#getNumberOfUUIDs() Gem's requested UUID count}.
-     * 
+     *
      * @param gem The gem stack
      * @returns The stored UUID(s), creating them if they do not exist.
      */
@@ -120,7 +121,7 @@ public class GemItem extends Item {
 
     /**
      * Retrieves cached attribute modifier UUID(s) from an itemstack.
-     * 
+     *
      * @param gem The gem stack
      * @returns The stored UUID(s), creating them if they do not exist.
      */
@@ -153,7 +154,7 @@ public class GemItem extends Item {
 
     /**
      * Sets the ID of the gem stored in this gem stack.
-     * 
+     *
      * @param gemStack The gem stack
      * @param gem      The Gem to store
      */
@@ -163,7 +164,7 @@ public class GemItem extends Item {
 
     /**
      * Retrieves the underlying Gem instance of this gem stack.
-     * 
+     *
      * @param gem The gem stack
      * @returns The backing Gem, or null if the gem does not exist or is invalid.
      */

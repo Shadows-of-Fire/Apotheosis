@@ -22,7 +22,6 @@ public class EnchantmentBonus extends GemBonus {
     protected final boolean global;
     protected final Map<LootRarity, Integer> values;
 
-    
     public static Codec<EnchantmentBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
@@ -31,7 +30,6 @@ public class EnchantmentBonus extends GemBonus {
             Codec.BOOL.optionalFieldOf("global", false).forGetter(a -> a.global),
             LootRarity.mapCodec(Codec.intRange(1, 127)).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, EnchantmentBonus::new));
-    
 
     public EnchantmentBonus(GemClass gemClass, Enchantment ench, boolean mustExist, boolean global, Map<LootRarity, Integer> values) {
         super(Apotheosis.loc("enchantment"), gemClass);
@@ -45,10 +43,10 @@ public class EnchantmentBonus extends GemBonus {
     public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
         int level = this.values.get(rarity);
         String desc = "bonus." + this.getId() + ".desc";
-        if (global) {
+        if (this.global) {
             desc += ".global";
         }
-        else if (mustExist) {
+        else if (this.mustExist) {
             desc += ".mustExist";
         }
         var enchName = Component.translatable(this.ench.getDescriptionId());

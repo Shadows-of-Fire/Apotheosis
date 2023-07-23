@@ -107,7 +107,7 @@ public final class LootCategory {
     }
 
     public boolean isDefensive() {
-        return isArmor() || this == SHIELD;
+        return this.isArmor() || this == SHIELD;
     }
 
     public boolean isLightWeapon() {
@@ -143,7 +143,7 @@ public final class LootCategory {
 
     /**
      * Registers a new loot category, adding it to the BY_ID and VALUES collections so that it will be found by the rest of the universe.
-     * 
+     *
      * @param orderRef   An existing category for ordering. The new category will be placed before the reference category.
      * @param name       The name of this category. May not be an existing name.
      * @param validator  A predicate that checks if an item stack matches this loot category.
@@ -164,7 +164,7 @@ public final class LootCategory {
 
     /**
      * Looks up a Loot Category by name.
-     * 
+     *
      * @param name The name of the loot category.
      * @return The loot category instance, or null, if no loot category has the specified name.
      */
@@ -175,7 +175,7 @@ public final class LootCategory {
 
     /**
      * Determines the loot category for an item, by iterating all the categories and selecting the first matching one.
-     * 
+     *
      * @param item The item to find the category for.
      * @return The first valid loot category, or {@link #NONE} if no categories were valid.
      */
@@ -201,12 +201,12 @@ public final class LootCategory {
             try {
                 ItemStack shield = new ItemStack(Items.SHIELD);
                 MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-                if (attacker == null && server != null) {
-                    attacker = new Zombie(server.getLevel(Level.OVERWORLD));
-                    holder = new Zombie(server.getLevel(Level.OVERWORLD));
+                if (this.attacker == null && server != null) {
+                    this.attacker = new Zombie(server.getLevel(Level.OVERWORLD));
+                    this.holder = new Zombie(server.getLevel(Level.OVERWORLD));
                 }
-                if (holder != null) holder.setItemInHand(InteractionHand.OFF_HAND, shield);
-                return t.canDisableShield(shield, holder, attacker);
+                if (this.holder != null) this.holder.setItemInHand(InteractionHand.OFF_HAND, shield);
+                return t.canDisableShield(shield, this.holder, this.attacker);
             }
             catch (Exception ex) {
                 return false;
@@ -216,7 +216,7 @@ public final class LootCategory {
     }
 
     private static Predicate<ItemStack> armorSlot(EquipmentSlot slot) {
-        return (stack) -> {
+        return stack -> {
             if (stack.is(Items.CARVED_PUMPKIN) || stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof AbstractSkullBlock) return false;
             return LivingEntity.getEquipmentSlotForItem(stack) == slot;
         };

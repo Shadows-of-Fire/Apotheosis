@@ -46,8 +46,8 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     private final Map<LootRarity, List<ItemStack>> displayItems = new HashMap<>();
 
     public SalvagingCategory(IGuiHelper guiHelper) {
-        background = guiHelper.drawableBuilder(TEXTURES, 0, 0, 98, 74).addPadding(0, 0, 0, 0).build();
-        icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Apoth.Blocks.SALVAGING_TABLE.get()));
+        this.background = guiHelper.drawableBuilder(TEXTURES, 0, 0, 98, 74).addPadding(0, 0, 0, 0).build();
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Apoth.Blocks.SALVAGING_TABLE.get()));
     }
 
     @Override
@@ -57,17 +57,17 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
 
     @Override
     public Component getTitle() {
-        return title;
+        return this.title;
     }
 
     @Override
     public IDrawable getBackground() {
-        return background;
+        return this.background;
     }
 
     @Override
     public IDrawable getIcon() {
-        return icon;
+        return this.icon;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     public void setRecipe(IRecipeLayoutBuilder builder, SalvagingRecipe recipe, IFocusGroup focuses) {
         List<ItemStack> input = Arrays.asList(recipe.getInput().getItems());
         if (recipe.getInput() instanceof RarityIngredient ri) {
-            input = displayItems.computeIfAbsent(ri.getRarity(), this::createFakeDisplayItems);
+            input = this.displayItems.computeIfAbsent(ri.getRarity(), this::createFakeDisplayItems);
             builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
         }
         else {

@@ -55,7 +55,6 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
     public static final String NAME_GEN = "use_name_generation";
 
-    
     public static final Codec<MinibossItem> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
@@ -74,7 +73,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
             Exclusion.CODEC.listOf().optionalFieldOf("exclusions", Collections.emptyList()).forGetter(a -> a.exclusions),
             Codec.BOOL.optionalFieldOf("finalize", false).forGetter(a -> a.finalize))
         .apply(inst, MinibossItem::new));
-    
+
     public static final PSerializer<MinibossItem> SERIALIZER = PSerializer.fromCodec("Apotheotic Miniboss", CODEC);
 
     /**
@@ -151,7 +150,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
     /**
      * List of rules that may prevent this miniboss from being selected.
-     * 
+     *
      * @see {@link Exclusion}
      */
     protected final List<Exclusion> exclusions;
@@ -162,7 +161,6 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
      */
     protected final boolean finalize;
 
-    
     public MinibossItem(int weight, float quality, float chance,
         String name, Set<EntityType<?>> entities, BossStats stats,
         Optional<Set<String>> stages, Set<ResourceLocation> dimensions, boolean affixed,
@@ -184,7 +182,6 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
         this.exclusions = exclusions;
         this.finalize = finalize;
     }
-    
 
     @Override
     public int getWeight() {
@@ -207,7 +204,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
     /**
      * Transforms a mob into this miniboss, spawning any supporting entities or mounts as needed.
-     * 
+     *
      * @param mob    The mob being transformed.
      * @param random A random, used for selection of boss stats.
      * @return The newly created boss, or it's mount, if it had one.
@@ -246,7 +243,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
     /**
      * Initializes an entity as a boss, based on the stats of this BossItem.
-     * 
+     *
      * @param rand
      * @param mob
      */
@@ -255,13 +252,13 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
         int duration = mob instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
-        for (ChancedEffectInstance inst : stats.effects()) {
+        for (ChancedEffectInstance inst : this.stats.effects()) {
             if (rand.nextFloat() <= inst.getChance()) {
                 mob.addEffect(inst.createInstance(rand, duration));
             }
         }
 
-        for (RandomAttributeModifier modif : stats.modifiers()) {
+        for (RandomAttributeModifier modif : this.stats.modifiers()) {
             modif.apply(rand, mob);
         }
 
@@ -307,15 +304,15 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
             }
 
             var rarity = LootRarity.random(rand, luck, AdventureConfig.AFFIX_CONVERT_RARITIES.get(mob.level.dimension().location()));
-            BossItem.modifyBossItem(temp, rand, name, luck, rarity, stats);
+            BossItem.modifyBossItem(temp, rand, this.name, luck, rarity, this.stats);
             mob.setCustomName(((MutableComponent) mob.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
             mob.setDropChance(EquipmentSlot.values()[guaranteed], 2F);
         }
 
         for (EquipmentSlot s : EquipmentSlot.values()) {
             ItemStack stack = mob.getItemBySlot(s);
-            if (!stack.isEmpty() && s.ordinal() != guaranteed && rand.nextFloat() < stats.enchantChance()) {
-                BossItem.enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[0] : stats.enchLevels()[1], true);
+            if (!stack.isEmpty() && s.ordinal() != guaranteed && rand.nextFloat() < this.stats.enchantChance()) {
+                BossItem.enchantBossItem(rand, stack, Apotheosis.enableEnch ? this.stats.enchLevels()[0] : this.stats.enchLevels()[1], true);
                 mob.setItemSlot(s, stack);
             }
         }
@@ -324,7 +321,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
 
     /**
      * Ensures that this boss item does not have null or empty fields that would cause a crash.
-     * 
+     *
      * @return this
      */
     public MinibossItem validate() {
@@ -355,7 +352,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
     }
 
     public boolean isExcluded(Mob mob, ServerLevelAccessor level, MobSpawnType type) {
-        CompoundTag tag = requiresNbtAccess() ? mob.saveWithoutId(new CompoundTag()) : null;
+        CompoundTag tag = this.requiresNbtAccess() ? mob.saveWithoutId(new CompoundTag()) : null;
         return this.exclusions.stream().anyMatch(ex -> ex.isExcluded(mob, level, type, tag));
     }
 

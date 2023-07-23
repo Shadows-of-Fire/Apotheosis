@@ -23,8 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.placebo.util.CachedObject.CachedObjectSource;
 import shadows.placebo.util.CachedObject;
+import shadows.placebo.util.CachedObject.CachedObjectSource;
 import shadows.placebo.util.StepFunction;
 
 public class AffixHelper {
@@ -72,7 +72,7 @@ public class AffixHelper {
 
     /**
      * Gets the affixes of an item. Changes to this map will not write-back to the affixes on the itemstack.
-     * 
+     *
      * @param stack The stack being queried.
      * @return A Map of all affixes on the stack, or an empty map if none were found.
      */

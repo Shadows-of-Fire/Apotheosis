@@ -36,7 +36,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
     public PotionCharmRecipe(List<Object> ingredients, int width, int height) {
         super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", width, height, makeIngredients(ingredients), new ItemStack(Apoth.Items.POTION_CHARM.get()));
         for (int i = 0; i < ingredients.size(); i++) {
-            if (ingredients.get(i).equals("potion")) this.potionSlots.add(i);
+            if ("potion".equals(ingredients.get(i))) this.potionSlots.add(i);
         }
     }
 
@@ -56,7 +56,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
         Ingredient potion = makePotionIngredient();
 
         for (Object o : ingredients) {
-            if (o.equals("potion")) realIngredients.add(potion);
+            if ("potion".equals(o)) realIngredients.add(potion);
             else realIngredients.add(o);
         }
 
@@ -107,7 +107,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
                 JsonArray arr = e.getAsJsonArray();
                 width = arr.size();
                 for (JsonElement input : arr) {
-                    if (input.isJsonPrimitive() && input.getAsString().equals("potion")) ingredients.add("potion");
+                    if (input.isJsonPrimitive() && "potion".equals(input.getAsString())) ingredients.add("potion");
                     else ingredients.add(CraftingHelper.getIngredient(input));
                 }
             }

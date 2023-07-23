@@ -59,14 +59,14 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
         super.init();
         int left = this.getGuiLeft();
         int top = this.getGuiTop();
-        
+
         this.upgradeBtn = this.addRenderableWidget(
             new SimpleTexButton(left + 125, top + 30, 40, 40, 216, 0, TEXTURE, 256, 256,
                 this::clickUpgradeBtn,
                 Component.translatable("button.apotheosis.upgrade"))
                 .setInactiveMessage(Component.translatable("button.apotheosis.upgrade.no").withStyle(ChatFormatting.RED)));
-        
-        updateBtnStatus();
+
+        this.updateBtnStatus();
     }
 
     protected void clickUpgradeBtn(Button btn) {
@@ -97,15 +97,15 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
         this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
-        if (hasItem(0) && GemItem.getLootRarity(this.menu.getSlot(0).getItem()) != LootRarity.ANCIENT) {
-            if (!hasItem(1)) {
-                renderItem(this.displayDust, this.menu.getSlot(1));
+        if (this.hasItem(0) && GemItem.getLootRarity(this.menu.getSlot(0).getItem()) != LootRarity.ANCIENT) {
+            if (!this.hasItem(1)) {
+                this.renderItem(this.displayDust, this.menu.getSlot(1));
             }
-            if (!hasItem(2)) {
-                renderItem(this.menu.getSlot(0).getItem(), this.menu.getSlot(2));
+            if (!this.hasItem(2)) {
+                this.renderItem(this.menu.getSlot(0).getItem(), this.menu.getSlot(2));
             }
-            if (!hasItem(3)) {
-                renderItem(this.displayMat, this.menu.getSlot(3));
+            if (!this.hasItem(3)) {
+                this.renderItem(this.displayMat, this.menu.getSlot(3));
             }
         }
     }
@@ -115,7 +115,7 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
     }
 
     protected void renderItem(ItemStack stack, Slot slot) {
-        var model = itemRenderer.getModel(stack, null, null, 0);
+        var model = this.itemRenderer.getModel(stack, null, null, 0);
         SalvagingScreen.renderGuiItem(stack, this.getGuiLeft() + slot.x, this.getGuiTop() + slot.y, model, GrayBufferSource::new);
     }
 
@@ -139,14 +139,14 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
                 boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
                 list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
                 list.add(Component.translatable("text.apotheosis.one_rarity_mat").withStyle(ChatFormatting.GRAY));
-                addMatTooltip(rarity.next(), GemCuttingMenu.NEXT_MAT_COST, list);
-                addMatTooltip(rarity, GemCuttingMenu.STD_MAT_COST, list);
+                this.addMatTooltip(rarity.next(), GemCuttingMenu.NEXT_MAT_COST, list);
+                this.addMatTooltip(rarity, GemCuttingMenu.STD_MAT_COST, list);
                 if (rarity != LootRarity.COMMON) {
-                    addMatTooltip(rarity.prev(), GemCuttingMenu.PREV_MAT_COST, list);
+                    this.addMatTooltip(rarity.prev(), GemCuttingMenu.PREV_MAT_COST, list);
                 }
             }
         }
-        drawOnLeft(poseStack, list, this.getGuiTop() + 16);
+        this.drawOnLeft(poseStack, list, this.getGuiTop() + 16);
         super.renderTooltip(poseStack, pX, pY);
     }
 
@@ -197,12 +197,13 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
             this.delay = 999;
         }
 
+        @Override
         public void tick() {
-            if (ticks == 4 || ticks == 9) {
+            if (this.ticks == 4 || this.ticks == 9) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.AMETHYST_BLOCK_BREAK, this.pitch + this.pitchOff, 1.5F));
-                pitchOff = -pitchOff;
+                this.pitchOff = -this.pitchOff;
             }
-            if (ticks++ > 8) this.stop();
+            if (this.ticks++ > 8) this.stop();
         }
 
         public static void start(BlockPos pos) {

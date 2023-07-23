@@ -25,12 +25,11 @@ import shadows.placebo.util.StepFunction;
 
 public class ExecutingAffix extends Affix {
 
-    
     public static final Codec<ExecutingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, ExecutingAffix::new));
-    
+
     public static final PSerializer<ExecutingAffix> SERIALIZER = PSerializer.fromCodec("Executing Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
@@ -42,12 +41,12 @@ public class ExecutingAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat == LootCategory.HEAVY_WEAPON && values.containsKey(rarity);
+        return cat == LootCategory.HEAVY_WEAPON && this.values.containsKey(rarity);
     }
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * getTrueLevel(rarity, level))));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * this.getTrueLevel(rarity, level))));
     }
 
     private float getTrueLevel(LootRarity rarity, float level) {
@@ -56,7 +55,7 @@ public class ExecutingAffix extends Affix {
 
     @Override
     public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
-        float threshold = getTrueLevel(rarity, level);
+        float threshold = this.getTrueLevel(rarity, level);
         if (Apotheosis.localAtkStrength >= 0.98 && target instanceof LivingEntity living && !living.level.isClientSide) {
             if (living.getHealth() / living.getMaxHealth() < threshold) {
                 DamageSource src = new EntityDamageSource("apotheosis.execute", user).bypassArmor().bypassMagic();

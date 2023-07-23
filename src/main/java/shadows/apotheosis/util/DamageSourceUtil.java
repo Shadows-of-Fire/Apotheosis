@@ -14,7 +14,7 @@ public class DamageSourceUtil {
 
     /**
      * Be careful with this, there are identity comparisons to certain vanilla constant sources.
-     * 
+     *
      * @param other
      * @return
      */

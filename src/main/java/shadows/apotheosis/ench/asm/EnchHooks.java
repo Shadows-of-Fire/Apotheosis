@@ -9,7 +9,7 @@ import shadows.apotheosis.ench.EnchModule;
 
 /**
  * Methods injected by Javascript Coremods.
- * 
+ *
  * @author Shadows
  */
 public class EnchHooks {

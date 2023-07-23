@@ -22,12 +22,12 @@ public class SalvageItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
-        return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(rarity.color()));
+        return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.color()));
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> list, TooltipFlag pIsAdvanced) {
-        list.add(Component.translatable("info.apotheosis.rarity_material", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable("info.apotheosis.rarity_material", this.rarity.toComponent()).withStyle(ChatFormatting.GRAY));
     }
 
 }

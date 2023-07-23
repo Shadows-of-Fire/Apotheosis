@@ -100,7 +100,7 @@ public class EnchModuleClient {
                 var ench = enchMap.keySet().iterator().next();
                 int lvl = enchMap.values().iterator().next();
                 if (!ModList.get().isLoaded("enchdesc")) {
-                    if (ForgeRegistries.ENCHANTMENTS.getKey(ench).getNamespace().equals(Apotheosis.MODID)) {
+                    if (Apotheosis.MODID.equals(ForgeRegistries.ENCHANTMENTS.getKey(ench).getNamespace())) {
                         tooltip.add(Component.translatable(ench.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
                     }
                 }

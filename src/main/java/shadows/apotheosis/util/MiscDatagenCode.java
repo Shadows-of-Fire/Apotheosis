@@ -68,7 +68,7 @@ public class MiscDatagenCode {
             else if (i instanceof ArmorItem a && a.getMaterial() instanceof ArmorMaterials) {
                 ArmorMaterials mat = (ArmorMaterials) a.getMaterial();
                 if (mat.ordinal() <= ArmorMaterials.IRON.ordinal()) {
-                    AffixLootEntry entry = new AffixLootEntry(100 - 15 * (mat.ordinal()), 1 + 2 * (mat.ordinal()), new ItemStack(i), overworld, null, LootRarity.RARE);
+                    AffixLootEntry entry = new AffixLootEntry(100 - 15 * mat.ordinal(), 1 + 2 * mat.ordinal(), new ItemStack(i), overworld, null, LootRarity.RARE);
                     writerFunc.accept("overworld", entry);
                 }
 

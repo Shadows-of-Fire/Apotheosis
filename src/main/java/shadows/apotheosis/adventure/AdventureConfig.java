@@ -99,13 +99,13 @@ public class AdventureConfig {
         cleaveHitsPlayers = c.getBoolean("Cleave Players", "affixes", cleaveHitsPlayers, "If affixes that cleave can hit players (excluding the user).");
 
         String[] lootRules = c.getStringList("Affix Item Loot Rules", "affixes", new String[] { "minecraft:chests.*|0.35", ".*chests.*|0.3", "twilightforest:structures.*|0.3" },
-            
+
             "Loot Rules, in the form of Loot Table Matchers, permitting affix items to spawn in loot tables."
                 + "\nThe format for these is domain:pattern|chance and domain is optional.  Domain is a modid, pattern is a regex string, and chance is a float 0..1 chance for the item to spawn in any matched tables."
                 + "\nIf you omit the domain, the format is pattern|chance, and the matcher will run for all domains."
                 + "\nThe pattern MUST be a valid regex string, and should match the paths of desired loot tables under the specified domain.  Note: \"Match Any Character\" is \".*\" (dot star) and not \"*\" (star)."
                 + "\nIf there is a match, an item has a chance to spawn in that loot table.");
-        
+
         AFFIX_ITEM_LOOT_RULES.clear();
         for (String s : lootRules) {
             try {
@@ -201,7 +201,6 @@ public class AdventureConfig {
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.");
 
-        
         String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses",
             new String[] {
                 "minecraft:overworld|0.018|NEEDS_SKY",
@@ -211,7 +210,7 @@ public class AdventureConfig {
             },
             "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1."
                 + "\nValid rules are visible here https://github.com/Shadows-of-Fire/Apotheosis/blob/1.19/src/main/java/shadows/apotheosis/adventure/boss/BossEvents.java#L174C27-L174C27");
-        
+
         BOSS_SPAWN_RULES.clear();
         for (String s : dims) {
             try {
@@ -263,13 +262,13 @@ public class AdventureConfig {
     public static record LootPatternMatcher(@Nullable String domain, Pattern pathRegex, float chance) {
 
         public boolean matches(ResourceLocation id) {
-            return (domain == null || domain.equals(id.getNamespace())) && pathRegex.matcher(id.getPath()).matches();
+            return (this.domain == null || this.domain.equals(id.getNamespace())) && this.pathRegex.matcher(id.getPath()).matches();
         }
 
         public static LootPatternMatcher parse(String s) throws Exception {
             int pipe = s.lastIndexOf('|');
             int colon = s.indexOf(':');
-            float chance = Float.parseFloat(s.substring(pipe + 1, s.length()));
+            float chance = Float.parseFloat(s.substring(pipe + 1));
             String domain = colon == -1 ? null : s.substring(0, colon);
             Pattern pattern = Pattern.compile(s.substring(colon + 1, pipe));
             return new LootPatternMatcher(domain, pattern, chance);

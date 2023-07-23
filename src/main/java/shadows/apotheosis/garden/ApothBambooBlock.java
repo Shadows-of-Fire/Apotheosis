@@ -62,7 +62,7 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
     protected int getHeightAboveUpToMax(BlockGetter worldIn, BlockPos pos) {
         int i;
         for (i = 0; i < GardenModule.maxBambooHeight && worldIn.getBlockState(pos.above(i + 1)).getBlock() == Blocks.BAMBOO; ++i) {
-            ;
+
         }
         return i;
     }
@@ -71,7 +71,7 @@ public class ApothBambooBlock extends BambooBlock implements IReplacementBlock {
     protected int getHeightBelowUpToMax(BlockGetter worldIn, BlockPos pos) {
         int i;
         for (i = 0; i < GardenModule.maxBambooHeight && worldIn.getBlockState(pos.below(i + 1)).getBlock() == Blocks.BAMBOO; ++i) {
-            ;
+
         }
         return i;
     }

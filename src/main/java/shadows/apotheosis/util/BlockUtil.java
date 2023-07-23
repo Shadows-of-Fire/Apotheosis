@@ -29,7 +29,7 @@ public class BlockUtil {
      * Vanilla Copy: {@link PlayerInteractionManager#tryHarvestBlock} <br>
      * Attempts to harvest a block as if the player with the given uuid
      * harvested it while holding the passed item.
-     * 
+     *
      * @param world    The world the block is in.
      * @param pos      The position of the block.
      * @param mainhand The main hand item that the player is supposibly holding.
@@ -95,7 +95,7 @@ public class BlockUtil {
 
     /**
      * Vanilla Copy: {@link PlayerInteractionManager#removeBlock}
-     * 
+     *
      * @param world      The world
      * @param player     The removing player
      * @param pos        The block location

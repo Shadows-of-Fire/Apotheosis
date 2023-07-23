@@ -33,7 +33,7 @@ public class EnchantingInfoScreen extends Screen {
 
     public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_info.png");
 
-    protected static ChatFormatting[] colors = new ChatFormatting[] { ChatFormatting.WHITE, ChatFormatting.YELLOW, ChatFormatting.BLUE, ChatFormatting.GOLD };
+    protected static ChatFormatting[] colors = { ChatFormatting.WHITE, ChatFormatting.YELLOW, ChatFormatting.BLUE, ChatFormatting.GOLD };
 
     protected final ApothEnchantScreen parent;
     protected final int imageWidth, imageHeight;

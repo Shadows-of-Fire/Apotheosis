@@ -30,14 +30,12 @@ import shadows.placebo.util.StepFunction;
 
 public class AllStatsBonus extends GemBonus {
 
-    
     public static Codec<AllStatsBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
             new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, AllStatsBonus::new));
-    
 
     protected final Operation operation;
     protected final Map<LootRarity, StepFunction> values;
@@ -49,7 +47,7 @@ public class AllStatsBonus extends GemBonus {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;
         this.values = values;
-        Registry.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(attributes::add);
+        Registry.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(this.attributes::add);
     }
 
     @Override

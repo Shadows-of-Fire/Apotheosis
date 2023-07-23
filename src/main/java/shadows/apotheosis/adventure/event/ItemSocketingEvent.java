@@ -19,20 +19,20 @@ public abstract class ItemSocketingEvent extends Event {
 
     /**
      * Gets the item being socketed into.
-     * 
+     *
      * @return A copy of the left input item.
      */
     public ItemStack getInputStack() {
-        return stack;
+        return this.stack;
     }
 
     /**
      * Gets the gem that is being socketed into {@link #getInputStack()}
-     * 
+     *
      * @return A copy of the right input item.
      */
     public ItemStack getInputGem() {
-        return gem;
+        return this.gem;
     }
 
     /**
@@ -65,7 +65,7 @@ public abstract class ItemSocketingEvent extends Event {
      * This event allows modification of the output item.
      * <p>
      * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
-     * 
+     *
      * @throws IllegalArgumentException if this event produces an empty output stack. Use {@link CanSocket} to prevent the operation.
      */
     public static class ModifyResult extends ItemSocketingEvent {
@@ -78,16 +78,16 @@ public abstract class ItemSocketingEvent extends Event {
 
         /**
          * By default, the result is a copy of the input item with the input gem added in the first open socket.
-         * 
+         *
          * @return The (possibly event-modified) result item.
          */
         public ItemStack getOutput() {
-            return output;
+            return this.output;
         }
 
         /**
          * Sets the output of the socketing operation.<br>
-         * 
+         *
          * @param output The new output.
          * @throws IllegalArgumentException if the stack is empty.
          */

@@ -24,7 +24,7 @@ import shadows.apotheosis.spawn.spawner.ApothSpawnerTile;
 
 /**
  * Parent class for all spawner modifiers.
- * 
+ *
  * @author Shadows
  */
 public class SpawnerModifier implements Recipe<Container> {
@@ -46,7 +46,7 @@ public class SpawnerModifier implements Recipe<Container> {
 
     /**
      * Tests if this modifier matches the held items.
-     * 
+     *
      * @return If this modifier matches the given items.
      */
     public boolean matches(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
@@ -59,7 +59,7 @@ public class SpawnerModifier implements Recipe<Container> {
 
     /**
      * Applies this modifier.
-     * 
+     *
      * @return If any part of the modification was successful, and items should be consumed.
      */
     public boolean apply(ApothSpawnerTile tile) {

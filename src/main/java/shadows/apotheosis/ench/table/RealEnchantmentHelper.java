@@ -30,7 +30,7 @@ public class RealEnchantmentHelper {
      * Slot 2 (the highest level slot) always receives a level equal to power * 2.
      * Slot 1 recieves between 60% and 80% of Slot 2.
      * Slot 0 receives between 20% and 40% of Slot 2.
-     * 
+     *
      * @param rand   Pre-seeded random.
      * @param num    Enchantment Slot Number [0-2]
      * @param eterna Enchantment Power (Eterna Level)
@@ -47,7 +47,7 @@ public class RealEnchantmentHelper {
 
     /**
      * Creates a list of enchantments for a specific slot given various variables.
-     * 
+     *
      * @param rand     Pre-seeded random.
      * @param stack    Itemstack to be enchanted.
      * @param level    Enchanting Slot XP Level

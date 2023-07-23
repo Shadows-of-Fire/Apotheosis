@@ -32,7 +32,6 @@ import shadows.placebo.util.StepFunction;
 
 public class DropTransformBonus extends GemBonus {
 
-    
     public static Codec<DropTransformBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
@@ -42,7 +41,6 @@ public class DropTransformBonus extends GemBonus {
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
             Codec.STRING.fieldOf("desc").forGetter(a -> a.descKey))
         .apply(inst, DropTransformBonus::new));
-    
 
     /**
      * Input blocks this transformation triggers on.<br>

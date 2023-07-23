@@ -72,13 +72,13 @@ public class LifeMendingEnchant extends Enchantment {
         if (amt <= 0F) return;
         for (EquipmentSlot slot : SLOTS) {
             ItemStack stack = e.getEntity().getItemBySlot(slot);
-            if (lifeMend(e, stack)) return;
+            if (this.lifeMend(e, stack)) return;
 
         }
         if (ModList.get().isLoaded("curios")) {
             List<ItemStack> stacks = AdventureCuriosCompat.getLifeMendingCurios(e.getEntity());
             for (ItemStack stack : stacks) {
-                if (lifeMend(e, stack)) return;
+                if (this.lifeMend(e, stack)) return;
             }
         }
     }

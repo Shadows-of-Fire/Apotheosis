@@ -35,7 +35,7 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
         super(Apoth.Menus.SALVAGE.get(), id, inv, pos);
         this.player = inv.player;
         for (int i = 0; i < 15; i++) {
-            this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(level, s) != null){
+            this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(this.level, s) != null){
 
                 @Override
                 public int getMaxStackSize() {
@@ -54,15 +54,15 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
         }
 
         this.addPlayerSlots(inv, 8, 84);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && findMatch(level, stack) != null, 0, 15);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && findMatch(this.level, stack) != null, 0, 15);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
         this.registerInvShuffleRules();
     }
 
     @Override
     public boolean stillValid(Player player) {
-        if (level.isClientSide) return true;
-        return level.getBlockState(pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get();
+        if (this.level.isClientSide) return true;
+        return this.level.getBlockState(this.pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (id == 0) {
-            salvageAll();
+            this.salvageAll();
             player.level.playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 0.99F, this.level.random.nextFloat() * 0.25F + 1F);
             player.level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.BLOCKS, 0.34F, this.level.random.nextFloat() * 0.2F + 0.8F);
             player.level.playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.45F, this.level.random.nextFloat() * 0.5F + 0.75F);
@@ -108,7 +108,7 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
                     if (out.isEmpty()) break;
                     out = this.tile.output.insertItem(outSlot, out, false);
                 }
-                if (!out.isEmpty()) giveItem(this.player, out);
+                if (!out.isEmpty()) this.giveItem(this.player, out);
             }
         }
     }
@@ -119,7 +119,7 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
     }
 
     public static int[] getSalvageCounts(OutputData output, ItemStack stack) {
-        int[] out = new int[] { output.min, output.max };
+        int[] out = { output.min, output.max };
         if (stack.isDamageableItem()) {
             out[1] = Math.max(out[0], Math.round(out[1] * (stack.getMaxDamage() - stack.getDamageValue()) / stack.getMaxDamage()));
         }

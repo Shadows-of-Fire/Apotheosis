@@ -75,12 +75,11 @@ public abstract class ModifierSourceType<T> {
     }
 
     public static Comparator<AttributeModifier> compareBySource(Map<UUID, ModifierSource<?>> sources) {
-        
+
         Comparator<AttributeModifier> comp = Comparators.chained(
             Comparator.comparingInt(a -> sources.get(a.getId()).getType().getPriority()),
             Comparator.comparing(a -> sources.get(a.getId())),
             AttributeHelper.modifierComparator());
-        
 
         return (a1, a2) -> {
             var src1 = sources.get(a1.getId());
@@ -94,7 +93,7 @@ public abstract class ModifierSourceType<T> {
 
     /**
      * Extracts all ModifierSource(s) of this type from the source entity.
-     * 
+     *
      * @param entity
      * @param map
      */

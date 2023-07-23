@@ -18,9 +18,9 @@ public class GrayBufferSource implements MultiBufferSource {
     @Override
     public VertexConsumer getBuffer(RenderType type) {
         if (type.format() == DefaultVertexFormat.NEW_ENTITY) {
-            return wrapped.getBuffer(AdventureModuleClient.gray(InventoryMenu.BLOCK_ATLAS));
+            return this.wrapped.getBuffer(AdventureModuleClient.gray(InventoryMenu.BLOCK_ATLAS));
         }
-        return wrapped.getBuffer(type);
+        return this.wrapped.getBuffer(type);
     }
 
 }

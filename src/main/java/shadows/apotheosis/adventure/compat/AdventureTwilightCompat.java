@@ -57,13 +57,11 @@ public class AdventureTwilightCompat {
 
     public static class OreMagnetBonus extends GemBonus {
 
-        
         public static final Codec<OreMagnetBonus> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 gemClass(),
                 GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
             .apply(inst, OreMagnetBonus::new));
-        
 
         protected final Map<LootRarity, StepFunction> values;
 
@@ -83,7 +81,7 @@ public class AdventureTwilightCompat {
             // https://github.com/TeamTwilight/twilightforest/blob/1.20.x/src/main/java/twilightforest/item/OreMagnetItem.java#L77
             ORE_MAGNET.get().releaseUsing(gem, level, player, 0);
             player.stopUsingItem();
-            int cost = values.get(rarity).getInt(0);
+            int cost = this.values.get(rarity).getInt(0);
             ctx.getItemInHand().hurtAndBreak(cost, player, user -> user.broadcastBreakEvent(ctx.getHand()));
             return super.onItemUse(gem, rarity, ctx);
         }
@@ -111,20 +109,18 @@ public class AdventureTwilightCompat {
 
         @Override
         public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-            return Component.translatable("bonus." + this.getId() + ".desc", values.get(rarity).getInt(0)).withStyle(ChatFormatting.YELLOW);
+            return Component.translatable("bonus." + this.getId() + ".desc", this.values.get(rarity).getInt(0)).withStyle(ChatFormatting.YELLOW);
         }
 
     }
 
     public static class TreasureGoblinBonus extends GemBonus {
 
-        
         public static final Codec<TreasureGoblinBonus> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 gemClass(),
                 LootRarity.mapCodec(Data.CODEC).fieldOf("values").forGetter(a -> a.values))
             .apply(inst, TreasureGoblinBonus::new));
-        
 
         protected final Map<LootRarity, Data> values;
 
@@ -185,19 +181,19 @@ public class AdventureTwilightCompat {
 
         @Override
         public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-            Data d = values.get(rarity);
+            Data d = this.values.get(rarity);
             Component cooldown = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(d.cooldown));
             return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(d.chance * 100), cooldown).withStyle(ChatFormatting.YELLOW);
         }
 
         protected static record Data(float chance, int cooldown) {
-            
+
             public static final Codec<Data> CODEC = RecordCodecBuilder.create(inst -> inst
                 .group(
                     Codec.FLOAT.fieldOf("chance").forGetter(Data::chance),
                     Codec.INT.fieldOf("cooldown").forGetter(Data::cooldown))
                 .apply(inst, Data::new));
-            
+
         }
 
     }
@@ -213,13 +209,11 @@ public class AdventureTwilightCompat {
 
     public static class FortificationBonus extends GemBonus {
 
-        
         public static final Codec<FortificationBonus> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 gemClass(),
                 LootRarity.mapCodec(Data.CODEC).fieldOf("values").forGetter(a -> a.values))
             .apply(inst, FortificationBonus::new));
-        
 
         protected final Map<LootRarity, Data> values;
 
@@ -263,19 +257,19 @@ public class AdventureTwilightCompat {
 
         @Override
         public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-            Data d = values.get(rarity);
+            Data d = this.values.get(rarity);
             Component cooldown = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(d.cooldown));
             return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(d.chance * 100), cooldown).withStyle(ChatFormatting.YELLOW);
         }
 
         protected static record Data(float chance, int cooldown) {
-            
+
             public static final Codec<Data> CODEC = RecordCodecBuilder.create(inst -> inst
                 .group(
                     Codec.FLOAT.fieldOf("chance").forGetter(Data::chance),
                     Codec.INT.fieldOf("cooldown").forGetter(Data::cooldown))
                 .apply(inst, Data::new));
-            
+
         }
 
     }

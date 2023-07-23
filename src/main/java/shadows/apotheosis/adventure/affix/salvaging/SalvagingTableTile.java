@@ -55,19 +55,19 @@ public class SalvagingTableTile extends BlockEntity {
 
         @Override
         public int getSlots() {
-            return 1 + output.getSlots();
+            return 1 + SalvagingTableTile.this.output.getSlots();
         }
 
         @Override
         public ItemStack getStackInSlot(int slot) {
             if (slot == 0) return ItemStack.EMPTY;
-            else return output.getStackInSlot(slot - 1);
+            else return SalvagingTableTile.this.output.getStackInSlot(slot - 1);
         }
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             if (slot != 0) return stack;
-            List<ItemStack> outputs = SalvagingMenu.getBestPossibleSalvageResults(level, stack);
+            List<ItemStack> outputs = SalvagingMenu.getBestPossibleSalvageResults(SalvagingTableTile.this.level, stack);
             if (outputs.isEmpty()) return stack;
             IntSet skipSlots = new IntOpenHashSet();
             // Simulate inserting all outputs.
@@ -99,18 +99,18 @@ public class SalvagingTableTile extends BlockEntity {
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
             if (slot == 0) return ItemStack.EMPTY;
-            return output.extractItem(slot - 1, amount, simulate);
+            return SalvagingTableTile.this.output.extractItem(slot - 1, amount, simulate);
         }
 
         @Override
         public int getSlotLimit(int slot) {
             if (slot == 0) return 1;
-            return output.getSlotLimit(slot - 1);
+            return SalvagingTableTile.this.output.getSlotLimit(slot - 1);
         }
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == 0) return SalvagingMenu.findMatch(level, stack) != null;
+            if (slot == 0) return SalvagingMenu.findMatch(SalvagingTableTile.this.level, stack) != null;
             return false;
         }
 

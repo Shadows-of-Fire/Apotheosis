@@ -22,12 +22,11 @@ import shadows.placebo.util.StepFunction;
 
 public class EnlightenedAffix extends Affix {
 
-    
     public static final Codec<EnlightenedAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, EnlightenedAffix::new));
-    
+
     public static final PSerializer<EnlightenedAffix> SERIALIZER = PSerializer.fromCodec("Enlightened Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
@@ -39,12 +38,12 @@ public class EnlightenedAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isBreaker() && values.containsKey(rarity);
+        return cat.isBreaker() && this.values.containsKey(rarity);
     }
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", values.get(rarity).getInt(level)));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", this.values.get(rarity).getInt(level)));
     }
 
     @Override
@@ -52,7 +51,7 @@ public class EnlightenedAffix extends Affix {
         Player player = ctx.getPlayer();
         if (AdventureConfig.torchItem.get().useOn(ctx).consumesAction()) {
             if (ctx.getItemInHand().isEmpty()) ctx.getItemInHand().grow(1);
-            player.getItemInHand(ctx.getHand()).hurtAndBreak(values.get(rarity).getInt(level), player, p -> p.broadcastBreakEvent(ctx.getHand()));
+            player.getItemInHand(ctx.getHand()).hurtAndBreak(this.values.get(rarity).getInt(level), player, p -> p.broadcastBreakEvent(ctx.getHand()));
             return InteractionResult.SUCCESS;
         }
         return super.onItemUse(stack, rarity, level, ctx);

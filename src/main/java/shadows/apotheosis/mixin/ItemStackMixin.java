@@ -33,7 +33,7 @@ public class ItemStackMixin {
             try {
                 Component component = AffixHelper.getName(ths);
                 if (component.getContents() instanceof TranslatableContents tContents) {
-                    int idx = tContents.getKey().equals("misc.apotheosis.affix_name.four") ? 2 : 1;
+                    int idx = "misc.apotheosis.affix_name.four".equals(tContents.getKey()) ? 2 : 1;
                     tContents.getArgs()[idx] = ci.getReturnValue();
                     ci.setReturnValue(component);
                 }

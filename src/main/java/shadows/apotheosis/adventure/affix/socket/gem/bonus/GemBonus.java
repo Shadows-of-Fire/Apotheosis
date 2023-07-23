@@ -66,7 +66,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     /**
      * Validates that this gem bonus has been deserialized into a valid state.
      * If not, throws an error.
-     * 
+     *
      * @return this
      * @apiNote Overriders should strongly-type to their class.
      */
@@ -74,7 +74,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Checks if this bonus supports the rarity.
-     * 
+     *
      * @param rarity The rarity being checked.
      * @return True, if this bonus contains values for the specified rarity.
      * @apiNote Other methods in this class will throw an exception if the bonus does not support the rarity.
@@ -89,7 +89,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Gets the one-line socket bonus tooltip.
-     * 
+     *
      * @param gem    The gem stack.
      * @param rarity The rarity of the gem.
      */
@@ -100,7 +100,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
      * This method will be called once for each slot based on the category this bonus is for.
      * <p>
      * For modifiers created here, they should use the UUIDs from {@link GemItem.getUUIDs(gem)}
-     * 
+     *
      * @param gem    The gem stack.
      * @param rarity The rarity of the gem.
      * @param map    The destination for generated attribute modifiers.
@@ -109,7 +109,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Calculates the protection value of this bonus, with respect to the given damage source.
-     * 
+     *
      * @param gem    The gem stack.
      * @param rarity The rarity of the gem.
      * @param source The damage source to compare against.
@@ -122,7 +122,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     /**
      * Calculates the additional damage this bonus provides.
      * This damage is dealt as player physical damage.
-     * 
+     *
      * @param gem    The gem stack.
      * @param rarity The rarity of the gem.
      * @param type   The type of the mob.
@@ -134,7 +134,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     /**
      * Called when someone attacks an entity with an item that has this bonus.<br>
      * Specifically, this is invoked whenever the user attacks a target, while having an item with this bonus in either hand or any armor slot.
-     * 
+     *
      * @param gem    The gem stack.
      * @param rarity The rarity of the gem.
      * @param user   The wielder of the weapon. The weapon stack will be in their main hand.
@@ -144,7 +144,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Called when an entity that has this bonus on one of its armor items is damaged.
-     * 
+     *
      * @param gem      The gem stack.
      * @param rarity   The rarity of the gem.
      * @param user     The entity wearing an itme with this bonus.
@@ -173,7 +173,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Called when a shield with this affix blocks some amount of damage.
-     * 
+     *
      * @param entity The blocking entity.
      * @param source The damage source being blocked.
      * @param amount The amount of damage blocked.
@@ -186,7 +186,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Called when a player with this affix breaks a block.
-     * 
+     *
      * @param player The breaking player.
      * @param world  The level the block was broken in.
      * @param pos    The position of the block.
@@ -198,7 +198,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Allows an affix to reduce durability damage to an item.
-     * 
+     *
      * @param gem    The stack representing this gem.
      * @param rarity The rarity of the item.
      * @param level  The level of the affix.
@@ -212,7 +212,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     /**
      * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
      * If the value is set to zero or below, the event will be cancelled.
-     * 
+     *
      * @param gem    The stack representing this gem.
      * @param rarity The rarity of the item.
      * @param level  The level of the affix.
@@ -227,7 +227,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
-     * 
+     *
      * @param gem    The stack representing this gem.
      * @param rarity The rarity of the item.
      * @param level  The level of the affix.
@@ -238,7 +238,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     /**
      * Fires from {@link LootModifier#apply(ObjectArrayList, LootContext)} when this bonus is active on the tool given by the context.
-     * 
+     *
      * @param gem    The gem itemstack.
      * @param rarity The rarity of the gem.
      * @param loot   The generated loot.
@@ -255,7 +255,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     }
 
     protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {
-        return GemClass.CODEC.fieldOf("gem_class").forGetter(gem -> gem.getGemClass());
+        return GemClass.CODEC.fieldOf("gem_class").forGetter(GemBonus::getGemClass);
     }
 
     public static void initCodecs() {

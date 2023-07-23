@@ -48,7 +48,6 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 
     public static final Codec<LootRarity> CODEC = ExtraCodecs.stringResolverCodec(LootRarity::id, LootRarity::byId);
 
-    
     public static final LootRarity COMMON = new LootRarity("common", 0x808080, 0, 400, 0, ImmutableList.of(
         new LootRule(AffixType.STAT, 1),
         new LootRule(AffixType.STAT, 0.25F)));
@@ -110,8 +109,6 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
         new LootRule(AffixType.SOCKET, 0.45F),
         new LootRule(AffixType.SOCKET, 0.25F),
         new LootRule(AffixType.DURABILITY, 0.75F)));
-
-    
 
     static {
         LIST = ImmutableList.of(COMMON, UNCOMMON, RARE, EPIC, MYTHIC, ANCIENT);
@@ -223,7 +220,7 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 
     /**
      * Clamps a loot rarity to within a min/max bound.
-     * 
+     *
      * @param lowerBound The minimum valid rarity
      * @param upperBound The maximum valid rarity
      * @return This, if this is within the bounds, or the min or max if it exceeded that bound.
@@ -279,13 +276,13 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
     }
 
     public static class RarityStub extends TypeKeyedBase<RarityStub> implements ILuckyWeighted {
-        
+
         public static final Codec<RarityStub> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
             Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
             new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(RarityStub::rules))
             .apply(inst, RarityStub::new));
-        
+
         public static final PSerializer<RarityStub> SERIALIZER = PSerializer.fromCodec("Loot Rarity", CODEC);
 
         int weight;
@@ -321,13 +318,11 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 
     public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
 
-        
         public static final Codec<LootRule> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             new EnumCodec<>(AffixType.class).fieldOf("type").forGetter(LootRule::type),
             Codec.FLOAT.fieldOf("chance").forGetter(LootRule::chance),
             ExtraCodecs.lazyInitializedCodec(() -> LootRule.CODEC).optionalFieldOf("backup").forGetter(rule -> Optional.ofNullable(rule.backup())))
             .apply(inst, LootRule::new));
-        
 
         private static Random jRand = new Random();
 
@@ -348,7 +343,7 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
                 }
                 List<Affix> available = AffixHelper.byType(this.type).stream().filter(a -> a.canApplyTo(stack, LootCategory.forItem(stack), rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
                 if (available.size() == 0) {
-                    if (backup != null) backup.execute(stack, rarity, currentAffixes, sockets, rand);
+                    if (this.backup != null) this.backup.execute(stack, rarity, currentAffixes, sockets, rand);
                     else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", ForgeRegistries.ITEMS.getKey(stack.getItem()), rarity.id(), this.type, this.chance);
                     return;
                 }
@@ -366,20 +361,20 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
         public LootRarity getMaxRarity();
 
         default LootRarity clamp(@Nullable LootRarity rarity) {
-            if (rarity == null) return getMinRarity();
-            return rarity.clamp(getMinRarity(), getMaxRarity());
+            if (rarity == null) return this.getMinRarity();
+            return rarity.clamp(this.getMinRarity(), this.getMaxRarity());
         }
 
         public static record Impl(LootRarity min, LootRarity max) implements Clamped {
 
             @Override
             public LootRarity getMinRarity() {
-                return min;
+                return this.min;
             }
 
             @Override
             public LootRarity getMaxRarity() {
-                return max;
+                return this.max;
             }
 
         }

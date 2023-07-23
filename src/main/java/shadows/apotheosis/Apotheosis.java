@@ -56,14 +56,13 @@ import shadows.placebo.util.RunnableReloader;
 public class Apotheosis {
 
     public static final String MODID = "apotheosis";
-    
+
     public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
         .named(new ResourceLocation(MODID, MODID))
         .clientAcceptedVersions(s -> true)
         .serverAcceptedVersions(s -> true)
         .networkProtocolVersion(() -> "1.0.0")
         .simpleChannel();
-    
 
     public static final RecipeHelper HELPER = new RecipeHelper(Apotheosis.MODID);
 

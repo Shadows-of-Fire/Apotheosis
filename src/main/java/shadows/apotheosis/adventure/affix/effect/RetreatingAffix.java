@@ -19,12 +19,11 @@ import shadows.placebo.json.PSerializer;
  */
 public class RetreatingAffix extends Affix {
 
-    
     public static final Codec<RetreatingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
         .apply(inst, RetreatingAffix::new));
-    
+
     public static final PSerializer<RetreatingAffix> SERIALIZER = PSerializer.fromCodec("Retreating Affix", CODEC);
 
     protected LootRarity minRarity;
@@ -36,7 +35,7 @@ public class RetreatingAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat == LootCategory.SHIELD && rarity.isAtLeast(minRarity);
+        return cat == LootCategory.SHIELD && rarity.isAtLeast(this.minRarity);
     }
 
     @Override

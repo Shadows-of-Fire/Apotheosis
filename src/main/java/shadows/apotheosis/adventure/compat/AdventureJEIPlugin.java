@@ -117,7 +117,7 @@ public class AdventureJEIPlugin implements IModPlugin {
         public void draw(AddSocketsRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
             Component text = Component.translatable("text.apotheosis.socket_limit", recipe.getMaxSockets());
             Font font = Minecraft.getInstance().font;
-            font.draw(stack, text, (125 / 2) - font.width(text) / 2, 23, 0);
+            font.draw(stack, text, 125 / 2 - font.width(text) / 2, 23, 0);
         }
 
     }

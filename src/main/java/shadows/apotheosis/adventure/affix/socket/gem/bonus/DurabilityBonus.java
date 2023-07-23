@@ -18,13 +18,11 @@ import shadows.placebo.util.StepFunction;
 
 public class DurabilityBonus extends GemBonus {
 
-    
     public static Codec<DurabilityBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, DurabilityBonus::new));
-    
 
     protected final Map<LootRarity, StepFunction> values;
 

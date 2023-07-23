@@ -46,12 +46,10 @@ public interface Exclusion extends CodecProvider<Exclusion> {
 
     public static record SpawnTypeExclusion(Set<MobSpawnType> types) implements Exclusion {
 
-        
         public static Codec<SpawnTypeExclusion> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 PlaceboCodecs.setOf(new EnumCodec<>(MobSpawnType.class)).fieldOf("spawn_types").forGetter(SpawnTypeExclusion::types))
             .apply(inst, SpawnTypeExclusion::new));
-        
 
         @Override
         public Codec<? extends Exclusion> getCodec() {
@@ -76,12 +74,10 @@ public interface Exclusion extends CodecProvider<Exclusion> {
      */
     public static record NbtExclusion(CompoundTag nbt) implements Exclusion {
 
-        
         public static Codec<NbtExclusion> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 NBTAdapter.EITHER_CODEC.fieldOf("nbt").forGetter(NbtExclusion::nbt))
             .apply(inst, NbtExclusion::new));
-        
 
         @Override
         public Codec<? extends Exclusion> getCodec() {
@@ -106,12 +102,10 @@ public interface Exclusion extends CodecProvider<Exclusion> {
      */
     public static record SurfaceTypeExclusion(BossSpawnRules rule) implements Exclusion {
 
-        
         public static Codec<SurfaceTypeExclusion> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 BossSpawnRules.CODEC.fieldOf("rule").forGetter(SurfaceTypeExclusion::rule))
             .apply(inst, SurfaceTypeExclusion::new));
-        
 
         @Override
         public Codec<? extends Exclusion> getCodec() {
@@ -120,7 +114,7 @@ public interface Exclusion extends CodecProvider<Exclusion> {
 
         @Override
         public boolean isExcluded(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
-            return !rule.test(level, mob.blockPosition());
+            return !this.rule.test(level, mob.blockPosition());
         }
 
         @Override
@@ -135,12 +129,10 @@ public interface Exclusion extends CodecProvider<Exclusion> {
      */
     public static record AndExclusion(List<Exclusion> exclusions) implements Exclusion {
 
-        
         public static Codec<AndExclusion> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Exclusion.CODEC.listOf().fieldOf("exclusions").forGetter(AndExclusion::exclusions))
             .apply(inst, AndExclusion::new));
-        
 
         @Override
         public Codec<? extends Exclusion> getCodec() {
@@ -149,12 +141,12 @@ public interface Exclusion extends CodecProvider<Exclusion> {
 
         @Override
         public boolean isExcluded(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, CompoundTag entityNbt) {
-            return exclusions.stream().allMatch(e -> e.isExcluded(mob, level, spawnType, entityNbt));
+            return this.exclusions.stream().allMatch(e -> e.isExcluded(mob, level, spawnType, entityNbt));
         }
 
         @Override
         public boolean requiresNbtAccess() {
-            return exclusions.stream().anyMatch(Exclusion::requiresNbtAccess);
+            return this.exclusions.stream().anyMatch(Exclusion::requiresNbtAccess);
         }
 
     }

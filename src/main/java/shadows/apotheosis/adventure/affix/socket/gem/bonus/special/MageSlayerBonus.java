@@ -22,12 +22,10 @@ import shadows.placebo.util.StepFunction;
 
 public class MageSlayerBonus extends GemBonus {
 
-    
     public static Codec<MageSlayerBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, MageSlayerBonus::new));
-    
 
     protected final Map<LootRarity, StepFunction> values;
 

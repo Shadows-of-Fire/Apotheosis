@@ -61,7 +61,7 @@ public class AttributeEvents {
     public void fixChangedAttributes(PlayerLoggedInEvent e) {
         AttributeMap map = e.getEntity().getAttributes();
         for (Entry<ResourceKey<Attribute>, Attribute> entry : Registry.ATTRIBUTE.entrySet()) {
-            if (entry.getKey().location().getNamespace().equals(Apotheosis.MODID)) {
+            if (Apotheosis.MODID.equals(entry.getKey().location().getNamespace())) {
                 map.getInstance(entry.getValue()).setBaseValue(((RangedAttribute) entry.getValue()).getDefaultValue());
             }
         }
@@ -81,7 +81,7 @@ public class AttributeEvents {
     public void drawSpeed(LivingEntityUseItemEvent.Tick e) {
         if (e.getEntity() instanceof Player player) {
             double t = player.getAttribute(ALAttributes.DRAW_SPEED.get()).getValue() - 1;
-            if (t == 0 || !canBenefitFromDrawSpeed(e.getItem())) return;
+            if (t == 0 || !this.canBenefitFromDrawSpeed(e.getItem())) return;
 
             // Handle negative draw speed.
             int offset = -1;
@@ -263,7 +263,7 @@ public class AttributeEvents {
      * Copied from {@link MeleeAttackGoal#getAttackReachSqr}
      */
     private static double getAttackReachSqr(Entity attacker, LivingEntity pAttackTarget) {
-        return (double) (attacker.getBbWidth() * 2.0F * attacker.getBbWidth() * 2.0F + pAttackTarget.getBbWidth());
+        return attacker.getBbWidth() * 2.0F * attacker.getBbWidth() * 2.0F + pAttackTarget.getBbWidth();
     }
 
     /**
@@ -285,7 +285,7 @@ public class AttributeEvents {
             double atkRangeSqr = attacker instanceof Player p ? p.getAttackRange() * p.getAttackRange() : getAttackReachSqr(attacker, target);
             dodgeRand.setSeed(target.tickCount);
             if (attacker.distanceToSqr(target) <= atkRangeSqr && dodgeRand.nextFloat() <= dodgeChance) {
-                onDodge(target);
+                this.onDodge(target);
                 e.setCanceled(true);
             }
         }
@@ -302,7 +302,7 @@ public class AttributeEvents {
             // We can skip the distance check for projectiles, as "Projectile Impact" means the projectile is on the target.
             dodgeRand.setSeed(target.tickCount);
             if (dodgeRand.nextFloat() <= dodgeChance) {
-                onDodge(lvTarget);
+                this.onDodge(lvTarget);
                 e.setCanceled(true);
             }
         }

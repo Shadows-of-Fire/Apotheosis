@@ -26,12 +26,11 @@ import shadows.placebo.util.StepFunction;
  */
 public class PsychicAffix extends Affix {
 
-    
     public static final Codec<PsychicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, PsychicAffix::new));
-    
+
     public static final PSerializer<PsychicAffix> SERIALIZER = PSerializer.fromCodec("Psychic Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
@@ -43,7 +42,7 @@ public class PsychicAffix extends Affix {
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * getTrueLevel(rarity, level))));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * this.getTrueLevel(rarity, level))));
     }
 
     @Override
@@ -56,7 +55,7 @@ public class PsychicAffix extends Affix {
         if (source.getDirectEntity() instanceof Projectile arrow) {
             Entity owner = arrow.getOwner();
             if (owner instanceof LivingEntity living) {
-                living.hurt(new EntityDamageSource("player", entity).setMagic(), amount * getTrueLevel(rarity, level));
+                living.hurt(new EntityDamageSource("player", entity).setMagic(), amount * this.getTrueLevel(rarity, level));
             }
         }
 

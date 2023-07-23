@@ -15,12 +15,11 @@ import shadows.placebo.json.PSerializer;
 
 public class MagicalArrowAffix extends Affix {
 
-    
     public static final Codec<MagicalArrowAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
         .apply(inst, MagicalArrowAffix::new));
-    
+
     public static final PSerializer<MagicalArrowAffix> SERIALIZER = PSerializer.fromCodec("Magical Arrow Affix", CODEC);
 
     protected LootRarity minRarity;
@@ -32,7 +31,7 @@ public class MagicalArrowAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isRanged() && rarity.isAtLeast(minRarity);
+        return cat.isRanged() && rarity.isAtLeast(this.minRarity);
     }
 
     // EventPriority.HIGH

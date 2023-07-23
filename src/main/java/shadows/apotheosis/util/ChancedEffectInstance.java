@@ -22,7 +22,6 @@ import shadows.placebo.util.StepFunction;
  */
 public class ChancedEffectInstance {
 
-    
     public static Codec<ChancedEffectInstance> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.FLOAT.fieldOf("chance").forGetter(a -> a.chance),
@@ -31,7 +30,6 @@ public class ChancedEffectInstance {
             Codec.BOOL.optionalFieldOf("ambient", true).forGetter(a -> a.ambient),
             Codec.BOOL.optionalFieldOf("visible", false).forGetter(a -> a.visible))
         .apply(inst, ChancedEffectInstance::new));
-    
 
     protected final float chance;
     protected final MobEffect effect;
@@ -41,7 +39,7 @@ public class ChancedEffectInstance {
 
     /**
      * Creates a Chanced Effect Instance.
-     * 
+     *
      * @param chance The chance this potion is received.
      * @param effect The effect.
      * @param amp    A random range of possible amplifiers.

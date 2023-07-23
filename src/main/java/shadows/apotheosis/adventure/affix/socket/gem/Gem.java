@@ -37,7 +37,6 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
-    
     public static final Codec<Gem> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
         Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
@@ -48,7 +47,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
         Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique),
         PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(gem -> Optional.ofNullable(gem.getStages())))
         .apply(inst, Gem::new));
-    
+
     public static final PSerializer<Gem> SERIALIZER = PSerializer.fromCodec("Gem", CODEC);
 
     protected final int weight;
@@ -104,7 +103,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 
     /**
      * Adds all tooltip data from this gem to the gem stack.
-     * 
+     *
      * @param gem      The gem stack.
      * @param purity   The purity of this gem.
      * @param tooltips The destination for tooltips.
@@ -133,7 +132,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
 
     /**
      * Checks if this gem can be applied to an item, preventing more than one unique.
-     * 
+     *
      * @param socketed The target item.
      * @param rarity   The rarity of the gem.
      * @param gem      The gem
@@ -144,12 +143,12 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
             List<Gem> gems = SocketHelper.getGemInstances(socketed).map(GemInstance::gem).toList();
             if (gems.contains(this)) return false;
         }
-        return isValidIn(socketed, gem, rarity);
+        return this.isValidIn(socketed, gem, rarity);
     }
 
     /**
      * Checks if this gem is legally socketed into an item. Does not validate uniques
-     * 
+     *
      * @param socketed The target item.
      * @param rarity   The rarity of the gem.
      * @param gem      The gem
@@ -157,7 +156,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
      */
     public boolean isValidIn(ItemStack socketed, ItemStack gem, LootRarity rarity) {
         LootCategory cat = LootCategory.forItem(socketed);
-        return !cat.isNone() && bonusMap.containsKey(cat) && bonusMap.get(cat).supports(rarity);
+        return !cat.isNone() && this.bonusMap.containsKey(cat) && this.bonusMap.get(cat).supports(rarity);
     }
 
     public Optional<GemBonus> getBonus(LootCategory cat) {
@@ -220,7 +219,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
         Preconditions.checkArgument(this.weight >= 0, "Gem " + this.getId() + " has a negative weight");
         Preconditions.checkArgument(this.quality >= 0, "Gem " + this.getId() + " has a negative quality");
         Preconditions.checkNotNull(this.dimensions);
-        Preconditions.checkArgument(maxRarity.ordinal() >= minRarity.ordinal());
+        Preconditions.checkArgument(this.maxRarity.ordinal() >= this.minRarity.ordinal());
         LootRarity.values().stream().filter(r -> r.isAtLeast(this.minRarity) && r.isAtMost(this.maxRarity)).forEach(r -> {
             Preconditions.checkArgument(this.bonuses.stream().allMatch(b -> b.supports(r)));
         });

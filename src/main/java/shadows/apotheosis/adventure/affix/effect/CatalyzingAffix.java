@@ -25,12 +25,11 @@ import shadows.placebo.util.StepFunction;
  */
 public class CatalyzingAffix extends Affix {
 
-    
     public static final Codec<CatalyzingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, CatalyzingAffix::new));
-    
+
     public static final PSerializer<CatalyzingAffix> SERIALIZER = PSerializer.fromCodec("Catalyzing Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;

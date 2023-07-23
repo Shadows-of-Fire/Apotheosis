@@ -22,12 +22,10 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class LeechBlockBonus extends GemBonus {
 
-    
     public static Codec<LeechBlockBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.mapCodec(Data.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, LeechBlockBonus::new));
-    
 
     protected final Map<LootRarity, Data> values;
 
@@ -79,13 +77,11 @@ public class LeechBlockBonus extends GemBonus {
 
     static record Data(float healFactor, int cooldown) {
 
-        
         public static final Codec<Data> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.FLOAT.fieldOf("heal_factor").forGetter(Data::healFactor),
                 Codec.INT.fieldOf("cooldown").forGetter(Data::cooldown))
             .apply(inst, Data::new));
-        
 
     }
 }

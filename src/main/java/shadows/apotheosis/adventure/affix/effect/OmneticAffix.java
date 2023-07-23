@@ -29,12 +29,11 @@ import shadows.placebo.json.PSerializer;
 
 public class OmneticAffix extends Affix {
 
-    
     public static final Codec<OmneticAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.mapCodec(OmneticData.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, OmneticAffix::new));
-    
+
     public static final PSerializer<OmneticAffix> SERIALIZER = PSerializer.fromCodec("Omnetic Affix", CODEC);
 
     protected final Map<LootRarity, OmneticData> values;
@@ -46,7 +45,7 @@ public class OmneticAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat.isBreaker() && values.containsKey(rarity);
+        return cat.isBreaker() && this.values.containsKey(rarity);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class OmneticAffix extends Affix {
         if (!stack.isEmpty()) {
             AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
             if (inst != null) {
-                OmneticData data = values.get(inst.rarity());
+                OmneticData data = this.values.get(inst.rarity());
                 for (ItemStack item : data.items()) {
                     if (item.isCorrectToolForDrops(e.getTargetBlock())) {
                         e.setCanHarvest(true);
@@ -77,7 +76,7 @@ public class OmneticAffix extends Affix {
             AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
             if (inst != null) {
                 float speed = e.getOriginalSpeed();
-                OmneticData data = values.get(inst.rarity());
+                OmneticData data = this.values.get(inst.rarity());
                 for (ItemStack item : data.items()) {
                     speed = Math.max(getBaseSpeed(e.getEntity(), item, e.getState(), e.getPosition().orElse(BlockPos.ZERO)), speed);
                 }
@@ -93,13 +92,12 @@ public class OmneticAffix extends Affix {
 
     static record OmneticData(String name, ItemStack[] items) {
 
-        
         public static Codec<OmneticData> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.STRING.fieldOf("name").forGetter(OmneticData::name),
                 Codec.list(ItemAdapter.CODEC).xmap(l -> l.toArray(new ItemStack[0]), Arrays::asList).fieldOf("items").forGetter(OmneticData::items))
             .apply(inst, OmneticData::new));
-        
+
     }
 
     static float getBaseSpeed(Player player, ItemStack tool, BlockState state, BlockPos pos) {
@@ -117,22 +115,13 @@ public class OmneticAffix extends Affix {
         }
 
         if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
-            float f1;
-            switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
-                case 0:
-                    f1 = 0.3F;
-                    break;
-                case 1:
-                    f1 = 0.09F;
-                    break;
-                case 2:
-                    f1 = 0.0027F;
-                    break;
-                case 3:
-                default:
-                    f1 = 8.1E-4F;
-            }
-
+            float f1 = switch (player.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+                case 0 -> 0.3F;
+                case 1 -> 0.09F;
+                case 2 -> 0.0027F;
+                case 3 -> 8.1E-4F;
+                default -> 8.1E-4F;
+            };
             f *= f1;
         }
 

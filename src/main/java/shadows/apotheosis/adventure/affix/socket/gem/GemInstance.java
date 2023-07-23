@@ -39,7 +39,7 @@ import shadows.apotheosis.adventure.loot.LootRarity;
  * This is the Gem counterparty of {@link AffixInstance}.
  * <p>
  * The major difference between them is that most methods do not live on {@link Gem} but rather on {@link GemBonus}.
- * 
+ *
  * @param gem      The socketed Gem.
  * @param cate     The LootCategory of the item the Gem is socketed into.
  * @param gemStack The itemstack form of the sockted Gem.
@@ -73,16 +73,16 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * Will always return false if using {@link #unsocketed(ItemStack)}
      */
     public boolean isValid() {
-        return isValidUnsocketed() && this.gem.getBonus(cat).isPresent();
+        return this.isValidUnsocketed() && this.gem.getBonus(this.cat).isPresent();
     }
 
     /**
      * @see GemBonus#addModifiers(ItemStack, LootRarity, BiConsumer)
      */
     public void addModifiers(EquipmentSlot slot, BiConsumer<Attribute, AttributeModifier> map) {
-        for (EquipmentSlot itemSlot : cat.getSlots()) {
+        for (EquipmentSlot itemSlot : this.cat.getSlots()) {
             if (itemSlot == slot) {
-                ifPresent(b -> b.addModifiers(gemStack, rarity, map));
+                this.ifPresent(b -> b.addModifiers(this.gemStack, this.rarity, map));
             }
         }
     }
@@ -91,42 +91,42 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * @see GemBonus#getSocketBonusTooltip(ItemStack, LootRarity)
      */
     public Component getSocketBonusTooltip() {
-        return map(b -> b.getSocketBonusTooltip(gemStack, rarity)).orElse(Component.literal("Invalid Gem Category"));
+        return this.map(b -> b.getSocketBonusTooltip(this.gemStack, this.rarity)).orElse(Component.literal("Invalid Gem Category"));
     }
 
     /**
      * @see GemBonus#getDamageProtection(ItemStack, LootRarity, DamageSource)
      */
     public int getDamageProtection(DamageSource source) {
-        return map(b -> b.getDamageProtection(gemStack, rarity, source)).orElse(0);
+        return this.map(b -> b.getDamageProtection(this.gemStack, this.rarity, source)).orElse(0);
     }
 
     /**
      * @see GemBonus#getDamageBonus(ItemStack, LootRarity, MobType)
      */
     public float getDamageBonus(MobType creatureType) {
-        return map(b -> b.getDamageBonus(gemStack, rarity, creatureType)).orElse(0F);
+        return this.map(b -> b.getDamageBonus(this.gemStack, this.rarity, creatureType)).orElse(0F);
     }
 
     /**
      * @see GemBonus#doPostAttack(ItemStack, LootRarity, LivingEntity, Entity)
      */
     public void doPostAttack(LivingEntity user, @Nullable Entity target) {
-        ifPresent(b -> b.doPostAttack(gemStack, rarity, user, target));
+        this.ifPresent(b -> b.doPostAttack(this.gemStack, this.rarity, user, target));
     }
 
     /**
      * @see GemBonus#doPostHurt(ItemStack, LootRarity, LivingEntity, Entity)
      */
     public void doPostHurt(LivingEntity user, @Nullable Entity attacker) {
-        ifPresent(b -> b.doPostHurt(gemStack, rarity, user, attacker));
+        this.ifPresent(b -> b.doPostHurt(this.gemStack, this.rarity, user, attacker));
     }
 
     /**
      * @see GemBonus#onArrowFired(ItemStack, LootRarity, LivingEntity, AbstractArrow)
      */
     public void onArrowFired(LivingEntity user, AbstractArrow arrow) {
-        ifPresent(b -> b.onArrowFired(gemStack, rarity, user, arrow));
+        this.ifPresent(b -> b.onArrowFired(this.gemStack, this.rarity, user, arrow));
     }
 
     /**
@@ -134,7 +134,7 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      */
     @Nullable
     public InteractionResult onItemUse(UseOnContext ctx) {
-        return map(b -> b.onItemUse(gemStack, rarity, ctx)).orElse(null);
+        return this.map(b -> b.onItemUse(this.gemStack, this.rarity, ctx)).orElse(null);
     }
 
     /**
@@ -148,49 +148,49 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * @see GemBonus#onShieldBlock(ItemStack, LootRarity, LivingEntity, DamageSource, float)
      */
     public float onShieldBlock(LivingEntity entity, DamageSource source, float amount) {
-        return map(b -> b.onShieldBlock(gemStack, rarity, entity, source, amount)).orElse(amount);
+        return this.map(b -> b.onShieldBlock(this.gemStack, this.rarity, entity, source, amount)).orElse(amount);
     }
 
     /**
      * @see GemBonus#onBlockBreak(ItemStack, LootRarity, Player, LevelAccessor, BlockPos, BlockState)
      */
     public void onBlockBreak(Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-        ifPresent(b -> b.onBlockBreak(gemStack, rarity, player, world, pos, state));
+        this.ifPresent(b -> b.onBlockBreak(this.gemStack, this.rarity, player, world, pos, state));
     }
 
     /**
      * @see GemBonus#getDurabilityBonusPercentage(ItemStack, LootRarity, ServerPlayer)
      */
     public float getDurabilityBonusPercentage(ServerPlayer user) {
-        return map(b -> b.getDurabilityBonusPercentage(gemStack, rarity, user)).orElse(0F);
+        return this.map(b -> b.getDurabilityBonusPercentage(this.gemStack, this.rarity, user)).orElse(0F);
     }
 
     /**
      * @see GemBonus#onHurt(ItemStack, LootRarity, DamageSource, LivingEntity, float)
      */
     public float onHurt(DamageSource src, LivingEntity ent, float amount) {
-        return map(b -> b.onHurt(gemStack, rarity, src, ent, amount)).orElse(amount);
+        return this.map(b -> b.onHurt(this.gemStack, this.rarity, src, ent, amount)).orElse(amount);
     }
 
     /**
      * @see GemBonus#getEnchantmentLevels(ItemStack, LootRarity, Map)
      */
     public void getEnchantmentLevels(Map<Enchantment, Integer> enchantments) {
-        ifPresent(b -> b.getEnchantmentLevels(gemStack, rarity, enchantments));
+        this.ifPresent(b -> b.getEnchantmentLevels(this.gemStack, this.rarity, enchantments));
     }
 
     /**
      * @see GemBonus#modifyLoot(ItemStack, LootRarity, ObjectArrayList, LootContext)
      */
     public void modifyLoot(ObjectArrayList<ItemStack> loot, LootContext ctx) {
-        ifPresent(b -> b.modifyLoot(gemStack, rarity, loot, ctx));
+        this.ifPresent(b -> b.modifyLoot(this.gemStack, this.rarity, loot, ctx));
     }
 
     private <T> Optional<T> map(Function<GemBonus, T> function) {
-        return gem.getBonus(cat).map(function);
+        return this.gem.getBonus(this.cat).map(function);
     }
 
     private void ifPresent(Consumer<GemBonus> function) {
-        gem.getBonus(cat).ifPresent(function);
+        this.gem.getBonus(this.cat).ifPresent(function);
     }
 }

@@ -77,7 +77,7 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
     }
 
     private void resolve() {
-        this.resolvedGems = this.gems.stream().map(id -> printErrorOnNull(GemManager.INSTANCE.getValue(id), id)).filter(Predicates.notNull()).toList();
+        this.resolvedGems = this.gems.stream().map(id -> this.printErrorOnNull(GemManager.INSTANCE.getValue(id), id)).filter(Predicates.notNull()).toList();
     }
 
     private <T> T printErrorOnNull(T t, ResourceLocation id) {

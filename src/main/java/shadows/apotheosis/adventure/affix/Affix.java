@@ -52,14 +52,12 @@ import shadows.placebo.json.TypeKeyed.TypeKeyedBase;
  */
 public abstract class Affix extends TypeKeyedBase<Affix> {
 
-    
     protected static final Gson GSON = new GsonBuilder()
         .registerTypeAdapter(LootRarity.class, JsonUtil.<LootRarity>makeSerializer((json, type, ctx) -> LootRarity.byId(json.getAsString()), null))
         .registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE)
         .registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
         .registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
         .create();
-    
 
     protected final AffixType type;
 
@@ -69,7 +67,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Retrieve the modifiers from this affix to be applied to the itemstack.
-     * 
+     *
      * @param stack The stack the affix is on.
      * @param level The level of this affix.
      * @param type  The slot type for modifiers being gathered.
@@ -80,7 +78,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
     /**
      * Adds all tooltip data from this affix to the given stack's tooltip list.
      * This consumer will insert tooltips immediately after enchantment tooltips, or after the name if none are present.
-     * 
+     *
      * @param stack    The stack the affix is on.
      * @param level    The level of this affix.
      * @param tooltips The destination for tooltips.
@@ -91,7 +89,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Get a component representing an addition of this affix to the item's name.
-     * 
+     *
      * @return The name part, prefix or suffix, as requested.
      */
     public Component getName(ItemStack stack, LootRarity rarity, float level, boolean prefix) {
@@ -103,7 +101,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
      * Calculates the protection value of this affix, with respect to the given damage source.<br>
      * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
      * Ench module overrides with {@link EnchHooks#getDamageAfterMagicAbsorb}<br>
-     * 
+     *
      * @param level  The level of this affix, if applicable.<br>
      * @param source The damage source to compare against.<br>
      * @return How many protection points this affix is worth against this source.<br>
@@ -123,7 +121,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
     /**
      * Called when someone attacks an entity with an item containing this affix.
      * More specifically, this is invoked whenever the user attacks a target, while having an item with this affix in either hand or any armor slot.
-     * 
+     *
      * @param user   The wielder of the weapon. The weapon stack will be in their main hand.
      * @param target The target entity being attacked.
      * @param level  The level of this affix, if applicable.
@@ -157,7 +155,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Called when a shield with this affix blocks some amount of damage.
-     * 
+     *
      * @param entity The blocking entity.
      * @param source The damage source being blocked.
      * @param amount The amount of damage blocked.
@@ -170,7 +168,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Called when a player with this affix breaks a block.
-     * 
+     *
      * @param player The breaking player.
      * @param world  The level the block was broken in.
      * @param pos    The position of the block.
@@ -182,7 +180,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Allows an affix to reduce durability damage to an item.
-     * 
+     *
      * @param stack  The stack with the affix.
      * @param rarity The rarity of the item.
      * @param level  The level of the affix.
@@ -196,7 +194,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
     /**
      * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
      * If the value is set to zero or below, the event will be cancelled.
-     * 
+     *
      * @param stack  The stack with the affix.
      * @param rarity The rarity of the item.
      * @param level  The level of the affix.
@@ -218,7 +216,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
-     * 
+     *
      * @param stack    The stack with the affix.
      * @param rarity   The rarity of the item.
      * @param level    The level of the affix.
@@ -230,7 +228,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Fires from {@link LootModifier#apply(ObjectArrayList, LootContext)} when this affix is on the tool given by the context.
-     * 
+     *
      * @param stack  The stack with the affix.
      * @param rarity The rarity of the item.
      * @param level  The level of the affix.
@@ -250,7 +248,7 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Checks if this affix can be applied to an item.
-     * 
+     *
      * @param stack  The item being checked against.
      * @param cat    The LootCategory of the item.
      * @param rarity The rarity of the item.

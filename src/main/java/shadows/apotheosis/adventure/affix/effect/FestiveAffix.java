@@ -34,12 +34,11 @@ import shadows.placebo.util.StepFunction;
  */
 public class FestiveAffix extends Affix {
 
-    
     public static Codec<FestiveAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, FestiveAffix::new));
-    
+
     public static final PSerializer<FestiveAffix> SERIALIZER = PSerializer.fromCodec("Festive Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
@@ -51,7 +50,7 @@ public class FestiveAffix extends Affix {
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * getTrueLevel(rarity, level))));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * this.getTrueLevel(rarity, level))));
     }
 
     @Override
@@ -79,7 +78,7 @@ public class FestiveAffix extends Affix {
         if (dead instanceof Player || dead.getPersistentData().getBoolean("apoth.no_pinata")) return;
         if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
             AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(this);
-            if (inst != null && player.level.random.nextFloat() < getTrueLevel(inst.rarity(), inst.level())) {
+            if (inst != null && player.level.random.nextFloat() < this.getTrueLevel(inst.rarity(), inst.level())) {
                 player.level.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (player.level.random.nextFloat() - player.level.random.nextFloat()) * 0.2F) * 0.7F);
                 ((ServerLevel) player.level).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
                 List<ItemEntity> drops = new ArrayList<>(e.getDrops());

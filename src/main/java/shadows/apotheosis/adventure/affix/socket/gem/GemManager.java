@@ -29,7 +29,7 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 
     /**
      * Pulls a random LootRarity and Gem, and generates an Gem Item
-     * 
+     *
      * @param rand   Random
      * @param rarity The rarity, or null if it should be randomly selected.
      * @param luck   The player's luck level
@@ -57,7 +57,7 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
      * Public bouncer for gem bonus tag resolution.
      */
     public final ICondition.IContext _getContext() {
-        return getContext();
+        return this.getContext();
     }
 
 }

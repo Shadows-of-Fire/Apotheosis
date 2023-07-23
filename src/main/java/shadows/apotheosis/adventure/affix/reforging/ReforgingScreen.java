@@ -38,27 +38,27 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
     public ReforgingScreen(ReforgingMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
         this.titleLabelY = 5;
-        Arrays.fill(choices, ItemStack.EMPTY);
+        Arrays.fill(this.choices, ItemStack.EMPTY);
         this.title = Component.translatable("container.apotheosis.reforge");
     }
 
     public boolean shouldRecompute() {
         ItemStack input = this.menu.getSlot(0).getItem();
         LootRarity rarity = this.getMenu().getRarity();
-        return !ItemStack.isSameItemSameTags(input, lastInput) || lastRarity != rarity;
+        return !ItemStack.isSameItemSameTags(input, this.lastInput) || this.lastRarity != rarity;
     }
 
     public void recomputeChoices() {
         ItemStack input = this.menu.getSlot(0).getItem();
         LootRarity rarity = this.getMenu().getRarity();
         if (input.isEmpty() || rarity == null) {
-            Arrays.fill(choices, ItemStack.EMPTY);
+            Arrays.fill(this.choices, ItemStack.EMPTY);
         }
         else {
             RandomSource rand = this.menu.random;
             for (int i = 0; i < 3; i++) {
                 rand.setSeed(this.menu.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + i);
-                choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
+                this.choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
             }
         }
         this.lastInput = input.copy();
@@ -67,7 +67,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 
     @Override
     public void render(PoseStack pPoseStack, int x, int y, float pPartialTick) {
-        if (shouldRecompute()) recomputeChoices();
+        if (this.shouldRecompute()) this.recomputeChoices();
         this.renderBackground(pPoseStack);
         super.render(pPoseStack, x, y, pPartialTick);
         RenderSystem.disableBlend();
@@ -155,9 +155,9 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
             int color = 0x515151;
             if ((dust < dustCost || levels < levelCost || mats < matCost) && !this.minecraft.player.getAbilities().instabuild) {
                 this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
-                blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
+                this.blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
                 this.font.drawWordWrap(randText, randTextX, yCenter + 16 + 19 * slot, width, color);
-                color = darken(rarity.color().getValue(), 2);
+                color = this.darken(rarity.color().getValue(), 2);
             }
             else {
                 int k2 = x - (xCenter + 60);
@@ -170,13 +170,13 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
                     this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166, 108, 19);
                     color = 0xCDCDCD;
                 }
-                blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
+                this.blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
 
                 this.font.drawWordWrap(randText, randTextX, yCenter + 16 + 19 * slot, width, color);
                 color = rarity.color().getValue();
             }
-            drawBorderedString(stack, costStr, slotsX + 10, yCenter + 21 + 19 * slot, color, darken(color, 4));
-            drawBorderedString(stack, levelStr, slotsX + 106 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color, darken(color, 4));
+            this.drawBorderedString(stack, costStr, slotsX + 10, yCenter + 21 + 19 * slot, color, this.darken(color, 4));
+            this.drawBorderedString(stack, levelStr, slotsX + 106 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color, this.darken(color, 4));
         }
     }
 
@@ -185,8 +185,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
         r /= factor;
         g /= factor;
         b /= factor;
-        int shadowColor = r << 16 | g << 8 | b;
-        return shadowColor;
+        return r << 16 | g << 8 | b;
     }
 
     protected void drawBorderedString(PoseStack stack, String str, int x, int y, int color, int shadowColor) {
@@ -200,8 +199,8 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
 
     @Override
     protected void renderLabels(PoseStack stack, int x, int y) {
-        this.font.draw(stack, this.title, (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
-        this.font.draw(stack, this.playerInventoryTitle, (float) this.inventoryLabelX, (float) this.inventoryLabelY, 4210752);
+        this.font.draw(stack, this.title, this.titleLabelX, this.titleLabelY, 4210752);
+        this.font.draw(stack, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752);
     }
 
     @Override

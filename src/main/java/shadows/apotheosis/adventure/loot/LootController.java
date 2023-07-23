@@ -44,7 +44,7 @@ public class LootController {
 
     /**
      * Modifies an ItemStack with affixes of the target category and rarity.
-     * 
+     *
      * @param stack  The ItemStack.
      * @param cat    The LootCategory. Should be valid for the item being passed.
      * @param rarity The target Rarity.
@@ -94,7 +94,7 @@ public class LootController {
 
     /**
      * Pulls a random LootRarity and AffixLootEntry, and generates an Affix Item
-     * 
+     *
      * @param rand   Random
      * @param rarity The rarity, or null if it should be randomly selected.
      * @param luck   The player's luck level

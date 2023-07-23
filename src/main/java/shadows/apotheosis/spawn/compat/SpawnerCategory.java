@@ -112,8 +112,8 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
         int left = 168;
         for (StatModifier<?> s : recipe.getStatModifiers()) {
             String value = s.value.toString();
-            if (value.equals("true")) value = "+";
-            else if (value.equals("false")) value = "-";
+            if ("true".equals(value)) value = "+";
+            else if ("false".equals(value)) value = "-";
             else if (s.value instanceof Number num && num.intValue() > 0) value = "+" + value;
             Component msg = Component.translatable("misc.apotheosis.concat", value, s.stat.name());
             int width = font.width(msg);

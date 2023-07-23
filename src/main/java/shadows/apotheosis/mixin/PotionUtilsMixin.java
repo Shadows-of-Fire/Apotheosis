@@ -23,7 +23,7 @@ public class PotionUtilsMixin {
 
     /**
      * Redirects the {@link List#isEmpty()} call that is checked before adding tooltips to potions to replace vanilla tooltip handling.
-     * 
+     *
      * @param list           The potion's attribute modifiers.
      * @param stack          The potion stack.
      * @param tooltips       The tooltip list.

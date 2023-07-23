@@ -27,12 +27,11 @@ import shadows.placebo.util.StepFunction;
  */
 public class ThunderstruckAffix extends Affix {
 
-    
     public static final Codec<ThunderstruckAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, ThunderstruckAffix::new));
-    
+
     public static final PSerializer<ThunderstruckAffix> SERIALIZER = PSerializer.fromCodec("Thunderstruck Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
@@ -44,7 +43,7 @@ public class ThunderstruckAffix extends Affix {
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", (int) getTrueLevel(rarity, level)));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", (int) this.getTrueLevel(rarity, level)));
     }
 
     @Override
@@ -58,7 +57,7 @@ public class ThunderstruckAffix extends Affix {
         if (Apotheosis.localAtkStrength >= 0.98) {
             List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), CleavingAffix.cleavePredicate(user, target));
             for (Entity e : nearby) {
-                e.hurt(DamageSource.mobAttack(user), getTrueLevel(rarity, level));
+                e.hurt(DamageSource.mobAttack(user), this.getTrueLevel(rarity, level));
             }
         }
     }

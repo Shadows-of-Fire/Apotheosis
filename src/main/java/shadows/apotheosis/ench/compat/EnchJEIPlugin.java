@@ -44,7 +44,7 @@ public class EnchJEIPlugin implements IModPlugin {
         ItemStack enchBook = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchBook);
         IVanillaRecipeFactory factory = reg.getVanillaRecipeFactory();
-        
+
         reg.addRecipes(RecipeTypes.ANVIL, ImmutableList.of(
             factory.createAnvilRecipe(
                 enchDiaSword,
@@ -62,7 +62,7 @@ public class EnchJEIPlugin implements IModPlugin {
                 new ItemStack(Blocks.DAMAGED_ANVIL),
                 ImmutableList.of(new ItemStack(Blocks.IRON_BLOCK)),
                 ImmutableList.of(new ItemStack(Blocks.ANVIL)))));
-        
+
         reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.enchanting"));
         reg.addIngredientInfo(new ItemStack(Apoth.Blocks.LIBRARY.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.library"));
         List<EnchantingRecipe> recipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(shadows.apotheosis.Apoth.RecipeTypes.INFUSION));

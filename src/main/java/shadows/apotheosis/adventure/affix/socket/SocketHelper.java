@@ -33,7 +33,7 @@ public class SocketHelper {
     /**
      * Gets the list of gems socketed into the item.<br>
      * Does not validate that the gems are valid in the item.
-     * 
+     *
      * @param stack The stack being queried
      * @return A list of all gems socketed in this item.
      */
@@ -61,7 +61,7 @@ public class SocketHelper {
 
     /**
      * Gets a stream of socketed gems that are valid for use in the item.
-     * 
+     *
      * @param stack The stack being queried.
      * @return A stream containing all valid gems in the item.
      * @see GemInstance#isValid()
@@ -72,7 +72,7 @@ public class SocketHelper {
 
     /**
      * Gets the list of Gem objects that are active in
-     * 
+     *
      * @param stack
      * @return
      */
@@ -83,7 +83,7 @@ public class SocketHelper {
     /**
      * Sets the gem list on the item to the provided list of gems.<br>
      * Setting more gems than there are sockets will cause the extra gems to be lost.
-     * 
+     *
      * @param stack The stack being modified.
      * @param gems  The list of socketed gems.
      */
@@ -100,7 +100,7 @@ public class SocketHelper {
      * Gets the number of sockets on an item.<br>
      * By default, this equals the level of {@linkplain Affixes#SOCKET the Socket affix}, but it may be
      * modified by {@link GetItemSocketsEvent}.
-     * 
+     *
      * @param stack The stack being queried.
      * @return The number of sockets on the stack.
      * @see SocketAffix
@@ -118,7 +118,7 @@ public class SocketHelper {
      * This changes the level of {@linkplain Affixes#SOCKET the Socket affix} on the item.
      * <p>
      * The value set here is not necessarily the value that will be returned by {@link #getSockets(ItemStack)} due to {@link GetItemSocketsEvent}.
-     * 
+     *
      * @param stack   The stack being modified.
      * @param sockets The number of sockets.
      */
@@ -130,7 +130,7 @@ public class SocketHelper {
 
     /**
      * Checks if any of the sockets on the item are empty.
-     * 
+     *
      * @param stack The stack being queried.
      * @return True, if any sockets are empty, otherwise false.
      */
@@ -140,7 +140,7 @@ public class SocketHelper {
 
     /**
      * Computes the index of the first empty socket, used during socketing.
-     * 
+     *
      * @param stack The stack being queried.
      * @return The index of the first empty socket in the stack's gem list.
      * @see #getGems(ItemStack)

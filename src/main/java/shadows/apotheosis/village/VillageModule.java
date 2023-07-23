@@ -94,7 +94,7 @@ public class VillageModule {
 
     @SubscribeEvent
     public void items(Register<Item> e) {
-        
+
         e.getRegistry().registerAll(
             new ObsidianArrowItem(), "obsidian_arrow",
             new BroadheadArrowItem(), "broadhead_arrow",
@@ -105,7 +105,7 @@ public class VillageModule {
 
     @SubscribeEvent
     public void entities(Register<EntityType<?>> e) {
-        
+
         e.getRegistry().register(EntityType.Builder
             .<ObsidianArrowEntity>of(ObsidianArrowEntity::new, MobCategory.MISC)
             .setShouldReceiveVelocityUpdates(true)
@@ -138,7 +138,7 @@ public class VillageModule {
             .sized(0.5F, 0.5F)
             .setCustomClientFactory((se, w) -> new MiningArrowEntity(w))
             .build("mining_arrow"), "mining_arrow");
-        
+
     }
 
     @SubscribeEvent

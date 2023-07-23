@@ -38,7 +38,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
     /**
      * Defines an Enchanting Recipe.
-     * 
+     *
      * @param id           The Recipe ID
      * @param output       The output ItemStack
      * @param input        The input Ingredient

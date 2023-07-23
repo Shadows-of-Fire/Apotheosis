@@ -14,7 +14,6 @@ import shadows.placebo.json.NBTAdapter;
 
 public class SupportingEntity {
 
-    
     public static Codec<SupportingEntity> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             ForgeRegistries.ENTITY_TYPES.getCodec().fieldOf("entity").forGetter(t -> t.entity),
@@ -23,7 +22,6 @@ public class SupportingEntity {
             Codec.DOUBLE.optionalFieldOf("y", 0D).forGetter(t -> t.y),
             Codec.DOUBLE.optionalFieldOf("z", 0D).forGetter(t -> t.z))
         .apply(inst, SupportingEntity::new));
-    
 
     public final EntityType<?> entity;
     protected final CompoundTag nbt;

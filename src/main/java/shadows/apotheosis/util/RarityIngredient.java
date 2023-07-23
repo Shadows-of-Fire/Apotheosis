@@ -23,7 +23,7 @@ public class RarityIngredient extends AbstractIngredient {
 
     @Override
     public boolean test(ItemStack stack) {
-        return AffixHelper.getRarity(stack) == rarity;
+        return AffixHelper.getRarity(stack) == this.rarity;
     }
 
     @Override

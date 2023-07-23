@@ -61,10 +61,9 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
 
     @Override
     public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean arg4) {
-        if (te instanceof ApothSpawnerTile) {
-            ApothSpawnerTile spw = (ApothSpawnerTile) te;
+        if (te instanceof ApothSpawnerTile spw) {
             BaseSpawner logic = spw.getSpawner();
-            
+
             tag.putIntArray(STATS,
                 new int[] {
                     logic.minSpawnDelay,
@@ -80,7 +79,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
                     spw.hasNoAI ? 1 : 0,
                     spw.silent ? 1 : 0
                 });
-            
+
         }
     }
 

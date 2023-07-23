@@ -60,8 +60,8 @@ public class SimpleTexButton extends Button {
     @Override
     public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, texture);
-        int yTex = yTexStart;
+        RenderSystem.setShaderTexture(0, this.texture);
+        int yTex = this.yTexStart;
         if (!this.isActive()) {
             yTex += this.height;
         }
@@ -70,7 +70,7 @@ public class SimpleTexButton extends Button {
         }
 
         RenderSystem.enableDepthTest();
-        blit(pPoseStack, this.x, this.y, this.xTexStart, yTex, this.width, this.height, textureWidth, textureHeight);
+        blit(pPoseStack, this.x, this.y, this.xTexStart, yTex, this.width, this.height, this.textureWidth, this.textureHeight);
         if (this.isHoveredOrFocused()) {
             this.renderToolTip(pPoseStack, pMouseX, pMouseY);
         }

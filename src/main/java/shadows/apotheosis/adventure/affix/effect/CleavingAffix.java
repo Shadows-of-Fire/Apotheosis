@@ -29,12 +29,11 @@ import shadows.placebo.util.StepFunction;
 
 public class CleavingAffix extends Affix {
 
-    
     public static final Codec<CleavingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.mapCodec(CleaveValues.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, CleavingAffix::new));
-    
+
     public static final PSerializer<CleavingAffix> SERIALIZER = PSerializer.fromCodec("Cleaving Affix", CODEC);
 
     protected final Map<LootRarity, CleaveValues> values;
@@ -53,7 +52,7 @@ public class CleavingAffix extends Affix {
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * getChance(rarity, level)), getTargets(rarity, level)).withStyle(ChatFormatting.YELLOW));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * this.getChance(rarity, level)), this.getTargets(rarity, level)).withStyle(ChatFormatting.YELLOW));
     }
 
     private float getChance(LootRarity rarity, float level) {
@@ -71,8 +70,8 @@ public class CleavingAffix extends Affix {
     public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
         if (Apotheosis.localAtkStrength >= 0.98 && !cleaving && !user.level.isClientSide) {
             cleaving = true;
-            float chance = getChance(rarity, level);
-            int targets = getTargets(rarity, level);
+            float chance = this.getChance(rarity, level);
+            int targets = this.getTargets(rarity, level);
             if (user.level.random.nextFloat() < chance && user instanceof Player player) {
                 List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), cleavePredicate(user, target));
                 for (Entity e : nearby) {
@@ -94,9 +93,9 @@ public class CleavingAffix extends Affix {
 
     public static Predicate<Entity> cleavePredicate(Entity user, Entity target) {
         return e -> {
-            if ((e instanceof Animal && !(target instanceof Animal)) || (e instanceof AbstractVillager && !(target instanceof AbstractVillager))) return false;
+            if (e instanceof Animal && !(target instanceof Animal) || e instanceof AbstractVillager && !(target instanceof AbstractVillager)) return false;
             if (!AdventureConfig.cleaveHitsPlayers && e instanceof Player) return false;
-            if ((target instanceof Enemy && !(e instanceof Enemy))) return false;
+            if (target instanceof Enemy && !(e instanceof Enemy)) return false;
             return e != user && e instanceof LivingEntity le && le.isAlive();
         };
     }

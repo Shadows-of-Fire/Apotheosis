@@ -66,7 +66,6 @@ public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvi
                 for (AttributeModifier modif : inst.getModifiers()) {
                     if (modif.getName().startsWith("placebo_random_modifier_")) {
                         bossAttribs.add(inst.save());
-                        continue;
                     }
                 }
             });

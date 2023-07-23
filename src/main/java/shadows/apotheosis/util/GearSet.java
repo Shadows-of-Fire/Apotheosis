@@ -23,12 +23,11 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 /**
  * Util class to contain the full equipment for an entity.
- * 
+ *
  * @author Shadows
  */
 public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 
-    
     public static final Codec<GearSet> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
         Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
@@ -40,7 +39,7 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
         WeightedItemStack.LIST_CODEC.fieldOf("helmets").forGetter(g -> g.helmets),
         Codec.STRING.listOf().fieldOf("tags").forGetter(g -> g.tags))
         .apply(inst, GearSet::new));
-    
+
     public static final PSerializer<GearSet> SERIALIZER = PSerializer.fromCodec("Gear Set", CODEC);
 
     protected final int weight;
@@ -83,27 +82,20 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
      */
     public LivingEntity apply(LivingEntity entity) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            getRandomStack(getPotentials(slot), entity.random).ifPresent(s -> s.apply(entity, slot));
+            getRandomStack(this.getPotentials(slot), entity.random).ifPresent(s -> s.apply(entity, slot));
         }
         return entity;
     }
 
     public List<WeightedItemStack> getPotentials(EquipmentSlot slot) {
-        switch (slot) {
-            case MAINHAND:
-                return this.mainhands;
-            case OFFHAND:
-                return this.offhands;
-            case FEET:
-                return this.boots;
-            case LEGS:
-                return this.leggings;
-            case CHEST:
-                return this.chestplates;
-            case HEAD:
-                return this.helmets;
-        }
-        throw new RuntimeException("invalid slot");
+        return switch (slot) {
+            case MAINHAND -> this.mainhands;
+            case OFFHAND -> this.offhands;
+            case FEET -> this.boots;
+            case LEGS -> this.leggings;
+            case CHEST -> this.chestplates;
+            case HEAD -> this.helmets;
+        };
     }
 
     @Override
@@ -121,13 +113,12 @@ public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 
     public static class WeightedItemStack extends Weighted {
 
-        
         public static final Codec<WeightedItemStack> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             ItemAdapter.CODEC.fieldOf("stack").forGetter(w -> w.stack),
             Codec.INT.fieldOf("weight").forGetter(w -> w.weight),
             Codec.FLOAT.optionalFieldOf("drop_chance", -1F).forGetter(w -> w.dropChance))
             .apply(inst, WeightedItemStack::new));
-        
+
         public static final Codec<List<WeightedItemStack>> LIST_CODEC = CODEC.listOf();
 
         final ItemStack stack;

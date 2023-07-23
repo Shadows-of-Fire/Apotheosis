@@ -36,7 +36,6 @@ import shadows.placebo.util.StepFunction;
 
 public class PotionAffix extends Affix {
 
-    
     public static final Codec<PotionAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
@@ -46,7 +45,7 @@ public class PotionAffix extends Affix {
             LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types),
             Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
         .apply(inst, PotionAffix::new));
-    
+
     public static final PSerializer<PotionAffix> SERIALIZER = PSerializer.fromCodec("Potion Affix", CODEC);
 
     protected final MobEffect effect;
@@ -85,24 +84,24 @@ public class PotionAffix extends Affix {
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
         return (this.types.isEmpty() || this.types.contains(cat)) && this.values.containsKey(rarity);
-    };
+    }
 
     @Override
     public void doPostHurt(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity attacker) {
-        if (this.target == Target.HURT_SELF) applyEffect(user, rarity, level);
+        if (this.target == Target.HURT_SELF) this.applyEffect(user, rarity, level);
         else if (this.target == Target.HURT_ATTACKER) {
             if (attacker instanceof LivingEntity tLiving) {
-                applyEffect(tLiving, rarity, level);
+                this.applyEffect(tLiving, rarity, level);
             }
         }
     }
 
     @Override
     public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
-        if (this.target == Target.ATTACK_SELF) applyEffect(user, rarity, level);
+        if (this.target == Target.ATTACK_SELF) this.applyEffect(user, rarity, level);
         else if (this.target == Target.ATTACK_TARGET) {
             if (target instanceof LivingEntity tLiving) {
-                applyEffect(tLiving, rarity, level);
+                this.applyEffect(tLiving, rarity, level);
             }
         }
     }
@@ -110,7 +109,7 @@ public class PotionAffix extends Affix {
     @Override
     public void onBlockBreak(ItemStack stack, LootRarity rarity, float level, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
         if (this.target == Target.BREAK_SELF) {
-            applyEffect(player, rarity, level);
+            this.applyEffect(player, rarity, level);
         }
     }
 
@@ -118,12 +117,12 @@ public class PotionAffix extends Affix {
     public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, float level, HitResult res, Type type) {
         if (this.target == Target.ARROW_SELF) {
             if (arrow.getOwner() instanceof LivingEntity owner) {
-                applyEffect(owner, rarity, level);
+                this.applyEffect(owner, rarity, level);
             }
         }
         else if (this.target == Target.ARROW_TARGET) {
             if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-                applyEffect(target, rarity, level);
+                this.applyEffect(target, rarity, level);
             }
         }
     }
@@ -131,10 +130,10 @@ public class PotionAffix extends Affix {
     @Override
     public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
         if (this.target == Target.BLOCK_SELF) {
-            applyEffect(entity, rarity, level);
+            this.applyEffect(entity, rarity, level);
         }
         else if (this.target == Target.BLOCK_ATTACKER && source.getDirectEntity() instanceof LivingEntity target) {
-            applyEffect(target, rarity, level);
+            this.applyEffect(target, rarity, level);
         }
         return amount;
     }
@@ -184,14 +183,12 @@ public class PotionAffix extends Affix {
 
     public static record EffectData(StepFunction duration, StepFunction amplifier, int cooldown) {
 
-        
         private static Codec<EffectData> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 StepFunction.CODEC.fieldOf("duration").forGetter(EffectData::duration),
                 StepFunction.CODEC.fieldOf("amplifier").forGetter(EffectData::amplifier),
                 Codec.INT.optionalFieldOf("cooldown", -1).forGetter(EffectData::cooldown))
             .apply(inst, EffectData::new));
-        
 
         public MobEffectInstance build(MobEffect effect, float level) {
             return new MobEffectInstance(effect, this.duration.getInt(level), this.amplifier.getInt(level));

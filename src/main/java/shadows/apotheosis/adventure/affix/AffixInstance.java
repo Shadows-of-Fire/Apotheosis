@@ -124,7 +124,7 @@ public record AffixInstance(Affix affix, ItemStack stack, LootRarity rarity, flo
      * @see Affix#onArrowImpact(AbstractArrow, LootRarity, float, HitResult, net.minecraft.world.phys.HitResult.Type)
      */
     public void onArrowImpact(AbstractArrow arrow, HitResult res, HitResult.Type type) {
-        this.affix.onArrowImpact(arrow, rarity, level, res, type);
+        this.affix.onArrowImpact(arrow, this.rarity, this.level, res, type);
     }
 
     /**
@@ -138,20 +138,20 @@ public record AffixInstance(Affix affix, ItemStack stack, LootRarity rarity, flo
      * @see Affix#onHurt(ItemStack, LootRarity, float, DamageSource, LivingEntity, float)
      */
     public float onHurt(DamageSource src, LivingEntity ent, float amount) {
-        return this.affix.onHurt(stack, rarity, level, src, ent, amount);
+        return this.affix.onHurt(this.stack, this.rarity, this.level, src, ent, amount);
     }
 
     /**
      * @see Affix#getEnchantmentLevels(ItemStack, LootRarity, float, Map)
      */
     public void getEnchantmentLevels(Map<Enchantment, Integer> enchantments) {
-        this.affix.getEnchantmentLevels(stack, rarity, level, enchantments);
+        this.affix.getEnchantmentLevels(this.stack, this.rarity, this.level, enchantments);
     }
 
     /**
      * @see Affix#modifyLoot(ItemStack, LootRarity, float, ObjectArrayList, LootContext)
      */
     public void modifyLoot(ObjectArrayList<ItemStack> loot, LootContext ctx) {
-        this.affix.modifyLoot(stack, rarity, level, loot, ctx);
+        this.affix.modifyLoot(this.stack, this.rarity, this.level, loot, ctx);
     }
 }

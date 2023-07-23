@@ -75,7 +75,7 @@ public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
      */
     @Deprecated(forRemoval = true, since = "1.20")
     public FItemLayerModel(@Nullable ImmutableList<Material> textures, IntSet emissiveLayers, Int2ObjectMap<ResourceLocation> renderTypeNames) {
-        this(textures, emissiveLayers.intStream().collect(Int2ObjectArrayMap::new, (map, val) -> map.put(val, new ForgeFaceData(0xFFFFFFFF, 15, 15)), (map1, map2) -> map1.putAll(map2)), renderTypeNames, false, false);
+        this(textures, emissiveLayers.intStream().collect(Int2ObjectArrayMap::new, (map, val) -> map.put(val, new ForgeFaceData(0xFFFFFFFF, 15, 15)), Int2ObjectArrayMap::putAll), renderTypeNames, false, false);
     }
 
     public FItemLayerModel(@Nullable ImmutableList<Material> textures, Int2ObjectMap<ForgeFaceData> layerData, Int2ObjectMap<ResourceLocation> renderTypeNames) {
@@ -92,19 +92,19 @@ public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
 
     @Override
     public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-        if (textures == null) throw new IllegalStateException("Textures have not been initialized. Either pass them in through the constructor or call getMaterials(...) first.");
+        if (this.textures == null) throw new IllegalStateException("Textures have not been initialized. Either pass them in through the constructor or call getMaterials(...) first.");
 
-        if (deprecatedLoader) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated loader \"forge:item-layers\" instead of \"forge:item_layers\". This loader will be removed in 1.20.");
-        if (logWarning) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated \"fullbright_layers\" field in its item layer model instead of \"emissive_layers\". This field will be removed in 1.20.");
+        if (this.deprecatedLoader) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated loader \"forge:item-layers\" instead of \"forge:item_layers\". This loader will be removed in 1.20.");
+        if (this.logWarning) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated \"fullbright_layers\" field in its item layer model instead of \"emissive_layers\". This field will be removed in 1.20.");
 
-        TextureAtlasSprite particle = spriteGetter.apply(context.hasMaterial("particle") ? context.getMaterial("particle") : textures.get(0));
+        TextureAtlasSprite particle = spriteGetter.apply(context.hasMaterial("particle") ? context.getMaterial("particle") : this.textures.get(0));
         var rootTransform = context.getRootTransform();
         if (!rootTransform.isIdentity()) modelState = new SimpleModelState(modelState.getRotation().compose(rootTransform), modelState.isUvLocked());
 
         var normalRenderTypes = new RenderTypeGroup(RenderType.translucent(), ForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get());
         CompositeModel.Baked.Builder builder = CompositeModel.Baked.builder(context, particle, overrides, context.getTransforms());
-        for (int i = 0; i < textures.size(); i++) {
-            TextureAtlasSprite sprite = spriteGetter.apply(textures.get(i));
+        for (int i = 0; i < this.textures.size(); i++) {
+            TextureAtlasSprite sprite = spriteGetter.apply(this.textures.get(i));
             var unbaked = UnbakedGeometryHelper.createUnbakedItemElements(i, sprite);
             var quads = UnbakedGeometryHelper.bakeElements(unbaked, $ -> sprite, modelState, modelLocation);
             if (this.layerData.containsKey(i)) {
@@ -112,7 +112,7 @@ public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
                 applyingLightmap(data.blockLight(), data.skyLight()).processInPlace(quads);
                 applyingColor(data.color()).processInPlace(quads);
             }
-            var renderTypeName = renderTypeNames.get(i);
+            var renderTypeName = this.renderTypeNames.get(i);
             var renderTypes = renderTypeName != null ? context.getRenderType(renderTypeName) : null;
             builder.addQuads(renderTypes != null ? renderTypes : normalRenderTypes, quads);
         }
@@ -147,26 +147,26 @@ public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
     /**
      * Converts an ARGB color to an ABGR color, as the commonly used color format is not the format colors end up packed into.
      * This function doubles as its own inverse.
-     * 
+     *
      * @param color ARGB color
      * @return ABGR color
      */
     public static int toABGR(int argb) {
-        return (argb & 0xFF00FF00) // alpha and green same spot
-            | ((argb >> 16) & 0x000000FF) // red moves to blue
-            | ((argb << 16) & 0x00FF0000); // blue moves to red
+        return argb & 0xFF00FF00 // alpha and green same spot
+            | argb >> 16 & 0x000000FF // red moves to blue
+            | argb << 16 & 0x00FF0000; // blue moves to red
     }
 
     @Override
     public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
-        if (textures != null) return textures;
+        if (this.textures != null) return this.textures;
 
         ImmutableList.Builder<Material> builder = ImmutableList.builder();
         if (context.hasMaterial("particle")) builder.add(context.getMaterial("particle"));
         for (int i = 0; context.hasMaterial("layer" + i); i++) {
             builder.add(context.getMaterial("layer" + i));
         }
-        return textures = builder.build();
+        return this.textures = builder.build();
     }
 
     public static final class Loader implements IGeometryLoader<FItemLayerModel> {
@@ -193,11 +193,11 @@ public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
             }
 
             var emissiveLayers = new Int2ObjectArrayMap<ForgeFaceData>();
-            readUnlit(jsonObject, "forge_data", renderTypeNames, emissiveLayers, false);
-            boolean logWarning = readUnlit(jsonObject, "emissive_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
-            logWarning |= readUnlit(jsonObject, "fullbright_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
+            this.readUnlit(jsonObject, "forge_data", renderTypeNames, emissiveLayers, false);
+            boolean logWarning = this.readUnlit(jsonObject, "emissive_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
+            logWarning |= this.readUnlit(jsonObject, "fullbright_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
 
-            return new FItemLayerModel(null, emissiveLayers, renderTypeNames, deprecated, logWarning);
+            return new FItemLayerModel(null, emissiveLayers, renderTypeNames, this.deprecated, logWarning);
         }
 
         protected boolean readUnlit(JsonObject jsonObject, String name, Int2ObjectOpenHashMap<ResourceLocation> renderTypeNames, Int2ObjectMap<ForgeFaceData> layerData, boolean logWarning) {
@@ -228,7 +228,7 @@ public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
      * Holds extra data that may be injected into a face.
      * <p>
      * Used by {@link ItemLayerModel}, {@link BlockElement} and {@link BlockElementFace}
-     * 
+     *
      * @param color      Color in ARGB format
      * @param blockLight Block Light for this face from 0-15 (inclusive)
      * @param skyLight   Sky Light for this face from 0-15 (inclusive)

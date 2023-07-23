@@ -29,7 +29,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
     protected InternalItemHandler inv = new InternalItemHandler(2){
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == 0) return isValidRarityMat(stack);
+            if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(stack);
             return stack.is(Apoth.Items.GEM_DUST.get());
         };
 
@@ -54,28 +54,28 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
     @Override
     public void clientTick(Level pLevel, BlockPos pPos, BlockState pState) {
-        Player player = pLevel.getNearestPlayer((double) pPos.getX() + 0.5D, (double) pPos.getY() + 0.5D, (double) pPos.getZ() + 0.5D, 4, false);
+        Player player = pLevel.getNearestPlayer(pPos.getX() + 0.5D, pPos.getY() + 0.5D, pPos.getZ() + 0.5D, 4, false);
 
         if (player != null) {
-            time++;
+            this.time++;
         }
         else {
-            if (time == 0 && step1) return;
-            else time++;
+            if (this.time == 0 && this.step1) return;
+            else this.time++;
         }
 
-        if (step1 && time == 59) {
-            step1 = false;
-            time = 0;
+        if (this.step1 && this.time == 59) {
+            this.step1 = false;
+            this.time = 0;
         }
-        else if (time == 4 && !step1) {
+        else if (this.time == 4 && !this.step1) {
             RandomSource rand = pLevel.random;
             for (int i = 0; i < 6; i++) {
                 pLevel.addParticle(ParticleTypes.CRIT, pPos.getX() + 0.5 - 0.1 * rand.nextDouble(), pPos.getY() + 13 / 16D, pPos.getZ() + 0.5 + 0.1 * rand.nextDouble(), 0, 0, 0);
             }
             pLevel.playLocalSound(pPos.getX(), pPos.getY(), pPos.getZ(), SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.03F, 1.7F + rand.nextFloat() * 0.2F, true);
-            step1 = true;
-            time = 0;
+            this.step1 = true;
+            this.time = 0;
         }
     }
 

@@ -14,7 +14,7 @@ public class ALCombatRules {
      * Protection bypass is based on {@linkplain ALAttributes#PROT_PIERCE Protection Pierce} and {@linkplain ALAttributes#PROT_SHRED Protection Shred}.
      * <p>
      * This is not invoked if the user does not have any protection points, and excess protection bypass has no effect.
-     * 
+     *
      * @param target     The attack's target.
      * @param src        The DamageSource of the attack.
      * @param amount     The amount of damage the attack is currently dealing, after armor has been applied.
@@ -25,7 +25,7 @@ public class ALCombatRules {
         if (src.getEntity() instanceof LivingEntity attacker) {
             float shred = (float) attacker.getAttributeValue(ALAttributes.PROT_SHRED.get());
             if (shred > 0.001F) {
-                protPoints *= (1 - shred);
+                protPoints *= 1 - shred;
             }
             float pierce = (float) attacker.getAttributeValue(ALAttributes.PROT_PIERCE.get());
             if (pierce > 0.001F) {
@@ -42,7 +42,7 @@ public class ALCombatRules {
      * Each protection point reduces damage by 2.5%, up to 85%.
      * <p>
      * In vanilla, each protection point reduces damage by 4%, up to 80%.
-     * 
+     *
      * @see #getDamageAfterProtection(LivingEntity, DamageSource, float, float)
      */
     public static float getProtDamageReduction(float protPoints) {
@@ -60,7 +60,7 @@ public class ALCombatRules {
      * Each point of armor toughness reduces the effectiveness of all armor bypass by 1%, up to 50%.<br>
      * That said, armor toughness no longer reduces damage, and only reduces armor bypass.
      * <p>
-     * 
+     *
      * @param target    The attack's target.
      * @param src       The DamageSource of the attack.
      * @param amount    The amount of damage the attack is currently dealing, after armor has been applied.
@@ -73,12 +73,12 @@ public class ALCombatRules {
             float shred = (float) attacker.getAttributeValue(ALAttributes.ARMOR_SHRED.get());
             float bypassResist = Math.min(toughness / 100, 0.5F);
             if (shred > 0.001F) {
-                shred *= (1 - bypassResist);
-                armor *= (1 - shred);
+                shred *= 1 - bypassResist;
+                armor *= 1 - shred;
             }
             float pierce = (float) attacker.getAttributeValue(ALAttributes.ARMOR_PIERCE.get());
             if (pierce > 0.001F) {
-                pierce *= (1 - bypassResist);
+                pierce *= 1 - bypassResist;
                 armor -= pierce;
             }
         }
@@ -96,7 +96,7 @@ public class ALCombatRules {
      * The vanilla calculation is <code>DR = clamp(armor - damage / (2 + toughness / 4), armor / 5, 20) / 25</code>
      * <p>
      * For comparisons, see https://i.imgur.com/3yEnTyi.png
-     * 
+     *
      * @see #getDamageAfterArmor(LivingEntity, DamageSource, float, float, float)
      */
     public static float getArmorDamageReduction(float armor) {

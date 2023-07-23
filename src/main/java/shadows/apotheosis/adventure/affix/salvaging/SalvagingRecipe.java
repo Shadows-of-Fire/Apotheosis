@@ -118,14 +118,13 @@ public class SalvagingRecipe implements Recipe<Container> {
 
     public static class OutputData {
 
-        
         public static Codec<OutputData> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 ItemAdapter.CODEC.fieldOf("stack").forGetter(d -> d.stack),
                 Codec.intRange(0, 64).fieldOf("min_count").forGetter(d -> d.min),
                 Codec.intRange(0, 64).fieldOf("max_count").forGetter(d -> d.max))
             .apply(inst, OutputData::new));
-        
+
         public static final Codec<List<OutputData>> LIST_CODEC = Codec.list(CODEC);
 
         ItemStack stack;

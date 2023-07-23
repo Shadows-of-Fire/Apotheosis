@@ -26,7 +26,7 @@ public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWei
 
     public static final PSerializer<SpawnerItem> SERIALIZER = PSerializer.basic("Rogue Spawner", obj -> RandomSpawnerManager.GSON.fromJson(obj, SpawnerItem.class));
 
-    public static final Block[] FILLER_BLOCKS = new Block[] { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
+    public static final Block[] FILLER_BLOCKS = { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
     protected final int weight;
     protected final SpawnerStats stats;

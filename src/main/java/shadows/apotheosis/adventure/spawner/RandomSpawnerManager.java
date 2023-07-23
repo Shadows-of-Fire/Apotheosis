@@ -23,14 +23,12 @@ import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem> {
 
-    
     public static final Gson GSON = new GsonBuilder()
         .setPrettyPrinting()
         .registerTypeAdapter(new TypeToken<SimpleWeightedRandomList<SpawnData>>(){}.getType(), new SpawnDataListAdapter())
         .registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
         .registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
         .create();
-    
 
     public static final RandomSpawnerManager INSTANCE = new RandomSpawnerManager();
 

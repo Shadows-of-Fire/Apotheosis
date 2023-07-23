@@ -23,8 +23,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
         Doubles quanta = Doubles.fromJson(json.get("quanta"));
         Doubles arcana = Doubles.fromJson(json.get("arcana"));
         Doubles rectification = Doubles.fromJson(json.get("rectification"));
-        Instance inst = new Instance(item, levels, eterna, quanta, arcana, rectification);
-        return inst;
+        return new Instance(item, levels, eterna, quanta, arcana, rectification);
     }
 
     public void trigger(ServerPlayer player, ItemStack stack, int level, float eterna, float quanta, float arcana, float rectification) {

@@ -212,8 +212,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
                             }
 
                             entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), pServerLevel.random.nextFloat() * 360.0F, 0.0F);
-                            if (entity instanceof Mob) {
-                                Mob mob = (Mob) entity;
+                            if (entity instanceof Mob mob) {
                                 net.minecraftforge.eventbus.api.Event.Result res = net.minecraftforge.event.ForgeEventFactory.canEntitySpawn(mob, useLiar ? liar : pServerLevel, (float) entity.getX(), (float) entity.getY(),
                                     (float) entity.getZ(), this, MobSpawnType.SPAWNER);
                                 if (res == net.minecraftforge.eventbus.api.Event.Result.DENY) continue;

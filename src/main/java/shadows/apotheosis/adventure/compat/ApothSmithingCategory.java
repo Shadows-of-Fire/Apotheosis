@@ -31,8 +31,8 @@ public class ApothSmithingCategory implements IRecipeCategory<UpgradeRecipe> {
     private final IDrawable icon;
 
     public ApothSmithingCategory(IGuiHelper guiHelper) {
-        background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
-        icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SMITHING_TABLE));
+        this.background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SMITHING_TABLE));
     }
 
     @Override
@@ -42,17 +42,17 @@ public class ApothSmithingCategory implements IRecipeCategory<UpgradeRecipe> {
 
     @Override
     public Component getTitle() {
-        return title;
+        return this.title;
     }
 
     @Override
     public IDrawable getBackground() {
-        return background;
+        return this.background;
     }
 
     @Override
     public IDrawable getIcon() {
-        return icon;
+        return this.icon;
     }
 
     @Override

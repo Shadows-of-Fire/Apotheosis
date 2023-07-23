@@ -47,9 +47,9 @@ public abstract class MHFMixinLivingEntity {
 
             final float savedHealth = tag.getFloat("Health");
 
-            if (savedHealth > getMaxHealth() && savedHealth > 0) {
+            if (savedHealth > this.getMaxHealth() && savedHealth > 0) {
 
-                actualHealth = savedHealth;
+                this.actualHealth = savedHealth;
             }
         }
     }
@@ -63,10 +63,10 @@ public abstract class MHFMixinLivingEntity {
     @Inject(method = "detectEquipmentUpdates()V", at = @At("RETURN"))
     private void maxhealthfix$detectEquipmentUpdates(CallbackInfo callback) {
 
-        if (actualHealth != null && actualHealth > 0 && actualHealth > this.getHealth()) {
+        if (this.actualHealth != null && this.actualHealth > 0 && this.actualHealth > this.getHealth()) {
 
-            this.setHealth(actualHealth);
-            actualHealth = null;
+            this.setHealth(this.actualHealth);
+            this.actualHealth = null;
         }
     }
 

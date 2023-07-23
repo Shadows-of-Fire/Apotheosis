@@ -32,7 +32,7 @@ public interface IFormattableAttribute {
      * <p>
      * For multiplication modifiers, this method is responsible for converting the value to percentage form.<br>
      * The only vanilla attribute which performs value formatting is Knockback Resistance.<br>
-     * 
+     *
      * @param op    The operation of the modifier.
      * @param value The value of the modifier.
      * @param flag  The tooltip flag.
@@ -60,13 +60,13 @@ public interface IFormattableAttribute {
      * <p>
      * This method does not handle formatting of "base" modifiers, such as Attack Damage or Attack Speed.
      * <p>
-     * 
+     *
      * @param modif The attribute modifier being converted to a component.
      * @param flag  The tooltip flag.
      * @return The component representation of the passed attribute modifier.
      */
     default MutableComponent toComponent(AttributeModifier modif, TooltipFlag flag) {
-        Attribute attr = ths();
+        Attribute attr = this.ths();
         double value = modif.getAmount();
 
         Component debugInfo = CommonComponents.EMPTY;
@@ -80,11 +80,11 @@ public interface IFormattableAttribute {
         MutableComponent comp;
 
         if (value > 0.0D) {
-            comp = Component.translatable("attributeslib.modifier.plus", toValueComponent(modif.getOperation(), value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
+            comp = Component.translatable("attributeslib.modifier.plus", this.toValueComponent(modif.getOperation(), value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.BLUE);
         }
         else {
             value *= -1.0D;
-            comp = Component.translatable("attributeslib.modifier.take", toValueComponent(modif.getOperation(), value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
+            comp = Component.translatable("attributeslib.modifier.take", this.toValueComponent(modif.getOperation(), value, flag), Component.translatable(attr.getDescriptionId())).withStyle(ChatFormatting.RED);
         }
 
         return comp.append(debugInfo);
@@ -92,7 +92,7 @@ public interface IFormattableAttribute {
 
     /**
      * Gets the specific UUID that represents a "base" (green) modifier for this attribute.
-     * 
+     *
      * @param modif The attribute modifier being checked.
      * @param flag  The tooltip flag.
      * @return The UUID of the "base" modifier, or null, if no such modifier may exist.
@@ -110,13 +110,13 @@ public interface IFormattableAttribute {
      * <p>
      * This method does not handle formatting of "base" modifiers, such as Attack Damage or Attack Speed.
      * <p>
-     * 
+     *
      * @param modif The attribute modifier being converted to a component.
      * @param flag  The tooltip flag.
      * @return The component representation of the passed attribute modifier.
      */
     default MutableComponent toBaseComponent(double value, double entityBase, boolean merged, TooltipFlag flag) {
-        Attribute attr = ths();
+        Attribute attr = this.ths();
 
         Component debugInfo = CommonComponents.EMPTY;
 
@@ -135,7 +135,7 @@ public interface IFormattableAttribute {
      * Certain attributes, such as Attack Damage, are increased by an Enchantment that doesn't actually apply
      * an attribute modifier.<br>
      * This method allows for including certain additional variables in the computation of "base" attribute values.
-     * 
+     *
      * @param stack The stack in question.
      * @return Any bonus value to be applied to the attribute's value, after all modifiers have been applied.
      */
@@ -147,7 +147,7 @@ public interface IFormattableAttribute {
     /**
      * This method is invoked when {@link #getBonusBaseValue(ItemStack)} returns a value higher than zero.<br>
      * It is responsible for adding tooltip lines that explain where the bonus values from {@link #getBonusBaseValue(ItemStack)} are from.
-     * 
+     *
      * @param stack   The stack in question.
      * @param tooltip The tooltip consumer.
      * @param flag    The tooltip flag.
@@ -161,7 +161,7 @@ public interface IFormattableAttribute {
                 debugInfo = Component.literal(" ").append(Component.translatable(AttributesLib.MODID + ".adv.sharpness_bonus", sharpness).withStyle(ChatFormatting.GRAY));
             }
             MutableComponent comp = AttributeHelper.list()
-                .append(Component.translatable("attribute.modifier.plus.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(sharpness), Component.translatable(ths().getDescriptionId())).withStyle(ChatFormatting.BLUE));
+                .append(Component.translatable("attribute.modifier.plus.0", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(sharpness), Component.translatable(this.ths().getDescriptionId())).withStyle(ChatFormatting.BLUE));
             tooltip.accept(comp.append(debugInfo));
         }
     }

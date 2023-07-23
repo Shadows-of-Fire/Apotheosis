@@ -22,12 +22,10 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class BloodyArrowBonus extends GemBonus {
 
-    
     public static Codec<BloodyArrowBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.mapCodec(Data.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, BloodyArrowBonus::new));
-    
 
     protected final Map<LootRarity, Data> values;
 
@@ -79,14 +77,12 @@ public class BloodyArrowBonus extends GemBonus {
 
     static record Data(float healthCost, float dmgMultiplier, int cooldown) {
 
-        
         public static final Codec<Data> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.FLOAT.fieldOf("health_cost").forGetter(Data::healthCost),
                 Codec.FLOAT.fieldOf("damage_mult").forGetter(Data::dmgMultiplier),
                 Codec.INT.fieldOf("cooldown").forGetter(Data::cooldown))
             .apply(inst, Data::new));
-        
 
     }
 }

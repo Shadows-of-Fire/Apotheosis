@@ -34,7 +34,6 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class PotionBonus extends GemBonus {
 
-    
     public static final Codec<PotionBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
@@ -43,7 +42,6 @@ public class PotionBonus extends GemBonus {
             LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
             Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
         .apply(inst, PotionBonus::new));
-    
 
     protected final MobEffect effect;
     protected final Target target;
@@ -90,20 +88,20 @@ public class PotionBonus extends GemBonus {
 
     @Override
     public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, Entity attacker) {
-        if (this.target == Target.HURT_SELF) applyEffect(user, rarity);
+        if (this.target == Target.HURT_SELF) this.applyEffect(user, rarity);
         else if (this.target == Target.HURT_ATTACKER) {
             if (attacker instanceof LivingEntity tLiving) {
-                applyEffect(tLiving, rarity);
+                this.applyEffect(tLiving, rarity);
             }
         }
     }
 
     @Override
     public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, Entity target) {
-        if (this.target == Target.ATTACK_SELF) applyEffect(user, rarity);
+        if (this.target == Target.ATTACK_SELF) this.applyEffect(user, rarity);
         else if (this.target == Target.ATTACK_TARGET) {
             if (target instanceof LivingEntity tLiving) {
-                applyEffect(tLiving, rarity);
+                this.applyEffect(tLiving, rarity);
             }
         }
     }
@@ -111,7 +109,7 @@ public class PotionBonus extends GemBonus {
     @Override
     public void onBlockBreak(ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
         if (this.target == Target.BREAK_SELF) {
-            applyEffect(player, rarity);
+            this.applyEffect(player, rarity);
         }
     }
 
@@ -119,12 +117,12 @@ public class PotionBonus extends GemBonus {
     public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, Type type) {
         if (this.target == Target.ARROW_SELF) {
             if (arrow.getOwner() instanceof LivingEntity owner) {
-                applyEffect(owner, rarity);
+                this.applyEffect(owner, rarity);
             }
         }
         else if (this.target == Target.ARROW_TARGET) {
             if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-                applyEffect(target, rarity);
+                this.applyEffect(target, rarity);
             }
         }
     }
@@ -132,10 +130,10 @@ public class PotionBonus extends GemBonus {
     @Override
     public float onShieldBlock(ItemStack stack, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
         if (this.target == Target.BLOCK_SELF) {
-            applyEffect(entity, rarity);
+            this.applyEffect(entity, rarity);
         }
         else if (this.target == Target.BLOCK_ATTACKER && source.getDirectEntity() instanceof LivingEntity target) {
-            applyEffect(target, rarity);
+            this.applyEffect(target, rarity);
         }
         return amount;
     }
@@ -152,7 +150,7 @@ public class PotionBonus extends GemBonus {
         var inst = target.getEffect(this.effect);
         if (this.stackOnReapply && inst != null) {
             if (inst != null) {
-                var newInst = new MobEffectInstance(this.effect, (int) Math.max(inst.getDuration(), data.duration), (int) (inst.getAmplifier() + 1 + data.amplifier));
+                var newInst = new MobEffectInstance(this.effect, Math.max(inst.getDuration(), data.duration), inst.getAmplifier() + 1 + data.amplifier);
                 target.addEffect(newInst);
             }
         }
@@ -179,14 +177,12 @@ public class PotionBonus extends GemBonus {
 
     public static record EffectData(int duration, int amplifier, int cooldown) {
 
-        
         private static Codec<EffectData> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.INT.fieldOf("duration").forGetter(EffectData::duration),
                 Codec.INT.fieldOf("amplifier").forGetter(EffectData::amplifier),
                 Codec.INT.optionalFieldOf("cooldown", 0).forGetter(EffectData::cooldown))
             .apply(inst, EffectData::new));
-        
 
         public MobEffectInstance build(MobEffect effect) {
             return new MobEffectInstance(effect, this.duration, this.amplifier);

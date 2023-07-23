@@ -28,12 +28,11 @@ import shadows.placebo.json.PSerializer;
  */
 public class TelepathicAffix extends Affix {
 
-    
     public static final Codec<TelepathicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
         .apply(inst, TelepathicAffix::new));
-    
+
     public static final PSerializer<TelepathicAffix> SERIALIZER = PSerializer.fromCodec("Telepathic Affix", CODEC);
 
     public static Vec3 blockDropTargetPos = null;
@@ -47,7 +46,7 @@ public class TelepathicAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return (cat.isRanged() || cat.isLightWeapon() || cat.isBreaker()) && rarity.isAtLeast(minRarity);
+        return (cat.isRanged() || cat.isLightWeapon() || cat.isBreaker()) && rarity.isAtLeast(this.minRarity);
     }
 
     @Override

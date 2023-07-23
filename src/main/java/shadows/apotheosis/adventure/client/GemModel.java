@@ -51,44 +51,44 @@ public class GemModel implements BakedModel {
 
     @Override
     public ItemOverrides getOverrides() {
-        return itemHandler;
+        return this.itemHandler;
     }
 
     @Override
     @Deprecated
     public List<BakedQuad> getQuads(BlockState pState, Direction pDirection, RandomSource pRandom) {
-        return original.getQuads(pState, pDirection, pRandom);
+        return this.original.getQuads(pState, pDirection, pRandom);
     }
 
     @Override
     public boolean useAmbientOcclusion() {
-        return original.useAmbientOcclusion();
+        return this.original.useAmbientOcclusion();
     }
 
     @Override
     public boolean isGui3d() {
-        return original.isGui3d();
+        return this.original.isGui3d();
     }
 
     @Override
     public boolean usesBlockLight() {
-        return original.usesBlockLight();
+        return this.original.usesBlockLight();
     }
 
     @Override
     public boolean isCustomRenderer() {
-        return original.isCustomRenderer();
+        return this.original.isCustomRenderer();
     }
 
     @Override
     @Deprecated
     public TextureAtlasSprite getParticleIcon() {
-        return original.getParticleIcon();
+        return this.original.getParticleIcon();
     }
 
     @Override
     @Deprecated
     public ItemTransforms getTransforms() {
-        return original.getTransforms();
+        return this.original.getTransforms();
     }
 }

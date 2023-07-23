@@ -60,7 +60,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
                     boolean flag = material.isSolid();
                     // Exit if the floor is not fully solid.
 
-                    if ((y == floor && !flag) || (y == roof && !flag)) {
+                    if (y == floor && !flag || y == roof && !flag) {
                         return false;
                     } // Exit if the roof is not fully solid.
                     if (y == roof + 1 && Math.abs(x) < xRadius && Math.abs(z) < zRadius && !flag) {

@@ -21,7 +21,7 @@ public class ClueMessage implements MessageProvider<ClueMessage> {
 
     /**
      * Sends a clue message to the client.
-     * 
+     *
      * @param slot
      * @param clues The clues.
      * @param all   If this is all of the enchantments being received.

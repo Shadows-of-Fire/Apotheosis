@@ -23,7 +23,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 
     /**
      * Determines the amount of enchanting power (Eterna) this block can provide to an enchanting table.
-     * 
+     *
      * @return The amount of enchanting power this block produces.
      * @apiNote Call via {@link EnchantingStatManager#getEterna(BlockState, Level, BlockPos)}
      */
@@ -34,7 +34,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 
     /**
      * Determines the maximum enchanting power (Eterna) that this block may contribute up to.
-     * 
+     *
      * @return The max Eterna this block may contribute towards. Once past this value, this block has no effect.
      * @apiNote Call via {@link EnchantingStatManager#getMaxEterna(BlockState, Level, BlockPos)}
      */
@@ -45,7 +45,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 
     /**
      * Determines the amount of Quanta this block provides to an enchanting table.
-     * 
+     *
      * @return The change in Quanta caused by this block.
      * @apiNote Call via {@link EnchantingStatManager#getQuanta(BlockState, Level, BlockPos)}
      */
@@ -56,7 +56,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 
     /**
      * Determines the amount of Arcana this block provides to an enchanting table.
-     * 
+     *
      * @return The change in Arcana caused by this block.
      * @apiNote Call via {@link EnchantingStatManager#getArcana(BlockState, Level, BlockPos)}
      */
@@ -70,7 +70,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * 1F of Rectification reduces the negative threshold by 1%
      * [-Q, +Q] -> [-(1-QR/100F)Q, +Q]
      * At 100%, quanta only has a positive effect.
-     * 
+     *
      * @return The Quanta Rectification bonus from this block.
      * @apiNote Call via {@link EnchantingStatManager#getQuantaRectification(BlockState, Level, BlockPos)}
      */
@@ -81,7 +81,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 
     /**
      * Determines how many extra clues can be viewed by the client when this block is present.
-     * 
+     *
      * @return The number of bonus clues to show.
      * @apiNote Call via {@link EnchantingStatManager#getBonusClues(BlockState, Level, BlockPos)}
      */
@@ -93,7 +93,7 @@ public interface IEnchantingBlock extends IForgeBlock {
     /**
      * Spawns Enchant particles in the world flowing towards the Enchanting Table.<br>
      * Only called on the client.
-     * 
+     *
      * @param state  The state of this block.
      * @param level  The level.
      * @param rand   The random.
@@ -104,7 +104,7 @@ public interface IEnchantingBlock extends IForgeBlock {
         if (rand.nextInt(16) == 0) {
             if (EnchantingStatManager.getEterna(level.getBlockState(pos.offset(offset)), level, pos.offset(offset)) > 0) {
                 if (level.isEmptyBlock(pos.offset(offset.getX() / 2, 0, offset.getZ() / 2))) {
-                    level.addParticle(getTableParticle(state), pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, offset.getX() + rand.nextFloat() - 0.5D, offset.getY() - rand.nextFloat() - 1.0F,
+                    level.addParticle(this.getTableParticle(state), pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, offset.getX() + rand.nextFloat() - 0.5D, offset.getY() - rand.nextFloat() - 1.0F,
                         offset.getZ() + rand.nextFloat() - 0.5D);
                 }
             }
@@ -115,7 +115,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * To avoid having to duplicate the logic in {@link #spawnTableParticle} just to change the particle type,
      * this method is provided.<br>
      * If you need to do anything more complex, then override {@link #spawnTableParticle}
-     * 
+     *
      * @param state The state of this block.
      * @return The particle type this block will spawn when near an Enchanting Table.
      */

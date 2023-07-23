@@ -149,7 +149,6 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
      */
     public static record Stats(float maxEterna, float eterna, float quanta, float arcana, float rectification, int clues) {
 
-        
         public static Codec<Stats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.FLOAT.optionalFieldOf("maxEterna", 15F).forGetter(Stats::maxEterna),
@@ -159,7 +158,6 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
                 Codec.FLOAT.optionalFieldOf("rectification", 0F).forGetter(Stats::rectification),
                 Codec.INT.optionalFieldOf("clues", 0).forGetter(Stats::clues))
             .apply(inst, Stats::new));
-        
 
         public void write(FriendlyByteBuf buf) {
             buf.writeFloat(this.maxEterna);
@@ -177,7 +175,6 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
 
     public static class BlockStats extends TypeKeyedBase<BlockStats> {
 
-        
         public static Codec<BlockStats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.list(ForgeRegistries.BLOCKS.getCodec()).optionalFieldOf("blocks", Collections.emptyList()).forGetter(bs -> bs.blocks),
@@ -185,7 +182,6 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
                 ForgeRegistries.BLOCKS.getCodec().optionalFieldOf("block").forGetter(bs -> Optional.empty()),
                 Stats.CODEC.fieldOf("stats").forGetter(bs -> bs.stats))
             .apply(inst, BlockStats::new));
-        
 
         public static final PSerializer<BlockStats> SERIALIZER = PSerializer.fromCodec("Enchanting Stats", CODEC);
 

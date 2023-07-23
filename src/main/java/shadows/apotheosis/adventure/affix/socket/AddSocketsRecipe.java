@@ -57,11 +57,11 @@ public class AddSocketsRecipe extends ApothUpgradeRecipe {
     }
 
     public Ingredient getInput() {
-        return input;
+        return this.input;
     }
 
     public int getMaxSockets() {
-        return maxSockets;
+        return this.maxSockets;
     }
 
     public static class Serializer implements RecipeSerializer<AddSocketsRecipe> {

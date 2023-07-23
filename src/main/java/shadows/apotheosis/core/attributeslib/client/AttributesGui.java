@@ -99,34 +99,34 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
     public void refreshData() {
         this.data.clear();
-        ForgeRegistries.ATTRIBUTES.getValues().stream().map(player::getAttribute).filter(Objects::nonNull).filter(ai -> {
+        ForgeRegistries.ATTRIBUTES.getValues().stream().map(this.player::getAttribute).filter(Objects::nonNull).filter(ai -> {
             if (!hideUnchanged) return true;
             return ai.getBaseValue() != ai.getValue();
-        }).forEach(data::add);
+        }).forEach(this.data::add);
         this.data.sort(this::compareAttrs);
         this.startIndex = (int) (scrollOffset * this.getOffScreenRows() + 0.5D);
     }
 
     public void toggleVisibility() {
         this.open = !this.open;
-        if (this.open && parent.getRecipeBookComponent().isVisible()) {
-            parent.getRecipeBookComponent().toggleVisibility();
+        if (this.open && this.parent.getRecipeBookComponent().isVisible()) {
+            this.parent.getRecipeBookComponent().toggleVisibility();
         }
         this.hideUnchangedBtn.visible = this.open;
 
         int newLeftPos;
-        if (this.open && parent.width >= 379) {
-            newLeftPos = 177 + (parent.width - parent.imageWidth - 200) / 2;
+        if (this.open && this.parent.width >= 379) {
+            newLeftPos = 177 + (this.parent.width - this.parent.imageWidth - 200) / 2;
         }
         else {
-            newLeftPos = (parent.width - parent.imageWidth) / 2;
+            newLeftPos = (this.parent.width - this.parent.imageWidth) / 2;
         }
 
-        parent.leftPos = newLeftPos;
-        this.leftPos = parent.getGuiLeft() - WIDTH;
-        this.topPos = parent.getGuiTop();
+        this.parent.leftPos = newLeftPos;
+        this.leftPos = this.parent.getGuiLeft() - WIDTH;
+        this.topPos = this.parent.getGuiTop();
 
-        if (this.recipeBookButton != null) this.recipeBookButton.setPosition(parent.getGuiLeft() + 104, parent.height / 2 - 22);
+        if (this.recipeBookButton != null) this.recipeBookButton.setPosition(this.parent.getGuiLeft() + 104, this.parent.height / 2 - 22);
         this.hideUnchangedBtn.setPosition(this.leftPos + 7, this.topPos + 151);
     }
 
@@ -138,8 +138,8 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
     @Override
     public boolean isMouseOver(double pMouseX, double pMouseY) {
-        if (!open) return false;
-        return isHovering(0, 0, WIDTH, 166, pMouseX, pMouseY);
+        if (!this.open) return false;
+        return this.isHovering(0, 0, WIDTH, 166, pMouseX, pMouseY);
     }
 
     @Override
@@ -148,7 +148,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
         this.toggleBtn.y = this.parent.getGuiTop() + 10;
         if (this.parent.getRecipeBookComponent().isVisible()) this.open = false;
         wasOpen = this.open;
-        if (!open) return;
+        if (!this.open) return;
 
         if (this.lastRenderTick != PlaceboClient.ticks) {
             this.lastRenderTick = PlaceboClient.ticks;
@@ -225,17 +225,17 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
             List<ClientTooltipComponent> finalTooltip = new ArrayList<>(list.size());
             for (Component txt : list) {
-                addComp(txt, finalTooltip);
+                this.addComp(txt, finalTooltip);
             }
 
             if (!inst.getModifiers().isEmpty()) {
-                addComp(CommonComponents.EMPTY, finalTooltip);
-                addComp(Component.translatable("attributeslib.gui.modifiers").withStyle(ChatFormatting.GOLD), finalTooltip);
+                this.addComp(CommonComponents.EMPTY, finalTooltip);
+                this.addComp(Component.translatable("attributeslib.gui.modifiers").withStyle(ChatFormatting.GOLD), finalTooltip);
 
                 Map<UUID, ModifierSource<?>> modifiersToSources = new HashMap<>();
 
                 for (ModifierSourceType<?> type : ModifierSourceType.getTypes()) {
-                    type.extract(player, (modif, source) -> modifiersToSources.put(modif.getId(), source));
+                    type.extract(this.player, (modif, source) -> modifiersToSources.put(modif.getId(), source));
                 }
 
                 Component[] opValues = new Component[3];
@@ -249,7 +249,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
                         if (modif.getAmount() != 0) {
                             Component comp = fAttr.toComponent(modif, AttributesLib.getTooltipFlag());
                             var src = modifiersToSources.get(modif.getId());
-                            finalTooltip.add(new AttributeModifierComponent(src, comp, font, this.leftPos - 16));
+                            finalTooltip.add(new AttributeModifierComponent(src, comp, this.font, this.leftPos - 16));
                         }
                     }
                     color = ChatFormatting.GRAY;
@@ -267,15 +267,15 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
                 }
 
                 if (AttributesLib.getTooltipFlag().isAdvanced()) {
-                    addComp(CommonComponents.EMPTY, finalTooltip);
+                    this.addComp(CommonComponents.EMPTY, finalTooltip);
                     for (Component comp : opValues) {
-                        addComp(comp, finalTooltip);
+                        this.addComp(comp, finalTooltip);
                     }
                 }
             }
 
-            parent.renderTooltip(stack, List.of(), 0, 0, font); // This no-op call sets Screen#tooltipFont, which is used in renderTooltipInternal
-            parent.renderTooltipInternal(stack, finalTooltip, this.leftPos - 16 - finalTooltip.stream().map(c -> c.getWidth(font)).max(Integer::compare).get(), mouseY);
+            this.parent.renderTooltip(stack, List.of(), 0, 0, this.font); // This no-op call sets Screen#tooltipFont, which is used in renderTooltipInternal
+            this.parent.renderTooltipInternal(stack, finalTooltip, this.leftPos - 16 - finalTooltip.stream().map(c -> c.getWidth(this.font)).max(Integer::compare).get(), mouseY);
         }
     }
 
@@ -348,7 +348,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        if (!open || !this.isScrollBarActive()) return false;
+        if (!this.open || !this.isScrollBarActive()) return false;
         this.scrolling = false;
         int left = this.leftPos + 111;
         int top = this.topPos + 15;
@@ -366,7 +366,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
-        if (!open) return false;
+        if (!this.open) return false;
         if (this.scrolling && this.isScrollBarActive()) {
             int i = this.topPos + 15;
             int j = i + 138;
@@ -382,7 +382,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
 
     @Override
     public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
-        if (!open) return false;
+        if (!this.open) return false;
         if (this.isScrollBarActive()) {
             int i = this.getOffScreenRows();
             scrollOffset = (float) (scrollOffset - pDelta / i);
@@ -419,9 +419,9 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
     protected boolean isHovering(int pX, int pY, int pWidth, int pHeight, double pMouseX, double pMouseY) {
         int i = this.leftPos;
         int j = this.topPos;
-        pMouseX -= (double) i;
-        pMouseY -= (double) j;
-        return pMouseX >= (double) (pX - 1) && pMouseX < (double) (pX + pWidth + 1) && pMouseY >= (double) (pY - 1) && pMouseY < (double) (pY + pHeight + 1);
+        pMouseX -= i;
+        pMouseY -= j;
+        return pMouseX >= pX - 1 && pMouseX < pX + pWidth + 1 && pMouseY >= pY - 1 && pMouseY < pY + pHeight + 1;
     }
 
     private static DecimalFormat f = ItemStack.ATTRIBUTE_MODIFIER_FORMAT;

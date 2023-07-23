@@ -112,7 +112,7 @@ public class AdventureModuleClient {
 
         @SubscribeEvent
         public static void addGemModels(ModelEvent.RegisterAdditional e) {
-            Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> loc.getNamespace().equals(Apotheosis.MODID) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json"))
+            Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> Apotheosis.MODID.equals(loc.getNamespace()) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json"))
                 .keySet();
             for (ResourceLocation s : locs) {
                 String path = s.getPath().substring("models/".length(), s.getPath().length() - ".json".length());
@@ -193,7 +193,7 @@ public class AdventureModuleClient {
         for (int i = 0; i < list.size(); i++) {
             Optional<FormattedText> o = list.get(i).left();
             if (o.isPresent() && o.get() instanceof Component comp && comp.getContents() instanceof LiteralContents tc) {
-                if (tc.text().equals("APOTH_REMOVE_MARKER")) {
+                if ("APOTH_REMOVE_MARKER".equals(tc.text())) {
                     rmvIdx = i;
                     list.remove(i);
                     break;
@@ -236,7 +236,7 @@ public class AdventureModuleClient {
 
         // Defines the RenderType. Make sure the name is unique by including your MODID in the name.
         private static RenderType gray(ResourceLocation loc) {
-            
+
             RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
                 .setShaderState(RENDER_TYPE_GRAY)
                 .setTextureState(new RenderStateShard.TextureStateShard(loc, false, false))
@@ -246,7 +246,7 @@ public class AdventureModuleClient {
                 .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
                 .createCompositeState(true);
             return create("gray", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, false, rendertype$state);
-            
+
         }
 
         // Dummy constructor needed to make java happy

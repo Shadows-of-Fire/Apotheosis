@@ -150,7 +150,7 @@ public class PotionJEIPlugin implements IModPlugin {
 
     }
 
-    private class PotionCharmSubtypes implements IIngredientSubtypeInterpreter<ItemStack> {
+    private static class PotionCharmSubtypes implements IIngredientSubtypeInterpreter<ItemStack> {
 
         @Override
         public String apply(ItemStack stack, UidContext context) {

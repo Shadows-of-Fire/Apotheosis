@@ -52,10 +52,10 @@ public class AttributesLibClient {
         int markIdx1 = -1, markIdx2 = -1;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getContents() instanceof LiteralContents tc) {
-                if (tc.text().equals("APOTH_REMOVE_MARKER")) {
+                if ("APOTH_REMOVE_MARKER".equals(tc.text())) {
                     markIdx1 = i;
                 }
-                if (tc.text().equals("APOTH_REMOVE_MARKER_2")) {
+                if ("APOTH_REMOVE_MARKER_2".equals(tc.text())) {
                     markIdx2 = i;
                     break;
                 }
@@ -182,7 +182,7 @@ public class AttributesLibClient {
                     else amt *= 1 + modif.getAmount();
                 }
                 amt += baseBonus;
-                boolean isMerged = (!baseModif.children.isEmpty() || baseBonus != 0);
+                boolean isMerged = !baseModif.children.isEmpty() || baseBonus != 0;
                 MutableComponent text = IFormattableAttribute.toBaseComponent(attr, amt, entityBase, isMerged, flag);
                 tooltip.accept(padded(" ", text).withStyle(isMerged ? ChatFormatting.GOLD : ChatFormatting.DARK_GREEN));
                 if (Screen.hasShiftDown() && isMerged) {

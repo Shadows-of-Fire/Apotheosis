@@ -11,7 +11,7 @@ import shadows.placebo.json.RandomAttributeModifier;
 
 /**
  * Boss Stats, aka everything that a boss might need to buff itself.
- * 
+ *
  * @param enchantChance Specifies the chance that boss items (aside from the affix item) are enchanted.
  * @param enchLevels    Array of enchantment levels to use for the boss's items. Order is {<Generic with EnchModule>, <Generic without>, <Affix with>, <Affix
  *                      without>}. Must have four entries.
@@ -20,7 +20,6 @@ import shadows.placebo.json.RandomAttributeModifier;
  */
 public record BossStats(float enchantChance, int[] enchLevels, List<ChancedEffectInstance> effects, List<RandomAttributeModifier> modifiers) {
 
-    
     public static final Codec<BossStats> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.FLOAT.fieldOf("enchant_chance").forGetter(BossStats::enchantChance),
@@ -28,6 +27,5 @@ public record BossStats(float enchantChance, int[] enchLevels, List<ChancedEffec
             ChancedEffectInstance.CODEC.listOf().fieldOf("effects").forGetter(BossStats::effects),
             RandomAttributeModifier.CODEC.listOf().fieldOf("attribute_modifiers").forGetter(BossStats::modifiers))
         .apply(inst, BossStats::new));
-    
 
 }

@@ -19,12 +19,10 @@ import shadows.apotheosis.adventure.loot.LootCategory;
  */
 public record GemClass(String key, Set<LootCategory> types) {
 
-    
     public static Codec<GemClass> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Codec.STRING.fieldOf("key").forGetter(GemClass::key),
         LootCategory.SET_CODEC.fieldOf("types").forGetter(GemClass::types))
         .apply(inst, GemClass::new));
-    
 
     public GemClass(String key, Set<LootCategory> types) {
         this.key = key;
@@ -36,7 +34,7 @@ public record GemClass(String key, Set<LootCategory> types) {
     public void write(FriendlyByteBuf buf) {
         buf.writeUtf(this.key);
         buf.writeByte(this.types.size());
-        types.forEach(c -> buf.writeUtf(c.getName()));
+        this.types.forEach(c -> buf.writeUtf(c.getName()));
     }
 
     public static GemClass read(FriendlyByteBuf buf) {

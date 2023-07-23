@@ -46,7 +46,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
      * Inserts a book into this library.
      * Handles the updating of the points and max levels maps.
      * Extra enchantment levels that cannot be voided will be destroyed.
-     * 
+     *
      * @param book An enchanted book
      */
     public void depositBook(ItemStack book) {
@@ -81,7 +81,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 
     /**
      * Checks if this level of an enchantment can be extracted from this library, given the current level of the enchantment on the item.
-     * 
+     *
      * @param ench         The enchantment being extracted
      * @param level        The desired target level
      * @param currentLevel The current level of this enchantment on the item being applied to.
@@ -93,7 +93,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
 
     /**
      * Converts an enchantment level into the corresponding point value.
-     * 
+     *
      * @param level The level to convert.
      * @return 2^(level - 1)
      */

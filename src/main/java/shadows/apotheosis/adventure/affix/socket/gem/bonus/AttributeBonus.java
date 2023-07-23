@@ -25,7 +25,6 @@ import shadows.placebo.util.StepFunction;
 
 public class AttributeBonus extends GemBonus {
 
-    
     public static Codec<AttributeBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
@@ -33,7 +32,6 @@ public class AttributeBonus extends GemBonus {
             new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, AttributeBonus::new));
-    
 
     protected final Attribute attribute;
     protected final Operation operation;
@@ -48,12 +46,12 @@ public class AttributeBonus extends GemBonus {
 
     @Override
     public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
-        map.accept(this.attribute, read(gem, rarity, GemItem.getUUIDs(gem).get(0)));
+        map.accept(this.attribute, this.read(gem, rarity, GemItem.getUUIDs(gem).get(0)));
     }
 
     @Override
     public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-        return IFormattableAttribute.toComponent(this.attribute, read(gem, rarity, UUID.randomUUID()), AttributesLib.getTooltipFlag());
+        return IFormattableAttribute.toComponent(this.attribute, this.read(gem, rarity, UUID.randomUUID()), AttributesLib.getTooltipFlag());
     }
 
     @Override

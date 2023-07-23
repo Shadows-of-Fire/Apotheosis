@@ -53,14 +53,14 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
         super.init();
         int left = this.getGuiLeft();
         int top = this.getGuiTop();
-        
+
         this.salvageBtn = this.addRenderableWidget(
             new SimpleTexButton(left + 105, top + 33, 20, 20, 196, 0, TEXTURE, 256, 256,
-                (btn) -> this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 0),
+                btn -> this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 0),
                 Component.translatable("button.apotheosis.salvage"))
                 .setInactiveMessage(Component.translatable("button.apotheosis.no_salvage").withStyle(ChatFormatting.RED)));
-        
-        computeResults();
+
+        this.computeResults();
     }
 
     public void computeResults() {
@@ -131,7 +131,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
                 }
             }
             if (displaySlot == -1) continue;
-            var model = itemRenderer.getModel(display, null, null, 0);
+            var model = this.itemRenderer.getModel(display, null, null, 0);
             renderGuiItem(display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, model, GhostBufferSource::new);
         }
 
@@ -146,7 +146,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         PoseStack posestack = RenderSystem.getModelViewStack();
         posestack.pushPose();
-        posestack.translate((double) pX, (double) pY, (double) (100.0F + Minecraft.getInstance().getItemRenderer().blitOffset));
+        posestack.translate(pX, pY, 100.0F + Minecraft.getInstance().getItemRenderer().blitOffset);
         posestack.translate(8.0D, 8.0D, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F, 16.0F, 16.0F);
@@ -188,7 +188,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
             tooltip.add(Component.translatable("%s-%s %s", data.min, data.max, data.stack.getHoverName()));
         }
 
-        if (tooltip.size() > 1) drawOnLeft(stack, tooltip, this.getGuiTop() + 29);
+        if (tooltip.size() > 1) this.drawOnLeft(stack, tooltip, this.getGuiTop() + 29);
         stack.popPose();
 
         super.renderTooltip(stack, x, y);
@@ -212,7 +212,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
 
     @Override
     protected void renderLabels(PoseStack stack, int mouseX, int mouseY) {
-        this.font.draw(stack, Component.translatable("text.apotheosis.results"), 133, (float) this.titleLabelY, 4210752);
+        this.font.draw(stack, Component.translatable("text.apotheosis.results"), 133, this.titleLabelY, 4210752);
         super.renderLabels(stack, mouseX, mouseY);
     }
 

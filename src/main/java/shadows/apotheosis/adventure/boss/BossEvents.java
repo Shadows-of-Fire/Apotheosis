@@ -60,7 +60,7 @@ public class BossEvents {
         if (e.getSpawnReason() == MobSpawnType.NATURAL || e.getSpawnReason() == MobSpawnType.CHUNK_GENERATION) {
             LivingEntity entity = e.getEntity();
             RandomSource rand = e.getLevel().getRandom();
-            if (bossCooldowns.getInt(entity.level.dimension().location()) <= 0 && !e.getLevel().isClientSide() && entity instanceof Monster && e.getResult() != Result.DENY) {
+            if (this.bossCooldowns.getInt(entity.level.dimension().location()) <= 0 && !e.getLevel().isClientSide() && entity instanceof Monster && e.getResult() != Result.DENY) {
                 ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
                 Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
                 if (rules == null) return;
@@ -76,7 +76,7 @@ public class BossEvents {
                         sLevel.addFreshEntityWithPassengers(boss);
                         e.setResult(Result.DENY);
                         AdventureModule.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());
-                        Component name = getName(boss);
+                        Component name = this.getName(boss);
                         if (name == null || name.getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a custom name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
                         else {
                             sLevel.players().forEach(p -> {
@@ -88,7 +88,7 @@ public class BossEvents {
                                 }
                             });
                         }
-                        bossCooldowns.put(entity.level.dimension().location(), AdventureConfig.bossSpawnCooldown);
+                        this.bossCooldowns.put(entity.level.dimension().location(), AdventureConfig.bossSpawnCooldown);
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class BossEvents {
     @SubscribeEvent
     public void tick(LevelTickEvent e) {
         if (e.phase == Phase.END) {
-            bossCooldowns.computeIntIfPresent(e.level.dimension().location(), (key, value) -> Math.max(0, value - 1));
+            this.bossCooldowns.computeIntIfPresent(e.level.dimension().location(), (key, value) -> Math.max(0, value - 1));
         }
     }
 
@@ -174,7 +174,7 @@ public class BossEvents {
     }
 
     public static enum BossSpawnRules implements BiPredicate<ServerLevelAccessor, BlockPos> {
-        NEEDS_SKY((level, pos) -> level.canSeeSky(pos)),
+        NEEDS_SKY(ServerLevelAccessor::canSeeSky),
         NEEDS_SURFACE(
             (level, pos) -> pos.getY() >= level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ())),
         BELOW_SURFACE(
@@ -194,7 +194,7 @@ public class BossEvents {
 
         @Override
         public boolean test(ServerLevelAccessor t, BlockPos u) {
-            return pred.test(t, u);
+            return this.pred.test(t, u);
         }
     }
 

@@ -36,7 +36,7 @@ public class MinibossManager extends WeightedJsonReloadListener<MinibossItem> {
 
         /**
          * Null or empty means "all entities". To make an item invalid, return 0 weight.
-         * 
+         *
          * @return A set of all entities that this item can be applied to.
          */
         @Nullable

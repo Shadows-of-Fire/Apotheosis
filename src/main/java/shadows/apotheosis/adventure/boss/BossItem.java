@@ -65,7 +65,6 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
-    
     public static final Codec<AABB> AABB_CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.DOUBLE.fieldOf("width").forGetter(a -> Math.abs(a.maxX - a.minX)),
@@ -87,7 +86,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
             LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(a -> a.maxRarity),
             SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)))
         .apply(inst, BossItem::new));
-    
+
     public static final PSerializer<BossItem> SERIALIZER = PSerializer.fromCodec("Apotheotic Boss", CODEC);
 
     public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
@@ -166,12 +165,12 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
      * @see #createBoss(ServerLevelAccessor, BlockPos, RandomSource, float, LootRarity)
      */
     public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
-        return createBoss(world, pos, random, luck, null);
+        return this.createBoss(world, pos, random, luck, null);
     }
 
     /**
      * Generates (but does not spawn) the result of this BossItem.
-     * 
+     *
      * @param world  The world to create the entity in.
      * @param pos    The location to place the entity. Will be centered (+0.5, +0.5).
      * @param random A random, used for selection of boss stats.
@@ -190,7 +189,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
         if (this.nbt != null) entity.readAdditionalSaveData(this.nbt);
 
         if (this.mount != null) {
-            Mob mountedEntity = (Mob) this.mount.create(world.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            Mob mountedEntity = this.mount.create(world.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
             entity.startRiding(mountedEntity, true);
             entity = mountedEntity;
         }
@@ -201,7 +200,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
     /**
      * Initializes an entity as a boss, based on the stats of this BossItem.
-     * 
+     *
      * @param rand
      * @param entity
      */
@@ -282,7 +281,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
         Component name = AffixHelper.getName(stack);
         if (name.getContents() instanceof TranslatableContents tc) {
             String oldKey = tc.getKey();
-            String newKey = oldKey.equals("misc.apotheosis.affix_name.two") ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
+            String newKey = "misc.apotheosis.affix_name.two".equals(oldKey) ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
             Object[] newArgs = new Object[tc.getArgs().length + 1];
             newArgs[0] = bossOwnerName;
             for (int i = 1; i < newArgs.length; i++) {
@@ -313,7 +312,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
     /**
      * Ensures that this boss item does not have null or empty fields that would cause a crash.
-     * 
+     *
      * @return this
      */
     public BossItem validate() {

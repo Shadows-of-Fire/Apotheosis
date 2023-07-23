@@ -55,7 +55,7 @@ public class AttributeHelper {
      * Further applying a Multiply Total modifier with a value of 0.75 would result in a value of 8.75 (5.0 * (1 + 0.75)).<br>
      * <p>
      * Applies a permanent modifier to the given attribute via {@link AttributeInstance#addPermanentModifier(AttributeModifier)}.
-     * 
+     *
      * @param entity    The entity the modifier will be applied to.
      * @param attribute The attribute being modified.
      * @param name      The name of the attribute modifier. This will be prefixed with {@link Placebo#MODID}.
@@ -97,12 +97,12 @@ public class AttributeHelper {
     }
 
     public static Comparator<AttributeModifier> modifierComparator() {
-        
+
         return Comparators.chained(
             Comparator.comparing(AttributeModifier::getOperation),
             Comparator.comparing(AttributeModifier::getAmount),
             Comparator.comparing(AttributeModifier::getId));
-        
+
     }
 
     /**

@@ -13,7 +13,7 @@ public class GameStagesCompat {
 
     /**
      * Checks if the player has any of the stages listed in the second param.
-     * 
+     *
      * @param player The player in question.
      * @param stages The stages of the item being checked. Null means "all stages", empty means "never available".
      * @return If the player has any of the passed stages.
@@ -29,7 +29,7 @@ public class GameStagesCompat {
 
         /**
          * Null means "all stages", empty means "never available".
-         * 
+         *
          * @return A set of all the game stages this item is available in.
          */
         @Nullable

@@ -29,14 +29,12 @@ import shadows.placebo.codec.EnumCodec;
 
 public class MultiAttrBonus extends GemBonus {
 
-    
     public static Codec<MultiAttrBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
             ModifierInst.CODEC.listOf().fieldOf("modifiers").forGetter(a -> a.modifiers),
             Codec.STRING.fieldOf("desc").forGetter(a -> a.desc))
         .apply(inst, MultiAttrBonus::new));
-    
 
     protected final List<ModifierInst> modifiers;
     protected final String desc;
@@ -51,18 +49,18 @@ public class MultiAttrBonus extends GemBonus {
     public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
         List<UUID> uuids = GemItem.getUUIDs(gem);
         int i = 0;
-        for (ModifierInst modifier : modifiers) {
+        for (ModifierInst modifier : this.modifiers) {
             map.accept(modifier.attr, modifier.build(uuids.get(i++), rarity));
         }
     }
 
     @Override
     public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-        Object[] values = new Object[modifiers.size() * 2];
+        Object[] values = new Object[this.modifiers.size() * 2];
         int i = 0;
-        for (ModifierInst modifier : modifiers) {
+        for (ModifierInst modifier : this.modifiers) {
             values[i] = IFormattableAttribute.toComponent(modifier.attr, modifier.build(UUID.randomUUID(), rarity), AttributesLib.getTooltipFlag());
-            values[modifiers.size() + i] = IFormattableAttribute.toValueComponent(modifier.attr, modifier.op, i, AttributesLib.getTooltipFlag());
+            values[this.modifiers.size() + i] = IFormattableAttribute.toValueComponent(modifier.attr, modifier.op, i, AttributesLib.getTooltipFlag());
             i++;
         }
         return Component.translatable(this.desc, values).withStyle(ChatFormatting.YELLOW);
@@ -72,7 +70,7 @@ public class MultiAttrBonus extends GemBonus {
     public MultiAttrBonus validate() {
         Preconditions.checkNotNull(this.modifiers, "Invalid AttributeBonus with null values");
         List<Set<LootRarity>> rarityChecks = new ArrayList<>();
-        for (ModifierInst inst : modifiers) {
+        for (ModifierInst inst : this.modifiers) {
             var set = new HashSet<LootRarity>();
             LootRarity.values().stream().filter(r -> inst.values.containsKey(r)).forEach(set::add);
             rarityChecks.add(set);
@@ -98,14 +96,12 @@ public class MultiAttrBonus extends GemBonus {
 
     protected static record ModifierInst(Attribute attr, Operation op, Map<LootRarity, Float> values) {
 
-        
         public static Codec<ModifierInst> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(ModifierInst::attr),
                 new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(ModifierInst::op),
                 LootRarity.mapCodec(Codec.FLOAT).fieldOf("values").forGetter(ModifierInst::values))
             .apply(inst, ModifierInst::new));
-        
 
         public AttributeModifier build(UUID id, LootRarity rarity) {
             return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity), this.op);

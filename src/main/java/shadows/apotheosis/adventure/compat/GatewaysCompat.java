@@ -39,12 +39,10 @@ public class GatewaysCompat {
 
     public static class BossWaveEntity implements WaveEntity {
 
-        
         public static Codec<BossWaveEntity> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 ResourceLocation.CODEC.optionalFieldOf("boss").forGetter(b -> b.bossId))
             .apply(inst, BossWaveEntity::new));
-        
 
         private final Optional<ResourceLocation> bossId;
         private final Supplier<BossItem> boss;
@@ -63,7 +61,7 @@ public class GatewaysCompat {
 
         @Override
         public Component getDescription() {
-            return Component.translatable("misc.apotheosis.boss", Component.translatable(this.bossId.isEmpty() ? "misc.apotheosis.random" : boss.get().getEntity().getDescriptionId()));
+            return Component.translatable("misc.apotheosis.boss", Component.translatable(this.bossId.isEmpty() ? "misc.apotheosis.random" : this.boss.get().getEntity().getDescriptionId()));
         }
 
         @Override
@@ -87,16 +85,14 @@ public class GatewaysCompat {
      */
     public static record RarityAffixItemReward(LootRarity rarity) implements Reward {
 
-        
         public static Codec<RarityAffixItemReward> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 LootRarity.CODEC.fieldOf("rarity").forGetter(RarityAffixItemReward::rarity))
             .apply(inst, RarityAffixItemReward::new));
-        
 
         @Override
         public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-            list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), rarity, level.random));
+            list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), this.rarity, level.random));
         }
 
         @Override

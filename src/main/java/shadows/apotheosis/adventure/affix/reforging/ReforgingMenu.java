@@ -56,33 +56,33 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
         this.registerInvShuffleRules();
 
-        updateSeed();
-        this.addDataSlot(needsReset);
-        this.addDataSlot(DataSlot.shared(seed, 0));
-        this.addDataSlot(DataSlot.shared(seed, 1));
-        this.addDataSlot(DataSlot.shared(costs, 0));
-        this.addDataSlot(DataSlot.shared(costs, 1));
-        this.addDataSlot(DataSlot.shared(costs, 2));
+        this.updateSeed();
+        this.addDataSlot(this.needsReset);
+        this.addDataSlot(DataSlot.shared(this.seed, 0));
+        this.addDataSlot(DataSlot.shared(this.seed, 1));
+        this.addDataSlot(DataSlot.shared(this.costs, 0));
+        this.addDataSlot(DataSlot.shared(this.costs, 1));
+        this.addDataSlot(DataSlot.shared(this.costs, 2));
     }
 
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
-        this.clearContainer(pPlayer, new RecipeWrapper(itemInv));
+        this.clearContainer(pPlayer, new RecipeWrapper(this.itemInv));
     }
 
     protected void updateSeed() {
-        int seed = player.getPersistentData().getInt(REFORGE_SEED);
+        int seed = this.player.getPersistentData().getInt(REFORGE_SEED);
         if (seed == 0) {
-            seed = player.random.nextInt();
-            player.getPersistentData().putInt(REFORGE_SEED, seed);
+            seed = this.player.random.nextInt();
+            this.player.getPersistentData().putInt(REFORGE_SEED, seed);
         }
         this.seed[0] = ContainerUtil.split(seed, false);
         this.seed[1] = ContainerUtil.split(seed, true);
     }
 
     public int getSeed() {
-        return ContainerUtil.merge(seed[0], seed[1], true);
+        return ContainerUtil.merge(this.seed[0], this.seed[1], true);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
                 }
                 player.giveExperienceLevels(-3 * ++slot);
                 player.getPersistentData().putInt(REFORGE_SEED, player.random.nextInt());
-                updateSeed();
+                this.updateSeed();
                 this.needsReset.set(1);
             }
 
@@ -147,15 +147,15 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
     }
 
     public int getDustCost(int slot, LootRarity rarity) {
-        return costs[0] * ++slot;
+        return this.costs[0] * ++slot;
     }
 
     public int getMatCost(int slot, LootRarity rarity) {
-        return costs[1] * ++slot;
+        return this.costs[1] * ++slot;
     }
 
     public int getLevelCost(int slot, LootRarity rarity) {
-        return costs[2] * ++slot;
+        return this.costs[2] * ++slot;
     }
 
     public boolean needsReset() {
@@ -164,7 +164,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 
     @Override
     public void slotsChanged(Container pContainer) {
-        LootRarity rarity = getRarity();
+        LootRarity rarity = this.getRarity();
         if (rarity == null) return;
         this.costs[0] = AdventureConfig.reforgeCosts.get(rarity).dustCost();
         this.costs[1] = AdventureConfig.reforgeCosts.get(rarity).matCost();

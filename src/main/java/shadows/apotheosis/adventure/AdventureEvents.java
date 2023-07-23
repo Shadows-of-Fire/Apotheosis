@@ -85,7 +85,7 @@ public class AdventureEvents {
             Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
             affixes.forEach((afx, inst) -> inst.addModifiers(e.getSlotType(), e::addModifier));
             if (AffixHelper.getRarity(stack) != null && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
-                double amt = -0.15 - 0.10 * (AffixHelper.getRarity(stack).ordinal());
+                double amt = -0.15 - 0.10 * AffixHelper.getRarity(stack).ordinal();
                 AttributeModifier baseAS = e.getModifiers().get(Attributes.ATTACK_SPEED).stream().filter(a -> ItemAccess.getBaseAS() == a.getId()).findFirst().orElse(null);
                 if (baseAS != null) {
                     // Try to not reduce attack speed below 0.4 if possible.
