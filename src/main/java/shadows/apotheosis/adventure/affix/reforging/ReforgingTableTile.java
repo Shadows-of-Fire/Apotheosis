@@ -23,90 +23,92 @@ import shadows.placebo.cap.InternalItemHandler;
 
 public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity {
 
-	public int time = 0;
-	public boolean step1 = true;
+    public int time = 0;
+    public boolean step1 = true;
 
-	protected InternalItemHandler inv = new InternalItemHandler(2) {
-		@Override
-		public boolean isItemValid(int slot, ItemStack stack) {
-			if (slot == 0) return isValidRarityMat(stack);
-			return stack.is(Apoth.Items.GEM_DUST.get());
-		};
+    protected InternalItemHandler inv = new InternalItemHandler(2){
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            if (slot == 0) return isValidRarityMat(stack);
+            return stack.is(Apoth.Items.GEM_DUST.get());
+        };
 
-		@Override
-		protected void onContentsChanged(int slot) {
-			ReforgingTableTile.this.setChanged();
-		};
-	};
+        @Override
+        protected void onContentsChanged(int slot) {
+            ReforgingTableTile.this.setChanged();
+        };
+    };
 
-	public ReforgingTableTile(BlockPos pWorldPosition, BlockState pBlockState) {
-		super(Apoth.Tiles.REFORGING_TABLE.get(), pWorldPosition, pBlockState);
-	}
+    public ReforgingTableTile(BlockPos pWorldPosition, BlockState pBlockState) {
+        super(Apoth.Tiles.REFORGING_TABLE.get(), pWorldPosition, pBlockState);
+    }
 
-	public LootRarity getMaxRarity() {
-		return ((ReforgingTableBlock) this.getBlockState().getBlock()).getMaxRarity();
-	}
+    public LootRarity getMaxRarity() {
+        return ((ReforgingTableBlock) this.getBlockState().getBlock()).getMaxRarity();
+    }
 
-	public boolean isValidRarityMat(ItemStack stack) {
-		LootRarity rarity = LootRarity.getMaterialRarity(stack);
-		return rarity != null && this.getMaxRarity().isAtLeast(rarity);
-	}
+    public boolean isValidRarityMat(ItemStack stack) {
+        LootRarity rarity = LootRarity.getMaterialRarity(stack);
+        return rarity != null && this.getMaxRarity().isAtLeast(rarity);
+    }
 
-	@Override
-	public void clientTick(Level pLevel, BlockPos pPos, BlockState pState) {
-		Player player = pLevel.getNearestPlayer((double) pPos.getX() + 0.5D, (double) pPos.getY() + 0.5D, (double) pPos.getZ() + 0.5D, 4, false);
+    @Override
+    public void clientTick(Level pLevel, BlockPos pPos, BlockState pState) {
+        Player player = pLevel.getNearestPlayer((double) pPos.getX() + 0.5D, (double) pPos.getY() + 0.5D, (double) pPos.getZ() + 0.5D, 4, false);
 
-		if (player != null) {
-			time++;
-		} else {
-			if (time == 0 && step1) return;
-			else time++;
-		}
+        if (player != null) {
+            time++;
+        }
+        else {
+            if (time == 0 && step1) return;
+            else time++;
+        }
 
-		if (step1 && time == 59) {
-			step1 = false;
-			time = 0;
-		} else if (time == 4 && !step1) {
-			RandomSource rand = pLevel.random;
-			for (int i = 0; i < 6; i++) {
-				pLevel.addParticle(ParticleTypes.CRIT, pPos.getX() + 0.5 - 0.1 * rand.nextDouble(), pPos.getY() + 13 / 16D, pPos.getZ() + 0.5 + 0.1 * rand.nextDouble(), 0, 0, 0);
-			}
-			pLevel.playLocalSound(pPos.getX(), pPos.getY(), pPos.getZ(), SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.03F, 1.7F + rand.nextFloat() * 0.2F, true);
-			step1 = true;
-			time = 0;
-		}
-	}
+        if (step1 && time == 59) {
+            step1 = false;
+            time = 0;
+        }
+        else if (time == 4 && !step1) {
+            RandomSource rand = pLevel.random;
+            for (int i = 0; i < 6; i++) {
+                pLevel.addParticle(ParticleTypes.CRIT, pPos.getX() + 0.5 - 0.1 * rand.nextDouble(), pPos.getY() + 13 / 16D, pPos.getZ() + 0.5 + 0.1 * rand.nextDouble(), 0, 0, 0);
+            }
+            pLevel.playLocalSound(pPos.getX(), pPos.getY(), pPos.getZ(), SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.03F, 1.7F + rand.nextFloat() * 0.2F, true);
+            step1 = true;
+            time = 0;
+        }
+    }
 
-	@Override
-	public void saveAdditional(CompoundTag tag) {
-		super.saveAdditional(tag);
-		tag.put("inventory", this.inv.serializeNBT());
-	}
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("inventory", this.inv.serializeNBT());
+    }
 
-	@Override
-	public void load(CompoundTag tag) {
-		super.load(tag);
-		this.inv.deserializeNBT(tag.getCompound("inventory"));
-	}
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        this.inv.deserializeNBT(tag.getCompound("inventory"));
+    }
 
-	LazyOptional<IItemHandler> invCap = LazyOptional.of(() -> this.inv);
+    LazyOptional<IItemHandler> invCap = LazyOptional.of(() -> this.inv);
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == ForgeCapabilities.ITEM_HANDLER) return this.invCap.cast();
-		return super.getCapability(cap, side);
-	}
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) return this.invCap.cast();
+        return super.getCapability(cap, side);
+    }
 
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		this.invCap.invalidate();
-	}
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.invCap.invalidate();
+    }
 
-	@Override
-	public void reviveCaps() {
-		super.reviveCaps();
-		this.invCap = LazyOptional.of(() -> this.inv);
-	}
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.invCap = LazyOptional.of(() -> this.inv);
+    }
 
 }

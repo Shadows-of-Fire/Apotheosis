@@ -17,26 +17,26 @@ import shadows.apotheosis.Apotheosis;
 
 public class BroadheadArrowItem extends ArrowItem implements IApothArrowItem {
 
-	public BroadheadArrowItem() {
-		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
-	}
+    public BroadheadArrowItem() {
+        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+    }
 
-	@Override
-	public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
-		return new BroadheadArrowEntity(shooter, world).bleed();
-	}
+    @Override
+    public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
+        return new BroadheadArrowEntity(shooter, world).bleed();
+    }
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(Component.translatable("info.apotheosis.broadhead_arrow").withStyle(ChatFormatting.RED));
-	}
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(Component.translatable("info.apotheosis.broadhead_arrow").withStyle(ChatFormatting.RED));
+    }
 
-	@Override
-	public AbstractArrow fromDispenser(Level world, double x, double y, double z) {
-		AbstractArrow e = new BroadheadArrowEntity(world, x, y, z).bleed();
-		e.pickup = AbstractArrow.Pickup.ALLOWED;
-		return e;
-	}
+    @Override
+    public AbstractArrow fromDispenser(Level world, double x, double y, double z) {
+        AbstractArrow e = new BroadheadArrowEntity(world, x, y, z).bleed();
+        e.pickup = AbstractArrow.Pickup.ALLOWED;
+        return e;
+    }
 
 }

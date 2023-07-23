@@ -6,23 +6,23 @@ import shadows.apotheosis.ench.EnchModule;
 
 public class SplittingEnchant extends Enchantment {
 
-	public SplittingEnchant() {
-		super(Rarity.RARE, EnchModule.ANVIL, new EquipmentSlot[0]);
-	}
+    public SplittingEnchant() {
+        super(Rarity.RARE, EnchModule.ANVIL, new EquipmentSlot[0]);
+    }
 
-	@Override
-	public int getMinCost(int enchantmentLevel) {
-		return 20;
-	}
+    @Override
+    public int getMinCost(int enchantmentLevel) {
+        return 20;
+    }
 
-	@Override
-	public int getMaxCost(int enchantmentLevel) {
-		return 200;
-	}
+    @Override
+    public int getMaxCost(int enchantmentLevel) {
+        return 200;
+    }
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
+    @Override
+    public int getMaxLevel() {
+        return 1;
+    }
 
 }

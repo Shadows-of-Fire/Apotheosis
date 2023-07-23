@@ -13,13 +13,13 @@ import net.minecraft.network.chat.Component;
 @Mixin(AbstractContainerScreen.class)
 public class AbstractContainerScreenMixin extends Screen {
 
-	protected AbstractContainerScreenMixin(Component pTitle) {
-		super(pTitle);
-	}
+    protected AbstractContainerScreenMixin(Component pTitle) {
+        super(pTitle);
+    }
 
-	@Inject(at = @At("RETURN"), method = "mouseDragged(DDIDD)Z", cancellable = true, require = 1)
-	public void apoth_superMouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY, CallbackInfoReturnable<Boolean> cir) {
-		if ((Object) this instanceof InventoryScreen) cir.setReturnValue(super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY));
-	}
+    @Inject(at = @At("RETURN"), method = "mouseDragged(DDIDD)Z", cancellable = true, require = 1)
+    public void apoth_superMouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY, CallbackInfoReturnable<Boolean> cir) {
+        if ((Object) this instanceof InventoryScreen) cir.setReturnValue(super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY));
+    }
 
 }

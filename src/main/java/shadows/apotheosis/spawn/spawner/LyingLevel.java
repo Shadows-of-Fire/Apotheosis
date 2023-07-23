@@ -43,215 +43,215 @@ import net.minecraft.world.ticks.LevelTickAccess;
 
 public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
 
-	protected final ServerLevel wrapped;
-	protected int fakeLightLevel;
+    protected final ServerLevel wrapped;
+    protected int fakeLightLevel;
 
-	public LyingLevel(ServerLevel wrapped) {
-		this.wrapped = wrapped;
-	}
+    public LyingLevel(ServerLevel wrapped) {
+        this.wrapped = wrapped;
+    }
 
-	public void setFakeLightLevel(int light) {
-		this.fakeLightLevel = light;
-	}
+    public void setFakeLightLevel(int light) {
+        this.fakeLightLevel = light;
+    }
 
-	@Override
-	public long nextSubTickCount() {
-		return this.wrapped.nextSubTickCount();
-	}
+    @Override
+    public long nextSubTickCount() {
+        return this.wrapped.nextSubTickCount();
+    }
 
-	@Override
-	public LevelTickAccess<Block> getBlockTicks() {
-		return this.wrapped.getBlockTicks();
-	}
+    @Override
+    public LevelTickAccess<Block> getBlockTicks() {
+        return this.wrapped.getBlockTicks();
+    }
 
-	@Override
-	public LevelTickAccess<Fluid> getFluidTicks() {
-		return this.wrapped.getFluidTicks();
-	}
+    @Override
+    public LevelTickAccess<Fluid> getFluidTicks() {
+        return this.wrapped.getFluidTicks();
+    }
 
-	@Override
-	public LevelData getLevelData() {
-		return this.wrapped.getLevelData();
-	}
+    @Override
+    public LevelData getLevelData() {
+        return this.wrapped.getLevelData();
+    }
 
-	@Override
-	public DifficultyInstance getCurrentDifficultyAt(BlockPos pPos) {
-		return this.wrapped.getCurrentDifficultyAt(pPos);
-	}
+    @Override
+    public DifficultyInstance getCurrentDifficultyAt(BlockPos pPos) {
+        return this.wrapped.getCurrentDifficultyAt(pPos);
+    }
 
-	@Override
-	public MinecraftServer getServer() {
-		return this.wrapped.getServer();
-	}
+    @Override
+    public MinecraftServer getServer() {
+        return this.wrapped.getServer();
+    }
 
-	@Override
-	public ChunkSource getChunkSource() {
-		return this.wrapped.getChunkSource();
-	}
+    @Override
+    public ChunkSource getChunkSource() {
+        return this.wrapped.getChunkSource();
+    }
 
-	@Override
-	public RandomSource getRandom() {
-		return this.wrapped.getRandom();
-	}
+    @Override
+    public RandomSource getRandom() {
+        return this.wrapped.getRandom();
+    }
 
-	@Override
-	public void playSound(Player pPlayer, BlockPos pPos, SoundEvent pSound, SoundSource pCategory, float pVolume, float pPitch) {
-		this.wrapped.playSound(pPlayer, pPos, pSound, pCategory, pVolume, pPitch);
-	}
+    @Override
+    public void playSound(Player pPlayer, BlockPos pPos, SoundEvent pSound, SoundSource pCategory, float pVolume, float pPitch) {
+        this.wrapped.playSound(pPlayer, pPos, pSound, pCategory, pVolume, pPitch);
+    }
 
-	@Override
-	public void addParticle(ParticleOptions pParticleData, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-		this.wrapped.addParticle(pParticleData, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
-	}
+    @Override
+    public void addParticle(ParticleOptions pParticleData, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+        this.wrapped.addParticle(pParticleData, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
+    }
 
-	@Override
-	public void levelEvent(Player pPlayer, int pType, BlockPos pPos, int pData) {
-		this.wrapped.levelEvent(pPlayer, pType, pPos, pData);
-	}
+    @Override
+    public void levelEvent(Player pPlayer, int pType, BlockPos pPos, int pData) {
+        this.wrapped.levelEvent(pPlayer, pType, pPos, pData);
+    }
 
-	@Override
-	public void gameEvent(Entity pEntity, GameEvent pEvent, BlockPos pPos) {
-		this.wrapped.gameEvent(pEntity, pEvent, pPos);
-	}
+    @Override
+    public void gameEvent(Entity pEntity, GameEvent pEvent, BlockPos pPos) {
+        this.wrapped.gameEvent(pEntity, pEvent, pPos);
+    }
 
-	@Override
-	public RegistryAccess registryAccess() {
-		return this.wrapped.registryAccess();
-	}
+    @Override
+    public RegistryAccess registryAccess() {
+        return this.wrapped.registryAccess();
+    }
 
-	@Override
-	public List<Entity> getEntities(Entity pEntity, AABB pArea, Predicate<? super Entity> pPredicate) {
-		return this.wrapped.getEntities(pEntity, pArea, pPredicate);
-	}
+    @Override
+    public List<Entity> getEntities(Entity pEntity, AABB pArea, Predicate<? super Entity> pPredicate) {
+        return this.wrapped.getEntities(pEntity, pArea, pPredicate);
+    }
 
-	@Override
-	public <T extends Entity> List<T> getEntities(EntityTypeTest<Entity, T> pEntityTypeTest, AABB pArea, Predicate<? super T> pPredicate) {
-		return this.wrapped.getEntities(pEntityTypeTest, pArea, pPredicate);
-	}
+    @Override
+    public <T extends Entity> List<T> getEntities(EntityTypeTest<Entity, T> pEntityTypeTest, AABB pArea, Predicate<? super T> pPredicate) {
+        return this.wrapped.getEntities(pEntityTypeTest, pArea, pPredicate);
+    }
 
-	@Override
-	public List<? extends Player> players() {
-		return this.wrapped.players();
-	}
+    @Override
+    public List<? extends Player> players() {
+        return this.wrapped.players();
+    }
 
-	@Override
-	public ChunkAccess getChunk(int pX, int pZ, ChunkStatus pRequiredStatus, boolean pNonnull) {
-		return this.wrapped.getChunk(pX, pZ, pRequiredStatus, pNonnull);
-	}
+    @Override
+    public ChunkAccess getChunk(int pX, int pZ, ChunkStatus pRequiredStatus, boolean pNonnull) {
+        return this.wrapped.getChunk(pX, pZ, pRequiredStatus, pNonnull);
+    }
 
-	@Override
-	public int getHeight(Types pHeightmapType, int pX, int pZ) {
-		return this.wrapped.getHeight(pHeightmapType, pX, pZ);
-	}
+    @Override
+    public int getHeight(Types pHeightmapType, int pX, int pZ) {
+        return this.wrapped.getHeight(pHeightmapType, pX, pZ);
+    }
 
-	@Override
-	public int getSkyDarken() {
-		return this.wrapped.getSkyDarken();
-	}
+    @Override
+    public int getSkyDarken() {
+        return this.wrapped.getSkyDarken();
+    }
 
-	@Override
-	public BiomeManager getBiomeManager() {
-		return this.wrapped.getBiomeManager();
-	}
+    @Override
+    public BiomeManager getBiomeManager() {
+        return this.wrapped.getBiomeManager();
+    }
 
-	@Override
-	public Holder<Biome> getUncachedNoiseBiome(int pX, int pY, int pZ) {
-		return this.wrapped.getUncachedNoiseBiome(pX, pY, pZ);
-	}
+    @Override
+    public Holder<Biome> getUncachedNoiseBiome(int pX, int pY, int pZ) {
+        return this.wrapped.getUncachedNoiseBiome(pX, pY, pZ);
+    }
 
-	@Override
-	public boolean isClientSide() {
-		return this.wrapped.isClientSide(); //Should always be false, but whatever
-	}
+    @Override
+    public boolean isClientSide() {
+        return this.wrapped.isClientSide(); // Should always be false, but whatever
+    }
 
-	@Override
-	public int getSeaLevel() {
-		return this.wrapped.getSeaLevel();
-	}
+    @Override
+    public int getSeaLevel() {
+        return this.wrapped.getSeaLevel();
+    }
 
-	@Override
-	public DimensionType dimensionType() {
-		return this.wrapped.dimensionType();
-	}
+    @Override
+    public DimensionType dimensionType() {
+        return this.wrapped.dimensionType();
+    }
 
-	@Override
-	public float getShade(Direction pDirection, boolean pShade) {
-		return this.wrapped.getShade(pDirection, pShade);
-	}
+    @Override
+    public float getShade(Direction pDirection, boolean pShade) {
+        return this.wrapped.getShade(pDirection, pShade);
+    }
 
-	@Override
-	public LevelLightEngine getLightEngine() {
-		return this.wrapped.getLightEngine();
-	}
+    @Override
+    public LevelLightEngine getLightEngine() {
+        return this.wrapped.getLightEngine();
+    }
 
-	@Override
-	public BlockEntity getBlockEntity(BlockPos pPos) {
-		return this.wrapped.getBlockEntity(pPos);
-	}
+    @Override
+    public BlockEntity getBlockEntity(BlockPos pPos) {
+        return this.wrapped.getBlockEntity(pPos);
+    }
 
-	@Override
-	public BlockState getBlockState(BlockPos p_45571_) {
-		return this.wrapped.getBlockState(p_45571_);
-	}
+    @Override
+    public BlockState getBlockState(BlockPos p_45571_) {
+        return this.wrapped.getBlockState(p_45571_);
+    }
 
-	@Override
-	public FluidState getFluidState(BlockPos pPos) {
-		return this.wrapped.getFluidState(pPos);
-	}
+    @Override
+    public FluidState getFluidState(BlockPos pPos) {
+        return this.wrapped.getFluidState(pPos);
+    }
 
-	@Override
-	public WorldBorder getWorldBorder() {
-		return this.wrapped.getWorldBorder();
-	}
+    @Override
+    public WorldBorder getWorldBorder() {
+        return this.wrapped.getWorldBorder();
+    }
 
-	@Override
-	public boolean isStateAtPosition(BlockPos pPos, Predicate<BlockState> pState) {
-		return this.wrapped.isStateAtPosition(pPos, pState);
-	}
+    @Override
+    public boolean isStateAtPosition(BlockPos pPos, Predicate<BlockState> pState) {
+        return this.wrapped.isStateAtPosition(pPos, pState);
+    }
 
-	@Override
-	public boolean isFluidAtPosition(BlockPos pPos, Predicate<FluidState> pPredicate) {
-		return this.wrapped.isFluidAtPosition(pPos, pPredicate);
-	}
+    @Override
+    public boolean isFluidAtPosition(BlockPos pPos, Predicate<FluidState> pPredicate) {
+        return this.wrapped.isFluidAtPosition(pPos, pPredicate);
+    }
 
-	@Override
-	public boolean setBlock(BlockPos pPos, BlockState pState, int pFlags, int pRecursionLeft) {
-		return this.wrapped.setBlock(pPos, pState, pFlags, pRecursionLeft);
-	}
+    @Override
+    public boolean setBlock(BlockPos pPos, BlockState pState, int pFlags, int pRecursionLeft) {
+        return this.wrapped.setBlock(pPos, pState, pFlags, pRecursionLeft);
+    }
 
-	@Override
-	public boolean removeBlock(BlockPos pPos, boolean pIsMoving) {
-		return this.wrapped.removeBlock(pPos, pIsMoving);
-	}
+    @Override
+    public boolean removeBlock(BlockPos pPos, boolean pIsMoving) {
+        return this.wrapped.removeBlock(pPos, pIsMoving);
+    }
 
-	@Override
-	public boolean destroyBlock(BlockPos pPos, boolean pDropBlock, Entity pEntity, int pRecursionLeft) {
-		return this.wrapped.destroyBlock(pPos, pDropBlock, pEntity, pRecursionLeft);
-	}
+    @Override
+    public boolean destroyBlock(BlockPos pPos, boolean pDropBlock, Entity pEntity, int pRecursionLeft) {
+        return this.wrapped.destroyBlock(pPos, pDropBlock, pEntity, pRecursionLeft);
+    }
 
-	@Override
-	public ServerLevel getLevel() {
-		return this.wrapped;
-	}
+    @Override
+    public ServerLevel getLevel() {
+        return this.wrapped;
+    }
 
-	@Override
-	public int getBrightness(LightLayer pLightType, BlockPos pBlockPos) {
-		return this.fakeLightLevel;
-	}
+    @Override
+    public int getBrightness(LightLayer pLightType, BlockPos pBlockPos) {
+        return this.fakeLightLevel;
+    }
 
-	@Override
-	public int getRawBrightness(BlockPos pBlockPos, int pAmount) {
-		return this.fakeLightLevel;
-	}
+    @Override
+    public int getRawBrightness(BlockPos pBlockPos, int pAmount) {
+        return this.fakeLightLevel;
+    }
 
-	@Override
-	public long getSeed() {
-		return this.wrapped.getSeed();
-	}
+    @Override
+    public long getSeed() {
+        return this.wrapped.getSeed();
+    }
 
-	@Override
-	public void gameEvent(GameEvent pEvent, Vec3 pPosition, Context pContext) {
-		this.wrapped.gameEvent(pEvent, pPosition, pContext);
-	}
+    @Override
+    public void gameEvent(GameEvent pEvent, Vec3 pPosition, Context pContext) {
+        this.wrapped.gameEvent(pEvent, pPosition, pContext);
+    }
 
 }

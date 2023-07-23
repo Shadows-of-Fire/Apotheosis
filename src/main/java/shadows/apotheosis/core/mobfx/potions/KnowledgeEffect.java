@@ -10,18 +10,18 @@ import shadows.apotheosis.core.mobfx.api.MFEffects;
 
 public class KnowledgeEffect extends MobEffect {
 
-	public KnowledgeEffect() {
-		super(MobEffectCategory.BENEFICIAL, 0xF4EE42);
-	}
+    public KnowledgeEffect() {
+        super(MobEffectCategory.BENEFICIAL, 0xF4EE42);
+    }
 
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void xp(LivingExperienceDropEvent e) {
-		if (e.getAttackingPlayer() != null && e.getAttackingPlayer().hasEffect(MFEffects.KNOWLEDGE.get())) {
-			int level = e.getAttackingPlayer().getEffect(MFEffects.KNOWLEDGE.get()).getAmplifier() + 1;
-			int curXp = e.getDroppedExperience();
-			int newXp = curXp + e.getOriginalExperience() * level * MobFxLib.knowledgeMult;
-			e.setDroppedExperience(newXp);
-		}
-	}
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void xp(LivingExperienceDropEvent e) {
+        if (e.getAttackingPlayer() != null && e.getAttackingPlayer().hasEffect(MFEffects.KNOWLEDGE.get())) {
+            int level = e.getAttackingPlayer().getEffect(MFEffects.KNOWLEDGE.get()).getAmplifier() + 1;
+            int curXp = e.getDroppedExperience();
+            int newXp = curXp + e.getOriginalExperience() * level * MobFxLib.knowledgeMult;
+            e.setDroppedExperience(newXp);
+        }
+    }
 
 }

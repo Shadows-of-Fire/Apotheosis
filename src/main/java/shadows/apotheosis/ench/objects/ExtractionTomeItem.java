@@ -27,66 +27,67 @@ import shadows.apotheosis.Apotheosis;
 
 public class ExtractionTomeItem extends BookItem {
 
-	static Random rand = new Random();
+    static Random rand = new Random();
 
-	public ExtractionTomeItem() {
-		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
-	}
+    public ExtractionTomeItem() {
+        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+    }
 
-	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return false;
-	}
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
+    }
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
-		if (stack.isEnchanted()) return;
-		tooltip.add(Component.translatable("info.apotheosis.extraction_tome").withStyle(ChatFormatting.GRAY));
-		tooltip.add(Component.translatable("info.apotheosis.extraction_tome2").withStyle(ChatFormatting.GRAY));
-	}
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
+        if (stack.isEnchanted()) return;
+        tooltip.add(Component.translatable("info.apotheosis.extraction_tome").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("info.apotheosis.extraction_tome2").withStyle(ChatFormatting.GRAY));
+    }
 
-	@Override
-	public Rarity getRarity(ItemStack stack) {
-		return Rarity.EPIC;
-	}
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return Rarity.EPIC;
+    }
 
-	@Override
-	public boolean isFoil(ItemStack pStack) {
-		return true;
-	}
+    @Override
+    public boolean isFoil(ItemStack pStack) {
+        return true;
+    }
 
-	public static boolean updateAnvil(AnvilUpdateEvent ev) {
-		ItemStack weapon = ev.getLeft();
-		ItemStack book = ev.getRight();
-		if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
+    public static boolean updateAnvil(AnvilUpdateEvent ev) {
+        ItemStack weapon = ev.getLeft();
+        ItemStack book = ev.getRight();
+        if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
 
-		Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
-		ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
-		EnchantmentHelper.setEnchantments(wepEnch, out);
-		ev.setMaterialCost(1);
-		ev.setCost(wepEnch.size() * 16);
-		ev.setOutput(out);
-		return true;
-	}
+        Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
+        ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantmentHelper.setEnchantments(wepEnch, out);
+        ev.setMaterialCost(1);
+        ev.setCost(wepEnch.size() * 16);
+        ev.setOutput(out);
+        return true;
+    }
 
-	protected static void giveItem(Player player, ItemStack stack) {
-		if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
-			player.drop(stack, false);
-		} else {
-			Inventory inventory = player.getInventory();
-			if (inventory.player instanceof ServerPlayer) {
-				inventory.placeItemBackInInventory(stack);
-			}
-		}
-	}
+    protected static void giveItem(Player player, ItemStack stack) {
+        if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
+            player.drop(stack, false);
+        }
+        else {
+            Inventory inventory = player.getInventory();
+            if (inventory.player instanceof ServerPlayer) {
+                inventory.placeItemBackInInventory(stack);
+            }
+        }
+    }
 
-	public static boolean updateRepair(AnvilRepairEvent ev) {
-		ItemStack weapon = ev.getLeft();
-		ItemStack book = ev.getRight();
-		if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
-		EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
-		giveItem(ev.getEntity(), weapon);
-		return true;
-	}
+    public static boolean updateRepair(AnvilRepairEvent ev) {
+        ItemStack weapon = ev.getLeft();
+        ItemStack book = ev.getRight();
+        if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
+        EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
+        giveItem(ev.getEntity(), weapon);
+        return true;
+    }
 }

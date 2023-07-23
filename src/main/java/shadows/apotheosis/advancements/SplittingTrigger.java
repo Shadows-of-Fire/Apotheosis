@@ -17,39 +17,38 @@ import shadows.apotheosis.Apotheosis;
 
 public class SplittingTrigger implements CriterionTrigger<AbstractCriterionTriggerInstance> {
 
-	private static final ResourceLocation ID = new ResourceLocation(Apotheosis.MODID, "splitting");
-	Map<PlayerAdvancements, Set<Listener<AbstractCriterionTriggerInstance>>> listeners = new HashMap<>();
+    private static final ResourceLocation ID = new ResourceLocation(Apotheosis.MODID, "splitting");
+    Map<PlayerAdvancements, Set<Listener<AbstractCriterionTriggerInstance>>> listeners = new HashMap<>();
 
-	@Override
-	public ResourceLocation getId() {
-		return ID;
-	}
+    @Override
+    public ResourceLocation getId() {
+        return ID;
+    }
 
-	@Override
-	public void addPlayerListener(PlayerAdvancements adv, Listener<AbstractCriterionTriggerInstance> listener) {
-		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).add(listener);
-	}
+    @Override
+    public void addPlayerListener(PlayerAdvancements adv, Listener<AbstractCriterionTriggerInstance> listener) {
+        this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).add(listener);
+    }
 
-	@Override
-	public void removePlayerListener(PlayerAdvancements adv, Listener<AbstractCriterionTriggerInstance> listener) {
-		this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).remove(listener);
-	}
+    @Override
+    public void removePlayerListener(PlayerAdvancements adv, Listener<AbstractCriterionTriggerInstance> listener) {
+        this.listeners.computeIfAbsent(adv, a -> new HashSet<>()).remove(listener);
+    }
 
-	@Override
-	public void removePlayerListeners(PlayerAdvancements adv) {
-		this.listeners.remove(adv);
-	}
+    @Override
+    public void removePlayerListeners(PlayerAdvancements adv) {
+        this.listeners.remove(adv);
+    }
 
-	@Override
-	public AbstractCriterionTriggerInstance createInstance(JsonObject json, DeserializationContext parser) {
-		return new AbstractCriterionTriggerInstance(ID, Composite.ANY) {
-		};
-	}
+    @Override
+    public AbstractCriterionTriggerInstance createInstance(JsonObject json, DeserializationContext parser) {
+        return new AbstractCriterionTriggerInstance(ID, Composite.ANY){};
+    }
 
-	public void trigger(PlayerAdvancements adv) {
-		if (this.listeners.containsKey(adv)) {
-			new HashSet<>(this.listeners.get(adv)).forEach(t -> t.run(adv));
-		}
-	}
+    public void trigger(PlayerAdvancements adv) {
+        if (this.listeners.containsKey(adv)) {
+            new HashSet<>(this.listeners.get(adv)).forEach(t -> t.run(adv));
+        }
+    }
 
 }

@@ -12,13 +12,13 @@ import shadows.apotheosis.ench.api.IEnchantingBlock;
 @Mixin(CandleBlock.class)
 public abstract class CandleBlockMixin extends AbstractCandleBlock implements IEnchantingBlock {
 
-	protected CandleBlockMixin(Properties pProperties) {
-		super(pProperties);
-	}
+    protected CandleBlockMixin(Properties pProperties) {
+        super(pProperties);
+    }
 
-	@Override
-	public float getArcanaBonus(BlockState state, LevelReader world, BlockPos pos) {
-		return 1.25F * state.getValue(CandleBlock.CANDLES).intValue();
-	}
+    @Override
+    public float getArcanaBonus(BlockState state, LevelReader world, BlockPos pos) {
+        return 1.25F * state.getValue(CandleBlock.CANDLES).intValue();
+    }
 
 }

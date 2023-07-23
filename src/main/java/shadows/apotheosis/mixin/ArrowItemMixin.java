@@ -14,11 +14,11 @@ import shadows.apotheosis.Apotheosis;
 @Mixin(ArrowItem.class)
 public class ArrowItemMixin {
 
-	@Inject(method = "isInfinite", at = @At(value = "RETURN"), remap = false, cancellable = true)
-	public void apoth_isInfinite(ItemStack stack, ItemStack bow, Player player, CallbackInfoReturnable<Boolean> ci) {
-		if (!ci.getReturnValueZ() && Apotheosis.enableEnch) {
-			ci.setReturnValue(Apoth.Enchantments.ENDLESS_QUIVER.get().isTrulyInfinite(stack, bow, player));
-		}
-	}
+    @Inject(method = "isInfinite", at = @At(value = "RETURN"), remap = false, cancellable = true)
+    public void apoth_isInfinite(ItemStack stack, ItemStack bow, Player player, CallbackInfoReturnable<Boolean> ci) {
+        if (!ci.getReturnValueZ() && Apotheosis.enableEnch) {
+            ci.setReturnValue(Apoth.Enchantments.ENDLESS_QUIVER.get().isTrulyInfinite(stack, bow, player));
+        }
+    }
 
 }

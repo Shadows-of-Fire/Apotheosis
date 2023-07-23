@@ -7,15 +7,15 @@ import shadows.apotheosis.Apotheosis;
 
 public class ObsidianArrowRenderer extends ArrowRenderer<ObsidianArrowEntity> {
 
-	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/entity/obsidian_arrow.png");
+    public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/entity/obsidian_arrow.png");
 
-	public ObsidianArrowRenderer(Context renderManagerIn) {
-		super(renderManagerIn);
-	}
+    public ObsidianArrowRenderer(Context renderManagerIn) {
+        super(renderManagerIn);
+    }
 
-	@Override
-	public ResourceLocation getTextureLocation(ObsidianArrowEntity entity) {
-		return TEXTURES;
-	}
+    @Override
+    public ResourceLocation getTextureLocation(ObsidianArrowEntity entity) {
+        return TEXTURES;
+    }
 
 }

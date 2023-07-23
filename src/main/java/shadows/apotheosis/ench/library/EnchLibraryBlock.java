@@ -38,81 +38,81 @@ import shadows.placebo.container.SimplerMenuProvider;
 
 public class EnchLibraryBlock extends HorizontalDirectionalBlock implements EntityBlock {
 
-	public static final Component NAME = Component.translatable("apotheosis.ench.library");
+    public static final Component NAME = Component.translatable("apotheosis.ench.library");
 
-	protected final BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier;
-	protected final int maxLevel;
+    protected final BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier;
+    protected final int maxLevel;
 
-	public EnchLibraryBlock(BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier, int maxLevel) {
-		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
-		this.tileSupplier = tileSupplier;
-		this.maxLevel = maxLevel;
-	}
+    public EnchLibraryBlock(BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier, int maxLevel) {
+        super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
+        this.tileSupplier = tileSupplier;
+        this.maxLevel = maxLevel;
+    }
 
-	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-		return ContainerUtil.openGui(player, pos, EnchLibraryContainer::new);
-	}
+    @Override
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        return ContainerUtil.openGui(player, pos, EnchLibraryContainer::new);
+    }
 
-	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-		return new SimplerMenuProvider<>(world, pos, EnchLibraryContainer::new);
-	}
+    @Override
+    public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
+        return new SimplerMenuProvider<>(world, pos, EnchLibraryContainer::new);
+    }
 
-	@Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-		builder.add(FACING);
-	}
+    @Override
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
 
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
-		return this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
-	}
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
+        return this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
+    }
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-		return this.tileSupplier.create(pPos, pState);
-	}
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return this.tileSupplier.create(pPos, pState);
+    }
 
-	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
-		ItemStack s = new ItemStack(this);
-		BlockEntity te = world.getBlockEntity(pos);
-		if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
-		return s;
-	}
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+        ItemStack s = new ItemStack(this);
+        BlockEntity te = world.getBlockEntity(pos);
+        if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+        return s;
+    }
 
-	@Override
-	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		BlockEntity te = world.getBlockEntity(pos);
-		if (te != null) {
-			te.load(stack.getOrCreateTagElement("BlockEntityTag"));
-		}
-	}
+    @Override
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        BlockEntity te = world.getBlockEntity(pos);
+        if (te != null) {
+            te.load(stack.getOrCreateTagElement("BlockEntityTag"));
+        }
+    }
 
-	@Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder ctx) {
-		ItemStack s = new ItemStack(this);
-		BlockEntity te = ctx.getParameter(LootContextParams.BLOCK_ENTITY);
-		if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
-		return Arrays.asList(s);
-	}
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder ctx) {
+        ItemStack s = new ItemStack(this);
+        BlockEntity te = ctx.getParameter(LootContextParams.BLOCK_ENTITY);
+        if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+        return Arrays.asList(s);
+    }
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> list, TooltipFlag advanced) {
-		list.add(Component.translatable("tooltip.enchlib.capacity", Component.translatable("enchantment.level." + this.maxLevel)).withStyle(ChatFormatting.GOLD));
-		CompoundTag tag = stack.getTagElement("BlockEntityTag");
-		if (tag != null && tag.contains("Points")) {
-			list.add(Component.translatable("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(ChatFormatting.GOLD));
-		}
-	}
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> list, TooltipFlag advanced) {
+        list.add(Component.translatable("tooltip.enchlib.capacity", Component.translatable("enchantment.level." + this.maxLevel)).withStyle(ChatFormatting.GOLD));
+        CompoundTag tag = stack.getTagElement("BlockEntityTag");
+        if (tag != null && tag.contains("Points")) {
+            list.add(Component.translatable("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(ChatFormatting.GOLD));
+        }
+    }
 
-	@Override
-	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (newState.getBlock() != this) {
-			world.removeBlockEntity(pos);
-		}
-	}
+    @Override
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (newState.getBlock() != this) {
+            world.removeBlockEntity(pos);
+        }
+    }
 
 }

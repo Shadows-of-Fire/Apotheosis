@@ -11,22 +11,22 @@ import shadows.apotheosis.ench.EnchModule;
 
 public class GrowthSerumEnchant extends Enchantment {
 
-	public GrowthSerumEnchant() {
-		super(Rarity.VERY_RARE, EnchModule.SHEARS, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
-	}
+    public GrowthSerumEnchant() {
+        super(Rarity.VERY_RARE, EnchModule.SHEARS, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+    }
 
-	@Override
-	public int getMinCost(int pLevel) {
-		return 55;
-	}
+    @Override
+    public int getMinCost(int pLevel) {
+        return 55;
+    }
 
-	@Override
-	public Component getFullname(int level) {
-		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_GREEN);
-	}
+    @Override
+    public Component getFullname(int level) {
+        return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_GREEN);
+    }
 
-	public void unshear(Sheep sheep, ItemStack shears) {
-		if (shears.getEnchantmentLevel(this) > 0 && sheep.random.nextBoolean()) sheep.setSheared(false);
-	}
+    public void unshear(Sheep sheep, ItemStack shears) {
+        if (shears.getEnchantmentLevel(this) > 0 && sheep.random.nextBoolean()) sheep.setSheared(false);
+    }
 
 }

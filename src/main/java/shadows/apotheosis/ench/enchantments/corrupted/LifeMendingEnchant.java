@@ -17,70 +17,70 @@ import shadows.apotheosis.adventure.compat.AdventureCuriosCompat;
 
 public class LifeMendingEnchant extends Enchantment {
 
-	public LifeMendingEnchant() {
-		super(Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, EquipmentSlot.values());
-	}
+    public LifeMendingEnchant() {
+        super(Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, EquipmentSlot.values());
+    }
 
-	@Override
-	public int getMinCost(int level) {
-		return 65 + (level - 1) * 35;
-	}
+    @Override
+    public int getMinCost(int level) {
+        return 65 + (level - 1) * 35;
+    }
 
-	@Override
-	public int getMaxCost(int level) {
-		return this.getMinCost(level) + 50;
-	}
+    @Override
+    public int getMaxCost(int level) {
+        return this.getMinCost(level) + 50;
+    }
 
-	@Override
-	public int getMaxLevel() {
-		return 3;
-	}
+    @Override
+    public int getMaxLevel() {
+        return 3;
+    }
 
-	@Override
-	public boolean isCurse() {
-		return true;
-	}
+    @Override
+    public boolean isCurse() {
+        return true;
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
-	}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
+    }
 
-	@Override
-	public Component getFullname(int level) {
-		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_RED);
-	}
+    @Override
+    public Component getFullname(int level) {
+        return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_RED);
+    }
 
-	private static final EquipmentSlot[] SLOTS = EquipmentSlot.values();
+    private static final EquipmentSlot[] SLOTS = EquipmentSlot.values();
 
-	private boolean lifeMend(LivingHealEvent e, ItemStack stack) {
-		if (!stack.isEmpty() && stack.isDamaged()) {
-			int level = stack.getEnchantmentLevel(this);
-			if (level <= 0) return false;
-			float cost = 1.0F / (1 << level - 1);
-			int maxRestore = Math.min(Mth.floor(e.getAmount() / cost), stack.getDamageValue());
-			e.setAmount(e.getAmount() - maxRestore * cost);
-			stack.setDamageValue(stack.getDamageValue() - maxRestore);
-			return true;
-		}
-		return false;
-	}
+    private boolean lifeMend(LivingHealEvent e, ItemStack stack) {
+        if (!stack.isEmpty() && stack.isDamaged()) {
+            int level = stack.getEnchantmentLevel(this);
+            if (level <= 0) return false;
+            float cost = 1.0F / (1 << level - 1);
+            int maxRestore = Math.min(Mth.floor(e.getAmount() / cost), stack.getDamageValue());
+            e.setAmount(e.getAmount() - maxRestore * cost);
+            stack.setDamageValue(stack.getDamageValue() - maxRestore);
+            return true;
+        }
+        return false;
+    }
 
-	public void lifeMend(LivingHealEvent e) {
-		if (e.getEntity().level.isClientSide) return;
-		float amt = e.getAmount();
-		if (amt <= 0F) return;
-		for (EquipmentSlot slot : SLOTS) {
-			ItemStack stack = e.getEntity().getItemBySlot(slot);
-			if (lifeMend(e, stack)) return;
+    public void lifeMend(LivingHealEvent e) {
+        if (e.getEntity().level.isClientSide) return;
+        float amt = e.getAmount();
+        if (amt <= 0F) return;
+        for (EquipmentSlot slot : SLOTS) {
+            ItemStack stack = e.getEntity().getItemBySlot(slot);
+            if (lifeMend(e, stack)) return;
 
-		}
-		if (ModList.get().isLoaded("curios")) {
-			List<ItemStack> stacks = AdventureCuriosCompat.getLifeMendingCurios(e.getEntity());
-			for (ItemStack stack : stacks) {
-				if (lifeMend(e, stack)) return;
-			}
-		}
-	}
+        }
+        if (ModList.get().isLoaded("curios")) {
+            List<ItemStack> stacks = AdventureCuriosCompat.getLifeMendingCurios(e.getEntity());
+            for (ItemStack stack : stacks) {
+                if (lifeMend(e, stack)) return;
+            }
+        }
+    }
 
 }

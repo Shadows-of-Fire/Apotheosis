@@ -15,28 +15,28 @@ import shadows.apotheosis.Apotheosis;
 
 public class WardenLootModifier extends LootModifier {
 
-	public static final Codec<WardenLootModifier> CODEC = RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, WardenLootModifier::new));
-	public static final ResourceLocation WARDEN_TABLE_ID = new ResourceLocation("minecraft", "entities/warden");
+    public static final Codec<WardenLootModifier> CODEC = RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, WardenLootModifier::new));
+    public static final ResourceLocation WARDEN_TABLE_ID = new ResourceLocation("minecraft", "entities/warden");
 
-	public WardenLootModifier(LootItemCondition[] conditionsIn) {
-		super(conditionsIn);
-	}
+    public WardenLootModifier(LootItemCondition[] conditionsIn) {
+        super(conditionsIn);
+    }
 
-	@Override
-	public Codec<? extends IGlobalLootModifier> codec() {
-		return CODEC;
-	}
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC;
+    }
 
-	@Override
-	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> loot, LootContext ctx) {
-		if (Apotheosis.enableEnch && WARDEN_TABLE_ID.equals(ctx.getQueriedLootTableId())) {
-			int amount = 1;
-			if (ctx.getRandom().nextFloat() <= 0.10F + ctx.getLootingModifier() * 0.10F) {
-				amount++;
-			}
-			loot.add(new ItemStack(Items.WARDEN_TENDRIL.get(), amount));
-		}
-		return loot;
-	}
+    @Override
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> loot, LootContext ctx) {
+        if (Apotheosis.enableEnch && WARDEN_TABLE_ID.equals(ctx.getQueriedLootTableId())) {
+            int amount = 1;
+            if (ctx.getRandom().nextFloat() <= 0.10F + ctx.getLootingModifier() * 0.10F) {
+                amount++;
+            }
+            loot.add(new ItemStack(Items.WARDEN_TENDRIL.get(), amount));
+        }
+        return loot;
+    }
 
 }

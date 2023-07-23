@@ -34,170 +34,171 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class PotionBonus extends GemBonus {
 
-	//Formatter::off
-	public static final Codec<PotionBonus> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			gemClass(),
-			ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
-			Target.CODEC.fieldOf("target").forGetter(a -> a.target),
-			LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
-			Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
-			.apply(inst, PotionBonus::new)
-		);
-	//Formatter::on
+    
+    public static final Codec<PotionBonus> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            gemClass(),
+            ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
+            Target.CODEC.fieldOf("target").forGetter(a -> a.target),
+            LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
+            Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
+        .apply(inst, PotionBonus::new));
+    
 
-	protected final MobEffect effect;
-	protected final Target target;
-	protected final Map<LootRarity, EffectData> values;
-	protected final boolean stackOnReapply;
+    protected final MobEffect effect;
+    protected final Target target;
+    protected final Map<LootRarity, EffectData> values;
+    protected final boolean stackOnReapply;
 
-	public PotionBonus(GemClass gemClass, MobEffect effect, Target target, Map<LootRarity, EffectData> values, boolean stackOnReapply) {
-		super(Apotheosis.loc("mob_effect"), gemClass);
-		this.effect = effect;
-		this.target = target;
-		this.values = values;
-		this.stackOnReapply = stackOnReapply;
-	}
+    public PotionBonus(GemClass gemClass, MobEffect effect, Target target, Map<LootRarity, EffectData> values, boolean stackOnReapply) {
+        super(Apotheosis.loc("mob_effect"), gemClass);
+        this.effect = effect;
+        this.target = target;
+        this.values = values;
+        this.stackOnReapply = stackOnReapply;
+    }
 
-	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-		MobEffectInstance inst = this.values.get(rarity).build(this.effect);
-		MutableComponent comp = this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW);
-		int cooldown = this.getCooldown(rarity);
-		if (cooldown != 0) {
-			Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(cooldown));
-			comp = comp.append(" ").append(cd);
-		}
-		if (this.stackOnReapply) {
-			comp = comp.append(" ").append(Component.translatable("affix.apotheosis.stacking"));
-		}
-		return comp;
-	}
+    @Override
+    public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+        MobEffectInstance inst = this.values.get(rarity).build(this.effect);
+        MutableComponent comp = this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW);
+        int cooldown = this.getCooldown(rarity);
+        if (cooldown != 0) {
+            Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(cooldown));
+            comp = comp.append(" ").append(cd);
+        }
+        if (this.stackOnReapply) {
+            comp = comp.append(" ").append(Component.translatable("affix.apotheosis.stacking"));
+        }
+        return comp;
+    }
 
-	@Override
-	public int getNumberOfUUIDs() {
-		return 0;
-	}
+    @Override
+    public int getNumberOfUUIDs() {
+        return 0;
+    }
 
-	@Override
-	public Codec<? extends GemBonus> getCodec() {
-		return CODEC;
-	}
+    @Override
+    public Codec<? extends GemBonus> getCodec() {
+        return CODEC;
+    }
 
-	@Override
-	public boolean supports(LootRarity rarity) {
-		return this.values.containsKey(rarity);
-	}
+    @Override
+    public boolean supports(LootRarity rarity) {
+        return this.values.containsKey(rarity);
+    }
 
-	@Override
-	public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, Entity attacker) {
-		if (this.target == Target.HURT_SELF) applyEffect(user, rarity);
-		else if (this.target == Target.HURT_ATTACKER) {
-			if (attacker instanceof LivingEntity tLiving) {
-				applyEffect(tLiving, rarity);
-			}
-		}
-	}
+    @Override
+    public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, Entity attacker) {
+        if (this.target == Target.HURT_SELF) applyEffect(user, rarity);
+        else if (this.target == Target.HURT_ATTACKER) {
+            if (attacker instanceof LivingEntity tLiving) {
+                applyEffect(tLiving, rarity);
+            }
+        }
+    }
 
-	@Override
-	public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, Entity target) {
-		if (this.target == Target.ATTACK_SELF) applyEffect(user, rarity);
-		else if (this.target == Target.ATTACK_TARGET) {
-			if (target instanceof LivingEntity tLiving) {
-				applyEffect(tLiving, rarity);
-			}
-		}
-	}
+    @Override
+    public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, Entity target) {
+        if (this.target == Target.ATTACK_SELF) applyEffect(user, rarity);
+        else if (this.target == Target.ATTACK_TARGET) {
+            if (target instanceof LivingEntity tLiving) {
+                applyEffect(tLiving, rarity);
+            }
+        }
+    }
 
-	@Override
-	public void onBlockBreak(ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
-		if (this.target == Target.BREAK_SELF) {
-			applyEffect(player, rarity);
-		}
-	}
+    @Override
+    public void onBlockBreak(ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+        if (this.target == Target.BREAK_SELF) {
+            applyEffect(player, rarity);
+        }
+    }
 
-	@Override
-	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, Type type) {
-		if (this.target == Target.ARROW_SELF) {
-			if (arrow.getOwner() instanceof LivingEntity owner) {
-				applyEffect(owner, rarity);
-			}
-		} else if (this.target == Target.ARROW_TARGET) {
-			if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-				applyEffect(target, rarity);
-			}
-		}
-	}
+    @Override
+    public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, Type type) {
+        if (this.target == Target.ARROW_SELF) {
+            if (arrow.getOwner() instanceof LivingEntity owner) {
+                applyEffect(owner, rarity);
+            }
+        }
+        else if (this.target == Target.ARROW_TARGET) {
+            if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
+                applyEffect(target, rarity);
+            }
+        }
+    }
 
-	@Override
-	public float onShieldBlock(ItemStack stack, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
-		if (this.target == Target.BLOCK_SELF) {
-			applyEffect(entity, rarity);
-		} else if (this.target == Target.BLOCK_ATTACKER && source.getDirectEntity() instanceof LivingEntity target) {
-			applyEffect(target, rarity);
-		}
-		return amount;
-	}
+    @Override
+    public float onShieldBlock(ItemStack stack, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
+        if (this.target == Target.BLOCK_SELF) {
+            applyEffect(entity, rarity);
+        }
+        else if (this.target == Target.BLOCK_ATTACKER && source.getDirectEntity() instanceof LivingEntity target) {
+            applyEffect(target, rarity);
+        }
+        return amount;
+    }
 
-	protected int getCooldown(LootRarity rarity) {
-		EffectData data = this.values.get(rarity);
-		return data.cooldown;
-	}
+    protected int getCooldown(LootRarity rarity) {
+        EffectData data = this.values.get(rarity);
+        return data.cooldown;
+    }
 
-	private void applyEffect(LivingEntity target, LootRarity rarity) {
-		int cooldown = this.getCooldown(rarity);
-		if (cooldown != 0 && Affix.isOnCooldown(this.getId(), cooldown, target)) return;
-		EffectData data = this.values.get(rarity);
-		var inst = target.getEffect(this.effect);
-		if (this.stackOnReapply && inst != null) {
-			if (inst != null) {
-				var newInst = new MobEffectInstance(this.effect, (int) Math.max(inst.getDuration(), data.duration), (int) (inst.getAmplifier() + 1 + data.amplifier));
-				target.addEffect(newInst);
-			}
-		} else {
-			target.addEffect(data.build(this.effect));
-		}
-		Affix.startCooldown(this.getId(), target);
-	}
+    private void applyEffect(LivingEntity target, LootRarity rarity) {
+        int cooldown = this.getCooldown(rarity);
+        if (cooldown != 0 && Affix.isOnCooldown(this.getId(), cooldown, target)) return;
+        EffectData data = this.values.get(rarity);
+        var inst = target.getEffect(this.effect);
+        if (this.stackOnReapply && inst != null) {
+            if (inst != null) {
+                var newInst = new MobEffectInstance(this.effect, (int) Math.max(inst.getDuration(), data.duration), (int) (inst.getAmplifier() + 1 + data.amplifier));
+                target.addEffect(newInst);
+            }
+        }
+        else {
+            target.addEffect(data.build(this.effect));
+        }
+        Affix.startCooldown(this.getId(), target);
+    }
 
-	public static Component toComponent(MobEffectInstance inst) {
-		MutableComponent mutablecomponent = Component.translatable(inst.getDescriptionId());
-		MobEffect mobeffect = inst.getEffect();
+    public static Component toComponent(MobEffectInstance inst) {
+        MutableComponent mutablecomponent = Component.translatable(inst.getDescriptionId());
+        MobEffect mobeffect = inst.getEffect();
 
-		if (inst.getAmplifier() > 0) {
-			mutablecomponent = Component.translatable("potion.withAmplifier", mutablecomponent, Component.translatable("potion.potency." + inst.getAmplifier()));
-		}
+        if (inst.getAmplifier() > 0) {
+            mutablecomponent = Component.translatable("potion.withAmplifier", mutablecomponent, Component.translatable("potion.potency." + inst.getAmplifier()));
+        }
 
-		if (inst.getDuration() > 20) {
-			mutablecomponent = Component.translatable("potion.withDuration", mutablecomponent, MobEffectUtil.formatDuration(inst, 1));
-		}
+        if (inst.getDuration() > 20) {
+            mutablecomponent = Component.translatable("potion.withDuration", mutablecomponent, MobEffectUtil.formatDuration(inst, 1));
+        }
 
-		return mutablecomponent.withStyle(mobeffect.getCategory().getTooltipFormatting());
-	}
+        return mutablecomponent.withStyle(mobeffect.getCategory().getTooltipFormatting());
+    }
 
-	public static record EffectData(int duration, int amplifier, int cooldown) {
+    public static record EffectData(int duration, int amplifier, int cooldown) {
 
-		//Formatter::off
-		private static Codec<EffectData> CODEC = RecordCodecBuilder.create(inst -> inst
-			.group(
-				Codec.INT.fieldOf("duration").forGetter(EffectData::duration),
-				Codec.INT.fieldOf("amplifier").forGetter(EffectData::amplifier),
-				Codec.INT.optionalFieldOf("cooldown", 0).forGetter(EffectData::cooldown))
-				.apply(inst, EffectData::new)
-			);
-		//Formatter::on
+        
+        private static Codec<EffectData> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                Codec.INT.fieldOf("duration").forGetter(EffectData::duration),
+                Codec.INT.fieldOf("amplifier").forGetter(EffectData::amplifier),
+                Codec.INT.optionalFieldOf("cooldown", 0).forGetter(EffectData::cooldown))
+            .apply(inst, EffectData::new));
+        
 
-		public MobEffectInstance build(MobEffect effect) {
-			return new MobEffectInstance(effect, this.duration, this.amplifier);
-		}
-	}
+        public MobEffectInstance build(MobEffect effect) {
+            return new MobEffectInstance(effect, this.duration, this.amplifier);
+        }
+    }
 
-	@Override
-	public PotionBonus validate() {
-		Preconditions.checkNotNull(this.effect, "Null mob effect");
-		Preconditions.checkNotNull(this.target, "Null target");
-		Preconditions.checkNotNull(this.values, "Null values map");
-		return this;
-	}
+    @Override
+    public PotionBonus validate() {
+        Preconditions.checkNotNull(this.effect, "Null mob effect");
+        Preconditions.checkNotNull(this.target, "Null target");
+        Preconditions.checkNotNull(this.values, "Null values map");
+        return this;
+    }
 
 }

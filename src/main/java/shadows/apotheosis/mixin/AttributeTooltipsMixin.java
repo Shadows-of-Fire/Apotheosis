@@ -14,9 +14,9 @@ import shadows.apotheosis.adventure.affix.AffixHelper;
 @Mixin(targets = "vazkii.quark.content.client.tooltip.AttributeTooltips")
 public class AttributeTooltipsMixin {
 
-	@Inject(at = @At("HEAD"), method = "makeTooltip", remap = false, cancellable = true)
-	private static void apoth_disableQuarkTooltipsForAffixItems(RenderTooltipEvent.GatherComponents event, CallbackInfo ci) {
-		if (AdventureConfig.disableQuarkOnAffixItems && !AffixHelper.getAffixes(event.getItemStack()).isEmpty()) ci.cancel();
-	}
+    @Inject(at = @At("HEAD"), method = "makeTooltip", remap = false, cancellable = true)
+    private static void apoth_disableQuarkTooltipsForAffixItems(RenderTooltipEvent.GatherComponents event, CallbackInfo ci) {
+        if (AdventureConfig.disableQuarkOnAffixItems && !AffixHelper.getAffixes(event.getItemStack()).isEmpty()) ci.cancel();
+    }
 
 }

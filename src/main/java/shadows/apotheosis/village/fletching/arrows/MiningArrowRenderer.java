@@ -6,13 +6,13 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MiningArrowRenderer extends ArrowRenderer<MiningArrowEntity> {
 
-	public MiningArrowRenderer(Context renderManagerIn) {
-		super(renderManagerIn);
-	}
+    public MiningArrowRenderer(Context renderManagerIn) {
+        super(renderManagerIn);
+    }
 
-	@Override
-	public ResourceLocation getTextureLocation(MiningArrowEntity entity) {
-		return entity.type.getTexture();
-	}
+    @Override
+    public ResourceLocation getTextureLocation(MiningArrowEntity entity) {
+        return entity.type.getTexture();
+    }
 
 }

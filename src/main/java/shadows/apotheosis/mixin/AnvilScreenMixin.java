@@ -9,9 +9,9 @@ import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 @Mixin(AnvilScreen.class)
 public class AnvilScreenMixin {
 
-	@ModifyConstant(method = "renderLabels(Lcom/mojang/blaze3d/vertex/PoseStack;II)V", constant = @Constant(intValue = 40))
-	public int apoth_removeLevelCap(int old) {
-		return Integer.MAX_VALUE;
-	}
+    @ModifyConstant(method = "renderLabels(Lcom/mojang/blaze3d/vertex/PoseStack;II)V", constant = @Constant(intValue = 40))
+    public int apoth_removeLevelCap(int old) {
+        return Integer.MAX_VALUE;
+    }
 
 }

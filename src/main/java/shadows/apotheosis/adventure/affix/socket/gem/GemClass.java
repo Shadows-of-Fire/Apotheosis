@@ -19,35 +19,33 @@ import shadows.apotheosis.adventure.loot.LootCategory;
  */
 public record GemClass(String key, Set<LootCategory> types) {
 
-	//Formatter::off
-	public static Codec<GemClass> CODEC = RecordCodecBuilder.create(inst -> 
-		inst.group(
-			Codec.STRING.fieldOf("key").forGetter(GemClass::key),
-			LootCategory.SET_CODEC.fieldOf("types").forGetter(GemClass::types))
-			.apply(inst, GemClass::new)
-		);
-	//Formatter::on
+    
+    public static Codec<GemClass> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        Codec.STRING.fieldOf("key").forGetter(GemClass::key),
+        LootCategory.SET_CODEC.fieldOf("types").forGetter(GemClass::types))
+        .apply(inst, GemClass::new));
+    
 
-	public GemClass(String key, Set<LootCategory> types) {
-		this.key = key;
-		this.types = types;
-		Preconditions.checkArgument(!Strings.isNullOrEmpty(this.key), "Invalid GemClass with null key");
-		Preconditions.checkArgument(this.types != null && !this.types.isEmpty(), "Invalid GemClass with null or empty types");
-	}
+    public GemClass(String key, Set<LootCategory> types) {
+        this.key = key;
+        this.types = types;
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(this.key), "Invalid GemClass with null key");
+        Preconditions.checkArgument(this.types != null && !this.types.isEmpty(), "Invalid GemClass with null or empty types");
+    }
 
-	public void write(FriendlyByteBuf buf) {
-		buf.writeUtf(this.key);
-		buf.writeByte(this.types.size());
-		types.forEach(c -> buf.writeUtf(c.getName()));
-	}
+    public void write(FriendlyByteBuf buf) {
+        buf.writeUtf(this.key);
+        buf.writeByte(this.types.size());
+        types.forEach(c -> buf.writeUtf(c.getName()));
+    }
 
-	public static GemClass read(FriendlyByteBuf buf) {
-		String key = buf.readUtf();
-		int size = buf.readByte();
-		List<LootCategory> list = new ArrayList<>(size);
-		for (int i = 0; i < size; i++) {
-			list.add(LootCategory.byId(buf.readUtf()));
-		}
-		return new GemClass(key, ImmutableSet.copyOf(list));
-	}
+    public static GemClass read(FriendlyByteBuf buf) {
+        String key = buf.readUtf();
+        int size = buf.readByte();
+        List<LootCategory> list = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            list.add(LootCategory.byId(buf.readUtf()));
+        }
+        return new GemClass(key, ImmutableSet.copyOf(list));
+    }
 }

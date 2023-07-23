@@ -12,28 +12,29 @@ import shadows.apotheosis.adventure.loot.LootCategory;
 
 public class CategoryCheckCommand {
 
-	public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-		root.then(Commands.literal("loot_category").requires(c -> c.hasPermission(2)).executes(c -> {
-			Player p = c.getSource().getPlayerOrException();
-			ItemStack stack = p.getMainHandItem();
-			LootCategory cat = LootCategory.forItem(stack);
-			EquipmentSlot[] slots = cat == null ? null : cat.getSlots();
-			p.sendSystemMessage(Component.literal("Loot Category - " + (cat == null ? "null" : cat.getName())));
-			p.sendSystemMessage(Component.literal("Equipment Slot - " + (slots == null ? "null" : toStr(slots))));
-			return 0;
-		}));
-	}
+    public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
+        root.then(Commands.literal("loot_category").requires(c -> c.hasPermission(2)).executes(c -> {
+            Player p = c.getSource().getPlayerOrException();
+            ItemStack stack = p.getMainHandItem();
+            LootCategory cat = LootCategory.forItem(stack);
+            EquipmentSlot[] slots = cat == null ? null : cat.getSlots();
+            p.sendSystemMessage(Component.literal("Loot Category - " + (cat == null ? "null" : cat.getName())));
+            p.sendSystemMessage(Component.literal("Equipment Slot - " + (slots == null ? "null" : toStr(slots))));
+            return 0;
+        }));
+    }
 
-	static String toStr(EquipmentSlot[] slots) {
-		StringBuilder b = new StringBuilder();
-		b.append('{');
-		for (int i = 0; i < slots.length; i++) {
-			b.append(slots[i].name().toLowerCase());
-			if (i == slots.length - 1) {
-				b.append('}');
-			} else b.append(", ");
-		}
-		return b.toString();
-	}
+    static String toStr(EquipmentSlot[] slots) {
+        StringBuilder b = new StringBuilder();
+        b.append('{');
+        for (int i = 0; i < slots.length; i++) {
+            b.append(slots[i].name().toLowerCase());
+            if (i == slots.length - 1) {
+                b.append('}');
+            }
+            else b.append(", ");
+        }
+        return b.toString();
+    }
 
 }

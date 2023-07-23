@@ -8,20 +8,20 @@ import shadows.apotheosis.Apotheosis;
 
 public class BleedingEffect extends MobEffect {
 
-	public static final DamageSource BLEEDING = new DamageSource(Apotheosis.MODID + ".bleeding").bypassArmor();
+    public static final DamageSource BLEEDING = new DamageSource(Apotheosis.MODID + ".bleeding").bypassArmor();
 
-	public BleedingEffect() {
-		super(MobEffectCategory.HARMFUL, 0x8B0000);
-	}
+    public BleedingEffect() {
+        super(MobEffectCategory.HARMFUL, 0x8B0000);
+    }
 
-	@Override
-	public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
-		entityLivingBaseIn.hurt(BLEEDING, 1.0F + amplifier);
-	}
+    @Override
+    public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
+        entityLivingBaseIn.hurt(BLEEDING, 1.0F + amplifier);
+    }
 
-	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier) {
-		return duration % 40 == 0;
-	}
+    @Override
+    public boolean isDurationEffectTick(int duration, int amplifier) {
+        return duration % 40 == 0;
+    }
 
 }

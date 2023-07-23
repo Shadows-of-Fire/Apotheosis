@@ -25,58 +25,57 @@ import shadows.placebo.util.StepFunction;
 
 public class ExecutingAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<ExecutingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, ExecutingAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<ExecutingAffix> SERIALIZER = PSerializer.fromCodec("Executing Affix", CODEC);
+    
+    public static final Codec<ExecutingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, ExecutingAffix::new));
+    
+    public static final PSerializer<ExecutingAffix> SERIALIZER = PSerializer.fromCodec("Executing Affix", CODEC);
 
-	protected final Map<LootRarity, StepFunction> values;
+    protected final Map<LootRarity, StepFunction> values;
 
-	public ExecutingAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.ABILITY);
-		this.values = values;
-	}
+    public ExecutingAffix(Map<LootRarity, StepFunction> values) {
+        super(AffixType.ABILITY);
+        this.values = values;
+    }
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return cat == LootCategory.HEAVY_WEAPON && values.containsKey(rarity);
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return cat == LootCategory.HEAVY_WEAPON && values.containsKey(rarity);
+    }
 
-	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * getTrueLevel(rarity, level))));
-	}
+    @Override
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * getTrueLevel(rarity, level))));
+    }
 
-	private float getTrueLevel(LootRarity rarity, float level) {
-		return this.values.get(rarity).get(level);
-	}
+    private float getTrueLevel(LootRarity rarity, float level) {
+        return this.values.get(rarity).get(level);
+    }
 
-	@Override
-	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
-		float threshold = getTrueLevel(rarity, level);
-		if (Apotheosis.localAtkStrength >= 0.98 && target instanceof LivingEntity living && !living.level.isClientSide) {
-			if (living.getHealth() / living.getMaxHealth() < threshold) {
-				DamageSource src = new EntityDamageSource("apotheosis.execute", user).bypassArmor().bypassMagic();
-				if (!((LivingEntityInvoker) living).callCheckTotemDeathProtection(src)) {
-					SoundEvent soundevent = ((LivingEntityInvoker) living).callGetDeathSound();
-					if (soundevent != null) {
-						living.playSound(soundevent, ((LivingEntityInvoker) living).callGetSoundVolume(), living.getVoicePitch());
-					}
+    @Override
+    public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
+        float threshold = getTrueLevel(rarity, level);
+        if (Apotheosis.localAtkStrength >= 0.98 && target instanceof LivingEntity living && !living.level.isClientSide) {
+            if (living.getHealth() / living.getMaxHealth() < threshold) {
+                DamageSource src = new EntityDamageSource("apotheosis.execute", user).bypassArmor().bypassMagic();
+                if (!((LivingEntityInvoker) living).callCheckTotemDeathProtection(src)) {
+                    SoundEvent soundevent = ((LivingEntityInvoker) living).callGetDeathSound();
+                    if (soundevent != null) {
+                        living.playSound(soundevent, ((LivingEntityInvoker) living).callGetSoundVolume(), living.getVoicePitch());
+                    }
 
-					living.setHealth(0);
-					living.die(src);
-				}
-			}
-		}
-	}
+                    living.setHealth(0);
+                    living.die(src);
+                }
+            }
+        }
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
 }

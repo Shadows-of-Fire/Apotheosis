@@ -22,69 +22,69 @@ import net.minecraft.world.level.block.Blocks;
 
 public class ApothSmithingCategory implements IRecipeCategory<UpgradeRecipe> {
 
-	public static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
+    public static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation("jei", "textures/gui/gui_vanilla.png");
 
-	private static final Map<Class<? extends UpgradeRecipe>, Extension<UpgradeRecipe>> EXTENSIONS = new IdentityHashMap<>();
+    private static final Map<Class<? extends UpgradeRecipe>, Extension<UpgradeRecipe>> EXTENSIONS = new IdentityHashMap<>();
 
-	private final Component title = Component.translatable("title.apotheosis.smithing");
-	private final IDrawable background;
-	private final IDrawable icon;
+    private final Component title = Component.translatable("title.apotheosis.smithing");
+    private final IDrawable background;
+    private final IDrawable icon;
 
-	public ApothSmithingCategory(IGuiHelper guiHelper) {
-		background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
-		icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SMITHING_TABLE));
-	}
+    public ApothSmithingCategory(IGuiHelper guiHelper) {
+        background = guiHelper.drawableBuilder(RECIPE_GUI_VANILLA, 0, 168, 125, 18).addPadding(0, 16, 0, 0).build();
+        icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SMITHING_TABLE));
+    }
 
-	@Override
-	public RecipeType<UpgradeRecipe> getRecipeType() {
-		return AdventureJEIPlugin.APO_SMITHING;
-	}
+    @Override
+    public RecipeType<UpgradeRecipe> getRecipeType() {
+        return AdventureJEIPlugin.APO_SMITHING;
+    }
 
-	@Override
-	public Component getTitle() {
-		return title;
-	}
+    @Override
+    public Component getTitle() {
+        return title;
+    }
 
-	@Override
-	public IDrawable getBackground() {
-		return background;
-	}
+    @Override
+    public IDrawable getBackground() {
+        return background;
+    }
 
-	@Override
-	public IDrawable getIcon() {
-		return icon;
-	}
+    @Override
+    public IDrawable getIcon() {
+        return icon;
+    }
 
-	@Override
-	public void draw(UpgradeRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-		EXTENSIONS.get(recipe.getClass()).draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
-	}
+    @Override
+    public void draw(UpgradeRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+        EXTENSIONS.get(recipe.getClass()).draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
+    }
 
-	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, UpgradeRecipe recipe, IFocusGroup focuses) {
-		EXTENSIONS.get(recipe.getClass()).setRecipe(builder, recipe, focuses);
-	}
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, UpgradeRecipe recipe, IFocusGroup focuses) {
+        EXTENSIONS.get(recipe.getClass()).setRecipe(builder, recipe, focuses);
+    }
 
-	@Override
-	public boolean isHandled(UpgradeRecipe recipe) {
-		return EXTENSIONS.containsKey(recipe.getClass());
-	}
+    @Override
+    public boolean isHandled(UpgradeRecipe recipe) {
+        return EXTENSIONS.containsKey(recipe.getClass());
+    }
 
-	public static interface Extension<R extends UpgradeRecipe> extends IRecipeCategoryExtension {
+    public static interface Extension<R extends UpgradeRecipe>extends IRecipeCategoryExtension {
 
-		public void setRecipe(IRecipeLayoutBuilder builder, R recipe, IFocusGroup focuses);
+        public void setRecipe(IRecipeLayoutBuilder builder, R recipe, IFocusGroup focuses);
 
-		@Override
-		@Deprecated
-		default void drawInfo(int recipeWidth, int recipeHeight, PoseStack stack, double mouseX, double mouseY) {
-			IRecipeCategoryExtension.super.drawInfo(recipeWidth, recipeHeight, stack, mouseX, mouseY);
-		}
+        @Override
+        @Deprecated
+        default void drawInfo(int recipeWidth, int recipeHeight, PoseStack stack, double mouseX, double mouseY) {
+            IRecipeCategoryExtension.super.drawInfo(recipeWidth, recipeHeight, stack, mouseX, mouseY);
+        }
 
-		public void draw(R recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY);
-	}
+        public void draw(R recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY);
+    }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static <R extends UpgradeRecipe> void registerExtension(Class<R> clazz, Extension<R> ext) {
-		EXTENSIONS.put(clazz, (Extension) ext);
-	}
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static <R extends UpgradeRecipe> void registerExtension(Class<R> clazz, Extension<R> ext) {
+        EXTENSIONS.put(clazz, (Extension) ext);
+    }
 }

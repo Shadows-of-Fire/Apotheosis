@@ -42,114 +42,116 @@ import shadows.placebo.util.IReplacementBlock;
 
 public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock {
 
-	public ApothSpawnerBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE).strength(5.0F).sound(SoundType.METAL).noOcclusion());
-	}
+    public ApothSpawnerBlock() {
+        super(BlockBehaviour.Properties.of(Material.STONE).strength(5.0F).sound(SoundType.METAL).noOcclusion());
+    }
 
-	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
-		ItemStack s = new ItemStack(this);
-		BlockEntity te = world.getBlockEntity(pos);
-		if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
-		return s;
-	}
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+        ItemStack s = new ItemStack(this);
+        BlockEntity te = world.getBlockEntity(pos);
+        if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+        return s;
+    }
 
-	@Override
-	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-		BlockEntity te = world.getBlockEntity(pos);
-		if (te != null && stack.hasTag()) te.load(stack.getOrCreateTagElement("BlockEntityTag"));
-	}
+    @Override
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        BlockEntity te = world.getBlockEntity(pos);
+        if (te != null && stack.hasTag()) te.load(stack.getOrCreateTagElement("BlockEntityTag"));
+    }
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-		return new ApothSpawnerTile(pPos, pState);
-	}
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return new ApothSpawnerTile(pPos, pState);
+    }
 
-	@Override
-	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
-		if (SpawnerModule.spawnerSilkLevel != -1 && stack.getEnchantmentLevel(Enchantments.SILK_TOUCH) >= SpawnerModule.spawnerSilkLevel) {
-			ItemStack s = new ItemStack(this);
-			if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
-			popResource(world, pos, s);
-			player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-			player.awardStat(Stats.BLOCK_MINED.get(this));
-			player.causeFoodExhaustion(0.035F);
-		} else super.playerDestroy(world, player, pos, state, te, stack);
-	}
+    @Override
+    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
+        if (SpawnerModule.spawnerSilkLevel != -1 && stack.getEnchantmentLevel(Enchantments.SILK_TOUCH) >= SpawnerModule.spawnerSilkLevel) {
+            ItemStack s = new ItemStack(this);
+            if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+            popResource(world, pos, s);
+            player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            player.awardStat(Stats.BLOCK_MINED.get(this));
+            player.causeFoodExhaustion(0.035F);
+        }
+        else super.playerDestroy(world, player, pos, state, te, stack);
+    }
 
-	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		BlockEntity te = world.getBlockEntity(pos);
-		ItemStack stack = player.getItemInHand(hand);
-		ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-		if (te instanceof ApothSpawnerTile tile) {
-			SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
-			if (match != null && match.apply(tile)) {
-				if (world.isClientSide) return InteractionResult.SUCCESS;
-				if (!player.isCreative()) {
-					stack.shrink(1);
-					if (match.consumesOffhand()) otherStack.shrink(1);
-				}
-				AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayer) player, tile, match);
-				world.sendBlockUpdated(pos, state, state, 3);
-				return InteractionResult.SUCCESS;
-			}
-		}
-		return InteractionResult.PASS;
-	}
+    @Override
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        BlockEntity te = world.getBlockEntity(pos);
+        ItemStack stack = player.getItemInHand(hand);
+        ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        if (te instanceof ApothSpawnerTile tile) {
+            SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
+            if (match != null && match.apply(tile)) {
+                if (world.isClientSide) return InteractionResult.SUCCESS;
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                    if (match.consumesOffhand()) otherStack.shrink(1);
+                }
+                AdvancementTriggers.SPAWNER_MODIFIER.trigger((ServerPlayer) player, tile, match);
+                world.sendBlockUpdated(pos, state, state, 3);
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
+    }
 
-	@Override
-	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
-			if (Screen.hasShiftDown()) {
-				CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
-				if (tag.contains("MinSpawnDelay")) tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), tag.getShort("MinSpawnDelay")));
-				if (tag.contains("MaxSpawnDelay")) tooltip.add(concat(SpawnerStats.MAX_DELAY.name(), tag.getShort("MaxSpawnDelay")));
-				if (tag.contains("SpawnCount")) tooltip.add(concat(SpawnerStats.SPAWN_COUNT.name(), tag.getShort("SpawnCount")));
-				if (tag.contains("MaxNearbyEntities")) tooltip.add(concat(SpawnerStats.MAX_NEARBY_ENTITIES.name(), tag.getShort("MaxNearbyEntities")));
-				if (tag.contains("RequiredPlayerRange")) tooltip.add(concat(SpawnerStats.REQ_PLAYER_RANGE.name(), tag.getShort("RequiredPlayerRange")));
-				if (tag.contains("SpawnRange")) tooltip.add(concat(SpawnerStats.SPAWN_RANGE.name(), tag.getShort("SpawnRange")));
-				if (tag.getBoolean("ignore_players")) tooltip.add(SpawnerStats.IGNORE_PLAYERS.name().withStyle(ChatFormatting.DARK_GREEN));
-				if (tag.getBoolean("ignore_conditions")) tooltip.add(SpawnerStats.IGNORE_CONDITIONS.name().withStyle(ChatFormatting.DARK_GREEN));
-				if (tag.getBoolean("redstone_control")) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
-				if (tag.getBoolean("ignore_light")) tooltip.add(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
-				if (tag.getBoolean("no_ai")) tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
-				if (tag.getBoolean("silent")) tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
-			} else {
-				tooltip.add(Component.translatable("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
-			}
-		}
-	}
+    @Override
+    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
+            if (Screen.hasShiftDown()) {
+                CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
+                if (tag.contains("MinSpawnDelay")) tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), tag.getShort("MinSpawnDelay")));
+                if (tag.contains("MaxSpawnDelay")) tooltip.add(concat(SpawnerStats.MAX_DELAY.name(), tag.getShort("MaxSpawnDelay")));
+                if (tag.contains("SpawnCount")) tooltip.add(concat(SpawnerStats.SPAWN_COUNT.name(), tag.getShort("SpawnCount")));
+                if (tag.contains("MaxNearbyEntities")) tooltip.add(concat(SpawnerStats.MAX_NEARBY_ENTITIES.name(), tag.getShort("MaxNearbyEntities")));
+                if (tag.contains("RequiredPlayerRange")) tooltip.add(concat(SpawnerStats.REQ_PLAYER_RANGE.name(), tag.getShort("RequiredPlayerRange")));
+                if (tag.contains("SpawnRange")) tooltip.add(concat(SpawnerStats.SPAWN_RANGE.name(), tag.getShort("SpawnRange")));
+                if (tag.getBoolean("ignore_players")) tooltip.add(SpawnerStats.IGNORE_PLAYERS.name().withStyle(ChatFormatting.DARK_GREEN));
+                if (tag.getBoolean("ignore_conditions")) tooltip.add(SpawnerStats.IGNORE_CONDITIONS.name().withStyle(ChatFormatting.DARK_GREEN));
+                if (tag.getBoolean("redstone_control")) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
+                if (tag.getBoolean("ignore_light")) tooltip.add(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
+                if (tag.getBoolean("no_ai")) tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
+                if (tag.getBoolean("silent")) tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
+            }
+            else {
+                tooltip.add(Component.translatable("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
+            }
+        }
+    }
 
-	public static Component concat(Object... args) {
-		return Component.translatable("misc.apotheosis.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
-	}
+    public static Component concat(Object... args) {
+        return Component.translatable("misc.apotheosis.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+    }
 
-	@Override
-	public Item asItem() {
-		return Items.SPAWNER;
-	}
+    @Override
+    public Item asItem() {
+        return Items.SPAWNER;
+    }
 
-	@Override
-	public int getExpDrop(BlockState state, LevelReader world, RandomSource randomSource, BlockPos pos, int fortune, int silktouch) {
-		return silktouch == 0 ? super.getExpDrop(state, world, randomSource, pos, fortune, silktouch) : 0;
-	}
+    @Override
+    public int getExpDrop(BlockState state, LevelReader world, RandomSource randomSource, BlockPos pos, int fortune, int silktouch) {
+        return silktouch == 0 ? super.getExpDrop(state, world, randomSource, pos, fortune, silktouch) : 0;
+    }
 
-	@Override
-	public void _setDefaultState(BlockState state) {
-		this.registerDefaultState(state);
-	}
+    @Override
+    public void _setDefaultState(BlockState state) {
+        this.registerDefaultState(state);
+    }
 
-	protected StateDefinition<Block, BlockState> container;
+    protected StateDefinition<Block, BlockState> container;
 
-	@Override
-	public void setStateContainer(StateDefinition<Block, BlockState> container) {
-		this.container = container;
-	}
+    @Override
+    public void setStateContainer(StateDefinition<Block, BlockState> container) {
+        this.container = container;
+    }
 
-	@Override
-	public StateDefinition<Block, BlockState> getStateDefinition() {
-		return this.container == null ? super.getStateDefinition() : this.container;
-	}
+    @Override
+    public StateDefinition<Block, BlockState> getStateDefinition() {
+        return this.container == null ? super.getStateDefinition() : this.container;
+    }
 
 }

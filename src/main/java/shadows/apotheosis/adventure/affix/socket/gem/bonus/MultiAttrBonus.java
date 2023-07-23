@@ -29,90 +29,88 @@ import shadows.placebo.codec.EnumCodec;
 
 public class MultiAttrBonus extends GemBonus {
 
-	//Formatter::off
-	public static Codec<MultiAttrBonus> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			gemClass(),
-			ModifierInst.CODEC.listOf().fieldOf("modifiers").forGetter(a -> a.modifiers),
-			Codec.STRING.fieldOf("desc").forGetter(a -> a.desc))
-			.apply(inst, MultiAttrBonus::new)
-		);
-	//Formatter::on
+    
+    public static Codec<MultiAttrBonus> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            gemClass(),
+            ModifierInst.CODEC.listOf().fieldOf("modifiers").forGetter(a -> a.modifiers),
+            Codec.STRING.fieldOf("desc").forGetter(a -> a.desc))
+        .apply(inst, MultiAttrBonus::new));
+    
 
-	protected final List<ModifierInst> modifiers;
-	protected final String desc;
+    protected final List<ModifierInst> modifiers;
+    protected final String desc;
 
-	public MultiAttrBonus(GemClass gemClass, List<ModifierInst> modifiers, String desc) {
-		super(Apotheosis.loc("multi_attribute"), gemClass);
-		this.modifiers = modifiers;
-		this.desc = desc;
-	}
+    public MultiAttrBonus(GemClass gemClass, List<ModifierInst> modifiers, String desc) {
+        super(Apotheosis.loc("multi_attribute"), gemClass);
+        this.modifiers = modifiers;
+        this.desc = desc;
+    }
 
-	@Override
-	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
-		List<UUID> uuids = GemItem.getUUIDs(gem);
-		int i = 0;
-		for (ModifierInst modifier : modifiers) {
-			map.accept(modifier.attr, modifier.build(uuids.get(i++), rarity));
-		}
-	}
+    @Override
+    public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
+        List<UUID> uuids = GemItem.getUUIDs(gem);
+        int i = 0;
+        for (ModifierInst modifier : modifiers) {
+            map.accept(modifier.attr, modifier.build(uuids.get(i++), rarity));
+        }
+    }
 
-	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-		Object[] values = new Object[modifiers.size() * 2];
-		int i = 0;
-		for (ModifierInst modifier : modifiers) {
-			values[i] = IFormattableAttribute.toComponent(modifier.attr, modifier.build(UUID.randomUUID(), rarity), AttributesLib.getTooltipFlag());
-			values[modifiers.size() + i] = IFormattableAttribute.toValueComponent(modifier.attr, modifier.op, i, AttributesLib.getTooltipFlag());
-			i++;
-		}
-		return Component.translatable(this.desc, values).withStyle(ChatFormatting.YELLOW);
-	}
+    @Override
+    public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+        Object[] values = new Object[modifiers.size() * 2];
+        int i = 0;
+        for (ModifierInst modifier : modifiers) {
+            values[i] = IFormattableAttribute.toComponent(modifier.attr, modifier.build(UUID.randomUUID(), rarity), AttributesLib.getTooltipFlag());
+            values[modifiers.size() + i] = IFormattableAttribute.toValueComponent(modifier.attr, modifier.op, i, AttributesLib.getTooltipFlag());
+            i++;
+        }
+        return Component.translatable(this.desc, values).withStyle(ChatFormatting.YELLOW);
+    }
 
-	@Override
-	public MultiAttrBonus validate() {
-		Preconditions.checkNotNull(this.modifiers, "Invalid AttributeBonus with null values");
-		List<Set<LootRarity>> rarityChecks = new ArrayList<>();
-		for (ModifierInst inst : modifiers) {
-			var set = new HashSet<LootRarity>();
-			LootRarity.values().stream().filter(r -> inst.values.containsKey(r)).forEach(set::add);
-			rarityChecks.add(set);
-		}
-		Preconditions.checkArgument(rarityChecks.stream().mapToInt(Set::size).allMatch(size -> size == rarityChecks.get(0).size()));
-		return this;
-	}
+    @Override
+    public MultiAttrBonus validate() {
+        Preconditions.checkNotNull(this.modifiers, "Invalid AttributeBonus with null values");
+        List<Set<LootRarity>> rarityChecks = new ArrayList<>();
+        for (ModifierInst inst : modifiers) {
+            var set = new HashSet<LootRarity>();
+            LootRarity.values().stream().filter(r -> inst.values.containsKey(r)).forEach(set::add);
+            rarityChecks.add(set);
+        }
+        Preconditions.checkArgument(rarityChecks.stream().mapToInt(Set::size).allMatch(size -> size == rarityChecks.get(0).size()));
+        return this;
+    }
 
-	@Override
-	public boolean supports(LootRarity rarity) {
-		return this.modifiers.get(0).values.containsKey(rarity);
-	}
+    @Override
+    public boolean supports(LootRarity rarity) {
+        return this.modifiers.get(0).values.containsKey(rarity);
+    }
 
-	@Override
-	public int getNumberOfUUIDs() {
-		return this.modifiers.size();
-	}
+    @Override
+    public int getNumberOfUUIDs() {
+        return this.modifiers.size();
+    }
 
-	@Override
-	public Codec<? extends GemBonus> getCodec() {
-		return CODEC;
-	}
+    @Override
+    public Codec<? extends GemBonus> getCodec() {
+        return CODEC;
+    }
 
-	protected static record ModifierInst(Attribute attr, Operation op, Map<LootRarity, Float> values) {
+    protected static record ModifierInst(Attribute attr, Operation op, Map<LootRarity, Float> values) {
 
-		//Formatter::off
-		public static Codec<ModifierInst> CODEC = RecordCodecBuilder.create(inst -> inst
-			.group(
-				ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(ModifierInst::attr),
-				new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(ModifierInst::op),
-				LootRarity.mapCodec(Codec.FLOAT).fieldOf("values").forGetter(ModifierInst::values))
-				.apply(inst, ModifierInst::new)
-			);
-		//Formatter::on
+        
+        public static Codec<ModifierInst> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(ModifierInst::attr),
+                new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(ModifierInst::op),
+                LootRarity.mapCodec(Codec.FLOAT).fieldOf("values").forGetter(ModifierInst::values))
+            .apply(inst, ModifierInst::new));
+        
 
-		public AttributeModifier build(UUID id, LootRarity rarity) {
-			return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity), this.op);
-		}
+        public AttributeModifier build(UUID id, LootRarity rarity) {
+            return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity), this.op);
+        }
 
-	}
+    }
 
 }

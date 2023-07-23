@@ -9,18 +9,18 @@ import net.minecraft.world.inventory.InventoryMenu;
 
 public class GrayBufferSource implements MultiBufferSource {
 
-	private final MultiBufferSource wrapped;
+    private final MultiBufferSource wrapped;
 
-	public GrayBufferSource(MultiBufferSource wrapped) {
-		this.wrapped = wrapped;
-	}
+    public GrayBufferSource(MultiBufferSource wrapped) {
+        this.wrapped = wrapped;
+    }
 
-	@Override
-	public VertexConsumer getBuffer(RenderType type) {
-		if (type.format() == DefaultVertexFormat.NEW_ENTITY) {
-			return wrapped.getBuffer(AdventureModuleClient.gray(InventoryMenu.BLOCK_ATLAS));
-		}
-		return wrapped.getBuffer(type);
-	}
+    @Override
+    public VertexConsumer getBuffer(RenderType type) {
+        if (type.format() == DefaultVertexFormat.NEW_ENTITY) {
+            return wrapped.getBuffer(AdventureModuleClient.gray(InventoryMenu.BLOCK_ATLAS));
+        }
+        return wrapped.getBuffer(type);
+    }
 
 }

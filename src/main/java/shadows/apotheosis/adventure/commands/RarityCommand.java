@@ -14,17 +14,17 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class RarityCommand {
 
-	public static final SuggestionProvider<CommandSourceStack> SUGGEST_RARITY = (ctx, builder) -> SharedSuggestionProvider.suggest(LootRarity.ids().stream(), builder);
+    public static final SuggestionProvider<CommandSourceStack> SUGGEST_RARITY = (ctx, builder) -> SharedSuggestionProvider.suggest(LootRarity.ids().stream(), builder);
 
-	public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-		root.then(Commands.literal("loot_rarity").requires(c -> c.hasPermission(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests(SUGGEST_RARITY).executes(c -> {
-			Player p = c.getSource().getPlayerOrException();
-			String type = c.getArgument("rarity", String.class);
-			LootRarity rarity = LootRarity.byId(type);
-			ItemStack stack = p.getMainHandItem();
-			AffixHelper.setRarity(stack, rarity);
-			return 0;
-		})));
-	}
+    public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
+        root.then(Commands.literal("loot_rarity").requires(c -> c.hasPermission(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests(SUGGEST_RARITY).executes(c -> {
+            Player p = c.getSource().getPlayerOrException();
+            String type = c.getArgument("rarity", String.class);
+            LootRarity rarity = LootRarity.byId(type);
+            ItemStack stack = p.getMainHandItem();
+            AffixHelper.setRarity(stack, rarity);
+            return 0;
+        })));
+    }
 
 }
