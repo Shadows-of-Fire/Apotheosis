@@ -17,12 +17,20 @@ import javax.annotation.Nullable;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.CritParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -31,11 +39,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.AddAttributeTooltipsEvent;
@@ -44,6 +54,11 @@ import shadows.apotheosis.core.attributeslib.api.GatherSkippedAttributeTooltipsE
 import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
 
 public class AttributesLibClient {
+
+    @SubscribeEvent
+    public static void particleFactories(RegisterParticleProvidersEvent e) {
+        e.register(Apoth.Particles.APOTH_CRIT.get(), ApothCritProvider::new);
+    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void tooltips(ItemTooltipEvent e) {
@@ -93,6 +108,13 @@ public class AttributesLibClient {
             else AdventureModule.LOGGER.debug("Detected broken attribute modifier entry on item {}.  Attr={}, Modif={}", stack, ent.getKey(), ent.getValue());
         }
         return map;
+    }
+
+    public static void apothCrit(int entityId) {
+        Entity entity = Minecraft.getInstance().level.getEntity(entityId);
+        if (entity != null) {
+            Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, Apoth.Particles.APOTH_CRIT.get());
+        }
     }
 
     private static boolean shouldShowInTooltip(int pHideFlags, ItemStack.TooltipPart pPart) {
@@ -236,6 +258,31 @@ public class AttributesLibClient {
                 });
             }
         }
+    }
+
+    public static class ApothCritProvider implements ParticleProvider<SimpleParticleType> {
+        private final SpriteSet sprite;
+
+        public ApothCritProvider(SpriteSet pSprites) {
+            this.sprite = pSprites;
+        }
+
+        public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+            CritParticle critparticle = new ApothCritParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
+            critparticle.pickSprite(this.sprite);
+            return critparticle;
+        }
+    }
+
+    public static class ApothCritParticle extends CritParticle {
+
+        public ApothCritParticle(ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+            super(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed);
+            this.bCol = 1F;
+            this.rCol = 0.3F;
+            this.gCol = 0.8F;
+        }
+
     }
 
 }

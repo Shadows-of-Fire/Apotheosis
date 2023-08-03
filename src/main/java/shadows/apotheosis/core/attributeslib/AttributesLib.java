@@ -3,6 +3,9 @@ package shadows.apotheosis.core.attributeslib;
 import java.util.function.BiConsumer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,7 +20,10 @@ import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import shadows.apotheosis.Apotheosis;
@@ -26,6 +32,8 @@ import shadows.apotheosis.core.attributeslib.client.AttributesLibClient;
 import shadows.apotheosis.core.attributeslib.compat.CuriosCompat;
 import shadows.apotheosis.core.attributeslib.impl.AttributeEvents;
 import shadows.apotheosis.core.attributeslib.impl.PercentBasedAttribute;
+import shadows.apotheosis.core.attributeslib.packet.CritParticleMessage;
+import shadows.placebo.network.MessageHelper;
 import shadows.placebo.util.RegObjHelper;
 import shadows.placebo.util.RegistryEvent.Register;
 
@@ -33,19 +41,27 @@ public class AttributesLib {
 
     public static final String MODID = "attributeslib";
     public static final RegObjHelper REG_OBJS = new RegObjHelper(Apotheosis.MODID);
-
     public static final RegistryObject<SoundEvent> DODGE_SOUND = REG_OBJS.sound("dodge");
+
+    public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
+        .named(new ResourceLocation(MODID, MODID))
+        .clientAcceptedVersions(s -> true)
+        .serverAcceptedVersions(s -> true)
+        .networkProtocolVersion(() -> "1.0.0")
+        .simpleChannel();
 
     public AttributesLib() {
         MinecraftForge.EVENT_BUS.register(new AttributeEvents());
         if (FMLEnvironment.dist.isClient()) {
             MinecraftForge.EVENT_BUS.register(new AttributesLibClient());
+            FMLJavaModLoadingContext.get().getModEventBus().register(AttributesLibClient.class);
         }
+
+        MessageHelper.registerMessage(CHANNEL, 0, new CritParticleMessage.Provider());
     }
 
     @SubscribeEvent
     public void attribs(Register<Attribute> e) {
-
         e.getRegistry().registerAll(
             new PercentBasedAttribute("apotheosis:draw_speed", 1.0D, 0.0D, 4.0D).setSyncable(true), "draw_speed",
             new PercentBasedAttribute("apotheosis:crit_chance", 0.05D, 0.0D, 10.0D).setSyncable(true), "crit_chance",
@@ -66,7 +82,11 @@ public class AttributesLib {
             new RangedAttribute("apotheosis:prot_pierce", 0.0D, 0.0D, 34.0D).setSyncable(true), "prot_pierce",
             new PercentBasedAttribute("apotheosis:prot_shred", 0.0D, 0.0D, 1.0D).setSyncable(true), "prot_shred",
             new PercentBasedAttribute("apotheosis:dodge_chance", 0.0D, 0.0D, 1.0D).setSyncable(true), "dodge_chance");
+    }
 
+    @SubscribeEvent
+    public void particles(Register<ParticleType<?>> e) {
+        e.getRegistry().register(new SimpleParticleType(false), "apoth_crit");
     }
 
     @SubscribeEvent
@@ -78,7 +98,6 @@ public class AttributesLib {
     @SubscribeEvent
     public void applyAttribs(EntityAttributeModificationEvent e) {
         e.getTypes().forEach(type -> {
-
             addAll(type, e::add,
                 ALAttributes.DRAW_SPEED,
                 ALAttributes.CRIT_CHANCE,
@@ -99,7 +118,6 @@ public class AttributesLib {
                 ALAttributes.PROT_PIERCE,
                 ALAttributes.PROT_SHRED,
                 ALAttributes.DODGE_CHANCE);
-
         });
         // Change the base value of Step Height to reflect the real base value of a Player.
         // The alternative is a bunch of special casing in the display.

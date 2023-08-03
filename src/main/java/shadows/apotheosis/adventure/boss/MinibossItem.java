@@ -262,7 +262,6 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
             modif.apply(rand, mob);
         }
 
-        mob.goalSelector.availableGoals.removeIf(BossItem.IS_VILLAGER_ATTACK);
         if (NAME_GEN.equals(this.name)) {
             NameHelper.setEntityName(rand, mob);
         }
@@ -304,7 +303,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
             }
 
             var rarity = LootRarity.random(rand, luck, AdventureConfig.AFFIX_CONVERT_RARITIES.get(mob.level.dimension().location()));
-            BossItem.modifyBossItem(temp, rand, this.name, luck, rarity, this.stats);
+            BossItem.modifyBossItem(temp, rand, mob.hasCustomName() ? mob.getCustomName().getString() : "", luck, rarity, this.stats);
             mob.setCustomName(((MutableComponent) mob.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
             mob.setDropChance(EquipmentSlot.values()[guaranteed], 2F);
         }

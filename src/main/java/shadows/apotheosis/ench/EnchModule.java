@@ -247,13 +247,11 @@ public class EnchModule {
 
     @SubscribeEvent
     public void particles(Register<ParticleType<?>> e) {
-
         e.getRegistry().registerAll(
             new SimpleParticleType(false), "enchant_fire",
             new SimpleParticleType(false), "enchant_water",
             new SimpleParticleType(false), "enchant_sculk",
             new SimpleParticleType(false), "enchant_end");
-
     }
 
     /**

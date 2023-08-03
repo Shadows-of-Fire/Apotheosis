@@ -50,7 +50,9 @@ import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.ALAttributes;
 import shadows.apotheosis.core.attributeslib.api.AttributeHelper;
 import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
+import shadows.apotheosis.core.attributeslib.packet.CritParticleMessage;
 import shadows.apotheosis.core.attributeslib.util.AttributesUtil;
+import shadows.placebo.network.PacketDistro;
 
 public class AttributeEvents {
 
@@ -178,8 +180,11 @@ public class AttributeEvents {
      */
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void apothCriticalStrike(LivingHurtEvent e) {
-        double critChance = e.getEntity().getAttributeValue(ALAttributes.CRIT_CHANCE.get());
-        float critDmg = (float) e.getEntity().getAttributeValue(ALAttributes.CRIT_DAMAGE.get());
+        LivingEntity attacker = e.getSource().getEntity() instanceof LivingEntity le ? le : null;
+        if (attacker == null) return;
+
+        double critChance = attacker.getAttributeValue(ALAttributes.CRIT_CHANCE.get());
+        float critDmg = (float) attacker.getAttributeValue(ALAttributes.CRIT_DAMAGE.get());
 
         RandomSource rand = e.getEntity().random;
 
@@ -195,7 +200,9 @@ public class AttributeEvents {
 
         e.setAmount(e.getAmount() * critMult);
 
-        // TODO: Add some sort of effect that triggers on crit.
+        if (critMult > 1 && !attacker.level.isClientSide) {
+            PacketDistro.sendToTracking(AttributesLib.CHANNEL, new CritParticleMessage(e.getEntity().getId()), (ServerLevel) attacker.level, e.getEntity().blockPosition());
+        }
     }
 
     /**

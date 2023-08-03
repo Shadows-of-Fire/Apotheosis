@@ -265,6 +265,7 @@ public class Apoth {
         public static final RegistryObject<SimpleParticleType> ENCHANT_WATER = R.particle("enchant_water");
         public static final RegistryObject<SimpleParticleType> ENCHANT_SCULK = R.particle("enchant_sculk");
         public static final RegistryObject<SimpleParticleType> ENCHANT_END = R.particle("enchant_end");
+        public static final RegistryObject<SimpleParticleType> APOTH_CRIT = R.particle("apoth_crit");
     }
 
 }

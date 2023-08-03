@@ -169,7 +169,6 @@ public class Apotheosis {
 
     /**
      * The apotheosis reload event is fired from resource reload.
-     * It may be fired off the main thread.
      */
     public static class ApotheosisReloadEvent extends Event {}
 

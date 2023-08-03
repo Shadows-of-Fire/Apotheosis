@@ -279,7 +279,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
 
         String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName);
         Component name = AffixHelper.getName(stack);
-        if (name.getContents() instanceof TranslatableContents tc) {
+        if (!bossName.isEmpty() && name.getContents() instanceof TranslatableContents tc) {
             String oldKey = tc.getKey();
             String newKey = "misc.apotheosis.affix_name.two".equals(oldKey) ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
             Object[] newArgs = new Object[tc.getArgs().length + 1];

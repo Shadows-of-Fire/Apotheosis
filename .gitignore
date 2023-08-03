@@ -21,3 +21,4 @@ build
 eclipse
 run
 logs
+/.apt_generated_tests/
