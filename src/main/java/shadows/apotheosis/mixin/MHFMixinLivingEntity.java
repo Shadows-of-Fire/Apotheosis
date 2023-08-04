@@ -42,13 +42,9 @@ public abstract class MHFMixinLivingEntity {
      */
     @Inject(method = "readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("HEAD"))
     private void maxhealthfix$readAdditionalSaveData(CompoundTag tag, CallbackInfo callback) {
-
         if (tag.contains("Health", Tag.TAG_ANY_NUMERIC)) {
-
             final float savedHealth = tag.getFloat("Health");
-
             if (savedHealth > this.getMaxHealth() && savedHealth > 0) {
-
                 this.actualHealth = savedHealth;
             }
         }
@@ -62,10 +58,10 @@ public abstract class MHFMixinLivingEntity {
      */
     @Inject(method = "detectEquipmentUpdates()V", at = @At("RETURN"))
     private void maxhealthfix$detectEquipmentUpdates(CallbackInfo callback) {
-
-        if (this.actualHealth != null && this.actualHealth > 0 && this.actualHealth > this.getHealth()) {
-
-            this.setHealth(this.actualHealth);
+        if (actualHealth != null) {
+            if (actualHealth > 0 && actualHealth > this.getHealth()) {
+                this.setHealth(actualHealth);
+            }
             this.actualHealth = null;
         }
     }

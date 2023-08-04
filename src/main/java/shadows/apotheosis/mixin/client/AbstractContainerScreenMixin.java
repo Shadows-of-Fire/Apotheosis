@@ -1,4 +1,4 @@
-package shadows.apotheosis.mixin;
+package shadows.apotheosis.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,13 +1,13 @@
 {
     "required": true,
-    "package": "shadows.${modid}.mixin",
-    "compatibilityLevel": "JAVA_17",
+    "package": "${modGroup}.${modid}.mixin",
+    "compatibilityLevel": "JAVA_${javaVersion}",
     "refmap": "${modid}.refmap.json",
     "mixins": [
-        ${mixins}
+${mixins}
     ],
     "client": [
-        ${clientMixins}
+${clientMixins}
     ],
     "minVersion": "0.8"
 }
