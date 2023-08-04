@@ -1,6 +1,12 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.3.2
+* Fixed an issue where Crit Chance was using the target's crit chance during application.
+* Added particle that trigger when an Apothic Crit happens.
+* More fixes for the naming process of minibosses with affix items. They should work as expected now.
+* Fixed slimes spawned by NoAI slimes not having the `apotheosis:movable` tag so they can fall.
+
 ## 6.3.1
 * Added missing Stoneshelf recipe.
 * Made gems remove the old `"facets"` tag, which should allow them to stack.
