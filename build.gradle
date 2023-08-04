@@ -181,7 +181,9 @@ tasks.named('processResources', ProcessResources).configure {
         fileTree("${project.projectDir}/src/main/resources/coremods").visit { FileVisitDetails details ->
             def name = details.file.path.replace('\\', '/')
             name = name.substring(name.indexOf('coremods'), name.length())
-            names.add(name)
+            if(name.endsWith('.js')) {
+                names.add(name)
+            }
         }
 
         def coremods = ''
