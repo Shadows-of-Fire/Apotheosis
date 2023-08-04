@@ -45,7 +45,7 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
 
         String id = entityNBT.getString("id"); // entity type ID
         if (world instanceof ServerLevelAccessor sla && "minecraft:item_frame".equals(id)) {
-            this.writeEntityNBT(sla.getLevel(), entityInfo.blockPos, placementSettings.getRandom(seedPos), entityNBT, placementSettings);
+            this.writeEntityNBT(sla.getLevel(), entityInfo.blockPos, placementSettings.getRandom(entityInfo.blockPos), entityNBT, placementSettings);
         }
 
         return entityInfo;
