@@ -6,6 +6,7 @@
 * Added particle that trigger when an Apothic Crit happens.
 * More fixes for the naming process of minibosses with affix items. They should work as expected now.
 * Fixed slimes spawned by NoAI slimes not having the `apotheosis:movable` tag so they can fall.
+* Fixed an issue where towers spawned with 4 identical gems in the item frames.
 
 ## 6.3.1
 * Added missing Stoneshelf recipe.
