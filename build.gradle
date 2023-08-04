@@ -292,7 +292,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     def projectId = getProperty('curseforgeProjectId')
     def mainFile = upload(projectId, jar)
     mainFile.changelog = getChangelogLink()
-    mainFile.addModLoader('NeoForge')
+    mainFile.addModLoader('Forge')
     mainFile.addJavaVersion("Java ${javaVersion}")
     mainFile.addGameVersion("${mcVersion}")
     mainFile.releaseType = "release"
