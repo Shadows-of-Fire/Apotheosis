@@ -219,6 +219,11 @@ public class AdventureEvents {
         TelepathicAffix.drops(e);
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+    public void festive_removeMarker(LivingDropsEvent e) {
+        Apoth.Affixes.FESTIVE.ifPresent(afx -> afx.removeMarker(e));
+    }
+
     @SubscribeEvent
     public void harvest(HarvestCheck e) {
         Apoth.Affixes.OMNETIC.ifPresent(afx -> afx.harvest(e));

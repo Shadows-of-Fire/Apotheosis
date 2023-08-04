@@ -96,6 +96,10 @@ public class FestiveAffix extends Affix {
                 }
             }
         }
+    }
+
+    // Lowest prio + receive cancelled
+    public void removeMarker(LivingDropsEvent e) {
         e.getDrops().stream().forEach(ent -> {
             ItemStack s = ent.getItem();
             if (s.hasTag() && s.getTag().contains(MARKER)) {
