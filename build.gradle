@@ -78,21 +78,22 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${mcVersion}-${forgeVersion}"
-    if(project.mixin.toBoolean())                annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
-    if(project.hasProperty('placeboVersion'))    implementation fg.deobf("shadows:Placebo:${mcVersion}-${placeboVersion}")
-    if(project.hasProperty('jeiVersion'))        implementation fg.deobf("mezz.jei:jei-${mcVersion}-forge:${jeiVersion}")
-    if(project.hasProperty('jadeFileId'))        implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
-    if(project.hasProperty('curiosVersion'))     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVersion}")
-    if(project.hasProperty('patchouliVersion'))  implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouliVersion}")
-    if(project.hasProperty('topVersion'))        implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {
+    minecraft "net.neoforged:forge:${mcVersion}-${forgeVersion}"
+    if(project.mixin.toBoolean())                   annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
+    if(project.hasProperty('placeboVersion'))       implementation fg.deobf("dev.shadowsoffire:Placebo:${mcVersion}-${placeboVersion}")
+    if(project.hasProperty('jeiVersion'))           implementation fg.deobf("mezz.jei:jei-${mcVersion}-forge:${jeiVersion}")
+    if(project.hasProperty('jadeFileId'))           implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
+    if(project.hasProperty('curiosVersion'))        implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curiosVersion}")
+    if(project.hasProperty('patchouliVersion'))     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouliVersion}")
+    if(project.hasProperty('topVersion'))           implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {
             transitive = false
     })
-    if(project.hasProperty('mmmFileId'))         implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${mmmFileId}")
-    if(project.hasProperty('bookshelfVersion'))  compileOnly    fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${mcVersion}:${bookshelfVersion}")
-    if(project.hasProperty('gamestagesVersion')) compileOnly    fg.deobf("net.darkhax.gamestages:GameStages-Forge-${mcVersion}:${gamestagesVersion}")
-    if(project.hasProperty('twilightFileId'))    implementation fg.deobf("curse.maven:the-twilight-forest-227639:${twilightFileId}")
-    if(project.hasProperty('gatewaysVersion'))   implementation fg.deobf("shadows:GatewaysToEternity:${mcVersion}-${gatewaysVersion}")
+    if(project.hasProperty('mmmFileId'))            implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${mmmFileId}")
+    if(project.hasProperty('bookshelfVersion'))     compileOnly    fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${mcVersion}:${bookshelfVersion}")
+    if(project.hasProperty('gamestagesVersion'))    compileOnly    fg.deobf("net.darkhax.gamestages:GameStages-Forge-${mcVersion}:${gamestagesVersion}")
+    if(project.hasProperty('twilightFileId'))       implementation fg.deobf("curse.maven:the-twilight-forest-227639:${twilightFileId}")
+    if(project.hasProperty('gatewaysVersion'))      implementation fg.deobf("dev.shadowsoffire:GatewaysToEternity:${mcVersion}-${gatewaysVersion}")
+    if(project.hasProperty('attributeslibVersion')) implementation fg.deobf("dev.shadowsoffire:ApothicAttributes:${mcVersion}-${attributeslibVersion}")
 }
 
 mixin {
@@ -112,10 +113,11 @@ tasks.named('processResources', ProcessResources).configure {
         forgeVersion: forgeVersion
     ]
 
-    if (project.hasProperty('placeboVersion'))      replaceProperties.put 'placeboVersion', placeboVersion
-    if (project.hasProperty('curiosVersion'))       replaceProperties.put 'curiosVersion', curiosVersion
-    if (project.hasProperty('topVersion'))          replaceProperties.put 'topVersion', topVersion
-    if (project.hasProperty('patchouliVersion'))    replaceProperties.put 'patchouliVersion', patchouliVersion
+    if (project.hasProperty('placeboVersion'))       replaceProperties.put 'placeboVersion', placeboVersion
+    if (project.hasProperty('attributeslibVersion')) replaceProperties.put 'attributeslibVersion', placeboVersion
+    if (project.hasProperty('curiosVersion'))        replaceProperties.put 'curiosVersion', curiosVersion
+    if (project.hasProperty('topVersion'))           replaceProperties.put 'topVersion', topVersion
+    if (project.hasProperty('patchouliVersion'))     replaceProperties.put 'patchouliVersion', patchouliVersion
 
     inputs.properties replaceProperties
 

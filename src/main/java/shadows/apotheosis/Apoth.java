@@ -1,5 +1,8 @@
 package shadows.apotheosis;
 
+import dev.shadowsoffire.placebo.registry.RegObjHelper;
+import dev.shadowsoffire.placebo.reload.DynamicRegistryObject;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -73,9 +76,6 @@ import shadows.apotheosis.village.fletching.arrows.MiningArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.MiningArrowItem;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import shadows.apotheosis.village.fletching.arrows.ObsidianArrowItem;
-import shadows.placebo.json.DynamicRegistryObject;
-import shadows.placebo.util.PlaceboUtil;
-import shadows.placebo.util.RegObjHelper;
 
 /**
  * Object Holder Class. For the main mod class, see {@link Apotheosis}
@@ -265,7 +265,6 @@ public class Apoth {
         public static final RegistryObject<SimpleParticleType> ENCHANT_WATER = R.particle("enchant_water");
         public static final RegistryObject<SimpleParticleType> ENCHANT_SCULK = R.particle("enchant_sculk");
         public static final RegistryObject<SimpleParticleType> ENCHANT_END = R.particle("enchant_end");
-        public static final RegistryObject<SimpleParticleType> APOTH_CRIT = R.particle("apoth_crit");
     }
 
 }

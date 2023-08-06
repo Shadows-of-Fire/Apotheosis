@@ -147,7 +147,6 @@ public class AdventureModule {
             Exclusion.initSerializers();
             GemBonus.initCodecs();
         });
-        MobEffects.BLINDNESS.addAttributeModifier(Attributes.FOLLOW_RANGE, "f8c3de3d-1fea-4d7c-a8b0-22f63c4c3454", -0.75, Operation.MULTIPLY_TOTAL);
     }
 
     @SubscribeEvent
