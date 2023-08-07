@@ -7,6 +7,9 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
+import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
+import dev.shadowsoffire.placebo.menu.MenuUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -18,11 +21,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
-import dev.shadowsoffire.placebo.container.BlockEntityContainer;
-import dev.shadowsoffire.placebo.container.ContainerUtil;
 
-public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
+public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
 
     public static final String REFORGE_SEED = "apoth_reforge_seed";
 
@@ -77,12 +77,12 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
             seed = this.player.random.nextInt();
             this.player.getPersistentData().putInt(REFORGE_SEED, seed);
         }
-        this.seed[0] = ContainerUtil.split(seed, false);
-        this.seed[1] = ContainerUtil.split(seed, true);
+        this.seed[0] = MenuUtil.split(seed, false);
+        this.seed[1] = MenuUtil.split(seed, true);
     }
 
     public int getSeed() {
-        return ContainerUtil.merge(this.seed[0], this.seed[1], true);
+        return MenuUtil.merge(this.seed[0], this.seed[1], true);
     }
 
     @Override
@@ -123,9 +123,9 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
                 this.needsReset.set(1);
             }
 
-            player.playSound(SoundEvents.EVOKER_CAST_SPELL, 0.99F, this.level().random.nextFloat() * 0.25F + 1F);
-            player.playSound(SoundEvents.AMETHYST_CLUSTER_STEP, 0.34F, this.level().random.nextFloat() * 0.2F + 0.8F);
-            player.playSound(SoundEvents.SMITHING_TABLE_USE, 0.45F, this.level().random.nextFloat() * 0.5F + 0.75F);
+            player.playSound(SoundEvents.EVOKER_CAST_SPELL, 0.99F, this.level.random.nextFloat() * 0.25F + 1F);
+            player.playSound(SoundEvents.AMETHYST_CLUSTER_STEP, 0.34F, this.level.random.nextFloat() * 0.2F + 0.8F);
+            player.playSound(SoundEvents.SMITHING_TABLE_USE, 0.45F, this.level.random.nextFloat() * 0.5F + 0.75F);
             return true;
         }
         return super.clickMenuButton(player, slot);

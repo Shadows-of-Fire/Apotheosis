@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import com.google.common.base.Preconditions;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.placebo.config.Configuration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +32,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.config.Configuration;
 
 /**
  * Generates names for various objects, based on stuff.
@@ -309,7 +309,7 @@ public class NameHelper {
             }
 
             String[] type = { "Armor" };
-            switch (((ArmorItem) stack.getItem()).getSlot()) {
+            switch (((ArmorItem) stack.getItem()).getEquipmentSlot()) {
                 case HEAD:
                     type = helms;
                     break;

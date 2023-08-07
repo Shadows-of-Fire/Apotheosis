@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.village.fletching.arrows;
 
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +16,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class BroadheadArrowItem extends ArrowItem implements IApothArrowItem {
 
-    public BroadheadArrowItem() {
-        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+    public BroadheadArrowItem(Item.Properties props) {
+        super(props);
     }
 
     @Override

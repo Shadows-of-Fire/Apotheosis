@@ -11,6 +11,9 @@ import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
+import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
+import dev.shadowsoffire.placebo.menu.FilteredSlot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -22,11 +25,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
-import dev.shadowsoffire.placebo.container.BlockEntityContainer;
-import dev.shadowsoffire.placebo.container.FilteredSlot;
 
-public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
+public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
 
     protected final Player player;
     protected final InternalItemHandler inputInv = new InternalItemHandler(15);
@@ -61,15 +61,15 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
 
     @Override
     public boolean stillValid(Player player) {
-        if (this.level().isClientSide) return true;
-        return this.level().getBlockState(this.pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get();
+        if (this.level.isClientSide) return true;
+        return this.level.getBlockState(this.pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get();
     }
 
     @Override
-    public void removed(Player pPlayer) {
-        super.removed(pPlayer);
-        if (!this.level().isClientSide) {
-            this.clearContainer(pPlayer, new RecipeWrapper(this.inputInv));
+    public void removed(Player player) {
+        super.removed(player);
+        if (!this.level.isClientSide) {
+            this.clearContainer(player, new RecipeWrapper(this.inputInv));
         }
     }
 
@@ -77,9 +77,9 @@ public class SalvagingMenu extends BlockEntityContainer<SalvagingTableTile> {
     public boolean clickMenuButton(Player player, int id) {
         if (id == 0) {
             this.salvageAll();
-            player.level().playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 0.99F, this.level().random.nextFloat() * 0.25F + 1F);
-            player.level().playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.BLOCKS, 0.34F, this.level().random.nextFloat() * 0.2F + 0.8F);
-            player.level().playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.45F, this.level().random.nextFloat() * 0.5F + 0.75F);
+            this.level.playSound(null, player.blockPosition(), SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 0.99F, this.level.random.nextFloat() * 0.25F + 1F);
+            this.level.playSound(null, player.blockPosition(), SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.BLOCKS, 0.34F, this.level.random.nextFloat() * 0.2F + 0.8F);
+            this.level.playSound(null, player.blockPosition(), SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.45F, this.level.random.nextFloat() * 0.5F + 0.75F);
             return true;
         }
         return super.clickMenuButton(player, id);

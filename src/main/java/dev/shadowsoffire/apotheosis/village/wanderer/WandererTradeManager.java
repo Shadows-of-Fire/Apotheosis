@@ -8,10 +8,10 @@ import java.util.Map;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.trades.AffixTrade;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
+import dev.shadowsoffire.placebo.reload.PlaceboJsonReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraftforge.common.BasicItemListing;
-import dev.shadowsoffire.placebo.json.PlaceboJsonReloadListener;
 
 public class WandererTradeManager extends PlaceboJsonReloadListener<JsonTrade> {
 
@@ -27,13 +27,8 @@ public class WandererTradeManager extends PlaceboJsonReloadListener<JsonTrade> {
 
     @Override
     protected void registerBuiltinSerializers() {
-        this.registerSerializer(Apotheosis.loc("basic_trade"), BasicJsonTrade.SERIALIZER);
+        this.registerSerializer(Apotheosis.loc("basic_trade"), WandererTrade.SERIALIZER);
         this.registerSerializer(Apotheosis.loc("affix"), AffixTrade.SERIALIZER);
-    }
-
-    @Override
-    protected <T extends JsonTrade> void register(ResourceLocation key, T trade) {
-        super.register(key, trade);
     }
 
     @Override

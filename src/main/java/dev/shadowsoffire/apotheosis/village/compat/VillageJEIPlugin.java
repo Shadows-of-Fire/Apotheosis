@@ -39,7 +39,7 @@ public class VillageJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration reg) {
         if (!Apotheosis.enableVillage) return;
-        reg.addRecipes(FletchingCategory.TYPE, Minecraft.getInstance().level().getRecipeManager().getRecipes().stream().filter(r -> r.getType() == RecipeTypes.FLETCHING).map(r -> (FletchingRecipe) r).toList());
+        reg.addRecipes(FletchingCategory.TYPE, Minecraft.getInstance().level.getRecipeManager().getRecipes().stream().filter(r -> r.getType() == RecipeTypes.FLETCHING).map(r -> (FletchingRecipe) r).toList());
     }
 
     @Override

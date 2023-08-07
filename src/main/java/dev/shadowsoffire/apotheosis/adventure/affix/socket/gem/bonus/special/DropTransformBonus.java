@@ -14,10 +14,13 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs.IngredientCodec;
+import dev.shadowsoffire.placebo.json.ItemAdapter;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
@@ -26,16 +29,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.fml.util.thread.EffectiveSide;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs.IngredientCodec;
-import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class DropTransformBonus extends GemBonus {
 
     public static Codec<DropTransformBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
-            TagKey.codec(Registry.BLOCK_REGISTRY).fieldOf("blocks").forGetter(a -> a.tag),
+            TagKey.codec(Registries.BLOCK).fieldOf("blocks").forGetter(a -> a.tag),
             IngredientCodec.INSTANCE.fieldOf("inputs").forGetter(a -> a.inputs),
             ItemAdapter.CODEC.fieldOf("output").forGetter(a -> a.output),
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),

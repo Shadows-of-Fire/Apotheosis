@@ -17,6 +17,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -25,7 +26,7 @@ import net.minecraftforge.fml.DistExecutor;
 
 public class FletchingContainer extends AbstractContainerMenu {
 
-    protected final CraftingContainer craftMatrix = new CraftingContainer(this, 1, 3);
+    protected final CraftingContainer craftMatrix = new TransientCraftingContainer(this, 1, 3);
     protected final ResultContainer craftResult = new ResultContainer();
     protected final Level world;
     protected final BlockPos pos;
@@ -67,7 +68,7 @@ public class FletchingContainer extends AbstractContainerMenu {
             Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(RecipeTypes.FLETCHING, this.craftMatrix, this.world);
             if (optional.isPresent()) {
                 FletchingRecipe icraftingrecipe = optional.get();
-                itemstack = icraftingrecipe.assemble(this.craftMatrix);
+                itemstack = icraftingrecipe.assemble(this.craftMatrix, player.level().registryAccess());
             }
 
             this.craftResult.setItem(0, itemstack);
@@ -149,7 +150,7 @@ public class FletchingContainer extends AbstractContainerMenu {
         public void onTake(Player thePlayer, ItemStack stack) {
             this.checkTakeAchievements(stack);
             net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
-            NonNullList<ItemStack> nonnulllist = thePlayer.level().getRecipeManager().getRemainingItemsFor(RecipeTypes.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level);
+            NonNullList<ItemStack> nonnulllist = thePlayer.level().getRecipeManager().getRemainingItemsFor(RecipeTypes.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level());
             net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
             for (int i = 0; i < nonnulllist.size(); ++i) {
                 ItemStack itemstack = FletchingContainer.this.craftMatrix.getItem(i);
@@ -163,7 +164,7 @@ public class FletchingContainer extends AbstractContainerMenu {
                     if (itemstack.isEmpty()) {
                         FletchingContainer.this.craftMatrix.setItem(i, itemstack1);
                     }
-                    else if (ItemStack.isSame(itemstack, itemstack1) && ItemStack.tagMatches(itemstack, itemstack1)) {
+                    else if (ItemStack.isSameItemSameTags(itemstack, itemstack1)) {
                         itemstack1.grow(itemstack.getCount());
                         FletchingContainer.this.craftMatrix.setItem(i, itemstack1);
                     }

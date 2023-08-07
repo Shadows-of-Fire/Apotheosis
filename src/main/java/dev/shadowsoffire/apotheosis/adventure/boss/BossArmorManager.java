@@ -10,10 +10,10 @@ import javax.annotation.Nullable;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.util.GearSet;
 import dev.shadowsoffire.apotheosis.util.GearSet.SetPredicate;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener;
 
 public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
 

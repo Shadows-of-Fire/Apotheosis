@@ -46,7 +46,6 @@ import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.garden.EnderLeadItem;
-import dev.shadowsoffire.apotheosis.potion.LuckyFootItem;
 import dev.shadowsoffire.apotheosis.potion.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -121,7 +120,7 @@ public class Apoth {
 
     public static final class Items {
         public static final RegistryObject<PotionCharmItem> POTION_CHARM = R.item("POTION_CHARM");
-        public static final RegistryObject<LuckyFootItem> LUCKY_FOOT = R.item("LUCKY_FOOT");
+        public static final RegistryObject<Item> LUCKY_FOOT = R.item("LUCKY_FOOT");
         public static final RegistryObject<ObsidianArrowItem> OBSIDIAN_ARROW = R.item("OBSIDIAN_ARROW");
         public static final RegistryObject<BroadheadArrowItem> BROADHEAD_ARROW = R.item("BROADHEAD_ARROW");
         public static final RegistryObject<ExplosiveArrowItem> EXPLOSIVE_ARROW = R.item("EXPLOSIVE_ARROW");

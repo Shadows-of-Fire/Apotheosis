@@ -16,6 +16,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
@@ -252,6 +253,11 @@ public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
     @Override
     public void gameEvent(GameEvent pEvent, Vec3 pPosition, Context pContext) {
         this.wrapped.gameEvent(pEvent, pPosition, pContext);
+    }
+
+    @Override
+    public FeatureFlagSet enabledFeatures() {
+        return this.wrapped.enabledFeatures();
     }
 
 }

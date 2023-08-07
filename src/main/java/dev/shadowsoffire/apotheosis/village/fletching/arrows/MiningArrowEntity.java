@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -67,7 +68,7 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -93,7 +94,7 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
         BlockPos blockpos = this.blockPosition();
         BlockState blockstate = this.level().getBlockState(blockpos);
         if (!blockstate.isAir() && !noClip) {
-            VoxelShape voxelshape = blockstate.getCollisionShape(this.level, blockpos);
+            VoxelShape voxelshape = blockstate.getCollisionShape(this.level(), blockpos);
             if (!voxelshape.isEmpty()) {
                 Vec3 vec31 = this.position();
 
@@ -215,7 +216,7 @@ public class MiningArrowEntity extends AbstractArrow implements IEntityAdditiona
     @SuppressWarnings("deprecation")
     protected void breakBlock(BlockPos pos) {
         if (!this.level().isClientSide && !this.level().getBlockState(pos).isAir()) {
-            if (BlockUtil.breakExtraBlock((ServerLevel) this.level, pos, this.breakerItem, this.playerId)) {
+            if (BlockUtil.breakExtraBlock((ServerLevel) this.level(), pos, this.breakerItem, this.playerId)) {
                 if (++this.blocksBroken >= 12) {
                     this.discard();
                 }

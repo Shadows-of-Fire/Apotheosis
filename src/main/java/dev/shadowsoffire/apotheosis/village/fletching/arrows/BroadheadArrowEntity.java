@@ -1,8 +1,10 @@
 package dev.shadowsoffire.apotheosis.village.fletching.arrows;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.core.mobfx.api.MFEffects;
+import dev.shadowsoffire.attributeslib.api.ALObjects;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,7 +37,7 @@ public class BroadheadArrowEntity extends Arrow {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -51,17 +53,18 @@ public class BroadheadArrowEntity extends Arrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
-        MobEffectInstance bleed = living.getEffect(MFEffects.BLEEDING.get());
+        MobEffect bleeding = ALObjects.MobEffects.BLEEDING.get();
+        MobEffectInstance bleed = living.getEffect(bleeding);
         if (bleed != null) {
-            living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+            living.addEffect(new MobEffectInstance(bleeding, bleed.getDuration() + 60, bleed.getAmplifier() + 1));
         }
         else {
-            living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
+            living.addEffect(new MobEffectInstance(bleeding, 300));
         }
     }
 
     public BroadheadArrowEntity bleed() {
-        this.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
+        this.addEffect(new MobEffectInstance(ALObjects.MobEffects.BLEEDING.get(), 300));
         return this;
     }
 }

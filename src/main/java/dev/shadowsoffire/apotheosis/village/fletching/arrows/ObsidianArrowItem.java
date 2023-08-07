@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.village.fletching.arrows;
 
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +16,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ObsidianArrowItem extends ArrowItem implements IApothArrowItem {
 
-    public ObsidianArrowItem() {
-        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+    public ObsidianArrowItem(Item.Properties props) {
+        super(props);
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +22,7 @@ public class MiningArrowItem extends ArrowItem implements IApothArrowItem {
     protected final MiningArrowEntity.Type arrowType;
 
     public MiningArrowItem(Supplier<Item> breakerItem, MiningArrowEntity.Type arrowType) {
-        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+        super(new Item.Properties());
         this.breakerItem = breakerItem;
         this.arrowType = arrowType;
     }

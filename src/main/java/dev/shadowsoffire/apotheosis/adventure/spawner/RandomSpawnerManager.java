@@ -14,12 +14,12 @@ import com.google.gson.reflect.TypeToken;
 import com.mojang.serialization.JsonOps;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.placebo.json.NBTAdapter;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.SpawnData;
-import dev.shadowsoffire.placebo.json.NBTAdapter;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener;
 
 public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem> {
 

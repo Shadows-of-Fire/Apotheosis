@@ -9,8 +9,11 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisConstruction;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisReloadEvent;
-import dev.shadowsoffire.apotheosis.core.mobfx.api.MFEffects;
+import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.apotheosis.potion.compat.CuriosCompat;
+import dev.shadowsoffire.attributeslib.api.ALObjects;
+import dev.shadowsoffire.placebo.config.Configuration;
+import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -35,8 +38,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.util.RegistryEvent.Register;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 
 public class PotionModule {
@@ -120,7 +121,7 @@ public class PotionModule {
 
     @SubscribeEvent
     public void items(Register<Item> e) {
-        e.getRegistry().registerAll(new LuckyFootItem(), "lucky_foot", new PotionCharmItem(), "potion_charm");
+        e.getRegistry().registerAll(new GlowyItem(new Item.Properties()), "lucky_foot", new PotionCharmItem(), "potion_charm");
     }
 
     @SubscribeEvent
@@ -142,18 +143,18 @@ public class PotionModule {
             new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 3600)), "wither",
             new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 9600)), "long_wither",
             new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 1800, 1)), "strong_wither",
-            new Potion("sundering", new MobEffectInstance(MFEffects.SUNDERING.get(), 3600)), "sundering",
-            new Potion("sundering", new MobEffectInstance(MFEffects.SUNDERING.get(), 9600)), "long_sundering",
-            new Potion("sundering", new MobEffectInstance(MFEffects.SUNDERING.get(), 1800, 1)), "strong_sundering",
-            new Potion("knowledge", new MobEffectInstance(MFEffects.KNOWLEDGE.get(), 2400)), "knowledge",
-            new Potion("knowledge", new MobEffectInstance(MFEffects.KNOWLEDGE.get(), 4800)), "long_knowledge",
-            new Potion("knowledge", new MobEffectInstance(MFEffects.KNOWLEDGE.get(), 1200, 1)), "strong_knowledge",
-            new Potion("vitality", new MobEffectInstance(MFEffects.VITALITY.get(), 4800)), "vitality",
-            new Potion("vitality", new MobEffectInstance(MFEffects.VITALITY.get(), 14400)), "long_vitality",
-            new Potion("vitality", new MobEffectInstance(MFEffects.VITALITY.get(), 3600, 1)), "strong_vitality",
-            new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 4800)), "grievous",
-            new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 14400)), "long_grievous",
-            new Potion("grievous", new MobEffectInstance(MFEffects.GRIEVOUS.get(), 3600, 1)), "strong_grievous");
+            new Potion("sundering", new MobEffectInstance(ALObjects.MobEffects.SUNDERING.get(), 3600)), "sundering",
+            new Potion("sundering", new MobEffectInstance(ALObjects.MobEffects.SUNDERING.get(), 9600)), "long_sundering",
+            new Potion("sundering", new MobEffectInstance(ALObjects.MobEffects.SUNDERING.get(), 1800, 1)), "strong_sundering",
+            new Potion("knowledge", new MobEffectInstance(ALObjects.MobEffects.KNOWLEDGE.get(), 2400)), "knowledge",
+            new Potion("knowledge", new MobEffectInstance(ALObjects.MobEffects.KNOWLEDGE.get(), 4800)), "long_knowledge",
+            new Potion("knowledge", new MobEffectInstance(ALObjects.MobEffects.KNOWLEDGE.get(), 1200, 1)), "strong_knowledge",
+            new Potion("vitality", new MobEffectInstance(ALObjects.MobEffects.VITALITY.get(), 4800)), "vitality",
+            new Potion("vitality", new MobEffectInstance(ALObjects.MobEffects.VITALITY.get(), 14400)), "long_vitality",
+            new Potion("vitality", new MobEffectInstance(ALObjects.MobEffects.VITALITY.get(), 3600, 1)), "strong_vitality",
+            new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS.get(), 4800)), "grievous",
+            new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS.get(), 14400)), "long_grievous",
+            new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS.get(), 3600, 1)), "strong_grievous");
 
     }
 
@@ -172,7 +173,7 @@ public class PotionModule {
         if (e.getEntity() instanceof Rabbit rabbit) {
             if (rabbit.level().random.nextFloat() < 0.045F + 0.045F * e.getLootingLevel()) {
                 e.getDrops().clear();
-                e.getDrops().add(new ItemEntity(rabbit.level, rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(Apoth.Items.LUCKY_FOOT.get())));
+                e.getDrops().add(new ItemEntity(rabbit.level(), rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(Apoth.Items.LUCKY_FOOT.get())));
             }
         }
     }

@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -97,7 +98,7 @@ public class SpawnerModifier implements Recipe<Container> {
 
     @Override
     @Deprecated
-    public ItemStack assemble(Container pContainer) {
+    public ItemStack assemble(Container pContainer, RegistryAccess regs) {
         return ItemStack.EMPTY;
     }
 
@@ -109,7 +110,7 @@ public class SpawnerModifier implements Recipe<Container> {
 
     @Override
     @Deprecated
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess regs) {
         return ItemStack.EMPTY;
     }
 

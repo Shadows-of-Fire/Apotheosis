@@ -6,10 +6,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -45,7 +46,7 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv) {
+    public ItemStack assemble(CraftingContainer inv, RegistryAccess reg) {
         return this.output.copy();
     }
 
@@ -55,7 +56,7 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess reg) {
         return this.output;
     }
 
@@ -77,6 +78,10 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.inputs;
+    }
+
+    public ItemStack getOutput() {
+        return this.output;
     }
 
     public static class Serializer implements RecipeSerializer<FletchingRecipe> {

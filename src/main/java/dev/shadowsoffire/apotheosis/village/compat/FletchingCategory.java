@@ -61,7 +61,7 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
         for (int i = 0; i < 3; i++) {
             builder.addSlot(RecipeIngredientRole.INPUT, 42, 1 + i * 18).addIngredients(VanillaTypes.ITEM_STACK, inputs.get(i));
         }
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 19).addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 19).addIngredient(VanillaTypes.ITEM_STACK, recipe.getOutput());
     }
 
 }

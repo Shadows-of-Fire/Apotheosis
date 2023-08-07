@@ -2,6 +2,8 @@ package dev.shadowsoffire.apotheosis.util;
 
 import java.util.function.Supplier;
 
+import dev.shadowsoffire.placebo.network.MessageHelper;
+import dev.shadowsoffire.placebo.network.MessageProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -9,8 +11,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent.Context;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
-import dev.shadowsoffire.placebo.network.MessageHelper;
-import dev.shadowsoffire.placebo.network.MessageProvider;
 
 public class ParticleMessage implements MessageProvider<ParticleMessage> {
 
@@ -59,9 +59,9 @@ public class ParticleMessage implements MessageProvider<ParticleMessage> {
 
     @Override
     public void handle(ParticleMessage msg, Supplier<Context> ctx) {
-        MessageHelper.handlePacket(() -> () -> {
+        MessageHelper.handlePacket(() -> {
             for (int i = 0; i < msg.count; i++)
-                Minecraft.getInstance().level().addParticle((ParticleOptions) msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
+                Minecraft.getInstance().level.addParticle((ParticleOptions) msg.type, msg.x, msg.y, msg.z, msg.velX, msg.velY, msg.velZ);
         }, ctx);
     }
 

@@ -23,11 +23,16 @@ import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.util.ItemAccess;
+import dev.shadowsoffire.placebo.events.AnvilLandEvent;
+import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
+import dev.shadowsoffire.placebo.events.ItemUseEvent;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -58,10 +63,6 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import dev.shadowsoffire.placebo.events.AnvilLandEvent;
-import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
-import dev.shadowsoffire.placebo.events.ItemUseEvent;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class AdventureEvents {
 
@@ -101,7 +102,7 @@ public class AdventureEvents {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void preventBossSuffocate(LivingHurtEvent e) {
-        if (e.getSource() == DamageSource.IN_WALL && e.getEntity().getPersistentData().contains("apoth.boss")) {
+        if (e.getSource().is(DamageTypes.IN_WALL) && e.getEntity().getPersistentData().contains("apoth.boss")) {
             e.setCanceled(true);
         }
     }
@@ -145,7 +146,7 @@ public class AdventureEvents {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onDamage(LivingHurtEvent e) {
-        Apoth.Affixes.MAGICAL.ifPresent(afx -> afx.onHurt(e));
+        Apoth.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(e));
         DamageSource src = e.getSource();
         LivingEntity ent = e.getEntity();
         float amount = e.getAmount();
@@ -206,12 +207,12 @@ public class AdventureEvents {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void drops(LivingDropsEvent e) {
-        Apoth.Affixes.FESTIVE.ifPresent(afx -> afx.drops(e));
+        Apoth.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.drops(e));
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void deathMark(LivingDeathEvent e) {
-        Apoth.Affixes.FESTIVE.ifPresent(afx -> afx.markEquipment(e));
+        Apoth.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.markEquipment(e));
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -221,22 +222,22 @@ public class AdventureEvents {
 
     @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
     public void festive_removeMarker(LivingDropsEvent e) {
-        Apoth.Affixes.FESTIVE.ifPresent(afx -> afx.removeMarker(e));
+        Apoth.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.removeMarker(e));
     }
 
     @SubscribeEvent
     public void harvest(HarvestCheck e) {
-        Apoth.Affixes.OMNETIC.ifPresent(afx -> afx.harvest(e));
+        Apoth.Affixes.OMNETIC.getOptional().ifPresent(afx -> afx.harvest(e));
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void speed(BreakSpeed e) {
-        Apoth.Affixes.OMNETIC.ifPresent(afx -> afx.speed(e));
+        Apoth.Affixes.OMNETIC.getOptional().ifPresent(afx -> afx.speed(e));
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onBreak(BlockEvent.BreakEvent e) {
-        Apoth.Affixes.RADIAL.ifPresent(afx -> afx.onBreak(e));
+        Apoth.Affixes.RADIAL.getOptional().ifPresent(afx -> afx.onBreak(e));
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

@@ -4,9 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -34,12 +33,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class PotionCharmItem extends Item {
+public class PotionCharmItem extends Item implements ITabFiller {
 
     public static final Set<ResourceLocation> EXTENDED_POTIONS = new HashSet<>();
 
     public PotionCharmItem() {
-        super(new Item.Properties().stacksTo(1).durability(192).tab(Apotheosis.APOTH_GROUP).setNoRepair());
+        super(new Item.Properties().stacksTo(1).durability(192).setNoRepair());
     }
 
     @Override
@@ -143,12 +142,10 @@ public class PotionCharmItem extends Item {
     }
 
     @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (this.allowedIn(group)) {
-            for (Potion potion : ForgeRegistries.POTIONS) {
-                if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
-                    items.add(PotionUtils.setPotion(new ItemStack(this), potion));
-                }
+    public void fillItemCategory(CreativeModeTab group, CreativeModeTab.Output out) {
+        for (Potion potion : ForgeRegistries.POTIONS) {
+            if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
+                out.accept(PotionUtils.setPotion(new ItemStack(this), potion));
             }
         }
     }

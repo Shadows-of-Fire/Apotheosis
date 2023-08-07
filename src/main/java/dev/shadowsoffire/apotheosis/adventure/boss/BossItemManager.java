@@ -5,10 +5,10 @@ import java.util.Map;
 import com.google.gson.JsonElement;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener;
 
 public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
 

@@ -9,6 +9,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
+import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,8 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
-import dev.shadowsoffire.placebo.container.PlaceboContainerMenu;
 
 public class GemCuttingMenu extends PlaceboContainerMenu {
 
@@ -75,7 +75,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
                     ItemStack out = r.getResult(gem, left, bot, right);
                     r.decrementInputs(gem, left, bot, right);
                     this.inv.setStackInSlot(0, out);
-                    this.level().playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level().random.nextFloat()));
+                    this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
                     AdvancementTriggers.GEM_CUT.trigger((ServerPlayer) player, out, GemItem.getLootRarity(out).id());
                     return true;
                 }

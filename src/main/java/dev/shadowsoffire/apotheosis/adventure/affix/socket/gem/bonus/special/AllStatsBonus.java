@@ -16,8 +16,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -25,15 +27,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
-import dev.shadowsoffire.placebo.codec.EnumCodec;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class AllStatsBonus extends GemBonus {
 
     public static Codec<AllStatsBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
-            new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
+            PlaceboCodecs.enumCodec(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, AllStatsBonus::new));
 
@@ -47,7 +47,7 @@ public class AllStatsBonus extends GemBonus {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;
         this.values = values;
-        Registry.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(this.attributes::add);
+        BuiltInRegistries.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(this.attributes::add);
     }
 
     @Override

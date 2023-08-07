@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -17,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ApothSpawnerItem extends BlockItem {
 
     public ApothSpawnerItem() {
-        super(Blocks.SPAWNER, new Item.Properties().tab(CreativeModeTab.TAB_MISC));
+        super(Blocks.SPAWNER, new Item.Properties());
     }
 
     @Override

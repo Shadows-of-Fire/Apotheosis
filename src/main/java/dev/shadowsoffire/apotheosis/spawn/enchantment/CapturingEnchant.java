@@ -48,7 +48,7 @@ public class CapturingEnchant extends Enchantment {
             if (SpawnerModule.bannedMobs.contains(EntityType.getKey(killed.getType()))) return;
             if (killed.level().random.nextFloat() < level / 250F) {
                 ItemStack egg = new ItemStack(ForgeSpawnEggItem.fromEntityType(killed.getType()));
-                e.getDrops().add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));
+                e.getDrops().add(new ItemEntity(killed.level(), killed.getX(), killed.getY(), killed.getZ(), egg));
             }
         }
     }

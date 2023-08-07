@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.village.fletching;
 
+import dev.shadowsoffire.placebo.util.IReplacementBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -14,16 +15,15 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import dev.shadowsoffire.placebo.util.IReplacementBlock;
 
 public class ApothFletchingBlock extends FletchingTableBlock implements IReplacementBlock {
 
     public static final Component NAME = Component.translatable("apotheosis.recipes.fletching");
 
     public ApothFletchingBlock() {
-        super(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5F).sound(SoundType.WOOD));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().strength(2.5F).sound(SoundType.WOOD));
     }
 
     @Override

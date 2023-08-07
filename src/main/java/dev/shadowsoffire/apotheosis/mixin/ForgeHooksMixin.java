@@ -8,13 +8,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
+import dev.shadowsoffire.apotheosis.Apoth.LootTables;
+import dev.shadowsoffire.placebo.Placebo;
+import dev.shadowsoffire.placebo.reload.PlaceboJsonReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.conditions.ICondition.IContext;
-import dev.shadowsoffire.placebo.Placebo;
-import dev.shadowsoffire.placebo.json.PlaceboJsonReloadListener;
 
 @Mixin(ForgeHooks.class)
 public class ForgeHooksMixin {

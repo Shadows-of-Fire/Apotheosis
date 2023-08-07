@@ -6,6 +6,9 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.village.wanderer.JsonTrade;
+import dev.shadowsoffire.placebo.json.ItemAdapter;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -13,9 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
-import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.TypeKeyed.TypeKeyedBase;
 
 public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
 
@@ -33,7 +33,7 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
         if (!(pTrader.level() instanceof ServerLevel)) return null;
         Player nearest = pTrader.level().getNearestPlayer(pTrader, -1);
         if (nearest == null) return null;
-        ItemStack affixItem = LootController.createRandomLootItem(pRand, null, nearest, (ServerLevel) pTrader.level);
+        ItemStack affixItem = LootController.createRandomLootItem(pRand, null, nearest, (ServerLevel) pTrader.level());
         if (affixItem.isEmpty()) return null;
         affixItem.getTag().putBoolean("apoth_merchant", true);
         ItemStack stdItem = affixItem.copy();

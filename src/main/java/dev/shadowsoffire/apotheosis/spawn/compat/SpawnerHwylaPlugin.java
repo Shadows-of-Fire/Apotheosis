@@ -9,10 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BaseSpawner;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
@@ -24,7 +21,7 @@ import snownee.jade.api.WailaPlugin;
 import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
-public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockEntity> {
+public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
 
     public static final String STATS = "spw_stats";
 
@@ -60,8 +57,8 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
     }
 
     @Override
-    public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean arg4) {
-        if (te instanceof ApothSpawnerTile spw) {
+    public void appendServerData(CompoundTag tag, BlockAccessor access) {
+        if (access.getBlockEntity() instanceof ApothSpawnerTile spw) {
             BaseSpawner logic = spw.getSpawner();
 
             tag.putIntArray(STATS,

@@ -19,6 +19,10 @@ import dev.shadowsoffire.apotheosis.village.fletching.arrows.MiningArrowItem;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import dev.shadowsoffire.apotheosis.village.wanderer.WandererReplacements;
+import dev.shadowsoffire.placebo.config.Configuration;
+import dev.shadowsoffire.placebo.menu.MenuUtil;
+import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.world.entity.EntityType;
@@ -29,8 +33,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -38,9 +42,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import dev.shadowsoffire.placebo.util.RegistryEvent.Register;
 
 public class VillageModule {
 
@@ -49,7 +50,7 @@ public class VillageModule {
 
     public static Configuration config;
 
-    public static BlockInteraction expArrowMode = BlockInteraction.DESTROY;
+    public static ExplosionInteraction expArrowMode = ExplosionInteraction.BLOCK;
 
     @SubscribeEvent
     public void setup(FMLCommonSetupEvent e) {
@@ -60,7 +61,7 @@ public class VillageModule {
         WandererReplacements.load(config);
 
         boolean blockDmg = config.getBoolean("Explosive Arrow Block Damage", "arrows", true, "If explosive arrows can break blocks.\nServer-authoritative.");
-        expArrowMode = blockDmg ? BlockInteraction.DESTROY : BlockInteraction.NONE;
+        expArrowMode = blockDmg ? ExplosionInteraction.BLOCK : ExplosionInteraction.NONE;
         if (config.hasChanged()) config.save();
 
         e.enqueueWork(() -> {
@@ -96,9 +97,9 @@ public class VillageModule {
     public void items(Register<Item> e) {
 
         e.getRegistry().registerAll(
-            new ObsidianArrowItem(), "obsidian_arrow",
-            new BroadheadArrowItem(), "broadhead_arrow",
-            new ExplosiveArrowItem(), "explosive_arrow",
+            new ObsidianArrowItem(new Item.Properties()), "obsidian_arrow",
+            new BroadheadArrowItem(new Item.Properties()), "broadhead_arrow",
+            new ExplosiveArrowItem(new Item.Properties()), "explosive_arrow",
             new MiningArrowItem(() -> Items.IRON_PICKAXE, MiningArrowEntity.Type.IRON), "iron_mining_arrow",
             new MiningArrowItem(() -> Items.DIAMOND_PICKAXE, MiningArrowEntity.Type.DIAMOND), "diamond_mining_arrow");
     }
@@ -143,6 +144,6 @@ public class VillageModule {
 
     @SubscribeEvent
     public void containers(Register<MenuType<?>> e) {
-        e.getRegistry().register(new MenuType<>(FletchingContainer::new), "fletching");
+        e.getRegistry().register(MenuUtil.type(FletchingContainer::new), "fletching");
     }
 }

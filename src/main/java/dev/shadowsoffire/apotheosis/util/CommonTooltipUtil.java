@@ -9,9 +9,9 @@ import java.util.function.Consumer;
 import com.google.common.base.Predicates;
 
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.core.attributeslib.AttributesLib;
-import dev.shadowsoffire.apotheosis.core.attributeslib.api.IFormattableAttribute;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager;
+import dev.shadowsoffire.attributeslib.AttributesLib;
+import dev.shadowsoffire.attributeslib.api.IFormattableAttribute;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.ChatFormatting;

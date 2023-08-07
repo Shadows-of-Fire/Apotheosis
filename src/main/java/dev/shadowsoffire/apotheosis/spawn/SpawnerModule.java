@@ -18,13 +18,17 @@ import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerItem;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
+import dev.shadowsoffire.placebo.config.Configuration;
+import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
+import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -45,10 +49,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import dev.shadowsoffire.placebo.util.RegistryEvent.Register;
 
 public class SpawnerModule {
 
@@ -59,17 +59,20 @@ public class SpawnerModule {
 
     @SubscribeEvent
     public void setup(FMLCommonSetupEvent e) {
-        BlockEntityType.MOB_SPAWNER.factory = ApothSpawnerTile::new;
-        BlockEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
         MinecraftForge.EVENT_BUS.addListener(this::dropsEvent);
         MinecraftForge.EVENT_BUS.addListener(this::handleUseItem);
         MinecraftForge.EVENT_BUS.addListener(this::reload);
         MinecraftForge.EVENT_BUS.addListener(this::handleTooltips);
         MinecraftForge.EVENT_BUS.addListener(this::tickDumbMobs);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::dumbMobsCantTeleport);
-        this.reload(null);
-        ObfuscationReflectionHelper.setPrivateValue(Item.class, Items.SPAWNER, CreativeModeTab.TAB_MISC, "f_41377_");
-        if (ModList.get().isLoaded("theoneprobe")) SpawnerTOPPlugin.register();
+        e.enqueueWork(() -> {
+            BlockEntityType.MOB_SPAWNER.factory = ApothSpawnerTile::new;
+            BlockEntityType.MOB_SPAWNER.validBlocks = ImmutableSet.of(Blocks.SPAWNER);
+
+            this.reload(null);
+            TabFillingRegistry.registerSimple(Items.SPAWNER, CreativeModeTabs.TOOLS_AND_UTILITIES);
+            if (ModList.get().isLoaded("theoneprobe")) SpawnerTOPPlugin.register();
+        });
     }
 
     @SubscribeEvent

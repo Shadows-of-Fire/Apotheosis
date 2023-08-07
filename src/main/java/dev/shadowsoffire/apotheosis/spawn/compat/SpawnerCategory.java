@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -23,7 +21,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -78,36 +76,32 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
     }
 
     @Override
-    public void draw(SpawnerModifier recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(SpawnerModifier recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gfx, double mouseX, double mouseY) {
         if (recipe.getOffhandInput() == Ingredient.EMPTY) {
-            GuiComponent.blit(stack, 1, 31, 0, 0, 88, 28, 34, 256, 256);
+            gfx.blit(TEXTURES, 1, 31, 0, 0, 88, 28, 34, 256, 256);
         }
 
         Screen scn = Minecraft.getInstance().screen;
+        Font font = Minecraft.getInstance().font;
         if (scn == null) return; // We need this to render tooltips, bail if its not there.
         if (mouseX >= -1 && mouseX < 9 && mouseY >= 13 && mouseY < 13 + 12) {
-            GuiComponent.blit(stack, -1, 13, 0, 0, 75, 10, 12, 256, 256);
-            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.mainhand")), (int) mouseX, (int) mouseY);
+            gfx.blit(TEXTURES, -1, 13, 0, 0, 75, 10, 12, 256, 256);
+            gfx.renderComponentTooltip(font, Arrays.asList(Component.translatable("misc.apotheosis.mainhand")), (int) mouseX, (int) mouseY);
         }
         else if (mouseX >= -1 && mouseX < 9 && mouseY >= 50 && mouseY < 50 + 12 && recipe.getOffhandInput() != Ingredient.EMPTY) {
-            GuiComponent.blit(stack, -1, 50, 0, 0, 75, 10, 12, 256, 256);
-            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.offhand"), Component.translatable("misc.apotheosis.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX, (int) mouseY);
+            gfx.blit(TEXTURES, -1, 50, 0, 0, 75, 10, 12, 256, 256);
+            gfx.renderComponentTooltip(font, Arrays.asList(Component.translatable("misc.apotheosis.offhand"), Component.translatable("misc.apotheosis.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX, (int) mouseY);
         }
         else if (mouseX >= 33 && mouseX < 33 + 16 && mouseY >= 30 && mouseY < 30 + 16) {
-            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.rclick_spawner")), (int) mouseX, (int) mouseY);
+            gfx.renderComponentTooltip(font, Arrays.asList(Component.translatable("misc.apotheosis.rclick_spawner")), (int) mouseX, (int) mouseY);
         }
 
-        PoseStack mvStack = RenderSystem.getModelViewStack();
+        PoseStack mvStack = gfx.pose();
         mvStack.pushPose();
-        Matrix4f mvMatrix = mvStack.last().pose();
-        mvMatrix.setIdentity();
-        mvMatrix.multiply(stack.last().pose());
-        mvStack.translate(0, 0.5, -2000);
-        Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(new ItemStack(Items.SPAWNER), 31, 29);
+        mvStack.translate(0, 0.5, 0);
+        gfx.renderFakeItem(new ItemStack(Items.SPAWNER), 31, 29);
         mvStack.popPose();
-        RenderSystem.applyModelViewMatrix();
 
-        Font font = Minecraft.getInstance().font;
         int top = 75 / 2 - recipe.getStatModifiers().size() * (font.lineHeight + 2) / 2 + 2;
         int left = 168;
         for (StatModifier<?> s : recipe.getStatModifiers()) {
@@ -118,7 +112,7 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
             Component msg = Component.translatable("misc.apotheosis.concat", value, s.stat.name());
             int width = font.width(msg);
             boolean hover = mouseX >= left - width && mouseX < left && mouseY >= top && mouseY < top + font.lineHeight + 1;
-            font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
+            gfx.drawString(font, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333, false);
 
             int maxWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
             maxWidth = maxWidth - (maxWidth - 210) / 2 - 210;
@@ -132,16 +126,16 @@ public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
                     if (((Number) s.min).intValue() > 0) list.add(Component.translatable("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));
                     if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.apotheosis.max_value", s.max).withStyle(ChatFormatting.GRAY));
                 }
-                renderComponentTooltip(scn, stack, list, left + 6, (int) mouseY, maxWidth, font);
+                renderComponentTooltip(scn, gfx, list, left + 6, (int) mouseY, maxWidth, font);
             }
 
             top += font.lineHeight + 2;
         }
     }
 
-    private static void renderComponentTooltip(Screen scn, PoseStack stack, List<Component> list, int x, int y, int maxWidth, Font font) {
+    private static void renderComponentTooltip(Screen scn, GuiGraphics gfx, List<Component> list, int x, int y, int maxWidth, Font font) {
         List<FormattedText> text = list.stream().map(c -> font.getSplitter().splitLines(c, maxWidth, c.getStyle())).flatMap(List::stream).toList();
-        scn.renderComponentTooltip(stack, text, x, y, font);
+        gfx.renderComponentTooltip(font, text, x, y, ItemStack.EMPTY);
     }
 
 }
