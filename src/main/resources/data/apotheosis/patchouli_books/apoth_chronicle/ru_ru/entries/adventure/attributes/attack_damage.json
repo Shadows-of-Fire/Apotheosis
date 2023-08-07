@@ -1,0 +1,13 @@
+{
+    "name": "Урон от Атаки",
+    "icon": "minecraft:diamond_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Урон от Атаки$() это атрибут, который контролирует, какой урон наносят ваши атаки.$(p)Как правило, оружие обеспечивает это состояние."
+        }
+	]
+}

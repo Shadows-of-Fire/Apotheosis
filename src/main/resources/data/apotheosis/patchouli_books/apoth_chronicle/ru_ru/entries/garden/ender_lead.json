@@ -1,0 +1,18 @@
+{
+    "name": "Эндер Поводок",
+    "icon": "apotheosis:ender_lead",
+    "category": "apotheosis:garden/garden",
+	"flag": "apotheosis:garden",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Эндер Поводок это предмет, который позволяет вам захватывать сельскохозяйственных животных.$(p)Ударьте животное поводком, чтобы захватить его, и щелкните правой кнопкой мыши, чтобы отпустить.$(p)Сельскохозяйственными животными обычно являются только те, которых можно разводить."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:ender_lead",
+			"text": ""
+		}
+	]
+}
