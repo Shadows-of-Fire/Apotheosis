@@ -512,8 +512,8 @@
 	"item.apotheosis.mythic_material": "Выкованная Богом Жемчужина",
 	"item.apotheosis.sigil_of_socketing": "Знак Вставки",
 	"item.apotheosis.superior_sigil_of_socketing": "Превосходный Знак Вставки",
-	"item.apotheosis.sigil_of_enhancement": "[NYI] Знак Усиления",
-	"item.apotheosis.superior_sigil_of_enhancement": "[NYI] Превосходный Знак Усиления",
+	"item.apotheosis.sigil_of_enhancement": "[ЕНР] Знак Усиления",
+	"item.apotheosis.superior_sigil_of_enhancement": "[ЕНР] Превосходный Знак Усиления",
 
 	"block.apotheosis.boss_spawner": "Рассадник Босса",
 	"block.apotheosis.gem_cutting_table": "Стол для Резки Самоцветов",
@@ -588,8 +588,8 @@
 	"info.apotheosis.boss_modifiers": "Модификаторы Боссов:",
 	"info.apotheosis.rarity_material": "Редкость Материала (%s)",
 	"info.apotheosis.gem_crushing": "Драгоценная Пыль получается, если уронить любой Апофатический Самоцвет в мире и заставить на него упасть Наковальню.",
-	"info.apotheosis.gem_extraction": "Используется на Кузнечном Столе для извлечения Апофатических самоцветов.\n\nThe предметы будут уничтожены в процессе.",
-	"info.apotheosis.gem_expulsion": "Используется на Кузнечном Столе для извлечения Апофатических самоцветов.\n\nThe самоцветы будут уничтожены в процессе.",
+	"info.apotheosis.gem_extraction": "Используется на Кузнечном Столе для извлечения Апофатических самоцветов.\n\nпредметы будут уничтожены в процессе.",
+	"info.apotheosis.gem_expulsion": "Используется на Кузнечном Столе для извлечения Апофатических самоцветов.\n\nсамоцветы будут уничтожены в процессе.",
 	"info.apotheosis.unnaming": "Используется в Столе Кузнеца для удаления компонентов прикрепления из названия элемента.",
 	"info.apotheosis.salvaging": "Редкие Материалы получаются путем утилизации Прикрепленных Предметов в Столе Утилизации.",
 	
@@ -824,12 +824,12 @@
     "comment_id": "/Enchantment Module",
 	
     "block.apotheosis.hellshelf": "Адская Книжная Полка",
-    "block.apotheosis.infused_hellshelf": "Настоящая Книжная Полка",
+    "block.apotheosis.infused_hellshelf": "Настоянная Книжная Полка",
     "block.apotheosis.blazing_hellshelf": "Пылающая Адская Книжная Полка",
     "block.apotheosis.glowing_hellshelf": "Светящаяся Адская Книжная Полка",
 	
     "block.apotheosis.seashelf": "Морская Книжная Полка",
-    "block.apotheosis.infused_seashelf": "Настоящая Морская Книжная Полка",
+    "block.apotheosis.infused_seashelf": "Настоянная Морская Книжная Полка",
     "block.apotheosis.crystal_seashelf": "Кристаллическая Морская Книжная Полка",
     "block.apotheosis.heart_seashelf": "Выкованное-Сердцем Морская Книжная Полка",
 
@@ -841,7 +841,7 @@
     "block.apotheosis.soul_touched_sculkshelf": "Тронутая Душой Скалк-Книжная Полка",
 	
     "block.apotheosis.endshelf": "Книжная Полка Конца",
-    "block.apotheosis.infused_endshelf": "Настоящая Книжная Полка Конца",
+    "block.apotheosis.infused_endshelf": "Настоянная Книжная Полка Конца",
     "block.apotheosis.pearl_endshelf": "Перламутровая Книжная Полка Конца",
     "block.apotheosis.draconic_endshelf": "Драконья Книжная Полка Конца",
 	
