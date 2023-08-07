@@ -9,15 +9,12 @@ import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
@@ -29,7 +26,7 @@ import snownee.jade.api.WailaPlugin;
 import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
-public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockEntity> {
+public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
 
     @Override
     public void register(IWailaCommonRegistration reg) {
@@ -55,10 +52,10 @@ public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, I
     }
 
     @Override
-    public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean something) {
-        if (te instanceof AnvilTile) {
+    public void appendServerData(CompoundTag tag, BlockAccessor access) {
+        if (access.getBlockEntity() instanceof AnvilTile te) {
             ItemStack stack = new ItemStack(Items.ANVIL);
-            EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), stack);
+            EnchantmentHelper.setEnchantments(te.getEnchantments(), stack);
             tag.put("enchantments", stack.getEnchantmentTags());
         }
     }

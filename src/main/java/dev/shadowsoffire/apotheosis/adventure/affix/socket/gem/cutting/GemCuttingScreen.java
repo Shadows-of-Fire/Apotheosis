@@ -3,12 +3,9 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
@@ -16,18 +13,18 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttin
 import dev.shadowsoffire.apotheosis.adventure.client.GrayBufferSource;
 import dev.shadowsoffire.apotheosis.adventure.client.SimpleTexButton;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.core.attributeslib.api.AttributeHelper;
+import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
+import dev.shadowsoffire.attributeslib.api.AttributeHelper;
+import dev.shadowsoffire.placebo.screen.PlaceboContainerScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentContents;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -35,9 +32,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import dev.shadowsoffire.placebo.screen.PlaceboContainerScreen;
 
-public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
+public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> implements DrawsOnLeft {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/gem_cutting.png");
 
@@ -90,22 +86,19 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
     }
 
     @Override
-    protected void renderBg(PoseStack stack, float pPartialTick, int pMouseX, int pMouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
+    protected void renderBg(GuiGraphics gfx, float pPartialTick, int pMouseX, int pMouseY) {
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
-        this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
+        gfx.blit(TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
         if (this.hasItem(0) && GemItem.getLootRarity(this.menu.getSlot(0).getItem()) != LootRarity.ANCIENT) {
             if (!this.hasItem(1)) {
-                this.renderItem(this.displayDust, this.menu.getSlot(1));
+                this.renderItem(gfx, this.displayDust, this.menu.getSlot(1));
             }
             if (!this.hasItem(2)) {
-                this.renderItem(this.menu.getSlot(0).getItem(), this.menu.getSlot(2));
+                this.renderItem(gfx, this.menu.getSlot(0).getItem(), this.menu.getSlot(2));
             }
             if (!this.hasItem(3)) {
-                this.renderItem(this.displayMat, this.menu.getSlot(3));
+                this.renderItem(gfx, this.displayMat, this.menu.getSlot(3));
             }
         }
     }
@@ -114,13 +107,12 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
         return this.menu.getSlot(slot).hasItem();
     }
 
-    protected void renderItem(ItemStack stack, Slot slot) {
-        var model = this.itemRenderer.getModel(stack, null, null, 0);
-        SalvagingScreen.renderGuiItem(stack, this.getGuiLeft() + slot.x, this.getGuiTop() + slot.y, model, GrayBufferSource::new);
+    protected void renderItem(GuiGraphics gfx, ItemStack stack, Slot slot) {
+        SalvagingScreen.renderGuiItem(gfx, stack, this.getGuiLeft() + slot.x, this.getGuiTop() + slot.y, GrayBufferSource::new);
     }
 
     @Override
-    protected void renderTooltip(PoseStack poseStack, int pX, int pY) {
+    protected void renderTooltip(GuiGraphics gfx, int pX, int pY) {
         ItemStack gemStack = this.menu.getSlot(0).getItem();
         GemInstance gem = GemInstance.unsocketed(gemStack);
         GemInstance secondary = GemInstance.unsocketed(this.menu.getSlot(2).getItem());
@@ -146,8 +138,8 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
                 }
             }
         }
-        this.drawOnLeft(poseStack, list, this.getGuiTop() + 16);
-        super.renderTooltip(poseStack, pX, pY);
+        this.drawOnLeft(gfx, list, this.getGuiTop() + 16);
+        super.renderTooltip(gfx, pX, pY);
     }
 
     private void addMatTooltip(LootRarity rarity, int cost, List<Component> list) {
@@ -162,32 +154,13 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
         }
     }
 
-    public void drawOnLeft(PoseStack stack, List<Component> list, int y) {
-        if (list.isEmpty()) return;
-        int xPos = this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get();
-        int maxWidth = 9999;
-        if (xPos < 0) {
-            maxWidth = this.getGuiLeft() - 6;
-            xPos = -8;
-        }
-
-        List<FormattedText> split = new ArrayList<>();
-        int lambdastupid = maxWidth;
-        list.forEach(comp -> {
-            if (comp.getContents() == ComponentContents.EMPTY) split.add(comp);
-            else split.addAll(this.font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle()));
-        });
-
-        this.renderComponentTooltip(stack, split, xPos, y, this.font);
-    }
-
     protected static class GemUpgradeSound extends AbstractTickableSoundInstance {
 
         protected int ticks = 0;
         protected float pitchOff;
 
         public GemUpgradeSound(BlockPos pos) {
-            super(SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, Minecraft.getInstance().level().random);
+            super(SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, Minecraft.getInstance().level.random);
             this.x = pos.getX() + 0.5F;
             this.y = pos.getY();
             this.z = pos.getZ() + 0.5F;

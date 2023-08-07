@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.garden;
 
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -25,7 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EnderLeadItem extends Item {
 
     public EnderLeadItem() {
-        super(new Item.Properties().stacksTo(1).durability(15).tab(Apotheosis.APOTH_GROUP));
+        super(new Item.Properties().stacksTo(1).durability(15));
     }
 
     @Override

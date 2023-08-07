@@ -164,25 +164,25 @@ public class AdventureModule {
     @SubscribeEvent
     public void items(Register<Item> e) {
         e.getRegistry().register(new GemItem(new Item.Properties()), "gem");
-        e.getRegistry().register(new BossSummonerItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "boss_summoner");
-        e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_dust");
-        e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_extraction");
-        e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_expulsion");
-        e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_unnaming");
+        e.getRegistry().register(new BossSummonerItem(new Item.Properties()), "boss_summoner");
+        e.getRegistry().register(new Item(new Item.Properties()), "gem_dust");
+        e.getRegistry().register(new Item(new Item.Properties()), "vial_of_extraction");
+        e.getRegistry().register(new Item(new Item.Properties()), "vial_of_expulsion");
+        e.getRegistry().register(new Item(new Item.Properties()), "vial_of_unnaming");
         for (LootRarity r : LootRarity.values()) {
             if (r == LootRarity.ANCIENT) continue;
-            Item material = new SalvageItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+            Item material = new SalvageItem(r, new Item.Properties());
             e.getRegistry().register(material, r.id() + "_material");
             RARITY_MATERIALS.put(r, material);
         }
-        e.getRegistry().register(new BlockItem(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "simple_reforging_table");
-        e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "reforging_table");
-        e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "salvaging_table");
-        e.getRegistry().register(new BlockItem(Apoth.Blocks.GEM_CUTTING_TABLE.get(), new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "gem_cutting_table");
-        e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sigil_of_socketing");
-        e.getRegistry().register(new GlowyItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "superior_sigil_of_socketing");
-        e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "sigil_of_enhancement");
-        e.getRegistry().register(new GlowyItem(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "superior_sigil_of_enhancement");
+        e.getRegistry().register(new BlockItem(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get(), new Item.Properties()), "simple_reforging_table");
+        e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties()), "reforging_table");
+        e.getRegistry().register(new BlockItem(Apoth.Blocks.SALVAGING_TABLE.get(), new Item.Properties()), "salvaging_table");
+        e.getRegistry().register(new BlockItem(Apoth.Blocks.GEM_CUTTING_TABLE.get(), new Item.Properties()), "gem_cutting_table");
+        e.getRegistry().register(new Item(new Item.Properties()), "sigil_of_socketing");
+        e.getRegistry().register(new GlowyItem(new Item.Properties()), "superior_sigil_of_socketing");
+        e.getRegistry().register(new Item(new Item.Properties()), "sigil_of_enhancement");
+        e.getRegistry().register(new GlowyItem(new Item.Properties()), "superior_sigil_of_enhancement");
     }
 
     @SubscribeEvent

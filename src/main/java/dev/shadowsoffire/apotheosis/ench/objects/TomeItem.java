@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.ench.objects;
 
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.IEnchantableItem;
 import net.minecraft.ChatFormatting;
@@ -32,7 +31,7 @@ public class TomeItem extends BookItem implements IEnchantableItem {
     final EnchantmentCategory type;
 
     public TomeItem(Item rep, EnchantmentCategory type) {
-        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+        super(new Item.Properties());
         this.type = type;
         this.rep = new ItemStack(rep);
         EnchModule.TYPED_BOOKS.add(this);

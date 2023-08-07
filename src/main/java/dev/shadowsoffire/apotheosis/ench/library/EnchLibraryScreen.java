@@ -12,16 +12,17 @@ import org.lwjgl.glfw.GLFW;
 
 import com.google.common.base.Strings;
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.placebo.Placebo;
+import dev.shadowsoffire.placebo.packets.ButtonClickMessage;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -37,8 +38,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
-import dev.shadowsoffire.placebo.Placebo;
-import dev.shadowsoffire.placebo.packets.ButtonClickMessage;
 
 public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContainer> {
     public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/library.png");
@@ -73,7 +72,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
         InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
         if (pKeyCode == GLFW.GLFW_KEY_ESCAPE && this.getFocused() == this.filter) {
             this.setFocused(null);
-            this.filter.setFocus(false);
+            this.filter.setFocused(false);
             return true;
         }
         else if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey) && this.getFocused() == this.filter) {
@@ -83,15 +82,15 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(stack, mouseX, mouseY);
+    public void render(GuiGraphics gfx, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(gfx);
+        super.render(gfx, mouseX, mouseY, partialTicks);
+        this.renderTooltip(gfx, mouseX, mouseY);
     }
 
     @Override
-    protected void renderTooltip(PoseStack stack, int mouseX, int mouseY) {
-        super.renderTooltip(stack, mouseX, mouseY);
+    protected void renderTooltip(GuiGraphics gfx, int mouseX, int mouseY) {
+        super.renderTooltip(gfx, mouseX, mouseY);
         LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
         if (libSlot != null) {
             List<FormattedText> list = new ArrayList<>();
@@ -116,39 +115,34 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
                 list.add(Component.translatable("tooltip.enchlib.extracting", Component.translatable("enchantment.level()." + targetLevel)).withStyle(ChatFormatting.BLUE));
                 list.add(Component.translatable("tooltip.enchlib.cost", cost).withStyle(cost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD));
             }
-            this.renderComponentTooltip(stack, list, this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY, this.font);
+            gfx.renderComponentTooltip(font, list, this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY, ItemStack.EMPTY);
         }
     }
 
     @Override
     @SuppressWarnings("deprecation")
-    protected void renderBg(PoseStack stack, float partial, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURES);
+    protected void renderBg(GuiGraphics gfx, float partial, int mouseX, int mouseY) {
         int left = this.leftPos;
         int top = this.topPos;
-        this.blit(stack, left, top, 0, 0, this.imageWidth, this.imageHeight);
+        gfx.blit(TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight);
         int scrollbarPos = (int) (118F * this.scrollOffs);
-        this.blit(stack, left + 75, top + 14 + scrollbarPos, 244, this.isScrollBarActive() ? 0 : 15, 12, 15);
+        gfx.blit(TEXTURES, left + 75, top + 14 + scrollbarPos, 244, this.isScrollBarActive() ? 0 : 15, 12, 15);
         int idx = this.startIndex;
         while (idx < this.startIndex + 7 && idx < this.data.size()) {
-            this.renderEntry(stack, this.data.get(idx), this.leftPos + 8, this.topPos + 14 + 19 * (idx - this.startIndex), mouseX, mouseY);
+            this.renderEntry(gfx, this.data.get(idx), this.leftPos + 8, this.topPos + 14 + 19 * (idx - this.startIndex), mouseX, mouseY);
             idx++;
         }
 
-        this.font.draw(stack, Component.translatable("tooltip.enchlib.nfilt"), this.getGuiLeft() + 91, this.getGuiTop() + 20, 4210752);
-        this.font.draw(stack, Component.translatable("tooltip.enchlib.ifilt"), this.getGuiLeft() + 91, this.getGuiTop() + 50, 4210752);
+        gfx.drawString(font, Component.translatable("tooltip.enchlib.nfilt"), this.getGuiLeft() + 91, this.getGuiTop() + 20, 4210752, false);
+        gfx.drawString(font, Component.translatable("tooltip.enchlib.ifilt"), this.getGuiLeft() + 91, this.getGuiTop() + 50, 4210752, false);
     }
 
-    private void renderEntry(PoseStack stack, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURES);
+    private void renderEntry(GuiGraphics gfx, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
         boolean hover = this.isHovering(x - this.leftPos, y - this.topPos, 64, 17, mouseX, mouseY);
-        this.blit(stack, x, y, 178, hover ? 19 : 0, 64, 19);
+        gfx.blit(TEXTURES, x, y, 178, hover ? 19 : 0, 64, 19);
         int progress = (int) Math.round(62 * Math.sqrt(data.points) / (float) Math.sqrt(this.menu.getPointCap()));
-        this.blit(stack, x + 1, y + 12, 179, 38, progress, 5);
+        gfx.blit(TEXTURES, x + 1, y + 12, 179, 38, progress, 5);
+        PoseStack stack = gfx.pose();
         stack.pushPose();
         Component txt = Component.translatable(data.ench.getDescriptionId());
         float scale = 1;
@@ -156,7 +150,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
             scale = 60F / this.font.width(txt);
         }
         stack.scale(scale, scale, 1);
-        this.font.draw(stack, txt, (x + 2) / scale, (y + 2) / scale, 0xFFFF80);
+        gfx.drawString(font, txt, (int) ((x + 2) / scale), (int) ((y + 2) / scale), 0xFFFF80, false);
         stack.popPose();
     }
 

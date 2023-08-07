@@ -75,7 +75,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
         enchs.put(ench, level);
         EnchantmentHelper.setEnchantments(enchs, stack);
         this.points.put(ench, Math.max(0, this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl))); // Safety, should never be below zero anyway.
-        if (!this.level().isClientSide()) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+        if (!this.level.isClientSide()) VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
         this.setChanged();
     }
 

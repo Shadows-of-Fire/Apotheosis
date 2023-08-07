@@ -129,7 +129,7 @@ public class OmneticAffix extends Affix {
             f /= 5.0F;
         }
 
-        if (!player.isOnGround()) {
+        if (!player.onGround()) {
             f /= 5.0F;
         }
         return f;

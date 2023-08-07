@@ -15,6 +15,7 @@ import com.mojang.serialization.JsonOps;
 
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager.Stats;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -71,6 +72,10 @@ public class EnchantingRecipe implements Recipe<Container> {
         return this.input;
     }
 
+    public ItemStack getOutput() {
+        return this.output;
+    }
+
     @Override
     @Deprecated
     public boolean matches(Container pContainer, Level pLevel) {
@@ -79,7 +84,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
     @Override
     @Deprecated
-    public ItemStack assemble(Container pContainer) {
+    public ItemStack assemble(Container pContainer, RegistryAccess regs) {
         return ItemStack.EMPTY;
     }
 
@@ -90,12 +95,13 @@ public class EnchantingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    @Deprecated
+    public ItemStack getResultItem(RegistryAccess regs) {
         return this.output;
     }
 
     public ItemStack assemble(ItemStack input, float eterna, float quanta, float arcana) {
-        return this.getResultItem().copy();
+        return this.output.copy();
     }
 
     @Override

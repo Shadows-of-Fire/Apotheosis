@@ -16,18 +16,18 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager.BlockStats;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.reload.PlaceboJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.PlaceboJsonReloadListener;
-import dev.shadowsoffire.placebo.json.TypeKeyed.TypeKeyedBase;
 
 public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats> {
 
@@ -178,7 +178,7 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
         public static Codec<BlockStats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.list(ForgeRegistries.BLOCKS.getCodec()).optionalFieldOf("blocks", Collections.emptyList()).forGetter(bs -> bs.blocks),
-                TagKey.codec(Registry.BLOCK_REGISTRY).optionalFieldOf("tag").forGetter(bs -> Optional.empty()),
+                TagKey.codec(Registries.BLOCK).optionalFieldOf("tag").forGetter(bs -> Optional.empty()),
                 ForgeRegistries.BLOCKS.getCodec().optionalFieldOf("block").forGetter(bs -> Optional.empty()),
                 Stats.CODEC.fieldOf("stats").forGetter(bs -> bs.stats))
             .apply(inst, BlockStats::new));

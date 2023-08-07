@@ -10,14 +10,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
 import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
+import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * A loot entry represents a possible item that can come out of a loot roll.

@@ -11,6 +11,9 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -30,9 +33,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.codec.EnumCodec;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class PotionAffix extends Affix {
 
@@ -210,7 +210,7 @@ public class PotionAffix extends Affix {
         BLOCK_SELF("block_self"),
         BLOCK_ATTACKER("block_attacker");
 
-        public static final Codec<Target> CODEC = new EnumCodec<>(Target.class);
+        public static final Codec<Target> CODEC = PlaceboCodecs.enumCodec(Target.class);
 
         private final String id;
 

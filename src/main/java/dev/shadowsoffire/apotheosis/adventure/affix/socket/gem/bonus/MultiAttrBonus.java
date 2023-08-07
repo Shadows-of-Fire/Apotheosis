@@ -16,8 +16,9 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.core.attributeslib.AttributesLib;
-import dev.shadowsoffire.apotheosis.core.attributeslib.api.IFormattableAttribute;
+import dev.shadowsoffire.attributeslib.AttributesLib;
+import dev.shadowsoffire.attributeslib.api.IFormattableAttribute;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -25,7 +26,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.codec.EnumCodec;
 
 public class MultiAttrBonus extends GemBonus {
 
@@ -99,7 +99,7 @@ public class MultiAttrBonus extends GemBonus {
         public static Codec<ModifierInst> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
                 ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(ModifierInst::attr),
-                new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(ModifierInst::op),
+                PlaceboCodecs.enumCodec(Operation.class).fieldOf("operation").forGetter(ModifierInst::op),
                 LootRarity.mapCodec(Codec.FLOAT).fieldOf("values").forGetter(ModifierInst::values))
             .apply(inst, ModifierInst::new));
 

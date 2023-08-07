@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BambooBlock;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BambooStalkBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -34,7 +34,7 @@ public class ApothBambooBlock extends BambooStalkBlock implements IReplacementBl
     }
 
     @Override
-    public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
         int i = this.getHeightAboveUpToMax(worldIn, pos);
         int j = this.getHeightBelowUpToMax(worldIn, pos);
         return i + j + 1 < GardenModule.maxBambooHeight && worldIn.getBlockState(pos.above(i)).getValue(STAGE) != 1;

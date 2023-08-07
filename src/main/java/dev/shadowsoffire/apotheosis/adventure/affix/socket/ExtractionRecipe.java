@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-public class ExtractionRecipe extends ApothUpgradeRecipe implements IExtUpgradeRecipe {
+public class ExtractionRecipe extends ApothUpgradeRecipe implements ApothSmithingRecipe {
 
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:extraction");
 

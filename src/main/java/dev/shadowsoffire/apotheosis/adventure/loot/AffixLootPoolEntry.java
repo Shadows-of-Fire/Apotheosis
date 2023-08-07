@@ -16,6 +16,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.reflect.TypeToken;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.placebo.reload.ListenerCallback;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.random.WeightedRandom;
@@ -25,7 +26,6 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import dev.shadowsoffire.placebo.json.ListenerCallback;
 
 public class AffixLootPoolEntry extends LootPoolSingletonContainer {
     public static final Serializer SERIALIZER = new Serializer();

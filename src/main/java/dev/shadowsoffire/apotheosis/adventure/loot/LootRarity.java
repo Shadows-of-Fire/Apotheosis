@@ -26,20 +26,20 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
+import dev.shadowsoffire.placebo.color.GradientColor;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable.EnumCodec;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.codec.EnumCodec;
-import dev.shadowsoffire.placebo.color.GradientColor;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 

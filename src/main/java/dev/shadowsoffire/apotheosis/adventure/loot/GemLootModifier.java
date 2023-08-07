@@ -8,13 +8,13 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemLootModifier extends LootModifier {
 

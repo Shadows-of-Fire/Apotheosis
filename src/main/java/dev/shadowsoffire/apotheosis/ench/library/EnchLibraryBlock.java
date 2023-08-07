@@ -6,7 +6,6 @@ import java.util.List;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,8 +27,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplie
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -44,7 +43,7 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
     protected final int maxLevel;
 
     public EnchLibraryBlock(BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier, int maxLevel) {
-        super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(5.0F, 1200.0F));
         this.tileSupplier = tileSupplier;
         this.maxLevel = maxLevel;
     }
@@ -91,7 +90,7 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder ctx) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder ctx) {
         ItemStack s = new ItemStack(this);
         BlockEntity te = ctx.getParameter(LootContextParams.BLOCK_ENTITY);
         if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());

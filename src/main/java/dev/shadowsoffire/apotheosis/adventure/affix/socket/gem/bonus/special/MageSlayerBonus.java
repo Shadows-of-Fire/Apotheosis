@@ -13,12 +13,13 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class MageSlayerBonus extends GemBonus {
 
@@ -37,7 +38,7 @@ public class MageSlayerBonus extends GemBonus {
     @Override
     public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity user, float amount) {
         float value = this.values.get(rarity).min();
-        if (src.isMagic()) {
+        if (src.is(DamageTypeTags.BYPASSES_ARMOR)) { // TODO: Forge IS_MAGIC tag
             user.heal(amount * (1 - value));
             return amount * (1 - value);
         }

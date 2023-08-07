@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BookItem;
@@ -25,7 +24,7 @@ public class ImprovedScrappingTomeItem extends BookItem {
     static Random rand = new Random();
 
     public ImprovedScrappingTomeItem() {
-        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+        super(new Item.Properties());
     }
 
     @Override

@@ -50,7 +50,7 @@ public class EnchModuleClient {
         else if (i == Apoth.Items.PRISMATIC_WEB.get()) tooltip.add(Component.translatable("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
         else if (i instanceof BlockItem) {
             Block block = ((BlockItem) i).getBlock();
-            Level world = Minecraft.getInstance().level();
+            Level world = Minecraft.getInstance().level;
             if (world == null || Minecraft.getInstance().player == null) return;
             BlockPlaceContext ctx = new BlockPlaceContext(world, Minecraft.getInstance().player, InteractionHand.MAIN_HAND, e.getItemStack(), res){};
             BlockState state = null;
@@ -133,9 +133,9 @@ public class EnchModuleClient {
 
     @SubscribeEvent
     public static void particleFactories(RegisterParticleProvidersEvent e) {
-        e.register(Particles.ENCHANT_FIRE.get(), EnchantmentTableParticle.Provider::new);
-        e.register(Particles.ENCHANT_WATER.get(), EnchantmentTableParticle.Provider::new);
-        e.register(Particles.ENCHANT_SCULK.get(), EnchantmentTableParticle.Provider::new);
-        e.register(Particles.ENCHANT_END.get(), EnchantmentTableParticle.Provider::new);
+        e.registerSpriteSet(Particles.ENCHANT_FIRE.get(), EnchantmentTableParticle.Provider::new);
+        e.registerSpriteSet(Particles.ENCHANT_WATER.get(), EnchantmentTableParticle.Provider::new);
+        e.registerSpriteSet(Particles.ENCHANT_SCULK.get(), EnchantmentTableParticle.Provider::new);
+        e.registerSpriteSet(Particles.ENCHANT_END.get(), EnchantmentTableParticle.Provider::new);
     }
 }

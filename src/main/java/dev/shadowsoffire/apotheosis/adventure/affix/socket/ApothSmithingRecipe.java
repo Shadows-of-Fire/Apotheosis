@@ -4,7 +4,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public interface IExtUpgradeRecipe {
+public interface ApothSmithingRecipe {
 
     public void onCraft(Container inv, Player player, ItemStack output);
 

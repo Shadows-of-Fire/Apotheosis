@@ -201,7 +201,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
                             if (list != null && !list.isEmpty()) {
                                 EnchantmentInstance enchantmentdata = list.remove(this.random.nextInt(list.size()));
                                 this.enchantClue[slot] = BuiltInRegistries.ENCHANTMENT.getId(enchantmentdata.enchantment);
-                                this.levelClue[slot] = enchantmentdata.level();
+                                this.levelClue[slot] = enchantmentdata.level;
                                 int clues = 1 + this.clues.get();
                                 List<EnchantmentInstance> clueList = new ArrayList<>();
                                 if (clues-- > 0) clueList.add(enchantmentdata);

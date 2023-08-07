@@ -20,6 +20,8 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.placebo.reload.ListenerCallback;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.random.WeightedRandom;
@@ -31,8 +33,6 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import dev.shadowsoffire.placebo.json.ListenerCallback;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemLootPoolEntry extends LootPoolSingletonContainer {
     public static final Serializer SERIALIZER = new Serializer();

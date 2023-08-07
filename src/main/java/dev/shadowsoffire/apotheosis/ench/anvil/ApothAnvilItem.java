@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.ench.anvil;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -12,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 public class ApothAnvilItem extends BlockItem {
 
     public ApothAnvilItem(Block block) {
-        super(block, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS));
+        super(block, new Item.Properties());
     }
 
     @Override

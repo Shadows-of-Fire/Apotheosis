@@ -83,7 +83,7 @@ public class ChainsawEnchant extends Enchantment {
         public ChainsawTask(UUID owner, ItemStack axe, Level level, BlockPos pos) {
             this.owner = owner;
             this.axe = axe;
-            this.level() = (ServerLevel) level;
+            this.level = (ServerLevel) level;
             this.hits.computeIfAbsent(pos.getY(), i -> new ArrayDeque<>()).add(pos);
         }
 
@@ -98,10 +98,10 @@ public class ChainsawEnchant extends Enchantment {
                 BlockPos pos = queue.poll();
                 for (BlockPos p : BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 1, 1))) {
                     if (p.equals(pos)) continue;
-                    BlockState state = this.level().getBlockState(p);
+                    BlockState state = this.level.getBlockState(p);
                     if (state.is(BlockTags.LOGS)) {
                         BlockUtil.breakExtraBlock(this.level, p, this.axe, this.owner);
-                        if (!this.level().getBlockState(p).is(BlockTags.LOGS)) { // Ensure a change happened
+                        if (!this.level.getBlockState(p).is(BlockTags.LOGS)) { // Ensure a change happened
                             this.hits.computeIfAbsent(p.getY(), i -> new ArrayDeque<>()).add(p.immutable());
                             breaks++;
                         }

@@ -21,7 +21,7 @@ public class KeepNBTEnchantingRecipe extends EnchantingRecipe {
 
     @Override
     public ItemStack assemble(ItemStack input, float eterna, float quanta, float arcana) {
-        ItemStack out = this.getResultItem().copy();
+        ItemStack out = this.getResultItem(null).copy();
         if (input.hasTag()) out.setTag(input.getTag().copy());
         return out;
     }

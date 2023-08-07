@@ -34,7 +34,7 @@ public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> imple
     @Override
     public void removed(Player player) {
         super.removed(player);
-        if (!this.level().isClientSide) this.tile.removeListener(this);
+        if (!this.level.isClientSide) this.tile.removeListener(this);
         this.clearContainer(player, this.ioInv);
     }
 
@@ -53,10 +53,11 @@ public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> imple
             @Override
             public void setChanged() {
                 super.setChanged();
-                if (!EnchLibraryContainer.this.level().isClientSide && !this.getItem().isEmpty()) {
+                if (!EnchLibraryContainer.this.level.isClientSide && !this.getItem().isEmpty()) {
                     EnchLibraryContainer.this.tile.depositBook(this.getItem());
                 }
-                if (!this.getItem().isEmpty() && EnchLibraryContainer.this.level().isClientSide) inv.player.level().playSound(inv.player, EnchLibraryContainer.this.pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 0.5F, 0.7F);
+                if (!this.getItem().isEmpty() && EnchLibraryContainer.this.level.isClientSide)
+                    inv.player.level().playSound(inv.player, EnchLibraryContainer.this.pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.NEUTRAL, 0.5F, 0.7F);
                 EnchLibraryContainer.this.ioInv.setItem(0, ItemStack.EMPTY);
             }
         });

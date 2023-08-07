@@ -11,28 +11,28 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
-import dev.shadowsoffire.apotheosis.adventure.client.SimpleTexButton;
 import dev.shadowsoffire.apotheosis.adventure.client.GhostVertexBuilder.GhostBufferSource;
+import dev.shadowsoffire.apotheosis.adventure.client.SimpleTexButton;
+import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
+import dev.shadowsoffire.placebo.screen.PlaceboContainerScreen;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import dev.shadowsoffire.placebo.screen.PlaceboContainerScreen;
 
-public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
+public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> implements DrawsOnLeft {
 
     public static final Component TITLE = Component.translatable("container.apotheosis.salvage");
     public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage.png");
@@ -101,9 +101,9 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
     }
 
     @Override
-    public void render(PoseStack stack, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(stack);
-        super.render(stack, pMouseX, pMouseY, pPartialTick);
+    public void render(GuiGraphics gfx, int pMouseX, int pMouseY, float pPartialTick) {
+        this.renderBackground(gfx);
+        super.render(gfx, pMouseX, pMouseY, pPartialTick);
         int left = this.getGuiLeft();
         int top = this.getGuiTop();
 
@@ -131,34 +131,35 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
                 }
             }
             if (displaySlot == -1) continue;
-            var model = this.itemRenderer.getModel(display, null, null, 0);
-            renderGuiItem(display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, model, GhostBufferSource::new);
+            renderGuiItem(gfx, display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, GhostBufferSource::new);
         }
 
-        this.renderTooltip(stack, pMouseX, pMouseY);
+        this.renderTooltip(gfx, pMouseX, pMouseY);
     }
 
-    public static void renderGuiItem(ItemStack pStack, int pX, int pY, BakedModel pBakedModel, Function<MultiBufferSource, MultiBufferSource> wrapper) {
+    public static void renderGuiItem(GuiGraphics gfx, ItemStack pStack, int pX, int pY, Function<MultiBufferSource, MultiBufferSource> wrapper) {
         Minecraft.getInstance().textureManager.getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
         RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        PoseStack posestack = RenderSystem.getModelViewStack();
+        PoseStack posestack = gfx.pose();
         posestack.pushPose();
-        posestack.translate(pX, pY, 100.0F + Minecraft.getInstance().getItemRenderer().blitOffset);
+        posestack.translate(pX, pY, 100.0F);
         posestack.translate(8.0D, 8.0D, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F, 16.0F, 16.0F);
         RenderSystem.applyModelViewMatrix();
         PoseStack posestack1 = new PoseStack();
-        boolean flag = !pBakedModel.usesBlockLight();
+        Minecraft mc = Minecraft.getInstance();
+        BakedModel model = mc.getItemRenderer().getModel(pStack, mc.level, mc.player, pX ^ pY);
+        boolean flag = !model.usesBlockLight();
         if (flag) {
             Lighting.setupForFlatItems();
         }
 
         MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        Minecraft.getInstance().getItemRenderer().render(pStack, ItemTransforms.TransformType.GUI, false, posestack1, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, pBakedModel);
+        Minecraft.getInstance().getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack1, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
         buffer.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {
@@ -170,15 +171,13 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
     }
 
     @Override
-    protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(pPoseStack, this.getGuiLeft(), this.getGuiTop(), 0, 0, this.imageWidth, this.imageHeight);
+    protected void renderBg(GuiGraphics gfx, float pPartialTick, int pX, int pY) {
+        gfx.blit(TEXTURE, this.getGuiLeft(), this.getGuiTop(), 0, 0, this.imageWidth, this.imageHeight);
     }
 
     @Override
-    protected void renderTooltip(PoseStack stack, int x, int y) {
+    protected void renderTooltip(GuiGraphics gfx, int x, int y) {
+        PoseStack stack = gfx.pose();
         stack.pushPose();
         stack.translate(0, 0, -100);
         List<Component> tooltip = new ArrayList<>();
@@ -188,32 +187,16 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> {
             tooltip.add(Component.translatable("%s-%s %s", data.min, data.max, data.stack.getHoverName()));
         }
 
-        if (tooltip.size() > 1) this.drawOnLeft(stack, tooltip, this.getGuiTop() + 29);
+        if (tooltip.size() > 1) this.drawOnLeft(gfx, tooltip, this.getGuiTop() + 29);
         stack.popPose();
 
-        super.renderTooltip(stack, x, y);
-    }
-
-    public void drawOnLeft(PoseStack stack, List<Component> list, int y) {
-        if (list.isEmpty()) return;
-        int xPos = this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get();
-        int maxWidth = 9999;
-        if (xPos < 0) {
-            maxWidth = this.getGuiLeft() - 6;
-            xPos = -8;
-        }
-
-        List<FormattedText> split = new ArrayList<>();
-        int lambdastupid = maxWidth;
-        list.forEach(comp -> split.addAll(this.font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
-
-        this.renderComponentTooltip(stack, split, xPos, y, this.font);
+        super.renderTooltip(gfx, x, y);
     }
 
     @Override
-    protected void renderLabels(PoseStack stack, int mouseX, int mouseY) {
-        this.font.draw(stack, Component.translatable("text.apotheosis.results"), 133, this.titleLabelY, 4210752);
-        super.renderLabels(stack, mouseX, mouseY);
+    protected void renderLabels(GuiGraphics gfx, int mouseX, int mouseY) {
+        gfx.drawString(font, Component.translatable("text.apotheosis.results"), 133, this.titleLabelY, 4210752, false);
+        super.renderLabels(gfx, mouseX, mouseY);
     }
 
 }

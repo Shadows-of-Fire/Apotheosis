@@ -16,6 +16,7 @@ import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer.Arcana;
 import dev.shadowsoffire.apotheosis.ench.table.RealEnchantmentHelper.ArcanaEnchantmentData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -77,20 +78,17 @@ public class EnchantingInfoScreen extends Screen {
     protected void init() {
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
-        // this.addRenderableWidget(new Button(0, 0, 40, 20, Component.literal("Close"), btn -> Minecraft.getInstance().popGuiLayer()));
         this.slider = this.addRenderableWidget(new PowerSlider(this.leftPos + 5, this.topPos + 80, 80, 20));
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(pPoseStack, -100);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURES);
+    public void render(GuiGraphics gfx, int pMouseX, int pMouseY, float pPartialTick) {
+        this.renderBackground(gfx);
 
-        pPoseStack.pushPose();
-        pPoseStack.translate(this.leftPos, this.topPos, 0);
-        this.blit(pPoseStack, 0, 0, 0, 0, this.imageWidth, this.imageHeight);
+        PoseStack pose = gfx.pose();
+        pose.pushPose();
+        pose.translate(this.leftPos, this.topPos, 0);
+        gfx.blit(TEXTURES, 0, 0, 0, 0, this.imageWidth, this.imageHeight);
         for (int i = 0; i < 3; i++) {
             Enchantment clue = Enchantment.byId(this.clues[i]);
             int u = 199, v = 225;
@@ -101,25 +99,25 @@ public class EnchantingInfoScreen extends Screen {
             else if (this.selectedSlot == i || this.isHovering(8, 18 + 19 * i, 18, 18, pMouseX, pMouseY)) {
                 u += 38;
             }
-            this.blit(pPoseStack, 8, 18 + 19 * i, 224, u, 18, 19);
-            this.blit(pPoseStack, 9, 22 + 18 * i + i, 16 * i, v, 16, 16);
+            gfx.blit(TEXTURES, 8, 18 + 19 * i, 224, u, 18, 19);
+            gfx.blit(TEXTURES, 9, 22 + 18 * i + i, 16 * i, v, 16, 16);
         }
 
         int scrollbarPos = (int) (128F * this.scrollOffs);
-        this.blit(pPoseStack, 220, 18 + scrollbarPos, 244, 173 + (this.isScrollBarActive() ? 0 : 15), 12, 15);
+        gfx.blit(TEXTURES, 220, 18 + scrollbarPos, 244, 173 + (this.isScrollBarActive() ? 0 : 15), 12, 15);
 
         ArcanaEnchantmentData hover = this.getHovered(pMouseX, pMouseY);
         for (int i = 0; i < 11; i++) {
             if (this.enchantments.size() - 1 < i) break;
             int v = 173;
             if (hover == this.enchantments.get(this.startIndex + i)) v += 13;
-            this.blit(pPoseStack, 89, 18 + 13 * i, 114, v, 128, 13);
+            gfx.blit(TEXTURES, 89, 18 + 13 * i, 114, v, 128, 13);
         }
 
         for (int i = 0; i < 11; i++) {
             if (this.enchantments.size() - 1 < i) break;
             ArcanaEnchantmentData data = this.enchantments.get(this.startIndex + i);
-            this.font.draw(pPoseStack, I18n.get(data.data.enchantment.getDescriptionId()), 91, 21 + 13 * i, 0xFFFF80);
+            gfx.drawString(font, I18n.get(data.data.enchantment.getDescriptionId()), 91, 21 + 13 * i, 0xFFFF80, false);
         }
 
         List<Component> list = new ArrayList<>();
@@ -129,11 +127,11 @@ public class EnchantingInfoScreen extends Screen {
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
-        this.renderComponentTooltip(pPoseStack, list, a == Arcana.MAX ? -2 : 1, 120);
+        gfx.renderComponentTooltip(font, list, a == Arcana.MAX ? -2 : 1, 120);
 
-        this.font.draw(pPoseStack, this.title, 7, 4, 4210752);
-        pPoseStack.popPose();
-        pPoseStack.translate(0, 0, 10);
+        gfx.drawString(font, this.title, 7, 4, 4210752, false);
+        pose.popPose();
+        pose.translate(0, 0, 10);
 
         for (int i = 0; i < 3; i++) {
             if (this.isHovering(8, 18 + 19 * i, 18, 18, pMouseX, pMouseY)) {
@@ -142,7 +140,7 @@ public class EnchantingInfoScreen extends Screen {
                 list.add(Component.translatable("info.apotheosis.enchinfo_level", this.costs[i]).withStyle(ChatFormatting.GREEN));
                 list.add(Component.translatable("info.apotheosis.enchinfo_minpow", this.powers[i][0]).withStyle(ChatFormatting.DARK_RED));
                 list.add(Component.translatable("info.apotheosis.enchinfo_maxpow", this.powers[i][1]).withStyle(ChatFormatting.BLUE));
-                this.renderComponentTooltip(pPoseStack, list, pMouseX, pMouseY);
+                gfx.renderComponentTooltip(font, list, pMouseX, pMouseY);
             }
         }
 
@@ -165,21 +163,12 @@ public class EnchantingInfoScreen extends Screen {
                 }
                 list.add(Component.translatable("Exclusive With: %s", sb.toString()).withStyle(ChatFormatting.RED));
             }
-            this.renderComponentTooltip(pPoseStack, list, pMouseX, pMouseY);
+            gfx.renderComponentTooltip(font, list, pMouseX, pMouseY);
         }
 
-        this.setBlitOffset(2001);
-        this.itemRenderer.blitOffset = 2001;
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(this.toEnchant, this.leftPos + 49, this.topPos + 39);
-        Minecraft.getInstance().getItemRenderer().renderGuiItemDecorations(this.font, this.toEnchant, this.leftPos + 49, this.topPos + 39);
-        this.itemRenderer.blitOffset = 0;
-        this.setBlitOffset(0);
-
-        pPoseStack.translate(0, 0, -10);
-
-        super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-
+        gfx.renderFakeItem(this.toEnchant, this.leftPos + 49, this.topPos + 39);
+        pose.translate(0, 0, -10);
+        super.render(gfx, pMouseX, pMouseY, pPartialTick);
     }
 
     @Override

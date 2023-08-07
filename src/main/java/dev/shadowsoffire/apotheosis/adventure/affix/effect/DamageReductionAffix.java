@@ -13,13 +13,15 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.attributeslib.util.AttributesUtil;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import dev.shadowsoffire.placebo.codec.EnumCodec;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
 
@@ -56,7 +58,7 @@ public class DamageReductionAffix extends Affix {
 
     @Override
     public float onHurt(ItemStack stack, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
-        if (src.isBypassInvul() || src.isBypassMagic()) return amount;
+        if (src.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || src.is(DamageTypeTags.BYPASSES_ENCHANTMENTS)) return amount;
         if (this.type.test(src)) return amount * (1 - this.getTrueLevel(rarity, level));
         return super.onHurt(stack, rarity, level, src, ent, amount);
     }
@@ -71,13 +73,13 @@ public class DamageReductionAffix extends Affix {
     }
 
     public static enum DamageType implements Predicate<DamageSource> {
-        PHYSICAL("physical", d -> !d.isMagic() && !d.isFire() && !d.isExplosion() && !d.isFall()),
-        MAGIC("magic", DamageSource::isMagic),
-        FIRE("fire", DamageSource::isFire),
-        FALL("fall", DamageSource::isFall),
-        EXPLOSION("explosion", DamageSource::isExplosion);
+        PHYSICAL("physical", AttributesUtil::isPhysicalDamage),
+        MAGIC("magic", d -> d.is(DamageTypeTags.BYPASSES_ARMOR)), // TODO: Forge IS_MAGIC tag
+        FIRE("fire", d -> d.is(DamageTypeTags.IS_FIRE)),
+        FALL("fall", d -> d.is(DamageTypeTags.IS_FALL)),
+        EXPLOSION("explosion", d -> d.is(DamageTypeTags.IS_EXPLOSION));
 
-        public static Codec<DamageType> CODEC = new EnumCodec<>(DamageType.class);
+        public static Codec<DamageType> CODEC = PlaceboCodecs.enumCodec(DamageType.class);
 
         private final String id;
         private final Predicate<DamageSource> predicate;

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,7 +29,7 @@ public class ExtractionTomeItem extends BookItem {
     static Random rand = new Random();
 
     public ExtractionTomeItem() {
-        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+        super(new Item.Properties());
     }
 
     @Override

@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.anvil;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -44,9 +43,10 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -56,24 +56,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingBlock, EntityBlock {
 
     public ApothAnvilBlock() {
-        super(BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.BLOCK).requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new AnvilTile(pPos, pState);
-    }
-
-    @Override
-    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
-        ItemStack anvil = new ItemStack(this);
-        if (te instanceof AnvilTile) {
-            Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
-            ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-            EnchantmentHelper.setEnchantments(ench, anvil);
-        }
-        popResource(world, pos, anvil);
-        super.playerDestroy(world, player, pos, state, te, stack);
     }
 
     @Override
@@ -87,8 +75,14 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, Builder builder) {
-        return Collections.emptyList();
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        ItemStack anvil = new ItemStack(this);
+        if (builder.getParameter(LootContextParams.BLOCK_ENTITY) instanceof AnvilTile te) {
+            Map<Enchantment, Integer> ench = te.getEnchantments();
+            ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+            EnchantmentHelper.setEnchantments(ench, anvil);
+        }
+        return List.of(anvil);
     }
 
     @Override

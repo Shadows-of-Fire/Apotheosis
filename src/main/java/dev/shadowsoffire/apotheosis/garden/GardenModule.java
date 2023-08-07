@@ -5,6 +5,9 @@ import java.io.File;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisReloadEvent;
+import dev.shadowsoffire.placebo.config.Configuration;
+import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -13,9 +16,6 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import dev.shadowsoffire.placebo.util.RegistryEvent.Register;
 
 public class GardenModule {
 

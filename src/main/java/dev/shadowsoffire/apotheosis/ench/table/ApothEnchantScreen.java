@@ -4,85 +4,65 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
-import net.minecraft.client.model.BookModel;
-import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 
-public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantContainer> {
+public class ApothEnchantScreen extends EnchantmentScreen {
 
-    private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_table.png");
-    private static final ResourceLocation ENCHANTMENT_TABLE_BOOK_TEXTURE = new ResourceLocation("textures/entity/enchanting_table_book.png");
-    private BookModel bookModel;
-    private final Random random = new Random();
-    public int ticks;
-    public float flip;
-    public float oFlip;
-    public float flipT;
-    public float flipA;
-    public float open;
-    public float oOpen;
-    private ItemStack last = ItemStack.EMPTY;
-    protected float eterna = 0, lastEterna = 0, quanta = 0, lastQuanta = 0, arcana = 0, lastArcana = 0;
+    public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_table.png");
+
+    protected final ApothEnchantContainer menu;
     protected final Int2ObjectMap<List<EnchantmentInstance>> clues = new Int2ObjectOpenHashMap<>();
+
+    protected float eterna = 0, lastEterna = 0, quanta = 0, lastQuanta = 0, arcana = 0, lastArcana = 0;
     protected boolean[] hasAllClues = { false, false, false };
 
-    public ApothEnchantScreen(ApothEnchantContainer container, Inventory inv, Component title) {
+    // menu type is weak due to weird generic stuff regarding screen registration.
+    public ApothEnchantScreen(EnchantmentMenu container, Inventory inv, Component title) {
         super(container, inv, title);
+        this.menu = (ApothEnchantContainer) container;
         this.imageHeight = 197;
         this.clues.defaultReturnValue(new ArrayList<>());
     }
 
     @Override
-    protected void init() {
-        super.init();
-        this.bookModel = new BookModel(this.minecraft.getEntityModels().bakeLayer(ModelLayers.BOOK));
-    }
-
-    @Override
-    protected void renderLabels(PoseStack stack, int mouseX, int mouseY) {
-        this.font.draw(stack, this.title, 12.0F, 5.0F, 4210752);
-        this.font.draw(stack, this.playerInventoryTitle, 7.0F, this.imageHeight - 96 + 4F, 4210752);
-        this.font.draw(stack, I18n.get("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);
-        this.font.draw(stack, I18n.get("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454);
-        this.font.draw(stack, I18n.get("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8);
+    protected void renderLabels(GuiGraphics gfx, int mouseX, int mouseY) {
+        gfx.drawString(font, this.title, 12, 5, 4210752, false);
+        gfx.drawString(font, this.playerInventoryTitle, 7, this.imageHeight - 96 + 4, 4210752, false);
+        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D, false);
+        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454, false);
+        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8, false);
     }
 
     @Override
     public void containerTick() {
-        this.tickBook();
+        super.containerTick();
         float current = this.menu.eterna.get();
         if (current != this.eterna) {
             if (current > this.eterna) this.eterna += Math.min(current - this.eterna, Math.max(0.16F, (current - this.eterna) * 0.1F));
@@ -131,78 +111,21 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
      */
     @SuppressWarnings("deprecation")
     @Override
-    protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY) {
-        Lighting.setupForFlatItems();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, ENCHANTMENT_TABLE_GUI_TEXTURE);
+    protected void renderBg(GuiGraphics gfx, float partialTicks, int mouseX, int mouseY) {
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
-        this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
-        int guiScale = (int) this.minecraft.getWindow().getGuiScale();
-        RenderSystem.viewport((this.width - 320) / 2 * guiScale, (this.height - 240) / 2 * guiScale, 320 * guiScale, 240 * guiScale);
-        Matrix4f matrix4f = Matrix4f.createTranslateMatrix(-0.34F, 0.23F, 0.0F);
-        matrix4f.multiply(Matrix4f.perspective(90.0D, 1.3333334F, 9.0F, 80.0F));
-        RenderSystem.backupProjectionMatrix();
-        RenderSystem.setProjectionMatrix(matrix4f);
-        stack.pushPose();
-        PoseStack.Pose posestack$pose = stack.last();
-        posestack$pose.pose().setIdentity();
-        posestack$pose.normal().setIdentity();
-        stack.translate(0.0D, 5.3F, 1984.0D);
-        stack.scale(5.0F, 5.0F, 5.0F);
-        stack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
-        stack.mulPose(Vector3f.XP.rotationDegrees(20.0F));
-        float f1 = Mth.lerp(partialTicks, this.oOpen, this.open);
+        gfx.blit(TEXTURES, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
+        this.renderBook(gfx, xCenter, yCenter, partialTicks);
 
-        stack.translate((1.0F - f1) * 0.2F, (1.0F - f1) * 0.1F, (1.0F - f1) * 0.25F);
-        float f2 = -(1.0F - f1) * 90.0F - 90.0F;
-        stack.mulPose(Vector3f.YP.rotationDegrees(f2));
-        stack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
-
-        float f3 = Mth.lerp(partialTicks, this.oFlip, this.flip) + 0.25F;
-        float f4 = Mth.lerp(partialTicks, this.oFlip, this.flip) + 0.75F;
-        f3 = (f3 - Mth.fastFloor(f3)) * 1.6F - 0.3F;
-        f4 = (f4 - Mth.fastFloor(f4)) * 1.6F - 0.3F;
-        if (f3 < 0.0F) {
-            f3 = 0.0F;
-        }
-
-        if (f4 < 0.0F) {
-            f4 = 0.0F;
-        }
-
-        if (f3 > 1.0F) {
-            f3 = 1.0F;
-        }
-
-        if (f4 > 1.0F) {
-            f4 = 1.0F;
-        }
-
-        this.bookModel.setupAnim(0.0F, f3, f4, f1);
-        MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-        VertexConsumer vertexconsumer = buf.getBuffer(this.bookModel.renderType(ENCHANTMENT_TABLE_BOOK_TEXTURE));
-        this.bookModel.renderToBuffer(stack, vertexconsumer, 15728880, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        buf.endBatch();
-        stack.popPose();
-        RenderSystem.viewport(0, 0, this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
-        RenderSystem.restoreProjectionMatrix();
-        Lighting.setupFor3DItems();
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         EnchantmentNames.getInstance().initSeed(this.menu.getEnchantmentSeed());
         int lapis = this.menu.getGoldCount();
 
         for (int slot = 0; slot < 3; ++slot) {
             int j1 = xCenter + 60;
             int k1 = j1 + 20;
-            this.setBlitOffset(0);
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShaderTexture(0, ENCHANTMENT_TABLE_GUI_TEXTURE);
             int level = this.menu.costs[slot];
             if (level == 0) {
-                this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
+                gfx.blit(TEXTURES, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
             }
             else {
                 String s = "" + level;
@@ -211,56 +134,56 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 int color = 6839882;
                 if ((lapis < slot + 1 || this.minecraft.player.experienceLevel < level) && !this.minecraft.player.getAbilities().instabuild || this.menu.enchantClue[slot] == -1) { // Forge: render buttons as disabled when enchantable
                                                                                                                                                                                     // but enchantability not met on lower levels
-                    this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
-                    this.blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
-                    this.font.drawWordWrap(itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
+                    gfx.blit(TEXTURES, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
+                    gfx.blit(TEXTURES, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
+                    gfx.drawWordWrap(font, itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
                     color = 4226832;
                 }
                 else {
                     int k2 = mouseX - (xCenter + 60);
                     int l2 = mouseY - (yCenter + 14 + 19 * slot);
                     if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-                        this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 237, 108, 19);
+                        gfx.blit(TEXTURES, j1, yCenter + 14 + 19 * slot, 148, 237, 108, 19);
                         color = 16777088;
                     }
                     else {
-                        this.blit(stack, j1, yCenter + 14 + 19 * slot, 148, 199, 108, 19);
+                        gfx.blit(TEXTURES, j1, yCenter + 14 + 19 * slot, 148, 199, 108, 19);
                     }
 
-                    this.blit(stack, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
-                    this.font.drawWordWrap(itextproperties, k1, yCenter + 16 + 19 * slot, width, color);
+                    gfx.blit(TEXTURES, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
+                    gfx.drawWordWrap(font, itextproperties, k1, yCenter + 16 + 19 * slot, width, color);
                     color = 8453920;
                 }
 
-                this.font.drawShadow(stack, s, k1 + 86 - this.font.width(s), yCenter + 16 + 19 * slot + 7, color);
+                gfx.drawString(font, s, k1 + 86 - this.font.width(s), yCenter + 16 + 19 * slot + 7, color);
             }
         }
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, ENCHANTMENT_TABLE_GUI_TEXTURE);
+        RenderSystem.setShaderTexture(0, TEXTURES);
         if (this.eterna > 0) {
-            this.blit(stack, xCenter + 59, yCenter + 75, 0, 197, (int) (this.eterna / this.menu.eterna.getMax() * 110), 5);
+            gfx.blit(TEXTURES, xCenter + 59, yCenter + 75, 0, 197, (int) (this.eterna / this.menu.eterna.getMax() * 110), 5);
         }
         if (this.quanta > 0) {
-            this.blit(stack, xCenter + 59, yCenter + 85, 0, 202, (int) (this.quanta / 100 * 110), 5);
+            gfx.blit(TEXTURES, xCenter + 59, yCenter + 85, 0, 202, (int) (this.quanta / 100 * 110), 5);
         }
         if (this.arcana > 0) {
-            this.blit(stack, xCenter + 59, yCenter + 95, 0, 207, (int) (this.arcana / 100 * 110), 5);
+            gfx.blit(TEXTURES, xCenter + 59, yCenter + 95, 0, 207, (int) (this.arcana / 100 * 110), 5);
         }
 
         if (this.menu.getSlot(0).hasItem() && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
             int u = this.isHovering(145, -15, 27, 15, mouseX, mouseY) ? 15 : 0;
-            this.blit(stack, xCenter + 145, yCenter - 15, this.imageWidth, u, 27, 15);
+            gfx.blit(TEXTURES, xCenter + 145, yCenter - 15, this.imageWidth, u, 27, 15);
         }
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics gfx, int mouseX, int mouseY, float partialTicks) {
         partialTicks = this.minecraft.getFrameTime();
-        this.renderBackground(stack);
-        super.render(stack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(stack, mouseX, mouseY);
+        this.renderBackground(gfx);
+        super.render(gfx, mouseX, mouseY, partialTicks);
+        this.renderTooltip(gfx, mouseX, mouseY);
         boolean creative = this.minecraft.player.getAbilities().instabuild;
         int lapis = this.menu.getGoldCount();
 
@@ -318,7 +241,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                         list.add(Component.literal(s).withStyle(ChatFormatting.GRAY));
                     }
                 }
-                this.renderComponentTooltip(stack, list, mouseX, mouseY);
+                gfx.renderComponentTooltip(font, list, mouseX, mouseY);
                 break;
             }
         }
@@ -331,7 +254,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 list.add(Component.literal(""));
                 list.add(Component.literal(I18n.get("gui.apotheosis.enchant.eterna.desc3", f(this.menu.eterna.get()), this.menu.eterna.getMax())).withStyle(ChatFormatting.GRAY));
             }
-            this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
         }
         else if (this.isHovering(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
             List<Component> list = Lists.newArrayList();
@@ -343,7 +266,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 list.add(Component.literal(I18n.get("gui.apotheosis.enchant.quanta.desc4", f(this.menu.quanta.get()))).withStyle(ChatFormatting.GRAY));
                 list.add(Component.literal(I18n.get("info.apotheosis.gui_rectification", f(this.menu.rectification.get()))).withStyle(ChatFormatting.YELLOW));
             }
-            this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
             float quanta = this.menu.quanta.get();
             float rectification = this.menu.rectification.get();
             if (quanta > 0) {
@@ -351,11 +274,12 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 list.add(Component.translatable("info.apotheosis.quanta_buff").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.RED));
                 list.add(Component.translatable("info.apotheosis.quanta_reduc", f(-quanta + quanta * rectification / 100F)).withStyle(ChatFormatting.DARK_RED));
                 list.add(Component.translatable("info.apotheosis.quanta_growth", f(quanta)).withStyle(ChatFormatting.BLUE));
-                this.drawOnLeft(stack, list, this.getGuiTop() + 29);
+                this.drawOnLeft(gfx, list, this.getGuiTop() + 29);
             }
         }
         else if (this.isHovering(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
             List<Component> list = Lists.newArrayList();
+            PoseStack stack = gfx.pose();
             stack.pushPose();
             stack.translate(0, 0, 4);
             list.add(Component.literal(arcana() + I18n.get("gui.apotheosis.enchant.arcana.desc")));
@@ -368,7 +292,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 list.add(Component.translatable("info.apotheosis.ench_bonus", f(ench)).withStyle(ChatFormatting.YELLOW));
                 list.add(Component.literal(I18n.get("gui.apotheosis.enchant.arcana.desc5", f(this.menu.arcana.get()))).withStyle(ChatFormatting.GOLD));
             }
-            this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
             stack.popPose();
             if (this.menu.arcana.get() > 0) {
                 list.clear();
@@ -378,7 +302,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 int minEnchants = this.menu.arcana.get() > 75F ? 3 : this.menu.arcana.get() > 25F ? 2 : 0;
                 if (minEnchants > 0) list.add(Component.translatable("info.apotheosis.min_enchants", minEnchants).withStyle(ChatFormatting.BLUE));
 
-                this.drawOnLeft(stack, list, this.getGuiTop() + 29);
+                this.drawOnLeft(gfx, list, this.getGuiTop() + 29);
                 int offset = 20 + list.size() * this.minecraft.font.lineHeight;
                 list.clear();
                 list.add(Component.translatable("info.apotheosis.rel_weights").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
@@ -386,13 +310,13 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
                 list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
                 list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
-                this.drawOnLeft(stack, list, this.getGuiTop() + 29 + offset);
+                this.drawOnLeft(gfx, list, this.getGuiTop() + 29 + offset);
             }
         }
         else if (this.menu.getSlot(0).hasItem() && this.isHovering(145, -15, 27, 15, mouseX, mouseY) && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
             List<Component> list = Lists.newArrayList();
             list.add(Component.translatable("info.apotheosis.all_available").withStyle(ChatFormatting.BLUE));
-            this.renderComponentTooltip(stack, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
         }
 
         ItemStack enchanting = this.menu.getSlot(0).getItem();
@@ -416,14 +340,19 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                     list.add(Component.translatable("info.apotheosis.power_range", Component.literal("" + minPow).withStyle(ChatFormatting.DARK_RED), Component.literal("" + maxPow).withStyle(ChatFormatting.BLUE)));
                     list.add(Component.translatable("info.apotheosis.item_ench", Component.literal("" + enchanting.getEnchantmentValue()).withStyle(ChatFormatting.GREEN)));
                     list.add(Component.translatable("info.apotheosis.num_clues", Component.literal("" + (1 + this.menu.clues.get())).withStyle(ChatFormatting.DARK_AQUA)));
-                    this.drawOnLeft(stack, list, this.getGuiTop() + 29);
+                    this.drawOnLeft(gfx, list, this.getGuiTop() + 29);
                     break;
                 }
             }
         }
     }
 
-    public void drawOnLeft(PoseStack stack, List<Component> list, int y) {
+    @Override
+    public ApothEnchantContainer getMenu() {
+        return this.menu;
+    }
+
+    public void drawOnLeft(GuiGraphics gfx, List<Component> list, int y) {
         if (list.isEmpty()) return;
         int xPos = this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get();
         int maxWidth = 9999;
@@ -436,45 +365,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
         int lambdastupid = maxWidth;
         list.forEach(comp -> split.addAll(this.font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
 
-        this.renderComponentTooltip(stack, split, xPos, y, this.font);
-
-        // GuiUtils.drawHoveringText(stack, list, xPos, y, width, height, maxWidth, this.font);
-    }
-
-    public void tickBook() {
-        ItemStack itemstack = this.menu.getSlot(0).getItem();
-        if (!ItemStack.matches(itemstack, this.last)) {
-            this.last = itemstack;
-
-            do {
-                this.flipT += this.random.nextInt(4) - this.random.nextInt(4);
-            }
-            while (this.flip <= this.flipT + 1.0F && this.flip >= this.flipT - 1.0F);
-        }
-
-        this.oFlip = this.flip;
-        this.oOpen = this.open;
-        boolean flag = false;
-
-        for (int i = 0; i < 3; ++i) {
-            if (this.menu.costs[i] != 0) {
-                flag = true;
-            }
-        }
-
-        if (flag) {
-            this.open += 0.2F;
-        }
-        else {
-            this.open -= 0.2F;
-        }
-
-        this.open = Mth.clamp(this.open, 0.0F, 1.0F);
-        float f1 = (this.flipT - this.flip) * 0.4F;
-
-        f1 = Mth.clamp(f1, -0.2F, 0.2F);
-        this.flipA += (f1 - this.flipA) * 0.9F;
-        this.flip += this.flipA;
+        gfx.renderComponentTooltip(font, split, xPos, y, ItemStack.EMPTY);
     }
 
     public void acceptClues(int slot, List<EnchantmentInstance> clues, boolean all) {

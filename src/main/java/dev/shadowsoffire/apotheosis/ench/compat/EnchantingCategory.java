@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -27,10 +26,9 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -84,24 +82,24 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
         if (ext != null) ext.setRecipe(builder, input, output, recipe, focuses);
         else {
             input.addIngredients(VanillaTypes.ITEM_STACK, Arrays.asList(recipe.getInput().getItems()));
-            output.addIngredient(VanillaTypes.ITEM_STACK, recipe.getResultItem());
+            output.addIngredient(VanillaTypes.ITEM_STACK, recipe.getOutput());
         }
     }
 
     @Override
-    public void draw(EnchantingRecipe recipe, IRecipeSlotsView slots, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(EnchantingRecipe recipe, IRecipeSlotsView slots, GuiGraphics gfx, double mouseX, double mouseY) {
         boolean hover = false;
         if (mouseX > 57 && mouseX <= 57 + 108 && mouseY > 4 && mouseY <= 4 + 19) {
-            GuiComponent.blit(stack, 57, 4, 0, 0, 71, 108, 19, 256, 256);
+            gfx.blit(TEXTURES, 57, 4, 0, 0, 71, 108, 19, 256, 256);
             hover = true;
         }
 
         Font font = Minecraft.getInstance().font;
         Stats stats = recipe.getRequirements();
         Stats maxStats = recipe.getMaxRequirements();
-        font.draw(stack, I18n.get("gui.apotheosis.enchant.eterna"), 16, 26, 0x3DB53D);
-        font.draw(stack, I18n.get("gui.apotheosis.enchant.quanta"), 16, 36, 0xFC5454);
-        font.draw(stack, I18n.get("gui.apotheosis.enchant.arcana"), 16, 46, 0xA800A8);
+        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.eterna"), 16, 26, 0x3DB53D, false);
+        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.quanta"), 16, 36, 0xFC5454, false);
+        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.arcana"), 16, 46, 0xA800A8, false);
         int level = (int) (stats.eterna() * 2);
 
         String s = "" + level;
@@ -109,32 +107,29 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
         EnchantmentNames.getInstance().initSeed(recipe.getId().hashCode());
         FormattedText itextproperties = EnchantmentNames.getInstance().getRandomName(font, width);
         int color = hover ? 16777088 : 6839882;
-        drawWordWrap(font, itextproperties, 77, 6, width, color, stack);
+        drawWordWrap(font, itextproperties, 77, 6, width, color, gfx);
         color = 8453920;
-        font.drawShadow(stack, s, 77 + width, 13, color);
+        gfx.drawString(font, s, 77 + width, 13, color);
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURES);
         int[] pos = { (int) (stats.eterna() / EnchantingStatManager.getAbsoluteMaxEterna() * 110), (int) (stats.quanta() / 100 * 110), (int) (stats.arcana() / 100 * 110) };
         if (stats.eterna() > 0) {
-            GuiComponent.blit(stack, 56, 27, 0, 56, pos[0], 5, 256, 256);
+            gfx.blit(TEXTURES, 56, 27, 0, 56, pos[0], 5, 256, 256);
         }
         if (stats.quanta() > 0) {
-            GuiComponent.blit(stack, 56, 37, 0, 61, pos[1], 5, 256, 256);
+            gfx.blit(TEXTURES, 56, 37, 0, 61, pos[1], 5, 256, 256);
         }
         if (stats.arcana() > 0) {
-            GuiComponent.blit(stack, 56, 47, 0, 66, pos[2], 5, 256, 256);
+            gfx.blit(TEXTURES, 56, 47, 0, 66, pos[2], 5, 256, 256);
         }
         RenderSystem.enableBlend();
         if (maxStats.eterna() > 0) {
-            GuiComponent.blit(stack, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna() - stats.eterna()) / EnchantingStatManager.getAbsoluteMaxEterna() * 110), 5, 256, 256);
+            gfx.blit(TEXTURES, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna() - stats.eterna()) / EnchantingStatManager.getAbsoluteMaxEterna() * 110), 5, 256, 256);
         }
         if (maxStats.quanta() > 0) {
-            GuiComponent.blit(stack, 56 + pos[1], 37, pos[1], 95, (int) ((maxStats.quanta() - stats.quanta()) / 100 * 110), 5, 256, 256);
+            gfx.blit(TEXTURES, 56 + pos[1], 37, pos[1], 95, (int) ((maxStats.quanta() - stats.quanta()) / 100 * 110), 5, 256, 256);
         }
         if (maxStats.arcana() > 0) {
-            GuiComponent.blit(stack, 56 + pos[2], 47, pos[2], 100, (int) ((maxStats.arcana() - stats.arcana()) / 100 * 110), 5, 256, 256);
+            gfx.blit(TEXTURES, 56 + pos[2], 47, pos[2], 100, (int) ((maxStats.arcana() - stats.arcana()) / 100 * 110), 5, 256, 256);
         }
         RenderSystem.disableBlend();
         Screen scn = Minecraft.getInstance().screen;
@@ -142,7 +137,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
         if (hover) {
             List<Component> list = new ArrayList<>();
             list.add(Component.translatable("container.enchant.clue", Apoth.Enchantments.INFUSION.get().getFullname(1).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-            scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
+            gfx.renderComponentTooltip(font, list, (int) mouseX, (int) mouseY);
         }
         else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 26 && mouseY <= 27 + 5) {
             List<Component> list = new ArrayList<>();
@@ -154,7 +149,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
                 list.add(Component.translatable("info.apotheosis.eterna_at_least", stats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
                 if (maxStats.eterna() > -1) list.add(Component.translatable("info.apotheosis.eterna_at_most", maxStats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
             }
-            scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
+            gfx.renderComponentTooltip(font, list, (int) mouseX, (int) mouseY);
         }
         else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 36 && mouseY <= 37 + 5) {
             List<Component> list = new ArrayList<>();
@@ -166,7 +161,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
                 list.add(Component.translatable("info.apotheosis.percent_at_least", stats.quanta()).withStyle(ChatFormatting.GRAY));
                 if (maxStats.quanta() > -1) list.add(Component.translatable("info.apotheosis.percent_at_most", maxStats.quanta()).withStyle(ChatFormatting.GRAY));
             }
-            scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
+            gfx.renderComponentTooltip(font, list, (int) mouseX, (int) mouseY);
         }
         else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 46 && mouseY <= 47 + 5) {
             List<Component> list = new ArrayList<>();
@@ -178,13 +173,13 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
                 list.add(Component.translatable("info.apotheosis.percent_at_least", stats.arcana()).withStyle(ChatFormatting.GRAY));
                 if (maxStats.arcana() > -1) list.add(Component.translatable("info.apotheosis.percent_at_most", maxStats.arcana()).withStyle(ChatFormatting.GRAY));
             }
-            scn.renderComponentTooltip(stack, list, (int) mouseX, (int) mouseY);
+            gfx.renderComponentTooltip(font, list, (int) mouseX, (int) mouseY);
         }
     }
 
-    public static void drawWordWrap(Font font, FormattedText pText, int pX, int pY, int pMaxWidth, int pColor, PoseStack stack) {
+    public static void drawWordWrap(Font font, FormattedText pText, int pX, int pY, int pMaxWidth, int pColor, GuiGraphics gfx) {
         for (FormattedCharSequence formattedcharsequence : font.split(pText, pMaxWidth)) {
-            font.draw(stack, formattedcharsequence, pX, pY, pColor);
+            gfx.drawString(font, formattedcharsequence, pX, pY, pColor, false);
             pY += 9;
         }
 

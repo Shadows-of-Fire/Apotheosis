@@ -11,8 +11,8 @@ import javax.annotation.Nullable;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -22,14 +22,14 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class GemItem extends Item {
+public class GemItem extends Item implements ITabFiller {
 
     public static final String HAS_REFRESHED = "has_refreshed";
     public static final String UUID_ARRAY = "uuids";
@@ -76,33 +76,20 @@ public class GemItem extends Item {
 
     @Override
     public boolean canBeHurtBy(DamageSource src) {
-        return super.canBeHurtBy(src) && src != DamageSource.ANVIL;
+        return super.canBeHurtBy(src) && !src.is(DamageTypes.FALLING_ANVIL);
     }
 
     @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (group == CreativeModeTab.TAB_SEARCH) {
-            GemManager.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
-                for (LootRarity rarity : LootRarity.values()) {
-                    if (gem.clamp(rarity) != rarity) continue;
-                    ItemStack stack = new ItemStack(this);
-                    setGem(stack, gem);
-                    setLootRarity(stack, rarity);
-                    items.add(stack);
-                }
-            });
-        }
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        // TODO: Remove 6.4.0 - Gems of the same type and rarity should stack, and UUIDs should not be generated until socketing time.
-        // However, old gems will have their UUIDs encoded, and as such will need to be datafixed.
-        CompoundTag tag = stack.getTag();
-        if (tag != null) {
-            tag.remove(UUID_ARRAY);
-            tag.remove("facets");
-        }
+    public void fillItemCategory(CreativeModeTab group, CreativeModeTab.Output out) {
+        GemManager.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
+            for (LootRarity rarity : LootRarity.values()) {
+                if (gem.clamp(rarity) != rarity) continue;
+                ItemStack stack = new ItemStack(this);
+                setGem(stack, gem);
+                setLootRarity(stack, rarity);
+                out.accept(stack);
+            }
+        });
     }
 
     /**

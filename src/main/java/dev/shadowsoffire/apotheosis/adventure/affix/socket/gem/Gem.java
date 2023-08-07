@@ -23,17 +23,17 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 

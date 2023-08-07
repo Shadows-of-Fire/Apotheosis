@@ -200,7 +200,7 @@ public class AdventureEvents {
             if (p.random.nextFloat() <= chance) {
                 Entity ent = e.getEntity();
                 e.getDrops()
-                    .add(new ItemEntity(ent.level, ent.getX(), ent.getY(), ent.getZ(), GemManager.createRandomGemStack(p.random, (ServerLevel) p.level, p.getLuck(), IDimensional.matches(p.getLevel()), IStaged.matches(p)), 0, 0, 0));
+                    .add(new ItemEntity(ent.level(), ent.getX(), ent.getY(), ent.getZ(), GemManager.createRandomGemStack(p.random, (ServerLevel) p.level(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p)), 0, 0, 0));
             }
         }
     }
@@ -290,7 +290,7 @@ public class AdventureEvents {
             // Copy of Mob#isSunBurnTick()
             if (entity.level().isDay() && !entity.level().isClientSide) {
                 float f = entity.getLightLevelDependentMagicValue();
-                BlockPos blockpos = new BlockPos(entity.getX(), entity.getEyeY(), entity.getZ());
+                BlockPos blockpos = BlockPos.containing(entity.getX(), entity.getEyeY(), entity.getZ());
                 boolean flag = entity.isInWaterRainOrBubble() || entity.isInPowderSnow || entity.wasInPowderSnow;
                 if (f > 0.5F && entity.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && entity.level().canSeeSky(blockpos)) {
                     entity.setSecondsOnFire(8);

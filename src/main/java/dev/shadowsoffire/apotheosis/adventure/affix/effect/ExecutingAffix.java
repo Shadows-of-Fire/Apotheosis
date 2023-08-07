@@ -13,15 +13,18 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mixin.LivingEntityInvoker;
-import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.util.StepFunction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 public class ExecutingAffix extends Affix {
 
@@ -31,6 +34,8 @@ public class ExecutingAffix extends Affix {
         .apply(inst, ExecutingAffix::new));
 
     public static final PSerializer<ExecutingAffix> SERIALIZER = PSerializer.fromCodec("Executing Affix", CODEC);
+
+    public static final ResourceKey<DamageType> EXECUTE = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("execute"));
 
     protected final Map<LootRarity, StepFunction> values;
 
@@ -58,13 +63,18 @@ public class ExecutingAffix extends Affix {
         float threshold = this.getTrueLevel(rarity, level);
         if (Apotheosis.localAtkStrength >= 0.98 && target instanceof LivingEntity living && !living.level().isClientSide) {
             if (living.getHealth() / living.getMaxHealth() < threshold) {
-                DamageSource src = new EntityDamageSource("apotheosis.execute", user).bypassArmor().bypassMagic();
+                DamageSource src = living.damageSources().source(EXECUTE, user);
                 if (!((LivingEntityInvoker) living).callCheckTotemDeathProtection(src)) {
                     SoundEvent soundevent = ((LivingEntityInvoker) living).callGetDeathSound();
                     if (soundevent != null) {
                         living.playSound(soundevent, ((LivingEntityInvoker) living).callGetSoundVolume(), living.getVoicePitch());
                     }
 
+                    living.setLastHurtByMob(user);
+                    if (user instanceof Player p) {
+                        living.setLastHurtByPlayer(p);
+                    }
+                    living.getCombatTracker().recordDamage(src, 99999);
                     living.setHealth(0);
                     living.die(src);
                 }
