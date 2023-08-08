@@ -14,6 +14,9 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.boss.MinibossManager.IEntityMatch;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.network.PacketDistro;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -42,33 +45,30 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent.LevelTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent.FinalizeSpawn;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import dev.shadowsoffire.placebo.codec.EnumCodec;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
-import dev.shadowsoffire.placebo.network.PacketDistro;
 
 public class BossEvents {
 
     public Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void naturalBosses(LivingSpawnEvent.SpecialSpawn e) {
-        if (e.getSpawnReason() == MobSpawnType.NATURAL || e.getSpawnReason() == MobSpawnType.CHUNK_GENERATION) {
+    public void naturalBosses(FinalizeSpawn e) {
+        if (e.getSpawnType() == MobSpawnType.NATURAL || e.getSpawnType() == MobSpawnType.CHUNK_GENERATION) {
             LivingEntity entity = e.getEntity();
             RandomSource rand = e.getLevel().getRandom();
             if (this.bossCooldowns.getInt(entity.level().dimension().location()) <= 0 && !e.getLevel().isClientSide() && entity instanceof Monster && e.getResult() != Result.DENY) {
                 ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
                 Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
                 if (rules == null) return;
-                if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, new BlockPos(e.getX(), e.getY(), e.getZ()))) {
+                if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, BlockPos.containing(e.getX(), e.getY(), e.getZ()))) {
                     Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
                     if (player == null) return; // Spawns require player context
                     BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
-                    Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
+                    Mob boss = item.createBoss(sLevel, BlockPos.containing(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
                     if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
                         boss.setTarget(player);
                     }
@@ -101,7 +101,7 @@ public class BossEvents {
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void minibosses(LivingSpawnEvent.SpecialSpawn e) {
+    public void minibosses(FinalizeSpawn e) {
         LivingEntity entity = e.getEntity();
         RandomSource rand = e.getLevel().getRandom();
         if (!e.getLevel().isClientSide() && entity instanceof Mob mob && e.getResult() != Result.DENY) {
@@ -109,7 +109,7 @@ public class BossEvents {
             Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
             if (player == null) return; // Spawns require player context
             MinibossItem item = MinibossManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
-            if (item != null && !item.isExcluded(mob, sLevel, e.getSpawnReason()) && sLevel.getRandom().nextFloat() <= item.getChance()) {
+            if (item != null && !item.isExcluded(mob, sLevel, e.getSpawnType()) && sLevel.getRandom().nextFloat() <= item.getChance()) {
                 mob.getPersistentData().putString("apoth.miniboss", item.getId().toString());
                 mob.getPersistentData().putFloat("apoth.miniboss.luck", player.getLuck());
                 if (!item.shouldFinalize()) e.setCanceled(true);
@@ -133,7 +133,7 @@ public class BossEvents {
     @SubscribeEvent
     public void tick(LevelTickEvent e) {
         if (e.phase == Phase.END) {
-            this.bossCooldowns.computeIntIfPresent(e.level().dimension().location(), (key, value) -> Math.max(0, value - 1));
+            this.bossCooldowns.computeIntIfPresent(e.level.dimension().location(), (key, value) -> Math.max(0, value - 1));
         }
     }
 
@@ -184,7 +184,7 @@ public class BossEvents {
             (level, pos) -> NEEDS_SURFACE.test(level, pos) && (Mth.abs(pos.getX()) > 1024 || Mth.abs(pos.getZ()) > 1024)),
         ANY((level, pos) -> true);
 
-        public static final Codec<BossSpawnRules> CODEC = new EnumCodec<>(BossSpawnRules.class);
+        public static final Codec<BossSpawnRules> CODEC = PlaceboCodecs.enumCodec(BossSpawnRules.class);
 
         BiPredicate<ServerLevelAccessor, BlockPos> pred;
 

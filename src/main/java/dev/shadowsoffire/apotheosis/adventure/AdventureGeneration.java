@@ -9,8 +9,10 @@ import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature2;
 import dev.shadowsoffire.apotheosis.adventure.gen.RogueSpawnerFeature;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -51,7 +53,7 @@ public class AdventureGeneration {
     }
 
     static Holder<PlacedFeature> register(String id, Holder<? extends ConfiguredFeature<?, ?>> feat, PlacementModifier... modifs) {
-        return PlacementUtils.register(Apotheosis.MODID + ":" + id, feat, modifs);
+        return PlacementUtils.register(ResourceKey.create(Registries.PLACED_FEATURE, Apotheosis.loc(id)), feat, modifs);
     }
 
     public static void init() {

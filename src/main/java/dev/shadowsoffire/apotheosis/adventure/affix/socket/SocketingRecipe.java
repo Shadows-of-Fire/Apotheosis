@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.event.ItemSocketingEvent;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event.Result;
 
-public class SocketingRecipe extends ApothUpgradeRecipe {
+public class SocketingRecipe extends ApothSmithingRecipe {
 
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:socketing");
 
@@ -48,7 +49,7 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
      * Returns an Item that is the result of this recipe
      */
     @Override
-    public ItemStack assemble(Container inv) {
+    public ItemStack assemble(Container inv, RegistryAccess regs) {
         ItemStack input = inv.getItem(0);
         ItemStack gemStack = inv.getItem(1);
         if (input.isEmpty()) return ItemStack.EMPTY; // This really should throw, but mods being mods, that might be a bad idea.
@@ -80,7 +81,7 @@ public class SocketingRecipe extends ApothUpgradeRecipe {
      * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
      */
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess regs) {
         return ItemStack.EMPTY;
     }
 

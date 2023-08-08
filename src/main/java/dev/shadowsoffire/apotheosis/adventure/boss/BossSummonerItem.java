@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class BossSummonerItem extends Item {
 

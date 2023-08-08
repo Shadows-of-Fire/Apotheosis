@@ -19,7 +19,7 @@ public class AdventureTOPPlugin implements TOPCompat.Provider {
     @Override
     public void addProbeEntityInfo(ProbeMode mode, IProbeInfo info, Player player, Level level, Entity entity, IProbeHitEntityData hitData) {
         if (entity instanceof LivingEntity living && living.getPersistentData().getBoolean("apoth.boss")) {
-            CommonTooltipUtil.appendBossData(living.level, living, info::mcText);
+            CommonTooltipUtil.appendBossData(living.level(), living, info::mcText);
         }
     }
 

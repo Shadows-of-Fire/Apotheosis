@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.client.Minecraft;
@@ -30,8 +30,8 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
 
         matrix.scale(1.25F, 1.25F, 1.25F);
         matrix.translate(8.5 * px / 1.25, 16 * px / 1.25 - 0.015, 7 * px / 1.25);
-        matrix.mulPose(Vector3f.YP.rotationDegrees(45));
-        matrix.mulPose(Vector3f.XP.rotationDegrees(90));
+        matrix.mulPose(Axis.YP.rotationDegrees(45));
+        matrix.mulPose(Axis.XP.rotationDegrees(90));
 
         if (tile.step1) {
             float factor = tile.time % 60 + partials;
@@ -39,7 +39,7 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
             float sinSq = sin * sin;
 
             matrix.translate(0.125 * sinSq, -0, -0.15 * sinSq);
-            matrix.mulPose(Vector3f.YN.rotationDegrees(45 * sinSq));
+            matrix.mulPose(Axis.YN.rotationDegrees(45 * sinSq));
         }
         else {
             float factor = tile.time % 5 + partials;
@@ -47,7 +47,7 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
             float sinSq = sin * sin;
 
             matrix.translate(0.125 * sinSq, -0, -0.15 * sinSq);
-            matrix.mulPose(Vector3f.YN.rotationDegrees(45 * sinSq));
+            matrix.mulPose(Axis.YN.rotationDegrees(45 * sinSq));
         }
         MultiBufferSource.BufferSource src = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
         irenderer.renderModelLists(base, ItemStack.EMPTY, light, overlay, matrix, ItemRenderer.getFoilBufferDirect(src, ItemBlockRenderTypes.getRenderType(tile.getBlockState(), true), true, false));

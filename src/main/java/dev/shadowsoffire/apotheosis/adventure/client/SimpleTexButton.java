@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -34,10 +33,10 @@ public class SimpleTexButton extends Button {
     }
 
     public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress, Component pMessage) {
-        this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, pTextureWidth, pTextureHeight, pOnPress, NO_TOOLTIP, pMessage);
+        this(pX, pY, pWidth, pHeight, pXTexStart, pYTexStart, texture, pTextureWidth, pTextureHeight, pOnPress, DEFAULT_NARRATION, pMessage);
     }
 
-    public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress, Button.OnTooltip pOnTooltip,
+    public SimpleTexButton(int pX, int pY, int pWidth, int pHeight, int pXTexStart, int pYTexStart, ResourceLocation texture, int pTextureWidth, int pTextureHeight, Button.OnPress pOnPress, Button.CreateNarration pOnTooltip,
         Component pMessage) {
         super(pX, pY, pWidth, pHeight, pMessage, pOnPress, pOnTooltip);
         this.textureWidth = pTextureWidth;
@@ -53,14 +52,12 @@ public class SimpleTexButton extends Button {
     }
 
     public void setPosition(int pX, int pY) {
-        this.x = pX;
-        this.y = pY;
+        this.setX(pX);
+        this.setY(pY);
     }
 
     @Override
-    public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, this.texture);
+    public void renderWidget(GuiGraphics gfx, int pMouseX, int pMouseY, float pPartialTick) {
         int yTex = this.yTexStart;
         if (!this.isActive()) {
             yTex += this.height;
@@ -70,22 +67,20 @@ public class SimpleTexButton extends Button {
         }
 
         RenderSystem.enableDepthTest();
-        blit(pPoseStack, this.x, this.y, this.xTexStart, yTex, this.width, this.height, this.textureWidth, this.textureHeight);
+        gfx.blit(this.texture, this.getX(), this.getY(), this.xTexStart, yTex, this.width, this.height, this.textureWidth, this.textureHeight);
         if (this.isHoveredOrFocused()) {
-            this.renderToolTip(pPoseStack, pMouseX, pMouseY);
+            this.renderToolTip(gfx, pMouseX, pMouseY);
         }
     }
 
-    @Override
-    public void renderToolTip(PoseStack pPoseStack, int pMouseX, int pMouseY) {
-        if (this.onTooltip != NO_TOOLTIP) this.onTooltip.onTooltip(this, pPoseStack, pMouseX, pMouseY);
-        else if (this.getMessage() != CommonComponents.EMPTY) {
+    public void renderToolTip(GuiGraphics gfx, int pMouseX, int pMouseY) {
+        if (this.getMessage() != CommonComponents.EMPTY) {
             MutableComponent primary = (MutableComponent) this.getMessage();
             if (!this.active) primary = primary.withStyle(ChatFormatting.GRAY);
             List<FormattedCharSequence> tooltips = new ArrayList<>();
             tooltips.add(primary.getVisualOrderText());
             if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) tooltips.add(this.inactiveMessage.getVisualOrderText());
-            Minecraft.getInstance().screen.renderTooltip(pPoseStack, tooltips, pMouseX, pMouseY);
+            gfx.renderTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
         }
     }
 

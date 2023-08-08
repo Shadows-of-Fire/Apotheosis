@@ -63,9 +63,12 @@ import dev.shadowsoffire.placebo.registry.RegObjHelper;
 import dev.shadowsoffire.placebo.reload.DynamicRegistryObject;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -264,6 +267,11 @@ public class Apoth {
         public static final RegistryObject<SimpleParticleType> ENCHANT_WATER = R.particle("enchant_water");
         public static final RegistryObject<SimpleParticleType> ENCHANT_SCULK = R.particle("enchant_sculk");
         public static final RegistryObject<SimpleParticleType> ENCHANT_END = R.particle("enchant_end");
+    }
+
+    public static final class DamageTypes {
+        public static final ResourceKey<DamageType> EXECUTE = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("execute"));
+        public static final ResourceKey<DamageType> PSYCHIC = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("psychic"));
     }
 
 }

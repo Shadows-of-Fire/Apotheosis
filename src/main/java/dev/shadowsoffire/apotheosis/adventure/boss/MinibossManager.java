@@ -6,9 +6,9 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener;
 
 public class MinibossManager extends WeightedJsonReloadListener<MinibossItem> {
 

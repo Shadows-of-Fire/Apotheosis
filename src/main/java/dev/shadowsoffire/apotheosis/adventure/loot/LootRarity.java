@@ -26,6 +26,7 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
@@ -35,7 +36,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.StringRepresentable.EnumCodec;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
@@ -319,7 +319,7 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
     public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
 
         public static final Codec<LootRule> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            new EnumCodec<>(AffixType.class).fieldOf("type").forGetter(LootRule::type),
+            PlaceboCodecs.enumCodec(AffixType.class).fieldOf("type").forGetter(LootRule::type),
             Codec.FLOAT.fieldOf("chance").forGetter(LootRule::chance),
             ExtraCodecs.lazyInitializedCodec(() -> LootRule.CODEC).optionalFieldOf("backup").forGetter(rule -> Optional.ofNullable(rule.backup())))
             .apply(inst, LootRule::new));

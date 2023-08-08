@@ -22,9 +22,16 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.util.ChancedEffectInstance;
 import dev.shadowsoffire.apotheosis.util.GearSet;
+import dev.shadowsoffire.apotheosis.util.GearSet.SetPredicate;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apotheosis.util.SupportingEntity;
-import dev.shadowsoffire.apotheosis.util.GearSet.SetPredicate;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.json.NBTAdapter;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
+import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -43,13 +50,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.NBTAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
-import dev.shadowsoffire.placebo.json.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements ILuckyWeighted, IDimensional, IStaged, IEntityMatch {
 
@@ -228,14 +228,14 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
         if (this.nbt != null) mob.readAdditionalSaveData(this.nbt);
 
         if (this.mount != null) {
-            Mob mountedEntity = this.mount.create(mob.getLevel(), mob.getX() + 0.5, mob.getY(), mob.getZ() + 0.5);
+            Mob mountedEntity = this.mount.create(mob.level(), mob.getX() + 0.5, mob.getY(), mob.getZ() + 0.5);
             mob.startRiding(mountedEntity, true);
             level.addFreshEntity(mountedEntity);
         }
 
         if (this.support != null) {
             for (var support : this.support) {
-                Mob supportingMob = support.create(mob.getLevel(), mob.getX() + 0.5, mob.getY(), mob.getZ() + 0.5);
+                Mob supportingMob = support.create(mob.level(), mob.getX() + 0.5, mob.getY(), mob.getZ() + 0.5);
                 level.addFreshEntity(supportingMob);
             }
         }

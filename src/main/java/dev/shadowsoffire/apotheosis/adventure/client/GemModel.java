@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.client;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +10,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -26,14 +24,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class GemModel implements BakedModel {
     private final BakedModel original;
-    private final ItemOverrides itemHandler;
+    private final ItemOverrides overrides;
 
     @SuppressWarnings("deprecation")
     public GemModel(BakedModel original, ModelBakery loader) {
         this.original = original;
-        BlockModel missing = (BlockModel) loader.getModel(ModelBakery.MISSING_MODEL_LOCATION);
-
-        this.itemHandler = new ItemOverrides(loader, missing, id -> missing, Collections.emptyList()){
+        this.overrides = new ItemOverrides(){
             @Override
             public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
                 return GemModel.this.resolve(original, stack, world, entity, seed);
@@ -51,7 +47,7 @@ public class GemModel implements BakedModel {
 
     @Override
     public ItemOverrides getOverrides() {
-        return this.itemHandler;
+        return this.overrides;
     }
 
     @Override

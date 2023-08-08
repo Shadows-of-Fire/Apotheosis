@@ -12,16 +12,15 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents.BossSpawnRules;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs.CodecProvider;
+import dev.shadowsoffire.placebo.json.NBTAdapter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
-import dev.shadowsoffire.placebo.codec.EnumCodec;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs.CodecProvider;
-import dev.shadowsoffire.placebo.json.NBTAdapter;
 
 public interface Exclusion extends CodecProvider<Exclusion> {
 
@@ -48,7 +47,7 @@ public interface Exclusion extends CodecProvider<Exclusion> {
 
         public static Codec<SpawnTypeExclusion> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                PlaceboCodecs.setOf(new EnumCodec<>(MobSpawnType.class)).fieldOf("spawn_types").forGetter(SpawnTypeExclusion::types))
+                PlaceboCodecs.setOf(PlaceboCodecs.enumCodec(MobSpawnType.class)).fieldOf("spawn_types").forGetter(SpawnTypeExclusion::types))
             .apply(inst, SpawnTypeExclusion::new));
 
         @Override

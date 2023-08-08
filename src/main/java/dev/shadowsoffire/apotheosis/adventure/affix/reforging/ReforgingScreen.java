@@ -3,16 +3,16 @@ package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.renderer.GameRenderer;
@@ -23,10 +23,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
+public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> implements DrawsOnLeft {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/reforge.png");
 
@@ -66,12 +65,12 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
     }
 
     @Override
-    public void render(PoseStack pPoseStack, int x, int y, float pPartialTick) {
+    public void render(GuiGraphics gfx, int x, int y, float pPartialTick) {
         if (this.shouldRecompute()) this.recomputeChoices();
-        this.renderBackground(pPoseStack);
-        super.render(pPoseStack, x, y, pPartialTick);
+        this.renderBackground(gfx);
+        super.render(gfx, x, y, pPartialTick);
         RenderSystem.disableBlend();
-        this.renderTooltip(pPoseStack, x, y);
+        this.renderTooltip(gfx, x, y);
 
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
@@ -105,29 +104,24 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
             int k2 = x - (xCenter + 60);
             int l2 = y - (yCenter + 14 + 19 * slot);
             if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-                this.renderTooltip(pPoseStack, choice.getTooltipLines(this.menu.player, TooltipFlag.Default.NORMAL), Optional.empty(), x, y, choice);
-                pPoseStack.translate(0, 0, -100);
-                this.drawOnLeft(pPoseStack, tooltips, this.getGuiTop() + 29);
-                pPoseStack.translate(0, 0, 100);
+                gfx.renderTooltip(font, choice, x, y);
+                this.drawOnLeft(gfx, tooltips, this.getGuiTop() + 29);
             }
         }
     }
 
     @Override
-    protected void renderBg(PoseStack stack, float partials, int x, int y) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
+    protected void renderBg(GuiGraphics gfx, float partials, int x, int y) {
         int xCenter = (this.width - this.imageWidth) / 2;
         int slotsX = xCenter + 60;
         int yCenter = (this.height - this.imageHeight) / 2;
-        this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
+        gfx.blit(TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
 
         LootRarity rarity = this.menu.getRarity();
 
         if (this.menu.getSlot(0).getItem().isEmpty() || rarity == null || this.menu.needsReset()) {
             for (int slot = 0; slot < 3; ++slot) {
-                this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
+                gfx.blit(TEXTURE, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
             }
             return;
         }
@@ -154,29 +148,29 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
             FormattedText randText = EnchantmentNames.getInstance().getRandomName(this.font, width);
             int color = 0x515151;
             if ((dust < dustCost || levels < levelCost || mats < matCost) && !this.minecraft.player.getAbilities().instabuild) {
-                this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
-                this.blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
-                this.font.drawWordWrap(randText, randTextX, yCenter + 16 + 19 * slot, width, color);
+                gfx.blit(TEXTURE, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
+                gfx.blit(TEXTURE, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
+                gfx.drawWordWrap(font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
                 color = this.darken(rarity.color().getValue(), 2);
             }
             else {
                 int k2 = x - (xCenter + 60);
                 int l2 = y - (yCenter + 14 + 19 * slot);
                 if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-                    this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 38, 108, 19);
+                    gfx.blit(TEXTURE, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 38, 108, 19);
                     color = 0xFFFF80;
                 }
                 else {
-                    this.blit(stack, slotsX, yCenter + 14 + 19 * slot, 0, 166, 108, 19);
+                    gfx.blit(TEXTURE, slotsX, yCenter + 14 + 19 * slot, 0, 166, 108, 19);
                     color = 0xCDCDCD;
                 }
-                this.blit(stack, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
+                gfx.blit(TEXTURE, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
 
-                this.font.drawWordWrap(randText, randTextX, yCenter + 16 + 19 * slot, width, color);
+                gfx.drawWordWrap(font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
                 color = rarity.color().getValue();
             }
-            this.drawBorderedString(stack, costStr, slotsX + 10, yCenter + 21 + 19 * slot, color, this.darken(color, 4));
-            this.drawBorderedString(stack, levelStr, slotsX + 106 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color, this.darken(color, 4));
+            this.drawBorderedString(gfx, costStr, slotsX + 10, yCenter + 21 + 19 * slot, color, this.darken(color, 4));
+            this.drawBorderedString(gfx, levelStr, slotsX + 106 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color, this.darken(color, 4));
         }
     }
 
@@ -188,19 +182,19 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
         return r << 16 | g << 8 | b;
     }
 
-    protected void drawBorderedString(PoseStack stack, String str, int x, int y, int color, int shadowColor) {
+    protected void drawBorderedString(GuiGraphics gfx, String str, int x, int y, int color, int shadowColor) {
         Component comp = Component.literal(str);
-        this.font.draw(stack, comp, x, y - 1, shadowColor);
-        this.font.draw(stack, comp, x - 1, y, shadowColor);
-        this.font.draw(stack, comp, x, y + 1, shadowColor);
-        this.font.draw(stack, comp, x + 1, y, shadowColor);
-        this.font.draw(stack, comp, x, y, color);
+        gfx.drawString(font, comp, x, y - 1, shadowColor, false);
+        gfx.drawString(font, comp, x - 1, y, shadowColor, false);
+        gfx.drawString(font, comp, x, y + 1, shadowColor, false);
+        gfx.drawString(font, comp, x + 1, y, shadowColor, false);
+        gfx.drawString(font, comp, x, y, color, false);
     }
 
     @Override
-    protected void renderLabels(PoseStack stack, int x, int y) {
-        this.font.draw(stack, this.title, this.titleLabelX, this.titleLabelY, 4210752);
-        this.font.draw(stack, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752);
+    protected void renderLabels(GuiGraphics gfx, int x, int y) {
+        gfx.drawString(font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
+        gfx.drawString(font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752, false);
     }
 
     @Override
@@ -220,21 +214,4 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
-    public void drawOnLeft(PoseStack stack, List<Component> list, int y) {
-        if (list.isEmpty()) return;
-        int xPos = this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get();
-        int maxWidth = 9999;
-        if (xPos < 0) {
-            maxWidth = this.getGuiLeft() - 6;
-            xPos = -8;
-        }
-
-        List<FormattedText> split = new ArrayList<>();
-        int lambdastupid = maxWidth;
-        list.forEach(comp -> split.addAll(this.font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
-
-        this.renderComponentTooltip(stack, split, xPos, y, this.font);
-
-        // GuiUtils.drawHoveringText(stack, list, xPos, y, width, height, maxWidth, this.font);
-    }
 }

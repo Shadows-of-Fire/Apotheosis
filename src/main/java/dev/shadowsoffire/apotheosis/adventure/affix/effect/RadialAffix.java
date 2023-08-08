@@ -16,6 +16,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -34,8 +36,6 @@ import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.level.BlockEvent;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
 
 public class RadialAffix extends Affix {
 
@@ -130,7 +130,7 @@ public class RadialAffix extends Affix {
 
         Vec3 base = player.getEyePosition(0);
         Vec3 look = player.getLookAngle();
-        double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+        double reach = player.getAttributeValue(ForgeMod.BLOCK_REACH.get());
         Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
         HitResult trace = world.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
 

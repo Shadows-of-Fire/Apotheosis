@@ -14,9 +14,9 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixManager;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity.LootRule;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity.RarityStub;
+import dev.shadowsoffire.placebo.reload.DynamicRegistryObject;
+import dev.shadowsoffire.placebo.reload.PlaceboJsonReloadListener;
 import net.minecraft.world.item.ItemStack;
-import dev.shadowsoffire.placebo.json.DynamicRegistryObject;
-import dev.shadowsoffire.placebo.json.PlaceboJsonReloadListener;
 
 /**
  * Handles loading the configurable portion of rarities.
@@ -25,12 +25,12 @@ public class LootRarityManager extends PlaceboJsonReloadListener<RarityStub> {
 
     public static final LootRarityManager INSTANCE = new LootRarityManager();
 
-    public static final DynamicRegistryObject<RarityStub> COMMON = INSTANCE.makeObj(Apotheosis.loc("common"));
-    public static final DynamicRegistryObject<RarityStub> UNCOMMON = INSTANCE.makeObj(Apotheosis.loc("uncommon"));
-    public static final DynamicRegistryObject<RarityStub> RARE = INSTANCE.makeObj(Apotheosis.loc("rare"));
-    public static final DynamicRegistryObject<RarityStub> EPIC = INSTANCE.makeObj(Apotheosis.loc("epic"));
-    public static final DynamicRegistryObject<RarityStub> MYTHIC = INSTANCE.makeObj(Apotheosis.loc("mythic"));
-    public static final DynamicRegistryObject<RarityStub> ANCIENT = INSTANCE.makeObj(Apotheosis.loc("ancient"));
+    public static final DynamicRegistryObject<RarityStub> COMMON = INSTANCE.registryObject(Apotheosis.loc("common"));
+    public static final DynamicRegistryObject<RarityStub> UNCOMMON = INSTANCE.registryObject(Apotheosis.loc("uncommon"));
+    public static final DynamicRegistryObject<RarityStub> RARE = INSTANCE.registryObject(Apotheosis.loc("rare"));
+    public static final DynamicRegistryObject<RarityStub> EPIC = INSTANCE.registryObject(Apotheosis.loc("epic"));
+    public static final DynamicRegistryObject<RarityStub> MYTHIC = INSTANCE.registryObject(Apotheosis.loc("mythic"));
+    public static final DynamicRegistryObject<RarityStub> ANCIENT = INSTANCE.registryObject(Apotheosis.loc("ancient"));
 
     protected Map<String, LootRarity> byId = new HashMap<>();
     protected List<LootRarity> list = new ArrayList<>(6);

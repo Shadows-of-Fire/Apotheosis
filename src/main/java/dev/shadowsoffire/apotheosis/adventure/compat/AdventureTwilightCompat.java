@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -11,8 +12,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.color.GradientColor;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -38,15 +41,13 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
-import dev.shadowsoffire.placebo.color.GradientColor;
-import dev.shadowsoffire.placebo.util.StepFunction;
 import twilightforest.capabilities.CapabilityList;
 import twilightforest.entity.monster.Redcap;
 
 public class AdventureTwilightCompat {
 
-    protected static final RegistryObject<Item> ORE_MAGNET = RegistryObject.create(new ResourceLocation("twilightforest", "ore_magnet"), Registry.ITEM_REGISTRY, Apotheosis.MODID);
-    protected static final RegistryObject<EntityType<Redcap>> REDCAP = RegistryObject.create(new ResourceLocation("twilightforest", "redcap"), Registry.ENTITY_TYPE_REGISTRY, Apotheosis.MODID);
+    protected static final RegistryObject<Item> ORE_MAGNET = RegistryObject.create(new ResourceLocation("twilightforest", "ore_magnet"), Registries.ITEM, Apotheosis.MODID);
+    protected static final RegistryObject<EntityType<Redcap>> REDCAP = RegistryObject.create(new ResourceLocation("twilightforest", "redcap"), Registries.ENTITY_TYPE, Apotheosis.MODID);
 
     public static void register() {
         GemBonus.CODECS.put(Apotheosis.loc("twilight_ore_magnet"), OreMagnetBonus.CODEC);
@@ -134,7 +135,7 @@ public class AdventureTwilightCompat {
             Data d = this.values.get(rarity);
             if (Affix.isOnCooldown(this.getId(), d.cooldown, user)) return;
             if (user.random.nextFloat() <= d.chance) {
-                Redcap goblin = REDCAP.get().create(user.level);
+                Redcap goblin = REDCAP.get().create(user.level());
                 CompoundTag tag = new CompoundTag();
                 tag.putString("DeathLootTable", "apotheosis:entity/treasure_goblin");
                 goblin.readAdditionalSaveData(tag);
@@ -201,8 +202,8 @@ public class AdventureTwilightCompat {
     @SubscribeEvent
     public static void doGoblins(EntityJoinLevelEvent e) {
         if (e.getEntity() instanceof Redcap r && r.getPersistentData().contains("apoth.treasure_goblin")) {
-            r.targetSelector.removeAllGoals();
-            r.goalSelector.removeAllGoals();
+            r.targetSelector.removeAllGoals(Predicates.alwaysTrue());
+            r.goalSelector.removeAllGoals(Predicates.alwaysTrue());
             r.goalSelector.addGoal(10, new AvoidEntityGoal<>(r, Player.class, 6, 1, 1.25));
         }
     }

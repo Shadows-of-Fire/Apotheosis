@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
@@ -15,12 +16,9 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mixin.LivingEntityInvoker;
 import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.util.StepFunction;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -34,8 +32,6 @@ public class ExecutingAffix extends Affix {
         .apply(inst, ExecutingAffix::new));
 
     public static final PSerializer<ExecutingAffix> SERIALIZER = PSerializer.fromCodec("Executing Affix", CODEC);
-
-    public static final ResourceKey<DamageType> EXECUTE = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("execute"));
 
     protected final Map<LootRarity, StepFunction> values;
 
@@ -63,7 +59,7 @@ public class ExecutingAffix extends Affix {
         float threshold = this.getTrueLevel(rarity, level);
         if (Apotheosis.localAtkStrength >= 0.98 && target instanceof LivingEntity living && !living.level().isClientSide) {
             if (living.getHealth() / living.getMaxHealth() < threshold) {
-                DamageSource src = living.damageSources().source(EXECUTE, user);
+                DamageSource src = living.damageSources().source(Apoth.DamageTypes.EXECUTE, user);
                 if (!((LivingEntityInvoker) living).callCheckTotemDeathProtection(src)) {
                     SoundEvent soundevent = ((LivingEntityInvoker) living).callGetDeathSound();
                     if (soundevent != null) {

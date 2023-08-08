@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.ApothSmithingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.ReactiveSmithingRecipe;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -31,6 +31,6 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
 
     @Inject(at = @At("HEAD"), method = "onTake")
     protected void onTake(Player player, ItemStack stack, CallbackInfo ci) {
-        if (this.selectedRecipe instanceof ApothSmithingRecipe ext) ext.onCraft(this.inputSlots, player, stack);
+        if (this.selectedRecipe instanceof ReactiveSmithingRecipe ext) ext.onCraft(this.inputSlots, player, stack);
     }
 }

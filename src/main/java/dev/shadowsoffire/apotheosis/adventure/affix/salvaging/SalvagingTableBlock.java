@@ -2,6 +2,8 @@ package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
 import java.util.List;
 
+import dev.shadowsoffire.placebo.menu.MenuUtil;
+import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -19,8 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import dev.shadowsoffire.placebo.container.ContainerUtil;
-import dev.shadowsoffire.placebo.container.SimplerMenuProvider;
 
 public class SalvagingTableBlock extends Block implements EntityBlock {
 
@@ -35,7 +35,7 @@ public class SalvagingTableBlock extends Block implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return ContainerUtil.openGui(player, pos, SalvagingMenu::new);
+        return MenuUtil.openGui(player, pos, SalvagingMenu::new);
     }
 
     @Override

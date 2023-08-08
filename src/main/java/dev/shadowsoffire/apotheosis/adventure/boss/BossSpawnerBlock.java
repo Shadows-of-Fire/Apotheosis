@@ -5,6 +5,9 @@ import java.util.Optional;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
+import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -22,9 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
-import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class BossSpawnerBlock extends Block implements TickingEntityBlock {
 
@@ -56,16 +56,16 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
         @Override
         public void serverTick(Level pLevel, BlockPos pPos, BlockState pState) {
             if (this.ticks++ % 40 == 0) {
-                Optional<Player> opt = this.level().getEntities(EntityType.PLAYER, new AABB(this.worldPosition).inflate(8, 8, 8), EntitySelector.NO_CREATIVE_OR_SPECTATOR).stream().findFirst();
+                Optional<Player> opt = this.level.getEntities(EntityType.PLAYER, new AABB(this.worldPosition).inflate(8, 8, 8), EntitySelector.NO_CREATIVE_OR_SPECTATOR).stream().findFirst();
                 opt.ifPresent(player -> {
-                    this.level().setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
+                    this.level.setBlockAndUpdate(this.worldPosition, Blocks.AIR.defaultBlockState());
                     BlockPos pos = this.worldPosition;
-                    BossItem bossItem = this.item == null ? BossItemManager.INSTANCE.getRandomItem(this.level().getRandom(), player.getLuck(), IDimensional.matches(this.level), IStaged.matches(player)) : this.item;
+                    BossItem bossItem = this.item == null ? BossItemManager.INSTANCE.getRandomItem(this.level.getRandom(), player.getLuck(), IDimensional.matches(this.level), IStaged.matches(player)) : this.item;
                     if (bossItem == null) {
-                        AdventureModule.LOGGER.error("A boss spawner attempted to spawn a boss at {} in {}, but no bosses were available!", this.getBlockPos(), this.level().dimension().location());
+                        AdventureModule.LOGGER.error("A boss spawner attempted to spawn a boss at {} in {}, but no bosses were available!", this.getBlockPos(), this.level.dimension().location());
                         return;
                     }
-                    Mob entity = bossItem.createBoss((ServerLevel) this.level, pos, this.level().getRandom(), player.getLuck());
+                    Mob entity = bossItem.createBoss((ServerLevel) this.level, pos, this.level.getRandom(), player.getLuck());
                     entity.setTarget(player);
                     entity.setPersistenceRequired();
                     ((ServerLevel) this.level).addFreshEntityWithPassengers(entity);

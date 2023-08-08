@@ -11,6 +11,7 @@ import dev.shadowsoffire.apotheosis.adventure.boss.BossItem;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossItemManager;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -25,7 +26,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import dev.shadowsoffire.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class BossCommand {
 
@@ -62,7 +62,7 @@ public class BossCommand {
             return -1;
         }
 
-        BossItem boss = bossId == null ? BossItemManager.INSTANCE.getRandomItem(summoner.random, summoner.getLuck(), IDimensional.matches(summoner.level), IStaged.matches(summoner)) : BossItemManager.INSTANCE.getValue(bossId);
+        BossItem boss = bossId == null ? BossItemManager.INSTANCE.getRandomItem(summoner.random, summoner.getLuck(), IDimensional.matches(summoner.level()), IStaged.matches(summoner)) : BossItemManager.INSTANCE.getValue(bossId);
         if (boss == null) {
             if (bossId == null) {
                 c.getSource().sendFailure(Component.literal("Unknown boss: " + bossId));
@@ -81,10 +81,10 @@ public class BossCommand {
                 c.getSource().sendFailure(Component.literal("Unknown rarity: " + rarityId));
                 return -3;
             }
-            bossEntity = boss.createBoss((ServerLevelAccessor) summoner.level, new BlockPos(pos), summoner.random, summoner.getLuck(), rarity);
+            bossEntity = boss.createBoss((ServerLevelAccessor) summoner.level(), BlockPos.containing(pos), summoner.random, summoner.getLuck(), rarity);
         }
         else {
-            bossEntity = boss.createBoss((ServerLevelAccessor) summoner.level, new BlockPos(pos), summoner.random, summoner.getLuck());
+            bossEntity = boss.createBoss((ServerLevelAccessor) summoner.level(), BlockPos.containing(pos), summoner.random, summoner.getLuck());
         }
 
         c.getSource().getLevel().addFreshEntityWithPassengers(bossEntity);

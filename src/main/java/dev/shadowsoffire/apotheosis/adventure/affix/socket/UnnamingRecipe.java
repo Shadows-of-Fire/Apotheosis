@@ -3,9 +3,10 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 import com.google.gson.JsonObject;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public class UnnamingRecipe extends ApothUpgradeRecipe {
+public class UnnamingRecipe extends ApothSmithingRecipe {
 
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:unnaming");
 
@@ -35,7 +36,7 @@ public class UnnamingRecipe extends ApothUpgradeRecipe {
     }
 
     @Override
-    public ItemStack assemble(Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess regs) {
         ItemStack out = pInv.getItem(0).copy();
         CompoundTag afxData = out.getTagElement(AffixHelper.AFFIX_DATA);
         LootRarity rarity = AffixHelper.getRarity(afxData);

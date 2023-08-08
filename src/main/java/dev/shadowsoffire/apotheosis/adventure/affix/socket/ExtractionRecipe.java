@@ -5,7 +5,8 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -17,7 +18,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-public class ExtractionRecipe extends ApothUpgradeRecipe implements ApothSmithingRecipe {
+public class ExtractionRecipe extends ApothSmithingRecipe implements ReactiveSmithingRecipe {
 
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:extraction");
 
@@ -38,7 +39,7 @@ public class ExtractionRecipe extends ApothUpgradeRecipe implements ApothSmithin
      * Returns an Item that is the result of this recipe
      */
     @Override
-    public ItemStack assemble(Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess regs) {
         ItemStack out = pInv.getItem(0);
         return SocketHelper.getGems(out).get(0);
     }
@@ -50,7 +51,7 @@ public class ExtractionRecipe extends ApothUpgradeRecipe implements ApothSmithin
         for (int i = 1; i < gems.size(); i++) {
             ItemStack stack = gems.get(i);
             if (!stack.isEmpty()) {
-                if (!player.addItem(stack)) Block.popResource(player.level, player.blockPosition(), stack);
+                if (!player.addItem(stack)) Block.popResource(player.level(), player.blockPosition(), stack);
             }
         }
     }

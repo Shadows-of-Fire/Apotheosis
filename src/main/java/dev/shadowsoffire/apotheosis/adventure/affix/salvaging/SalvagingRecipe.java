@@ -9,6 +9,8 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.placebo.json.ItemAdapter;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -22,7 +24,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import dev.shadowsoffire.placebo.json.ItemAdapter;
 
 public class SalvagingRecipe implements Recipe<Container> {
 
@@ -65,7 +66,7 @@ public class SalvagingRecipe implements Recipe<Container> {
 
     @Override
     @Deprecated
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess regs) {
         return ItemStack.EMPTY;
     }
 
@@ -77,7 +78,7 @@ public class SalvagingRecipe implements Recipe<Container> {
 
     @Override
     @Deprecated
-    public ItemStack assemble(Container pContainer) {
+    public ItemStack assemble(Container pContainer, RegistryAccess regs) {
         return ItemStack.EMPTY;
     }
 

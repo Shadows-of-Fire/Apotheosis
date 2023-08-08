@@ -17,7 +17,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
@@ -56,8 +55,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
                 for (int z = -zRadius; z <= zRadius; ++z) {
                     BlockPos blockpos = pos.offset(x, y, z);
                     BlockState state = world.getBlockState(blockpos);
-                    Material material = state.getMaterial();
-                    boolean flag = material.isSolid();
+                    boolean flag = state.isSolid();
                     // Exit if the floor is not fully solid.
 
                     if (y == floor && !flag || y == roof && !flag) {

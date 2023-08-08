@@ -33,8 +33,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingScreen;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
-import dev.shadowsoffire.apotheosis.core.attributeslib.api.AddAttributeTooltipsEvent;
-import dev.shadowsoffire.apotheosis.core.attributeslib.api.GatherSkippedAttributeTooltipsEvent;
+import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
+import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -101,11 +101,6 @@ public class AdventureModuleClient {
         }
 
         @SubscribeEvent
-        public static void onRegisterGeometryLoaders(ModelEvent.RegisterGeometryLoaders e) {
-            e.register("item_layers", FItemLayerModel.Loader.INSTANCE);
-        }
-
-        @SubscribeEvent
         public static void tooltipComps(RegisterClientTooltipComponentFactoriesEvent e) {
             e.register(SocketComponent.class, SocketTooltipRenderer::new);
         }
@@ -132,7 +127,7 @@ public class AdventureModuleClient {
         @SubscribeEvent
         public static void shaderRegistry(RegisterShadersEvent event) throws IOException {
             // Adds a shader to the list, the callback runs when loading is complete.
-            event.registerShader(new ShaderInstance(event.getResourceManager(), new ResourceLocation("apotheosis:gray"), DefaultVertexFormat.NEW_ENTITY), shaderInstance -> {
+            event.registerShader(new ShaderInstance(event.getResourceProvider(), new ResourceLocation("apotheosis:gray"), DefaultVertexFormat.NEW_ENTITY), shaderInstance -> {
                 CustomRenderTypes.grayShader = shaderInstance;
             });
         }

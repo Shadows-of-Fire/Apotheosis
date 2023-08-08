@@ -11,6 +11,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -18,8 +20,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class SpectralShotAffix extends Affix {
 
@@ -52,7 +52,7 @@ public class SpectralShotAffix extends Affix {
         if (user.level().random.nextFloat() <= this.getTrueLevel(rarity, level)) {
             if (!user.level().isClientSide) {
                 ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
-                AbstractArrow spectralArrow = arrowitem.createArrow(user.level, ItemStack.EMPTY, user);
+                AbstractArrow spectralArrow = arrowitem.createArrow(user.level(), ItemStack.EMPTY, user);
                 spectralArrow.shoot(user.getXRot(), user.getYRot(), 0.0F, 2.0F, 1.0F);
                 this.cloneMotion(arrow, spectralArrow);
                 spectralArrow.setCritArrow(arrow.isCritArrow());

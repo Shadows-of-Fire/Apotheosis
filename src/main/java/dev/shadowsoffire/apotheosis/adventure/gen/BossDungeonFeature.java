@@ -14,7 +14,6 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
@@ -51,8 +50,7 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
                 for (int z = -zRadius; z <= zRadius; ++z) {
                     BlockPos blockpos = pos.offset(x, y, z);
                     BlockState state = world.getBlockState(blockpos);
-                    Material material = state.getMaterial();
-                    boolean flag = material.isSolid();
+                    boolean flag = state.isSolid();
                     // Exit if the floor is not fully solid.
 
                     if (y == floor && !flag || y == roof && !flag) {
@@ -76,10 +74,10 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
                         if (x != -xRadius && y != floor && z != -zRadius && x != xRadius && y != roof && z != zRadius) {
                             if (!state.is(Blocks.CHEST)) world.setBlock(blockpos, CAVE_AIR, 2);
                         }
-                        else if (y > floor && !states[x + xRadius][y - 1 + 1][z + zRadius].getMaterial().isSolid()) {
+                        else if (y > floor && !states[x + xRadius][y - 1 + 1][z + zRadius].isSolid()) {
                             world.setBlock(blockpos, CAVE_AIR, 2);
                         }
-                        else if (state.getMaterial().isSolid() && !state.is(Blocks.CHEST)) {
+                        else if (state.isSolid() && !state.is(Blocks.CHEST)) {
                             if (y == floor) {
                                 world.setBlock(blockpos, BRICKS[rand.nextInt(3)], 2);
                             }
@@ -104,7 +102,7 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
                         int nearbySolids = 0;
 
                         for (Direction dir : Direction.Plane.HORIZONTAL) {
-                            if (world.getBlockState(blockpos2.relative(dir)).getMaterial().isSolid()) {
+                            if (world.getBlockState(blockpos2.relative(dir)).isSolid()) {
                                 ++nearbySolids;
                             }
                         }

@@ -5,7 +5,8 @@ import java.util.Collections;
 import com.google.gson.JsonObject;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public class ExpulsionRecipe extends ApothUpgradeRecipe {
+public class ExpulsionRecipe extends ApothSmithingRecipe {
 
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:expulsion");
 
@@ -35,7 +36,7 @@ public class ExpulsionRecipe extends ApothUpgradeRecipe {
      * Returns an Item that is the result of this recipe
      */
     @Override
-    public ItemStack assemble(Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess regs) {
         ItemStack out = pInv.getItem(0).copy();
         if (out.isEmpty()) return ItemStack.EMPTY;
         SocketHelper.setGems(out, Collections.emptyList());

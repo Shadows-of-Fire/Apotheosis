@@ -27,6 +27,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -71,14 +72,15 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     }
 
     @Override
-    public void draw(SalvagingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(SalvagingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics gfx, double mouseX, double mouseY) {
         List<OutputData> outputs = recipe.getOutputs();
         Font font = Minecraft.getInstance().font;
+        PoseStack pose = gfx.pose();
 
         int idx = 0;
         for (var d : outputs) {
-            stack.pushPose();
-            stack.translate(0, 0, 200);
+            pose.pushPose();
+            pose.translate(0, 0, 200);
             String text = String.format("%d-%d", d.getMin(), d.getMax());
 
             float x = 59 + 18 * (idx % 2) + (16 - font.width(text) * 0.5F);
@@ -86,11 +88,11 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
 
             float scale = 0.5F;
 
-            stack.scale(scale, scale, 1);
-            font.drawShadow(stack, text, x / scale, y / scale, 0xFFFFFF);
+            pose.scale(scale, scale, 1);
+            gfx.drawString(font, text, (int) (x / scale), (int) (y / scale), 0xFFFFFF);
 
             idx++;
-            stack.popPose();
+            pose.popPose();
         }
     }
 

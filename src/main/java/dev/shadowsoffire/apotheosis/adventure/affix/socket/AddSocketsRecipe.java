@@ -2,8 +2,9 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
 import com.google.gson.JsonObject;
 
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
-public class AddSocketsRecipe extends ApothUpgradeRecipe {
+public class AddSocketsRecipe extends ApothSmithingRecipe {
 
     private final Ingredient input;
     private final int maxSockets;
@@ -29,7 +30,7 @@ public class AddSocketsRecipe extends ApothUpgradeRecipe {
      * Used to check if a recipe matches current crafting inventory
      */
     @Override
-    public boolean matches(Container pInv, Level pLevel) {
+    public boolean matches(Container pInv, Level level) {
         ItemStack in = pInv.getItem(0);
         return !LootCategory.forItem(in).isNone() && SocketHelper.getSockets(in) < this.getMaxSockets() && this.getInput().test(pInv.getItem(1));
     }
@@ -38,7 +39,7 @@ public class AddSocketsRecipe extends ApothUpgradeRecipe {
      * Returns an Item that is the result of this recipe
      */
     @Override
-    public ItemStack assemble(Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess regs) {
         ItemStack out = pInv.getItem(0).copy();
         if (out.isEmpty()) return ItemStack.EMPTY;
         int sockets = SocketHelper.getSockets(out) + 1;
@@ -70,7 +71,7 @@ public class AddSocketsRecipe extends ApothUpgradeRecipe {
 
         @Override
         public AddSocketsRecipe fromJson(ResourceLocation id, JsonObject obj) {
-            Ingredient item = CraftingHelper.getIngredient(GsonHelper.getAsJsonObject(obj, "input"));
+            Ingredient item = CraftingHelper.getIngredient(GsonHelper.getAsJsonObject(obj, "input"), false);
             int maxSockets = obj.get("max_sockets").getAsInt();
             return new AddSocketsRecipe(id, item, maxSockets);
         }

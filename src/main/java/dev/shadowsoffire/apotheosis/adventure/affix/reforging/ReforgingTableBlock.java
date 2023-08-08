@@ -4,6 +4,9 @@ import java.util.List;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
+import dev.shadowsoffire.placebo.menu.MenuUtil;
+import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,9 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
-import dev.shadowsoffire.placebo.container.ContainerUtil;
-import dev.shadowsoffire.placebo.container.SimplerMenuProvider;
 
 public class ReforgingTableBlock extends Block implements TickingEntityBlock {
     public static final Component TITLE = Component.translatable("container.apotheosis.reforge");
@@ -53,7 +53,7 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        return ContainerUtil.openGui(player, pos, ReforgingMenu::new);
+        return MenuUtil.openGui(player, pos, ReforgingMenu::new);
     }
 
     @Override

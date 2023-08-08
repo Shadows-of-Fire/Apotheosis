@@ -8,13 +8,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
@@ -27,7 +25,7 @@ import snownee.jade.api.WailaPlugin;
 import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
-public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvider, IServerDataProvider<Entity> {
+public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvider, IServerDataProvider<EntityAccessor> {
 
     @Override
     public void register(IWailaCommonRegistration reg) {
@@ -51,13 +49,13 @@ public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvi
             }
             accessor.getServerData().remove("apoth.modifiers");
             living.getPersistentData().merge(accessor.getServerData());
-            CommonTooltipUtil.appendBossData(living.level, living, tooltip::add);
+            CommonTooltipUtil.appendBossData(living.level(), living, tooltip::add);
         }
     }
 
     @Override
-    public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, Entity entity, boolean something) {
-        if (entity instanceof LivingEntity living && living.getPersistentData().getBoolean("apoth.boss")) {
+    public void appendServerData(CompoundTag tag, EntityAccessor access) {
+        if (access.getEntity() instanceof LivingEntity living && living.getPersistentData().getBoolean("apoth.boss")) {
             tag.putBoolean("apoth.boss", true);
             tag.putString("apoth.rarity", living.getPersistentData().getString("apoth.rarity"));
             AttributeMap map = living.getAttributes();

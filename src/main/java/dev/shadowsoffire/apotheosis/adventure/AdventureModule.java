@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -37,10 +36,10 @@ import dev.shadowsoffire.apotheosis.adventure.boss.BossArmorManager;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossItemManager;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
+import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSummonerItem;
 import dev.shadowsoffire.apotheosis.adventure.boss.Exclusion;
 import dev.shadowsoffire.apotheosis.adventure.boss.MinibossManager;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.adventure.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.adventure.compat.AdventureTOPPlugin;
 import dev.shadowsoffire.apotheosis.adventure.compat.AdventureTwilightCompat;
@@ -61,29 +60,31 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarityManager;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RandomSpawnerManager;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
+import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
+import dev.shadowsoffire.placebo.config.Configuration;
+import dev.shadowsoffire.placebo.loot.LootSystem;
+import dev.shadowsoffire.placebo.menu.MenuUtil;
+import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.MenuType.MenuSupplier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.UpgradeRecipe;
+import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -93,11 +94,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
-import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
-import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.container.ContainerUtil;
-import dev.shadowsoffire.placebo.loot.LootSystem;
-import dev.shadowsoffire.placebo.util.RegistryEvent.Register;
 
 public class AdventureModule {
 
@@ -142,8 +138,8 @@ public class AdventureModule {
             LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());
             LootSystem.defaultBlockTable(Apoth.Blocks.GEM_CUTTING_TABLE.get());
             AdventureGeneration.init();
-            Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
-            Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
+            Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
+            Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
             Exclusion.initSerializers();
             GemBonus.initCodecs();
         });
@@ -157,8 +153,7 @@ public class AdventureModule {
         // e.getRegistry().register(TroveFeature.INSTANCE, "trove");
         // e.getRegistry().register(TomeTowerFeature.INSTANCE, "tome_tower");
         MinecraftForge.EVENT_BUS.register(AdventureGeneration.class);
-        Registry.register(Registry.STRUCTURE_PROCESSOR, "apotheosis:item_frame_gems", ITEM_FRAME_LOOT);
-        Registry.register(BuiltinRegistries.PROCESSOR_LIST, "apotheosis:item_frame_gems", new StructureProcessorList(ImmutableList.of(new ItemFrameGemsProcessor(new ResourceLocation("a")))));
+        Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, "apotheosis:item_frame_gems", ITEM_FRAME_LOOT);
     }
 
     @SubscribeEvent
@@ -187,11 +182,11 @@ public class AdventureModule {
 
     @SubscribeEvent
     public void blocks(Register<Block> e) {
-        e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.0F).noLootTable()), "boss_spawner");
-        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2, 20F), LootRarity.RARE), "simple_reforging_table");
-        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(4, 1000F), LootRarity.MYTHIC), "reforging_table");
-        e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "salvaging_table");
-        e.getRegistry().register(new GemCuttingBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5F)), "gem_cutting_table");
+        e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(-1.0F, 3600000.0F).noLootTable()), "boss_spawner");
+        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(2, 20F), LootRarity.RARE), "simple_reforging_table");
+        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4, 1000F), LootRarity.MYTHIC), "reforging_table");
+        e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(2.5F)), "salvaging_table");
+        e.getRegistry().register(new GemCuttingBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(2.5F)), "gem_cutting_table");
     }
 
     @SubscribeEvent
@@ -226,9 +221,9 @@ public class AdventureModule {
 
     @SubscribeEvent
     public void containers(Register<MenuType<?>> e) {
-        e.getRegistry().register(ContainerUtil.makeType(ReforgingMenu::new), "reforging");
-        e.getRegistry().register(ContainerUtil.makeType(SalvagingMenu::new), "salvage");
-        e.getRegistry().register(new MenuType<>(GemCuttingMenu::new), "gem_cutting");
+        e.getRegistry().register(MenuUtil.posType(ReforgingMenu::new), "reforging");
+        e.getRegistry().register(MenuUtil.posType(SalvagingMenu::new), "salvage");
+        e.getRegistry().register(MenuUtil.type((MenuSupplier<GemCuttingMenu>) GemCuttingMenu::new), "gem_cutting");
     }
 
     @SubscribeEvent
@@ -255,10 +250,10 @@ public class AdventureModule {
         if (DEBUG) AdventureModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
     }
 
-    public static class ApothUpgradeRecipe extends UpgradeRecipe {
+    public static class ApothSmithingRecipe extends SmithingTransformRecipe {
 
-        public ApothUpgradeRecipe(ResourceLocation pId, Ingredient pBase, Ingredient pAddition, ItemStack pResult) {
-            super(pId, pBase, pAddition, pResult);
+        public ApothSmithingRecipe(ResourceLocation pId, Ingredient pBase, Ingredient pAddition, ItemStack pResult) {
+            super(pId, Ingredient.EMPTY, pBase, pAddition, pResult);
         }
     }
 
