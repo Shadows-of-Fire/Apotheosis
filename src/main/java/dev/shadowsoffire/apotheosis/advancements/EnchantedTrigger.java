@@ -2,9 +2,9 @@ package dev.shadowsoffire.apotheosis.advancements;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EnchantedItemTrigger;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.MinMaxBounds.Doubles;
@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 public class EnchantedTrigger extends EnchantedItemTrigger {
 
     @Override
-    public Instance createInstance(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
+    public Instance createInstance(JsonObject json, ContextAwarePredicate entityPredicate, DeserializationContext conditionsParser) {
         ItemPredicate item = ItemPredicate.fromJson(json.get("item"));
         Ints levels = Ints.fromJson(json.get("levels"));
         Doubles eterna = Doubles.fromJson(json.get("eterna"));
@@ -38,7 +38,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
         protected final Doubles eterna, quanta, arcana, rectification;
 
         public Instance(ItemPredicate item, Ints levels, Doubles eterna, Doubles quanta, Doubles arcana, Doubles rectification) {
-            super(EntityPredicate.Composite.ANY, item, levels);
+            super(ContextAwarePredicate.ANY, item, levels);
             this.eterna = eterna;
             this.quanta = quanta;
             this.arcana = arcana;
@@ -46,7 +46,7 @@ public class EnchantedTrigger extends EnchantedItemTrigger {
         }
 
         public static EnchantedItemTrigger.TriggerInstance any() {
-            return new EnchantedItemTrigger.TriggerInstance(EntityPredicate.Composite.ANY, ItemPredicate.ANY, MinMaxBounds.Ints.ANY);
+            return new EnchantedItemTrigger.TriggerInstance(ContextAwarePredicate.ANY, ItemPredicate.ANY, MinMaxBounds.Ints.ANY);
         }
 
         public boolean test(ItemStack stack, int level, float eterna, float quanta, float arcana, float rectification) {

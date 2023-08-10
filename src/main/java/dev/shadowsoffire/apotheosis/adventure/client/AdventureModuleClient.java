@@ -35,6 +35,7 @@ import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage.BossSpawnD
 import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -116,7 +117,7 @@ public class AdventureModuleClient {
         }
 
         @SubscribeEvent
-        public static void replaceGemModel(ModelEvent.BakingCompleted e) {
+        public static void replaceGemModel(ModelEvent.ModifyBakingResult e) {
             ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
             BakedModel oldModel = e.getModels().get(key);
             if (oldModel != null) {
@@ -203,12 +204,12 @@ public class AdventureModuleClient {
     public static void affixTooltips(ItemTooltipEvent e) {
         ItemStack stack = e.getItemStack();
         if (stack.hasTag()) {
-            Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+            Map<DynamicHolder<? extends Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
             List<Component> components = new ArrayList<>();
             Consumer<Component> dotPrefixer = afxComp -> {
                 components.add(Component.translatable("text.apotheosis.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
             };
-            affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().getType().ordinal())).forEach(inst -> inst.addInformation(dotPrefixer));
+            affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().get().getType().ordinal())).forEach(inst -> inst.addInformation(dotPrefixer));
             e.getToolTip().addAll(1, components);
         }
     }

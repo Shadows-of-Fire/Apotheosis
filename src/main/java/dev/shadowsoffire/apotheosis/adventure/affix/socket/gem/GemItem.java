@@ -6,11 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -41,37 +41,38 @@ public class GemItem extends Item implements ITabFiller {
 
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
-        Gem gem = getGem(pStack);
-        if (gem == null) {
+        DynamicHolder<Gem> gem = getGem(pStack);
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
+        if (!gem.isBound() || !rarity.isBound()) {
             tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
             return;
         }
-        gem.addInformation(pStack, getLootRarity(pStack), tooltip::add);
+        gem.get().addInformation(pStack, rarity.get(), tooltip::add);
     }
 
     @Override
     public Component getName(ItemStack pStack) {
-        Gem gem = getGem(pStack);
-        LootRarity rarity = getLootRarity(pStack);
-        if (gem == null || rarity == null) return super.getName(pStack);
+        DynamicHolder<Gem> gem = getGem(pStack);
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
+        if (!gem.isBound() || !rarity.isBound()) return super.getName(pStack);
         MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
-        comp = Component.translatable("item.apotheosis.gem." + rarity.id(), comp);
-        return comp.withStyle(Style.EMPTY.withColor(rarity.color()));
+        comp = Component.translatable("item.apotheosis.gem." + rarity.getId(), comp);
+        return comp.withStyle(Style.EMPTY.withColor(rarity.get().getColor()));
     }
 
     @Override
     public String getDescriptionId(ItemStack pStack) {
-        Gem gem = getGem(pStack);
-        if (gem == null) return super.getDescriptionId();
+        DynamicHolder<Gem> gem = getGem(pStack);
+        if (!gem.isBound()) return super.getDescriptionId();
         return super.getDescriptionId(pStack) + "." + gem.getId();
     }
 
     @Override
     public boolean isFoil(ItemStack pStack) {
-        Gem gem = getGem(pStack);
-        LootRarity rarity = getLootRarity(pStack);
-        if (gem == null || rarity == null) return super.isFoil(pStack);
-        return gem.getMaxRarity() == rarity;
+        DynamicHolder<Gem> gem = getGem(pStack);
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
+        if (!gem.isBound() || !rarity.isBound()) return super.isFoil(pStack);
+        return gem.get().getMaxRarity() == rarity.get();
     }
 
     @Override
@@ -81,12 +82,12 @@ public class GemItem extends Item implements ITabFiller {
 
     @Override
     public void fillItemCategory(CreativeModeTab group, CreativeModeTab.Output out) {
-        GemManager.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
-            for (LootRarity rarity : LootRarity.values()) {
+        GemRegistry.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
+            for (LootRarity rarity : RarityRegistry.INSTANCE.getValues()) {
                 if (gem.clamp(rarity) != rarity) continue;
                 ItemStack stack = new ItemStack(this);
                 setGem(stack, gem);
-                setLootRarity(stack, rarity);
+                AffixHelper.setRarity(stack, rarity);
                 out.accept(stack);
             }
         });
@@ -101,9 +102,9 @@ public class GemItem extends Item implements ITabFiller {
      * @returns The stored UUID(s), creating them if they do not exist.
      */
     public static List<UUID> getUUIDs(ItemStack gemStack) {
-        Gem gem = getGem(gemStack);
-        if (gem == null) return Collections.emptyList();
-        return getOrCreateUUIDs(gemStack.getOrCreateTag(), gem.getNumberOfUUIDs());
+        DynamicHolder<Gem> gem = getGem(gemStack);
+        if (!gem.isBound()) return Collections.emptyList();
+        return getOrCreateUUIDs(gemStack.getOrCreateTag(), gem.get().getNumberOfUUIDs());
     }
 
     /**
@@ -155,22 +156,9 @@ public class GemItem extends Item implements ITabFiller {
      * @param gem The gem stack
      * @returns The backing Gem, or null if the gem does not exist or is invalid.
      */
-    @Nullable
-    public static Gem getGem(ItemStack gem) {
+    public static DynamicHolder<Gem> getGem(ItemStack gem) {
         if (gem.getItem() != Apoth.Items.GEM.get() || !gem.hasTag()) return null;
         var tag = gem.getTag();
-        if (tag.contains(GEM)) return GemManager.INSTANCE.getValue(new ResourceLocation(tag.getString(GEM)));
-        return null;
+        return GemRegistry.INSTANCE.holder(new ResourceLocation(tag.getString(GEM)));
     }
-
-    public static void setLootRarity(ItemStack stack, LootRarity rarity) {
-        stack.getOrCreateTag().putString(AffixHelper.RARITY, rarity.id());
-    }
-
-    @Nullable
-    public static LootRarity getLootRarity(ItemStack stack) {
-        Gem gem = getGem(stack);
-        return gem == null ? null : gem.clamp(AffixHelper.getRarity(stack.getTag()));
-    }
-
 }

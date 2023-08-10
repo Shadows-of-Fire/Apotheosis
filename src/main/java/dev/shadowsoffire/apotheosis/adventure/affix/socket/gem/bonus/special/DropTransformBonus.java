@@ -11,7 +11,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs.IngredientCodec;
@@ -72,7 +72,7 @@ public class DropTransformBonus extends GemBonus {
         this.values = values;
         this.descKey = descKey;
         if (EffectiveSide.get().isServer()) {
-            this.blocks = GemManager.INSTANCE._getContext().getTag(tag).stream().map(Holder::get).toList();
+            this.blocks = GemRegistry.INSTANCE._getContext().getTag(tag).stream().map(Holder::get).toList();
         }
         else this.blocks = Collections.emptyList();
     }

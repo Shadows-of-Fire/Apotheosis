@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
 
 public class MiscDatagenCode {
-
+/*
     public static void genAffixLootItems() {
         Set<ResourceLocation> overworld = ImmutableSet.of(new ResourceLocation("overworld"));
         Set<ResourceLocation> nether = ImmutableSet.of(new ResourceLocation("the_nether"));
@@ -86,5 +86,5 @@ public class MiscDatagenCode {
             }
         }
     }
-
+*/
 }

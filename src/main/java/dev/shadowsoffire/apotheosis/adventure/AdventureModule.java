@@ -13,7 +13,7 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisConstruction;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisReloadEvent;
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixManager;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
@@ -28,18 +28,18 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.ExtractionRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.UnnamingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossArmorManager;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossItemManager;
+import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSummonerItem;
 import dev.shadowsoffire.apotheosis.adventure.boss.Exclusion;
-import dev.shadowsoffire.apotheosis.adventure.boss.MinibossManager;
+import dev.shadowsoffire.apotheosis.adventure.boss.GearSetRegistry;
+import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.adventure.compat.AdventureTOPPlugin;
 import dev.shadowsoffire.apotheosis.adventure.compat.AdventureTwilightCompat;
@@ -50,14 +50,14 @@ import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
 import dev.shadowsoffire.apotheosis.adventure.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixConvertLootModifier;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixHookLootModifier;
-import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootManager;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootModifier;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootPoolEntry;
+import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.GemLootModifier;
 import dev.shadowsoffire.apotheosis.adventure.loot.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarityManager;
-import dev.shadowsoffire.apotheosis.adventure.spawner.RandomSpawnerManager;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
@@ -98,7 +98,6 @@ import net.minecraftforge.registries.RegisterEvent;
 public class AdventureModule {
 
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
-    public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
 
     public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
@@ -115,14 +114,14 @@ public class AdventureModule {
         MinecraftForge.EVENT_BUS.register(new AdventureEvents());
         MinecraftForge.EVENT_BUS.register(new BossEvents());
         MinecraftForge.EVENT_BUS.addListener(this::reload);
-        AffixManager.INSTANCE.registerToBus();
-        GemManager.INSTANCE.registerToBus();
-        AffixLootManager.INSTANCE.registerToBus();
-        BossArmorManager.INSTANCE.registerToBus();
-        BossItemManager.INSTANCE.registerToBus();
-        RandomSpawnerManager.INSTANCE.registerToBus();
-        LootRarityManager.INSTANCE.registerToBus();
-        MinibossManager.INSTANCE.registerToBus();
+        RarityRegistry.INSTANCE.registerToBus();
+        AffixRegistry.INSTANCE.registerToBus();
+        GemRegistry.INSTANCE.registerToBus();
+        GearSetRegistry.INSTANCE.registerToBus();
+        AffixLootRegistry.INSTANCE.registerToBus();
+        BossRegistry.INSTANCE.registerToBus();
+        RogueSpawnerRegistry.INSTANCE.registerToBus();
+        MinibossRegistry.INSTANCE.registerToBus();
         Apotheosis.HELPER.registerProvider(f -> {
             f.addRecipe(new SocketingRecipe());
             f.addRecipe(new ExpulsionRecipe());
@@ -137,7 +136,6 @@ public class AdventureModule {
             LootSystem.defaultBlockTable(Apoth.Blocks.REFORGING_TABLE.get());
             LootSystem.defaultBlockTable(Apoth.Blocks.SALVAGING_TABLE.get());
             LootSystem.defaultBlockTable(Apoth.Blocks.GEM_CUTTING_TABLE.get());
-            AdventureGeneration.init();
             Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
             Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
             Exclusion.initSerializers();
@@ -147,8 +145,8 @@ public class AdventureModule {
 
     @SubscribeEvent
     public void register(Register<Feature<?>> e) {
-        e.getRegistry().register(BossDungeonFeature.INSTANCE, "boss_dng");
-        e.getRegistry().register(BossDungeonFeature2.INSTANCE, "boss_dng_2");
+        e.getRegistry().register(BossDungeonFeature.INSTANCE, "boss_dungeon");
+        e.getRegistry().register(BossDungeonFeature2.INSTANCE, "boss_dungeon_2");
         e.getRegistry().register(RogueSpawnerFeature.INSTANCE, "rogue_spawner");
         // e.getRegistry().register(TroveFeature.INSTANCE, "trove");
         // e.getRegistry().register(TomeTowerFeature.INSTANCE, "tome_tower");
@@ -164,11 +162,10 @@ public class AdventureModule {
         e.getRegistry().register(new Item(new Item.Properties()), "vial_of_extraction");
         e.getRegistry().register(new Item(new Item.Properties()), "vial_of_expulsion");
         e.getRegistry().register(new Item(new Item.Properties()), "vial_of_unnaming");
-        for (LootRarity r : LootRarity.values()) {
-            if (r == LootRarity.ANCIENT) continue;
-            Item material = new SalvageItem(r, new Item.Properties());
-            e.getRegistry().register(material, r.id() + "_material");
-            RARITY_MATERIALS.put(r, material);
+        String[] names = { "common", "uncommon", "rare", "epic", "mythic", "ancient" };
+        for (String s : names) {
+            Item material = new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(s)), new Item.Properties());
+            e.getRegistry().register(material, s + "_material");
         }
         e.getRegistry().register(new BlockItem(Apoth.Blocks.SIMPLE_REFORGING_TABLE.get(), new Item.Properties()), "simple_reforging_table");
         e.getRegistry().register(new BlockItem(Apoth.Blocks.REFORGING_TABLE.get(), new Item.Properties()), "reforging_table");
@@ -183,8 +180,8 @@ public class AdventureModule {
     @SubscribeEvent
     public void blocks(Register<Block> e) {
         e.getRegistry().register(new BossSpawnerBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(-1.0F, 3600000.0F).noLootTable()), "boss_spawner");
-        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(2, 20F), LootRarity.RARE), "simple_reforging_table");
-        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4, 1000F), LootRarity.MYTHIC), "reforging_table");
+        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(2, 20F), 2), "simple_reforging_table");
+        e.getRegistry().register(new ReforgingTableBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(4, 1000F), 4), "reforging_table");
         e.getRegistry().register(new SalvagingTableBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(2.5F)), "salvaging_table");
         e.getRegistry().register(new GemCuttingBlock(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(2.5F)), "gem_cutting_table");
     }

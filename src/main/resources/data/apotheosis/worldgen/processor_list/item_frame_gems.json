@@ -1,0 +1,7 @@
+{
+  "processors": [
+    {
+      "processor_type": "apotheosis:item_frame_gems"
+    }
+  ]
+}

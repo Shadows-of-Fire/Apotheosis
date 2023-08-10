@@ -1,7 +1,9 @@
 {
-
+    "ordinal": 2,
+    "color": "#5555FF",
+    "material": "apotheosis:rare_material",
 	"weight": 150,
-	"quality": 3,
+	"quality": 10,
 	"rules": [{
 			"type": "stat",
 			"chance": 1.0

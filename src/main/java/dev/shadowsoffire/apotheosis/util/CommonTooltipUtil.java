@@ -9,9 +9,11 @@ import java.util.function.Consumer;
 import com.google.common.base.Predicates;
 
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.attributeslib.AttributesLib;
 import dev.shadowsoffire.attributeslib.api.IFormattableAttribute;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.ChatFormatting;
@@ -30,9 +32,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class CommonTooltipUtil {
 
     public static void appendBossData(Level level, LivingEntity entity, Consumer<Component> tooltip) {
-        LootRarity rarity = LootRarity.byId(entity.getPersistentData().getString("apoth.rarity"));
-        if (rarity == null) return;
-        tooltip.accept(Component.translatable("info.apotheosis.boss", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
+        DynamicHolder<LootRarity> rarity = RarityRegistry.byLegacyId(entity.getPersistentData().getString("apoth.rarity"));
+        if (!rarity.isBound()) return;
+        tooltip.accept(Component.translatable("info.apotheosis.boss", rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
         if (FMLEnvironment.production) return;
         tooltip.accept(CommonComponents.EMPTY);
         tooltip.accept(Component.translatable("info.apotheosis.boss_modifiers").withStyle(ChatFormatting.GRAY));
@@ -47,12 +49,12 @@ public class CommonTooltipUtil {
     }
 
     public static void appendBlockStats(Level world, BlockState state, Consumer<Component> tooltip) {
-        float maxEterna = EnchantingStatManager.getMaxEterna(state, world, BlockPos.ZERO);
-        float eterna = EnchantingStatManager.getEterna(state, world, BlockPos.ZERO);
-        float quanta = EnchantingStatManager.getQuanta(state, world, BlockPos.ZERO);
-        float arcana = EnchantingStatManager.getArcana(state, world, BlockPos.ZERO);
-        float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
-        int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
+        float maxEterna = EnchantingStatRegistry.getMaxEterna(state, world, BlockPos.ZERO);
+        float eterna = EnchantingStatRegistry.getEterna(state, world, BlockPos.ZERO);
+        float quanta = EnchantingStatRegistry.getQuanta(state, world, BlockPos.ZERO);
+        float arcana = EnchantingStatRegistry.getArcana(state, world, BlockPos.ZERO);
+        float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, BlockPos.ZERO);
+        int clues = EnchantingStatRegistry.getBonusClues(state, world, BlockPos.ZERO);
         if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
             tooltip.accept(Component.translatable("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
         }
@@ -99,7 +101,7 @@ public class CommonTooltipUtil {
             if (e.getFloatKey() > 0) stats[0] = Math.min(e.getFloatKey(), stats[0] + e.getFloatValue());
             else stats[0] += e.getFloatValue();
         }
-        tooltip.accept(Component.translatable("info.apotheosis.eterna.t", String.format("%.2f", stats[0]), String.format("%.2f", EnchantingStatManager.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
+        tooltip.accept(Component.translatable("info.apotheosis.eterna.t", String.format("%.2f", stats[0]), String.format("%.2f", EnchantingStatRegistry.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
         tooltip.accept(Component.translatable("info.apotheosis.quanta.t", String.format("%.2f", Math.min(100, stats[1]))).withStyle(ChatFormatting.RED));
         tooltip.accept(Component.translatable("info.apotheosis.arcana.t", String.format("%.2f", Math.min(100, stats[2]))).withStyle(ChatFormatting.DARK_PURPLE));
         tooltip.accept(Component.translatable("info.apotheosis.rectification.t", String.format("%.2f", Mth.clamp(stats[3], -100, 100))).withStyle(ChatFormatting.YELLOW));
@@ -109,16 +111,16 @@ public class CommonTooltipUtil {
     public static void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         if (state.isAir()) return;
-        float max = EnchantingStatManager.getMaxEterna(state, world, pos);
-        float eterna = EnchantingStatManager.getEterna(state, world, pos);
+        float max = EnchantingStatRegistry.getMaxEterna(state, world, pos);
+        float eterna = EnchantingStatRegistry.getEterna(state, world, pos);
         eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
-        float quanta = EnchantingStatManager.getQuanta(state, world, pos);
+        float quanta = EnchantingStatRegistry.getQuanta(state, world, pos);
         stats[1] += quanta;
-        float arcana = EnchantingStatManager.getArcana(state, world, pos);
+        float arcana = EnchantingStatRegistry.getArcana(state, world, pos);
         stats[2] += arcana;
-        float quantaRec = EnchantingStatManager.getQuantaRectification(state, world, pos);
+        float quantaRec = EnchantingStatRegistry.getQuantaRectification(state, world, pos);
         stats[3] += quantaRec;
-        int clues = EnchantingStatManager.getBonusClues(state, world, pos);
+        int clues = EnchantingStatRegistry.getBonusClues(state, world, pos);
         stats[4] += clues;
     }
 }

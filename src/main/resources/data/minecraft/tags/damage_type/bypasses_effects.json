@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "apotheosis:execute"
+    "apotheosis:execute",
+    "apotheosis:corrupted"
   ]
 }

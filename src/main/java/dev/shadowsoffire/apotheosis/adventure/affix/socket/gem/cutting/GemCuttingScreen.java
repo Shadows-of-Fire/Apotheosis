@@ -6,15 +6,17 @@ import java.util.List;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.client.GrayBufferSource;
 import dev.shadowsoffire.apotheosis.adventure.client.SimpleTexButton;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import dev.shadowsoffire.attributeslib.api.AttributeHelper;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.screen.PlaceboContainerScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -81,7 +83,7 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
                 return;
             }
         }
-        this.displayMat = gem.isEmpty() ? ItemStack.EMPTY : GemItem.getLootRarity(gem).getMaterial();
+        this.displayMat = gem.isEmpty() ? ItemStack.EMPTY : new ItemStack(AffixHelper.getRarity(gem).get().getMaterial());
         if (this.upgradeBtn != null) this.upgradeBtn.active = false;
     }
 
@@ -90,7 +92,7 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
         gfx.blit(TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
-        if (this.hasItem(0) && GemItem.getLootRarity(this.menu.getSlot(0).getItem()) != LootRarity.ANCIENT) {
+        if (this.hasItem(0) && AffixHelper.getRarity(this.menu.getSlot(0).getItem()) != RarityRegistry.getMaxRarity()) {
             if (!this.hasItem(1)) {
                 this.renderItem(gfx, this.displayDust, this.menu.getSlot(1));
             }
@@ -119,8 +121,8 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
         List<Component> list = new ArrayList<>();
         if (gem.isValidUnsocketed()) {
             int dust = this.menu.getSlot(1).getItem().getCount();
-            LootRarity rarity = gem.rarity();
-            if (rarity == LootRarity.ANCIENT) {
+            DynamicHolder<LootRarity> rarity = gem.rarity();
+            if (rarity == RarityRegistry.getMaxRarity()) {
                 list.add(Component.translatable("text.apotheosis.no_upgrade").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
             }
             else {
@@ -131,10 +133,10 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
                 boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
                 list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
                 list.add(Component.translatable("text.apotheosis.one_rarity_mat").withStyle(ChatFormatting.GRAY));
-                this.addMatTooltip(rarity.next(), GemCuttingMenu.NEXT_MAT_COST, list);
+                this.addMatTooltip(RarityRegistry.next(rarity), GemCuttingMenu.NEXT_MAT_COST, list);
                 this.addMatTooltip(rarity, GemCuttingMenu.STD_MAT_COST, list);
-                if (rarity != LootRarity.COMMON) {
-                    this.addMatTooltip(rarity.prev(), GemCuttingMenu.PREV_MAT_COST, list);
+                if (rarity != RarityRegistry.getMinRarity()) {
+                    this.addMatTooltip(RarityRegistry.prev(rarity), GemCuttingMenu.PREV_MAT_COST, list);
                 }
             }
         }
@@ -142,12 +144,12 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
         super.renderTooltip(gfx, pX, pY);
     }
 
-    private void addMatTooltip(LootRarity rarity, int cost, List<Component> list) {
-        if (rarity == LootRarity.ANCIENT) {
+    private void addMatTooltip(DynamicHolder<LootRarity> rarity, int cost, List<Component> list) {
+        if (rarity == RarityRegistry.getMaxRarity()) {
             list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", 1, Component.literal("Manifestation of Infinity").withStyle(ChatFormatting.OBFUSCATED)).withStyle(ChatFormatting.RED)));
         }
         else {
-            Item rarityMat = rarity.getMaterial().getItem();
+            Item rarityMat = rarity.get().getMaterial();
             ItemStack slotMat = this.menu.getSlot(3).getItem();
             boolean hasMats = slotMat.getItem() == rarityMat && slotMat.getCount() >= cost;
             list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", cost, rarityMat.getName(ItemStack.EMPTY).getString()).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));

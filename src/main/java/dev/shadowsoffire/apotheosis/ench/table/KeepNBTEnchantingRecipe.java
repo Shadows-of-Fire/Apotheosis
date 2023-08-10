@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.gson.JsonObject;
 
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager.Stats;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;

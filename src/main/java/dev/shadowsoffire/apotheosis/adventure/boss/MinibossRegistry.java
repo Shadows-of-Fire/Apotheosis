@@ -6,27 +6,27 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 
-public class MinibossManager extends WeightedJsonReloadListener<MinibossItem> {
+public class MinibossRegistry extends WeightedDynamicRegistry<ApothMiniboss> {
 
-    public static final MinibossManager INSTANCE = new MinibossManager();
+    public static final MinibossRegistry INSTANCE = new MinibossRegistry();
 
-    public MinibossManager() {
+    public MinibossRegistry() {
         super(AdventureModule.LOGGER, "minibosses", false, false);
     }
 
     @Override
-    protected void validateItem(MinibossItem item) {
+    protected void validateItem(ApothMiniboss item) {
         super.validateItem(item);
         item.validate();
     }
 
     @Override
     protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, MinibossItem.SERIALIZER);
+        this.registerSerializer(DEFAULT, ApothMiniboss.SERIALIZER);
     }
 
     /**

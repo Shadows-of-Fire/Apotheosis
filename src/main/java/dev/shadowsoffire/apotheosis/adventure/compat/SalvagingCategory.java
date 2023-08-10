@@ -12,9 +12,10 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.RarityIngredient;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -101,7 +102,7 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
         List<ItemStack> out = Arrays.asList(Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS, Items.DIAMOND_BOOTS).stream().map(ItemStack::new).toList();
         out.forEach(stack -> {
             LootController.createLootItem(stack, rarity, src);
-            AffixHelper.setName(stack, Component.translatable("text.apotheosis.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.color())));
+            AffixHelper.setName(stack, Component.translatable("text.apotheosis.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.getColor())));
         });
         return out;
     }
@@ -115,9 +116,9 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
         }
         else {
             if (input.size() == 1 && input.get(0).getItem() == Apoth.Items.GEM.get()) {
-                LootRarity rarity = AffixHelper.getRarity(input.get(0).getTag());
+                LootRarity rarity = AffixHelper.getRarity(input.get(0).getTag()).getOptional().orElse(RarityRegistry.getMinRarity().get());
                 RandomSource rand = new LegacyRandomSource(0);
-                input = GemManager.INSTANCE.getValues().stream().filter(gem -> rarity == null || gem.clamp(rarity) == rarity).map(gem -> GemManager.createGemStack(gem, rand, rarity, 0)).toList();
+                input = GemRegistry.INSTANCE.getValues().stream().filter(gem -> rarity == null || gem.clamp(rarity) == rarity).map(gem -> GemRegistry.createGemStack(gem, rand, rarity, 0)).toList();
             }
             builder.addSlot(RecipeIngredientRole.INPUT, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
         }

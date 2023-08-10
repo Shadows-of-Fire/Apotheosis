@@ -7,11 +7,13 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 
-import dev.shadowsoffire.apotheosis.adventure.boss.BossItem;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossItemManager;
+import dev.shadowsoffire.apotheosis.adventure.boss.ApothBoss;
+import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -29,7 +31,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class BossCommand {
 
-    public static final SuggestionProvider<CommandSourceStack> SUGGEST_BOSS = (ctx, builder) -> SharedSuggestionProvider.suggest(BossItemManager.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
+    public static final SuggestionProvider<CommandSourceStack> SUGGEST_BOSS = (ctx, builder) -> SharedSuggestionProvider.suggest(BossRegistry.INSTANCE.getKeys().stream().map(ResourceLocation::toString), builder);
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
         LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("spawn_boss").requires(c -> c.hasPermission(2));
@@ -62,7 +64,7 @@ public class BossCommand {
             return -1;
         }
 
-        BossItem boss = bossId == null ? BossItemManager.INSTANCE.getRandomItem(summoner.random, summoner.getLuck(), IDimensional.matches(summoner.level()), IStaged.matches(summoner)) : BossItemManager.INSTANCE.getValue(bossId);
+        ApothBoss boss = bossId == null ? BossRegistry.INSTANCE.getRandomItem(summoner.random, summoner.getLuck(), IDimensional.matches(summoner.level()), IStaged.matches(summoner)) : BossRegistry.INSTANCE.getValue(bossId);
         if (boss == null) {
             if (bossId == null) {
                 c.getSource().sendFailure(Component.literal("Unknown boss: " + bossId));
@@ -76,12 +78,12 @@ public class BossCommand {
         Mob bossEntity;
 
         if (rarityId != null) {
-            LootRarity rarity = LootRarity.byId(rarityId);
-            if (rarity == null) {
+            DynamicHolder<LootRarity> rarity = RarityRegistry.byLegacyId(rarityId);
+            if (!rarity.isBound()) {
                 c.getSource().sendFailure(Component.literal("Unknown rarity: " + rarityId));
                 return -3;
             }
-            bossEntity = boss.createBoss((ServerLevelAccessor) summoner.level(), BlockPos.containing(pos), summoner.random, summoner.getLuck(), rarity);
+            bossEntity = boss.createBoss((ServerLevelAccessor) summoner.level(), BlockPos.containing(pos), summoner.random, summoner.getLuck(), rarity.get());
         }
         else {
             bossEntity = boss.createBoss((ServerLevelAccessor) summoner.level(), BlockPos.containing(pos), summoner.random, summoner.getLuck());

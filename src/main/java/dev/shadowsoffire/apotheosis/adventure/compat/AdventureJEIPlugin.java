@@ -8,17 +8,17 @@ import java.util.List;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.ReactiveSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -61,16 +61,15 @@ public class AdventureJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration reg) {
         if (!Apotheosis.enableAdventure) return;
         ItemStack gem = new ItemStack(Apoth.Items.GEM.get());
-        Gem gemObj = GemManager.INSTANCE.getRandomItem(new LegacyRandomSource(1854));
+        Gem gemObj = GemRegistry.INSTANCE.getRandomItem(new LegacyRandomSource(1854));
         GemItem.setGem(gem, gemObj);
-        GemItem.setLootRarity(gem, gemObj.getMaxRarity());
+        AffixHelper.setRarity(gem, gemObj.getMaxRarity());
         reg.addIngredientInfo(gem, VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.socketing"));
 
         reg.addIngredientInfo(new ItemStack(Apoth.Items.GEM_DUST.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_crushing"));
         reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXTRACTION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_extraction"));
         reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXPULSION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_expulsion"));
         reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_UNNAMING.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.unnaming"));
-        reg.addIngredientInfo(AdventureModule.RARITY_MATERIALS.values().stream().map(ItemStack::new).toList(), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.salvaging"));
         ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
         reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ReactiveSmithingRecipe).toList());
         List<SalvagingRecipe> salvagingRecipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));
@@ -129,10 +128,9 @@ public class AdventureJEIPlugin implements IModPlugin {
 
         @Override
         public String apply(ItemStack stack, UidContext context) {
-            Gem gem = GemItem.getGem(stack);
-            LootRarity rarity = GemItem.getLootRarity(stack);
-            if (gem == null) return ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
-            return gem.getId() + "@" + rarity.id();
+            GemInstance inst = GemInstance.unsocketed(stack);
+            if (!inst.isValidUnsocketed()) return ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+            return inst.gem().getId() + "@" + inst.rarity().getId();
         }
 
     }

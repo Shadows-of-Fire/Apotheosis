@@ -14,8 +14,8 @@ import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
 import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -31,8 +31,8 @@ public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implemen
             Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
             ItemAdapter.CODEC.fieldOf("stack").forGetter(a -> a.stack),
             PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
-            LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(a -> a.minRarity),
-            LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(a -> a.maxRarity),
+            LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity),
+            LootRarity.CODEC.fieldOf("max_rarity").forGetter(a -> a.maxRarity),
             PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)))
         .apply(inst, AffixLootEntry::new));
 

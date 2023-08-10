@@ -23,11 +23,13 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -80,14 +82,14 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
             this.minRarity = minRarity.get();
         }
         else {
-            this.minRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).min(LootRarity::compareTo).get();
+            this.minRarity = RarityRegistry.INSTANCE.getValues().stream().filter(bonuses.get(0)::supports).min(LootRarity::compareTo).get();
         }
 
         if (maxRarity.isPresent()) {
             this.maxRarity = maxRarity.get();
         }
         else {
-            this.maxRarity = LootRarity.values().stream().filter(bonuses.get(0)::supports).max(LootRarity::compareTo).get();
+            this.maxRarity = RarityRegistry.INSTANCE.getValues().stream().filter(bonuses.get(0)::supports).max(LootRarity::compareTo).get();
         }
 
         Preconditions.checkArgument(this.minRarity.ordinal() <= this.maxRarity.ordinal(), "The min rarity must be <= the max rarity.");
@@ -140,7 +142,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
      */
     public boolean canApplyTo(ItemStack socketed, ItemStack gem, LootRarity rarity) {
         if (this.isUnique()) {
-            List<Gem> gems = SocketHelper.getGemInstances(socketed).map(GemInstance::gem).toList();
+            List<Gem> gems = SocketHelper.getGemInstances(socketed).map(GemInstance::gem).map(DynamicHolder::get).toList();
             if (gems.contains(this)) return false;
         }
         return this.isValidIn(socketed, gem, rarity);
@@ -220,7 +222,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
         Preconditions.checkArgument(this.quality >= 0, "Gem " + this.getId() + " has a negative quality");
         Preconditions.checkNotNull(this.dimensions);
         Preconditions.checkArgument(this.maxRarity.ordinal() >= this.minRarity.ordinal());
-        LootRarity.values().stream().filter(r -> r.isAtLeast(this.minRarity) && r.isAtMost(this.maxRarity)).forEach(r -> {
+        RarityRegistry.INSTANCE.getValues().stream().filter(r -> r.isAtLeast(this.minRarity) && r.isAtMost(this.maxRarity)).forEach(r -> {
             Preconditions.checkArgument(this.bonuses.stream().allMatch(b -> b.supports(r)));
         });
         return this;

@@ -18,9 +18,11 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity.LootRule;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -52,18 +54,18 @@ public class LootController {
      * @return The modifed ItemStack (note the original is not preserved, but the stack is returned for simplicity).
      */
     public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, RandomSource rand) {
-        Set<Affix> selected = new HashSet<>();
+        Set<DynamicHolder<Affix>> selected = new HashSet<>();
         MutableInt sockets = new MutableInt(0);
         float durability = 0;
-        for (LootRule rule : rarity.rules()) {
+        for (LootRule rule : rarity.getRules()) {
             if (rule.type() == AffixType.DURABILITY) durability = rule.chance();
             else rule.execute(stack, rarity, selected, sockets, rand);
         }
 
-        Map<Affix, AffixInstance> loaded = new HashMap<>();
+        Map<DynamicHolder<? extends Affix>, AffixInstance> loaded = new HashMap<>();
         List<AffixInstance> nameList = new ArrayList<>(selected.size());
-        for (Affix a : selected) {
-            AffixInstance inst = new AffixInstance(a, stack, rarity, rand.nextFloat());
+        for (DynamicHolder<Affix> a : selected) {
+            AffixInstance inst = new AffixInstance(a, stack, RarityRegistry.INSTANCE.holder(rarity), rand.nextFloat());
             loaded.put(a, inst);
             nameList.add(inst);
         }
@@ -73,17 +75,17 @@ public class LootController {
 
         // Socket and Durability handling, which is non-standard.
         if (sockets.intValue() > 0) {
-            loaded.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, rarity, sockets.intValue()));
+            SocketHelper.setSockets(stack, sockets.intValue());
         }
 
         if (durability > 0) {
-            loaded.put(Affixes.DURABLE.get(), new AffixInstance(Affixes.DURABLE.get(), stack, rarity, durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
+            loaded.put(Affixes.DURABLE, new AffixInstance(Affixes.DURABLE, stack, RarityRegistry.INSTANCE.holder(rarity), durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
         }
 
         jRand.setSeed(rand.nextLong());
         Collections.shuffle(nameList, jRand);
         String key = nameList.size() > 1 ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.two";
-        MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.color()));
+        MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.getColor()));
 
         AffixHelper.setRarity(stack, rarity);
         AffixHelper.setAffixes(stack, loaded);
@@ -102,7 +104,7 @@ public class LootController {
      * @return An affix item, or an empty ItemStack if no entries were available for the dimension.
      */
     public static ItemStack createRandomLootItem(RandomSource rand, @Nullable LootRarity rarity, Player player, ServerLevelAccessor level) {
-        AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(level.getLevel()), IStaged.matches(player));
+        AffixLootEntry entry = AffixLootRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(level.getLevel()), IStaged.matches(player));
         if (entry == null) return ItemStack.EMPTY;
         if (rarity == null) rarity = LootRarity.random(rand, player.getLuck(), entry);
         return createLootItem(entry.getStack(), entry.getType(), rarity, rand);

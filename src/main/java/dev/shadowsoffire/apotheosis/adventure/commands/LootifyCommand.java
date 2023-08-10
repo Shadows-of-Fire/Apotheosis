@@ -9,6 +9,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +23,7 @@ public class LootifyCommand {
         root.then(Commands.literal("lootify").requires(c -> c.hasPermission(2)).then(Commands.argument("rarity", StringArgumentType.word()).suggests(SUGGEST_RARITY).executes(c -> {
             Player p = c.getSource().getPlayerOrException();
             String type = c.getArgument("rarity", String.class);
-            LootRarity rarity = LootRarity.byId(type);
+            LootRarity rarity = RarityRegistry.byLegacyId(type).get();
             ItemStack stack = p.getMainHandItem();
             AffixHelper.setAffixes(stack, Collections.emptyMap());
             LootController.createLootItem(stack, rarity, p.level().random);

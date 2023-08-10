@@ -1,4 +1,7 @@
 {
+    "ordinal": 0,
+    "color": "#808080",
+    "material": "apotheosis:common_material",
 	"weight": 400,
 	"quality": 0,
 	"rules": [{

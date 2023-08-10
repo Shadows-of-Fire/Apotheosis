@@ -10,7 +10,6 @@ import com.google.common.collect.HashBiMap;
 import com.mojang.datafixers.kinds.App;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.mojang.serialization.codecs.SimpleMapCodec;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
@@ -20,6 +19,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.Dro
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.LeechBlockBonus;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.MageSlayerBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs.CodecProvider;
+import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -44,14 +47,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs.CodecProvider;
-import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public abstract class GemBonus implements CodecProvider<GemBonus> {
 
-    public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
+    public static final Codec<Map<LootRarity, StepFunction>> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
     public static final BiMap<ResourceLocation, Codec<? extends GemBonus>> CODECS = HashBiMap.create();
     public static final Codec<GemBonus> CODEC = PlaceboCodecs.mapBacked("Gem Bonus", CODECS);
 

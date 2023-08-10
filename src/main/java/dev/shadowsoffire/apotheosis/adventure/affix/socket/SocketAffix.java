@@ -96,7 +96,7 @@ public final class SocketAffix extends Affix {
 
     @Override
     public void onArrowImpact(AbstractArrow arrow, LootRarity itemRarity, float numSockets, HitResult res, Type type) {
-        gems(arrow).forEach(inst -> inst.onArrowImpact(arrow, inst.gemStack(), inst.rarity(), res, type));
+        gems(arrow).forEach(inst -> inst.onArrowImpact(arrow, res, type));
     }
 
     @Override

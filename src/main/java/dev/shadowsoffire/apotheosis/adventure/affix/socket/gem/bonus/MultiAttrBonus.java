@@ -16,6 +16,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.attributeslib.AttributesLib;
 import dev.shadowsoffire.attributeslib.api.IFormattableAttribute;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -72,7 +73,7 @@ public class MultiAttrBonus extends GemBonus {
         List<Set<LootRarity>> rarityChecks = new ArrayList<>();
         for (ModifierInst inst : this.modifiers) {
             var set = new HashSet<LootRarity>();
-            LootRarity.values().stream().filter(r -> inst.values.containsKey(r)).forEach(set::add);
+            RarityRegistry.INSTANCE.getValues().stream().filter(r -> inst.values.containsKey(r)).forEach(set::add);
             rarityChecks.add(set);
         }
         Preconditions.checkArgument(rarityChecks.stream().mapToInt(Set::size).allMatch(size -> size == rarityChecks.get(0).size()));

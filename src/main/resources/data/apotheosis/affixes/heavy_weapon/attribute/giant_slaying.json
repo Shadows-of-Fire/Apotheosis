@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:current_hp_damage",
+	"attribute": "attributeslib:current_hp_damage",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

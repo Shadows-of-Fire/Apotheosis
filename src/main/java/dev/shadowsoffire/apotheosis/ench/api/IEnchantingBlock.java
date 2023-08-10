@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.api;
 
 import org.jetbrains.annotations.ApiStatus;
 
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,7 +25,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * Determines the amount of enchanting power (Eterna) this block can provide to an enchanting table.
      *
      * @return The amount of enchanting power this block produces.
-     * @apiNote Call via {@link EnchantingStatManager#getEterna(BlockState, Level, BlockPos)}
+     * @apiNote Call via {@link EnchantingStatRegistry#getEterna(BlockState, Level, BlockPos)}
      */
     @ApiStatus.OverrideOnly
     default float getEternaBonus(BlockState state, LevelReader world, BlockPos pos) {
@@ -36,7 +36,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * Determines the maximum enchanting power (Eterna) that this block may contribute up to.
      *
      * @return The max Eterna this block may contribute towards. Once past this value, this block has no effect.
-     * @apiNote Call via {@link EnchantingStatManager#getMaxEterna(BlockState, Level, BlockPos)}
+     * @apiNote Call via {@link EnchantingStatRegistry#getMaxEterna(BlockState, Level, BlockPos)}
      */
     @ApiStatus.OverrideOnly
     default float getMaxEnchantingPower(BlockState state, LevelReader world, BlockPos pos) {
@@ -47,7 +47,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * Determines the amount of Quanta this block provides to an enchanting table.
      *
      * @return The change in Quanta caused by this block.
-     * @apiNote Call via {@link EnchantingStatManager#getQuanta(BlockState, Level, BlockPos)}
+     * @apiNote Call via {@link EnchantingStatRegistry#getQuanta(BlockState, Level, BlockPos)}
      */
     @ApiStatus.OverrideOnly
     default float getQuantaBonus(BlockState state, LevelReader world, BlockPos pos) {
@@ -58,7 +58,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * Determines the amount of Arcana this block provides to an enchanting table.
      *
      * @return The change in Arcana caused by this block.
-     * @apiNote Call via {@link EnchantingStatManager#getArcana(BlockState, Level, BlockPos)}
+     * @apiNote Call via {@link EnchantingStatRegistry#getArcana(BlockState, Level, BlockPos)}
      */
     @ApiStatus.OverrideOnly
     default float getArcanaBonus(BlockState state, LevelReader world, BlockPos pos) {
@@ -72,7 +72,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * At 100%, quanta only has a positive effect.
      *
      * @return The Quanta Rectification bonus from this block.
-     * @apiNote Call via {@link EnchantingStatManager#getQuantaRectification(BlockState, Level, BlockPos)}
+     * @apiNote Call via {@link EnchantingStatRegistry#getQuantaRectification(BlockState, Level, BlockPos)}
      */
     @ApiStatus.OverrideOnly
     default float getQuantaRectification(BlockState state, LevelReader world, BlockPos pos) {
@@ -83,7 +83,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      * Determines how many extra clues can be viewed by the client when this block is present.
      *
      * @return The number of bonus clues to show.
-     * @apiNote Call via {@link EnchantingStatManager#getBonusClues(BlockState, Level, BlockPos)}
+     * @apiNote Call via {@link EnchantingStatRegistry#getBonusClues(BlockState, Level, BlockPos)}
      */
     @ApiStatus.OverrideOnly
     default int getBonusClues(BlockState state, LevelReader world, BlockPos pos) {
@@ -102,7 +102,7 @@ public interface IEnchantingBlock extends IForgeBlock {
      */
     default void spawnTableParticle(BlockState state, Level level, RandomSource rand, BlockPos pos, BlockPos offset) {
         if (rand.nextInt(16) == 0) {
-            if (EnchantingStatManager.getEterna(level.getBlockState(pos.offset(offset)), level, pos.offset(offset)) > 0) {
+            if (EnchantingStatRegistry.getEterna(level.getBlockState(pos.offset(offset)), level, pos.offset(offset)) > 0) {
                 if (level.isEmptyBlock(pos.offset(offset.getX() / 2, 0, offset.getZ() / 2))) {
                     level.addParticle(this.getTableParticle(state), pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, offset.getX() + rand.nextFloat() - 0.5D, offset.getY() - rand.nextFloat() - 1.0F,
                         offset.getZ() + rand.nextFloat() - 0.5D);

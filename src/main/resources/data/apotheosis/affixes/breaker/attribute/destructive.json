@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:mining_speed",
+	"attribute": "attributeslib:mining_speed",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

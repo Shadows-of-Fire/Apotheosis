@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:armor_pierce",
+	"attribute": "attributeslib:armor_pierce",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import dev.shadowsoffire.apotheosis.Apoth.Affixes;
@@ -13,7 +13,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.event.GetItemSocketsEvent;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -28,7 +29,9 @@ import net.minecraftforge.common.MinecraftForge;
  */
 public class SocketHelper {
 
+    public static final String AFFIX_DATA = AffixHelper.AFFIX_DATA;
     public static final String GEMS = "gems";
+    public static final String SOCKETS = "sockets";
 
     /**
      * Gets the list of gems socketed into the item.<br>
@@ -76,9 +79,9 @@ public class SocketHelper {
      * @param stack
      * @return
      */
-    public static List<Gem> getActiveGems(ItemStack stack) {
-        return getGems(stack).stream().map(GemItem::getGem).filter(Objects::nonNull).toList();
-    }
+    // public static List<Gem> getActiveGems(ItemStack stack) {
+    // return getGems(stack).stream().map(GemItem::getGem).filter(Objects::nonNull).toList();
+    // }
 
     /**
      * Sets the gem list on the item to the provided list of gems.<br>
@@ -98,24 +101,20 @@ public class SocketHelper {
 
     /**
      * Gets the number of sockets on an item.<br>
-     * By default, this equals the level of {@linkplain Affixes#SOCKET the Socket affix}, but it may be
-     * modified by {@link GetItemSocketsEvent}.
+     * By default, this equals the nbt-encoded socket count, but it may be modified by {@link GetItemSocketsEvent}.
      *
      * @param stack The stack being queried.
      * @return The number of sockets on the stack.
-     * @see SocketAffix
      */
     public static int getSockets(ItemStack stack) {
-        AffixInstance socketAffix = AffixHelper.getAffixes(stack).get(Affixes.SOCKET.get());
-        int sockets = socketAffix != null ? (int) socketAffix.level() : 0;
+        int sockets = stack.getOrCreateTagElement(AFFIX_DATA).getInt(SOCKETS);
         var event = new GetItemSocketsEvent(stack, sockets);
         MinecraftForge.EVENT_BUS.post(event);
         return event.getSockets();
     }
 
     /**
-     * Sets the number of sockets on the item to the specified value.<br>
-     * This changes the level of {@linkplain Affixes#SOCKET the Socket affix} on the item.
+     * Sets the number of sockets on the item to the specified value.
      * <p>
      * The value set here is not necessarily the value that will be returned by {@link #getSockets(ItemStack)} due to {@link GetItemSocketsEvent}.
      *
@@ -123,9 +122,7 @@ public class SocketHelper {
      * @param sockets The number of sockets.
      */
     public static void setSockets(ItemStack stack, int sockets) {
-        Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-        affixes.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, LootRarity.COMMON, sockets));
-        AffixHelper.setAffixes(stack, affixes);
+        stack.getOrCreateTagElement(AFFIX_DATA).putInt(SOCKETS, sockets);
     }
 
     /**
@@ -135,7 +132,7 @@ public class SocketHelper {
      * @return True, if any sockets are empty, otherwise false.
      */
     public static boolean hasEmptySockets(ItemStack stack) {
-        return getGems(stack).stream().map(GemItem::getGem).anyMatch(Objects::isNull);
+        return getGems(stack).stream().map(GemItem::getGem).map(DynamicHolder::getOptional).anyMatch(Optional::isEmpty);
     }
 
     /**
@@ -148,10 +145,18 @@ public class SocketHelper {
     public static int getFirstEmptySocket(ItemStack stack) {
         List<ItemStack> gems = getGems(stack);
         for (int socket = 0; socket < gems.size(); socket++) {
-            Gem gem = GemItem.getGem(gems.get(socket));
-            if (gem == null) return socket;
+            DynamicHolder<Gem> gem = GemItem.getGem(gems.get(socket));
+            if (!gem.isBound()) return socket;
         }
         return 0;
+    }
+
+    public static void loadSocketAffix(ItemStack stack, Map<DynamicHolder<? extends Affix>, AffixInstance> affixes) {
+        int sockets = getSockets(stack);
+        if (sockets > 0) {
+            // The rarity is irrelevant for the socket affix, so we always pass the min rarity to the fake affix instance.
+            affixes.put(Affixes.SOCKET, new AffixInstance(Affixes.SOCKET, stack, RarityRegistry.getMinRarity(), sockets));
+        }
     }
 
 }

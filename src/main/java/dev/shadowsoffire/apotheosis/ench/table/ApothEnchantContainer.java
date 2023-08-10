@@ -41,7 +41,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ApothEnchantContainer extends EnchantmentMenu {
 
-    protected final FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatManager.getAbsoluteMaxEterna());
+    protected final FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatRegistry.getAbsoluteMaxEterna());
     protected final FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 100);
     protected final FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 100);
     protected final FloatReferenceHolder rectification = new FloatReferenceHolder(0F, -100, 100);
@@ -281,16 +281,16 @@ public class ApothEnchantContainer extends EnchantmentMenu {
     public static void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         if (state.isAir()) return;
-        float max = EnchantingStatManager.getMaxEterna(state, world, pos);
-        float eterna = EnchantingStatManager.getEterna(state, world, pos);
+        float max = EnchantingStatRegistry.getMaxEterna(state, world, pos);
+        float eterna = EnchantingStatRegistry.getEterna(state, world, pos);
         eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
-        float quanta = EnchantingStatManager.getQuanta(state, world, pos);
+        float quanta = EnchantingStatRegistry.getQuanta(state, world, pos);
         stats[1] += quanta;
-        float arcana = EnchantingStatManager.getArcana(state, world, pos);
+        float arcana = EnchantingStatRegistry.getArcana(state, world, pos);
         stats[2] += arcana;
-        float quantaRec = EnchantingStatManager.getQuantaRectification(state, world, pos);
+        float quantaRec = EnchantingStatRegistry.getQuantaRectification(state, world, pos);
         stats[3] += quantaRec;
-        int clues = EnchantingStatManager.getBonusClues(state, world, pos);
+        int clues = EnchantingStatRegistry.getBonusClues(state, world, pos);
         stats[4] += clues;
     }
 

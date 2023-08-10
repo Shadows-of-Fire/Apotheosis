@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:arrow_damage",
+	"attribute": "attributeslib:arrow_damage",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

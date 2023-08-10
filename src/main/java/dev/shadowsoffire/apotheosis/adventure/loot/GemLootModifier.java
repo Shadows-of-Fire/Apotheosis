@@ -6,9 +6,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -33,7 +33,7 @@ public class GemLootModifier extends LootModifier {
                     var player = GemLootPoolEntry.findPlayer(context);
                     if (player == null) return generatedLoot;
                     float luck = context.getLuck();
-                    ItemStack gem = GemManager.createRandomGemStack(context.getRandom(), context.getLevel(), luck, IDimensional.matches(context.getLevel()), IStaged.matches(player));
+                    ItemStack gem = GemRegistry.createRandomGemStack(context.getRandom(), context.getLevel(), luck, IDimensional.matches(context.getLevel()), IStaged.matches(player));
                     generatedLoot.add(gem);
                 }
                 break;

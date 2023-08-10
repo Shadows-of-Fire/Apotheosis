@@ -1,6 +1,9 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.0.0
+* Updated to 1.20.1.
+
 ## 6.3.2
 * Fixed an issue where Crit Chance was using the target's crit chance during application.
 * Added particle that trigger when an Apothic Crit happens.

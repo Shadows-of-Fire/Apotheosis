@@ -9,16 +9,16 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossItem;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossItemManager;
+import dev.shadowsoffire.apotheosis.adventure.boss.ApothBoss;
+import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
-import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootManager;
+import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.Reward;
 import dev.shadowsoffire.gateways.gate.WaveEntity;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -45,16 +45,16 @@ public class GatewaysCompat {
             .apply(inst, BossWaveEntity::new));
 
         private final Optional<ResourceLocation> bossId;
-        private final Supplier<BossItem> boss;
+        private final Supplier<ApothBoss> boss;
 
         public BossWaveEntity(Optional<ResourceLocation> bossId) {
             this.bossId = bossId;
-            this.boss = Suppliers.memoize(() -> bossId.map(BossItemManager.INSTANCE::getValue).orElse(null));
+            this.boss = Suppliers.memoize(() -> bossId.map(BossRegistry.INSTANCE::getValue).orElse(null));
         }
 
         @Override
         public LivingEntity createEntity(Level level) {
-            BossItem realBoss = this.bossId.isEmpty() ? BossItemManager.INSTANCE.getRandomItem(level.random) : this.boss.get();
+            ApothBoss realBoss = this.bossId.isEmpty() ? BossRegistry.INSTANCE.getRandomItem(level.random) : this.boss.get();
             if (realBoss == null) return null; // error condition
             return realBoss.createBoss((ServerLevelAccessor) level, BlockPos.ZERO, level.random, 0);
         }
@@ -92,7 +92,7 @@ public class GatewaysCompat {
 
         @Override
         public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-            list.accept(LootController.createLootItem(AffixLootManager.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), this.rarity, level.random));
+            list.accept(LootController.createLootItem(AffixLootRegistry.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), this.rarity, level.random));
         }
 
         @Override

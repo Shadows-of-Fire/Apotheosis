@@ -8,20 +8,20 @@ import java.util.Map;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.trades.AffixTrade;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
-import dev.shadowsoffire.placebo.reload.PlaceboJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.DynamicRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraftforge.common.BasicItemListing;
 
-public class WandererTradeManager extends PlaceboJsonReloadListener<JsonTrade> {
+public class WandererTradesRegistry extends DynamicRegistry<JsonTrade> {
 
-    public static final WandererTradeManager INSTANCE = new WandererTradeManager();
+    public static final WandererTradesRegistry INSTANCE = new WandererTradesRegistry();
 
     protected final Map<ResourceLocation, BasicItemListing> registry = new HashMap<>();
     protected final List<ItemListing> normTrades = new ArrayList<>();
     protected final List<ItemListing> rareTrades = new ArrayList<>();
 
-    public WandererTradeManager() {
+    public WandererTradesRegistry() {
         super(VillageModule.LOGGER, "wanderer_trades", false, true);
     }
 

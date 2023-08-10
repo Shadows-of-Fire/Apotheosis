@@ -6,20 +6,13 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
-import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.json.JsonUtil;
-import dev.shadowsoffire.placebo.json.NBTAdapter;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,13 +44,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  * What the level means is up to the individual affix.
  */
 public abstract class Affix extends TypeKeyedBase<Affix> {
-
-    protected static final Gson GSON = new GsonBuilder()
-        .registerTypeAdapter(LootRarity.class, JsonUtil.<LootRarity>makeSerializer((json, type, ctx) -> LootRarity.byId(json.getAsString()), null))
-        .registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE)
-        .registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
-        .registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-        .create();
 
     protected final AffixType type;
 

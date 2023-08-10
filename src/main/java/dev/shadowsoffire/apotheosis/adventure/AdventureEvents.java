@@ -1,17 +1,15 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisCommandEvent;
-import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.TelepathicAffix;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemManager;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.commands.BossCommand;
 import dev.shadowsoffire.apotheosis.adventure.commands.CategoryCheckCommand;
 import dev.shadowsoffire.apotheosis.adventure.commands.GemCommand;
@@ -26,7 +24,7 @@ import dev.shadowsoffire.apotheosis.util.ItemAccess;
 import dev.shadowsoffire.placebo.events.AnvilLandEvent;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import dev.shadowsoffire.placebo.events.ItemUseEvent;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -83,10 +81,10 @@ public class AdventureEvents {
     public void affixModifiers(ItemAttributeModifierEvent e) {
         ItemStack stack = e.getItemStack();
         if (stack.hasTag()) {
-            Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+            var affixes = AffixHelper.getAffixes(stack);
             affixes.forEach((afx, inst) -> inst.addModifiers(e.getSlotType(), e::addModifier));
-            if (AffixHelper.getRarity(stack) != null && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
-                double amt = -0.15 - 0.10 * AffixHelper.getRarity(stack).ordinal();
+            if (!affixes.isEmpty() && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
+                double amt = -0.15 - 0.10 * affixes.values().stream().findAny().get().rarity().get().ordinal();
                 AttributeModifier baseAS = e.getModifiers().get(Attributes.ATTACK_SPEED).stream().filter(a -> ItemAccess.getBaseAS() == a.getId()).findFirst().orElse(null);
                 if (baseAS != null) {
                     // Try to not reduce attack speed below 0.4 if possible.
@@ -124,7 +122,7 @@ public class AdventureEvents {
                     }
                 }
                 if (bow.isEmpty()) return;
-                Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(bow);
+                var affixes = AffixHelper.getAffixes(bow);
                 affixes.values().forEach(a -> {
                     a.onArrowFired(living, arrow);
                 });
@@ -139,7 +137,7 @@ public class AdventureEvents {
     @SubscribeEvent
     public void impact(ProjectileImpactEvent e) {
         if (e.getProjectile() instanceof AbstractArrow arrow) {
-            Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(arrow);
+            var affixes = AffixHelper.getAffixes(arrow);
             affixes.values().forEach(inst -> inst.onArrowImpact(arrow, e.getRayTraceResult(), e.getRayTraceResult().getType()));
         }
     }
@@ -151,7 +149,7 @@ public class AdventureEvents {
         LivingEntity ent = e.getEntity();
         float amount = e.getAmount();
         for (ItemStack s : ent.getAllSlots()) {
-            Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
+            var affixes = AffixHelper.getAffixes(s);
             for (AffixInstance inst : affixes.values()) {
                 amount = inst.onHurt(src, ent, amount);
             }
@@ -162,7 +160,7 @@ public class AdventureEvents {
     @SubscribeEvent
     public void onItemUse(ItemUseEvent e) {
         ItemStack s = e.getItemStack();
-        Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
+        var affixes = AffixHelper.getAffixes(s);
         for (AffixInstance inst : affixes.values()) {
             InteractionResult type = inst.onItemUse(e.getContext());
             if (type != null) {
@@ -175,7 +173,7 @@ public class AdventureEvents {
     @SubscribeEvent
     public void shieldBlock(ShieldBlockEvent e) {
         ItemStack stack = e.getEntity().getUseItem();
-        Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+        var affixes = AffixHelper.getAffixes(stack);
         float blocked = e.getBlockedDamage();
         for (AffixInstance inst : affixes.values()) {
             blocked = inst.onShieldBlock(e.getEntity(), e.getDamageSource(), blocked);
@@ -186,7 +184,7 @@ public class AdventureEvents {
     @SubscribeEvent
     public void blockBreak(BreakEvent e) {
         ItemStack stack = e.getPlayer().getMainHandItem();
-        Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+        var affixes = AffixHelper.getAffixes(stack);
         for (AffixInstance inst : affixes.values()) {
             inst.onBlockBreak(e.getPlayer(), e.getLevel(), e.getPos(), e.getState());
         }
@@ -200,7 +198,7 @@ public class AdventureEvents {
             if (p.random.nextFloat() <= chance) {
                 Entity ent = e.getEntity();
                 e.getDrops()
-                    .add(new ItemEntity(ent.level(), ent.getX(), ent.getY(), ent.getZ(), GemManager.createRandomGemStack(p.random, (ServerLevel) p.level(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p)), 0, 0, 0));
+                    .add(new ItemEntity(ent.level(), ent.getX(), ent.getY(), ent.getZ(), GemRegistry.createRandomGemStack(p.random, (ServerLevel) p.level(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p)), 0, 0, 0));
             }
         }
     }

@@ -5,16 +5,16 @@ import java.util.Map;
 import com.google.gson.JsonElement;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 
-public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
+public class BossRegistry extends WeightedDynamicRegistry<ApothBoss> {
 
-    public static final BossItemManager INSTANCE = new BossItemManager();
+    public static final BossRegistry INSTANCE = new BossRegistry();
 
-    public BossItemManager() {
+    public BossRegistry() {
         super(AdventureModule.LOGGER, "bosses", false, false);
     }
 
@@ -27,14 +27,14 @@ public class BossItemManager extends WeightedJsonReloadListener<BossItem> {
     }
 
     @Override
-    protected void validateItem(BossItem item) {
+    protected void validateItem(ApothBoss item) {
         super.validateItem(item);
         item.validate();
     }
 
     @Override
     protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, BossItem.SERIALIZER);
+        this.registerSerializer(DEFAULT, ApothBoss.SERIALIZER);
     }
 
 }

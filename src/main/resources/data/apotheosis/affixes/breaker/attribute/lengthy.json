@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "forge:reach_distance",
+	"attribute": "forge:block_reach",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 
 import java.util.function.Consumer;
 
-import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -12,7 +11,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import net.minecraft.network.FriendlyByteBuf;
+import dev.shadowsoffire.placebo.json.PSerializer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import dev.shadowsoffire.placebo.json.PSerializer;
 
 /**
  * Teleport Drops
@@ -87,22 +85,6 @@ public class TelepathicAffix extends Affix {
                 item.setPickUpDelay(0);
             }
         }
-    }
-
-    public static Affix read(JsonObject obj) {
-        return new TelepathicAffix(GSON.fromJson(obj.get("min_rarity"), LootRarity.class));
-    }
-
-    public JsonObject write() {
-        return new JsonObject();
-    }
-
-    public void write(FriendlyByteBuf buf) {
-        buf.writeUtf(this.minRarity.id());
-    }
-
-    public static Affix read(FriendlyByteBuf buf) {
-        return new TelepathicAffix(LootRarity.byId(buf.readUtf()));
     }
 
 }

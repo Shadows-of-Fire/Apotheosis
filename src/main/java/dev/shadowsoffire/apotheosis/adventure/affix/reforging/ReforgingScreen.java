@@ -151,7 +151,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
                 gfx.blit(TEXTURE, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
                 gfx.blit(TEXTURE, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
                 gfx.drawWordWrap(font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
-                color = this.darken(rarity.color().getValue(), 2);
+                color = this.darken(rarity.getColor().getValue(), 2);
             }
             else {
                 int k2 = x - (xCenter + 60);
@@ -167,7 +167,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
                 gfx.blit(TEXTURE, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
 
                 gfx.drawWordWrap(font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
-                color = rarity.color().getValue();
+                color = rarity.getColor().getValue();
             }
             this.drawBorderedString(gfx, costStr, slotsX + 10, yCenter + 21 + 19 * slot, color, this.darken(color, 4));
             this.drawBorderedString(gfx, levelStr, slotsX + 106 - this.font.width(levelStr), yCenter + 16 + 19 * slot + 7, color, this.darken(color, 4));

@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +22,7 @@ public class BossSummonerItem extends Item {
         Level world = ctx.getLevel();
         if (world.isClientSide) return InteractionResult.SUCCESS;
         Player player = ctx.getPlayer();
-        BossItem item = BossItemManager.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer().getLuck(), IDimensional.matches(world), IStaged.matches(player));
+        ApothBoss item = BossRegistry.INSTANCE.getRandomItem(world.getRandom(), ctx.getPlayer().getLuck(), IDimensional.matches(world), IStaged.matches(player));
         if (item == null) return InteractionResult.FAIL;
         BlockPos pos = ctx.getClickedPos().relative(ctx.getClickedFace());
         if (!world.noCollision(item.getSize().move(pos))) {

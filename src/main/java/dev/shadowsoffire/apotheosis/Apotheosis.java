@@ -8,7 +8,6 @@ import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
-import dev.shadowsoffire.apotheosis.core.mobfx.MobFxLib;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
@@ -18,7 +17,6 @@ import dev.shadowsoffire.apotheosis.util.ModuleCondition;
 import dev.shadowsoffire.apotheosis.util.ParticleMessage;
 import dev.shadowsoffire.apotheosis.util.RarityIngredient;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
-import dev.shadowsoffire.attributeslib.AttributesLib;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.network.MessageHelper;
 import dev.shadowsoffire.placebo.recipe.NBTIngredient;
@@ -27,9 +25,7 @@ import dev.shadowsoffire.placebo.util.RunnableReloader;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -41,6 +37,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -65,14 +62,6 @@ public class Apotheosis {
         .simpleChannel();
 
     public static final RecipeHelper HELPER = new RecipeHelper(Apotheosis.MODID);
-
-    public static final CreativeModeTab APOTH_GROUP = new CreativeModeTab(MODID){
-
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(Items.ENCHANTING_TABLE);
-        }
-    };
 
     public static File configDir;
     public static Configuration config;
@@ -101,8 +90,6 @@ public class Apotheosis {
         if (config.hasChanged()) config.save();
     }
 
-    public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").bypassArmor().bypassMagic();
-
     public Apotheosis() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -126,9 +113,9 @@ public class Apotheosis {
 
     @SubscribeEvent
     public void init(FMLCommonSetupEvent e) {
-        MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
-        MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage(null, 0));
-        MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage(0, null, false));
+        MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage.Provider());
+        MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage.Provider());
+        MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage.Provider());
         e.enqueueWork(() -> {
             AdvancementTriggers.init();
             CraftingHelper.register(new ModuleCondition.Serializer());
@@ -136,7 +123,7 @@ public class Apotheosis {
         });
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void reloads(AddReloadListenerEvent e) {
         e.addListener(RunnableReloader.of(() -> MinecraftForge.EVENT_BUS.post(new ApotheosisReloadEvent())));
     }

@@ -10,8 +10,8 @@ import com.google.gson.JsonObject;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate.Composite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 
@@ -42,7 +42,7 @@ public class SplittingTrigger implements CriterionTrigger<AbstractCriterionTrigg
 
     @Override
     public AbstractCriterionTriggerInstance createInstance(JsonObject json, DeserializationContext parser) {
-        return new AbstractCriterionTriggerInstance(ID, Composite.ANY){};
+        return new AbstractCriterionTriggerInstance(ID, ContextAwarePredicate.ANY){};
     }
 
     public void trigger(PlayerAdvancements adv) {

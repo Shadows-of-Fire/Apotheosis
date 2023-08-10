@@ -14,7 +14,7 @@ import com.google.gson.JsonParseException;
 import com.mojang.serialization.JsonOps;
 
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager.Stats;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

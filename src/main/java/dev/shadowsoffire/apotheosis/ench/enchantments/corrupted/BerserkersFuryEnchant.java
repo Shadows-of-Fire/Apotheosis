@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -58,7 +58,7 @@ public class BerserkersFuryEnchant extends Enchantment {
             if (level > 0) {
                 if (Affix.isOnCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), 900, user)) return;
                 user.invulnerableTime = 0;
-                user.hurt(Apotheosis.CORRUPTED, (float) Math.pow(2.5, level));
+                user.hurt(user.damageSources().source(Apoth.DamageTypes.CORRUPTED), (float) Math.pow(2.5, level));
                 user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, level - 1));
                 user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, level - 1));
                 user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, level - 1));

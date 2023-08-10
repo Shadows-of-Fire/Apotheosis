@@ -24,18 +24,18 @@ import dev.shadowsoffire.apotheosis.adventure.affix.effect.SpectralShotAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.TelepathicAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
-import dev.shadowsoffire.placebo.reload.PlaceboJsonReloadListener;
-import dev.shadowsoffire.placebo.util.CachedObject;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.reload.DynamicRegistry;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
-public class AffixManager extends PlaceboJsonReloadListener<Affix> {
+public class AffixRegistry extends DynamicRegistry<Affix> {
 
-    public static final AffixManager INSTANCE = new AffixManager();
+    public static final AffixRegistry INSTANCE = new AffixRegistry();
 
-    private Multimap<AffixType, Affix> byType = ImmutableMultimap.of();
+    private Multimap<AffixType, DynamicHolder<Affix>> byType = ImmutableMultimap.of();
 
-    public AffixManager() {
+    public AffixRegistry() {
         super(AdventureModule.LOGGER, "affixes", true, true);
     }
 
@@ -48,12 +48,11 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
     @Override
     protected void onReload() {
         super.onReload();
-        ImmutableMultimap.Builder<AffixType, Affix> builder = ImmutableMultimap.builder();
-        this.registry.values().forEach(a -> builder.put(a.type, a));
+        ImmutableMultimap.Builder<AffixType, DynamicHolder<Affix>> builder = ImmutableMultimap.builder();
+        this.registry.values().forEach(a -> builder.put(a.type, this.holder(a.getId())));
         this.byType = builder.build();
         Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
         Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
-        CachedObject.invalidateAll(AffixHelper.AFFIX_CACHED_OBJECT);
         if (!FMLEnvironment.production) {
             StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
             String json = "\"%s\": \"\",";
@@ -91,7 +90,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
         this.registerSerializer(Apotheosis.loc("durable"), DurableAffix.SERIALIZER);
     }
 
-    public Multimap<AffixType, Affix> getTypeMap() {
+    public Multimap<AffixType, DynamicHolder<Affix>> getTypeMap() {
         return this.byType;
     }
 

@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager.Stats;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;

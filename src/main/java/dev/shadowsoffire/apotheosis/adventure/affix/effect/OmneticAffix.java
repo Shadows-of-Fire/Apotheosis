@@ -7,12 +7,15 @@ import java.util.function.Consumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.json.ItemAdapter;
+import dev.shadowsoffire.placebo.json.PSerializer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectUtil;
@@ -24,8 +27,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck;
-import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
 
 public class OmneticAffix extends Affix {
 
@@ -56,9 +57,9 @@ public class OmneticAffix extends Affix {
     public void harvest(HarvestCheck e) {
         ItemStack stack = e.getEntity().getMainHandItem();
         if (!stack.isEmpty()) {
-            AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
-            if (inst != null) {
-                OmneticData data = this.values.get(inst.rarity());
+            AffixInstance inst = AffixHelper.getAffixes(stack).get(Affixes.OMNETIC);
+            if (inst != null && inst.isValid()) {
+                OmneticData data = this.values.get(inst.rarity().get());
                 for (ItemStack item : data.items()) {
                     if (item.isCorrectToolForDrops(e.getTargetBlock())) {
                         e.setCanHarvest(true);
@@ -73,10 +74,10 @@ public class OmneticAffix extends Affix {
     public void speed(BreakSpeed e) {
         ItemStack stack = e.getEntity().getMainHandItem();
         if (!stack.isEmpty()) {
-            AffixInstance inst = AffixHelper.getAffixes(stack).get(this);
-            if (inst != null) {
+            AffixInstance inst = AffixHelper.getAffixes(stack).get(Affixes.OMNETIC);
+            if (inst != null && inst.isValid()) {
                 float speed = e.getOriginalSpeed();
-                OmneticData data = this.values.get(inst.rarity());
+                OmneticData data = this.values.get(inst.rarity().get());
                 for (ItemStack item : data.items()) {
                     speed = Math.max(getBaseSpeed(e.getEntity(), item, e.getState(), e.getPosition().orElse(BlockPos.ZERO)), speed);
                 }

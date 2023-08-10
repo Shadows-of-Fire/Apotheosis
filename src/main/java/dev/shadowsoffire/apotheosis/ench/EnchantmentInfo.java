@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.ench;
 
 import java.math.BigDecimal;
 
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 import s_com.udojava.evalex.Expression;
@@ -111,7 +111,7 @@ public class EnchantmentInfo {
     }
 
     public static PowerFunc defaultMax(Enchantment ench) {
-        return level -> (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4);
+        return level -> (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4);
     }
 
     /**

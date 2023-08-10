@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis;
 
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixManager;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.DurableAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.FestiveAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.MagicalArrowAffix;
@@ -19,6 +19,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttin
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.anvil.ObliterationEnchant;
 import dev.shadowsoffire.apotheosis.ench.anvil.SplittingEnchant;
@@ -60,7 +62,7 @@ import dev.shadowsoffire.apotheosis.village.fletching.arrows.MiningArrowItem;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.ObsidianArrowEntity;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.ObsidianArrowItem;
 import dev.shadowsoffire.placebo.registry.RegObjHelper;
-import dev.shadowsoffire.placebo.reload.DynamicRegistryObject;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
@@ -232,14 +234,24 @@ public class Apoth {
 
     public static final class Affixes {
         // Implicit affixes
-        public static final DynamicRegistryObject<SocketAffix> SOCKET = AffixManager.INSTANCE.makeObj(Apotheosis.loc("socket"));
-        public static final DynamicRegistryObject<DurableAffix> DURABLE = AffixManager.INSTANCE.makeObj(Apotheosis.loc("durable"));
+        public static final DynamicHolder<SocketAffix> SOCKET = AffixRegistry.INSTANCE.holder(Apotheosis.loc("socket"));
+        public static final DynamicHolder<DurableAffix> DURABLE = AffixRegistry.INSTANCE.holder(Apotheosis.loc("durable"));
         // Real affixes
-        public static final DynamicRegistryObject<MagicalArrowAffix> MAGICAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("ranged/special/magical"));
-        public static final DynamicRegistryObject<FestiveAffix> FESTIVE = AffixManager.INSTANCE.makeObj(Apotheosis.loc("sword/special/festive"));
-        public static final DynamicRegistryObject<TelepathicAffix> TELEPATHIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("telepathic"));
-        public static final DynamicRegistryObject<OmneticAffix> OMNETIC = AffixManager.INSTANCE.makeObj(Apotheosis.loc("breaker/special/omnetic"));
-        public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Apotheosis.loc("breaker/special/radial"));
+        public static final DynamicHolder<MagicalArrowAffix> MAGICAL = AffixRegistry.INSTANCE.holder(Apotheosis.loc("ranged/special/magical"));
+        public static final DynamicHolder<FestiveAffix> FESTIVE = AffixRegistry.INSTANCE.holder(Apotheosis.loc("sword/special/festive"));
+        public static final DynamicHolder<TelepathicAffix> TELEPATHIC = AffixRegistry.INSTANCE.holder(Apotheosis.loc("telepathic"));
+        public static final DynamicHolder<OmneticAffix> OMNETIC = AffixRegistry.INSTANCE.holder(Apotheosis.loc("breaker/special/omnetic"));
+        public static final DynamicHolder<RadialAffix> RADIAL = AffixRegistry.INSTANCE.holder(Apotheosis.loc("breaker/special/radial"));
+    }
+
+    @Deprecated
+    public static final class Rarities {
+        public static final DynamicHolder<LootRarity> COMMON = RarityRegistry.INSTANCE.holder(Apotheosis.loc("common"));
+        public static final DynamicHolder<LootRarity> UNCOMMON = RarityRegistry.INSTANCE.holder(Apotheosis.loc("uncommon"));
+        public static final DynamicHolder<LootRarity> RARE = RarityRegistry.INSTANCE.holder(Apotheosis.loc("rare"));
+        public static final DynamicHolder<LootRarity> EPIC = RarityRegistry.INSTANCE.holder(Apotheosis.loc("epic"));
+        public static final DynamicHolder<LootRarity> MYTHIC = RarityRegistry.INSTANCE.holder(Apotheosis.loc("mythic"));
+        public static final DynamicHolder<LootRarity> ANCIENT = RarityRegistry.INSTANCE.holder(Apotheosis.loc("ancient"));
     }
 
     public static final class Tags {
@@ -272,6 +284,7 @@ public class Apoth {
     public static final class DamageTypes {
         public static final ResourceKey<DamageType> EXECUTE = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("execute"));
         public static final ResourceKey<DamageType> PSYCHIC = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("psychic"));
+        public static final ResourceKey<DamageType> CORRUPTED = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("corrupted"));
     }
 
 }

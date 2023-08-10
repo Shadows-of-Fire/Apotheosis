@@ -2,6 +2,10 @@ package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,8 +22,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 
 public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity {
 
@@ -48,8 +50,8 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
     }
 
     public boolean isValidRarityMat(ItemStack stack) {
-        LootRarity rarity = LootRarity.getMaterialRarity(stack);
-        return rarity != null && this.getMaxRarity().isAtLeast(rarity);
+        DynamicHolder<LootRarity> rarity = RarityRegistry.getMaterialRarity(stack.getItem());
+        return rarity.isBound() && this.getMaxRarity().isAtLeast(rarity.get());
     }
 
     @Override

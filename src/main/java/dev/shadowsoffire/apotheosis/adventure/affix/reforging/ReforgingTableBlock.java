@@ -4,6 +4,7 @@ import java.util.List;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
@@ -30,15 +31,15 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
     public static final Component TITLE = Component.translatable("container.apotheosis.reforge");
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
-    protected final LootRarity maxRarity;
+    protected final int maxRarity;
 
-    public ReforgingTableBlock(BlockBehaviour.Properties properties, LootRarity maxRarity) {
+    public ReforgingTableBlock(BlockBehaviour.Properties properties, int maxRarity) {
         super(properties);
         this.maxRarity = maxRarity;
     }
 
     public LootRarity getMaxRarity() {
-        return this.maxRarity;
+        return RarityRegistry.byOrdinal(this.maxRarity).get();
     }
 
     @Override
@@ -64,7 +65,8 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
         list.add(Component.translatable(Apoth.Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
-        if (this.maxRarity != LootRarity.ANCIENT) list.add(Component.translatable(Apoth.Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc2", this.getMaxRarity().toComponent()).withStyle(ChatFormatting.GRAY));
+        if (this.maxRarity < RarityRegistry.getMaxRarity().get().ordinal())
+            list.add(Component.translatable(Apoth.Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc2", this.getMaxRarity().toComponent()).withStyle(ChatFormatting.GRAY));
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -72,10 +73,10 @@ public class RadialAffix extends Affix {
         ItemStack tool = player.getMainHandItem();
         Level world = player.level();
         if (!world.isClientSide && tool.hasTag()) {
-            AffixInstance inst = AffixHelper.getAffixes(tool).get(this);
-            if (inst != null) {
+            AffixInstance inst = AffixHelper.getAffixes(tool).get(Affixes.RADIAL);
+            if (inst != null && inst.isValid()) {
                 float hardness = e.getState().getDestroySpeed(e.getLevel(), e.getPos());
-                breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, this.getTrueLevel(inst.rarity(), inst.level()), hardness);
+                breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, this.getTrueLevel(inst.rarity().get(), inst.level()), hardness);
             }
         }
     }

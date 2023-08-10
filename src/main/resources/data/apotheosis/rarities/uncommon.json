@@ -1,7 +1,9 @@
 {
-
+    "ordinal": 1,
+    "color": "#33FF33",
+    "material": "apotheosis:uncommon_material",
 	"weight": 320,
-	"quality": 1.5,
+	"quality": 5,
 	"rules": [{
 			"type": "stat",
 			"chance": 1.0

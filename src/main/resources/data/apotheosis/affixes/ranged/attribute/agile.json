@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:draw_speed",
+	"attribute": "attributeslib:draw_speed",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

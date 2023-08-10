@@ -6,6 +6,7 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -39,10 +40,10 @@ public class UnnamingRecipe extends ApothSmithingRecipe {
     public ItemStack assemble(Container pInv, RegistryAccess regs) {
         ItemStack out = pInv.getItem(0).copy();
         CompoundTag afxData = out.getTagElement(AffixHelper.AFFIX_DATA);
-        LootRarity rarity = AffixHelper.getRarity(afxData);
-        if (afxData == null || rarity == null) return ItemStack.EMPTY;
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(afxData);
+        if (afxData == null || !rarity.isBound()) return ItemStack.EMPTY;
         // args[1] will be set to the item's underlying name. args[0] will be ignored.
-        Component comp = Component.translatable("%2$s", "", "").withStyle(Style.EMPTY.withColor(rarity.color()));
+        Component comp = Component.translatable("%2$s", "", "").withStyle(Style.EMPTY.withColor(rarity.get().getColor()));
         AffixHelper.setName(out, comp);
         return out;
     }

@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:prot_pierce",
+	"attribute": "attributeslib:prot_pierce",
 	"operation": "ADDITION",
 	"values": {
 		"rare": {

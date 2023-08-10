@@ -10,17 +10,17 @@ import javax.annotation.Nullable;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.util.GearSet;
 import dev.shadowsoffire.apotheosis.util.GearSet.SetPredicate;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
 import net.minecraft.util.random.WeightedRandom;
 
-public class BossArmorManager extends WeightedJsonReloadListener<GearSet> {
+public class GearSetRegistry extends WeightedDynamicRegistry<GearSet> {
 
-    public static final BossArmorManager INSTANCE = new BossArmorManager();
+    public static final GearSetRegistry INSTANCE = new GearSetRegistry();
 
-    public BossArmorManager() {
-        super(AdventureModule.LOGGER, "boss_gear", false, false);
+    public GearSetRegistry() {
+        super(AdventureModule.LOGGER, "gear_sets", false, false);
     }
 
     /**

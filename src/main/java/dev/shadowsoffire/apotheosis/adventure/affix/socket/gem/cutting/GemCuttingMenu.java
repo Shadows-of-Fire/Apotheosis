@@ -5,12 +5,15 @@ import java.util.List;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -76,7 +79,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
                     r.decrementInputs(gem, left, bot, right);
                     this.inv.setStackInSlot(0, out);
                     this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
-                    AdvancementTriggers.GEM_CUT.trigger((ServerPlayer) player, out, GemItem.getLootRarity(out).id());
+                    AdvancementTriggers.GEM_CUT.trigger((ServerPlayer) player, out, AffixHelper.getRarity(out).getId());
                     return true;
                 }
             }
@@ -85,15 +88,15 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
     }
 
     protected boolean isValidMainGem(ItemStack stack) {
-        Gem gem = GemItem.getGem(stack);
-        return gem != null && GemItem.getLootRarity(stack) != LootRarity.ANCIENT;
+        DynamicHolder<Gem> gem = GemItem.getGem(stack);
+        return gem.isBound() && AffixHelper.getRarity(stack) != RarityRegistry.getMaxRarity();
     }
 
     protected boolean isValidMaterial(ItemStack stack) {
         var mainGem = GemInstance.unsocketed(this.inv.getStackInSlot(0));
         if (!mainGem.isValidUnsocketed()) return false;
-        LootRarity rarity = LootRarity.getMaterialRarity(stack);
-        return rarity != null && Math.abs(rarity.ordinal() - mainGem.rarity().ordinal()) <= 1;
+        DynamicHolder<LootRarity> rarity = RarityRegistry.getMaterialRarity(stack.getItem());
+        return rarity != null && Math.abs(rarity.get().ordinal() - mainGem.rarity().get().ordinal()) <= 1;
     }
 
     protected boolean matchesMainGem(ItemStack stack) {
@@ -158,35 +161,38 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         public boolean matches(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
             GemInstance g = GemInstance.unsocketed(gem);
             GemInstance g2 = GemInstance.unsocketed(bot);
+
             if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem() || g.rarity() != g2.rarity()) return false;
-            if (g.rarity() == LootRarity.ANCIENT) return false;
+            if (g.rarity() == RarityRegistry.getMaxRarity()) return false;
             if (left.getItem() != Apoth.Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity())) return false;
-            LootRarity matRarity = LootRarity.getMaterialRarity(right);
-            LootRarity gemRarity = g.rarity();
+            if (!RarityRegistry.isMaterial(right.getItem())) return false;
+
+            DynamicHolder<LootRarity> matRarity = RarityRegistry.getMaterialRarity(right.getItem());
+            DynamicHolder<LootRarity> gemRarity = g.rarity();
             if (matRarity == gemRarity) return right.getCount() >= STD_MAT_COST;
-            else if (matRarity == gemRarity.next()) return right.getCount() >= NEXT_MAT_COST;
-            else return matRarity == gemRarity.prev() && right.getCount() >= PREV_MAT_COST;
+            else if (matRarity == RarityRegistry.next(gemRarity)) return right.getCount() >= NEXT_MAT_COST;
+            else return matRarity == RarityRegistry.prev(gemRarity) && right.getCount() >= PREV_MAT_COST;
         }
 
         @Override
         public ItemStack getResult(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
             ItemStack out = gem.copy();
-            GemItem.setLootRarity(out, GemItem.getLootRarity(out).next());
+            AffixHelper.setRarity(out, RarityRegistry.next(AffixHelper.getRarity(out)).get());
             return out;
         }
 
         @Override
         public void decrementInputs(ItemStack gem, ItemStack left, ItemStack bot, ItemStack right) {
-            LootRarity matRarity = LootRarity.getMaterialRarity(right);
-            LootRarity gemRarity = GemInstance.unsocketed(gem).rarity();
+            DynamicHolder<LootRarity> matRarity = RarityRegistry.getMaterialRarity(right.getItem());
+            DynamicHolder<LootRarity> gemRarity = GemInstance.unsocketed(gem).rarity();
             gem.shrink(1);
             left.shrink(getDustCost(gemRarity));
             bot.shrink(1);
-            right.shrink(matRarity == gemRarity ? STD_MAT_COST : matRarity == gemRarity.next() ? NEXT_MAT_COST : PREV_MAT_COST);
+            right.shrink(matRarity == gemRarity ? STD_MAT_COST : matRarity == RarityRegistry.next(gemRarity) ? NEXT_MAT_COST : PREV_MAT_COST);
         }
     }
 
-    public static int getDustCost(LootRarity gemRarity) {
-        return 1 + gemRarity.ordinal() * 2;
+    public static int getDustCost(DynamicHolder<LootRarity> gemRarity) {
+        return 1 + gemRarity.get().ordinal() * 2;
     }
 }

@@ -2,7 +2,7 @@
 	"loader": "forge:separate_transforms",
 	"parent": "forge:item/default",
 	"base": {
-		"loader": "apotheosis:item_layers",
+		"loader": "forge:item_layers",
 		"parent": "item/generated",
 		"textures": {
 			"layer0": "apotheosis:items/rune_base",
@@ -18,7 +18,7 @@
 	},
 	"perspectives": {
 		"gui": {
-			"loader": "apotheosis:item_layers",
+			"loader": "forge:item_layers",
 			"parent": "item/generated",
 			"textures": {
 				"layer0": "apotheosis:items/rune_base",

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -38,8 +39,8 @@ public class GemModel implements BakedModel {
     }
 
     public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
-        Gem gem = GemItem.getGem(stack);
-        if (gem != null) {
+        DynamicHolder<Gem> gem = GemItem.getGem(stack);
+        if (gem.isBound()) {
             return Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(Apotheosis.MODID, "item/gems/" + gem.getId().getPath()));
         }
         return original;

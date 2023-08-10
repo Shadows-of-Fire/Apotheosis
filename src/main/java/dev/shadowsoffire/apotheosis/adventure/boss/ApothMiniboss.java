@@ -16,7 +16,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.apotheosis.adventure.boss.MinibossManager.IEntityMatch;
+import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry.IEntityMatch;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -30,8 +30,8 @@ import dev.shadowsoffire.placebo.json.NBTAdapter;
 import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -51,11 +51,11 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements ILuckyWeighted, IDimensional, IStaged, IEntityMatch {
+public final class ApothMiniboss extends TypeKeyedBase<ApothMiniboss> implements ILuckyWeighted, IDimensional, IStaged, IEntityMatch {
 
     public static final String NAME_GEN = "use_name_generation";
 
-    public static final Codec<MinibossItem> CODEC = RecordCodecBuilder.create(inst -> inst
+    public static final Codec<ApothMiniboss> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
             Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
@@ -72,9 +72,9 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
             SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)),
             Exclusion.CODEC.listOf().optionalFieldOf("exclusions", Collections.emptyList()).forGetter(a -> a.exclusions),
             Codec.BOOL.optionalFieldOf("finalize", false).forGetter(a -> a.finalize))
-        .apply(inst, MinibossItem::new));
+        .apply(inst, ApothMiniboss::new));
 
-    public static final PSerializer<MinibossItem> SERIALIZER = PSerializer.fromCodec("Apotheotic Miniboss", CODEC);
+    public static final PSerializer<ApothMiniboss> SERIALIZER = PSerializer.fromCodec("Apotheotic Miniboss", CODEC);
 
     /**
      * Weight relative to other minibosses that may apply to the same entity.
@@ -161,7 +161,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
      */
     protected final boolean finalize;
 
-    public MinibossItem(int weight, float quality, float chance,
+    public ApothMiniboss(int weight, float quality, float chance,
         String name, Set<EntityType<?>> entities, BossStats stats,
         Optional<Set<String>> stages, Set<ResourceLocation> dimensions, boolean affixed,
         List<SetPredicate> gearSets, Optional<CompoundTag> nbt, List<SupportingEntity> support,
@@ -272,7 +272,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
         if (mob.hasCustomName()) mob.setCustomNameVisible(true);
 
         if (!this.gearSets.isEmpty()) {
-            GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.gearSets);
+            GearSet set = GearSetRegistry.INSTANCE.getRandomSet(rand, luck, this.gearSets);
             Preconditions.checkNotNull(set, String.format("Failed to find a valid gear set for the miniboss %s.", this.getId()));
             set.apply(mob);
         }
@@ -303,15 +303,15 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
             }
 
             var rarity = LootRarity.random(rand, luck, AdventureConfig.AFFIX_CONVERT_RARITIES.get(mob.level().dimension().location()));
-            BossItem.modifyBossItem(temp, rand, mob.hasCustomName() ? mob.getCustomName().getString() : "", luck, rarity, this.stats);
-            mob.setCustomName(((MutableComponent) mob.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
+            ApothBoss.modifyBossItem(temp, rand, mob.hasCustomName() ? mob.getCustomName().getString() : "", luck, rarity, this.stats);
+            mob.setCustomName(((MutableComponent) mob.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.getColor())));
             mob.setDropChance(EquipmentSlot.values()[guaranteed], 2F);
         }
 
         for (EquipmentSlot s : EquipmentSlot.values()) {
             ItemStack stack = mob.getItemBySlot(s);
             if (!stack.isEmpty() && s.ordinal() != guaranteed && rand.nextFloat() < this.stats.enchantChance()) {
-                BossItem.enchantBossItem(rand, stack, Apotheosis.enableEnch ? this.stats.enchLevels()[0] : this.stats.enchLevels()[1], true);
+                ApothBoss.enchantBossItem(rand, stack, Apotheosis.enableEnch ? this.stats.enchLevels()[0] : this.stats.enchLevels()[1], true);
                 mob.setItemSlot(s, stack);
             }
         }
@@ -323,7 +323,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
      *
      * @return this
      */
-    public MinibossItem validate() {
+    public ApothMiniboss validate() {
         Preconditions.checkArgument(this.weight >= 0, "Miniboss Item " + this.id + " has a negative weight!");
         Preconditions.checkArgument(this.quality >= 0, "Miniboss Item " + this.id + " has a negative quality!");
         Preconditions.checkNotNull(this.entities, "Miniboss Item " + this.id + " has null entity match list!");
@@ -342,7 +342,7 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
     }
 
     @Override
-    public PSerializer<? extends MinibossItem> getSerializer() {
+    public PSerializer<? extends ApothMiniboss> getSerializer() {
         return SERIALIZER;
     }
 

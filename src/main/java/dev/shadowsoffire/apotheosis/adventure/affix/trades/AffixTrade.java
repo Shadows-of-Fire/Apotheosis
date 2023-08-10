@@ -8,6 +8,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.village.wanderer.JsonTrade;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
 import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -38,11 +39,12 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
         affixItem.getTag().putBoolean("apoth_merchant", true);
         ItemStack stdItem = affixItem.copy();
         stdItem.setTag(null);
-        LootRarity rarity = AffixHelper.getRarity(affixItem);
-        if (rarity == null) return null;
-        ItemStack emeralds = new ItemStack(Items.EMERALD, 8 + rarity.ordinal() * 8);
-        if (rarity.isAtLeast(LootRarity.MYTHIC)) {
-            emeralds = new ItemStack(Items.EMERALD_BLOCK, 20 + (rarity == LootRarity.ANCIENT ? 30 : 0));
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(affixItem);
+        if (!rarity.isBound()) return null;
+        int ordinal = rarity.get().ordinal();
+        ItemStack emeralds = new ItemStack(Items.EMERALD, 8 + ordinal * 8);
+        if (ordinal >= 4) {
+            emeralds = new ItemStack(Items.EMERALD_BLOCK, 20 + (ordinal - 4) * 10);
         }
         return new MerchantOffer(stdItem, emeralds, affixItem, 1, 100, 1);
     }

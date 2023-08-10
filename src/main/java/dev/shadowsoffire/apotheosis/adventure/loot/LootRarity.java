@@ -2,145 +2,81 @@ package dev.shadowsoffire.apotheosis.adventure.loot;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.ListCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.mojang.serialization.codecs.SimpleMapCodec;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.WeightedEntry.Wrapper;
-import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
+public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeighted, Comparable<LootRarity> {
 
-    public static final List<LootRarity> LIST;
-    public static final Map<String, LootRarity> BY_ID;
+    public static final Codec<LootRarity> LOAD_CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        TextColor.CODEC.fieldOf("color").forGetter(LootRarity::getColor),
+        ForgeRegistries.ITEMS.getCodec().fieldOf("material").forGetter(LootRarity::getMaterial),
+        Codec.INT.fieldOf("ordinal").forGetter(LootRarity::ordinal),
+        Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
+        Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+        new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(LootRarity::getRules))
+        .apply(inst, LootRarity::new));
 
-    public static final Codec<LootRarity> CODEC = ExtraCodecs.stringResolverCodec(LootRarity::id, LootRarity::byId);
+    public static final PSerializer<LootRarity> SERIALIZER = PSerializer.fromCodec("Loot Rarity", LOAD_CODEC);
 
-    public static final LootRarity COMMON = new LootRarity("common", 0x808080, 0, 400, 0, ImmutableList.of(
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 0.25F)));
+    public static final Codec<DynamicHolder<LootRarity>> HOLDER_CODEC = ExtraCodecs.lazyInitializedCodec(() -> Codec.STRING.xmap(RarityRegistry::convertId, ResourceLocation::toString).xmap(RarityRegistry.INSTANCE::holder,
+        DynamicHolder::getId));
 
-    public static final LootRarity UNCOMMON = new LootRarity("uncommon", 0x33FF33, 1, 320, 1.5F, ImmutableList.of(
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 0.45F, new LootRule(AffixType.ABILITY, 0.25F)),
-        new LootRule(AffixType.SOCKET, 0.45F)));
+    /**
+     * Direct resolution codec. Only for use in other datapack objects which load after the {@link RarityRegistry}.
+     */
+    public static final Codec<LootRarity> CODEC = ExtraCodecs.lazyInitializedCodec(() -> HOLDER_CODEC.xmap(DynamicHolder::get, RarityRegistry.INSTANCE::holder));
 
-    public static final LootRarity RARE = new LootRarity("rare", 0x5555FF, 2, 150, 3, ImmutableList.of(
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.25F)),
-        new LootRule(AffixType.ABILITY, 1),
-        new LootRule(AffixType.ABILITY, 0.33F),
-        new LootRule(AffixType.SOCKET, 0.65F),
-        new LootRule(AffixType.SOCKET, 0.45F),
-        new LootRule(AffixType.DURABILITY, 0.1F)));
-
-    public static final LootRarity EPIC = new LootRarity("epic", 0xBB00BB, 3, 90, 4.5F, ImmutableList.of(
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.45F)),
-        new LootRule(AffixType.STAT, 0.5F, new LootRule(AffixType.ABILITY, 0.33F)),
-        new LootRule(AffixType.ABILITY, 1),
-        new LootRule(AffixType.ABILITY, 0.65F),
-        new LootRule(AffixType.SOCKET, 0.85F),
-        new LootRule(AffixType.SOCKET, 0.65F),
-        new LootRule(AffixType.SOCKET, 0.45F),
-        new LootRule(AffixType.DURABILITY, 0.3F)));
-
-    public static final LootRarity MYTHIC = new LootRarity("mythic", 0xED7014, 4, 40, 6, ImmutableList.of(
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.5F)),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.4F)),
-        new LootRule(AffixType.ABILITY, 1),
-        new LootRule(AffixType.ABILITY, 1),
-        new LootRule(AffixType.ABILITY, 0.3F),
-        new LootRule(AffixType.SOCKET, 1F),
-        new LootRule(AffixType.SOCKET, 0.85F),
-        new LootRule(AffixType.SOCKET, 0.65F),
-        new LootRule(AffixType.DURABILITY, 0.5F)));
-
-    public static final LootRarity ANCIENT = new LootRarity("ancient", GradientColor.RAINBOW, 5, 0, 0, ImmutableList.of(
-        new LootRule(AffixType.ANCIENT, 1),
-        new LootRule(AffixType.STAT, 1),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.7F)),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.6F)),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.5F)),
-        new LootRule(AffixType.STAT, 1, new LootRule(AffixType.ABILITY, 0.4F)),
-        new LootRule(AffixType.ABILITY, 1), new LootRule(AffixType.ABILITY, 1),
-        new LootRule(AffixType.ABILITY, 0.75F),
-        new LootRule(AffixType.ABILITY, 0.45F),
-        new LootRule(AffixType.SOCKET, 1F),
-        new LootRule(AffixType.SOCKET, 0.85F),
-        new LootRule(AffixType.SOCKET, 0.65F),
-        new LootRule(AffixType.SOCKET, 0.45F),
-        new LootRule(AffixType.SOCKET, 0.25F),
-        new LootRule(AffixType.DURABILITY, 0.75F)));
-
-    static {
-        LIST = ImmutableList.of(COMMON, UNCOMMON, RARE, EPIC, MYTHIC, ANCIENT);
-        BY_ID = ImmutableMap.copyOf(LIST.stream().collect(Collectors.toMap(LootRarity::id, Function.identity())));
-    }
-
-    private final String id;
+    private final Item material;
     private final TextColor color;
     private final int ordinal;
+    private final int weight;
+    private final float quality;
+    private final List<LootRule> rules;
 
-    private int weight;
-    private float quality;
-    private List<LootRule> rules;
-
-    private LootRarity(String id, TextColor color, int ordinal, int weight, float quality, List<LootRule> rules) {
-        this.id = id;
+    private LootRarity(TextColor color, Item material, int ordinal, int weight, float quality, List<LootRule> rules) {
         this.color = color;
+        this.material = material;
         this.ordinal = ordinal;
         this.weight = weight;
         this.quality = quality;
         this.rules = rules;
     }
 
-    private LootRarity(String id, int color, int ordinal, int weight, float quality, List<LootRule> rules) {
-        this(id, TextColor.fromRgb(color), ordinal, weight, quality, rules);
+    public Item getMaterial() {
+        return this.material;
     }
 
-    public String id() {
-        return this.id;
-    }
-
-    public TextColor color() {
+    public TextColor getColor() {
         return this.color;
     }
 
@@ -158,18 +94,8 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
         return this.quality;
     }
 
-    public List<LootRule> rules() {
+    public List<LootRule> getRules() {
         return this.rules;
-    }
-
-    public LootRarity prev() {
-        if (this == COMMON) return this;
-        return LIST.get(this.ordinal - 1);
-    }
-
-    public LootRarity next() {
-        if (this == ANCIENT) return this;
-        return LIST.get(this.ordinal + 1);
     }
 
     /**
@@ -203,22 +129,6 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
     }
 
     /**
-     * Returns true if the passed item is a rarity material.
-     */
-    public static boolean isRarityMat(ItemStack stack) {
-        return AdventureModule.RARITY_MATERIALS.containsValue(stack.getItem());
-    }
-
-    @Nullable
-    public static LootRarity getMaterialRarity(ItemStack stack) {
-        return AdventureModule.RARITY_MATERIALS.inverse().get(stack.getItem());
-    }
-
-    public ItemStack getMaterial() {
-        return new ItemStack(AdventureModule.RARITY_MATERIALS.get(this));
-    }
-
-    /**
      * Clamps a loot rarity to within a min/max bound.
      *
      * @param lowerBound The minimum valid rarity
@@ -233,28 +143,19 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
         return Component.translatable("rarity.apoth." + this.id).withStyle(Style.EMPTY.withColor(this.color));
     }
 
-    void update(RarityStub stub) {
-        this.weight = stub.weight;
-        this.quality = stub.quality;
-        this.rules = ImmutableList.copyOf(stub.rules);
-    }
-
     @Override
     public String toString() {
         return "LootRarity{" + this.id + "}";
     }
 
-    @Nullable
-    public static LootRarity byId(String id) {
-        return BY_ID.get(id.toLowerCase(Locale.ROOT));
+    @Override
+    public int compareTo(LootRarity o) {
+        return Integer.compare(this.ordinal, o.ordinal);
     }
 
-    public static Set<String> ids() {
-        return BY_ID.keySet();
-    }
-
-    public static List<LootRarity> values() {
-        return LIST;
+    @Override
+    public PSerializer<? extends LootRarity> getSerializer() {
+        return SERIALIZER;
     }
 
     public static LootRarity random(RandomSource rand, float luck) {
@@ -267,53 +168,11 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
     }
 
     public static LootRarity random(RandomSource rand, float luck, @Nullable LootRarity min, @Nullable LootRarity max) {
-        List<Wrapper<LootRarity>> list = LIST.stream().filter(r -> r.clamp(min, max) == r).map(r -> r.<LootRarity>wrap(luck)).toList();
-        return WeightedRandom.getRandomItem(rand, list).map(Wrapper::getData).get();
+        return RarityRegistry.INSTANCE.getRandomItem(rand, luck).clamp(min, max);
     }
 
-    public static <T> SimpleMapCodec<LootRarity, T> mapCodec(Codec<T> codec) {
-        return Codec.simpleMap(LootRarity.CODEC, codec, Keyable.forStrings(() -> LootRarity.values().stream().map(LootRarity::id)));
-    }
-
-    public static class RarityStub extends TypeKeyedBase<RarityStub> implements ILuckyWeighted {
-
-        public static final Codec<RarityStub> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-            Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
-            new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(RarityStub::rules))
-            .apply(inst, RarityStub::new));
-
-        public static final PSerializer<RarityStub> SERIALIZER = PSerializer.fromCodec("Loot Rarity", CODEC);
-
-        int weight;
-        float quality;
-        List<LootRule> rules;
-
-        public RarityStub(int weight, float quality, List<LootRule> rules) {
-            this.weight = weight;
-            this.quality = quality;
-            this.rules = rules;
-        }
-
-        @Override
-        public int getWeight() {
-            return this.weight;
-        }
-
-        @Override
-        public float getQuality() {
-            return this.quality;
-        }
-
-        public List<LootRule> rules() {
-            return this.rules;
-        }
-
-        @Override
-        public PSerializer<? extends RarityStub> getSerializer() {
-            return SERIALIZER;
-        }
-
+    public static <T> Codec<Map<LootRarity, T>> mapCodec(Codec<T> codec) {
+        return Codec.unboundedMap(LootRarity.CODEC, codec);
     }
 
     public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
@@ -334,17 +193,17 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
             this(type, chance, backup.orElse(null));
         }
 
-        public void execute(ItemStack stack, LootRarity rarity, Set<Affix> currentAffixes, MutableInt sockets, RandomSource rand) {
+        public void execute(ItemStack stack, LootRarity rarity, Set<DynamicHolder<Affix>> currentAffixes, MutableInt sockets, RandomSource rand) {
             if (this.type == AffixType.DURABILITY) return;
             if (rand.nextFloat() <= this.chance) {
                 if (this.type == AffixType.SOCKET) {
                     sockets.add(1);
                     return;
                 }
-                List<Affix> available = AffixHelper.byType(this.type).stream().filter(a -> a.canApplyTo(stack, LootCategory.forItem(stack), rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
+                List<DynamicHolder<Affix>> available = AffixHelper.byType(this.type).stream().filter(a -> a.get().canApplyTo(stack, LootCategory.forItem(stack), rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
                 if (available.size() == 0) {
                     if (this.backup != null) this.backup.execute(stack, rarity, currentAffixes, sockets, rand);
-                    else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", ForgeRegistries.ITEMS.getKey(stack.getItem()), rarity.id(), this.type, this.chance);
+                    else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", ForgeRegistries.ITEMS.getKey(stack.getItem()), rarity.getId(), this.type, this.chance);
                     return;
                 }
                 jRand.setSeed(rand.nextLong());
@@ -356,33 +215,29 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
 
     public static interface Clamped {
 
+        @Nullable
         public LootRarity getMinRarity();
 
+        @Nullable
         public LootRarity getMaxRarity();
 
-        default LootRarity clamp(@Nullable LootRarity rarity) {
-            if (rarity == null) return this.getMinRarity();
+        default LootRarity clamp(LootRarity rarity) {
             return rarity.clamp(this.getMinRarity(), this.getMaxRarity());
         }
 
-        public static record Impl(LootRarity min, LootRarity max) implements Clamped {
+        public static record Simple(DynamicHolder<LootRarity> min, DynamicHolder<LootRarity> max) implements Clamped {
 
             @Override
             public LootRarity getMinRarity() {
-                return this.min;
+                return this.min.getOptional().orElse(null);
             }
 
             @Override
             public LootRarity getMaxRarity() {
-                return this.max;
+                return this.max.getOptional().orElse(null);
             }
 
         }
 
-    }
-
-    @Override
-    public int compareTo(LootRarity o) {
-        return Integer.compare(this.ordinal, o.ordinal);
     }
 }

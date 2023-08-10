@@ -88,12 +88,14 @@ dependencies {
     if(project.hasProperty('topVersion'))           implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${topVersion}") {
             transitive = false
     })
-    if(project.hasProperty('mmmFileId'))            implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${mmmFileId}")
     if(project.hasProperty('bookshelfVersion'))     compileOnly    fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${mcVersion}:${bookshelfVersion}")
     if(project.hasProperty('gamestagesVersion'))    compileOnly    fg.deobf("net.darkhax.gamestages:GameStages-Forge-${mcVersion}:${gamestagesVersion}")
     if(project.hasProperty('twilightFileId'))       implementation fg.deobf("curse.maven:the-twilight-forest-227639:${twilightFileId}")
     if(project.hasProperty('gatewaysVersion'))      implementation fg.deobf("dev.shadowsoffire:GatewaysToEternity:${mcVersion}-${gatewaysVersion}")
     if(project.hasProperty('attributeslibVersion')) implementation fg.deobf("dev.shadowsoffire:ApothicAttributes:${mcVersion}-${attributeslibVersion}")
+
+    implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4602101")
+    implementation fg.deobf("curse.maven:selene-499980:4656567")
 }
 
 mixin {
@@ -114,7 +116,7 @@ tasks.named('processResources', ProcessResources).configure {
     ]
 
     if (project.hasProperty('placeboVersion'))       replaceProperties.put 'placeboVersion', placeboVersion
-    if (project.hasProperty('attributeslibVersion')) replaceProperties.put 'attributeslibVersion', placeboVersion
+    if (project.hasProperty('attributeslibVersion')) replaceProperties.put 'attributeslibVersion', attributeslibVersion
     if (project.hasProperty('curiosVersion'))        replaceProperties.put 'curiosVersion', curiosVersion
     if (project.hasProperty('topVersion'))           replaceProperties.put 'topVersion', topVersion
     if (project.hasProperty('patchouliVersion'))     replaceProperties.put 'patchouliVersion', patchouliVersion

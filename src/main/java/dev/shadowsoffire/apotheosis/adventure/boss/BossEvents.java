@@ -11,12 +11,12 @@ import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.apotheosis.adventure.boss.MinibossManager.IEntityMatch;
+import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry.IEntityMatch;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.network.PacketDistro;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.IDimensional;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -67,7 +67,7 @@ public class BossEvents {
                 if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, BlockPos.containing(e.getX(), e.getY(), e.getZ()))) {
                     Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
                     if (player == null) return; // Spawns require player context
-                    BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
+                    ApothBoss item = BossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
                     Mob boss = item.createBoss(sLevel, BlockPos.containing(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
                     if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
                         boss.setTarget(player);
@@ -108,7 +108,7 @@ public class BossEvents {
             ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
             Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
             if (player == null) return; // Spawns require player context
-            MinibossItem item = MinibossManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
+            ApothMiniboss item = MinibossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
             if (item != null && !item.isExcluded(mob, sLevel, e.getSpawnType()) && sLevel.getRandom().nextFloat() <= item.getChance()) {
                 mob.getPersistentData().putString("apoth.miniboss", item.getId().toString());
                 mob.getPersistentData().putFloat("apoth.miniboss.luck", player.getLuck());
@@ -122,7 +122,7 @@ public class BossEvents {
         if (!e.getLevel().isClientSide && e.getEntity() instanceof Mob mob) {
             String key = mob.getPersistentData().getString("apoth.miniboss");
             if (key != null) {
-                MinibossItem item = MinibossManager.INSTANCE.getValue(new ResourceLocation(key));
+                ApothMiniboss item = MinibossRegistry.INSTANCE.getValue(new ResourceLocation(key));
                 if (item != null) {
                     item.transformMiniboss((ServerLevel) e.getLevel(), mob, e.getLevel().getRandom(), mob.getPersistentData().getFloat("apoth.miniboss.luck"));
                 }

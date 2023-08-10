@@ -62,7 +62,7 @@ import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantBlock;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.loot.LootSystem;
@@ -208,7 +208,7 @@ public class EnchModule {
             DispenserBlock.registerBehavior(Items.SHEARS, new ShearsDispenseItemBehavior());
         });
         if (ModList.get().isLoaded("theoneprobe")) EnchTOPPlugin.register();
-        EnchantingStatManager.INSTANCE.registerToBus();
+        EnchantingStatRegistry.INSTANCE.registerToBus();
     }
 
     @SubscribeEvent
@@ -454,7 +454,7 @@ public class EnchModule {
         int level = ench.getMaxLevel();
         if (level == 1) return 1;
         PowerFunc minFunc = EnchantmentInfo.defaultMin(ench);
-        int max = (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4);
+        int max = (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4);
         int minPower = minFunc.getPower(level);
         if (minPower >= max) return level;
         int lastPower = minPower;

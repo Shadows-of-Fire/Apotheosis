@@ -1,6 +1,9 @@
 {
+    "ordinal": 3,
+    "color": "#BB00BB",
+    "material": "apotheosis:epic_material",
 	"weight": 90,
-	"quality": 4.5,
+	"quality": 15,
 	"rules": [{
 			"type": "stat",
 			"chance": 1.0

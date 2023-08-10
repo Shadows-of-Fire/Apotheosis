@@ -5,8 +5,7 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.event.ItemSocketingEvent;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -36,13 +35,13 @@ public class SocketingRecipe extends ApothSmithingRecipe {
     public boolean matches(Container inv, Level pLevel) {
         ItemStack input = inv.getItem(0);
         ItemStack gemStack = inv.getItem(1);
-        Gem gem = GemItem.getGem(gemStack);
-        if (gem == null) return false;
+        GemInstance gem = GemInstance.unsocketed(gemStack);
+        if (!gem.isValidUnsocketed()) return false;
         if (!SocketHelper.hasEmptySockets(input)) return false;
         var event = new ItemSocketingEvent.CanSocket(input, gemStack);
         MinecraftForge.EVENT_BUS.post(event);
         Result res = event.getResult();
-        return res == Result.ALLOW ? true : res == Result.DEFAULT && gem.canApplyTo(inv.getItem(0), gemStack, GemItem.getLootRarity(gemStack));
+        return res == Result.ALLOW ? true : res == Result.DEFAULT && gem.canApplyTo(inv.getItem(0));
     }
 
     /**

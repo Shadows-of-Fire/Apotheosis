@@ -39,15 +39,15 @@ public class WandererReplacements {
 
     @SubscribeEvent
     public static void setup(FMLCommonSetupEvent e) {
-        WandererTradeManager.INSTANCE.registerToBus();
+        WandererTradesRegistry.INSTANCE.registerToBus();
         MinecraftForge.EVENT_BUS.addListener(WandererReplacements::replaceWandererArrays);
     }
 
     public static void replaceWandererArrays(WandererTradesEvent e) {
         if (clearNormTrades) e.getGenericTrades().clear();
         if (clearRareTrades) e.getRareTrades().clear();
-        e.getGenericTrades().addAll(WandererTradeManager.INSTANCE.getNormalTrades());
-        e.getRareTrades().addAll(WandererTradeManager.INSTANCE.getRareTrades());
+        e.getGenericTrades().addAll(WandererTradesRegistry.INSTANCE.getNormalTrades());
+        e.getRareTrades().addAll(WandererTradesRegistry.INSTANCE.getRareTrades());
     }
 
     public static void load(Configuration cfg) {

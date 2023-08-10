@@ -15,13 +15,13 @@ import com.mojang.serialization.JsonOps;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.placebo.json.NBTAdapter;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.SpawnData;
 
-public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem> {
+public class RogueSpawnerRegistry extends WeightedDynamicRegistry<RogueSpawner> {
 
     public static final Gson GSON = new GsonBuilder()
         .setPrettyPrinting()
@@ -30,15 +30,15 @@ public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem
         .registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
         .create();
 
-    public static final RandomSpawnerManager INSTANCE = new RandomSpawnerManager();
+    public static final RogueSpawnerRegistry INSTANCE = new RogueSpawnerRegistry();
 
-    public RandomSpawnerManager() {
-        super(AdventureModule.LOGGER, "random_spawners", false, false);
+    public RogueSpawnerRegistry() {
+        super(AdventureModule.LOGGER, "rogue_spawners", false, false);
     }
 
     @Override
     protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, SpawnerItem.SERIALIZER);
+        this.registerSerializer(DEFAULT, RogueSpawner.SERIALIZER);
     }
 
     private static class SpawnDataListAdapter implements JsonDeserializer<SimpleWeightedRandomList<SpawnData>>, JsonSerializer<SimpleWeightedRandomList<SpawnData>> {

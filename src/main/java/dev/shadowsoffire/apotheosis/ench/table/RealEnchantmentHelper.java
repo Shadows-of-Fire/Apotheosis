@@ -62,7 +62,7 @@ public class RealEnchantmentHelper {
         int srcLevel = level;
         if (enchantability > 0) {
             float quantaFactor = 1 + Mth.nextFloat(rand, -1F + rectification / 100F, 1F) * quanta / 100F; // The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
-            level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
+            level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
             Arcana arcanaVals = Arcana.getForThreshold(arcana);
             List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure);
             Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);

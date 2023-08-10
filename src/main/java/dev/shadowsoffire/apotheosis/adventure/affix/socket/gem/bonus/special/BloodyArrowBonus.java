@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
@@ -38,7 +39,7 @@ public class BloodyArrowBonus extends GemBonus {
     public void onArrowFired(ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {
         Data d = this.values.get(rarity);
         if (Affix.isOnCooldown(this.getId(), d.cooldown, user)) return;
-        user.hurt(Apotheosis.CORRUPTED, user.getMaxHealth() * d.healthCost);
+        user.hurt(user.damageSources().source(Apoth.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
         arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
         Affix.startCooldown(this.getId(), user);
     }

@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:prot_shred",
+	"attribute": "attributeslib:prot_shred",
 	"operation": "ADDITION",
 	"values": {
 		"rare": {

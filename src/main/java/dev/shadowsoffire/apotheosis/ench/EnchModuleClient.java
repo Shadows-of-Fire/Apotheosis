@@ -7,7 +7,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apoth.Particles;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantScreen;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -65,12 +65,12 @@ public class EnchModuleClient {
             }
 
             if (state == null) state = block.defaultBlockState();
-            float maxEterna = EnchantingStatManager.getMaxEterna(state, world, BlockPos.ZERO);
-            float eterna = EnchantingStatManager.getEterna(state, world, BlockPos.ZERO);
-            float quanta = EnchantingStatManager.getQuanta(state, world, BlockPos.ZERO);
-            float arcana = EnchantingStatManager.getArcana(state, world, BlockPos.ZERO);
-            float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
-            int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
+            float maxEterna = EnchantingStatRegistry.getMaxEterna(state, world, BlockPos.ZERO);
+            float eterna = EnchantingStatRegistry.getEterna(state, world, BlockPos.ZERO);
+            float quanta = EnchantingStatRegistry.getQuanta(state, world, BlockPos.ZERO);
+            float arcana = EnchantingStatRegistry.getArcana(state, world, BlockPos.ZERO);
+            float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, BlockPos.ZERO);
+            int clues = EnchantingStatRegistry.getBonusClues(state, world, BlockPos.ZERO);
             if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
                 tooltip.add(Component.translatable("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
             }

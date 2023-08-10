@@ -7,6 +7,7 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
@@ -143,7 +144,7 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
     public LootRarity getRarity() {
         ItemStack s = this.getSlot(1).getItem();
         if (s.isEmpty()) return null;
-        return LootRarity.getMaterialRarity(s);
+        return RarityRegistry.getMaterialRarity(s.getItem()).getOptional().orElse(null);
     }
 
     public int getDustCost(int slot, LootRarity rarity) {

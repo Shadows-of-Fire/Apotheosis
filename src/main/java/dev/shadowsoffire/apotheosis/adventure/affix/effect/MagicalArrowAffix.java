@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
@@ -37,7 +38,7 @@ public class MagicalArrowAffix extends Affix {
     // EventPriority.HIGH
     public void onHurt(LivingHurtEvent e) {
         if (e.getSource().getDirectEntity() instanceof AbstractArrow arrow) {
-            if (AffixHelper.getAffixes(arrow).containsKey(this)) {
+            if (AffixHelper.getAffixes(arrow).containsKey(Affixes.MAGICAL)) {
                 // e.getSource().setMagic(); TODO: Forge event needs updating with a setDamageSource method.
             }
         }

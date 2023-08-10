@@ -2,10 +2,11 @@ package dev.shadowsoffire.apotheosis.util;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -15,15 +16,16 @@ import net.minecraftforge.common.crafting.IIngredientSerializer;
 
 public class RarityIngredient extends AbstractIngredient {
 
-    protected final LootRarity rarity;
+    protected final DynamicHolder<LootRarity> rarity;
 
-    public RarityIngredient(LootRarity rarity) {
+    public RarityIngredient(DynamicHolder<LootRarity> rarity) {
         this.rarity = rarity;
     }
 
     @Override
     public boolean test(ItemStack stack) {
-        return AffixHelper.getRarity(stack) == this.rarity;
+        var rarity = AffixHelper.getRarity(stack);
+        return rarity.isBound() && rarity == this.rarity;
     }
 
     @Override
@@ -42,7 +44,7 @@ public class RarityIngredient extends AbstractIngredient {
     }
 
     public LootRarity getRarity() {
-        return this.rarity;
+        return this.rarity.get();
     }
 
     public static class Serializer implements IIngredientSerializer<RarityIngredient> {
@@ -50,20 +52,19 @@ public class RarityIngredient extends AbstractIngredient {
 
         @Override
         public RarityIngredient parse(FriendlyByteBuf buffer) {
-            LootRarity rarity = LootRarity.byId(buffer.readUtf());
+            var rarity = RarityRegistry.byLegacyId(buffer.readUtf());
             return new RarityIngredient(rarity);
         }
 
         @Override
         public RarityIngredient parse(JsonObject json) {
-            LootRarity rarity = LootRarity.byId(GsonHelper.getAsString(json, "rarity"));
-            if (rarity == null) throw new JsonParseException("Invalid Rarity");
+            var rarity = RarityRegistry.byLegacyId(GsonHelper.getAsString(json, "rarity"));
             return new RarityIngredient(rarity);
         }
 
         @Override
         public void write(FriendlyByteBuf buffer, RarityIngredient ingredient) {
-            buffer.writeUtf(ingredient.rarity.id());
+            buffer.writeResourceLocation(ingredient.rarity.getId());
         }
     }
 

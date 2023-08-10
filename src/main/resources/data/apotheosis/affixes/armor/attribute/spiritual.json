@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:healing_received",
+	"attribute": "attributeslib:healing_received",
 	"operation": "MULTIPLY_TOTAL",
 	"values": {
 		"rare": {

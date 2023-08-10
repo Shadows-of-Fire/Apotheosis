@@ -1,6 +1,9 @@
 {
+    "ordinal": 4,
+    "color": "#ED7014",
+    "material": "apotheosis:mythic_material",
 	"weight": 40,
-	"quality": 6,
+	"quality": 20,
 	"rules": [{
 			"type": "stat",
 			"chance": 1.0

@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "apotheosis:arrow_velocity",
+	"attribute": "attributeslib:arrow_velocity",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

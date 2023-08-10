@@ -16,8 +16,8 @@ import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile.SpawnerLogicExt;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.resources.ResourceLocation;
@@ -100,7 +100,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 
         public Instance(MinMaxBounds.Ints minDelay, MinMaxBounds.Ints maxDelay, MinMaxBounds.Ints spawnCount, MinMaxBounds.Ints nearbyEnts, MinMaxBounds.Ints playerRange, MinMaxBounds.Ints spawnRange, Boolean ignorePlayers,
             Boolean ignoreConditions, Boolean redstone, Boolean ignoreLight, Boolean noAI) {
-            super(ModifierTrigger.ID, EntityPredicate.Composite.ANY);
+            super(ModifierTrigger.ID, ContextAwarePredicate.ANY);
             this.minDelay = minDelay;
             this.maxDelay = maxDelay;
             this.spawnCount = spawnCount;

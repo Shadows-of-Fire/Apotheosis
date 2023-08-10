@@ -11,8 +11,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager.Stats;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -111,7 +111,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
         color = 8453920;
         gfx.drawString(font, s, 77 + width, 13, color);
 
-        int[] pos = { (int) (stats.eterna() / EnchantingStatManager.getAbsoluteMaxEterna() * 110), (int) (stats.quanta() / 100 * 110), (int) (stats.arcana() / 100 * 110) };
+        int[] pos = { (int) (stats.eterna() / EnchantingStatRegistry.getAbsoluteMaxEterna() * 110), (int) (stats.quanta() / 100 * 110), (int) (stats.arcana() / 100 * 110) };
         if (stats.eterna() > 0) {
             gfx.blit(TEXTURES, 56, 27, 0, 56, pos[0], 5, 256, 256);
         }
@@ -123,7 +123,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
         }
         RenderSystem.enableBlend();
         if (maxStats.eterna() > 0) {
-            gfx.blit(TEXTURES, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna() - stats.eterna()) / EnchantingStatManager.getAbsoluteMaxEterna() * 110), 5, 256, 256);
+            gfx.blit(TEXTURES, 56 + pos[0], 27, pos[0], 90, (int) ((maxStats.eterna() - stats.eterna()) / EnchantingStatRegistry.getAbsoluteMaxEterna() * 110), 5, 256, 256);
         }
         if (maxStats.quanta() > 0) {
             gfx.blit(TEXTURES, 56 + pos[1], 37, pos[1], 95, (int) ((maxStats.quanta() - stats.quanta()) / 100 * 110), 5, 256, 256);
@@ -143,11 +143,11 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
             List<Component> list = new ArrayList<>();
             list.add(Component.translatable("gui.apotheosis.enchant.eterna").withStyle(ChatFormatting.GREEN));
             if (maxStats.eterna() == stats.eterna()) {
-                list.add(Component.translatable("info.apotheosis.eterna_exact", stats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable("info.apotheosis.eterna_exact", stats.eterna(), EnchantingStatRegistry.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
             }
             else {
-                list.add(Component.translatable("info.apotheosis.eterna_at_least", stats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
-                if (maxStats.eterna() > -1) list.add(Component.translatable("info.apotheosis.eterna_at_most", maxStats.eterna(), EnchantingStatManager.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable("info.apotheosis.eterna_at_least", stats.eterna(), EnchantingStatRegistry.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
+                if (maxStats.eterna() > -1) list.add(Component.translatable("info.apotheosis.eterna_at_most", maxStats.eterna(), EnchantingStatRegistry.getAbsoluteMaxEterna()).withStyle(ChatFormatting.GRAY));
             }
             gfx.renderComponentTooltip(font, list, (int) mouseX, (int) mouseY);
         }

@@ -15,9 +15,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatManager.BlockStats;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.BlockStats;
 import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.reload.PlaceboJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.DynamicRegistry;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -29,15 +29,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats> {
+public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
 
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    public static final EnchantingStatManager INSTANCE = new EnchantingStatManager();
+    public static final EnchantingStatRegistry INSTANCE = new EnchantingStatRegistry();
     private final Map<Block, Stats> statsPerBlock = new HashMap<>();
 
     private float absoluteMaxEterna = 50;
 
-    protected EnchantingStatManager() {
+    protected EnchantingStatRegistry() {
         super(EnchModule.LOGGER, "enchanting_stats", true, false);
     }
 
@@ -191,7 +191,7 @@ public class EnchantingStatManager extends PlaceboJsonReloadListener<BlockStats>
         public BlockStats(List<Block> blocks, Optional<TagKey<Block>> tag, Optional<Block> block, Stats stats) {
             this.blocks = new ArrayList<>();
             if (!blocks.isEmpty()) this.blocks.addAll(blocks);
-            if (tag.isPresent()) this.blocks.addAll(EnchantingStatManager.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList());
+            if (tag.isPresent()) this.blocks.addAll(EnchantingStatRegistry.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList());
             if (block.isPresent()) this.blocks.add(block.get());
             this.stats = stats;
         }

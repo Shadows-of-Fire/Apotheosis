@@ -5,14 +5,14 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
@@ -31,7 +31,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
     @Override
-    public InventoryChangeTrigger.TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite andPred, DeserializationContext conditionsParser) {
+    public InventoryChangeTrigger.TriggerInstance createInstance(JsonObject json, ContextAwarePredicate andPred, DeserializationContext conditionsParser) {
         JsonObject slots = GsonHelper.getAsJsonObject(json, "slots", new JsonObject());
         MinMaxBounds.Ints occupied = MinMaxBounds.Ints.fromJson(slots.get("occupied"));
         MinMaxBounds.Ints full = MinMaxBounds.Ints.fromJson(slots.get("full"));
@@ -57,12 +57,11 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
             return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
         }
         if ("rarity".equals(type)) {
-            LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
-            return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
+            var rarity = RarityRegistry.byLegacyId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
+            return new ItemPredicate[] { new TrueItemPredicate(s -> rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("gem_rarity".equals(type)) {
-            LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
-            return new ItemPredicate[] { new TrueItemPredicate(s -> GemItem.getLootRarity(s) == rarity) };
+            throw new JsonParseException("Removed. Use \"rarity\"");
         }
         if ("socket".equals(type)) {
             return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };

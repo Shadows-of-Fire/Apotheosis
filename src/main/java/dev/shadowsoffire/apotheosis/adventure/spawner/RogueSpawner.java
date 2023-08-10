@@ -7,7 +7,7 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.util.SpawnerStats;
 import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener.ILuckyWeighted;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import dev.shadowsoffire.placebo.util.ChestBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,9 +22,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWeighted {
+public class RogueSpawner extends TypeKeyedBase<RogueSpawner> implements ILuckyWeighted {
 
-    public static final PSerializer<SpawnerItem> SERIALIZER = PSerializer.basic("Rogue Spawner", obj -> RandomSpawnerManager.GSON.fromJson(obj, SpawnerItem.class));
+    public static final PSerializer<RogueSpawner> SERIALIZER = PSerializer.basic("Rogue Spawner", obj -> RogueSpawnerRegistry.GSON.fromJson(obj, RogueSpawner.class));
 
     public static final Block[] FILLER_BLOCKS = { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
@@ -35,7 +35,7 @@ public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWei
     @SerializedName("loot_table")
     protected final ResourceLocation lootTable;
 
-    public SpawnerItem(SpawnerStats stats, ResourceLocation lootTable, SimpleWeightedRandomList<SpawnData> potentials, int weight) {
+    public RogueSpawner(SpawnerStats stats, ResourceLocation lootTable, SimpleWeightedRandomList<SpawnData> potentials, int weight) {
         this.weight = weight;
         this.stats = stats;
         this.lootTable = lootTable;
@@ -70,7 +70,7 @@ public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWei
     }
 
     @Override
-    public PSerializer<? extends SpawnerItem> getSerializer() {
+    public PSerializer<? extends RogueSpawner> getSerializer() {
         return SERIALIZER;
     }
 

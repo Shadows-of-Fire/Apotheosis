@@ -7,18 +7,19 @@ import javax.annotation.Nullable;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.placebo.reload.WeightedJsonReloadListener;
+import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 
-public class GemManager extends WeightedJsonReloadListener<Gem> {
+public class GemRegistry extends WeightedDynamicRegistry<Gem> {
 
-    public static final GemManager INSTANCE = new GemManager();
+    public static final GemRegistry INSTANCE = new GemRegistry();
 
-    public GemManager() {
+    public GemRegistry() {
         super(AdventureModule.LOGGER, "gems", true, false);
     }
 
@@ -38,7 +39,7 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
      */
     @SafeVarargs
     public static ItemStack createRandomGemStack(RandomSource rand, ServerLevel level, float luck, Predicate<Gem>... filter) {
-        Gem gem = GemManager.INSTANCE.getRandomItem(rand, luck, filter);
+        Gem gem = GemRegistry.INSTANCE.getRandomItem(rand, luck, filter);
         if (gem == null) return ItemStack.EMPTY;
         LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(level.dimension().location());
         LootRarity rarity = gem.clamp(LootRarity.random(rand, luck, clamp));
@@ -49,7 +50,7 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
         ItemStack stack = new ItemStack(Apoth.Items.GEM.get());
         GemItem.setGem(stack, gem);
         if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
-        GemItem.setLootRarity(stack, rarity);
+        AffixHelper.setRarity(stack, rarity);
         return stack;
     }
 
