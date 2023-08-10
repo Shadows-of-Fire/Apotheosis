@@ -141,7 +141,24 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
                 throw new RuntimeException("Two rarities may not share the same rarity material: " + r.getId() + " conflicts with " + old.getId());
             }
         }
+    }
 
+    @Override
+    protected void registerBuiltinSerializers() {
+        this.registerSerializer(DEFAULT, LootRarity.SERIALIZER);
+    }
+
+    @Override
+    protected void validateItem(LootRarity item) {
+        super.validateItem(item);
+        Preconditions.checkNotNull(item.getColor());
+        Preconditions.checkArgument(item.getMaterial() != null && item.getMaterial() != Items.AIR);
+        Preconditions.checkArgument(item.getWeight() >= 0, "A rarity may not have negative weight!");
+        Preconditions.checkArgument(item.getQuality() >= 0, "A rarity may not have negative quality!");
+        Preconditions.checkArgument(!item.getRules().isEmpty(), "A rarity may not have no rules!");
+    }
+
+    public void validateLootRules() {
         for (LootRarity rarity : this.registry.values()) {
             Map<AffixType, List<LootRule>> sorted = new HashMap<>();
             rarity.getRules().stream().filter(r -> r.type().needsValidation()).forEach(rule -> {
@@ -165,21 +182,6 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
                 }
             });
         }
-    }
-
-    @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, LootRarity.SERIALIZER);
-    }
-
-    @Override
-    protected void validateItem(LootRarity item) {
-        super.validateItem(item);
-        Preconditions.checkNotNull(item.getColor());
-        Preconditions.checkArgument(item.getMaterial() != null && item.getMaterial() != Items.AIR);
-        Preconditions.checkArgument(item.getWeight() >= 0, "A rarity may not have negative weight!");
-        Preconditions.checkArgument(item.getQuality() >= 0, "A rarity may not have negative quality!");
-        Preconditions.checkArgument(!item.getRules().isEmpty(), "A rarity may not have no rules!");
     }
 
 }

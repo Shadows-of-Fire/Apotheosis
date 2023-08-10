@@ -41,7 +41,7 @@
 					}
 				},
 				{
-					"attribute": "apotheosis:arrow_damage",
+					"attribute": "attributeslib:arrow_damage",
 					"operation": "MULTIPLY_BASE",
 					"value": {
 						"min": 0.2,
@@ -82,7 +82,7 @@
 					}
 				},
 				{
-					"attribute": "apotheosis:arrow_damage",
+					"attribute": "attributeslib:arrow_damage",
 					"operation": "MULTIPLY_BASE",
 					"value": {
 						"min": 0.25,

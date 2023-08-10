@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:mob_effect",
-	"mob_effect": "apotheosis:sundering",
+	"mob_effect": "attributeslib:sundering",
 	"target": "ATTACK_TARGET",
 	"values": {
 		"epic": {

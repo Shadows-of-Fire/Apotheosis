@@ -13,7 +13,7 @@
 					"trident"
 				]
 			},
-			"attribute": "apotheosis:armor_pierce",
+			"attribute": "attributeslib:armor_pierce",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.5,
@@ -32,7 +32,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "apotheosis:armor_shred",
+			"attribute": "attributeslib:armor_shred",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -52,7 +52,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "forge:reach_distance",
+			"attribute": "forge:block_reach",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.5,
@@ -72,7 +72,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "apotheosis:prot_pierce",
+			"attribute": "attributeslib:prot_pierce",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.5,

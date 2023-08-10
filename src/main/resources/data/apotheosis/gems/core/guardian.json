@@ -33,7 +33,7 @@
 					"trident"
 				]
 			},
-			"attribute": "apotheosis:life_steal",
+			"attribute": "attributeslib:life_steal",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -52,7 +52,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "apotheosis:overheal",
+			"attribute": "attributeslib:overheal",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,

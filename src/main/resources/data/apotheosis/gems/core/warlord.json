@@ -15,7 +15,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "apotheosis:crit_damage",
+			"attribute": "attributeslib:crit_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -34,7 +34,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "apotheosis:crit_damage",
+			"attribute": "attributeslib:crit_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.075,

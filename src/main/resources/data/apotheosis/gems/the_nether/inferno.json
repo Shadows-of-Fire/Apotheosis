@@ -18,7 +18,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "apotheosis:fire_damage",
+			"attribute": "attributeslib:fire_damage",
 			"operation": "ADDITION",
 			"values": {
 				"rare": 6,
@@ -36,7 +36,7 @@
 					"trident"
 				]
 			},
-			"mob_effect": "apotheosis:detonation",
+			"mob_effect": "attributeslib:detonation",
 			"target": "attack_target",
 			"values": {
 				"mythic": {
@@ -92,7 +92,7 @@
 					"helmet"
 				]
 			},
-			"attribute": "apotheosis:fire_damage",
+			"attribute": "attributeslib:fire_damage",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"rare": 0.50,

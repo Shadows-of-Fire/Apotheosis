@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:mob_effect",
-	"mob_effect": "apotheosis:vitality",
+	"mob_effect": "attributeslib:vitality",
 	"target": "HURT_SELF",
 	"values": {
 		"epic": {

@@ -43,7 +43,7 @@
 				"value": 0.10
 			},
 			{
-				"attribute": "apotheosis:arrow_damage",
+				"attribute": "attributeslib:arrow_damage",
 				"operation": "MULTIPLY_BASE",
 				"value": 0.25
 			},

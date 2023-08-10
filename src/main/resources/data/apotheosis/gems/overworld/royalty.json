@@ -53,7 +53,7 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "apotheosis:prot_shred",
+					"attribute": "attributeslib:prot_shred",
 					"operation": "ADDITION",
 					"values": {
 						"rare": 0.25,
@@ -63,7 +63,7 @@
 					}
 				},
 				{
-					"attribute": "apotheosis:draw_speed",
+					"attribute": "attributeslib:draw_speed",
 					"operation": "MULTIPLY_TOTAL",
 					"values": {
 						"rare": -0.35,

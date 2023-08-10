@@ -15,7 +15,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "apotheosis:arrow_damage",
+			"attribute": "attributeslib:arrow_damage",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.05,

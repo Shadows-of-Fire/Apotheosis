@@ -16,7 +16,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "apotheosis:crit_chance",
+			"attribute": "attributeslib:crit_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -35,7 +35,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "apotheosis:crit_chance",
+			"attribute": "attributeslib:crit_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.10,
@@ -74,7 +74,7 @@
 					"helmet"
 				]
 			},
-			"attribute": "apotheosis:arrow_velocity",
+			"attribute": "attributeslib:arrow_velocity",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"common": 0.075,
@@ -93,7 +93,7 @@
 					"shield"
 				]
 			},
-			"attribute": "apotheosis:dodge_chance",
+			"attribute": "attributeslib:dodge_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.01,

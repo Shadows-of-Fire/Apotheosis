@@ -14,7 +14,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "apotheosis:draw_speed",
+			"attribute": "attributeslib:draw_speed",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.10,
@@ -34,7 +34,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "apotheosis:mining_speed",
+			"attribute": "attributeslib:mining_speed",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.05,
@@ -53,7 +53,7 @@
 					"boots"
 				]
 			},
-			"attribute": "apotheosis:dodge_chance",
+			"attribute": "attributeslib:dodge_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.025,

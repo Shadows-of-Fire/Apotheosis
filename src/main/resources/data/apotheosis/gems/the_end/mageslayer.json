@@ -14,7 +14,7 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "apotheosis:prot_pierce",
+					"attribute": "attributeslib:prot_pierce",
 					"operation": "ADDITION",
 					"values": {
 						"epic": 6,
@@ -23,7 +23,7 @@
 					}
 				},
 				{
-					"attribute": "apotheosis:armor_pierce",
+					"attribute": "attributeslib:armor_pierce",
 					"operation": "MULTIPLY_TOTAL",
 					"values": {
 						"epic": -0.15,
@@ -43,7 +43,7 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "apotheosis:prot_shred",
+					"attribute": "attributeslib:prot_shred",
 					"operation": "ADDITION",
 					"values": {
 						"epic": 0.25,
@@ -52,7 +52,7 @@
 					}
 				},
 				{
-					"attribute": "apotheosis:armor_shred",
+					"attribute": "attributeslib:armor_shred",
 					"operation": "MULTIPLY_TOTAL",
 					"values": {
 						"epic": -0.15,

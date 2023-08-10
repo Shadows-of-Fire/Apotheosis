@@ -55,7 +55,7 @@
 					"value": 0.4
 				},
 				{
-					"attribute": "apotheosis:healing_received",
+					"attribute": "attributeslib:healing_received",
 					"operation": "MULTIPLY_TOTAL",
 					"value": -0.5
 				}
@@ -111,7 +111,7 @@
 					"value": 3
 				},
 				{
-					"attribute": "apotheosis:healing_received",
+					"attribute": "attributeslib:healing_received",
 					"operation": "MULTIPLY_TOTAL",
 					"value": -0.5
 				}

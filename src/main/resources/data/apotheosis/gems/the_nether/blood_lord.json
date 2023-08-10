@@ -13,7 +13,7 @@
 					"trident"
 				]
 			},
-			"attribute": "apotheosis:life_steal",
+			"attribute": "attributeslib:life_steal",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -65,7 +65,7 @@
 					"chestplate"
 				]
 			},
-			"attribute": "apotheosis:healing_received",
+			"attribute": "attributeslib:healing_received",
 			"operation": "ADDITION",
 			"values": {
 				"uncommon": 0.15,

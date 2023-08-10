@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:mob_effect",
-	"mob_effect": "apotheosis:knowledge",
+	"mob_effect": "attributeslib:knowledge",
 	"target": "ATTACK_SELF",
 	"values": {
 		"epic": {

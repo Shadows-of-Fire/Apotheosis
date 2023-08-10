@@ -13,7 +13,7 @@
 					"trident"
 				]
 			},
-			"attribute": "apotheosis:cold_damage",
+			"attribute": "attributeslib:cold_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 1,

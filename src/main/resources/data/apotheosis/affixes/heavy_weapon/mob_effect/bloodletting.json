@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:mob_effect",
-	"mob_effect": "apotheosis:bleeding",
+	"mob_effect": "attributeslib:bleeding",
 	"target": "ATTACK_TARGET",
 	"stack_on_reapply": true,
 	"values": {

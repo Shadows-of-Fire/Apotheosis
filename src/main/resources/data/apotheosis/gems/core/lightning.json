@@ -13,7 +13,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "apotheosis:arrow_velocity",
+			"attribute": "attributeslib:arrow_velocity",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.05,
@@ -33,7 +33,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "apotheosis:mining_speed",
+			"attribute": "attributeslib:mining_speed",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,

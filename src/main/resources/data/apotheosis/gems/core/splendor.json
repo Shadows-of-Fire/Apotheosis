@@ -38,7 +38,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "apotheosis:experience_gained",
+			"attribute": "attributeslib:experience_gained",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"common": 0.075,

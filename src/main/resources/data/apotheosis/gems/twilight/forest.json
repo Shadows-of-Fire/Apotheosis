@@ -47,7 +47,7 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "apotheosis:healing_received",
+					"attribute": "attributeslib:healing_received",
 					"operation": "MULTIPLY_BASE",
 					"values": {
 						"rare": 0.10,
@@ -93,7 +93,7 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "apotheosis:armor_shred",
+					"attribute": "attributeslib:armor_shred",
 					"operation": "MULTIPLY_TOTAL",
 					"values": {
 						"rare": 0.35,
@@ -103,7 +103,7 @@
 					}
 				},
 				{
-					"attribute": "apotheosis:prot_shred",
+					"attribute": "attributeslib:prot_shred",
 					"operation": "MULTIPLY_TOTAL",
 					"values": {
 						"rare": -0.25,
@@ -113,7 +113,7 @@
 					}
 				},
 				{
-					"attribute": "apotheosis:prot_pierce",
+					"attribute": "attributeslib:prot_pierce",
 					"operation": "MULTIPLY_TOTAL",
 					"values": {
 						"rare": -0.25,

@@ -157,7 +157,7 @@ public class GemItem extends Item implements ITabFiller {
      * @returns The backing Gem, or null if the gem does not exist or is invalid.
      */
     public static DynamicHolder<Gem> getGem(ItemStack gem) {
-        if (gem.getItem() != Apoth.Items.GEM.get() || !gem.hasTag()) return null;
+        if (gem.getItem() != Apoth.Items.GEM.get() || !gem.hasTag()) return GemRegistry.INSTANCE.emptyHolder();
         var tag = gem.getTag();
         return GemRegistry.INSTANCE.holder(new ResourceLocation(tag.getString(GEM)));
     }

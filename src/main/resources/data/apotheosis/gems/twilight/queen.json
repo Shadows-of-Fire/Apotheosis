@@ -45,7 +45,7 @@
 					"helmet"
 				]
 			},
-			"attribute": "apotheosis:cold_damage",
+			"attribute": "attributeslib:cold_damage",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"rare": 0.50,
@@ -62,7 +62,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "apotheosis:cold_damage",
+			"attribute": "attributeslib:cold_damage",
 			"operation": "ADDITION",
 			"values": {
 				"rare": 6,

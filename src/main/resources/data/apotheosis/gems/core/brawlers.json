@@ -52,7 +52,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "apotheosis:armor_pierce",
+			"attribute": "attributeslib:armor_pierce",
 			"operation": "ADDITION",
 			"values": {
 				"common": 1,

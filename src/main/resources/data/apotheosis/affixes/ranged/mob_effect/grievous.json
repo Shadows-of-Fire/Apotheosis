@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:mob_effect",
-	"mob_effect": "apotheosis:grievous",
+	"mob_effect": "attributeslib:grievous",
 	"target": "ARROW_TARGET",
 	"values": {
 		"rare": {
