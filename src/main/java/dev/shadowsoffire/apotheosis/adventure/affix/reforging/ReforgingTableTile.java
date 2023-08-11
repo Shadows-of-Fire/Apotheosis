@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
@@ -32,7 +33,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(stack);
-            return stack.is(Apoth.Items.GEM_DUST.get());
+            return stack.is(Items.GEM_DUST.get());
         };
 
         @Override

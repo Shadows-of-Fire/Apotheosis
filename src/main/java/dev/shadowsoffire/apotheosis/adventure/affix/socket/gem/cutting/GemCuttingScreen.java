@@ -3,8 +3,6 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
@@ -39,7 +37,7 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/gem_cutting.png");
 
-    protected final ItemStack displayDust = Apoth.Items.GEM_DUST.get().getDefaultInstance();
+    protected final ItemStack displayDust = dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM_DUST.get().getDefaultInstance();
 
     protected ItemStack displayMat;
     protected SimpleTexButton upgradeBtn;
@@ -129,7 +127,8 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
                 list.add(Component.translatable("text.apotheosis.cut_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
                 list.add(CommonComponents.EMPTY);
                 boolean hasDust = dust > GemCuttingMenu.getDustCost(rarity);
-                list.add(Component.translatable("text.apotheosis.cost", GemCuttingMenu.getDustCost(rarity), Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
+                list.add(Component.translatable("text.apotheosis.cost", GemCuttingMenu.getDustCost(rarity), dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM_DUST.get().getName(ItemStack.EMPTY))
+                    .withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
                 boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
                 list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
                 list.add(Component.translatable("text.apotheosis.one_rarity_mat").withStyle(ChatFormatting.GRAY));

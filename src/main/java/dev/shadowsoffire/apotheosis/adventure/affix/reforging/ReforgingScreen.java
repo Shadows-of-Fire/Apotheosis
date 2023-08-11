@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
@@ -92,7 +92,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
             tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
             tooltips.add(CommonComponents.EMPTY);
             if (dustCost > 0) {
-                tooltips.add(Component.translatable("%s %s", dustCost, Apoth.Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < dustCost ? ChatFormatting.RED : ChatFormatting.GRAY));
+                tooltips.add(Component.translatable("%s %s", dustCost, Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(dust < dustCost ? ChatFormatting.RED : ChatFormatting.GRAY));
             }
             if (matCost > 0) {
                 tooltips.add(Component.translatable("%s %s", matCost, this.menu.getSlot(1).getItem().getHoverName()).withStyle(mats < matCost ? ChatFormatting.RED : ChatFormatting.GRAY));

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
@@ -60,16 +59,16 @@ public class AdventureJEIPlugin implements IModPlugin {
     @SuppressWarnings("removal")
     public void registerRecipes(IRecipeRegistration reg) {
         if (!Apotheosis.enableAdventure) return;
-        ItemStack gem = new ItemStack(Apoth.Items.GEM.get());
+        ItemStack gem = new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM.get());
         Gem gemObj = GemRegistry.INSTANCE.getRandomItem(new LegacyRandomSource(1854));
         GemItem.setGem(gem, gemObj);
         AffixHelper.setRarity(gem, gemObj.getMaxRarity());
         reg.addIngredientInfo(gem, VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.socketing"));
 
-        reg.addIngredientInfo(new ItemStack(Apoth.Items.GEM_DUST.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_crushing"));
-        reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXTRACTION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_extraction"));
-        reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXPULSION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_expulsion"));
-        reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_UNNAMING.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.unnaming"));
+        reg.addIngredientInfo(new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM_DUST.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_crushing"));
+        reg.addIngredientInfo(new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.VIAL_OF_EXTRACTION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_extraction"));
+        reg.addIngredientInfo(new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.VIAL_OF_EXPULSION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_expulsion"));
+        reg.addIngredientInfo(new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.VIAL_OF_UNNAMING.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.unnaming"));
         ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
         reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ReactiveSmithingRecipe).toList());
         List<SalvagingRecipe> salvagingRecipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));
@@ -88,13 +87,13 @@ public class AdventureJEIPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration reg) {
         if (!Apotheosis.enableAdventure) return;
         reg.addRecipeCatalyst(new ItemStack(Blocks.SMITHING_TABLE), APO_SMITHING);
-        reg.addRecipeCatalyst(new ItemStack(Apoth.Blocks.SALVAGING_TABLE.get()), SALVAGING);
+        reg.addRecipeCatalyst(new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks.SALVAGING_TABLE.get()), SALVAGING);
     }
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration reg) {
         if (!Apotheosis.enableAdventure) return;
-        reg.registerSubtypeInterpreter(Apoth.Items.GEM.get(), new GemSubtypes());
+        reg.registerSubtypeInterpreter(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM.get(), new GemSubtypes());
     }
 
     private static final List<ItemStack> DUMMY_INPUTS = Arrays.asList(Items.GOLDEN_SWORD, Items.DIAMOND_PICKAXE, Items.STONE_AXE, Items.IRON_CHESTPLATE, Items.TRIDENT).stream().map(ItemStack::new).toList();

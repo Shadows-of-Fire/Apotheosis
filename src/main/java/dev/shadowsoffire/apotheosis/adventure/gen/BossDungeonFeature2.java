@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.gen;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -26,7 +25,6 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
 
     public static final ResourceLocation TEMPLATE_ID = new ResourceLocation(Apotheosis.MODID, "boss_1");
-    public static final BossDungeonFeature2 INSTANCE = new BossDungeonFeature2();
 
     protected static int xRadius = 4;
     protected static int floor = -1;
@@ -90,7 +88,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
             world.setBlock(chest2, StructurePiece.reorient(world, chest2, Blocks.CHEST.defaultBlockState()), 2);
             RandomizableContainerBlockEntity.setLootTable(world, rand, chest2, BuiltInLootTables.SIMPLE_DUNGEON);
 
-            world.setBlock(pos, Apoth.Blocks.BOSS_SPAWNER.get().defaultBlockState(), 2);
+            world.setBlock(pos, dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks.BOSS_SPAWNER.get().defaultBlockState(), 2);
             AdventureModule.debugLog(pos, "Boss Dungeon (Variant 2)");
             return true;
         }

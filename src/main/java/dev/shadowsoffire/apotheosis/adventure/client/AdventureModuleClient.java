@@ -21,6 +21,7 @@ import com.mojang.datafixers.util.Either;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
@@ -82,9 +83,9 @@ public class AdventureModuleClient {
 
     public static void init() {
         MinecraftForge.EVENT_BUS.register(AdventureModuleClient.class);
-        MenuScreens.register(Apoth.Menus.REFORGING.get(), ReforgingScreen::new);
-        MenuScreens.register(Apoth.Menus.SALVAGE.get(), SalvagingScreen::new);
-        MenuScreens.register(Apoth.Menus.GEM_CUTTING.get(), GemCuttingScreen::new);
+        MenuScreens.register(Menus.REFORGING.get(), ReforgingScreen::new);
+        MenuScreens.register(Menus.SALVAGE.get(), SalvagingScreen::new);
+        MenuScreens.register(Menus.GEM_CUTTING.get(), GemCuttingScreen::new);
         BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
     }
 

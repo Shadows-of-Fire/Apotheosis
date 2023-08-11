@@ -7,17 +7,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.effect.MagicalArrowAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.OmneticAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.RadialAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.TelepathicAffix;
-import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingMenu;
-import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
@@ -116,11 +109,6 @@ public class Apoth {
         public static final RegistryObject<Block> SIGHTSHELF = R.block("SIGHTSHELF");
         public static final RegistryObject<Block> SIGHTSHELF_T2 = R.block("SIGHTSHELF_T2");
         public static final RegistryObject<EnchLibraryBlock> ENDER_LIBRARY = R.block("ENDER_LIBRARY");
-        public static final RegistryObject<BossSpawnerBlock> BOSS_SPAWNER = R.block("BOSS_SPAWNER");
-        public static final RegistryObject<ReforgingTableBlock> SIMPLE_REFORGING_TABLE = R.block("SIMPLE_REFORGING_TABLE");
-        public static final RegistryObject<ReforgingTableBlock> REFORGING_TABLE = R.block("REFORGING_TABLE");
-        public static final RegistryObject<SalvagingTableBlock> SALVAGING_TABLE = R.block("SALVAGING_TABLE");
-        public static final RegistryObject<GemCuttingBlock> GEM_CUTTING_TABLE = R.block("gem_cutting_table");
     }
 
     public static final class Items {
@@ -143,11 +131,6 @@ public class Apoth {
         public static final RegistryObject<Item> PICKAXE_TOME = R.item("PICKAXE_TOME");
         public static final RegistryObject<Item> FISHING_TOME = R.item("FISHING_TOME");
         public static final RegistryObject<Item> BOW_TOME = R.item("BOW_TOME");
-        public static final RegistryObject<Item> GEM = R.item("GEM");
-        public static final RegistryObject<Item> GEM_DUST = R.item("GEM_DUST");
-        public static final RegistryObject<Item> VIAL_OF_EXPULSION = R.item("VIAL_OF_EXPULSION");
-        public static final RegistryObject<Item> VIAL_OF_EXTRACTION = R.item("VIAL_OF_EXTRACTION");
-        public static final RegistryObject<Item> VIAL_OF_UNNAMING = R.item("VIAL_OF_UNNAMING");
         public static final RegistryObject<Item> WARDEN_TENDRIL = R.item("WARDEN_TENDRIL");
 
         public static final RegistryObject<Item> SKULL_FRAGMENT = RegistryObject.create(new ResourceLocation("wstweaks", "fragment"), ForgeRegistries.ITEMS);
@@ -218,9 +201,6 @@ public class Apoth {
         public static final RegistryObject<MenuType<FletchingContainer>> FLETCHING = R.menu("fletching");
         public static final RegistryObject<MenuType<EnchLibraryContainer>> LIBRARY = R.menu("library");
         public static final RegistryObject<MenuType<ApothEnchantContainer>> ENCHANTING_TABLE = R.menu("enchanting_table");
-        public static final RegistryObject<MenuType<ReforgingMenu>> REFORGING = R.menu("reforging");
-        public static final RegistryObject<MenuType<SalvagingMenu>> SALVAGE = R.menu("salvage");
-        public static final RegistryObject<MenuType<GemCuttingMenu>> GEM_CUTTING = R.menu("gem_cutting");
     }
 
     public static final class Tiles {

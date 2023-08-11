@@ -11,7 +11,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
-import dev.shadowsoffire.apotheosis.adventure.client.GhostVertexBuilder.GhostBufferSource;
+import dev.shadowsoffire.apotheosis.adventure.client.GrayBufferSource;
 import dev.shadowsoffire.apotheosis.adventure.client.SimpleTexButton;
 import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import dev.shadowsoffire.placebo.screen.PlaceboContainerScreen;
@@ -131,7 +131,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
                 }
             }
             if (displaySlot == -1) continue;
-            renderGuiItem(gfx, display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, GhostBufferSource::new);
+            renderGuiItem(gfx, display, left + 134 + displaySlot % 2 * 18, top + 17 + displaySlot / 2 * 18, GrayBufferSource::new);
         }
 
         this.renderTooltip(gfx, pMouseX, pMouseY);
@@ -149,8 +149,6 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         posestack.translate(8.0D, 8.0D, 0.0D);
         posestack.scale(1.0F, -1.0F, 1.0F);
         posestack.scale(16.0F, 16.0F, 16.0F);
-        RenderSystem.applyModelViewMatrix();
-        PoseStack posestack1 = new PoseStack();
         Minecraft mc = Minecraft.getInstance();
         BakedModel model = mc.getItemRenderer().getModel(pStack, mc.level, mc.player, pX ^ pY);
         boolean flag = !model.usesBlockLight();
@@ -159,7 +157,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         }
 
         MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        Minecraft.getInstance().getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack1, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
+        Minecraft.getInstance().getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
         buffer.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {

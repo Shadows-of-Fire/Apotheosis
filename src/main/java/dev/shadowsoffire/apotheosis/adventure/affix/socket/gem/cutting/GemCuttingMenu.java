@@ -3,8 +3,10 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
@@ -49,17 +51,17 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
     }
 
     public GemCuttingMenu(int id, Inventory playerInv, ContainerLevelAccess access) {
-        super(Apoth.Menus.GEM_CUTTING.get(), id, playerInv);
+        super(Menus.GEM_CUTTING.get(), id, playerInv);
         this.player = playerInv.player;
         this.access = access;
         this.addSlot(new UpdatingSlot(this.inv, 0, 53, 25, stack -> GemItem.getGem(stack) != null));
-        this.addSlot(new UpdatingSlot(this.inv, 1, 12, 25, stack -> stack.getItem() == Apoth.Items.GEM_DUST.get()));
+        this.addSlot(new UpdatingSlot(this.inv, 1, 12, 25, stack -> stack.getItem() == Items.GEM_DUST.get()));
         this.addSlot(new UpdatingSlot(this.inv, 2, 53, 68, this::matchesMainGem));
         this.addSlot(new UpdatingSlot(this.inv, 3, 94, 25, this::isValidMaterial));
 
         this.addPlayerSlots(playerInv, 8, 98);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inv.getStackInSlot(0).isEmpty() && this.isValidMainGem(stack), 0, 1);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 1, 2);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Items.GEM_DUST.get(), 1, 2);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.matchesMainGem(stack), 2, 3);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.isValidMaterial(stack), 3, 4);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
@@ -107,7 +109,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Apoth.Blocks.GEM_CUTTING_TABLE.get(), true);
+        return this.access.evaluate((level, pos) -> level.getBlockState(pos).getBlock() == Blocks.GEM_CUTTING_TABLE.get(), true);
     }
 
     @Override
@@ -164,7 +166,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
             if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem() || g.rarity() != g2.rarity()) return false;
             if (g.rarity() == RarityRegistry.getMaxRarity()) return false;
-            if (left.getItem() != Apoth.Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity())) return false;
+            if (left.getItem() != Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity())) return false;
             if (!RarityRegistry.isMaterial(right.getItem())) return false;
 
             DynamicHolder<LootRarity> matRarity = RarityRegistry.getMaterialRarity(right.getItem());

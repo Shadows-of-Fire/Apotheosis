@@ -5,8 +5,8 @@
 		"module": "adventure"
 	}],
 	"input": {
-		"type": "apotheosis:rarity",
-		"rarity": "rare"
+		"type": "apotheosis:affix_item",
+		"rarity": "apotheosis:rare"
 	},
 	"outputs": [{
 		"min_count": 1,

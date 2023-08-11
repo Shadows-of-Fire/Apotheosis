@@ -13,7 +13,6 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 
 public class SimpleTexButton extends Button {
 
@@ -74,13 +73,13 @@ public class SimpleTexButton extends Button {
     }
 
     public void renderToolTip(GuiGraphics gfx, int pMouseX, int pMouseY) {
-        if (this.getMessage() != CommonComponents.EMPTY) {
+        if (this.getMessage() != CommonComponents.EMPTY && this.isHovered()) {
             MutableComponent primary = (MutableComponent) this.getMessage();
             if (!this.active) primary = primary.withStyle(ChatFormatting.GRAY);
-            List<FormattedCharSequence> tooltips = new ArrayList<>();
-            tooltips.add(primary.getVisualOrderText());
-            if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) tooltips.add(this.inactiveMessage.getVisualOrderText());
-            gfx.renderTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
+            List<Component> tooltips = new ArrayList<>();
+            tooltips.add(primary);
+            if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) tooltips.add(this.inactiveMessage);
+            gfx.renderComponentTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
         }
     }
 

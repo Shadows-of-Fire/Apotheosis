@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
@@ -157,7 +157,7 @@ public class GemItem extends Item implements ITabFiller {
      * @returns The backing Gem, or null if the gem does not exist or is invalid.
      */
     public static DynamicHolder<Gem> getGem(ItemStack gem) {
-        if (gem.getItem() != Apoth.Items.GEM.get() || !gem.hasTag()) return GemRegistry.INSTANCE.emptyHolder();
+        if (gem.getItem() != Items.GEM.get() || !gem.hasTag()) return GemRegistry.INSTANCE.emptyHolder();
         var tag = gem.getTag();
         return GemRegistry.INSTANCE.holder(new ResourceLocation(tag.getString(GEM)));
     }

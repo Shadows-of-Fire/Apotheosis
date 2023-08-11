@@ -17,7 +17,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
 
-    public static final RogueSpawnerFeature INSTANCE = new RogueSpawnerFeature();
     public static final RuleTest STONE_TEST = new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD);
 
     public RogueSpawnerFeature() {

@@ -8,8 +8,9 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicates;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
@@ -32,7 +33,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
     protected final InternalItemHandler inputInv = new InternalItemHandler(15);
 
     public SalvagingMenu(int id, Inventory inv, BlockPos pos) {
-        super(Apoth.Menus.SALVAGE.get(), id, inv, pos);
+        super(Menus.SALVAGE.get(), id, inv, pos);
         this.player = inv.player;
         for (int i = 0; i < 15; i++) {
             this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(this.level, s) != null){
@@ -62,7 +63,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
     @Override
     public boolean stillValid(Player player) {
         if (this.level.isClientSide) return true;
-        return this.level.getBlockState(this.pos).getBlock() == Apoth.Blocks.SALVAGING_TABLE.get();
+        return this.level.getBlockState(this.pos).getBlock() == Blocks.SALVAGING_TABLE.get();
     }
 
     @Override

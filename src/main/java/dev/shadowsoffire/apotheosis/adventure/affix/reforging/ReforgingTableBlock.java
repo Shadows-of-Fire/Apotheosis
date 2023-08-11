@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
@@ -64,9 +64,9 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
-        list.add(Component.translatable(Apoth.Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable(Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
         if (this.maxRarity < RarityRegistry.getMaxRarity().get().ordinal())
-            list.add(Component.translatable(Apoth.Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc2", this.getMaxRarity().toComponent()).withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable(Blocks.REFORGING_TABLE.get().getDescriptionId() + ".desc2", this.getMaxRarity().toComponent()).withStyle(ChatFormatting.GRAY));
     }
 
     @Override

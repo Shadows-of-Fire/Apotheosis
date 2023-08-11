@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis;
 
 import java.io.File;
+import java.util.function.BooleanSupplier;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -15,12 +16,12 @@ import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.util.ModuleCondition;
 import dev.shadowsoffire.apotheosis.util.ParticleMessage;
-import dev.shadowsoffire.apotheosis.util.RarityIngredient;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.network.MessageHelper;
 import dev.shadowsoffire.placebo.recipe.NBTIngredient;
 import dev.shadowsoffire.placebo.recipe.RecipeHelper;
+import dev.shadowsoffire.placebo.registry.DeferredHelper;
 import dev.shadowsoffire.placebo.util.RunnableReloader;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -48,6 +49,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.RegisterEvent;
 
 @Mod(Apotheosis.MODID)
 public class Apotheosis {
@@ -119,7 +121,6 @@ public class Apotheosis {
         e.enqueueWork(() -> {
             AdvancementTriggers.init();
             CraftingHelper.register(new ModuleCondition.Serializer());
-            CraftingHelper.register(new ResourceLocation(MODID, "rarity"), RarityIngredient.Serializer.INSTANCE);
         });
     }
 
@@ -143,6 +144,10 @@ public class Apotheosis {
 
     public static Ingredient potionIngredient(Potion type) {
         return new NBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), type));
+    }
+
+    public static ResourceLocation loc(String s) {
+        return new ResourceLocation(MODID, s);
     }
 
     /**
@@ -172,8 +177,27 @@ public class Apotheosis {
         }
     }
 
-    public static ResourceLocation loc(String s) {
-        return new ResourceLocation(MODID, s);
+    public static class ModularDeferredHelper extends DeferredHelper {
+
+        protected final BooleanSupplier flag;
+
+        public static ModularDeferredHelper create(BooleanSupplier flag) {
+            ModularDeferredHelper helper = new ModularDeferredHelper(flag);
+            FMLJavaModLoadingContext.get().getModEventBus().register(helper);
+            return helper;
+        }
+
+        protected ModularDeferredHelper(BooleanSupplier flag) {
+            super(Apotheosis.MODID);
+            this.flag = flag;
+        }
+
+        @Override
+        @SubscribeEvent
+        public void register(RegisterEvent e) {
+            if (flag.getAsBoolean()) super.register(e);
+        }
+
     }
 
 }

@@ -4,7 +4,7 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
@@ -47,7 +47,7 @@ public class GemRegistry extends WeightedDynamicRegistry<Gem> {
     }
 
     public static ItemStack createGemStack(Gem gem, RandomSource rand, @Nullable LootRarity rarity, float luck) {
-        ItemStack stack = new ItemStack(Apoth.Items.GEM.get());
+        ItemStack stack = new ItemStack(Items.GEM.get());
         GemItem.setGem(stack, gem);
         if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
         AffixHelper.setRarity(stack, rarity);

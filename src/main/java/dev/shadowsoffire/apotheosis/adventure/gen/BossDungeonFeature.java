@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.gen;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import net.minecraft.core.BlockPos;
@@ -23,8 +22,6 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
     private static final BlockState MOSSY_BRICK = Blocks.MOSSY_STONE_BRICKS.defaultBlockState();
     private static final BlockState CRACKED_BRICK = Blocks.CRACKED_STONE_BRICKS.defaultBlockState();
     private static final BlockState[] BRICKS = { BRICK, MOSSY_BRICK, CRACKED_BRICK };
-
-    public static final BossDungeonFeature INSTANCE = new BossDungeonFeature();
 
     public BossDungeonFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -116,7 +113,7 @@ public class BossDungeonFeature extends Feature<NoneFeatureConfiguration> {
                 }
             }
 
-            world.setBlock(pos, Apoth.Blocks.BOSS_SPAWNER.get().defaultBlockState(), 2);
+            world.setBlock(pos, dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks.BOSS_SPAWNER.get().defaultBlockState(), 2);
             AdventureModule.debugLog(pos, "Boss Dungeon");
 
             return true;

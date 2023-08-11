@@ -1,0 +1,10 @@
+{
+	"values": [
+		"apotheosis:common_material",
+		"apotheosis:uncommon_material",
+		"apotheosis:rare_material",
+		"apotheosis:epic_material",
+		"apotheosis:mythic_material",
+		"apotheosis:ancient_material"
+	]
+}

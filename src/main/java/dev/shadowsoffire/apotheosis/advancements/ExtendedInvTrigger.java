@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
@@ -61,7 +61,8 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
             return new ItemPredicate[] { new TrueItemPredicate(s -> rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("gem_rarity".equals(type)) {
-            throw new JsonParseException("Removed. Use \"rarity\"");
+            var rarity = RarityRegistry.byLegacyId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
+            return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() == Adventure.Items.GEM.get() && rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("socket".equals(type)) {
             return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };

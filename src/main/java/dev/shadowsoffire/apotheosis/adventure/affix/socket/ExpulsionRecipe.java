@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import com.google.gson.JsonObject;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,7 +21,7 @@ public class ExpulsionRecipe extends ApothSmithingRecipe {
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:expulsion");
 
     public ExpulsionRecipe() {
-        super(ID, Ingredient.EMPTY, Ingredient.of(Apoth.Items.VIAL_OF_EXPULSION.get()), ItemStack.EMPTY);
+        super(ID, Ingredient.EMPTY, Ingredient.of(Items.VIAL_OF_EXPULSION.get()), ItemStack.EMPTY);
     }
 
     /**
@@ -29,7 +29,7 @@ public class ExpulsionRecipe extends ApothSmithingRecipe {
      */
     @Override
     public boolean matches(Container pInv, Level pLevel) {
-        return pInv.getItem(1).getItem() == Apoth.Items.VIAL_OF_EXPULSION.get() && SocketHelper.getGems(pInv.getItem(0)).stream().anyMatch(i -> !i.isEmpty());
+        return pInv.getItem(1).getItem() == Items.VIAL_OF_EXPULSION.get() && SocketHelper.getGems(pInv.getItem(0)).stream().anyMatch(i -> !i.isEmpty());
     }
 
     /**

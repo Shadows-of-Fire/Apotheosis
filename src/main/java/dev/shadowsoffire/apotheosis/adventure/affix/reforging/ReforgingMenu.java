@@ -2,7 +2,8 @@ package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import javax.annotation.Nullable;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
@@ -35,7 +36,7 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
     protected DataSlot needsReset = DataSlot.standalone();
 
     public ReforgingMenu(int id, Inventory inv, BlockPos pos) {
-        super(Apoth.Menus.REFORGING.get(), id, inv, pos);
+        super(Menus.REFORGING.get(), id, inv, pos);
         this.player = inv.player;
         this.addSlot(new UpdatingSlot(this.itemInv, 0, 25, 24, stack -> !LootCategory.forItem(stack).isNone()){
             @Override
@@ -49,11 +50,11 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
             }
         });
         this.addSlot(new UpdatingSlot(this.tile.inv, 0, 15, 45, this.tile::isValidRarityMat));
-        this.addSlot(new UpdatingSlot(this.tile.inv, 1, 35, 45, stack -> stack.getItem() == Apoth.Items.GEM_DUST.get()));
+        this.addSlot(new UpdatingSlot(this.tile.inv, 1, 35, 45, stack -> stack.getItem() == Items.GEM_DUST.get()));
         this.addPlayerSlots(inv, 8, 84);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && !LootCategory.forItem(stack).isNone(), 0, 1);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.tile.isValidRarityMat(stack), 1, 2);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Apoth.Items.GEM_DUST.get(), 2, 3);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Items.GEM_DUST.get(), 2, 3);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
         this.registerInvShuffleRules();
 

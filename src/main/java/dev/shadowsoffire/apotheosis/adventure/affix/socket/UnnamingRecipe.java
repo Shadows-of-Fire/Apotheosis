@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
 import com.google.gson.JsonObject;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -25,7 +25,7 @@ public class UnnamingRecipe extends ApothSmithingRecipe {
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:unnaming");
 
     public UnnamingRecipe() {
-        super(ID, Ingredient.EMPTY, Ingredient.of(Apoth.Items.VIAL_OF_UNNAMING.get()), ItemStack.EMPTY);
+        super(ID, Ingredient.EMPTY, Ingredient.of(Items.VIAL_OF_UNNAMING.get()), ItemStack.EMPTY);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UnnamingRecipe extends ApothSmithingRecipe {
         if (pInv.getItem(0).isEmpty()) return false;
         CompoundTag afxData = pInv.getItem(0).getTagElement(AffixHelper.AFFIX_DATA);
         boolean hasName = afxData != null && afxData.contains(AffixHelper.NAME, 8);
-        return hasName && pInv.getItem(1).getItem() == Apoth.Items.VIAL_OF_UNNAMING.get();
+        return hasName && pInv.getItem(1).getItem() == Items.VIAL_OF_UNNAMING.get();
     }
 
     @Override

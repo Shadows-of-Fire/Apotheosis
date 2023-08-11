@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisCommandEvent;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.TelepathicAffix;
@@ -260,8 +261,8 @@ public class AdventureEvents {
         List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
         for (ItemEntity ent : items) {
             ItemStack stack = ent.getItem();
-            if (stack.getItem() == Apoth.Items.GEM.get()) {
-                ent.setItem(new ItemStack(Apoth.Items.GEM_DUST.get(), stack.getCount()));
+            if (stack.getItem() == Items.GEM.get()) {
+                ent.setItem(new ItemStack(Items.GEM_DUST.get(), stack.getCount()));
             }
         }
     }

@@ -5,11 +5,8 @@
 		"module": "adventure"
 	}],
 	"input": {
-		"type": "forge:partial_nbt",
-		"item": "apotheosis:gem",
-		"nbt": {
-			"rarity": "uncommon"
-		}
+		"type": "apotheosis:gem",
+		"rarity": "apotheosis:uncommon"
 	},
 	"outputs": [{
 		"min_count": 1,

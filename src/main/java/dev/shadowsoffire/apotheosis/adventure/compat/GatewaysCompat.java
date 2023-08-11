@@ -18,6 +18,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.Reward;
 import dev.shadowsoffire.gateways.gate.WaveEntity;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -83,21 +84,21 @@ public class GatewaysCompat {
     /**
      * Provides a random affix item as a reward.
      */
-    public static record RarityAffixItemReward(LootRarity rarity) implements Reward {
+    public static record RarityAffixItemReward(DynamicHolder<LootRarity> rarity) implements Reward {
 
         public static Codec<RarityAffixItemReward> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                LootRarity.CODEC.fieldOf("rarity").forGetter(RarityAffixItemReward::rarity))
+                LootRarity.HOLDER_CODEC.fieldOf("rarity").forGetter(RarityAffixItemReward::rarity))
             .apply(inst, RarityAffixItemReward::new));
 
         @Override
         public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-            list.accept(LootController.createLootItem(AffixLootRegistry.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), this.rarity, level.random));
+            list.accept(LootController.createLootItem(AffixLootRegistry.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), this.rarity.get(), level.random));
         }
 
         @Override
         public void appendHoverText(Consumer<Component> list) {
-            list.accept(Component.translatable("reward.apotheosis.affix", this.rarity.toComponent()));
+            list.accept(Component.translatable("reward.apotheosis.affix", this.rarity.get().toComponent()));
         }
 
         @Override

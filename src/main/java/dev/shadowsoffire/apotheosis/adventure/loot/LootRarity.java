@@ -140,7 +140,7 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
     }
 
     public Component toComponent() {
-        return Component.translatable("rarity.apoth." + this.id).withStyle(Style.EMPTY.withColor(this.color));
+        return Component.translatable("rarity." + this.getId()).withStyle(Style.EMPTY.withColor(this.color));
     }
 
     @Override
