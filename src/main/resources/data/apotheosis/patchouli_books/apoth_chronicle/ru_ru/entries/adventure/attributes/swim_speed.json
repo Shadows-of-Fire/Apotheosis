@@ -1,0 +1,13 @@
+{
+    "name": "Скорость Плавания",
+    "icon": "minecraft:kelp",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Скорость Плавания$() - это модификатор вашей фактической скорости плавания. Если бы ваша скорость плавания составляла 200%, вы бы плавали в два раза быстрее.$(p)Можно найти только на ботинках."
+        }
+	]
+}

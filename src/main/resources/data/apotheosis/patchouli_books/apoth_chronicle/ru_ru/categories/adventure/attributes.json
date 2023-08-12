@@ -1,0 +1,7 @@
+{
+    "name": "Атрибуты",
+    "description": "В дополнение к атрибутам ваниллы, мод Апофеозис добавляет множество новых.$(p)В этом разделе подробно описаны все из них.",
+    "icon": "minecraft:diamond_chestplate",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

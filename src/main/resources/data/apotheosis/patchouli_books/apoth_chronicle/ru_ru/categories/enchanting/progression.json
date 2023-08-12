@@ -1,0 +1,8 @@
+{
+    "name": "Прогрессирование уровня",
+    "description": "В этом разделе дается обзор того, как обновить ваш Чародейский стол.",
+    "icon": "apotheosis:dormant_deepshelf",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting",
+	"sortnum": -1
+}

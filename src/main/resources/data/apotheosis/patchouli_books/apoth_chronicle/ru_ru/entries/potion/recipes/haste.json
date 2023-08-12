@@ -1,0 +1,19 @@
+{
+    "name": "Спешка",
+    "icon": "minecraft:textures/mob_effect/haste.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Спешка$() - это еще один полезный эффект, который не имеет рецепта в ванилле.$(p)Каждый уровень дает +20% к скорости копания."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Рецепт Приготовления",
+			"item": "minecraft:mushroom_stew",
+            "text": "Это зелье можно приготовить из грубого зелья и немного грибного рагу.$(p)Его можно расширить, усилить или превратить в зелье-всплеск с обычными ингредиентами."
+        }
+	]
+}

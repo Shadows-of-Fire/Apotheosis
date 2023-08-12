@@ -1,0 +1,13 @@
+{
+    "name": "Уничтожение",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Смотреть $(l:apotheosis:enchanting/anvil/obliteration)Уничтожение$()."
+        }
+	]
+}

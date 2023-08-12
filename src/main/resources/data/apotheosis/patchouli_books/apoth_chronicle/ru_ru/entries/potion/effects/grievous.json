@@ -1,0 +1,17 @@
+{
+    "name": "Тяжелые раны",
+    "icon": "apotheosis:textures/mob_effect/grievous.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Часть $(c)Тяжелые раны$() является негативным эффектом.$(p)Находясь под его воздействием, все полученное исцеление уменьшается."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Уменьшение времени заживления равно 40% за каждый уровень.$(p)При достижении уровня III или выше любое заживление предотвращается."
+        }
+	]
+}
