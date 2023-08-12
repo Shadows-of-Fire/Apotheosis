@@ -8,6 +8,7 @@
   * Added better Potion tooltips as well as improved the text shown when hovering effects in the inventory.
   * Changed the implementation of Ancient Knowledge to use the Experience Gained attribute.
   * Changed how advanced tooltips displays attribute modifiers.
+* Arseni: Updated Russian Translation
 
 ## 6.3.2
 * Fixed an issue where Crit Chance was using the target's crit chance during application.
