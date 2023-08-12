@@ -14,12 +14,14 @@ import dev.shadowsoffire.apotheosis.potion.compat.CuriosCompat;
 import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
+import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -122,6 +124,8 @@ public class PotionModule {
     @SubscribeEvent
     public void items(Register<Item> e) {
         e.getRegistry().registerAll(new GlowyItem(new Item.Properties()), "lucky_foot", new PotionCharmItem(), "potion_charm");
+        TabFillingRegistry.register(CreativeModeTabs.INGREDIENTS, Apoth.Items.LUCKY_FOOT);
+        TabFillingRegistry.register(CreativeModeTabs.TOOLS_AND_UTILITIES, Apoth.Items.POTION_CHARM);
     }
 
     @SubscribeEvent

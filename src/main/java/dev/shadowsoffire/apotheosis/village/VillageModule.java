@@ -5,6 +5,7 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.fletching.ApothFletchingBlock;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingContainer;
@@ -22,6 +23,7 @@ import dev.shadowsoffire.apotheosis.village.wanderer.WandererReplacements;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
+import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
@@ -29,6 +31,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -102,6 +105,8 @@ public class VillageModule {
             new ExplosiveArrowItem(new Item.Properties()), "explosive_arrow",
             new MiningArrowItem(() -> Items.IRON_PICKAXE, MiningArrowEntity.Type.IRON), "iron_mining_arrow",
             new MiningArrowItem(() -> Items.DIAMOND_PICKAXE, MiningArrowEntity.Type.DIAMOND), "diamond_mining_arrow");
+
+        TabFillingRegistry.register(CreativeModeTabs.COMBAT, Apoth.Items.OBSIDIAN_ARROW, Apoth.Items.BROADHEAD_ARROW, Apoth.Items.EXPLOSIVE_ARROW, Apoth.Items.IRON_MINING_ARROW, Apoth.Items.DIAMOND_MINING_ARROW);
     }
 
     @SubscribeEvent

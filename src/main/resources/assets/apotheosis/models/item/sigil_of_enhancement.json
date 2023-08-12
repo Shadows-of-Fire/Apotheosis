@@ -9,11 +9,13 @@
 			"layer1": "apotheosis:items/sigil_of_enhancement"
 		},
 		"forge_data": {
-			"1": {
-				"color": "FFD3610D",
-				"block_light": 15,
-				"sky_light": 15
-			}
+            "layers": {
+                "1": {
+                    "color": "FFD3610D",
+                    "block_light": 15,
+                    "sky_light": 15
+                }
+            }
 		}
 	},
 	"perspectives": {
@@ -25,11 +27,13 @@
 				"layer1": "apotheosis:items/sigil_of_enhancement"
 			},
 			"forge_data": {
-				"1": {
-					"color": "FFFF7411",
-					"block_light": 15,
-					"sky_light": 15
-				}
+                "layers": {
+                    "1": {
+                        "color": "FFFF7411",
+                        "block_light": 15,
+                        "sky_light": 15
+                    }
+                }
 			}
 		}
 	}

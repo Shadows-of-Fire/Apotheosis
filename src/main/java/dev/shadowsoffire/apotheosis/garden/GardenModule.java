@@ -7,7 +7,9 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.registry.RegistryEvent.Register;
+import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -44,6 +46,7 @@ public class GardenModule {
         e.getRegistry().register(new EnderLeadItem(), "ender_lead");
         ComposterBlock.COMPOSTABLES.put(Blocks.CACTUS.asItem(), 0.5F);
         ComposterBlock.COMPOSTABLES.put(Blocks.SUGAR_CANE.asItem(), 0.5F);
+        TabFillingRegistry.register(CreativeModeTabs.TOOLS_AND_UTILITIES, Apoth.Items.ENDER_LEAD);
     }
 
     public void reload(ApotheosisReloadEvent e) {

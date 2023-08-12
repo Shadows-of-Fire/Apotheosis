@@ -273,8 +273,8 @@ public class Ench {
 
     public static class Tabs {
 
-        public static final RegistryObject<CreativeModeTab> TAB = R.tab("ench",
-            () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.apotheosis.ench")).icon(() -> Items.HELLSHELF.get().getDefaultInstance()).build());
+        public static final RegistryObject<CreativeModeTab> ENCH = R.tab("ench",
+            () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.apotheosis.ench")).icon(() -> Items.HELLSHELF.get().getDefaultInstance()).withTabsBefore(Apotheosis.loc("adventure")).build());
 
         private static void bootstrap() {}
 

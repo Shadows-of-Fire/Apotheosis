@@ -133,7 +133,7 @@ public class Adventure {
 
     public static class Tabs {
 
-        public static final RegistryObject<CreativeModeTab> TAB = R.tab("adventure",
+        public static final RegistryObject<CreativeModeTab> ADVENTURE = R.tab("adventure",
             () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.apotheosis.adventure")).icon(() -> Items.GEM.get().getDefaultInstance()).build());
 
         private static void bootstrap() {}
