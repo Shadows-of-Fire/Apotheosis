@@ -9,12 +9,19 @@
 	"use_blocky_font": true,
     "use_resource_pack": true,
 	"macros": {
+		"$(вечность)": "$(#3DB53D)Вечность$()",
 		"$(eterna)": "$(#3DB53D)Eterna$()",
+		"$(кванты)": "$(#FC5454)Кванты$()",
 		"$(quanta)": "$(#FC5454)Quanta$()",
+		"$(таинство)": "$(#A800A8)Таинство$()",
 		"$(arcana)": "$(#A800A8)Arcana$()",
+		"$(исправление)": "$(#CCCC33)Исправление$()",
 		"$(rectification)": "$(#CCCC33)Rectification$()",
+		"$(подсказки)": "$(#00AAAA)Подсказки$()",
 		"$(clues)": "$(#00AAAA)Enchanting Clues$()",
+		"$(фмощность)": "$(#CC00CC)Финальная мощность$()",
 		"$(fpower)": "$(#CC00CC)Final Power$()",
+		"$(нмощность)": "$(6)Начальная мощность$()",
 		"$(bpower)": "$(6)Base Power$()"
 	}
 }

@@ -1,0 +1,13 @@
+{
+    "name": "Отскакивающий",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Отскакивающий$() - это заклинание для нагрудников и леггинсов.$(p)Оно заставляет всех атакующих в ближнем бою отскакивать от пользователя.$(p)Более высокие уровни увеличивают дистанцию."
+        }
+	]
+}

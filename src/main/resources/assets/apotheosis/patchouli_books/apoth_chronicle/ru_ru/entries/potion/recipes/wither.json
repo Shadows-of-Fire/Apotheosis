@@ -1,0 +1,19 @@
+{
+    "name": "Иссушение",
+    "icon": "minecraft:textures/mob_effect/wither.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "&apotheosis:potion,!apotheosis:wstloaded",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)Иссшуение$() - это враждебный эффект, который обычно нельзя создать.$(p)При нанесении его вы будете получать урон каждый тик.$(p)В отличие от яда, этот урон смертелен."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Рецепт Приготовления",
+			"item": "minecraft:wither_skeleton_skull",
+            "text": "Это зелье можно создать с помощью Грубого зелья и Черепа Визера. $(p)Его можно расширить, усилить или превратить в зелье-всплеск с обычными ингредиентами."
+        }
+	]
+}

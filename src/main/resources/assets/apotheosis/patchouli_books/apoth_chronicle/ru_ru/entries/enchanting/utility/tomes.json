@@ -1,0 +1,41 @@
+{
+    "name": "Фолианты(Томы)",
+    "icon": "apotheosis:other_tome",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Томы - это особый тип книг.$(p)Том может быть зачарован точно так же, как и книга, но может получать только определенные чары.$(p)Исключением является $(l:apotheosis:enchanting/utility/scrapping)Том Утилизации$(), который имеет другую цель."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:other_tome",
+			"text": "Как только вы зачаруете том, он превратится в заколдованную книгу."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:helmet_tome",
+			"recipe2": "apotheosis:chestplate_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:leggings_tome",
+			"recipe2": "apotheosis:boots_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:weapon_tome",
+			"recipe2": "apotheosis:pickaxe_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:fishing_tome",
+			"recipe2": "apotheosis:bow_tome",
+			"text": ""
+		}
+	]
+}

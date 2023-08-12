@@ -1,0 +1,17 @@
+{
+    "name": "Устойчивая опора",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Устойчивая опора$() - это заклинание для ботинок.$(p)Оно отменяет штраф за превышение скорости при полете.$(p)Сюда входят все штрафы за то, что вы не стоите на земле."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "В сочетании с $(9)Подводник$(), при плавании вы можете развивать максимальную скорость отрыва."
+		}
+	]
+}

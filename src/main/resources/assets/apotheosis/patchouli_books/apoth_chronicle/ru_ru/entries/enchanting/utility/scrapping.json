@@ -1,0 +1,29 @@
+{
+    "name": "Том Утилизации",
+    "icon": "apotheosis:scrap_tome",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Том Утилизации это способ извлечения заклинаний из предмета.$(p)Объединение одного с другим предметом в наковальне уничтожит другой предмет и создаст книгу с некоторыми заклинаниями случайным образом."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:scrap_tome",
+			"text": "Вы всегда будете получать половину зачарований (округлено в большую сторону).$(p)Выбранные чары основаны на ваших $(l:apotheosis:enchanting/table/seed)Зачарованное семя$()."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Superior Scrapping",
+			"item": "apotheosis:improved_scrap_tome",
+			"text": "$(9)Том Превосходной Утилизации$() является обновленной версией Тома утилизации.$(p)Извлекает все чары на предмет, а не половину из них."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:extraction_tome",
+			"text": "$(9)Том извлечения$() является усовершенствованной версией Тома Утилизации.$(p)Извлекает все чары из предмета и не уничтожает его в процессе.."
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Скорость Добычи",
+    "icon": "minecraft:netherite_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Увеличивая вашу $(9)Скорость Добычи$() увеличивает скорость, с которой вы разбиваете блоки. При базовом значении 1.0 вы разбиваете блоки как обычно.$(p)Встречается на кирках и лопатах."
+        }
+	]
+}
