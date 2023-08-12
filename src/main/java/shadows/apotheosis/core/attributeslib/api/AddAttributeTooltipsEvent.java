@@ -9,8 +9,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
+/**
+ * This event is used to add additional attribute tooltip lines without having to manually locate the inject point.
+ * <p>
+ * This event is fired on {@linkplain MinecraftForge#EVENT_BUS the main event bus}.<br>
+ * This event is only fired on the {@linkplain Dist#CLIENT physical client}.
+ */
 public class AddAttributeTooltipsEvent extends PlayerEvent {
 
     protected final ItemStack stack;
@@ -41,7 +49,7 @@ public class AddAttributeTooltipsEvent extends PlayerEvent {
     }
 
     /**
-     * The {@link ItemStack} tooltip.
+     * The {@link ItemStack}'s full tooltip.
      */
     public List<Component> getTooltip() {
         return this.tooltip;

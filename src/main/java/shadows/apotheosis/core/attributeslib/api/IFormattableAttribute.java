@@ -1,6 +1,5 @@
 package shadows.apotheosis.core.attributeslib.api;
 
-import java.util.Locale;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -72,9 +71,16 @@ public interface IFormattableAttribute {
         Component debugInfo = CommonComponents.EMPTY;
 
         if (flag.isAdvanced()) {
-            // Advanced Tooltips show the operation and the "real" (unformatted) value.
+            // Advanced Tooltips show the underlying operation and the "true" value. We offset MULTIPLY_TOTAL by 1 due to how the operation is calculated.
+            double advValue = (modif.getOperation() == Operation.MULTIPLY_TOTAL ? 1 : 0) + modif.getAmount();
+            String valueStr = ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(advValue);
+            String txt = switch (modif.getOperation()) {
+                case ADDITION -> advValue > 0 ? String.format("[+%s]", valueStr) : String.format("[%s]", valueStr);
+                case MULTIPLY_BASE -> advValue > 0 ? String.format("[+%sx]", valueStr) : String.format("[%sx]", valueStr);
+                case MULTIPLY_TOTAL -> String.format("[x%s]", valueStr);
+            };
             debugInfo = Component.literal(" ")
-                .append(Component.translatable(AttributesLib.MODID + ".adv." + modif.getOperation().name().toLowerCase(Locale.ROOT), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(modif.getAmount())).withStyle(ChatFormatting.GRAY));
+                .append(Component.literal(txt).withStyle(ChatFormatting.GRAY));
         }
 
         MutableComponent comp;

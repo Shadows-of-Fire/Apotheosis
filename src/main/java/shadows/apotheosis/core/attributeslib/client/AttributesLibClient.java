@@ -14,7 +14,9 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -25,11 +27,16 @@ import net.minecraft.client.particle.CritParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -38,7 +45,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStack.TooltipPart;
+import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -50,6 +59,7 @@ import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.AddAttributeTooltipsEvent;
 import shadows.apotheosis.core.attributeslib.api.AttributeHelper;
+import shadows.apotheosis.core.attributeslib.api.GatherEffectScreenTooltipsEvent;
 import shadows.apotheosis.core.attributeslib.api.GatherSkippedAttributeTooltipsEvent;
 import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
 
@@ -97,6 +107,71 @@ public class AttributesLibClient {
             e.addListener(atrComp.toggleBtn);
             e.addListener(atrComp.hideUnchangedBtn);
             if (AttributesGui.wasOpen) atrComp.toggleVisibility();
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void effectGuiTooltips(GatherEffectScreenTooltipsEvent e) {
+        List<Component> tooltips = e.getTooltip();
+        MobEffectInstance effectInst = e.getEffectInstance();
+        MobEffect effect = effectInst.getEffect();
+
+        MutableComponent name = (MutableComponent) tooltips.get(0);
+        Component duration = tooltips.remove(1);
+        duration = Component.translatable("(%s)", duration).withStyle(ChatFormatting.WHITE);
+
+        name.append(" ").append(duration);
+
+        if (AttributesLib.getTooltipFlag().isAdvanced()) {
+            name.append(" ").append(Component.translatable("[%s]", Registry.MOB_EFFECT.getKey(effect)).withStyle(ChatFormatting.GRAY));
+        }
+
+        String key = effect.getDescriptionId() + ".desc";
+        if (I18n.exists(key)) {
+            tooltips.add(Component.translatable(key).withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+        }
+        else if (AttributesLib.getTooltipFlag().isAdvanced() && effect.getAttributeModifiers().isEmpty()) {
+            tooltips.add(Component.translatable(key).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+
+        List<Pair<Attribute, AttributeModifier>> list = Lists.newArrayList();
+        Map<Attribute, AttributeModifier> map = effect.getAttributeModifiers();
+        if (!map.isEmpty()) {
+            for (Map.Entry<Attribute, AttributeModifier> entry : map.entrySet()) {
+                AttributeModifier attributemodifier = entry.getValue();
+                AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), effect.getAttributeModifierValue(effectInst.getAmplifier(), attributemodifier), attributemodifier.getOperation());
+                list.add(new Pair<>(entry.getKey(), attributemodifier1));
+            }
+        }
+
+        if (!list.isEmpty()) {
+            tooltips.add(CommonComponents.EMPTY);
+            for (Pair<Attribute, AttributeModifier> pair : list) {
+                tooltips.add(IFormattableAttribute.toComponent(pair.getFirst(), pair.getSecond(), AttributesLib.getTooltipFlag()));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void potionTooltips(ItemTooltipEvent e) {
+        ItemStack stack = e.getItemStack();
+        List<Component> tooltips = e.getToolTip();
+
+        if (stack.getItem() instanceof PotionItem) {
+            List<MobEffectInstance> effects = PotionUtils.getMobEffects(stack);
+            if (effects.size() == 1 && tooltips.size() >= 2) {
+                MobEffect effect = effects.get(0).getEffect();
+                String key = effect.getDescriptionId() + ".desc";
+                if (I18n.exists(key)) {
+                    tooltips.add(2, Component.translatable(key).withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+                    tooltips.add(3, CommonComponents.EMPTY);
+                }
+                else if (e.getFlags().isAdvanced() && effect.getAttributeModifiers().isEmpty()) {
+                    tooltips.add(2, Component.translatable(key).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                    tooltips.add(3, CommonComponents.EMPTY);
+                }
+            }
         }
     }
 

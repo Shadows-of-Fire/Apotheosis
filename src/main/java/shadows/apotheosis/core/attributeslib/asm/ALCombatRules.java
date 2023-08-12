@@ -51,13 +51,13 @@ public class ALCombatRules {
 
     /**
      * Gets the amount of damage the user would take after applying armor, toughness, and armor bypass.<br>
-     * Armor bypass is based on {@linkplain ALAttributes#PROT_PIERCE Protection Pierce} and {@linkplain ALAttributes#PROT_SHRED Protection Shred}.
+     * Armor bypass is based on {@linkplain ALAttributes#ARMOR_PIERCE Armor Pierce} and {@linkplain ALAttributes#ARMOR_SHRED Armor Shred}.
      * <p>
      * Unlike protection bypass, additional armor bypass will cause unarmored targets to take additional damage.<br>
      * Not invoked if the incoming damage source {@linkplain DamageSource#isBypassArmor() bypasses armor}.
      * <p>
      * With the introduction of this attribute, armor toughness acts as a shield against armor bypass.<br>
-     * Each point of armor toughness reduces the effectiveness of all armor bypass by 1%, up to 50%.<br>
+     * Each point of armor toughness reduces the effectiveness of all armor bypass by 2%, up to 60%.<br>
      * That said, armor toughness no longer reduces damage, and only reduces armor bypass.
      * <p>
      *
@@ -71,7 +71,7 @@ public class ALCombatRules {
     public static float getDamageAfterArmor(LivingEntity target, DamageSource src, float amount, float armor, float toughness) {
         if (src.getEntity() instanceof LivingEntity attacker) {
             float shred = (float) attacker.getAttributeValue(ALAttributes.ARMOR_SHRED.get());
-            float bypassResist = Math.min(toughness / 100, 0.5F);
+            float bypassResist = Math.min(toughness * 0.02F, 0.6F);
             if (shred > 0.001F) {
                 shred *= 1 - bypassResist;
                 armor *= 1 - shred;
@@ -84,22 +84,36 @@ public class ALCombatRules {
         }
 
         if (armor <= 0) return amount;
-        return amount * getArmorDamageReduction(armor);
+        return amount * getArmorDamageReduction(amount, armor);
+    }
+
+    /**
+     * Computes the A value used in the Y = A / (A + X) formula used by {@link #getArmorDamageReduction(float, float)}.<br>
+     * This value is a flat 10 for small damage values (< 20), and increases after that point.
+     * 
+     * @param damage The amount of incoming damage.
+     * @return The A value, for use in {@link #getArmorDamageReduction(float, float)}
+     */
+    public static float getAValue(float damage) {
+        if (damage < 20) return 10;
+        return 10 + (damage - 20) / 2;
     }
 
     /**
      * Computes the damage reduction factor of the given armor level.<br>
-     * Armor reduces a percentage of incoming damage equal to <code>50 / (50 + armor)</code>.
+     * Armor reduces a percentage of incoming damage equal to <code>A / (A + armor)</code>, where A varies based on the damage.
      * <p>
      * Armor Toughness no longer impacts this calculation.
      * <p>
      * The vanilla calculation is <code>DR = clamp(armor - damage / (2 + toughness / 4), armor / 5, 20) / 25</code>
      * <p>
-     * For comparisons, see https://i.imgur.com/3yEnTyi.png
+     * For comparisons, see https://i.imgur.com/2OHQhgp.png
      *
+     * @see #getAValue(float)
      * @see #getDamageAfterArmor(LivingEntity, DamageSource, float, float, float)
      */
-    public static float getArmorDamageReduction(float armor) {
-        return 50 / (50 + armor);
+    public static float getArmorDamageReduction(float damage, float armor) {
+        float a = getAValue(damage);
+        return a / (a + armor);
     }
 }

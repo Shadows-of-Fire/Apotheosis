@@ -1,6 +1,14 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.3.3
+* Backported all changes that happened during the extraction of Apothic Attributes.
+  * Armor formula updated from 50 / (50 + armor) to the one used by AA.
+  * Armor Toughness value per point increased from 1% to 2%, cap up from 50% to 60%.
+  * Added better Potion tooltips as well as improved the text shown when hovering effects in the inventory.
+  * Changed the implementation of Ancient Knowledge to use the Experience Gained attribute.
+  * Changed how advanced tooltips displays attribute modifiers.
+
 ## 6.3.2
 * Fixed an issue where Crit Chance was using the target's crit chance during application.
 * Added particle that trigger when an Apothic Crit happens.

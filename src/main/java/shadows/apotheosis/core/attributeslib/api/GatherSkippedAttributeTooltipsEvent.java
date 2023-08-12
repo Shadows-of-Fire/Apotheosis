@@ -8,8 +8,18 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
+/**
+ * This event is used to collect UUIDs of attribute modifiers that will not be displayed in item tooltips.
+ * <p>
+ * This allows hiding specific modifiers for whatever reason. They will still be shown in the attributes GUI.
+ * <p>
+ * This event is fired on {@linkplain MinecraftForge#EVENT_BUS the main event bus}.<br>
+ * This event is only fired on the {@linkplain Dist#CLIENT physical client}.
+ */
 public class GatherSkippedAttributeTooltipsEvent extends PlayerEvent {
 
     protected final ItemStack stack;

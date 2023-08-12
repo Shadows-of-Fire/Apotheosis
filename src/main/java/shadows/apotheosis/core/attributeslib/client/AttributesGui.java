@@ -186,12 +186,15 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
                 name.append(Component.literal(" [" + Registry.ATTRIBUTE.getKey(attr).toString() + "]").withStyle(style));
             }
             list.add(name);
-            if (I18n.exists(Registry.ATTRIBUTE.getKey(attr) + ".desc")) {
-                Component txt = Component.translatable(Registry.ATTRIBUTE.getKey(attr) + ".desc").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC);
+
+            String key = attr.getDescriptionId() + ".desc";
+
+            if (I18n.exists(key)) {
+                Component txt = Component.translatable(key).withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC);
                 list.add(txt);
             }
             else if (AttributesLib.getTooltipFlag().isAdvanced()) {
-                Component txt = Component.literal(Registry.ATTRIBUTE.getKey(attr) + ".desc").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+                Component txt = Component.literal(key).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
                 list.add(txt);
             }
 
@@ -228,7 +231,7 @@ public class AttributesGui extends GuiComponent implements Widget, GuiEventListe
                 this.addComp(txt, finalTooltip);
             }
 
-            if (!inst.getModifiers().isEmpty()) {
+            if (inst.getModifiers().stream().anyMatch(modif -> modif.getAmount() != 0)) {
                 this.addComp(CommonComponents.EMPTY, finalTooltip);
                 this.addComp(Component.translatable("attributeslib.gui.modifiers").withStyle(ChatFormatting.GOLD), finalTooltip);
 

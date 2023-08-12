@@ -26,6 +26,6 @@ public class CombatRulesMixin {
     @Overwrite
     public static float getDamageAfterAbsorb(float damage, float armor, float toughness) {
         AdventureModule.LOGGER.trace("Invocation of CombatRules#getDamageAfterAbsorb is bypassing armor pen.");
-        return damage * ALCombatRules.getArmorDamageReduction(armor);
+        return damage * ALCombatRules.getArmorDamageReduction(damage, armor);
     }
 }
