@@ -34,7 +34,7 @@ public class WardenLootModifier extends LootModifier {
             if (ctx.getRandom().nextFloat() <= 0.10F + ctx.getLootingModifier() * 0.10F) {
                 amount++;
             }
-            loot.add(new ItemStack(Items.WARDEN_TENDRIL.get(), amount));
+            loot.add(new ItemStack(dev.shadowsoffire.apotheosis.ench.Ench.Items.WARDEN_TENDRIL.get(), amount));
         }
         return loot;
     }

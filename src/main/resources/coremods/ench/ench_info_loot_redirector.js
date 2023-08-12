@@ -6,7 +6,7 @@ var MethodInsnNode = Java.type('org.objectweb.asm.tree.MethodInsnNode');
 function maxLootLevelNode(){
 	return new MethodInsnNode(
 			Opcodes.INVOKESTATIC, 
-			"shadows/apotheosis/ench/asm/EnchHooks", 
+			"dev/shadowsoffire/apotheosis/ench/asm/EnchHooks", 
 			"getMaxLootLevel", 
 			"(Lnet/minecraft/world/item/enchantment/Enchantment;)I", 
 			false);
@@ -15,7 +15,7 @@ function maxLootLevelNode(){
 function lootableNode(){
 	return new MethodInsnNode(
 			Opcodes.INVOKESTATIC, 
-			"shadows/apotheosis/ench/asm/EnchHooks", 
+			"dev/shadowsoffire/apotheosis/ench/asm/EnchHooks", 
 			"isLootable", 
 			"(Lnet/minecraft/world/item/enchantment/Enchantment;)Z", 
 			false);
@@ -24,7 +24,7 @@ function lootableNode(){
 function treasureNode(){
 	return new MethodInsnNode(
 			Opcodes.INVOKESTATIC, 
-			"shadows/apotheosis/ench/asm/EnchHooks", 
+			"dev/shadowsoffire/apotheosis/ench/asm/EnchHooks", 
 			"isTreasureOnly", 
 			"(Lnet/minecraft/world/item/enchantment/Enchantment;)Z", 
 			false);
@@ -33,7 +33,7 @@ function treasureNode(){
 function tradeableNode(){
 	return new MethodInsnNode(
 			Opcodes.INVOKESTATIC, 
-			"shadows/apotheosis/ench/asm/EnchHooks", 
+			"dev/shadowsoffire/apotheosis/ench/asm/EnchHooks", 
 			"isTradeable", 
 			"(Lnet/minecraft/world/item/enchantment/Enchantment;)Z", 
 			false);

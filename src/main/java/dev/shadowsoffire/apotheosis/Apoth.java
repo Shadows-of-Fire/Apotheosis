@@ -15,27 +15,6 @@ import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerT
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
-import dev.shadowsoffire.apotheosis.ench.anvil.ObliterationEnchant;
-import dev.shadowsoffire.apotheosis.ench.anvil.SplittingEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.ChromaticEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.InertEnchantment;
-import dev.shadowsoffire.apotheosis.ench.enchantments.NaturesBlessingEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.ReflectiveEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.SpearfishingEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.StableFootingEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.TemptingEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.corrupted.BerserkersFuryEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.corrupted.LifeMendingEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.masterwork.ChainsawEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.masterwork.EarthsBoonEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.masterwork.EndlessQuiverEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.masterwork.GrowthSerumEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.masterwork.KnowledgeEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.masterwork.ScavengerEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.ExploitationEnchant;
-import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
-import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryBlock;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer;
@@ -69,7 +48,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -81,36 +59,6 @@ public class Apoth {
 
     public static final RegObjHelper R = new RegObjHelper(Apotheosis.MODID);
 
-    public static final class Blocks {
-        public static final RegistryObject<EnchLibraryBlock> LIBRARY = R.block("LIBRARY");
-        public static final RegistryObject<Block> HELLSHELF = R.block("HELLSHELF");
-        public static final RegistryObject<Block> INFUSED_HELLSHELF = R.block("INFUSED_HELLSHELF");
-        public static final RegistryObject<Block> BLAZING_HELLSHELF = R.block("BLAZING_HELLSHELF");
-        public static final RegistryObject<Block> GLOWING_HELLSHELF = R.block("GLOWING_HELLSHELF");
-        public static final RegistryObject<Block> SEASHELF = R.block("SEASHELF");
-        public static final RegistryObject<Block> INFUSED_SEASHELF = R.block("INFUSED_SEASHELF");
-        public static final RegistryObject<Block> CRYSTAL_SEASHELF = R.block("CRYSTAL_SEASHELF");
-        public static final RegistryObject<Block> HEART_SEASHELF = R.block("HEART_SEASHELF");
-        public static final RegistryObject<Block> DORMANT_DEEPSHELF = R.block("DORMANT_DEEPSHELF");
-        public static final RegistryObject<Block> DEEPSHELF = R.block("DEEPSHELF");
-        public static final RegistryObject<Block> ECHOING_DEEPSHELF = R.block("ECHOING_DEEPSHELF");
-        public static final RegistryObject<Block> SOUL_TOUCHED_DEEPSHELF = R.block("SOUL_TOUCHED_DEEPSHELF");
-        public static final RegistryObject<Block> ECHOING_SCULKSHELF = R.block("ECHOING_SCULKSHELF");
-        public static final RegistryObject<Block> SOUL_TOUCHED_SCULKSHELF = R.block("SOUL_TOUCHED_SCULKSHELF");
-        public static final RegistryObject<Block> ENDSHELF = R.block("ENDSHELF");
-        public static final RegistryObject<Block> PEARL_ENDSHELF = R.block("PEARL_ENDSHELF");
-        public static final RegistryObject<Block> DRACONIC_ENDSHELF = R.block("DRACONIC_ENDSHELF");
-        public static final RegistryObject<Block> BEESHELF = R.block("BEESHELF");
-        public static final RegistryObject<Block> MELONSHELF = R.block("MELONSHELF");
-        public static final RegistryObject<Block> STONESHELF = R.block("STONESHELF");
-        public static final RegistryObject<Block> RECTIFIER = R.block("RECTIFIER");
-        public static final RegistryObject<Block> RECTIFIER_T2 = R.block("RECTIFIER_T2");
-        public static final RegistryObject<Block> RECTIFIER_T3 = R.block("RECTIFIER_T3");
-        public static final RegistryObject<Block> SIGHTSHELF = R.block("SIGHTSHELF");
-        public static final RegistryObject<Block> SIGHTSHELF_T2 = R.block("SIGHTSHELF_T2");
-        public static final RegistryObject<EnchLibraryBlock> ENDER_LIBRARY = R.block("ENDER_LIBRARY");
-    }
-
     public static final class Items {
         public static final RegistryObject<PotionCharmItem> POTION_CHARM = R.item("POTION_CHARM");
         public static final RegistryObject<Item> LUCKY_FOOT = R.item("LUCKY_FOOT");
@@ -120,45 +68,12 @@ public class Apoth {
         public static final RegistryObject<MiningArrowItem> IRON_MINING_ARROW = R.item("IRON_MINING_ARROW");
         public static final RegistryObject<MiningArrowItem> DIAMOND_MINING_ARROW = R.item("DIAMOND_MINING_ARROW");
         public static final RegistryObject<EnderLeadItem> ENDER_LEAD = R.item("ENDER_LEAD");
-        public static final RegistryObject<Item> PRISMATIC_WEB = R.item("PRISMATIC_WEB");
-        public static final RegistryObject<Item> SCRAP_TOME = R.item("SCRAP_TOME");
-        public static final RegistryObject<Item> OTHER_TOME = R.item("OTHER_TOME");
-        public static final RegistryObject<Item> HELMET_TOME = R.item("HELMET_TOME");
-        public static final RegistryObject<Item> CHESTPLATE_TOME = R.item("CHESTPLATE_TOME");
-        public static final RegistryObject<Item> LEGGINGS_TOME = R.item("LEGGINGS_TOME");
-        public static final RegistryObject<Item> BOOTS_TOME = R.item("BOOTS_TOME");
-        public static final RegistryObject<Item> WEAPON_TOME = R.item("WEAPON_TOME");
-        public static final RegistryObject<Item> PICKAXE_TOME = R.item("PICKAXE_TOME");
-        public static final RegistryObject<Item> FISHING_TOME = R.item("FISHING_TOME");
-        public static final RegistryObject<Item> BOW_TOME = R.item("BOW_TOME");
-        public static final RegistryObject<Item> WARDEN_TENDRIL = R.item("WARDEN_TENDRIL");
-
         public static final RegistryObject<Item> SKULL_FRAGMENT = RegistryObject.create(new ResourceLocation("wstweaks", "fragment"), ForgeRegistries.ITEMS);
     }
 
     public static final class Enchantments {
-        public static final RegistryObject<EndlessQuiverEnchant> ENDLESS_QUIVER = R.enchant("ENDLESS_QUIVER");
-        public static final RegistryObject<CapturingEnchant> CAPTURING = R.enchant("CAPTURING");
-        public static final RegistryObject<BerserkersFuryEnchant> BERSERKERS_FURY = R.enchant("BERSERKERS_FURY");
-        public static final RegistryObject<CrescendoEnchant> CRESCENDO = R.enchant("CRESCENDO");
-        public static final RegistryObject<KnowledgeEnchant> KNOWLEDGE = R.enchant("KNOWLEDGE");
-        public static final RegistryObject<LifeMendingEnchant> LIFE_MENDING = R.enchant("LIFE_MENDING");
-        public static final RegistryObject<MinersFervorEnchant> MINERS_FERVOR = R.enchant("MINERS_FERVOR");
-        public static final RegistryObject<NaturesBlessingEnchant> NATURES_BLESSING = R.enchant("NATURES_BLESSING");
-        public static final RegistryObject<ReflectiveEnchant> REFLECTIVE = R.enchant("REFLECTIVE");
-        public static final RegistryObject<ScavengerEnchant> SCAVENGER = R.enchant("SCAVENGER");
-        public static final RegistryObject<StableFootingEnchant> STABLE_FOOTING = R.enchant("STABLE_FOOTING");
-        public static final RegistryObject<TemptingEnchant> TEMPTING = R.enchant("TEMPTING");
-        public static final RegistryObject<ObliterationEnchant> OBLITERATION = R.enchant("OBLITERATION");
-        public static final RegistryObject<SplittingEnchant> SPLITTING = R.enchant("SPLITTING");
-        public static final RegistryObject<InertEnchantment> INFUSION = R.enchant("INFUSION");
-        public static final RegistryObject<ChromaticEnchant> CHROMATIC = R.enchant("CHROMATIC");
-        public static final RegistryObject<ExploitationEnchant> EXPLOITATION = R.enchant("EXPLOITATION");
-        public static final RegistryObject<GrowthSerumEnchant> GROWTH_SERUM = R.enchant("GROWTH_SERUM");
-        public static final RegistryObject<EarthsBoonEnchant> EARTHS_BOON = R.enchant("EARTHS_BOON");
-        public static final RegistryObject<ChainsawEnchant> CHAINSAW = R.enchant("CHAINSAW");
-        public static final RegistryObject<SpearfishingEnchant> SPEARFISHING = R.enchant("SPEARFISHING");
-    }
+
+        public static final RegistryObject<CapturingEnchant> CAPTURING = Apoth.R.enchant("CAPTURING");}
 
     public static final class Potions {
         public static final RegistryObject<Potion> RESISTANCE = R.potion("RESISTANCE");

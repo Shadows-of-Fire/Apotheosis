@@ -8,7 +8,7 @@ function initializeCoreMod() {
                 'methodDesc': '(Lnet/minecraft/core/BlockPos;)V'
             },
             'transformer': function(method) {
-                var owner = "shadows/apotheosis/ench/asm/EnchHooks";
+                var owner = "dev/shadowsoffire/apotheosis/ench/asm/EnchHooks";
                 var name = "getTicksCaughtDelay";
                 var desc = "(Lnet/minecraft/world/entity/projectile/FishingHook;)I";
                 var instr = method.instructions;

@@ -31,8 +31,8 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
      */
     @Override
     public boolean matches(Container pInv, Level level) {
-        ItemStack in = pInv.getItem(0);
-        return !LootCategory.forItem(in).isNone() && SocketHelper.getSockets(in) < this.getMaxSockets() && this.getInput().test(pInv.getItem(1));
+        ItemStack in = pInv.getItem(BASE);
+        return !LootCategory.forItem(in).isNone() && SocketHelper.getSockets(in) < this.getMaxSockets() && this.getInput().test(pInv.getItem(ADDITION));
     }
 
     /**
@@ -40,7 +40,7 @@ public class AddSocketsRecipe extends ApothSmithingRecipe {
      */
     @Override
     public ItemStack assemble(Container pInv, RegistryAccess regs) {
-        ItemStack out = pInv.getItem(0).copy();
+        ItemStack out = pInv.getItem(BASE).copy();
         if (out.isEmpty()) return ItemStack.EMPTY;
         int sockets = SocketHelper.getSockets(out) + 1;
         SocketHelper.setSockets(out, sockets);

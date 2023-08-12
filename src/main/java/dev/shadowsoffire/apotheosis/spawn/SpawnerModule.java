@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import dev.shadowsoffire.apotheosis.spawn.compat.SpawnerTOPPlugin;
@@ -98,7 +97,7 @@ public class SpawnerModule {
     }
 
     public void dropsEvent(LivingDropsEvent e) {
-        Apoth.Enchantments.CAPTURING.get().handleCapturing(e);
+        dev.shadowsoffire.apotheosis.Apoth.Enchantments.CAPTURING.get().handleCapturing(e);
     }
 
     public void handleUseItem(RightClickBlock e) {

@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.mixin.CrossbowItemMixin;
 import net.minecraft.ChatFormatting;
@@ -52,7 +52,7 @@ public class CrescendoEnchant extends Enchantment {
      */
     public static void preArrowFired(ItemStack crossbow) {
         if (!Apotheosis.enableEnch) return;
-        int level = crossbow.getEnchantmentLevel(Apoth.Enchantments.CRESCENDO.get());
+        int level = crossbow.getEnchantmentLevel(Ench.Enchantments.CRESCENDO.get());
         if (level > 0) {
             nbt.set(crossbow.getTag().getList("ChargedProjectiles", Tag.TAG_COMPOUND).copy());
         }
@@ -66,7 +66,7 @@ public class CrescendoEnchant extends Enchantment {
      */
     public static void onArrowFired(ItemStack crossbow) {
         if (!Apotheosis.enableEnch) return;
-        int level = crossbow.getEnchantmentLevel(Apoth.Enchantments.CRESCENDO.get());
+        int level = crossbow.getEnchantmentLevel(Ench.Enchantments.CRESCENDO.get());
         if (level > 0 && nbt.get() != null) {
             int shots = crossbow.getTag().getInt("shots");
             if (shots < level) {

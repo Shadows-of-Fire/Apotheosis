@@ -42,6 +42,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootPoolEntry;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.GemLootModifier;
 import dev.shadowsoffire.apotheosis.adventure.loot.GemLootPoolEntry;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
@@ -190,8 +191,15 @@ public class AdventureModule {
 
     public static class ApothSmithingRecipe extends SmithingTransformRecipe {
 
+        public static final int TEMPLATE = 0, BASE = 1, ADDITION = 2;
+
         public ApothSmithingRecipe(ResourceLocation pId, Ingredient pBase, Ingredient pAddition, ItemStack pResult) {
             super(pId, Ingredient.EMPTY, pBase, pAddition, pResult);
+        }
+
+        @Override
+        public boolean isBaseIngredient(ItemStack pStack) {
+            return !LootCategory.forItem(pStack).isNone();
         }
     }
 

@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
@@ -26,9 +26,9 @@ public class SheepMixin {
     @Inject(method = "onSheared", at = @At("RETURN"), remap = false, cancellable = true)
     public void onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune, CallbackInfoReturnable<List<ItemStack>> ci) {
         if (Apotheosis.enableEnch) {
-            ci.setReturnValue(Apoth.Enchantments.CHROMATIC.get().molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
-            ci.setReturnValue(Apoth.Enchantments.EXPLOITATION.get().molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
-            Apoth.Enchantments.GROWTH_SERUM.get().unshear((Sheep) (Object) this, item);
+            ci.setReturnValue(Ench.Enchantments.CHROMATIC.get().molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
+            ci.setReturnValue(Ench.Enchantments.EXPLOITATION.get().molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
+            Ench.Enchantments.GROWTH_SERUM.get().unshear((Sheep) (Object) this, item);
         }
     }
 

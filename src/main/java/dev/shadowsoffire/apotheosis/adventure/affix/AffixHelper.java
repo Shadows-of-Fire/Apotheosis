@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -41,7 +42,7 @@ public class AffixHelper {
      * Adds this specific affix to the Item's NBT tag.
      */
     public static void applyAffix(ItemStack stack, AffixInstance affix) {
-        var affixes = getAffixes(stack);
+        var affixes = new HashMap<>(getAffixes(stack));
         affixes.put(affix.affix(), affix);
         setAffixes(stack, affixes);
     }
@@ -72,7 +73,7 @@ public class AffixHelper {
      * Gets the affixes of an item. Changes to this map will not write-back to the affixes on the itemstack.
      *
      * @param stack The stack being queried.
-     * @return A Map of all affixes on the stack, or an empty map if none were found.
+     * @return An immutable map of all affixes on the stack, or an empty map if none were found.
      */
     public static Map<DynamicHolder<? extends Affix>, AffixInstance> getAffixes(ItemStack stack) {
         return CachedObjectSource.getOrCreate(stack, AFFIX_CACHED_OBJECT, AffixHelper::getAffixesImpl, CachedObject.hashSubkey(AFFIX_DATA));
@@ -80,7 +81,8 @@ public class AffixHelper {
 
     public static Map<DynamicHolder<? extends Affix>, AffixInstance> getAffixesImpl(ItemStack stack) {
         Map<DynamicHolder<? extends Affix>, AffixInstance> map = new HashMap<>();
-        if (!hasAffixes(stack)) return map;
+        if (stack.isEmpty()) return Collections.emptyMap();
+        SocketHelper.loadSocketAffix(stack, map);
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
         if (afxData != null && afxData.contains(AFFIXES)) {
             CompoundTag affixes = afxData.getCompound(AFFIXES);
@@ -94,8 +96,7 @@ public class AffixHelper {
                 map.put(affix, new AffixInstance(affix, stack, rarity, lvl));
             }
         }
-        SocketHelper.loadSocketAffix(stack, map);
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 
     public static Stream<AffixInstance> streamAffixes(ItemStack stack) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.event.ItemSocketingEvent;
@@ -25,7 +26,7 @@ public class SocketingRecipe extends ApothSmithingRecipe {
     private static final ResourceLocation ID = new ResourceLocation("apotheosis:socketing");
 
     public SocketingRecipe() {
-        super(ID, Ingredient.EMPTY, Ingredient.EMPTY, ItemStack.EMPTY);
+        super(ID, Ingredient.EMPTY, Ingredient.of(Adventure.Items.GEM.get()), ItemStack.EMPTY);
     }
 
     /**
@@ -33,15 +34,15 @@ public class SocketingRecipe extends ApothSmithingRecipe {
      */
     @Override
     public boolean matches(Container inv, Level pLevel) {
-        ItemStack input = inv.getItem(0);
-        ItemStack gemStack = inv.getItem(1);
+        ItemStack input = inv.getItem(BASE);
+        ItemStack gemStack = inv.getItem(ADDITION);
         GemInstance gem = GemInstance.unsocketed(gemStack);
         if (!gem.isValidUnsocketed()) return false;
         if (!SocketHelper.hasEmptySockets(input)) return false;
         var event = new ItemSocketingEvent.CanSocket(input, gemStack);
         MinecraftForge.EVENT_BUS.post(event);
         Result res = event.getResult();
-        return res == Result.ALLOW ? true : res == Result.DEFAULT && gem.canApplyTo(inv.getItem(0));
+        return res == Result.ALLOW ? true : res == Result.DEFAULT && gem.canApplyTo(input);
     }
 
     /**
@@ -49,8 +50,8 @@ public class SocketingRecipe extends ApothSmithingRecipe {
      */
     @Override
     public ItemStack assemble(Container inv, RegistryAccess regs) {
-        ItemStack input = inv.getItem(0);
-        ItemStack gemStack = inv.getItem(1);
+        ItemStack input = inv.getItem(BASE);
+        ItemStack gemStack = inv.getItem(ADDITION);
         if (input.isEmpty()) return ItemStack.EMPTY; // This really should throw, but mods being mods, that might be a bad idea.
 
         ItemStack result = input.copy();

@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn.enchantment;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apoth.Enchantments;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import net.minecraft.world.entity.Entity;
@@ -43,7 +43,7 @@ public class CapturingEnchant extends Enchantment {
     public void handleCapturing(LivingDropsEvent e) {
         Entity killer = e.getSource().getEntity();
         if (killer instanceof LivingEntity living) {
-            int level = living.getMainHandItem().getEnchantmentLevel(Apoth.Enchantments.CAPTURING.get());
+            int level = living.getMainHandItem().getEnchantmentLevel(Enchantments.CAPTURING.get());
             LivingEntity killed = e.getEntity();
             if (SpawnerModule.bannedMobs.contains(EntityType.getKey(killed.getType()))) return;
             if (killed.level().random.nextFloat() < level / 250F) {

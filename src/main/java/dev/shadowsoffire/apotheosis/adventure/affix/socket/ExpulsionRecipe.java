@@ -29,7 +29,7 @@ public class ExpulsionRecipe extends ApothSmithingRecipe {
      */
     @Override
     public boolean matches(Container pInv, Level pLevel) {
-        return pInv.getItem(1).getItem() == Items.VIAL_OF_EXPULSION.get() && SocketHelper.getGems(pInv.getItem(0)).stream().anyMatch(i -> !i.isEmpty());
+        return pInv.getItem(ADDITION).getItem() == Items.VIAL_OF_EXPULSION.get() && SocketHelper.getGems(pInv.getItem(BASE)).stream().anyMatch(i -> !i.isEmpty());
     }
 
     /**
@@ -37,7 +37,7 @@ public class ExpulsionRecipe extends ApothSmithingRecipe {
      */
     @Override
     public ItemStack assemble(Container pInv, RegistryAccess regs) {
-        ItemStack out = pInv.getItem(0).copy();
+        ItemStack out = pInv.getItem(BASE).copy();
         if (out.isEmpty()) return ItemStack.EMPTY;
         SocketHelper.setGems(out, Collections.emptyList());
         return out;

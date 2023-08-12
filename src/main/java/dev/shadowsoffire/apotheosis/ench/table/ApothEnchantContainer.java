@@ -9,6 +9,7 @@ import java.util.Optional;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.advancements.EnchantedTrigger;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
 import dev.shadowsoffire.placebo.network.PacketDistro;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
@@ -137,7 +138,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
             List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
             if (!list.isEmpty()) {
                 player.onEnchantmentPerformed(toEnchant, cost);
-                if (list.get(0).enchantment == Apoth.Enchantments.INFUSION.get()) {
+                if (list.get(0).enchantment == Ench.Enchantments.INFUSION.get()) {
                     EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
                     if (match != null) this.enchantSlots.setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));
                     else return;
@@ -236,7 +237,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
         EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.eterna.get(), this.quanta.get(), this.arcana.get()))).get().orElse(null);
         if (enchantSlot == 2 && match != null) {
             list.clear();
-            list.add(new EnchantmentInstance(Apoth.Enchantments.INFUSION.get(), 1));
+            list.add(new EnchantmentInstance(Ench.Enchantments.INFUSION.get(), 1));
         }
         return list;
     }

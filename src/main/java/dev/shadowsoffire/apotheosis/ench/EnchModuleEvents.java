@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.ench;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.objects.ExtractionTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
@@ -43,7 +42,7 @@ public class EnchModuleEvents {
                 e.setMaterialCost(1);
                 e.setOutput(stack);
             }
-            else if (e.getRight().getItem() == Apoth.Items.PRISMATIC_WEB.get()) {
+            else if (e.getRight().getItem() == dev.shadowsoffire.apotheosis.ench.Ench.Items.PRISMATIC_WEB.get()) {
                 ItemStack stack = e.getLeft().copy();
                 EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue)), stack);
                 e.setCost(30);
@@ -79,27 +78,27 @@ public class EnchModuleEvents {
     @SubscribeEvent(priority = EventPriority.LOW)
     public void drops(LivingDropsEvent e) throws Throwable {
         if (e.getSource().getEntity() instanceof Player p) {
-            Apoth.Enchantments.SCAVENGER.get().drops(p, e);
-            Apoth.Enchantments.SPEARFISHING.get().addFishes(e);
+            dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.SCAVENGER.get().drops(p, e);
+            dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.SPEARFISHING.get().addFishes(e);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void dropsLowest(LivingDropsEvent e) {
         if (e.getSource().getEntity() instanceof Player p) {
-            Apoth.Enchantments.KNOWLEDGE.get().drops(p, e);
+            dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.KNOWLEDGE.get().drops(p, e);
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void healing(LivingHealEvent e) {
         if (e.getEntity().getType() == EntityType.ARMOR_STAND) return; // https://github.com/Shadows-of-Fire/Apotheosis/issues/636
-        Apoth.Enchantments.LIFE_MENDING.get().lifeMend(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.LIFE_MENDING.get().lifeMend(e);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void block(ShieldBlockEvent e) {
-        Apoth.Enchantments.REFLECTIVE.get().reflect(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.REFLECTIVE.get().reflect(e);
     }
 
     @SubscribeEvent
@@ -120,12 +119,12 @@ public class EnchModuleEvents {
      */
     @SubscribeEvent
     public void breakSpeed(PlayerEvent.BreakSpeed e) {
-        Apoth.Enchantments.STABLE_FOOTING.get().breakSpeed(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.STABLE_FOOTING.get().breakSpeed(e);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void breakSpeedLow(PlayerEvent.BreakSpeed e) {
-        Apoth.Enchantments.MINERS_FERVOR.get().breakSpeed(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.MINERS_FERVOR.get().breakSpeed(e);
     }
 
     /**
@@ -133,8 +132,8 @@ public class EnchModuleEvents {
      */
     @SubscribeEvent(priority = EventPriority.LOW)
     public void breakSpeed(BlockEvent.BreakEvent e) {
-        Apoth.Enchantments.EARTHS_BOON.get().provideBenefits(e);
-        Apoth.Enchantments.CHAINSAW.get().chainsaw(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.EARTHS_BOON.get().provideBenefits(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.CHAINSAW.get().chainsaw(e);
     }
 
     /**
@@ -142,7 +141,7 @@ public class EnchModuleEvents {
      */
     @SubscribeEvent
     public void rightClick(PlayerInteractEvent.RightClickBlock e) {
-        Apoth.Enchantments.NATURES_BLESSING.get().rightClick(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.NATURES_BLESSING.get().rightClick(e);
     }
 
     /**
@@ -161,7 +160,7 @@ public class EnchModuleEvents {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void livingHurt(LivingHurtEvent e) {
-        Apoth.Enchantments.BERSERKERS_FURY.get().livingHurt(e);
+        dev.shadowsoffire.apotheosis.ench.Ench.Enchantments.BERSERKERS_FURY.get().livingHurt(e);
     }
 
 }

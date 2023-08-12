@@ -107,7 +107,8 @@ public class SocketHelper {
      * @return The number of sockets on the stack.
      */
     public static int getSockets(ItemStack stack) {
-        int sockets = stack.getOrCreateTagElement(AFFIX_DATA).getInt(SOCKETS);
+        CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
+        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
         var event = new GetItemSocketsEvent(stack, sockets);
         MinecraftForge.EVENT_BUS.post(event);
         return event.getSockets();

@@ -51,11 +51,11 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
         }
         for (ItemStack gem : this.comp.gems()) {
             if (!gem.isEmpty()) {
-                PoseStack mvStack = RenderSystem.getModelViewStack();
-                mvStack.pushPose();
-                mvStack.scale(0.5F, 0.5F, 1);
+                PoseStack pose = gfx.pose();
+                pose.pushPose();
+                pose.scale(0.5F, 0.5F, 1);
                 gfx.renderFakeItem(gem, 2 * x + 1, 2 * y + 1);
-                mvStack.popPose();
+                pose.popPose();
                 RenderSystem.applyModelViewMatrix();
             }
             y += this.spacing;

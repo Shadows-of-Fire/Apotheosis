@@ -30,15 +30,16 @@ public class UnnamingRecipe extends ApothSmithingRecipe {
 
     @Override
     public boolean matches(Container pInv, Level pLevel) {
-        if (pInv.getItem(0).isEmpty()) return false;
-        CompoundTag afxData = pInv.getItem(0).getTagElement(AffixHelper.AFFIX_DATA);
+        ItemStack base = pInv.getItem(BASE);
+        if (base.isEmpty()) return false;
+        CompoundTag afxData = base.getTagElement(AffixHelper.AFFIX_DATA);
         boolean hasName = afxData != null && afxData.contains(AffixHelper.NAME, 8);
-        return hasName && pInv.getItem(1).getItem() == Items.VIAL_OF_UNNAMING.get();
+        return hasName && pInv.getItem(ADDITION).getItem() == Items.VIAL_OF_UNNAMING.get();
     }
 
     @Override
     public ItemStack assemble(Container pInv, RegistryAccess regs) {
-        ItemStack out = pInv.getItem(0).copy();
+        ItemStack out = pInv.getItem(BASE).copy();
         CompoundTag afxData = out.getTagElement(AffixHelper.AFFIX_DATA);
         DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(afxData);
         if (afxData == null || !rarity.isBound()) return ItemStack.EMPTY;

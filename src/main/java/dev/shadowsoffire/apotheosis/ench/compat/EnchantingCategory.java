@@ -8,8 +8,8 @@ import java.util.Map;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
@@ -136,7 +136,7 @@ public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
         if (scn == null) return; // We need this to render tooltips, bail if its not there.
         if (hover) {
             List<Component> list = new ArrayList<>();
-            list.add(Component.translatable("container.enchant.clue", Apoth.Enchantments.INFUSION.get().getFullname(1).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            list.add(Component.translatable("container.enchant.clue", Ench.Enchantments.INFUSION.get().getFullname(1).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             gfx.renderComponentTooltip(font, list, (int) mouseX, (int) mouseY);
         }
         else if (mouseX > 56 && mouseX <= 56 + 110 && mouseY > 26 && mouseY <= 27 + 5) {

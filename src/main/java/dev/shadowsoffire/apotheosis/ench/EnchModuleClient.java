@@ -47,7 +47,7 @@ public class EnchModuleClient {
         Item i = e.getItemStack().getItem();
         List<Component> tooltip = e.getToolTip();
         if (i == Items.COBWEB) tooltip.add(Component.translatable("info.apotheosis.cobweb").withStyle(ChatFormatting.GRAY));
-        else if (i == Apoth.Items.PRISMATIC_WEB.get()) tooltip.add(Component.translatable("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
+        else if (i == dev.shadowsoffire.apotheosis.ench.Ench.Items.PRISMATIC_WEB.get()) tooltip.add(Component.translatable("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
         else if (i instanceof BlockItem) {
             Block block = ((BlockItem) i).getBlock();
             Level world = Minecraft.getInstance().level;

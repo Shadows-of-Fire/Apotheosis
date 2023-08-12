@@ -32,7 +32,7 @@ public class ExtractionRecipe extends ApothSmithingRecipe implements ReactiveSmi
     @Override
     public boolean matches(Container pInv, Level pLevel) {
         List<ItemStack> sockets = SocketHelper.getGems(pInv.getItem(0));
-        return pInv.getItem(1).getItem() == Items.VIAL_OF_EXTRACTION.get() && !sockets.isEmpty() && !sockets.get(0).isEmpty();
+        return pInv.getItem(ADDITION).getItem() == Items.VIAL_OF_EXTRACTION.get() && !sockets.isEmpty() && !sockets.get(BASE).isEmpty();
     }
 
     /**
@@ -40,13 +40,13 @@ public class ExtractionRecipe extends ApothSmithingRecipe implements ReactiveSmi
      */
     @Override
     public ItemStack assemble(Container pInv, RegistryAccess regs) {
-        ItemStack out = pInv.getItem(0);
-        return SocketHelper.getGems(out).get(0);
+        ItemStack out = pInv.getItem(BASE);
+        return SocketHelper.getGems(out).get(BASE);
     }
 
     @Override
     public void onCraft(Container inv, Player player, ItemStack output) {
-        ItemStack out = inv.getItem(0);
+        ItemStack out = inv.getItem(BASE);
         List<ItemStack> gems = SocketHelper.getGems(out);
         for (int i = 1; i < gems.size(); i++) {
             ItemStack stack = gems.get(i);

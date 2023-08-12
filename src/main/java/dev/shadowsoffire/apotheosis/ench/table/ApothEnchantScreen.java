@@ -10,9 +10,10 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -33,7 +34,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
-public class ApothEnchantScreen extends EnchantmentScreen {
+public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft {
 
     public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_table.png");
 
@@ -182,7 +183,7 @@ public class ApothEnchantScreen extends EnchantmentScreen {
     public void render(GuiGraphics gfx, int mouseX, int mouseY, float partialTicks) {
         partialTicks = this.minecraft.getFrameTime();
         this.renderBackground(gfx);
-        super.render(gfx, mouseX, mouseY, partialTicks);
+        ((SuperRender) this).apoth_superRender(gfx, mouseX, mouseY, partialTicks);
         this.renderTooltip(gfx, mouseX, mouseY);
         boolean creative = this.minecraft.player.getAbilities().instabuild;
         int lapis = this.menu.getGoldCount();
@@ -207,7 +208,7 @@ public class ApothEnchantScreen extends EnchantmentScreen {
                     }
                 }
                 else if (isFailedInfusion) {
-                    list.add(Apoth.Enchantments.INFUSION.get().getFullname(1).copy().withStyle(ChatFormatting.ITALIC));
+                    list.add(Ench.Enchantments.INFUSION.get().getFullname(1).copy().withStyle(ChatFormatting.ITALIC));
                     Collections.addAll(list, Component.literal(""), Component.translatable("info.apotheosis.infusion_failed").withStyle(ChatFormatting.RED));
                 }
                 else {
@@ -218,7 +219,7 @@ public class ApothEnchantScreen extends EnchantmentScreen {
                 if (enchantment != null && !creative) {
                     list.add(Component.literal(""));
                     if (this.minecraft.player.experienceLevel < level) {
-                        list.add(Component.translatable("container.enchant.level().requirement", this.menu.costs[slot]).withStyle(ChatFormatting.RED));
+                        list.add(Component.translatable("container.enchant.level.requirement", this.menu.costs[slot]).withStyle(ChatFormatting.RED));
                     }
                     else {
                         String s;
@@ -232,10 +233,10 @@ public class ApothEnchantScreen extends EnchantmentScreen {
                         ChatFormatting textformatting = lapis >= cost ? ChatFormatting.GRAY : ChatFormatting.RED;
                         list.add(Component.literal(s).withStyle(textformatting));
                         if (cost == 1) {
-                            s = I18n.get("container.enchant.level().one");
+                            s = I18n.get("container.enchant.level.one");
                         }
                         else {
-                            s = I18n.get("container.enchant.level().many", cost);
+                            s = I18n.get("container.enchant.level.many", cost);
                         }
 
                         list.add(Component.literal(s).withStyle(ChatFormatting.GRAY));
@@ -352,22 +353,6 @@ public class ApothEnchantScreen extends EnchantmentScreen {
         return this.menu;
     }
 
-    public void drawOnLeft(GuiGraphics gfx, List<Component> list, int y) {
-        if (list.isEmpty()) return;
-        int xPos = this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get();
-        int maxWidth = 9999;
-        if (xPos < 0) {
-            maxWidth = this.getGuiLeft() - 6;
-            xPos = -8;
-        }
-
-        List<FormattedText> split = new ArrayList<>();
-        int lambdastupid = maxWidth;
-        list.forEach(comp -> split.addAll(this.font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
-
-        gfx.renderComponentTooltip(font, split, xPos, y, ItemStack.EMPTY);
-    }
-
     public void acceptClues(int slot, List<EnchantmentInstance> clues, boolean all) {
         this.clues.put(slot, clues);
         this.hasAllClues[slot] = all;
@@ -393,4 +378,7 @@ public class ApothEnchantScreen extends EnchantmentScreen {
         return String.format("%.2f", f);
     }
 
+    public static interface SuperRender {
+        public void apoth_superRender(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick);
+    }
 }
