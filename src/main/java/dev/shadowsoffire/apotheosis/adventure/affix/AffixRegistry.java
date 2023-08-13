@@ -24,10 +24,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.effect.SpectralShotAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.TelepathicAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
+import dev.shadowsoffire.apotheosis.adventure.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
 public class AffixRegistry extends DynamicRegistry<Affix> {
@@ -54,21 +54,8 @@ public class AffixRegistry extends DynamicRegistry<Affix> {
         this.byType = builder.build();
         Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
         Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
-        if (!FMLEnvironment.production) {
-            StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
-            boolean any = false;
-            String json = "\"%s\": \"\",";
-            for (Affix a : this.getValues()) {
-                if (!I18n.exists("affix." + a.getId())) {
-                    sb.append(json.formatted("affix." + a.getId()) + "\n");
-                    any = true;
-                }
-                if (!I18n.exists("affix." + a.getId() + ".suffix")) {
-                    sb.append(json.formatted("affix." + a.getId() + ".suffix") + "\n");
-                    any = true;
-                }
-            }
-            if (any) AdventureModule.LOGGER.error(sb.toString());
+        if (!FMLEnvironment.production && FMLEnvironment.dist.isClient()) {
+            AdventureModuleClient.checkAffixLangKeys();
         }
         RarityRegistry.INSTANCE.validateLootRules();
     }

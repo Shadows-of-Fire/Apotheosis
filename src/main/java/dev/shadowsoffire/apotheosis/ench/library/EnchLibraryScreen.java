@@ -101,7 +101,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
                 list.add(Component.literal(""));
             }
 
-            list.add(Component.translatable("tooltip.enchlib.max_lvl", Component.translatable("enchantment.level()." + libSlot.maxLvl)).withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable("tooltip.enchlib.max_lvl", Component.translatable("enchantment.level." + libSlot.maxLvl)).withStyle(ChatFormatting.GRAY));
             list.add(Component.translatable("tooltip.enchlib.points", format(libSlot.points), format(this.menu.getPointCap())).withStyle(ChatFormatting.GRAY));
             list.add(Component.literal(""));
             ItemStack outSlot = this.menu.ioInv.getItem(1);
@@ -112,7 +112,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
             int cost = EnchLibraryTile.levelToPoints(targetLevel) - EnchLibraryTile.levelToPoints(current);
             if (targetLevel > libSlot.maxLvl) list.add(Component.translatable("tooltip.enchlib.unavailable").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
             else {
-                list.add(Component.translatable("tooltip.enchlib.extracting", Component.translatable("enchantment.level()." + targetLevel)).withStyle(ChatFormatting.BLUE));
+                list.add(Component.translatable("tooltip.enchlib.extracting", Component.translatable("enchantment.level." + targetLevel)).withStyle(ChatFormatting.BLUE));
                 list.add(Component.translatable("tooltip.enchlib.cost", cost).withStyle(cost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD));
             }
             gfx.renderComponentTooltip(font, list, this.getGuiLeft() - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY, ItemStack.EMPTY);

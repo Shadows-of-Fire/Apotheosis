@@ -7,13 +7,12 @@ import dev.shadowsoffire.apotheosis.adventure.affix.effect.MagicalArrowAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.OmneticAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.RadialAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.TelepathicAffix;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
@@ -73,7 +72,8 @@ public class Apoth {
 
     public static final class Enchantments {
 
-        public static final RegistryObject<CapturingEnchant> CAPTURING = Apoth.R.enchant("CAPTURING");}
+        public static final RegistryObject<CapturingEnchant> CAPTURING = Apoth.R.enchant("CAPTURING");
+    }
 
     public static final class Potions {
         public static final RegistryObject<Potion> RESISTANCE = R.potion("RESISTANCE");
@@ -139,16 +139,6 @@ public class Apoth {
         public static final DynamicHolder<RadialAffix> RADIAL = AffixRegistry.INSTANCE.holder(Apotheosis.loc("breaker/special/radial"));
     }
 
-    @Deprecated
-    public static final class Rarities {
-        public static final DynamicHolder<LootRarity> COMMON = RarityRegistry.INSTANCE.holder(Apotheosis.loc("common"));
-        public static final DynamicHolder<LootRarity> UNCOMMON = RarityRegistry.INSTANCE.holder(Apotheosis.loc("uncommon"));
-        public static final DynamicHolder<LootRarity> RARE = RarityRegistry.INSTANCE.holder(Apotheosis.loc("rare"));
-        public static final DynamicHolder<LootRarity> EPIC = RarityRegistry.INSTANCE.holder(Apotheosis.loc("epic"));
-        public static final DynamicHolder<LootRarity> MYTHIC = RarityRegistry.INSTANCE.holder(Apotheosis.loc("mythic"));
-        public static final DynamicHolder<LootRarity> ANCIENT = RarityRegistry.INSTANCE.holder(Apotheosis.loc("ancient"));
-    }
-
     public static final class Tags {
         public static final TagKey<Item> BOON_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "boon_drops"));
         public static final TagKey<Item> SPEARFISHING_DROPS = ItemTags.create(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"));
@@ -159,6 +149,7 @@ public class Apoth {
         public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
         public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
         public static final RecipeType<SalvagingRecipe> SALVAGING = PlaceboUtil.makeRecipeType("apotheosis:salvaging");
+        public static final RecipeType<ReforgingRecipe> REFORGING = PlaceboUtil.makeRecipeType("apotheosis:reforging");
     }
 
     public static final class LootTables {

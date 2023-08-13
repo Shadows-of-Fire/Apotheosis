@@ -57,12 +57,7 @@ public class AdventureConfig {
     public static boolean bossAutoAggro = false;
     public static boolean bossGlowOnSpawn = true;
 
-    // Generation Chances
-    public static int bossDungeonAttempts = 8;
-    public static int bossDungeon2Attempts = 8;
-    public static int rogueSpawnerAttempts = 4;
-    // public static int troveAttempts = 8;
-    // public static int tomeTowerChance = 125;
+    // Generation
     public static float spawnerValueChance = 0.11F;
 
     // Affix
@@ -234,10 +229,6 @@ public class AdventureConfig {
                 AdventureModule.LOGGER.error("Invalid dim whitelist entry: " + s + " will be ignored");
             }
         }
-
-        bossDungeonAttempts = c.getInt("Boss Dungeon Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon generation attempts per-chunk.");
-        bossDungeon2Attempts = c.getInt("Boss Dungeon (Variant 2) Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon (variant 2) generation attempts per-chunk.");
-        rogueSpawnerAttempts = c.getInt("Rogue Spawner Attempts", "worldgen", 4, 0, 256, "The number of rogue spawner generation attempts per-chunk.");
 
         spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
 

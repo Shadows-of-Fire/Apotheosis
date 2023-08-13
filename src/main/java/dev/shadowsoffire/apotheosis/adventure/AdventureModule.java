@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
@@ -150,6 +151,7 @@ public class AdventureModule {
         e.getRegistry().register(UnnamingRecipe.Serializer.INSTANCE, "unnaming");
         e.getRegistry().register(AddSocketsRecipe.Serializer.INSTANCE, "add_sockets");
         e.getRegistry().register(SalvagingRecipe.Serializer.INSTANCE, "salvaging");
+        e.getRegistry().register(ReforgingRecipe.Serializer.INSTANCE, "reforging");
     }
 
     @SubscribeEvent

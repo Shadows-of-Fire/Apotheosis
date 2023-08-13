@@ -1,6 +1,9 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
+import org.jetbrains.annotations.Nullable;
+
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
@@ -47,12 +50,17 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
     }
 
     public LootRarity getMaxRarity() {
-        return ((ReforgingTableBlock) this.getBlockState().getBlock()).getMaxRarity();
+        return RarityRegistry.getMaxRarity().get(); // ((ReforgingTableBlock) this.getBlockState().getBlock()).getMaxRarity();
     }
 
     public boolean isValidRarityMat(ItemStack stack) {
         DynamicHolder<LootRarity> rarity = RarityRegistry.getMaterialRarity(stack.getItem());
-        return rarity.isBound() && this.getMaxRarity().isAtLeast(rarity.get());
+        return rarity.isBound() && this.getMaxRarity().isAtLeast(rarity.get()) && getRecipeFor(rarity.get()) != null;
+    }
+
+    @Nullable
+    public ReforgingRecipe getRecipeFor(LootRarity rarity) {
+        return this.level.getRecipeManager().getAllRecipesFor(RecipeTypes.REFORGING).stream().filter(r -> r.rarity().get() == rarity).findFirst().orElse(null);
     }
 
     @Override

@@ -98,7 +98,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         var mainGem = GemInstance.unsocketed(this.inv.getStackInSlot(0));
         if (!mainGem.isValidUnsocketed()) return false;
         DynamicHolder<LootRarity> rarity = RarityRegistry.getMaterialRarity(stack.getItem());
-        return rarity != null && Math.abs(rarity.get().ordinal() - mainGem.rarity().get().ordinal()) <= 1;
+        return rarity.isBound() && Math.abs(rarity.get().ordinal() - mainGem.rarity().get().ordinal()) <= 1;
     }
 
     protected boolean matchesMainGem(ItemStack stack) {

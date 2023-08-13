@@ -1,6 +1,11 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.0.1
+* Fixed an issue where players could not log into servers.
+* Made Reforging costs use recipes instead of the adventure module config.
+* Fixed some broken translation keys.
+
 ## 7.0.0
 * Updated to 1.20.1.
 

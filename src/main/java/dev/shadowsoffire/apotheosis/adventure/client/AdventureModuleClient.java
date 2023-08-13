@@ -23,9 +23,11 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
@@ -47,6 +49,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -251,6 +254,23 @@ public class AdventureModuleClient {
             super(s, v, m, i, b, b2, r, r2);
             throw new IllegalStateException("This class is not meant to be constructed!");
         }
+    }
+
+    public static void checkAffixLangKeys() {
+        StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
+        boolean any = false;
+        String json = "\"%s\": \"\",";
+        for (Affix a : AffixRegistry.INSTANCE.getValues()) {
+            if (!I18n.exists("affix." + a.getId())) {
+                sb.append(json.formatted("affix." + a.getId()) + "\n");
+                any = true;
+            }
+            if (!I18n.exists("affix." + a.getId() + ".suffix")) {
+                sb.append(json.formatted("affix." + a.getId() + ".suffix") + "\n");
+                any = true;
+            }
+        }
+        if (any) AdventureModule.LOGGER.error(sb.toString());
     }
 
 }

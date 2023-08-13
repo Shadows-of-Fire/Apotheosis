@@ -100,7 +100,7 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
     @Override
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> list, TooltipFlag advanced) {
-        list.add(Component.translatable("tooltip.enchlib.capacity", Component.translatable("enchantment.level()." + this.maxLevel)).withStyle(ChatFormatting.GOLD));
+        list.add(Component.translatable("tooltip.enchlib.capacity", Component.translatable("enchantment.level." + this.maxLevel)).withStyle(ChatFormatting.GOLD));
         CompoundTag tag = stack.getTagElement("BlockEntityTag");
         if (tag != null && tag.contains("Points")) {
             list.add(Component.translatable("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(ChatFormatting.GOLD));

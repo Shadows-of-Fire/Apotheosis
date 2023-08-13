@@ -299,7 +299,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.addModLoader('NeoForge')
     mainFile.addJavaVersion("Java ${javaVersion}")
     mainFile.addGameVersion("${mcVersion}")
-    mainFile.releaseType = "release"
+    mainFile.releaseType = "alpha"
 
     if (project.hasProperty('requiredDeps')) {
         mainFile.addRequirement(splitDeps("${requiredDeps}"))

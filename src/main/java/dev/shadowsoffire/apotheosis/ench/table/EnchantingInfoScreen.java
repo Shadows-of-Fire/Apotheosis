@@ -145,7 +145,7 @@ public class EnchantingInfoScreen extends Screen {
         if (hover != null) {
             list.clear();
             list.add(Component.translatable(hover.data.enchantment.getDescriptionId()).withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
-            list.add(Component.translatable("info.apotheosis.enchinfo_level", Component.translatable("enchantment.level()." + hover.data.level)).withStyle(ChatFormatting.DARK_AQUA));
+            list.add(Component.translatable("info.apotheosis.enchinfo_level", Component.translatable("enchantment.level." + hover.data.level)).withStyle(ChatFormatting.DARK_AQUA));
             Component rarity = Component.translatable("rarity.enchantment." + hover.data.enchantment.getRarity().name().toLowerCase(Locale.ROOT)).withStyle(colors[hover.data.enchantment.getRarity().ordinal()]);
             list.add(Component.translatable("info.apotheosis.enchinfo_rarity", rarity).withStyle(ChatFormatting.DARK_AQUA));
             list.add(Component.translatable("info.apotheosis.enchinfo_chance", String.format("%.2f", 100F * hover.getWeight().asInt() / WeightedRandom.getTotalWeight(this.enchantments)) + "%").withStyle(ChatFormatting.DARK_AQUA));

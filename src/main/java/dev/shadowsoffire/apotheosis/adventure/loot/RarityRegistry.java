@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -40,7 +38,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
     protected BiMap<Item, DynamicHolder<LootRarity>> materialMap = HashBiMap.create();
 
     private RarityRegistry() {
-        super(AdventureModule.LOGGER, "rarities", false, false);
+        super(AdventureModule.LOGGER, "rarities", true, false);
     }
 
     /**
@@ -50,17 +48,16 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
      * @return True if the item is a rarity material.
      */
     public static boolean isMaterial(Item item) {
-        return getMaterialRarity(item) != null;
+        return getMaterialRarity(item).isBound();
     }
 
     /**
      * Returns the rarity associated with the passed rarity material.
      * <p>
-     * Guaranted to be {@linkplain DynamicHolder#isBound() bound}, if the return value is not null.
+     * May be unbound.
      */
-    @Nullable
     public static DynamicHolder<LootRarity> getMaterialRarity(Item item) {
-        return INSTANCE.materialMap.get(item);
+        return INSTANCE.materialMap.getOrDefault(item, INSTANCE.emptyHolder());
     }
 
     /**

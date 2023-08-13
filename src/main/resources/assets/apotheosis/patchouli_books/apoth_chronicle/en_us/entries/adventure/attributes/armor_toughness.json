@@ -11,7 +11,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "Each point of Armor Toughness reduces the effectiveness of Armor Pierce and Armor Shred by 1%, up to 50%.$(p)This function is unique to Apotheosis. In Vanilla Minecraft, Armor Toughness contributes to damage reduction."
+			"text": "Each point of Armor Toughness reduces the effectiveness of Armor Pierce and Armor Shred by 2%, up to 60%.$(p)This function is unique to Apotheosis. In Vanilla Minecraft, Armor Toughness contributes to damage reduction."
 		}
 	]
 }
