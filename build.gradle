@@ -34,10 +34,9 @@ minecraft {
         }
 
         client = {
-            args (project.mixin.toBoolean() ? "-mixin.config=${modid}.mixins.json" : "")
         }
         server = {
-            args "--nogui", (project.mixin.toBoolean() ? "-mixin.config=${modid}.mixins.json" : "")
+            args "--nogui"
         }
         data = {
             workingDirectory project.file('run-data')
@@ -96,7 +95,10 @@ dependencies {
 }
 
 mixin {
-    if(project.mixin.toBoolean()) add sourceSets.main, "${modid}.refmap.json"
+    if (project.mixin.toBoolean()) {
+        config "${modid}.mixins.json"
+        add sourceSets.main, "${modid}.refmap.json"
+    }
 }
 
 tasks.named('processResources', ProcessResources).configure {
