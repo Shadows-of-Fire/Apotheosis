@@ -1,0 +1,20 @@
+{
+    "name": "Уровни 1 - 30",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Достижение уровня 30",
+			"recipe": "minecraft:bookshelf",
+			"text": "Достижение уровня 30 сделано обычным способом, с пятнадцатью книжными полками."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Другие Статистики",
+			"item": "minecraft:skeleton_skull",
+			"text": "На данном этапе есть несколько основных вариантов увеличения других характеристик.$(p)Вы можете использовать Свечи для увеличения $(таинство), Черепа для увеличения $(кванты) и Аметистовые Кластеры для увеличения $(исправление).."
+		}
+	]
+}

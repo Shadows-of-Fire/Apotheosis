@@ -23,42 +23,40 @@ import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class RandomSpawnerManager extends WeightedJsonReloadListener<SpawnerItem> {
 
-	//Formatter::off
-	public static final Gson GSON = new GsonBuilder()
-			.setPrettyPrinting()
-			.registerTypeAdapter(new TypeToken<SimpleWeightedRandomList<SpawnData>>() {}.getType(), new SpawnDataListAdapter())
-			.registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
-			.registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
-			.create();
-	//Formatter::on
+    public static final Gson GSON = new GsonBuilder()
+        .setPrettyPrinting()
+        .registerTypeAdapter(new TypeToken<SimpleWeightedRandomList<SpawnData>>(){}.getType(), new SpawnDataListAdapter())
+        .registerTypeAdapter(ResourceLocation.class, new ResourceLocation.Serializer())
+        .registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE)
+        .create();
 
-	public static final RandomSpawnerManager INSTANCE = new RandomSpawnerManager();
+    public static final RandomSpawnerManager INSTANCE = new RandomSpawnerManager();
 
-	public RandomSpawnerManager() {
-		super(AdventureModule.LOGGER, "random_spawners", false, false);
-	}
+    public RandomSpawnerManager() {
+        super(AdventureModule.LOGGER, "random_spawners", false, false);
+    }
 
-	@Override
-	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, SpawnerItem.SERIALIZER);
-	}
+    @Override
+    protected void registerBuiltinSerializers() {
+        this.registerSerializer(DEFAULT, SpawnerItem.SERIALIZER);
+    }
 
-	private static class SpawnDataListAdapter implements JsonDeserializer<SimpleWeightedRandomList<SpawnData>>, JsonSerializer<SimpleWeightedRandomList<SpawnData>> {
+    private static class SpawnDataListAdapter implements JsonDeserializer<SimpleWeightedRandomList<SpawnData>>, JsonSerializer<SimpleWeightedRandomList<SpawnData>> {
 
-		@Override
-		public SimpleWeightedRandomList<SpawnData> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-			return SpawnData.LIST_CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, s -> {
-				throw new RuntimeException("Failed to parse SpawnDataList " + s);
-			});
-		}
+        @Override
+        public SimpleWeightedRandomList<SpawnData> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return SpawnData.LIST_CODEC.parse(JsonOps.INSTANCE, json).getOrThrow(false, s -> {
+                throw new RuntimeException("Failed to parse SpawnDataList " + s);
+            });
+        }
 
-		@Override
-		public JsonElement serialize(SimpleWeightedRandomList<SpawnData> src, Type typeOfSrc, JsonSerializationContext context) {
-			return SpawnData.LIST_CODEC.encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> {
-				throw new RuntimeException("Failed to encode SpawnListData " + s);
-			});
-		}
+        @Override
+        public JsonElement serialize(SimpleWeightedRandomList<SpawnData> src, Type typeOfSrc, JsonSerializationContext context) {
+            return SpawnData.LIST_CODEC.encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> {
+                throw new RuntimeException("Failed to encode SpawnListData " + s);
+            });
+        }
 
-	}
+    }
 
 }

@@ -11,33 +11,34 @@ import shadows.apotheosis.adventure.affix.socket.SocketHelper;
  * This event is fired on the {@link MinecraftForge#EVENT_BUS}.
  */
 public class GetItemSocketsEvent extends Event {
-	protected final ItemStack stack;
-	protected int sockets;
+    protected final ItemStack stack;
+    protected int sockets;
 
-	public GetItemSocketsEvent(ItemStack stack, int sockets) {
-		this.stack = stack;
-		this.sockets = sockets;
-	}
+    public GetItemSocketsEvent(ItemStack stack, int sockets) {
+        this.stack = stack;
+        this.sockets = sockets;
+    }
 
-	/**
-	 * @return The item whose socket value is being calculated.
-	 */
-	public ItemStack getStack() {
-		return stack;
-	}
+    /**
+     * @return The item whose socket value is being calculated.
+     */
+    public ItemStack getStack() {
+        return this.stack;
+    }
 
-	/**
-	 * @return The (possibly event-modified) number of sockets this item has.
-	 */
-	public int getSockets() {
-		return sockets;
-	}
+    /**
+     * @return The (possibly event-modified) number of sockets this item has.
+     */
+    public int getSockets() {
+        return this.sockets;
+    }
 
-	/**
-	 * Sets the number of sockets the item will have to a given amount.
-	 * @param sockets The new socket count.
-	 */
-	public void setSockets(int sockets) {
-		this.sockets = sockets;
-	}
+    /**
+     * Sets the number of sockets the item will have to a given amount.
+     *
+     * @param sockets The new socket count.
+     */
+    public void setSockets(int sockets) {
+        this.sockets = sockets;
+    }
 }

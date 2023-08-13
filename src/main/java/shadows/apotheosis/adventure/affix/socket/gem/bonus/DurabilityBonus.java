@@ -18,52 +18,49 @@ import shadows.placebo.util.StepFunction;
 
 public class DurabilityBonus extends GemBonus {
 
-	//Formatter::off
-	public static Codec<DurabilityBonus> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			gemClass(),
-			VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, DurabilityBonus::new)
-		);
-	//Formatter::on
+    public static Codec<DurabilityBonus> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            gemClass(),
+            VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, DurabilityBonus::new));
 
-	protected final Map<LootRarity, StepFunction> values;
+    protected final Map<LootRarity, StepFunction> values;
 
-	public DurabilityBonus(GemClass gemClass, Map<LootRarity, StepFunction> values) {
-		super(Apotheosis.loc("durability"), gemClass);
-		this.values = values;
-	}
+    public DurabilityBonus(GemClass gemClass, Map<LootRarity, StepFunction> values) {
+        super(Apotheosis.loc("durability"), gemClass);
+        this.values = values;
+    }
 
-	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-		float level = this.values.get(rarity).get(0);
-		return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(ChatFormatting.YELLOW);
-	}
+    @Override
+    public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+        float level = this.values.get(rarity).get(0);
+        return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(100 * level)).withStyle(ChatFormatting.YELLOW);
+    }
 
-	@Override
-	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, ServerPlayer user) {
-		return this.values.get(rarity).min();
-	}
+    @Override
+    public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, ServerPlayer user) {
+        return this.values.get(rarity).min();
+    }
 
-	@Override
-	public GemBonus validate() {
-		Preconditions.checkNotNull(this.values, "Invalid AttributeBonus with null values");
-		return this;
-	}
+    @Override
+    public GemBonus validate() {
+        Preconditions.checkNotNull(this.values, "Invalid AttributeBonus with null values");
+        return this;
+    }
 
-	@Override
-	public boolean supports(LootRarity rarity) {
-		return this.values.containsKey(rarity);
-	}
+    @Override
+    public boolean supports(LootRarity rarity) {
+        return this.values.containsKey(rarity);
+    }
 
-	@Override
-	public int getNumberOfUUIDs() {
-		return 0;
-	}
+    @Override
+    public int getNumberOfUUIDs() {
+        return 0;
+    }
 
-	@Override
-	public Codec<? extends GemBonus> getCodec() {
-		return CODEC;
-	}
+    @Override
+    public Codec<? extends GemBonus> getCodec() {
+        return CODEC;
+    }
 
 }

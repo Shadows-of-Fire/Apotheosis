@@ -14,13 +14,13 @@ import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
  */
 public class PercentBasedAttribute extends RangedAttribute implements IFormattableAttribute {
 
-	public PercentBasedAttribute(String pDescriptionId, double pDefaultValue, double pMin, double pMax) {
-		super(pDescriptionId, pDefaultValue, pMin, pMax);
-	}
+    public PercentBasedAttribute(String pDescriptionId, double pDefaultValue, double pMin, double pMax) {
+        super(pDescriptionId, pDefaultValue, pMin, pMax);
+    }
 
-	@Override
-	public MutableComponent toValueComponent(Operation op, double value, TooltipFlag flag) {
-		return Component.translatable("attributeslib.value.percent", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(value * 100));
-	}
+    @Override
+    public MutableComponent toValueComponent(Operation op, double value, TooltipFlag flag) {
+        return Component.translatable("attributeslib.value.percent", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(value * 100));
+    }
 
 }

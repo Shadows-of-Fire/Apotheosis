@@ -13,24 +13,24 @@ import shadows.apotheosis.Apotheosis;
 @Mixin(ShearsItem.class)
 public class ShearsItemMixin extends Item {
 
-	public ShearsItemMixin(Properties pProperties) {
-		super(pProperties);
-	}
+    public ShearsItemMixin(Properties pProperties) {
+        super(pProperties);
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment ench) {
-		if (!Apotheosis.enableEnch) return super.canApplyAtEnchantingTable(stack, ench);
-		return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.BLOCK_EFFICIENCY || ench == Enchantments.BLOCK_FORTUNE;
-	}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment ench) {
+        if (!Apotheosis.enableEnch) return super.canApplyAtEnchantingTable(stack, ench);
+        return super.canApplyAtEnchantingTable(stack, ench) || ench == Enchantments.UNBREAKING || ench == Enchantments.BLOCK_EFFICIENCY || ench == Enchantments.BLOCK_FORTUNE;
+    }
 
-	@Override
-	public int getEnchantmentValue() {
-		return Apotheosis.enableEnch ? 15 : 0;
-	}
+    @Override
+    public int getEnchantmentValue() {
+        return Apotheosis.enableEnch ? 15 : 0;
+    }
 
-	@Override
-	public String getCreatorModId(ItemStack itemStack) {
-		return Apotheosis.enableEnch && this == Items.SHEARS ? Apotheosis.MODID : super.getCreatorModId(itemStack);
-	}
+    @Override
+    public String getCreatorModId(ItemStack itemStack) {
+        return Apotheosis.enableEnch && this == Items.SHEARS ? Apotheosis.MODID : super.getCreatorModId(itemStack);
+    }
 
 }

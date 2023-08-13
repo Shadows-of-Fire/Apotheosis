@@ -51,222 +51,229 @@ import shadows.placebo.util.StepFunction;
 
 public abstract class GemBonus implements CodecProvider<GemBonus> {
 
-	public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
-	public static final BiMap<ResourceLocation, Codec<? extends GemBonus>> CODECS = HashBiMap.create();
-	public static final Codec<GemBonus> CODEC = PlaceboCodecs.mapBacked("Gem Bonus", CODECS);
+    public static final SimpleMapCodec<LootRarity, StepFunction> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
+    public static final BiMap<ResourceLocation, Codec<? extends GemBonus>> CODECS = HashBiMap.create();
+    public static final Codec<GemBonus> CODEC = PlaceboCodecs.mapBacked("Gem Bonus", CODECS);
 
-	protected final ResourceLocation id;
-	protected final GemClass gemClass;
+    protected final ResourceLocation id;
+    protected final GemClass gemClass;
 
-	public GemBonus(ResourceLocation id, GemClass gemClass) {
-		this.id = id;
-		this.gemClass = gemClass;
-	}
+    public GemBonus(ResourceLocation id, GemClass gemClass) {
+        this.id = id;
+        this.gemClass = gemClass;
+    }
 
-	/**
-	 * Validates that this gem bonus has been deserialized into a valid state.
-	 * If not, throws an error.
-	 * @return this
-	 * @apiNote Overriders should strongly-type to their class.
-	 */
-	public abstract GemBonus validate();
+    /**
+     * Validates that this gem bonus has been deserialized into a valid state.
+     * If not, throws an error.
+     *
+     * @return this
+     * @apiNote Overriders should strongly-type to their class.
+     */
+    public abstract GemBonus validate();
 
-	/**
-	 * Checks if this bonus supports the rarity.
-	 * @param rarity The rarity being checked.
-	 * @return True, if this bonus contains values for the specified rarity.
-	 * @apiNote Other methods in this class will throw an exception if the bonus does not support the rarity.
-	 */
-	public abstract boolean supports(LootRarity rarity);
+    /**
+     * Checks if this bonus supports the rarity.
+     *
+     * @param rarity The rarity being checked.
+     * @return True, if this bonus contains values for the specified rarity.
+     * @apiNote Other methods in this class will throw an exception if the bonus does not support the rarity.
+     */
+    public abstract boolean supports(LootRarity rarity);
 
-	/**
-	 * Returns the number of UUIDs that need to be generated for this Gem to operate properly.<br>
-	 * This should be equal to the maximum amount of attribute modifiers that need to be generated for proper usage.
-	 */
-	public abstract int getNumberOfUUIDs();
+    /**
+     * Returns the number of UUIDs that need to be generated for this Gem to operate properly.<br>
+     * This should be equal to the maximum amount of attribute modifiers that need to be generated for proper usage.
+     */
+    public abstract int getNumberOfUUIDs();
 
-	/**
-	 * Gets the one-line socket bonus tooltip.
-	 * @param gem    The gem stack.
-	 * @param rarity The rarity of the gem.
-	 */
-	public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity);
+    /**
+     * Gets the one-line socket bonus tooltip.
+     *
+     * @param gem    The gem stack.
+     * @param rarity The rarity of the gem.
+     */
+    public abstract Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity);
 
-	/**
-	 * Retrieve the modifiers from this bonus to be applied to the socketed stack.<br>
-	 * This method will be called once for each slot based on the category this bonus is for.
-	 * <p>
-	 * For modifiers created here, they should use the UUIDs from {@link GemItem.getUUIDs(gem)}
-	 * @param gem    The gem stack.
-	 * @param rarity The rarity of the gem.
-	 * @param map    The destination for generated attribute modifiers.
-	 */
-	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
-	}
+    /**
+     * Retrieve the modifiers from this bonus to be applied to the socketed stack.<br>
+     * This method will be called once for each slot based on the category this bonus is for.
+     * <p>
+     * For modifiers created here, they should use the UUIDs from {@link GemItem.getUUIDs(gem)}
+     *
+     * @param gem    The gem stack.
+     * @param rarity The rarity of the gem.
+     * @param map    The destination for generated attribute modifiers.
+     */
+    public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {}
 
-	/**
-	 * Calculates the protection value of this bonus, with respect to the given damage source.
-	 * @param gem    The gem stack.
-	 * @param rarity The rarity of the gem.
-	 * @param source The damage source to compare against.
-	 * @return How many protection points this affix is worth against this source.
-	 */
-	public int getDamageProtection(ItemStack gem, LootRarity rarity, DamageSource source) {
-		return 0;
-	}
+    /**
+     * Calculates the protection value of this bonus, with respect to the given damage source.
+     *
+     * @param gem    The gem stack.
+     * @param rarity The rarity of the gem.
+     * @param source The damage source to compare against.
+     * @return How many protection points this affix is worth against this source.
+     */
+    public int getDamageProtection(ItemStack gem, LootRarity rarity, DamageSource source) {
+        return 0;
+    }
 
-	/**
-	 * Calculates the additional damage this bonus provides.
-	 * This damage is dealt as player physical damage.
-	 * @param gem    The gem stack.
-	 * @param rarity The rarity of the gem.
-	 * @param type   The type of the mob.
-	 */
-	public float getDamageBonus(ItemStack gem, LootRarity rarity, MobType type) {
-		return 0.0F;
-	}
+    /**
+     * Calculates the additional damage this bonus provides.
+     * This damage is dealt as player physical damage.
+     *
+     * @param gem    The gem stack.
+     * @param rarity The rarity of the gem.
+     * @param type   The type of the mob.
+     */
+    public float getDamageBonus(ItemStack gem, LootRarity rarity, MobType type) {
+        return 0.0F;
+    }
 
-	/**
-	 * Called when someone attacks an entity with an item that has this bonus.<br>
-	 * Specifically, this is invoked whenever the user attacks a target, while having an item with this bonus in either hand or any armor slot.
-	 * @param gem    The gem stack.
-	 * @param rarity The rarity of the gem.
-	 * @param user   The wielder of the weapon. The weapon stack will be in their main hand.
-	 * @param target The target entity being attacked.
-	 */
-	public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity target) {
-	}
+    /**
+     * Called when someone attacks an entity with an item that has this bonus.<br>
+     * Specifically, this is invoked whenever the user attacks a target, while having an item with this bonus in either hand or any armor slot.
+     *
+     * @param gem    The gem stack.
+     * @param rarity The rarity of the gem.
+     * @param user   The wielder of the weapon. The weapon stack will be in their main hand.
+     * @param target The target entity being attacked.
+     */
+    public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity target) {}
 
-	/**
-	 * Called when an entity that has this bonus on one of its armor items is damaged.
-	 * @param gem      The gem stack.
-	 * @param rarity   The rarity of the gem.
-	 * @param user     The entity wearing an itme with this bonus.
-	 * @param attacker The entity attacking the user.
-	 */
-	public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity attacker) {
-	}
+    /**
+     * Called when an entity that has this bonus on one of its armor items is damaged.
+     *
+     * @param gem      The gem stack.
+     * @param rarity   The rarity of the gem.
+     * @param user     The entity wearing an itme with this bonus.
+     * @param attacker The entity attacking the user.
+     */
+    public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, @Nullable Entity attacker) {}
 
-	/**
-	 * Called when a user fires an arrow from a bow or crossbow with this affix on it.
-	 */
-	public void onArrowFired(ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {
-	}
+    /**
+     * Called when a user fires an arrow from a bow or crossbow with this affix on it.
+     */
+    public void onArrowFired(ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {}
 
-	/**
-	 * Called when {@link Item#onItemUse(ItemUseContext)} would be called for an item with this affix.
-	 * Return null to not impact the original result type.
-	 */
-	@Nullable
-	public InteractionResult onItemUse(ItemStack gem, LootRarity rarity, UseOnContext ctx) {
-		return null;
-	}
+    /**
+     * Called when {@link Item#onItemUse(ItemUseContext)} would be called for an item with this affix.
+     * Return null to not impact the original result type.
+     */
+    @Nullable
+    public InteractionResult onItemUse(ItemStack gem, LootRarity rarity, UseOnContext ctx) {
+        return null;
+    }
 
-	/**
-	 * Called when an arrow that was marked with this affix hits a target.
-	 */
-	public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, HitResult.Type type) {
-	}
+    /**
+     * Called when an arrow that was marked with this affix hits a target.
+     */
+    public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, HitResult.Type type) {}
 
-	/**
-	 * Called when a shield with this affix blocks some amount of damage.
-	 * @param entity The blocking entity.
-	 * @param source The damage source being blocked.
-	 * @param amount The amount of damage blocked.
-	 * @param purity The purity of this gem.
-	 * @return	     The amount of damage that is *actually* blocked by the shield, after this affix applies.
-	 */
-	public float onShieldBlock(ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
-		return amount;
-	}
+    /**
+     * Called when a shield with this affix blocks some amount of damage.
+     *
+     * @param entity The blocking entity.
+     * @param source The damage source being blocked.
+     * @param amount The amount of damage blocked.
+     * @param purity The purity of this gem.
+     * @return The amount of damage that is *actually* blocked by the shield, after this affix applies.
+     */
+    public float onShieldBlock(ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
+        return amount;
+    }
 
-	/**
-	 * Called when a player with this affix breaks a block.
-	 * @param player The breaking player.
-	 * @param world  The level the block was broken in.
-	 * @param pos    The position of the block.
-	 * @param state  The state that was broken.
-	 */
-	public void onBlockBreak(ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
+    /**
+     * Called when a player with this affix breaks a block.
+     *
+     * @param player The breaking player.
+     * @param world  The level the block was broken in.
+     * @param pos    The position of the block.
+     * @param state  The state that was broken.
+     */
+    public void onBlockBreak(ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
 
-	}
+    }
 
-	/**
-	 * Allows an affix to reduce durability damage to an item.
-	 * @param gem     The stack representing this gem.
-	 * @param rarity  The rarity of the item.
-	 * @param level   The level of the affix.
-	 * @param user    The user of the item, if applicable.
-	 * @return        The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
-	 */
-	public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, @Nullable ServerPlayer user) {
-		return 0;
-	}
+    /**
+     * Allows an affix to reduce durability damage to an item.
+     *
+     * @param gem    The stack representing this gem.
+     * @param rarity The rarity of the item.
+     * @param level  The level of the affix.
+     * @param user   The user of the item, if applicable.
+     * @return The percentage [0, 1] of durability damage to ignore. This value will be summed with all other affixes that increase it.
+     */
+    public float getDurabilityBonusPercentage(ItemStack gem, LootRarity rarity, @Nullable ServerPlayer user) {
+        return 0;
+    }
 
-	/**
-	 * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
-	 * If the value is set to zero or below, the event will be cancelled.
-	 * @param gem     The stack representing this gem.
-	 * @param rarity  The rarity of the item.
-	 * @param level   The level of the affix.
-	 * @param src     The Damage Source of the attack.
-	 * @param user    The entity being attacked.
-	 * @param amount  The amount of damage that is to be taken.
-	 * @return        The amount of damage that will be taken, after modification. This value will propagate to other bonuses.
-	 */
-	public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity user, float amount) {
-		return amount;
-	}
+    /**
+     * Fires during the {@link LivingHurtEvent}, and allows for modification of the damage value.<br>
+     * If the value is set to zero or below, the event will be cancelled.
+     *
+     * @param gem    The stack representing this gem.
+     * @param rarity The rarity of the item.
+     * @param level  The level of the affix.
+     * @param src    The Damage Source of the attack.
+     * @param user   The entity being attacked.
+     * @param amount The amount of damage that is to be taken.
+     * @return The amount of damage that will be taken, after modification. This value will propagate to other bonuses.
+     */
+    public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity user, float amount) {
+        return amount;
+    }
 
-	/**
-	 * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
-	 * @param gem       The stack representing this gem.
-	 * @param rarity    The rarity of the item.
-	 * @param level     The level of the affix.
-	 * @param ench      The enchantment being queried for.
-	 * @return          The bonus level to be added to the current enchantment.
-	 */
-	public void getEnchantmentLevels(ItemStack gem, LootRarity rarity, Map<Enchantment, Integer> enchantments) {
-	}
+    /**
+     * Fires during {@link GetEnchantmentLevelEvent} and allows for increasing enchantment levels.
+     *
+     * @param gem    The stack representing this gem.
+     * @param rarity The rarity of the item.
+     * @param level  The level of the affix.
+     * @param ench   The enchantment being queried for.
+     * @return The bonus level to be added to the current enchantment.
+     */
+    public void getEnchantmentLevels(ItemStack gem, LootRarity rarity, Map<Enchantment, Integer> enchantments) {}
 
-	/**
-	 * Fires from {@link LootModifier#apply(ObjectArrayList, LootContext)} when this bonus is active on the tool given by the context.
-	 * @param gem      The gem itemstack.
-	 * @param rarity   The rarity of the gem.
-	 * @param loot     The generated loot.
-	 * @param ctx      The loot context.
-	 */
-	public void modifyLoot(ItemStack gem, LootRarity rarity, ObjectArrayList<ItemStack> loot, LootContext ctx) {
-	}
+    /**
+     * Fires from {@link LootModifier#apply(ObjectArrayList, LootContext)} when this bonus is active on the tool given by the context.
+     *
+     * @param gem    The gem itemstack.
+     * @param rarity The rarity of the gem.
+     * @param loot   The generated loot.
+     * @param ctx    The loot context.
+     */
+    public void modifyLoot(ItemStack gem, LootRarity rarity, ObjectArrayList<ItemStack> loot, LootContext ctx) {}
 
-	public ResourceLocation getId() {
-		return this.id;
-	}
+    public ResourceLocation getId() {
+        return this.id;
+    }
 
-	public GemClass getGemClass() {
-		return this.gemClass;
-	}
+    public GemClass getGemClass() {
+        return this.gemClass;
+    }
 
-	protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {
-		return GemClass.CODEC.fieldOf("gem_class").forGetter(gem -> gem.getGemClass());
-	}
+    protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {
+        return GemClass.CODEC.fieldOf("gem_class").forGetter(GemBonus::getGemClass);
+    }
 
-	public static void initCodecs() {
-		register("attribute", AttributeBonus.CODEC);
-		register("multi_attribute", MultiAttrBonus.CODEC);
-		register("durability", DurabilityBonus.CODEC);
-		register("damage_reduction", DamageReductionBonus.CODEC);
-		register("enchantment", EnchantmentBonus.CODEC);
-		register("bloody_arrow", BloodyArrowBonus.CODEC);
-		register("leech_block", LeechBlockBonus.CODEC);
-		register("all_stats", AllStatsBonus.CODEC);
-		register("drop_transform", DropTransformBonus.CODEC);
-		register("mageslayer", MageSlayerBonus.CODEC);
-		register("mob_effect", PotionBonus.CODEC);
-	}
+    public static void initCodecs() {
+        register("attribute", AttributeBonus.CODEC);
+        register("multi_attribute", MultiAttrBonus.CODEC);
+        register("durability", DurabilityBonus.CODEC);
+        register("damage_reduction", DamageReductionBonus.CODEC);
+        register("enchantment", EnchantmentBonus.CODEC);
+        register("bloody_arrow", BloodyArrowBonus.CODEC);
+        register("leech_block", LeechBlockBonus.CODEC);
+        register("all_stats", AllStatsBonus.CODEC);
+        register("drop_transform", DropTransformBonus.CODEC);
+        register("mageslayer", MageSlayerBonus.CODEC);
+        register("mob_effect", PotionBonus.CODEC);
+    }
 
-	private static void register(String id, Codec<? extends GemBonus> codec) {
-		CODECS.put(Apotheosis.loc(id), codec);
-	}
+    private static void register(String id, Codec<? extends GemBonus> codec) {
+        CODECS.put(Apotheosis.loc(id), codec);
+    }
 
 }

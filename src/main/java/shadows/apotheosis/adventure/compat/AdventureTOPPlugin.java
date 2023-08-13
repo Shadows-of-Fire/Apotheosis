@@ -12,15 +12,15 @@ import shadows.placebo.compat.TOPCompat;
 
 public class AdventureTOPPlugin implements TOPCompat.Provider {
 
-	public static void register() {
-		TOPCompat.registerProvider(new AdventureTOPPlugin());
-	}
+    public static void register() {
+        TOPCompat.registerProvider(new AdventureTOPPlugin());
+    }
 
-	@Override
-	public void addProbeEntityInfo(ProbeMode mode, IProbeInfo info, Player player, Level level, Entity entity, IProbeHitEntityData hitData) {
-		if (entity instanceof LivingEntity living && living.getPersistentData().getBoolean("apoth.boss")) {
-			CommonTooltipUtil.appendBossData(living.level, living, info::mcText);
-		}
-	}
+    @Override
+    public void addProbeEntityInfo(ProbeMode mode, IProbeInfo info, Player player, Level level, Entity entity, IProbeHitEntityData hitData) {
+        if (entity instanceof LivingEntity living && living.getPersistentData().getBoolean("apoth.boss")) {
+            CommonTooltipUtil.appendBossData(living.level, living, info::mcText);
+        }
+    }
 
 }

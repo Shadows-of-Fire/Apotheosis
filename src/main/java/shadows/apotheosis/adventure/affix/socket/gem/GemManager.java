@@ -16,47 +16,48 @@ import shadows.placebo.json.WeightedJsonReloadListener;
 
 public class GemManager extends WeightedJsonReloadListener<Gem> {
 
-	public static final GemManager INSTANCE = new GemManager();
+    public static final GemManager INSTANCE = new GemManager();
 
-	public GemManager() {
-		super(AdventureModule.LOGGER, "gems", true, false);
-	}
+    public GemManager() {
+        super(AdventureModule.LOGGER, "gems", true, false);
+    }
 
-	@Override
-	protected void registerBuiltinSerializers() {
-		this.registerSerializer(DEFAULT, Gem.SERIALIZER);
-	}
+    @Override
+    protected void registerBuiltinSerializers() {
+        this.registerSerializer(DEFAULT, Gem.SERIALIZER);
+    }
 
-	/**
-	 * Pulls a random LootRarity and Gem, and generates an Gem Item
-	 * @param rand Random
-	 * @param rarity The rarity, or null if it should be randomly selected.
-	 * @param luck The player's luck level
-	 * @param filter The filter
-	 * @return A gem item, or an empty ItemStack if no entries were available for the dimension.
-	 */
-	@SafeVarargs
-	public static ItemStack createRandomGemStack(RandomSource rand, ServerLevel level, float luck, Predicate<Gem>... filter) {
-		Gem gem = GemManager.INSTANCE.getRandomItem(rand, luck, filter);
-		if (gem == null) return ItemStack.EMPTY;
-		LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(level.dimension().location());
-		LootRarity rarity = gem.clamp(LootRarity.random(rand, luck, clamp));
-		return createGemStack(gem, rand, rarity, luck);
-	}
+    /**
+     * Pulls a random LootRarity and Gem, and generates an Gem Item
+     *
+     * @param rand   Random
+     * @param rarity The rarity, or null if it should be randomly selected.
+     * @param luck   The player's luck level
+     * @param filter The filter
+     * @return A gem item, or an empty ItemStack if no entries were available for the dimension.
+     */
+    @SafeVarargs
+    public static ItemStack createRandomGemStack(RandomSource rand, ServerLevel level, float luck, Predicate<Gem>... filter) {
+        Gem gem = GemManager.INSTANCE.getRandomItem(rand, luck, filter);
+        if (gem == null) return ItemStack.EMPTY;
+        LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(level.dimension().location());
+        LootRarity rarity = gem.clamp(LootRarity.random(rand, luck, clamp));
+        return createGemStack(gem, rand, rarity, luck);
+    }
 
-	public static ItemStack createGemStack(Gem gem, RandomSource rand, @Nullable LootRarity rarity, float luck) {
-		ItemStack stack = new ItemStack(Apoth.Items.GEM.get());
-		GemItem.setGem(stack, gem);
-		if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
-		GemItem.setLootRarity(stack, rarity);
-		return stack;
-	}
+    public static ItemStack createGemStack(Gem gem, RandomSource rand, @Nullable LootRarity rarity, float luck) {
+        ItemStack stack = new ItemStack(Apoth.Items.GEM.get());
+        GemItem.setGem(stack, gem);
+        if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
+        GemItem.setLootRarity(stack, rarity);
+        return stack;
+    }
 
-	/**
-	 * Public bouncer for gem bonus tag resolution.
-	 */
-	public final ICondition.IContext _getContext() {
-		return getContext();
-	}
+    /**
+     * Public bouncer for gem bonus tag resolution.
+     */
+    public final ICondition.IContext _getContext() {
+        return this.getContext();
+    }
 
 }

@@ -23,169 +23,158 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 /**
  * Util class to contain the full equipment for an entity.
- * @author Shadows
  *
+ * @author Shadows
  */
 public class GearSet extends TypeKeyedBase<GearSet> implements ILuckyWeighted {
 
-	//Formatter::off
-	public static final Codec<GearSet> CODEC = RecordCodecBuilder.create(inst -> 
-		inst.group(
-			Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-			Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
-			WeightedItemStack.LIST_CODEC.fieldOf("mainhands").forGetter(g -> g.mainhands),
-			WeightedItemStack.LIST_CODEC.fieldOf("offhands").forGetter(g -> g.offhands),
-			WeightedItemStack.LIST_CODEC.fieldOf("boots").forGetter(g -> g.boots),
-			WeightedItemStack.LIST_CODEC.fieldOf("leggings").forGetter(g -> g.leggings),
-			WeightedItemStack.LIST_CODEC.fieldOf("chestplates").forGetter(g -> g.chestplates),
-			WeightedItemStack.LIST_CODEC.fieldOf("helmets").forGetter(g -> g.helmets),
-			Codec.STRING.listOf().fieldOf("tags").forGetter(g -> g.tags))
-		.apply(inst, GearSet::new)
-	);
-	//Formatter::on
-	public static final PSerializer<GearSet> SERIALIZER = PSerializer.fromCodec("Gear Set", CODEC);
+    public static final Codec<GearSet> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+        Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
+        Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+        WeightedItemStack.LIST_CODEC.fieldOf("mainhands").forGetter(g -> g.mainhands),
+        WeightedItemStack.LIST_CODEC.fieldOf("offhands").forGetter(g -> g.offhands),
+        WeightedItemStack.LIST_CODEC.fieldOf("boots").forGetter(g -> g.boots),
+        WeightedItemStack.LIST_CODEC.fieldOf("leggings").forGetter(g -> g.leggings),
+        WeightedItemStack.LIST_CODEC.fieldOf("chestplates").forGetter(g -> g.chestplates),
+        WeightedItemStack.LIST_CODEC.fieldOf("helmets").forGetter(g -> g.helmets),
+        Codec.STRING.listOf().fieldOf("tags").forGetter(g -> g.tags))
+        .apply(inst, GearSet::new));
 
-	protected final int weight;
-	protected final float quality;
-	protected final List<WeightedItemStack> mainhands;
-	protected final List<WeightedItemStack> offhands;
-	protected final List<WeightedItemStack> boots;
-	protected final List<WeightedItemStack> leggings;
-	protected final List<WeightedItemStack> chestplates;
-	protected final List<WeightedItemStack> helmets;
-	protected final List<String> tags;
+    public static final PSerializer<GearSet> SERIALIZER = PSerializer.fromCodec("Gear Set", CODEC);
 
-	protected transient Map<EquipmentSlot, List<WeightedItemStack>> slotToStacks;
+    protected final int weight;
+    protected final float quality;
+    protected final List<WeightedItemStack> mainhands;
+    protected final List<WeightedItemStack> offhands;
+    protected final List<WeightedItemStack> boots;
+    protected final List<WeightedItemStack> leggings;
+    protected final List<WeightedItemStack> chestplates;
+    protected final List<WeightedItemStack> helmets;
+    protected final List<String> tags;
 
-	public GearSet(int weight, float quality, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates, List<WeightedItemStack> helmets, List<String> tags) {
-		this.weight = weight;
-		this.quality = quality;
-		this.mainhands = mainhands;
-		this.offhands = offhands;
-		this.boots = boots;
-		this.leggings = leggings;
-		this.chestplates = chestplates;
-		this.helmets = helmets;
-		this.tags = tags;
-	}
+    protected transient Map<EquipmentSlot, List<WeightedItemStack>> slotToStacks;
 
-	@Override
-	public int getWeight() {
-		return this.weight;
-	}
+    public GearSet(int weight, float quality, List<WeightedItemStack> mainhands, List<WeightedItemStack> offhands, List<WeightedItemStack> boots, List<WeightedItemStack> leggings, List<WeightedItemStack> chestplates,
+        List<WeightedItemStack> helmets, List<String> tags) {
+        this.weight = weight;
+        this.quality = quality;
+        this.mainhands = mainhands;
+        this.offhands = offhands;
+        this.boots = boots;
+        this.leggings = leggings;
+        this.chestplates = chestplates;
+        this.helmets = helmets;
+        this.tags = tags;
+    }
 
-	@Override
-	public float getQuality() {
-		return this.quality;
-	}
+    @Override
+    public int getWeight() {
+        return this.weight;
+    }
 
-	/**
-	 * Makes the entity wear this armor set.  Returns the entity for convenience.
-	 */
-	public LivingEntity apply(LivingEntity entity) {
-		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			getRandomStack(getPotentials(slot), entity.random).ifPresent(s -> s.apply(entity, slot));
-		}
-		return entity;
-	}
+    @Override
+    public float getQuality() {
+        return this.quality;
+    }
 
-	public List<WeightedItemStack> getPotentials(EquipmentSlot slot) {
-		switch (slot) {
-		case MAINHAND:
-			return this.mainhands;
-		case OFFHAND:
-			return this.offhands;
-		case FEET:
-			return this.boots;
-		case LEGS:
-			return this.leggings;
-		case CHEST:
-			return this.chestplates;
-		case HEAD:
-			return this.helmets;
-		}
-		throw new RuntimeException("invalid slot");
-	}
+    /**
+     * Makes the entity wear this armor set. Returns the entity for convenience.
+     */
+    public LivingEntity apply(LivingEntity entity) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            getRandomStack(this.getPotentials(slot), entity.random).ifPresent(s -> s.apply(entity, slot));
+        }
+        return entity;
+    }
 
-	@Override
-	public PSerializer<? extends GearSet> getSerializer() {
-		return SERIALIZER;
-	}
+    public List<WeightedItemStack> getPotentials(EquipmentSlot slot) {
+        return switch (slot) {
+            case MAINHAND -> this.mainhands;
+            case OFFHAND -> this.offhands;
+            case FEET -> this.boots;
+            case LEGS -> this.leggings;
+            case CHEST -> this.chestplates;
+            case HEAD -> this.helmets;
+        };
+    }
 
-	/**
-	 * Returns a copy of a random itemstack in this list of stacks.
-	 */
-	public static Optional<WeightedItemStack> getRandomStack(List<WeightedItemStack> stacks, RandomSource random) {
-		if (stacks.isEmpty()) return Optional.empty();
-		return Optional.of(WeightedRandom.getRandomItem(random, stacks).get());
-	}
+    @Override
+    public PSerializer<? extends GearSet> getSerializer() {
+        return SERIALIZER;
+    }
 
-	public static class WeightedItemStack extends Weighted {
+    /**
+     * Returns a copy of a random itemstack in this list of stacks.
+     */
+    public static Optional<WeightedItemStack> getRandomStack(List<WeightedItemStack> stacks, RandomSource random) {
+        if (stacks.isEmpty()) return Optional.empty();
+        return Optional.of(WeightedRandom.getRandomItem(random, stacks).get());
+    }
 
-		//Formatter::off
-		public static final Codec<WeightedItemStack> CODEC = RecordCodecBuilder.create(inst -> 
-			inst.group(
-				ItemAdapter.CODEC.fieldOf("stack").forGetter(w -> w.stack),
-				Codec.INT.fieldOf("weight").forGetter(w -> w.weight),
-				Codec.FLOAT.optionalFieldOf("drop_chance", -1F).forGetter(w -> w.dropChance))
-			.apply(inst, WeightedItemStack::new)
-		);
-		//Formatter::on
-		public static final Codec<List<WeightedItemStack>> LIST_CODEC = CODEC.listOf();
+    public static class WeightedItemStack extends Weighted {
 
-		final ItemStack stack;
-		final float dropChance;
+        public static final Codec<WeightedItemStack> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            ItemAdapter.CODEC.fieldOf("stack").forGetter(w -> w.stack),
+            Codec.INT.fieldOf("weight").forGetter(w -> w.weight),
+            Codec.FLOAT.optionalFieldOf("drop_chance", -1F).forGetter(w -> w.dropChance))
+            .apply(inst, WeightedItemStack::new));
 
-		public WeightedItemStack(ItemStack stack, int weight, float dropChance) {
-			super(weight);
-			this.stack = stack;
-			this.dropChance = dropChance;
-		}
+        public static final Codec<List<WeightedItemStack>> LIST_CODEC = CODEC.listOf();
 
-		public ItemStack getStack() {
-			return this.stack;
-		}
+        final ItemStack stack;
+        final float dropChance;
 
-		@Override
-		public String toString() {
-			return "Stack: " + this.stack.toString() + " @ Weight: " + this.weight;
-		}
+        public WeightedItemStack(ItemStack stack, int weight, float dropChance) {
+            super(weight);
+            this.stack = stack;
+            this.dropChance = dropChance;
+        }
 
-		public void apply(LivingEntity entity, EquipmentSlot slot) {
-			entity.setItemSlot(slot, this.stack.copy());
-			if (this.dropChance >= 0 && entity instanceof Mob mob) {
-				mob.setDropChance(slot, this.dropChance);
-			}
-		}
-	}
+        public ItemStack getStack() {
+            return this.stack;
+        }
 
-	public static class SetPredicate implements Predicate<GearSet> {
+        @Override
+        public String toString() {
+            return "Stack: " + this.stack.toString() + " @ Weight: " + this.weight;
+        }
 
-		public static final Codec<SetPredicate> CODEC = ExtraCodecs.stringResolverCodec(s -> s.key, SetPredicate::new);
+        public void apply(LivingEntity entity, EquipmentSlot slot) {
+            entity.setItemSlot(slot, this.stack.copy());
+            if (this.dropChance >= 0 && entity instanceof Mob mob) {
+                mob.setDropChance(slot, this.dropChance);
+            }
+        }
+    }
 
-		protected final String key;
-		protected final Predicate<GearSet> internal;
+    public static class SetPredicate implements Predicate<GearSet> {
 
-		public SetPredicate(String key) {
-			this.key = key;
-			if (key.startsWith("#")) {
-				String tag = key.substring(1);
-				this.internal = t -> t.tags.contains(tag);
-			} else {
-				ResourceLocation id = new ResourceLocation(key);
-				this.internal = t -> t.id.equals(id);
-			}
-		}
+        public static final Codec<SetPredicate> CODEC = ExtraCodecs.stringResolverCodec(s -> s.key, SetPredicate::new);
 
-		@Override
-		public boolean test(GearSet t) {
-			return this.internal.test(t);
-		}
+        protected final String key;
+        protected final Predicate<GearSet> internal;
 
-		@Override
-		public String toString() {
-			return "SetPredicate[" + this.key + "]";
-		}
+        public SetPredicate(String key) {
+            this.key = key;
+            if (key.startsWith("#")) {
+                String tag = key.substring(1);
+                this.internal = t -> t.tags.contains(tag);
+            }
+            else {
+                ResourceLocation id = new ResourceLocation(key);
+                this.internal = t -> t.id.equals(id);
+            }
+        }
 
-	}
+        @Override
+        public boolean test(GearSet t) {
+            return this.internal.test(t);
+        }
+
+        @Override
+        public String toString() {
+            return "SetPredicate[" + this.key + "]";
+        }
+
+    }
 }

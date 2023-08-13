@@ -24,54 +24,54 @@ import shadows.placebo.util.ChestBuilder;
 
 public class SpawnerItem extends TypeKeyedBase<SpawnerItem> implements ILuckyWeighted {
 
-	public static final PSerializer<SpawnerItem> SERIALIZER = PSerializer.basic("Rogue Spawner", obj -> RandomSpawnerManager.GSON.fromJson(obj, SpawnerItem.class));
+    public static final PSerializer<SpawnerItem> SERIALIZER = PSerializer.basic("Rogue Spawner", obj -> RandomSpawnerManager.GSON.fromJson(obj, SpawnerItem.class));
 
-	public static final Block[] FILLER_BLOCKS = new Block[] { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
+    public static final Block[] FILLER_BLOCKS = { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
-	protected final int weight;
-	protected final SpawnerStats stats;
-	@SerializedName("spawn_potentials")
-	protected final SimpleWeightedRandomList<SpawnData> spawnPotentials;
-	@SerializedName("loot_table")
-	protected final ResourceLocation lootTable;
+    protected final int weight;
+    protected final SpawnerStats stats;
+    @SerializedName("spawn_potentials")
+    protected final SimpleWeightedRandomList<SpawnData> spawnPotentials;
+    @SerializedName("loot_table")
+    protected final ResourceLocation lootTable;
 
-	public SpawnerItem(SpawnerStats stats, ResourceLocation lootTable, SimpleWeightedRandomList<SpawnData> potentials, int weight) {
-		this.weight = weight;
-		this.stats = stats;
-		this.lootTable = lootTable;
-		this.spawnPotentials = potentials;
-	}
+    public SpawnerItem(SpawnerStats stats, ResourceLocation lootTable, SimpleWeightedRandomList<SpawnData> potentials, int weight) {
+        this.weight = weight;
+        this.stats = stats;
+        this.lootTable = lootTable;
+        this.spawnPotentials = potentials;
+    }
 
-	@Override
-	public int getWeight() {
-		return this.weight;
-	}
+    @Override
+    public int getWeight() {
+        return this.weight;
+    }
 
-	@Override
-	public float getQuality() {
-		return 0;
-	}
+    @Override
+    public float getQuality() {
+        return 0;
+    }
 
-	@SuppressWarnings("deprecation")
-	public void place(WorldGenLevel world, BlockPos pos, RandomSource rand) {
-		world.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
-		SpawnerBlockEntity entity = (SpawnerBlockEntity) world.getBlockEntity(pos);
-		this.stats.apply(entity);
-		entity.spawner.spawnPotentials = this.spawnPotentials;
-		entity.spawner.setNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
-		ChestBuilder.place(world, pos.below(), rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable);
-		world.setBlock(pos.above(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].defaultBlockState(), 2);
-		for (Direction f : Plane.HORIZONTAL) {
-			if (world.getBlockState(pos.relative(f)).isAir()) {
-				BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateDefinition().getProperty(f.getOpposite().getName());
-				world.setBlock(pos.relative(f), Blocks.VINE.defaultBlockState().setValue(side, true), 2);
-			}
-		}
-	}
+    @SuppressWarnings("deprecation")
+    public void place(WorldGenLevel world, BlockPos pos, RandomSource rand) {
+        world.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
+        SpawnerBlockEntity entity = (SpawnerBlockEntity) world.getBlockEntity(pos);
+        this.stats.apply(entity);
+        entity.spawner.spawnPotentials = this.spawnPotentials;
+        entity.spawner.setNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
+        ChestBuilder.place(world, pos.below(), rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable);
+        world.setBlock(pos.above(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].defaultBlockState(), 2);
+        for (Direction f : Plane.HORIZONTAL) {
+            if (world.getBlockState(pos.relative(f)).isAir()) {
+                BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateDefinition().getProperty(f.getOpposite().getName());
+                world.setBlock(pos.relative(f), Blocks.VINE.defaultBlockState().setValue(side, true), 2);
+            }
+        }
+    }
 
-	@Override
-	public PSerializer<? extends SpawnerItem> getSerializer() {
-		return SERIALIZER;
-	}
+    @Override
+    public PSerializer<? extends SpawnerItem> getSerializer() {
+        return SERIALIZER;
+    }
 
 }

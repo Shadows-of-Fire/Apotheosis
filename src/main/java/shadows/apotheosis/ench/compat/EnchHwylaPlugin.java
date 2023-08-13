@@ -31,41 +31,41 @@ import snownee.jade.api.config.IPluginConfig;
 @WailaPlugin
 public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockEntity> {
 
-	@Override
-	public void register(IWailaCommonRegistration reg) {
-		reg.registerBlockDataProvider(this, AnvilTile.class);
-	}
+    @Override
+    public void register(IWailaCommonRegistration reg) {
+        reg.registerBlockDataProvider(this, AnvilTile.class);
+    }
 
-	@Override
-	public void registerClient(IWailaClientRegistration reg) {
-		reg.registerBlockComponent(this, Block.class);
-	}
+    @Override
+    public void registerClient(IWailaClientRegistration reg) {
+        reg.registerBlockComponent(this, Block.class);
+    }
 
-	@Override
-	public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-		if (accessor.getBlock() instanceof ApothAnvilBlock) {
-			CompoundTag tag = accessor.getServerData();
-			Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
-			for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
-				tooltip.add(e.getKey().getFullname(e.getValue()));
-			}
-		}
-		CommonTooltipUtil.appendBlockStats(accessor.getLevel(), accessor.getBlockState(), tooltip::add);
-		if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(accessor.getLevel(), accessor.getPosition(), tooltip::add);
-	}
+    @Override
+    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (accessor.getBlock() instanceof ApothAnvilBlock) {
+            CompoundTag tag = accessor.getServerData();
+            Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
+            for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
+                tooltip.add(e.getKey().getFullname(e.getValue()));
+            }
+        }
+        CommonTooltipUtil.appendBlockStats(accessor.getLevel(), accessor.getBlockState(), tooltip::add);
+        if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(accessor.getLevel(), accessor.getPosition(), tooltip::add);
+    }
 
-	@Override
-	public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean something) {
-		if (te instanceof AnvilTile) {
-			ItemStack stack = new ItemStack(Items.ANVIL);
-			EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), stack);
-			tag.put("enchantments", stack.getEnchantmentTags());
-		}
-	}
+    @Override
+    public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean something) {
+        if (te instanceof AnvilTile) {
+            ItemStack stack = new ItemStack(Items.ANVIL);
+            EnchantmentHelper.setEnchantments(((AnvilTile) te).getEnchantments(), stack);
+            tag.put("enchantments", stack.getEnchantmentTags());
+        }
+    }
 
-	@Override
-	public ResourceLocation getUid() {
-		return Apotheosis.loc("ench");
-	}
+    @Override
+    public ResourceLocation getUid() {
+        return Apotheosis.loc("ench");
+    }
 
 }

@@ -1,0 +1,21 @@
+{
+    "name": "Пыль от Самоцвета",
+    "icon": "apotheosis:gem_dust",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:gem_dust",
+			"link_recipe": true,
+            "text": "Все Апофеозные Самоцветы могут быть превращены в $(br)$(9)Пыль от Самоцвета$() путем дробления.$(p)Одним из способов является дробление их наковальней $(br)в мире."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"title": "Утилизация Самоцветов",
+            "text": "Как только вы раздавите несколько самоцветов наковальней, вы сможете создавать и использовать $(9)Стол Утилизации$() вместо."
+        }
+	]
+}

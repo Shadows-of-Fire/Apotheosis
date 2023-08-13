@@ -7,15 +7,15 @@ import shadows.apotheosis.Apotheosis;
 
 public class BroadheadArrowRenderer extends ArrowRenderer<BroadheadArrowEntity> {
 
-	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/entity/broadhead_arrow.png");
+    public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/entity/broadhead_arrow.png");
 
-	public BroadheadArrowRenderer(Context renderManagerIn) {
-		super(renderManagerIn);
-	}
+    public BroadheadArrowRenderer(Context renderManagerIn) {
+        super(renderManagerIn);
+    }
 
-	@Override
-	public ResourceLocation getTextureLocation(BroadheadArrowEntity entity) {
-		return TEXTURES;
-	}
+    @Override
+    public ResourceLocation getTextureLocation(BroadheadArrowEntity entity) {
+        return TEXTURES;
+    }
 
 }

@@ -1,6 +1,22 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.3.3
+* Backported all changes that happened during the extraction of Apothic Attributes.
+  * Armor formula updated from 50 / (50 + armor) to the one used by AA.
+  * Armor Toughness value per point increased from 1% to 2%, cap up from 50% to 60%.
+  * Added better Potion tooltips as well as improved the text shown when hovering effects in the inventory.
+  * Changed the implementation of Ancient Knowledge to use the Experience Gained attribute.
+  * Changed how advanced tooltips displays attribute modifiers.
+* Arseni: Updated Russian Translation
+
+## 6.3.2
+* Fixed an issue where Crit Chance was using the target's crit chance during application.
+* Added particle that trigger when an Apothic Crit happens.
+* More fixes for the naming process of minibosses with affix items. They should work as expected now.
+* Fixed slimes spawned by NoAI slimes not having the `apotheosis:movable` tag so they can fall.
+* Fixed an issue where towers spawned with 4 identical gems in the item frames.
+
 ## 6.3.1
 * Added missing Stoneshelf recipe.
 * Made gems remove the old `"facets"` tag, which should allow them to stack.

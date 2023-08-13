@@ -14,24 +14,24 @@ import shadows.apotheosis.Apotheosis;
 
 public class FlamingDetonationEffect extends MobEffect {
 
-	public static final DamageSource DETONATION = new DamageSource(Apotheosis.MODID + ".detonation").setMagic().bypassArmor();
+    public static final DamageSource DETONATION = new DamageSource(Apotheosis.MODID + ".detonation").setMagic().bypassArmor();
 
-	public FlamingDetonationEffect() {
-		super(MobEffectCategory.HARMFUL, 0xFFD800);
-	}
+    public FlamingDetonationEffect() {
+        super(MobEffectCategory.HARMFUL, 0xFFD800);
+    }
 
-	@Override
-	public void removeAttributeModifiers(LivingEntity entity, AttributeMap map, int amp) {
-		super.removeAttributeModifiers(entity, map, amp);
-		int ticks = entity.getRemainingFireTicks();
-		if (ticks > 0) {
-			entity.setRemainingFireTicks(0);
-			entity.hurt(DETONATION, (1 + amp) * ticks / 14F);
-			ServerLevel level = (ServerLevel) entity.level;
-			AABB bb = entity.getBoundingBox();
-			level.sendParticles(ParticleTypes.FLAME, entity.getX(), entity.getY(), entity.getZ(), 100, bb.getXsize(), bb.getYsize(), bb.getZsize(), 0.25);
-			level.playSound(null, entity, SoundEvents.DRAGON_FIREBALL_EXPLODE, SoundSource.HOSTILE, 1, 1.2F);
-		}
-	}
+    @Override
+    public void removeAttributeModifiers(LivingEntity entity, AttributeMap map, int amp) {
+        super.removeAttributeModifiers(entity, map, amp);
+        int ticks = entity.getRemainingFireTicks();
+        if (ticks > 0) {
+            entity.setRemainingFireTicks(0);
+            entity.hurt(DETONATION, (1 + amp) * ticks / 14F);
+            ServerLevel level = (ServerLevel) entity.level;
+            AABB bb = entity.getBoundingBox();
+            level.sendParticles(ParticleTypes.FLAME, entity.getX(), entity.getY(), entity.getZ(), 100, bb.getXsize(), bb.getYsize(), bb.getZsize(), 0.25);
+            level.playSound(null, entity, SoundEvents.DRAGON_FIREBALL_EXPLODE, SoundSource.HOSTILE, 1, 1.2F);
+        }
+    }
 
 }

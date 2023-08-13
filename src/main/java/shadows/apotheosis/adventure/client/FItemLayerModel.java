@@ -62,180 +62,185 @@ import net.minecraftforge.client.model.geometry.UnbakedGeometryHelper;
  * - Support for per-layer render types
  */
 public class FItemLayerModel implements IUnbakedGeometry<FItemLayerModel> {
-	private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
-	@Nullable
-	private ImmutableList<Material> textures;
-	private final Int2ObjectMap<ForgeFaceData> layerData;
-	private final Int2ObjectMap<ResourceLocation> renderTypeNames;
-	private final boolean deprecatedLoader, logWarning;
+    @Nullable
+    private ImmutableList<Material> textures;
+    private final Int2ObjectMap<ForgeFaceData> layerData;
+    private final Int2ObjectMap<ResourceLocation> renderTypeNames;
+    private final boolean deprecatedLoader, logWarning;
 
-	/**
-	 * Use the below constructor which allows for providing extra data on a per-layer basis instead of only emissivity.
-	 */
-	@Deprecated(forRemoval = true, since = "1.20")
-	public FItemLayerModel(@Nullable ImmutableList<Material> textures, IntSet emissiveLayers, Int2ObjectMap<ResourceLocation> renderTypeNames) {
-		this(textures, emissiveLayers.intStream().collect(Int2ObjectArrayMap::new, (map, val) -> map.put(val, new ForgeFaceData(0xFFFFFFFF, 15, 15)), (map1, map2) -> map1.putAll(map2)), renderTypeNames, false, false);
-	}
+    /**
+     * Use the below constructor which allows for providing extra data on a per-layer basis instead of only emissivity.
+     */
+    @Deprecated(forRemoval = true, since = "1.20")
+    public FItemLayerModel(@Nullable ImmutableList<Material> textures, IntSet emissiveLayers, Int2ObjectMap<ResourceLocation> renderTypeNames) {
+        this(textures, emissiveLayers.intStream().collect(Int2ObjectArrayMap::new, (map, val) -> map.put(val, new ForgeFaceData(0xFFFFFFFF, 15, 15)), Int2ObjectArrayMap::putAll), renderTypeNames, false, false);
+    }
 
-	public FItemLayerModel(@Nullable ImmutableList<Material> textures, Int2ObjectMap<ForgeFaceData> layerData, Int2ObjectMap<ResourceLocation> renderTypeNames) {
-		this(textures, layerData, renderTypeNames, false, false);
-	}
+    public FItemLayerModel(@Nullable ImmutableList<Material> textures, Int2ObjectMap<ForgeFaceData> layerData, Int2ObjectMap<ResourceLocation> renderTypeNames) {
+        this(textures, layerData, renderTypeNames, false, false);
+    }
 
-	private FItemLayerModel(@Nullable ImmutableList<Material> textures, Int2ObjectMap<ForgeFaceData> layerData, Int2ObjectMap<ResourceLocation> renderTypeNames, boolean deprecatedLoader, boolean logWarning) {
-		this.textures = textures;
-		this.layerData = layerData;
-		this.renderTypeNames = renderTypeNames;
-		this.deprecatedLoader = deprecatedLoader;
-		this.logWarning = logWarning;
-	}
+    private FItemLayerModel(@Nullable ImmutableList<Material> textures, Int2ObjectMap<ForgeFaceData> layerData, Int2ObjectMap<ResourceLocation> renderTypeNames, boolean deprecatedLoader, boolean logWarning) {
+        this.textures = textures;
+        this.layerData = layerData;
+        this.renderTypeNames = renderTypeNames;
+        this.deprecatedLoader = deprecatedLoader;
+        this.logWarning = logWarning;
+    }
 
-	@Override
-	public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-		if (textures == null) throw new IllegalStateException("Textures have not been initialized. Either pass them in through the constructor or call getMaterials(...) first.");
+    @Override
+    public BakedModel bake(IGeometryBakingContext context, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+        if (this.textures == null) throw new IllegalStateException("Textures have not been initialized. Either pass them in through the constructor or call getMaterials(...) first.");
 
-		if (deprecatedLoader) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated loader \"forge:item-layers\" instead of \"forge:item_layers\". This loader will be removed in 1.20.");
-		if (logWarning) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated \"fullbright_layers\" field in its item layer model instead of \"emissive_layers\". This field will be removed in 1.20.");
+        if (this.deprecatedLoader) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated loader \"forge:item-layers\" instead of \"forge:item_layers\". This loader will be removed in 1.20.");
+        if (this.logWarning) LOGGER.warn("Model \"" + modelLocation + "\" is using the deprecated \"fullbright_layers\" field in its item layer model instead of \"emissive_layers\". This field will be removed in 1.20.");
 
-		TextureAtlasSprite particle = spriteGetter.apply(context.hasMaterial("particle") ? context.getMaterial("particle") : textures.get(0));
-		var rootTransform = context.getRootTransform();
-		if (!rootTransform.isIdentity()) modelState = new SimpleModelState(modelState.getRotation().compose(rootTransform), modelState.isUvLocked());
+        TextureAtlasSprite particle = spriteGetter.apply(context.hasMaterial("particle") ? context.getMaterial("particle") : this.textures.get(0));
+        var rootTransform = context.getRootTransform();
+        if (!rootTransform.isIdentity()) modelState = new SimpleModelState(modelState.getRotation().compose(rootTransform), modelState.isUvLocked());
 
-		var normalRenderTypes = new RenderTypeGroup(RenderType.translucent(), ForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get());
-		CompositeModel.Baked.Builder builder = CompositeModel.Baked.builder(context, particle, overrides, context.getTransforms());
-		for (int i = 0; i < textures.size(); i++) {
-			TextureAtlasSprite sprite = spriteGetter.apply(textures.get(i));
-			var unbaked = UnbakedGeometryHelper.createUnbakedItemElements(i, sprite);
-			var quads = UnbakedGeometryHelper.bakeElements(unbaked, $ -> sprite, modelState, modelLocation);
-			if (this.layerData.containsKey(i)) {
-				var data = this.layerData.get(i);
-				applyingLightmap(data.blockLight(), data.skyLight()).processInPlace(quads);
-				applyingColor(data.color()).processInPlace(quads);
-			}
-			var renderTypeName = renderTypeNames.get(i);
-			var renderTypes = renderTypeName != null ? context.getRenderType(renderTypeName) : null;
-			builder.addQuads(renderTypes != null ? renderTypes : normalRenderTypes, quads);
-		}
-		
-		return builder.build();
-	}
+        var normalRenderTypes = new RenderTypeGroup(RenderType.translucent(), ForgeRenderTypes.ITEM_UNSORTED_TRANSLUCENT.get());
+        CompositeModel.Baked.Builder builder = CompositeModel.Baked.builder(context, particle, overrides, context.getTransforms());
+        for (int i = 0; i < this.textures.size(); i++) {
+            TextureAtlasSprite sprite = spriteGetter.apply(this.textures.get(i));
+            var unbaked = UnbakedGeometryHelper.createUnbakedItemElements(i, sprite);
+            var quads = UnbakedGeometryHelper.bakeElements(unbaked, $ -> sprite, modelState, modelLocation);
+            if (this.layerData.containsKey(i)) {
+                var data = this.layerData.get(i);
+                applyingLightmap(data.blockLight(), data.skyLight()).processInPlace(quads);
+                applyingColor(data.color()).processInPlace(quads);
+            }
+            var renderTypeName = this.renderTypeNames.get(i);
+            var renderTypes = renderTypeName != null ? context.getRenderType(renderTypeName) : null;
+            builder.addQuads(renderTypes != null ? renderTypes : normalRenderTypes, quads);
+        }
 
-	/**
-	 * @return A new {@link BakedQuad} transformer that applies the specified block and sky light values.
-	 */
-	public static IQuadTransformer applyingLightmap(int blockLight, int skyLight) {
-		return quad -> {
-			var vertices = quad.getVertices();
-			for (int i = 0; i < 4; i++)
-				vertices[i * IQuadTransformer.STRIDE + IQuadTransformer.UV2] = LightTexture.pack(blockLight, skyLight);
-		};
-	}
+        return builder.build();
+    }
 
-	/**
-	 * @param color The color in ARGB format.
-	 * @return A {@link BakedQuad} transformer that sets the color to the specified value.
-	 */
-	public static IQuadTransformer applyingColor(int color) {
-		final int fixedColor = toABGR(color);
-		return quad -> {
-			var vertices = quad.getVertices();
-			for (int i = 0; i < 4; i++)
-				vertices[i * IQuadTransformer.STRIDE + IQuadTransformer.COLOR] = fixedColor;
-		};
-	}
+    /**
+     * @return A new {@link BakedQuad} transformer that applies the specified block and sky light values.
+     */
+    public static IQuadTransformer applyingLightmap(int blockLight, int skyLight) {
+        return quad -> {
+            var vertices = quad.getVertices();
+            for (int i = 0; i < 4; i++)
+                vertices[i * IQuadTransformer.STRIDE + IQuadTransformer.UV2] = LightTexture.pack(blockLight, skyLight);
+        };
+    }
 
-	/**
-	 * Converts an ARGB color to an ABGR color, as the commonly used color format is not the format colors end up packed into.
-	 * This function doubles as its own inverse.
-	 * @param color ARGB color
-	 * @return ABGR color
-	 */
-	public static int toABGR(int argb) {
-		return (argb & 0xFF00FF00) // alpha and green same spot
-				| ((argb >> 16) & 0x000000FF) // red moves to blue
-				| ((argb << 16) & 0x00FF0000); // blue moves to red
-	}
+    /**
+     * @param color The color in ARGB format.
+     * @return A {@link BakedQuad} transformer that sets the color to the specified value.
+     */
+    public static IQuadTransformer applyingColor(int color) {
+        final int fixedColor = toABGR(color);
+        return quad -> {
+            var vertices = quad.getVertices();
+            for (int i = 0; i < 4; i++)
+                vertices[i * IQuadTransformer.STRIDE + IQuadTransformer.COLOR] = fixedColor;
+        };
+    }
 
-	@Override
-	public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
-		if (textures != null) return textures;
+    /**
+     * Converts an ARGB color to an ABGR color, as the commonly used color format is not the format colors end up packed into.
+     * This function doubles as its own inverse.
+     *
+     * @param color ARGB color
+     * @return ABGR color
+     */
+    public static int toABGR(int argb) {
+        return argb & 0xFF00FF00 // alpha and green same spot
+            | argb >> 16 & 0x000000FF // red moves to blue
+            | argb << 16 & 0x00FF0000; // blue moves to red
+    }
 
-		ImmutableList.Builder<Material> builder = ImmutableList.builder();
-		if (context.hasMaterial("particle")) builder.add(context.getMaterial("particle"));
-		for (int i = 0; context.hasMaterial("layer" + i); i++) {
-			builder.add(context.getMaterial("layer" + i));
-		}
-		return textures = builder.build();
-	}
+    @Override
+    public Collection<Material> getMaterials(IGeometryBakingContext context, Function<ResourceLocation, UnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
+        if (this.textures != null) return this.textures;
 
-	public static final class Loader implements IGeometryLoader<FItemLayerModel> {
-		public static final Loader INSTANCE = new Loader(false);
-		@Deprecated(forRemoval = true, since = "1.19")
-		public static final Loader INSTANCE_DEPRECATED = new Loader(true);
+        ImmutableList.Builder<Material> builder = ImmutableList.builder();
+        if (context.hasMaterial("particle")) builder.add(context.getMaterial("particle"));
+        for (int i = 0; context.hasMaterial("layer" + i); i++) {
+            builder.add(context.getMaterial("layer" + i));
+        }
+        return this.textures = builder.build();
+    }
 
-		private final boolean deprecated;
+    public static final class Loader implements IGeometryLoader<FItemLayerModel> {
+        public static final Loader INSTANCE = new Loader(false);
+        @Deprecated(forRemoval = true, since = "1.19")
+        public static final Loader INSTANCE_DEPRECATED = new Loader(true);
 
-		private Loader(boolean deprecated) {
-			this.deprecated = deprecated;
-		}
+        private final boolean deprecated;
 
-		@Override
-		public FItemLayerModel read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) {
-			var renderTypeNames = new Int2ObjectOpenHashMap<ResourceLocation>();
-			if (jsonObject.has("render_types")) {
-				var renderTypes = jsonObject.getAsJsonObject("render_types");
-				for (Map.Entry<String, JsonElement> entry : renderTypes.entrySet()) {
-					var renderType = new ResourceLocation(entry.getKey());
-					for (var layer : entry.getValue().getAsJsonArray())
-						if (renderTypeNames.put(layer.getAsInt(), renderType) != null) throw new JsonParseException("Registered duplicate render type for layer " + layer);
-				}
-			}
+        private Loader(boolean deprecated) {
+            this.deprecated = deprecated;
+        }
 
-			var emissiveLayers = new Int2ObjectArrayMap<ForgeFaceData>();
-			readUnlit(jsonObject, "forge_data", renderTypeNames, emissiveLayers, false);
-			boolean logWarning = readUnlit(jsonObject, "emissive_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
-			logWarning |= readUnlit(jsonObject, "fullbright_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
+        @Override
+        public FItemLayerModel read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) {
+            var renderTypeNames = new Int2ObjectOpenHashMap<ResourceLocation>();
+            if (jsonObject.has("render_types")) {
+                var renderTypes = jsonObject.getAsJsonObject("render_types");
+                for (Map.Entry<String, JsonElement> entry : renderTypes.entrySet()) {
+                    var renderType = new ResourceLocation(entry.getKey());
+                    for (var layer : entry.getValue().getAsJsonArray())
+                        if (renderTypeNames.put(layer.getAsInt(), renderType) != null) throw new JsonParseException("Registered duplicate render type for layer " + layer);
+                }
+            }
 
-			return new FItemLayerModel(null, emissiveLayers, renderTypeNames, deprecated, logWarning);
-		}
+            var emissiveLayers = new Int2ObjectArrayMap<ForgeFaceData>();
+            this.readUnlit(jsonObject, "forge_data", renderTypeNames, emissiveLayers, false);
+            boolean logWarning = this.readUnlit(jsonObject, "emissive_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
+            logWarning |= this.readUnlit(jsonObject, "fullbright_layers", renderTypeNames, emissiveLayers, true); // TODO: Deprecated name. To be removed in 1.20
 
-		protected boolean readUnlit(JsonObject jsonObject, String name, Int2ObjectOpenHashMap<ResourceLocation> renderTypeNames, Int2ObjectMap<ForgeFaceData> layerData, boolean logWarning) {
-			if (!jsonObject.has(name)) return false;
-			JsonElement ele = jsonObject.get(name);
-			if (ele.isJsonArray()) // Legacy array-mode, all specified layers are max emissivity. TODO: To be removed in 1.20
-			{
-				var fullbrightLayers = jsonObject.getAsJsonArray(name);
-				for (var layer : fullbrightLayers) {
-					layerData.put(layer.getAsInt(), new ForgeFaceData(0xFFFFFFFF, 15, 15));
-				}
-				return logWarning && !fullbrightLayers.isEmpty();
-			} else // New mode, extra data is specified on a per-layer basis.
-			{
-				var fullbrightLayers = jsonObject.getAsJsonObject(name);
-				for (var layerStr : fullbrightLayers.keySet()) {
-					int layer = Integer.parseInt(layerStr);
-					var data = ForgeFaceData.CODEC.parse(JsonOps.INSTANCE, fullbrightLayers.get(layerStr)).getOrThrow(false, LOGGER::error);
-					layerData.put(layer, data);
-				}
-				return false; // Old name never supported this mode.
-			}
-		}
-	}
+            return new FItemLayerModel(null, emissiveLayers, renderTypeNames, this.deprecated, logWarning);
+        }
 
-	/**
-	 * Holds extra data that may be injected into a face.<p>
-	 * Used by {@link ItemLayerModel}, {@link BlockElement} and {@link BlockElementFace}
-	 * 
-	 * @param color Color in ARGB format
-	 * @param blockLight Block Light for this face from 0-15 (inclusive)
-	 * @param skyLight Sky Light for this face from 0-15 (inclusive)
-	 */
-	public static record ForgeFaceData(int color, int blockLight, int skyLight) {
+        protected boolean readUnlit(JsonObject jsonObject, String name, Int2ObjectOpenHashMap<ResourceLocation> renderTypeNames, Int2ObjectMap<ForgeFaceData> layerData, boolean logWarning) {
+            if (!jsonObject.has(name)) return false;
+            JsonElement ele = jsonObject.get(name);
+            if (ele.isJsonArray()) // Legacy array-mode, all specified layers are max emissivity. TODO: To be removed in 1.20
+            {
+                var fullbrightLayers = jsonObject.getAsJsonArray(name);
+                for (var layer : fullbrightLayers) {
+                    layerData.put(layer.getAsInt(), new ForgeFaceData(0xFFFFFFFF, 15, 15));
+                }
+                return logWarning && !fullbrightLayers.isEmpty();
+            }
+            else // New mode, extra data is specified on a per-layer basis.
+            {
+                var fullbrightLayers = jsonObject.getAsJsonObject(name);
+                for (var layerStr : fullbrightLayers.keySet()) {
+                    int layer = Integer.parseInt(layerStr);
+                    var data = ForgeFaceData.CODEC.parse(JsonOps.INSTANCE, fullbrightLayers.get(layerStr)).getOrThrow(false, LOGGER::error);
+                    layerData.put(layer, data);
+                }
+                return false; // Old name never supported this mode.
+            }
+        }
+    }
 
-		public static final ForgeFaceData DEFAULT = new ForgeFaceData(0xFFFFFFFF, 0, 0);
+    /**
+     * Holds extra data that may be injected into a face.
+     * <p>
+     * Used by {@link ItemLayerModel}, {@link BlockElement} and {@link BlockElementFace}
+     *
+     * @param color      Color in ARGB format
+     * @param blockLight Block Light for this face from 0-15 (inclusive)
+     * @param skyLight   Sky Light for this face from 0-15 (inclusive)
+     */
+    public static record ForgeFaceData(int color, int blockLight, int skyLight) {
 
-		public static final Codec<Integer> COLOR = new ExtraCodecs.EitherCodec<>(Codec.INT, Codec.STRING).xmap(either -> either.map(Function.identity(), str -> (int) Long.parseLong(str, 16)), color -> Either.right(Integer.toHexString(color)));
+        public static final ForgeFaceData DEFAULT = new ForgeFaceData(0xFFFFFFFF, 0, 0);
 
-		public static final Codec<ForgeFaceData> CODEC = RecordCodecBuilder.create(builder -> builder.group(COLOR.optionalFieldOf("color", 0xFFFFFFFF).forGetter(ForgeFaceData::color), Codec.intRange(0, 15).optionalFieldOf("block_light", 0).forGetter(ForgeFaceData::blockLight), Codec.intRange(0, 15).optionalFieldOf("sky_light", 0).forGetter(ForgeFaceData::skyLight)).apply(builder, ForgeFaceData::new));
-	}
+        public static final Codec<Integer> COLOR = new ExtraCodecs.EitherCodec<>(Codec.INT, Codec.STRING).xmap(either -> either.map(Function.identity(), str -> (int) Long.parseLong(str, 16)),
+            color -> Either.right(Integer.toHexString(color)));
+
+        public static final Codec<ForgeFaceData> CODEC = RecordCodecBuilder.create(builder -> builder.group(COLOR.optionalFieldOf("color", 0xFFFFFFFF).forGetter(ForgeFaceData::color),
+            Codec.intRange(0, 15).optionalFieldOf("block_light", 0).forGetter(ForgeFaceData::blockLight), Codec.intRange(0, 15).optionalFieldOf("sky_light", 0).forGetter(ForgeFaceData::skyLight)).apply(builder, ForgeFaceData::new));
+    }
 }

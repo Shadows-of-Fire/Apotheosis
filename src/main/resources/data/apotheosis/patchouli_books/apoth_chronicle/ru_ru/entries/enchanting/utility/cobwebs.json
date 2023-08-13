@@ -1,0 +1,17 @@
+{
+    "name": "Паутина",
+    "icon": "minecraft:cobweb",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Паутину можно комбинировать с предметом в наковальне, чтобы снять все чары.$(p)Призматическую паутину можно комбинировать с предметом в наковальне, чтобы снять все проклятия."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:cobweb",
+			"recipe2": "apotheosis:prismatic_web"
+		}
+	]
+}

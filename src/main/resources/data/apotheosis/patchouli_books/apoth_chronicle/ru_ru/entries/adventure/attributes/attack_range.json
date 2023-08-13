@@ -1,0 +1,13 @@
+{
+    "name": "Дальность Атаки",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Ваша $(9)Дальность Атаки$() - это максимальное расстояние, на котором вы можете атаковать цели оружием ближнего боя.$(p)Обычно встречается на оружии."
+        }
+	]
+}

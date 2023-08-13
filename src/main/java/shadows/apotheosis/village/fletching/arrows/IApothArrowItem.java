@@ -5,6 +5,6 @@ import net.minecraft.world.level.Level;
 
 public interface IApothArrowItem {
 
-	AbstractArrow fromDispenser(Level world, double x, double y, double z);
+    AbstractArrow fromDispenser(Level world, double x, double y, double z);
 
 }

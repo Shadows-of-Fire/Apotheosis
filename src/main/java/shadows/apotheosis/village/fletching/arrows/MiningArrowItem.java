@@ -19,29 +19,29 @@ import shadows.apotheosis.Apotheosis;
 
 public class MiningArrowItem extends ArrowItem implements IApothArrowItem {
 
-	protected final Supplier<Item> breakerItem;
-	protected final MiningArrowEntity.Type arrowType;
+    protected final Supplier<Item> breakerItem;
+    protected final MiningArrowEntity.Type arrowType;
 
-	public MiningArrowItem(Supplier<Item> breakerItem, MiningArrowEntity.Type arrowType) {
-		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
-		this.breakerItem = breakerItem;
-		this.arrowType = arrowType;
-	}
+    public MiningArrowItem(Supplier<Item> breakerItem, MiningArrowEntity.Type arrowType) {
+        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+        this.breakerItem = breakerItem;
+        this.arrowType = arrowType;
+    }
 
-	@Override
-	public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
-		return new MiningArrowEntity(shooter, world, new ItemStack(this.breakerItem.get()), this.arrowType);
-	}
+    @Override
+    public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
+        return new MiningArrowEntity(shooter, world, new ItemStack(this.breakerItem.get()), this.arrowType);
+    }
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(Component.translatable("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
-	}
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(Component.translatable("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
+    }
 
-	@Override
-	public AbstractArrow fromDispenser(Level world, double x, double y, double z) {
-		return new MiningArrowEntity(world, x, y, z, new ItemStack(this.breakerItem.get()), this.arrowType);
-	}
+    @Override
+    public AbstractArrow fromDispenser(Level world, double x, double y, double z) {
+        return new MiningArrowEntity(world, x, y, z, new ItemStack(this.breakerItem.get()), this.arrowType);
+    }
 
 }

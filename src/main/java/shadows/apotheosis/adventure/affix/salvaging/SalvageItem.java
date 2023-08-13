@@ -13,21 +13,21 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class SalvageItem extends Item {
 
-	protected final LootRarity rarity;
+    protected final LootRarity rarity;
 
-	public SalvageItem(LootRarity rarity, Properties pProperties) {
-		super(pProperties);
-		this.rarity = rarity;
-	}
+    public SalvageItem(LootRarity rarity, Properties pProperties) {
+        super(pProperties);
+        this.rarity = rarity;
+    }
 
-	@Override
-	public Component getName(ItemStack pStack) {
-		return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(rarity.color()));
-	}
+    @Override
+    public Component getName(ItemStack pStack) {
+        return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.color()));
+    }
 
-	@Override
-	public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> list, TooltipFlag pIsAdvanced) {
-		list.add(Component.translatable("info.apotheosis.rarity_material", rarity.toComponent()).withStyle(ChatFormatting.GRAY));
-	}
+    @Override
+    public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> list, TooltipFlag pIsAdvanced) {
+        list.add(Component.translatable("info.apotheosis.rarity_material", this.rarity.toComponent()).withStyle(ChatFormatting.GRAY));
+    }
 
 }

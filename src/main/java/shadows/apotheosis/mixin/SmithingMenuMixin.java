@@ -21,16 +21,16 @@ import shadows.apotheosis.adventure.affix.socket.IExtUpgradeRecipe;
 @Mixin(SmithingMenu.class)
 public abstract class SmithingMenuMixin extends ItemCombinerMenu {
 
-	public SmithingMenuMixin(MenuType<?> p_39773_, int p_39774_, Inventory p_39775_, ContainerLevelAccess p_39776_) {
-		super(p_39773_, p_39774_, p_39775_, p_39776_);
-	}
+    public SmithingMenuMixin(MenuType<?> p_39773_, int p_39774_, Inventory p_39775_, ContainerLevelAccess p_39776_) {
+        super(p_39773_, p_39774_, p_39775_, p_39776_);
+    }
 
-	@Shadow
-	@Nullable
-	private UpgradeRecipe selectedRecipe;
+    @Shadow
+    @Nullable
+    private UpgradeRecipe selectedRecipe;
 
-	@Inject(at = @At("HEAD"), method = "onTake")
-	protected void onTake(Player player, ItemStack stack, CallbackInfo ci) {
-		if (this.selectedRecipe instanceof IExtUpgradeRecipe ext) ext.onCraft(this.inputSlots, player, stack);
-	}
+    @Inject(at = @At("HEAD"), method = "onTake")
+    protected void onTake(Player player, ItemStack stack, CallbackInfo ci) {
+        if (this.selectedRecipe instanceof IExtUpgradeRecipe ext) ext.onCraft(this.inputSlots, player, stack);
+    }
 }

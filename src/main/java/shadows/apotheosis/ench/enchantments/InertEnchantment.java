@@ -9,35 +9,35 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class InertEnchantment extends Enchantment {
 
-	public static final EnchantmentCategory NULL = EnchantmentCategory.create("apotheosis.null", Predicates.alwaysFalse());
+    public static final EnchantmentCategory NULL = EnchantmentCategory.create("apotheosis.null", Predicates.alwaysFalse());
 
-	public InertEnchantment() {
-		super(Rarity.VERY_RARE, NULL, new EquipmentSlot[0]);
-	}
+    public InertEnchantment() {
+        super(Rarity.VERY_RARE, NULL, new EquipmentSlot[0]);
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return false;
-	}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return false;
+    }
 
-	@Override
-	public boolean isDiscoverable() {
-		return false;
-	}
+    @Override
+    public boolean isDiscoverable() {
+        return false;
+    }
 
-	@Override
-	public boolean isAllowedOnBooks() {
-		return false;
-	}
+    @Override
+    public boolean isAllowedOnBooks() {
+        return false;
+    }
 
-	@Override
-	public boolean isTradeable() {
-		return false;
-	}
+    @Override
+    public boolean isTradeable() {
+        return false;
+    }
 
-	@Override
-	public boolean isTreasureOnly() {
-		return true;
-	}
+    @Override
+    public boolean isTreasureOnly() {
+        return true;
+    }
 
 }

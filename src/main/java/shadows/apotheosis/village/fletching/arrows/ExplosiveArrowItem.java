@@ -17,24 +17,24 @@ import shadows.apotheosis.Apotheosis;
 
 public class ExplosiveArrowItem extends ArrowItem implements IApothArrowItem {
 
-	public ExplosiveArrowItem() {
-		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
-	}
+    public ExplosiveArrowItem() {
+        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+    }
 
-	@Override
-	public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
-		return new ExplosiveArrowEntity(shooter, world);
-	}
+    @Override
+    public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter) {
+        return new ExplosiveArrowEntity(shooter, world);
+    }
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(Component.translatable("info.apotheosis.explosive_arrow").withStyle(ChatFormatting.RED));
-	}
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(Component.translatable("info.apotheosis.explosive_arrow").withStyle(ChatFormatting.RED));
+    }
 
-	@Override
-	public AbstractArrow fromDispenser(Level world, double x, double y, double z) {
-		return new ExplosiveArrowEntity(world, x, y, z);
-	}
+    @Override
+    public AbstractArrow fromDispenser(Level world, double x, double y, double z) {
+        return new ExplosiveArrowEntity(world, x, y, z);
+    }
 
 }

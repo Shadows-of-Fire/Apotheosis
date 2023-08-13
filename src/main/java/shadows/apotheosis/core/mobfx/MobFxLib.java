@@ -17,24 +17,24 @@ import shadows.placebo.util.RegistryEvent.Register;
 
 public class MobFxLib {
 
-	public static final String MODID = "mobfx";
-	public static final RegObjHelper REG_OBJS = new RegObjHelper(Apotheosis.MODID);
+    public static final String MODID = "mobfx";
+    public static final RegObjHelper REG_OBJS = new RegObjHelper(Apotheosis.MODID);
 
-	public static int knowledgeMult = 4;
+    public static int knowledgeMult = 4;
 
-	@SubscribeEvent
-	public void init(FMLCommonSetupEvent e) {
-		MinecraftForge.EVENT_BUS.register(MFEffects.KNOWLEDGE.get());
-	}
+    @SubscribeEvent
+    public void init(FMLCommonSetupEvent e) {
+        MinecraftForge.EVENT_BUS.register(MFEffects.KNOWLEDGE.get());
+    }
 
-	@SubscribeEvent
-	public void potions(Register<MobEffect> e) {
-		e.getRegistry().register(new SunderingEffect(), "sundering");
-		e.getRegistry().register(new KnowledgeEffect(), "knowledge");
-		e.getRegistry().register(new VitalityEffect(), "vitality");
-		e.getRegistry().register(new GrievousEffect(), "grievous");
-		e.getRegistry().register(new BleedingEffect(), "bleeding");
-		e.getRegistry().register(new FlamingDetonationEffect(), "detonation");
-	}
+    @SubscribeEvent
+    public void potions(Register<MobEffect> e) {
+        e.getRegistry().register(new SunderingEffect(), "sundering");
+        e.getRegistry().register(new KnowledgeEffect(), "knowledge");
+        e.getRegistry().register(new VitalityEffect(), "vitality");
+        e.getRegistry().register(new GrievousEffect(), "grievous");
+        e.getRegistry().register(new BleedingEffect(), "bleeding");
+        e.getRegistry().register(new FlamingDetonationEffect(), "detonation");
+    }
 
 }

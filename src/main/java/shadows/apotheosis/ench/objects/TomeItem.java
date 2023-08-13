@@ -28,64 +28,64 @@ import shadows.apotheosis.ench.table.IEnchantableItem;
 
 public class TomeItem extends BookItem implements IEnchantableItem {
 
-	final ItemStack rep;
-	final EnchantmentCategory type;
+    final ItemStack rep;
+    final EnchantmentCategory type;
 
-	public TomeItem(Item rep, EnchantmentCategory type) {
-		super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
-		this.type = type;
-		this.rep = new ItemStack(rep);
-		EnchModule.TYPED_BOOKS.add(this);
-	}
+    public TomeItem(Item rep, EnchantmentCategory type) {
+        super(new Item.Properties().tab(Apotheosis.APOTH_GROUP));
+        this.type = type;
+        this.rep = new ItemStack(rep);
+        EnchModule.TYPED_BOOKS.add(this);
+    }
 
-	@Override
-	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-		return stack.getCount() == 1;
-	}
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return stack.getCount() == 1;
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		if (this.type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canEnchant(new ItemStack(b)));
-		return enchantment.category == this.type || enchantment.canApplyAtEnchantingTable(this.rep);
-	}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        if (this.type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canEnchant(new ItemStack(b)));
+        return enchantment.category == this.type || enchantment.canApplyAtEnchantingTable(this.rep);
+    }
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(Component.translatable("info.apotheosis." + ForgeRegistries.ITEMS.getKey(this).getPath()).withStyle(ChatFormatting.GRAY));
-		if (stack.isEnchanted()) {
-			tooltip.add(Component.translatable("info.apotheosis.tome_error").withStyle(ChatFormatting.RED));
-		}
-	}
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+        tooltip.add(Component.translatable("info.apotheosis." + ForgeRegistries.ITEMS.getKey(this).getPath()).withStyle(ChatFormatting.GRAY));
+        if (stack.isEnchanted()) {
+            tooltip.add(Component.translatable("info.apotheosis.tome_error").withStyle(ChatFormatting.RED));
+        }
+    }
 
-	@Override
-	public Rarity getRarity(ItemStack stack) {
-		return !stack.isEnchanted() ? super.getRarity(stack) : Rarity.UNCOMMON;
-	}
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return !stack.isEnchanted() ? super.getRarity(stack) : Rarity.UNCOMMON;
+    }
 
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-		ItemStack stack = player.getItemInHand(hand);
-		if (stack.isEnchanted()) {
-			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, stack.getCount());
-			EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), book);
-			return InteractionResultHolder.consume(book);
-		}
-		return InteractionResultHolder.pass(stack);
-	}
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (stack.isEnchanted()) {
+            ItemStack book = new ItemStack(Items.ENCHANTED_BOOK, stack.getCount());
+            EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), book);
+            return InteractionResultHolder.consume(book);
+        }
+        return InteractionResultHolder.pass(stack);
+    }
 
-	@Override
-	public ItemStack onEnchantment(ItemStack stack, List<EnchantmentInstance> enchantments) {
-		stack = new ItemStack(Items.ENCHANTED_BOOK);
-		for (EnchantmentInstance inst : enchantments) {
-			EnchantedBookItem.addEnchantment(stack, inst);
-		}
-		return stack;
-	}
+    @Override
+    public ItemStack onEnchantment(ItemStack stack, List<EnchantmentInstance> enchantments) {
+        stack = new ItemStack(Items.ENCHANTED_BOOK);
+        for (EnchantmentInstance inst : enchantments) {
+            EnchantedBookItem.addEnchantment(stack, inst);
+        }
+        return stack;
+    }
 
-	@Override
-	public boolean forciblyAllowsTableEnchantment(ItemStack stack, Enchantment enchantment) {
-		return this.canApplyAtEnchantingTable(stack, enchantment);
-	}
+    @Override
+    public boolean forciblyAllowsTableEnchantment(ItemStack stack, Enchantment enchantment) {
+        return this.canApplyAtEnchantingTable(stack, enchantment);
+    }
 
 }

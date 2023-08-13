@@ -15,39 +15,37 @@ import shadows.placebo.json.PSerializer;
 
 public class MagicalArrowAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<MagicalArrowAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
-			.apply(inst, MagicalArrowAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<MagicalArrowAffix> SERIALIZER = PSerializer.fromCodec("Magical Arrow Affix", CODEC);
+    public static final Codec<MagicalArrowAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
+        .apply(inst, MagicalArrowAffix::new));
 
-	protected LootRarity minRarity;
+    public static final PSerializer<MagicalArrowAffix> SERIALIZER = PSerializer.fromCodec("Magical Arrow Affix", CODEC);
 
-	public MagicalArrowAffix(LootRarity minRarity) {
-		super(AffixType.ABILITY);
-		this.minRarity = minRarity;
-	}
+    protected LootRarity minRarity;
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return cat.isRanged() && rarity.isAtLeast(minRarity);
-	}
+    public MagicalArrowAffix(LootRarity minRarity) {
+        super(AffixType.ABILITY);
+        this.minRarity = minRarity;
+    }
 
-	// EventPriority.HIGH
-	public void onHurt(LivingHurtEvent e) {
-		if (e.getSource().getDirectEntity() instanceof AbstractArrow arrow) {
-			if (AffixHelper.getAffixes(arrow).containsKey(this)) {
-				e.getSource().setMagic();
-			}
-		}
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return cat.isRanged() && rarity.isAtLeast(this.minRarity);
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    // EventPriority.HIGH
+    public void onHurt(LivingHurtEvent e) {
+        if (e.getSource().getDirectEntity() instanceof AbstractArrow arrow) {
+            if (AffixHelper.getAffixes(arrow).containsKey(this)) {
+                e.getSource().setMagic();
+            }
+        }
+    }
+
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
 }

@@ -26,51 +26,49 @@ import shadows.placebo.util.StepFunction;
  */
 public class PsychicAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<PsychicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, PsychicAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<PsychicAffix> SERIALIZER = PSerializer.fromCodec("Psychic Affix", CODEC);
+    public static final Codec<PsychicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, PsychicAffix::new));
 
-	protected final Map<LootRarity, StepFunction> values;
+    public static final PSerializer<PsychicAffix> SERIALIZER = PSerializer.fromCodec("Psychic Affix", CODEC);
 
-	public PsychicAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.ABILITY);
-		this.values = values;
-	}
+    protected final Map<LootRarity, StepFunction> values;
 
-	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * getTrueLevel(rarity, level))));
-	}
+    public PsychicAffix(Map<LootRarity, StepFunction> values) {
+        super(AffixType.ABILITY);
+        this.values = values;
+    }
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return cat == LootCategory.SHIELD && this.values.containsKey(rarity);
-	}
+    @Override
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * this.getTrueLevel(rarity, level))));
+    }
 
-	@Override
-	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof Projectile arrow) {
-			Entity owner = arrow.getOwner();
-			if (owner instanceof LivingEntity living) {
-				living.hurt(new EntityDamageSource("player", entity).setMagic(), amount * getTrueLevel(rarity, level));
-			}
-		}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return cat == LootCategory.SHIELD && this.values.containsKey(rarity);
+    }
 
-		return super.onShieldBlock(stack, rarity, level, entity, source, amount);
-	}
+    @Override
+    public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
+        if (source.getDirectEntity() instanceof Projectile arrow) {
+            Entity owner = arrow.getOwner();
+            if (owner instanceof LivingEntity living) {
+                living.hurt(new EntityDamageSource("player", entity).setMagic(), amount * this.getTrueLevel(rarity, level));
+            }
+        }
 
-	private float getTrueLevel(LootRarity rarity, float level) {
-		return this.values.get(rarity).get(level);
-	}
+        return super.onShieldBlock(stack, rarity, level, entity, source, amount);
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    private float getTrueLevel(LootRarity rarity, float level) {
+        return this.values.get(rarity).get(level);
+    }
+
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
 }

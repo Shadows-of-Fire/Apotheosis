@@ -1,5 +1,3 @@
 {
-	"ench_info_redirector": "coremods/ench/ench_info_redirector.js",
-	"ench_info_loot_redirector": "coremods/ench/ench_info_loot_redirector.js",
-	"fishing_hook": "coremods/ench/fishing_hook.js"
+${coremods}
 }

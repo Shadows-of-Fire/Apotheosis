@@ -1,0 +1,13 @@
+{
+    "name": "Благо Земли",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Благо Земли$() это мастерское заклинание для кирки.$(p)При добыче простых камней есть вероятность выпадения блока руды."
+        }
+	]
+}
