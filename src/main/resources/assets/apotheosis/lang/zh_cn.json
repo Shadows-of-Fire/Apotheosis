@@ -3,6 +3,8 @@
 
     "item.modifiers.both_hands": "在任意手时：",
 
+    "attributeslib.adv.base": "[实体：%s | 物品：%s]",
+
     "attributeslib.value.flat": "%s",
     "attributeslib.value.percent": "%s%%",
 
@@ -122,6 +124,16 @@
     "effect.apotheosis.detonation.desc": "该效果结束后，根据剩余着火时间造成伤害。",
     "effect.apotheosis.detonation.description": "该效果结束后，根据剩余着火时间造成伤害。",
     "death.attack.apotheosis.detonation": "%s被火焰引爆了。",
+
+    "effect.minecraft.night_vision.desc": "允许你在黑暗中也能看清东西。",
+    "effect.minecraft.invisibility.desc": "使你隐身，不包括装备。",
+    "effect.minecraft.jump_boost.desc": "增加跳跃高度。",
+    "effect.minecraft.fire_resistance.desc": "使你免疫火焰伤害。",
+    "effect.minecraft.water_breathing.desc": "使你不会溺水。",
+    "effect.minecraft.instant_health.desc": "立即恢复少量生命值。",
+    "effect.minecraft.instant_damage.desc": "立即造成少量魔法伤害。",
+    "effect.minecraft.poison.desc": "定期造成非致命伤害。",
+    "effect.minecraft.regeneration.desc": "使你随着时间的推移恢复生命值。",
 
     "comment_id": "/冒险模块",
 

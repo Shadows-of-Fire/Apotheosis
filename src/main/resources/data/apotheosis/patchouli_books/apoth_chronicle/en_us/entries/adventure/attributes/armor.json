@@ -19,7 +19,7 @@
 		},
 		{
 			"type": "patchouli:text",
-			"text": "The goal of this change is to reduce invulnerabilty at high levels, and make $(9)Protection$() and $(9)Resistance$() more impactful.$(p)It also makes fights where both parties are heavily armored significantly more active."
+			"text": "The goal of this change is to reduce invulnerability at high levels, and make $(9)Protection$() and $(9)Resistance$() more impactful.$(p)It also makes fights where both parties are heavily armored significantly more active."
 		}
 	]
 }
