@@ -287,29 +287,31 @@ def splitDeps(deps) {
     return split
 }
 
-task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-    apiToken = getProperty('curseforgeUploadToken')
-    disableVersionDetection()
-
-    def projectId = getProperty('curseforgeProjectId')
-    def mainFile = upload(projectId, jar)
-    mainFile.changelog = getChangelogLink()
-    mainFile.addModLoader('Forge')
-    mainFile.addJavaVersion("Java ${javaVersion}")
-    mainFile.addGameVersion("${mcVersion}")
-    mainFile.releaseType = "release"
-
-    if (project.hasProperty('requiredDeps')) {
-        mainFile.addRequirement(splitDeps("${requiredDeps}"))
+tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurseForge).configure {
+    if (project.hasProperty('curseforgeUploadToken')) {
+        apiToken = getProperty('curseforgeUploadToken')
+        disableVersionDetection()
+    
+        def projectId = getProperty('curseforgeProjectId')
+        def mainFile = upload(projectId, jar)
+        mainFile.changelog = getChangelogLink()
+        mainFile.addModLoader('Forge')
+        mainFile.addJavaVersion("Java ${javaVersion}")
+        mainFile.addGameVersion("${mcVersion}")
+        mainFile.releaseType = "release"
+    
+        if (project.hasProperty('requiredDeps')) {
+            mainFile.addRequirement(splitDeps("${requiredDeps}"))
+        }
+        if (project.hasProperty('optionalDeps')) {
+            mainFile.addOptional(splitDeps("${optionalDeps}"))
+        }
+        if (project.hasProperty('incompatibleDeps')) {
+            mainFile.addIncompatibility(splitDeps("${incompatibleDeps}"))
+        }
+    
+        mainFile.withAdditionalFile(sourcesJar)
     }
-    if (project.hasProperty('optionalDeps')) {
-        mainFile.addOptional(splitDeps("${optionalDeps}"))
-    }
-    if (project.hasProperty('incompatibleDeps')) {
-        mainFile.addIncompatibility(splitDeps("${incompatibleDeps}"))
-    }
-
-    mainFile.withAdditionalFile(sourcesJar)
 }
 
 task publishAll() {
