@@ -1,0 +1,11 @@
+{
+    "conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"type": "apotheosis:reforging",
+	"rarity": "rare",
+    "material_cost": 2,
+    "dust_cost": 2,
+    "level_cost": 15
+}

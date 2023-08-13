@@ -21,6 +21,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class GemCutTrigger implements CriterionTrigger<GemCutTrigger.Instance> {
     private static final ResourceLocation ID = new ResourceLocation(Apotheosis.MODID, "gem_cutting");
@@ -64,25 +65,24 @@ public class GemCutTrigger implements CriterionTrigger<GemCutTrigger.Instance> {
         json = json.getAsJsonObject("conditions");
         if (json != null) {
             ItemPredicate item = ItemPredicate.fromJson(json.get("item"));
-            String rarity = GsonHelper.getAsString(json, "rarity", "");
+            LootRarity rarity = LootRarity.byId(GsonHelper.getAsString(json, "rarity", ""));
             return new GemCutTrigger.Instance(item, rarity);
         }
-        return new GemCutTrigger.Instance(ItemPredicate.ANY, "");
+        return new GemCutTrigger.Instance(ItemPredicate.ANY, null);
     }
 
-    public void trigger(ServerPlayer player, ItemStack stack, String rarity) {
+    public void trigger(ServerPlayer player, ItemStack stack, LootRarity rarity) {
         GemCutTrigger.Listeners ModifierTrigger$listeners = this.listeners.get(player.getAdvancements());
         if (ModifierTrigger$listeners != null) {
             ModifierTrigger$listeners.trigger(stack, rarity);
         }
-
     }
 
     public static class Instance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate gem;
-        private final String rarity;
+        private final LootRarity rarity;
 
-        public Instance(ItemPredicate gem, String rarity) {
+        public Instance(ItemPredicate gem, LootRarity rarity) {
             super(GemCutTrigger.ID, EntityPredicate.Composite.ANY);
             this.gem = gem;
             this.rarity = rarity;
@@ -93,8 +93,8 @@ public class GemCutTrigger implements CriterionTrigger<GemCutTrigger.Instance> {
             return new JsonObject();
         }
 
-        public boolean test(ItemStack stack, String rarity) {
-            return this.gem.matches(stack) && (this.rarity.isEmpty() || this.rarity.equals(rarity));
+        public boolean test(ItemStack stack, LootRarity rarity) {
+            return this.gem.matches(stack) && (this.rarity == null || rarity == this.rarity);
         }
     }
 
@@ -118,7 +118,7 @@ public class GemCutTrigger implements CriterionTrigger<GemCutTrigger.Instance> {
             this.listeners.remove(listener);
         }
 
-        public void trigger(ItemStack stack, String rarity) {
+        public void trigger(ItemStack stack, LootRarity rarity) {
             List<CriterionTrigger.Listener<GemCutTrigger.Instance>> list = null;
 
             for (CriterionTrigger.Listener<GemCutTrigger.Instance> listener : this.listeners) {

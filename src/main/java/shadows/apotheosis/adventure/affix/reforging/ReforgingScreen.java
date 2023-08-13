@@ -79,16 +79,15 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
         int dust = this.menu.getDustCount();
         int mats = this.menu.getMatCount();
         int levels = this.menu.player.experienceLevel;
-        LootRarity rarity = this.menu.getRarity();
 
         for (int slot = 0; slot < 3; ++slot) {
             ItemStack choice = this.choices[slot];
             if (choice.isEmpty() || this.menu.needsReset()) continue;
             List<Component> tooltips = new ArrayList<>();
 
-            int dustCost = this.menu.getDustCost(slot, rarity);
-            int matCost = this.menu.getMatCost(slot, rarity);
-            int levelCost = this.menu.getLevelCost(slot, rarity);
+            int dustCost = this.menu.getDustCost(slot);
+            int matCost = this.menu.getMatCost(slot);
+            int levelCost = this.menu.getLevelCost(slot);
 
             tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
             tooltips.add(CommonComponents.EMPTY);
@@ -142,10 +141,10 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShaderTexture(0, TEXTURE);
 
-            int dustCost = this.menu.getDustCost(slot, rarity);
-            int matCost = this.menu.getMatCost(slot, rarity);
-            int levelCost = this.menu.getLevelCost(slot, rarity);
-            int maxCost = this.menu.getMatCost(2, rarity);
+            int dustCost = this.menu.getDustCost(slot);
+            int matCost = this.menu.getMatCost(slot);
+            int levelCost = this.menu.getLevelCost(slot);
+            int maxCost = this.menu.getMatCost(2);
 
             String levelStr = "" + levelCost;
             String costStr = "" + matCost;

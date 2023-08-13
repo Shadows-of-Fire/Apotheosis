@@ -76,7 +76,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
                     r.decrementInputs(gem, left, bot, right);
                     this.inv.setStackInSlot(0, out);
                     this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
-                    AdvancementTriggers.GEM_CUT.trigger((ServerPlayer) player, out, GemItem.getLootRarity(out).id());
+                    AdvancementTriggers.GEM_CUT.trigger((ServerPlayer) player, out, GemItem.getLootRarity(out));
                     return true;
                 }
             }

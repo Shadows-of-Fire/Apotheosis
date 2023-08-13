@@ -21,6 +21,7 @@ import shadows.apotheosis.adventure.affix.effect.OmneticAffix;
 import shadows.apotheosis.adventure.affix.effect.RadialAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingMenu;
+import shadows.apotheosis.adventure.affix.reforging.ReforgingRecipe;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingMenu;
@@ -250,6 +251,7 @@ public class Apoth {
         public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
         public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
         public static final RecipeType<SalvagingRecipe> SALVAGING = PlaceboUtil.makeRecipeType("apotheosis:salvaging");
+        public static final RecipeType<ReforgingRecipe> REFORGING = PlaceboUtil.makeRecipeType("apotheosis:reforging");
     }
 
     public static final class LootTables {

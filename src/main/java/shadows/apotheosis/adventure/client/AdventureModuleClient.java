@@ -29,6 +29,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -61,9 +62,11 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.AdventureConfig;
+import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
+import shadows.apotheosis.adventure.affix.AffixManager;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import shadows.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingScreen;
@@ -254,6 +257,23 @@ public class AdventureModuleClient {
             super(s, v, m, i, b, b2, r, r2);
             throw new IllegalStateException("This class is not meant to be constructed!");
         }
+    }
+
+    public static void checkAffixLangKeys() {
+        StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
+        boolean any = false;
+        String json = "\"%s\": \"\",";
+        for (Affix a : AffixManager.INSTANCE.getValues()) {
+            if (!I18n.exists("affix." + a.getId())) {
+                sb.append(json.formatted("affix." + a.getId()) + "\n");
+                any = true;
+            }
+            if (!I18n.exists("affix." + a.getId() + ".suffix")) {
+                sb.append(json.formatted("affix." + a.getId() + ".suffix") + "\n");
+                any = true;
+            }
+        }
+        if (any) AdventureModule.LOGGER.error(sb.toString());
     }
 
 }

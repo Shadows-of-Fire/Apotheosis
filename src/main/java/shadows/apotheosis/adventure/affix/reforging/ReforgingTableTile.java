@@ -1,5 +1,7 @@
 package shadows.apotheosis.adventure.affix.reforging;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -17,6 +19,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import shadows.apotheosis.Apoth;
+import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.block_entity.TickingBlockEntity;
 import shadows.placebo.cap.InternalItemHandler;
@@ -49,7 +52,12 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
     public boolean isValidRarityMat(ItemStack stack) {
         LootRarity rarity = LootRarity.getMaterialRarity(stack);
-        return rarity != null && this.getMaxRarity().isAtLeast(rarity);
+        return rarity != null && this.getMaxRarity().isAtLeast(rarity) && getRecipeFor(rarity) != null;
+    }
+
+    @Nullable
+    public ReforgingRecipe getRecipeFor(LootRarity rarity) {
+        return this.level.getRecipeManager().getAllRecipesFor(RecipeTypes.REFORGING).stream().filter(r -> r.rarity() == rarity).findFirst().orElse(null);
     }
 
     @Override

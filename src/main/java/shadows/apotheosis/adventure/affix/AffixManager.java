@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
-import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import shadows.apotheosis.Apoth.Affixes;
 import shadows.apotheosis.Apotheosis;
@@ -26,8 +25,8 @@ import shadows.apotheosis.adventure.affix.effect.SpectralShotAffix;
 import shadows.apotheosis.adventure.affix.effect.TelepathicAffix;
 import shadows.apotheosis.adventure.affix.effect.ThunderstruckAffix;
 import shadows.apotheosis.adventure.affix.socket.SocketAffix;
+import shadows.apotheosis.adventure.client.AdventureModuleClient;
 import shadows.placebo.json.PlaceboJsonReloadListener;
-import shadows.placebo.util.CachedObject;
 
 public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 
@@ -53,19 +52,8 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
         this.byType = builder.build();
         Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
         Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
-        CachedObject.invalidateAll(AffixHelper.AFFIX_CACHED_OBJECT);
         if (!FMLEnvironment.production) {
-            StringBuilder sb = new StringBuilder("Missing Affix Lang Keys:\n");
-            String json = "\"%s\": \"\",";
-            for (Affix a : this.getValues()) {
-                if (!I18n.exists("affix." + a.getId())) {
-                    sb.append(json.formatted("affix." + a.getId()) + "\n");
-                }
-                if (!I18n.exists("affix." + a.getId() + ".suffix")) {
-                    sb.append(json.formatted("affix." + a.getId() + ".suffix") + "\n");
-                }
-            }
-            AdventureModule.LOGGER.error(sb.toString());
+            AdventureModuleClient.checkAffixLangKeys();
         }
     }
 

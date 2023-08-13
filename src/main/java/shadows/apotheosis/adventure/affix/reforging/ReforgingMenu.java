@@ -14,7 +14,6 @@ import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
@@ -91,14 +90,15 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 
             ItemStack input = this.getSlot(0).getItem();
             LootRarity rarity = this.getRarity();
-            if (rarity == null || input.isEmpty() || this.needsReset()) return false;
+            ReforgingRecipe recipe = this.tile.getRecipeFor(rarity);
+            if (recipe == null || input.isEmpty() || this.needsReset()) return false;
 
             int dust = this.getDustCount();
-            int dustCost = this.getDustCost(slot, rarity);
+            int dustCost = this.getDustCost(slot);
             int mats = this.getMatCount();
-            int matCost = this.getMatCost(slot, rarity);
+            int matCost = this.getMatCost(slot);
             int levels = this.player.experienceLevel;
-            int levelCost = this.getLevelCost(slot, rarity);
+            int levelCost = this.getLevelCost(slot);
 
             if ((dust < dustCost || mats < matCost || levels < levelCost) && !player.isCreative()) return false;
 
@@ -146,15 +146,15 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
         return LootRarity.getMaterialRarity(s);
     }
 
-    public int getDustCost(int slot, LootRarity rarity) {
+    public int getDustCost(int slot) {
         return this.costs[0] * ++slot;
     }
 
-    public int getMatCost(int slot, LootRarity rarity) {
+    public int getMatCost(int slot) {
         return this.costs[1] * ++slot;
     }
 
-    public int getLevelCost(int slot, LootRarity rarity) {
+    public int getLevelCost(int slot) {
         return this.costs[2] * ++slot;
     }
 
@@ -165,10 +165,14 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
     @Override
     public void slotsChanged(Container pContainer) {
         LootRarity rarity = this.getRarity();
-        if (rarity == null) return;
-        this.costs[0] = AdventureConfig.reforgeCosts.get(rarity).dustCost();
-        this.costs[1] = AdventureConfig.reforgeCosts.get(rarity).matCost();
-        this.costs[2] = AdventureConfig.reforgeCosts.get(rarity).levelCost();
+        if (rarity != null) {
+            ReforgingRecipe recipe = this.tile.getRecipeFor(rarity);
+            if (recipe != null) {
+                this.costs[0] = recipe.dustCost();
+                this.costs[1] = recipe.matCost();
+                this.costs[2] = recipe.levelCost();
+            }
+        }
         if (ReforgingMenu.this.needsReset()) {
             ReforgingMenu.this.needsReset.set(0);
         }
