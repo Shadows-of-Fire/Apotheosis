@@ -11,7 +11,15 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "A fórmula mencionada não é a usada pelo Minecraft vanilla, pois o Apotheosis a substitui."
+			"text": "O primeiro component da fórmula é o valor de $(br)A, igual a $(9)10 + (dano - 20) / 2$(), com um valor mínimo de $(9)10$().$(p)Você então reduz o dano igual a $(br)$(9)A / (A + armadura)$().$(p)A fórmula mencionada não é a usada pelo Minecraft vanilla, pois o Apotheosis a substitui."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "Para valores de dano e armadura do vanilla, você sofrerá um pouco menos de dano.$(p) Para valores de dano e armadura altos, a armadura será significativamente menos eficaz."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "O objetivo dessa mudança é reduzir a invulnerabilidade em níveis altos e tornar $(9)proteção$() e $(9)resistência$() mais impactantes.$(p)Também torna as lutas em que ambas as partes estão fortemente blindadas significativamente mais ativa."
 		}
 	]
 }

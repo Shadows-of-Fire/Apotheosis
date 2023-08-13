@@ -3,6 +3,8 @@
 
     "item.modifiers.both_hands": "Quando segurado:",
 
+    "attributeslib.adv.base": "[Entidade: %s | Item: %s]",
+
 	"attributeslib.value.flat": "%s",
 	"attributeslib.value.percent": "%s%%",
 
@@ -122,6 +124,16 @@
     "effect.apotheosis.detonation.desc": "Ao expirar, inflige danos com base nos ticks de fogo restantes.",
     "effect.apotheosis.detonation.description": "Ao expirar, inflige danos com base nos ticks de fogo restantes.",
     "death.attack.apotheosis.detonation": "%s foi detonado por uma chama.",
+
+    "effect.minecraft.night_vision.desc": "Permite que você veja no escuro.",
+    "effect.minecraft.invisibility.desc": "Torna você invisível, com exceção dos equipamentos.",
+    "effect.minecraft.jump_boost.desc": "Aumenta a altura do salto.",
+    "effect.minecraft.fire_resistance.desc": "Torna você imune a dano de fogo.",
+    "effect.minecraft.water_breathing.desc": "Faz com que você não se afogue.",
+    "effect.minecraft.instant_health.desc": "Restaura instantaneamente um pouco da sua saúde.",
+    "effect.minecraft.instant_damage.desc": "Causa instantaneamente um pouco de dano mágico.",
+    "effect.minecraft.poison.desc": "Inflige dano não letal periodicamente.",
+    "effect.minecraft.regeneration.desc": "Faz com que você regenere a saúde ao longo do tempo.",
 
     "comment_id": "/Adventure Module",
 
