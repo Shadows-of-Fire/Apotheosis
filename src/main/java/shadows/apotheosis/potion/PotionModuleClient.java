@@ -17,28 +17,28 @@ import shadows.apotheosis.Apoth;
 
 public class PotionModuleClient {
 
-	// Static mod bus events
+    // Static mod bus events
 
-	@SubscribeEvent
-	public static void colors(RegisterColorHandlersEvent.Item e) {
-		e.register((stack, tint) -> PotionUtils.getColor(stack), Apoth.Items.POTION_CHARM.get());
-	}
+    @SubscribeEvent
+    public static void colors(RegisterColorHandlersEvent.Item e) {
+        e.register((stack, tint) -> PotionUtils.getColor(stack), Apoth.Items.POTION_CHARM.get());
+    }
 
-	// Instance forge bus events
+    // Instance forge bus events
 
-	@SubscribeEvent
-	public void tooltips(ItemTooltipEvent e) {
-		ItemStack stack = e.getItemStack();
-		if (stack.getItem() instanceof PotionItem) {
-			List<MobEffectInstance> effects = PotionUtils.getMobEffects(stack);
-			if (effects.size() == 1) {
-				MobEffect effect = effects.get(0).getEffect();
-				String key = effect.getDescriptionId() + ".desc";
-				if (I18n.exists(key)) {
-					e.getToolTip().add(Component.translatable(key).withStyle(ChatFormatting.GRAY));
-				}
-			}
-		}
-	}
+    @SubscribeEvent
+    public void tooltips(ItemTooltipEvent e) {
+        ItemStack stack = e.getItemStack();
+        if (stack.getItem() instanceof PotionItem) {
+            List<MobEffectInstance> effects = PotionUtils.getMobEffects(stack);
+            if (effects.size() == 1) {
+                MobEffect effect = effects.get(0).getEffect();
+                String key = effect.getDescriptionId() + ".desc";
+                if (I18n.exists(key)) {
+                    e.getToolTip().add(Component.translatable(key).withStyle(ChatFormatting.GRAY));
+                }
+            }
+        }
+    }
 
 }

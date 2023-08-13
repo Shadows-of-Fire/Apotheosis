@@ -55,146 +55,142 @@ import shadows.placebo.util.RunnableReloader;
 @Mod(Apotheosis.MODID)
 public class Apotheosis {
 
-	public static final String MODID = "apotheosis";
-	//Formatter::off
+    public static final String MODID = "apotheosis";
+
     public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
-            .named(new ResourceLocation(MODID, MODID))
-            .clientAcceptedVersions(s->true)
-            .serverAcceptedVersions(s->true)
-            .networkProtocolVersion(() -> "1.0.0")
-            .simpleChannel();
-    //Formatter::on
+        .named(new ResourceLocation(MODID, MODID))
+        .clientAcceptedVersions(s -> true)
+        .serverAcceptedVersions(s -> true)
+        .networkProtocolVersion(() -> "1.0.0")
+        .simpleChannel();
 
-	public static final RecipeHelper HELPER = new RecipeHelper(Apotheosis.MODID);
+    public static final RecipeHelper HELPER = new RecipeHelper(Apotheosis.MODID);
 
-	public static final CreativeModeTab APOTH_GROUP = new CreativeModeTab(MODID) {
+    public static final CreativeModeTab APOTH_GROUP = new CreativeModeTab(MODID){
 
-		@Override
-		public ItemStack makeIcon() {
-			return new ItemStack(Items.ENCHANTING_TABLE);
-		}
-	};
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(Items.ENCHANTING_TABLE);
+        }
+    };
 
-	public static File configDir;
-	public static Configuration config;
-	public static boolean enableEnch = true;
-	public static boolean enableAdventure = true;
-	public static boolean enableSpawner = true;
-	public static boolean enablePotion = true;
-	public static boolean enableVillage = true;
-	public static boolean enableGarden = true;
-	public static boolean giveBook = true;
+    public static File configDir;
+    public static Configuration config;
+    public static boolean enableEnch = true;
+    public static boolean enableAdventure = true;
+    public static boolean enableSpawner = true;
+    public static boolean enablePotion = true;
+    public static boolean enableVillage = true;
+    public static boolean enableGarden = true;
+    public static boolean giveBook = true;
 
-	public static float localAtkStrength = 1;
+    public static float localAtkStrength = 1;
 
-	static {
-		configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
-		config = new Configuration(new File(configDir, MODID + ".cfg"));
-		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
-		enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
-		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
-		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
-		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
-		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
-		config.setTitle("Apotheosis Module Control");
-		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");
-		if (config.hasChanged()) config.save();
-	}
+    static {
+        configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
+        config = new Configuration(new File(configDir, MODID + ".cfg"));
+        enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
+        enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
+        enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
+        enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
+        enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
+        enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
+        giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
+        config.setTitle("Apotheosis Module Control");
+        config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");
+        if (config.hasChanged()) config.save();
+    }
 
-	public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").bypassArmor().bypassMagic();
+    public static final DamageSource CORRUPTED = new DamageSource("apoth_corrupted").bypassArmor().bypassMagic();
 
-	public Apotheosis() {
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Apotheosis() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		// Library modules - Mandatory 
-		bus.register(new AttributesLib());
-		bus.register(new MobFxLib());
+        // Library modules - Mandatory
+        bus.register(new AttributesLib());
+        bus.register(new MobFxLib());
 
-		// Real modules
-		if (enableEnch) bus.register(new EnchModule());
-		if (enableSpawner) bus.register(new SpawnerModule());
-		if (enableGarden) bus.register(new GardenModule());
-		if (enableAdventure) bus.register(new AdventureModule());
-		if (enablePotion) bus.register(new PotionModule());
-		if (enableVillage) bus.register(new VillageModule());
+        // Real modules
+        if (enableEnch) bus.register(new EnchModule());
+        if (enableSpawner) bus.register(new SpawnerModule());
+        if (enableGarden) bus.register(new GardenModule());
+        if (enableAdventure) bus.register(new AdventureModule());
+        if (enablePotion) bus.register(new PotionModule());
+        if (enableVillage) bus.register(new VillageModule());
 
-		if (config.hasChanged()) config.save();
-		bus.post(new ApotheosisConstruction());
-		bus.addListener(this::init);
-		MinecraftForge.EVENT_BUS.addListener(this::reloads);
-		MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
-		MinecraftForge.EVENT_BUS.addListener(this::cmds);
-		if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
-		Apoth.RecipeTypes.FLETCHING.getClass(); // Static init wew
-	}
+        if (config.hasChanged()) config.save();
+        bus.post(new ApotheosisConstruction());
+        bus.addListener(this::init);
+        MinecraftForge.EVENT_BUS.addListener(this::reloads);
+        MinecraftForge.EVENT_BUS.addListener(this::trackCooldown);
+        MinecraftForge.EVENT_BUS.addListener(this::cmds);
+        if (ModList.get().isLoaded("patchouli")) PatchouliCompat.register();
+        Apoth.RecipeTypes.FLETCHING.getClass(); // Static init wew
+    }
 
-	@SubscribeEvent
-	public void init(FMLCommonSetupEvent e) {
-		MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
-		MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage(null, 0));
-		MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage(0, null, false));
-		e.enqueueWork(() -> {
-			AdvancementTriggers.init();
-			CraftingHelper.register(new ModuleCondition.Serializer());
-			CraftingHelper.register(new ResourceLocation(MODID, "rarity"), RarityIngredient.Serializer.INSTANCE);
-		});
-	}
+    @SubscribeEvent
+    public void init(FMLCommonSetupEvent e) {
+        MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
+        MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage(null, 0));
+        MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage(0, null, false));
+        e.enqueueWork(() -> {
+            AdvancementTriggers.init();
+            CraftingHelper.register(new ModuleCondition.Serializer());
+            CraftingHelper.register(new ResourceLocation(MODID, "rarity"), RarityIngredient.Serializer.INSTANCE);
+        });
+    }
 
-	@SubscribeEvent
-	public void reloads(AddReloadListenerEvent e) {
-		e.addListener(RunnableReloader.of(() -> MinecraftForge.EVENT_BUS.post(new ApotheosisReloadEvent())));
-	}
+    @SubscribeEvent
+    public void reloads(AddReloadListenerEvent e) {
+        e.addListener(RunnableReloader.of(() -> MinecraftForge.EVENT_BUS.post(new ApotheosisReloadEvent())));
+    }
 
-	@SubscribeEvent
-	public void trackCooldown(AttackEntityEvent e) {
-		Player p = e.getEntity();
-		localAtkStrength = p.getAttackStrengthScale(0.5F);
-	}
+    @SubscribeEvent
+    public void trackCooldown(AttackEntityEvent e) {
+        Player p = e.getEntity();
+        localAtkStrength = p.getAttackStrengthScale(0.5F);
+    }
 
-	@SubscribeEvent
-	public void cmds(RegisterCommandsEvent e) {
-		var builder = Commands.literal("apoth");
-		MinecraftForge.EVENT_BUS.post(new ApotheosisCommandEvent(builder));
-		e.getDispatcher().register(builder);
-	}
+    @SubscribeEvent
+    public void cmds(RegisterCommandsEvent e) {
+        var builder = Commands.literal("apoth");
+        MinecraftForge.EVENT_BUS.post(new ApotheosisCommandEvent(builder));
+        e.getDispatcher().register(builder);
+    }
 
-	public static Ingredient potionIngredient(Potion type) {
-		return new NBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), type));
-	}
+    public static Ingredient potionIngredient(Potion type) {
+        return new NBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), type));
+    }
 
-	/**
-	 * The apotheosis construction event is fired from {@link Apotheosis}'s constructor.
-	 */
-	public static class ApotheosisConstruction extends Event implements IModBusEvent {
-	}
+    /**
+     * The apotheosis construction event is fired from {@link Apotheosis}'s constructor.
+     */
+    public static class ApotheosisConstruction extends Event implements IModBusEvent {}
 
-	/**
-	 * The apotheosis reload event is fired from resource reload.
-	 * It may be fired off the main thread.
-	 */
-	public static class ApotheosisReloadEvent extends Event {
-	}
+    /**
+     * The apotheosis reload event is fired from resource reload.
+     */
+    public static class ApotheosisReloadEvent extends Event {}
 
-	/**
-	 * The apotheosis command event is fired when commands are to be registered.
-	 * Register subcommands at this time.
-	 */
-	public static class ApotheosisCommandEvent extends Event {
+    /**
+     * The apotheosis command event is fired when commands are to be registered.
+     * Register subcommands at this time.
+     */
+    public static class ApotheosisCommandEvent extends Event {
 
-		private final LiteralArgumentBuilder<CommandSourceStack> root;
+        private final LiteralArgumentBuilder<CommandSourceStack> root;
 
-		public ApotheosisCommandEvent(LiteralArgumentBuilder<CommandSourceStack> root) {
-			this.root = root;
-		}
+        public ApotheosisCommandEvent(LiteralArgumentBuilder<CommandSourceStack> root) {
+            this.root = root;
+        }
 
-		public LiteralArgumentBuilder<CommandSourceStack> getRoot() {
-			return this.root;
-		}
-	}
+        public LiteralArgumentBuilder<CommandSourceStack> getRoot() {
+            return this.root;
+        }
+    }
 
-	public static ResourceLocation loc(String s) {
-		return new ResourceLocation(MODID, s);
-	}
+    public static ResourceLocation loc(String s) {
+        return new ResourceLocation(MODID, s);
+    }
 
 }

@@ -1,0 +1,13 @@
+{
+    "name": "Подводная охота",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Подводная охота$() - это заклинание с трезубцем.$(p)Оно дает убийствам с брошенным трезубцем шанс в 3,5% за уровень сбросить несколько случайных рыб."
+        }
+	]
+}

@@ -18,53 +18,53 @@ import shadows.apotheosis.adventure.affix.Affix;
 
 public class BerserkersFuryEnchant extends Enchantment {
 
-	public BerserkersFuryEnchant() {
-		super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[] { EquipmentSlot.CHEST });
-	}
+    public BerserkersFuryEnchant() {
+        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[] { EquipmentSlot.CHEST });
+    }
 
-	@Override
-	public int getMinCost(int level) {
-		return 50 + level * 40;
-	}
+    @Override
+    public int getMinCost(int level) {
+        return 50 + level * 40;
+    }
 
-	@Override
-	public int getMaxCost(int level) {
-		return 200;
-	}
+    @Override
+    public int getMaxCost(int level) {
+        return 200;
+    }
 
-	@Override
-	public int getMaxLevel() {
-		return 3;
-	}
+    @Override
+    public int getMaxLevel() {
+        return 3;
+    }
 
-	@Override
-	public boolean isCurse() {
-		return true;
-	}
+    @Override
+    public boolean isCurse() {
+        return true;
+    }
 
-	@Override
-	public Component getFullname(int level) {
-		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_RED);
-	}
+    @Override
+    public Component getFullname(int level) {
+        return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_RED);
+    }
 
-	/**
-	 * Handles the application of Berserker's Fury.
-	 */
-	@SuppressWarnings("deprecation")
-	public void livingHurt(LivingHurtEvent e) {
-		LivingEntity user = e.getEntity();
-		if (e.getSource().getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
-			int level = EnchantmentHelper.getEnchantmentLevel(this, user);
-			if (level > 0) {
-				if (Affix.isOnCooldown(Registry.ENCHANTMENT.getKey(this), 900, user)) return;
-				user.invulnerableTime = 0;
-				user.hurt(Apotheosis.CORRUPTED, (float) Math.pow(2.5, level));
-				user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, level - 1));
-				user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, level - 1));
-				user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, level - 1));
-				Affix.startCooldown(Registry.ENCHANTMENT.getKey(this), user);
-			}
-		}
-	}
+    /**
+     * Handles the application of Berserker's Fury.
+     */
+    @SuppressWarnings("deprecation")
+    public void livingHurt(LivingHurtEvent e) {
+        LivingEntity user = e.getEntity();
+        if (e.getSource().getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
+            int level = EnchantmentHelper.getEnchantmentLevel(this, user);
+            if (level > 0) {
+                if (Affix.isOnCooldown(Registry.ENCHANTMENT.getKey(this), 900, user)) return;
+                user.invulnerableTime = 0;
+                user.hurt(Apotheosis.CORRUPTED, (float) Math.pow(2.5, level));
+                user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, level - 1));
+                user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, level - 1));
+                user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, level - 1));
+                Affix.startCooldown(Registry.ENCHANTMENT.getKey(this), user);
+            }
+        }
+    }
 
 }

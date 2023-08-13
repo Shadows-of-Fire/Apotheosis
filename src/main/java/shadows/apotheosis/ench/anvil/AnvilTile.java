@@ -18,30 +18,30 @@ import shadows.apotheosis.Apoth;
 
 public class AnvilTile extends BlockEntity {
 
-	protected final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
+    protected final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
 
-	public AnvilTile(BlockPos pos, BlockState state) {
-		super(Apoth.Tiles.ANVIL.get(), pos, state);
-	}
+    public AnvilTile(BlockPos pos, BlockState state) {
+        super(Apoth.Tiles.ANVIL.get(), pos, state);
+    }
 
-	@Override
-	public void saveAdditional(CompoundTag tag) {
-		ItemStack stack = new ItemStack(Items.ANVIL);
-		EnchantmentHelper.setEnchantments(this.enchantments, stack);
-		tag.put("enchantments", stack.getEnchantmentTags());
-	}
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        ItemStack stack = new ItemStack(Items.ANVIL);
+        EnchantmentHelper.setEnchantments(this.enchantments, stack);
+        tag.put("enchantments", stack.getEnchantmentTags());
+    }
 
-	@Override
-	public void load(CompoundTag tag) {
-		super.load(tag);
-		ListTag enchants = tag.getList("enchantments", Tag.TAG_COMPOUND);
-		Map<Enchantment, Integer> map = EnchantmentHelper.deserializeEnchantments(enchants);
-		this.enchantments.clear();
-		this.enchantments.putAll(map);
-	}
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        ListTag enchants = tag.getList("enchantments", Tag.TAG_COMPOUND);
+        Map<Enchantment, Integer> map = EnchantmentHelper.deserializeEnchantments(enchants);
+        this.enchantments.clear();
+        this.enchantments.putAll(map);
+    }
 
-	public Object2IntMap<Enchantment> getEnchantments() {
-		return this.enchantments;
-	}
+    public Object2IntMap<Enchantment> getEnchantments() {
+        return this.enchantments;
+    }
 
 }

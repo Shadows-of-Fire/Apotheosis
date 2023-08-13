@@ -23,80 +23,78 @@ import shadows.placebo.util.StepFunction;
 
 public class DamageReductionAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<DamageReductionAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			DamageType.CODEC.fieldOf("damage_type").forGetter(a -> a.type),
-			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
-			LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
-			.apply(inst, DamageReductionAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<DamageReductionAffix> SERIALIZER = PSerializer.fromCodec("Damage Reduction Affix", CODEC);
+    public static final Codec<DamageReductionAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            DamageType.CODEC.fieldOf("damage_type").forGetter(a -> a.type),
+            GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
+            LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
+        .apply(inst, DamageReductionAffix::new));
 
-	protected final DamageType type;
-	protected final Map<LootRarity, StepFunction> values;
-	protected final Set<LootCategory> types;
+    public static final PSerializer<DamageReductionAffix> SERIALIZER = PSerializer.fromCodec("Damage Reduction Affix", CODEC);
 
-	public DamageReductionAffix(DamageType type, Map<LootRarity, StepFunction> levelFuncs, Set<LootCategory> types) {
-		super(AffixType.ABILITY);
-		this.type = type;
-		this.values = levelFuncs;
-		this.types = types;
-	}
+    protected final DamageType type;
+    protected final Map<LootRarity, StepFunction> values;
+    protected final Set<LootCategory> types;
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return !cat.isNone() && (this.types.isEmpty() || this.types.contains(cat)) && this.values.containsKey(rarity);
-	}
+    public DamageReductionAffix(DamageType type, Map<LootRarity, StepFunction> levelFuncs, Set<LootCategory> types) {
+        super(AffixType.ABILITY);
+        this.type = type;
+        this.values = levelFuncs;
+        this.types = types;
+    }
 
-	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		var comp = Component.translatable("affix.apotheosis:damage_reduction.desc", Component.translatable("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level)));
-		list.accept(comp);
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return !cat.isNone() && (this.types.isEmpty() || this.types.contains(cat)) && this.values.containsKey(rarity);
+    }
 
-	@Override
-	public float onHurt(ItemStack stack, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
-		if (src.isBypassInvul() || src.isBypassMagic()) return amount;
-		if (this.type.test(src)) return amount * (1 - this.getTrueLevel(rarity, level));
-		return super.onHurt(stack, rarity, level, src, ent, amount);
-	}
+    @Override
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+        var comp = Component.translatable("affix.apotheosis:damage_reduction.desc", Component.translatable("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level)));
+        list.accept(comp);
+    }
 
-	private float getTrueLevel(LootRarity rarity, float level) {
-		return this.values.get(rarity).get(level);
-	}
+    @Override
+    public float onHurt(ItemStack stack, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
+        if (src.isBypassInvul() || src.isBypassMagic()) return amount;
+        if (this.type.test(src)) return amount * (1 - this.getTrueLevel(rarity, level));
+        return super.onHurt(stack, rarity, level, src, ent, amount);
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    private float getTrueLevel(LootRarity rarity, float level) {
+        return this.values.get(rarity).get(level);
+    }
 
-	public static enum DamageType implements Predicate<DamageSource> {
-		PHYSICAL("physical", d -> !d.isMagic() && !d.isFire() && !d.isExplosion() && !d.isFall()),
-		MAGIC("magic", DamageSource::isMagic),
-		FIRE("fire", DamageSource::isFire),
-		FALL("fall", DamageSource::isFall),
-		EXPLOSION("explosion", DamageSource::isExplosion);
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
-		public static Codec<DamageType> CODEC = new EnumCodec<>(DamageType.class);
+    public static enum DamageType implements Predicate<DamageSource> {
+        PHYSICAL("physical", d -> !d.isMagic() && !d.isFire() && !d.isExplosion() && !d.isFall()),
+        MAGIC("magic", DamageSource::isMagic),
+        FIRE("fire", DamageSource::isFire),
+        FALL("fall", DamageSource::isFall),
+        EXPLOSION("explosion", DamageSource::isExplosion);
 
-		private final String id;
-		private final Predicate<DamageSource> predicate;
+        public static Codec<DamageType> CODEC = new EnumCodec<>(DamageType.class);
 
-		private DamageType(String id, Predicate<DamageSource> predicate) {
-			this.id = id;
-			this.predicate = predicate;
-		}
+        private final String id;
+        private final Predicate<DamageSource> predicate;
 
-		public String getId() {
-			return this.id;
-		}
+        private DamageType(String id, Predicate<DamageSource> predicate) {
+            this.id = id;
+            this.predicate = predicate;
+        }
 
-		@Override
-		public boolean test(DamageSource t) {
-			return this.predicate.test(t);
-		}
-	}
+        public String getId() {
+            return this.id;
+        }
+
+        @Override
+        public boolean test(DamageSource t) {
+            return this.predicate.test(t);
+        }
+    }
 
 }

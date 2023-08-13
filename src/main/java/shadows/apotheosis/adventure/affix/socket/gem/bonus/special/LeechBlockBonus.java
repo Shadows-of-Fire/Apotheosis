@@ -22,72 +22,66 @@ import shadows.apotheosis.adventure.loot.LootRarity;
 
 public class LeechBlockBonus extends GemBonus {
 
-	//Formatter::off
-	public static Codec<LeechBlockBonus> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			LootRarity.mapCodec(Data.CODEC).fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, LeechBlockBonus::new)
-		);
-	//Formatter::on
+    public static Codec<LeechBlockBonus> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            LootRarity.mapCodec(Data.CODEC).fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, LeechBlockBonus::new));
 
-	protected final Map<LootRarity, Data> values;
+    protected final Map<LootRarity, Data> values;
 
-	public LeechBlockBonus(Map<LootRarity, Data> values) {
-		super(Apotheosis.loc("leech_block"), new GemClass("shield", ImmutableSet.of(LootCategory.SHIELD)));
-		this.values = values;
-	}
+    public LeechBlockBonus(Map<LootRarity, Data> values) {
+        super(Apotheosis.loc("leech_block"), new GemClass("shield", ImmutableSet.of(LootCategory.SHIELD)));
+        this.values = values;
+    }
 
-	@Override
-	public float onShieldBlock(ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
-		Data d = this.values.get(rarity);
-		if (amount <= 2 || Affix.isOnCooldown(this.getId(), d.cooldown, entity)) return amount;
-		entity.heal(amount * d.healFactor);
-		Affix.startCooldown(this.getId(), entity);
-		return amount;
-	}
+    @Override
+    public float onShieldBlock(ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
+        Data d = this.values.get(rarity);
+        if (amount <= 2 || Affix.isOnCooldown(this.getId(), d.cooldown, entity)) return amount;
+        entity.heal(amount * d.healFactor);
+        Affix.startCooldown(this.getId(), entity);
+        return amount;
+    }
 
-	@Override
-	public Codec<? extends GemBonus> getCodec() {
-		return CODEC;
-	}
+    @Override
+    public Codec<? extends GemBonus> getCodec() {
+        return CODEC;
+    }
 
-	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-		Data d = this.values.get(rarity);
-		Component cooldown = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(d.cooldown));
-		return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(d.healFactor * 100), cooldown).withStyle(ChatFormatting.YELLOW);
-	}
+    @Override
+    public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+        Data d = this.values.get(rarity);
+        Component cooldown = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(d.cooldown));
+        return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(d.healFactor * 100), cooldown).withStyle(ChatFormatting.YELLOW);
+    }
 
-	@Override
-	public LeechBlockBonus validate() {
-		Preconditions.checkNotNull(this.values);
-		this.values.forEach((k, v) -> {
-			Preconditions.checkNotNull(k);
-			Preconditions.checkNotNull(v);
-		});
-		return this;
-	}
+    @Override
+    public LeechBlockBonus validate() {
+        Preconditions.checkNotNull(this.values);
+        this.values.forEach((k, v) -> {
+            Preconditions.checkNotNull(k);
+            Preconditions.checkNotNull(v);
+        });
+        return this;
+    }
 
-	@Override
-	public boolean supports(LootRarity rarity) {
-		return this.values.containsKey(rarity);
-	}
+    @Override
+    public boolean supports(LootRarity rarity) {
+        return this.values.containsKey(rarity);
+    }
 
-	@Override
-	public int getNumberOfUUIDs() {
-		return 0;
-	}
+    @Override
+    public int getNumberOfUUIDs() {
+        return 0;
+    }
 
-	static record Data(float healFactor, int cooldown) {
+    static record Data(float healFactor, int cooldown) {
 
-		//Formatter::off
-		public static final Codec<Data> CODEC = RecordCodecBuilder.create(inst -> inst
-			.group(
-				Codec.FLOAT.fieldOf("heal_factor").forGetter(Data::healFactor), 
-				Codec.INT.fieldOf("cooldown").forGetter(Data::cooldown))
-			.apply(inst, Data::new)
-		);
-		//Formatter::on
+        public static final Codec<Data> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                Codec.FLOAT.fieldOf("heal_factor").forGetter(Data::healFactor),
+                Codec.INT.fieldOf("cooldown").forGetter(Data::cooldown))
+            .apply(inst, Data::new));
 
-	}
+    }
 }

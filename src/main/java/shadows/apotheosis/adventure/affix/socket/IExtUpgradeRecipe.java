@@ -6,6 +6,6 @@ import net.minecraft.world.item.ItemStack;
 
 public interface IExtUpgradeRecipe {
 
-	public void onCraft(Container inv, Player player, ItemStack output);
+    public void onCraft(Container inv, Player player, ItemStack output);
 
 }

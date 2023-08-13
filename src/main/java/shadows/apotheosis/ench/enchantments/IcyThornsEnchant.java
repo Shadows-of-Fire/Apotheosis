@@ -15,43 +15,42 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class IcyThornsEnchant extends Enchantment {
 
-	public IcyThornsEnchant() {
-		super(Rarity.RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[] { EquipmentSlot.CHEST });
-	}
+    public IcyThornsEnchant() {
+        super(Rarity.RARE, EnchantmentCategory.ARMOR_CHEST, new EquipmentSlot[] { EquipmentSlot.CHEST });
+    }
 
-	@Override
-	public int getMinCost(int level) {
-		return 35 + (level - 1) * 20;
-	}
+    @Override
+    public int getMinCost(int level) {
+        return 35 + (level - 1) * 20;
+    }
 
-	@Override
-	public int getMaxCost(int level) {
-		return 200;
-	}
+    @Override
+    public int getMaxCost(int level) {
+        return 200;
+    }
 
-	@Override
-	public int getMaxLevel() {
-		return 3;
-	}
+    @Override
+    public int getMaxLevel() {
+        return 3;
+    }
 
-	@Override
-	public boolean canEnchant(ItemStack stack) {
-		return stack.getItem() instanceof ArmorItem ? true : super.canEnchant(stack);
-	}
+    @Override
+    public boolean canEnchant(ItemStack stack) {
+        return stack.getItem() instanceof ArmorItem ? true : super.canEnchant(stack);
+    }
 
-	@Override
-	protected boolean checkCompatibility(Enchantment pOther) {
-		return super.checkCompatibility(pOther) && pOther != Enchantments.THORNS;
-	}
+    @Override
+    protected boolean checkCompatibility(Enchantment pOther) {
+        return super.checkCompatibility(pOther) && pOther != Enchantments.THORNS;
+    }
 
-	@Override
-	public void doPostHurt(LivingEntity user, Entity attacker, int level) {
-		if (user == null) return;
-		RandomSource rand = user.getRandom();
-		if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
-			LivingEntity ent = (LivingEntity) attacker;
-			ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
-		}
-	}
+    @Override
+    public void doPostHurt(LivingEntity user, Entity attacker, int level) {
+        if (user == null) return;
+        RandomSource rand = user.getRandom();
+        if (attacker instanceof LivingEntity ent && !(attacker instanceof FakePlayer)) {
+            ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
+        }
+    }
 
 }

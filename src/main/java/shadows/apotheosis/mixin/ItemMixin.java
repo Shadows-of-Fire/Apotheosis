@@ -10,14 +10,14 @@ import shadows.apotheosis.ench.table.IEnchantableItem;
 @Mixin(Item.class)
 public class ItemMixin implements IEnchantableItem {
 
-	/**
-	 * @author Shadows
-	 * @reason Enables all items to be enchantable by default.
-	 * @return
-	 */
-	@Overwrite
-	public int getEnchantmentValue() {
-		return Apotheosis.enableEnch ? 1 : 0;
-	}
+    /**
+     * @author Shadows
+     * @reason Enables all items to be enchantable by default.
+     * @return
+     */
+    @Overwrite
+    public int getEnchantmentValue() {
+        return Apotheosis.enableEnch ? 1 : 0;
+    }
 
 }

@@ -26,84 +26,83 @@ import shadows.apotheosis.util.Comparators;
  */
 public abstract class ModifierSourceType<T> {
 
-	private static final List<ModifierSourceType<?>> SOURCE_TYPES = new ArrayList<>();
+    private static final List<ModifierSourceType<?>> SOURCE_TYPES = new ArrayList<>();
 
-	public static final ModifierSourceType<ItemStack> EQUIPMENT = register(new ModifierSourceType<>() {
+    public static final ModifierSourceType<ItemStack> EQUIPMENT = register(new ModifierSourceType<>(){
 
-		@Override
-		public void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> map) {
-			for (EquipmentSlot slot : EquipmentSlot.values()) {
-				ItemStack item = entity.getItemBySlot(slot);
-				item.getAttributeModifiers(slot).values().forEach(modif -> {
-					map.accept(modif, new ItemModifierSource(item));
-				});
-			}
-		}
+        @Override
+        public void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> map) {
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                ItemStack item = entity.getItemBySlot(slot);
+                item.getAttributeModifiers(slot).values().forEach(modif -> {
+                    map.accept(modif, new ItemModifierSource(item));
+                });
+            }
+        }
 
-		@Override
-		public int getPriority() {
-			return 0;
-		}
+        @Override
+        public int getPriority() {
+            return 0;
+        }
 
-	});
+    });
 
-	public static final ModifierSourceType<MobEffectInstance> MOB_EFFECT = register(new ModifierSourceType<>() {
+    public static final ModifierSourceType<MobEffectInstance> MOB_EFFECT = register(new ModifierSourceType<>(){
 
-		@Override
-		public void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> map) {
-			for (MobEffectInstance effectInst : entity.getActiveEffects()) {
-				effectInst.getEffect().getAttributeModifiers().values().forEach(modif -> {
-					map.accept(modif, new EffectModifierSource(effectInst));
-				});
-			}
-		}
+        @Override
+        public void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> map) {
+            for (MobEffectInstance effectInst : entity.getActiveEffects()) {
+                effectInst.getEffect().getAttributeModifiers().values().forEach(modif -> {
+                    map.accept(modif, new EffectModifierSource(effectInst));
+                });
+            }
+        }
 
-		@Override
-		public int getPriority() {
-			return 100;
-		}
+        @Override
+        public int getPriority() {
+            return 100;
+        }
 
-	});
+    });
 
-	public static Collection<ModifierSourceType<?>> getTypes() {
-		return Collections.unmodifiableCollection(SOURCE_TYPES);
-	}
+    public static Collection<ModifierSourceType<?>> getTypes() {
+        return Collections.unmodifiableCollection(SOURCE_TYPES);
+    }
 
-	public static <T extends ModifierSourceType<?>> T register(T type) {
-		SOURCE_TYPES.add(type);
-		return type;
-	}
+    public static <T extends ModifierSourceType<?>> T register(T type) {
+        SOURCE_TYPES.add(type);
+        return type;
+    }
 
-	public static Comparator<AttributeModifier> compareBySource(Map<UUID, ModifierSource<?>> sources) {
-		//Formatter::off
-		Comparator<AttributeModifier> comp = Comparators.chained(
-			Comparator.comparingInt(a -> sources.get(a.getId()).getType().getPriority()),
-			Comparator.comparing(a -> sources.get(a.getId())),
-			AttributeHelper.modifierComparator()
-		);
-		//Formatter::on
+    public static Comparator<AttributeModifier> compareBySource(Map<UUID, ModifierSource<?>> sources) {
 
-		return (a1, a2) -> {
-			var src1 = sources.get(a1.getId());
-			var src2 = sources.get(a2.getId());
+        Comparator<AttributeModifier> comp = Comparators.chained(
+            Comparator.comparingInt(a -> sources.get(a.getId()).getType().getPriority()),
+            Comparator.comparing(a -> sources.get(a.getId())),
+            AttributeHelper.modifierComparator());
 
-			if (src1 != null && src2 != null) return comp.compare(a1, a2);
+        return (a1, a2) -> {
+            var src1 = sources.get(a1.getId());
+            var src2 = sources.get(a2.getId());
 
-			return src1 != null ? -1 : src2 != null ? 1 : 0;
-		};
-	}
+            if (src1 != null && src2 != null) return comp.compare(a1, a2);
 
-	/**
-	 * Extracts all ModifierSource(s) of this type from the source entity.
-	 * @param entity
-	 * @param map
-	 */
-	public abstract void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> map);
+            return src1 != null ? -1 : src2 != null ? 1 : 0;
+        };
+    }
 
-	/**
-	 * Integer priority for display sorting.<br>
-	 * Lower priority values will be displayed at the top of the list.
-	 */
-	public abstract int getPriority();
+    /**
+     * Extracts all ModifierSource(s) of this type from the source entity.
+     *
+     * @param entity
+     * @param map
+     */
+    public abstract void extract(LivingEntity entity, BiConsumer<AttributeModifier, ModifierSource<?>> map);
+
+    /**
+     * Integer priority for display sorting.<br>
+     * Lower priority values will be displayed at the top of the list.
+     */
+    public abstract int getPriority();
 
 }

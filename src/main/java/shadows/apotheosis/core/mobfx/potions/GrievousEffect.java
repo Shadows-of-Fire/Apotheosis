@@ -8,9 +8,9 @@ import shadows.apotheosis.core.attributeslib.api.ALAttributes;
 
 public class GrievousEffect extends MobEffect {
 
-	public GrievousEffect() {
-		super(MobEffectCategory.HARMFUL, ChatFormatting.DARK_RED.getColor());
-		this.addAttributeModifier(ALAttributes.HEALING_RECEIVED.get(), "e04b0b87-5722-4841-bb87-98c6a4632c6f", -0.4, Operation.ADDITION);
-	}
+    public GrievousEffect() {
+        super(MobEffectCategory.HARMFUL, ChatFormatting.DARK_RED.getColor());
+        this.addAttributeModifier(ALAttributes.HEALING_RECEIVED.get(), "e04b0b87-5722-4841-bb87-98c6a4632c6f", -0.4, Operation.ADDITION);
+    }
 
 }

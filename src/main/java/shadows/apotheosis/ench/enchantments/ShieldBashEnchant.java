@@ -11,45 +11,45 @@ import shadows.apotheosis.ench.EnchModule;
 
 public class ShieldBashEnchant extends Enchantment {
 
-	public ShieldBashEnchant() {
-		super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
-	}
+    public ShieldBashEnchant() {
+        super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+    }
 
-	@Override
-	public int getMinCost(int enchantmentLevel) {
-		return 1 + (enchantmentLevel - 1) * 17;
-	}
+    @Override
+    public int getMinCost(int enchantmentLevel) {
+        return 1 + (enchantmentLevel - 1) * 17;
+    }
 
-	@Override
-	public int getMaxCost(int enchantmentLevel) {
-		return this.getMinCost(enchantmentLevel) + 40;
-	}
+    @Override
+    public int getMaxCost(int enchantmentLevel) {
+        return this.getMinCost(enchantmentLevel) + 40;
+    }
 
-	@Override
-	public int getMaxLevel() {
-		return 4;
-	}
+    @Override
+    public int getMaxLevel() {
+        return 4;
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
-	}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
+    }
 
-	@Override
-	public float getDamageBonus(int pLevel, MobType pType) {
-		return 3.5F * pLevel;
-	}
+    @Override
+    public float getDamageBonus(int pLevel, MobType pType) {
+        return 3.5F * pLevel;
+    }
 
-	@Override
-	public void doPostAttack(LivingEntity user, Entity target, int level) {
-		if (target instanceof LivingEntity) {
-			ItemStack stack = user.getMainHandItem();
-			if (stack.getEnchantmentLevel(this) == level) {
-				stack.hurtAndBreak(Math.max(1, 20 - level), user, e -> {
-					e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
-				});
-			}
-		}
-	}
+    @Override
+    public void doPostAttack(LivingEntity user, Entity target, int level) {
+        if (target instanceof LivingEntity) {
+            ItemStack stack = user.getMainHandItem();
+            if (stack.getEnchantmentLevel(this) == level) {
+                stack.hurtAndBreak(Math.max(1, 20 - level), user, e -> {
+                    e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
+                });
+            }
+        }
+    }
 
 }

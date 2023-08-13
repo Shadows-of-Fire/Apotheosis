@@ -19,42 +19,40 @@ import shadows.placebo.json.PSerializer;
  */
 public class RetreatingAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<RetreatingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
-			.apply(inst, RetreatingAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<RetreatingAffix> SERIALIZER = PSerializer.fromCodec("Retreating Affix", CODEC);
+    public static final Codec<RetreatingAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
+        .apply(inst, RetreatingAffix::new));
 
-	protected LootRarity minRarity;
+    public static final PSerializer<RetreatingAffix> SERIALIZER = PSerializer.fromCodec("Retreating Affix", CODEC);
 
-	public RetreatingAffix(LootRarity minRarity) {
-		super(AffixType.ABILITY);
-		this.minRarity = minRarity;
-	}
+    protected LootRarity minRarity;
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return cat == LootCategory.SHIELD && rarity.isAtLeast(minRarity);
-	}
+    public RetreatingAffix(LootRarity minRarity) {
+        super(AffixType.ABILITY);
+        this.minRarity = minRarity;
+    }
 
-	@Override
-	public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
-		Entity tSource = source.getEntity();
-		if (tSource != null && tSource.distanceToSqr(entity) <= 9) {
-			Vec3 look = entity.getLookAngle();
-			entity.setDeltaMovement(new Vec3(1 * -look.x, 0.25, 1 * -look.z));
-			entity.hurtMarked = true;
-			entity.setOnGround(false);
-		}
-		return super.onShieldBlock(stack, rarity, level, entity, source, amount);
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return cat == LootCategory.SHIELD && rarity.isAtLeast(this.minRarity);
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    @Override
+    public float onShieldBlock(ItemStack stack, LootRarity rarity, float level, LivingEntity entity, DamageSource source, float amount) {
+        Entity tSource = source.getEntity();
+        if (tSource != null && tSource.distanceToSqr(entity) <= 9) {
+            Vec3 look = entity.getLookAngle();
+            entity.setDeltaMovement(new Vec3(1 * -look.x, 0.25, 1 * -look.z));
+            entity.hurtMarked = true;
+            entity.setOnGround(false);
+        }
+        return super.onShieldBlock(stack, rarity, level, entity, source, amount);
+    }
+
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
 }

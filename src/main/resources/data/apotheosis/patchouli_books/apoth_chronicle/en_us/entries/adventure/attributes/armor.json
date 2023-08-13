@@ -7,11 +7,19 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Armor$() is a measure of how resistant you are to physical damage.$(p)Usually provided by armor items, and shields.$(p)Your physical damage taken is reduced by $(9)50 / (50 + armor)$()"
+            "text": "$(9)Armor$() is a measure of how resistant you are to physical damage.$(p)Usually provided by armor items, and shields.$(p)How much damage you take is a function of the incoming damage and your armor."
         },
 		{
 			"type": "patchouli:text",
-			"text": "The aforementioned formula is not the one used by Vanilla Minecraft, as Apotheosis replaces it."
+			"text": "The first component of the formula is the $(br)A-value, equal to $(9)10 + (damage - 20) / 2$(), with a minimum value of $(9)10$().$(p)You then reduce damage equal to $(br)$(9)A / (A + armor)$().$(p)The aforementioned formula is not the one used by Vanilla Minecraft, as Apotheosis replaces it."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "For vanilla armor and damage values, you will find yourself taking slightly less damage.$(p)For high armor and damage values, armor will be significantly less effective."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "The goal of this change is to reduce invulnerabilty at high levels, and make $(9)Protection$() and $(9)Resistance$() more impactful.$(p)It also makes fights where both parties are heavily armored significantly more active."
 		}
 	]
 }

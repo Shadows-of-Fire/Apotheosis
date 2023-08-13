@@ -39,135 +39,134 @@ import shadows.placebo.util.PlaceboUtil;
 
 public class RadialAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<RadialAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			LootRarity.mapCodec(Codec.list(RadialData.CODEC)).fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, RadialAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<RadialAffix> SERIALIZER = PSerializer.fromCodec("Radial Affix", CODEC);
+    public static final Codec<RadialAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            LootRarity.mapCodec(Codec.list(RadialData.CODEC)).fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, RadialAffix::new));
 
-	private static Set<UUID> breakers = new HashSet<>();
+    public static final PSerializer<RadialAffix> SERIALIZER = PSerializer.fromCodec("Radial Affix", CODEC);
 
-	protected final Map<LootRarity, List<RadialData>> values;
+    private static Set<UUID> breakers = new HashSet<>();
 
-	public RadialAffix(Map<LootRarity, List<RadialData>> values) {
-		super(AffixType.ABILITY);
-		this.values = values;
-	}
+    protected final Map<LootRarity, List<RadialData>> values;
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return cat.isBreaker() && this.values.containsKey(rarity);
-	}
+    public RadialAffix(Map<LootRarity, List<RadialData>> values) {
+        super(AffixType.ABILITY);
+        this.values = values;
+    }
 
-	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		RadialData data = this.getTrueLevel(rarity, level);
-		list.accept(Component.translatable("affix." + this.getId() + ".desc", data.x, data.y));
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return cat.isBreaker() && this.values.containsKey(rarity);
+    }
 
-	// EventPriority.LOW
-	public void onBreak(BlockEvent.BreakEvent e) {
-		Player player = e.getPlayer();
-		ItemStack tool = player.getMainHandItem();
-		Level world = player.level;
-		if (!world.isClientSide && tool.hasTag()) {
-			AffixInstance inst = AffixHelper.getAffixes(tool).get(this);
-			if (inst != null) {
-				float hardness = e.getState().getDestroySpeed(e.getLevel(), e.getPos());
-				breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, getTrueLevel(inst.rarity(), inst.level()), hardness);
-			}
-		}
-	}
+    @Override
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+        RadialData data = this.getTrueLevel(rarity, level);
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", data.x, data.y));
+    }
 
-	private RadialData getTrueLevel(LootRarity rarity, float level) {
-		var list = this.values.get(rarity);
-		return list.get(Math.min(list.size() - 1, (int) Mth.lerp(level, 0, list.size())));
-	}
+    // EventPriority.LOW
+    public void onBreak(BlockEvent.BreakEvent e) {
+        Player player = e.getPlayer();
+        ItemStack tool = player.getMainHandItem();
+        Level world = player.level;
+        if (!world.isClientSide && tool.hasTag()) {
+            AffixInstance inst = AffixHelper.getAffixes(tool).get(this);
+            if (inst != null) {
+                float hardness = e.getState().getDestroySpeed(e.getLevel(), e.getPos());
+                breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, this.getTrueLevel(inst.rarity(), inst.level()), hardness);
+            }
+        }
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    private RadialData getTrueLevel(LootRarity rarity, float level) {
+        var list = this.values.get(rarity);
+        return list.get(Math.min(list.size() - 1, (int) Mth.lerp(level, 0, list.size())));
+    }
 
-	static record RadialData(int x, int y, int xOff, int yOff) {
-		//Formatter::off
-		public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
-			.group(
-				Codec.INT.fieldOf("x").forGetter(RadialData::x),
-				Codec.INT.fieldOf("y").forGetter(RadialData::y),
-				Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
-				Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
-				.apply(inst, RadialData::new)
-			);
-		//Formatter::on
-	}
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
-	/**
-	 * Performs the actual extra breaking of blocks
-	 * @param player The player breaking the block
-	 * @param pos The position of the originally broken block
-	 * @param tool The tool being used (which has this affix on it)
-	 * @param level The level of this affix, in this case, the mode of operation.
-	 */
-	public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
-		if (!breakers.add(player.getUUID())) return; //Prevent multiple break operations from cascading, and don't execute when sneaking.
-		if (!player.isShiftKeyDown()) try {
-			breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		breakers.remove(player.getUUID());
-	}
+    static record RadialData(int x, int y, int xOff, int yOff) {
 
-	@SuppressWarnings("deprecation")
-	public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
-		Level world = player.level;
-		if (x < 2 && y < 2) return;
-		int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
-		int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
+        public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                Codec.INT.fieldOf("x").forGetter(RadialData::x),
+                Codec.INT.fieldOf("y").forGetter(RadialData::y),
+                Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
+                Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
+            .apply(inst, RadialData::new));
 
-		Vec3 base = player.getEyePosition(0);
-		Vec3 look = player.getLookAngle();
-		double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
-		Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
-		HitResult trace = world.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
+    }
 
-		if (trace == null || trace.getType() != Type.BLOCK) return;
-		BlockHitResult res = (BlockHitResult) trace;
+    /**
+     * Performs the actual extra breaking of blocks
+     *
+     * @param player The player breaking the block
+     * @param pos    The position of the originally broken block
+     * @param tool   The tool being used (which has this affix on it)
+     * @param level  The level of this affix, in this case, the mode of operation.
+     */
+    public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
+        if (!breakers.add(player.getUUID())) return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
+        if (!player.isShiftKeyDown()) try {
+            breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        breakers.remove(player.getUUID());
+    }
 
-		Direction face = res.getDirection(); //Face of the block currently being looked at by the player.
+    @SuppressWarnings("deprecation")
+    public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
+        Level world = player.level;
+        if (x < 2 && y < 2) return;
+        int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
+        int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
 
-		for (int iy = lowerY; iy < upperY; iy++) {
-			for (int ix = lowerX; ix < upperX; ix++) {
-				BlockPos genPos = new BlockPos(pos.getX() + ix + xOff, pos.getY() + iy + yOff, pos.getZ());
+        Vec3 base = player.getEyePosition(0);
+        Vec3 look = player.getLookAngle();
+        double reach = player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
+        Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
+        HitResult trace = world.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
 
-				if (player.getDirection().getAxis() == Axis.X) {
-					genPos = new BlockPos(genPos.getX() - (ix + xOff), genPos.getY(), genPos.getZ() + ix + xOff);
-				}
+        if (trace == null || trace.getType() != Type.BLOCK) return;
+        BlockHitResult res = (BlockHitResult) trace;
 
-				if (face.getAxis().isVertical()) {
-					genPos = rotateDown(genPos, iy + yOff, player.getDirection());
-				}
+        Direction face = res.getDirection(); // Face of the block currently being looked at by the player.
 
-				if (genPos.equals(pos)) continue;
-				BlockState state = world.getBlockState(genPos);
-				float stateHardness = state.getDestroySpeed(world, genPos);
-				if (!state.isAir() && stateHardness != -1 && stateHardness <= hardness * 3F && isEffective(state, player)) PlaceboUtil.tryHarvestBlock(player, genPos);
-			}
-		}
+        for (int iy = lowerY; iy < upperY; iy++) {
+            for (int ix = lowerX; ix < upperX; ix++) {
+                BlockPos genPos = new BlockPos(pos.getX() + ix + xOff, pos.getY() + iy + yOff, pos.getZ());
 
-	}
+                if (player.getDirection().getAxis() == Axis.X) {
+                    genPos = new BlockPos(genPos.getX() - (ix + xOff), genPos.getY(), genPos.getZ() + ix + xOff);
+                }
 
-	static BlockPos rotateDown(BlockPos pos, int y, Direction horizontal) {
-		Vec3i vec = horizontal.getNormal();
-		return new BlockPos(pos.getX() + vec.getX() * y, pos.getY() - y, pos.getZ() + vec.getZ() * y);
-	}
+                if (face.getAxis().isVertical()) {
+                    genPos = rotateDown(genPos, iy + yOff, player.getDirection());
+                }
 
-	static boolean isEffective(BlockState state, Player player) {
-		return player.hasCorrectToolForDrops(state);
-	}
+                if (genPos.equals(pos)) continue;
+                BlockState state = world.getBlockState(genPos);
+                float stateHardness = state.getDestroySpeed(world, genPos);
+                if (!state.isAir() && stateHardness != -1 && stateHardness <= hardness * 3F && isEffective(state, player)) PlaceboUtil.tryHarvestBlock(player, genPos);
+            }
+        }
+
+    }
+
+    static BlockPos rotateDown(BlockPos pos, int y, Direction horizontal) {
+        Vec3i vec = horizontal.getNormal();
+        return new BlockPos(pos.getX() + vec.getX() * y, pos.getY() - y, pos.getZ() + vec.getZ() * y);
+    }
+
+    static boolean isEffective(BlockState state, Player player) {
+        return player.hasCorrectToolForDrops(state);
+    }
 
 }

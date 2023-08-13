@@ -7,26 +7,26 @@ import net.minecraft.world.level.block.Block;
 
 public class GlowyBlockItem extends BlockItem {
 
-	public GlowyBlockItem(Block pBlock, Properties pProperties) {
-		super(pBlock, pProperties);
-	}
+    public GlowyBlockItem(Block pBlock, Properties pProperties) {
+        super(pBlock, pProperties);
+    }
 
-	@Override
-	public boolean isFoil(ItemStack pStack) {
-		return true;
-	}
+    @Override
+    public boolean isFoil(ItemStack pStack) {
+        return true;
+    }
 
-	public static class GlowyItem extends Item {
+    public static class GlowyItem extends Item {
 
-		public GlowyItem(Properties pProperties) {
-			super(pProperties);
-		}
+        public GlowyItem(Properties pProperties) {
+            super(pProperties);
+        }
 
-		@Override
-		public boolean isFoil(ItemStack pStack) {
-			return true;
-		}
+        @Override
+        public boolean isFoil(ItemStack pStack) {
+            return true;
+        }
 
-	}
+    }
 
 }

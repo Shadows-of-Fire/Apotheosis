@@ -25,63 +25,60 @@ import shadows.placebo.util.StepFunction;
 
 public class AttributeBonus extends GemBonus {
 
-	//Formatter::off
-	public static Codec<AttributeBonus> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			gemClass(),
-			ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(a -> a.attribute),
-			new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
-			VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, AttributeBonus::new)
-		);
-	//Formatter::on
+    public static Codec<AttributeBonus> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            gemClass(),
+            ForgeRegistries.ATTRIBUTES.getCodec().fieldOf("attribute").forGetter(a -> a.attribute),
+            new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
+            VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, AttributeBonus::new));
 
-	protected final Attribute attribute;
-	protected final Operation operation;
-	protected final Map<LootRarity, StepFunction> values;
+    protected final Attribute attribute;
+    protected final Operation operation;
+    protected final Map<LootRarity, StepFunction> values;
 
-	public AttributeBonus(GemClass gemClass, Attribute attr, Operation op, Map<LootRarity, StepFunction> values) {
-		super(Apotheosis.loc("attribute"), gemClass);
-		this.attribute = attr;
-		this.operation = op;
-		this.values = values;
-	}
+    public AttributeBonus(GemClass gemClass, Attribute attr, Operation op, Map<LootRarity, StepFunction> values) {
+        super(Apotheosis.loc("attribute"), gemClass);
+        this.attribute = attr;
+        this.operation = op;
+        this.values = values;
+    }
 
-	@Override
-	public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
-		map.accept(this.attribute, read(gem, rarity, GemItem.getUUIDs(gem).get(0)));
-	}
+    @Override
+    public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
+        map.accept(this.attribute, this.read(gem, rarity, GemItem.getUUIDs(gem).get(0)));
+    }
 
-	@Override
-	public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
-		return IFormattableAttribute.toComponent(this.attribute, read(gem, rarity, UUID.randomUUID()), AttributesLib.getTooltipFlag());
-	}
+    @Override
+    public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
+        return IFormattableAttribute.toComponent(this.attribute, this.read(gem, rarity, UUID.randomUUID()), AttributesLib.getTooltipFlag());
+    }
 
-	@Override
-	public AttributeBonus validate() {
-		Preconditions.checkNotNull(this.attribute, "Invalid AttributeBonus with null attribute");
-		Preconditions.checkNotNull(this.operation, "Invalid AttributeBonus with null operation");
-		Preconditions.checkNotNull(this.values, "Invalid AttributeBonus with null values");
-		return this;
-	}
+    @Override
+    public AttributeBonus validate() {
+        Preconditions.checkNotNull(this.attribute, "Invalid AttributeBonus with null attribute");
+        Preconditions.checkNotNull(this.operation, "Invalid AttributeBonus with null operation");
+        Preconditions.checkNotNull(this.values, "Invalid AttributeBonus with null values");
+        return this;
+    }
 
-	@Override
-	public boolean supports(LootRarity rarity) {
-		return this.values.containsKey(rarity);
-	}
+    @Override
+    public boolean supports(LootRarity rarity) {
+        return this.values.containsKey(rarity);
+    }
 
-	@Override
-	public int getNumberOfUUIDs() {
-		return 1;
-	}
+    @Override
+    public int getNumberOfUUIDs() {
+        return 1;
+    }
 
-	public AttributeModifier read(ItemStack gem, LootRarity rarity, UUID id) {
-		return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity).get(0), this.operation);
-	}
+    public AttributeModifier read(ItemStack gem, LootRarity rarity, UUID id) {
+        return new AttributeModifier(id, "apoth.gem_modifier", this.values.get(rarity).get(0), this.operation);
+    }
 
-	@Override
-	public Codec<? extends GemBonus> getCodec() {
-		return CODEC;
-	}
+    @Override
+    public Codec<? extends GemBonus> getCodec() {
+        return CODEC;
+    }
 
 }

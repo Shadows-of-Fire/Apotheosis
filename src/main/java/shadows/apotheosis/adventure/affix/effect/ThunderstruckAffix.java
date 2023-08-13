@@ -27,50 +27,48 @@ import shadows.placebo.util.StepFunction;
  */
 public class ThunderstruckAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<ThunderstruckAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, ThunderstruckAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<ThunderstruckAffix> SERIALIZER = PSerializer.fromCodec("Thunderstruck Affix", CODEC);
+    public static final Codec<ThunderstruckAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, ThunderstruckAffix::new));
 
-	protected final Map<LootRarity, StepFunction> values;
+    public static final PSerializer<ThunderstruckAffix> SERIALIZER = PSerializer.fromCodec("Thunderstruck Affix", CODEC);
 
-	public ThunderstruckAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.ABILITY);
-		this.values = values;
-	}
+    protected final Map<LootRarity, StepFunction> values;
 
-	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(Component.translatable("affix." + this.getId() + ".desc", (int) getTrueLevel(rarity, level)));
-	}
+    public ThunderstruckAffix(Map<LootRarity, StepFunction> values) {
+        super(AffixType.ABILITY);
+        this.values = values;
+    }
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return cat.isLightWeapon() && this.values.containsKey(rarity);
-	}
+    @Override
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", (int) this.getTrueLevel(rarity, level)));
+    }
 
-	@Override
-	public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
-		if (user.level.isClientSide) return;
-		if (Apotheosis.localAtkStrength >= 0.98) {
-			List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), CleavingAffix.cleavePredicate(user, target));
-			for (Entity e : nearby) {
-				e.hurt(DamageSource.mobAttack(user), getTrueLevel(rarity, level));
-			}
-		}
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return cat.isLightWeapon() && this.values.containsKey(rarity);
+    }
 
-	private float getTrueLevel(LootRarity rarity, float level) {
-		return this.values.get(rarity).get(level);
-	}
+    @Override
+    public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
+        if (user.level.isClientSide) return;
+        if (Apotheosis.localAtkStrength >= 0.98) {
+            List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), CleavingAffix.cleavePredicate(user, target));
+            for (Entity e : nearby) {
+                e.hurt(DamageSource.mobAttack(user), this.getTrueLevel(rarity, level));
+            }
+        }
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    private float getTrueLevel(LootRarity rarity, float level) {
+        return this.values.get(rarity).get(level);
+    }
+
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
 }

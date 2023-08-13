@@ -14,31 +14,31 @@ import shadows.apotheosis.ench.api.IEnchantingBlock;
 
 public class TypedShelfBlock extends Block implements IEnchantingBlock {
 
-	protected final Supplier<? extends ParticleOptions> particle;
+    protected final Supplier<? extends ParticleOptions> particle;
 
-	public TypedShelfBlock(Properties props, Supplier<? extends ParticleOptions> particle) {
-		super(props);
-		this.particle = particle;
-	}
+    public TypedShelfBlock(Properties props, Supplier<? extends ParticleOptions> particle) {
+        super(props);
+        this.particle = particle;
+    }
 
-	@Override
-	public ParticleOptions getTableParticle(BlockState state) {
-		return this.particle.get();
-	}
+    @Override
+    public ParticleOptions getTableParticle(BlockState state) {
+        return this.particle.get();
+    }
 
-	public static class SculkShelfBlock extends TypedShelfBlock {
+    public static class SculkShelfBlock extends TypedShelfBlock {
 
-		public SculkShelfBlock(Properties props, Supplier<? extends ParticleOptions> particle) {
-			super(props, particle);
-		}
+        public SculkShelfBlock(Properties props, Supplier<? extends ParticleOptions> particle) {
+            super(props, particle);
+        }
 
-		@Override
-		public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-			if (rand.nextInt(100) == 0) {
-				level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + rand.nextFloat() * 0.4F, true);
-			}
-		}
+        @Override
+        public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
+            if (rand.nextInt(100) == 0) {
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + rand.nextFloat() * 0.4F, true);
+            }
+        }
 
-	}
+    }
 
 }

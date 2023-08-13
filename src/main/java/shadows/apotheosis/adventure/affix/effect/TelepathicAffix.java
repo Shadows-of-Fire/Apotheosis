@@ -28,82 +28,81 @@ import shadows.placebo.json.PSerializer;
  */
 public class TelepathicAffix extends Affix {
 
-	//Formatter::off
-	public static final Codec<TelepathicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
-			.apply(inst, TelepathicAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<TelepathicAffix> SERIALIZER = PSerializer.fromCodec("Telepathic Affix", CODEC);
+    public static final Codec<TelepathicAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
+        .apply(inst, TelepathicAffix::new));
 
-	public static Vec3 blockDropTargetPos = null;
+    public static final PSerializer<TelepathicAffix> SERIALIZER = PSerializer.fromCodec("Telepathic Affix", CODEC);
 
-	protected LootRarity minRarity;
+    public static Vec3 blockDropTargetPos = null;
 
-	public TelepathicAffix(LootRarity minRarity) {
-		super(AffixType.ABILITY);
-		this.minRarity = minRarity;
-	}
+    protected LootRarity minRarity;
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return (cat.isRanged() || cat.isLightWeapon() || cat.isBreaker()) && rarity.isAtLeast(minRarity);
-	}
+    public TelepathicAffix(LootRarity minRarity) {
+        super(AffixType.ABILITY);
+        this.minRarity = minRarity;
+    }
 
-	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		LootCategory cat = LootCategory.forItem(stack);
-		String type = cat.isRanged() || cat.isWeapon() ? "weapon" : "tool";
-		list.accept(Component.translatable("affix." + this.getId() + ".desc." + type));
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return (cat.isRanged() || cat.isLightWeapon() || cat.isBreaker()) && rarity.isAtLeast(this.minRarity);
+    }
 
-	@Override
-	public boolean enablesTelepathy() {
-		return true;
-	}
+    @Override
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+        LootCategory cat = LootCategory.forItem(stack);
+        String type = cat.isRanged() || cat.isWeapon() ? "weapon" : "tool";
+        list.accept(Component.translatable("affix." + this.getId() + ".desc." + type));
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    @Override
+    public boolean enablesTelepathy() {
+        return true;
+    }
 
-	// EventPriority.LOWEST
-	public static void drops(LivingDropsEvent e) {
-		DamageSource src = e.getSource();
-		boolean canTeleport = false;
-		Vec3 targetPos = null;
-		if (src.getDirectEntity() instanceof AbstractArrow arrow && arrow.getOwner() != null) {
-			canTeleport = AffixHelper.streamAffixes(arrow).anyMatch(AffixInstance::enablesTelepathy);
-			targetPos = arrow.getOwner().position();
-		} else if (src.getDirectEntity() instanceof LivingEntity living) {
-			ItemStack weapon = living.getMainHandItem();
-			canTeleport = AffixHelper.streamAffixes(weapon).anyMatch(AffixInstance::enablesTelepathy);
-			targetPos = living.position();
-		}
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 
-		if (canTeleport) {
-			for (ItemEntity item : e.getDrops()) {
-				item.setPos(targetPos.x, targetPos.y, targetPos.z);
-				item.setPickUpDelay(0);
-			}
-		}
-	}
+    // EventPriority.LOWEST
+    public static void drops(LivingDropsEvent e) {
+        DamageSource src = e.getSource();
+        boolean canTeleport = false;
+        Vec3 targetPos = null;
+        if (src.getDirectEntity() instanceof AbstractArrow arrow && arrow.getOwner() != null) {
+            canTeleport = AffixHelper.streamAffixes(arrow).anyMatch(AffixInstance::enablesTelepathy);
+            targetPos = arrow.getOwner().position();
+        }
+        else if (src.getDirectEntity() instanceof LivingEntity living) {
+            ItemStack weapon = living.getMainHandItem();
+            canTeleport = AffixHelper.streamAffixes(weapon).anyMatch(AffixInstance::enablesTelepathy);
+            targetPos = living.position();
+        }
 
-	public static Affix read(JsonObject obj) {
-		return new TelepathicAffix(GSON.fromJson(obj.get("min_rarity"), LootRarity.class));
-	}
+        if (canTeleport) {
+            for (ItemEntity item : e.getDrops()) {
+                item.setPos(targetPos.x, targetPos.y, targetPos.z);
+                item.setPickUpDelay(0);
+            }
+        }
+    }
 
-	public JsonObject write() {
-		return new JsonObject();
-	}
+    public static Affix read(JsonObject obj) {
+        return new TelepathicAffix(GSON.fromJson(obj.get("min_rarity"), LootRarity.class));
+    }
 
-	public void write(FriendlyByteBuf buf) {
-		buf.writeUtf(this.minRarity.id());
-	}
+    public JsonObject write() {
+        return new JsonObject();
+    }
 
-	public static Affix read(FriendlyByteBuf buf) {
-		return new TelepathicAffix(LootRarity.byId(buf.readUtf()));
-	}
+    public void write(FriendlyByteBuf buf) {
+        buf.writeUtf(this.minRarity.id());
+    }
+
+    public static Affix read(FriendlyByteBuf buf) {
+        return new TelepathicAffix(LootRarity.byId(buf.readUtf()));
+    }
 
 }

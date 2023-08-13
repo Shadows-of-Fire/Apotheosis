@@ -5,6 +5,6 @@ import shadows.placebo.json.TypeKeyed;
 
 public interface JsonTrade extends ItemListing, TypeKeyed<JsonTrade> {
 
-	boolean isRare();
+    boolean isRare();
 
 }

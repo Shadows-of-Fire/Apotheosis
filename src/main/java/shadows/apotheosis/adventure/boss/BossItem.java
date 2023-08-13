@@ -65,290 +65,292 @@ import shadows.placebo.json.WeightedJsonReloadListener.ILuckyWeighted;
 
 public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
 
-	//Formatter::off
-	public static final Codec<AABB> AABB_CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			Codec.DOUBLE.fieldOf("width").forGetter(a -> Math.abs(a.maxX - a.minX)),
-			Codec.DOUBLE.fieldOf("height").forGetter(a -> Math.abs(a.maxY - a.minY)))
-		.apply(inst, (width, height) -> new AABB(0, 0, 0, width, height, width))
-	);
+    public static final Codec<AABB> AABB_CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            Codec.DOUBLE.fieldOf("width").forGetter(a -> Math.abs(a.maxX - a.minX)),
+            Codec.DOUBLE.fieldOf("height").forGetter(a -> Math.abs(a.maxY - a.minY)))
+        .apply(inst, (width, height) -> new AABB(0, 0, 0, width, height, width)));
 
-	public static final Codec<BossItem> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-			Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
-			ForgeRegistries.ENTITY_TYPES.getCodec().fieldOf("entity").forGetter(a -> a.entity),
-			AABB_CODEC.fieldOf("size").forGetter(a -> a.size),
-			LootRarity.mapCodec(BossStats.CODEC).fieldOf("stats").forGetter(a -> a.stats),
-			PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)),
-			SetPredicate.CODEC.listOf().fieldOf("valid_gear_sets").forGetter(a -> a.gearSets),
-			NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
-			PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
-			LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(a -> a.minRarity),
-			LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(a -> a.maxRarity),
-			SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)))
-		.apply(inst, BossItem::new)
-	);
-	//Formatter::on
-	public static final PSerializer<BossItem> SERIALIZER = PSerializer.fromCodec("Apotheotic Boss", CODEC);
+    public static final Codec<BossItem> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
+            Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+            ForgeRegistries.ENTITY_TYPES.getCodec().fieldOf("entity").forGetter(a -> a.entity),
+            AABB_CODEC.fieldOf("size").forGetter(a -> a.size),
+            LootRarity.mapCodec(BossStats.CODEC).fieldOf("stats").forGetter(a -> a.stats),
+            PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)),
+            SetPredicate.CODEC.listOf().fieldOf("valid_gear_sets").forGetter(a -> a.gearSets),
+            NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
+            PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
+            LootRarity.CODEC.optionalFieldOf("min_rarity", LootRarity.COMMON).forGetter(a -> a.minRarity),
+            LootRarity.CODEC.optionalFieldOf("max_rarity", LootRarity.MYTHIC).forGetter(a -> a.maxRarity),
+            SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)))
+        .apply(inst, BossItem::new));
 
-	public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
+    public static final PSerializer<BossItem> SERIALIZER = PSerializer.fromCodec("Apotheotic Boss", CODEC);
 
-	protected final int weight;
-	protected final float quality;
-	protected final EntityType<?> entity;
-	protected final AABB size;
-	protected final Map<LootRarity, BossStats> stats;
+    public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
-	@Nullable
-	protected final Set<String> stages;
+    protected final int weight;
+    protected final float quality;
+    protected final EntityType<?> entity;
+    protected final AABB size;
+    protected final Map<LootRarity, BossStats> stats;
 
-	@SerializedName("valid_gear_sets")
-	protected final List<SetPredicate> gearSets;
+    @Nullable
+    protected final Set<String> stages;
 
-	@Nullable
-	protected final CompoundTag nbt;
+    @SerializedName("valid_gear_sets")
+    protected final List<SetPredicate> gearSets;
 
-	protected final Set<ResourceLocation> dimensions;
+    @Nullable
+    protected final CompoundTag nbt;
 
-	@SerializedName("min_rarity")
-	protected final LootRarity minRarity;
+    protected final Set<ResourceLocation> dimensions;
 
-	@SerializedName("max_rarity")
-	protected final LootRarity maxRarity;
+    @SerializedName("min_rarity")
+    protected final LootRarity minRarity;
 
-	@Nullable
-	protected final SupportingEntity mount;
+    @SerializedName("max_rarity")
+    protected final LootRarity maxRarity;
 
-	public BossItem(int weight, float quality, EntityType<?> entity, AABB size, Map<LootRarity, BossStats> stats, Optional<Set<String>> stages, List<SetPredicate> armorSets, Optional<CompoundTag> nbt, Set<ResourceLocation> dimensions, LootRarity minRarity, LootRarity maxRarity, Optional<SupportingEntity> mount) {
-		this.weight = weight;
-		this.quality = quality;
-		this.entity = entity;
-		this.size = size;
-		this.stats = stats;
-		this.stages = stages.orElse(null);
-		this.gearSets = armorSets;
-		this.nbt = nbt.orElse(null);
-		this.dimensions = dimensions;
-		this.minRarity = minRarity;
-		this.maxRarity = maxRarity;
-		this.mount = mount.orElse(null);
-	}
+    @Nullable
+    protected final SupportingEntity mount;
 
-	@Override
-	public int getWeight() {
-		return this.weight;
-	}
+    public BossItem(int weight, float quality, EntityType<?> entity, AABB size, Map<LootRarity, BossStats> stats, Optional<Set<String>> stages, List<SetPredicate> armorSets, Optional<CompoundTag> nbt, Set<ResourceLocation> dimensions,
+        LootRarity minRarity, LootRarity maxRarity, Optional<SupportingEntity> mount) {
+        this.weight = weight;
+        this.quality = quality;
+        this.entity = entity;
+        this.size = size;
+        this.stats = stats;
+        this.stages = stages.orElse(null);
+        this.gearSets = armorSets;
+        this.nbt = nbt.orElse(null);
+        this.dimensions = dimensions;
+        this.minRarity = minRarity;
+        this.maxRarity = maxRarity;
+        this.mount = mount.orElse(null);
+    }
 
-	@Override
-	public float getQuality() {
-		return this.quality;
-	}
+    @Override
+    public int getWeight() {
+        return this.weight;
+    }
 
-	@Override
-	public LootRarity getMinRarity() {
-		return this.minRarity;
-	}
+    @Override
+    public float getQuality() {
+        return this.quality;
+    }
 
-	@Override
-	public LootRarity getMaxRarity() {
-		return this.maxRarity;
-	}
+    @Override
+    public LootRarity getMinRarity() {
+        return this.minRarity;
+    }
 
-	public AABB getSize() {
-		return this.size;
-	}
+    @Override
+    public LootRarity getMaxRarity() {
+        return this.maxRarity;
+    }
 
-	public EntityType<?> getEntity() {
-		return this.entity;
-	}
+    public AABB getSize() {
+        return this.size;
+    }
 
-	/**
-	 * @see #createBoss(ServerLevelAccessor, BlockPos, RandomSource, float, LootRarity)
-	 */
-	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
-		return createBoss(world, pos, random, luck, null);
-	}
+    public EntityType<?> getEntity() {
+        return this.entity;
+    }
 
-	/**
-	 * Generates (but does not spawn) the result of this BossItem.
-	 * @param world The world to create the entity in.
-	 * @param pos The location to place the entity.  Will be centered (+0.5, +0.5).
-	 * @param random A random, used for selection of boss stats.
-	 * @param luck The player's luck value.
-	 * @param rarity A rarity override. This will be clamped to a valid rarity, and randomly generated if null.
-	 * @return The newly created boss, or it's mount, if it had one.
-	 */
-	public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck, @Nullable LootRarity rarity) {
-		CompoundTag fakeNbt = this.nbt == null ? new CompoundTag() : this.nbt;
-		fakeNbt.putString("id", EntityType.getKey(this.entity).toString());
-		Mob entity = (Mob) EntityType.loadEntityRecursive(fakeNbt, world.getLevel(), Function.identity());
-		if (this.nbt != null) entity.load(this.nbt);
-		this.initBoss(random, entity, luck, rarity);
-		// Re-read here so we can apply certain things after the boss has been modified
-		// But only mob-specific things, not a full load()
-		if (this.nbt != null) entity.readAdditionalSaveData(this.nbt);
+    /**
+     * @see #createBoss(ServerLevelAccessor, BlockPos, RandomSource, float, LootRarity)
+     */
+    public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck) {
+        return this.createBoss(world, pos, random, luck, null);
+    }
 
-		if (this.mount != null) {
-			Mob mountedEntity = (Mob) this.mount.create(world.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			entity.startRiding(mountedEntity, true);
-			entity = mountedEntity;
-		}
+    /**
+     * Generates (but does not spawn) the result of this BossItem.
+     *
+     * @param world  The world to create the entity in.
+     * @param pos    The location to place the entity. Will be centered (+0.5, +0.5).
+     * @param random A random, used for selection of boss stats.
+     * @param luck   The player's luck value.
+     * @param rarity A rarity override. This will be clamped to a valid rarity, and randomly generated if null.
+     * @return The newly created boss, or it's mount, if it had one.
+     */
+    public Mob createBoss(ServerLevelAccessor world, BlockPos pos, RandomSource random, float luck, @Nullable LootRarity rarity) {
+        CompoundTag fakeNbt = this.nbt == null ? new CompoundTag() : this.nbt;
+        fakeNbt.putString("id", EntityType.getKey(this.entity).toString());
+        Mob entity = (Mob) EntityType.loadEntityRecursive(fakeNbt, world.getLevel(), Function.identity());
+        if (this.nbt != null) entity.load(this.nbt);
+        this.initBoss(random, entity, luck, rarity);
+        // Re-read here so we can apply certain things after the boss has been modified
+        // But only mob-specific things, not a full load()
+        if (this.nbt != null) entity.readAdditionalSaveData(this.nbt);
 
-		entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
-		return entity;
-	}
+        if (this.mount != null) {
+            Mob mountedEntity = this.mount.create(world.getLevel(), pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            entity.startRiding(mountedEntity, true);
+            entity = mountedEntity;
+        }
 
-	/**
-	 * Initializes an entity as a boss, based on the stats of this BossItem.
-	 * @param rand
-	 * @param entity
-	 */
-	public void initBoss(RandomSource rand, Mob entity, float luck, @Nullable LootRarity rarity) {
-		if (rarity == null) rarity = LootRarity.random(rand, luck, this);
-		rarity = this.clamp(rarity);
-		BossStats stats = this.stats.get(rarity);
-		int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
+        entity.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
+        return entity;
+    }
 
-		for (ChancedEffectInstance inst : stats.effects()) {
-			if (rand.nextFloat() <= inst.getChance()) {
-				entity.addEffect(inst.createInstance(rand, duration));
-			}
-		}
+    /**
+     * Initializes an entity as a boss, based on the stats of this BossItem.
+     *
+     * @param rand
+     * @param entity
+     */
+    public void initBoss(RandomSource rand, Mob entity, float luck, @Nullable LootRarity rarity) {
+        if (rarity == null) rarity = LootRarity.random(rand, luck, this);
+        rarity = this.clamp(rarity);
+        BossStats stats = this.stats.get(rarity);
+        int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
-		for (RandomAttributeModifier modif : stats.modifiers()) {
-			modif.apply(rand, entity);
-		}
+        for (ChancedEffectInstance inst : stats.effects()) {
+            if (rand.nextFloat() <= inst.getChance()) {
+                entity.addEffect(inst.createInstance(rand, duration));
+            }
+        }
 
-		entity.goalSelector.availableGoals.removeIf(IS_VILLAGER_ATTACK);
-		String name = NameHelper.setEntityName(rand, entity);
+        for (RandomAttributeModifier modif : stats.modifiers()) {
+            modif.apply(rand, entity);
+        }
 
-		GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.gearSets);
-		set.apply(entity);
+        entity.goalSelector.availableGoals.removeIf(IS_VILLAGER_ATTACK);
+        String name = NameHelper.setEntityName(rand, entity);
 
-		boolean anyValid = false;
+        GearSet set = BossArmorManager.INSTANCE.getRandomSet(rand, luck, this.gearSets);
+        set.apply(entity);
 
-		for (EquipmentSlot t : EquipmentSlot.values()) {
-			ItemStack s = entity.getItemBySlot(t);
-			if (!s.isEmpty() && !LootCategory.forItem(s).isNone()) {
-				anyValid = true;
-				break;
-			}
-		}
+        boolean anyValid = false;
 
-		if (!anyValid) throw new RuntimeException("Attempted to apply boss gear set " + set.getId() + " but it had no valid affix loot items generated.");
+        for (EquipmentSlot t : EquipmentSlot.values()) {
+            ItemStack s = entity.getItemBySlot(t);
+            if (!s.isEmpty() && !LootCategory.forItem(s).isNone()) {
+                anyValid = true;
+                break;
+            }
+        }
 
-		int guaranteed = rand.nextInt(6);
+        if (!anyValid) throw new RuntimeException("Attempted to apply boss gear set " + set.getId() + " but it had no valid affix loot items generated.");
 
-		ItemStack temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
-		while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategory.NONE) {
-			guaranteed = rand.nextInt(6);
-			temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
-		}
+        int guaranteed = rand.nextInt(6);
 
-		for (EquipmentSlot s : EquipmentSlot.values()) {
-			ItemStack stack = entity.getItemBySlot(s);
-			if (stack.isEmpty()) continue;
-			if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
-			if (s.ordinal() == guaranteed) {
-				entity.setItemSlot(s, modifyBossItem(stack, rand, name, luck, rarity, stats));
-				entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
-			} else if (rand.nextFloat() < stats.enchantChance()) {
-				enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[0] : stats.enchLevels()[1], true);
-				entity.setItemSlot(s, stack);
-			}
-		}
-		entity.getPersistentData().putBoolean("apoth.boss", true);
-		entity.getPersistentData().putString("apoth.rarity", rarity.id());
-		entity.setHealth(entity.getMaxHealth());
-		if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3600));
-	}
+        ItemStack temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
+        while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategory.NONE) {
+            guaranteed = rand.nextInt(6);
+            temp = entity.getItemBySlot(EquipmentSlot.values()[guaranteed]);
+        }
 
-	public static void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {
-		List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, level, treasure);
-		var map = ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max));
-		map.putAll(EnchantmentHelper.getEnchantments(stack));
-		EnchantmentHelper.setEnchantments(map, stack);
-	}
+        for (EquipmentSlot s : EquipmentSlot.values()) {
+            ItemStack stack = entity.getItemBySlot(s);
+            if (stack.isEmpty()) continue;
+            if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
+            if (s.ordinal() == guaranteed) {
+                entity.setItemSlot(s, modifyBossItem(stack, rand, name, luck, rarity, stats));
+                entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
+            }
+            else if (rand.nextFloat() < stats.enchantChance()) {
+                enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[0] : stats.enchLevels()[1], true);
+                entity.setItemSlot(s, stack);
+            }
+        }
+        entity.getPersistentData().putBoolean("apoth.boss", true);
+        entity.getPersistentData().putString("apoth.rarity", rarity.id());
+        entity.setHealth(entity.getMaxHealth());
+        if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3600));
+    }
 
-	public static ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity, BossStats stats) {
-		enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[2] : stats.enchLevels()[3], true);
-		NameHelper.setItemName(rand, stack);
-		stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
+    public static void enchantBossItem(RandomSource rand, ItemStack stack, int level, boolean treasure) {
+        List<EnchantmentInstance> ench = EnchantmentHelper.selectEnchantment(rand, stack, level, treasure);
+        var map = ench.stream().filter(d -> !d.enchantment.isCurse()).collect(Collectors.toMap(d -> d.enchantment, d -> d.level, Math::max));
+        map.putAll(EnchantmentHelper.getEnchantments(stack));
+        EnchantmentHelper.setEnchantments(map, stack);
+    }
 
-		String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName);
-		Component name = AffixHelper.getName(stack);
-		if (name.getContents() instanceof TranslatableContents tc) {
-			String oldKey = tc.getKey();
-			String newKey = oldKey.equals("misc.apotheosis.affix_name.two") ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
-			Object[] newArgs = new Object[tc.getArgs().length + 1];
-			newArgs[0] = bossOwnerName;
-			for (int i = 1; i < newArgs.length; i++) {
-				newArgs[i] = tc.getArgs()[i - 1];
-			}
-			Component copy = Component.translatable(newKey, newArgs).withStyle(name.getStyle().withItalic(false));
-			AffixHelper.setName(stack, copy);
-		}
+    public static ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity, BossStats stats) {
+        enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[2] : stats.enchLevels()[3], true);
+        NameHelper.setItemName(rand, stack);
+        stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
 
-		Map<Enchantment, Integer> enchMap = new HashMap<>();
-		for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
-			if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + rand.nextInt(2)));
-		}
+        String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName);
+        Component name = AffixHelper.getName(stack);
+        if (!bossName.isEmpty() && name.getContents() instanceof TranslatableContents tc) {
+            String oldKey = tc.getKey();
+            String newKey = "misc.apotheosis.affix_name.two".equals(oldKey) ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
+            Object[] newArgs = new Object[tc.getArgs().length + 1];
+            newArgs[0] = bossOwnerName;
+            for (int i = 1; i < newArgs.length; i++) {
+                newArgs[i] = tc.getArgs()[i - 1];
+            }
+            Component copy = Component.translatable(newKey, newArgs).withStyle(name.getStyle().withItalic(false));
+            AffixHelper.setName(stack, copy);
+        }
 
-		if (AdventureConfig.curseBossItems) {
-			final ItemStack stk = stack; //Lambda rules require this instead of a direct reference to stack
-			List<Enchantment> curses = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter(e -> e.canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
-			if (!curses.isEmpty()) {
-				Enchantment curse = curses.get(rand.nextInt(curses.size()));
-				enchMap.put(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse)));
-			}
-		}
+        Map<Enchantment, Integer> enchMap = new HashMap<>();
+        for (Entry<Enchantment, Integer> e : EnchantmentHelper.getEnchantments(stack).entrySet()) {
+            if (e.getKey() != null) enchMap.put(e.getKey(), Math.min(EnchHooks.getMaxLevel(e.getKey()), e.getValue() + rand.nextInt(2)));
+        }
 
-		EnchantmentHelper.setEnchantments(enchMap, stack);
-		stack.getTag().putBoolean("apoth_boss", true);
-		return stack;
-	}
+        if (AdventureConfig.curseBossItems) {
+            final ItemStack stk = stack; // Lambda rules require this instead of a direct reference to stack
+            List<Enchantment> curses = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter(e -> e.canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
+            if (!curses.isEmpty()) {
+                Enchantment curse = curses.get(rand.nextInt(curses.size()));
+                enchMap.put(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse)));
+            }
+        }
 
-	/**
-	 * Ensures that this boss item does not have null or empty fields that would cause a crash.
-	 * @return this
-	 */
-	public BossItem validate() {
-		Preconditions.checkArgument(this.weight >= 0, "Boss Item " + this.id + " has a negative weight!");
-		Preconditions.checkArgument(this.quality >= 0, "Boss Item " + this.id + " has a negative quality!");
-		Preconditions.checkNotNull(this.entity, "Boss Item " + this.id + " has null entity type!");
-		Preconditions.checkNotNull(this.size, "Boss Item " + this.id + " has no size!");
-		if (this.minRarity != null) {
-			Preconditions.checkArgument(this.maxRarity == null || this.maxRarity.isAtLeast(this.minRarity));
-		}
-		if (this.maxRarity != null) {
-			Preconditions.checkArgument(this.minRarity == null || this.maxRarity.isAtLeast(this.minRarity));
-		}
-		if (this.mount != null) {
-			Preconditions.checkNotNull(this.mount.entity, "Boss Item " + this.id + " has an invalid mount");
-		}
-		LootRarity r = LootRarity.max(LootRarity.COMMON, this.minRarity);
-		while (r != LootRarity.ANCIENT) {
-			Preconditions.checkNotNull(this.stats.get(r));
-			if (r == this.maxRarity) break;
-			r = LootRarity.LIST.get(r.ordinal() + 1);
-		}
-		return this;
-	}
+        EnchantmentHelper.setEnchantments(enchMap, stack);
+        stack.getTag().putBoolean("apoth_boss", true);
+        return stack;
+    }
 
-	@Override
-	public Set<ResourceLocation> getDimensions() {
-		return this.dimensions;
-	}
+    /**
+     * Ensures that this boss item does not have null or empty fields that would cause a crash.
+     *
+     * @return this
+     */
+    public BossItem validate() {
+        Preconditions.checkArgument(this.weight >= 0, "Boss Item " + this.id + " has a negative weight!");
+        Preconditions.checkArgument(this.quality >= 0, "Boss Item " + this.id + " has a negative quality!");
+        Preconditions.checkNotNull(this.entity, "Boss Item " + this.id + " has null entity type!");
+        Preconditions.checkNotNull(this.size, "Boss Item " + this.id + " has no size!");
+        if (this.minRarity != null) {
+            Preconditions.checkArgument(this.maxRarity == null || this.maxRarity.isAtLeast(this.minRarity));
+        }
+        if (this.maxRarity != null) {
+            Preconditions.checkArgument(this.minRarity == null || this.maxRarity.isAtLeast(this.minRarity));
+        }
+        if (this.mount != null) {
+            Preconditions.checkNotNull(this.mount.entity, "Boss Item " + this.id + " has an invalid mount");
+        }
+        LootRarity r = LootRarity.max(LootRarity.COMMON, this.minRarity);
+        while (r != LootRarity.ANCIENT) {
+            Preconditions.checkNotNull(this.stats.get(r));
+            if (r == this.maxRarity) break;
+            r = LootRarity.LIST.get(r.ordinal() + 1);
+        }
+        return this;
+    }
 
-	@Override
-	public Set<String> getStages() {
-		return this.stages;
-	}
+    @Override
+    public Set<ResourceLocation> getDimensions() {
+        return this.dimensions;
+    }
 
-	@Override
-	public PSerializer<? extends BossItem> getSerializer() {
-		return SERIALIZER;
-	}
+    @Override
+    public Set<String> getStages() {
+        return this.stages;
+    }
+
+    @Override
+    public PSerializer<? extends BossItem> getSerializer() {
+        return SERIALIZER;
+    }
 
 }

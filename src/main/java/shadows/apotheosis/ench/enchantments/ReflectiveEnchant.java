@@ -13,50 +13,50 @@ import shadows.apotheosis.ench.EnchModule;
 
 public class ReflectiveEnchant extends Enchantment {
 
-	public ReflectiveEnchant() {
-		super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlot[] { EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND });
-	}
+    public ReflectiveEnchant() {
+        super(Rarity.RARE, EnchModule.SHIELD, new EquipmentSlot[] { EquipmentSlot.OFFHAND, EquipmentSlot.MAINHAND });
+    }
 
-	@Override
-	public int getMinCost(int enchantmentLevel) {
-		return enchantmentLevel * 18;
-	}
+    @Override
+    public int getMinCost(int enchantmentLevel) {
+        return enchantmentLevel * 18;
+    }
 
-	@Override
-	public int getMaxCost(int enchantmentLevel) {
-		return 200;
-	}
+    @Override
+    public int getMaxCost(int enchantmentLevel) {
+        return 200;
+    }
 
-	@Override
-	public int getMaxLevel() {
-		return 5;
-	}
+    @Override
+    public int getMaxLevel() {
+        return 5;
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
-	}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
+    }
 
-	/**
-	 * Enables application of the reflective defenses enchantment.
-	 * Called from {@link LivingEntity#blockUsingShield(LivingEntity)}
-	 */
-	public void reflect(ShieldBlockEvent e) {
-		LivingEntity user = e.getEntity();
-		Entity attacker = e.getDamageSource().getDirectEntity();
-		ItemStack shield = user.getUseItem();
-		int level = shield.getEnchantmentLevel(this);
-		if (level > 0) {
-			if (user.level.random.nextInt(Math.max(2, 7 - level)) == 0) {
-				DamageSource src = user instanceof Player plr ? DamageSource.playerAttack(plr).setMagic().bypassArmor() : DamageSource.MAGIC;
-				if (attacker instanceof LivingEntity livingAttacker) {
-					livingAttacker.hurt(src, level * 0.15F * e.getBlockedDamage());
-					shield.hurtAndBreak(10, user, ent -> {
-						ent.broadcastBreakEvent(EquipmentSlot.OFFHAND);
-					});
-				}
-			}
-		}
-	}
+    /**
+     * Enables application of the reflective defenses enchantment.
+     * Called from {@link LivingEntity#blockUsingShield(LivingEntity)}
+     */
+    public void reflect(ShieldBlockEvent e) {
+        LivingEntity user = e.getEntity();
+        Entity attacker = e.getDamageSource().getDirectEntity();
+        ItemStack shield = user.getUseItem();
+        int level = shield.getEnchantmentLevel(this);
+        if (level > 0) {
+            if (user.level.random.nextInt(Math.max(2, 7 - level)) == 0) {
+                DamageSource src = user instanceof Player plr ? DamageSource.playerAttack(plr).setMagic().bypassArmor() : DamageSource.MAGIC;
+                if (attacker instanceof LivingEntity livingAttacker) {
+                    livingAttacker.hurt(src, level * 0.15F * e.getBlockedDamage());
+                    shield.hurtAndBreak(10, user, ent -> {
+                        ent.broadcastBreakEvent(EquipmentSlot.OFFHAND);
+                    });
+                }
+            }
+        }
+    }
 
 }

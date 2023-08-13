@@ -26,131 +26,129 @@ import shadows.placebo.json.ItemAdapter;
 
 public class SalvagingRecipe implements Recipe<Container> {
 
-	protected final ResourceLocation id;
-	protected final Ingredient input;
-	protected final List<OutputData> outputs;
+    protected final ResourceLocation id;
+    protected final Ingredient input;
+    protected final List<OutputData> outputs;
 
-	public SalvagingRecipe(ResourceLocation id, List<OutputData> outputs, Ingredient input) {
-		this.id = id;
-		this.outputs = outputs;
-		this.input = input;
-	}
+    public SalvagingRecipe(ResourceLocation id, List<OutputData> outputs, Ingredient input) {
+        this.id = id;
+        this.outputs = outputs;
+        this.input = input;
+    }
 
-	public boolean matches(ItemStack stack) {
-		return this.input.test(stack);
-	}
+    public boolean matches(ItemStack stack) {
+        return this.input.test(stack);
+    }
 
-	public Ingredient getInput() {
-		return this.input;
-	}
+    public Ingredient getInput() {
+        return this.input;
+    }
 
-	public List<OutputData> getOutputs() {
-		return this.outputs;
-	}
+    public List<OutputData> getOutputs() {
+        return this.outputs;
+    }
 
-	@Override
-	public ResourceLocation getId() {
-		return this.id;
-	}
+    @Override
+    public ResourceLocation getId() {
+        return this.id;
+    }
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return Serializer.INSTANCE;
-	}
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return Serializer.INSTANCE;
+    }
 
-	@Override
-	public RecipeType<?> getType() {
-		return RecipeTypes.SALVAGING;
-	}
+    @Override
+    public RecipeType<?> getType() {
+        return RecipeTypes.SALVAGING;
+    }
 
-	@Override
-	@Deprecated
-	public ItemStack getResultItem() {
-		return ItemStack.EMPTY;
-	}
+    @Override
+    @Deprecated
+    public ItemStack getResultItem() {
+        return ItemStack.EMPTY;
+    }
 
-	@Override
-	@Deprecated
-	public boolean matches(Container pContainer, Level pLevel) {
-		return false;
-	}
+    @Override
+    @Deprecated
+    public boolean matches(Container pContainer, Level pLevel) {
+        return false;
+    }
 
-	@Override
-	@Deprecated
-	public ItemStack assemble(Container pContainer) {
-		return ItemStack.EMPTY;
-	}
+    @Override
+    @Deprecated
+    public ItemStack assemble(Container pContainer) {
+        return ItemStack.EMPTY;
+    }
 
-	@Override
-	@Deprecated
-	public boolean canCraftInDimensions(int pWidth, int pHeight) {
-		return false;
-	}
+    @Override
+    @Deprecated
+    public boolean canCraftInDimensions(int pWidth, int pHeight) {
+        return false;
+    }
 
-	public static class Serializer implements RecipeSerializer<SalvagingRecipe> {
+    public static class Serializer implements RecipeSerializer<SalvagingRecipe> {
 
-		public static final Serializer INSTANCE = new Serializer();
+        public static final Serializer INSTANCE = new Serializer();
 
-		@Override
-		public SalvagingRecipe fromJson(ResourceLocation id, JsonObject obj) {
-			var outputs = OutputData.LIST_CODEC.decode(JsonOps.INSTANCE, GsonHelper.getAsJsonArray(obj, "outputs")).result().get().getFirst();
-			Ingredient input = Ingredient.fromJson(obj.get("input"));
-			return new SalvagingRecipe(id, outputs, input);
-		}
+        @Override
+        public SalvagingRecipe fromJson(ResourceLocation id, JsonObject obj) {
+            var outputs = OutputData.LIST_CODEC.decode(JsonOps.INSTANCE, GsonHelper.getAsJsonArray(obj, "outputs")).result().get().getFirst();
+            Ingredient input = Ingredient.fromJson(obj.get("input"));
+            return new SalvagingRecipe(id, outputs, input);
+        }
 
-		@Override
-		public SalvagingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-			var outputs = OutputData.LIST_CODEC.decode(NbtOps.INSTANCE, buf.readNbt().get("outputs")).result().get().getFirst();
-			Ingredient input = Ingredient.fromNetwork(buf);
-			return new SalvagingRecipe(id, outputs, input);
-		}
+        @Override
+        public SalvagingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+            var outputs = OutputData.LIST_CODEC.decode(NbtOps.INSTANCE, buf.readNbt().get("outputs")).result().get().getFirst();
+            Ingredient input = Ingredient.fromNetwork(buf);
+            return new SalvagingRecipe(id, outputs, input);
+        }
 
-		@Override
-		public void toNetwork(FriendlyByteBuf buf, SalvagingRecipe recipe) {
-			Tag outputs = OutputData.LIST_CODEC.encodeStart(NbtOps.INSTANCE, recipe.outputs).get().left().get();
-			CompoundTag netWrapper = new CompoundTag();
-			netWrapper.put("outputs", outputs);
-			buf.writeNbt(netWrapper);
-			recipe.input.toNetwork(buf);
-		}
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, SalvagingRecipe recipe) {
+            Tag outputs = OutputData.LIST_CODEC.encodeStart(NbtOps.INSTANCE, recipe.outputs).get().left().get();
+            CompoundTag netWrapper = new CompoundTag();
+            netWrapper.put("outputs", outputs);
+            buf.writeNbt(netWrapper);
+            recipe.input.toNetwork(buf);
+        }
 
-	}
+    }
 
-	public static class OutputData {
+    public static class OutputData {
 
-		//Formatter::off
-		public static Codec<OutputData> CODEC = RecordCodecBuilder.create(inst -> inst
-			.group(
-				ItemAdapter.CODEC.fieldOf("stack").forGetter(d -> d.stack),
-				Codec.intRange(0, 64).fieldOf("min_count").forGetter(d -> d.min),
-				Codec.intRange(0, 64).fieldOf("max_count").forGetter(d -> d.max))
-				.apply(inst, OutputData::new)
-			);
-		//Formatter::on
-		public static final Codec<List<OutputData>> LIST_CODEC = Codec.list(CODEC);
+        public static Codec<OutputData> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                ItemAdapter.CODEC.fieldOf("stack").forGetter(d -> d.stack),
+                Codec.intRange(0, 64).fieldOf("min_count").forGetter(d -> d.min),
+                Codec.intRange(0, 64).fieldOf("max_count").forGetter(d -> d.max))
+            .apply(inst, OutputData::new));
 
-		ItemStack stack;
-		int min, max;
+        public static final Codec<List<OutputData>> LIST_CODEC = Codec.list(CODEC);
 
-		OutputData(ItemStack stack, int min, int max) {
-			this.stack = stack;
-			this.min = min;
-			this.max = max;
-			Preconditions.checkArgument(max >= min);
-			this.stack.setCount(1);
-		}
+        ItemStack stack;
+        int min, max;
 
-		public ItemStack getStack() {
-			return this.stack;
-		}
+        OutputData(ItemStack stack, int min, int max) {
+            this.stack = stack;
+            this.min = min;
+            this.max = max;
+            Preconditions.checkArgument(max >= min);
+            this.stack.setCount(1);
+        }
 
-		public int getMin() {
-			return this.min;
-		}
+        public ItemStack getStack() {
+            return this.stack;
+        }
 
-		public int getMax() {
-			return this.max;
-		}
+        public int getMin() {
+            return this.min;
+        }
 
-	}
+        public int getMax() {
+            return this.max;
+        }
+
+    }
 }

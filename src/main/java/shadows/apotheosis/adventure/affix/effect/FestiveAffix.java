@@ -34,82 +34,84 @@ import shadows.placebo.util.StepFunction;
  */
 public class FestiveAffix extends Affix {
 
-	//Formatter::off
-	public static Codec<FestiveAffix> CODEC = RecordCodecBuilder.create(inst -> inst
-		.group(
-			GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
-			.apply(inst, FestiveAffix::new)
-		);
-	//Formatter::on
-	public static final PSerializer<FestiveAffix> SERIALIZER = PSerializer.fromCodec("Festive Affix", CODEC);
+    public static Codec<FestiveAffix> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+        .apply(inst, FestiveAffix::new));
 
-	protected final Map<LootRarity, StepFunction> values;
+    public static final PSerializer<FestiveAffix> SERIALIZER = PSerializer.fromCodec("Festive Affix", CODEC);
 
-	public FestiveAffix(Map<LootRarity, StepFunction> values) {
-		super(AffixType.ABILITY);
-		this.values = values;
-	}
+    protected final Map<LootRarity, StepFunction> values;
 
-	@Override
-	public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-		list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * getTrueLevel(rarity, level))));
-	}
+    public FestiveAffix(Map<LootRarity, StepFunction> values) {
+        super(AffixType.ABILITY);
+        this.values = values;
+    }
 
-	@Override
-	public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-		return cat.isLightWeapon() && this.values.containsKey(rarity);
-	}
+    @Override
+    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(100 * this.getTrueLevel(rarity, level))));
+    }
 
-	private float getTrueLevel(LootRarity rarity, float level) {
-		return this.values.get(rarity).get(level);
-	}
+    @Override
+    public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
+        return cat.isLightWeapon() && this.values.containsKey(rarity);
+    }
 
-	private static String MARKER = "apoth.equipment";
+    private float getTrueLevel(LootRarity rarity, float level) {
+        return this.values.get(rarity).get(level);
+    }
 
-	// EventPriority.LOW
-	public void markEquipment(LivingDeathEvent e) {
-		if (e.getEntity() instanceof Player || e.getEntity().getPersistentData().getBoolean("apoth.no_pinata")) return;
-		e.getEntity().getAllSlots().forEach(i -> {
-			if (!i.isEmpty()) i.getOrCreateTag().putBoolean(MARKER, true);
-		});
-	}
+    private static String MARKER = "apoth.equipment";
 
-	// EventPriority.LOW
-	public void drops(LivingDropsEvent e) {
-		LivingEntity dead = e.getEntity();
-		if (dead instanceof Player || dead.getPersistentData().getBoolean("apoth.no_pinata")) return;
-		if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
-			AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(this);
-			if (inst != null && player.level.random.nextFloat() < getTrueLevel(inst.rarity(), inst.level())) {
-				player.level.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (player.level.random.nextFloat() - player.level.random.nextFloat()) * 0.2F) * 0.7F);
-				((ServerLevel) player.level).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
-				List<ItemEntity> drops = new ArrayList<>(e.getDrops());
-				for (ItemEntity item : drops) {
-					if (item.getItem().hasTag() && item.getItem().getTag().contains(MARKER)) continue;
-					for (int i = 0; i < 20; i++) {
-						e.getDrops().add(new ItemEntity(player.level, item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
-					}
-				}
-				for (ItemEntity item : e.getDrops()) {
-					if (!item.getItem().getItem().canBeDepleted()) {
-						item.setPos(dead.getX(), dead.getY(), dead.getZ());
-						item.setDeltaMovement(-0.3 + dead.level.random.nextDouble() * 0.6, 0.3 + dead.level.random.nextDouble() * 0.3, -0.3 + dead.level.random.nextDouble() * 0.6);
-					}
-				}
-			}
-		}
-		e.getDrops().stream().forEach(ent -> {
-			ItemStack s = ent.getItem();
-			if (s.hasTag() && s.getTag().contains(MARKER)) {
-				s.getTag().remove(MARKER);
-				if (s.getTag().isEmpty()) s.setTag(null);
-			}
-			ent.setItem(s);
-		});
-	}
+    // EventPriority.LOW
+    public void markEquipment(LivingDeathEvent e) {
+        if (e.getEntity() instanceof Player || e.getEntity().getPersistentData().getBoolean("apoth.no_pinata")) return;
+        e.getEntity().getAllSlots().forEach(i -> {
+            if (!i.isEmpty()) i.getOrCreateTag().putBoolean(MARKER, true);
+        });
+    }
 
-	@Override
-	public PSerializer<? extends Affix> getSerializer() {
-		return SERIALIZER;
-	}
+    // EventPriority.LOW
+    public void drops(LivingDropsEvent e) {
+        LivingEntity dead = e.getEntity();
+        if (dead instanceof Player || dead.getPersistentData().getBoolean("apoth.no_pinata")) return;
+        if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
+            AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(this);
+            if (inst != null && player.level.random.nextFloat() < this.getTrueLevel(inst.rarity(), inst.level())) {
+                player.level.playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (player.level.random.nextFloat() - player.level.random.nextFloat()) * 0.2F) * 0.7F);
+                ((ServerLevel) player.level).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
+                List<ItemEntity> drops = new ArrayList<>(e.getDrops());
+                for (ItemEntity item : drops) {
+                    if (item.getItem().hasTag() && item.getItem().getTag().contains(MARKER)) continue;
+                    for (int i = 0; i < 20; i++) {
+                        e.getDrops().add(new ItemEntity(player.level, item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
+                    }
+                }
+                for (ItemEntity item : e.getDrops()) {
+                    if (!item.getItem().getItem().canBeDepleted()) {
+                        item.setPos(dead.getX(), dead.getY(), dead.getZ());
+                        item.setDeltaMovement(-0.3 + dead.level.random.nextDouble() * 0.6, 0.3 + dead.level.random.nextDouble() * 0.3, -0.3 + dead.level.random.nextDouble() * 0.6);
+                    }
+                }
+            }
+        }
+    }
+
+    // Lowest prio + receive cancelled
+    public void removeMarker(LivingDropsEvent e) {
+        e.getDrops().stream().forEach(ent -> {
+            ItemStack s = ent.getItem();
+            if (s.hasTag() && s.getTag().contains(MARKER)) {
+                s.getTag().remove(MARKER);
+                if (s.getTag().isEmpty()) s.setTag(null);
+            }
+            ent.setItem(s);
+        });
+    }
+
+    @Override
+    public PSerializer<? extends Affix> getSerializer() {
+        return SERIALIZER;
+    }
 }

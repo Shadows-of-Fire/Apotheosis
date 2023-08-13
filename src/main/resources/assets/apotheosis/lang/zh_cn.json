@@ -3,12 +3,6 @@
 
     "item.modifiers.both_hands": "在任意手时：",
 
-    "attributeslib.adv.addition": "[增加：%s]",
-    "attributeslib.adv.multiply_base": "[基础乘数：%s]",
-    "attributeslib.adv.multiply_total": "[总乘数：%s]",
-    "attributeslib.adv.base": "[实体基础值：%s|物品基础值：%s]",
-    "attributeslib.adv.sharpness_bonus": "[锋利：+%s]",
-
     "attributeslib.value.flat": "%s",
     "attributeslib.value.percent": "%s%%",
 
@@ -27,22 +21,22 @@
     "attributeslib.gui.current": "当前：%s",
     "attributeslib.gui.show_attributes": "显示属性",
 
-    "minecraft:generic.armor.desc": "增加物理伤害减免。",
-    "minecraft:generic.armor_toughness.desc": "降低敌方护甲值减少效果。",
-    "minecraft:generic.attack_damage.desc": "完全蓄力攻击造成的物理伤害。",
-    "minecraft:generic.attack_knockback.desc": "你的近战攻击击退敌人的距离，以半格为单位。",
-    "minecraft:generic.attack_speed.desc": "你每秒能发动完全蓄力攻击的次数。",
-    "minecraft:generic.knockback_resistance.desc": "你无视的击退量。",
-    "minecraft:generic.luck.desc": "增加好事发生的可能性。",
-    "minecraft:generic.max_health.desc": "你拥有的生命值点数。",
-    "minecraft:generic.movement_speed.desc": "行走时的移动速度。",
+    "attribute.name.generic.armor.desc": "增加物理伤害减免。",
+    "attribute.name.generic.armor_toughness.desc": "降低敌方护甲值减少效果。",
+    "attribute.name.generic.attack_damage.desc": "完全蓄力攻击造成的物理伤害。",
+    "attribute.name.generic.attack_knockback.desc": "你的近战攻击击退敌人的距离，以半格为单位。",
+    "attribute.name.generic.attack_speed.desc": "你每秒能发动完全蓄力攻击的次数。",
+    "attribute.name.generic.knockback_resistance.desc": "你无视的击退量。",
+    "attribute.name.generic.luck.desc": "增加好事发生的可能性。",
+    "attribute.name.generic.max_health.desc": "你拥有的生命值点数。",
+    "attribute.name.generic.movement_speed.desc": "行走时的移动速度。",
 
-    "forge:attack_range.desc": "你的近战攻击能打到敌人的距离，以格为单位。",
-    "forge:entity_gravity.desc": "落向地面的加速度，以格/平方秒为单位。",
-    "forge:nametag_distance.desc": "其他玩家必须距离多远才能看到你的名字。",
-    "forge:reach_distance.desc": "你能与方块互动的距离，以格为单位。",
-    "forge:step_height_addition.desc": "你可以在不跳跃的情况下自动走上方块的高度。",
-    "forge:swim_speed.desc": "相对于正常情况，你的游泳速度。",
+    "forge.attack_range.desc": "你的近战攻击能打到敌人的距离，以格为单位。",
+    "forge.entity_gravity.desc": "落向地面的加速度，以格/平方秒为单位。",
+    "forge.name_tag_distance.desc": "其他玩家必须距离多远才能看到你的名字。",
+    "forge.reach_distance.desc": "你能与方块互动的距离，以格为单位。",
+    "forge.step_height_addition.desc": "你可以在不跳跃的情况下自动走上方块的高度。",
+    "forge.swim_speed.desc": "相对于正常情况，你的游泳速度。",
 
     "apotheosis:draw_speed": "蓄力速度",
     "apotheosis:draw_speed.desc": "你蓄力远程武器（例如弓、弩或三叉戟）的速度。",
@@ -111,7 +105,7 @@
     "effect.apotheosis.sundering.desc": "增加受到的伤害。",
     "effect.apotheosis.sundering.description": "增加受到的伤害。",
 
-    "effect.apotheosis.vitality": "活力四射",
+    "effect.apotheosis.vitality": "活力迸发",
     "effect.apotheosis.vitality.desc": "增加受到的治疗效果。",
     "effect.apotheosis.vitality.description": "增加受到的治疗效果。",
 
@@ -402,7 +396,7 @@
     "affix.apotheosis:ranged/mob_effect/grievous": "重创的",
     "affix.apotheosis:ranged/mob_effect/grievous.suffix": "（伤口）",
 
-    "affix.apotheosis:armor/mob_effect/bursting": "爆发的",
+    "affix.apotheosis:armor/mob_effect/bursting": "迸发的",
     "affix.apotheosis:armor/mob_effect/bursting.suffix": "（活力）",
 
     "affix.apotheosis:socket": "",
@@ -515,6 +509,7 @@
     "item.apotheosis.sigil_of_enhancement": "[NYI]强化符石",
     "item.apotheosis.superior_sigil_of_enhancement": "[NYI]高级强化符石",
 
+    "block.apotheosis.boss_spawner": "Boss刷怪笼",
     "block.apotheosis.gem_cutting_table": "宝石切割台",
     "block.apotheosis.gem_cutting_table.desc": "使用宝石粉和珍宝材料来升级宝石",
     "block.apotheosis.salvaging_table": "回收台",
@@ -732,7 +727,7 @@
     "advancements.apotheosis.socket": "珠宝匠",
     "advancements.apotheosis.socket.desc": "使用锻造台镶嵌一个宝石。",
 
-    "advancements.apotheosis.gem_cut": "宝石厂",
+    "advancements.apotheosis.gem_cut": "宝石雕琢工",
     "advancements.apotheosis.gem_cut.desc": "使用宝石切割台升级神化宝石。",
 
     "advancements.apotheosis.spawner.root": "神化刷怪笼",
@@ -912,7 +907,7 @@
     "info.apotheosis.eterna_exact": "精确需求：%s/%s",
     "info.apotheosis.percent_exact": "精确需求：%s%%",
     "apotheosis.recipes.enchanting": "灌注附魔",
-    "info.apotheosis.power_range": "最少需要：%s%%",
+    "info.apotheosis.book_range": "威力范围：[%s, %s]",
     "info.apotheosis.discoverable": "可发现",
     "info.apotheosis.discoverable.not": "不可发现",
     "info.apotheosis.lootable": "战利品可得",
@@ -1187,6 +1182,7 @@
     "info.apotheosis.power_range": "威力范围：%s~%s",
     "info.apotheosis.item_ench": "物品附魔能力：%s",
     "info.apotheosis.num_clues": "魔咒线索：%s",
+    "info.apotheosis.infusion_failed": "不符合灌注条件",
 
     "info.apotheosis.slider_power": "威力：%s",
     "info.apotheosis.enchinfo_level": "等级：%s",
@@ -1290,7 +1286,6 @@
     "info.apotheosis.mining_arrow.diamond": "射出的箭会像钻石镐一样挖掘方块",
 
     "comment_id": "/杂项",
-    "generic.reachDistance": "触及距离",
     "info.apoth.modifier_disabled": "该调节器已被禁用",
     "itemGroup.apotheosis": "神化",
     "config.jade.plugin_apotheosis.spawner": "神化刷怪笼模块",

@@ -1,0 +1,17 @@
+{
+    "name": "Мини-боссы",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Иногда вы можете видеть именованных или наделенных полномочиями мобов по всему вашему миру.$(p)Скорее всего, это $(9)Апофеозные Мини-боссы$()."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Эти мобы будут появляться случайным образом вместо своих обычных собратьев.$(p)Будьте настороже."
+		}
+	]
+}

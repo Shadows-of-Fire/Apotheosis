@@ -13,54 +13,55 @@ import shadows.apotheosis.core.mobfx.api.MFEffects;
 
 public class BroadheadArrowEntity extends Arrow {
 
-	public BroadheadArrowEntity(EntityType<? extends Arrow> t, Level world) {
-		super(t, world);
-	}
+    public BroadheadArrowEntity(EntityType<? extends Arrow> t, Level world) {
+        super(t, world);
+    }
 
-	public BroadheadArrowEntity(Level world) {
-		super(Apoth.Entities.BROADHEAD_ARROW.get(), world);
-	}
+    public BroadheadArrowEntity(Level world) {
+        super(Apoth.Entities.BROADHEAD_ARROW.get(), world);
+    }
 
-	public BroadheadArrowEntity(LivingEntity shooter, Level world) {
-		super(world, shooter);
-	}
+    public BroadheadArrowEntity(LivingEntity shooter, Level world) {
+        super(world, shooter);
+    }
 
-	public BroadheadArrowEntity(Level world, double x, double y, double z) {
-		super(world, x, y, z);
-	}
+    public BroadheadArrowEntity(Level world, double x, double y, double z) {
+        super(world, x, y, z);
+    }
 
-	@Override
-	protected ItemStack getPickupItem() {
-		return new ItemStack(Apoth.Items.BROADHEAD_ARROW.get());
-	}
+    @Override
+    protected ItemStack getPickupItem() {
+        return new ItemStack(Apoth.Items.BROADHEAD_ARROW.get());
+    }
 
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    @Override
+    public Packet<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-	@Override
-	public EntityType<?> getType() {
-		return Apoth.Entities.BROADHEAD_ARROW.get();
-	}
+    @Override
+    public EntityType<?> getType() {
+        return Apoth.Entities.BROADHEAD_ARROW.get();
+    }
 
-	@Override
-	public int getColor() {
-		return -1;
-	}
+    @Override
+    public int getColor() {
+        return -1;
+    }
 
-	@Override
-	protected void doPostHurtEffects(LivingEntity living) {
-		MobEffectInstance bleed = living.getEffect(MFEffects.BLEEDING.get());
-		if (bleed != null) {
-			living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), bleed.getDuration() + 60, bleed.getAmplifier() + 1));
-		} else {
-			living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
-		}
-	}
+    @Override
+    protected void doPostHurtEffects(LivingEntity living) {
+        MobEffectInstance bleed = living.getEffect(MFEffects.BLEEDING.get());
+        if (bleed != null) {
+            living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), bleed.getDuration() + 60, bleed.getAmplifier() + 1));
+        }
+        else {
+            living.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
+        }
+    }
 
-	public BroadheadArrowEntity bleed() {
-		this.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
-		return this;
-	}
+    public BroadheadArrowEntity bleed() {
+        this.addEffect(new MobEffectInstance(MFEffects.BLEEDING.get(), 300));
+        return this;
+    }
 }

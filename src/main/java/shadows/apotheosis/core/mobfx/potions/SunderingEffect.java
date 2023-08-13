@@ -9,8 +9,8 @@ import shadows.apotheosis.mixin.LivingEntityMixin;
  */
 public class SunderingEffect extends MobEffect {
 
-	public SunderingEffect() {
-		super(MobEffectCategory.HARMFUL, 0x989898);
-	}
+    public SunderingEffect() {
+        super(MobEffectCategory.HARMFUL, 0x989898);
+    }
 
 }

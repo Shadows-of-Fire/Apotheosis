@@ -35,111 +35,113 @@ import shadows.apotheosis.spawn.modifiers.StatModifier;
 
 public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 
-	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/spawner_jei.png");
-	public static final ResourceLocation UID = new ResourceLocation(Apotheosis.MODID, "spawner_modifiers");
-	public static final RecipeType<SpawnerModifier> TYPE = RecipeType.create(Apotheosis.MODID, "spawner_modifiers", SpawnerModifier.class);
+    public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/spawner_jei.png");
+    public static final ResourceLocation UID = new ResourceLocation(Apotheosis.MODID, "spawner_modifiers");
+    public static final RecipeType<SpawnerModifier> TYPE = RecipeType.create(Apotheosis.MODID, "spawner_modifiers", SpawnerModifier.class);
 
-	private IDrawable bg;
-	private IDrawable icon;
-	private Component title;
+    private IDrawable bg;
+    private IDrawable icon;
+    private Component title;
 
-	public SpawnerCategory(IGuiHelper helper) {
-		this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 169, 75).build();
-		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Items.SPAWNER));
-		this.title = Component.translatable("title.apotheosis.spawner");
-	}
+    public SpawnerCategory(IGuiHelper helper) {
+        this.bg = helper.drawableBuilder(TEXTURES, 0, 0, 169, 75).build();
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Items.SPAWNER));
+        this.title = Component.translatable("title.apotheosis.spawner");
+    }
 
-	@Override
-	public RecipeType<SpawnerModifier> getRecipeType() {
-		return TYPE;
-	}
+    @Override
+    public RecipeType<SpawnerModifier> getRecipeType() {
+        return TYPE;
+    }
 
-	@Override
-	public Component getTitle() {
-		return this.title;
-	}
+    @Override
+    public Component getTitle() {
+        return this.title;
+    }
 
-	@Override
-	public IDrawable getBackground() {
-		return this.bg;
-	}
+    @Override
+    public IDrawable getBackground() {
+        return this.bg;
+    }
 
-	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, SpawnerModifier recipe, IFocusGroup focuses) {
-		builder.addSlot(RecipeIngredientRole.INPUT, 11, 11).addIngredients(recipe.getMainhandInput());
-		if (recipe.getOffhandInput() != Ingredient.EMPTY) builder.addSlot(RecipeIngredientRole.INPUT, 11, 48).addIngredients(recipe.getOffhandInput());
-		builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
-		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
-	}
+    @Override
+    public void setRecipe(IRecipeLayoutBuilder builder, SpawnerModifier recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 11, 11).addIngredients(recipe.getMainhandInput());
+        if (recipe.getOffhandInput() != Ingredient.EMPTY) builder.addSlot(RecipeIngredientRole.INPUT, 11, 48).addIngredients(recipe.getOffhandInput());
+        builder.addInvisibleIngredients(RecipeIngredientRole.CATALYST).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
+        builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.SPAWNER));
+    }
 
-	@Override
-	public IDrawable getIcon() {
-		return this.icon;
-	}
+    @Override
+    public IDrawable getIcon() {
+        return this.icon;
+    }
 
-	@Override
-	public void draw(SpawnerModifier recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-		if (recipe.getOffhandInput() == Ingredient.EMPTY) {
-			GuiComponent.blit(stack, 1, 31, 0, 0, 88, 28, 34, 256, 256);
-		}
+    @Override
+    public void draw(SpawnerModifier recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+        if (recipe.getOffhandInput() == Ingredient.EMPTY) {
+            GuiComponent.blit(stack, 1, 31, 0, 0, 88, 28, 34, 256, 256);
+        }
 
-		Screen scn = Minecraft.getInstance().screen;
-		if (scn == null) return; // We need this to render tooltips, bail if its not there.
-		if (mouseX >= -1 && mouseX < 9 && mouseY >= 13 && mouseY < 13 + 12) {
-			GuiComponent.blit(stack, -1, 13, 0, 0, 75, 10, 12, 256, 256);
-			scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.mainhand")), (int) mouseX, (int) mouseY);
-		} else if (mouseX >= -1 && mouseX < 9 && mouseY >= 50 && mouseY < 50 + 12 && recipe.getOffhandInput() != Ingredient.EMPTY) {
-			GuiComponent.blit(stack, -1, 50, 0, 0, 75, 10, 12, 256, 256);
-			scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.offhand"), Component.translatable("misc.apotheosis.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX, (int) mouseY);
-		} else if (mouseX >= 33 && mouseX < 33 + 16 && mouseY >= 30 && mouseY < 30 + 16) {
-			scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.rclick_spawner")), (int) mouseX, (int) mouseY);
-		}
+        Screen scn = Minecraft.getInstance().screen;
+        if (scn == null) return; // We need this to render tooltips, bail if its not there.
+        if (mouseX >= -1 && mouseX < 9 && mouseY >= 13 && mouseY < 13 + 12) {
+            GuiComponent.blit(stack, -1, 13, 0, 0, 75, 10, 12, 256, 256);
+            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.mainhand")), (int) mouseX, (int) mouseY);
+        }
+        else if (mouseX >= -1 && mouseX < 9 && mouseY >= 50 && mouseY < 50 + 12 && recipe.getOffhandInput() != Ingredient.EMPTY) {
+            GuiComponent.blit(stack, -1, 50, 0, 0, 75, 10, 12, 256, 256);
+            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.offhand"), Component.translatable("misc.apotheosis.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX, (int) mouseY);
+        }
+        else if (mouseX >= 33 && mouseX < 33 + 16 && mouseY >= 30 && mouseY < 30 + 16) {
+            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.apotheosis.rclick_spawner")), (int) mouseX, (int) mouseY);
+        }
 
-		PoseStack mvStack = RenderSystem.getModelViewStack();
-		mvStack.pushPose();
-		Matrix4f mvMatrix = mvStack.last().pose();
-		mvMatrix.setIdentity();
-		mvMatrix.multiply(stack.last().pose());
-		mvStack.translate(0, 0.5, -2000);
-		Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(new ItemStack(Items.SPAWNER), 31, 29);
-		mvStack.popPose();
-		RenderSystem.applyModelViewMatrix();
+        PoseStack mvStack = RenderSystem.getModelViewStack();
+        mvStack.pushPose();
+        Matrix4f mvMatrix = mvStack.last().pose();
+        mvMatrix.setIdentity();
+        mvMatrix.multiply(stack.last().pose());
+        mvStack.translate(0, 0.5, -2000);
+        Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(new ItemStack(Items.SPAWNER), 31, 29);
+        mvStack.popPose();
+        RenderSystem.applyModelViewMatrix();
 
-		Font font = Minecraft.getInstance().font;
-		int top = 75 / 2 - recipe.getStatModifiers().size() * (font.lineHeight + 2) / 2 + 2;
-		int left = 168;
-		for (StatModifier<?> s : recipe.getStatModifiers()) {
-			String value = s.value.toString();
-			if (value.equals("true")) value = "+";
-			else if (value.equals("false")) value = "-";
-			else if (s.value instanceof Number num && num.intValue() > 0) value = "+" + value;
-			Component msg = Component.translatable("misc.apotheosis.concat", value, s.stat.name());
-			int width = font.width(msg);
-			boolean hover = mouseX >= left - width && mouseX < left && mouseY >= top && mouseY < top + font.lineHeight + 1;
-			font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
+        Font font = Minecraft.getInstance().font;
+        int top = 75 / 2 - recipe.getStatModifiers().size() * (font.lineHeight + 2) / 2 + 2;
+        int left = 168;
+        for (StatModifier<?> s : recipe.getStatModifiers()) {
+            String value = s.value.toString();
+            if ("true".equals(value)) value = "+";
+            else if ("false".equals(value)) value = "-";
+            else if (s.value instanceof Number num && num.intValue() > 0) value = "+" + value;
+            Component msg = Component.translatable("misc.apotheosis.concat", value, s.stat.name());
+            int width = font.width(msg);
+            boolean hover = mouseX >= left - width && mouseX < left && mouseY >= top && mouseY < top + font.lineHeight + 1;
+            font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
 
-			int maxWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
-			maxWidth = maxWidth - (maxWidth - 210) / 2 - 210;
+            int maxWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+            maxWidth = maxWidth - (maxWidth - 210) / 2 - 210;
 
-			if (hover) {
-				List<Component> list = new ArrayList<>();
-				list.add(s.stat.name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
-				list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
-				if (s.value instanceof Number) {
-					if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.literal(" "));
-					if (((Number) s.min).intValue() > 0) list.add(Component.translatable("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));
-					if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.apotheosis.max_value", s.max).withStyle(ChatFormatting.GRAY));
-				}
-				renderComponentTooltip(scn, stack, list, left + 6, (int) mouseY, maxWidth, font);
-			}
+            if (hover) {
+                List<Component> list = new ArrayList<>();
+                list.add(s.stat.name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
+                list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
+                if (s.value instanceof Number) {
+                    if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.literal(" "));
+                    if (((Number) s.min).intValue() > 0) list.add(Component.translatable("misc.apotheosis.min_value", s.min).withStyle(ChatFormatting.GRAY));
+                    if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.apotheosis.max_value", s.max).withStyle(ChatFormatting.GRAY));
+                }
+                renderComponentTooltip(scn, stack, list, left + 6, (int) mouseY, maxWidth, font);
+            }
 
-			top += font.lineHeight + 2;
-		}
-	}
+            top += font.lineHeight + 2;
+        }
+    }
 
-	private static void renderComponentTooltip(Screen scn, PoseStack stack, List<Component> list, int x, int y, int maxWidth, Font font) {
-		List<FormattedText> text = list.stream().map(c -> font.getSplitter().splitLines(c, maxWidth, c.getStyle())).flatMap(List::stream).toList();
-		scn.renderComponentTooltip(stack, text, x, y, font);
-	}
+    private static void renderComponentTooltip(Screen scn, PoseStack stack, List<Component> list, int x, int y, int maxWidth, Font font) {
+        List<FormattedText> text = list.stream().map(c -> font.getSplitter().splitLines(c, maxWidth, c.getStyle())).flatMap(List::stream).toList();
+        scn.renderComponentTooltip(stack, text, x, y, font);
+    }
 
 }

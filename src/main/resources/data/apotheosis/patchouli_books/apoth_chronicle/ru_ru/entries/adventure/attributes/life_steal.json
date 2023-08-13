@@ -1,0 +1,13 @@
+{
+    "name": "Вампиризм",
+    "icon": "apotheosis:textures/mob_effect/bleeding.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Ваш $(9)Вампиризм$() - это процент от нанесенного вами физического урона, который добавляется непосредственно к вашему здоровью.$(p)Как правило, только оружие предоставляет это утверждение."
+        }
+	]
+}

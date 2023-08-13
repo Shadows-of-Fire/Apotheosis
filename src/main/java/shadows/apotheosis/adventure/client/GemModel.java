@@ -25,70 +25,70 @@ import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 public class GemModel implements BakedModel {
-	private final BakedModel original;
-	private final ItemOverrides itemHandler;
+    private final BakedModel original;
+    private final ItemOverrides itemHandler;
 
-	@SuppressWarnings("deprecation")
-	public GemModel(BakedModel original, ModelBakery loader) {
-		this.original = original;
-		BlockModel missing = (BlockModel) loader.getModel(ModelBakery.MISSING_MODEL_LOCATION);
+    @SuppressWarnings("deprecation")
+    public GemModel(BakedModel original, ModelBakery loader) {
+        this.original = original;
+        BlockModel missing = (BlockModel) loader.getModel(ModelBakery.MISSING_MODEL_LOCATION);
 
-		this.itemHandler = new ItemOverrides(loader, missing, id -> missing, Collections.emptyList()) {
-			@Override
-			public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
-				return GemModel.this.resolve(original, stack, world, entity, seed);
-			}
-		};
-	}
+        this.itemHandler = new ItemOverrides(loader, missing, id -> missing, Collections.emptyList()){
+            @Override
+            public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
+                return GemModel.this.resolve(original, stack, world, entity, seed);
+            }
+        };
+    }
 
-	public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
-		Gem gem = GemItem.getGem(stack);
-		if (gem != null) {
-			return Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(Apotheosis.MODID, "item/gems/" + gem.getId().getPath()));
-		}
-		return original;
-	}
+    public BakedModel resolve(BakedModel original, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
+        Gem gem = GemItem.getGem(stack);
+        if (gem != null) {
+            return Minecraft.getInstance().getModelManager().getModel(new ResourceLocation(Apotheosis.MODID, "item/gems/" + gem.getId().getPath()));
+        }
+        return original;
+    }
 
-	@Override
-	public ItemOverrides getOverrides() {
-		return itemHandler;
-	}
+    @Override
+    public ItemOverrides getOverrides() {
+        return this.itemHandler;
+    }
 
-	@Override
-	@Deprecated
-	public List<BakedQuad> getQuads(BlockState pState, Direction pDirection, RandomSource pRandom) {
-		return original.getQuads(pState, pDirection, pRandom);
-	}
+    @Override
+    @Deprecated
+    public List<BakedQuad> getQuads(BlockState pState, Direction pDirection, RandomSource pRandom) {
+        return this.original.getQuads(pState, pDirection, pRandom);
+    }
 
-	@Override
-	public boolean useAmbientOcclusion() {
-		return original.useAmbientOcclusion();
-	}
+    @Override
+    public boolean useAmbientOcclusion() {
+        return this.original.useAmbientOcclusion();
+    }
 
-	@Override
-	public boolean isGui3d() {
-		return original.isGui3d();
-	}
+    @Override
+    public boolean isGui3d() {
+        return this.original.isGui3d();
+    }
 
-	@Override
-	public boolean usesBlockLight() {
-		return original.usesBlockLight();
-	}
+    @Override
+    public boolean usesBlockLight() {
+        return this.original.usesBlockLight();
+    }
 
-	@Override
-	public boolean isCustomRenderer() {
-		return original.isCustomRenderer();
-	}
+    @Override
+    public boolean isCustomRenderer() {
+        return this.original.isCustomRenderer();
+    }
 
-	@Override
-	@Deprecated
-	public TextureAtlasSprite getParticleIcon() {
-		return original.getParticleIcon();
-	}
+    @Override
+    @Deprecated
+    public TextureAtlasSprite getParticleIcon() {
+        return this.original.getParticleIcon();
+    }
 
-	@Override
-	@Deprecated
-	public ItemTransforms getTransforms() {
-		return original.getTransforms();
-	}
+    @Override
+    @Deprecated
+    public ItemTransforms getTransforms() {
+        return this.original.getTransforms();
+    }
 }

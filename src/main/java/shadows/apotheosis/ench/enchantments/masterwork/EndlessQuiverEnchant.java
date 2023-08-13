@@ -13,36 +13,36 @@ import net.minecraft.world.item.enchantment.Enchantments;
 
 public class EndlessQuiverEnchant extends Enchantment {
 
-	public EndlessQuiverEnchant() {
-		super(Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
-	}
+    public EndlessQuiverEnchant() {
+        super(Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+    }
 
-	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
+    @Override
+    public int getMaxLevel() {
+        return 1;
+    }
 
-	@Override
-	public int getMinCost(int enchantmentLevel) {
-		return 60;
-	}
+    @Override
+    public int getMinCost(int enchantmentLevel) {
+        return 60;
+    }
 
-	@Override
-	public int getMaxCost(int enchantmentLevel) {
-		return 200;
-	}
+    @Override
+    public int getMaxCost(int enchantmentLevel) {
+        return 200;
+    }
 
-	@Override
-	public Component getFullname(int level) {
-		return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_GREEN);
-	}
+    @Override
+    public Component getFullname(int level) {
+        return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_GREEN);
+    }
 
-	@Override
-	protected boolean checkCompatibility(Enchantment ench) {
-		return super.checkCompatibility(ench) && ench != Enchantments.INFINITY_ARROWS;
-	}
+    @Override
+    protected boolean checkCompatibility(Enchantment ench) {
+        return super.checkCompatibility(ench) && ench != Enchantments.INFINITY_ARROWS;
+    }
 
-	public boolean isTrulyInfinite(ItemStack stack, ItemStack bow, Player player) {
-		return bow.getEnchantmentLevel(this) > 0 && stack.getItem() instanceof ArrowItem;
-	}
+    public boolean isTrulyInfinite(ItemStack stack, ItemStack bow, Player player) {
+        return bow.getEnchantmentLevel(this) > 0 && stack.getItem() instanceof ArrowItem;
+    }
 }
