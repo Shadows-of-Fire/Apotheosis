@@ -1,6 +1,12 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.3.4
+* Fixed duplicated potion tooltips when the potion module is enabled.
+* Fixed an issue with miniboss affix items being named incorrectly.
+* t0piy: Updated Brazilian Portuguese translation.
+* mc-kaishixiaxue: Updated Chinese translation.
+
 ## 6.3.3
 * Backported all changes that happened during the extraction of Apothic Attributes.
   * Armor formula updated from 50 / (50 + armor) to the one used by AA.

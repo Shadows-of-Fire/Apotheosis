@@ -251,7 +251,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
             if (stack.isEmpty()) continue;
             if (s.ordinal() == guaranteed) entity.setDropChance(s, 2F);
             if (s.ordinal() == guaranteed) {
-                entity.setItemSlot(s, modifyBossItem(stack, rand, name, luck, rarity, stats));
+                entity.setItemSlot(s, modifyBossItem(stack, rand, Component.literal(name), luck, rarity, stats));
                 entity.setCustomName(((MutableComponent) entity.getCustomName()).withStyle(Style.EMPTY.withColor(rarity.color())));
             }
             else if (rand.nextFloat() < stats.enchantChance()) {
@@ -272,14 +272,14 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
         EnchantmentHelper.setEnchantments(map, stack);
     }
 
-    public static ItemStack modifyBossItem(ItemStack stack, RandomSource rand, String bossName, float luck, LootRarity rarity, BossStats stats) {
+    public static ItemStack modifyBossItem(ItemStack stack, RandomSource rand, @Nullable Component bossName, float luck, LootRarity rarity, BossStats stats) {
         enchantBossItem(rand, stack, Apotheosis.enableEnch ? stats.enchLevels()[2] : stats.enchLevels()[3], true);
         NameHelper.setItemName(rand, stack);
         stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, rand);
 
-        String bossOwnerName = String.format(NameHelper.ownershipFormat, bossName);
+        Component bossOwnerName = Component.translatable(NameHelper.ownershipFormat, bossName);
         Component name = AffixHelper.getName(stack);
-        if (!bossName.isEmpty() && name.getContents() instanceof TranslatableContents tc) {
+        if (bossName != null && name.getContents() instanceof TranslatableContents tc) {
             String oldKey = tc.getKey();
             String newKey = "misc.apotheosis.affix_name.two".equals(oldKey) ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
             Object[] newArgs = new Object[tc.getArgs().length + 1];
