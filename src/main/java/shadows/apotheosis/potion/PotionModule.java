@@ -52,7 +52,6 @@ public class PotionModule {
         this.reload(null);
         if (FMLEnvironment.dist.isClient()) {
             FMLJavaModLoadingContext.get().getModEventBus().register(PotionModuleClient.class);
-            MinecraftForge.EVENT_BUS.register(new PotionModuleClient());
         }
         InterModComms.sendTo("curios", "REGISTER_TYPE", () -> new SlotTypeMessage.Builder("charm").size(1).build());
 
