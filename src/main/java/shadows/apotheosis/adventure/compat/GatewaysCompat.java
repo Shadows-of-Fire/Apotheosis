@@ -66,7 +66,7 @@ public class GatewaysCompat {
 
         @Override
         public AABB getAABB(double x, double y, double z) {
-            return this.bossId.isEmpty() ? new AABB(0, 0, 0, 2, 2, 2).move(x, y, z) : this.boss.get().getSize();
+            return (this.bossId.isEmpty() ? new AABB(0, 0, 0, 2, 2, 2) : this.boss.get().getSize()).move(x, y, z);
         }
 
         @Override

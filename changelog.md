@@ -1,6 +1,12 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.3.5
+* Re-release of 6.3.4, since for some reason 6.3.4 includes the 1.20 code in the jar. Gradle is haunted.
+* Fixed an error with the apotheosis gateways integration when specifying a specific boss.
+* Added a more proper warning message when a user fails to specify bosses for a dimension.
+* Fixed an error in loading the gem cutting advancement trigger.
+
 ## 6.3.4
 * Fixed duplicated potion tooltips when the potion module is enabled.
 * Fixed an issue with miniboss affix items being named incorrectly.

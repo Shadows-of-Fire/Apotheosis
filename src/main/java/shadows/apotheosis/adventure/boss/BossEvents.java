@@ -62,12 +62,17 @@ public class BossEvents {
             RandomSource rand = e.getLevel().getRandom();
             if (this.bossCooldowns.getInt(entity.level.dimension().location()) <= 0 && !e.getLevel().isClientSide() && entity instanceof Monster && e.getResult() != Result.DENY) {
                 ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
-                Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
+                ResourceLocation dimId = sLevel.getLevel().dimension().location();
+                Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(dimId);
                 if (rules == null) return;
                 if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, new BlockPos(e.getX(), e.getY(), e.getZ()))) {
                     Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
                     if (player == null) return; // Spawns require player context
                     BossItem item = BossItemManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
+                    if (item == null) {
+                        AdventureModule.LOGGER.error("Attempted to spawn a boss in dimension {} using configured boss spawn rule {}/{} but no bosses were made available.", dimId, rules.getRight(), rules.getLeft());
+                        return;
+                    }
                     Mob boss = item.createBoss(sLevel, new BlockPos(e.getX() - 0.5, e.getY(), e.getZ() - 0.5), rand, player.getLuck());
                     if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
                         boss.setTarget(player);

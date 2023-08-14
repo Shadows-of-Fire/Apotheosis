@@ -62,9 +62,12 @@ public class GemCutTrigger implements CriterionTrigger<GemCutTrigger.Instance> {
     @Override
     public GemCutTrigger.Instance createInstance(JsonObject json, DeserializationContext conditionsParser) {
         json = json.getAsJsonObject("conditions");
-        ItemPredicate item = ItemPredicate.fromJson(json.get("item"));
-        String rarity = GsonHelper.getAsString(json, "rarity", "");
-        return new GemCutTrigger.Instance(item, rarity);
+        if (json != null) {
+            ItemPredicate item = ItemPredicate.fromJson(json.get("item"));
+            String rarity = GsonHelper.getAsString(json, "rarity", "");
+            return new GemCutTrigger.Instance(item, rarity);
+        }
+        return new GemCutTrigger.Instance(ItemPredicate.ANY, "");
     }
 
     public void trigger(ServerPlayer player, ItemStack stack, String rarity) {
