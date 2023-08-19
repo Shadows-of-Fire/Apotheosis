@@ -1,6 +1,10 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.0.3
+* Potential perf uplift for the Tempting enchantment.
+  * Now only checks if the enchantment is applied if the item is a Hoe, otherwise the check is not performed.
+
 ## 7.0.2
 * Added JEI support for Gem Cutting.
 * Fixed JEI support for Gems (specifically for Salvaging).
