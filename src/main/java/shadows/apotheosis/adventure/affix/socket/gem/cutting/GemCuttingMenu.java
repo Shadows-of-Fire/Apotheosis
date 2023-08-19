@@ -161,8 +161,11 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
             if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem() || g.rarity() != g2.rarity()) return false;
             if (g.rarity() == LootRarity.ANCIENT) return false;
             if (left.getItem() != Apoth.Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity())) return false;
+            if (!LootRarity.isRarityMat(right)) return false;
+
             LootRarity matRarity = LootRarity.getMaterialRarity(right);
             LootRarity gemRarity = g.rarity();
+
             if (matRarity == gemRarity) return right.getCount() >= STD_MAT_COST;
             else if (matRarity == gemRarity.next()) return right.getCount() >= NEXT_MAT_COST;
             else return matRarity == gemRarity.prev() && right.getCount() >= PREV_MAT_COST;

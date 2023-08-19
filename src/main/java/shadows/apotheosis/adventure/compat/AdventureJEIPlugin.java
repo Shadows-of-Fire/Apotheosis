@@ -34,7 +34,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.RecipeTypes;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import shadows.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
@@ -43,6 +42,7 @@ import shadows.apotheosis.adventure.affix.socket.SocketHelper;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
+import shadows.apotheosis.adventure.compat.GemCuttingCategory.GemCuttingRecipe;
 import shadows.apotheosis.adventure.loot.LootRarity;
 
 @JeiPlugin
@@ -50,6 +50,7 @@ public class AdventureJEIPlugin implements IModPlugin {
 
     public static final RecipeType<UpgradeRecipe> APO_SMITHING = RecipeType.create(Apotheosis.MODID, "smithing", ApothUpgradeRecipe.class);
     public static final RecipeType<SalvagingRecipe> SALVAGING = RecipeType.create(Apotheosis.MODID, "salvaging", SalvagingRecipe.class);
+    public static final RecipeType<GemCuttingRecipe> GEM_CUTTING = RecipeType.create(Apotheosis.MODID, "gem_cutting", GemCuttingRecipe.class);
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -70,12 +71,22 @@ public class AdventureJEIPlugin implements IModPlugin {
         reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXTRACTION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_extraction"));
         reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_EXPULSION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_expulsion"));
         reg.addIngredientInfo(new ItemStack(Apoth.Items.VIAL_OF_UNNAMING.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.unnaming"));
-        reg.addIngredientInfo(AdventureModule.RARITY_MATERIALS.values().stream().map(ItemStack::new).toList(), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.salvaging"));
         ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
         reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ApothUpgradeRecipe).toList());
         List<SalvagingRecipe> salvagingRecipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));
         salvagingRecipes.sort(Comparator.comparingInt(recipe -> recipe.getOutputs().stream().mapToInt(OutputData::getMax).max().orElse(0)));
         reg.addRecipes(SALVAGING, salvagingRecipes);
+
+        List<GemCuttingRecipe> gemCutRecipes = new ArrayList<>();
+        for (Gem g : GemManager.INSTANCE.getValues()) {
+            LootRarity r = LootRarity.COMMON;
+            LootRarity max = LootRarity.ANCIENT;
+            while (r != max) {
+                if (g.clamp(r) == r) gemCutRecipes.add(new GemCuttingRecipe(g, r));
+                r = r.next();
+            }
+        }
+        reg.addRecipes(GEM_CUTTING, gemCutRecipes);
     }
 
     @Override
@@ -83,6 +94,7 @@ public class AdventureJEIPlugin implements IModPlugin {
         if (!Apotheosis.enableAdventure) return;
         reg.addRecipeCategories(new ApothSmithingCategory(reg.getJeiHelpers().getGuiHelper()));
         reg.addRecipeCategories(new SalvagingCategory(reg.getJeiHelpers().getGuiHelper()));
+        reg.addRecipeCategories(new GemCuttingCategory(reg.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -90,6 +102,7 @@ public class AdventureJEIPlugin implements IModPlugin {
         if (!Apotheosis.enableAdventure) return;
         reg.addRecipeCatalyst(new ItemStack(Blocks.SMITHING_TABLE), APO_SMITHING);
         reg.addRecipeCatalyst(new ItemStack(Apoth.Blocks.SALVAGING_TABLE.get()), SALVAGING);
+        reg.addRecipeCatalyst(new ItemStack(Apoth.Blocks.GEM_CUTTING_TABLE.get()), GEM_CUTTING);
     }
 
     @Override

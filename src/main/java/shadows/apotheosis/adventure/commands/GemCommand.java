@@ -17,6 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemManager;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.json.WeightedJsonReloadListener.IDimensional;
 
 public class GemCommand {
@@ -30,7 +31,7 @@ public class GemCommand {
         root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {
             Gem gem = GemManager.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));
             Player p = c.getSource().getPlayerOrException();
-            ItemStack stack = GemManager.createGemStack(gem, p.random, null, p.getLuck());
+            ItemStack stack = GemManager.createGemStack(gem, LootRarity.random(p.random, p.getLuck()));
             p.addItem(stack);
             return 0;
         }))).then(Commands.literal("random").executes(c -> {

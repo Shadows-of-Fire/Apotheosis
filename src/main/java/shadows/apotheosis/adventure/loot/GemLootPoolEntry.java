@@ -67,7 +67,7 @@ public class GemLootPoolEntry extends LootPoolSingletonContainer {
         }
 
         LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(ctx.getLevel().dimension().location());
-        ItemStack stack = GemManager.createGemStack(gem, ctx.getRandom(), gem.clamp(LootRarity.random(ctx.getRandom(), ctx.getLuck(), clamp)), ctx.getLuck());
+        ItemStack stack = GemManager.createGemStack(gem, gem.clamp(LootRarity.random(ctx.getRandom(), ctx.getLuck(), clamp)));
         list.accept(stack);
     }
 

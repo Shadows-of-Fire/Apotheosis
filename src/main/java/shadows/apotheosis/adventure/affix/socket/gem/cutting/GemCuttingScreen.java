@@ -22,7 +22,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.Items;
@@ -134,8 +133,9 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
             else {
                 list.add(Component.translatable("text.apotheosis.cut_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
                 list.add(CommonComponents.EMPTY);
-                boolean hasDust = dust > GemCuttingMenu.getDustCost(rarity);
-                list.add(Component.translatable("text.apotheosis.cost", GemCuttingMenu.getDustCost(rarity), Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
+                int dustCost = GemCuttingMenu.getDustCost(rarity);
+                boolean hasDust = dust > dustCost;
+                list.add(Component.translatable("text.apotheosis.cost", dustCost, Items.GEM_DUST.get().getName(ItemStack.EMPTY)).withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
                 boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
                 list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
                 list.add(Component.translatable("text.apotheosis.one_rarity_mat").withStyle(ChatFormatting.GRAY));
@@ -151,15 +151,10 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
     }
 
     private void addMatTooltip(LootRarity rarity, int cost, List<Component> list) {
-        if (rarity == LootRarity.ANCIENT) {
-            list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", 1, Component.literal("Manifestation of Infinity").withStyle(ChatFormatting.OBFUSCATED)).withStyle(ChatFormatting.RED)));
-        }
-        else {
-            Item rarityMat = rarity.getMaterial().getItem();
-            ItemStack slotMat = this.menu.getSlot(3).getItem();
-            boolean hasMats = slotMat.getItem() == rarityMat && slotMat.getCount() >= cost;
-            list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", cost, rarityMat.getName(ItemStack.EMPTY).getString()).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
-        }
+        ItemStack rarityMat = rarity.getMaterial();
+        ItemStack slotMat = this.menu.getSlot(3).getItem();
+        boolean hasMats = slotMat.getItem() == rarityMat.getItem() && slotMat.getCount() >= cost;
+        list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", cost, rarityMat.getHoverName()).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
     }
 
     public void drawOnLeft(PoseStack stack, List<Component> list, int y) {

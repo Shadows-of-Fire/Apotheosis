@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.color.GradientColor;
 
 public class SalvageItem extends Item {
 
@@ -22,6 +23,9 @@ public class SalvageItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
+        if (this.rarity == LootRarity.ANCIENT) {
+            return Component.translatable(this.getDescriptionId(pStack)).withStyle(ChatFormatting.OBFUSCATED).withStyle(s -> s.withColor(GradientColor.RAINBOW));
+        }
         return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.color()));
     }
 
