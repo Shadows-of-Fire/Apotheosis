@@ -166,7 +166,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
             if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem() || g.rarity() != g2.rarity()) return false;
             if (g.rarity() == RarityRegistry.getMaxRarity()) return false;
-            if (left.getItem() != Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity())) return false;
+            if (left.getItem() != Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity().get())) return false;
             if (!RarityRegistry.isMaterial(right.getItem())) return false;
 
             DynamicHolder<LootRarity> matRarity = RarityRegistry.getMaterialRarity(right.getItem());
@@ -188,13 +188,13 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
             DynamicHolder<LootRarity> matRarity = RarityRegistry.getMaterialRarity(right.getItem());
             DynamicHolder<LootRarity> gemRarity = GemInstance.unsocketed(gem).rarity();
             gem.shrink(1);
-            left.shrink(getDustCost(gemRarity));
+            left.shrink(getDustCost(gemRarity.get()));
             bot.shrink(1);
             right.shrink(matRarity == gemRarity ? STD_MAT_COST : matRarity == RarityRegistry.next(gemRarity) ? NEXT_MAT_COST : PREV_MAT_COST);
         }
     }
 
-    public static int getDustCost(DynamicHolder<LootRarity> gemRarity) {
-        return 1 + gemRarity.get().ordinal() * 2;
+    public static int getDustCost(LootRarity gemRarity) {
+        return 1 + gemRarity.ordinal() * 2;
     }
 }

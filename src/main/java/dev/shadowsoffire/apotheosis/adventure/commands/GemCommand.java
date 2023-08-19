@@ -8,6 +8,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -30,7 +31,7 @@ public class GemCommand {
         root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {
             Gem gem = GemRegistry.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));
             Player p = c.getSource().getPlayerOrException();
-            ItemStack stack = GemRegistry.createGemStack(gem, p.random, null, p.getLuck());
+            ItemStack stack = GemRegistry.createGemStack(gem, LootRarity.random(p.random, p.getLuck()));
             p.addItem(stack);
             return 0;
         }))).then(Commands.literal("random").executes(c -> {

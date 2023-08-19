@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 import java.util.List;
 
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -23,6 +24,9 @@ public class SalvageItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
+        if (this.rarity.getId().getPath().equals("ancient")) {
+            return Component.translatable(this.getDescriptionId(pStack)).withStyle(ChatFormatting.OBFUSCATED).withStyle(s -> s.withColor(GradientColor.RAINBOW));
+        }
         if (!rarity.isBound()) return super.getName(pStack);
         return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.get().getColor()));
     }

@@ -1,22 +1,14 @@
 package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
-import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -30,12 +22,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
 
 @SuppressWarnings("removal")
 public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
@@ -45,7 +33,6 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
     private final Component title = Component.translatable("title.apotheosis.salvaging");
     private final IDrawable background;
     private final IDrawable icon;
-    private final Map<LootRarity, List<ItemStack>> displayItems = new HashMap<>();
 
     public SalvagingCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.drawableBuilder(TEXTURES, 0, 0, 98, 74).addPadding(0, 0, 0, 0).build();
@@ -97,31 +84,10 @@ public class SalvagingCategory implements IRecipeCategory<SalvagingRecipe> {
         }
     }
 
-    private List<ItemStack> createFakeDisplayItems(LootRarity rarity) {
-        RandomSource src = new LegacyRandomSource(0);
-        List<ItemStack> out = Arrays.asList(Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS, Items.DIAMOND_BOOTS).stream().map(ItemStack::new).toList();
-        out.forEach(stack -> {
-            LootController.createLootItem(stack, rarity, src);
-            AffixHelper.setName(stack, Component.translatable("text.apotheosis.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.getColor())));
-        });
-        return out;
-    }
-
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SalvagingRecipe recipe, IFocusGroup focuses) {
         List<ItemStack> input = Arrays.asList(recipe.getInput().getItems());
-        if (recipe.getInput() instanceof AffixItemIngredient ri) {
-            input = this.displayItems.computeIfAbsent(ri.getRarity(), this::createFakeDisplayItems);
-            builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
-        }
-        else {
-            if (input.size() == 1 && input.get(0).getItem() == dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM.get()) {
-                LootRarity rarity = AffixHelper.getRarity(input.get(0).getTag()).getOptional().orElse(RarityRegistry.getMinRarity().get());
-                RandomSource rand = new LegacyRandomSource(0);
-                input = GemRegistry.INSTANCE.getValues().stream().filter(gem -> rarity == null || gem.clamp(rarity) == rarity).map(gem -> GemRegistry.createGemStack(gem, rand, rarity, 0)).toList();
-            }
-            builder.addSlot(RecipeIngredientRole.INPUT, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
-        }
+        builder.addSlot(RecipeIngredientRole.INPUT, 5, 29).addIngredients(VanillaTypes.ITEM_STACK, input);
         List<OutputData> outputs = recipe.getOutputs();
         int idx = 0;
         for (var d : outputs) {

@@ -2,8 +2,6 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem;
 
 import java.util.function.Predicate;
 
-import javax.annotation.Nullable;
-
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -43,13 +41,12 @@ public class GemRegistry extends WeightedDynamicRegistry<Gem> {
         if (gem == null) return ItemStack.EMPTY;
         LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(level.dimension().location());
         LootRarity rarity = gem.clamp(LootRarity.random(rand, luck, clamp));
-        return createGemStack(gem, rand, rarity, luck);
+        return createGemStack(gem, rarity);
     }
 
-    public static ItemStack createGemStack(Gem gem, RandomSource rand, @Nullable LootRarity rarity, float luck) {
+    public static ItemStack createGemStack(Gem gem, LootRarity rarity) {
         ItemStack stack = new ItemStack(Items.GEM.get());
         GemItem.setGem(stack, gem);
-        if (rarity == null) rarity = LootRarity.random(rand, luck, gem);
         AffixHelper.setRarity(stack, rarity);
         return stack;
     }

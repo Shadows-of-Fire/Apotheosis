@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
@@ -126,8 +127,9 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
             else {
                 list.add(Component.translatable("text.apotheosis.cut_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
                 list.add(CommonComponents.EMPTY);
-                boolean hasDust = dust > GemCuttingMenu.getDustCost(rarity);
-                list.add(Component.translatable("text.apotheosis.cost", GemCuttingMenu.getDustCost(rarity), dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM_DUST.get().getName(ItemStack.EMPTY))
+                int dustCost = GemCuttingMenu.getDustCost(rarity.get());
+                boolean hasDust = dust > dustCost;
+                list.add(Component.translatable("text.apotheosis.cost", dustCost, Adventure.Items.GEM_DUST.get().getName(ItemStack.EMPTY))
                     .withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
                 boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
                 list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
@@ -144,15 +146,10 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
     }
 
     private void addMatTooltip(DynamicHolder<LootRarity> rarity, int cost, List<Component> list) {
-        if (rarity == RarityRegistry.getMaxRarity()) {
-            list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", 1, Component.literal("Manifestation of Infinity").withStyle(ChatFormatting.OBFUSCATED)).withStyle(ChatFormatting.RED)));
-        }
-        else {
-            Item rarityMat = rarity.get().getMaterial();
-            ItemStack slotMat = this.menu.getSlot(3).getItem();
-            boolean hasMats = slotMat.getItem() == rarityMat && slotMat.getCount() >= cost;
-            list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", cost, rarityMat.getName(ItemStack.EMPTY).getString()).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
-        }
+        Item rarityMat = rarity.get().getMaterial();
+        ItemStack slotMat = this.menu.getSlot(3).getItem();
+        boolean hasMats = slotMat.getItem() == rarityMat && slotMat.getCount() >= cost;
+        list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", cost, rarityMat.getName(ItemStack.EMPTY)).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
     }
 
     protected static class GemUpgradeSound extends AbstractTickableSoundInstance {
