@@ -98,6 +98,14 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
         return this.rules;
     }
 
+    public LootRarity next() {
+        return RarityRegistry.next(RarityRegistry.INSTANCE.holder(this)).get();
+    }
+
+    public LootRarity prev() {
+        return RarityRegistry.prev(RarityRegistry.INSTANCE.holder(this)).get();
+    }
+
     /**
      * Checks if this rarity is the same or worse than the passed rarity.
      */
