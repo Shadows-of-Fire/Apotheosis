@@ -53,26 +53,48 @@ repositories {
     maven {
         // JEI
         url "https://dvs1.progwml6.com/files/maven"
+        content {
+            includeGroup "mezz.jei"
+        }
     }
     maven {
         // CurseForge
         url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
     maven {
         // Curios
         url "https://maven.theillusivec4.top"
+        content {
+            includeGroupByRegex "top\\.theillusivec4.*"
+        }
     }
     maven {
         // The One Probe
         url "https://maven.k-4u.nl"
+        content {
+            includeGroup "mcjty.theoneprobe"
+        }
     }
     maven {
         // Patchouli
         url "https://maven.blamejared.com"
+        content {
+            includeGroup "vazkii.patchouli"
+            includeGroupByRegex "net\\.darkhax.*"
+            includeGroupByRegex "com\\.blamejared.*"
+            includeGroup "org.openzen.zencode"
+            includeGroup "mezz.jei"
+        }
     }
     maven {
         // Shadows
         url "https://maven.shadowsoffire.dev/releases"
+        content {
+            includeGroup "dev.shadowsoffire"
+        }
     }
 }
 
@@ -285,9 +307,10 @@ def getChangelogLink() {
     }
 }
 
-def splitDeps(deps) {
-    def split = deps.split(', ')
-    assert split.length == deps.count(',') + 1
+// Splits a list of values separated by ', ' (comma + space).
+def splitList(list) {
+    def split = list.split(', ')
+    assert split.length == list.count(',') + 1
     return split
 }
 
@@ -299,19 +322,19 @@ tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurs
         def projectId = getProperty('curseforgeProjectId')
         def mainFile = upload(projectId, jar)
         mainFile.changelog = getChangelogLink()
-        mainFile.addModLoader('NeoForge')
+        mainFile.addModLoader(splitList("${modLoaders}"))
         mainFile.addJavaVersion("Java ${javaVersion}")
         mainFile.addGameVersion("${mcVersion}")
-        mainFile.releaseType = "alpha"
+        mainFile.releaseType = "${releaseType}"
     
         if (project.hasProperty('requiredDeps')) {
-            mainFile.addRequirement(splitDeps("${requiredDeps}"))
+            mainFile.addRequirement(splitList("${requiredDeps}"))
         }
         if (project.hasProperty('optionalDeps')) {
-            mainFile.addOptional(splitDeps("${optionalDeps}"))
+            mainFile.addOptional(splitList("${optionalDeps}"))
         }
         if (project.hasProperty('incompatibleDeps')) {
-            mainFile.addIncompatibility(splitDeps("${incompatibleDeps}"))
+            mainFile.addIncompatibility(splitList("${incompatibleDeps}"))
         }
     
         mainFile.withAdditionalFile(sourcesJar)

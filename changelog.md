@@ -2,7 +2,11 @@
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
 ## 7.0.2
+* Added JEI support for Gem Cutting.
+* Fixed JEI support for Gems (specifically for Salvaging).
 * Removed duplicated potion tooltips (this is now part of Apothic Attributes).
+* Removed forge dependency line from the mods.toml and marked as Forge and NeoForge for CF.
+  * The dependency will be added back and the Forge marker will be removed once CF supports Neo correctly.
 
 ## 7.0.1
 * Fixed an issue where players could not log into servers.
