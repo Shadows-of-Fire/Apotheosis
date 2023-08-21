@@ -1,6 +1,11 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.0.4
+* Fixed damage type lang keys being invalid.
+* Fixed the enchantment table being blocked by blocks that are in the "enchantment_power_transmitter" tag.
+* Fixed the simple reforging table ignoring the max rarity.
+
 ## 7.0.3
 * Potential perf uplift for the Tempting enchantment.
   * Now only checks if the enchantment is applied if the item is a Hoe, otherwise the check is not performed.
