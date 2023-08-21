@@ -50,7 +50,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
     }
 
     public LootRarity getMaxRarity() {
-        return RarityRegistry.getMaxRarity().get(); // ((ReforgingTableBlock) this.getBlockState().getBlock()).getMaxRarity();
+        return ((ReforgingTableBlock) this.getBlockState().getBlock()).getMaxRarity();
     }
 
     public boolean isValidRarityMat(ItemStack stack) {
