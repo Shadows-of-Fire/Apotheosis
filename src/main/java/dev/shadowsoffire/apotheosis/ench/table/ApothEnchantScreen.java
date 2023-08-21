@@ -12,7 +12,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -38,7 +38,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
 
     public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_table.png");
 
-    protected final ApothEnchantContainer menu;
+    protected final ApothEnchantmentMenu menu;
     protected final Int2ObjectMap<List<EnchantmentInstance>> clues = new Int2ObjectOpenHashMap<>();
 
     protected float eterna = 0, lastEterna = 0, quanta = 0, lastQuanta = 0, arcana = 0, lastArcana = 0;
@@ -47,7 +47,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
     // menu type is weak due to weird generic stuff regarding screen registration.
     public ApothEnchantScreen(EnchantmentMenu container, Inventory inv, Component title) {
         super(container, inv, title);
-        this.menu = (ApothEnchantContainer) container;
+        this.menu = (ApothEnchantmentMenu) container;
         this.imageHeight = 197;
         this.clues.defaultReturnValue(new ArrayList<>());
     }
@@ -349,7 +349,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
     }
 
     @Override
-    public ApothEnchantContainer getMenu() {
+    public ApothEnchantmentMenu getMenu() {
         return this.menu;
     }
 

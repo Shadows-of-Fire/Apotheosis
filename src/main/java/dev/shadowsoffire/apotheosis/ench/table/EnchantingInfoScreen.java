@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import dev.shadowsoffire.apotheosis.ench.table.RealEnchantmentHelper.ArcanaEnchantmentData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

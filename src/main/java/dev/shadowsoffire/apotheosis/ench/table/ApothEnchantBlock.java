@@ -37,7 +37,7 @@ public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplace
         BlockEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof ApothEnchantTile) {
             Component itextcomponent = ((Nameable) tileentity).getDisplayName();
-            return new SimpleMenuProvider((id, inventory, player) -> new ApothEnchantContainer(id, inventory, ContainerLevelAccess.create(world, pos), (ApothEnchantTile) tileentity), itextcomponent);
+            return new SimpleMenuProvider((id, inventory, player) -> new ApothEnchantmentMenu(id, inventory, ContainerLevelAccess.create(world, pos), (ApothEnchantTile) tileentity), itextcomponent);
         }
         else {
             return null;

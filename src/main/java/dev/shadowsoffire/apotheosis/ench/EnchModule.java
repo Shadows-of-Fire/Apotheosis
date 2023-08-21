@@ -32,7 +32,7 @@ import dev.shadowsoffire.apotheosis.ench.objects.WardenLootModifier;
 import dev.shadowsoffire.apotheosis.ench.replacements.BaneEnchant;
 import dev.shadowsoffire.apotheosis.ench.replacements.DefenseEnchant;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantBlock;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
@@ -230,7 +230,7 @@ public class EnchModule {
 
     @SubscribeEvent
     public void containers(Register<MenuType<?>> e) {
-        e.getRegistry().register(MenuUtil.type(ApothEnchantContainer::new), "enchanting_table");
+        e.getRegistry().register(MenuUtil.type(ApothEnchantmentMenu::new), "enchanting_table");
         e.getRegistry().register(MenuUtil.posType(EnchLibraryContainer::new), "library");
     }
 

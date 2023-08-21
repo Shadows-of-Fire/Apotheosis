@@ -16,7 +16,7 @@ import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerT
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.garden.EnderLeadItem;
 import dev.shadowsoffire.apotheosis.potion.PotionCharmItem;
@@ -115,7 +115,7 @@ public class Apoth {
     public static final class Menus {
         public static final RegistryObject<MenuType<FletchingContainer>> FLETCHING = R.menu("fletching");
         public static final RegistryObject<MenuType<EnchLibraryContainer>> LIBRARY = R.menu("library");
-        public static final RegistryObject<MenuType<ApothEnchantContainer>> ENCHANTING_TABLE = R.menu("enchanting_table");
+        public static final RegistryObject<MenuType<ApothEnchantmentMenu>> ENCHANTING_TABLE = R.menu("enchanting_table");
     }
 
     public static final class Tiles {
