@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.joml.Matrix4f;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -56,7 +55,6 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
                 pose.scale(0.5F, 0.5F, 1);
                 gfx.renderFakeItem(gem, 2 * x + 1, 2 * y + 1);
                 pose.popPose();
-                RenderSystem.applyModelViewMatrix();
             }
             y += this.spacing;
         }

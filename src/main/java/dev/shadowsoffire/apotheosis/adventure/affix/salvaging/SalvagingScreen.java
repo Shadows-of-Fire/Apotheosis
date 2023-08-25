@@ -165,7 +165,6 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         }
 
         posestack.popPose();
-        RenderSystem.applyModelViewMatrix();
     }
 
     @Override
