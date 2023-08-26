@@ -4,7 +4,7 @@
     "module": "village"
   }],
   "type": "apotheosis:basic_trade",
-  "rare": "true",
+  "rare": true,
   "input_1": {
     "item": "minecraft:diamond_boots",
     "count": 1,
@@ -17,9 +17,36 @@
   "output": {
     "item": "minecraft:diamond_boots",
     "count": 1,
-    "nbt": "{Enchantments:[{lvl:5s,id:\"minecraft:protection\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:5s,id:\"minecraft:unbreaking\"},{lvl:1s,id:\"apotheosis:stable_footing\"},{lvl:5s,id:\"minecraft:feather_falling\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_boots\"}\u0027},Damage:0}"
+    "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 5,
+                "id": "minecraft:protection"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:mending"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:unbreaking"
+            },
+            {
+                "lvl": 1,
+                "id": "apotheosis:stable_footing"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:feather_falling"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.apotheosis.merch_boots\", \"italic\": false, \"color\": \"#1ABBE0\"}"
+        },
+        "Damage": 0
+    }
   },
   "max_trades": 1,
-  "xp": 20,
+  "xp": 500,
   "price_mult": 1.0
 }

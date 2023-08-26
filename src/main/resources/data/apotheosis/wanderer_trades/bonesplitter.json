@@ -4,7 +4,7 @@
     "module": "village"
   }],
   "type": "apotheosis:basic_trade",
-  "rare": "true",
+  "rare": true,
   "input_1": {
     "item": "minecraft:diamond_axe",
     "count": 1,
@@ -12,14 +12,45 @@
   },
   "input_2": {
     "item": "minecraft:emerald",
-    "count": 45
+    "count": 64
   },
   "output": {
     "item": "minecraft:diamond_axe",
     "count": 1,
-    "nbt": "{Enchantments:[{lvl:10s,id:\"minecraft:sharpness\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:5s,id:\"apotheosis:hell_infusion\"},{lvl:2s,id:\"apotheosis:capturing\"},{lvl:5s,id:\"minecraft:looting\"},{lvl:3s,id:\"minecraft:unbreaking\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_axe2\"}\u0027},Damage:0}"
+    "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 10,
+                "id": "minecraft:sharpness"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:mending"
+            },
+            {
+                "lvl": 2,
+                "id": "apotheosis:scavenger"
+            },
+            {
+                "lvl": 2,
+                "id": "apotheosis:capturing"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:looting"
+            },
+            {
+                "lvl": 3,
+                "id": "minecraft:unbreaking"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.apotheosis.merch_axe2\", \"italic\": false, \"color\": \"#9AB091\"}"
+        },
+        "Damage": 0
+    }
   },
   "max_trades": 1,
-  "xp": 20,
+  "xp": 500,
   "price_mult": 1.0
 }

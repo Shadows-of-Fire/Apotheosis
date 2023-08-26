@@ -4,7 +4,7 @@
     "module": "village"
   }],
   "type": "apotheosis:basic_trade",
-  "rare": "true",
+  "rare": true,
   "input_1": {
     "item": "minecraft:diamond_sword",
     "count": 1,
@@ -17,9 +17,36 @@
   "output": {
     "item": "minecraft:diamond_sword",
     "count": 1,
-    "nbt": "{Enchantments:[{lvl:5s,id:\"minecraft:sharpness\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:4s,id:\"minecraft:looting\"},{lvl:5s,id:\"minecraft:unbreaking\"},{lvl:3s,id:\"apotheosis:capturing\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_sword\"}\u0027},Damage:0}"
+    "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 5,
+                "id": "minecraft:sharpness"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:mending"
+            },
+            {
+                "lvl": 4,
+                "id": "minecraft:looting"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:unbreaking"
+            },
+            {
+                "lvl": 5,
+                "id": "apotheosis:capturing"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.apotheosis.merch_sword\", \"italic\": false, \"color\": \"#ADD8E6\"}"
+        },
+        "Damage": 0
+    }
   },
   "max_trades": 1,
-  "xp": 20,
+  "xp": 500,
   "price_mult": 1.0
 }

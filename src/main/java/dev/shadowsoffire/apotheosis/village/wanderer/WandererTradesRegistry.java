@@ -32,6 +32,13 @@ public class WandererTradesRegistry extends DynamicRegistry<JsonTrade> {
     }
 
     @Override
+    protected void beginReload() {
+        super.beginReload();
+        this.normTrades.clear();
+        this.rareTrades.clear();
+    }
+
+    @Override
     protected void onReload() {
         super.onReload();
         this.getValues().forEach(trade -> {
