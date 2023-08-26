@@ -24,6 +24,7 @@ import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.util.ChancedEffectInstance;
@@ -64,7 +65,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
+public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyWeighted, IDimensional, RarityClamp, IStaged {
 
     public static final Codec<AABB> AABB_CODEC = RecordCodecBuilder.create(inst -> inst
         .group(

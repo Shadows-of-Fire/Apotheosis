@@ -7,6 +7,7 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -39,7 +40,7 @@ public class GemRegistry extends WeightedDynamicRegistry<Gem> {
     public static ItemStack createRandomGemStack(RandomSource rand, ServerLevel level, float luck, Predicate<Gem>... filter) {
         Gem gem = GemRegistry.INSTANCE.getRandomItem(rand, luck, filter);
         if (gem == null) return ItemStack.EMPTY;
-        LootRarity.Clamped clamp = AdventureConfig.GEM_DIM_RARITIES.get(level.dimension().location());
+        RarityClamp clamp = AdventureConfig.GEM_DIM_RARITIES.get(level.dimension().location());
         LootRarity rarity = gem.clamp(LootRarity.random(rand, luck, clamp));
         return createGemStack(gem, rarity);
     }

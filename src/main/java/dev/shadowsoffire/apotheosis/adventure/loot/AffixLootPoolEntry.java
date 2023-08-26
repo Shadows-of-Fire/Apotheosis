@@ -30,10 +30,10 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
     public static final LootPoolEntryType TYPE = new LootPoolEntryType(SERIALIZER);
 
     @Nullable
-    private final LootRarity.Clamped rarityLimit;
+    private final RarityClamp rarityLimit;
     private final List<DynamicHolder<AffixLootEntry>> entries;
 
-    public AffixLootPoolEntry(@Nullable LootRarity.Clamped rarityLimit, List<ResourceLocation> entries, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions) {
+    public AffixLootPoolEntry(@Nullable RarityClamp rarityLimit, List<ResourceLocation> entries, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions) {
         super(weight, quality, conditions, functions);
         this.rarityLimit = rarityLimit;
         this.entries = entries.stream().map(AffixLootRegistry.INSTANCE::holder).toList();
@@ -77,11 +77,11 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 
         @Override
         protected AffixLootPoolEntry deserialize(JsonObject obj, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] lootConditions, LootItemFunction[] lootFunctions) {
-            LootRarity.Clamped rarity;
+            RarityClamp rarity;
             if (obj.has("min_rarity") || obj.has("max_rarity")) {
                 DynamicHolder<LootRarity> minRarity = RarityRegistry.byLegacyId(GsonHelper.getAsString(obj, "min_rarity"));
                 DynamicHolder<LootRarity> maxRarity = RarityRegistry.byLegacyId(GsonHelper.getAsString(obj, "max_rarity"));
-                rarity = new LootRarity.Clamped.Simple(minRarity, maxRarity);
+                rarity = new RarityClamp.Simple(minRarity, maxRarity);
             }
             else {
                 rarity = null;

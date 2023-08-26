@@ -7,7 +7,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity.Clamped;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +29,7 @@ public class AffixConvertLootModifier extends LootModifier {
         if (!Apotheosis.enableAdventure) return generatedLoot;
         for (LootPatternMatcher m : AdventureConfig.AFFIX_CONVERT_LOOT_RULES) {
             if (m.matches(context.getQueriedLootTableId())) {
-                Clamped rarities = AdventureConfig.AFFIX_CONVERT_RARITIES.get(context.getLevel().dimension().location());
+                RarityClamp rarities = AdventureConfig.AFFIX_CONVERT_RARITIES.get(context.getLevel().dimension().location());
                 RandomSource rand = context.getRandom();
                 float luck = context.getLuck();
                 for (ItemStack s : generatedLoot) {

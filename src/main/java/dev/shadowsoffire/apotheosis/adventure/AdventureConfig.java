@@ -15,6 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents.BossSpawnRules;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.config.Configuration;
 import net.minecraft.ResourceLocationException;
@@ -40,13 +41,13 @@ public class AdventureConfig {
      */
     public static final List<LootPatternMatcher> AFFIX_ITEM_LOOT_RULES = new ArrayList<>();
     public static final List<LootPatternMatcher> GEM_LOOT_RULES = new ArrayList<>();
-    public static final Map<ResourceLocation, LootRarity.Clamped> GEM_DIM_RARITIES = new HashMap<>();
+    public static final Map<ResourceLocation, RarityClamp> GEM_DIM_RARITIES = new HashMap<>();
 
     /**
      * Loot table matchers and dimensional rarities for affix conversion rules.
      */
     public static final List<LootPatternMatcher> AFFIX_CONVERT_LOOT_RULES = new ArrayList<>();
-    public static final Map<ResourceLocation, LootRarity.Clamped> AFFIX_CONVERT_RARITIES = new HashMap<>();
+    public static final Map<ResourceLocation, RarityClamp> AFFIX_CONVERT_RARITIES = new HashMap<>();
 
     // Boss Stats
     public static boolean curseBossItems = false;
@@ -148,7 +149,7 @@ public class AdventureConfig {
                 ResourceLocation dim = new ResourceLocation(split[0]);
                 var min = RarityRegistry.byLegacyId(split[1]);
                 var max = RarityRegistry.byLegacyId(split[2]);
-                AFFIX_CONVERT_RARITIES.put(dim, new LootRarity.Clamped.Simple(min, max));
+                AFFIX_CONVERT_RARITIES.put(dim, new RarityClamp.Simple(min, max));
             }
             catch (Exception e) {
                 AdventureModule.LOGGER.error("Invalid Affix Convert Rarity: " + s + " will be ignored");
@@ -165,7 +166,7 @@ public class AdventureConfig {
                 ResourceLocation dim = new ResourceLocation(split[0]);
                 var min = RarityRegistry.byLegacyId(split[1]);
                 var max = RarityRegistry.byLegacyId(split[2]);
-                GEM_DIM_RARITIES.put(dim, new LootRarity.Clamped.Simple(min, max));
+                GEM_DIM_RARITIES.put(dim, new RarityClamp.Simple(min, max));
             }
             catch (Exception e) {
                 AdventureModule.LOGGER.error("Invalid Gem Dimensional Rarity: " + s + " will be ignored");

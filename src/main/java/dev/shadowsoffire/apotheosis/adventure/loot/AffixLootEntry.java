@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
  * A loot entry represents a possible item that can come out of a loot roll.
  * It is classified into a type, which is used to determine possible affixes.
  */
-public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements ILuckyWeighted, IDimensional, LootRarity.Clamped, IStaged {
+public final class AffixLootEntry extends TypeKeyedBase<AffixLootEntry> implements ILuckyWeighted, IDimensional, RarityClamp, IStaged {
 
     public static final Codec<AffixLootEntry> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(

@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.adventure.loot;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -167,20 +166,12 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
     }
 
     public static LootRarity random(RandomSource rand, float luck) {
-        return random(rand, luck, null, null);
+        return RarityRegistry.INSTANCE.getRandomItem(rand, luck);
     }
 
-    public static LootRarity random(RandomSource rand, float luck, @Nullable Clamped item) {
-        if (item == null) return random(rand, luck);
-        return random(rand, luck, item.getMinRarity(), item.getMaxRarity());
-    }
-
-    public static LootRarity random(RandomSource rand, float luck, @Nullable LootRarity min, @Nullable LootRarity max) {
-        return RarityRegistry.INSTANCE.getRandomItem(rand, luck).clamp(min, max);
-    }
-
-    public static <T> Codec<Map<LootRarity, T>> mapCodec(Codec<T> codec) {
-        return Codec.unboundedMap(LootRarity.CODEC, codec);
+    public static LootRarity random(RandomSource rand, float luck, @Nullable RarityClamp clamp) {
+        LootRarity rarity = random(rand, luck);
+        return clamp == null ? rarity : clamp.clamp(rarity);
     }
 
     public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
@@ -219,33 +210,5 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
                 currentAffixes.add(available.get(0));
             }
         }
-    }
-
-    public static interface Clamped {
-
-        @Nullable
-        public LootRarity getMinRarity();
-
-        @Nullable
-        public LootRarity getMaxRarity();
-
-        default LootRarity clamp(LootRarity rarity) {
-            return rarity.clamp(this.getMinRarity(), this.getMaxRarity());
-        }
-
-        public static record Simple(DynamicHolder<LootRarity> min, DynamicHolder<LootRarity> max) implements Clamped {
-
-            @Override
-            public LootRarity getMinRarity() {
-                return this.min.getOptional().orElse(null);
-            }
-
-            @Override
-            public LootRarity getMaxRarity() {
-                return this.max.getOptional().orElse(null);
-            }
-
-        }
-
     }
 }
