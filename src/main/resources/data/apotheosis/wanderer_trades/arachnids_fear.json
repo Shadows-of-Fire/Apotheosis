@@ -4,7 +4,7 @@
     "module": "village"
   }],
   "type": "apotheosis:basic_trade",
-  "rare": "true",
+  "rare": true,
   "input_1": {
     "item": "minecraft:diamond_sword",
     "count": 1,
@@ -17,9 +17,36 @@
   "output": {
     "item": "minecraft:diamond_sword",
     "count": 1,
-    "nbt": "{Enchantments:[{lvl:10s,id:\"minecraft:bane_of_arthropods\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:5s,id:\"minecraft:looting\"},{lvl:5s,id:\"minecraft:unbreaking\"},{lvl:3s,id:\"minecraft:fire_aspect\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_spider_sword\"}\u0027},Damage:0}"
+    "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 10,
+                "id": "minecraft:bane_of_arthropods"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:mending"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:looting"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:unbreaking"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:fire_aspect"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.apotheosis.merch_spider_sword\", \"italic\": false, \"color\": \"#C11101\"}"
+        },
+        "Damage": 0
+    }
   },
   "max_trades": 1,
-  "xp": 20,
+  "xp": 500,
   "price_mult": 1.0
 }

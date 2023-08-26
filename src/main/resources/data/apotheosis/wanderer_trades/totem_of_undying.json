@@ -4,7 +4,7 @@
     "module": "village"
   }],
   "type": "apotheosis:basic_trade",
-  "rare": "true",
+  "rare": true,
   "input_1": {
     "item": "minecraft:emerald",
     "count": 10

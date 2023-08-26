@@ -32,8 +32,10 @@ public class WandererTradeManager extends PlaceboJsonReloadListener<JsonTrade> {
     }
 
     @Override
-    protected <T extends JsonTrade> void register(ResourceLocation key, T trade) {
-        super.register(key, trade);
+    protected void beginReload() {
+        super.beginReload();
+        this.normTrades.clear();
+        this.rareTrades.clear();
     }
 
     @Override

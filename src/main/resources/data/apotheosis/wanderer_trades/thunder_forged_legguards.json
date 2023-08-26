@@ -4,7 +4,7 @@
     "module": "village"
   }],
   "type": "apotheosis:basic_trade",
-  "rare": "true",
+  "rare": true,
   "input_1": {
     "item": "minecraft:diamond_leggings",
     "count": 1,
@@ -12,14 +12,37 @@
   },
   "input_2": {
     "item": "minecraft:emerald",
-    "count": 45
+    "count": 55
   },
   "output": {
     "item": "minecraft:diamond_leggings",
     "count": 1,
-    "nbt": "{Enchantments:[{lvl:5s,id:\"minecraft:protection\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:5s,id:\"minecraft:unbreaking\"},{lvl:2s,id:\"apotheosis:berserk\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_legs\"}\u0027},Damage:0}"
+    "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 5,
+                "id": "minecraft:protection"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:mending"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:unbreaking"
+            },
+            {
+                "lvl": 10,
+                "id": "apotheosis:rebounding"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.apotheosis.merch_legs\", \"italic\": false, \"color\": \"#1ABBE0\"}"
+        },
+        "Damage": 0
+    }
   },
   "max_trades": 1,
-  "xp": 20,
+  "xp": 500,
   "price_mult": 1.0
 }

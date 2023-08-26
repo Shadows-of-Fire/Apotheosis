@@ -4,7 +4,7 @@
     "module": "village"
   }],
   "type": "apotheosis:basic_trade",
-  "rare": "true",
+  "rare": true,
   "input_1": {
     "item": "minecraft:diamond_axe",
     "count": 1,
@@ -17,9 +17,36 @@
   "output": {
     "item": "minecraft:diamond_axe",
     "count": 1,
-    "nbt": "{Enchantments:[{lvl:10s,id:\"minecraft:efficiency\"},{lvl:1s,id:\"minecraft:mending\"},{lvl:1s,id:\"minecraft:silk_touch\"},{lvl:5s,id:\"minecraft:unbreaking\"}],display:{Name:\u0027{\"translate\":\"name.apotheosis.merch_axe\"}\u0027},Damage:0}"
+    "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 10,
+                "id": "minecraft:efficiency"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:mending"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:silk_touch"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:unbreaking"
+            },
+            {
+                "lvl": 1,
+                "id": "apotheosis:chainsaw"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.apotheosis.merch_axe\",  \"italic\": false, \"color\": \"#608F07\"}"
+        },
+        "Damage": 0
+    }
   },
   "max_trades": 1,
-  "xp": 20,
+  "xp": 500,
   "price_mult": 1.0
 }
