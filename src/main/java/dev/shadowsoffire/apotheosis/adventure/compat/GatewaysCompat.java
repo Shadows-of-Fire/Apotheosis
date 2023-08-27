@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.Reward;
 import dev.shadowsoffire.gateways.gate.WaveEntity;
@@ -89,7 +90,7 @@ public class GatewaysCompat {
 
         public static Codec<RarityAffixItemReward> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                LootRarity.HOLDER_CODEC.fieldOf("rarity").forGetter(RarityAffixItemReward::rarity))
+                RarityRegistry.INSTANCE.holderCodec().fieldOf("rarity").forGetter(RarityAffixItemReward::rarity))
             .apply(inst, RarityAffixItemReward::new));
 
         @Override

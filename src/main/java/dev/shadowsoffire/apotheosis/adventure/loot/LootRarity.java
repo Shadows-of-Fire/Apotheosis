@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.loot;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -47,6 +48,7 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
 
     public static final PSerializer<LootRarity> SERIALIZER = PSerializer.fromCodec("Loot Rarity", LOAD_CODEC);
 
+    @Deprecated // TODO: RarityRegistry.INSTANCE.holderCodec() - requires updating all data files to use namespaced rarities.
     public static final Codec<DynamicHolder<LootRarity>> HOLDER_CODEC = ExtraCodecs.lazyInitializedCodec(() -> Codec.STRING.xmap(RarityRegistry::convertId, ResourceLocation::toString).xmap(RarityRegistry.INSTANCE::holder,
         DynamicHolder::getId));
 
@@ -172,6 +174,10 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
     public static LootRarity random(RandomSource rand, float luck, @Nullable RarityClamp clamp) {
         LootRarity rarity = random(rand, luck);
         return clamp == null ? rarity : clamp.clamp(rarity);
+    }
+
+    public static <T> Codec<Map<LootRarity, T>> mapCodec(Codec<T> codec) {
+        return Codec.unboundedMap(LootRarity.CODEC, codec);
     }
 
     public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {

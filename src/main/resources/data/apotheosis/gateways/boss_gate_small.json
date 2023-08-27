@@ -11,7 +11,7 @@
 			}],
 			"rewards": [{
 				"type": "apotheosis:affix",
-				"rarity": "uncommon"
+				"rarity": "apotheosis:uncommon"
 			}],
 			"max_wave_time": 1250,
 			"setup_time": 150
@@ -48,7 +48,7 @@
 			],
 			"rewards": [{
 				"type": "apotheosis:affix",
-				"rarity": "rare"
+				"rarity": "apotheosis:rare"
 			}],
 			"max_wave_time": 1750,
 			"setup_time": 400
@@ -86,7 +86,7 @@
 			],
 			"rewards": [{
 				"type": "apotheosis:affix",
-				"rarity": "epic"
+				"rarity": "apotheosis:epic"
 			}],
 			"max_wave_time": 2250,
 			"setup_time": 400
@@ -94,7 +94,7 @@
 	],
 	"rewards": [{
 		"type": "apotheosis:affix",
-		"rarity": "mythic"
+		"rarity": "apotheosis:mythic"
 	}],
 	"completion_xp": 2500,
 	"spawn_range": 5
