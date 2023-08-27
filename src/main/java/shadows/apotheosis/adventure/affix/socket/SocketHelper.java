@@ -1,17 +1,22 @@
 package shadows.apotheosis.adventure.affix.socket;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import com.google.common.collect.ImmutableList;
+
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import shadows.apotheosis.Apoth.Affixes;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
@@ -20,6 +25,8 @@ import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.event.GetItemSocketsEvent;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.placebo.util.CachedObject;
+import shadows.placebo.util.CachedObject.CachedObjectSource;
 
 /**
  * Utility class for the manipulation of Sockets on items.
@@ -28,6 +35,9 @@ import shadows.apotheosis.adventure.loot.LootRarity;
  */
 public class SocketHelper {
 
+    public static final ResourceLocation GEMS_CACHED_OBJECT = Apotheosis.loc("gems");
+
+    public static final String AFFIX_DATA = AffixHelper.AFFIX_DATA;
     public static final String GEMS = "gems";
 
     /**
@@ -35,28 +45,33 @@ public class SocketHelper {
      * Does not validate that the gems are valid in the item.
      *
      * @param stack The stack being queried
-     * @return A list of all gems socketed in this item.
+     * @return An immutable list of all gems socketed in this item. This list is cached.
      */
     public static List<ItemStack> getGems(ItemStack stack) {
-        return getGems(stack, getSockets(stack));
+        return CachedObjectSource.getOrCreate(stack, GEMS_CACHED_OBJECT, SocketHelper::getGemsImpl, CachedObject.hashSubkey(AFFIX_DATA));
     }
 
     /**
      * Implementation for {@link #getGems(ItemStack)}
      */
-    private static List<ItemStack> getGems(ItemStack stack, int size) {
+    private static List<ItemStack> getGemsImpl(ItemStack stack) {
+        int size = getSockets(stack);
+        if (size == 0 || stack.isEmpty()) return Collections.emptyList();
         List<ItemStack> gems = NonNullList.withSize(size, ItemStack.EMPTY);
-        if (size == 0 || stack.isEmpty()) return gems;
         int i = 0;
-        CompoundTag afxData = stack.getTagElement(AffixHelper.AFFIX_DATA);
+        CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
         if (afxData != null && afxData.contains(GEMS)) {
             ListTag gemData = afxData.getList(GEMS, Tag.TAG_COMPOUND);
             for (Tag tag : gemData) {
-                gems.set(i++, ItemStack.of((CompoundTag) tag));
+                ItemStack gemStack = ItemStack.of((CompoundTag) tag);
+                gemStack.setCount(1);
+                if (GemInstance.unsocketed(gemStack).isValidUnsocketed()) {
+                    gems.set(i++, gemStack);
+                }
                 if (i >= size) break;
             }
         }
-        return gems;
+        return ImmutableList.copyOf(gems);
     }
 
     /**
