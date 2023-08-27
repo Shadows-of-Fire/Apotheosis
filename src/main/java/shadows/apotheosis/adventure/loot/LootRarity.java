@@ -16,6 +16,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.ListCodec;
@@ -366,6 +367,22 @@ public class LootRarity implements ILuckyWeighted, Comparable<LootRarity> {
         }
 
         public static record Impl(LootRarity min, LootRarity max) implements Clamped {
+
+            public static final Codec<Impl> STRING_CODEC = ExtraCodecs.lazyInitializedCodec(() -> Codec.STRING.xmap(s -> {
+                LootRarity rarity = LootRarity.byId(s);
+                return new Impl(rarity, rarity);
+            }, simple -> simple.min().id().toString()));
+
+            public static final Codec<Impl> MIN_MAX_CODEC = ExtraCodecs.lazyInitializedCodec(() -> RecordCodecBuilder.create(inst -> inst
+                .group(
+                    LootRarity.CODEC.fieldOf("min").forGetter(Impl::min),
+                    LootRarity.CODEC.fieldOf("max").forGetter(Impl::max))
+                .apply(inst, Impl::new)));
+
+            /**
+             * Acceps either a string as the rarity name or an object specifying "min" and "max" rarity names.
+             */
+            public static final Codec<Impl> CODEC = Codec.either(STRING_CODEC, MIN_MAX_CODEC).xmap(e -> e.map(Function.identity(), Function.identity()), Either::right);
 
             @Override
             public LootRarity getMinRarity() {

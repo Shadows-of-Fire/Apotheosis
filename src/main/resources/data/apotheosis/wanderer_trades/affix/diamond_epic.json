@@ -1,0 +1,28 @@
+{
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"type": "apotheosis:affix",
+	"rare": true,
+	"input_1": {
+		"item": "minecraft:diamond",
+		"count": 5
+	},
+	"input_2": {
+		"item": "minecraft:emerald",
+		"count": 30
+	},
+	"rarities": "epic",
+	"entries": [
+		"apotheosis:overworld/bow",
+		"apotheosis:the_nether/diamond_axe",
+		"apotheosis:the_nether/diamond_boots",
+		"apotheosis:the_nether/diamond_chestplate",
+		"apotheosis:the_nether/diamond_helmet",
+		"apotheosis:the_nether/diamond_leggings",
+		"apotheosis:the_nether/diamond_pickaxe",
+		"apotheosis:the_nether/diamond_shovel",
+		"apotheosis:the_nether/diamond_sword"
+	]
+}

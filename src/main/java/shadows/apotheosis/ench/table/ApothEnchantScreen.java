@@ -38,10 +38,10 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import shadows.placebo.util.EnchantmentUtils;
 
-public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantContainer> {
+public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantmentMenu> {
 
     private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/enchanting_table.png");
     private static final ResourceLocation ENCHANTMENT_TABLE_BOOK_TEXTURE = new ResourceLocation("textures/entity/enchanting_table_book.png");
@@ -59,7 +59,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
     protected final Int2ObjectMap<List<EnchantmentInstance>> clues = new Int2ObjectOpenHashMap<>();
     protected boolean[] hasAllClues = { false, false, false };
 
-    public ApothEnchantScreen(ApothEnchantContainer container, Inventory inv, Component title) {
+    public ApothEnchantScreen(ApothEnchantmentMenu container, Inventory inv, Component title) {
         super(container, inv, title);
         this.imageHeight = 197;
         this.clues.defaultReturnValue(new ArrayList<>());

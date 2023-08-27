@@ -1,0 +1,31 @@
+{
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	},{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+	"type": "apotheosis:affix",
+	"rare": false,
+	"input_1": {
+		"item": "twilightforest:ironwood_ingot",
+		"count": 5
+	},
+	"input_2": {
+		"item": "minecraft:emerald",
+		"count": 12
+	},
+	"rarities": "rare",
+	"entries": [
+		"apotheosis:overworld/crossbow",
+		"apotheosis:twilight/ironwood_axe",
+		"apotheosis:twilight/ironwood_boots",
+		"apotheosis:twilight/ironwood_chestplate",
+		"apotheosis:twilight/ironwood_helmet",
+		"apotheosis:twilight/ironwood_leggings",
+		"apotheosis:twilight/ironwood_pickaxe",
+		"apotheosis:twilight/ironwood_shovel",
+		"apotheosis:twilight/ironwood_sword"
+	]
+}

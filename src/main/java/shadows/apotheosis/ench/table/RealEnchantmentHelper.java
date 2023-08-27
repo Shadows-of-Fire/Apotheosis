@@ -20,7 +20,7 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.ench.EnchModule;
 import shadows.apotheosis.ench.EnchantmentInfo;
-import shadows.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 
 public class RealEnchantmentHelper {
 

@@ -26,7 +26,7 @@ import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import shadows.apotheosis.Apotheosis;
-import shadows.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import shadows.apotheosis.ench.table.RealEnchantmentHelper.ArcanaEnchantmentData;
 
 public class EnchantingInfoScreen extends Screen {
