@@ -103,6 +103,10 @@ public class Apoth {
         public static final RegistryObject<Potion> GRIEVOUS = R.potion("GRIEVOUS");
         public static final RegistryObject<Potion> LONG_GRIEVOUS = R.potion("LONG_GRIEVOUS");
         public static final RegistryObject<Potion> STRONG_GRIEVOUS = R.potion("STRONG_GRIEVOUS");
+        public static final RegistryObject<Potion> LEVITATION = R.potion("LEVITATION");
+        public static final RegistryObject<Potion> FLYING = R.potion("FLYING");
+        public static final RegistryObject<Potion> LONG_FLYING = R.potion("LONG_FLYING");
+        public static final RegistryObject<Potion> EXTRA_LONG_FLYING = R.potion("EXTRA_LONG_FLYING");
     }
 
     public static final class Entities {

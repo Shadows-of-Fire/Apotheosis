@@ -107,6 +107,11 @@ public class PotionModule {
             PotionBrewing.addMix(Apoth.Potions.STRONG_VITALITY.get(), Items.FERMENTED_SPIDER_EYE, Apoth.Potions.STRONG_GRIEVOUS.get());
             PotionBrewing.addMix(Apoth.Potions.GRIEVOUS.get(), Items.REDSTONE, Apoth.Potions.LONG_GRIEVOUS.get());
             PotionBrewing.addMix(Apoth.Potions.GRIEVOUS.get(), Items.GLOWSTONE_DUST, Apoth.Potions.STRONG_GRIEVOUS.get());
+
+            PotionBrewing.addMix(Potions.SLOW_FALLING, Items.FERMENTED_SPIDER_EYE, Apoth.Potions.LEVITATION.get());
+            PotionBrewing.addMix(Apoth.Potions.LEVITATION.get(), Items.POPPED_CHORUS_FRUIT, Apoth.Potions.FLYING.get());
+            PotionBrewing.addMix(Apoth.Potions.FLYING.get(), Items.REDSTONE, Apoth.Potions.LONG_FLYING.get());
+            PotionBrewing.addMix(Apoth.Potions.LONG_FLYING.get(), Items.REDSTONE, Apoth.Potions.EXTRA_LONG_FLYING.get());
         });
         Apotheosis.HELPER.registerProvider(factory -> {
             Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
@@ -157,7 +162,11 @@ public class PotionModule {
             new Potion("vitality", new MobEffectInstance(ALObjects.MobEffects.VITALITY.get(), 3600, 1)), "strong_vitality",
             new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS.get(), 4800)), "grievous",
             new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS.get(), 14400)), "long_grievous",
-            new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS.get(), 3600, 1)), "strong_grievous");
+            new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS.get(), 3600, 1)), "strong_grievous",
+            new Potion("levitation", new MobEffectInstance(MobEffects.LEVITATION, 2400)), "levitation",
+            new Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING.get(), 9600)), "flying",
+            new Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING.get(), 18000)), "long_flying",
+            new Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING.get(), 36000)), "extra_long_flying");
 
     }
 

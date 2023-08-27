@@ -1121,6 +1121,11 @@
     "item.minecraft.lingering_potion.effect.grievous": "Lingering Potion of Healing Reduction",
     "item.minecraft.tipped_arrow.effect.grievous": "Arrow of Healing Reduction",
 
+    "item.minecraft.potion.effect.flying": "Potion of Flying",
+    "item.minecraft.splash_potion.effect.flying": "Splash Potion of Flying",
+    "item.minecraft.lingering_potion.effect.flying": "Lingering Potion of Flying",
+    "item.minecraft.tipped_arrow.effect.flying": "Arrow of Flying",
+
     "item.apotheosis.lucky_foot": "Lucky Rabbit's Foot",
 
     "item.apotheosis.potion_charm_broke": "Invalid Potion Charm",
