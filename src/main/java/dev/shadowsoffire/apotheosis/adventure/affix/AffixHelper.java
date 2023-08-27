@@ -156,7 +156,7 @@ public class AffixHelper {
      * May be unbound
      */
     public static DynamicHolder<LootRarity> getRarity(ItemStack stack) {
-        if (!stack.hasTag()) return null;
+        if (!stack.hasTag()) return RarityRegistry.INSTANCE.emptyHolder();
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
         return getRarity(afxData);
     }
