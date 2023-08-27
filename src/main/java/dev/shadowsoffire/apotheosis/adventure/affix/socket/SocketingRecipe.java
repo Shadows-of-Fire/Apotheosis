@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.JsonObject;
@@ -56,12 +57,14 @@ public class SocketingRecipe extends ApothSmithingRecipe {
 
         ItemStack result = input.copy();
         result.setCount(1);
-        List<ItemStack> gems = SocketHelper.getGems(result);
         int socket = SocketHelper.getFirstEmptySocket(result);
+        List<ItemStack> gems = new ArrayList<>(SocketHelper.getGems(result));
+        ItemStack gemToInsert = gemStack.copy();
+        gemToInsert.setCount(1);
         gems.set(socket, gemStack.copy());
         SocketHelper.setGems(result, gems);
 
-        var event = new ItemSocketingEvent.ModifyResult(input, gemStack, result);
+        var event = new ItemSocketingEvent.ModifyResult(input, gemToInsert, result);
         MinecraftForge.EVENT_BUS.post(event);
         result = event.getOutput();
         if (result.isEmpty()) throw new IllegalArgumentException("ItemSocketingEvent$ModifyResult produced an empty output stack.");
