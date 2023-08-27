@@ -1,6 +1,10 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.4.0
+* Backport of 1.20 content:
+  * Added JEI Support for Gem Cutting.
+
 ## 6.3.5
 * Re-release of 6.3.4, since for some reason 6.3.4 includes the 1.20 code in the jar. Gradle is haunted.
 * Fixed an error with the apotheosis gateways integration when specifying a specific boss.
