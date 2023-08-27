@@ -1,4 +1,8 @@
 {
-  "type": "apotheosis:boss_dungeon_2",
-  "config": {}
+	"forge:conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"type": "apotheosis:boss_dungeon_2",
+	"config": {}
 }

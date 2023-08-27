@@ -1,4 +1,8 @@
 {
-  "type": "apotheosis:rogue_spawner",
-  "config": {}
+	"forge:conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"type": "apotheosis:rogue_spawner",
+	"config": {}
 }

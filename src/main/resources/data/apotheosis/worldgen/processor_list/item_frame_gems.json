@@ -1,7 +1,9 @@
 {
-  "processors": [
-    {
-      "processor_type": "apotheosis:item_frame_gems"
-    }
-  ]
+	"forge:conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"processors": [{
+		"processor_type": "apotheosis:item_frame_gems"
+	}]
 }
