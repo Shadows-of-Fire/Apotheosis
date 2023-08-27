@@ -1,6 +1,17 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.0.5
+* Fixed some broken Wandering Trader trades.
+* Fixed Wandering Trader trades being re-added multiplicatively based on the number of reloads that were run.
+* Moved `LootRarity$Clamped` to `RarityClamp` and added a codec for `RarityClamp$Simple`. Still not entirely happy with this class.
+* Overhauled Wandering Trader Affix Item trades to be more appealing and less dead draws. Only Rare+ items are now sold.
+* Added the Potion of Flying. The recipe is temporary until the Potion Module overhaul begins, but who knows when that'll be.
+* Fixed the particle texture `sga_i_water.png` being erroneously named `sga_I_water.png`.
+* Fixed `AffixHelper#getRarity` returning null.
+* Fixed an issue where socketed gems would have stack sizes > 1.
+* Made sockets use `CachedObject`.
+
 ## 7.0.4
 * Fixed damage type lang keys being invalid.
 * Fixed the enchantment table being blocked by blocks that are in the "enchantment_power_transmitter" tag.

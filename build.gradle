@@ -51,13 +51,6 @@ sourceSets.main.resources {
 
 repositories {
     maven {
-        // JEI
-        url "https://dvs1.progwml6.com/files/maven"
-        content {
-            includeGroup "mezz.jei"
-        }
-    }
-    maven {
         // CurseForge
         url "https://www.cursemaven.com"
         content {
