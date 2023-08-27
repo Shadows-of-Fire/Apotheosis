@@ -60,6 +60,9 @@
 
 	"affix.apotheosis:armor/attribute/fortunate": "Fortunate",
     "affix.apotheosis:armor/attribute/fortunate.suffix": "of the Four-Leaf Clover",
+    
+	"affix.apotheosis:armor/attribute/winged": "Winged",
+    "affix.apotheosis:armor/attribute/winged.suffix": "of the Skies",
 
 	"affix.apotheosis:sword/attribute/intricate": "Intricate",
     "affix.apotheosis:sword/attribute/intricate.suffix": "of Critical Thinking",
