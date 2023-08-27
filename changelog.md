@@ -4,6 +4,7 @@
 ## 6.4.0
 * Backport of 1.20 content:
   * Added JEI Support for Gem Cutting.
+  * Made Reforging backed by JSON recipes.
 
 ## 6.3.5
 * Re-release of 6.3.4, since for some reason 6.3.4 includes the 1.20 code in the jar. Gradle is haunted.
