@@ -104,7 +104,7 @@ import shadows.apotheosis.ench.objects.WardenLootModifier;
 import shadows.apotheosis.ench.replacements.BaneEnchant;
 import shadows.apotheosis.ench.replacements.DefenseEnchant;
 import shadows.apotheosis.ench.table.ApothEnchantBlock;
-import shadows.apotheosis.ench.table.ApothEnchantContainer;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu;
 import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
@@ -235,7 +235,7 @@ public class EnchModule {
 
     @SubscribeEvent
     public void containers(Register<MenuType<?>> e) {
-        e.getRegistry().register(new MenuType<>(ApothEnchantContainer::new), "enchanting_table");
+        e.getRegistry().register(new MenuType<>(ApothEnchantmentMenu::new), "enchanting_table");
         e.getRegistry().register(ContainerUtil.makeType(EnchLibraryContainer::new), "library");
     }
 

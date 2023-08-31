@@ -57,7 +57,7 @@ import shadows.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import shadows.apotheosis.ench.library.EnchLibraryBlock;
 import shadows.apotheosis.ench.library.EnchLibraryContainer;
 import shadows.apotheosis.ench.library.EnchLibraryTile;
-import shadows.apotheosis.ench.table.ApothEnchantContainer;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.garden.EnderLeadItem;
 import shadows.apotheosis.potion.LuckyFootItem;
@@ -214,7 +214,7 @@ public class Apoth {
     public static final class Menus {
         public static final RegistryObject<MenuType<FletchingContainer>> FLETCHING = R.menu("fletching");
         public static final RegistryObject<MenuType<EnchLibraryContainer>> LIBRARY = R.menu("library");
-        public static final RegistryObject<MenuType<ApothEnchantContainer>> ENCHANTING_TABLE = R.menu("enchanting_table");
+        public static final RegistryObject<MenuType<ApothEnchantmentMenu>> ENCHANTING_TABLE = R.menu("enchanting_table");
         public static final RegistryObject<MenuType<ReforgingMenu>> REFORGING = R.menu("reforging");
         public static final RegistryObject<MenuType<SalvagingMenu>> SALVAGE = R.menu("salvage");
         public static final RegistryObject<MenuType<GemCuttingMenu>> GEM_CUTTING = R.menu("gem_cutting");
