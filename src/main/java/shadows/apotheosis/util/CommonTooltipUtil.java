@@ -1,15 +1,9 @@
 package shadows.apotheosis.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.function.Consumer;
 
 import com.google.common.base.Predicates;
 
-import it.unimi.dsi.fastutil.floats.Float2FloatMap;
-import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
@@ -25,6 +19,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.attributeslib.api.IFormattableAttribute;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu;
+import shadows.apotheosis.ench.table.ApothEnchantmentMenu.TableStats;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
 
 public class CommonTooltipUtil {
@@ -77,48 +73,11 @@ public class CommonTooltipUtil {
     }
 
     public static void appendTableStats(Level world, BlockPos pos, Consumer<Component> tooltip) {
-        Float2FloatMap eternaMap = new Float2FloatOpenHashMap();
-        float[] stats = { 0, 15F, 0, 0, 0 };
-        for (int j = -1; j <= 1; ++j) {
-            for (int k = -1; k <= 1; ++k) {
-                if ((j != 0 || k != 0) && world.isEmptyBlock(pos.offset(k, 0, j)) && world.isEmptyBlock(pos.offset(k, 1, j))) {
-                    gatherStats(eternaMap, stats, world, pos.offset(k * 2, 0, j * 2));
-                    gatherStats(eternaMap, stats, world, pos.offset(k * 2, 1, j * 2));
-                    if (k != 0 && j != 0) {
-                        gatherStats(eternaMap, stats, world, pos.offset(k * 2, 0, j));
-                        gatherStats(eternaMap, stats, world, pos.offset(k * 2, 1, j));
-                        gatherStats(eternaMap, stats, world, pos.offset(k, 0, j * 2));
-                        gatherStats(eternaMap, stats, world, pos.offset(k, 1, j * 2));
-                    }
-                }
-            }
-        }
-        List<Float2FloatMap.Entry> entries = new ArrayList<>(eternaMap.float2FloatEntrySet());
-        Collections.sort(entries, Comparator.comparing(Float2FloatMap.Entry::getFloatKey));
-        for (Float2FloatMap.Entry e : entries) {
-            if (e.getFloatKey() > 0) stats[0] = Math.min(e.getFloatKey(), stats[0] + e.getFloatValue());
-            else stats[0] += e.getFloatValue();
-        }
-        tooltip.accept(Component.translatable("info.apotheosis.eterna.t", String.format("%.2f", stats[0]), String.format("%.2f", EnchantingStatManager.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
-        tooltip.accept(Component.translatable("info.apotheosis.quanta.t", String.format("%.2f", Math.min(100, stats[1]))).withStyle(ChatFormatting.RED));
-        tooltip.accept(Component.translatable("info.apotheosis.arcana.t", String.format("%.2f", Math.min(100, stats[2]))).withStyle(ChatFormatting.DARK_PURPLE));
-        tooltip.accept(Component.translatable("info.apotheosis.rectification.t", String.format("%.2f", Mth.clamp(stats[3], -100, 100))).withStyle(ChatFormatting.YELLOW));
-        tooltip.accept(Component.translatable("info.apotheosis.clues.t", String.format("%d", (int) stats[4] + 1)).withStyle(ChatFormatting.DARK_AQUA));
-    }
-
-    public static void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {
-        BlockState state = world.getBlockState(pos);
-        if (state.isAir()) return;
-        float max = EnchantingStatManager.getMaxEterna(state, world, pos);
-        float eterna = EnchantingStatManager.getEterna(state, world, pos);
-        eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
-        float quanta = EnchantingStatManager.getQuanta(state, world, pos);
-        stats[1] += quanta;
-        float arcana = EnchantingStatManager.getArcana(state, world, pos);
-        stats[2] += arcana;
-        float quantaRec = EnchantingStatManager.getQuantaRectification(state, world, pos);
-        stats[3] += quantaRec;
-        int clues = EnchantingStatManager.getBonusClues(state, world, pos);
-        stats[4] += clues;
+        TableStats stats = ApothEnchantmentMenu.gatherStats(world, pos);
+        tooltip.accept(Component.translatable("info.apotheosis.eterna.t", String.format("%.2f", stats.eterna()), String.format("%.2f", EnchantingStatManager.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
+        tooltip.accept(Component.translatable("info.apotheosis.quanta.t", String.format("%.2f", Math.min(100, stats.quanta()))).withStyle(ChatFormatting.RED));
+        tooltip.accept(Component.translatable("info.apotheosis.arcana.t", String.format("%.2f", Math.min(100, stats.arcana()))).withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.accept(Component.translatable("info.apotheosis.rectification.t", String.format("%.2f", Mth.clamp(stats.rectification(), -100, 100))).withStyle(ChatFormatting.YELLOW));
+        tooltip.accept(Component.translatable("info.apotheosis.clues.t", String.format("%d", stats.clues())).withStyle(ChatFormatting.DARK_AQUA));
     }
 }
