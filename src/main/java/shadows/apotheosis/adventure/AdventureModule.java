@@ -176,7 +176,6 @@ public class AdventureModule {
         e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_expulsion");
         e.getRegistry().register(new Item(new Item.Properties().tab(Apotheosis.APOTH_GROUP)), "vial_of_unnaming");
         for (LootRarity r : LootRarity.values()) {
-            if (r == LootRarity.ANCIENT) continue;
             Item material = new SalvageItem(r, new Item.Properties().tab(Apotheosis.APOTH_GROUP));
             e.getRegistry().register(material, r.id() + "_material");
             RARITY_MATERIALS.put(r, material);

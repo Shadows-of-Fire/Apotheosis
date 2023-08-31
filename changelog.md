@@ -5,6 +5,10 @@
 * Backport of 1.20 content:
   * Added JEI Support for Gem Cutting.
   * Made Reforging backed by JSON recipes.
+  * Improved how Enchanting Stats are collected.
+  * Updated Wandering Trader trades (both the static ones from the village module and the affix trades).
+  * Fixed an issue with a particle texture name being incorrectly capitalized.
+  * Fixed socketed gems retaining their stack size.
 
 ## 6.3.5
 * Re-release of 6.3.4, since for some reason 6.3.4 includes the 1.20 code in the jar. Gradle is haunted.
