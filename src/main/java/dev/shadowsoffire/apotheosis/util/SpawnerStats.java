@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.util;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 

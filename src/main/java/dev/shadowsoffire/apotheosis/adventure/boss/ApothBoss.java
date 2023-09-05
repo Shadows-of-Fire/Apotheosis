@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.base.Preconditions;
-import com.google.gson.annotations.SerializedName;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -96,24 +95,14 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
     protected final EntityType<?> entity;
     protected final AABB size;
     protected final Map<LootRarity, BossStats> stats;
-
     @Nullable
     protected final Set<String> stages;
-
-    @SerializedName("valid_gear_sets")
     protected final List<SetPredicate> gearSets;
-
     @Nullable
     protected final CompoundTag nbt;
-
     protected final Set<ResourceLocation> dimensions;
-
-    @SerializedName("min_rarity")
     protected final LootRarity minRarity;
-
-    @SerializedName("max_rarity")
     protected final LootRarity maxRarity;
-
     @Nullable
     protected final SupportingEntity mount;
 

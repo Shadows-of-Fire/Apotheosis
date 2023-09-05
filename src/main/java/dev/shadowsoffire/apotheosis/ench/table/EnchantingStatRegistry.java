@@ -18,6 +18,7 @@ import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.BlockStats;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

@@ -1,15 +1,14 @@
 {
-  "weight": 55,
+  "weight": 75,
   "quality": 3.5,
   "stack": {
     "item": "minecraft:turtle_helmet",
     "count": 1,
     "nbt": "{Damage:0}"
   },
-  "type": "ARMOR",
   "dimensions": [
     "minecraft:overworld"
   ],
-  "min_rarity": "common",
-  "max_rarity": "rare"
+  "min_rarity": "apotheosis:common",
+  "max_rarity": "apotheosis:rare"
 }

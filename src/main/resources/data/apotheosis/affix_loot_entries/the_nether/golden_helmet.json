@@ -1,14 +1,16 @@
 {
-  "weight": 85,
-  "quality": 3.0,
-  "stack": {
-    "item": "minecraft:golden_helmet",
-    "count": 1,
-    "nbt": "{Damage:0}"
-  },
-  "dimensions": [
-    "minecraft:the_nether"
-  ],
-  "min_rarity": "uncommon",
-  "max_rarity": "epic"
+    "dimensions": [
+        "minecraft:the_nether"
+    ],
+    "min_rarity": "apotheosis:uncommon",
+    "max_rarity": "apotheosis:epic",
+    "weight": 85,
+    "quality": 3.0,
+    "stack": {
+        "item": "minecraft:golden_helmet",
+        "count": 1,
+        "nbt": {
+            "Damage": 0
+        }
+    }
 }

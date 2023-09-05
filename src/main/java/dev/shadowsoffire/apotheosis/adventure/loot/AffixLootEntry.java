@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -13,6 +12,7 @@ import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.resources.ResourceLocation;
@@ -30,8 +30,8 @@ public final class AffixLootEntry implements CodecProvider<AffixLootEntry>, ILuc
             PlaceboCodecs.nullableField(Codec.floatRange(0, Float.MAX_VALUE), "quality", 0F).forGetter(ILuckyWeighted::getQuality),
             ItemAdapter.CODEC.fieldOf("stack").forGetter(a -> a.stack),
             PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
-            LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity),
-            LootRarity.CODEC.fieldOf("max_rarity").forGetter(a -> a.maxRarity),
+            RarityRegistry.INSTANCE.holderCodec().fieldOf("min_rarity").forGetter(a -> a.minRarity),
+            RarityRegistry.INSTANCE.holderCodec().fieldOf("max_rarity").forGetter(a -> a.maxRarity),
             PlaceboCodecs.nullableField(PlaceboCodecs.setOf(Codec.STRING), "stages").forGetter(a -> Optional.ofNullable(a.stages)))
         .apply(inst, AffixLootEntry::new));
 
@@ -39,11 +39,11 @@ public final class AffixLootEntry implements CodecProvider<AffixLootEntry>, ILuc
     protected final float quality;
     protected final ItemStack stack;
     protected final Set<ResourceLocation> dimensions;
-    protected final LootRarity minRarity;
-    protected final LootRarity maxRarity;
+    protected final DynamicHolder<LootRarity> minRarity;
+    protected final DynamicHolder<LootRarity> maxRarity;
     protected final @Nullable Set<String> stages;
 
-    public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max, Optional<Set<String>> stages) {
+    public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, DynamicHolder<LootRarity> min, DynamicHolder<LootRarity> max, Optional<Set<String>> stages) {
         this.weight = weight;
         this.quality = quality;
         this.stack = stack;
@@ -51,10 +51,9 @@ public final class AffixLootEntry implements CodecProvider<AffixLootEntry>, ILuc
         this.minRarity = min;
         this.maxRarity = max;
         this.stages = stages.orElse(null);
-        Preconditions.checkArgument(min.ordinal() <= max.ordinal(), "The minimum rarity " + min + " must be lower or equal to the max rarity " + max);
     }
 
-    public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, LootRarity min, LootRarity max) {
+    public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, DynamicHolder<LootRarity> min, DynamicHolder<LootRarity> max) {
         this(weight, quality, stack, dimensions, min, max, Optional.empty());
     }
 
@@ -79,12 +78,12 @@ public final class AffixLootEntry implements CodecProvider<AffixLootEntry>, ILuc
 
     @Override
     public LootRarity getMinRarity() {
-        return this.minRarity;
+        return this.minRarity.get();
     }
 
     @Override
     public LootRarity getMaxRarity() {
-        return this.maxRarity;
+        return this.maxRarity.get();
     }
 
     public LootCategory getType() {

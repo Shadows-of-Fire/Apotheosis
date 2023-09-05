@@ -4,9 +4,8 @@
 	"stack": {
 		"item": "minecraft:crossbow"
 	},
-	"type": "CROSSBOW",
-	"min_rarity": "common",
-	"max_rarity": "rare",
+	"min_rarity": "apotheosis:common",
+	"max_rarity": "apotheosis:rare",
 	"dimensions": [
 		"minecraft:overworld"
 	]

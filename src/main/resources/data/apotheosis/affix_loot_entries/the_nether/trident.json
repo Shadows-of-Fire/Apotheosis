@@ -1,12 +1,11 @@
 {
-	"weight": 50,
+	"weight": 125,
 	"quality": 2.5,
 	"stack": {
 		"item": "minecraft:trident"
 	},
-	"type": "TRIDENT",
-	"min_rarity": "uncommon",
-	"max_rarity": "epic",
+	"min_rarity": "apotheosis:uncommon",
+	"max_rarity": "apotheosis:epic",
 	"dimensions": [
 		"minecraft:the_nether"
 	]

@@ -1,14 +1,16 @@
 {
-  "weight": 85,
-  "quality": 4.0,
-  "stack": {
-    "item": "minecraft:iron_pickaxe",
-    "count": 1,
-    "nbt": "{Damage:0}"
-  },
-  "dimensions": [
-    "minecraft:overworld"
-  ],
-  "min_rarity": "common",
-  "max_rarity": "rare"
+    "dimensions": [
+        "minecraft:overworld"
+    ],
+    "min_rarity": "apotheosis:common",
+    "max_rarity": "apotheosis:rare",
+    "weight": 85,
+    "quality": 4.0,
+    "stack": {
+        "item": "minecraft:iron_pickaxe",
+        "count": 1,
+        "nbt": {
+            "Damage": 0
+        }
+    }
 }

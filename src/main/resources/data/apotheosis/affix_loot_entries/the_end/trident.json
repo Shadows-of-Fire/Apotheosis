@@ -1,12 +1,11 @@
 {
-	"weight": 50,
+	"weight": 75,
 	"quality": 2.5,
 	"stack": {
 		"item": "minecraft:trident"
 	},
-	"type": "TRIDENT",
-	"min_rarity": "rare",
-	"max_rarity": "mythic",
+	"min_rarity": "apotheosis:rare",
+	"max_rarity": "apotheosis:mythic",
 	"dimensions": [
 		"minecraft:the_end"
 	]

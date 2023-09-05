@@ -195,7 +195,7 @@ public class Apotheosis {
         @Override
         @SubscribeEvent
         public void register(RegisterEvent e) {
-            if (flag.getAsBoolean()) super.register(e);
+            if (this.flag.getAsBoolean()) super.register(e);
         }
 
     }

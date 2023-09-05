@@ -9,6 +9,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;

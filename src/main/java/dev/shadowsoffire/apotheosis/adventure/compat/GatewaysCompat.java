@@ -19,6 +19,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.gateways.entity.GatewayEntity;
 import dev.shadowsoffire.gateways.gate.Reward;
 import dev.shadowsoffire.gateways.gate.WaveEntity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;

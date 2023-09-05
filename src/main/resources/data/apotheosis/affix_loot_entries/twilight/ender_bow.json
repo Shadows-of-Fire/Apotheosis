@@ -8,9 +8,8 @@
 	"stack": {
 		"item": "twilightforest:ender_bow"
 	},
-	"type": "bow",
-  "min_rarity": "uncommon",
-  "max_rarity": "epic",
+  "min_rarity": "apotheosis:uncommon",
+  "max_rarity": "apotheosis:epic",
   "dimensions": [
     "twilightforest:twilight_forest"
   ]

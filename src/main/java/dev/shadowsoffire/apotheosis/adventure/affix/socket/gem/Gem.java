@@ -173,16 +173,6 @@ public class Gem implements CodecProvider<Gem>, ILuckyWeighted, IDimensional, Ra
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Gem gem && gem.getId().equals(this.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return this.getId().hashCode();
-    }
-
-    @Override
     public float getQuality() {
         return this.quality;
     }

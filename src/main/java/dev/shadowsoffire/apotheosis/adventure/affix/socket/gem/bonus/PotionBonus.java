@@ -11,6 +11,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.PotionAffix.Target;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

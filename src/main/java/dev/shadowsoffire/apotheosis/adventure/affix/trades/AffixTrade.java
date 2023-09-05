@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.village.wanderer.JsonTrade;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.util.ExtraCodecs;

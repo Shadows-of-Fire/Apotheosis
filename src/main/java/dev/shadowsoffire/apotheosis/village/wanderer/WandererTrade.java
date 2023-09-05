@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.village.wanderer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.BasicItemListing;

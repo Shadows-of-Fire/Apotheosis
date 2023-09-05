@@ -4,9 +4,8 @@
 	"stack": {
 		"item": "minecraft:bow"
 	},
-	"type": "BOW",
-	"min_rarity": "rare",
-	"max_rarity": "mythic",
+	"min_rarity": "apotheosis:rare",
+	"max_rarity": "apotheosis:mythic",
 	"dimensions": [
 		"minecraft:the_end"
 	]

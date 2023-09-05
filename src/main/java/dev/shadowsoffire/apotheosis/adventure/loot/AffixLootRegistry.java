@@ -26,8 +26,9 @@ public class AffixLootRegistry extends WeightedDynamicRegistry<AffixLootEntry> {
     @Override
     protected void validateItem(ResourceLocation key, AffixLootEntry item) {
         super.validateItem(key, item);
-        Preconditions.checkArgument(!item.stack.isEmpty());
-        Preconditions.checkArgument(!item.getType().isNone());
+        Preconditions.checkArgument(!item.stack.isEmpty(), "Empty itemstacks are not permitted.");
+        Preconditions.checkArgument(!item.getType().isNone(), "Items without a valid loot category are not permitted.");
+        Preconditions.checkArgument(item.getMinRarity().ordinal() <= item.getMaxRarity().ordinal(), "The minimum rarity must be lower or equal to the max rarity.");
     }
 
 }

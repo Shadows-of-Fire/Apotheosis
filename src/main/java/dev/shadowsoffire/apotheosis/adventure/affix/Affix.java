@@ -262,16 +262,6 @@ public abstract class Affix implements CodecProvider<Affix> {
         else return ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(f);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Affix afx && afx.getId().equals(this.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return this.getId().hashCode();
-    }
-
     public final ResourceLocation getId() {
         return AffixRegistry.INSTANCE.getKey(this);
     }

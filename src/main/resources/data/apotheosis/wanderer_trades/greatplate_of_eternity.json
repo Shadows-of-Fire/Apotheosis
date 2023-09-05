@@ -7,8 +7,7 @@
   "rare": true,
   "input_1": {
     "item": "minecraft:diamond_chestplate",
-    "count": 1,
-    "nbt": "{Damage:0}"
+    "count": 1
   },
   "input_2": {
     "item": "minecraft:emerald",
