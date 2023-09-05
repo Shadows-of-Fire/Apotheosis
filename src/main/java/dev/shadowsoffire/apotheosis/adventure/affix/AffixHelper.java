@@ -120,7 +120,7 @@ public class AffixHelper {
         afxData.putString(NAME, Component.Serializer.toJson(comp));
         // if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack,
         // Component.translatable("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
-        afxData.putString(RARITY, rarity.getId().toString());
+        afxData.putString(RARITY, RarityRegistry.INSTANCE.getKey(rarity).toString());
     }
 
     public static void copyFrom(ItemStack stack, Entity entity) {

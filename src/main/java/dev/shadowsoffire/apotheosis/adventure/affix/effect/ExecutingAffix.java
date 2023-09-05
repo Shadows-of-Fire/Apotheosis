@@ -14,7 +14,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mixin.LivingEntityInvoker;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
@@ -30,8 +29,6 @@ public class ExecutingAffix extends Affix {
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, ExecutingAffix::new));
-
-    public static final PSerializer<ExecutingAffix> SERIALIZER = PSerializer.fromCodec("Executing Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
 
@@ -79,8 +76,8 @@ public class ExecutingAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
 }

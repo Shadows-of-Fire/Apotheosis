@@ -28,7 +28,6 @@ import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
 import dev.shadowsoffire.apotheosis.adventure.boss.Exclusion;
-import dev.shadowsoffire.apotheosis.adventure.boss.GearSetRegistry;
 import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.adventure.compat.AdventureTOPPlugin;
@@ -103,7 +102,6 @@ public class AdventureModule {
         RarityRegistry.INSTANCE.registerToBus();
         AffixRegistry.INSTANCE.registerToBus();
         GemRegistry.INSTANCE.registerToBus();
-        GearSetRegistry.INSTANCE.registerToBus();
         AffixLootRegistry.INSTANCE.registerToBus();
         BossRegistry.INSTANCE.registerToBus();
         RogueSpawnerRegistry.INSTANCE.registerToBus();

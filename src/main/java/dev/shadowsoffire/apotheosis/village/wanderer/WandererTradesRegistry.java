@@ -26,9 +26,9 @@ public class WandererTradesRegistry extends DynamicRegistry<JsonTrade> {
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(Apotheosis.loc("basic_trade"), WandererTrade.SERIALIZER);
-        this.registerSerializer(Apotheosis.loc("affix"), AffixTrade.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("basic_trade"), WandererTrade.CODEC);
+        this.registerCodec(Apotheosis.loc("affix"), AffixTrade.CODEC);
     }
 
     @Override

@@ -117,7 +117,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
     @Override
     protected void onReload() {
         super.onReload();
-        this.ordered = this.registry.values().stream().sorted(Comparator.comparing(LootRarity::ordinal)).map(r -> this.holder(r.getId())).toList();
+        this.ordered = this.registry.values().stream().sorted(Comparator.comparing(LootRarity::ordinal)).map(this::holder).toList();
 
         int lastOrdinal = -1;
         for (DynamicHolder<LootRarity> r : ordered) {
@@ -141,13 +141,13 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, LootRarity.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("rarity"), LootRarity.LOAD_CODEC);
     }
 
     @Override
-    protected void validateItem(LootRarity item) {
-        super.validateItem(item);
+    protected void validateItem(ResourceLocation key, LootRarity item) {
+        super.validateItem(key, item);
         Preconditions.checkNotNull(item.getColor());
         Preconditions.checkArgument(item.getMaterial() != null && item.getMaterial() != Items.AIR);
         Preconditions.checkArgument(item.getWeight() >= 0, "A rarity may not have negative weight!");
@@ -169,7 +169,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
 
                     if (affixes.size() < rules.size()) {
                         var errMsg = new StringBuilder();
-                        errMsg.append("Insufficient number of affixes to satisfy the loot rules (ignoring backup rules) of rarity " + rarity.getId() + " for category " + cat.getName());
+                        errMsg.append("Insufficient number of affixes to satisfy the loot rules (ignoring backup rules) of rarity " + getKey(rarity) + " for category " + cat.getName());
                         errMsg.append("Required: " + rules.size());
                         errMsg.append("; Provided: " + affixes.size());
                         // errMsg.append("The following affixes exist for this category/rarity combination: ");

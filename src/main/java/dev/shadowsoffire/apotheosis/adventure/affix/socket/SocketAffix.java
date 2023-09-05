@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.mutable.MutableFloat;
 
 import com.google.common.base.Predicates;
+import com.mojang.serialization.Codec;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
@@ -37,11 +38,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
-import dev.shadowsoffire.placebo.json.PSerializer;
 
 public final class SocketAffix extends Affix {
 
-    public static final PSerializer<SocketAffix> SERIALIZER = PSerializer.builtin("Socket Affix", SocketAffix::new);
+    public static final Codec<SocketAffix> CODEC = Codec.unit(SocketAffix::new);
 
     public SocketAffix() {
         super(AffixType.SOCKET);
@@ -132,8 +132,8 @@ public final class SocketAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
     private static Stream<GemInstance> gems(AbstractArrow arrow) {

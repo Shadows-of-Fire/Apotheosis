@@ -11,7 +11,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,8 +29,6 @@ public class TelepathicAffix extends Affix {
         .group(
             LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
         .apply(inst, TelepathicAffix::new));
-
-    public static final PSerializer<TelepathicAffix> SERIALIZER = PSerializer.fromCodec("Telepathic Affix", CODEC);
 
     public static Vec3 blockDropTargetPos = null;
 
@@ -60,8 +57,8 @@ public class TelepathicAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
     // EventPriority.LOWEST

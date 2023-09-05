@@ -81,7 +81,7 @@ public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
                 this.materials[0] = new ItemStack(rarity.getMaterial(), GemCuttingMenu.STD_MAT_COST);
                 this.materials[1] = new ItemStack(rarity.next().getMaterial(), GemCuttingMenu.NEXT_MAT_COST);
             }
-            else if (rarity.next().getId().getPath().equals("ancient")) { // Special case ancient because the material is unavailable.
+            else if (RarityRegistry.INSTANCE.getKey(rarity.next()).getPath().equals("ancient")) { // Special case ancient because the material is unavailable.
                 this.materials = new ItemStack[2];
                 this.materials[0] = new ItemStack(rarity.prev().getMaterial(), GemCuttingMenu.PREV_MAT_COST);
                 this.materials[1] = new ItemStack(rarity.getMaterial(), GemCuttingMenu.STD_MAT_COST);

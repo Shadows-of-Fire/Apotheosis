@@ -9,8 +9,8 @@ import javax.annotation.Nullable;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -43,7 +43,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  * The Affix's Level is a float from 0 to 1 that defines its relative power level, compared to max.
  * What the level means is up to the individual affix.
  */
-public abstract class Affix extends TypeKeyedBase<Affix> {
+public abstract class Affix implements CodecProvider<Affix> {
 
     protected final AffixType type;
 
@@ -270,5 +270,9 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
     @Override
     public int hashCode() {
         return this.getId().hashCode();
+    }
+
+    public final ResourceLocation getId() {
+        return AffixRegistry.INSTANCE.getKey(this);
     }
 }

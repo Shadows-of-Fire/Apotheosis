@@ -261,12 +261,13 @@ public class AdventureModuleClient {
         boolean any = false;
         String json = "\"%s\": \"\",";
         for (Affix a : AffixRegistry.INSTANCE.getValues()) {
-            if (!I18n.exists("affix." + a.getId())) {
-                sb.append(json.formatted("affix." + a.getId()) + "\n");
+            ResourceLocation id = AffixRegistry.INSTANCE.getKey(a);
+            if (!I18n.exists("affix." + id)) {
+                sb.append(json.formatted("affix." + id) + "\n");
                 any = true;
             }
-            if (!I18n.exists("affix." + a.getId() + ".suffix")) {
-                sb.append(json.formatted("affix." + a.getId() + ".suffix") + "\n");
+            if (!I18n.exists("affix." + id + ".suffix")) {
+                sb.append(json.formatted("affix." + id + ".suffix") + "\n");
                 any = true;
             }
         }

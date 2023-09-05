@@ -18,7 +18,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -42,8 +41,6 @@ public class AttributeAffix extends Affix {
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
             LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
         .apply(inst, AttributeAffix::new));
-
-    public static final PSerializer<AttributeAffix> SERIALIZER = PSerializer.fromCodec("Attribute Affix", CODEC);
 
     protected final Attribute attribute;
     protected final Operation operation;
@@ -90,9 +87,9 @@ public class AttributeAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
-    }
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
+    };
 
     public record ModifierInst(Attribute attr, Operation op, StepFunction valueFactory) {
 

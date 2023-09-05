@@ -16,7 +16,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -39,8 +38,6 @@ public class FestiveAffix extends Affix {
         .group(
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
         .apply(inst, FestiveAffix::new));
-
-    public static final PSerializer<FestiveAffix> SERIALIZER = PSerializer.fromCodec("Festive Affix", CODEC);
 
     protected final Map<LootRarity, StepFunction> values;
 
@@ -113,7 +110,7 @@ public class FestiveAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 }

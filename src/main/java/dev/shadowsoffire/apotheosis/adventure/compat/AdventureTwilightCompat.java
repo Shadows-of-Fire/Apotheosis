@@ -50,9 +50,9 @@ public class AdventureTwilightCompat {
     protected static final RegistryObject<EntityType<Redcap>> REDCAP = RegistryObject.create(new ResourceLocation("twilightforest", "redcap"), Registries.ENTITY_TYPE, Apotheosis.MODID);
 
     public static void register() {
-        GemBonus.CODECS.put(Apotheosis.loc("twilight_ore_magnet"), OreMagnetBonus.CODEC);
-        GemBonus.CODECS.put(Apotheosis.loc("twilight_treasure_goblin"), TreasureGoblinBonus.CODEC);
-        GemBonus.CODECS.put(Apotheosis.loc("twilight_fortification"), FortificationBonus.CODEC);
+        GemBonus.CODEC.register(Apotheosis.loc("twilight_ore_magnet"), OreMagnetBonus.CODEC);
+        GemBonus.CODEC.register(Apotheosis.loc("twilight_treasure_goblin"), TreasureGoblinBonus.CODEC);
+        GemBonus.CODEC.register(Apotheosis.loc("twilight_fortification"), FortificationBonus.CODEC);
         MinecraftForge.EVENT_BUS.addListener(AdventureTwilightCompat::doGoblins);
     }
 

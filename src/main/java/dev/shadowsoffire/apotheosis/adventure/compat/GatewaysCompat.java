@@ -23,6 +23,7 @@ import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,13 +31,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.AABB;
 
 public class GatewaysCompat {
 
     public static void register() {
-        WaveEntity.CODECS.put(Apotheosis.loc("boss"), BossWaveEntity.CODEC);
-        Reward.CODECS.put(Apotheosis.loc("affix"), RarityAffixItemReward.CODEC);
+        WaveEntity.CODEC.register(Apotheosis.loc("boss"), BossWaveEntity.CODEC);
+        Reward.CODEC.register(Apotheosis.loc("affix"), RarityAffixItemReward.CODEC);
     }
 
     public static class BossWaveEntity implements WaveEntity {
@@ -62,14 +62,8 @@ public class GatewaysCompat {
         }
 
         @Override
-        public Component getDescription() {
+        public MutableComponent getDescription() {
             return Component.translatable("misc.apotheosis.boss", Component.translatable(this.bossId.isEmpty() ? "misc.apotheosis.random" : this.boss.get().getEntity().getDescriptionId()));
-        }
-
-        @Override
-        public AABB getAABB(double x, double y, double z) {
-            AABB bossBox = this.bossId.isEmpty() ? new AABB(0, 0, 0, 2, 2, 2) : this.boss.get().getSize();
-            return bossBox.move(x, y, z);
         }
 
         @Override
@@ -80,6 +74,11 @@ public class GatewaysCompat {
         @Override
         public Codec<? extends WaveEntity> getCodec() {
             return CODEC;
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
         }
     }
 
@@ -99,7 +98,7 @@ public class GatewaysCompat {
         }
 
         @Override
-        public void appendHoverText(Consumer<Component> list) {
+        public void appendHoverText(Consumer<MutableComponent> list) {
             list.accept(Component.translatable("reward.apotheosis.affix", this.rarity.get().toComponent()));
         }
 

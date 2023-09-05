@@ -15,7 +15,6 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.attributeslib.util.AttributesUtil;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
@@ -31,8 +30,6 @@ public class DamageReductionAffix extends Affix {
             GemBonus.VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
             LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types))
         .apply(inst, DamageReductionAffix::new));
-
-    public static final PSerializer<DamageReductionAffix> SERIALIZER = PSerializer.fromCodec("Damage Reduction Affix", CODEC);
 
     protected final DamageType type;
     protected final Map<LootRarity, StepFunction> values;
@@ -68,8 +65,8 @@ public class DamageReductionAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
     public static enum DamageType implements Predicate<DamageSource> {

@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem;
 
 import java.util.function.Predicate;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -23,8 +24,8 @@ public class GemRegistry extends WeightedDynamicRegistry<Gem> {
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, Gem.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("gem"), Gem.CODEC);
     }
 
     /**

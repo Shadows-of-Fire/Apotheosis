@@ -16,9 +16,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.village.wanderer.JsonTrade;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.Wrapper;
@@ -29,7 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ServerLevelAccessor;
 
-public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
+public class AffixTrade implements JsonTrade {
 
     public static final Codec<AffixTrade> CODEC = ExtraCodecs.lazyInitializedCodec(() -> RecordCodecBuilder.create(inst -> inst
         .group(
@@ -39,8 +37,6 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
             AffixLootRegistry.INSTANCE.holderCodec().listOf().fieldOf("entries").forGetter(a -> a.entries),
             Codec.BOOL.optionalFieldOf("rare", false).forGetter(a -> a.rare))
         .apply(inst, AffixTrade::new)));
-
-    public static final PSerializer<AffixTrade> SERIALIZER = PSerializer.fromCodec("Affix Trade", CODEC);
 
     /**
      * Input items
@@ -102,8 +98,8 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
     }
 
     @Override
-    public PSerializer<? extends JsonTrade> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends JsonTrade> getCodec() {
+        return CODEC;
     }
 
     /**

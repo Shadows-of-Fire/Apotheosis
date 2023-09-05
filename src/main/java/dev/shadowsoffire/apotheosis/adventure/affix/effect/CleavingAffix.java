@@ -24,7 +24,6 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class CleavingAffix extends Affix {
@@ -33,8 +32,6 @@ public class CleavingAffix extends Affix {
         .group(
             LootRarity.mapCodec(CleaveValues.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, CleavingAffix::new));
-
-    public static final PSerializer<CleavingAffix> SERIALIZER = PSerializer.fromCodec("Cleaving Affix", CODEC);
 
     protected final Map<LootRarity, CleaveValues> values;
 
@@ -87,8 +84,8 @@ public class CleavingAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
     public static Predicate<Entity> cleavePredicate(Entity user, Entity target) {

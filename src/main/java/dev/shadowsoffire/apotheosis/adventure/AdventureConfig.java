@@ -14,7 +14,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents.BossSpawnRules;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.config.Configuration;
@@ -68,8 +67,6 @@ public class AdventureConfig {
     public static boolean disableQuarkOnAffixItems = true;
     public static Supplier<Item> torchItem = () -> Items.TORCH;
     public static boolean cleaveHitsPlayers = false;
-
-    public static Map<LootRarity, ReforgeData> reforgeCosts = new HashMap<>();
 
     public static void load(Configuration c) {
         c.setTitle("Apotheosis Adventure Module Config");
@@ -232,17 +229,6 @@ public class AdventureConfig {
         }
 
         spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
-
-        reforgeCosts.clear();
-        int num = 1;
-        for (LootRarity r : RarityRegistry.INSTANCE.getValues()) {
-            int matCost = c.getInt("Material Cost", "reforging." + r.getId(), 2, 0, 64, "The amount of rarity materials it costs to reforge at this rarity.");
-            int dustCost = c.getInt("Gem Dust Cost", "reforging." + r.getId(), 2, 0, 64, "The amount of gem dust it costs to reforge at this rarity.");
-            int levelCost = c.getInt("XP Level Cost", "reforging." + r.getId(), num * 5, 0, 65536, "The amount of xp levels it costs to reforge at this rarity.");
-            reforgeCosts.put(r, new ReforgeData(matCost, dustCost, levelCost));
-            num++;
-        }
-
     }
 
     public record ReforgeData(int matCost, int dustCost, int levelCost) {}

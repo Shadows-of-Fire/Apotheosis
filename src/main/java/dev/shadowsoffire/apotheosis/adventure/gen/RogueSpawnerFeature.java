@@ -2,8 +2,8 @@ package dev.shadowsoffire.apotheosis.adventure.gen;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawner;
+import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -36,7 +36,7 @@ public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
         if (STONE_TEST.test(downState, rand) && upState.isAir() && (state.isAir() || STONE_TEST.test(state, rand))) {
             RogueSpawner item = RogueSpawnerRegistry.INSTANCE.getRandomItem(rand);
             item.place(world, pos, rand);
-            AdventureModule.debugLog(pos, "Rogue Spawner - " + item.getId());
+            AdventureModule.debugLog(pos, "Rogue Spawner - " + RogueSpawnerRegistry.INSTANCE.getKey(item));
             return true;
         }
         return false;

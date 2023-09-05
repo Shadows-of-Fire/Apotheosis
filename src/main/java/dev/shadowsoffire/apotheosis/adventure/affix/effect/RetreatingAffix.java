@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import dev.shadowsoffire.placebo.json.PSerializer;
 
 /**
  * Disengage
@@ -23,8 +22,6 @@ public class RetreatingAffix extends Affix {
         .group(
             LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity))
         .apply(inst, RetreatingAffix::new));
-
-    public static final PSerializer<RetreatingAffix> SERIALIZER = PSerializer.fromCodec("Retreating Affix", CODEC);
 
     protected LootRarity minRarity;
 
@@ -51,8 +48,8 @@ public class RetreatingAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
 }

@@ -1,12 +1,12 @@
 package dev.shadowsoffire.apotheosis.adventure.spawner;
 
-import com.google.gson.annotations.SerializedName;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.util.SpawnerStats;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import dev.shadowsoffire.placebo.util.ChestBuilder;
 import net.minecraft.core.BlockPos;
@@ -22,20 +22,24 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
-public class RogueSpawner extends TypeKeyedBase<RogueSpawner> implements ILuckyWeighted {
+public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted {
 
-    public static final PSerializer<RogueSpawner> SERIALIZER = PSerializer.basic("Rogue Spawner", obj -> RogueSpawnerRegistry.GSON.fromJson(obj, RogueSpawner.class));
+    public static final Codec<RogueSpawner> CODEC = RecordCodecBuilder.create(inst -> inst
+        .group(
+            Codec.INT.fieldOf("weight").forGetter(RogueSpawner::getWeight),
+            SpawnerStats.CODEC.fieldOf("stats").forGetter(RogueSpawner::getStats),
+            ResourceLocation.CODEC.fieldOf("loot_table").forGetter(RogueSpawner::getLootTableId),
+            SimpleWeightedRandomList.wrappedCodec(SpawnData.CODEC).fieldOf("spawn_potentials").forGetter(s -> s.spawnPotentials))
+        .apply(inst, RogueSpawner::new));
 
     public static final Block[] FILLER_BLOCKS = { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
     protected final int weight;
     protected final SpawnerStats stats;
-    @SerializedName("spawn_potentials")
-    protected final SimpleWeightedRandomList<SpawnData> spawnPotentials;
-    @SerializedName("loot_table")
     protected final ResourceLocation lootTable;
+    protected final SimpleWeightedRandomList<SpawnData> spawnPotentials;
 
-    public RogueSpawner(SpawnerStats stats, ResourceLocation lootTable, SimpleWeightedRandomList<SpawnData> potentials, int weight) {
+    public RogueSpawner(int weight, SpawnerStats stats, ResourceLocation lootTable, SimpleWeightedRandomList<SpawnData> potentials) {
         this.weight = weight;
         this.stats = stats;
         this.lootTable = lootTable;
@@ -50,6 +54,14 @@ public class RogueSpawner extends TypeKeyedBase<RogueSpawner> implements ILuckyW
     @Override
     public float getQuality() {
         return 0;
+    }
+
+    public SpawnerStats getStats() {
+        return this.stats;
+    }
+
+    public ResourceLocation getLootTableId() {
+        return this.lootTable;
     }
 
     @SuppressWarnings("deprecation")
@@ -70,8 +82,8 @@ public class RogueSpawner extends TypeKeyedBase<RogueSpawner> implements ILuckyW
     }
 
     @Override
-    public PSerializer<? extends RogueSpawner> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends RogueSpawner> getCodec() {
+        return CODEC;
     }
 
 }

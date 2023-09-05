@@ -30,10 +30,10 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
     public static final LootPoolEntryType TYPE = new LootPoolEntryType(SERIALIZER);
 
     @Nullable
-    private final RarityClamp rarityLimit;
+    private final RarityClamp.Simple rarityLimit;
     private final List<DynamicHolder<AffixLootEntry>> entries;
 
-    public AffixLootPoolEntry(@Nullable RarityClamp rarityLimit, List<ResourceLocation> entries, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions) {
+    public AffixLootPoolEntry(@Nullable RarityClamp.Simple rarityLimit, List<ResourceLocation> entries, int weight, int quality, LootItemCondition[] conditions, LootItemFunction[] functions) {
         super(weight, quality, conditions, functions);
         this.rarityLimit = rarityLimit;
         this.entries = entries.stream().map(AffixLootRegistry.INSTANCE::holder).toList();
@@ -77,7 +77,7 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
 
         @Override
         protected AffixLootPoolEntry deserialize(JsonObject obj, JsonDeserializationContext context, int weight, int quality, LootItemCondition[] lootConditions, LootItemFunction[] lootFunctions) {
-            RarityClamp rarity;
+            RarityClamp.Simple rarity;
             if (obj.has("min_rarity") || obj.has("max_rarity")) {
                 DynamicHolder<LootRarity> minRarity = RarityRegistry.byLegacyId(GsonHelper.getAsString(obj, "min_rarity"));
                 DynamicHolder<LootRarity> maxRarity = RarityRegistry.byLegacyId(GsonHelper.getAsString(obj, "max_rarity"));
@@ -93,8 +93,8 @@ public class AffixLootPoolEntry extends LootPoolSingletonContainer {
         @Override
         public void serializeCustom(JsonObject object, AffixLootPoolEntry e, JsonSerializationContext ctx) {
             if (e.rarityLimit != null) {
-                object.addProperty("min_rarity", e.rarityLimit.getMinRarity().getId().toString());
-                object.addProperty("max_rarity", e.rarityLimit.getMaxRarity().getId().toString());
+                object.addProperty("min_rarity", e.rarityLimit.min().getId().toString());
+                object.addProperty("max_rarity", e.rarityLimit.max().getId().toString());
             }
             object.add("entries", ctx.serialize(e.entries));
             super.serializeCustom(object, e, ctx);

@@ -13,12 +13,12 @@ import com.google.gson.GsonBuilder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.BlockStats;
-import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -42,8 +42,8 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, BlockStats.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("enchanting_stats"), BlockStats.CODEC);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
         }
     }
 
-    public static class BlockStats extends TypeKeyedBase<BlockStats> {
+    public static class BlockStats implements CodecProvider<BlockStats> {
 
         public static Codec<BlockStats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
@@ -182,8 +182,6 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
                 ForgeRegistries.BLOCKS.getCodec().optionalFieldOf("block").forGetter(bs -> Optional.empty()),
                 Stats.CODEC.fieldOf("stats").forGetter(bs -> bs.stats))
             .apply(inst, BlockStats::new));
-
-        public static final PSerializer<BlockStats> SERIALIZER = PSerializer.fromCodec("Enchanting Stats", CODEC);
 
         public final List<Block> blocks;
         public final Stats stats;
@@ -197,8 +195,8 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
         }
 
         @Override
-        public PSerializer<? extends BlockStats> getSerializer() {
-            return SERIALIZER;
+        public Codec<? extends BlockStats> getCodec() {
+            return CODEC;
         }
 
     }

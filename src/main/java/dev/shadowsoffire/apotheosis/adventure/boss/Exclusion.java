@@ -5,28 +5,24 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents.BossSpawnRules;
+import dev.shadowsoffire.placebo.codec.CodecMap;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs.CodecProvider;
 import dev.shadowsoffire.placebo.json.NBTAdapter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 public interface Exclusion extends CodecProvider<Exclusion> {
 
-    public static final BiMap<ResourceLocation, Codec<? extends Exclusion>> CODECS = HashBiMap.create();
-
-    public static final Codec<Exclusion> CODEC = PlaceboCodecs.mapBacked("Miniboss Exclusion", CODECS);
+    public static final CodecMap<Exclusion> CODEC = new CodecMap<>("Miniboss Exclusion");
 
     public boolean isExcluded(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, @Nullable CompoundTag entityNbt);
 
@@ -40,7 +36,7 @@ public interface Exclusion extends CodecProvider<Exclusion> {
     }
 
     private static void register(String id, Codec<? extends Exclusion> codec) {
-        CODECS.put(Apotheosis.loc(id), codec);
+        CODEC.register(Apotheosis.loc(id), codec);
     }
 
     public static record SpawnTypeExclusion(Set<MobSpawnType> types) implements Exclusion {
