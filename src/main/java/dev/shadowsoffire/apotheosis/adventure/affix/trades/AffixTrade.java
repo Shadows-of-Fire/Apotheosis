@@ -32,10 +32,10 @@ public class AffixTrade implements JsonTrade {
     public static final Codec<AffixTrade> CODEC = ExtraCodecs.lazyInitializedCodec(() -> RecordCodecBuilder.create(inst -> inst
         .group(
             ItemAdapter.CODEC.fieldOf("input_1").forGetter(a -> a.price),
-            ItemAdapter.CODEC.optionalFieldOf("input_2", ItemStack.EMPTY).forGetter(a -> a.price2),
-            RarityClamp.Simple.CODEC.optionalFieldOf("rarities", RarityClamp.UNCLAMPED).forGetter(a -> a.rarities),
+            PlaceboCodecs.nullableField(ItemAdapter.CODEC, "input_2", ItemStack.EMPTY).forGetter(a -> a.price2),
+            PlaceboCodecs.nullableField(RarityClamp.Simple.CODEC, "rarities", RarityClamp.UNCLAMPED).forGetter(a -> a.rarities),
             AffixLootRegistry.INSTANCE.holderCodec().listOf().fieldOf("entries").forGetter(a -> a.entries),
-            Codec.BOOL.optionalFieldOf("rare", false).forGetter(a -> a.rare))
+            PlaceboCodecs.nullableField(Codec.BOOL, "rare", false).forGetter(a -> a.rare))
         .apply(inst, AffixTrade::new)));
 
     /**

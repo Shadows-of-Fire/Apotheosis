@@ -40,7 +40,7 @@ public class PotionBonus extends GemBonus {
             ForgeRegistries.MOB_EFFECTS.getCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
             Target.CODEC.fieldOf("target").forGetter(a -> a.target),
             LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
-            Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
+            PlaceboCodecs.nullableField(Codec.BOOL, "stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
         .apply(inst, PotionBonus::new));
 
     protected final MobEffect effect;
@@ -181,7 +181,7 @@ public class PotionBonus extends GemBonus {
             .group(
                 Codec.INT.fieldOf("duration").forGetter(EffectData::duration),
                 Codec.INT.fieldOf("amplifier").forGetter(EffectData::amplifier),
-                Codec.INT.optionalFieldOf("cooldown", 0).forGetter(EffectData::cooldown))
+                PlaceboCodecs.nullableField(Codec.INT, "cooldown", 0).forGetter(EffectData::cooldown))
             .apply(inst, EffectData::new));
 
         public MobEffectInstance build(MobEffect effect) {

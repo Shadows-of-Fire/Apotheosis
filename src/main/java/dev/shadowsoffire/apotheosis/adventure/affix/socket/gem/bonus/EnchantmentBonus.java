@@ -26,8 +26,8 @@ public class EnchantmentBonus extends GemBonus {
         .group(
             gemClass(),
             ForgeRegistries.ENCHANTMENTS.getCodec().fieldOf("enchantment").forGetter(a -> a.ench),
-            Codec.BOOL.optionalFieldOf("must_exist", false).forGetter(a -> a.mustExist),
-            Codec.BOOL.optionalFieldOf("global", false).forGetter(a -> a.global),
+            PlaceboCodecs.nullableField(Codec.BOOL, "must_exist", false).forGetter(a -> a.mustExist),
+            PlaceboCodecs.nullableField(Codec.BOOL, "global", false).forGetter(a -> a.global),
             LootRarity.mapCodec(Codec.intRange(1, 127)).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, EnchantmentBonus::new));
 

@@ -41,7 +41,7 @@ public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Co
         ForgeRegistries.ITEMS.getCodec().fieldOf("material").forGetter(LootRarity::getMaterial),
         Codec.INT.fieldOf("ordinal").forGetter(LootRarity::ordinal),
         Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-        Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+        PlaceboCodecs.nullableField(Codec.floatRange(0, Float.MAX_VALUE), "quality", 0F).forGetter(ILuckyWeighted::getQuality),
         new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(LootRarity::getRules))
         .apply(inst, LootRarity::new));
 
@@ -182,7 +182,7 @@ public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Co
         public static final Codec<LootRule> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             PlaceboCodecs.enumCodec(AffixType.class).fieldOf("type").forGetter(LootRule::type),
             Codec.FLOAT.fieldOf("chance").forGetter(LootRule::chance),
-            ExtraCodecs.lazyInitializedCodec(() -> LootRule.CODEC).optionalFieldOf("backup").forGetter(rule -> Optional.ofNullable(rule.backup())))
+            PlaceboCodecs.nullableField(ExtraCodecs.lazyInitializedCodec(() -> LootRule.CODEC), "backup").forGetter(rule -> Optional.ofNullable(rule.backup())))
             .apply(inst, LootRule::new));
 
         private static Random jRand = new Random();

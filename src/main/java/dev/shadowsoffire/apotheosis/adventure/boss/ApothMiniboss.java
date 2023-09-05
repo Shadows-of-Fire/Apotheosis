@@ -58,20 +58,20 @@ public final class ApothMiniboss implements CodecProvider<ApothMiniboss>, ILucky
     public static final Codec<ApothMiniboss> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-            Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+            PlaceboCodecs.nullableField(Codec.floatRange(0, Float.MAX_VALUE), "quality", 0F).forGetter(ILuckyWeighted::getQuality),
             ExtraCodecs.POSITIVE_FLOAT.fieldOf("chance").forGetter(a -> a.chance),
-            Codec.STRING.optionalFieldOf("name", "").forGetter(a -> a.name),
+            PlaceboCodecs.nullableField(Codec.STRING, "name", "").forGetter(a -> a.name),
             PlaceboCodecs.setOf(ForgeRegistries.ENTITY_TYPES.getCodec()).fieldOf("entities").forGetter(a -> a.entities),
             BossStats.CODEC.fieldOf("stats").forGetter(a -> a.stats),
-            PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)),
+            PlaceboCodecs.nullableField(PlaceboCodecs.setOf(Codec.STRING), "stages").forGetter(a -> Optional.ofNullable(a.stages)),
             PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
-            Codec.BOOL.optionalFieldOf("affixed", false).forGetter(a -> a.affixed),
-            SetPredicate.CODEC.listOf().optionalFieldOf("valid_gear_sets", Collections.emptyList()).forGetter(a -> a.gearSets),
-            NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
-            SupportingEntity.CODEC.listOf().optionalFieldOf("supporting_entities", Collections.emptyList()).forGetter(a -> a.support),
-            SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)),
-            Exclusion.CODEC.listOf().optionalFieldOf("exclusions", Collections.emptyList()).forGetter(a -> a.exclusions),
-            Codec.BOOL.optionalFieldOf("finalize", false).forGetter(a -> a.finalize))
+            PlaceboCodecs.nullableField(Codec.BOOL, "affixed", false).forGetter(a -> a.affixed),
+            PlaceboCodecs.nullableField(SetPredicate.CODEC.listOf(), "valid_gear_sets", Collections.emptyList()).forGetter(a -> a.gearSets),
+            PlaceboCodecs.nullableField(NBTAdapter.EITHER_CODEC, "nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
+            PlaceboCodecs.nullableField(SupportingEntity.CODEC.listOf(), "supporting_entities", Collections.emptyList()).forGetter(a -> a.support),
+            PlaceboCodecs.nullableField(SupportingEntity.CODEC, "mount").forGetter(a -> Optional.ofNullable(a.mount)),
+            PlaceboCodecs.nullableField(Exclusion.CODEC.listOf(), "exclusions", Collections.emptyList()).forGetter(a -> a.exclusions),
+            PlaceboCodecs.nullableField(Codec.BOOL, "finalize", false).forGetter(a -> a.finalize))
         .apply(inst, ApothMiniboss::new));
 
     /**

@@ -151,12 +151,12 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
 
         public static Codec<Stats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                Codec.FLOAT.optionalFieldOf("maxEterna", 15F).forGetter(Stats::maxEterna),
-                Codec.FLOAT.optionalFieldOf("eterna", 0F).forGetter(Stats::eterna),
-                Codec.FLOAT.optionalFieldOf("quanta", 0F).forGetter(Stats::quanta),
-                Codec.FLOAT.optionalFieldOf("arcana", 0F).forGetter(Stats::arcana),
-                Codec.FLOAT.optionalFieldOf("rectification", 0F).forGetter(Stats::rectification),
-                Codec.INT.optionalFieldOf("clues", 0).forGetter(Stats::clues))
+                PlaceboCodecs.nullableField(Codec.FLOAT, "maxEterna", 15F).forGetter(Stats::maxEterna),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "eterna", 0F).forGetter(Stats::eterna),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "quanta", 0F).forGetter(Stats::quanta),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "arcana", 0F).forGetter(Stats::arcana),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "rectification", 0F).forGetter(Stats::rectification),
+                PlaceboCodecs.nullableField(Codec.INT, "clues", 0).forGetter(Stats::clues))
             .apply(inst, Stats::new));
 
         public void write(FriendlyByteBuf buf) {
@@ -177,9 +177,9 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
 
         public static Codec<BlockStats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                Codec.list(ForgeRegistries.BLOCKS.getCodec()).optionalFieldOf("blocks", Collections.emptyList()).forGetter(bs -> bs.blocks),
-                TagKey.codec(Registries.BLOCK).optionalFieldOf("tag").forGetter(bs -> Optional.empty()),
-                ForgeRegistries.BLOCKS.getCodec().optionalFieldOf("block").forGetter(bs -> Optional.empty()),
+                PlaceboCodecs.nullableField(Codec.list(ForgeRegistries.BLOCKS.getCodec()), "blocks", Collections.emptyList()).forGetter(bs -> bs.blocks),
+                PlaceboCodecs.nullableField(TagKey.codec(Registries.BLOCK), "tag").forGetter(bs -> Optional.empty()),
+                PlaceboCodecs.nullableField(ForgeRegistries.BLOCKS.getCodec(), "block").forGetter(bs -> Optional.empty()),
                 Stats.CODEC.fieldOf("stats").forGetter(bs -> bs.stats))
             .apply(inst, BlockStats::new));
 

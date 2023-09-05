@@ -12,12 +12,12 @@ public class WandererTrade extends BasicItemListing implements JsonTrade {
     public static Codec<WandererTrade> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             ItemAdapter.CODEC.fieldOf("input_1").forGetter(trade -> trade.price),
-            ItemAdapter.CODEC.optionalFieldOf("input_2", ItemStack.EMPTY).forGetter(trade -> trade.price2),
+            PlaceboCodecs.nullableField(ItemAdapter.CODEC, "input_2", ItemStack.EMPTY).forGetter(trade -> trade.price2),
             ItemAdapter.CODEC.fieldOf("output").forGetter(trade -> trade.forSale),
-            Codec.INT.optionalFieldOf("max_trades", 1).forGetter(trade -> trade.maxTrades),
-            Codec.INT.optionalFieldOf("xp", 0).forGetter(trade -> trade.xp),
-            Codec.FLOAT.optionalFieldOf("price_mult", 1F).forGetter(trade -> trade.priceMult),
-            Codec.BOOL.optionalFieldOf("rare", false).forGetter(trade -> trade.rare))
+            PlaceboCodecs.nullableField(Codec.INT, "max_trades", 1).forGetter(trade -> trade.maxTrades),
+            PlaceboCodecs.nullableField(Codec.INT, "xp", 0).forGetter(trade -> trade.xp),
+            PlaceboCodecs.nullableField(Codec.FLOAT, "price_mult", 1F).forGetter(trade -> trade.priceMult),
+            PlaceboCodecs.nullableField(Codec.BOOL, "rare", false).forGetter(trade -> trade.rare))
         .apply(inst, WandererTrade::new));
 
     protected final boolean rare;

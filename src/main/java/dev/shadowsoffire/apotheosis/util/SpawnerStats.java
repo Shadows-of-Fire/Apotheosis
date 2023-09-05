@@ -10,13 +10,13 @@ public record SpawnerStats(int spawnDelay, int minDelay, int maxDelay, int spawn
 
     public static final Codec<SpawnerStats> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
-            Codec.INT.optionalFieldOf("spawn_delay", 20).forGetter(SpawnerStats::spawnDelay),
-            Codec.INT.optionalFieldOf("min_delay", 200).forGetter(SpawnerStats::minDelay),
-            Codec.INT.optionalFieldOf("max_delay", 800).forGetter(SpawnerStats::maxDelay),
-            Codec.INT.optionalFieldOf("spawn_count", 4).forGetter(SpawnerStats::spawnCount),
-            Codec.INT.optionalFieldOf("max_nearby_entities", 6).forGetter(SpawnerStats::maxNearbyEntities),
-            Codec.INT.optionalFieldOf("spawn_range", 4).forGetter(SpawnerStats::spawnRange),
-            Codec.INT.optionalFieldOf("player_activation_range", 16).forGetter(SpawnerStats::playerRange))
+            PlaceboCodecs.nullableField(Codec.INT, "spawn_delay", 20).forGetter(SpawnerStats::spawnDelay),
+            PlaceboCodecs.nullableField(Codec.INT, "min_delay", 200).forGetter(SpawnerStats::minDelay),
+            PlaceboCodecs.nullableField(Codec.INT, "max_delay", 800).forGetter(SpawnerStats::maxDelay),
+            PlaceboCodecs.nullableField(Codec.INT, "spawn_count", 4).forGetter(SpawnerStats::spawnCount),
+            PlaceboCodecs.nullableField(Codec.INT, "max_nearby_entities", 6).forGetter(SpawnerStats::maxNearbyEntities),
+            PlaceboCodecs.nullableField(Codec.INT, "spawn_range", 4).forGetter(SpawnerStats::spawnRange),
+            PlaceboCodecs.nullableField(Codec.INT, "player_activation_range", 16).forGetter(SpawnerStats::playerRange))
         .apply(inst, SpawnerStats::new));
 
     public SpawnerStats() {
