@@ -2,8 +2,8 @@
 	"entity": "minecraft:zombified_piglin",
 	"weight": 100,
 	"size": {
-		"width": 1,
-		"height": 2
+		"width": 0.6,
+		"height": 1.95
 	},
 	"valid_gear_sets": [
 		"#the_nether"

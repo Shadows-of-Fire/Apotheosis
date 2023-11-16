@@ -3,8 +3,8 @@
 	"weight": 100,
 	"quality": 0,
 	"size": {
-		"width": 1,
-		"height": 2
+		"width": 0.7,
+		"height": 2.4
 	},
 	"valid_gear_sets": [
 		"#the_nether",
