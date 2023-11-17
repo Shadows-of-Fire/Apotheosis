@@ -1,6 +1,27 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.1.0
+* Updated to Placebo 8.5.6. Changed a lot of things to use Codecs and Records where applicable.
+* Improved data validation by switching to `nullableField` instead of `optionalFieldOf`.
+* Affix Loot Entries have been datafixed to the current format.
+* SkyzerFlyzer: Updated boss AABB sizes to match sizes reported by the vanilla wiki.
+* VenomCode: Fixed the Vial of Arcane Extraction.
+* Made the NoAI spawner modifier apply to passengers as well as the primary mob.
+* Fixed mob effect affixes applying the mob effect on the client.
+* Fixed the telepathic (teleport drops) affix not working.
+* Fixed a crash that happened if affixes were resolved too early.
+* Fixed the healing amount for the Gem of the Mageslayer being too high.
+* Changed the Gem of the Royal Family to only boost stats from vanilla/forge and apothic attributes.
+  * Additional stats can be datapacked in.
+  * The tooltip is unchanged, and still shows "+X% to all stats"
+* Fixed the Reforging Table voiding items if the server shutdown while the menu was open.
+* Fixed being able to place invalid items into the Gem Cutting Table, which was causing a crash.
+* Made Shield Bash exclusive with Sharpness and other damage enchantments.
+* Fixed Towers generating in Oceans.
+* Added the Youthful spawner modifier, which forces all spawned mobs to be babies.
+  * Applied with a turtle egg.
+
 ## 7.0.5
 * Fixed some broken Wandering Trader trades.
 * Fixed Wandering Trader trades being re-added multiplicatively based on the number of reloads that were run.
