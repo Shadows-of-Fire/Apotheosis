@@ -1,30 +1,36 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-import com.google.gson.JsonElement;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
 public class SpawnerStats {
 
-    public static final Map<String, SpawnerStat<?>> REGISTRY = new HashMap<>();
+    public static final Map<String, SpawnerStat<?>> REGISTRY = new LinkedHashMap<>();
 
-    public static final SpawnerStat<Integer> MIN_DELAY = register(new IntStat("min_delay", s -> s.spawner.minSpawnDelay, (s, v) -> s.spawner.minSpawnDelay = v));
+    public static final SpawnerStat<Short> MIN_DELAY = register(new ShortStat("min_delay", s -> s.spawner.minSpawnDelay, (s, v) -> s.spawner.minSpawnDelay = v));
 
-    public static final SpawnerStat<Integer> MAX_DELAY = register(new IntStat("max_delay", s -> s.spawner.maxSpawnDelay, (s, v) -> s.spawner.maxSpawnDelay = v));
+    public static final SpawnerStat<Short> MAX_DELAY = register(new ShortStat("max_delay", s -> s.spawner.maxSpawnDelay, (s, v) -> s.spawner.maxSpawnDelay = v));
 
-    public static final SpawnerStat<Integer> SPAWN_COUNT = register(new IntStat("spawn_count", s -> s.spawner.spawnCount, (s, v) -> s.spawner.spawnCount = v));
+    public static final SpawnerStat<Short> SPAWN_COUNT = register(new ShortStat("spawn_count", s -> s.spawner.spawnCount, (s, v) -> s.spawner.spawnCount = v));
 
-    public static final SpawnerStat<Integer> MAX_NEARBY_ENTITIES = register(new IntStat("max_nearby_entities", s -> s.spawner.maxNearbyEntities, (s, v) -> s.spawner.maxNearbyEntities = v));
+    public static final SpawnerStat<Short> MAX_NEARBY_ENTITIES = register(new ShortStat("max_nearby_entities", s -> s.spawner.maxNearbyEntities, (s, v) -> s.spawner.maxNearbyEntities = v));
 
-    public static final SpawnerStat<Integer> REQ_PLAYER_RANGE = register(new IntStat("req_player_range", s -> s.spawner.requiredPlayerRange, (s, v) -> s.spawner.requiredPlayerRange = v));
+    public static final SpawnerStat<Short> REQ_PLAYER_RANGE = register(new ShortStat("req_player_range", s -> s.spawner.requiredPlayerRange, (s, v) -> s.spawner.requiredPlayerRange = v));
 
-    public static final SpawnerStat<Integer> SPAWN_RANGE = register(new IntStat("spawn_range", s -> s.spawner.spawnRange, (s, v) -> s.spawner.spawnRange = v));
+    public static final SpawnerStat<Short> SPAWN_RANGE = register(new ShortStat("spawn_range", s -> s.spawner.spawnRange, (s, v) -> s.spawner.spawnRange = v));
 
     public static final SpawnerStat<Boolean> IGNORE_PLAYERS = register(new BoolStat("ignore_players", s -> s.ignoresPlayers, (s, v) -> s.ignoresPlayers = v));
 
@@ -37,6 +43,17 @@ public class SpawnerStats {
     public static final SpawnerStat<Boolean> NO_AI = register(new BoolStat("no_ai", s -> s.hasNoAI, (s, v) -> s.hasNoAI = v));
 
     public static final SpawnerStat<Boolean> SILENT = register(new BoolStat("silent", s -> s.silent, (s, v) -> s.silent = v));
+
+    public static final SpawnerStat<Boolean> BABY = register(new BoolStat("baby", s -> s.baby, (s, v) -> s.baby = v));
+
+    public static void generateTooltip(ApothSpawnerTile tile, Consumer<Component> list) {
+        for (SpawnerStat<?> stat : REGISTRY.values()) {
+            Component comp = stat.getTooltip(tile);
+            if (!comp.getString().isEmpty()) {
+                list.accept(comp);
+            }
+        }
+    }
 
     private static <T extends SpawnerStat<?>> T register(T t) {
         REGISTRY.put(t.getId(), t);
@@ -60,17 +77,32 @@ public class SpawnerStats {
             return this.id;
         }
 
+        @Override
+        public T getValue(ApothSpawnerTile spawner) {
+            return this.getter.apply(spawner);
+        }
+
     }
 
     private static class BoolStat extends Base<Boolean> {
+
+        private final Codec<StatModifier<Boolean>> modifierCodec = RecordCodecBuilder.create(inst -> inst
+            .group(
+                Codec.BOOL.fieldOf("value").forGetter(StatModifier::value))
+            .apply(inst, (value) -> new StatModifier<>(this, value, false, true)));
 
         private BoolStat(String id, Function<ApothSpawnerTile, Boolean> getter, BiConsumer<ApothSpawnerTile, Boolean> setter) {
             super(id, getter, setter);
         }
 
         @Override
-        public Boolean parseValue(JsonElement value) {
-            return value == null ? false : value.getAsBoolean();
+        public Codec<StatModifier<Boolean>> getModifierCodec() {
+            return this.modifierCodec;
+        }
+
+        @Override
+        public Component getTooltip(ApothSpawnerTile spawner) {
+            return getValue(spawner) ? name().withStyle(ChatFormatting.DARK_GREEN) : CommonComponents.EMPTY;
         }
 
         @Override
@@ -80,34 +112,40 @@ public class SpawnerStats {
             return old != this.getter.apply(spawner);
         }
 
-        @Override
-        public Class<Boolean> getTypeClass() {
-            return Boolean.class;
-        }
     }
 
-    private static class IntStat extends Base<Integer> {
+    private static class ShortStat extends Base<Short> {
 
-        private IntStat(String id, Function<ApothSpawnerTile, Integer> getter, BiConsumer<ApothSpawnerTile, Integer> setter) {
-            super(id, getter, setter);
+        public static final Codec<Short> BOUNDS_CODEC = Codec.intRange(-1, Short.MAX_VALUE).xmap(Integer::shortValue, Short::intValue);
+
+        private final Codec<StatModifier<Short>> modifierCodec = RecordCodecBuilder.create(inst -> inst
+            .group(
+                Codec.SHORT.fieldOf("value").forGetter(StatModifier::value),
+                BOUNDS_CODEC.fieldOf("min").forGetter(StatModifier::min),
+                BOUNDS_CODEC.fieldOf("max").forGetter(StatModifier::max))
+            .apply(inst, (value, min, max) -> new StatModifier<>(this, value, min == -1 ? 0 : min, max == -1 ? Short.MAX_VALUE : max)));
+
+        private ShortStat(String id, Function<ApothSpawnerTile, Integer> getter, BiConsumer<ApothSpawnerTile, Short> setter) {
+            super(id, tile -> getter.apply(tile).shortValue(), setter);
         }
 
         @Override
-        public Integer parseValue(JsonElement value) {
-            return value == null ? 0 : value.getAsInt();
+        public Codec<StatModifier<Short>> getModifierCodec() {
+            return this.modifierCodec;
         }
 
         @Override
-        public boolean apply(Integer value, Integer min, Integer max, ApothSpawnerTile spawner) {
+        public Component getTooltip(ApothSpawnerTile spawner) {
+            return ApothSpawnerBlock.concat(name(), getValue(spawner));
+        }
+
+        @Override
+        public boolean apply(Short value, Short min, Short max, ApothSpawnerTile spawner) {
             int old = this.getter.apply(spawner);
-            this.setter.accept(spawner, Mth.clamp(old + value, min, max));
+            this.setter.accept(spawner, (short) Mth.clamp(old + value, min, max));
             return old != this.getter.apply(spawner);
         }
 
-        @Override
-        public Class<Integer> getTypeClass() {
-            return Integer.class;
-        }
     }
 
 }

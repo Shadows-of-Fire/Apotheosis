@@ -40,6 +40,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
     public boolean ignoresLight = false;
     public boolean hasNoAI = false;
     public boolean silent = false;
+    public boolean baby = false;
 
     public ApothSpawnerTile(BlockPos pos, BlockState state) {
         super(pos, state);
@@ -54,6 +55,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
         tag.putBoolean("ignore_light", this.ignoresLight);
         tag.putBoolean("no_ai", this.hasNoAI);
         tag.putBoolean("silent", this.silent);
+        tag.putBoolean("baby", this.baby);
         super.saveAdditional(tag);
     }
 
@@ -65,6 +67,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
         this.ignoresLight = tag.getBoolean("ignore_light");
         this.hasNoAI = tag.getBoolean("no_ai");
         this.silent = tag.getBoolean("silent");
+        this.baby = tag.getBoolean("baby");
         super.load(tag);
     }
 
@@ -211,6 +214,10 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
                                     mob.setNoAi(true);
                                     mob.getPersistentData().putBoolean("apotheosis:movable", true);
                                 });
+                            }
+
+                            if (ApothSpawnerTile.this.baby && entity instanceof Mob mob) {
+                                mob.setBaby(true);
                             }
 
                             if (ApothSpawnerTile.this.silent) entity.setSilent(true);
