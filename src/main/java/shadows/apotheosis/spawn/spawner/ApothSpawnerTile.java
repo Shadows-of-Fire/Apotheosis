@@ -199,9 +199,12 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
                                 return;
                             }
 
-                            if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
-                                mob.setNoAi(true);
-                                entity.getPersistentData().putBoolean("apotheosis:movable", true);
+                            // Raise the NoAI Flag and set the apotheosis:movable flag for the main mob and all mob passengers.
+                            if (ApothSpawnerTile.this.hasNoAI) {
+                                entity.getSelfAndPassengers().filter(t -> t instanceof Mob).map(Mob.class::cast).forEach(mob -> {
+                                    mob.setNoAi(true);
+                                    mob.getPersistentData().putBoolean("apotheosis:movable", true);
+                                });
                             }
                             if (ApothSpawnerTile.this.silent) entity.setSilent(true);
 
