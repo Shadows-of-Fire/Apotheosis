@@ -8,7 +8,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import shadows.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
 
-@Debug(export = true)
 @Pseudo
 @Mixin(targets = {"com.rolfmao.upgradednetherite.content.UpgradedNetheriteCrossbow", "com.rolfmao.upgradednetherite_ultimate.content.UpgradedNetheriteCrossbow"})
 public class UpgradedNetheriteCrossbowMixin extends CrossbowItem {
