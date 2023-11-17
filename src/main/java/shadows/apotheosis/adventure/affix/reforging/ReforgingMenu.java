@@ -177,6 +177,7 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
             ReforgingMenu.this.needsReset.set(0);
         }
         super.slotsChanged(pContainer);
+        this.tile.setChanged();
     }
 
 }
