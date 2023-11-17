@@ -76,6 +76,7 @@ public class AffixHelper {
      * @return An immutable map of all affixes on the stack, or an empty map if none were found.
      */
     public static Map<DynamicHolder<? extends Affix>, AffixInstance> getAffixes(ItemStack stack) {
+        if (AffixRegistry.INSTANCE.getValues().isEmpty()) return Collections.emptyMap(); // Don't enter getAffixesImpl if the affixes haven't loaded yet.
         return CachedObjectSource.getOrCreate(stack, AFFIX_CACHED_OBJECT, AffixHelper::getAffixesImpl, CachedObject.hashSubkey(AFFIX_DATA));
     }
 
