@@ -8,6 +8,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,14 +16,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import shadows.apotheosis.ench.enchantments.masterwork.CrescendoEnchant;
 
+@Debug(export = true)
 @Pseudo
-@Mixin(targets = "com.rolfmao.upgradednetherite.content.UpgradedNetheriteCrossbow")
+@Mixin(targets = {"com.rolfmao.upgradednetherite.content.UpgradedNetheriteCrossbow", "com.rolfmao.upgradednetherite_ultimate.content.UpgradedNetheriteCrossbow"})
 public class UpgradedNetheriteCrossbowMixin extends CrossbowItem {
     public UpgradedNetheriteCrossbowMixin(final Properties properties) {
         super(properties);
     }
 
-    @Inject(method = "m_7203_", at = @At(value = "INVOKE", target = "Lcom/rolfmao/upgradednetherite/content/UpgradedNetheriteCrossbow;performShooting(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;FF)V", remap = false))
+    @Inject(method = "m_7203_", at =
+            {
+                    @At(value = "INVOKE", target = "Lcom/rolfmao/upgradednetherite/content/UpgradedNetheriteCrossbow;performShooting(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;FF)V", remap = false),
+                    @At(value = "INVOKE", target = "Lcom/rolfmao/upgradednetherite_ultimate/content/UpgradedNetheriteCrossbow;performShooting(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;FF)V", remap = false)
+            })
     public void apoth_preFired(Level pLevel, Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> ci) {
         CrescendoEnchant.preArrowFired(pPlayer.getItemInHand(pHand));
     }
