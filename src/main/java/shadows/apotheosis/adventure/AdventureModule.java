@@ -149,9 +149,10 @@ public class AdventureModule {
             Exclusion.initSerializers();
             GemBonus.initCodecs();
             MobEffects.BLINDNESS.addAttributeModifier(Attributes.FOLLOW_RANGE, "f8c3de3d-1fea-4d7c-a8b0-22f63c4c3454", -0.75, Operation.MULTIPLY_TOTAL);
-            if (MobEffects.SLOW_FALLING.getAttributeModifiers().isEmpty()) {
-                MobEffects.SLOW_FALLING.addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA", -0.07, Operation.ADDITION);
-            }
+            // TODO: Update to show in GUI without applying attribute to entity
+            // if (MobEffects.SLOW_FALLING.getAttributeModifiers().isEmpty()) {
+            //     MobEffects.SLOW_FALLING.addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), "A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA", -0.07, Operation.ADDITION);
+            // }
         });
     }
 
