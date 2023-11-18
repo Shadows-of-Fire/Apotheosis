@@ -145,7 +145,7 @@ public class PotionAffix extends Affix {
     }
 
     private void applyEffect(LivingEntity target, LootRarity rarity, float level) {
-        if (target.level().isClientSide()) return;
+        if (target.level.isClientSide()) return;
 
         int cooldown = this.getCooldown(rarity);
         if (cooldown != 0 && isOnCooldown(this.getId(), cooldown, target)) return;
