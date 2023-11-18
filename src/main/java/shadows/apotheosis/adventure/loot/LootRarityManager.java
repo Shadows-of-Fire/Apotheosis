@@ -36,7 +36,7 @@ public class LootRarityManager extends PlaceboJsonReloadListener<RarityStub> {
     protected List<LootRarity> list = new ArrayList<>(6);
 
     private LootRarityManager() {
-        super(AdventureModule.LOGGER, "rarities", false, false);
+        super(AdventureModule.LOGGER, "rarities", true, false);
     }
 
     @Override

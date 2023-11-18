@@ -52,7 +52,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
         this.byType = builder.build();
         Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
         Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
-        if (!FMLEnvironment.production) {
+        if (!FMLEnvironment.production && FMLEnvironment.dist.isClient()) {
             AdventureModuleClient.checkAffixLangKeys();
         }
     }
