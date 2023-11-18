@@ -1,6 +1,21 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 6.4.1
+* ChampionAsh: Disable entity gravity modifier directly on slow falling
+  * Should resolve issues where high levels of slow falling (like the one applied by The Bumblezone) would send players into the atmosphere.
+* SiverDX: Added Crescendo of Bolts support to the Upgraded Netherite Crossbow.
+* Fixed rarity changes causing the Reforging Table to desync when playing on a dedicated server.
+* Backported the following bugfixes from 7.1.0:
+  * Made the NoAI spawner modifier apply to passengers as well as the primary mob.
+  * Fixed mob effect affixes applying the mob effect on the client.
+  * Fixed the healing amount for the Gem of the Mageslayer being too high.
+  * Changed the Gem of the Royal Family to only boost stats from vanilla/forge and apothic attributes.
+    * Additional stats can be datapacked in.
+    * The tooltip is unchanged, and still shows "+X% to all stats"
+  * Fixed the Reforging Table voiding items if the server shutdown while the menu was open.
+  * Made Shield Bash exclusive with Sharpness and other damage enchantments.
+
 ## 6.4.0
 * Backport of 1.20 content:
   * Added JEI Support for Gem Cutting.
