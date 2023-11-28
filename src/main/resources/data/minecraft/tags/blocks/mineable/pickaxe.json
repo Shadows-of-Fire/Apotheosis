@@ -119,6 +119,10 @@
 		{
 			"id": "apotheosis:simple_reforging_table",
 			"required": false
+		},
+		{
+			"id": "apotheosis:filtering_shelf",
+			"required": false
 		}
 	]
 }

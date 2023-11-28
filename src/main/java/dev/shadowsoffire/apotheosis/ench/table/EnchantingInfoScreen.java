@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -24,6 +25,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.random.WeightedEntry.IntrusiveBase;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -47,7 +49,7 @@ public class EnchantingInfoScreen extends Screen {
     protected float scrollOffs;
     protected boolean scrolling;
     protected int startIndex;
-    List<ArcanaEnchantmentData> enchantments = Collections.emptyList();
+    List<EnchantmentDataWrapper> enchantments = Collections.emptyList();
     Map<Enchantment, List<Enchantment>> exclusions = new HashMap<>();
 
     public EnchantingInfoScreen(ApothEnchantScreen parent) {
@@ -62,8 +64,8 @@ public class EnchantingInfoScreen extends Screen {
             Enchantment clue = Enchantment.byId(this.clues[i]);
             if (clue != null) {
                 int level = this.costs[i];
-                float quanta = parent.getMenu().quanta.get() / 100F;
-                float rectification = parent.getMenu().rectification.get() / 100F;
+                float quanta = parent.getMenu().stats.quanta() / 100F;
+                float rectification = parent.getMenu().stats.rectification() / 100F;
                 int minPow = Math.round(Mth.clamp(level - level * (quanta - quanta * rectification), 1, EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
                 int maxPow = Math.round(Mth.clamp(level + level * quanta, 1, EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
                 this.powers[i] = new int[] { minPow, maxPow };
@@ -104,22 +106,29 @@ public class EnchantingInfoScreen extends Screen {
         int scrollbarPos = (int) (128F * this.scrollOffs);
         gfx.blit(TEXTURES, 220, 18 + scrollbarPos, 244, 173 + (this.isScrollBarActive() ? 0 : 15), 12, 15);
 
-        ArcanaEnchantmentData hover = this.getHovered(pMouseX, pMouseY);
+        EnchantmentDataWrapper hover = this.getHovered(pMouseX, pMouseY);
         for (int i = 0; i < 11; i++) {
             if (this.enchantments.size() - 1 < i) break;
             int v = 173;
-            if (hover == this.enchantments.get(this.startIndex + i)) v += 13;
-            gfx.blit(TEXTURES, 89, 18 + 13 * i, 114, v, 128, 13);
+            EnchantmentDataWrapper data = this.enchantments.get(this.startIndex + i);
+            if (data.isBlacklisted) v += 26;
+            else if (hover == this.enchantments.get(this.startIndex + i)) v += 13;
+            gfx.blit(TEXTURES, 89, 18 + 13 * i, 96, v, 128, 13);
         }
 
         for (int i = 0; i < 11; i++) {
             if (this.enchantments.size() - 1 < i) break;
-            ArcanaEnchantmentData data = this.enchantments.get(this.startIndex + i);
-            gfx.drawString(font, I18n.get(data.data.enchantment.getDescriptionId()), 91, 21 + 13 * i, 0xFFFF80, false);
+            EnchantmentDataWrapper data = this.enchantments.get(this.startIndex + i);
+            if (data.isBlacklisted) {
+                gfx.drawString(font, Component.translatable(data.getEnch().getDescriptionId()).withStyle(s -> s.withColor(0x58B0CC).withStrikethrough(true)), 91, 21 + 13 * i, 0xFFFF80, false);
+            }
+            else {
+                gfx.drawString(font, I18n.get(data.getEnch().getDescriptionId()), 91, 21 + 13 * i, 0xFFFF80, false);
+            }
         }
 
         List<Component> list = new ArrayList<>();
-        Arcana a = Arcana.getForThreshold(this.parent.getMenu().arcana.get());
+        Arcana a = Arcana.getForThreshold(this.parent.getMenu().stats.arcana());
         list.add(Component.translatable("info.apotheosis.weights").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.common"), a.rarities[0]).withStyle(ChatFormatting.GRAY));
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
@@ -144,15 +153,15 @@ public class EnchantingInfoScreen extends Screen {
 
         if (hover != null) {
             list.clear();
-            list.add(Component.translatable(hover.data.enchantment.getDescriptionId()).withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
-            list.add(Component.translatable("info.apotheosis.enchinfo_level", Component.translatable("enchantment.level." + hover.data.level)).withStyle(ChatFormatting.DARK_AQUA));
-            Component rarity = Component.translatable("rarity.enchantment." + hover.data.enchantment.getRarity().name().toLowerCase(Locale.ROOT)).withStyle(colors[hover.data.enchantment.getRarity().ordinal()]);
+            list.add(Component.translatable(hover.getEnch().getDescriptionId()).withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
+            list.add(Component.translatable("info.apotheosis.enchinfo_level", Component.translatable("enchantment.level." + hover.getLevel())).withStyle(ChatFormatting.DARK_AQUA));
+            Component rarity = Component.translatable("rarity.enchantment." + hover.getEnch().getRarity().name().toLowerCase(Locale.ROOT)).withStyle(colors[hover.getEnch().getRarity().ordinal()]);
             list.add(Component.translatable("info.apotheosis.enchinfo_rarity", rarity).withStyle(ChatFormatting.DARK_AQUA));
             list.add(Component.translatable("info.apotheosis.enchinfo_chance", String.format("%.2f", 100F * hover.getWeight().asInt() / WeightedRandom.getTotalWeight(this.enchantments)) + "%").withStyle(ChatFormatting.DARK_AQUA));
-            if (I18n.exists(hover.data.enchantment.getDescriptionId() + ".desc")) {
-                list.add(Component.translatable(hover.data.enchantment.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_AQUA));
+            if (I18n.exists(hover.getEnch().getDescriptionId() + ".desc")) {
+                list.add(Component.translatable(hover.getEnch().getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_AQUA));
             }
-            List<Enchantment> excls = this.exclusions.get(hover.data.enchantment);
+            List<Enchantment> excls = this.exclusions.get(hover.getEnch());
             if (!excls.isEmpty()) {
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < excls.size(); i++) {
@@ -235,19 +244,25 @@ public class EnchantingInfoScreen extends Screen {
     }
 
     protected void recomputeEnchantments() {
-        Arcana arc = Arcana.getForThreshold(this.parent.getMenu().arcana.get());
-        this.enchantments = RealEnchantmentHelper.getAvailableEnchantmentResults(this.currentPower, this.toEnchant, false).stream().map(e -> new ArcanaEnchantmentData(arc, e)).collect(Collectors.toList());
+        Arcana arc = Arcana.getForThreshold(this.parent.getMenu().stats.arcana());
+        Set<Enchantment> blacklist = this.parent.getMenu().stats.blacklist();
+        this.enchantments = RealEnchantmentHelper.getAvailableEnchantmentResults(this.currentPower, this.toEnchant, false, Collections.emptySet())
+            .stream()
+            .map(e -> new ArcanaEnchantmentData(arc, e))
+            .map(a -> new EnchantmentDataWrapper(a, blacklist.contains(a.data.enchantment)))
+            .collect(Collectors.toList());
         if (this.startIndex + 11 >= this.enchantments.size()) {
             this.startIndex = 0;
             this.scrollOffs = 0;
         }
         this.exclusions.clear();
-        for (ArcanaEnchantmentData d : this.enchantments) {
+        for (EnchantmentDataWrapper d : this.enchantments) {
+            if (blacklist.contains(d.getEnch())) continue;
             List<Enchantment> excls = new ArrayList<>();
-            for (ArcanaEnchantmentData d2 : this.enchantments) {
-                if (d != d2 && !d.data.enchantment.isCompatibleWith(d2.data.enchantment)) excls.add(d2.data.enchantment);
+            for (EnchantmentDataWrapper d2 : this.enchantments) {
+                if (d != d2 && !d.getEnch().isCompatibleWith(d2.getEnch())) excls.add(d2.getEnch());
             }
-            this.exclusions.put(d.data.enchantment, excls);
+            this.exclusions.put(d.getEnch(), excls);
         }
     }
 
@@ -256,11 +271,12 @@ public class EnchantingInfoScreen extends Screen {
         return false;
     }
 
-    protected ArcanaEnchantmentData getHovered(double mouseX, double mouseY) {
+    protected EnchantmentDataWrapper getHovered(double mouseX, double mouseY) {
         for (int i = 0; i < 11; i++) {
             if (this.enchantments.size() - 1 < i) break;
             if (this.isHovering(89, 18 + i * 13, 128, 13, mouseX, mouseY)) {
-                return this.enchantments.get(this.startIndex + i);
+                EnchantmentDataWrapper data = this.enchantments.get(this.startIndex + i);
+                return data.isBlacklisted ? null : data;
             }
         }
         return null;
@@ -329,6 +345,27 @@ public class EnchantingInfoScreen extends Screen {
         private float step() {
             return 1F / Math.max(this.max() - this.min(), 1);
         }
+    }
+
+    protected static class EnchantmentDataWrapper extends IntrusiveBase {
+
+        protected final ArcanaEnchantmentData data;
+        protected final boolean isBlacklisted;
+
+        public EnchantmentDataWrapper(ArcanaEnchantmentData data, boolean isBlacklisted) {
+            super(isBlacklisted ? 0 : data.getWeight().asInt());
+            this.data = data;
+            this.isBlacklisted = isBlacklisted;
+        }
+
+        public Enchantment getEnch() {
+            return this.data.data.enchantment;
+        }
+
+        public int getLevel() {
+            return this.data.data.level;
+        }
+
     }
 
 }

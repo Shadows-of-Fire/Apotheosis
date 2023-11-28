@@ -27,7 +27,7 @@ public class EnchTOPPlugin implements TOPCompat.Provider {
                 info.text(e.getKey().getFullname(e.getIntValue()));
             }
         }
-        CommonTooltipUtil.appendBlockStats(level, state, info::mcText);
+        CommonTooltipUtil.appendBlockStats(level, state, hitData.getPos(), info::mcText);
         if (state.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(level, hitData.getPos(), info::mcText);
     }
 

@@ -9,9 +9,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.boss.ApothBoss;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootEntry;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -95,7 +97,12 @@ public class GatewaysCompat {
 
         @Override
         public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
-            list.accept(LootController.createLootItem(AffixLootRegistry.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner)).getStack(), this.rarity.get(), level.random));
+            AffixLootEntry entry = AffixLootRegistry.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner));
+            if (entry == null) {
+                AdventureModule.LOGGER.error("Failed to find an affix loot item for a RarityAffixItemReward executing in dimension {} with rarity {}.", level.dimension(), rarity.getId());
+                return;
+            }
+            list.accept(LootController.createLootItem(entry.getStack(), this.rarity.get(), level.random));
         }
 
         @Override

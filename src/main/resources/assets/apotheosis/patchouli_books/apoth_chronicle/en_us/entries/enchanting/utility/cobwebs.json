@@ -3,6 +3,7 @@
     "icon": "minecraft:cobweb",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
+	"sortnum": 5,
     "pages": [
         {
             "type": "patchouli:text",

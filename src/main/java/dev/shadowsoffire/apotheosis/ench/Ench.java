@@ -2,6 +2,8 @@ package dev.shadowsoffire.apotheosis.ench;
 
 import java.util.function.Supplier;
 
+import com.google.common.collect.ImmutableSet;
+
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.Particles;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -33,6 +35,8 @@ import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryBlock;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.ExtractionTomeItem;
+import dev.shadowsoffire.apotheosis.ench.objects.FilteringShelfBlock;
+import dev.shadowsoffire.apotheosis.ench.objects.FilteringShelfBlock.FilteringShelfTile;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
@@ -46,9 +50,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.RegistryObject;
@@ -110,6 +116,9 @@ public class Ench {
         public static final RegistryObject<Block> SOUL_TOUCHED_SCULKSHELF = sculkShelf("soul_touched_sculkshelf");
 
         public static final RegistryObject<Block> STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.25F, () -> ParticleTypes.ENCHANT);
+
+        public static final RegistryObject<Block> FILTERING_SHELF = R.block("filtering_shelf",
+            () -> new FilteringShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).sound(SoundType.STONE).strength(1.25F).requiresCorrectToolForDrops()));
 
         private static void bootstrap() {}
 
@@ -215,6 +224,8 @@ public class Ench {
 
         public static final RegistryObject<TomeItem> WEAPON_TOME = R.item("weapon_tome", () -> new TomeItem(net.minecraft.world.item.Items.DIAMOND_SWORD, EnchantmentCategory.WEAPON));
 
+        public static final RegistryObject<BlockItem> FILTERING_SHELF = R.item("filtering_shelf", () -> new BlockItem(Ench.Blocks.FILTERING_SHELF.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+
         private static void bootstrap() {}
 
     }
@@ -280,6 +291,15 @@ public class Ench {
 
     }
 
+    public static class Tiles {
+
+        public static final RegistryObject<BlockEntityType<FilteringShelfTile>> FILTERING_SHELF = R.blockEntity("filtering_shelf",
+            () -> new BlockEntityType<>(FilteringShelfTile::new, ImmutableSet.of(Blocks.FILTERING_SHELF.get()), null));
+
+        private static void bootstrap() {}
+
+    }
+
     private static final DeferredHelper R = ModularDeferredHelper.create(() -> Apotheosis.enableEnch);
 
     public static void bootstrap() {
@@ -287,6 +307,7 @@ public class Ench {
         Items.bootstrap();
         Enchantments.bootstrap();
         Tabs.bootstrap();
+        Tiles.bootstrap();
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
@@ -48,23 +49,24 @@ public class RealEnchantmentHelper {
     /**
      * Creates a list of enchantments for a specific slot given various variables.
      *
-     * @param rand     Pre-seeded random.
-     * @param stack    Itemstack to be enchanted.
-     * @param level    Enchanting Slot XP Level
-     * @param quanta   Quanta Level
-     * @param arcana   Arcana Level
-     * @param treasure If treasure enchantments can show up.
+     * @param rand      Pre-seeded random.
+     * @param stack     Itemstack to be enchanted.
+     * @param level     Enchanting Slot XP Level
+     * @param quanta    Quanta Level
+     * @param arcana    Arcana Level
+     * @param treasure  If treasure enchantments can show up.
+     * @param blacklist A list of all enchantments that may not be selected.
      * @return A list of enchantments based on the seed, item, and eterna/quanta/arcana levels.
      */
-    public static List<EnchantmentInstance> selectEnchantment(RandomSource rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure) {
+    public static List<EnchantmentInstance> selectEnchantment(RandomSource rand, ItemStack stack, int level, float quanta, float arcana, float rectification, boolean treasure, Set<Enchantment> blacklist) {
         List<EnchantmentInstance> chosenEnchants = Lists.newArrayList();
         int enchantability = stack.getEnchantmentValue();
         int srcLevel = level;
         if (enchantability > 0) {
-            float quantaFactor = 1 + Mth.nextFloat(rand, -1F + rectification / 100F, 1F) * quanta / 100F; // The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
+            float quantaFactor = 1 + Mth.clamp((float) rand.nextGaussian(), -1F + rectification / 100F, 1F) * quanta / 100F; // The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
             level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
             Arcana arcanaVals = Arcana.getForThreshold(arcana);
-            List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure);
+            List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure, blacklist);
             Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
             allEnchants.removeIf(e -> enchants.containsKey(e.enchantment)); // Remove duplicates.
             List<ArcanaEnchantmentData> possibleEnchants = allEnchants.stream().map(d -> new ArcanaEnchantmentData(arcanaVals, d)).collect(Collectors.toList());
@@ -119,16 +121,18 @@ public class RealEnchantmentHelper {
      * @param power         The current enchanting power.
      * @param stack         The ItemStack being enchanted.
      * @param allowTreasure If treasure enchantments are allowed.
+     * @param blacklist     A list of all enchantments that may not be selected.
      * @return All possible enchantments that are eligible to be placed on this item at a specific power level.
      */
-    public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure) {
+    public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure, Set<Enchantment> blacklist) {
         List<EnchantmentInstance> list = new ArrayList<>();
-        IEnchantableItem enchi = (IEnchantableItem) stack.getItem();
-        allowTreasure = enchi.isTreasureAllowed(stack, allowTreasure);
+        IEnchantableItem item = (IEnchantableItem) stack.getItem();
+        allowTreasure = item.isTreasureAllowed(stack, allowTreasure);
         for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
             EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
             if (info.isTreasure() && !allowTreasure || !info.isDiscoverable()) continue;
-            if (enchantment.canApplyAtEnchantingTable(stack) || enchi.forciblyAllowsTableEnchantment(stack, enchantment)) {
+            if (blacklist.contains(enchantment)) continue;
+            if (enchantment.canApplyAtEnchantingTable(stack) || item.forciblyAllowsTableEnchantment(stack, enchantment)) {
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
                     if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
                         list.add(new EnchantmentInstance(enchantment, level));
