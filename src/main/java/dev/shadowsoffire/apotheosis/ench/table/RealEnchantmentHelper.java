@@ -63,7 +63,7 @@ public class RealEnchantmentHelper {
         int enchantability = stack.getEnchantmentValue();
         int srcLevel = level;
         if (enchantability > 0) {
-            float quantaFactor = 1 + Mth.clamp((float) rand.nextGaussian(), -1F + rectification / 100F, 1F) * quanta / 100F; // The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
+            float quantaFactor = getQuantaFactor(rand, quanta, rectification);
             level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
             Arcana arcanaVals = Arcana.getForThreshold(arcana);
             List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure, blacklist);
@@ -142,6 +142,37 @@ public class RealEnchantmentHelper {
             }
         }
         return list;
+    }
+
+    /**
+     * Generates a quanta factor, which is a value within the range [-1, 1] used to scale the final power.
+     * <p>
+     * The initial value is normally distributed within [-1, 1] with mean = 0 and stdev = 0.33.
+     * <p>
+     * This is done by using {@link RandomSource#nextGaussian()} which returns a normally distributed
+     * value with mean = 0 and stdev = 1, and dividing it by three (reducing the stdev to 0.33).<br>
+     * Any values outside the range [-1, 1] are clamped to fit the range.
+     * <p>
+     * Finally, values that would be blocked by rectification are uniformly distributed across the remaining space.<br>
+     * The resulting distribution is some weird frankenstein that is normal over [-1, 1] but approaches uniform over [0, 1]
+     * as rectification increases.
+     * 
+     * @param rand          The pre-seeded enchanting random.
+     * @param quanta        The quanta value, in [0, 100].
+     * @param rectification The rectification value, in [0, 100].
+     * @return A quanta factor that should be multiplied with the base power to retrieve the final power.
+     */
+    public static float getQuantaFactor(RandomSource rand, float quanta, float rectification) {
+        float gaussian = (float) rand.nextGaussian();
+        float factor = Mth.clamp(gaussian / 3F, -1F, 1F);
+
+        float rectPercent = rectification / 100F;
+
+        if (factor < (rectPercent - 1)) {
+            factor = Mth.nextFloat(rand, rectPercent - 1, 1);
+        }
+
+        return quanta * factor;
     }
 
     public static class ArcanaEnchantmentData extends IntrusiveBase {
