@@ -13,6 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -322,18 +323,15 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
 
         ItemStack enchanting = this.menu.getSlot(0).getItem();
         if (!enchanting.isEmpty() && this.menu.costs[2] > 0) {
-            for (int j = 0; j < 3; j++) {
-                if (this.isHovering(60, 14 + 19 * j, 108, 17, mouseX, mouseY)) {
+            for (int slot = 0; slot < 3; slot++) {
+                if (this.isHovering(60, 14 + 19 * slot, 108, 17, mouseX, mouseY)) {
                     List<Component> list = new ArrayList<>();
-                    int level = this.menu.costs[j];
+                    int level = this.menu.costs[slot];
                     list.add(Component.literal(I18n.get("info.apotheosis.ench_at", level)).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GREEN));
                     list.add(Component.literal(""));
-                    int cost = 0;
-                    for (int i = 0; i <= j; i++) {
-                        cost += EnchantmentUtils.getExperienceForLevel(level - i) - EnchantmentUtils.getExperienceForLevel(level - i - 1);
-                    }
-                    list.add(Component.translatable("info.apotheosis.xp_cost", Component.literal("" + cost).withStyle(ChatFormatting.GREEN),
-                        Component.literal("" + EnchantmentUtils.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
+                    int expCost = ApothMiscUtil.getExpCostForSlot(level, slot);
+                    list.add(Component.translatable("info.apotheosis.xp_cost", Component.literal("" + expCost).withStyle(ChatFormatting.GREEN),
+                        Component.literal("" + EnchantmentUtils.getLevelForExperience(expCost)).withStyle(ChatFormatting.GREEN)));
                     float quanta = this.menu.stats.quanta() / 100F;
                     float rectification = this.menu.stats.rectification() / 100F;
                     int minPow = Math.round(Mth.clamp(level - level * (quanta - quanta * rectification), 1, EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
