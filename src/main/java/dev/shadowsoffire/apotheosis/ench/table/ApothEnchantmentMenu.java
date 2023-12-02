@@ -132,7 +132,8 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
             float eterna = this.stats.eterna, quanta = this.stats.quanta, arcana = this.stats.arcana,
                 rectification = this.stats.rectification;
             List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, slot, this.costs[slot]);
-            if (!list.isEmpty() && EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(level, slot))) {
+            if (!list.isEmpty()) {
+                EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(level, slot));
                 player.onEnchantmentPerformed(toEnchant, 0); // Pass zero here instead of the cost so no experience is taken, but the method is still called for tracking reasons.
                 if (list.get(0).enchantment == Ench.Enchantments.INFUSION.get()) {
                     EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
@@ -228,7 +229,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
     private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
         this.random.setSeed(this.enchantmentSeed.get() + enchantSlot);
-        List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.stats.quanta(), this.stats.arcana(), this.stats.rectification(), false, this.stats.blacklist());
+        List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.stats.quanta(), this.stats.arcana(), this.stats.rectification(), this.stats.treasure(), this.stats.blacklist());
         EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.stats.eterna(), this.stats.quanta(), this.stats.arcana()))).get().orElse(null);
         if (enchantSlot == 2 && match != null) {
             list.clear();

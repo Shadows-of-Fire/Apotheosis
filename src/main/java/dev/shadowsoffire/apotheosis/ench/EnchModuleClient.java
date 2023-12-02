@@ -1,10 +1,12 @@
 package dev.shadowsoffire.apotheosis.ench;
 
 import java.util.List;
+import java.util.Set;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apoth.Particles;
+import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantScreen;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
@@ -17,6 +19,7 @@ import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
@@ -24,6 +27,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -71,6 +76,7 @@ public class EnchModuleClient {
             float arcana = EnchantingStatRegistry.getArcana(state, world, BlockPos.ZERO);
             float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, BlockPos.ZERO);
             int clues = EnchantingStatRegistry.getBonusClues(state, world, BlockPos.ZERO);
+            boolean treasure = ((IEnchantingBlock) state.getBlock()).allowsTreasure(state, world, BlockPos.ZERO);
             if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
                 tooltip.add(Component.translatable("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
             }
@@ -91,6 +97,19 @@ public class EnchModuleClient {
             }
             if (clues != 0) {
                 tooltip.add(Component.translatable("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+            }
+            if (treasure) {
+                tooltip.add(Component.translatable("info.apotheosis.allows_treasure").withStyle(ChatFormatting.GOLD));
+            }
+            Set<Enchantment> blacklist = ((IEnchantingBlock) state.getBlock()).getBlacklistedEnchantments(state, world, BlockPos.ZERO);
+            if (blacklist.size() > 0) {
+                tooltip.add(Component.translatable("info.apotheosis.filter").withStyle(s -> s.withColor(0x58B0CC)));
+                for (Enchantment ench : blacklist) {
+                    MutableComponent name = (MutableComponent) ench.getFullname(1);
+                    name.getSiblings().clear();
+                    name.withStyle(s -> s.withColor(0x5878AA));
+                    tooltip.add(Component.literal(" - ").append(name).withStyle(s -> s.withColor(0x5878AA)));
+                }
             }
         }
         else if (i == Items.ENCHANTED_BOOK) {
@@ -119,6 +138,11 @@ public class EnchModuleClient {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public void drawAnvilCostBlob(ScreenEvent.Render.Post e) {
+
     }
 
     private static Component boolComp(String key, boolean flag) {

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import dev.shadowsoffire.apotheosis.ench.table.RealEnchantmentHelper.ArcanaEnchantmentData;
 import net.minecraft.ChatFormatting;
@@ -42,6 +43,8 @@ public class EnchantingInfoScreen extends Screen {
     protected final int[] costs;
     protected final int[] clues;
     protected final int[][] powers = new int[3][];
+    protected final boolean treasure;
+
     protected int selectedSlot = -1;
     protected int leftPos, topPos;
     protected PowerSlider slider;
@@ -60,6 +63,7 @@ public class EnchantingInfoScreen extends Screen {
         this.toEnchant = parent.getMenu().getSlot(0).getItem();
         this.costs = parent.getMenu().costs;
         this.clues = parent.getMenu().enchantClue;
+        this.treasure = parent.getMenu().stats.treasure();
         for (int i = 0; i < 3; i++) {
             Enchantment clue = Enchantment.byId(this.clues[i]);
             if (clue != null) {
@@ -153,7 +157,7 @@ public class EnchantingInfoScreen extends Screen {
 
         if (hover != null) {
             list.clear();
-            list.add(Component.translatable(hover.getEnch().getDescriptionId()).withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
+            list.add(Component.translatable(hover.getEnch().getDescriptionId()).withStyle(getColor(hover.getEnch()), ChatFormatting.UNDERLINE));
             list.add(Component.translatable("info.apotheosis.enchinfo_level", Component.translatable("enchantment.level." + hover.getLevel())).withStyle(ChatFormatting.DARK_AQUA));
             Component rarity = Component.translatable("rarity.enchantment." + hover.getEnch().getRarity().name().toLowerCase(Locale.ROOT)).withStyle(colors[hover.getEnch().getRarity().ordinal()]);
             list.add(Component.translatable("info.apotheosis.enchinfo_rarity", rarity).withStyle(ChatFormatting.DARK_AQUA));
@@ -246,7 +250,7 @@ public class EnchantingInfoScreen extends Screen {
     protected void recomputeEnchantments() {
         Arcana arc = Arcana.getForThreshold(this.parent.getMenu().stats.arcana());
         Set<Enchantment> blacklist = this.parent.getMenu().stats.blacklist();
-        this.enchantments = RealEnchantmentHelper.getAvailableEnchantmentResults(this.currentPower, this.toEnchant, false, Collections.emptySet())
+        this.enchantments = RealEnchantmentHelper.getAvailableEnchantmentResults(this.currentPower, this.toEnchant, this.treasure, Collections.emptySet())
             .stream()
             .map(e -> new ArcanaEnchantmentData(arc, e))
             .map(a -> new EnchantmentDataWrapper(a, blacklist.contains(a.data.enchantment)))
@@ -280,6 +284,10 @@ public class EnchantingInfoScreen extends Screen {
             }
         }
         return null;
+    }
+
+    public static ChatFormatting getColor(Enchantment ench) {
+        return EnchModule.getEnchInfo(ench).isTreasure() ? ChatFormatting.GOLD : ChatFormatting.GREEN;
     }
 
     public class PowerSlider extends AbstractSliderButton {

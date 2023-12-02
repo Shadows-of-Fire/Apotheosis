@@ -55,6 +55,7 @@ public class CommonTooltipUtil {
         float arcana = EnchantingStatRegistry.getArcana(state, world, pos);
         float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, pos);
         int clues = EnchantingStatRegistry.getBonusClues(state, world, pos);
+        boolean treasure = ((IEnchantingBlock) state.getBlock()).allowsTreasure(state, world, pos);
         if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
             tooltip.accept(Component.translatable("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
         }
@@ -75,6 +76,9 @@ public class CommonTooltipUtil {
         }
         if (clues != 0) {
             tooltip.accept(Component.translatable("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+        }
+        if (treasure) {
+            tooltip.accept(Component.translatable("info.apotheosis.allows_treasure").withStyle(ChatFormatting.GOLD));
         }
         Set<Enchantment> blacklist = ((IEnchantingBlock) state.getBlock()).getBlacklistedEnchantments(state, world, pos);
         if (blacklist.size() > 0) {

@@ -41,6 +41,7 @@ import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.TomeItem;
+import dev.shadowsoffire.apotheosis.ench.objects.TreasureShelfBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
@@ -119,6 +120,9 @@ public class Ench {
 
         public static final RegistryObject<Block> FILTERING_SHELF = R.block("filtering_shelf",
             () -> new FilteringShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).sound(SoundType.STONE).strength(1.75F).requiresCorrectToolForDrops()));
+
+        public static final RegistryObject<Block> TREASURE_SHELF = R.block("treasure_shelf",
+            () -> new TreasureShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.STONE).strength(1.75F).requiresCorrectToolForDrops()));
 
         private static void bootstrap() {}
 
@@ -225,6 +229,8 @@ public class Ench {
         public static final RegistryObject<TomeItem> WEAPON_TOME = R.item("weapon_tome", () -> new TomeItem(net.minecraft.world.item.Items.DIAMOND_SWORD, EnchantmentCategory.WEAPON));
 
         public static final RegistryObject<BlockItem> FILTERING_SHELF = R.item("filtering_shelf", () -> new BlockItem(Ench.Blocks.FILTERING_SHELF.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+        public static final RegistryObject<BlockItem> TREASURE_SHELF = R.item("treasure_shelf", () -> new BlockItem(Ench.Blocks.TREASURE_SHELF.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
         private static void bootstrap() {}
 

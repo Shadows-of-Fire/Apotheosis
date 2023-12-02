@@ -125,4 +125,13 @@ public interface IEnchantingBlock extends IForgeBlock {
         return ParticleTypes.ENCHANT;
     }
 
+    /**
+     * Enchanting tables normally cannot roll treasure enchantments, but if a bookshelf block permits it, they can.
+     * 
+     * @return If this block allows the table to roll treasure enchantments.
+     */
+    default boolean allowsTreasure(BlockState state, LevelReader world, BlockPos pos) {
+        return false;
+    }
+
 }

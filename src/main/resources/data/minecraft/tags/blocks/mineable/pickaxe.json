@@ -123,6 +123,10 @@
 		{
 			"id": "apotheosis:filtering_shelf",
 			"required": false
+		},
+		{
+			"id": "apotheosis:treasure_shelf",
+			"required": false
 		}
 	]
 }
