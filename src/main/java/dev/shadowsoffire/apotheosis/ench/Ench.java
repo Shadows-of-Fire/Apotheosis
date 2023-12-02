@@ -115,10 +115,10 @@ public class Ench {
 
         public static final RegistryObject<Block> SOUL_TOUCHED_SCULKSHELF = sculkShelf("soul_touched_sculkshelf");
 
-        public static final RegistryObject<Block> STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.25F, () -> ParticleTypes.ENCHANT);
+        public static final RegistryObject<Block> STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.75F, () -> ParticleTypes.ENCHANT);
 
         public static final RegistryObject<Block> FILTERING_SHELF = R.block("filtering_shelf",
-            () -> new FilteringShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).sound(SoundType.STONE).strength(1.25F).requiresCorrectToolForDrops()));
+            () -> new FilteringShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).sound(SoundType.STONE).strength(1.75F).requiresCorrectToolForDrops()));
 
         private static void bootstrap() {}
 
