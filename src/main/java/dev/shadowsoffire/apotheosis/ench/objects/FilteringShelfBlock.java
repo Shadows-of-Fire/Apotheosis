@@ -8,11 +8,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -83,6 +85,11 @@ public class FilteringShelfBlock extends ChiseledBookShelfBlock implements IEnch
             return shelf.getBooks().size();
         }
         return 0;
+    }
+
+    @Override
+    public ParticleOptions getTableParticle(BlockState state) {
+        return Apoth.Particles.ENCHANT_WATER.get();
     }
 
     @Override
