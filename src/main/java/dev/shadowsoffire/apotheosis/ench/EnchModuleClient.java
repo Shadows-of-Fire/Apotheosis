@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,12 +11,16 @@ import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantScreen;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
+import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
+import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.particle.EnchantmentTableParticle;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -142,7 +147,16 @@ public class EnchModuleClient {
 
     @SubscribeEvent
     public void drawAnvilCostBlob(ScreenEvent.Render.Post e) {
-
+        if (e.getScreen() instanceof AnvilScreen anv) {
+            int level = anv.getMenu().getCost();
+            if (level <= 0 || !anv.getMenu().getSlot(anv.getMenu().getResultSlot()).hasItem()) return;
+            List<Component> list = new ArrayList<>();
+            list.add(Component.literal(I18n.get("info.apotheosis.anvil_at", level)).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GREEN));
+            int expCost = EnchantmentUtils.getTotalExperienceForLevel(level);
+            list.add(Component.translatable("info.apotheosis.anvil_xp_cost", Component.literal("" + expCost).withStyle(ChatFormatting.GREEN),
+                Component.literal("" + level).withStyle(ChatFormatting.GREEN)));
+            DrawsOnLeft.draw(anv, e.getGuiGraphics(), list, anv.getGuiTop() + 28);
+        }
     }
 
     private static Component boolComp(String key, boolean flag) {
