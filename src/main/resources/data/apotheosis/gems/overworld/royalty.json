@@ -48,11 +48,7 @@
                 "attributeslib:overheal",
                 "attributeslib:prot_pierce",
                 "attributeslib:prot_shred",
-                "attributeslib:elytra_flight",
-                "attributeslib:creative_flight",
                 "forge:swim_speed",
-                "forge:nametag_distance",
-                "forge:entity_gravity",
                 "forge:block_reach",
                 "forge:entity_reach",
                 "forge:step_height_addition"
