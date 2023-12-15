@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "During the enchanting process, you spend experience and Lapis Lazuli to enchant an item.$(p)But how are the enchantments selected?$(p)The answer to that is Enchanting Power."
+            "text": "During the enchanting process, you spend experience and Lapis Lazuli to enchant an item.$(p)From this, enchantments are randomly selected using some complex formulas.$(p)This chapter explains that process."
         },
 		{
             "type": "patchouli:text",
@@ -14,7 +14,7 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "But how is $(fpower) calculated? Well, it takes some math.$(p)Intially, you have a $(bpower), which is the level you spent while enchanting.$(p)Then, $(quanta) and Rectification modify your $(bpower) to produce your $(fpower)."
+			"text": "$(fpower) is calculated using the following steps:$(p)Intially, you have a $(bpower), which is the level you spent while enchanting.$(p)Then, $(quanta) and Rectification modify your $(bpower) to produce your $(fpower)."
 		},
 		{
 			"type": "patchouli:text",

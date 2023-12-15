@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Sometimes, it is desirable to avoid certain enchantments entirely during the enchanting process.$(p)The $(9)Shelf of Aquatic Filtration$() allows you to do just that."
+            "text": "Sometimes, it is desirable to avoid certain enchantments entirely during the enchanting process.$(p)The $(9)Seashelf of Aquatic Filtration$() allows you to do just that."
         },
         {
             "type": "patchouli:crafting",
