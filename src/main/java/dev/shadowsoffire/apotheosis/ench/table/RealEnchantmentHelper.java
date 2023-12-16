@@ -63,7 +63,8 @@ public class RealEnchantmentHelper {
         int enchantability = stack.getEnchantmentValue();
         int srcLevel = level;
         if (enchantability > 0) {
-            float quantaFactor = getQuantaFactor(rand, quanta, rectification);
+            float quantaFactor = 1 + getQuantaFactor(rand, quanta, rectification);
+            // if (!FMLEnvironment.production) EnchModule.LOGGER.debug("Quanta: {} | Rect: {} | Quanta Roll: {}", quanta, rectification, quantaFactor);
             level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
             Arcana arcanaVals = Arcana.getForThreshold(arcana);
             List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure, blacklist);
@@ -172,7 +173,7 @@ public class RealEnchantmentHelper {
             factor = Mth.nextFloat(rand, rectPercent - 1, 1);
         }
 
-        return quanta * factor;
+        return quanta * factor / 100F;
     }
 
     public static class ArcanaEnchantmentData extends IntrusiveBase {
