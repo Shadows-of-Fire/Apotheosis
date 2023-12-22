@@ -3,7 +3,7 @@
     "icon": "apotheosis:scrap_tome",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
-	"sortnum": 1,
+	"sortnum": 4,
     "pages": [
         {
             "type": "patchouli:text",
