@@ -61,6 +61,9 @@
 	"affix.apotheosis:armor/attribute/fortunate": "Afortunado",
     "affix.apotheosis:armor/attribute/fortunate.suffix": "do Trevo-de-quatro-folhas",
 
+    "affix.apotheosis:armor/attribute/winged": "Alado",
+    "affix.apotheosis:armor/attribute/winged.suffix": "dos Céus",
+
 	"affix.apotheosis:sword/attribute/intricate": "Confuso",
     "affix.apotheosis:sword/attribute/intricate.suffix": "do Pensamento crítico",
 
@@ -380,6 +383,7 @@
 	"item.apotheosis.rare_material": "Fragmento de cristal luminoso",
 	"item.apotheosis.epic_material": "Areias arcanas",
 	"item.apotheosis.mythic_material": "Pérola forjada pelos deuses",
+    "item.apotheosis.ancient_material": "Manifestaçäo do infinito",
 	"item.apotheosis.sigil_of_socketing": "Signo de encaixe",
 	"item.apotheosis.superior_sigil_of_socketing": "Signo de encaixe superior",
 	"item.apotheosis.sigil_of_enhancement": "[ANI] Signo de aprimoramento",
@@ -1119,6 +1123,11 @@
     "item.minecraft.splash_potion.effect.grievous": "Poção arremessável de redução de cura",
     "item.minecraft.lingering_potion.effect.grievous": "Poção prolongada de redução de cura",
     "item.minecraft.tipped_arrow.effect.grievous": "Flecha de redução de cura",
+
+    "item.minecraft.potion.effect.flying": "Poçäo de voo",
+    "item.minecraft.splash_potion.effect.flying": "Poçäo arremessável de voo",
+    "item.minecraft.lingering_potion.effect.flying": "Poçäo prolongada de voo",
+    "item.minecraft.tipped_arrow.effect.flying": "Flecha de voo",
 
     "item.apotheosis.lucky_foot": "Pé de coelho da sorte",
 
