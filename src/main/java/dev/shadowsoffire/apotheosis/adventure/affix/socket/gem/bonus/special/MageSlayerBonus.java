@@ -39,7 +39,7 @@ public class MageSlayerBonus extends GemBonus {
     public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity user, float amount) {
         float value = this.values.get(rarity).min();
         if (src.is(DamageTypeTags.BYPASSES_ARMOR)) { // TODO: Forge IS_MAGIC tag
-            user.heal(amount * (1 - value));
+            user.heal(amount * value);
             return amount * (1 - value);
         }
         return super.onHurt(gem, rarity, src, user, amount);

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "PSP",
+    "LLL",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:prismarine_bricks"
+    },
+	"S": {
+      "item": "apotheosis:infused_seashelf"
+    },
+	"L": {
+      "item": "minecraft:prismarine_brick_slab"
+    }
+  },
+  "result": {
+    "item": "apotheosis:filtering_shelf",
+    "count": 1
+  }
+}

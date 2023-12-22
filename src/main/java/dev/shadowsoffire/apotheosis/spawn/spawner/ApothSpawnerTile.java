@@ -40,6 +40,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
     public boolean ignoresLight = false;
     public boolean hasNoAI = false;
     public boolean silent = false;
+    public boolean baby = false;
 
     public ApothSpawnerTile(BlockPos pos, BlockState state) {
         super(pos, state);
@@ -54,6 +55,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
         tag.putBoolean("ignore_light", this.ignoresLight);
         tag.putBoolean("no_ai", this.hasNoAI);
         tag.putBoolean("silent", this.silent);
+        tag.putBoolean("baby", this.baby);
         super.saveAdditional(tag);
     }
 
@@ -65,6 +67,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
         this.ignoresLight = tag.getBoolean("ignore_light");
         this.hasNoAI = tag.getBoolean("no_ai");
         this.silent = tag.getBoolean("silent");
+        this.baby = tag.getBoolean("baby");
         super.load(tag);
     }
 
@@ -205,9 +208,16 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
                                 return;
                             }
 
-                            if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
-                                mob.setNoAi(true);
-                                entity.getPersistentData().putBoolean("apotheosis:movable", true);
+                            // Raise the NoAI Flag and set the apotheosis:movable flag for the main mob and all mob passengers.
+                            if (ApothSpawnerTile.this.hasNoAI) {
+                                entity.getSelfAndPassengers().filter(t -> t instanceof Mob).map(Mob.class::cast).forEach(mob -> {
+                                    mob.setNoAi(true);
+                                    mob.getPersistentData().putBoolean("apotheosis:movable", true);
+                                });
+                            }
+
+                            if (ApothSpawnerTile.this.baby && entity instanceof Mob mob) {
+                                mob.setBaby(true);
                             }
 
                             if (ApothSpawnerTile.this.silent) entity.setSilent(true);

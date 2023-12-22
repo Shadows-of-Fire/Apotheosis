@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "GSG",
+    "DED",
+    "GSG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:storage_blocks/gold"
+    },
+	"S": {
+      "item": "apotheosis:deepshelf"
+    },
+	"D": {
+      "tag": "forge:gems/diamond"
+    },
+	"E": {
+      "tag": "forge:storage_blocks/emerald"
+    }
+  },
+  "result": {
+    "item": "apotheosis:treasure_shelf",
+    "count": 1
+  }
+}

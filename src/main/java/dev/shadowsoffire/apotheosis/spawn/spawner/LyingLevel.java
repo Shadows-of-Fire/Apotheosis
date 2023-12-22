@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.spawn.spawner;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
@@ -42,7 +42,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.LevelTickAccess;
 
-public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
+public class LyingLevel implements WorldGenLevel {
 
     protected final ServerLevel wrapped;
     protected int fakeLightLevel;
@@ -258,6 +258,31 @@ public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
     @Override
     public FeatureFlagSet enabledFeatures() {
         return this.wrapped.enabledFeatures();
+    }
+
+    @Override
+    public boolean ensureCanWrite(BlockPos pPos) {
+        return this.wrapped.ensureCanWrite(pPos);
+    }
+
+    @Override
+    public void setCurrentlyGenerating(Supplier<String> pCurrentlyGenerating) {
+        this.wrapped.setCurrentlyGenerating(pCurrentlyGenerating);
+    }
+
+    @Override
+    public void addFreshEntityWithPassengers(Entity pEntity) {
+        this.wrapped.addFreshEntityWithPassengers(pEntity);
+    }
+
+    @Override
+    public void blockUpdated(BlockPos pPos, Block pBlock) {
+        this.wrapped.blockUpdated(pPos, pBlock);
+    }
+
+    @Override
+    public boolean addFreshEntity(Entity pEntity) {
+        return this.wrapped.addFreshEntity(pEntity);
     }
 
 }

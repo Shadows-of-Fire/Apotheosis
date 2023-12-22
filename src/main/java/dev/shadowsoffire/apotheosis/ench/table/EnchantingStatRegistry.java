@@ -92,8 +92,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
     public static float getQuanta(BlockState state, Level world, BlockPos pos) {
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).quanta;
-        else if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getQuantaBonus(state, world, pos);
-        return 0;
+        return ((IEnchantingBlock) block).getQuantaBonus(state, world, pos);
     }
 
     /**
@@ -104,8 +103,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
     public static float getArcana(BlockState state, Level world, BlockPos pos) {
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).arcana;
-        else if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getArcanaBonus(state, world, pos);
-        return 0;
+        return ((IEnchantingBlock) block).getArcanaBonus(state, world, pos);
     }
 
     /**
@@ -115,8 +113,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
     public static float getQuantaRectification(BlockState state, Level world, BlockPos pos) {
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).rectification;
-        if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getQuantaRectification(state, world, pos);
-        return 0;
+        return ((IEnchantingBlock) block).getQuantaRectification(state, world, pos);
     }
 
     /**
@@ -126,8 +123,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<BlockStats> {
     public static int getBonusClues(BlockState state, Level world, BlockPos pos) {
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).clues;
-        if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getBonusClues(state, world, pos);
-        return 0;
+        return ((IEnchantingBlock) block).getBonusClues(state, world, pos);
     }
 
     /**

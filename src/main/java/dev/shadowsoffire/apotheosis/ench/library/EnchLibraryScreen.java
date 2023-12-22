@@ -15,6 +15,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.attributeslib.AttributesLib;
 import dev.shadowsoffire.placebo.Placebo;
 import dev.shadowsoffire.placebo.packets.ButtonClickMessage;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
@@ -25,8 +26,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
@@ -89,13 +92,20 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void renderTooltip(GuiGraphics gfx, int mouseX, int mouseY) {
         super.renderTooltip(gfx, mouseX, mouseY);
         LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
         if (libSlot != null) {
             List<FormattedText> list = new ArrayList<>();
-            list.add(Component.translatable(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true)));
-            if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc")) {
+
+            MutableComponent name = Component.translatable(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true));
+            if (AttributesLib.getTooltipFlag().isAdvanced()) {
+                name = name.append(Component.literal(" [" + BuiltInRegistries.ENCHANTMENT.getKey(libSlot.ench) + "]").withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withUnderlined(false)));
+            }
+            list.add(name);
+
+            if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc") || AttributesLib.getTooltipFlag().isAdvanced()) {
                 Component txt = Component.translatable(libSlot.ench.getDescriptionId() + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true));
                 list.addAll(this.font.getSplitter().splitLines(txt, this.getGuiLeft() - 16, txt.getStyle()));
                 list.add(Component.literal(""));

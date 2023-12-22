@@ -3,6 +3,7 @@
     "icon": "apotheosis:other_tome",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
+	"sortnum": 3,
     "pages": [
         {
             "type": "patchouli:text",

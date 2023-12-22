@@ -3,30 +3,35 @@ package dev.shadowsoffire.apotheosis.ench.table;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.advancements.EnchantedTrigger;
 import dev.shadowsoffire.apotheosis.ench.Ench;
-import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
+import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.network.PacketDistro;
+import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
@@ -43,11 +48,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ApothEnchantmentMenu extends EnchantmentMenu {
 
-    protected final FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatRegistry.getAbsoluteMaxEterna());
-    protected final FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 100);
-    protected final FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 100);
-    protected final FloatReferenceHolder rectification = new FloatReferenceHolder(0F, -100, 100);
-    protected final DataSlot clues = DataSlot.standalone();
+    protected TableStats stats = TableStats.INVALID;
     protected final Player player;
 
     public ApothEnchantmentMenu(int id, Inventory inv) {
@@ -72,7 +73,6 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
             }
         });
         this.initCommon(inv);
-
     }
 
     public ApothEnchantmentMenu(int id, Inventory inv, ContainerLevelAccess wPos, ApothEnchantTile te) {
@@ -114,31 +114,27 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         for (int k = 0; k < 9; ++k) {
             this.addSecretSlot(new Slot(inv, k, 8 + k * 18, 142 + 31));
         }
-        this.addDataSlots(this.eterna.getArray());
-        this.addDataSlots(this.quanta.getArray());
-        this.addDataSlots(this.arcana.getArray());
-        this.addDataSlots(this.rectification.getArray());
-        this.clues.set(1);
-        this.addDataSlot(this.clues);
     }
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
-        int level = this.costs[id];
+        int slot = id;
+        int level = this.costs[slot];
         ItemStack toEnchant = this.enchantSlots.getItem(0);
         ItemStack lapis = this.getSlot(1).getItem();
-        int cost = id + 1;
+        int cost = slot + 1;
         if ((lapis.isEmpty() || lapis.getCount() < cost) && !player.getAbilities().instabuild) return false;
 
-        if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < cost || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) return false;
+        if (this.costs[slot] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < cost || player.experienceLevel < this.costs[slot]) && !player.getAbilities().instabuild) return false;
 
         this.access.execute((world, pos) -> {
             ItemStack enchanted = toEnchant;
-            float eterna = this.eterna.get(), quanta = this.quanta.get(), arcana = this.arcana.get(),
-                rectification = this.rectification.get();
-            List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
+            float eterna = this.stats.eterna, quanta = this.stats.quanta, arcana = this.stats.arcana,
+                rectification = this.stats.rectification;
+            List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, slot, this.costs[slot]);
             if (!list.isEmpty()) {
-                player.onEnchantmentPerformed(toEnchant, cost);
+                EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(level, slot));
+                player.onEnchantmentPerformed(toEnchant, 0); // Pass zero here instead of the cost so no experience is taken, but the method is still called for tracking reasons.
                 if (list.get(0).enchantment == Ench.Enchantments.INFUSION.get()) {
                     EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
                     if (match != null) this.enchantSlots.setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));
@@ -181,7 +177,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                 this.gatherStats();
                 EnchantingRecipe match = EnchantingRecipe.findItemMatch(world, toEnchant);
                 if (toEnchant.getCount() == 1 && (match != null || toEnchant.getItem().isEnchantable(toEnchant) && isEnchantableEnough(toEnchant))) {
-                    float eterna = this.eterna.get();
+                    float eterna = this.stats.eterna();
                     if (eterna < 1.5) eterna = 1.5F; // Allow for enchanting with no bookshelves as vanilla does
                     this.random.setSeed(this.enchantmentSeed.get());
 
@@ -204,7 +200,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                                 EnchantmentInstance enchantmentdata = list.remove(this.random.nextInt(list.size()));
                                 this.enchantClue[slot] = BuiltInRegistries.ENCHANTMENT.getId(enchantmentdata.enchantment);
                                 this.levelClue[slot] = enchantmentdata.level;
-                                int clues = this.clues.get();
+                                int clues = this.stats.clues();
                                 List<EnchantmentInstance> clueList = new ArrayList<>();
                                 if (clues-- > 0) clueList.add(enchantmentdata);
                                 while (clues-- > 0 && !list.isEmpty()) {
@@ -223,9 +219,8 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                         this.enchantClue[i] = -1;
                         this.levelClue[i] = -1;
                     }
-                    this.eterna.set(0);
-                    this.quanta.set(0);
-                    this.arcana.set(0);
+                    this.stats = TableStats.INVALID;
+                    PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), player);
                 }
             }
             return this;
@@ -234,8 +229,8 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
     private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
         this.random.setSeed(this.enchantmentSeed.get() + enchantSlot);
-        List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.quanta.get(), this.arcana.get(), this.rectification.get(), false);
-        EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.eterna.get(), this.quanta.get(), this.arcana.get()))).get().orElse(null);
+        List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.stats.quanta(), this.stats.arcana(), this.stats.rectification(), this.stats.treasure(), this.stats.blacklist());
+        EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.stats.eterna(), this.stats.quanta(), this.stats.arcana()))).get().orElse(null);
         if (enchantSlot == 2 && match != null) {
             list.clear();
             list.add(new EnchantmentInstance(Ench.Enchantments.INFUSION.get(), 1));
@@ -245,12 +240,8 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
     public void gatherStats() {
         this.access.evaluate((world, pos) -> {
-            TableStats stats = gatherStats(world, pos);
-            this.eterna.set(stats.eterna());
-            this.quanta.set(stats.quanta());
-            this.arcana.set(stats.arcana() + this.getSlot(0).getItem().getEnchantmentValue() / 2F);
-            this.rectification.set(stats.rectification());
-            this.clues.set(stats.clues());
+            this.stats = gatherStats(world, pos, this.getSlot(0).getItem().getEnchantmentValue());
+            PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), player);
             return this;
         }).orElse(this);
     }
@@ -258,26 +249,19 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     /**
      * Gathers all enchanting stats for an enchantment table located at the specified position.
      * 
-     * @param level The level.
-     * @param pos   The position of the enchantment table.
+     * @param level    The level.
+     * @param pos      The position of the enchantment table.
+     * @param itemEnch The enchantability of the item being enchanted.
      * @return The computed {@link TableStats}.
      */
-    public static TableStats gatherStats(Level level, BlockPos pos) {
-        Float2FloatMap eternaMap = new Float2FloatOpenHashMap();
-        // Base Stats are 15% Quanta and 1 Clue, but 0 of everything else.
-        float[] stats = { 0, 15F, 0, 0, 1 };
+    public static TableStats gatherStats(Level level, BlockPos pos, int itemEnch) {
+        TableStats.Builder builder = new TableStats.Builder(itemEnch);
         for (BlockPos offset : EnchantmentTableBlock.BOOKSHELF_OFFSETS) {
             if (canReadStatsFrom(level, pos, offset)) {
-                gatherStats(eternaMap, stats, level, pos.offset(offset));
+                gatherStats(builder, level, pos.offset(offset));
             }
         }
-        List<Float2FloatMap.Entry> entries = new ArrayList<>(eternaMap.float2FloatEntrySet());
-        Collections.sort(entries, Comparator.comparing(Float2FloatMap.Entry::getFloatKey));
-        for (Float2FloatMap.Entry e : entries) {
-            if (e.getFloatKey() > 0) stats[0] = Math.min(e.getFloatKey(), stats[0] + e.getFloatValue());
-            else stats[0] += e.getFloatValue();
-        }
-        return new TableStats(stats);
+        return builder.build();
     }
 
     /**
@@ -301,16 +285,20 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
      * @param world     The world.
      * @param pos       The position of the stat-providing block.
      */
-    public static void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {
+    public static void gatherStats(TableStats.Builder builder, Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         if (state.isAir()) return;
-        float max = EnchantingStatRegistry.getMaxEterna(state, world, pos);
         float eterna = EnchantingStatRegistry.getEterna(state, world, pos);
-        eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
-        stats[1] += EnchantingStatRegistry.getQuanta(state, world, pos);
-        stats[2] += EnchantingStatRegistry.getArcana(state, world, pos);
-        stats[3] += EnchantingStatRegistry.getQuantaRectification(state, world, pos);
-        stats[4] += EnchantingStatRegistry.getBonusClues(state, world, pos);
+        float max = EnchantingStatRegistry.getMaxEterna(state, world, pos);
+        builder.addEterna(eterna, max);
+        builder.addQuanta(EnchantingStatRegistry.getQuanta(state, world, pos));
+        builder.addArcana(EnchantingStatRegistry.getArcana(state, world, pos));
+        builder.addRectification(EnchantingStatRegistry.getQuantaRectification(state, world, pos));
+        builder.addClues(EnchantingStatRegistry.getBonusClues(state, world, pos));
+        ((IEnchantingBlock) state.getBlock()).getBlacklistedEnchantments(state, world, pos).forEach(builder::blacklistEnchant);
+        if (((IEnchantingBlock) state.getBlock()).allowsTreasure(state, world, pos)) {
+            builder.setAllowsTreasure(true);
+        }
     }
 
     @Override
@@ -368,10 +356,104 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     /**
      * Holder for the computed stat values of an enchantment table.
      */
-    public static record TableStats(float eterna, float quanta, float arcana, float rectification, int clues) {
+    @SuppressWarnings("deprecation")
+    public static record TableStats(float eterna, float quanta, float arcana, float rectification, int clues, Set<Enchantment> blacklist, boolean treasure) {
 
-        public TableStats(float[] data) {
-            this(data[0], data[1], data[2], data[3], (int) data[4]);
+        public static TableStats INVALID = new TableStats(0, 0, 0, 0, 0, Collections.emptySet(), false);
+
+        public TableStats(float eterna, float quanta, float arcana, float rectification, int clues, Set<Enchantment> blacklist, boolean treasure) {
+            this.eterna = Mth.clamp(eterna, 0, EnchantingStatRegistry.getAbsoluteMaxEterna());
+            this.quanta = Mth.clamp(quanta, 0, 100);
+            this.arcana = Mth.clamp(arcana, 0, 100);
+            this.rectification = Mth.clamp(rectification, 0, 100);
+            this.clues = Math.max(clues, 0);
+            this.blacklist = Collections.unmodifiableSet(blacklist);
+            this.treasure = treasure;
+        }
+
+        public TableStats(float[] data, Set<Enchantment> blacklist, boolean treasure) {
+            this(data[0], data[1], data[2], data[3], (int) data[4], blacklist, treasure);
+        }
+
+        public void write(FriendlyByteBuf buf) {
+            buf.writeFloat(this.eterna);
+            buf.writeFloat(this.quanta);
+            buf.writeFloat(this.arcana);
+            buf.writeFloat(this.rectification);
+            buf.writeByte(this.clues);
+            buf.writeShort(blacklist.size());
+            for (Enchantment e : blacklist) {
+                buf.writeVarInt(BuiltInRegistries.ENCHANTMENT.getId(e));
+            }
+            buf.writeBoolean(this.treasure);
+        }
+
+        public static TableStats read(FriendlyByteBuf buf) {
+            float[] data = new float[] { buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readByte() };
+            int size = buf.readShort();
+            Set<Enchantment> blacklist = new HashSet<>(size);
+            for (int i = 0; i < size; i++) {
+                blacklist.add(BuiltInRegistries.ENCHANTMENT.byId(buf.readVarInt()));
+            }
+            boolean treasure = buf.readBoolean();
+            return new TableStats(data, blacklist, treasure);
+        }
+
+        public static class Builder {
+
+            private final Float2FloatMap eternaMap = new Float2FloatOpenHashMap();
+
+            private final Set<Enchantment> blacklist = new HashSet<>();
+
+            private boolean allowsTreasure = false;
+
+            private final float[] stats = new float[5];
+
+            public Builder(int itemEnch) {
+                this.addQuanta(15F);
+                this.addArcana(itemEnch / 2F);
+                this.addClues(1);
+            }
+
+            public void addEterna(float eterna, float max) {
+                this.eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
+            }
+
+            public void addQuanta(float quanta) {
+                this.stats[1] += quanta;
+            }
+
+            public void addArcana(float arcana) {
+                this.stats[2] += arcana;
+            }
+
+            public void addRectification(float rectification) {
+                this.stats[3] += rectification;
+            }
+
+            public void addClues(int clues) {
+                this.stats[4] += clues;
+            }
+
+            public void blacklistEnchant(Enchantment ench) {
+                this.blacklist.add(ench);
+            }
+
+            public void setAllowsTreasure(boolean allowsTreasure) {
+                this.allowsTreasure = allowsTreasure;
+            }
+
+            public TableStats build() {
+                List<Float2FloatMap.Entry> entries = new ArrayList<>(this.eternaMap.float2FloatEntrySet());
+                Collections.sort(entries, Comparator.comparing(Float2FloatMap.Entry::getFloatKey));
+
+                for (Float2FloatMap.Entry e : entries) {
+                    if (e.getFloatKey() > 0) stats[0] = Math.min(e.getFloatKey(), stats[0] + e.getFloatValue());
+                    else stats[0] += e.getFloatValue();
+                }
+
+                return new TableStats(this.stats, this.blacklist, this.allowsTreasure);
+            }
         }
 
     }

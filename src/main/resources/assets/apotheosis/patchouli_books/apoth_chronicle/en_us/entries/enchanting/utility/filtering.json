@@ -1,0 +1,27 @@
+{
+    "name": "Enchantment Filtering",
+    "icon": "apotheosis:filtering_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Sometimes, it is desirable to avoid certain enchantments entirely during the enchanting process.$(p)The $(9)Seashelf of Aquatic Filtration$() allows you to do just that."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:filtering_shelf",
+            "title": "Aquatic Filtration",
+            "text": "The shelf allows you to insert up to six single-enchantment books in it, preventing those enchantments from appearing."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "To use it, simply insert a single-enchantment book of an enchantment you wish to blacklist.$(p)The enchantment will then no longer be available in the Enchanting Table.$(p)The shelf will also gain $(eterna) and $(arcana) based on the number of books inserted."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Note: books can be inserted the same way you use a chiseled bookshelf, and the shelf must be in a valid bookshelf slot to operate.$(p)Blacklisted enchantments will be reflected in the $(l:apotheosis:enchanting/table/info)Enchanting Info Screen$()."
+        }
+    ]
+}

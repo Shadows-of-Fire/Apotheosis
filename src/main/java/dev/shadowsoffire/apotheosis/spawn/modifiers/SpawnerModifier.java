@@ -161,14 +161,7 @@ public class SpawnerModifier implements Recipe<Container> {
             List<StatModifier<?>> statChanges = new ArrayList<>();
             int size = buf.readByte();
             for (int i = 0; i < size; i++) {
-                SpawnerStat<?> stat = SpawnerStats.REGISTRY.get(buf.readUtf(32));
-                boolean isBool = buf.readBoolean();
-                if (isBool) {
-                    statChanges.add(new StatModifier(stat, buf.readBoolean(), false, false));
-                }
-                else {
-                    statChanges.add(new StatModifier(stat, buf.readInt(), buf.readInt(), buf.readInt()));
-                }
+                statChanges.add(StatModifier.read(buf));
             }
             return new SpawnerModifier(id, mainhand, offhand, consumesOffhand, statChanges);
         }
@@ -180,20 +173,7 @@ public class SpawnerModifier implements Recipe<Container> {
             if (recipe.offHand != Ingredient.EMPTY) recipe.offHand.toNetwork(buf);
             buf.writeBoolean(recipe.consumesOffhand);
             buf.writeByte(recipe.statChanges.size());
-            for (StatModifier<?> s : recipe.statChanges) {
-                SpawnerStat<?> stat = s.stat;
-                buf.writeUtf(stat.getId(), 32);
-                boolean isBool = stat.getTypeClass() == Boolean.class;
-                buf.writeBoolean(isBool);
-                if (isBool) {
-                    buf.writeBoolean((boolean) s.value);
-                }
-                else {
-                    buf.writeInt((int) s.value);
-                    buf.writeInt((int) s.min);
-                    buf.writeInt((int) s.max);
-                }
-            }
+            recipe.statChanges.forEach(m -> m.write(buf));
         }
     }
 }

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "apotheosis:blocks/treasure_shelf_top",
+        "side": "apotheosis:blocks/treasure_shelf_side"
+    }
+}

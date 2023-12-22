@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -21,33 +20,31 @@ import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeHooks;
 
+@SuppressWarnings("deprecation")
 public class AllStatsBonus extends GemBonus {
 
     public static Codec<AllStatsBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
             PlaceboCodecs.enumCodec(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
-            VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+            VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
+            BuiltInRegistries.ATTRIBUTE.byNameCodec().listOf().fieldOf("attributes").forGetter(a -> a.attributes))
         .apply(inst, AllStatsBonus::new));
 
     protected final Operation operation;
     protected final Map<LootRarity, StepFunction> values;
+    protected final List<Attribute> attributes;
 
-    protected transient final List<Attribute> attributes = new ArrayList<>();
-
-    @SuppressWarnings("deprecation")
-    public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values) {
+    public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values, List<Attribute> attributes) {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;
         this.values = values;
-        BuiltInRegistries.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(this.attributes::add);
+        this.attributes = attributes;
     }
 
     @Override

@@ -4,7 +4,17 @@
 		"module": "adventure"
 	}],
 	"type": "minecraft:jigsaw",
-	"biomes": "#apotheosis:tower_leaf",
+	"biomes": {
+        "type": "forge:and",
+        "values":
+        [
+           "#apotheosis:tower_leaf",
+           {
+               "type": "forge:not",
+               "value": "#minecraft:is_ocean"
+           }
+        ]
+    },
 	"step": "surface_structures",
 	"spawn_overrides": {},
 	"terrain_adaptation": "beard_thin",

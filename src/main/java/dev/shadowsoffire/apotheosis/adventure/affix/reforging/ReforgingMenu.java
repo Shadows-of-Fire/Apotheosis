@@ -8,9 +8,11 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
+import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -119,7 +121,7 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
                     this.getSlot(1).getItem().shrink(matCost);
                     this.getSlot(2).getItem().shrink(dustCost);
                 }
-                player.giveExperienceLevels(-3 * ++slot);
+                EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(levelCost, slot));
                 player.getPersistentData().putInt(REFORGE_SEED, player.random.nextInt());
                 this.updateSeed();
                 this.needsReset.set(1);
@@ -179,6 +181,7 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
             ReforgingMenu.this.needsReset.set(0);
         }
         super.slotsChanged(pContainer);
+        this.tile.setChanged();
     }
 
 }

@@ -2,8 +2,8 @@
 	"entity": "minecraft:enderman",
 	"weight": 80,
 	"size": {
-		"width": 1,
-		"height": 3
+		"width": 0.6,
+		"height": 2.9
 	},
 	"valid_gear_sets": [
 		"#the_end"

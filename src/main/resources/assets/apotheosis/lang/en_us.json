@@ -675,6 +675,7 @@
     "stat.apotheosis.ignore_light": "Ignores Light",
     "stat.apotheosis.no_ai": "No AI",
 	"stat.apotheosis.silent": "Silent",
+	"stat.apotheosis.baby": "Youthful",
 
     "stat.apotheosis.min_delay.desc": "The minimum number of ticks between spawns",
     "stat.apotheosis.max_delay.desc": "The maximum number of ticks between spawns",
@@ -688,6 +689,7 @@
     "stat.apotheosis.ignore_light.desc": "The spawner ignores light levels",
     "stat.apotheosis.no_ai.desc": "Spawned entities will have no AI",
 	"stat.apotheosis.silent.desc": "Spawned entities will make no noise",
+	"stat.apotheosis.baby.desc": "The spawner will always spawn a baby entity when possible",
 
     "title.apotheosis.spawner": "Spawner Modification",
     "info.apotheosis.spawner": "Spawners can be collected with %s and may be modified with various items.",
@@ -701,7 +703,7 @@
     "block.apotheosis.infused_hellshelf": "Infused Hellshelf",
     "block.apotheosis.blazing_hellshelf": "Blazing Hellshelf",
     "block.apotheosis.glowing_hellshelf": "Glowing Hellshelf",
-	
+
     "block.apotheosis.seashelf": "Seashelf",
     "block.apotheosis.infused_seashelf": "Infused Seashelf",
     "block.apotheosis.crystal_seashelf": "Crystalline Seashelf",
@@ -713,23 +715,24 @@
     "block.apotheosis.soul_touched_deepshelf": "Soul-Touched Deepshelf",
     "block.apotheosis.echoing_sculkshelf": "Echoing Sculkshelf",
     "block.apotheosis.soul_touched_sculkshelf": "Soul-Touched Sculkshelf",
-	
+
     "block.apotheosis.endshelf": "Endshelf",
     "block.apotheosis.infused_endshelf": "Infused Endshelf",
     "block.apotheosis.pearl_endshelf": "Pearlescent Endshelf",
     "block.apotheosis.draconic_endshelf": "Draconic Endshelf",
-	
+
     "block.apotheosis.beeshelf": "Beeshelf",
     "block.apotheosis.melonshelf": "Melonshelf",
     "block.apotheosis.stoneshelf": "Stoneshelf",
-	
-    "block.apotheosis.sightshelf": "Shelf of Sight",
-    "block.apotheosis.sightshelf_t2": "Shelf of Masterful Sight",
+
+    "block.apotheosis.sightshelf": "Hellshelf of Sight",
+    "block.apotheosis.sightshelf_t2": "Hellshelf of Masterful Sight",
     "block.apotheosis.rectifier": "Shelf of Seabound Rectification",
     "block.apotheosis.rectifier_t2": "Shelf of Hellbound Rectification",
     "block.apotheosis.rectifier_t3": "Shelf of End-Fused Rectification",
-	
-	
+    "block.apotheosis.filtering_shelf": "Seashelf of Aquatic Filtration",
+    "block.apotheosis.treasure_shelf": "Deepshelf of Arcane Treasures",
+
     "info.apotheosis.ench_power": "Provides %s enchanting power.",
     "info.apotheosis.cobweb": "Can be used to remove enchantments.",
     "info.apotheosis.masterwork": "Masterwork",
@@ -747,6 +750,8 @@
     "info.apotheosis.arcana": " - Arcana: %s%%",
     "info.apotheosis.rectification": " - Rectification: %s%%",
     "info.apotheosis.clues": " - Enchanting Clues: %s",
+    "info.apotheosis.allows_treasure": " - Allows Treasure Enchantments",
+    "info.apotheosis.filter": "Enchantment Filter:",
     "info.apotheosis.eterna.p": " - Eterna: +%s (Max %s)",
     "info.apotheosis.quanta.p": " - Quanta: +%s%%",
     "info.apotheosis.arcana.p": " - Arcana: +%s%%",
@@ -758,10 +763,10 @@
 	"info.apotheosis.rectification.t": "Rectification: %s%%",
 	"info.apotheosis.clues.t": "Enchanting Clues: %s",
     "gui.apotheosis.enchant.eterna.desc": " - Magical Energy",
-    "gui.apotheosis.enchant.eterna.desc2": "Determines the available enchantment levels",
+    "gui.apotheosis.enchant.eterna.desc2": "Set the max enchanting level",
     "gui.apotheosis.enchant.eterna.desc3": "Current Value: %s/%s",
     "gui.apotheosis.enchant.quanta.desc": " - Pure Chaos",
-    "gui.apotheosis.enchant.quanta.desc2": "Modulates the power range",
+    "gui.apotheosis.enchant.quanta.desc2": "Increases underlying randomness",
     "gui.apotheosis.enchant.quanta.desc3": " lessens the negative effects",
     "gui.apotheosis.enchant.quanta.desc4": "Current Value: %s%%",
     "gui.apotheosis.enchant.arcana.desc": " - Ethereal Purity",
@@ -797,6 +802,8 @@
     "info.apotheosis.tradeable.not": "Not Tradeable",
     "info.apotheosis.treasure": "Treasure",
     "info.apotheosis.treasure.not": "Not Treasure",
+    "info.apotheosis.filtering_shelf": "Insert enchanted books to prevent them from appearing in the table.",
+    "info.apotheosis.filtering_shelf2": "Gains eterna and arcana based on the number of inserted books.",
 
     "enchantment.apotheosis.infusion": "Infusion",
     "enchantment.apotheosis.infusion.desc": "Placeholder for Enchantment Crafting",
@@ -1065,6 +1072,8 @@
     "info.apotheosis.item_ench": "Item Enchantability: %s",
     "info.apotheosis.num_clues": "Enchanting Clues: %s",
 	"info.apotheosis.infusion_failed": "Infusion Criteria Not Met",
+    "info.apotheosis.anvil_at": "Forging at Level %s",
+    "info.apotheosis.anvil_xp_cost": "Raw XP Cost: %s",
     
     "info.apotheosis.slider_power": "Power: %s",
     "info.apotheosis.enchinfo_level": "Level: %s",

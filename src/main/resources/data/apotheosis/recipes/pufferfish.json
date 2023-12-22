@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "group": "something",
+  "pattern": [
+    " B ",
+    "BFB",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bamboo"
+    },
+	"F": {
+      "tag": "minecraft:fishes"
+    }
+  },
+  "result": {
+    "item": "minecraft:pufferfish",
+    "count": 1,
+    "nbt": {
+        "display": {
+            "Name": "{\"italic\":false,\"extra\":[{\"translate\":\"item.minecraft.pufferfish\"},{\"text\":\"\\\"\"}],\"text\":\"\\\"\"}"
+        }
+    }
+  }
+}

@@ -14,6 +14,9 @@ import net.minecraft.world.item.ItemStack;
  */
 public interface DrawsOnLeft {
 
+    /**
+     * Renders a list of text as a tooltip attached to the left edge of the currently open container screen.
+     */
     default void drawOnLeft(GuiGraphics gfx, List<Component> list, int y) {
         if (list.isEmpty()) return;
         int xPos = ths().getGuiLeft() - 16 - list.stream().map(ths().font::width).max(Integer::compare).get();
@@ -32,6 +35,10 @@ public interface DrawsOnLeft {
 
     default AbstractContainerScreen<?> ths() {
         return (AbstractContainerScreen<?>) this;
+    }
+
+    public static void draw(AbstractContainerScreen<?> screen, GuiGraphics gfx, List<Component> list, int y) {
+        ((DrawsOnLeft) screen).drawOnLeft(gfx, list, y);
     }
 
 }

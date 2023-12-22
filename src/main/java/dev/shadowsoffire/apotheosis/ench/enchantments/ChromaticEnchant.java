@@ -38,7 +38,7 @@ public class ChromaticEnchant extends Enchantment {
     });
 
     public ChromaticEnchant() {
-        super(Rarity.RARE, EnchModule.SHEARS, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(Rarity.UNCOMMON, EnchModule.SHEARS, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
     }
 
     @Override

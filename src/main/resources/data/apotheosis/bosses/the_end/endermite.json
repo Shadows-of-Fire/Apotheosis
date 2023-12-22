@@ -3,8 +3,8 @@
 	"weight": 5,
 	"quality": 1,
 	"size": {
-		"width": 1,
-		"height": 3
+		"width": 0.4,
+		"height": 0.3
 	},
 	"valid_gear_sets": [
 		"#the_end"

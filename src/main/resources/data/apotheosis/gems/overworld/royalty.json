@@ -15,10 +15,44 @@
 			"operation": "multiply_total",
 			"values": {
 				"rare": 0.05,
-				"epic": 0.10,
-				"mythic": 0.15,
-				"ancient": 0.20
-			}
+				"epic": 0.075,
+				"mythic": 0.10,
+				"ancient": 0.15
+			},
+            "attributes": [
+                "minecraft:generic.max_health",
+                "minecraft:generic.knockback_resistance",
+                "minecraft:generic.movement_speed",
+                "minecraft:generic.attack_damage",
+                "minecraft:generic.attack_knockback",
+                "minecraft:generic.attack_speed",
+                "minecraft:generic.armor",
+                "minecraft:generic.armor_toughness",
+                "minecraft:generic.luck",
+                "attributeslib:armor_pierce",
+                "attributeslib:armor_shred",
+                "attributeslib:arrow_damage",
+                "attributeslib:arrow_velocity",
+                "attributeslib:cold_damage",
+                "attributeslib:crit_chance",
+                "attributeslib:crit_damage",
+                "attributeslib:current_hp_damage",
+                "attributeslib:dodge_chance",
+                "attributeslib:draw_speed",
+                "attributeslib:experience_gained",
+                "attributeslib:fire_damage",
+                "attributeslib:ghost_health",
+                "attributeslib:healing_received",
+                "attributeslib:life_steal",
+                "attributeslib:mining_speed",
+                "attributeslib:overheal",
+                "attributeslib:prot_pierce",
+                "attributeslib:prot_shred",
+                "forge:swim_speed",
+                "forge:block_reach",
+                "forge:entity_reach",
+                "forge:step_height_addition"
+            ]
 		},
 		{
 			"type": "apotheosis:drop_transform",

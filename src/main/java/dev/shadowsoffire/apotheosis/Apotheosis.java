@@ -11,6 +11,7 @@ import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
+import dev.shadowsoffire.apotheosis.ench.table.StatsMessage;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
 import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
@@ -118,6 +119,7 @@ public class Apotheosis {
         MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage.Provider());
         MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage.Provider());
         MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage.Provider());
+        MessageHelper.registerMessage(CHANNEL, 3, new StatsMessage.Provider());
         e.enqueueWork(() -> {
             AdvancementTriggers.init();
             CraftingHelper.register(new ModuleCondition.Serializer());

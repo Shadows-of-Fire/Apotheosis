@@ -26,8 +26,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 public class AffixLootPoolEntry extends LootPoolSingletonContainer {
-    public static final Serializer SERIALIZER = new Serializer();
-    public static final LootPoolEntryType TYPE = new LootPoolEntryType(SERIALIZER);
+    public static final LootPoolEntryType TYPE = new LootPoolEntryType(new AffixLootPoolEntry.Serializer());
 
     @Nullable
     private final RarityClamp.Simple rarityLimit;

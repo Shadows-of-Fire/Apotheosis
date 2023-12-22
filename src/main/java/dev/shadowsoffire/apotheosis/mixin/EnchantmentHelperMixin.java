@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,7 +35,7 @@ public class EnchantmentHelperMixin {
      */
     @Overwrite
     public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure) {
-        return RealEnchantmentHelper.getAvailableEnchantmentResults(power, stack, allowTreasure);
+        return RealEnchantmentHelper.getAvailableEnchantmentResults(power, stack, allowTreasure, Collections.emptySet());
     }
 
     /**
@@ -48,7 +49,7 @@ public class EnchantmentHelperMixin {
      */
     @Overwrite
     public static List<EnchantmentInstance> selectEnchantment(RandomSource pRandom, ItemStack pItemStack, int pLevel, boolean pAllowTreasure) {
-        return RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 15F, 0, 0, pAllowTreasure);
+        return RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 15F, 0, 0, pAllowTreasure, Collections.emptySet());
     }
 
     /**

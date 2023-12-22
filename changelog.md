@@ -1,6 +1,64 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.2.0
+### Enchanting Module
+#### New Content
+* Added the Seashelf of Aquatic Filtration, which allows blacklisting certain enchants from your enchanting table.
+* Added the Deepshelf of Arcane Treasures, which allows obtaining treasure enchantments in the enchanting table.
+* Added a recipe which allows obtaining pufferfish without relying on RNG.
+  * Pufferfish are needed for Seashelfs, and when mods are adding more fish, obtaining them becomes nigh-impossible.
+
+#### Mechanical Changes
+* Made all experience costs (enchanting table, anvil, reforging table) use the optimal XP cost (as if you were spending the exact level).
+  * A book entry was added to cover this, and a tooltip was added to the anvil to show the actual XP amount being used.
+* Added debug tooltips to the Enchantment Library (visible with f3+h).
+* Made Quanta Randomness semi-normally-distributed.
+  * This should reduce the chance that you see huge swings in power values, and keeps the values closer to your actual level.
+* Reduced the rarity of the Chromatic and Exploitation enchantments (for shears).
+
+#### Bugfixes
+* Fixed the stoneshelf hardness value being too low.
+* Made Tomes no longer explicitly check the enchantment category.
+  * This check shouldn't be necessary but it might cause certain enchantments to no longer show up depending on how they work.
+  * The check was removed because some mods are declaring enchantments in the wrong categories, which breaks the tomes.
+
+### Adventure Module
+#### Bugfixes
+* Fixed gems that were removed from items not being stackable.
+* Made the Gem of the Royal Family no longer increase gravity.
+
+### Spawner Module
+#### Bugfixes
+* Fixed an issue where spawners could spawn invalid baby mobs that would eventually jam up the spawn radius.
+  * This was caused by jockey mobs getting spawned and the mounts not getting added to the world.
+
+### Village Module
+#### Mechanical Changes
+* Reduced wandering trader spawn rates.
+  * I think some combination of mods was causing these to spawn way too frequently.  Reducing the rates should tone it down a bit.
+
+## 7.1.0
+* Updated to Placebo 8.5.6. Changed a lot of things to use Codecs and Records where applicable.
+* Improved data validation by switching to `nullableField` instead of `optionalFieldOf`.
+* Affix Loot Entries have been datafixed to the current format.
+* SkyzerFlyzer: Updated boss AABB sizes to match sizes reported by the vanilla wiki.
+* VenomCode: Fixed the Vial of Arcane Extraction.
+* Made the NoAI spawner modifier apply to passengers as well as the primary mob.
+* Fixed mob effect affixes applying the mob effect on the client.
+* Fixed the telepathic (teleport drops) affix not working.
+* Fixed a crash that happened if affixes were resolved too early.
+* Fixed the healing amount for the Gem of the Mageslayer being too high.
+* Changed the Gem of the Royal Family to only boost stats from vanilla/forge and apothic attributes.
+  * Additional stats can be datapacked in.
+  * The tooltip is unchanged, and still shows "+X% to all stats"
+* Fixed the Reforging Table voiding items if the server shutdown while the menu was open.
+* Fixed being able to place invalid items into the Gem Cutting Table, which was causing a crash.
+* Made Shield Bash exclusive with Sharpness and other damage enchantments.
+* Fixed Towers generating in Oceans.
+* Added the Youthful spawner modifier, which forces all spawned mobs to be babies.
+  * Applied with a turtle egg.
+
 ## 7.0.5
 * Fixed some broken Wandering Trader trades.
 * Fixed Wandering Trader trades being re-added multiplicatively based on the number of reloads that were run.

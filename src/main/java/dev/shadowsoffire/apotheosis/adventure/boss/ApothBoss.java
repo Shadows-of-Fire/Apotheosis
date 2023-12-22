@@ -200,8 +200,8 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
         int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
         for (ChancedEffectInstance inst : stats.effects()) {
-            if (rand.nextFloat() <= inst.getChance()) {
-                entity.addEffect(inst.createInstance(rand, duration));
+            if (rand.nextFloat() <= inst.chance()) {
+                entity.addEffect(inst.create(rand, duration));
             }
         }
 

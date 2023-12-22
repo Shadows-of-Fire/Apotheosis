@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
-import com.google.gson.JsonElement;
+import com.mojang.serialization.Codec;
 
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import net.minecraft.network.chat.Component;
@@ -14,9 +14,20 @@ public interface SpawnerStat<T> {
     String getId();
 
     /**
-     * Parses a JsonElement into the correct value type for this stat.
+     * Returns a codec that can de/serialize a stat modifier for this stat.
      */
-    T parseValue(JsonElement value);
+    Codec<StatModifier<T>> getModifierCodec();
+
+    /**
+     * Gets the current value of this stat.
+     */
+    T getValue(ApothSpawnerTile spawner);
+
+    /**
+     * Computes a tooltip to be shown in the item tooltip and Jade/TOP.
+     * If the returned component is empty, the tooltip line will not be shown.
+     */
+    Component getTooltip(ApothSpawnerTile spawner);
 
     /**
      * Applies this stat change to the selected spawner.
@@ -28,8 +39,6 @@ public interface SpawnerStat<T> {
      * @return If the application was successful (was a spawner stat changed).
      */
     boolean apply(T value, T min, T max, ApothSpawnerTile spawner);
-
-    Class<T> getTypeClass();
 
     default MutableComponent name() {
         return Component.translatable("stat.apotheosis." + this.getId());

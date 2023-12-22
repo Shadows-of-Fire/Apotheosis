@@ -3,8 +3,8 @@ package dev.shadowsoffire.apotheosis.ench.objects;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +34,7 @@ public class WardenLootModifier extends LootModifier {
             if (ctx.getRandom().nextFloat() <= 0.10F + ctx.getLootingModifier() * 0.10F) {
                 amount++;
             }
-            loot.add(new ItemStack(dev.shadowsoffire.apotheosis.ench.Ench.Items.WARDEN_TENDRIL.get(), amount));
+            loot.add(new ItemStack(Ench.Items.WARDEN_TENDRIL.get(), amount));
         }
         return loot;
     }
