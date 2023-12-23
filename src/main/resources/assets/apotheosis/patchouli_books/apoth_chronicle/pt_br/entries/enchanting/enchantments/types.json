@@ -12,17 +12,17 @@
 		{
             "type": "patchouli:text",
 			"title": "Obra-Prima",
-            "text": "Encantamentos do tipo $(2)obra-prima$() representam os encantamentos mais fortes e raros.$(p)Eles sempre requerem pelo menos 55 de $(#CC00CC)poder final$() para receber."
+            "text": "Encantamentos do tipo $(2)obra-prima$() representam os encantamentos mais fortes e raros.$(p)Eles sempre requerem pelo menos 55 de $(poderf) para receber."
         },
 		{
             "type": "patchouli:text",
 			"title": "Distorcido",
-            "text": "Encantamentos $(5)distorcidos$() sempre têm um efeito bom e um ruim.$(p)Eles sempre requerem pelo menos 45 de $(#CC00CC)poder final$() para serem recebidos."
+            "text": "Encantamentos $(5)distorcidos$() sempre têm um efeito bom e um ruim.$(p)Eles sempre requerem pelo menos 45 de $(poderf) para serem recebidos."
         },
 		{
             "type": "patchouli:text",
 			"title": "Corrompido",
-            "text": "Encantamentos $(4)corrompidos$() têm um custo de saúde associado ao seu efeito.$(p)Eles sempre requerem pelo menos 65 de $(#CC00CC)poder final$() para serem recebidos.$(p)Eles são considerados $(c)maldições$()."
+            "text": "Encantamentos $(4)corrompidos$() têm um custo de saúde associado ao seu efeito.$(p)Eles sempre requerem pelo menos 65 de $(poderf) para serem recebidos.$(p)Eles são considerados $(c)maldições$()."
         }
 	]
 }

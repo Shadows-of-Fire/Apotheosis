@@ -313,7 +313,7 @@
 	"gem_class.breaker": "Ferramentas de mineração",
     "gem_class.pickaxe": "Picaretas",
 	"gem_class.light_ranged": "Armas leves ou de longo alcance",
-	"gem_class.weapons_or_tools": "Armas ou ferramentas",
+	"gem_class.weapon_or_tool": "Armas ou ferramentas",
     "gem_class.weapon": "Armas",
 
 	"gem_class.helmet": "Capacetes",
@@ -392,25 +392,25 @@
     "block.apotheosis.boss_spawner": "Gerador de chefe",
     "block.apotheosis.gem_cutting_table": "Bancada de lapidação de gema",
 	"block.apotheosis.gem_cutting_table.desc": "Usa pó de gema materiais de raridade para melhorar gemas",
-	"block.apotheosis.salvaging_table": "Bancada de desmontagem",
-	"block.apotheosis.salvaging_table.desc": "Desmonta itens de afixo em materiais de raridade",
-	"block.apotheosis.simple_reforging_table": "Bancada simples de reforja",
-	"block.apotheosis.reforging_table": "Bancada de reforja",
+	"block.apotheosis.salvaging_table": "Bancada de reciclagem",
+	"block.apotheosis.salvaging_table.desc": "Recicla itens de afixo em materiais de raridade",
+	"block.apotheosis.simple_reforging_table": "Bancada simples de reforjação",
+	"block.apotheosis.reforging_table": "Bancada de reforjação",
 	"block.apotheosis.reforging_table.desc": "Usa pó de gema e materiais de raridade para rolar novamente os afixos",
 	"block.apotheosis.reforging_table.desc2": "Raridade máxima: %s",
 	
-	"button.apotheosis.salvage": "Itens de desmontagem",
+	"button.apotheosis.salvage": "Itens de reciclagem",
 	"button.apotheosis.no_salvage": "Nenhum item selecionado",
 	"button.apotheosis.no_salvage_all": "Nenhum item válido no inventário",
     "button.apotheosis.upgrade": "Aprimorar gema",
-	"button.apotheosis.upgrade.no": "Entradas ausentes",
+	"button.apotheosis.upgrade.no": "Itens ausentes",
 
 	"menu.apotheosis.gem_cutting": "Lapidação de gema",
-    "container.apotheosis.salvage": "Desmontar",
+    "container.apotheosis.salvage": "Reciclar",
 	"container.apotheosis.reforge": "Reforjar",
 	"text.apotheosis.cost": "%sx %s",
-	"text.apotheosis.reforge_cost": "Custo de reforja",
-	"text.apotheosis.salvage_results": "Resultados da desmontagem",
+	"text.apotheosis.reforge_cost": "Custo de reforjação",
+	"text.apotheosis.salvage_results": "Resultados da reciclagem",
 	"text.apotheosis.unique": "Único",
 	"text.apotheosis.results": "Resultados",
 	"text.apotheosis.facets": "Facetas: %s",
@@ -421,9 +421,9 @@
 	"text.apotheosis.cut_cost": "Custo de lapidação de gema",
 	"text.apotheosis.one_rarity_mat": "Materiais de raridade (1)",
 	"title.apotheosis.smithing": "Ferraria apótica",
-    "title.apotheosis.salvaging": "Desmontagem",
+    "title.apotheosis.salvaging": "Reciclagem",
 
-"text.apotheosis.anything": "Qualquer coisa",
+    "text.apotheosis.anything": "Qualquer coisa",
 	"text.apotheosis.category.none": "Nada",
 	"text.apotheosis.category.none.plural": "Nada",
 	"text.apotheosis.category.bow": "Arco",
@@ -465,7 +465,7 @@
 	"info.apotheosis.gem_extraction": "Usado em uma bancada de ferraria para desencaixar gemas apóticas.\n\nO item será destruído no processo.",
 	"info.apotheosis.gem_expulsion": "Usado em uma bancada de ferraria para desencaixar gemas apóticas.\n\nAs gemas serão destruídas no processo.",
 	"info.apotheosis.unnaming": "Usado em uma bancada de ferraria para remover os componentes de afixo do nome de um item.",
-    "info.apotheosis.salvaging": "Materiais de raridade são obtidos ao desmontar itens de afixo em uma bancada de desmontagem.",
+    "info.apotheosis.salvaging": "Materiais de raridade são obtidos ao reciclar itens de afixo em uma bancada de reciclagem.",
 	
     "rarity.apotheosis:common": "comum",
     "rarity.apotheosis:uncommon": "incomum",
@@ -474,10 +474,10 @@
     "rarity.apotheosis:mythic": "mítico",
     "rarity.apotheosis:ancient": "ancestral",
     
-    "death.attack.apoth.frozen_solid": "%s foi congelado.",
-    "death.attack.apoth.frozen_solid.player": "%s foi congelado por %s.",
-    "death.attack.apoth.execute": "%s foi executado.",
-    "death.attack.apoth.execute.player": "%s foi executado por %s.",
+    "death.attack.apotheosis:psychic": "%s foi morto por um ataque refletido.",
+    "death.attack.apotheosis:psychic.player": "%s teve seu ataque refletido por %s.",
+    "death.attack.apotheosis:execute": "%s foi executado.",
+    "death.attack.apotheosis:execute.player": "%s foi executado por %s.",
 
 	"comment_id": "/Adventure + Gateways Compat",
 
@@ -514,7 +514,7 @@
     "advancements.apotheosis.upgrade_hellshelf.desc": "Melhore uma estante infernal infundida.",
     
     "advancements.apotheosis.deepshelf": "Mergulhando nas trevas",
-    "advancements.apotheosis.deepshelf.desc": "Ative uma estante das profundezas dormente.",
+    "advancements.apotheosis.deepshelf.desc": "Ative uma estante profunda dormente.",
     
     "advancements.apotheosis.sculkshelf": "Abraçando o sculk",
     "advancements.apotheosis.sculkshelf.desc": "Crie uma estante sculk usando uma gavinha do defensor.",
@@ -526,13 +526,13 @@
     "advancements.apotheosis.upgrade_endshelf.desc": "Melhore uma estante do End em uma estante dracônica.",
     
     "advancements.apotheosis.seashelf": "A pureza dos mares",
-    "advancements.apotheosis.seashelf.desc": "Obtenha uma estante do mar.",
+    "advancements.apotheosis.seashelf.desc": "Obtenha uma estante marinha.",
     
-    "advancements.apotheosis.infuse_seashelf": "Infusão do mar",
-    "advancements.apotheosis.infuse_seashelf.desc": "Obtenha uma estante do mar infundida através do encantamento de infusão.",
+    "advancements.apotheosis.infuse_seashelf": "Infusão marinha",
+    "advancements.apotheosis.infuse_seashelf.desc": "Obtenha uma estante marinha infundida através do encantamento de infusão.",
     
     "advancements.apotheosis.upgrade_seashelf": "Dormindo no frio abaixo",
-    "advancements.apotheosis.upgrade_seashelf.desc": "Melhore uma estante do mar infundida",
+    "advancements.apotheosis.upgrade_seashelf.desc": "Melhore uma estante marinha infundida",
     
     "advancements.apotheosis.infuse_hellshelf": "Infusão infernal",
     "advancements.apotheosis.infuse_hellshelf.desc": "Obtenha uma estante infernal infundida através do encantamento de infusão.",
@@ -675,6 +675,7 @@
     "stat.apotheosis.ignore_light": "Ignora luz",
     "stat.apotheosis.no_ai": "Sem IA",
 	"stat.apotheosis.silent": "Silencioso",
+    "stat.apotheosis.baby": "Juvenil",
 
     "stat.apotheosis.min_delay.desc": "O número mínimo de ticks entre as gerações",
     "stat.apotheosis.max_delay.desc": "O número máximo de ticks entre as gerações",
@@ -688,6 +689,7 @@
     "stat.apotheosis.ignore_light.desc": "O gerador ignora os níveis de luz",
     "stat.apotheosis.no_ai.desc": "As entidades geradas não terão IA",
 	"stat.apotheosis.silent.desc": "As entidades geradas não farão nenhum barulho",
+    "stat.apotheosis.baby.desc": "O gerador sempre gerará uma entidade bebê quando possível",
 
     "title.apotheosis.spawner": "Modificação de gerador",
     "info.apotheosis.spawner": "Os geradores podem ser coletados com %s e podem ser modificados com vários itens.",
@@ -702,15 +704,15 @@
     "block.apotheosis.blazing_hellshelf": "Estante infernal em chamas",
     "block.apotheosis.glowing_hellshelf": "Estante infernal brilhante",
 
-    "block.apotheosis.seashelf": "Estante do mar",
-    "block.apotheosis.infused_seashelf": "Estante do mar infundida",
-    "block.apotheosis.crystal_seashelf": "Estante do mar cristalina",
-    "block.apotheosis.heart_seashelf": "Estante do mar forjada pelo coração",
+    "block.apotheosis.seashelf": "Estante marinha",
+    "block.apotheosis.infused_seashelf": "Estante marinha infundida",
+    "block.apotheosis.crystal_seashelf": "Estante marinha cristalina",
+    "block.apotheosis.heart_seashelf": "Estante marinha forjada pelo coração",
 
-    "block.apotheosis.dormant_deepshelf": "Estante das profundezas dormente",
-    "block.apotheosis.deepshelf": "Estante das profundezas",
-    "block.apotheosis.echoing_deepshelf": "Estante das profundezas ecoante",
-    "block.apotheosis.soul_touched_deepshelf": "Estante das profundezas tocada pela alma",
+    "block.apotheosis.dormant_deepshelf": "Estante profunda dormente",
+    "block.apotheosis.deepshelf": "Estante profunda",
+    "block.apotheosis.echoing_deepshelf": "Estante profunda ecoante",
+    "block.apotheosis.soul_touched_deepshelf": "Estante profunda tocada pela alma",
     "block.apotheosis.echoing_sculkshelf": "Estante sculk ecoante",
     "block.apotheosis.soul_touched_sculkshelf": "Estante sculk tocada pela alma",
 
@@ -723,12 +725,13 @@
     "block.apotheosis.melonshelf": "Estante de melancia",
     "block.apotheosis.stoneshelf": "Estante pedregosa",
 
-    "block.apotheosis.sightshelf": "Estante da observação",
-    "block.apotheosis.sightshelf_t2": "Estante da observação mestra",
-    "block.apotheosis.rectifier": "Estante da retificação do mar",
+    "block.apotheosis.sightshelf": "Estante infernal da observação",
+    "block.apotheosis.sightshelf_t2": "Estante infernal da visão magistral",
+    "block.apotheosis.rectifier": "Estante da retificação marinha",
     "block.apotheosis.rectifier_t2": "Estante da retificação infernal",
     "block.apotheosis.rectifier_t3": "Estante da retificação fundida do End",
-
+    "block.apotheosis.filtering_shelf": "Estante marinha da filtração aquática",
+    "block.apotheosis.treasure_shelf": "Estante profunda de tesouros arcanos",
     
     "info.apotheosis.ench_power": "Fornece %s de poder de encantamento.",
     "info.apotheosis.cobweb": "Pode ser usada para remover encantamentos.",
@@ -747,6 +750,8 @@
     "info.apotheosis.arcana": " - Arcana: %s%%",
     "info.apotheosis.rectification": " - Retificação: %s%%",
     "info.apotheosis.clues": " - Pistas de encantamento: %s",
+    "info.apotheosis.allows_treasure": " - Permite encantamentos de tesouro",
+    "info.apotheosis.filter": "Filtro de encantamento:",
     "info.apotheosis.eterna.p": " - Eterna: +%s (Máx. %s)",
     "info.apotheosis.quanta.p": " - Quanta: +%s%%",
     "info.apotheosis.arcana.p": " - Arcana: +%s%%",
@@ -788,7 +793,7 @@
     "info.apotheosis.eterna_exact": "Requer exatamente: %s/%s",
     "info.apotheosis.percent_exact": "Requer exatamente: %s%%",
     "apotheosis.recipes.enchanting": "Encatamento de infusão",
-    "info.apotheosis.power_range": "Requer pelo menos: %s%%",
+    "info.apotheosis.book_range": "Alcance de força: [%s, %s]",
     "info.apotheosis.discoverable": "Encontrável",
     "info.apotheosis.discoverable.not": "Não encontrável",
     "info.apotheosis.lootable": "Saqueável",
@@ -797,6 +802,8 @@
     "info.apotheosis.tradeable.not": "Não trocável",
     "info.apotheosis.treasure": "Tesouro",
     "info.apotheosis.treasure.not": "Não é um tesouro",
+    "info.apotheosis.filtering_shelf": "Insira livros encantados para evitar que eles apareçam na mesa.",
+    "info.apotheosis.filtering_shelf2": "Ganhe bônus de eterna e arcana baseado no número de livros inseridos.",
 
     "enchantment.apotheosis.infusion": "Infusão",
     "enchantment.apotheosis.infusion.desc": "Espaço reservado para criação de encantamentos",
@@ -822,8 +829,8 @@
     "enchantment.apotheosis.bane_of_illagers": "Ruína dos illagers",
     "enchantment.apotheosis.bane_of_illagers.desc": "Illagers sofrem dano aumentado.",
 
-    "death.attack.apoth_corrupted": "%s foi drenado por um encantamento corrupto.",
-    "death.attack.apoth_corrupted.player": "%s foi corrompido por %s.",
+    "death.attack.apotheosis:corrupted": "%s foi drenado por um encantamento corrupto.",
+    "death.attack.apotheosis:corrupted.player": "%s foi corrompido por %s.",
 
     "item.apotheosis.prismatic_web": "Teia de aranha prismática",
     "info.apotheosis.prismatic_cobweb": "Pode ser usada para remover maldições.",
@@ -1065,6 +1072,8 @@
     "info.apotheosis.item_ench": "Encantabilidade do item: %s",
     "info.apotheosis.num_clues": "Pistas de encantamento: %s",
     "info.apotheosis.infusion_failed": "Critérios de infusão não atendidos",
+    "info.apotheosis.anvil_at": "Forjando no nível %s",
+    "info.apotheosis.anvil_xp_cost": "Custo de EXP bruto: %s",
     
     "info.apotheosis.slider_power": "Poder: %s",
     "info.apotheosis.enchinfo_level": "Nível: %s",
@@ -1173,9 +1182,9 @@
     "info.apotheosis.mining_arrow.diamond": "Quebra blocos como uma picareta de diamante",
     
     "comment_id": "/Misc",
-    "generic.reachDistance": "Distância de alcance",
     "info.apoth.modifier_disabled": "Este Modificador está desativado",
-    "itemGroup.apotheosis": "Apotheosis",
+    "itemGroup.apotheosis.adventure": "Apotheosis: Módulo de aventura",
+    "itemGroup.apotheosis.ench": "Apotheosis: Módulo de encantamento",
     "config.jade.plugin_apotheosis.spawner": "Módulo de gerador apótico",
 	"config.jade.plugin_apotheosis.ench": "Módulo de encan. apótico",
 	"config.jade.plugin_apotheosis.adventure": "Módulo de aventura apótico",

@@ -6,19 +6,19 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Durante o processo de encantamento, você gasta experiência e lápis-lazúli para encantar um item.$(p)Mas como os encantamentos são selecionados?$(p)A resposta para isso é poder de encantamento."
+            "text": "Durante o processo de encantamento, você gasta experiência e lápis-lazúli para encantar um item.$(p)A partir disso, os encantamentos são selecionados aleatoriamente usando algumas fórmulas complexas.$(p)Este capítulo explica esse processo."
         },
 		{
             "type": "patchouli:text",
-            "text": "Primeiro, veremos como os encantamentos são selecionados.$(p)Cada encantamento tem uma $(5)função de poder$(), que controla o que $(#CC00CC)poder final$() disponibilizará em um nível específico.$(p)Depois de tudo os encantamentos disponíveis são reunidos, alguns são selecionados aleatoriamente com base em seus pesos."
+            "text": "Primeiro, veremos como os encantamentos são selecionados.$(p)Cada encantamento tem uma $(5)função de poder$(), que controla o que $(poderf) disponibilizará em um nível específico.$(p)Depois de tudo os encantamentos disponíveis são reunidos, alguns são selecionados aleatoriamente com base em seus pesos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "Mas como $(#CC00CC)poder final$() é calculado? Bem, é preciso um pouco de matemática.$(p)Inicialmente, você tem um $(6)poder base$(), que é o nível que você gastou enquanto encantava.$(p)Então, $(#FC5454)quanta$() e a retificação modificam seu $(6)poder base$() para produzir seu $(#CC00CC)poder final$()."
+			"text": "O cálculo do $(poderf) é feito com os seguintes passos:$(p)Inicialmente, você tem um $(poderb), que é o nível que você gastou enquanto encantava.$(p)Então, $(quanta) e a retificação modificam seu $(poderb) para produzir seu $(poderf)."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "Os detalhes de como cada status modifica seu $(6)poder base$() podem ser encontrados em $(l:apotheosis:enchanting/table/stats#quanta)$(#FC5454)quanta$() e entradas de $(l:apotheosis:enchanting/table/stats#rectification)retificação$().$(p)Normalmente, um $(#CC00CC)poder final$() maior lhe dará acesso a encantamentos de nível superior."
+			"text": "Os detalhes de como cada status modifica seu $(poderb) podem ser encontrados em $(l:apotheosis:enchanting/table/stats#quanta)$(quanta) e entradas de $(l:apotheosis:enchanting/table/stats#rectification)retificação$().$(p)Normalmente, um $(poderf) maior lhe dará acesso a encantamentos de nível superior."
 		}
 	]
 }

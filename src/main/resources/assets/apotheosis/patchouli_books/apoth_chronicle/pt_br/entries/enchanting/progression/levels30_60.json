@@ -1,0 +1,44 @@
+{
+    "name": "Níveis 30 - 60",
+    "icon": "apotheosis:hellshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Alcançando o nível 45",
+			"recipe": "apotheosis:hellshelf",
+			"text": "Para atingir o nível 45, você vai querer criar algumas $(9)estantes infernais$() e adicioná-las às suas estantes de livro existentes."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Alcançando o nível 45",
+			"recipe": "apotheosis:seashelf",
+			"text": "Se você não gosta do Nether, você também pode se aventurar no oceano e criar $(9)estante do mar$()."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Alcançando o nível 60",
+			"item": "apotheosis:infused_hellshelf",
+			"text": "Depois de alcançar o nível 45, você precisará explorar $(l:apotheosis:enchanting/table/infusion)encantamento de infusão$() para melhorar suas estantes."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Alcançando o nível 60",
+			"item": "apotheosis:infused_seashelf",
+			"text": "Crie mais algumas estantes do tipo que você estava usando, infunda-as e atualize-as.$(p)Essas novas estantes, em cima das antigas, permitirão que você alcance o nível 60."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Outros status",
+			"item": "apotheosis:sightshelf",
+			"text": "Agora você tem acesso a melhores opções para aumentar outras estatísticas.$(p)Além dos bônus de estantes infernais e estantes do mar, agora você também pode criar $(9)estante da observação$() para aumentar suas $(pistas)."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Outros status",
+			"recipe": "apotheosis:rectifier",
+			"text": "Se você tiver uma quantidade boa de ametista, você também pode fazer $(9)retificadores$() para aumentar ainda mais sua $(retificacao)."
+		}
+	]
+}

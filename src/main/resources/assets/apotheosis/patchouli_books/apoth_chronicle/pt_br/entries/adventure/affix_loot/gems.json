@@ -10,6 +10,11 @@
             "text": "Uma $(9)gema$() é um cristal de força condensada.$(p)Quando encaixada em um item de afixo, uma gema fornecerá um bônus poderoso.$(p)As gemas podem fornecer bônus diferentes em itens diferentes e podem ser melhoradas."
         },
 		{
+			"title": "Raridade",
+            "type": "patchouli:text",
+            "text": "Como um item de afixo, cada gema tem uma $(l:apotheosis:adventure/affix_loot/rarities)raridade$(). A raridade por si só determina a força da gema, e gemas de raridade mais alta são mais caras para melhorar.$(p)As gemas não podem ser melhoradas além da raridade ancestral."
+        },
+		{
 			"type": "patchouli:text",
 			"title": "Obtendo gemas",
 			"text": "As gemas podem ser encontradas em pilhas de baús e raramente podem ser encontradas ao matar criaturas. No entanto, para uma gema cair, o assassino deve ser um jogador real, não uma máquina ou outra fonte de automação.$(p)Gemas são mais comuns a cair de chefes."

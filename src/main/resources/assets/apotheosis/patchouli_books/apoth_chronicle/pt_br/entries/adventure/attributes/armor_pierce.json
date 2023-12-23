@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Perfuração de armadura$() permite que você ignore uma quantidade absoluta de armadura do seu alvo ao atacar.$(p)Perfuração de armadura extra pode fazer com que seu alvo tenha armadura negativa."
+            "text": "$(9)Perfuração de armadura$() faz com que você ignore uma quantidade absoluta de armadura do seu alvo ao atacar.$(p)Perfuração de armadura extra pode fazer com que seu alvo tenha armadura negativa."
         }
 	]
 }
