@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Velocidade da puxada$() é o quão rápido você pode realizar uma puxada em uma arma à distância em relação à velocidade original. 1 = 100%, 2 = 200%, e etc.$(p)Encontrado em arcos e armas a distância."
+            "text": "$(9)Velocidade da puxada$() é o quão rápido você pode realizar uma puxada em uma arma à distância em relação à velocidade original. 1 = 100%, 2 = 200%, e etc.$(p)Encontrado em armas a distância."
         }
 	]
 }

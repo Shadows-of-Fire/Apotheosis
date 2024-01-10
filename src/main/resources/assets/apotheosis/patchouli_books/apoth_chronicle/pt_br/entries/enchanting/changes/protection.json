@@ -19,7 +19,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "Os primeiros 20 pontos fornecem 4% de RD cada, até o total de 80%.$(p)No vanilla, 20 pontos é o máximo, e qualquer ponto extra não tem efeito.$(p)Com o Apotheosis, os próximos 45 pontos fornecem 0,33% adicionais cada, até 95% no total (ao chegar em 65 pontos).$(p)A armadura é aplicada antes dos encantamentos."
+            "text": "No Apotheosis, cada ponto de proteção proporciona 2,5% de redução de dano, até 85%.$(p)No vanilla, cada ponto proporciona 4% de redução de dano, até 80%."
         }
 	]
 }

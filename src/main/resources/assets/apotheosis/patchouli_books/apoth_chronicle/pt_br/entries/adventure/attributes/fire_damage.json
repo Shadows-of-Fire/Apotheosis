@@ -1,5 +1,5 @@
 {
-    "name": "Dano de fogo",
+    "name": "Dano flamejante",
     "icon": "minecraft:blaze_powder",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Dano de fogo$() é um dano mágico bônus aplicado a ataques corpo a corpo. Ele também incendeia o alvo por um curto período. Danos mais altos aumentam a duração do incêndio.$(p)Encontrado em armas corpo a corpo."
+            "text": "$(9)Dano flamejante$() é um dano mágico bônus aplicado a ataques corpo a corpo. Ele também incendeia o alvo por um curto período. Danos mais altos aumentam a duração do incêndio.$(p)Encontrado em armas corpo a corpo."
         }
 	]
 }

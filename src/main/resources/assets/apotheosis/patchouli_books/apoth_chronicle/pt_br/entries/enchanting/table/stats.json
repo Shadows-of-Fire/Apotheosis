@@ -11,32 +11,32 @@
         {
             "type": "patchouli:text",
             "title": "Eterna",
-            "text": "$(eterna) é o status principal do encantamento.$(p)Cada ponto de $(#3DB53D)eterna$() aumenta o nível máximo de encantamento em dois.$(p)Alguns blocos só podem fornecer $(#3DB53D)eterna$() até um certo valor máximo."
+            "text": "$(eterna) é o status principal do encantamento.$(p)Cada ponto de $(eterna) aumenta o nível máximo de encantamento em dois.$(p)Alguns blocos só podem fornecer $(eterna) até um certo valor máximo."
         },
         {
             "type": "patchouli:text",
             "title": "Quanta",
             "anchor": "quanta",
-            "text": "$(quanta) é um status secundário. Ela controla a variação dos encantamentos.$(p)Durante o encantamento, você tem um $(6)poder base(), que é o nível que você gastou para encantar, e então um $(#CC00CC)poder final(), após todas as modificações.$(p)$(quanta) é um dos fatores do processo de modificação."
+            "text": "$(quanta) é um status secundário. Ela controla a variação dos encantamentos.$(p)Durante o encantamento, você tem um $(poderb), que é o nível que você gastou para encantar, e então um $(poderf), após todas as modificações.$(p)$(quanta) é um dos fatores do processo de modificação."
         },
         {
             "type": "patchouli:text",
-            "text": "Um valor é selecionado entre $(4)1 - Quanta$() e $(9)1 + Quanta$().$(p)Seu $(#CC00CC)poder final() é igual a esse valor multiplicado pelo seu $(6)poder base().$(p)Valores mais altos de $(#FC5454)quanta$() aumentam a faixa de poder, o que significa que seus encantamentos são menos consistentes em seu $(#CC00CC)poder final()."
+            "text": "Um valor é selecionado entre $(4)1 - Quanta$() e $(9)1 + Quanta$().$(p)Seu $(poderf) é igual a esse valor multiplicado pelo seu $(poderb).$(p)Valores mais altos de $(quanta) aumentam a faixa de poder, o que significa que seus encantamentos são menos consistentes em seu $(poderf)."
         },
         {
             "type": "patchouli:text",
             "title": "Arcana",
-            "text": "$(arcana) é um status secundário. Ela controla os pesos de raridade e, em certos níveis, garantirá encantamentos adicionais.$(p)Com 25% de $(#A800A8)arcana$(), você sempre receberá pelo menos dois encantamentos. Com 75%, você sempre receberá três."
+            "text": "$(arcana) é um status secundário. Ela controla os pesos de raridade e, em certos níveis, garantirá encantamentos adicionais.$(p)Com 25% de $(arcana), você sempre receberá pelo menos dois encantamentos. Com 75%, você sempre receberá três."
         },
         {
             "type": "patchouli:text",
-            "text": "Por padrão, as raridades têm os seguintes pesos:$(p)Comum: 10$(br)Incomum: 5$(br)Raro: 3$(br)Muito Raro: 1$(p)A cada 10% de $(#A800A8)arcana$(), os pesos mudam, eventualmente se invertendo completamente.$(p)Ao passar o mouse sobre a barra de $(#A800A8)arcana$(), você verá os pesos atuais."
+            "text": "Por padrão, as raridades têm os seguintes pesos:$(p)Comum: 10$(br)Incomum: 5$(br)Raro: 3$(br)Muito Raro: 1$(p)A cada 10% de $(arcana), os pesos mudam, eventualmente se invertendo completamente.$(p)Ao passar o mouse sobre a barra de $(arcana), você verá os pesos atuais."
         },
         {
             "type": "patchouli:text",
             "title": "Retificação",
             "anchor": "rectification",
-            "text": "Retificação é um status terciário. Ela afeta diretamente o limite inferior das modificações de $(#FC5454)quanta$().$(p)Lembre-se de que seu $(4)poder mínimo$() é igual a $(4)1 - Quanta$().$(p)Com retificação (R), seu $(4)poder mínimo$() é igual a $(4)1 - (1 - R) * Quanta$()."
+            "text": "Retificação é um status terciário. Ela afeta diretamente o limite inferior das modificações de $(quanta).$(p)Lembre-se de que seu $(4)poder mínimo$() é igual a $(4)1 - Quanta$().$(p)Com retificação (R), seu $(4)poder mínimo$() é igual a $(4)1 - (1 - R) * Quanta$()."
         },
         {
             "type": "patchouli:text",

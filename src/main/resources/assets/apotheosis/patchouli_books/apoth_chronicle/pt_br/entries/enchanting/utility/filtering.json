@@ -1,0 +1,27 @@
+{
+    "name": "Filtração de encantamento",
+    "icon": "apotheosis:filtering_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Às vezes, é desejável evitar certos encantamentos durante o processo de encantamento.$(p)A $(9)estante marinha da filtração aquática$() permite que você faça exatamente isso."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:filtering_shelf",
+            "title": "Filtração aquática",
+            "text": "A estante permite inserir até seis livros de encantamento único, evitando que esses encantamentos apareçam."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Para usá-lo, basta inserir um livro de encantamento único de um encantamento que você deseja colocar na lista negra.$(p)O encantamento não estará mais disponível na estante de encantamentos.$(p)A estante também ganhará $(eterna) e $(arcano) baseado no número de livros inseridos."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Nota: os livros podem ser inseridos da mesma forma que você usa um porta-livros, e a estante deve estar em um slot de estante de livros válido para funcionar.$(p)Os encantamentos da lista negra serão refletidos na $(l:apotheosis:enchanting/table/info)tela de informação de encantamento$()."
+        }
+    ]
+}

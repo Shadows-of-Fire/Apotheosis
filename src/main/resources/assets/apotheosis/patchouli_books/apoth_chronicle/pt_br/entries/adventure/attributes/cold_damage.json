@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Dano gélido$() é um dano mágico bônus aplicado a ataques corpo a corpo. Também aplica uma lentidão dependente da força do dano.$(p)Encontrado em armas corpo a corpo."
+            "text": "$(9)Dano de gélido$() é um dano mágico bônus aplicado a ataques corpo a corpo. Também aplica uma lentidão dependente da força do dano.$(p)Encontrado em armas corpo a corpo."
         }
 	]
 }

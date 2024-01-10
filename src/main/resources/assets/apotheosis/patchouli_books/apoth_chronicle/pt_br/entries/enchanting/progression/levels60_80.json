@@ -1,0 +1,43 @@
+{
+    "name": "Níveis 60 - 80",
+    "icon": "apotheosis:dormant_deepshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Alcançando o nível 70",
+			"recipe": "apotheosis:dormant_deepshelf",
+			"text": "Alcançar o nível 70 requer uma mesa de encantamentos de nível 60 e acesso a ardósia."
+		},
+		{
+            "type": "patchouli:text",
+			"title": "Alcançando o nível 70",
+			"text": "Depois de criar uma $(9)estante das profundezas dormente$(), você precisa infundi-la.$(p)Esta receita de infusão exigirá alguns blocos extras para atingir o limite de status.$(p)Concluir a infusão produzirá uma $(9)estante das profundezas$(), que pode levar você ao nível 70."
+		},
+		{
+            "type": "patchouli:text",
+			"title": "Alcançando o nível 75",
+			"text": "Para atingir o nível 75, você precisará melhorar suas estantes das profundezas.$(p)Para fazer isso, são necessários materiais encontrados apenas nas $(9)profundezas sombrias$().$(p)$(9)Fragmentos de eco$() podem ser saqueados de cidades ancestrais, e $(9)sculk$() podem ser coletados com toque suave."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Alcançando o nível 75",
+			"recipe": "apotheosis:echoing_deepshelf",
+			"recipe2": "apotheosis:soul_touched_deepshelf"
+		},
+		{
+            "type": "patchouli:entity",
+			"entity": "minecraft:warden",
+			"title": "Alcançando o nível 80",
+			"scale": 0.95,
+			"text": "A última etapa para o nível 80 requer matar o $(9)guardião$(), que permite criar $(9)estante sculk$()."
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "Alcançando o nível 80",
+			"recipe": "apotheosis:echoing_sculkshelf",
+			"recipe2": "apotheosis:soul_touched_sculkshelf"
+		}
+	]
+}

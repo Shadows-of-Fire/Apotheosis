@@ -9,14 +9,13 @@
             "type": "patchouli:spotlight",
 			"item": "apotheosis:gem_dust",
 			"link_recipe": true,
-            "text": "Todas as gemas apoteóticas podem ser reduzidas a $(br)$(9)pó de gema$() pelo esmagamento.$(p)Especificamente, elas devem ser esmagadas com uma bigorna $(br)no mundo."
-            
+            "text": "Todas as gemas apoteóticas podem ser reduzidas a $(br)$(9)pó de gema$() pelo esmagamento.$(p)Um método é esmagando-as com uma bigorna $(br)no mundo."     
         },
         {
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:salvaging_table",
-			"title": "Gemas de desmontagem",
-            "text": "Depois de esmagar algumas joias com uma bigorna, você pode criar e usar a $(9)bancada de desmontagem$()."
+			"title": "Reciclando gemas",
+            "text": "Depois de esmagar algumas joias com uma bigorna, você pode criar e usar a $(9)bancada de reciclagem$()."
         }
 	]
 }

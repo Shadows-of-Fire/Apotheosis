@@ -7,11 +7,19 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Armadura$() é uma medida de quão resistente você é a danos físicos.$(p)Geralmente fornecida por itens de armaduras e escudos.$(p)Seu dano físico sofrido é reduzido em $(9)50 / (50 + armadura)$()"
+            "text": "$(9)Armadura$() é uma medida de quão resistente você é a danos físicos.$(p)Geralmente fornecida por itens de armaduras e escudos.$(p)A quantidade de dano que você sofre depende do dano recebido e de sua armadura."
         },
 		{
 			"type": "patchouli:text",
-			"text": "A fórmula mencionada não é a usada pelo Minecraft vanilla, pois o Apotheosis a substitui."
+			"text": "O primeiro componente da fórmula é o $(br)valor A, igual a $(9)10 + (dano - 20) / 2$(), com um valor mínimo de $(9)10$().$ (p)Você então reduz o dano igual a $(br)$(9)A / (A + armadura)$().$(p)A fórmula mencionada não é a usada pelo Minecraft vanilla, pois o Apotheosis a substitui."
+		},
+        {
+			"type": "patchouli:text",
+			"text": "Para armaduras do vanilla e valores de dano, você sofrerá um pouco menos de dano.$(p)Para valores altos de armadura e dano, a armadura será significativamente menos eficaz."
+		},
+		{
+			"type": "patchouli:text",
+			"text": "O objetivo desta mudança é reduzir a invulnerabilidade em níveis altos e tornar $(9)proteção$() e $(9)resistência$() mais impactantes.$(p)Isso também torna as lutas onde ambas as partes estão fortemente blindadas significativamente mais ativa."
 		}
 	]
 }

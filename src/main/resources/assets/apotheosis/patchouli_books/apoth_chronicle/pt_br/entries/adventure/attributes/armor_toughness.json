@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Resistência da armadura$() é uma status que reduz a eficácia da redução de armadura recebida.$(p)Geralmente fornecido por itens de armaduras ou escudos."
+            "text": "$(9)Resistência da armadura$() é um status que reduz a eficácia da redução de armadura recebida.$(p)Geralmente fornecido por itens de armaduras ou escudos."
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(9)$(n)Valor base:$() 0$(p)$(9)$(n)Valor máximo:$() 30$(p)Nota: No vanilla, o valor máximo é 20.  O Apotheosis aumenta o limite para 30 e também altera o cálculo da armadura."
+			"text": "Cada ponto de resistência da armadura reduz a eficácia de perfuraração de armadura e fragmentação de armadura em 2%, até 60%.$(p)Esta função é exclusiva do Apotheosis. No Minecraft vanilla, resistência da armadura contribui para a redução de danos."
 		}
 	]
 }

@@ -1,0 +1,20 @@
+{
+    "name": "Níveis 1 - 30",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "Alcançando o nível 30",
+			"recipe": "minecraft:bookshelf",
+			"text": "Alcançar o nível 30 é feito da forma usual, com quinze estantes de livro."
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "Outros status",
+			"item": "minecraft:skeleton_skull",
+			"text": "Neste estágio, existem algumas opções básicas para aumentar outros status.$(p)você pode usar Velas para aumentar $(arcana), caveiras para aumentar $(quanta) e agregados de ametista para aumentar $(rectification)."
+		}
+	]
+}

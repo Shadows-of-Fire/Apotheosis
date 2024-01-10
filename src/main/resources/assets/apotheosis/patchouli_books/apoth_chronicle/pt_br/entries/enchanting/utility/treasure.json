@@ -1,0 +1,19 @@
+{
+    "name": "Encantamentos de tesouro",
+    "icon": "apotheosis:treasure_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Encantamentos de tesouro são encantamentos especiais que normalmente não estão disponíveis na mesa de encantamentos.$(p)No entanto, isso pode ser remediado com um $(9)estante profunda de tesouros arcanos$()."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:treasure_shelf",
+            "title": "Tesouros arcanos",
+            "text": "Colocar esta estante em um slot válido fará com que encantamentos de tesouro apareçam durante o encantamento.$(p)Tenha em mente que a maioria das $(4)maldições$() são encantamentos de tesouro."
+        }
+    ]
+}

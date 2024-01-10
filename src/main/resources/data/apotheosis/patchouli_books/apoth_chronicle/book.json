@@ -17,11 +17,15 @@
 		"$(arcana)": "$(#A800A8)Arcana$()",
 		"$(исправление)": "$(#CCCC33)Исправление$()",
 		"$(rectification)": "$(#CCCC33)Rectification$()",
+		"$(retificacao)": "$(#CCCC33)retificação$()",
 		"$(подсказки)": "$(#00AAAA)Подсказки$()",
 		"$(clues)": "$(#00AAAA)Enchanting Clues$()",
+		"$(pistas)": "$(#00AAAA)pistas de encantamento$()",
 		"$(фмощность)": "$(#CC00CC)Финальная мощность$()",
 		"$(fpower)": "$(#CC00CC)Final Power$()",
+		"$(poderf)": "$(#CC00CC)poder final$()",
 		"$(нмощность)": "$(6)Начальная мощность$()",
-		"$(bpower)": "$(6)Base Power$()"
+		"$(bpower)": "$(6)Base Power$()",
+		"$(poderb)": "$(6)poder base$()"
 	}
 }

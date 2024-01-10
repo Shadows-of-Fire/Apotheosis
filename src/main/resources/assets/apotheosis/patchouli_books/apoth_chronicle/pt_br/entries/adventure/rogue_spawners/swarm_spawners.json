@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Um gerador de enxame é um subtipo vil de gerador traiçoeiro que irá gerar mobs em grandes quantidades rapidamente.$(p)Normalmente, eles são limitados a mobs mais fracos, geralmente da variedade aracnídea, portanto, não são terrivelmente opressores."
+            "text": "Um gerador de enxame é um subtipo vil de gerador traiçoeiro que irá gerar criaturas em grandes quantidades rapidamente.$(p)Normalmente, eles são limitados a criatruas mais fracas, geralmente da variedade aracnídea, portanto, não são terrivelmente opressores."
         }
 	]
 }

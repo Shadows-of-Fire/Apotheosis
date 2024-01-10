@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Ocasionalmente, você pode ver mobs nomeados ou com poderes em todo o seu mundo.$(p)Eles são provavelmente $(9)miniches apóticos$()."
+            "text": "Ocasionalmente, você pode ver criaturas nomeadas ou com poderes em todo o seu mundo.$(p)Elas são provavelmente $(9)minichefes apóticos$()."
         },
 		{
 			"type": "patchouli:text",
-			"text": "Esses mobs aparecerão aleatoriamente no lugar de suas contrapartes normais.$(p)Fique atento."
+			"text": "Essas criaturas aparecerão aleatoriamente no lugar de suas contrapartes normais.$(p)Fique atento."
 		}
 	]
 }

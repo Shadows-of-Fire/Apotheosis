@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)Velocidade de ataque$() controla com que frequência você pode atacar. Se sua velocidade de ataque for 2, você pode atacar duas vezes por segundo.$(p)Vários itens podem aumentar sua velocidade de ataque."
+            "text": "$(9)Velocidade de ataque$() controla a frequência em que você pode atacar. Se sua velocidade de ataque for 2, você pode atacar duas vezes por segundo.$(p)Vários itens podem aumentar sua velocidade de ataque."
         }
 	]
 }
