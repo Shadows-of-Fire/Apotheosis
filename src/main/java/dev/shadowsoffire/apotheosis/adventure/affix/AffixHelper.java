@@ -71,9 +71,12 @@ public class AffixHelper {
 
     /**
      * Gets the affixes of an item. Changes to this map will not write-back to the affixes on the itemstack.
+     * <p>
+     * Due to potential reloads, it is possible for an affix instance to become unbound but still remain cached.
      *
      * @param stack The stack being queried.
      * @return An immutable map of all affixes on the stack, or an empty map if none were found.
+     * @apiNote Prefer using {@link #streamAffixes(ItemStack)} where applicable, since invalid instances will be pre-filtered.
      */
     public static Map<DynamicHolder<? extends Affix>, AffixInstance> getAffixes(ItemStack stack) {
         if (AffixRegistry.INSTANCE.getValues().isEmpty()) return Collections.emptyMap(); // Don't enter getAffixesImpl if the affixes haven't loaded yet.
@@ -101,7 +104,7 @@ public class AffixHelper {
     }
 
     public static Stream<AffixInstance> streamAffixes(ItemStack stack) {
-        return getAffixes(stack).values().stream();
+        return getAffixes(stack).values().stream().filter(AffixInstance::isValid);
     }
 
     public static boolean hasAffixes(ItemStack stack) {

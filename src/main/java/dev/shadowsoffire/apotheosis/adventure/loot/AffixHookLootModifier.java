@@ -25,7 +25,7 @@ public class AffixHookLootModifier extends LootModifier {
         if (!Apotheosis.enableAdventure) return generatedLoot;
         if (ctx.hasParam(LootContextParams.TOOL)) {
             ItemStack tool = ctx.getParam(LootContextParams.TOOL);
-            AffixHelper.getAffixes(tool).values().forEach(inst -> inst.modifyLoot(generatedLoot, ctx));
+            AffixHelper.streamAffixes(tool).forEach(inst -> inst.modifyLoot(generatedLoot, ctx));
         }
         return generatedLoot;
     }
