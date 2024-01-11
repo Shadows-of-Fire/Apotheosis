@@ -27,12 +27,12 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
 
     @Override
     public void register(IWailaCommonRegistration reg) {
-        reg.registerBlockDataProvider(this, ApothSpawnerTile.class);
+        if (Apotheosis.enableSpawner) reg.registerBlockDataProvider(this, ApothSpawnerTile.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration reg) {
-        reg.registerBlockComponent(this, ApothSpawnerBlock.class);
+        if (Apotheosis.enableSpawner) reg.registerBlockComponent(this, ApothSpawnerBlock.class);
     }
 
     @Override

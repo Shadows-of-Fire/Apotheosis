@@ -1,6 +1,12 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.2.1
+* mc-kaishixiaxue: Updated chinese translation.
+* t0piy: Updated brazilian translation.
+* Fixed an issue where Jade compat would throw an error if the Enchanting module was disabled.
+* Fixed an issue where certain affix operations could crash during reloads.
+
 ## 7.2.0
 ### Enchanting Module
 #### New Content

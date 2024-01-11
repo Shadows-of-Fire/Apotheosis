@@ -123,8 +123,7 @@ public class AdventureEvents {
                     }
                 }
                 if (bow.isEmpty()) return;
-                var affixes = AffixHelper.getAffixes(bow);
-                affixes.values().forEach(a -> {
+                AffixHelper.streamAffixes(bow).forEach(a -> {
                     a.onArrowFired(living, arrow);
                 });
                 AffixHelper.copyFrom(bow, arrow);
@@ -161,14 +160,13 @@ public class AdventureEvents {
     @SubscribeEvent
     public void onItemUse(ItemUseEvent e) {
         ItemStack s = e.getItemStack();
-        var affixes = AffixHelper.getAffixes(s);
-        for (AffixInstance inst : affixes.values()) {
+        AffixHelper.streamAffixes(s).forEach(inst -> {
             InteractionResult type = inst.onItemUse(e.getContext());
             if (type != null) {
                 e.setCanceled(true);
                 e.setCancellationResult(type);
             }
-        }
+        });
     }
 
     @SubscribeEvent
@@ -185,10 +183,9 @@ public class AdventureEvents {
     @SubscribeEvent
     public void blockBreak(BreakEvent e) {
         ItemStack stack = e.getPlayer().getMainHandItem();
-        var affixes = AffixHelper.getAffixes(stack);
-        for (AffixInstance inst : affixes.values()) {
+        AffixHelper.streamAffixes(stack).forEach(inst -> {
             inst.onBlockBreak(e.getPlayer(), e.getLevel(), e.getPos(), e.getState());
-        }
+        });
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)

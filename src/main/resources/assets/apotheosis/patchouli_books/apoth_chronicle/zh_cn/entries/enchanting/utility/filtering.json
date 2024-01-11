@@ -1,0 +1,27 @@
+{
+    "name": "魔咒过滤",
+    "icon": "apotheosis:filtering_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "有时，我们希望在附魔过程中完全避免某些魔咒。$(p)$(9)水之过滤海洋书架$()能让你做到这一点。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:filtering_shelf",
+            "title": "水之过滤海洋书架",
+            "text": "书架上最多可放置6本单一魔咒的附魔书，防止这些魔咒出现。"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "要使用它，只需放入一本你希望将某个魔咒列入黑名单的单一魔咒的附魔书即可。$(p)该魔咒将不再出现在附魔台中。$(p)该书架还将根据放入附魔书的数量获得$(#3DB53D)位阶$()和$(#A800A8)阿卡那$()。"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "注意：放入附魔书的方式与使用雕纹书架的方式相同，书架必须位于有效的书架槽位中才能操作。$(p)被列入黑名单的魔咒将在$(l:apotheosis:enchanting/table/info)附魔信息界面$()显示。"
+        }
+    ]
+}

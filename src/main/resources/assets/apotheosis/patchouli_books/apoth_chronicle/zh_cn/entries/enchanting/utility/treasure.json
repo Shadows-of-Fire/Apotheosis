@@ -1,0 +1,19 @@
+{
+    "name": "宝藏型魔咒",
+    "icon": "apotheosis:treasure_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "宝藏型魔咒是一种特殊魔咒，通常无法在附魔台中找到。$(p)不过，这可以用$(9)奥术宝藏深暗书架$()来弥补。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:treasure_shelf",
+            "title": "奥术宝藏深暗书架",
+            "text": "将此书架放置在有效槽位会在附魔时出现宝藏型魔咒。$(p)请注意，大多数$(4)诅咒$()都是宝藏型魔咒。"
+        }
+    ]
+}
