@@ -1,6 +1,11 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.2.2
+* Substantially reduced the spawn rate of Rogue Spawners.
+  * Rogue Spawners placement logic now includes a 1% chance to succeed, so changing the count to 1 will reduce the chance to 1% (previously 100% at count = 1).
+* Slightly reduced spawn rates of Boss Dungeons.
+
 ## 7.2.1
 * mc-kaishixiaxue: Updated chinese translation.
 * t0piy: Updated brazilian translation.
