@@ -30,7 +30,7 @@ public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
         if (!AdventureConfig.canGenerateIn(world)) return false;
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
-        if (rand.nextInt(10) == 0) {
+        if (rand.nextInt(100) == 0) {
             BlockState state = world.getBlockState(pos);
             BlockState downState = world.getBlockState(pos.below());
             BlockState upState = world.getBlockState(pos.above());
