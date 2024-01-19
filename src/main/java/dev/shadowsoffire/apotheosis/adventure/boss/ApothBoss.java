@@ -120,6 +120,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
         this.minRarity = minRarity;
         this.maxRarity = maxRarity;
         this.mount = mount.orElse(null);
+        Preconditions.checkArgument(minRarity.ordinal() <= maxRarity.ordinal(), "Min rarity must be less than or equal to max rarity.");
     }
 
     @Override
