@@ -27,6 +27,7 @@ import dev.shadowsoffire.placebo.util.RunnableReloader;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -76,7 +77,7 @@ public class Apotheosis {
     public static boolean enableGarden = true;
     public static boolean giveBook = true;
 
-    public static float localAtkStrength = 1;
+    private static float localAtkStrength = 1;
 
     static {
         configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
@@ -150,6 +151,18 @@ public class Apotheosis {
 
     public static ResourceLocation loc(String s) {
         return new ResourceLocation(MODID, s);
+    }
+
+    /**
+     * Gets the local attack strength of an entity.
+     * <p>
+     * For players, this is recorded in {@link AttackEntityEvent} and is valid for other damage events.
+     * <p>
+     * For non-players, this value is always 1.
+     */
+    public static float getLocalAtkStrength(Entity entity) {
+        if (entity instanceof Player) return localAtkStrength;
+        return 1;
     }
 
     /**
