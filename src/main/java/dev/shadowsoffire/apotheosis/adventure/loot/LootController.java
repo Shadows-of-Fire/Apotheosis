@@ -3,7 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.loot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -54,7 +54,7 @@ public class LootController {
      * @return The modifed ItemStack (note the original is not preserved, but the stack is returned for simplicity).
      */
     public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, RandomSource rand) {
-        Set<DynamicHolder<Affix>> selected = new HashSet<>();
+        Set<DynamicHolder<Affix>> selected = new LinkedHashSet<>();
         MutableInt sockets = new MutableInt(0);
         float durability = 0;
         for (LootRule rule : rarity.getRules()) {
