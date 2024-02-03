@@ -231,8 +231,6 @@ public class AdventureConfig {
         spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
     }
 
-    public record ReforgeData(int matCost, int dustCost, int levelCost) {}
-
     public static boolean canGenerateIn(WorldGenLevel world) {
         ResourceKey<Level> key = world.getLevel().dimension();
         return DIM_WHITELIST.contains(key.location());
