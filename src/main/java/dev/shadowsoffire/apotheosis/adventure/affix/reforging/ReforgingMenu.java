@@ -107,16 +107,12 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
             if ((dust < dustCost || mats < matCost || levels < levelCost) && !player.isCreative()) return false;
 
             if (!player.level().isClientSide) {
-                ItemStack[] choices = new ItemStack[3];
 
                 RandomSource rand = this.random;
-                for (int i = 0; i < 3; i++) {
-                    rand.setSeed(this.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + i);
-                    choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
-                }
+                rand.setSeed(this.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + slot);
+                ItemStack output = LootController.createLootItem(input.copy(), rarity, rand);
 
-                ItemStack out = choices[slot];
-                this.getSlot(0).set(out);
+                this.getSlot(0).set(output);
                 if (!player.isCreative()) {
                     this.getSlot(1).getItem().shrink(matCost);
                     this.getSlot(2).getItem().shrink(dustCost);

@@ -110,7 +110,7 @@ public class BossEvents {
         LivingEntity entity = e.getEntity();
         RandomSource rand = e.getLevel().getRandom();
         if (!e.getLevel().isClientSide() && entity instanceof Mob mob && e.getResult() != Result.DENY) {
-            ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
+            ServerLevelAccessor sLevel = e.getLevel();
             Player player = sLevel.getNearestPlayer(e.getX(), e.getY(), e.getZ(), -1, false);
             if (player == null) return; // Spawns require player context
             ApothMiniboss item = MinibossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));

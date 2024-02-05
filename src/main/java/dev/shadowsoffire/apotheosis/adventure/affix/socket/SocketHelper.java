@@ -58,7 +58,7 @@ public class SocketHelper {
      */
     private static List<ItemStack> getGemsImpl(ItemStack stack) {
         int size = getSockets(stack);
-        if (size == 0 || stack.isEmpty()) return Collections.emptyList();
+        if (size <= 0 || stack.isEmpty()) return Collections.emptyList();
         List<ItemStack> gems = NonNullList.withSize(size, ItemStack.EMPTY);
         int i = 0;
         CompoundTag afxData = stack.getTagElement(AffixHelper.AFFIX_DATA);

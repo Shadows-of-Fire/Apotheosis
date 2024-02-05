@@ -36,6 +36,7 @@ public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
             BlockState upState = world.getBlockState(pos.above());
             if (STONE_TEST.test(downState, rand) && upState.isAir() && (state.isAir() || STONE_TEST.test(state, rand))) {
                 RogueSpawner item = RogueSpawnerRegistry.INSTANCE.getRandomItem(rand);
+                if (item == null) return false;
                 item.place(world, pos, rand);
                 AdventureModule.debugLog(pos, "Rogue Spawner - " + RogueSpawnerRegistry.INSTANCE.getKey(item));
                 return true;
