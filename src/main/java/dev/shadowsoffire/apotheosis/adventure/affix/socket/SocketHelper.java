@@ -84,7 +84,7 @@ public class SocketHelper {
      * @see GemInstance#isValid()
      */
     public static Stream<GemInstance> getGemInstances(ItemStack stack) {
-        return getGems(stack).stream().map(gemStack -> new GemInstance(stack, gemStack)).filter(GemInstance::isValid);
+        return getGems(stack).stream().map(gemStack -> GemInstance.socketed(stack, gemStack)).filter(GemInstance::isValid);
     }
 
     /**
