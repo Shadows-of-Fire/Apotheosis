@@ -67,6 +67,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RegisterShadersEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
@@ -90,6 +91,7 @@ public class AdventureModuleClient {
         MenuScreens.register(Menus.SALVAGE.get(), SalvagingScreen::new);
         MenuScreens.register(Menus.GEM_CUTTING.get(), GemCuttingScreen::new);
         BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
+        MinecraftForge.EVENT_BUS.register(AdventureKeys.class);
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
@@ -135,6 +137,11 @@ public class AdventureModuleClient {
             event.registerShader(new ShaderInstance(event.getResourceProvider(), new ResourceLocation("apotheosis:gray"), DefaultVertexFormat.NEW_ENTITY), shaderInstance -> {
                 CustomRenderTypes.grayShader = shaderInstance;
             });
+        }
+
+        @SubscribeEvent
+        public static void keys(RegisterKeyMappingsEvent e) {
+            e.register(AdventureKeys.TOGGLE_RADIAL);
         }
     }
 

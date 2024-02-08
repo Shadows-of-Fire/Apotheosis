@@ -8,6 +8,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage;
+import dev.shadowsoffire.apotheosis.adventure.net.RadialStateChangeMessage;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
@@ -24,8 +25,11 @@ import dev.shadowsoffire.placebo.recipe.NBTIngredient;
 import dev.shadowsoffire.placebo.recipe.RecipeHelper;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
 import dev.shadowsoffire.placebo.util.RunnableReloader;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -121,6 +125,7 @@ public class Apotheosis {
         MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage.Provider());
         MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage.Provider());
         MessageHelper.registerMessage(CHANNEL, 3, new StatsMessage.Provider());
+        MessageHelper.registerMessage(CHANNEL, 4, new RadialStateChangeMessage.Provider());
         e.enqueueWork(() -> {
             AdvancementTriggers.init();
             CraftingHelper.register(new ModuleCondition.Serializer());
@@ -163,6 +168,10 @@ public class Apotheosis {
     public static float getLocalAtkStrength(Entity entity) {
         if (entity instanceof Player) return localAtkStrength;
         return 1;
+    }
+
+    public static MutableComponent sysMessageHeader() {
+        return Component.translatable("[%s] ", Component.literal("Apoth").withStyle(ChatFormatting.GOLD));
     }
 
     /**

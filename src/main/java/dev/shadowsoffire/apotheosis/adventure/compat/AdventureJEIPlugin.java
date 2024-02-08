@@ -64,7 +64,7 @@ public class AdventureJEIPlugin implements IModPlugin {
     @SuppressWarnings("removal")
     public void registerRecipes(IRecipeRegistration reg) {
         if (!Apotheosis.enableAdventure) return;
-        ItemStack gem = new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM.get());
+        ItemStack gem = new ItemStack(Adventure.Items.GEM.get());
         Gem gemObj = GemRegistry.INSTANCE.getRandomItem(new LegacyRandomSource(1854));
         GemItem.setGem(gem, gemObj);
         AffixHelper.setRarity(gem, gemObj.getMaxRarity());

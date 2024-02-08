@@ -1,6 +1,9 @@
 {
 	"comment_id": "/Adventure Module",
 
+    "key.categories.apotheosis": "Apotheosis",
+    "key.apotheosis.toggle_radial_mining": "Change Radial Mining Mode",
+
     "info.apotheosis.affix_item": "Apothic Affix Item",
 	
 	"death.attack.apotheosis.execute": "%s was executed by %s",
@@ -9,7 +12,13 @@
 	"misc.apotheosis.affix_name.two": "%s %s",
 	"misc.apotheosis.affix_name.three": "%s %s %s",
 	"misc.apotheosis.affix_name.four": "%s %s %s %s",
-	
+
+    "misc.apotheosis.radial_state_updated": "Radial mining mode updated to \"%s\"",
+    "misc.apotheosis.radial_state.require_not_sneaking": "Disabled While Sneaking",
+    "misc.apotheosis.radial_state.require_sneaking": "Enabled While Sneaking",
+    "misc.apotheosis.radial_state.enabled": "Enabled",
+    "misc.apotheosis.radial_state.disabled": "Disabled",
+
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",
 
