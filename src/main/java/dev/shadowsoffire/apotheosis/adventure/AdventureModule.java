@@ -188,8 +188,10 @@ public class AdventureModule {
                         var categoryOverride = (Map.Entry<Item, String>) msg.messageSupplier().get();
                         ResourceLocation item = BuiltInRegistries.ITEM.getKey(categoryOverride.getKey());
                         LootCategory cat = LootCategory.byId(categoryOverride.getValue());
+                        if (cat == null) throw new NullPointerException("Invalid loot category ID: " + categoryOverride.getValue());
                         IMC_TYPE_OVERRIDES.put(item, cat);
                         AdventureModule.LOGGER.info("Mod {} has overriden the loot category of {} to {}.", msg.senderModId(), item, cat.getName());
+                        break;
                     }
                     catch (Exception ex) {
                         AdventureModule.LOGGER.error(ex.getMessage());
