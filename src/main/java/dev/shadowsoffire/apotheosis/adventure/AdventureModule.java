@@ -1,6 +1,9 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,6 +62,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -71,6 +75,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -80,6 +85,7 @@ public class AdventureModule {
 
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
+    static final Map<ResourceLocation, LootCategory> IMC_TYPE_OVERRIDES = new HashMap<>();
 
     public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
 
@@ -169,6 +175,32 @@ public class AdventureModule {
     public void client(FMLClientSetupEvent e) {
         e.enqueueWork(AdventureModuleClient::init);
         FMLJavaModLoadingContext.get().getModEventBus().register(new AdventureModuleClient());
+    }
+
+    @SubscribeEvent
+    @SuppressWarnings({ "unchecked", "deprecation" })
+    public void imc(InterModProcessEvent e) {
+        e.getIMCStream().forEach(msg -> {
+            switch (msg.method().toLowerCase(Locale.ROOT)) {
+                // Payload: Map.Entry<Item, String> where the string is a LootCategory ID.
+                case "loot_category_override" -> {
+                    try {
+                        var categoryOverride = (Map.Entry<Item, String>) msg.messageSupplier().get();
+                        ResourceLocation item = BuiltInRegistries.ITEM.getKey(categoryOverride.getKey());
+                        LootCategory cat = LootCategory.byId(categoryOverride.getValue());
+                        IMC_TYPE_OVERRIDES.put(item, cat);
+                        AdventureModule.LOGGER.info("Mod {} has overriden the loot category of {} to {}.", msg.senderModId(), item, cat.getName());
+                    }
+                    catch (Exception ex) {
+                        AdventureModule.LOGGER.error(ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                }
+                default -> {
+                    AdventureModule.LOGGER.error("Unknown or invalid IMC Message: {}", msg);
+                }
+            }
+        });
     }
 
     /**
