@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import org.jetbrains.annotations.Nullable;
+
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -88,6 +90,16 @@ public class GemItem extends Item implements ITabFiller {
                 out.accept(stack);
             }
         });
+    }
+
+    @Override
+    @Nullable
+    public String getCreatorModId(ItemStack stack) {
+        GemInstance inst = GemInstance.unsocketed(stack);
+        if (inst.isValidUnsocketed()) {
+            return inst.gem().getId().getNamespace();
+        }
+        return super.getCreatorModId(stack);
     }
 
     /**
