@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.objects;
 
 import java.util.function.Supplier;
 
+import dev.shadowsoffire.apotheosis.ench.EnchConfig;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -34,7 +35,7 @@ public class TypedShelfBlock extends Block implements IEnchantingBlock {
 
         @Override
         public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-            if (rand.nextInt(100) == 0) {
+            if (EnchConfig.sculkShelfNoiseChance > 0 && rand.nextInt(EnchConfig.sculkShelfNoiseChance) == 0) {
                 level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.SCULK_CATALYST_BLOOM, SoundSource.BLOCKS, 2.0F, 0.6F + rand.nextFloat() * 0.4F, true);
             }
         }
