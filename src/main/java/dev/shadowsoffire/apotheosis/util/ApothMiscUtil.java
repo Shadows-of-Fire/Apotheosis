@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.util;
 
+import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 
 public class ApothMiscUtil {
@@ -24,6 +25,23 @@ public class ApothMiscUtil {
             cost += EnchantmentUtils.getExperienceForLevel(level - i);
         }
         return cost - 1; // Eating exactly the amount will put you one point below the level, so offset by one here.
+    }
+
+    /**
+     * Since {@link GradientColor} goes 1:1 through the entire array, if we have a unidirectional gradient, we need to make it wrap around.
+     * <p>
+     * This is done by making a reversed copy and concatenating them together.
+     * 
+     * @param data The original unidirectional gradient data.
+     * @return A cyclical gradient.
+     */
+    public static int[] doubleUpGradient(int[] data) {
+        int[] out = new int[data.length * 2];
+        System.arraycopy(data, 0, out, 0, data.length);
+        for (int i = data.length - 1; i >= 0; i--) {
+            out[data.length * 2 - 1 - i] = data[i];
+        }
+        return out;
     }
 
 }

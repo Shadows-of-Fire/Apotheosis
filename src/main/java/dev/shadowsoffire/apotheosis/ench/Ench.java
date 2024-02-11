@@ -44,6 +44,8 @@ import dev.shadowsoffire.apotheosis.ench.objects.TomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.TreasureShelfBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
+import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -304,6 +306,16 @@ public class Ench {
 
         private static void bootstrap() {}
 
+    }
+
+    public static class Colors {
+        private static int[] _LIGHT_BLUE_FLASH = { 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 
+            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 
+            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 
+            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x0bb5ff, 
+            0x17b8ff, 0x22bbff, 0x2dbdff, 0x39c0ff, 0x44c3ff, 0x4fc6ff, 0x5bc9ff, 0x66ccff};
+
+        public static GradientColor LIGHT_BLUE_FLASH = new GradientColor(ApothMiscUtil.doubleUpGradient(_LIGHT_BLUE_FLASH), "light_blue_flash");
     }
 
     private static final DeferredHelper R = ModularDeferredHelper.create(() -> Apotheosis.enableEnch);
