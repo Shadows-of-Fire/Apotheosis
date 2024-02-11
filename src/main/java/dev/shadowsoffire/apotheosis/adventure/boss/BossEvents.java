@@ -61,7 +61,7 @@ public class BossEvents {
             LivingEntity entity = e.getEntity();
             RandomSource rand = e.getLevel().getRandom();
             if (this.bossCooldowns.getInt(entity.level().dimension().location()) <= 0 && !e.getLevel().isClientSide() && entity instanceof Monster && e.getResult() != Result.DENY) {
-                ServerLevelAccessor sLevel = (ServerLevelAccessor) e.getLevel();
+                ServerLevelAccessor sLevel = e.getLevel();
                 ResourceLocation dimId = sLevel.getLevel().dimension().location();
                 Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(dimId);
                 if (rules == null) return;

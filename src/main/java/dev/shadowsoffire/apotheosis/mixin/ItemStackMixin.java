@@ -27,7 +27,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 
 @Mixin(value = ItemStack.class, priority = 500)
 public class ItemStackMixin {
@@ -86,7 +85,7 @@ public class ItemStackMixin {
         Map<Enchantment, Integer> realLevels = ths.getAllEnchantments();
         for (int i = 0; i < tagEnchants.size(); ++i) {
             CompoundTag compoundtag = tagEnchants.getCompound(i);
-            BuiltInRegistries.ENCHANTMENT.getOptional(EnchantmentHelper.getEnchantmentId(compoundtag)).ifPresent((ench) -> {
+            BuiltInRegistries.ENCHANTMENT.getOptional(EnchantmentHelper.getEnchantmentId(compoundtag)).ifPresent(ench -> {
                 int nbtLevel = EnchantmentHelper.getEnchantmentLevel(compoundtag);
                 int realLevel = realLevels.get(ench);
                 if (nbtLevel == realLevel) {

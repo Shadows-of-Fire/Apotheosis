@@ -89,7 +89,7 @@ public class AttributeAffix extends Affix {
     @Override
     public Codec<? extends Affix> getCodec() {
         return CODEC;
-    };
+    }
 
     public record ModifierInst(Attribute attr, Operation op, StepFunction valueFactory) {
 

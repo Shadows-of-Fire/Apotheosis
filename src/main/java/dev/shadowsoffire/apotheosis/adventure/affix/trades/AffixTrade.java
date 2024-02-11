@@ -90,7 +90,7 @@ public class AffixTrade implements JsonTrade {
 
         if (affixItem.isEmpty()) return null;
         affixItem.getTag().putBoolean("apoth_merchant", true);
-        return new MerchantOffer(price, price2, affixItem, 1, 100, 1);
+        return new MerchantOffer(this.price, this.price2, affixItem, 1, 100, 1);
     }
 
     @Override

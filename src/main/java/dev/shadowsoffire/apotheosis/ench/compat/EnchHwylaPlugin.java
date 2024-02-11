@@ -68,7 +68,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, I
             tooltip.remove(Identifiers.MC_TOTAL_ENCHANTMENT_POWER);
         }
 
-        if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF.get()) handleFilteringShelf(tooltip, accessor);
+        if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF.get()) this.handleFilteringShelf(tooltip, accessor);
     }
 
     @Override

@@ -55,7 +55,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
     public boolean isValidRarityMat(ItemStack stack) {
         DynamicHolder<LootRarity> rarity = RarityRegistry.getMaterialRarity(stack.getItem());
-        return rarity.isBound() && this.getMaxRarity().isAtLeast(rarity.get()) && getRecipeFor(rarity.get()) != null;
+        return rarity.isBound() && this.getMaxRarity().isAtLeast(rarity.get()) && this.getRecipeFor(rarity.get()) != null;
     }
 
     @Nullable

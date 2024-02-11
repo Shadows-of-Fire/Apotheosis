@@ -75,7 +75,7 @@ public class AdventureJEIPlugin implements IModPlugin {
         reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_EXPULSION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_expulsion"));
         reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_UNNAMING.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.unnaming"));
         ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
-        reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ReactiveSmithingRecipe).toList());
+        reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(ReactiveSmithingRecipe.class::isInstance).toList());
         List<SalvagingRecipe> salvagingRecipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));
         salvagingRecipes.sort(Comparator.comparingInt(recipe -> recipe.getOutputs().stream().mapToInt(OutputData::getMax).max().orElse(0)));
         reg.addRecipes(SALVAGING, salvagingRecipes);

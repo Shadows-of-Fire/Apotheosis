@@ -52,7 +52,7 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack ge
 
     /**
      * Creates a {@link GemInstance} for a socketed gem.
-     * 
+     *
      * @param socketed The item the gem is socketed in.
      * @param gemStack The stack representing the gem.
      */

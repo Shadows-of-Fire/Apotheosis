@@ -7,6 +7,7 @@ import java.util.function.BooleanSupplier;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.util.BlockUtil;
+import dev.shadowsoffire.placebo.util.PlaceboTaskQueue;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.ChatFormatting;
@@ -23,7 +24,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
-import dev.shadowsoffire.placebo.util.PlaceboTaskQueue;
 
 public class ChainsawEnchant extends Enchantment {
 

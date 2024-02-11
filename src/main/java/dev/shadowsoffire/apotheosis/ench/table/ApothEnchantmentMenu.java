@@ -220,7 +220,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                         this.levelClue[i] = -1;
                     }
                     this.stats = TableStats.INVALID;
-                    PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), player);
+                    PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), this.player);
                 }
             }
             return this;
@@ -241,14 +241,14 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     public void gatherStats() {
         this.access.evaluate((world, pos) -> {
             this.stats = gatherStats(world, pos, this.getSlot(0).getItem().getEnchantmentValue());
-            PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), player);
+            PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), this.player);
             return this;
         }).orElse(this);
     }
 
     /**
      * Gathers all enchanting stats for an enchantment table located at the specified position.
-     * 
+     *
      * @param level    The level.
      * @param pos      The position of the enchantment table.
      * @param itemEnch The enchantability of the item being enchanted.
@@ -266,7 +266,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
     /**
      * Checks if stats can be read from a block at a particular offset.
-     * 
+     *
      * @param level    The level.
      * @param tablePos The position of the enchanting table.
      * @param offset   The offset being checked.
@@ -279,7 +279,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     /**
      * Collects enchanting stats from a particular shelf spot into the stat array.<br>
      * If you are collecting all stats, you should use {@link #gatherStats(Level, BlockPos)} instead.
-     * 
+     *
      * @param eternaMap A map of max eterna contributions to eterna contributions for that max.
      * @param stats     The stat array, with order {eterna, quanta, arcana, rectification, clues}.
      * @param world     The world.
@@ -381,15 +381,15 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
             buf.writeFloat(this.arcana);
             buf.writeFloat(this.rectification);
             buf.writeByte(this.clues);
-            buf.writeShort(blacklist.size());
-            for (Enchantment e : blacklist) {
+            buf.writeShort(this.blacklist.size());
+            for (Enchantment e : this.blacklist) {
                 buf.writeVarInt(BuiltInRegistries.ENCHANTMENT.getId(e));
             }
             buf.writeBoolean(this.treasure);
         }
 
         public static TableStats read(FriendlyByteBuf buf) {
-            float[] data = new float[] { buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readByte() };
+            float[] data = { buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readByte() };
             int size = buf.readShort();
             Set<Enchantment> blacklist = new HashSet<>(size);
             for (int i = 0; i < size; i++) {
@@ -416,7 +416,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
             }
 
             public void addEterna(float eterna, float max) {
-                this.eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
+                this.eternaMap.put(max, this.eternaMap.getOrDefault(max, 0) + eterna);
             }
 
             public void addQuanta(float quanta) {
@@ -448,8 +448,8 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                 Collections.sort(entries, Comparator.comparing(Float2FloatMap.Entry::getFloatKey));
 
                 for (Float2FloatMap.Entry e : entries) {
-                    if (e.getFloatKey() > 0) stats[0] = Math.min(e.getFloatKey(), stats[0] + e.getFloatValue());
-                    else stats[0] += e.getFloatValue();
+                    if (e.getFloatKey() > 0) this.stats[0] = Math.min(e.getFloatKey(), this.stats[0] + e.getFloatValue());
+                    else this.stats[0] += e.getFloatValue();
                 }
 
                 return new TableStats(this.stats, this.blacklist, this.allowsTreasure);

@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.compat;
 
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
+import dev.shadowsoffire.placebo.compat.TOPCompat;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -11,7 +12,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import dev.shadowsoffire.placebo.compat.TOPCompat;
 
 public class EnchTOPPlugin implements TOPCompat.Provider {
 

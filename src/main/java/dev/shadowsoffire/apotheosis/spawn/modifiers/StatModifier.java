@@ -17,8 +17,8 @@ public record StatModifier<T>(SpawnerStat<T> stat, T value, T min, T max) {
     }
 
     public void write(FriendlyByteBuf buf) {
-        buf.writeUtf(stat.getId(), 32);
-        buf.writeNbt((CompoundTag) stat.getModifierCodec().encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, SpawnerModule.LOG::error));
+        buf.writeUtf(this.stat.getId(), 32);
+        buf.writeNbt((CompoundTag) this.stat.getModifierCodec().encodeStart(NbtOps.INSTANCE, this).getOrThrow(false, SpawnerModule.LOG::error));
     }
 
     public static StatModifier<?> read(FriendlyByteBuf buf) {

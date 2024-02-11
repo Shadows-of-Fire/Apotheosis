@@ -89,7 +89,7 @@ public class SpawnerStats {
         private final Codec<StatModifier<Boolean>> modifierCodec = RecordCodecBuilder.create(inst -> inst
             .group(
                 Codec.BOOL.fieldOf("value").forGetter(StatModifier::value))
-            .apply(inst, (value) -> new StatModifier<>(this, value, false, true)));
+            .apply(inst, value -> new StatModifier<>(this, value, false, true)));
 
         private BoolStat(String id, Function<ApothSpawnerTile, Boolean> getter, BiConsumer<ApothSpawnerTile, Boolean> setter) {
             super(id, getter, setter);
@@ -102,7 +102,7 @@ public class SpawnerStats {
 
         @Override
         public Component getTooltip(ApothSpawnerTile spawner) {
-            return getValue(spawner) ? name().withStyle(ChatFormatting.DARK_GREEN) : CommonComponents.EMPTY;
+            return this.getValue(spawner) ? this.name().withStyle(ChatFormatting.DARK_GREEN) : CommonComponents.EMPTY;
         }
 
         @Override
@@ -136,7 +136,7 @@ public class SpawnerStats {
 
         @Override
         public Component getTooltip(ApothSpawnerTile spawner) {
-            return ApothSpawnerBlock.concat(name(), getValue(spawner));
+            return ApothSpawnerBlock.concat(this.name(), this.getValue(spawner));
         }
 
         @Override

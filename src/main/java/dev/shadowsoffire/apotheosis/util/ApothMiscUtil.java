@@ -14,7 +14,7 @@ public class ApothMiscUtil {
      * S == 2 -> cost = XP(L) + XP(L-1) + XP(L-2)
      * <p>
      * And so on and so forth, if there were ever to be more than three slots.
-     * 
+     *
      * @param level The level of the slot
      * @param slot  The slot index
      * @return The cost, in experience points, of buying the enchantment in a particular slot.
@@ -31,7 +31,7 @@ public class ApothMiscUtil {
      * Since {@link GradientColor} goes 1:1 through the entire array, if we have a unidirectional gradient, we need to make it wrap around.
      * <p>
      * This is done by making a reversed copy and concatenating them together.
-     * 
+     *
      * @param data The original unidirectional gradient data.
      * @return A cyclical gradient.
      */

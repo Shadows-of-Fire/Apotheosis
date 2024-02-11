@@ -1,8 +1,8 @@
 package dev.shadowsoffire.apotheosis.village.compat;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingContainer;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingRecipe;
 import mezz.jei.api.IModPlugin;

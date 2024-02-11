@@ -99,7 +99,7 @@ public class GatewaysCompat {
         public void generateLoot(ServerLevel level, GatewayEntity gate, Player summoner, Consumer<ItemStack> list) {
             AffixLootEntry entry = AffixLootRegistry.INSTANCE.getRandomItem(level.random, summoner.getLuck(), IDimensional.matches(level), IStaged.matches(summoner));
             if (entry == null) {
-                AdventureModule.LOGGER.error("Failed to find an affix loot item for a RarityAffixItemReward executing in dimension {} with rarity {}.", level.dimension(), rarity.getId());
+                AdventureModule.LOGGER.error("Failed to find an affix loot item for a RarityAffixItemReward executing in dimension {} with rarity {}.", level.dimension(), this.rarity.getId());
                 return;
             }
             list.accept(LootController.createLootItem(entry.getStack(), this.rarity.get(), level.random));

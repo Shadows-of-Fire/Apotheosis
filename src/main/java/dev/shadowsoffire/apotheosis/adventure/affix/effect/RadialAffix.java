@@ -183,7 +183,7 @@ public class RadialAffix extends Affix {
 
     static enum RadialState {
         REQUIRE_NOT_SNEAKING(p -> !p.isShiftKeyDown()),
-        REQUIRE_SNEAKING(p -> p.isShiftKeyDown()),
+        REQUIRE_SNEAKING(Player::isShiftKeyDown),
         ENABLED(p -> true),
         DISABLED(p -> false);
 
@@ -210,7 +210,7 @@ public class RadialAffix extends Affix {
         }
 
         public Component toComponent() {
-            return Component.translatable("misc.apotheosis.radial_state." + name().toLowerCase(Locale.ROOT));
+            return Component.translatable("misc.apotheosis.radial_state." + this.name().toLowerCase(Locale.ROOT));
         }
 
         public static RadialState getState(Player player) {

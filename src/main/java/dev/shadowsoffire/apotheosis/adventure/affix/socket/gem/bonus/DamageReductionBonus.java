@@ -12,10 +12,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.DamageReductionAffix.DamageType;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import dev.shadowsoffire.placebo.util.StepFunction;
 
 public class DamageReductionBonus extends GemBonus {
 

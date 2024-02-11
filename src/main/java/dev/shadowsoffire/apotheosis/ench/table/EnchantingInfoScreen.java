@@ -124,10 +124,10 @@ public class EnchantingInfoScreen extends Screen {
             if (this.enchantments.size() - 1 < i) break;
             EnchantmentDataWrapper data = this.enchantments.get(this.startIndex + i);
             if (data.isBlacklisted) {
-                gfx.drawString(font, Component.translatable(data.getEnch().getDescriptionId()).withStyle(s -> s.withColor(0x58B0CC).withStrikethrough(true)), 91, 21 + 13 * i, 0xFFFF80, false);
+                gfx.drawString(this.font, Component.translatable(data.getEnch().getDescriptionId()).withStyle(s -> s.withColor(0x58B0CC).withStrikethrough(true)), 91, 21 + 13 * i, 0xFFFF80, false);
             }
             else {
-                gfx.drawString(font, I18n.get(data.getEnch().getDescriptionId()), 91, 21 + 13 * i, 0xFFFF80, false);
+                gfx.drawString(this.font, I18n.get(data.getEnch().getDescriptionId()), 91, 21 + 13 * i, 0xFFFF80, false);
             }
         }
 
@@ -138,9 +138,9 @@ public class EnchantingInfoScreen extends Screen {
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
         list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
-        gfx.renderComponentTooltip(font, list, a == Arcana.MAX ? -2 : 1, 120);
+        gfx.renderComponentTooltip(this.font, list, a == Arcana.MAX ? -2 : 1, 120);
 
-        gfx.drawString(font, this.title, 7, 4, 4210752, false);
+        gfx.drawString(this.font, this.title, 7, 4, 4210752, false);
         pose.popPose();
         pose.translate(0, 0, 10);
 
@@ -151,7 +151,7 @@ public class EnchantingInfoScreen extends Screen {
                 list.add(Component.translatable("info.apotheosis.enchinfo_level", this.costs[i]).withStyle(ChatFormatting.GREEN));
                 list.add(Component.translatable("info.apotheosis.enchinfo_minpow", this.powers[i][0]).withStyle(ChatFormatting.DARK_RED));
                 list.add(Component.translatable("info.apotheosis.enchinfo_maxpow", this.powers[i][1]).withStyle(ChatFormatting.BLUE));
-                gfx.renderComponentTooltip(font, list, pMouseX, pMouseY);
+                gfx.renderComponentTooltip(this.font, list, pMouseX, pMouseY);
             }
         }
 
@@ -174,7 +174,7 @@ public class EnchantingInfoScreen extends Screen {
                 }
                 list.add(Component.translatable("Exclusive With: %s", sb.toString()).withStyle(ChatFormatting.RED));
             }
-            gfx.renderComponentTooltip(font, list, pMouseX, pMouseY);
+            gfx.renderComponentTooltip(this.font, list, pMouseX, pMouseY);
         }
 
         gfx.renderFakeItem(this.toEnchant, this.leftPos + 49, this.topPos + 39);

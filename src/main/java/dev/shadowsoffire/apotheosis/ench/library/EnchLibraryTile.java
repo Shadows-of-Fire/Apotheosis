@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -25,7 +26,6 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
 
 public abstract class EnchLibraryTile extends BlockEntity {
 

@@ -14,7 +14,7 @@ import net.minecraft.util.ExtraCodecs;
 
 /**
  * A Rarity clamp imposes min and/or max bounds on rarities.
- * 
+ *
  * @see LootRarity#clamp(LootRarity, LootRarity)
  */
 public interface RarityClamp {

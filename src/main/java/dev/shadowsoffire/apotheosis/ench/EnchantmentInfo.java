@@ -3,10 +3,10 @@ package dev.shadowsoffire.apotheosis.ench;
 import java.math.BigDecimal;
 
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
+import dev.shadowsoffire.placebo.config.Configuration;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 import s_com.udojava.evalex.Expression;
-import dev.shadowsoffire.placebo.config.Configuration;
 
 public class EnchantmentInfo {
 

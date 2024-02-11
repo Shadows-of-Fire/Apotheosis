@@ -170,7 +170,7 @@ public class Ench {
 
         public static final RegistryObject<BlockItem> ENDSHELF = R.item("endshelf", () -> new BlockItem(Ench.Blocks.ENDSHELF.get(), new Item.Properties()));
 
-        public static final RegistryObject<ExtractionTomeItem> EXTRACTION_TOME = R.item("extraction_tome", () -> new ExtractionTomeItem());
+        public static final RegistryObject<ExtractionTomeItem> EXTRACTION_TOME = R.item("extraction_tome", ExtractionTomeItem::new);
 
         public static final RegistryObject<TomeItem> FISHING_TOME = R.item("fishing_tome", () -> new TomeItem(net.minecraft.world.item.Items.FISHING_ROD, EnchantmentCategory.FISHING_ROD));
 
@@ -182,7 +182,7 @@ public class Ench {
 
         public static final RegistryObject<TomeItem> HELMET_TOME = R.item("helmet_tome", () -> new TomeItem(net.minecraft.world.item.Items.DIAMOND_HELMET, EnchantmentCategory.ARMOR_HEAD));
 
-        public static final RegistryObject<ImprovedScrappingTomeItem> IMPROVED_SCRAP_TOME = R.item("improved_scrap_tome", () -> new ImprovedScrappingTomeItem());
+        public static final RegistryObject<ImprovedScrappingTomeItem> IMPROVED_SCRAP_TOME = R.item("improved_scrap_tome", ImprovedScrappingTomeItem::new);
 
         public static final RegistryObject<Item> INERT_TRIDENT = R.item("inert_trident", () -> new Item(new Item.Properties().stacksTo(1)));
 
@@ -212,7 +212,7 @@ public class Ench {
 
         public static final RegistryObject<BlockItem> RECTIFIER_T3 = R.item("rectifier_t3", () -> new BlockItem(Ench.Blocks.RECTIFIER_T3.get(), new Item.Properties()));
 
-        public static final RegistryObject<ScrappingTomeItem> SCRAP_TOME = R.item("scrap_tome", () -> new ScrappingTomeItem());
+        public static final RegistryObject<ScrappingTomeItem> SCRAP_TOME = R.item("scrap_tome", ScrappingTomeItem::new);
 
         public static final RegistryObject<BlockItem> SEASHELF = R.item("seashelf", () -> new BlockItem(Ench.Blocks.SEASHELF.get(), new Item.Properties()));
 
@@ -309,11 +309,11 @@ public class Ench {
     }
 
     public static class Colors {
-        private static int[] _LIGHT_BLUE_FLASH = { 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 
-            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 
-            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 
-            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x0bb5ff, 
-            0x17b8ff, 0x22bbff, 0x2dbdff, 0x39c0ff, 0x44c3ff, 0x4fc6ff, 0x5bc9ff, 0x66ccff};
+        private static int[] _LIGHT_BLUE_FLASH = { 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff,
+            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff,
+            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff,
+            0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x0bb5ff,
+            0x17b8ff, 0x22bbff, 0x2dbdff, 0x39c0ff, 0x44c3ff, 0x4fc6ff, 0x5bc9ff, 0x66ccff };
 
         public static GradientColor LIGHT_BLUE_FLASH = new GradientColor(ApothMiscUtil.doubleUpGradient(_LIGHT_BLUE_FLASH), "light_blue_flash");
     }
