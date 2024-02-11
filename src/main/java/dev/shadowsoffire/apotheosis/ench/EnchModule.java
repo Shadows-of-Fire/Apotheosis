@@ -396,6 +396,7 @@ public class EnchModule {
         }
 
         if (e == null && enchInfoConfig.hasChanged()) enchInfoConfig.save();
+        EnchConfig.load(new Configuration(new File(Apotheosis.configDir, "ench.cfg")));
     }
 
 }
