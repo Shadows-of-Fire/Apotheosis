@@ -53,8 +53,8 @@ function initializeCoreMod() {
 				'type': 'CLASS',
 				'names': function(listofclasses) {
 					return [
-						'vazkii.quark.content.tools.module.AncientTomesModule',
-						'vazkii.quark.content.tools.item.AncientTomeItem',
+						'org.violetmoon.quark.content.tools.module.AncientTomesModule',
+						'org.violetmoon.quark.content.tools.item.AncientTomeItem',
 						'net.minecraft.server.commands.EnchantCommand',
 						'net.minecraft.world.item.EnchantedBookItem',
 						'net.minecraft.world.inventory.AnvilMenu',
