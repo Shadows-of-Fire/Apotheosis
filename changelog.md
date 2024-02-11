@@ -1,6 +1,38 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.3.0
+### Features
+* Added a keybind to change the current state of the radial mining affix.
+  * The default keybind is `CTRL + O`
+  * The default mode is the same (enabled while not sneaking).
+  * The other modes are requires sneaking, always enabled, and disabled.
+* Gems will now report their creator's modid instead of always reporting `apotheosis`.
+* Removed the Heavy Weapon attack speed penalty.
+* Added a config for the enchanted book metadata tooltip.
+* Added a config for the sculkshelf noise chance.
+* Added new tooltip handling for Enchantment tooltips. The following features are now enabled.
+  * Enchantments above the vanilla max level will have an animated light blue color.
+  * Enchantments which are having their effective levels increased (ex: by gems) will now show their effective level, as well as the base + bonus levels.
+
+### Bugfixes
+* Cold, Fire, and % Current HP damage should now deal the correct amounts when used by non-players.
+* Fixed a crash caused by the capturing enchantment.
+* Added a sanity check so empty itemstacks always return `LootCategory.NONE`.
+* Fixed a desync that could occur when reforging.
+* Fixed a crash that could occur if an item was given negative sockets.
+* Fixed a crash that could occur if no rogue spawners are loaded.
+* Forced gems to have a valid rarity, clamping to the value closest to their nbt encoded rarity.
+  * This fix will apply retroactively.
+* Fixed the rarity advancement trigger proccing on gems instead of affix items.
+* Fixed the `/apoth set_sockets` command allowing negative sockets.
+* Fixed creative tabs always showing the vanilla max levels of enchantments instead of the adjusted levels.
+
+### Other
+* Added the IMC method `loot_category_override`.
+  * This method accepts a payload of `Map.Entry<Item, String>` and allows a mod to set the default loot category for an item.
+  * The config may still override this value.
+
 ## 7.2.2
 * Substantially reduced the spawn rate of Rogue Spawners.
   * Rogue Spawners placement logic now includes a 1% chance to succeed, so changing the count to 1 will reduce the chance to 1% (previously 100% at count = 1).
