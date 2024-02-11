@@ -58,7 +58,8 @@ function initializeCoreMod() {
 						'net.minecraft.server.commands.EnchantCommand',
 						'net.minecraft.world.item.EnchantedBookItem',
 						'net.minecraft.world.inventory.AnvilMenu',
-						'com.mrcrayfish.goblintraders.Hooks'
+						'com.mrcrayfish.goblintraders.Hooks',
+						'net.minecraft.world.item.CreativeModeTabs'
 					]
 				}
 			},
