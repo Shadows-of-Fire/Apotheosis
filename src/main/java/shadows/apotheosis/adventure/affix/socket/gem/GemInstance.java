@@ -55,7 +55,7 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      */
     public static GemInstance socketed(ItemStack socketed, ItemStack gemStack) {
         Gem gem = GemItem.getGem(gemStack);
-        LootRarity rarity = AffixHelper.getRarity(gemStack);
+        LootRarity rarity = AffixHelper.getRarity(gemStack.getTag());
 
         if (gem != null && rarity != null) {
             rarity = gem.clamp(rarity);
@@ -70,7 +70,7 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      */
     public static GemInstance unsocketed(ItemStack gemStack) {
         Gem gem = GemItem.getGem(gemStack);
-        LootRarity rarity = AffixHelper.getRarity(gemStack);
+        LootRarity rarity = AffixHelper.getRarity(gemStack.getTag());
 
         if (gem != null && rarity != null) {
             rarity = gem.clamp(rarity);
