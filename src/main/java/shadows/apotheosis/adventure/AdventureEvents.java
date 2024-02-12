@@ -2,7 +2,6 @@ package shadows.apotheosis.adventure;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.minecraft.core.BlockPos;
@@ -14,9 +13,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -57,7 +53,6 @@ import shadows.apotheosis.adventure.commands.SocketCommand;
 import shadows.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
-import shadows.apotheosis.util.ItemAccess;
 import shadows.placebo.events.AnvilLandEvent;
 import shadows.placebo.events.GetEnchantmentLevelEvent;
 import shadows.placebo.events.ItemUseEvent;
@@ -76,26 +71,12 @@ public class AdventureEvents {
         BossCommand.register(e.getRoot());
     }
 
-    private static final UUID HEAVY_WEAPON_AS = UUID.fromString("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454");
-
     @SubscribeEvent
     public void affixModifiers(ItemAttributeModifierEvent e) {
         ItemStack stack = e.getItemStack();
         if (stack.hasTag()) {
             Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
             affixes.forEach((afx, inst) -> inst.addModifiers(e.getSlotType(), e::addModifier));
-            if (AffixHelper.getRarity(stack) != null && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.getSlotType() == EquipmentSlot.MAINHAND) {
-                double amt = -0.15 - 0.10 * AffixHelper.getRarity(stack).ordinal();
-                AttributeModifier baseAS = e.getModifiers().get(Attributes.ATTACK_SPEED).stream().filter(a -> ItemAccess.getBaseAS() == a.getId()).findFirst().orElse(null);
-                if (baseAS != null) {
-                    // Try to not reduce attack speed below 0.4 if possible.
-                    double value = 4 + baseAS.getAmount();
-                    double clampedAmt = 0.4F / value - 1;
-                    amt = Math.max(amt, clampedAmt);
-                    if (amt >= 0) return;
-                }
-                e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(HEAVY_WEAPON_AS, "Heavy Weapon AS", amt, Operation.MULTIPLY_TOTAL));
-            }
         }
     }
 

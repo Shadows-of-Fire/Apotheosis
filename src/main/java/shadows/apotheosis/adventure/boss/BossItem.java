@@ -131,6 +131,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
         this.minRarity = minRarity;
         this.maxRarity = maxRarity;
         this.mount = mount.orElse(null);
+        Preconditions.checkArgument(minRarity.ordinal() <= maxRarity.ordinal(), "Min rarity must be less than or equal to max rarity.");
     }
 
     @Override

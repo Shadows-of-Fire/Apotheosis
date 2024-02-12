@@ -96,15 +96,15 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
         this.blit(stack, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
-        if (this.hasItem(0) && GemItem.getLootRarity(this.menu.getSlot(0).getItem()) != LootRarity.ANCIENT) {
+        if (this.hasItem(0) && GemCuttingMenu.isValidMainGem(this.menu.getSlot(0).getItem())) {
             if (!this.hasItem(1)) {
-                this.renderItem(this.displayDust, this.menu.getSlot(1));
+                this.renderGrayItem(this.displayDust, this.menu.getSlot(1));
             }
             if (!this.hasItem(2)) {
-                this.renderItem(this.menu.getSlot(0).getItem(), this.menu.getSlot(2));
+                this.renderGrayItem(this.menu.getSlot(0).getItem(), this.menu.getSlot(2));
             }
             if (!this.hasItem(3)) {
-                this.renderItem(this.displayMat, this.menu.getSlot(3));
+                this.renderGrayItem(this.displayMat, this.menu.getSlot(3));
             }
         }
     }
@@ -113,7 +113,7 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> {
         return this.menu.getSlot(slot).hasItem();
     }
 
-    protected void renderItem(ItemStack stack, Slot slot) {
+    protected void renderGrayItem(ItemStack stack, Slot slot) {
         var model = this.itemRenderer.getModel(stack, null, null, 0);
         SalvagingScreen.renderGuiItem(stack, this.getGuiLeft() + slot.x, this.getGuiTop() + slot.y, model, GrayBufferSource::new);
     }

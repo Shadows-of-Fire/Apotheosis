@@ -54,7 +54,7 @@ public class ThunderstruckAffix extends Affix {
     @Override
     public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
         if (user.level.isClientSide) return;
-        if (Apotheosis.localAtkStrength >= 0.98) {
+        if (Apotheosis.getLocalAtkStrength(user) >= 0.98) {
             List<Entity> nearby = target.level.getEntities(target, new AABB(target.blockPosition()).inflate(6), CleavingAffix.cleavePredicate(user, target));
             for (Entity e : nearby) {
                 e.hurt(DamageSource.mobAttack(user), this.getTrueLevel(rarity, level));

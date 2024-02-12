@@ -29,6 +29,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
@@ -46,9 +47,21 @@ import shadows.apotheosis.adventure.loot.LootRarity;
  * @param rarity   The rarity of the Gem. Not the rarity of the item the Gem is socketed into.
  */
 public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRarity rarity) {
+    /**
+     * Creates a {@link GemInstance} for a socketed gem.
+     *
+     * @param socketed The item the gem is socketed in.
+     * @param gemStack The stack representing the gem.
+     */
+    public static GemInstance socketed(ItemStack socketed, ItemStack gemStack) {
+        Gem gem = GemItem.getGem(gemStack);
+        LootRarity rarity = AffixHelper.getRarity(gemStack);
 
-    public GemInstance(ItemStack socketed, ItemStack gemStack) {
-        this(GemItem.getGem(gemStack), LootCategory.forItem(socketed), gemStack, GemItem.getLootRarity(gemStack));
+        if (gem != null && rarity != null) {
+            rarity = gem.clamp(rarity);
+        }
+
+        return new GemInstance(gem, LootCategory.forItem(socketed), gemStack, rarity);
     }
 
     /**
@@ -56,7 +69,14 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * This instance will be unable to invoke bonus methods, but may be used to easily retrieve the gem properties.
      */
     public static GemInstance unsocketed(ItemStack gemStack) {
-        return new GemInstance(GemItem.getGem(gemStack), LootCategory.NONE, gemStack, GemItem.getLootRarity(gemStack));
+        Gem gem = GemItem.getGem(gemStack);
+        LootRarity rarity = AffixHelper.getRarity(gemStack);
+
+        if (gem != null && rarity != null) {
+            rarity = gem.clamp(rarity);
+        }
+
+        return new GemInstance(gem, LootCategory.NONE, gemStack, rarity);
     }
 
     /**
@@ -74,6 +94,13 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      */
     public boolean isValid() {
         return this.isValidUnsocketed() && this.gem.getBonus(this.cat).isPresent();
+    }
+
+    /**
+     * Checks if the rarity of the gem stack is equal to the max rarity of the underlying Gem.
+     */
+    public boolean isMaxRarity() {
+        return this.rarity() == this.gem.getMaxRarity();
     }
 
     /**

@@ -180,6 +180,7 @@ public final class LootCategory {
      * @return The first valid loot category, or {@link #NONE} if no categories were valid.
      */
     public static LootCategory forItem(ItemStack item) {
+        if (item.isEmpty()) return NONE;
         LootCategory override = AdventureConfig.TYPE_OVERRIDES.get(ForgeRegistries.ITEMS.getKey(item.getItem()));
         if (override != null) return override;
         for (LootCategory c : VALUES) {

@@ -1,7 +1,11 @@
 package shadows.apotheosis.adventure;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -82,15 +86,7 @@ import shadows.apotheosis.adventure.gen.BossDungeonFeature;
 import shadows.apotheosis.adventure.gen.BossDungeonFeature2;
 import shadows.apotheosis.adventure.gen.ItemFrameGemsProcessor;
 import shadows.apotheosis.adventure.gen.RogueSpawnerFeature;
-import shadows.apotheosis.adventure.loot.AffixConvertLootModifier;
-import shadows.apotheosis.adventure.loot.AffixHookLootModifier;
-import shadows.apotheosis.adventure.loot.AffixLootManager;
-import shadows.apotheosis.adventure.loot.AffixLootModifier;
-import shadows.apotheosis.adventure.loot.AffixLootPoolEntry;
-import shadows.apotheosis.adventure.loot.GemLootModifier;
-import shadows.apotheosis.adventure.loot.GemLootPoolEntry;
-import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.apotheosis.adventure.loot.LootRarityManager;
+import shadows.apotheosis.adventure.loot.*;
 import shadows.apotheosis.adventure.spawner.RandomSpawnerManager;
 import shadows.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import shadows.apotheosis.util.NameHelper;
@@ -105,6 +101,7 @@ public class AdventureModule {
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
     public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
+    static final Map<ResourceLocation, LootCategory> IMC_TYPE_OVERRIDES = new HashMap<>();
 
     public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
 
@@ -241,6 +238,34 @@ public class AdventureModule {
     public void client(FMLClientSetupEvent e) {
         e.enqueueWork(AdventureModuleClient::init);
         FMLJavaModLoadingContext.get().getModEventBus().register(new AdventureModuleClient());
+    }
+
+    @SubscribeEvent
+    @SuppressWarnings({ "unchecked", "deprecation" })
+    public void imc(InterModProcessEvent e) {
+        e.getIMCStream().forEach(msg -> {
+            switch (msg.method().toLowerCase(Locale.ROOT)) {
+                // Payload: Map.Entry<Item, String> where the string is a LootCategory ID.
+                case "loot_category_override" -> {
+                    try {
+                        var categoryOverride = (Map.Entry<Item, String>) msg.messageSupplier().get();
+                        ResourceLocation item = ForgeRegistries.ITEMS.getKey(categoryOverride.getKey());
+                        LootCategory cat = LootCategory.byId(categoryOverride.getValue());
+                        if (cat == null) throw new NullPointerException("Invalid loot category ID: " + categoryOverride.getValue());
+                        IMC_TYPE_OVERRIDES.put(item, cat);
+                        AdventureModule.LOGGER.info("Mod {} has overriden the loot category of {} to {}.", msg.senderModId(), item, cat.getName());
+                        break;
+                    }
+                    catch (Exception ex) {
+                        AdventureModule.LOGGER.error(ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                }
+                default -> {
+                    AdventureModule.LOGGER.error("Unknown or invalid IMC Message: {}", msg);
+                }
+            }
+        });
     }
 
     /**

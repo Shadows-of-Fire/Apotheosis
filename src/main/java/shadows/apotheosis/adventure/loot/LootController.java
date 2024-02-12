@@ -1,13 +1,6 @@
 package shadows.apotheosis.adventure.loot;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Nullable;
 
@@ -52,7 +45,7 @@ public class LootController {
      * @return The modifed ItemStack (note the original is not preserved, but the stack is returned for simplicity).
      */
     public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, RandomSource rand) {
-        Set<Affix> selected = new HashSet<>();
+        Set<Affix> selected = new LinkedHashSet<>();
         MutableInt sockets = new MutableInt(0);
         float durability = 0;
         for (LootRule rule : rarity.rules()) {

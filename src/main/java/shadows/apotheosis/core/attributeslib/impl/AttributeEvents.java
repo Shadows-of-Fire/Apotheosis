@@ -153,17 +153,18 @@ public class AttributeEvents {
             LivingEntity target = e.getEntity();
             int time = target.invulnerableTime;
             target.invulnerableTime = 0;
-            if (hpDmg > 0.001 && Apotheosis.localAtkStrength >= 0.85F) {
-                target.hurt(src(attacker), Apotheosis.localAtkStrength * hpDmg * target.getHealth());
+            float localAtkStrength = Apotheosis.getLocalAtkStrength(attacker);
+            if (hpDmg > 0.001 && localAtkStrength >= 0.85F) {
+                target.hurt(src(attacker), localAtkStrength * hpDmg * target.getHealth());
             }
             target.invulnerableTime = 0;
-            if (fireDmg > 0.001 && Apotheosis.localAtkStrength >= 0.55F) {
-                target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * fireDmg);
+            if (fireDmg > 0.001 && localAtkStrength >= 0.55F) {
+                target.hurt(src(attacker).setMagic().bypassArmor(), localAtkStrength * fireDmg);
                 target.setRemainingFireTicks(target.getRemainingFireTicks() + (int) (10 * fireDmg));
             }
             target.invulnerableTime = 0;
-            if (coldDmg > 0.001 && Apotheosis.localAtkStrength >= 0.55F) {
-                target.hurt(src(attacker).setMagic().bypassArmor(), Apotheosis.localAtkStrength * coldDmg);
+            if (coldDmg > 0.001 && localAtkStrength >= 0.55F) {
+                target.hurt(src(attacker).setMagic().bypassArmor(), localAtkStrength * coldDmg);
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
             }
             target.invulnerableTime = time;

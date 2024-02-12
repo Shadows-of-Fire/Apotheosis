@@ -17,9 +17,11 @@ import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootController;
 import shadows.apotheosis.adventure.loot.LootRarity;
+import shadows.apotheosis.util.ApothMiscUtil;
 import shadows.placebo.cap.InternalItemHandler;
 import shadows.placebo.container.BlockEntityContainer;
 import shadows.placebo.container.ContainerUtil;
+import shadows.placebo.util.EnchantmentUtils;
 
 public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
 
@@ -103,21 +105,16 @@ public class ReforgingMenu extends BlockEntityContainer<ReforgingTableTile> {
             if ((dust < dustCost || mats < matCost || levels < levelCost) && !player.isCreative()) return false;
 
             if (!player.level.isClientSide) {
-                ItemStack[] choices = new ItemStack[3];
-
                 RandomSource rand = this.random;
-                for (int i = 0; i < 3; i++) {
-                    rand.setSeed(this.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + i);
-                    choices[i] = LootController.createLootItem(input.copy(), rarity, rand);
-                }
+                rand.setSeed(this.getSeed() ^ ForgeRegistries.ITEMS.getKey(input.getItem()).hashCode() + slot);
+                ItemStack output = LootController.createLootItem(input.copy(), rarity, rand);
 
-                ItemStack out = choices[slot];
-                this.getSlot(0).set(out);
+                this.getSlot(0).set(output);
                 if (!player.isCreative()) {
                     this.getSlot(1).getItem().shrink(matCost);
                     this.getSlot(2).getItem().shrink(dustCost);
                 }
-                player.giveExperienceLevels(-3 * ++slot);
+                EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(levelCost, slot));
                 player.getPersistentData().putInt(REFORGE_SEED, player.random.nextInt());
                 this.updateSeed();
                 this.needsReset.set(1);

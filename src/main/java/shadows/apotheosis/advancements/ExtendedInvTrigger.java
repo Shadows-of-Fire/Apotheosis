@@ -58,7 +58,7 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
         }
         if ("rarity".equals(type)) {
             LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
-            return new ItemPredicate[] { new TrueItemPredicate(s -> AffixHelper.getRarity(s) == rarity) };
+            return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("gem_rarity".equals(type)) {
             LootRarity rarity = LootRarity.byId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
