@@ -128,18 +128,20 @@ public class EnchModuleClient {
                         tooltip.add(Component.translatable(ench.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
                     }
                 }
-                var info = EnchModule.getEnchInfo(ench);
-                Object[] args = new Object[4];
-                args[0] = boolComp("info.apotheosis.discoverable", info.isDiscoverable());
-                args[1] = boolComp("info.apotheosis.lootable", info.isLootable());
-                args[2] = boolComp("info.apotheosis.tradeable", info.isTradeable());
-                args[3] = boolComp("info.apotheosis.treasure", info.isTreasure());
-                if (e.getFlags().isAdvanced()) {
-                    tooltip.add(Component.translatable("%s \u2507 %s \u2507 %s \u2507 %s", args[0], args[1], args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
-                    tooltip.add(Component.translatable("info.apotheosis.book_range", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
-                }
-                else {
-                    tooltip.add(Component.translatable("%s \u2507 %s", args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
+                if (EnchConfig.showEnchantedBookMetadata) {
+                    var info = EnchModule.getEnchInfo(ench);
+                    Object[] args = new Object[4];
+                    args[0] = boolComp("info.apotheosis.discoverable", info.isDiscoverable());
+                    args[1] = boolComp("info.apotheosis.lootable", info.isLootable());
+                    args[2] = boolComp("info.apotheosis.tradeable", info.isTradeable());
+                    args[3] = boolComp("info.apotheosis.treasure", info.isTreasure());
+                    if (e.getFlags().isAdvanced()) {
+                        tooltip.add(Component.translatable("%s \u2507 %s \u2507 %s \u2507 %s", args[0], args[1], args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
+                        tooltip.add(Component.translatable("info.apotheosis.book_range", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
+                    }
+                    else {
+                        tooltip.add(Component.translatable("%s \u2507 %s", args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
+                    }
                 }
             }
         }

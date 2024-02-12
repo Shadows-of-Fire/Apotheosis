@@ -68,7 +68,7 @@ public class FletchingContainer extends AbstractContainerMenu {
             Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(RecipeTypes.FLETCHING, this.craftMatrix, this.world);
             if (optional.isPresent()) {
                 FletchingRecipe icraftingrecipe = optional.get();
-                itemstack = icraftingrecipe.assemble(this.craftMatrix, player.level().registryAccess());
+                itemstack = icraftingrecipe.assemble(this.craftMatrix, this.player.level().registryAccess());
             }
 
             this.craftResult.setItem(0, itemstack);

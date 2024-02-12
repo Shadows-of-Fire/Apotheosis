@@ -8,7 +8,6 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -60,7 +59,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         this.addSlot(new UpdatingSlot(this.inv, 3, 94, 25, this::isValidMaterial));
 
         this.addPlayerSlots(playerInv, 8, 98);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inv.getStackInSlot(0).isEmpty() && this.isValidMainGem(stack), 0, 1);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inv.getStackInSlot(0).isEmpty() && GemCuttingMenu.isValidMainGem(stack), 0, 1);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Items.GEM_DUST.get(), 1, 2);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.matchesMainGem(stack), 2, 3);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.isValidMaterial(stack), 3, 4);
@@ -89,9 +88,9 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         return false;
     }
 
-    protected boolean isValidMainGem(ItemStack stack) {
-        DynamicHolder<Gem> gem = GemItem.getGem(stack);
-        return gem.isBound() && AffixHelper.getRarity(stack) != RarityRegistry.getMaxRarity();
+    public static boolean isValidMainGem(ItemStack stack) {
+        GemInstance inst = GemInstance.unsocketed(stack);
+        return inst.isValidUnsocketed() && !inst.isMaxRarity();
     }
 
     protected boolean isValidMaterial(ItemStack stack) {
@@ -165,7 +164,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
             GemInstance g2 = GemInstance.unsocketed(bot);
 
             if (!g.isValidUnsocketed() || !g2.isValidUnsocketed() || g.gem() != g2.gem() || g.rarity() != g2.rarity()) return false;
-            if (g.rarity() == RarityRegistry.getMaxRarity()) return false;
+            if (g.isMaxRarity()) return false;
             if (left.getItem() != Items.GEM_DUST.get() || left.getCount() < getDustCost(g.rarity().get())) return false;
             if (!RarityRegistry.isMaterial(right.getItem())) return false;
 

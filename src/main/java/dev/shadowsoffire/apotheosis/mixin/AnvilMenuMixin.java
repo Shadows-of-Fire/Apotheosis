@@ -20,7 +20,7 @@ public class AnvilMenuMixin {
 
     /**
      * Reduces the XP cost to the "optimal" cost (the amount of XP that would have been used if the player had exactly that level).
-     * 
+     *
      * @param player The player using the anvil.
      * @param level  The negative of the cost of performing the anvil operation.
      */

@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import org.jetbrains.annotations.Nullable;
+
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -41,23 +43,21 @@ public class GemItem extends Item implements ITabFiller {
 
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
-        DynamicHolder<Gem> gem = getGem(pStack);
-        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
-        if (!gem.isBound() || !rarity.isBound()) {
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) {
             tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
             return;
         }
-        gem.get().addInformation(pStack, rarity.get(), tooltip::add);
+        inst.gem().get().addInformation(pStack, inst.rarity().get(), tooltip::add);
     }
 
     @Override
     public Component getName(ItemStack pStack) {
-        DynamicHolder<Gem> gem = getGem(pStack);
-        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
-        if (!gem.isBound() || !rarity.isBound()) return super.getName(pStack);
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) return super.getName(pStack);
         MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
-        comp = Component.translatable("item.apotheosis.gem." + rarity.getId(), comp);
-        return comp.withStyle(Style.EMPTY.withColor(rarity.get().getColor()));
+        comp = Component.translatable("item.apotheosis.gem." + inst.rarity().getId(), comp);
+        return comp.withStyle(Style.EMPTY.withColor(inst.rarity().get().getColor()));
     }
 
     @Override
@@ -69,10 +69,9 @@ public class GemItem extends Item implements ITabFiller {
 
     @Override
     public boolean isFoil(ItemStack pStack) {
-        DynamicHolder<Gem> gem = getGem(pStack);
-        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
-        if (!gem.isBound() || !rarity.isBound()) return super.isFoil(pStack);
-        return gem.get().getMaxRarity() == rarity.get();
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) return super.isFoil(pStack);
+        return inst.isMaxRarity();
     }
 
     @Override
@@ -91,6 +90,16 @@ public class GemItem extends Item implements ITabFiller {
                 out.accept(stack);
             }
         });
+    }
+
+    @Override
+    @Nullable
+    public String getCreatorModId(ItemStack stack) {
+        GemInstance inst = GemInstance.unsocketed(stack);
+        if (inst.isValidUnsocketed()) {
+            return inst.gem().getId().getNamespace();
+        }
+        return super.getCreatorModId(stack);
     }
 
     /**
@@ -154,7 +163,7 @@ public class GemItem extends Item implements ITabFiller {
      * Retrieves the underlying Gem instance of this gem stack.
      *
      * @param gem The gem stack
-     * @returns The backing Gem, or null if the gem does not exist or is invalid.
+     * @returns A {@link DynamicHolder} targetting the gem, which may be unbound if the gem is missing or invalid.
      */
     public static DynamicHolder<Gem> getGem(ItemStack gem) {
         if (gem.getItem() != Items.GEM.get() || !gem.hasTag()) return GemRegistry.INSTANCE.emptyHolder();

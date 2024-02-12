@@ -50,6 +50,7 @@ public class SimpleTexButton extends Button {
         return this;
     }
 
+    @Override
     public void setPosition(int pX, int pY) {
         this.setX(pX);
         this.setY(pY);

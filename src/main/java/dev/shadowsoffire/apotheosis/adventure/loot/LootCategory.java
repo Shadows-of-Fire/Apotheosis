@@ -15,6 +15,7 @@ import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.InteractionHand;
@@ -33,7 +34,6 @@ import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 
 public final class LootCategory {
 
@@ -180,6 +180,7 @@ public final class LootCategory {
      * @return The first valid loot category, or {@link #NONE} if no categories were valid.
      */
     public static LootCategory forItem(ItemStack item) {
+        if (item.isEmpty()) return NONE;
         LootCategory override = AdventureConfig.TYPE_OVERRIDES.get(ForgeRegistries.ITEMS.getKey(item.getItem()));
         if (override != null) return override;
         for (LootCategory c : VALUES) {

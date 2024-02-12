@@ -103,7 +103,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
             int k2 = x - (xCenter + 60);
             int l2 = y - (yCenter + 14 + 19 * slot);
             if (k2 >= 0 && l2 >= 0 && k2 < 108 && l2 < 19) {
-                gfx.renderTooltip(font, choice, x, y);
+                gfx.renderTooltip(this.font, choice, x, y);
                 this.drawOnLeft(gfx, tooltips, this.getGuiTop() + 29);
             }
         }
@@ -149,7 +149,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
             if ((dust < dustCost || levels < levelCost || mats < matCost) && !this.minecraft.player.getAbilities().instabuild) {
                 gfx.blit(TEXTURE, slotsX, yCenter + 14 + 19 * slot, 0, 166 + 19, 108, 19);
                 gfx.blit(TEXTURE, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
-                gfx.drawWordWrap(font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
+                gfx.drawWordWrap(this.font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
                 color = this.darken(rarity.getColor().getValue(), 2);
             }
             else {
@@ -165,7 +165,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
                 }
                 gfx.blit(TEXTURE, slotsX + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
 
-                gfx.drawWordWrap(font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
+                gfx.drawWordWrap(this.font, randText, randTextX, yCenter + 16 + 19 * slot, width, color);
                 color = rarity.getColor().getValue();
             }
             this.drawBorderedString(gfx, costStr, slotsX + 10, yCenter + 21 + 19 * slot, color, this.darken(color, 4));
@@ -183,17 +183,17 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
 
     protected void drawBorderedString(GuiGraphics gfx, String str, int x, int y, int color, int shadowColor) {
         Component comp = Component.literal(str);
-        gfx.drawString(font, comp, x, y - 1, shadowColor, false);
-        gfx.drawString(font, comp, x - 1, y, shadowColor, false);
-        gfx.drawString(font, comp, x, y + 1, shadowColor, false);
-        gfx.drawString(font, comp, x + 1, y, shadowColor, false);
-        gfx.drawString(font, comp, x, y, color, false);
+        gfx.drawString(this.font, comp, x, y - 1, shadowColor, false);
+        gfx.drawString(this.font, comp, x - 1, y, shadowColor, false);
+        gfx.drawString(this.font, comp, x, y + 1, shadowColor, false);
+        gfx.drawString(this.font, comp, x + 1, y, shadowColor, false);
+        gfx.drawString(this.font, comp, x, y, color, false);
     }
 
     @Override
     protected void renderLabels(GuiGraphics gfx, int x, int y) {
-        gfx.drawString(font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
-        gfx.drawString(font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752, false);
+        gfx.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
+        gfx.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752, false);
     }
 
     @Override

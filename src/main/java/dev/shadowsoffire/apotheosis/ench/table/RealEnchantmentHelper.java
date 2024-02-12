@@ -157,7 +157,7 @@ public class RealEnchantmentHelper {
      * Finally, values that would be blocked by rectification are uniformly distributed across the remaining space.<br>
      * The resulting distribution is some weird frankenstein that is normal over [-1, 1] but approaches uniform over [0, 1]
      * as rectification increases.
-     * 
+     *
      * @param rand          The pre-seeded enchanting random.
      * @param quanta        The quanta value, in [0, 100].
      * @param rectification The rectification value, in [0, 100].
@@ -169,7 +169,7 @@ public class RealEnchantmentHelper {
 
         float rectPercent = rectification / 100F;
 
-        if (factor < (rectPercent - 1)) {
+        if (factor < rectPercent - 1) {
             factor = Mth.nextFloat(rand, rectPercent - 1, 1);
         }
 

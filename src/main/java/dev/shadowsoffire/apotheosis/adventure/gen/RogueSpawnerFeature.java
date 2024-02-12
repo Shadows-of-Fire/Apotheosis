@@ -30,14 +30,17 @@ public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
         if (!AdventureConfig.canGenerateIn(world)) return false;
         BlockPos pos = ctx.origin();
         RandomSource rand = ctx.random();
-        BlockState state = world.getBlockState(pos);
-        BlockState downState = world.getBlockState(pos.below());
-        BlockState upState = world.getBlockState(pos.above());
-        if (STONE_TEST.test(downState, rand) && upState.isAir() && (state.isAir() || STONE_TEST.test(state, rand))) {
-            RogueSpawner item = RogueSpawnerRegistry.INSTANCE.getRandomItem(rand);
-            item.place(world, pos, rand);
-            AdventureModule.debugLog(pos, "Rogue Spawner - " + RogueSpawnerRegistry.INSTANCE.getKey(item));
-            return true;
+        if (rand.nextInt(100) == 0) {
+            BlockState state = world.getBlockState(pos);
+            BlockState downState = world.getBlockState(pos.below());
+            BlockState upState = world.getBlockState(pos.above());
+            if (STONE_TEST.test(downState, rand) && upState.isAir() && (state.isAir() || STONE_TEST.test(state, rand))) {
+                RogueSpawner item = RogueSpawnerRegistry.INSTANCE.getRandomItem(rand);
+                if (item == null) return false;
+                item.place(world, pos, rand);
+                AdventureModule.debugLog(pos, "Rogue Spawner - " + RogueSpawnerRegistry.INSTANCE.getKey(item));
+                return true;
+            }
         }
         return false;
     }

@@ -6,7 +6,7 @@
 	"feature": "apotheosis:rogue_spawner",
 	"placement": [{
 			"type": "minecraft:count",
-			"count": 8
+			"count": 65
 		},
 		{
 			"type": "minecraft:in_square"
@@ -19,7 +19,7 @@
 					"below_top": 0
 				},
 				"min_inclusive": {
-					"absolute": 0
+					"absolute": 10
 				}
 			}
 		},

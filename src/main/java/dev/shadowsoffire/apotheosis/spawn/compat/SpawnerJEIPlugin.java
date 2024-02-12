@@ -3,8 +3,8 @@ package dev.shadowsoffire.apotheosis.spawn.compat;
 import java.util.ArrayList;
 import java.util.List;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import mezz.jei.api.IModPlugin;

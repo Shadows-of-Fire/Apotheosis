@@ -55,11 +55,11 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
 
     @Override
     protected void renderLabels(GuiGraphics gfx, int mouseX, int mouseY) {
-        gfx.drawString(font, this.title, 12, 5, 4210752, false);
-        gfx.drawString(font, this.playerInventoryTitle, 7, this.imageHeight - 96 + 4, 4210752, false);
-        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D, false);
-        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454, false);
-        gfx.drawString(font, I18n.get("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8, false);
+        gfx.drawString(this.font, this.title, 12, 5, 4210752, false);
+        gfx.drawString(this.font, this.playerInventoryTitle, 7, this.imageHeight - 96 + 4, 4210752, false);
+        gfx.drawString(this.font, I18n.get("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D, false);
+        gfx.drawString(this.font, I18n.get("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454, false);
+        gfx.drawString(this.font, I18n.get("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8, false);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
                                                                                                                                                                                     // but enchantability not met on lower levels
                     gfx.blit(TEXTURES, j1, yCenter + 14 + 19 * slot, 148, 218, 108, 19);
                     gfx.blit(TEXTURES, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 239, 16, 16);
-                    gfx.drawWordWrap(font, itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
+                    gfx.drawWordWrap(this.font, itextproperties, k1, yCenter + 16 + 19 * slot, width, (color & 16711422) >> 1);
                     color = 4226832;
                 }
                 else {
@@ -153,11 +153,11 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
                     }
 
                     gfx.blit(TEXTURES, j1 + 1, yCenter + 15 + 19 * slot, 16 * slot, 223, 16, 16);
-                    gfx.drawWordWrap(font, itextproperties, k1, yCenter + 16 + 19 * slot, width, color);
+                    gfx.drawWordWrap(this.font, itextproperties, k1, yCenter + 16 + 19 * slot, width, color);
                     color = 8453920;
                 }
 
-                gfx.drawString(font, s, k1 + 86 - this.font.width(s), yCenter + 16 + 19 * slot + 7, color);
+                gfx.drawString(this.font, s, k1 + 86 - this.font.width(s), yCenter + 16 + 19 * slot + 7, color);
             }
         }
 
@@ -243,7 +243,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
                         list.add(Component.literal(s).withStyle(ChatFormatting.GRAY));
                     }
                 }
-                gfx.renderComponentTooltip(font, list, mouseX, mouseY);
+                gfx.renderComponentTooltip(this.font, list, mouseX, mouseY);
                 break;
             }
         }
@@ -256,7 +256,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
                 list.add(Component.literal(""));
                 list.add(Component.literal(I18n.get("gui.apotheosis.enchant.eterna.desc3", f(this.menu.stats.eterna()), EnchantingStatRegistry.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GRAY));
             }
-            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(this.font, list, mouseX, mouseY);
         }
         else if (this.isHovering(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
             List<Component> list = Lists.newArrayList();
@@ -268,7 +268,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
                 list.add(Component.literal(I18n.get("gui.apotheosis.enchant.quanta.desc4", f(this.menu.stats.quanta()))).withStyle(ChatFormatting.GRAY));
                 list.add(Component.literal(I18n.get("info.apotheosis.gui_rectification", f(this.menu.stats.rectification()))).withStyle(ChatFormatting.YELLOW));
             }
-            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(this.font, list, mouseX, mouseY);
             float quanta = this.menu.stats.quanta();
             float rectification = this.menu.stats.rectification();
             if (quanta > 0) {
@@ -294,7 +294,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
                 list.add(Component.translatable("info.apotheosis.ench_bonus", f(ench)).withStyle(ChatFormatting.YELLOW));
                 list.add(Component.literal(I18n.get("gui.apotheosis.enchant.arcana.desc5", f(this.menu.stats.arcana()))).withStyle(ChatFormatting.GOLD));
             }
-            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(this.font, list, mouseX, mouseY);
             stack.popPose();
             if (this.menu.stats.arcana() > 0) {
                 list.clear();
@@ -318,7 +318,7 @@ public class ApothEnchantScreen extends EnchantmentScreen implements DrawsOnLeft
         else if (this.menu.getSlot(0).hasItem() && this.isHovering(145, -15, 27, 15, mouseX, mouseY) && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
             List<Component> list = Lists.newArrayList();
             list.add(Component.translatable("info.apotheosis.all_available").withStyle(ChatFormatting.BLUE));
-            gfx.renderComponentTooltip(font, list, mouseX, mouseY);
+            gfx.renderComponentTooltip(this.font, list, mouseX, mouseY);
         }
 
         ItemStack enchanting = this.menu.getSlot(0).getItem();

@@ -26,9 +26,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplacementBlock {
 
     public ApothEnchantBlock() {
-        super(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().lightLevel((state) -> {
-            return 7;
-        }).strength(5.0F, 1200.0F));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().lightLevel(state -> 7).strength(5.0F, 1200.0F));
     }
 
     @Override

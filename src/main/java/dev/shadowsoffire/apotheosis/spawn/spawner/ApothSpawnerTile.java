@@ -108,7 +108,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
         }
 
         protected boolean isActivated(Level level, BlockPos pos) {
-            boolean hasPlayer = ApothSpawnerTile.this.ignoresPlayers || isNearPlayer(level, pos);
+            boolean hasPlayer = ApothSpawnerTile.this.ignoresPlayers || this.isNearPlayer(level, pos);
             return hasPlayer && (!ApothSpawnerTile.this.redstoneControl || ApothSpawnerTile.this.level.hasNeighborSignal(pos));
         }
 
@@ -210,7 +210,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
                             // Raise the NoAI Flag and set the apotheosis:movable flag for the main mob and all mob passengers.
                             if (ApothSpawnerTile.this.hasNoAI) {
-                                entity.getSelfAndPassengers().filter(t -> t instanceof Mob).map(Mob.class::cast).forEach(mob -> {
+                                entity.getSelfAndPassengers().filter(Mob.class::isInstance).map(Mob.class::cast).forEach(mob -> {
                                     mob.setNoAi(true);
                                     mob.getPersistentData().putBoolean("apotheosis:movable", true);
                                 });
@@ -229,9 +229,8 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
                             }
 
                             entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), rand.nextFloat() * 360.0F, 0.0F);
-                            if (entity instanceof Mob) {
-                                Mob mob = (Mob) entity;
-                                if (!checkSpawnPositionSpawner(mob, useLiar ? liar : level, MobSpawnType.SPAWNER, spawnData, this)) {
+                            if (entity instanceof Mob mob) {
+                                if (!this.checkSpawnPositionSpawner(mob, useLiar ? liar : level, MobSpawnType.SPAWNER, spawnData, this)) {
                                     continue;
                                 }
 
@@ -269,8 +268,8 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
             MinecraftForge.EVENT_BUS.post(event);
             if (event.getResult() == Result.DEFAULT) {
                 return ApothSpawnerTile.this.ignoresConditions
-                    || (spawnData.getCustomSpawnRules().isPresent()
-                        || mob.checkSpawnRules(level, MobSpawnType.SPAWNER) && mob.checkSpawnObstruction(level));
+                    || spawnData.getCustomSpawnRules().isPresent()
+                    || mob.checkSpawnRules(level, MobSpawnType.SPAWNER) && mob.checkSpawnObstruction(level);
             }
             return event.getResult() == Result.ALLOW;
         }

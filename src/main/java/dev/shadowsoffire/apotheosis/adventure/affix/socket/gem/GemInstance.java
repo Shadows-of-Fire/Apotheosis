@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -49,8 +50,21 @@ import net.minecraft.world.phys.HitResult;
  */
 public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack gemStack, DynamicHolder<LootRarity> rarity) {
 
-    public GemInstance(ItemStack socketed, ItemStack gemStack) {
-        this(GemItem.getGem(gemStack), LootCategory.forItem(socketed), gemStack, AffixHelper.getRarity(gemStack));
+    /**
+     * Creates a {@link GemInstance} for a socketed gem.
+     *
+     * @param socketed The item the gem is socketed in.
+     * @param gemStack The stack representing the gem.
+     */
+    public static GemInstance socketed(ItemStack socketed, ItemStack gemStack) {
+        DynamicHolder<Gem> gem = GemItem.getGem(gemStack);
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(gemStack);
+
+        if (gem.isBound() && rarity.isBound()) {
+            rarity = RarityRegistry.INSTANCE.holder(gem.get().clamp(rarity.get()));
+        }
+
+        return new GemInstance(gem, LootCategory.forItem(socketed), gemStack, rarity);
     }
 
     /**
@@ -58,7 +72,14 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack ge
      * This instance will be unable to invoke bonus methods, but may be used to easily retrieve the gem properties.
      */
     public static GemInstance unsocketed(ItemStack gemStack) {
-        return new GemInstance(GemItem.getGem(gemStack), LootCategory.NONE, gemStack, AffixHelper.getRarity(gemStack));
+        DynamicHolder<Gem> gem = GemItem.getGem(gemStack);
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(gemStack);
+
+        if (gem.isBound() && rarity.isBound()) {
+            rarity = RarityRegistry.INSTANCE.holder(gem.get().clamp(rarity.get()));
+        }
+
+        return new GemInstance(gem, LootCategory.NONE, gemStack, rarity);
     }
 
     /**
@@ -76,6 +97,13 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack ge
      */
     public boolean isValid() {
         return this.isValidUnsocketed() && this.gem.get().getBonus(this.cat).isPresent();
+    }
+
+    /**
+     * Checks if the rarity of the gem stack is equal to the max rarity of the underlying Gem.
+     */
+    public boolean isMaxRarity() {
+        return this.rarity().get() == this.gem.get().getMaxRarity();
     }
 
     /**

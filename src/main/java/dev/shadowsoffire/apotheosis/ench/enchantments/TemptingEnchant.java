@@ -31,7 +31,7 @@ public class TemptingEnchant extends Enchantment {
      * Injected by {@link TemptGoalMixin}
      */
     public boolean shouldFollow(LivingEntity target) {
-        return shouldFollow(target.getMainHandItem()) || shouldFollow(target.getOffhandItem());
+        return this.shouldFollow(target.getMainHandItem()) || this.shouldFollow(target.getOffhandItem());
     }
 
     /**

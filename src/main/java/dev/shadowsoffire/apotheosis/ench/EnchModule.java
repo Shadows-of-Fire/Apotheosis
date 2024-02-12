@@ -102,10 +102,10 @@ public class EnchModule {
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
     public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
-    public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", i -> i instanceof HoeItem);
-    public static final EnchantmentCategory SHIELD = EnchantmentCategory.create("SHIELD", i -> i instanceof ShieldItem);
+    public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", HoeItem.class::isInstance);
+    public static final EnchantmentCategory SHIELD = EnchantmentCategory.create("SHIELD", ShieldItem.class::isInstance);
     public static final EnchantmentCategory ANVIL = EnchantmentCategory.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
-    public static final EnchantmentCategory SHEARS = EnchantmentCategory.create("SHEARS", i -> i instanceof ShearsItem);
+    public static final EnchantmentCategory SHEARS = EnchantmentCategory.create("SHEARS", ShearsItem.class::isInstance);
     public static final EnchantmentCategory PICKAXE = EnchantmentCategory.create("PICKAXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.PICKAXE_DIG));
     public static final EnchantmentCategory AXE = EnchantmentCategory.create("AXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.AXE_DIG));
     public static final EnchantmentCategory CORE_ARMOR = EnchantmentCategory.create("CORE_ARMOR", i -> EnchantmentCategory.ARMOR_CHEST.canEnchant(i) || EnchantmentCategory.ARMOR_LEGS.canEnchant(i));
@@ -202,6 +202,8 @@ public class EnchModule {
             fill(Ench.Tabs.ENCH.getKey(), Enchantments.BERSERKERS_FURY, Enchantments.CHAINSAW, Enchantments.CHROMATIC, Enchantments.CRESCENDO, Enchantments.EARTHS_BOON, Enchantments.ENDLESS_QUIVER, Enchantments.EXPLOITATION,
                 Enchantments.GROWTH_SERUM, Enchantments.ICY_THORNS, Enchantments.KNOWLEDGE, Enchantments.LIFE_MENDING, Enchantments.MINERS_FERVOR, Enchantments.NATURES_BLESSING, Enchantments.OBLITERATION, Enchantments.REBOUNDING,
                 Enchantments.REFLECTIVE, Enchantments.SCAVENGER, Enchantments.SHIELD_BASH, Enchantments.SPEARFISHING, Enchantments.SPLITTING, Enchantments.STABLE_FOOTING, Enchantments.TEMPTING);
+
+            PlaceboUtil.registerCustomColor(Ench.Colors.LIGHT_BLUE_FLASH);
         });
 
         if (ModList.get().isLoaded("theoneprobe")) EnchTOPPlugin.register();
@@ -396,6 +398,6 @@ public class EnchModule {
         }
 
         if (e == null && enchInfoConfig.hasChanged()) enchInfoConfig.save();
+        EnchConfig.load(new Configuration(new File(Apotheosis.configDir, "ench.cfg")));
     }
-
 }

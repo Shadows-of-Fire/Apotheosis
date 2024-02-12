@@ -85,7 +85,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 
     /**
      * Blacklisted enchantments are prevented from being rolled in the enchanting table, as if they were not discoverable.
-     * 
+     *
      * @return A list of all enchantments that are blacklisted by the presence of this block.
      */
     default Set<Enchantment> getBlacklistedEnchantments(BlockState state, LevelReader world, BlockPos pos) {
@@ -127,7 +127,7 @@ public interface IEnchantingBlock extends IForgeBlock {
 
     /**
      * Enchanting tables normally cannot roll treasure enchantments, but if a bookshelf block permits it, they can.
-     * 
+     *
      * @return If this block allows the table to roll treasure enchantments.
      */
     default boolean allowsTreasure(BlockState state, LevelReader world, BlockPos pos) {

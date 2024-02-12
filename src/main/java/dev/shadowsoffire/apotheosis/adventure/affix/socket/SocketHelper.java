@@ -58,7 +58,7 @@ public class SocketHelper {
      */
     private static List<ItemStack> getGemsImpl(ItemStack stack) {
         int size = getSockets(stack);
-        if (size == 0 || stack.isEmpty()) return Collections.emptyList();
+        if (size <= 0 || stack.isEmpty()) return Collections.emptyList();
         List<ItemStack> gems = NonNullList.withSize(size, ItemStack.EMPTY);
         int i = 0;
         CompoundTag afxData = stack.getTagElement(AffixHelper.AFFIX_DATA);
@@ -84,7 +84,7 @@ public class SocketHelper {
      * @see GemInstance#isValid()
      */
     public static Stream<GemInstance> getGemInstances(ItemStack stack) {
-        return getGems(stack).stream().map(gemStack -> new GemInstance(stack, gemStack)).filter(GemInstance::isValid);
+        return getGems(stack).stream().map(gemStack -> GemInstance.socketed(stack, gemStack)).filter(GemInstance::isValid);
     }
 
     /**

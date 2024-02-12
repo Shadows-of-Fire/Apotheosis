@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.garden;
 
+import dev.shadowsoffire.placebo.util.IReplacementBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -10,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraftforge.common.ForgeHooks;
-import dev.shadowsoffire.placebo.util.IReplacementBlock;
 
 public class ApothCactusBlock extends CactusBlock implements IReplacementBlock {
 

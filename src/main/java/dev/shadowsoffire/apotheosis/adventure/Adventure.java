@@ -102,7 +102,7 @@ public class Adventure {
             return R.item(id + "_material", () -> new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), new Item.Properties()));
         }
 
-        private static void bootstrap() {};
+        private static void bootstrap() {}
 
     }
 
@@ -116,7 +116,7 @@ public class Adventure {
 
         public static final RegistryObject<StructureProcessorType<ItemFrameGemsProcessor>> ITEM_FRAME_GEMS = R.custom("item_frame_gems", Registries.STRUCTURE_PROCESSOR, () -> () -> ItemFrameGemsProcessor.CODEC);
 
-        private static void bootstrap() {};
+        private static void bootstrap() {}
 
     }
 
@@ -128,7 +128,7 @@ public class Adventure {
 
         public static final RegistryObject<MenuType<GemCuttingMenu>> GEM_CUTTING = R.menu("gem_cutting", () -> MenuUtil.type(GemCuttingMenu::new));
 
-        private static void bootstrap() {};
+        private static void bootstrap() {}
     }
 
     public static class Tabs {
@@ -145,6 +145,6 @@ public class Adventure {
         Features.bootstrap();
         Menus.bootstrap();
         Tabs.bootstrap();
-    };
+    }
 
 }

@@ -2,14 +2,19 @@ package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem;
 
 import java.util.function.Predicate;
 
+import com.google.common.base.Preconditions;
+
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -51,6 +56,18 @@ public class GemRegistry extends WeightedDynamicRegistry<Gem> {
         GemItem.setGem(stack, gem);
         AffixHelper.setRarity(stack, rarity);
         return stack;
+    }
+
+    @Override
+    protected void validateItem(ResourceLocation key, Gem item) {
+        super.validateItem(key, item);
+        for (LootRarity r = item.minRarity; r != item.maxRarity; r = r.next()) {
+            boolean atLeastOne = false;
+            for (GemBonus bonus : item.bonuses) {
+                if (bonus.supports(r)) atLeastOne = true;
+            }
+            Preconditions.checkArgument(atLeastOne, "No bonuses provided for supported rarity %s. At least one bonus must be provided, or the rarity should not be supported.", RarityRegistry.INSTANCE.getKey(r));
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 import java.util.List;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 
 public class SalvagingTableTile extends BlockEntity {
 

@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 public class SocketCommand {
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root) {
-        root.then(Commands.literal("set_sockets").requires(c -> c.hasPermission(2)).then(Commands.argument("sockets", IntegerArgumentType.integer()).executes(c -> {
+        root.then(Commands.literal("set_sockets").requires(c -> c.hasPermission(2)).then(Commands.argument("sockets", IntegerArgumentType.integer(0, 16)).executes(c -> {
             Player p = c.getSource().getPlayerOrException();
             ItemStack stack = p.getMainHandItem();
 

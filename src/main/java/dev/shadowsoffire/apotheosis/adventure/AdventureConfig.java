@@ -72,6 +72,7 @@ public class AdventureConfig {
         c.setTitle("Apotheosis Adventure Module Config");
 
         TYPE_OVERRIDES.clear();
+        TYPE_OVERRIDES.putAll(AdventureModule.IMC_TYPE_OVERRIDES);
         String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|sword", "minecraft:shulker_shell|none" },
             "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.\nValid types are: none, sword, trident, shield, heavy_weapon, pickaxe, shovel, crossbow, bow");
         for (String s : overrides) {
@@ -230,8 +231,6 @@ public class AdventureConfig {
 
         spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
     }
-
-    public record ReforgeData(int matCost, int dustCost, int levelCost) {}
 
     public static boolean canGenerateIn(WorldGenLevel world) {
         ResourceKey<Level> key = world.getLevel().dimension();

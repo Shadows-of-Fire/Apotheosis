@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.placebo.config.Configuration;
+import dev.shadowsoffire.placebo.json.ItemAdapter;
+import dev.shadowsoffire.placebo.json.NBTAdapter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.BasicItemListing;
@@ -13,9 +16,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.json.NBTAdapter;
 
 /**
  * The wandering merchant sucks. Trades are totally underwhelming and are borderline garbage 99% of the time.
