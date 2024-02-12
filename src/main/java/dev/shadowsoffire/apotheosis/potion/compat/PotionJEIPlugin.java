@@ -155,8 +155,8 @@ public class PotionJEIPlugin implements IModPlugin {
         @Override
         public String apply(ItemStack stack, UidContext context) {
             if (context != UidContext.Recipe) {
-                if (!PotionCharmItem.hasPotion(stack)) return NONE;
                 Potion p = PotionUtils.getPotion(stack);
+                if(p==Potions.EMPTY)return NONE;
                 MobEffectInstance contained = p.getEffects().get(0);
                 return ForgeRegistries.MOB_EFFECTS.getKey(contained.getEffect()) + "@" + contained.getAmplifier() + "@" + contained.getDuration();
             }
