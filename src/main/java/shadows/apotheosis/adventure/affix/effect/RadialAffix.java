@@ -1,6 +1,11 @@
 package shadows.apotheosis.adventure.affix.effect;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import com.google.common.base.Predicate;
