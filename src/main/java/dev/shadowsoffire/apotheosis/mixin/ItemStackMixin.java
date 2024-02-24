@@ -1,13 +1,19 @@
 package dev.shadowsoffire.apotheosis.mixin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.DoubleStream;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -77,6 +83,7 @@ public class ItemStackMixin {
         return amount - blocked;
     }
 
+    @Unique
     private static void appendModifiedEnchTooltip(List<Component> tooltip, Enchantment ench, int realLevel, int nbtLevel) {
         MutableComponent mc = ench.getFullname(realLevel).copy();
         mc.getSiblings().clear();
@@ -94,21 +101,39 @@ public class ItemStackMixin {
         tooltip.add(mc);
     }
 
+    @Unique
+    private static void foreachUniqueEnchantmentTag(ListTag tagEnchants, Consumer<CompoundTag> handleEnchantmentTag) {
+        int tagSize = tagEnchants.size();
+        List<CompoundTag> uniqueEnchantmentsReversed = new ArrayList<>(tagSize);
+        Set<ResourceLocation> seenEnchantmentIds = new HashSet<>();
+
+        for (int i = tagSize - 1; i >= 0 ; --i) {
+            CompoundTag compoundTag = tagEnchants.getCompound(i);
+            ResourceLocation enchantmentId = EnchantmentHelper.getEnchantmentId(compoundTag);
+            if (seenEnchantmentIds.add(enchantmentId)) {
+                uniqueEnchantmentsReversed.add(compoundTag);
+            }
+        }
+
+        for (int i = uniqueEnchantmentsReversed.size() - 1; i >= 0 ; --i) {
+            handleEnchantmentTag.accept(uniqueEnchantmentsReversed.get(i));
+        }
+    }
+
     /**
      * Rewrites the enchantment tooltip lines to include the effective level, as well as the (NBT + bonus) calculation.
+     * Also, only displays the last duplicate enchantment.
      */
     @SuppressWarnings("deprecation")
     @Redirect(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;appendEnchantmentNames(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))
     public void apoth_enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
         ItemStack ths = (ItemStack) (Object) this;
-        Map<Enchantment, Integer> realLevels = ths.getAllEnchantments();
-        Map<Enchantment, Integer> virtualLevels = new HashMap<>(realLevels);
-        for (int i = 0; i < tagEnchants.size(); ++i) {
-            CompoundTag compoundtag = tagEnchants.getCompound(i);
+        Map<Enchantment, Integer> realLevels = new HashMap<>(ths.getAllEnchantments());
+
+        foreachUniqueEnchantmentTag(tagEnchants, compoundtag -> {
             BuiltInRegistries.ENCHANTMENT.getOptional(EnchantmentHelper.getEnchantmentId(compoundtag)).ifPresent(ench -> {
                 int nbtLevel = EnchantmentHelper.getEnchantmentLevel(compoundtag);
-                Integer realLevel = realLevels.get(ench);
-                virtualLevels.remove(ench);
+                Integer realLevel = realLevels.remove(ench);
                 if (realLevel == null || nbtLevel == realLevel) {
                     // Default logic when levels are the same
                     tooltip.add(ench.getFullname(EnchantmentHelper.getEnchantmentLevel(compoundtag)));
@@ -118,10 +143,11 @@ public class ItemStackMixin {
                     appendModifiedEnchTooltip(tooltip, ench, realLevel, nbtLevel);
                 }
             });
-        }
+        });
+
         // Show the tooltip for any modified enchantments not present in NBT.
-        for (Map.Entry<Enchantment, Integer> virtual : virtualLevels.entrySet()) {
-            if (virtual.getValue() > 0) appendModifiedEnchTooltip(tooltip, virtual.getKey(), virtual.getValue(), 0);
+        for (Map.Entry<Enchantment, Integer> real : realLevels.entrySet()) {
+            if (real.getValue() > 0) appendModifiedEnchTooltip(tooltip, real.getKey(), real.getValue(), 0);
         }
     }
 
