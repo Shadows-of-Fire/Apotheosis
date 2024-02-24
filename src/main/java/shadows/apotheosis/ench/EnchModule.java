@@ -57,7 +57,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
-import org.checkerframework.checker.units.qual.C;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apoth.Particles;
 import shadows.apotheosis.Apotheosis;

@@ -8,7 +8,11 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import org.lwjgl.glfw.GLFW;
 
 import com.google.common.base.Strings;
