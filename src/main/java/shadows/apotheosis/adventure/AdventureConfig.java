@@ -238,8 +238,8 @@ public class AdventureConfig {
 
         bossDungeonAttempts = c.getInt("Boss Dungeon Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon generation attempts per-chunk.");
         bossDungeon2Attempts = c.getInt("Boss Dungeon (Variant 2) Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon (variant 2) generation attempts per-chunk.");
-        rogueSpawnerAttempts = c.getInt("Rogue Spawner Attempts", "worldgen", 4, 0, 1024, "The number of rogue spawner generation attempts per-chunk.");
-        deepRogueSpawnerAttempts = c.getInt("Deep Rogue Spawner Attempts", "worldgen", 4, 0, 1024, "The number of deep rogue spawner generation attempts per-chunk.");
+        rogueSpawnerAttempts = c.getInt("Rogue Spawner Attempts", "worldgen", 65, 0, 1024, "The number of rogue spawner generation attempts per-chunk.");
+        deepRogueSpawnerAttempts = c.getInt("Deep Rogue Spawner Attempts", "worldgen", 85, 0, 1024, "The number of deep rogue spawner generation attempts per-chunk.");
 
         spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
 
