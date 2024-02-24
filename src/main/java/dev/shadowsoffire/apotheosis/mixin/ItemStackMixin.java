@@ -101,13 +101,15 @@ public class ItemStackMixin {
     @Redirect(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;appendEnchantmentNames(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))
     public void apoth_enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
         ItemStack ths = (ItemStack) (Object) this;
-        Map<Enchantment, Integer> realLevels = new HashMap<>(ths.getAllEnchantments());
+        Map<Enchantment, Integer> realLevels = ths.getAllEnchantments();
+        Map<Enchantment, Integer> virtualLevels = new HashMap<>(realLevels);
         for (int i = 0; i < tagEnchants.size(); ++i) {
             CompoundTag compoundtag = tagEnchants.getCompound(i);
             BuiltInRegistries.ENCHANTMENT.getOptional(EnchantmentHelper.getEnchantmentId(compoundtag)).ifPresent(ench -> {
                 int nbtLevel = EnchantmentHelper.getEnchantmentLevel(compoundtag);
-                int realLevel = realLevels.remove(ench);
-                if (nbtLevel == realLevel) {
+                Integer realLevel = realLevels.get(ench);
+                virtualLevels.remove(ench);
+                if (realLevel == null || nbtLevel == realLevel) {
                     // Default logic when levels are the same
                     tooltip.add(ench.getFullname(EnchantmentHelper.getEnchantmentLevel(compoundtag)));
                 }
@@ -118,8 +120,8 @@ public class ItemStackMixin {
             });
         }
         // Show the tooltip for any modified enchantments not present in NBT.
-        for (Map.Entry<Enchantment, Integer> real : realLevels.entrySet()) {
-            if (real.getValue() > 0) appendModifiedEnchTooltip(tooltip, real.getKey(), real.getValue(), 0);
+        for (Map.Entry<Enchantment, Integer> virtual : virtualLevels.entrySet()) {
+            if (virtual.getValue() > 0) appendModifiedEnchTooltip(tooltip, virtual.getKey(), virtual.getValue(), 0);
         }
     }
 
