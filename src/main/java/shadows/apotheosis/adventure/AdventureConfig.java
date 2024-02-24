@@ -59,7 +59,7 @@ public class AdventureConfig {
     // Generation Chances
     public static int bossDungeonAttempts = 8;
     public static int bossDungeon2Attempts = 8;
-    public static int rogueSpawnerAttempts = 4;
+    public static int rogueSpawnerAttempts = 65;
     // public static int troveAttempts = 8;
     // public static int tomeTowerChance = 125;
     public static float spawnerValueChance = 0.11F;
