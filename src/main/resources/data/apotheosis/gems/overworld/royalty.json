@@ -15,10 +15,43 @@
 			"operation": "multiply_total",
 			"values": {
 				"rare": 0.05,
-				"epic": 0.10,
-				"mythic": 0.15,
-				"ancient": 0.20
-			}
+				"epic": 0.75,
+				"mythic": 0.10,
+				"ancient": 0.15
+			},
+			"attributes": [
+				"minecraft:generic.max_health",
+				"minecraft:generic.knockback_resistance",
+				"minecraft:generic.movement_speed",
+				"minecraft:generic.attack_damage",
+				"minecraft:generic.attack_knockback",
+				"minecraft:generic.attack_speed",
+				"minecraft:generic.armor",
+				"minecraft:generic.armor_toughness",
+				"minecraft:generic.luck",
+				"apotheosis:armor_pierce",
+				"apotheosis:armor_shred",
+				"apotheosis:arrow_damage",
+				"apotheosis:arrow_velocity",
+				"apotheosis:cold_damage",
+				"apotheosis:crit_chance",
+				"apotheosis:crit_damage",
+				"apotheosis:current_hp_damage",
+				"apotheosis:dodge_chance",
+				"apotheosis:draw_speed",
+				"apotheosis:experience_gained",
+				"apotheosis:fire_damage",
+				"apotheosis:ghost_health",
+				"apotheosis:healing_received",
+				"apotheosis:life_steal",
+				"apotheosis:mining_speed",
+				"apotheosis:overheal",
+				"apotheosis:prot_pierce",
+				"apotheosis:prot_shred",
+				"forge:swim_speed",
+				"forge:attack_range",
+				"forge:step_height_addition"
+			]
 		},
 		{
 			"type": "apotheosis:drop_transform",
