@@ -3,6 +3,10 @@ package dev.shadowsoffire.apotheosis.mixin;
 import java.util.Collections;
 import java.util.List;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
@@ -50,6 +54,36 @@ public class EnchantmentHelperMixin {
     @Overwrite
     public static List<EnchantmentInstance> selectEnchantment(RandomSource pRandom, ItemStack pItemStack, int pLevel, boolean pAllowTreasure) {
         return RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 15F, 0, 0, pAllowTreasure, Collections.emptySet());
+    }
+
+    /**
+     * Overwrites {@link EnchantmentHelper#getTagEnchantmentLevel(Enchantment, ItemStack)} to use the last duplicate enchantment's level.
+     *
+     * @author BlueAgent
+     * @reason For consistency with {@link EnchantmentHelper#deserializeEnchantments(ListTag)}.
+     * @param pEnchantment The enchantment to get the level of.
+     * @param pItemStack   The stack that possibly contains the enchantment.
+     * @return The level of the last duplicate of the enchantment.
+     */
+    @Overwrite(remap = false)
+    public static int getTagEnchantmentLevel(Enchantment pEnchantment, ItemStack pItemStack) {
+        if (pItemStack.isEmpty()) {
+            return 0;
+        }
+
+        ResourceLocation targetEnchantmentId = EnchantmentHelper.getEnchantmentId(pEnchantment);
+        ListTag enchantmentTags = pItemStack.getEnchantmentTags();
+        int level = 0;
+
+        for (int i = 0; i < enchantmentTags.size(); ++i) {
+            CompoundTag enchantmentTag = enchantmentTags.getCompound(i);
+            ResourceLocation currentEnchantmentId = EnchantmentHelper.getEnchantmentId(enchantmentTag);
+            if (currentEnchantmentId != null && currentEnchantmentId.equals(targetEnchantmentId)) {
+                level = EnchantmentHelper.getEnchantmentLevel(enchantmentTag);
+            }
+        }
+
+        return level;
     }
 
     /**
