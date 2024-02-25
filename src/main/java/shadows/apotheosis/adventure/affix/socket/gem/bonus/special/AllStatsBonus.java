@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure.affix.socket.gem.bonus.special;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
@@ -12,10 +13,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.ForgeHooks;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
@@ -32,7 +35,7 @@ public class AllStatsBonus extends GemBonus {
             gemClass(),
             PlaceboCodecs.enumCodec(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
             VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
-            Registry.ATTRIBUTE.byNameCodec().listOf().fieldOf("attributes").forGetter(a -> a.attributes))
+            Registry.ATTRIBUTE.byNameCodec().listOf().optionalFieldOf("attributes").forGetter(a -> Optional.of(a.attributes)))
         .apply(inst, AllStatsBonus::new));
 
     protected final Operation operation;
@@ -40,11 +43,11 @@ public class AllStatsBonus extends GemBonus {
     protected final List<Attribute> attributes;
 
     @SuppressWarnings("deprecation")
-    public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values, List<Attribute> attributes) {
+    public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values, Optional<List<Attribute>> attributes) {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;
         this.values = values;
-        this.attributes = attributes;
+        this.attributes = attributes.orElseGet(() -> Registry.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).toList());
     }
 
     @Override
