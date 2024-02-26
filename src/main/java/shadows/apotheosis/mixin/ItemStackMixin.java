@@ -1,16 +1,20 @@
 package shadows.apotheosis.mixin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.DoubleStream;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -96,6 +100,7 @@ public class ItemStackMixin {
     @Unique
     private static final MutableComponent apotheosis$SPACE = Component.literal(" ");
 
+    @Unique
     private static void appendModifiedEnchTooltip(List<Component> tooltip, Enchantment ench, int realLevel, int nbtLevel) {
         MutableComponent mc = ench.getFullname(realLevel).copy();
         mc.getSiblings().clear();
@@ -113,6 +118,25 @@ public class ItemStackMixin {
         tooltip.add(mc);
     }
 
+    @Unique
+    private static void foreachUniqueEnchantmentTag(ListTag tagEnchants, Consumer<CompoundTag> handleEnchantmentTag) {
+        int tagSize = tagEnchants.size();
+        List<CompoundTag> uniqueEnchantmentsReversed = new ArrayList<>(tagSize);
+        Set<ResourceLocation> seenEnchantmentIds = new HashSet<>();
+
+        for (int i = tagSize - 1; i >= 0 ; --i) {
+            CompoundTag compoundTag = tagEnchants.getCompound(i);
+            ResourceLocation enchantmentId = EnchantmentHelper.getEnchantmentId(compoundTag);
+            if (seenEnchantmentIds.add(enchantmentId)) {
+                uniqueEnchantmentsReversed.add(compoundTag);
+            }
+        }
+
+        for (int i = uniqueEnchantmentsReversed.size() - 1; i >= 0 ; --i) {
+            handleEnchantmentTag.accept(uniqueEnchantmentsReversed.get(i));
+        }
+    }
+
     /**
      * Rewrites the enchantment tooltip lines to include the effective level, as well as the (NBT + bonus) calculation.
      */
@@ -121,13 +145,12 @@ public class ItemStackMixin {
     public void apoth_enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
         ItemStack ths = (ItemStack) (Object) this;
         Map<Enchantment, Integer> realLevels = new HashMap<>(ths.getAllEnchantments());
-        for (int i = 0; i < tagEnchants.size(); ++i) {
-            CompoundTag compoundtag = tagEnchants.getCompound(i);
+        foreachUniqueEnchantmentTag(tagEnchants, compoundtag -> {
             ForgeRegistries.ENCHANTMENTS.getDelegate(EnchantmentHelper.getEnchantmentId(compoundtag)).ifPresent(holder -> {
                 Enchantment ench = holder.get();
                 int nbtLevel = EnchantmentHelper.getEnchantmentLevel(compoundtag);
-                int realLevel = realLevels.remove(ench);
-                if (nbtLevel == realLevel) {
+                Integer realLevel = realLevels.remove(ench);
+                if (realLevel == null || nbtLevel == realLevel) {
                     // Default logic when levels are the same
                     tooltip.add(ench.getFullname(EnchantmentHelper.getEnchantmentLevel(compoundtag)));
                 }
@@ -136,7 +159,7 @@ public class ItemStackMixin {
                     appendModifiedEnchTooltip(tooltip, ench, realLevel, nbtLevel);
                 }
             });
-        }
+        });
         // Show the tooltip for any modified enchantments not present in NBT.
         for (Map.Entry<Enchantment, Integer> real : realLevels.entrySet()) {
             if (real.getValue() > 0) appendModifiedEnchTooltip(tooltip, real.getKey(), real.getValue(), 0);

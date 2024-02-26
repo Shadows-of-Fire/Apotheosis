@@ -3,10 +3,13 @@ package shadows.apotheosis.mixin;
 import java.util.List;
 import java.util.Map;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.nbt.ListTag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -112,4 +115,8 @@ public class EnchantmentHelperMixin {
         }
     }
 
+    @ModifyArg(method = "getTagEnchantmentLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/ListTag;getCompound(I)Lnet/minecraft/nbt/CompoundTag;"), remap = false)
+    private static int apotheosis$reverseLoop(int index, @Local final ListTag tags) {
+        return tags.size() - 1 - index;
+    }
 }
