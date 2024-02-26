@@ -1,3 +1,5 @@
+import net.minecraftforge.gradle.userdev.tasks.JarJar
+
 plugins {
     id 'idea'
     id 'eclipse'
@@ -21,6 +23,7 @@ minecraft {
     enableEclipsePrepareRuns = true
     copyIdeResources = true
     generateRunFolders = true
+    jarJar.enable()
     runs {
         configureEach {
             workingDirectory project.file('run')
@@ -93,7 +96,13 @@ repositories {
 
 dependencies {
     minecraft "net.neoforged:forge:${mcVersion}-${forgeVersion}"
-    if(project.mixin.toBoolean())                   annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
+    if(project.mixin.toBoolean()) {
+                                                    annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
+                                                    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixinExtrasVersion}"))
+                                                    implementation(jarJar("io.github.llamalad7:mixinextras-forge:${mixinExtrasVersion}")) {
+                                                        jarJar.ranged(it, "[${mixinExtrasVersion},)")
+                                                    }
+    }
     if(project.hasProperty('placeboVersion'))       implementation fg.deobf("dev.shadowsoffire:Placebo:${mcVersion}-${placeboVersion}")
     if(project.hasProperty('jeiVersion'))           implementation fg.deobf("mezz.jei:jei-${mcVersion}-forge:${jeiVersion}")
     if(project.hasProperty('jadeFileId'))           implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")
@@ -238,6 +247,21 @@ tasks.named('jar', Jar).configure {
     }
 
     finalizedBy 'reobfJar'
+}
+
+// Make jar-in-jar output into the normal jar location.
+tasks.named('jarJar', JarJar).configure {
+    archiveClassifier.set("")
+}
+
+// Make gradle happy.
+afterEvaluate {
+    reobfJar {
+        dependsOn 'jarJar'
+    }
+    reobfJarJar {
+        dependsOn 'jar'
+    }
 }
 
 java {

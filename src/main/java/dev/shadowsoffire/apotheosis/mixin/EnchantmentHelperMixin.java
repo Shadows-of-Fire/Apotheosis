@@ -3,22 +3,26 @@ package dev.shadowsoffire.apotheosis.mixin;
 import java.util.Collections;
 import java.util.List;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.ench.table.RealEnchantmentHelper;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
@@ -50,6 +54,20 @@ public class EnchantmentHelperMixin {
     @Overwrite
     public static List<EnchantmentInstance> selectEnchantment(RandomSource pRandom, ItemStack pItemStack, int pLevel, boolean pAllowTreasure) {
         return RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 15F, 0, 0, pAllowTreasure, Collections.emptySet());
+    }
+
+    /**
+     * Modifies {@link EnchantmentHelper#getTagEnchantmentLevel(Enchantment, ItemStack)} to use the last duplicate enchantment's level.
+     *
+     * @author SiverDX
+     * @reason For consistency with {@link EnchantmentHelper#deserializeEnchantments(ListTag)}.
+     * @param index Original index.
+     * @param tags  List tag containing the enchantments
+     * @return The level of the last duplicate of the enchantment.
+     */
+    @ModifyArg(method = "getTagEnchantmentLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/ListTag;getCompound(I)Lnet/minecraft/nbt/CompoundTag;", remap = true), remap = false)
+    private static int apotheosis$reverseLoop(int index, @Local final ListTag tags) {
+        return tags.size() - 1 - index;
     }
 
     /**
