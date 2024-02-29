@@ -1,6 +1,9 @@
 {
     "comment_id": "/Adventure Module",
 
+    "key.categories.apotheosis": "Apotheosis",
+    "key.apotheosis.toggle_radial_mining": "Alterar modo de mineração radial",
+
     "info.apotheosis.affix_item": "Item de afixo apótico",
 	
 	"death.attack.apotheosis.execute": "%s foi executado por %s",
@@ -10,6 +13,12 @@
 	"misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",
 	"misc.apotheosis.affix_name.four": "%3$s %2$s %4$s de %1$s",
 	
+    "misc.apotheosis.radial_state_updated": "Modo de mineração radial atualizado para \"%s\"",
+    "misc.apotheosis.radial_state.require_not_sneaking": "Desativado enquanto se agacha",
+    "misc.apotheosis.radial_state.require_sneaking": "Habilitado enquanto se agacha",
+    "misc.apotheosis.radial_state.enabled": "Habilitado",
+    "misc.apotheosis.radial_state.disabled": "Desativado",
+
     "affix.apotheosis:armor/attribute/blessed": "Abençoado",
     "affix.apotheosis:armor/attribute/blessed.suffix": "da Saúde",
 
@@ -928,6 +937,7 @@
     "forge.entity_gravity": "Gravidade",
     "block.reeds": "Cana-de-açúcar",
     "potion.potency.3": "IV",
+    "enchantment.level.0": "0",
     "enchantment.level.11": "XI",
     "enchantment.level.12": "XII",
     "enchantment.level.13": "XIII",
