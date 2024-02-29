@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,21 +104,32 @@ public class ItemStackMixin {
     public void apoth_enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
         ItemStack ths = (ItemStack) (Object) this;
         Map<Enchantment, Integer> realLevels = new HashMap<>(ths.getAllEnchantments());
-        for (int i = 0; i < tagEnchants.size(); ++i) {
+        List<Component> enchTooltips = new ArrayList<>();
+
+        // Iterate backwards to address duplicate enchantment logic (always use the last-positioned copy).
+        for (int i = tagEnchants.size() - 1; i >= 0; i--) {
             CompoundTag compoundtag = tagEnchants.getCompound(i);
-            BuiltInRegistries.ENCHANTMENT.getOptional(EnchantmentHelper.getEnchantmentId(compoundtag)).ifPresent(ench -> {
-                int nbtLevel = EnchantmentHelper.getEnchantmentLevel(compoundtag);
-                int realLevel = realLevels.remove(ench);
-                if (nbtLevel == realLevel) {
-                    // Default logic when levels are the same
-                    tooltip.add(ench.getFullname(EnchantmentHelper.getEnchantmentLevel(compoundtag)));
-                }
-                else {
-                    // Show the change vs nbt level
-                    appendModifiedEnchTooltip(tooltip, ench, realLevel, nbtLevel);
-                }
-            });
+
+            Enchantment ench = BuiltInRegistries.ENCHANTMENT.get(EnchantmentHelper.getEnchantmentId(compoundtag));
+            if (ench == null || !realLevels.containsKey(ench)) continue;
+
+            int nbtLevel = EnchantmentHelper.getEnchantmentLevel(compoundtag);
+            int realLevel = realLevels.remove(ench);
+
+            if (nbtLevel == realLevel) {
+                // Default logic when levels are the same
+                enchTooltips.add(ench.getFullname(EnchantmentHelper.getEnchantmentLevel(compoundtag)));
+            }
+            else {
+                // Show the change vs nbt level
+                appendModifiedEnchTooltip(enchTooltips, ench, realLevel, nbtLevel);
+            }
         }
+
+        // Reverse and add to tooltip. Honestly we probably don't even need to reverse, but for consistency's sake.
+        Collections.reverse(enchTooltips);
+        tooltip.addAll(enchTooltips);
+
         // Show the tooltip for any modified enchantments not present in NBT.
         for (Map.Entry<Enchantment, Integer> real : realLevels.entrySet()) {
             if (real.getValue() > 0) appendModifiedEnchTooltip(tooltip, real.getKey(), real.getValue(), 0);
