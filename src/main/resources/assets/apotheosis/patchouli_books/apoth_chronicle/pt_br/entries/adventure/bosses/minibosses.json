@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Ocasionalmente, você pode ver criaturas nomeadas ou com poderes em todo o seu mundo.$(p)Elas são provavelmente $(9)minichefes apóticos$()."
+            "text": "Ocasionalmente, você pode ver criaturas nomeadas ou com poderes em todo o seu mundo.$(p)Elas são provavelmente $(9)minichefes apoteóticos$()."
         },
 		{
 			"type": "patchouli:text",
