@@ -1,6 +1,9 @@
 {
     "comment_id": "/冒险模块",
 
+    "key.categories.apotheosis": "神化",
+    "key.apotheosis.toggle_radial_mining": "更改径向挖掘模式",
+
     "info.apotheosis.affix_item": "神化词缀物品",
 
     "death.attack.apotheosis.execute": "%s被%s处决了",
@@ -9,6 +12,12 @@
     "misc.apotheosis.affix_name.two": "%s的%s",
     "misc.apotheosis.affix_name.three": "%s的%s（%s）",
     "misc.apotheosis.affix_name.four": "%s %s的%s（%s）",
+
+    "misc.apotheosis.radial_state_updated": "径向挖掘模式已更新为“%s”",
+    "misc.apotheosis.radial_state.require_not_sneaking": "潜行时禁用",
+    "misc.apotheosis.radial_state.require_sneaking": "潜行时启用",
+    "misc.apotheosis.radial_state.enabled": "启用",
+    "misc.apotheosis.radial_state.disabled": "禁用",
 
     "affix.apotheosis:armor/attribute/blessed": "祝福",
     "affix.apotheosis:armor/attribute/blessed.suffix": "生命",
@@ -806,7 +815,7 @@
     "info.apotheosis.filtering_shelf2": "根据放入附魔书的数量获得位阶和阿卡那。",
 
     "enchantment.apotheosis.infusion": "灌注",
-    "enchantment.apotheosis.infusion.desc": "用于制造灌注书架。",
+    "enchantment.apotheosis.infusion.desc": "用于附魔合成的占位符。",
 
     "enchantment.apotheosis.mounted_strike": "骑砍",
     "enchantment.apotheosis.mounted_strike.desc": "在骑乘时攻击能造成额外伤害。",
@@ -818,7 +827,7 @@
     "enchantment.apotheosis.stable_footing.desc": "取消飞行时的挖掘速度惩罚。",
 
     "enchantment.apotheosis.scavenger": "清道夫",
-    "enchantment.apotheosis.scavenger.desc": "击杀生物有概率掉落两次战利品。",
+    "enchantment.apotheosis.scavenger.desc": "被杀死的生物有概率掉落两次战利品。",
 
     "enchantment.apotheosis.life_mending": "生命修补",
     "enchantment.apotheosis.life_mending.desc": "治疗的生命值将会转化为物品的耐久度。",
@@ -827,7 +836,7 @@
     "enchantment.apotheosis.icy_thorns.desc": "使攻击者受到缓慢效果。",
 
     "enchantment.apotheosis.bane_of_illagers": "灾厄村民杀手",
-    "enchantment.apotheosis.bane_of_illagers.desc": "对灾厄村民（掠夺者、卫道士、唤魔者、幻术师和劫掠兽）能造成额外伤害。",
+    "enchantment.apotheosis.bane_of_illagers.desc": "对灾厄村民能造成额外伤害。",
 
     "death.attack.apotheosis:corrupted": "%s被腐化魔咒榨干了。",
     "death.attack.apotheosis:corrupted.player": "%s被%s腐化了。",
@@ -869,7 +878,7 @@
     "info.apotheosis.extraction_tome2": "不会销毁物品",
 
     "enchantment.apotheosis.tempting": "引诱",
-    "enchantment.apotheosis.tempting.desc": "吸引附近的动物。",
+    "enchantment.apotheosis.tempting.desc": "吸引附近的农场动物。",
 
     "enchantment.apotheosis.shield_bash": "盾击",
     "enchantment.apotheosis.shield_bash.desc": "增加盾牌造成的伤害。",
@@ -878,7 +887,7 @@
     "enchantment.apotheosis.reflective.desc": "格挡攻击有概率对攻击者造成伤害。",
 
     "enchantment.apotheosis.berserkers_fury": "狂战士之怒",
-    "enchantment.apotheosis.berserkers_fury.desc": "受到伤害后狂怒。",
+    "enchantment.apotheosis.berserkers_fury.desc": "受到伤害后狂怒。[⌛ 0:45]",
 
     "enchantment.apotheosis.knowledge": "岁月学识",
     "enchantment.apotheosis.knowledge.desc": "将敌人的掉落物直接转化为经验。",
@@ -890,10 +899,10 @@
     "enchantment.apotheosis.obliteration.desc": "铁砧砸中单魔咒附魔书后，能将其拆分成两本次级魔咒的附魔书。",
 
     "enchantment.apotheosis.natures_blessing": "自然祝福",
-    "enchantment.apotheosis.natures_blessing.desc": "锄头右击可以直接对作物施加肥料。",
+    "enchantment.apotheosis.natures_blessing.desc": "可以使用锄对作物施加骨粉。",
 
     "enchantment.apotheosis.rebounding": "弹飞",
-    "enchantment.apotheosis.rebounding.desc": "被近距离攻击后，击退攻击者。",
+    "enchantment.apotheosis.rebounding.desc": "受到近战攻击后，击退攻击者。",
 
     "enchantment.apotheosis.magic_protection": "厌魔者",
     "enchantment.apotheosis.magic_protection.desc": "减少使用者造成与受到的魔法伤害。",
@@ -928,6 +937,7 @@
     "forge.entity_gravity": "重力",
     "block.reeds": "甘蔗",
     "potion.potency.3": "IV",
+    "enchantment.level.0": "0",
     "enchantment.level.11": "XI",
     "enchantment.level.12": "XII",
     "enchantment.level.13": "XIII",
@@ -1055,10 +1065,10 @@
     "tooltip.enchlib.unavailable": "无法达到下一魔咒等级",
     "tooltip.enchlib.extracting": "提取魔咒等级%s",
     "tooltip.enchlib.cost": "消耗点数：%s",
-    "tooltip.enchlib.item": "当前储存了 %d 种魔咒。",
+    "tooltip.enchlib.item": "当前储存了%d种魔咒。",
     "tooltip.enchlib.nfilt": "名称筛选",
     "tooltip.enchlib.ifilt": "物品筛选",
-    "info.apotheosis.library": "魔咒图书馆是一个储存魔咒的方块。放入一本附有魔咒的附魔书可以将其中的魔咒储存进去。鼠标左击一种储存的魔咒将提取一级魔咒，按住Shift左击将提取可用的最大等级魔咒。",
+    "info.apotheosis.library": "魔咒图书馆是一个储存魔咒的方块。放入一本附有魔咒的附魔书可以将其中的魔咒储存进去。左击一种储存的魔咒将提取一级魔咒，按住Shift左击将提取可用的最高等级。",
     "info.apotheosis.runes": "符文之语",
     "info.apotheosis.no_clue": "符文什么也没揭示",
     "info.apotheosis.runes_all": "符文揭示了一切",
@@ -1155,7 +1165,7 @@
     "item.apotheosis.ender_lead": "末影拴绳",
     "info.apotheosis.noentity": "拴有实体：无",
     "info.apotheosis.containedentity": "拴有实体：%s",
-    "info.apotheosis.ender_lead": "末影拴绳是一种可以用来移动动物的物品。鼠标左击捕捉动物，鼠标右击释放动物。末影拴绳仅能捕捉动物。",
+    "info.apotheosis.ender_lead": "末影拴绳是一种可以用来移动动物的物品。左击捕捉动物，右击释放动物。末影拴绳对其他类型的实体不起作用。",
 
     "comment_id": "/村民模块",
     "name.apotheosis.merch_sword": "奴役狂梦",

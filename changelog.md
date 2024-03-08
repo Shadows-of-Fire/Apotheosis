@@ -1,6 +1,17 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.3.1
+* Fixed issues that would occur when duplicate copies of the same enchantment were present on one item.
+  * Fixed a crash that would occur due to the new tooltip handling.
+  * Fixed a discrepency caused by how vanilla computes enchantment levels.
+  * Made duplicate copies invisible in the item tooltip, showing only the "real" one.
+* Made it possible for non-players to break Spawners with silk touch.
+* mc-kaishixiaxue: Updated Chinese translation.
+* FabLeKebab: Added French translation.
+* t0piy: Updated Brazilian translation.
+* gun0000: Added Korean translation.
+
 ## 7.3.0
 ### Features
 * Added a keybind to change the current state of the radial mining affix.
