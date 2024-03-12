@@ -159,8 +159,15 @@ public class Gem implements CodecProvider<Gem>, ILuckyWeighted, IDimensional, Ra
         return !cat.isNone() && this.bonusMap.containsKey(cat) && this.bonusMap.get(cat).supports(rarity);
     }
 
-    public Optional<GemBonus> getBonus(LootCategory cat) {
-        return Optional.ofNullable(this.bonusMap.get(cat));
+    /**
+     * Optionally returns this gem's bonus for the given category/rarity combination.
+     * 
+     * @param cat    The category
+     * @param rarity The rarity
+     * @return If a bonus exists for the inputs, an {@link Optional} holding it, otherwise {@link Optional#empty()}.
+     */
+    public Optional<GemBonus> getBonus(LootCategory cat, LootRarity rarity) {
+        return Optional.ofNullable(this.bonusMap.get(cat)).filter(b -> b.supports(rarity));
     }
 
     @Override
