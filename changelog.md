@@ -1,6 +1,19 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.3.2
+* t0piy: Updated Brazilian translation.
+* t0piy: Fixed a JSON syntax error in the French translation.
+* Made `ShieldBreakerTest` only set the shield item to the target zombie once at creation.
+  * This should resolve a performance issue caused by repeated capability comparisons when this test executed.
+* Fixed the default radial mining state being `REQUIRE_SNEAKING` when it should have been `REQUIRE_NOT_SNEAKING`.
+* Added a NBT-sensitive tool action check to the chainsaw enchantment, which may permit application on dynamic axes.
+* Improved sanity checking in `GemBonus`.
+* Changed the Gem of the Royal Family to convert copper ore to gold instead of iron ore.
+* Fixed the cooldown of gems being applied across all instances of the same gem bonus.
+* Fixed gems not working when interacting with arrows on-hit.
+* Added a bonus to the Tyrannical gem which applies Bleeding on arrow impact.
+
 ## 7.3.1
 * Fixed issues that would occur when duplicate copies of the same enchantment were present on one item.
   * Fixed a crash that would occur due to the new tooltip handling.
