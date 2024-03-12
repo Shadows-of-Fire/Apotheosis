@@ -93,7 +93,7 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * Will always return false if using {@link #unsocketed(ItemStack)}
      */
     public boolean isValid() {
-        return this.isValidUnsocketed() && this.gem.getBonus(this.cat).isPresent();
+        return this.isValidUnsocketed() && this.gem.getBonus(this.cat, this.rarity).isPresent();
     }
 
     /**
@@ -213,11 +213,21 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
         this.ifPresent(b -> b.modifyLoot(this.gemStack, this.rarity, loot, ctx));
     }
 
+    /**
+     * Resolves a gem bonus using {@link Optional#map(Function)}.
+     *
+     * @throws UnsupportedOperationException if this instance is not {@link #isValid()}.
+     */
     private <T> Optional<T> map(Function<GemBonus, T> function) {
-        return this.gem.getBonus(this.cat).map(function);
+        return this.gem.getBonus(this.cat, this.rarity).map(function);
     }
 
+    /**
+     * Resolves a gem bonus using {@link Optional#ifPresent(Consumer)}.
+     *
+     * @throws UnsupportedOperationException if this instance is not {@link #isValid()}.
+     */
     private void ifPresent(Consumer<GemBonus> function) {
-        this.gem.getBonus(this.cat).ifPresent(function);
+        this.gem.getBonus(this.cat, this.rarity).ifPresent(function);
     }
 }
