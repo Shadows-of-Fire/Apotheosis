@@ -42,7 +42,7 @@ import shadows.apotheosis.adventure.loot.LootRarity;
  * The major difference between them is that most methods do not live on {@link Gem} but rather on {@link GemBonus}.
  *
  * @param gem      The socketed Gem.
- * @param cate     The LootCategory of the item the Gem is socketed into.
+ * @param cat      The LootCategory of the item the Gem is socketed into.
  * @param gemStack The itemstack form of the sockted Gem.
  * @param rarity   The rarity of the Gem. Not the rarity of the item the Gem is socketed into.
  */
@@ -54,6 +54,16 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * @param gemStack The stack representing the gem.
      */
     public static GemInstance socketed(ItemStack socketed, ItemStack gemStack) {
+        return socketed(LootCategory.forItem(socketed), gemStack);
+    }
+
+    /**
+     * Creates a {@link GemInstance} for a socketed gem.
+     *
+     * @param category The category of the object the gem is socketed in.
+     * @param gemStack The stack representing the gem.
+     */
+    public static GemInstance socketed(LootCategory category, ItemStack gemStack) {
         Gem gem = GemItem.getGem(gemStack);
         LootRarity rarity = AffixHelper.getRarity(gemStack.getTag());
 
@@ -61,7 +71,7 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
             rarity = gem.clamp(rarity);
         }
 
-        return new GemInstance(gem, LootCategory.forItem(socketed), gemStack, rarity);
+        return new GemInstance(gem, category, gemStack, rarity);
     }
 
     /**
@@ -168,7 +178,7 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * @see {@link GemBonus#onArrowImpact(AbstractArrow, LootRarity, HitResult, HitResult.Type)}
      */
     public void onArrowImpact(AbstractArrow arrow, ItemStack gem, LootRarity rarity, HitResult res, HitResult.Type type) {
-        // TODO: getBonus(arrow).ifPresent(b -> b.onArrowImpact(gem, arrow, res, type));
+        this.ifPresent(b -> b.onArrowImpact(this.gemStack, this.rarity, arrow, res, type));
     }
 
     /**

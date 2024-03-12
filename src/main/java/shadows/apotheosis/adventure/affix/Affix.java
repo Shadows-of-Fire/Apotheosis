@@ -36,6 +36,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import shadows.apotheosis.adventure.affix.socket.gem.Gem;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.apotheosis.ench.asm.EnchHooks;
@@ -266,6 +268,8 @@ public abstract class Affix extends TypeKeyedBase<Affix> {
 
     /**
      * Records the current time as a cooldown tracker. Used in conjunction with {@link #isOnCooldown(Affix, int, LivingEntity)}
+     * <p>
+     * Use of this method is problematic if the id is not unique for the effect, as is the case with {@link Gem#getId()} and {@link GemBonus#getId()}.
      */
     public static void startCooldown(ResourceLocation id, LivingEntity entity) {
         entity.getPersistentData().putLong("apoth.affix_cooldown." + id.toString(), entity.level.getGameTime());

@@ -37,9 +37,9 @@ public class LeechBlockBonus extends GemBonus {
     @Override
     public float onShieldBlock(ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
         Data d = this.values.get(rarity);
-        if (amount <= 2 || Affix.isOnCooldown(this.getId(), d.cooldown, entity)) return amount;
+        if (amount <= 2 || Affix.isOnCooldown(this.getCooldownId(gem), d.cooldown, entity)) return amount;
         entity.heal(amount * d.healFactor);
-        Affix.startCooldown(this.getId(), entity);
+        Affix.startCooldown(this.getCooldownId(gem), entity);
         return amount;
     }
 

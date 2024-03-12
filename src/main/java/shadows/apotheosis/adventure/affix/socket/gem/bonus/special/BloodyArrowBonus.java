@@ -37,10 +37,10 @@ public class BloodyArrowBonus extends GemBonus {
     @Override
     public void onArrowFired(ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {
         Data d = this.values.get(rarity);
-        if (Affix.isOnCooldown(this.getId(), d.cooldown, user)) return;
+        if (Affix.isOnCooldown(this.getCooldownId(gem), d.cooldown, user)) return;
         user.hurt(Apotheosis.CORRUPTED, user.getMaxHealth() * d.healthCost);
         arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
-        Affix.startCooldown(this.getId(), user);
+        Affix.startCooldown(this.getCooldownId(gem), user);
     }
 
     @Override
