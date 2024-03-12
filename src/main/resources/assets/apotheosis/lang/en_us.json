@@ -342,7 +342,7 @@
 	"bonus.apotheosis:bloody_arrow.desc": "When firing, you lose %s%% Max Health and deal %s%% damage. %s",
 	"bonus.apotheosis:leech_block.desc": "Blocking an attack heals you for %s%% of the damage. %s",
 	"bonus.apotheosis:all_stats.desc": "+%s%% to All Stats",
-	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Iron Ore has a %s%% chance to drop Raw Gold instead.",
+	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Copper Ore has a %s%% chance to drop Raw Gold instead.",
 	"bonus.apotheosis:mageslayer.desc": "Ignore %s%% of magic damage and heal for the same amount.",
 	"bonus.apotheosis:twilight_ore_magnet.desc": "Can be used as an Ore Magnet, costing an extra %s durability.",
 	"bonus.apotheosis:twilight_treasure_goblin.desc": "Attacking an entity has a %s%% chance to summon a Treasure Goblin. %s",
