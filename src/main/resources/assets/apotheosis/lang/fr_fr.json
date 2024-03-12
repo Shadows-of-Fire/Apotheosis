@@ -1202,5 +1202,5 @@
     "comment_id": "Guidebook",
     "book.apotheosis.name": "Chronicle of Shadows",
     "book.apotheosis.subtitle": "Guide to Apotheosis",
-    "book.apotheosis.landing": "Bienvenue dans le monde d'Apothéose.$(br2)Apothéose est organisé en $(#8080FF)Modules$(), tout comme le contenu de ce livre.$(br2)Les modules désactivés sont masqués.",
+    "book.apotheosis.landing": "Bienvenue dans le monde d'Apothéose.$(br2)Apothéose est organisé en $(#8080FF)Modules$(), tout comme le contenu de ce livre.$(br2)Les modules désactivés sont masqués."
 }
