@@ -57,6 +57,16 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack ge
      * @param gemStack The stack representing the gem.
      */
     public static GemInstance socketed(ItemStack socketed, ItemStack gemStack) {
+        return socketed(LootCategory.forItem(socketed), gemStack);
+    }
+
+    /**
+     * Creates a {@link GemInstance} for a socketed gem.
+     *
+     * @param category The category of the object the gem is socketed in.
+     * @param gemStack The stack representing the gem.
+     */
+    public static GemInstance socketed(LootCategory category, ItemStack gemStack) {
         DynamicHolder<Gem> gem = GemItem.getGem(gemStack);
         DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(gemStack);
 
@@ -64,7 +74,7 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack ge
             rarity = RarityRegistry.INSTANCE.holder(gem.get().clamp(rarity.get()));
         }
 
-        return new GemInstance(gem, LootCategory.forItem(socketed), gemStack, rarity);
+        return new GemInstance(gem, category, gemStack, rarity);
     }
 
     /**
@@ -178,7 +188,7 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack ge
      * @see {@link GemBonus#onArrowImpact(AbstractArrow, LootRarity, HitResult, HitResult.Type)}
      */
     public void onArrowImpact(AbstractArrow arrow, HitResult res, HitResult.Type type) {
-        // TODO: getBonus(arrow).ifPresent(b -> b.onArrowImpact(gem, arrow, res, type));
+        this.ifPresent(b -> b.onArrowImpact(this.gemStack, this.rarity.get(), arrow, res, type));
     }
 
     /**

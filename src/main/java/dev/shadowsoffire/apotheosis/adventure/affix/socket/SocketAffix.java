@@ -137,7 +137,7 @@ public final class SocketAffix extends Affix {
     }
 
     private static Stream<GemInstance> gems(AbstractArrow arrow) {
-        return Stream.empty(); // TODO: Implement
+        return SocketHelper.getGemInstances(arrow);
     }
 
 }

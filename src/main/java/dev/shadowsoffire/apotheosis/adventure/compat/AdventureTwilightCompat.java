@@ -133,7 +133,7 @@ public class AdventureTwilightCompat {
         @Override
         public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, Entity target) {
             Data d = this.values.get(rarity);
-            if (Affix.isOnCooldown(this.getId(), d.cooldown, user)) return;
+            if (Affix.isOnCooldown(this.getCooldownId(gem), d.cooldown, user)) return;
             if (user.random.nextFloat() <= d.chance) {
                 Redcap goblin = REDCAP.get().create(user.level());
                 CompoundTag tag = new CompoundTag();
@@ -155,7 +155,7 @@ public class AdventureTwilightCompat {
                 }
                 goblin.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0));
                 user.level().addFreshEntity(goblin);
-                Affix.startCooldown(this.getId(), user);
+                Affix.startCooldown(this.getCooldownId(gem), user);
             }
         }
 
@@ -226,12 +226,12 @@ public class AdventureTwilightCompat {
         @Override
         public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, Entity attacker) {
             Data d = this.values.get(rarity);
-            if (Affix.isOnCooldown(this.getId(), d.cooldown, user)) return;
+            if (Affix.isOnCooldown(this.getCooldownId(gem), d.cooldown, user)) return;
             if (user.random.nextFloat() <= d.chance) {
                 user.getCapability(CapabilityList.SHIELDS).ifPresent(cap -> {
                     cap.replenishShields();
                 });
-                Affix.startCooldown(this.getId(), user);
+                Affix.startCooldown(this.getCooldownId(gem), user);
             }
         }
 
