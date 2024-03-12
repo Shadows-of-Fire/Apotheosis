@@ -121,7 +121,6 @@ public class RadialAffix extends Affix {
         breakers.remove(player.getUUID());
     }
 
-    @SuppressWarnings("deprecation")
     public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
         Level world = player.level();
         if (x < 2 && y < 2) return;
@@ -213,13 +212,22 @@ public class RadialAffix extends Affix {
             return Component.translatable("misc.apotheosis.radial_state." + this.name().toLowerCase(Locale.ROOT));
         }
 
+        /**
+         * Returns the current radial break state for the given player.
+         * <p>
+         * The state defaults to {@link #REQUIRE_NOT_SNEAKING} if no state is set.
+         * 
+         * @param player The player
+         * @return The current radial state, or {@link #REQUIRE_NOT_SNEAKING} if a parse error occurred.
+         */
         public static RadialState getState(Player player) {
             String str = player.getPersistentData().getString("apoth.radial_state");
             try {
                 return RadialState.valueOf(str);
             }
             catch (Exception ex) {
-                return RadialState.REQUIRE_SNEAKING;
+                setState(player, RadialState.REQUIRE_NOT_SNEAKING);
+                return RadialState.REQUIRE_NOT_SNEAKING;
             }
         }
 
