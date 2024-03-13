@@ -1,6 +1,10 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.3.3
+* Fixed a typo in the tag used by the Gem of the Royal Family.
+* Fixed an issue where the `apotheosis:drop_transform` gem bonus would fail to resolve tags and always trigger on all blocks.
+
 ## 7.3.2
 * t0piy: Updated Brazilian translation.
 * t0piy: Fixed a JSON syntax error in the French translation.
