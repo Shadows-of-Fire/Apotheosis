@@ -37,8 +37,10 @@ import net.minecraftforge.items.SlotItemHandler;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.advancements.EnchantedTrigger;
+import shadows.apotheosis.util.ApothMiscUtil;
 import shadows.apotheosis.util.FloatReferenceHolder;
 import shadows.placebo.network.PacketDistro;
+import shadows.placebo.util.EnchantmentUtils;
 
 public class ApothEnchantmentMenu extends EnchantmentMenu {
 
@@ -123,21 +125,22 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int id) {
-        int level = this.costs[id];
+        int slot = id;
+        int level = this.costs[slot];
         ItemStack toEnchant = this.enchantSlots.getItem(0);
         ItemStack lapis = this.getSlot(1).getItem();
-        int cost = id + 1;
+        int cost = slot + 1;
         if ((lapis.isEmpty() || lapis.getCount() < cost) && !player.getAbilities().instabuild) return false;
 
-        if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < cost || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) return false;
+        if (this.costs[slot] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < cost || player.experienceLevel < this.costs[slot]) && !player.getAbilities().instabuild) return false;
 
         this.access.execute((world, pos) -> {
             ItemStack enchanted = toEnchant;
             float eterna = this.eterna.get(), quanta = this.quanta.get(), arcana = this.arcana.get(),
                 rectification = this.rectification.get();
-            List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
-            if (!list.isEmpty()) {
-                player.onEnchantmentPerformed(toEnchant, cost);
+            List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, slot, this.costs[slot]);
+            if (!list.isEmpty() && EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(level, slot))) {
+                player.onEnchantmentPerformed(toEnchant, 0); // Pass zero here instead of the cost so no experience is taken, but the method is still called for tracking reasons.
                 if (list.get(0).enchantment == Apoth.Enchantments.INFUSION.get()) {
                     EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
                     if (match != null) this.enchantSlots.setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));

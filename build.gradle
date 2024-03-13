@@ -74,7 +74,9 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mcVersion}-${forgeVersion}"
-    if(project.mixin.toBoolean())                annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
+
+    if (project.mixin.toBoolean())               annotationProcessor "org.spongepowered:mixin:${mixinVersion}:processor"
+
     if(project.hasProperty('placeboVersion'))    implementation fg.deobf("shadows:Placebo:${mcVersion}-${placeboVersion}")
     if(project.hasProperty('jeiVersion'))        implementation fg.deobf("mezz.jei:jei-${mcVersion}-forge:${jeiVersion}")
     if(project.hasProperty('jadeFileId'))        implementation fg.deobf("curse.maven:jade-324717:${jadeFileId}")

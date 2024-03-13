@@ -109,6 +109,8 @@ import shadows.apotheosis.ench.table.ApothEnchantTile;
 import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.ench.table.EnchantingStatManager;
 import shadows.apotheosis.ench.table.KeepNBTEnchantingRecipe;
+import shadows.apotheosis.util.ApothMiscUtil;
+import shadows.placebo.color.GradientColor;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.container.ContainerUtil;
 import shadows.placebo.loot.LootSystem;
@@ -209,6 +211,7 @@ public class EnchModule {
         });
         if (ModList.get().isLoaded("theoneprobe")) EnchTOPPlugin.register();
         EnchantingStatManager.INSTANCE.registerToBus();
+        PlaceboUtil.registerCustomColor(Colors.LIGHT_BLUE_FLASH);
     }
 
     @SubscribeEvent
@@ -484,6 +487,16 @@ public class EnchModule {
         }
 
         if (e == null && enchInfoConfig.hasChanged()) enchInfoConfig.save();
+        EnchConfig.load(new Configuration(new File(Apotheosis.configDir, "ench.cfg")));
     }
 
+    public static class Colors {
+        private static int[] _LIGHT_BLUE_FLASH = { 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff,
+                0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff,
+                0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff,
+                0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x00b3ff, 0x0bb5ff,
+                0x17b8ff, 0x22bbff, 0x2dbdff, 0x39c0ff, 0x44c3ff, 0x4fc6ff, 0x5bc9ff, 0x66ccff};
+
+        public static GradientColor LIGHT_BLUE_FLASH = new GradientColor(ApothMiscUtil.doubleUpGradient(_LIGHT_BLUE_FLASH), "light_blue_flash");
+    }
 }

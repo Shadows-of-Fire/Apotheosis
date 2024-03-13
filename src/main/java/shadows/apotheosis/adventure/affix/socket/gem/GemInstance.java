@@ -29,6 +29,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootCategory;
@@ -41,14 +42,36 @@ import shadows.apotheosis.adventure.loot.LootRarity;
  * The major difference between them is that most methods do not live on {@link Gem} but rather on {@link GemBonus}.
  *
  * @param gem      The socketed Gem.
- * @param cate     The LootCategory of the item the Gem is socketed into.
+ * @param cat      The LootCategory of the item the Gem is socketed into.
  * @param gemStack The itemstack form of the sockted Gem.
  * @param rarity   The rarity of the Gem. Not the rarity of the item the Gem is socketed into.
  */
 public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRarity rarity) {
+    /**
+     * Creates a {@link GemInstance} for a socketed gem.
+     *
+     * @param socketed The item the gem is socketed in.
+     * @param gemStack The stack representing the gem.
+     */
+    public static GemInstance socketed(ItemStack socketed, ItemStack gemStack) {
+        return socketed(LootCategory.forItem(socketed), gemStack);
+    }
 
-    public GemInstance(ItemStack socketed, ItemStack gemStack) {
-        this(GemItem.getGem(gemStack), LootCategory.forItem(socketed), gemStack, GemItem.getLootRarity(gemStack));
+    /**
+     * Creates a {@link GemInstance} for a socketed gem.
+     *
+     * @param category The category of the object the gem is socketed in.
+     * @param gemStack The stack representing the gem.
+     */
+    public static GemInstance socketed(LootCategory category, ItemStack gemStack) {
+        Gem gem = GemItem.getGem(gemStack);
+        LootRarity rarity = AffixHelper.getRarity(gemStack.getTag());
+
+        if (gem != null && rarity != null) {
+            rarity = gem.clamp(rarity);
+        }
+
+        return new GemInstance(gem, category, gemStack, rarity);
     }
 
     /**
@@ -56,7 +79,14 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * This instance will be unable to invoke bonus methods, but may be used to easily retrieve the gem properties.
      */
     public static GemInstance unsocketed(ItemStack gemStack) {
-        return new GemInstance(GemItem.getGem(gemStack), LootCategory.NONE, gemStack, GemItem.getLootRarity(gemStack));
+        Gem gem = GemItem.getGem(gemStack);
+        LootRarity rarity = AffixHelper.getRarity(gemStack.getTag());
+
+        if (gem != null && rarity != null) {
+            rarity = gem.clamp(rarity);
+        }
+
+        return new GemInstance(gem, LootCategory.NONE, gemStack, rarity);
     }
 
     /**
@@ -73,7 +103,14 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * Will always return false if using {@link #unsocketed(ItemStack)}
      */
     public boolean isValid() {
-        return this.isValidUnsocketed() && this.gem.getBonus(this.cat).isPresent();
+        return this.isValidUnsocketed() && this.gem.getBonus(this.cat, this.rarity).isPresent();
+    }
+
+    /**
+     * Checks if the rarity of the gem stack is equal to the max rarity of the underlying Gem.
+     */
+    public boolean isMaxRarity() {
+        return this.rarity() == this.gem.getMaxRarity();
     }
 
     /**
@@ -141,7 +178,7 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
      * @see {@link GemBonus#onArrowImpact(AbstractArrow, LootRarity, HitResult, HitResult.Type)}
      */
     public void onArrowImpact(AbstractArrow arrow, ItemStack gem, LootRarity rarity, HitResult res, HitResult.Type type) {
-        // TODO: getBonus(arrow).ifPresent(b -> b.onArrowImpact(gem, arrow, res, type));
+        this.ifPresent(b -> b.onArrowImpact(this.gemStack, this.rarity, arrow, res, type));
     }
 
     /**
@@ -186,11 +223,21 @@ public record GemInstance(Gem gem, LootCategory cat, ItemStack gemStack, LootRar
         this.ifPresent(b -> b.modifyLoot(this.gemStack, this.rarity, loot, ctx));
     }
 
+    /**
+     * Resolves a gem bonus using {@link Optional#map(Function)}.
+     *
+     * @throws UnsupportedOperationException if this instance is not {@link #isValid()}.
+     */
     private <T> Optional<T> map(Function<GemBonus, T> function) {
-        return this.gem.getBonus(this.cat).map(function);
+        return this.gem.getBonus(this.cat, this.rarity).map(function);
     }
 
+    /**
+     * Resolves a gem bonus using {@link Optional#ifPresent(Consumer)}.
+     *
+     * @throws UnsupportedOperationException if this instance is not {@link #isValid()}.
+     */
     private void ifPresent(Consumer<GemBonus> function) {
-        this.gem.getBonus(this.cat).ifPresent(function);
+        this.gem.getBonus(this.cat, this.rarity).ifPresent(function);
     }
 }

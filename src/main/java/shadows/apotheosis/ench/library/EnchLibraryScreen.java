@@ -8,6 +8,11 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import org.lwjgl.glfw.GLFW;
 
 import com.google.common.base.Strings;
@@ -23,10 +28,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -37,6 +38,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistry;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.placebo.Placebo;
 import shadows.placebo.packets.ButtonClickMessage;
 
@@ -95,8 +97,14 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
         LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
         if (libSlot != null) {
             List<FormattedText> list = new ArrayList<>();
-            list.add(Component.translatable(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true)));
-            if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc")) {
+
+            MutableComponent name = Component.translatable(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true));
+            if (AttributesLib.getTooltipFlag().isAdvanced()) {
+                name = name.append(Component.literal(" [" + ForgeRegistries.ENCHANTMENTS.getKey(libSlot.ench) + "]").withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withUnderlined(false)));
+            }
+            list.add(name);
+
+            if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc") || AttributesLib.getTooltipFlag().isAdvanced()) {
                 Component txt = Component.translatable(libSlot.ench.getDescriptionId() + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true));
                 list.addAll(this.font.getSplitter().splitLines(txt, this.getGuiLeft() - 16, txt.getStyle()));
                 list.add(Component.literal(""));

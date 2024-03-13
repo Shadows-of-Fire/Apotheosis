@@ -41,22 +41,21 @@ public class GemItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
-        Gem gem = getGem(pStack);
-        if (gem == null) {
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) {
             tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
             return;
         }
-        gem.addInformation(pStack, getLootRarity(pStack), tooltip::add);
+        inst.gem().addInformation(pStack, getLootRarity(pStack), tooltip::add);
     }
 
     @Override
     public Component getName(ItemStack pStack) {
-        Gem gem = getGem(pStack);
-        LootRarity rarity = getLootRarity(pStack);
-        if (gem == null || rarity == null) return super.getName(pStack);
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) return super.getName(pStack);
         MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
-        comp = Component.translatable("item.apotheosis.gem." + rarity.id(), comp);
-        return comp.withStyle(Style.EMPTY.withColor(rarity.color()));
+        comp = Component.translatable("item.apotheosis.gem." + inst.rarity().id(), comp);
+        return comp.withStyle(Style.EMPTY.withColor(inst.rarity().color()));
     }
 
     @Override
@@ -68,10 +67,9 @@ public class GemItem extends Item {
 
     @Override
     public boolean isFoil(ItemStack pStack) {
-        Gem gem = getGem(pStack);
-        LootRarity rarity = getLootRarity(pStack);
-        if (gem == null || rarity == null) return super.isFoil(pStack);
-        return gem.getMaxRarity() == rarity;
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) return super.isFoil(pStack);
+        return inst.isMaxRarity();
     }
 
     @Override
@@ -103,6 +101,16 @@ public class GemItem extends Item {
             tag.remove(UUID_ARRAY);
             tag.remove("facets");
         }
+    }
+
+    @Override
+    @Nullable
+    public String getCreatorModId(ItemStack stack) {
+        GemInstance inst = GemInstance.unsocketed(stack);
+        if (inst.isValidUnsocketed()) {
+            return inst.gem().getId().getNamespace();
+        }
+        return super.getCreatorModId(stack);
     }
 
     /**

@@ -4,10 +4,14 @@ import java.io.File;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -34,6 +38,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import shadows.apotheosis.advancements.AdvancementTriggers;
 import shadows.apotheosis.adventure.AdventureModule;
 import shadows.apotheosis.adventure.client.BossSpawnMessage;
+import shadows.apotheosis.adventure.net.RadialStateChangeMessage;
 import shadows.apotheosis.compat.PatchouliCompat;
 import shadows.apotheosis.core.attributeslib.AttributesLib;
 import shadows.apotheosis.core.mobfx.MobFxLib;
@@ -84,7 +89,7 @@ public class Apotheosis {
     public static boolean enableGarden = true;
     public static boolean giveBook = true;
 
-    public static float localAtkStrength = 1;
+    private static float localAtkStrength = 1;
 
     static {
         configDir = new File(FMLPaths.CONFIGDIR.get().toFile(), MODID);
@@ -133,6 +138,7 @@ public class Apotheosis {
         MessageHelper.registerMessage(CHANNEL, 0, new ParticleMessage());
         MessageHelper.registerMessage(CHANNEL, 1, new BossSpawnMessage(null, 0));
         MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage(0, null, false));
+        MessageHelper.registerMessage(CHANNEL, 4, new RadialStateChangeMessage());
         e.enqueueWork(() -> {
             AdvancementTriggers.init();
             CraftingHelper.register(new ModuleCondition.Serializer());
@@ -193,4 +199,19 @@ public class Apotheosis {
         return new ResourceLocation(MODID, s);
     }
 
+    /**
+     * Gets the local attack strength of an entity.
+     * <p>
+     * For players, this is recorded in {@link AttackEntityEvent} and is valid for other damage events.
+     * <p>
+     * For non-players, this value is always 1.
+     */
+    public static float getLocalAtkStrength(Entity entity) {
+        if (entity instanceof Player) return localAtkStrength;
+        return 1;
+    }
+
+    public static MutableComponent sysMessageHeader() {
+        return Component.translatable("[%s] ", Component.literal("Apoth").withStyle(ChatFormatting.GOLD));
+    }
 }

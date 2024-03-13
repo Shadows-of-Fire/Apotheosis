@@ -11,6 +11,12 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RegisterShadersEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -45,12 +51,7 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
-import net.minecraftforge.client.event.RegisterShadersEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
@@ -88,6 +89,7 @@ public class AdventureModuleClient {
         MenuScreens.register(Apoth.Menus.SALVAGE.get(), SalvagingScreen::new);
         MenuScreens.register(Apoth.Menus.GEM_CUTTING.get(), GemCuttingScreen::new);
         BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
+        MinecraftForge.EVENT_BUS.register(AdventureKeys.class);
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
@@ -138,6 +140,11 @@ public class AdventureModuleClient {
             event.registerShader(new ShaderInstance(event.getResourceManager(), new ResourceLocation("apotheosis:gray"), DefaultVertexFormat.NEW_ENTITY), shaderInstance -> {
                 CustomRenderTypes.grayShader = shaderInstance;
             });
+        }
+
+        @SubscribeEvent
+        public static void keys(RegisterKeyMappingsEvent e) {
+            e.register(AdventureKeys.TOGGLE_RADIAL);
         }
     }
 

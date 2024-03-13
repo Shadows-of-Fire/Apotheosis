@@ -37,7 +37,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import shadows.apotheosis.Apotheosis;
+import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.AllStatsBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.BloodyArrowBonus;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.special.DropTransformBonus;
@@ -169,7 +171,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     /**
      * Called when an arrow that was marked with this affix hits a target.
      */
-    public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, HitResult.Type type) {}
+    public void onArrowImpact(ItemStack gemStack, LootRarity rarity, AbstractArrow arrow, HitResult res, HitResult.Type type) {}
 
     /**
      * Called when a shield with this affix blocks some amount of damage.
@@ -252,6 +254,14 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     public GemClass getGemClass() {
         return this.gemClass;
+    }
+
+    /**
+     * Generates an ID for use with {@link Affix#isOnCooldown} / {@link Affix#startCooldown}
+     */
+    protected final ResourceLocation getCooldownId(ItemStack gemStack) {
+        ResourceLocation gemId = GemItem.getGem(gemStack).getId();
+        return new ResourceLocation(gemId.getNamespace(), gemId.getPath() + "/" + this.getId().toLanguageKey());
     }
 
     protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {

@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import shadows.apotheosis.Apoth.Affixes;
@@ -24,6 +25,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.Gem;
 import shadows.apotheosis.adventure.affix.socket.gem.GemInstance;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.event.GetItemSocketsEvent;
+import shadows.apotheosis.adventure.loot.LootCategory;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.util.CachedObject;
 import shadows.placebo.util.CachedObject.CachedObjectSource;
@@ -39,6 +41,7 @@ public class SocketHelper {
 
     public static final String AFFIX_DATA = AffixHelper.AFFIX_DATA;
     public static final String GEMS = "gems";
+    public static final String SOCKETS = "sockets";
 
     /**
      * Gets the list of gems socketed into the item.<br>
@@ -56,7 +59,7 @@ public class SocketHelper {
      */
     private static List<ItemStack> getGemsImpl(ItemStack stack) {
         int size = getSockets(stack);
-        if (size == 0 || stack.isEmpty()) return Collections.emptyList();
+        if (size <= 0 || stack.isEmpty()) return Collections.emptyList();
         List<ItemStack> gems = NonNullList.withSize(size, ItemStack.EMPTY);
         int i = 0;
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
@@ -82,17 +85,7 @@ public class SocketHelper {
      * @see GemInstance#isValid()
      */
     public static Stream<GemInstance> getGemInstances(ItemStack stack) {
-        return getGems(stack).stream().map(gemStack -> new GemInstance(stack, gemStack)).filter(GemInstance::isValid);
-    }
-
-    /**
-     * Gets the list of Gem objects that are active in
-     *
-     * @param stack
-     * @return
-     */
-    public static List<Gem> getActiveGems(ItemStack stack) {
-        return getGems(stack).stream().map(GemItem::getGem).filter(Objects::nonNull).toList();
+        return getGems(stack).stream().map(gemStack -> GemInstance.socketed(stack, gemStack)).filter(GemInstance::isValid);
     }
 
     /**
@@ -169,4 +162,59 @@ public class SocketHelper {
         return 0;
     }
 
+    public static void loadSocketAffix(ItemStack stack, Map<Affix, AffixInstance> affixes) {
+        int sockets = getSockets(stack);
+        if (sockets > 0) {
+            // The rarity is irrelevant for the socket affix, so we always pass the min rarity to the fake affix instance.
+            affixes.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, LootRarity.UNCOMMON, sockets));
+        }
+    }
+
+    public static void loadSocketAffix(AbstractArrow arrow, Map<Affix, AffixInstance> affixes) {
+        CompoundTag afxData = arrow.getPersistentData().getCompound(AFFIX_DATA);
+        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
+        if (sockets > 0) {
+            affixes.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), ItemStack.EMPTY, LootRarity.UNCOMMON, sockets));
+        }
+    }
+
+    /**
+     * Gets the list of gems socketed into the item that shot the arrow.<br>
+     * Does not validate that the gems are valid.
+     *
+     * @param arrow The arrow being queried
+     * @return A list of all the gems stored in the arrow.
+     */
+    private static List<ItemStack> getGems(AbstractArrow arrow) {
+        CompoundTag afxData = arrow.getPersistentData().getCompound(AFFIX_DATA);
+        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
+        if (sockets <= 0) return Collections.emptyList();
+        List<ItemStack> gems = NonNullList.withSize(sockets, ItemStack.EMPTY);
+        int i = 0;
+        if (afxData != null && afxData.contains(GEMS)) {
+            ListTag gemData = afxData.getList(GEMS, Tag.TAG_COMPOUND);
+            for (Tag tag : gemData) {
+                ItemStack gemStack = ItemStack.of((CompoundTag) tag);
+                gemStack.setCount(1);
+                if (GemInstance.unsocketed(gemStack).isValidUnsocketed()) {
+                    gems.set(i++, gemStack);
+                }
+                if (i >= sockets) break;
+            }
+        }
+        return gems;
+    }
+
+    /**
+     * Gets a stream of socketed gems that are valid for use by the arrow.
+     *
+     * @param arrow The arrow being queried.
+     * @return A stream containing all valid gems in the arrow.
+     * @see GemInstance#isValid()
+     */
+    public static Stream<GemInstance> getGemInstances(AbstractArrow arrow) {
+        LootCategory cat = AffixHelper.getShooterCategory(arrow);
+        if (cat == null) return Stream.empty();
+        return getGems(arrow).stream().map(gemStack -> GemInstance.socketed(cat, gemStack)).filter(GemInstance::isValid);
+    }
 }

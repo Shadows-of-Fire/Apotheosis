@@ -180,6 +180,7 @@ public final class LootCategory {
      * @return The first valid loot category, or {@link #NONE} if no categories were valid.
      */
     public static LootCategory forItem(ItemStack item) {
+        if (item.isEmpty()) return NONE;
         LootCategory override = AdventureConfig.TYPE_OVERRIDES.get(ForgeRegistries.ITEMS.getKey(item.getItem()));
         if (override != null) return override;
         for (LootCategory c : VALUES) {
@@ -199,14 +200,13 @@ public final class LootCategory {
         @Override
         public boolean test(ItemStack t) {
             try {
-                ItemStack shield = new ItemStack(Items.SHIELD);
                 MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
                 if (this.attacker == null && server != null) {
                     this.attacker = new Zombie(server.getLevel(Level.OVERWORLD));
                     this.holder = new Zombie(server.getLevel(Level.OVERWORLD));
+                    this.holder.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(Items.SHIELD));
                 }
-                if (this.holder != null) this.holder.setItemInHand(InteractionHand.OFF_HAND, shield);
-                return t.canDisableShield(shield, this.holder, this.attacker);
+                return t.canDisableShield(this.holder.getOffhandItem(), this.holder, this.attacker);
             }
             catch (Exception ex) {
                 return false;

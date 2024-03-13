@@ -131,6 +131,7 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
         this.minRarity = minRarity;
         this.maxRarity = maxRarity;
         this.mount = mount.orElse(null);
+        Preconditions.checkArgument(minRarity.ordinal() <= maxRarity.ordinal(), "Min rarity must be less than or equal to max rarity.");
     }
 
     @Override
@@ -211,8 +212,8 @@ public final class BossItem extends TypeKeyedBase<BossItem> implements ILuckyWei
         int duration = entity instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
         for (ChancedEffectInstance inst : stats.effects()) {
-            if (rand.nextFloat() <= inst.getChance()) {
-                entity.addEffect(inst.createInstance(rand, duration));
+            if (rand.nextFloat() <= inst.chance()) {
+                entity.addEffect(inst.create(rand, duration));
             }
         }
 

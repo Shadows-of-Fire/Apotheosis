@@ -2,6 +2,7 @@ package shadows.apotheosis.adventure.affix.socket.gem;
 
 import java.util.function.Predicate;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +10,7 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import shadows.apotheosis.Apoth.Items;
 import shadows.apotheosis.adventure.AdventureConfig;
 import shadows.apotheosis.adventure.AdventureModule;
+import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootRarity;
 import shadows.placebo.json.WeightedJsonReloadListener;
 
@@ -48,6 +50,19 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
         GemItem.setGem(stack, gem);
         GemItem.setLootRarity(stack, rarity);
         return stack;
+    }
+
+    @Override
+    protected <T extends Gem> void validateItem(T item) {
+        super.validateItem(item);
+
+        for (LootRarity r = item.minRarity; r != item.maxRarity; r = r.next()) {
+            boolean atLeastOne = false;
+            for (GemBonus bonus : item.bonuses) {
+                if (bonus.supports(r)) atLeastOne = true;
+            }
+            Preconditions.checkArgument(atLeastOne, "No bonuses provided for supported rarity %s. At least one bonus must be provided, or the rarity should not be supported.", r.id());
+        }
     }
 
     /**

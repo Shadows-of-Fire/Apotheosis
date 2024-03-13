@@ -31,12 +31,12 @@ public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvi
 
     @Override
     public void register(IWailaCommonRegistration reg) {
-        reg.registerEntityDataProvider(this, LivingEntity.class);
+        if (Apotheosis.enableAdventure) reg.registerEntityDataProvider(this, LivingEntity.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration reg) {
-        reg.registerEntityComponent(this, Entity.class);
+        if (Apotheosis.enableAdventure) reg.registerEntityComponent(this, Entity.class);
     }
 
     @Override

@@ -1,0 +1,17 @@
+{
+    "name": "Experience Costs",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "In Vanilla, things that cost levels (enchantment tables and anvils) take a flat amount of levels from you, no matter how many levels you have.$(p)Apotheosis changes both of these to cost the \"optimal\" amount of experience."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "For enchanting tables, you will be charged the amount of experience as if you always had the exact amount of levels you needed to perform that enchantment.$(p)Similar for anvils, except the cost is from zero (instead of only the top N levels)."
+        }
+	]
+}

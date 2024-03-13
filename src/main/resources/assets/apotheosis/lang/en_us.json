@@ -137,6 +137,9 @@
 
 	"comment_id": "/Adventure Module",
 
+    "key.categories.apotheosis": "Apotheosis",
+    "key.apotheosis.toggle_radial_mining": "Change Radial Mining Mode",
+
     "info.apotheosis.affix_item": "Apothic Affix Item",
 	
 	"death.attack.apotheosis.execute": "%s was executed by %s",
@@ -145,7 +148,13 @@
 	"misc.apotheosis.affix_name.two": "%s %s",
 	"misc.apotheosis.affix_name.three": "%s %s %s",
 	"misc.apotheosis.affix_name.four": "%s %s %s %s",
-	
+
+    "misc.apotheosis.radial_state_updated": "Radial mining mode updated to \"%s\"",
+    "misc.apotheosis.radial_state.require_not_sneaking": "Disabled While Sneaking",
+    "misc.apotheosis.radial_state.require_sneaking": "Enabled While Sneaking",
+    "misc.apotheosis.radial_state.enabled": "Enabled",
+    "misc.apotheosis.radial_state.disabled": "Disabled",
+
     "affix.apotheosis:armor/attribute/blessed": "Blessed",
     "affix.apotheosis:armor/attribute/blessed.suffix": "of Health",
 
@@ -466,7 +475,7 @@
 	"bonus.apotheosis:bloody_arrow.desc": "When firing, you lose %s%% Max Health and deal %s%% damage. %s",
 	"bonus.apotheosis:leech_block.desc": "Blocking an attack heals you for %s%% of the damage. %s",
 	"bonus.apotheosis:all_stats.desc": "+%s%% to All Stats",
-	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Iron Ore has a %s%% chance to drop Raw Gold instead.",
+	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Breaking Copper Ore has a %s%% chance to drop Raw Gold instead.",
 	"bonus.apotheosis:mageslayer.desc": "Ignore %s%% of magic damage and heal for the same amount.",
 	"bonus.apotheosis:twilight_ore_magnet.desc": "Can be used as an Ore Magnet, costing an extra %s durability.",
 	"bonus.apotheosis:twilight_treasure_goblin.desc": "Attacking an entity has a %s%% chance to summon a Treasure Goblin. %s",
@@ -1054,6 +1063,7 @@
     "forge.entity_gravity": "Gravity",
     "block.reeds": "Sugar Cane",
     "potion.potency.3": "IV",
+    "enchantment.level.0": "0",
     "enchantment.level.11": "XI",
     "enchantment.level.12": "XII",
     "enchantment.level.13": "XIII",
@@ -1198,6 +1208,8 @@
     "info.apotheosis.item_ench": "Item Enchantability: %s",
     "info.apotheosis.num_clues": "Enchanting Clues: %s",
 	"info.apotheosis.infusion_failed": "Infusion Criteria Not Met",
+    "info.apotheosis.anvil_at": "Forging at Level %s",
+    "info.apotheosis.anvil_xp_cost": "Raw XP Cost: %s",
     
     "info.apotheosis.slider_power": "Power: %s",
     "info.apotheosis.enchinfo_level": "Level: %s",

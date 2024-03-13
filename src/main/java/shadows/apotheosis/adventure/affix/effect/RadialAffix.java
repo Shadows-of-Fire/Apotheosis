@@ -2,14 +2,17 @@ package shadows.apotheosis.adventure.affix.effect;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import com.google.common.base.Predicate;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -28,6 +31,7 @@ import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.level.BlockEvent;
+import shadows.apotheosis.Apotheosis;
 import shadows.apotheosis.adventure.affix.Affix;
 import shadows.apotheosis.adventure.affix.AffixHelper;
 import shadows.apotheosis.adventure.affix.AffixInstance;
@@ -73,7 +77,7 @@ public class RadialAffix extends Affix {
         Level world = player.level;
         if (!world.isClientSide && tool.hasTag()) {
             AffixInstance inst = AffixHelper.getAffixes(tool).get(this);
-            if (inst != null) {
+            if (inst != null && RadialState.getState(player).isRadialMiningEnabled(player)) {
                 float hardness = e.getState().getDestroySpeed(e.getLevel(), e.getPos());
                 breakExtraBlocks((ServerPlayer) player, e.getPos(), tool, this.getTrueLevel(inst.rarity(), inst.level()), hardness);
             }
@@ -90,16 +94,14 @@ public class RadialAffix extends Affix {
         return SERIALIZER;
     }
 
-    static record RadialData(int x, int y, int xOff, int yOff) {
-
-        public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
-            .group(
-                Codec.INT.fieldOf("x").forGetter(RadialData::x),
-                Codec.INT.fieldOf("y").forGetter(RadialData::y),
-                Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
-                Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
-            .apply(inst, RadialData::new));
-
+    /**
+     * Updates the players radial state to the next state, and notifies them of the change.
+     */
+    public static void toggleRadialState(Player player) {
+        RadialState state = RadialState.getState(player);
+        RadialState next = state.next();
+        RadialState.setState(player, next);
+        player.sendSystemMessage(Apotheosis.sysMessageHeader().append(Component.translatable("misc.apotheosis.radial_state_updated", next.toComponent(), state.toComponent()).withStyle(ChatFormatting.YELLOW)));
     }
 
     /**
@@ -112,7 +114,7 @@ public class RadialAffix extends Affix {
      */
     public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
         if (!breakers.add(player.getUUID())) return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
-        if (!player.isShiftKeyDown()) try {
+        try {
             breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
         }
         catch (Exception e) {
@@ -121,7 +123,6 @@ public class RadialAffix extends Affix {
         breakers.remove(player.getUUID());
     }
 
-    @SuppressWarnings("deprecation")
     public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
         Level world = player.level;
         if (x < 2 && y < 2) return;
@@ -169,4 +170,71 @@ public class RadialAffix extends Affix {
         return player.hasCorrectToolForDrops(state);
     }
 
+    static record RadialData(int x, int y, int xOff, int yOff) {
+
+        public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
+                .group(
+                        Codec.INT.fieldOf("x").forGetter(RadialData::x),
+                        Codec.INT.fieldOf("y").forGetter(RadialData::y),
+                        Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
+                        Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
+                .apply(inst, RadialData::new));
+
+    }
+
+    static enum RadialState {
+        REQUIRE_NOT_SNEAKING(p -> !p.isShiftKeyDown()),
+        REQUIRE_SNEAKING(p -> p.isShiftKeyDown()),
+        ENABLED(p -> true),
+        DISABLED(p -> false);
+
+        private Predicate<Player> condition;
+
+        RadialState(Predicate<Player> condition) {
+            this.condition = condition;
+        }
+
+        /**
+         * @return If the radial breaking feature is enabled while the player is in the current state
+         */
+        public boolean isRadialMiningEnabled(Player input) {
+            return this.condition.apply(input);
+        }
+
+        public RadialState next() {
+            return switch (this) {
+                case REQUIRE_NOT_SNEAKING -> REQUIRE_SNEAKING;
+                case REQUIRE_SNEAKING -> ENABLED;
+                case ENABLED -> DISABLED;
+                case DISABLED -> REQUIRE_NOT_SNEAKING;
+            };
+        }
+
+        public Component toComponent() {
+            return Component.translatable("misc.apotheosis.radial_state." + name().toLowerCase(Locale.ROOT));
+        }
+
+        /**
+         * Returns the current radial break state for the given player.
+         * <p>
+         * The state defaults to {@link #REQUIRE_NOT_SNEAKING} if no state is set.
+         *
+         * @param player The player
+         * @return The current radial state, or {@link #REQUIRE_NOT_SNEAKING} if a parse error occurred.
+         */
+        public static RadialState getState(Player player) {
+            String str = player.getPersistentData().getString("apoth.radial_state");
+            try {
+                return RadialState.valueOf(str);
+            }
+            catch (Exception ex) {
+                setState(player, RadialState.REQUIRE_NOT_SNEAKING);
+                return RadialState.REQUIRE_NOT_SNEAKING;
+            }
+        }
+
+        public static void setState(Player player, RadialState state) {
+            player.getPersistentData().putString("apoth.radial_state", state.name());
+        }
+    }
 }

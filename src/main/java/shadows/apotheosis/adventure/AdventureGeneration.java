@@ -42,8 +42,8 @@ public class AdventureGeneration {
     public static final Holder<PlacedFeature> BOSS_DUNGEON_2_DEEP = register("boss_dungeon_2_deep", CF_BOSS_DUNGEON_2, CountPlacement.of(AdventureConfig.bossDungeon2Attempts / 2), InSquarePlacement.spread(),
         HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(6), VerticalAnchor.absolute(-1)), BiomeFilter.biome());
     public static final Holder<PlacedFeature> ROGUE_SPAWNER = register("rogue_spawner", CF_ROGUE_SPAWNER, CountPlacement.of(AdventureConfig.rogueSpawnerAttempts), InSquarePlacement.spread(),
-        HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.top()), BiomeFilter.biome());
-    public static final Holder<PlacedFeature> ROGUE_SPAWNER_DEEP = register("rogue_spawner_deep", CF_ROGUE_SPAWNER, CountPlacement.of(AdventureConfig.rogueSpawnerAttempts / 2), InSquarePlacement.spread(),
+        HeightRangePlacement.uniform(VerticalAnchor.absolute(10), VerticalAnchor.belowTop(0)), BiomeFilter.biome());
+    public static final Holder<PlacedFeature> ROGUE_SPAWNER_DEEP = register("rogue_spawner_deep", CF_ROGUE_SPAWNER, CountPlacement.of(AdventureConfig.deepRogueSpawnerAttempts), InSquarePlacement.spread(),
         HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(6), VerticalAnchor.absolute(-1)), BiomeFilter.biome());
 
     static Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> register(Feature<NoneFeatureConfiguration> feat, String id) {

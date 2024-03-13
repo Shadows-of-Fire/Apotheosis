@@ -68,7 +68,7 @@ public class CleavingAffix extends Affix {
 
     @Override
     public void doPostAttack(ItemStack stack, LootRarity rarity, float level, LivingEntity user, Entity target) {
-        if (Apotheosis.localAtkStrength >= 0.98 && !cleaving && !user.level.isClientSide) {
+        if (Apotheosis.getLocalAtkStrength(user) >= 0.98 && !cleaving && !user.level.isClientSide) {
             cleaving = true;
             float chance = this.getChance(rarity, level);
             int targets = this.getTargets(rarity, level);

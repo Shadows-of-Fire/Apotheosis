@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.adventure.AdventureModule.ApothUpgradeRecipe;
+import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 
 public class ExtractionRecipe extends ApothUpgradeRecipe implements IExtUpgradeRecipe {
 
@@ -39,17 +40,20 @@ public class ExtractionRecipe extends ApothUpgradeRecipe implements IExtUpgradeR
      */
     @Override
     public ItemStack assemble(Container pInv) {
-        ItemStack out = pInv.getItem(0);
-        return SocketHelper.getGems(out).get(0);
+        ItemStack base = pInv.getItem(0);
+        ItemStack out = SocketHelper.getGems(base).get(0);
+        out.removeTagKey(GemItem.UUID_ARRAY);
+        return out;
     }
 
     @Override
     public void onCraft(Container inv, Player player, ItemStack output) {
-        ItemStack out = inv.getItem(0);
-        List<ItemStack> gems = SocketHelper.getGems(out);
+        ItemStack base = inv.getItem(0);
+        List<ItemStack> gems = SocketHelper.getGems(base);
         for (int i = 1; i < gems.size(); i++) {
             ItemStack stack = gems.get(i);
             if (!stack.isEmpty()) {
+                stack.removeTagKey(GemItem.UUID_ARRAY);
                 if (!player.addItem(stack)) Block.popResource(player.level, player.blockPosition(), stack);
             }
         }

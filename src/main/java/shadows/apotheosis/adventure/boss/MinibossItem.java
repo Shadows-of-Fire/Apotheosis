@@ -253,8 +253,8 @@ public final class MinibossItem extends TypeKeyedBase<MinibossItem> implements I
         int duration = mob instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 
         for (ChancedEffectInstance inst : this.stats.effects()) {
-            if (rand.nextFloat() <= inst.getChance()) {
-                mob.addEffect(inst.createInstance(rand, duration));
+            if (rand.nextFloat() <= inst.chance()) {
+                mob.addEffect(inst.create(rand, duration));
             }
         }
 

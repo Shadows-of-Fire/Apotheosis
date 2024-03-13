@@ -5,6 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -47,7 +48,9 @@ public class CapturingEnchant extends Enchantment {
             LivingEntity killed = e.getEntity();
             if (SpawnerModule.bannedMobs.contains(EntityType.getKey(killed.getType()))) return;
             if (killed.level.random.nextFloat() < level / 250F) {
-                ItemStack egg = new ItemStack(ForgeSpawnEggItem.fromEntityType(killed.getType()));
+                Item eggItem = ForgeSpawnEggItem.fromEntityType(killed.getType());
+                if (eggItem == null) return;
+                ItemStack egg = new ItemStack(eggItem);
                 e.getDrops().add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));
             }
         }

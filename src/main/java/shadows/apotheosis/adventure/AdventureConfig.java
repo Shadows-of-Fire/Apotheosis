@@ -59,7 +59,8 @@ public class AdventureConfig {
     // Generation Chances
     public static int bossDungeonAttempts = 8;
     public static int bossDungeon2Attempts = 8;
-    public static int rogueSpawnerAttempts = 4;
+    public static int rogueSpawnerAttempts = 65;
+    public static int deepRogueSpawnerAttempts = 85;
     // public static int troveAttempts = 8;
     // public static int tomeTowerChance = 125;
     public static float spawnerValueChance = 0.11F;
@@ -78,6 +79,7 @@ public class AdventureConfig {
         c.setTitle("Apotheosis Adventure Module Config");
 
         TYPE_OVERRIDES.clear();
+        TYPE_OVERRIDES.putAll(AdventureModule.IMC_TYPE_OVERRIDES);
         String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|sword", "minecraft:shulker_shell|none" },
             "A list of type overrides for the affix loot system.  Format is <itemname>|chance|<type>.\nValid types are: none, sword, trident, shield, heavy_weapon, pickaxe, shovel, crossbow, bow");
         for (String s : overrides) {
@@ -236,7 +238,8 @@ public class AdventureConfig {
 
         bossDungeonAttempts = c.getInt("Boss Dungeon Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon generation attempts per-chunk.");
         bossDungeon2Attempts = c.getInt("Boss Dungeon (Variant 2) Attempts", "worldgen", 8, 0, 256, "The number of boss dungeon (variant 2) generation attempts per-chunk.");
-        rogueSpawnerAttempts = c.getInt("Rogue Spawner Attempts", "worldgen", 4, 0, 256, "The number of rogue spawner generation attempts per-chunk.");
+        rogueSpawnerAttempts = c.getInt("Rogue Spawner Attempts", "worldgen", 65, 0, 1024, "The number of rogue spawner generation attempts per-chunk.");
+        deepRogueSpawnerAttempts = c.getInt("Deep Rogue Spawner Attempts", "worldgen", 85, 0, 1024, "The number of deep rogue spawner generation attempts per-chunk.");
 
         spawnerValueChance = c.getFloat("Spawner Value Chance", "spawners", spawnerValueChance, 0, 1, "The chance that a Rogue Spawner has a \"valuable\" chest instead of a standard one. 0 = 0%, 1 = 100%");
 

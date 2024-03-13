@@ -1,8 +1,8 @@
 package shadows.apotheosis.adventure.affix.socket.gem.bonus.special;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
@@ -25,7 +25,7 @@ import shadows.apotheosis.adventure.affix.socket.gem.GemClass;
 import shadows.apotheosis.adventure.affix.socket.gem.GemItem;
 import shadows.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import shadows.apotheosis.adventure.loot.LootRarity;
-import shadows.placebo.codec.EnumCodec;
+import shadows.placebo.codec.PlaceboCodecs;
 import shadows.placebo.util.StepFunction;
 
 public class AllStatsBonus extends GemBonus {
@@ -33,21 +33,21 @@ public class AllStatsBonus extends GemBonus {
     public static Codec<AllStatsBonus> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             gemClass(),
-            new EnumCodec<>(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
-            VALUES_CODEC.fieldOf("values").forGetter(a -> a.values))
+            PlaceboCodecs.enumCodec(Operation.class).fieldOf("operation").forGetter(a -> a.operation),
+            VALUES_CODEC.fieldOf("values").forGetter(a -> a.values),
+            Registry.ATTRIBUTE.byNameCodec().listOf().optionalFieldOf("attributes").forGetter(a -> Optional.of(a.attributes)))
         .apply(inst, AllStatsBonus::new));
 
     protected final Operation operation;
     protected final Map<LootRarity, StepFunction> values;
-
-    protected transient final List<Attribute> attributes = new ArrayList<>();
+    protected final List<Attribute> attributes;
 
     @SuppressWarnings("deprecation")
-    public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values) {
+    public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values, Optional<List<Attribute>> attributes) {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;
         this.values = values;
-        Registry.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(this.attributes::add);
+        this.attributes = attributes.orElseGet(() -> Registry.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).toList());
     }
 
     @Override
