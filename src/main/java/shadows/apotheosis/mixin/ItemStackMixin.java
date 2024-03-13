@@ -3,11 +3,8 @@ package shadows.apotheosis.mixin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.DoubleStream;
 
 import javax.annotation.Nullable;
@@ -15,7 +12,6 @@ import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -117,25 +113,6 @@ public class ItemStackMixin {
             mc.withStyle(ChatFormatting.DARK_GRAY);
         }
         tooltip.add(mc);
-    }
-
-    @Unique
-    private static void foreachUniqueEnchantmentTag(ListTag tagEnchants, Consumer<CompoundTag> handleEnchantmentTag) {
-        int tagSize = tagEnchants.size();
-        List<CompoundTag> uniqueEnchantmentsReversed = new ArrayList<>(tagSize);
-        Set<ResourceLocation> seenEnchantmentIds = new HashSet<>();
-
-        for (int i = tagSize - 1; i >= 0 ; --i) {
-            CompoundTag compoundTag = tagEnchants.getCompound(i);
-            ResourceLocation enchantmentId = EnchantmentHelper.getEnchantmentId(compoundTag);
-            if (seenEnchantmentIds.add(enchantmentId)) {
-                uniqueEnchantmentsReversed.add(compoundTag);
-            }
-        }
-
-        for (int i = uniqueEnchantmentsReversed.size() - 1; i >= 0 ; --i) {
-            handleEnchantmentTag.accept(uniqueEnchantmentsReversed.get(i));
-        }
     }
 
     /**
