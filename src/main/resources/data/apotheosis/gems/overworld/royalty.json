@@ -64,7 +64,7 @@
 			},
 			"blocks": "forge:ores/copper",
 			"inputs": {
-				"tag": "forge:raw_materials/copperr"
+				"tag": "forge:raw_materials/copper"
 			},
 			"output": {
 				"item": "minecraft:raw_gold"
