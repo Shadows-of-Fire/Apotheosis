@@ -1,5 +1,6 @@
-## Future
-* [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
+## 6.5.0
+* Cadentem: Backported all changes from Apotheosis 7.1.0 through Apotheosis 7.3.3
+  * See https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#710
 
 ## 6.4.1
 * ChampionAsh: Disable entity gravity modifier directly on slow falling
