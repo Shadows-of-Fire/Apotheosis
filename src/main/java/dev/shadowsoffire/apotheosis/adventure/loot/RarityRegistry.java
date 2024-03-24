@@ -9,6 +9,7 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableList;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -107,6 +108,10 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
         return RarityRegistry.byOrdinal(rarity.get().ordinal() + 1);
     }
 
+    public List<DynamicHolder<LootRarity>> getOrderedRarities() {
+        return this.ordered;
+    }
+
     @Override
     protected void beginReload() {
         super.beginReload();
@@ -138,6 +143,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
                 throw new RuntimeException("Two rarities may not share the same rarity material: " + r.getId() + " conflicts with " + old.getId());
             }
         }
+        this.ordered = ImmutableList.copyOf(this.ordered);
     }
 
     @Override
