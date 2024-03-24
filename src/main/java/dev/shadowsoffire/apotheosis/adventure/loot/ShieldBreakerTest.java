@@ -31,9 +31,13 @@ class ShieldBreakerTest implements Predicate<ItemStack> {
         try {
             MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
             Level level = server != null ? server.getLevel(Level.OVERWORLD) : Client.getLevel();
-            Zombies zombies = zombieCache.computeIfAbsent(level, Zombies::new);
-            return t.canDisableShield(zombies.target.getOffhandItem(), zombies.target, zombies.attacker);
+            if (level != null) {
+                Zombies zombies = zombieCache.computeIfAbsent(level, Zombies::new);
+                return t.canDisableShield(zombies.target.getOffhandItem(), zombies.target, zombies.attacker);
+            }
+            return t.canDisableShield(Items.SHIELD.getDefaultInstance(), null, null);
         }
+
         catch (Exception ex) {
             AdventureModule.LOGGER.error("Failed to execute ShieldBreakerTest", ex);
             return false;
