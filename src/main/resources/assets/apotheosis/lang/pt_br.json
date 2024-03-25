@@ -278,7 +278,7 @@
 	"affix.apotheosis:heavy_weapon/attribute/nullifying": "Anulante",
 	"affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "do Destruidor de Magos",
 
-	"affix.apotheosis:sword/attribute/spellbreaking": "Quebra-encantos",
+	"affix.apotheosis:sword/attribute/spellbreaking": "Quebra-Encantos",
 	"affix.apotheosis:sword/attribute/spellbreaking.suffix": "do Golem de Petricita",
 
 	"affix.apotheosis:ranged/mob_effect/grievous": "Grave",
@@ -342,7 +342,7 @@
 	"bonus.apotheosis:bloody_arrow.desc": "Ao atirar, você perde %s%% da vida máxima e causa %s%% de dano. %s",
 	"bonus.apotheosis:leech_block.desc": "Cura você em %s%% do dano ao bloquear um ataque. %s",
 	"bonus.apotheosis:all_stats.desc": "+%s%% para todos os status",
-	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Quebrar minério de ferro tem uma chance de %s%% de derrubar ouro bruto no lugar.",
+	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Quebrar minério de cobre tem uma chance de %s%% de derrubar ouro bruto no lugar.",
 	"bonus.apotheosis:mageslayer.desc": "Ignora %s%% do dano mágico e cura pela mesma quantidade.",
 	"bonus.apotheosis:twilight_ore_magnet.desc": "Pode ser usado como um imã de minério, custando %s extra de durabilidade.",
 	"bonus.apotheosis:twilight_treasure_goblin.desc": "Atacar uma entidade tem %s%% de chance de invocar um goblin do tesouro. %s",
@@ -817,25 +817,25 @@
     "enchantment.apotheosis.infusion": "Infusão",
     "enchantment.apotheosis.infusion.desc": "Espaço reservado para criação de encantamentos",
     
-    "enchantment.apotheosis.mounted_strike": "Ataque Montado",
+    "enchantment.apotheosis.mounted_strike": "Ataque montado",
     "enchantment.apotheosis.mounted_strike.desc": "Causa dano extra quando montado em um cavalo.",
 
-    "enchantment.apotheosis.miners_fervor": "Fervor do Mineiro",
+    "enchantment.apotheosis.miners_fervor": "Fervor do mineiro",
     "enchantment.apotheosis.miners_fervor.desc": "Você irá minerar muito rápido, mas nunca instantaneamente.",
 
-    "enchantment.apotheosis.stable_footing": "Piso Firme",
+    "enchantment.apotheosis.stable_footing": "Piso firme",
     "enchantment.apotheosis.stable_footing.desc": "Anula a penalidade de velocidade de mineração ao voar.",
 
     "enchantment.apotheosis.scavenger": "Carniceiro",
     "enchantment.apotheosis.scavenger.desc": "Criaturas mortas podem rolar suas tabelas de itens duas vezes.",
 
-    "enchantment.apotheosis.life_mending": "Remendo de Vida",
+    "enchantment.apotheosis.life_mending": "Remendo de vida",
     "enchantment.apotheosis.life_mending.desc": "Consome a cura recebida para reparar itens.",
 
-    "enchantment.apotheosis.icy_thorns": "Espinhos Gelados",
+    "enchantment.apotheosis.icy_thorns": "Espinhos gelados",
     "enchantment.apotheosis.icy_thorns.desc": "Causa lentidão aos atacantes.",
     
-    "enchantment.apotheosis.bane_of_illagers": "Ruína dos Illagers",
+    "enchantment.apotheosis.bane_of_illagers": "Ruína dos illagers",
     "enchantment.apotheosis.bane_of_illagers.desc": "Illagers sofrem dano aumentado.",
 
     "death.attack.apotheosis:corrupted": "%s foi drenado por um encantamento corrupto.",
@@ -880,16 +880,16 @@
     "enchantment.apotheosis.tempting": "Tentação",
     "enchantment.apotheosis.tempting.desc": "Atrai animais de fazenda próximos.",
 
-    "enchantment.apotheosis.shield_bash": "Golpe de Escudo",
+    "enchantment.apotheosis.shield_bash": "Golpe de escudo",
     "enchantment.apotheosis.shield_bash.desc": "Aumenta o dano causado por escudos.",
 
-    "enchantment.apotheosis.reflective": "Defesa Refletiva",
+    "enchantment.apotheosis.reflective": "Defesa refletiva",
     "enchantment.apotheosis.reflective.desc": "Ataques bloqueados podem causar dano ao atacante.",
 
-    "enchantment.apotheosis.berserkers_fury": "Fúria do Berserker",
+    "enchantment.apotheosis.berserkers_fury": "Fúria do berserker",
     "enchantment.apotheosis.berserkers_fury.desc": "Ficar furioso ao receber dano.",
 
-    "enchantment.apotheosis.knowledge": "Conhecimento das Eras",
+    "enchantment.apotheosis.knowledge": "Conhecimento das eras",
     "enchantment.apotheosis.knowledge.desc": "Os saques dos inimigos são diretamente convertidos em experiência.",
 
     "enchantment.apotheosis.splitting": "Divisão",
@@ -898,25 +898,25 @@
     "enchantment.apotheosis.obliteration": "Obliteração",
     "enchantment.apotheosis.obliteration.desc": "Bigornas dividem encantamentos únicos de livros sobre os quais caem.",
 
-    "enchantment.apotheosis.natures_blessing": "Bênção da Natureza",
+    "enchantment.apotheosis.natures_blessing": "Bênção da natureza",
     "enchantment.apotheosis.natures_blessing.desc": "Enxadas podem ser usadas para fertilizar plantações.",
 
     "enchantment.apotheosis.rebounding": "Ricochete",
     "enchantment.apotheosis.rebounding.desc": "Os atacantes corpo a corpo serão jogados para longe.",
 
-    "enchantment.apotheosis.magic_protection": "Aversão Oculta",
+    "enchantment.apotheosis.magic_protection": "Aversão oculta",
     "enchantment.apotheosis.magic_protection.desc": "Dano mágico causado pelo e ao o usuário é reduzido.",
     
-    "enchantment.apotheosis.crescendo": "Chuva de Virotes",
+    "enchantment.apotheosis.crescendo": "Chuva de virotes",
     "enchantment.apotheosis.crescendo.desc": "Sua besta pode disparar mais vezes por recarga.",
 
-    "enchantment.apotheosis.chromatic": "Aberração Cromática",
+    "enchantment.apotheosis.chromatic": "Aberração cromática",
     "enchantment.apotheosis.chromatic.desc": "A lã cortada será alterada para uma cor aleatória.",
 
-    "enchantment.apotheosis.exploitation": "Exploração do Artífice",
+    "enchantment.apotheosis.exploitation": "Exploração do artífice",
     "enchantment.apotheosis.exploitation.desc": "A lã recebida é dobrada, mas a ovelha leva dano.",
 
-    "enchantment.apotheosis.growth_serum": "Soro do Crescimento",
+    "enchantment.apotheosis.growth_serum": "Soro do crescimento",
     "enchantment.apotheosis.growth_serum.desc": "As ovelhas têm 50% de chance de regenerar instantaneamente sua lã.",
 
     "enchantment.apotheosis.earths_boon": "Benção da Terra",
@@ -925,10 +925,10 @@
     "enchantment.apotheosis.chainsaw": "Motoserra",
     "enchantment.apotheosis.chainsaw.desc": "Árvores serão aniquiladas.",
 
-    "enchantment.apotheosis.spearfishing": "Caça Submarina",
+    "enchantment.apotheosis.spearfishing": "Caça submarina",
     "enchantment.apotheosis.spearfishing.desc": "Mortes causadas com um tridente jogado pode pegar um peixe.",
     
-    "enchantment.apotheosis.endless_quiver": "Aljava Infinda",
+    "enchantment.apotheosis.endless_quiver": "Aljava infinda",
     "enchantment.apotheosis.endless_quiver.desc": "Torna todas as flechas infinitas.",
 
     "comment_id": "/Vanilla",
@@ -1070,7 +1070,7 @@
     "tooltip.enchlib.nfilt": "Filtro de nome",
     "tooltip.enchlib.ifilt": "Filtro de item",
     "info.apotheosis.library": "A biblioteca de encantamentos é um bloco que armazena encantamentos.  Inserir um livro encantado irá depositá-lo. Clicar com o botão esquerdo em um encantamento armazenado extrairá um nível dele.  Clicar com a tecla Shift extrairá o nível máximo disponível.",
-    "info.apotheosis.runes": "As runas Revelam",
+    "info.apotheosis.runes": "As runas revelam",
     "info.apotheosis.no_clue": "As runas não revelam nada",
     "info.apotheosis.runes_all": "As runas revelam tudo",
     "info.apotheosis.arcana_bonus": "Empoderamentos arcanos",
