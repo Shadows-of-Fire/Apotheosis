@@ -7,12 +7,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.ench.table.RealEnchantmentHelper;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -109,6 +112,17 @@ public class EnchantmentHelperMixin {
                 inst.doPostHurt(user, attacker);
             }
         }
+    }
+
+    /**
+     * Reverses the loop iteration order in {@link EnchantmentHelper#getTagEnchantmentLevel} to ensure consistency with duplicate enchantments when compared to {@link EnchantmentHelper#getEnchantments}.
+     * @param tags The itemstack's enchantment tags from {@link ItemStack#getEnchantmentTags()}.
+     * @param index The current list iteration order, between [0, tags.size())
+     * @return The compound tag at the reversed index.
+     */
+    @Redirect(method = "getTagEnchantmentLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/ListTag;getCompound(I)Lnet/minecraft/nbt/CompoundTag;", remap = true), remap = false)
+    private static CompoundTag apoth_reverseLoopOrder(ListTag tags, int index) {
+        return tags.getCompound(tags.size() - 1 - index);
     }
 
 }

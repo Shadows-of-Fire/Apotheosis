@@ -2,6 +2,8 @@ package dev.shadowsoffire.apotheosis.spawn.spawner;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -38,6 +40,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootParams.Builder;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
@@ -69,16 +73,30 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
     }
 
     @Override
-    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
+    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack) {
+        super.playerDestroy(world, player, pos, state, te, stack);
         if (SpawnerModule.spawnerSilkLevel != -1 && stack.getEnchantmentLevel(Enchantments.SILK_TOUCH) >= SpawnerModule.spawnerSilkLevel) {
-            ItemStack s = new ItemStack(this);
-            if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
-            popResource(world, pos, s);
-            player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            if (SpawnerModule.spawnerSilkDamage > 1) {
+                player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage - 1, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            }
             player.awardStat(Stats.BLOCK_MINED.get(this));
             player.causeFoodExhaustion(0.035F);
         }
-        else super.playerDestroy(world, player, pos, state, te, stack);
+    }
+
+    @Override
+    @Deprecated
+    public List<ItemStack> getDrops(BlockState state, Builder params) {
+        ItemStack tool = params.getParameter(LootContextParams.TOOL);
+
+        if (SpawnerModule.spawnerSilkLevel != -1 && tool.getEnchantmentLevel(Enchantments.SILK_TOUCH) >= SpawnerModule.spawnerSilkLevel) {
+            ItemStack s = new ItemStack(this);
+            BlockEntity te = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+            if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+            return List.of(s);
+        }
+
+        return super.getDrops(state, params);
     }
 
     @Override

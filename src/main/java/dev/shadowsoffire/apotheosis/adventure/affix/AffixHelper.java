@@ -24,6 +24,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 
 public class AffixHelper {
@@ -37,6 +38,9 @@ public class AffixHelper {
     public static final String AFFIXES = "affixes";
     public static final String RARITY = "rarity";
     public static final String NAME = "name";
+
+    // Used to encode the loot category of the shooting item on arrows.
+    public static final String CATEGORY = "category";
 
     /**
      * Adds this specific affix to the Item's NBT tag.
@@ -128,16 +132,26 @@ public class AffixHelper {
     }
 
     public static void copyFrom(ItemStack stack, Entity entity) {
-        if (hasAffixes(stack)) {
-            CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
-            entity.getPersistentData().put(AFFIX_DATA, afxData.copy());
+        if (stack.hasTag() && stack.getTagElement(AFFIX_DATA) != null) {
+            CompoundTag afxData = stack.getTagElement(AFFIX_DATA).copy();
+            afxData.putString(CATEGORY, LootCategory.forItem(stack).getName());
+            entity.getPersistentData().put(AFFIX_DATA, afxData);
         }
     }
 
-    public static Map<DynamicHolder<Affix>, AffixInstance> getAffixes(Entity entity) {
-        Map<DynamicHolder<Affix>, AffixInstance> map = new HashMap<>();
-        if (entity == null) return map;
+    @Nullable
+    public static LootCategory getShooterCategory(Entity entity) {
         CompoundTag afxData = entity.getPersistentData().getCompound(AFFIX_DATA);
+        if (afxData != null && afxData.contains(CATEGORY)) {
+            return LootCategory.byId(afxData.getString(CATEGORY));
+        }
+        return null;
+    }
+
+    public static Map<DynamicHolder<? extends Affix>, AffixInstance> getAffixes(AbstractArrow arrow) {
+        Map<DynamicHolder<? extends Affix>, AffixInstance> map = new HashMap<>();
+        CompoundTag afxData = arrow.getPersistentData().getCompound(AFFIX_DATA);
+        SocketHelper.loadSocketAffix(arrow, map);
         if (afxData != null && afxData.contains(AFFIXES)) {
             CompoundTag affixes = afxData.getCompound(AFFIXES);
             DynamicHolder<LootRarity> rarity = getRarity(afxData);
@@ -152,8 +166,8 @@ public class AffixHelper {
         return map;
     }
 
-    public static Stream<AffixInstance> streamAffixes(Entity entity) {
-        return getAffixes(entity).values().stream();
+    public static Stream<AffixInstance> streamAffixes(AbstractArrow arrow) {
+        return getAffixes(arrow).values().stream();
     }
 
     /**

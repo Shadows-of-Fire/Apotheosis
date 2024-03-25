@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
@@ -252,6 +254,8 @@ public abstract class Affix implements CodecProvider<Affix> {
 
     /**
      * Records the current time as a cooldown tracker. Used in conjunction with {@link #isOnCooldown(Affix, int, LivingEntity)}
+     * <p>
+     * Use of this method is problematic if the id is not unique for the effect, as is the case with {@link Gem#getId()} and {@link GemBonus#getId()}.
      */
     public static void startCooldown(ResourceLocation id, LivingEntity entity) {
         entity.getPersistentData().putLong("apoth.affix_cooldown." + id.toString(), entity.level().getGameTime());

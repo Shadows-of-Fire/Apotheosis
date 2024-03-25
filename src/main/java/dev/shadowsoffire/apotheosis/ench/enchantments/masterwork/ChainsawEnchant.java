@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 
 public class ChainsawEnchant extends Enchantment {
@@ -49,6 +50,11 @@ public class ChainsawEnchant extends Enchantment {
     @Override
     public Component getFullname(int level) {
         return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_GREEN);
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return stack.canPerformAction(ToolActions.AXE_DIG) || super.canApplyAtEnchantingTable(stack);
     }
 
     public void chainsaw(BreakEvent e) {

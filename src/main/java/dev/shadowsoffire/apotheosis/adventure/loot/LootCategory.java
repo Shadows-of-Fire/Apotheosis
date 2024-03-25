@@ -16,24 +16,19 @@ import com.mojang.serialization.Codec;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.ServerLifecycleHooks;
 
 public final class LootCategory {
 
@@ -191,29 +186,6 @@ public final class LootCategory {
 
     private static EquipmentSlot[] arr(EquipmentSlot... s) {
         return s;
-    }
-
-    private static class ShieldBreakerTest implements Predicate<ItemStack> {
-
-        private Zombie attacker, holder;
-
-        @Override
-        public boolean test(ItemStack t) {
-            try {
-                ItemStack shield = new ItemStack(Items.SHIELD);
-                MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-                if (this.attacker == null && server != null) {
-                    this.attacker = new Zombie(server.getLevel(Level.OVERWORLD));
-                    this.holder = new Zombie(server.getLevel(Level.OVERWORLD));
-                }
-                if (this.holder != null) this.holder.setItemInHand(InteractionHand.OFF_HAND, shield);
-                return t.canDisableShield(shield, this.holder, this.attacker);
-            }
-            catch (Exception ex) {
-                return false;
-            }
-        }
-
     }
 
     private static Predicate<ItemStack> armorSlot(EquipmentSlot slot) {

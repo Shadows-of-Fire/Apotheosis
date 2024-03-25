@@ -17,6 +17,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.event.GetItemSocketsEvent;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.CachedObject;
@@ -26,6 +27,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -86,16 +88,6 @@ public class SocketHelper {
     public static Stream<GemInstance> getGemInstances(ItemStack stack) {
         return getGems(stack).stream().map(gemStack -> GemInstance.socketed(stack, gemStack)).filter(GemInstance::isValid);
     }
-
-    /**
-     * Gets the list of Gem objects that are active in
-     *
-     * @param stack
-     * @return
-     */
-    // public static List<Gem> getActiveGems(ItemStack stack) {
-    // return getGems(stack).stream().map(GemItem::getGem).filter(Objects::nonNull).toList();
-    // }
 
     /**
      * Sets the gem list on the item to the provided list of gems.<br>
@@ -172,6 +164,54 @@ public class SocketHelper {
             // The rarity is irrelevant for the socket affix, so we always pass the min rarity to the fake affix instance.
             affixes.put(Affixes.SOCKET, new AffixInstance(Affixes.SOCKET, stack, RarityRegistry.getMinRarity(), sockets));
         }
+    }
+
+    public static void loadSocketAffix(AbstractArrow arrow, Map<DynamicHolder<? extends Affix>, AffixInstance> affixes) {
+        CompoundTag afxData = arrow.getPersistentData().getCompound(AFFIX_DATA);
+        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
+        if (sockets > 0) {
+            affixes.put(Affixes.SOCKET, new AffixInstance(Affixes.SOCKET, ItemStack.EMPTY, RarityRegistry.getMinRarity(), sockets));
+        }
+    }
+
+    /**
+     * Gets the list of gems socketed into the item that shot the arrow.<br>
+     * Does not validate that the gems are valid.
+     *
+     * @param arrow The arrow being queried
+     * @return A list of all the gems stored in the arrow.
+     */
+    private static List<ItemStack> getGems(AbstractArrow arrow) {
+        CompoundTag afxData = arrow.getPersistentData().getCompound(AFFIX_DATA);
+        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
+        if (sockets <= 0) return Collections.emptyList();
+        List<ItemStack> gems = NonNullList.withSize(sockets, ItemStack.EMPTY);
+        int i = 0;
+        if (afxData != null && afxData.contains(GEMS)) {
+            ListTag gemData = afxData.getList(GEMS, Tag.TAG_COMPOUND);
+            for (Tag tag : gemData) {
+                ItemStack gemStack = ItemStack.of((CompoundTag) tag);
+                gemStack.setCount(1);
+                if (GemInstance.unsocketed(gemStack).isValidUnsocketed()) {
+                    gems.set(i++, gemStack);
+                }
+                if (i >= sockets) break;
+            }
+        }
+        return gems;
+    }
+
+    /**
+     * Gets a stream of socketed gems that are valid for use by the arrow.
+     *
+     * @param arrow The arrow being queried.
+     * @return A stream containing all valid gems in the arrow.
+     * @see GemInstance#isValid()
+     */
+    public static Stream<GemInstance> getGemInstances(AbstractArrow arrow) {
+        LootCategory cat = AffixHelper.getShooterCategory(arrow);
+        if (cat == null) return Stream.empty();
+        return getGems(arrow).stream().map(gemStack -> GemInstance.socketed(cat, gemStack)).filter(GemInstance::isValid);
     }
 
 }

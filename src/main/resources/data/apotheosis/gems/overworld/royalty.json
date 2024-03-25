@@ -62,18 +62,18 @@
 					"pickaxe"
 				]
 			},
-			"blocks": "forge:ores/iron",
+			"blocks": "forge:ores/copper",
 			"inputs": {
-				"tag": "forge:raw_materials/iron"
+				"tag": "forge:raw_materials/copper"
 			},
 			"output": {
 				"item": "minecraft:raw_gold"
 			},
 			"values": {
-				"rare": 0.20,
-				"epic": 0.30,
-				"mythic": 0.40,
-				"ancient": 0.50
+				"rare": 0.15,
+				"epic": 0.20,
+				"mythic": 0.25,
+				"ancient": 0.40
 			},
 			"desc": "gem.apotheosis:overworld/royalty.bonus.pickaxe"
 		},

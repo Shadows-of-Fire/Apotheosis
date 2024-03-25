@@ -1,6 +1,46 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.3.4
+* Made the small boss gateway disabled by default.
+  * This gateway was for reference, not usage, and frequently crashes due to being setup incorrectly.
+* Fixed some quark compat issues relating to enchantment max levels.
+* Mob spawners may now spawn slimes without needing a slime chunk or the ignore conditions modifier.
+  * This is a Vanilla change from 1.20.4 that I backported via mixin.
+* Fixed heavy weapon detection not working on the client.
+* Fixed damage reduction gems not functioning.
+* Fixed the Guardian Gem granting armor toughness instead of armor.
+* Fixed the ordering of gems in JEI.
+* t0piy: Updated Brazilian translation.
+
+## 7.3.3
+* Fixed a typo in the tag used by the Gem of the Royal Family.
+* Fixed an issue where the `apotheosis:drop_transform` gem bonus would fail to resolve tags and always trigger on all blocks.
+
+## 7.3.2
+* t0piy: Updated Brazilian translation.
+* t0piy: Fixed a JSON syntax error in the French translation.
+* Made `ShieldBreakerTest` only set the shield item to the target zombie once at creation.
+  * This should resolve a performance issue caused by repeated capability comparisons when this test executed.
+* Fixed the default radial mining state being `REQUIRE_SNEAKING` when it should have been `REQUIRE_NOT_SNEAKING`.
+* Added a NBT-sensitive tool action check to the chainsaw enchantment, which may permit application on dynamic axes.
+* Improved sanity checking in `GemBonus`.
+* Changed the Gem of the Royal Family to convert copper ore to gold instead of iron ore.
+* Fixed the cooldown of gems being applied across all instances of the same gem bonus.
+* Fixed gems not working when interacting with arrows on-hit.
+* Added a bonus to the Tyrannical gem which applies Bleeding on arrow impact.
+
+## 7.3.1
+* Fixed issues that would occur when duplicate copies of the same enchantment were present on one item.
+  * Fixed a crash that would occur due to the new tooltip handling.
+  * Fixed a discrepency caused by how vanilla computes enchantment levels.
+  * Made duplicate copies invisible in the item tooltip, showing only the "real" one.
+* Made it possible for non-players to break Spawners with silk touch.
+* mc-kaishixiaxue: Updated Chinese translation.
+* FabLeKebab: Added French translation.
+* t0piy: Updated Brazilian translation.
+* gun0000: Added Korean translation.
+
 ## 7.3.0
 ### Features
 * Added a keybind to change the current state of the radial mining affix.

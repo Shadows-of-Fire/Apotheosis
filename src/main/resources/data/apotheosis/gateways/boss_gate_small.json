@@ -1,7 +1,6 @@
 {
 	"conditions": [{
-		"type": "apotheosis:module",
-		"module": "adventure"
+		"type": "forge:false"
 	}],
 	"size": "small",
 	"color": "rainbow",

@@ -10,7 +10,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.AllStatsBonus;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.BloodyArrowBonus;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.DropTransformBonus;
@@ -48,6 +50,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public abstract class GemBonus implements CodecProvider<GemBonus> {
 
+    // TODO: Convert to Registry<Codec<?>> instead of using a raw codec map.
     public static final CodecMap<GemBonus> CODEC = new CodecMap<>("Gem Bonus");
     public static final Codec<Map<LootRarity, StepFunction>> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
 
@@ -165,7 +168,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     /**
      * Called when an arrow that was marked with this affix hits a target.
      */
-    public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, HitResult.Type type) {}
+    public void onArrowImpact(ItemStack gemStack, LootRarity rarity, AbstractArrow arrow, HitResult res, HitResult.Type type) {}
 
     /**
      * Called when a shield with this affix blocks some amount of damage.
@@ -248,6 +251,14 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     public GemClass getGemClass() {
         return this.gemClass;
+    }
+
+    /**
+     * Generates an ID for use with {@link Affix#isOnCooldown} / {@link Affix#startCooldown}
+     */
+    protected final ResourceLocation getCooldownId(ItemStack gemStack) {
+        ResourceLocation gemId = GemItem.getGem(gemStack).getId();
+        return new ResourceLocation(gemId.getNamespace(), gemId.getPath() + "/" + this.getId().toLanguageKey());
     }
 
     protected static <T extends GemBonus> App<RecordCodecBuilder.Mu<T>, GemClass> gemClass() {

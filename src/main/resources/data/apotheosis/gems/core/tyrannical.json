@@ -81,6 +81,31 @@
 				"mythic": 0.3,
 				"ancient": 0.425
 			}
+		},
+        {
+			"type": "apotheosis:mob_effect",
+			"gem_class": {
+				"key": "ranged_weapon",
+				"types": [
+					"bow",
+					"crossbow"
+				]
+			},
+			"mob_effect": "attributeslib:bleeding",
+            "stack_on_reapply": true,
+			"target": "arrow_target",
+			"values": {
+				"mythic": {
+					"duration": 160,
+					"amplifier": 0,
+					"cooldown": 40
+				},
+				"ancient": {
+					"duration": 160,
+					"amplifier": 1,
+					"cooldown": 40
+				}
+			}
 		}
 	]
 }

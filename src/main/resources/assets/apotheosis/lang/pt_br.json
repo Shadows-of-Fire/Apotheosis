@@ -1,6 +1,9 @@
 {
     "comment_id": "/Adventure Module",
 
+    "key.categories.apotheosis": "Apotheosis",
+    "key.apotheosis.toggle_radial_mining": "Alterar modo de mineração radial",
+
     "info.apotheosis.affix_item": "Item de afixo apótico",
 	
 	"death.attack.apotheosis.execute": "%s foi executado por %s",
@@ -10,10 +13,16 @@
 	"misc.apotheosis.affix_name.three": "%2$s %1$s %3$s",
 	"misc.apotheosis.affix_name.four": "%3$s %2$s %4$s de %1$s",
 	
+    "misc.apotheosis.radial_state_updated": "Modo de mineração radial atualizado para \"%s\"",
+    "misc.apotheosis.radial_state.require_not_sneaking": "Desativado enquanto se agacha",
+    "misc.apotheosis.radial_state.require_sneaking": "Habilitado enquanto se agacha",
+    "misc.apotheosis.radial_state.enabled": "Habilitado",
+    "misc.apotheosis.radial_state.disabled": "Desativado",
+
     "affix.apotheosis:armor/attribute/blessed": "Abençoado",
     "affix.apotheosis:armor/attribute/blessed.suffix": "da Saúde",
 
-    "affix.apotheosis:armor/attribute/windswept": "Levado pelo vento",
+    "affix.apotheosis:armor/attribute/windswept": "Levado pelo Vento",
     "affix.apotheosis:armor/attribute/windswept.suffix": "da Corrente",
 
     "affix.apotheosis:armor/attribute/ironforged": "Ferroforjado",
@@ -22,7 +31,7 @@
     "affix.apotheosis:sword/attribute/violent": "Violento",
     "affix.apotheosis:sword/attribute/violent.suffix": "da Matança",
 
-    "affix.apotheosis:ranged/attribute/windswept": "Levado pelo vento",
+    "affix.apotheosis:ranged/attribute/windswept": "Levado pelo Vento",
     "affix.apotheosis:ranged/attribute/windswept.suffix": "da Corrente",
 
     "affix.apotheosis:sword/attribute/graceful": "Gracioso",
@@ -44,12 +53,12 @@
     "affix.apotheosis:breaker/attribute/experienced.suffix": "do Erudito",
 
 	"affix.apotheosis:sword/attribute/elongated": "Alongado",
-    "affix.apotheosis:sword/attribute/elongated.suffix": "das Batalhas distantes",
+    "affix.apotheosis:sword/attribute/elongated.suffix": "das Batalhas Distantes",
 
 	"affix.apotheosis:ranged/attribute/agile": "Ágil",
     "affix.apotheosis:ranged/attribute/agile.suffix": "da Destreza",
 
-	"affix.apotheosis:armor/attribute/steel_touched": "Tocado pelo aço",
+	"affix.apotheosis:armor/attribute/steel_touched": "Tocado pelo Aço",
     "affix.apotheosis:armor/attribute/steel_touched.suffix": "do Defensor",
 
 	"affix.apotheosis:armor/attribute/stalwart": "Robusto",
@@ -59,16 +68,16 @@
     "affix.apotheosis:armor/attribute/elastic.suffix": "da Escalada",
 
 	"affix.apotheosis:armor/attribute/fortunate": "Afortunado",
-    "affix.apotheosis:armor/attribute/fortunate.suffix": "do Trevo-de-quatro-folhas",
+    "affix.apotheosis:armor/attribute/fortunate.suffix": "do Trevo-de-Quatro-Folhas",
 
     "affix.apotheosis:armor/attribute/winged": "Alado",
     "affix.apotheosis:armor/attribute/winged.suffix": "dos Céus",
 
 	"affix.apotheosis:sword/attribute/intricate": "Confuso",
-    "affix.apotheosis:sword/attribute/intricate.suffix": "do Pensamento crítico",
+    "affix.apotheosis:sword/attribute/intricate.suffix": "do Pensamento Crítico",
 
 	"affix.apotheosis:sword/attribute/lacerating": "Lacerante",
-    "affix.apotheosis:sword/attribute/lacerating.suffix": "da Precisão cirúrgica",
+    "affix.apotheosis:sword/attribute/lacerating.suffix": "da Precisão Cirúrgica",
 
 	"affix.apotheosis:sword/attribute/glacial": "Glacial",
     "affix.apotheosis:sword/attribute/glacial.suffix": "das Terras congeladas",
@@ -85,8 +94,8 @@
 	"affix.apotheosis:heavy_weapon/attribute/shredding": "Retalhador",
     "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "da Penetração",
 
-	"affix.apotheosis:heavy_weapon/attribute/giant_slaying": "Assassino de gigantes",
-    "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "dos Golpes colossais",
+	"affix.apotheosis:heavy_weapon/attribute/giant_slaying": "Assassino de Gigantes",
+    "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "dos Golpes Colossais",
 
 	"affix.apotheosis:heavy_weapon/attribute/berserking": "Furioso",
     "affix.apotheosis:heavy_weapon/attribute/berserking.suffix": "do Berserker",
@@ -95,7 +104,7 @@
     "affix.apotheosis:breaker/attribute/destructive.suffix": "das Pedreiras",
 
 	"affix.apotheosis:ranged/attribute/elven": "Élfico",
-    "affix.apotheosis:ranged/attribute/elven.suffix": "do Arqueiro primordial",
+    "affix.apotheosis:ranged/attribute/elven.suffix": "do Arqueiro Primordial",
 
 	"affix.apotheosis:ranged/attribute/streamlined": "Aerodinâmico",
     "affix.apotheosis:ranged/attribute/streamlined.suffix": "do Atirador",
@@ -106,8 +115,8 @@
 	"affix.apotheosis:breaker/mob_effect/swift": "Veloz",
     "affix.apotheosis:breaker/mob_effect/swift.suffix": "do Esmagamento",
 
-    "affix.apotheosis:breaker/mob_effect/spelunkers": "de espeleólogo",
-    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "de Exploração de cavernas",
+    "affix.apotheosis:breaker/mob_effect/spelunkers": "Espeleológico",
+    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "de Exploração de Cavernas",
 
 	"affix.apotheosis:ranged/mob_effect/ensnaring": "Ilusório",
     "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "do Predador",
@@ -137,7 +146,7 @@
     "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "da Levitação",
 
 	"affix.apotheosis:shield/mob_effect/withering": "Murchador",
-    "affix.apotheosis:shield/mob_effect/withering.suffix": "do Esqueleto das trevas",
+    "affix.apotheosis:shield/mob_effect/withering.suffix": "do Esqueleto das Trevas",
 
     "affix.apotheosis:shield/attribute/ironforged": "Ferroforjado",
     "affix.apotheosis:shield/attribute/ironforged.suffix": "do Ferro",
@@ -146,7 +155,7 @@
     "affix.apotheosis:shield/attribute/steel_touched.suffix": "do Defensor",
 
 	"affix.apotheosis:ranged/mob_effect/ivy_laced": "Entrelaçado de Hera",
-    "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "das Toxinas naturais",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "das Toxinas Naturais",
 
 	"affix.apotheosis:ranged/mob_effect/satanic": "Satânico",
     "affix.apotheosis:ranged/mob_effect/satanic.suffix": "da Maldição",
@@ -168,11 +177,11 @@
     "affix.apotheosis:sword/special/thunderstruck.desc": "Seus ataques causam %s de dano para inimigos próximos.",
 	
 	"affix.apotheosis:shield/special/retreating": "Recuante",
-    "affix.apotheosis:shield/special/retreating.suffix": "do Bobo da corte",
+    "affix.apotheosis:shield/special/retreating.suffix": "do Bobo da Corte",
     "affix.apotheosis:shield/special/retreating.desc": "Você pulará para trás ao bloquear em combate corpo a corpo.",
 	
 	"affix.apotheosis:telepathic": "Telepático",
-    "affix.apotheosis:telepathic.suffix": "do Tempo e espaço",
+    "affix.apotheosis:telepathic.suffix": "do Tempo e Espaço",
     "affix.apotheosis:telepathic.desc.weapon": "Saques de criatura se teletransportarão para você.",
     "affix.apotheosis:telepathic.desc.tool": "Saques de blocos se teletransportarão para você.",
 
@@ -185,7 +194,7 @@
     "affix.apotheosis:heavy_weapon/special/cleaving.desc": "Os ataques têm uma chance de %s%% de atingir também até %s inimigos próximos.",
 
 	"affix.apotheosis:breaker/special/enlightened": "Iluminado",
-    "affix.apotheosis:breaker/special/enlightened.suffix": "do Emissário da luz",
+    "affix.apotheosis:breaker/special/enlightened.suffix": "do Emissário da Luz",
     "affix.apotheosis:breaker/special/enlightened.desc": "Esta ferramenta pode colocar uma tocha à custa de %s da durabilidade.",
 
 	"affix.apotheosis:shield/special/psychic": "Psíquico",
@@ -200,7 +209,7 @@
     "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "do Titã",
 
 	"affix.apotheosis:heavy_weapon/attribute/decimating": "Dizimador",
-    "affix.apotheosis:heavy_weapon/attribute/decimating.suffix": "do Rei divino",
+    "affix.apotheosis:heavy_weapon/attribute/decimating.suffix": "do Rei Divino",
 	
 	"affix.apotheosis:heavy_weapon/attribute/murderous": "Assassino",
     "affix.apotheosis:heavy_weapon/attribute/murderous.suffix": "do Minotauro",
@@ -212,20 +221,20 @@
     "affix.apotheosis:heavy_weapon/mob_effect/bloodletting.suffix": "do Matador",
 
 	"affix.apotheosis:heavy_weapon/mob_effect/caustic": "Cáustico",
-    "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "do Reino cáustico",
+    "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "do Reino Cáustico",
 
 	"affix.apotheosis:sword/mob_effect/sophisticated": "Sofisticado",
-    "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "da Biblioteca antiga",
+    "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "da Biblioteca Antiga",
 
 	"affix.apotheosis:shield/mob_effect/devilish": "Diabólico",
     "affix.apotheosis:shield/mob_effect/devilish.suffix": "do Veterano",
 
 	"affix.apotheosis:breaker/special/radial": "Radial",
-    "affix.apotheosis:breaker/special/radial.suffix": "do Rompe-terra",
+    "affix.apotheosis:breaker/special/radial.suffix": "do Rompe-Terra",
     "affix.apotheosis:breaker/special/radial.desc": "Esta ferramenta quebra em uma área %sx%s.",
 	
     "affix.apotheosis:melee_weapon/mob_effect/detonating": "Fulminante",
-    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "da Chama elemental",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "da Chama Elemental",
 
 	"misc.apotheosis.iron": "ferro",
 	"misc.apotheosis.diamond": "diamante",
@@ -246,10 +255,10 @@
     "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "do Bloqueio",
 	
 	"affix.apotheosis:armor/dmg_reduction/runed": "Rúnico",
-    "affix.apotheosis:armor/dmg_reduction/runed.suffix": "do Guardião de feitiços",
+    "affix.apotheosis:armor/dmg_reduction/runed.suffix": "do Guardião de Feitiços",
 	
-	"affix.apotheosis:armor/dmg_reduction/blast_forged": "Forjado pela explosão",
-    "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "do Deus da forja",
+	"affix.apotheosis:armor/dmg_reduction/blast_forged": "Forjado pela Explosão",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "do Deus da Forja",
 	
 	"affix.apotheosis:armor/dmg_reduction/dwarven": "Anão",
     "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "do Vulcão",
@@ -267,10 +276,10 @@
 	"affix.apotheosis:breaker/attribute/lucky.suffix": "do Acaso",
 
 	"affix.apotheosis:heavy_weapon/attribute/nullifying": "Anulante",
-	"affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "do Destruidor de magos",
+	"affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "do Destruidor de Magos",
 
-	"affix.apotheosis:sword/attribute/spellbreaking": "Quebra-encantos",
-	"affix.apotheosis:sword/attribute/spellbreaking.suffix": "do Golem de petricita",
+	"affix.apotheosis:sword/attribute/spellbreaking": "Quebra-Encantos",
+	"affix.apotheosis:sword/attribute/spellbreaking.suffix": "do Golem de Petricita",
 
 	"affix.apotheosis:ranged/mob_effect/grievous": "Grave",
 	"affix.apotheosis:ranged/mob_effect/grievous.suffix": "do Ferimento",
@@ -333,7 +342,7 @@
 	"bonus.apotheosis:bloody_arrow.desc": "Ao atirar, você perde %s%% da vida máxima e causa %s%% de dano. %s",
 	"bonus.apotheosis:leech_block.desc": "Cura você em %s%% do dano ao bloquear um ataque. %s",
 	"bonus.apotheosis:all_stats.desc": "+%s%% para todos os status",
-	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Quebrar minério de ferro tem uma chance de %s%% de derrubar ouro bruto no lugar.",
+	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "Quebrar minério de cobre tem uma chance de %s%% de derrubar ouro bruto no lugar.",
 	"bonus.apotheosis:mageslayer.desc": "Ignora %s%% do dano mágico e cura pela mesma quantidade.",
 	"bonus.apotheosis:twilight_ore_magnet.desc": "Pode ser usado como um imã de minério, custando %s extra de durabilidade.",
 	"bonus.apotheosis:twilight_treasure_goblin.desc": "Atacar uma entidade tem %s%% de chance de invocar um goblin do tesouro. %s",
@@ -366,7 +375,7 @@
     "item.apotheosis.gem.apotheosis:twilight/forest": "Gema da floresta do crepúsculo",
 	"item.apotheosis.gem.apotheosis:twilight/queen": "Gema da rainha congelada",
 
-	"item.apotheosis.boss_summoner": "Invocador de chefe apótico",
+	"item.apotheosis.boss_summoner": "Invocador de chefe apoteótico",
     "item.apotheosis.gem.apotheosis:common": "%s rachada",
     "item.apotheosis.gem.apotheosis:uncommon": "%s lascada",
     "item.apotheosis.gem.apotheosis:rare": "%s defeituosa",
@@ -457,7 +466,7 @@
 	"text.apotheosis.any_x_item": "Qualquer item de afixo %s",
 	
 	"info.apotheosis.boss_spawn": "%s despertou por perto!",
-	"info.apotheosis.boss": "Chefe apótico %s",
+	"info.apotheosis.boss": "Chefe apoteótico %s",
 	"info.apotheosis.boss_item": "Derrubará: %s",
 	"info.apotheosis.boss_modifiers": "Modificadores do chefe:",
 	"info.apotheosis.rarity_material": "Material de raridade (%s)",
@@ -481,166 +490,166 @@
 
 	"comment_id": "/Adventure + Gateways Compat",
 
-	"misc.apotheosis.boss": "Chefe apótico %s",
+	"misc.apotheosis.boss": "Chefe apoteótico %s",
 	"misc.apotheosis.random": "Aleatório",
 	"reward.apotheosis.affix": "Item de afixo %s",
 	"reward.apotheosis.random_affix": "Item de afixo aleatório",
-	"apotheosis.boss_gate_small": "Portão de chefe apótico pequeno",
+	"apotheosis.boss_gate_small": "Portão pequeno de chefe apoteótico",
 
     "comment_id": "/Advancements",
 
-    "advancements.apotheosis.enchantment": "Os segredos do encantamento",
+    "advancements.apotheosis.enchantment": "Os Segredos do Encantamento",
     "advancements.apotheosis.enchantment.desc": "Obtenha uma mesa de encantamentos e comece a desvendar o mistério.",
     
-    "advancements.apotheosis.30ench": "O básico",
+    "advancements.apotheosis.30ench": "O Básico",
     "advancements.apotheosis.30ench.desc": "Encante um item no nível 30.",
     
-    "advancements.apotheosis.60ench": "Dominando o mar e o inferno",
+    "advancements.apotheosis.60ench": "Dominando o Mar e o Inferno",
     "advancements.apotheosis.60ench.desc": "Encante um item no nível 60.",
     
-    "advancements.apotheosis.80ench": "Encatamentos das profundezas",
+    "advancements.apotheosis.80ench": "Encatamentos das Profundezas",
     "advancements.apotheosis.80ench.desc": "Encante um item no nível 80.",
     
-    "advancements.apotheosis.100ench": "Encantamento dracônico",
+    "advancements.apotheosis.100ench": "Encantamento Dracônico",
     "advancements.apotheosis.100ench.desc": "Encante um item no nível 100.",
     
-    "advancements.apotheosis.bookshelf": "Bibliotecário local",
+    "advancements.apotheosis.bookshelf": "Bibliotecário Local",
     "advancements.apotheosis.bookshelf.desc": "Crie uma estante de livros.",
     
-    "advancements.apotheosis.hellshelf": "O caos do inferno",
+    "advancements.apotheosis.hellshelf": "O Caos do Inferno",
     "advancements.apotheosis.hellshelf.desc": "Obtenha uma estante infernal",
     
-    "advancements.apotheosis.upgrade_hellshelf": "Dominando o inferno",
+    "advancements.apotheosis.upgrade_hellshelf": "Dominando o Inferno",
     "advancements.apotheosis.upgrade_hellshelf.desc": "Melhore uma estante infernal infundida.",
     
-    "advancements.apotheosis.deepshelf": "Mergulhando nas trevas",
+    "advancements.apotheosis.deepshelf": "Mergulhando nas Trevas",
     "advancements.apotheosis.deepshelf.desc": "Ative uma estante profunda dormente.",
     
-    "advancements.apotheosis.sculkshelf": "Abraçando o sculk",
+    "advancements.apotheosis.sculkshelf": "Abraçando o Sculk",
     "advancements.apotheosis.sculkshelf.desc": "Crie uma estante sculk usando uma gavinha do defensor.",
     
-    "advancements.apotheosis.endshelf": "A força do End",
+    "advancements.apotheosis.endshelf": "A Força do End",
     "advancements.apotheosis.endshelf.desc": "Obtenha um bafo de dragão infundido e crie uma estante do End",
     
-    "advancements.apotheosis.upgrade_endshelf": "A última estante",
+    "advancements.apotheosis.upgrade_endshelf": "A Última Estante",
     "advancements.apotheosis.upgrade_endshelf.desc": "Melhore uma estante do End em uma estante dracônica.",
     
-    "advancements.apotheosis.seashelf": "A pureza dos mares",
+    "advancements.apotheosis.seashelf": "A Pureza dos Mares",
     "advancements.apotheosis.seashelf.desc": "Obtenha uma estante marinha.",
     
-    "advancements.apotheosis.infuse_seashelf": "Infusão marinha",
+    "advancements.apotheosis.infuse_seashelf": "Infusão Marinha",
     "advancements.apotheosis.infuse_seashelf.desc": "Obtenha uma estante marinha infundida através do encantamento de infusão.",
     
-    "advancements.apotheosis.upgrade_seashelf": "Dormindo no frio abaixo",
+    "advancements.apotheosis.upgrade_seashelf": "Dormindo no Frio Abaixo",
     "advancements.apotheosis.upgrade_seashelf.desc": "Melhore uma estante marinha infundida",
     
-    "advancements.apotheosis.infuse_hellshelf": "Infusão infernal",
+    "advancements.apotheosis.infuse_hellshelf": "Infusão Infernal",
     "advancements.apotheosis.infuse_hellshelf.desc": "Obtenha uma estante infernal infundida através do encantamento de infusão.",
     
-    "advancements.apotheosis.anvilench": "Encantador de bigorna",
+    "advancements.apotheosis.anvilench": "Encantador de Bigorna",
     "advancements.apotheosis.anvilench.desc": "Encante uma bigorna",
-    "advancements.apotheosis.shieldench": "Encantador de escudo",
+    "advancements.apotheosis.shieldench": "Encantador de Escudo",
     "advancements.apotheosis.shieldench.desc": "Encante um escudo",
     "advancements.apotheosis.altar": "Transformação Oceânica",
     "advancements.apotheosis.altar.desc": "Create an Altar of the Seas, which can turn unwanted enchanted items into a new book.",
-    "advancements.apotheosis.splitting": "Esmagador de encantamentos",
+    "advancements.apotheosis.splitting": "Esmagador de Encantamentos",
     "advancements.apotheosis.splitting.desc": "Deixe cair uma bigorna encantada com divisão em um livro encantado para separá-lo",
-    "advancements.apotheosis.sharp10": "O mais afiado",
+    "advancements.apotheosis.sharp10": "O Mais Afiado",
     "advancements.apotheosis.sharp10.desc": "Encante uma arma com afiação X ou superior",
-    "advancements.apotheosis.level20": "Poder ilimitado",
+    "advancements.apotheosis.level20": "Poder Ilimitado",
     "advancements.apotheosis.level20.desc": "Obtenha um item com um encantamento no nível XX ou superior",
-    "advancements.apotheosis.enchanting_stats": "Eterna, quanta, arcana",
+    "advancements.apotheosis.enchanting_stats": "Eterna, Quanta, Arcana",
     "advancements.apotheosis.enchanting_stats.desc": "Encante um item tendo pelo menos 10 de cada atributo.",
-    "advancements.apotheosis.quanta0": "Desapareça, fluxo",
+    "advancements.apotheosis.quanta0": "Desapareça, Fluxo",
     "advancements.apotheosis.quanta0.desc": "Encante um item com 0% de quanta.",
-    "advancements.apotheosis.quanta50": "Introdução ao caos",
+    "advancements.apotheosis.quanta50": "Introdução ao Caos",
     "advancements.apotheosis.quanta50.desc": "Encante um item com 50% de quanta.",
-    "advancements.apotheosis.quanta100": "Jogando os dados",
+    "advancements.apotheosis.quanta100": "Jogando os Dados",
     "advancements.apotheosis.quanta100.desc": "Encante um item com 100% de quanta.",
-    "advancements.apotheosis.arcana50": "Energia mágica",
+    "advancements.apotheosis.arcana50": "Energia Mágica",
     "advancements.apotheosis.arcana50.desc": "Encante um item com 50% de arcana.",
-    "advancements.apotheosis.arcana100": "Poder arcano",
+    "advancements.apotheosis.arcana100": "Poder Arcano",
     "advancements.apotheosis.arcana100.desc": "Encante um item com 100% de arcana.",
-    "advancements.apotheosis.max_stats": "Força máxima",
+    "advancements.apotheosis.max_stats": "Força Máxima",
     "advancements.apotheosis.max_stats.desc": "Encante um item tendo todos os status no máximo.",
-    "advancements.apotheosis.max_stable": "Poder estável",
+    "advancements.apotheosis.max_stable": "Poder Estável",
     "advancements.apotheosis.max_stable.desc": "Encante um item tendo eterna e arcana máximas, mas 0% de quanta.",
-    "advancements.apotheosis.max_rectified": "Apenas o melhor",
+    "advancements.apotheosis.max_rectified": "Apenas o Melhor",
     "advancements.apotheosis.max_rectified.desc": "Encante um item com atributos máximos e retificação máxima.",
     
-    "advancements.apotheosis.affix": "Uma fixação impressionante",
+    "advancements.apotheosis.affix": "Uma Fixação Impressionante",
     "advancements.apotheosis.affix.desc": "Encontre um item com um afixo apótico.",
 
-    "advancements.apotheosis.rare": "Certamente parece raro...",
+    "advancements.apotheosis.rare": "Certamente Parece Raro...",
     "advancements.apotheosis.rare.desc": "Encontre um item de afixo raro.",
     
     "advancements.apotheosis.epic": "Épico!",
     "advancements.apotheosis.epic.desc": "Encontre um item de afixo épico.",
     
-    "advancements.apotheosis.mythic": "Forjado pelos titãs",
+    "advancements.apotheosis.mythic": "Forjado Pelos Titãs",
     "advancements.apotheosis.mythic.desc": "Encontre um item de afixo mítico.",
     
-    "advancements.apotheosis.ancient": "Tesouros perdidos dos deuses",
+    "advancements.apotheosis.ancient": "Tesouros Perdidos dos Deuses",
     "advancements.apotheosis.ancient.desc": "Encontre um item antigo.",
     
     "advancements.apotheosis.boss": "Ele não era tão forte",
-    "advancements.apotheosis.boss.desc": "Mate um chefe apótico e recupere o item de afixo dele.",
+    "advancements.apotheosis.boss.desc": "Mate um chefe apoteótico e recupere o item de afixo dele.",
     "advancements.apotheosis.chests": "Eu encontrei isso embaixo da terra",
     "advancements.apotheosis.chests.desc": "Encontre um item de afixo em um baú.",
-    "advancements.apotheosis.merchant": "Eu consegui negócios",
+    "advancements.apotheosis.merchant": "Eu Fechei Negócios",
     "advancements.apotheosis.merchant.desc": "Compre um item de afixo do vendedor ambulante.",
     "advancements.apotheosis.random": "Como você conseguiu isso?",
     "advancements.apotheosis.random.desc": "Recupere um item de afixo de um monstro aleatório.",
     
-    "advancements.apotheosis.gem": "Um cristal antigo",
+    "advancements.apotheosis.gem": "Um Cristal Antigo",
     "advancements.apotheosis.gem.desc": "Encontre uma gema encaixável.",
 
-    "advancements.apotheosis.rare_gem": "Longe de ser perfeito",
+    "advancements.apotheosis.rare_gem": "Longe de ser Perfeito",
     "advancements.apotheosis.rare_gem.desc": "Adquira uma gema defeituosa.",
 
-    "advancements.apotheosis.mythic_gem": "Cristais impecáveis",
+    "advancements.apotheosis.mythic_gem": "Cristais Impecáveis",
     "advancements.apotheosis.mythic_gem.desc": "Adquira uma gema impecável.",
 	
-	"advancements.apotheosis.ancient_gem": "Jóias do infinito",
+	"advancements.apotheosis.ancient_gem": "Jóias do Infinito",
     "advancements.apotheosis.ancient_gem.desc": "Usando a bancada de lapidação de gema, crie uma gema perfeita.",
 
-    "advancements.apotheosis.socket": "O joalheiro",
+    "advancements.apotheosis.socket": "O Joalheiro",
     "advancements.apotheosis.socket.desc": "Usando uma bancada de ferraria, encaixe uma gema em um item.",
     
-    "advancements.apotheosis.gem_cut": "O lapidário",
+    "advancements.apotheosis.gem_cut": "O Lapidário",
     "advancements.apotheosis.gem_cut.desc": "Use uma bancada de lapidação de gema para melhorar uma gema apótica.",
 	
     "advancements.apotheosis.spawner.root": "Geradores do Apotheosis",
     "advancements.apotheosis.spawner.root.desc": "Geradores podem ser coletados e modificados, consulte o JEI para obter informações.",
-    "advancements.apotheosis.spawner": "Geradores apóticos",
+    "advancements.apotheosis.spawner": "Geradores Apoteóticos",
     "advancements.apotheosis.spawner.desc": "Colete um gerador de mobs usando toque suave.",
     "advancements.apotheosis.capturing": "Capturado!",
     "advancements.apotheosis.capturing.desc": "Obtenha um ovo gerador de um criatura usando o encantamento captura.",
-    "advancements.apotheosis.modifier": "Apenas algumas modificações...",
+    "advancements.apotheosis.modifier": "Apenas Algumas Modificações...",
     "advancements.apotheosis.modifier.desc": "Use um modificador de gerador para alterar os status de um gerador.",
-    "advancements.apotheosis.spawncount": "Olhe o tamanho do seu gerador!",
+    "advancements.apotheosis.spawncount": "Olhe o Tamanho do seu Gerador!",
     "advancements.apotheosis.spawncount.desc": "Aumente a quantidade de surgimento de um gerador para 16.",
-    "advancements.apotheosis.maxdelay": "Gerador temporal",
+    "advancements.apotheosis.maxdelay": "Gerador Temporal",
     "advancements.apotheosis.maxdelay.desc": "Diminua o atraso máximo de surgimento de um gerador para 20.",
-    "advancements.apotheosis.mindelay": "Eu sou a velocidade",
+    "advancements.apotheosis.mindelay": "Eu sou a Velocidade",
     "advancements.apotheosis.mindelay.desc": "Diminua o atraso mínimo de surgimento de um gerador para 20.",
-    "advancements.apotheosis.nearbyents": "Criando uma horda",
+    "advancements.apotheosis.nearbyents": "Criando uma Horda",
     "advancements.apotheosis.nearbyents.desc": "Aumente o número máximo de entidades próximas de um gerador para 32.",
-    "advancements.apotheosis.playerrange": "Longe da luta",
+    "advancements.apotheosis.playerrange": "Longe da Luta",
     "advancements.apotheosis.playerrange.desc": "Aumente o alcance de ativação do jogador de um gerador para 48.",
-    "advancements.apotheosis.spawnrange": "Criaturas por quilômetros",
+    "advancements.apotheosis.spawnrange": "Criaturas por Milhas",
     "advancements.apotheosis.spawnrange.desc": "Aumente o alcance de surgimento de um gerador para 32.",
-    "advancements.apotheosis.conditions": "Geração sem verificação",
+    "advancements.apotheosis.conditions": "Geração sem Verificação",
     "advancements.apotheosis.conditions.desc": "Desative as condições de surgimento para um gerador.",
-    "advancements.apotheosis.players": "Pronto de fábrica",
+    "advancements.apotheosis.players": "Pronto de Fábrica",
     "advancements.apotheosis.players.desc": "Desative a necessidade de jogadores próximos para um gerador.",
-    "advancements.apotheosis.redstone": "Adicionando um interruptor",
+    "advancements.apotheosis.redstone": "Adicionando um Interruptor",
     "advancements.apotheosis.redstone.desc": "Habilite o controle por redstone para um gerador.",
-    "advancements.apotheosis.light": "Quem precisa de escuridão?",
+    "advancements.apotheosis.light": "Quem Precisa da Escuridão?",
     "advancements.apotheosis.light.desc": "Faça seu gerador funcionar em qualquer nível de luz.",
-    "advancements.apotheosis.noai": "Esvaziamento cerebral",
+    "advancements.apotheosis.noai": "Esvaziamento Cerebral",
     "advancements.apotheosis.noai.desc": "Desative a IA das criaturas para um gerador.",
-    "advancements.apotheosis.ultimate_spawner": "O gerador definitivo",
+    "advancements.apotheosis.ultimate_spawner": "O Gerador Definitivo",
     "advancements.apotheosis.ultimate_spawner.desc": "Crie um gerador com atrasos mínimos, controle por redstone, sem IA, que ignora condições de spawn e jogadores.",
 
     "comment_id": "/Spawner Module",
@@ -928,6 +937,7 @@
     "forge.entity_gravity": "Gravidade",
     "block.reeds": "Cana-de-açúcar",
     "potion.potency.3": "IV",
+    "enchantment.level.0": "0",
     "enchantment.level.11": "XI",
     "enchantment.level.12": "XII",
     "enchantment.level.13": "XIII",
@@ -1060,7 +1070,7 @@
     "tooltip.enchlib.nfilt": "Filtro de nome",
     "tooltip.enchlib.ifilt": "Filtro de item",
     "info.apotheosis.library": "A biblioteca de encantamentos é um bloco que armazena encantamentos.  Inserir um livro encantado irá depositá-lo. Clicar com o botão esquerdo em um encantamento armazenado extrairá um nível dele.  Clicar com a tecla Shift extrairá o nível máximo disponível.",
-    "info.apotheosis.runes": "As runas Revelam",
+    "info.apotheosis.runes": "As runas revelam",
     "info.apotheosis.no_clue": "As runas não revelam nada",
     "info.apotheosis.runes_all": "As runas revelam tudo",
     "info.apotheosis.arcana_bonus": "Empoderamentos arcanos",
@@ -1154,8 +1164,8 @@
 
     "comment_id": "/Garden Module",
     "item.apotheosis.ender_lead": "Laço do ender",
-    "info.apotheosis.noentity": "Entidade segurada: nada",
-    "info.apotheosis.containedentity": "Entidade segurada: %s",
+    "info.apotheosis.noentity": "Entidade guardada: nada",
+    "info.apotheosis.containedentity": "Entidade guardada: %s",
     "info.apotheosis.ender_lead": "O laço do ender é um item que pode ser usado para mover animais.  Soque um animal para capturar e clique com o botão direito para liberá-lo.  The leash will not work on other types of entities.",
 
     "comment_id": "/Villager Module",
@@ -1170,7 +1180,7 @@
     "name.apotheosis.merch_boots": "Grevas forjadas com runas",
     "name.apotheosis.vigilance": "Vigília eterna",
     "apotheosis.recipes.fletching": "Flecharia",
-    "item.apotheosis.obsidian_arrow": "Flecha obsidiana",
+    "item.apotheosis.obsidian_arrow": "Flecha de obsidiana",
     "info.apotheosis.obsidian_arrow": "+20%% dano",
     "item.apotheosis.broadhead_arrow": "Flecha de ponta larga",
     "info.apotheosis.broadhead_arrow": "Sangramento (0:15)",
@@ -1190,7 +1200,7 @@
 	"config.jade.plugin_apotheosis.adventure": "Módulo de aventura apótico",
 	
     "comment_id": "Guidebook",
-    "book.apotheosis.name": "Crônica das sombras",
-    "book.apotheosis.subtitle": "Guia apoteótico",
+    "book.apotheosis.name": "Crônica das Sombras",
+    "book.apotheosis.subtitle": "Guia apótico",
     "book.apotheosis.landing": "Bem-vindo ao mundo do Apotheosis.$(br2)O Apotheosis é organizado em $(#8080FF)módulos$(), assim como o conteúdo deste livro.$(br2)Os módulos desabilitados estão ocultos."
 }

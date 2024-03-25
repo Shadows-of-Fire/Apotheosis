@@ -1,14 +1,28 @@
+# Ancient Items
+
+## Terminology
+
+### Life-Infused
+The relevant effect is increased by a flat amount equal to your current max health.
+
+## Effects
+* Every 6th attack is Life Infused
+* Attacks randomly deal between 1% and [150-225]% of their normal damage.
+* Damaging [5-8] or more enemies with one attack does... something, idk - heals?  Maybe?  Doesn't seem useful enough ig
+* 
+
+
+
+# Progression
+
+## Mob Augmentations
+
+Rename Minibosses to Mob Augmentations.  Keep most current functionality, but also enable multiple augmentation files to apply at once.
+
+
+
+
 Gem Dust as a catalyst in brewing, increasing potion levels by +1 above normal.
-
-Healing Reduction potion for the potion module. Also add an affix once the effect is added.
-
-Wooden (and potentially Ender) Reforging Table, effectively tiering the levels of reforging that can be done.
-
-Recipes for upgrading Rarity Materials into the next tier.
-
-Vial for removing affix names.
-
-Automated Gem Dusting and Salvaging.
 
 Review anvil level math at higher levels, as well as repair costs.
 

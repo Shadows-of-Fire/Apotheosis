@@ -53,6 +53,7 @@ function initializeCoreMod() {
 				'type': 'CLASS',
 				'names': function(listofclasses) {
 					return [
+						'org.violetmoon.quark.content.tools.loot.EnchantTome',
 						'net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction',
 						'net.minecraft.world.entity.npc.VillagerTrades$EnchantBookForEmeralds'
 					]

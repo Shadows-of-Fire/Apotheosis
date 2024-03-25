@@ -89,20 +89,20 @@ public class PotionBonus extends GemBonus {
 
     @Override
     public void doPostHurt(ItemStack gem, LootRarity rarity, LivingEntity user, Entity attacker) {
-        if (this.target == Target.HURT_SELF) this.applyEffect(user, rarity);
+        if (this.target == Target.HURT_SELF) this.applyEffect(gem, user, rarity);
         else if (this.target == Target.HURT_ATTACKER) {
             if (attacker instanceof LivingEntity tLiving) {
-                this.applyEffect(tLiving, rarity);
+                this.applyEffect(gem, tLiving, rarity);
             }
         }
     }
 
     @Override
     public void doPostAttack(ItemStack gem, LootRarity rarity, LivingEntity user, Entity target) {
-        if (this.target == Target.ATTACK_SELF) this.applyEffect(user, rarity);
+        if (this.target == Target.ATTACK_SELF) this.applyEffect(gem, user, rarity);
         else if (this.target == Target.ATTACK_TARGET) {
             if (target instanceof LivingEntity tLiving) {
-                this.applyEffect(tLiving, rarity);
+                this.applyEffect(gem, tLiving, rarity);
             }
         }
     }
@@ -110,31 +110,31 @@ public class PotionBonus extends GemBonus {
     @Override
     public void onBlockBreak(ItemStack gem, LootRarity rarity, Player player, LevelAccessor world, BlockPos pos, BlockState state) {
         if (this.target == Target.BREAK_SELF) {
-            this.applyEffect(player, rarity);
+            this.applyEffect(gem, player, rarity);
         }
     }
 
     @Override
-    public void onArrowImpact(AbstractArrow arrow, LootRarity rarity, HitResult res, Type type) {
+    public void onArrowImpact(ItemStack gemStack, LootRarity rarity, AbstractArrow arrow, HitResult res, HitResult.Type type) {
         if (this.target == Target.ARROW_SELF) {
             if (arrow.getOwner() instanceof LivingEntity owner) {
-                this.applyEffect(owner, rarity);
+                this.applyEffect(gemStack, owner, rarity);
             }
         }
         else if (this.target == Target.ARROW_TARGET) {
             if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-                this.applyEffect(target, rarity);
+                this.applyEffect(gemStack, target, rarity);
             }
         }
     }
 
     @Override
-    public float onShieldBlock(ItemStack stack, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
+    public float onShieldBlock(ItemStack gem, LootRarity rarity, LivingEntity entity, DamageSource source, float amount) {
         if (this.target == Target.BLOCK_SELF) {
-            this.applyEffect(entity, rarity);
+            this.applyEffect(gem, entity, rarity);
         }
         else if (this.target == Target.BLOCK_ATTACKER && source.getDirectEntity() instanceof LivingEntity target) {
-            this.applyEffect(target, rarity);
+            this.applyEffect(gem, target, rarity);
         }
         return amount;
     }
@@ -144,9 +144,9 @@ public class PotionBonus extends GemBonus {
         return data.cooldown;
     }
 
-    private void applyEffect(LivingEntity target, LootRarity rarity) {
+    private void applyEffect(ItemStack gemStack, LivingEntity target, LootRarity rarity) {
         int cooldown = this.getCooldown(rarity);
-        if (cooldown != 0 && Affix.isOnCooldown(this.getId(), cooldown, target)) return;
+        if (cooldown != 0 && Affix.isOnCooldown(this.getCooldownId(gemStack), cooldown, target)) return;
         EffectData data = this.values.get(rarity);
         var inst = target.getEffect(this.effect);
         if (this.stackOnReapply && inst != null) {
@@ -158,7 +158,7 @@ public class PotionBonus extends GemBonus {
         else {
             target.addEffect(data.build(this.effect));
         }
-        Affix.startCooldown(this.getId(), target);
+        Affix.startCooldown(this.getCooldownId(gemStack), target);
     }
 
     public static Component toComponent(MobEffectInstance inst) {
