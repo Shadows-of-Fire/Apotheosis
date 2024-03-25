@@ -17,6 +17,7 @@ import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 // This is kind of horrible, but we have to try and make entities to call the method and not leak those entities
@@ -30,11 +31,20 @@ class ShieldBreakerTest implements Predicate<ItemStack> {
     public boolean test(ItemStack t) {
         try {
             MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-            Level level = server != null ? server.getLevel(Level.OVERWORLD) : Client.getLevel();
+
+            Level level = null;
+            if (server != null) {
+                level = server.getLevel(Level.OVERWORLD);
+            }
+            else if (FMLEnvironment.dist.isClient()) {
+                level = Client.getLevel();
+            }
+
             if (level != null) {
                 Zombies zombies = zombieCache.computeIfAbsent(level, Zombies::new);
                 return t.canDisableShield(zombies.target.getOffhandItem(), zombies.target, zombies.attacker);
             }
+
             return t.canDisableShield(Items.SHIELD.getDefaultInstance(), null, null);
         }
 
