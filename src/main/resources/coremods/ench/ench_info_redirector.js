@@ -53,6 +53,7 @@ function initializeCoreMod() {
 				'type': 'CLASS',
 				'names': function(listofclasses) {
 					return [
+						'org.violetmoon.quark.content.experimental.module.GameNerfsModule',
 						'org.violetmoon.quark.content.tools.module.AncientTomesModule',
 						'org.violetmoon.quark.content.tools.item.AncientTomeItem',
 						'net.minecraft.server.commands.EnchantCommand',

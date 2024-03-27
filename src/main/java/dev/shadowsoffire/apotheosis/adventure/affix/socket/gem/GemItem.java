@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.tabs.ITabFiller;
@@ -82,13 +81,14 @@ public class GemItem extends Item implements ITabFiller {
     @Override
     public void fillItemCategory(CreativeModeTab group, CreativeModeTab.Output out) {
         GemRegistry.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
-            for (LootRarity rarity : RarityRegistry.INSTANCE.getValues()) {
-                if (gem.clamp(rarity) != rarity) continue;
-                ItemStack stack = new ItemStack(this);
-                setGem(stack, gem);
-                AffixHelper.setRarity(stack, rarity);
-                out.accept(stack);
-            }
+            RarityRegistry.INSTANCE.getOrderedRarities().stream().map(DynamicHolder::get).forEach(rarity -> {
+                if (gem.clamp(rarity) == rarity) {
+                    ItemStack stack = new ItemStack(this);
+                    setGem(stack, gem);
+                    AffixHelper.setRarity(stack, rarity);
+                    out.accept(stack);
+                }
+            });
         });
     }
 

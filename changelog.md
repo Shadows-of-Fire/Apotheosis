@@ -1,6 +1,18 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.3.4
+* Made the small boss gateway disabled by default.
+  * This gateway was for reference, not usage, and frequently crashes due to being setup incorrectly.
+* Fixed some quark compat issues relating to enchantment max levels.
+* Mob spawners may now spawn slimes without needing a slime chunk or the ignore conditions modifier.
+  * This is a Vanilla change from 1.20.4 that I backported via mixin.
+* Fixed heavy weapon detection not working on the client.
+* Fixed damage reduction gems not functioning.
+* Fixed the Guardian Gem granting armor toughness instead of armor.
+* Fixed the ordering of gems in JEI.
+* t0piy: Updated Brazilian translation.
+
 ## 7.3.3
 * Fixed a typo in the tag used by the Gem of the Royal Family.
 * Fixed an issue where the `apotheosis:drop_transform` gem bonus would fail to resolve tags and always trigger on all blocks.

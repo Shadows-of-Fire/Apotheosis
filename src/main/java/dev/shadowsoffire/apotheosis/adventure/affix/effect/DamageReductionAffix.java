@@ -55,8 +55,9 @@ public class DamageReductionAffix extends Affix {
 
     @Override
     public float onHurt(ItemStack stack, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
-        if (src.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || src.is(DamageTypeTags.BYPASSES_ENCHANTMENTS)) return amount;
-        if (this.type.test(src)) return amount * (1 - this.getTrueLevel(rarity, level));
+        if (!src.is(DamageTypeTags.BYPASSES_INVULNERABILITY) && !src.is(DamageTypeTags.BYPASSES_ENCHANTMENTS) && this.type.test(src)) {
+            return amount * (1 - this.getTrueLevel(rarity, level));
+        }
         return super.onHurt(stack, rarity, level, src, ent, amount);
     }
 

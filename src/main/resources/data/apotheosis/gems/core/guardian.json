@@ -13,15 +13,15 @@
 					"leggings"
 				]
 			},
-			"attribute": "minecraft:generic.armor_toughness",
+			"attribute": "minecraft:generic.armor",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.5,
 				"uncommon": 1,
 				"rare": 2.5,
 				"epic": 4,
-				"mythic": 6.5,
-				"ancient": 9
+				"mythic": 6,
+				"ancient": 8
 			}
 		},
 		{
