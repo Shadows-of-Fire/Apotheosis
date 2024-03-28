@@ -344,7 +344,7 @@
 	"bonus.apotheosis:all_stats.desc": "모든 능력치 +%s%%",
 	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "구리 광석을 캐면 %s%% 확률로 구리 대신 금 원석을 떨굽니다.",
 	"bonus.apotheosis:mageslayer.desc": "마법 피해를 %s%% 만큼 무시하고 같은 양만큼 회복합니다.",
-	"bonus.apotheosis:twilight_ore_magnet.desc": "%s의 내구도를 더 소모하여 광물 자석으로 사용할 수 있습니다.",
+	"bonus.apotheosis:twilight_ore_magnet.desc": "%s의 내구도를 더 소모하여 광물 자석을 사용할 수 있습니다.",
 	"bonus.apotheosis:twilight_treasure_goblin.desc": "개체를 공격하면 %s%% 확률로 보물 고블린을 소환합니다. %s",
 	"bonus.apotheosis:twilight_fortification.desc": "피해를 받으면 %s%% 확률로 황혼의 보호막으로 강화됩니다. %s",
 
@@ -884,7 +884,7 @@
     "enchantment.apotheosis.shield_bash.desc": "방패로 피해를 가할 수 있게합니다.",
 
     "enchantment.apotheosis.reflective": "반사적인 방어",
-    "enchantment.apotheosis.reflective.desc": "공격을 막으면 공격자에게 피해를 가할 수 있습니다.",
+    "enchantment.apotheosis.reflective.desc": "공격을 막으면 공격 한 대상에게 피해를 가할 수 있습니다.",
 
     "enchantment.apotheosis.berserkers_fury": "광전사의 격분",
     "enchantment.apotheosis.berserkers_fury.desc": "피해를 받을 시 격분 상태가 됩니다. [⌛ 0:45]",
@@ -893,19 +893,19 @@
     "enchantment.apotheosis.knowledge.desc": "적의 전리품이 즉시 경험치로 변환됩니다.",
 
     "enchantment.apotheosis.splitting": "분할",
-    "enchantment.apotheosis.splitting.desc": "모루가 책 위에 떨어지면, 책에 있는 마법이 여러 개로 분리됩니다.",
+    "enchantment.apotheosis.splitting.desc": "모루가 책 위에 떨어지면, 책에 있는 마법이 여러 개로 분리합니다.",
     
     "enchantment.apotheosis.obliteration": "소멸",
-    "enchantment.apotheosis.obliteration.desc": "모루가 책 위에 떨어지면, 책에 있는 마법이 단일로 분리됩니다.",
+    "enchantment.apotheosis.obliteration.desc": "모루가 책 위에 떨어지면, 책에 있는 마법이 단일로 분리합니다.",
 
     "enchantment.apotheosis.natures_blessing": "자연의 축복",
-    "enchantment.apotheosis.natures_blessing.desc": "괭이를 뼛가루 역할로 사용할 수 있도록 합니다.",
+    "enchantment.apotheosis.natures_blessing.desc": "괭이에 뼛가루를 사용할 수 있도록 합니다.",
 
     "enchantment.apotheosis.rebounding": "리바운딩",
-    "enchantment.apotheosis.rebounding.desc": "근접 공격자는 훨씬 더 멀리 떨어져 있는 것을 발견할 수 있습니다.",
+    "enchantment.apotheosis.rebounding.desc": "근접 공격을 받으면 공격 한 대상을 훨씬 멀리 밀칩니다.",
 
     "enchantment.apotheosis.magic_protection": "오컬트 혐오",
-    "enchantment.apotheosis.magic_protection.desc": "사용자가 받는 마법 피해가 감소합니다.",
+    "enchantment.apotheosis.magic_protection.desc": "받는 마법 피해가 감소합니다.",
     
     "enchantment.apotheosis.crescendo": "화살의 크레센도",
     "enchantment.apotheosis.crescendo.desc": "쇠뇌는 재장전할 때마다 화살을 추가로 발사할 수 있습니다.",
