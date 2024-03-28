@@ -195,7 +195,7 @@
 
 	"affix.apotheosis:breaker/special/enlightened": "빛을 밝히는",
     "affix.apotheosis:breaker/special/enlightened.suffix": "- 빛의 인도자",
-    "affix.apotheosis:breaker/special/enlightened.desc": "이 도구는 내구도 %s를 희생하여 횃불을 설치할 수 있습니다.",
+    "affix.apotheosis:breaker/special/enlightened.desc": "이 도구는 내구도 %s를 소모하여 횃불을 설치할 수 있습니다.",
 
 	"affix.apotheosis:shield/special/psychic": "초능력의",
     "affix.apotheosis:shield/special/psychic.suffix": "- 복수심",
@@ -344,7 +344,7 @@
 	"bonus.apotheosis:all_stats.desc": "모든 능력치 +%s%%",
 	"gem.apotheosis:overworld/royalty.bonus.pickaxe": "구리 광석을 캐면 %s%% 확률로 구리 대신 금 원석을 떨굽니다.",
 	"bonus.apotheosis:mageslayer.desc": "마법 피해를 %s%% 만큼 무시하고 같은 양만큼 회복합니다.",
-	"bonus.apotheosis:twilight_ore_magnet.desc": "광석 자석으로 사용할 수 있으며 그 대가로 %s의 내구도가 더 닳습니다.",
+	"bonus.apotheosis:twilight_ore_magnet.desc": "%s의 내구도를 더 소모하여 광물 자석으로 사용할 수 있습니다.",
 	"bonus.apotheosis:twilight_treasure_goblin.desc": "개체를 공격하면 %s%% 확률로 보물 고블린을 소환합니다. %s",
 	"bonus.apotheosis:twilight_fortification.desc": "피해를 받으면 %s%% 확률로 황혼의 보호막으로 강화됩니다. %s",
 
@@ -375,7 +375,7 @@
 	"item.apotheosis.gem.apotheosis:twilight/forest": "황혼의 숲의 보석",
 	"item.apotheosis.gem.apotheosis:twilight/queen": "얼음 여왕의 보석",
 
-	"item.apotheosis.boss_summoner": "아포틱 보스 생성기",
+	"item.apotheosis.boss_summoner": "어포틱 보스 생성기",
 	"item.apotheosis.gem.apotheosis:common": "금이 간 %s",
 	"item.apotheosis.gem.apotheosis:uncommon": "갈라진 %s",
 	"item.apotheosis.gem.apotheosis:rare": "결점이 있는 %s",
@@ -386,7 +386,7 @@
 	"item.apotheosis.vial_of_expulsion": "이글거리는 추방의 약병",
 	"item.apotheosis.vial_of_unnaming": "이름 없는 약병",
 	"item.apotheosis.gem_dust": "보석 가루",
-	"item.apotheosis.gem_dust.desc": "으깨진 아포틱 보석",
+	"item.apotheosis.gem_dust.desc": "으깨진 어포틱 보석",
 	"item.apotheosis.common_material": "신비한 고철",
 	"item.apotheosis.uncommon_material": "낡은 원단",
 	"item.apotheosis.rare_material": "빛나는 수정 파편",
@@ -752,7 +752,7 @@
     "gui.apotheosis.enchant.eterna": "에테르나",
     "gui.apotheosis.enchant.quanta": "퀀타",
     "gui.apotheosis.enchant.arcana": "아르카나",
-    "gui.apotheosis.enchant.rectification": "수정",
+    "gui.apotheosis.enchant.rectification": "수정:",
     "info.apotheosis.ench_stats": "마법 부여 능력치:",
     "info.apotheosis.eterna": " - 에테르나: %s",
     "info.apotheosis.quanta": " - 퀀타: %s%%",
@@ -877,7 +877,7 @@
     "info.apotheosis.extraction_tome": "아이템에 있는 모든 마법을 추출합니다.",
     "info.apotheosis.extraction_tome2": "아이템을 파괴하지 않습니다.",
 
-    "enchantment.apotheosis.tempting": "Temptation",
+    "enchantment.apotheosis.tempting": "유혹",
     "enchantment.apotheosis.tempting.desc": "주변의 사육 가능한 동물들을 유인합니다.",
 
     "enchantment.apotheosis.shield_bash": "방패 치기",
@@ -914,10 +914,10 @@
     "enchantment.apotheosis.chromatic.desc": "깎아진 양털은 무작위로 색깔을 변경됩니다.",
 
     "enchantment.apotheosis.exploitation": "일꾼 착취",
-    "enchantment.apotheosis.exploitation.desc": "받는 양털은 두 배가 되지만 양은 피해를 입습니다.",
+    "enchantment.apotheosis.exploitation.desc": "받는 양털이 두 배가 되지만 양은 피해를 입습니다.",
 
     "enchantment.apotheosis.growth_serum": "성장 세럼",
-    "enchantment.apotheosis.growth_serum.desc": "양은 50%의 확률로 털을 즉시 재생합니다.",
+    "enchantment.apotheosis.growth_serum.desc": "양이 50%의 확률로 털을 즉시 재생합니다.",
 
     "enchantment.apotheosis.earths_boon": "지구의 축복",
     "enchantment.apotheosis.earths_boon.desc": "돌을 채굴할 때 광석이 발견될 수 있습니다.",
@@ -1072,7 +1072,7 @@
     "info.apotheosis.library": "마법 부여 문고는 마법을 저장하는 블록입니다.  마법이 부여된 책을 넣으면 보관됩니다.  저장된 마법을 마우스 왼쪽 버튼으로 클릭하면 한 레벨씩 추출됩니다.  Shift 키를 누른 채 클릭하면 사용 가능한 최대 레벨이 추출됩니다.",
     "info.apotheosis.runes": "룬이 드러남",
     "info.apotheosis.no_clue": "룬이 아무것도 드러내지 못했음",
-    "info.apotheosis.runes_all": "룬이 모두 드러냄",
+    "info.apotheosis.runes_all": "룬이 모두 드러남",
     "info.apotheosis.arcana_bonus": "아르카나 부여",
     "info.apotheosis.weights_changed": "희귀도 가중치가 변경됨",
     "info.apotheosis.min_enchants": "최소 %s 마법 부여",
