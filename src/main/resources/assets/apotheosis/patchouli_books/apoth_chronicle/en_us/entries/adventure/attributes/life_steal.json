@@ -1,6 +1,6 @@
 {
     "name": "Life Steal",
-    "icon": "apotheosis:textures/mob_effect/bleeding.png",
+    "icon": "attributeslib:textures/mob_effect/bleeding.png",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
 	"sortnum": 0,

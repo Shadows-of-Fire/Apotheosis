@@ -17,7 +17,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +39,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public class ItemStackMixin {
 
     @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)
-    public void apoth_affixItemName(CallbackInfoReturnable<Component> ci) {
+    public void apoth_affixItemName(CallbackInfoReturnable<Component> cir) {
         ItemStack ths = (ItemStack) (Object) this;
         CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);
         if (afxData != null && afxData.contains(AffixHelper.NAME, 8)) {
@@ -44,14 +47,20 @@ public class ItemStackMixin {
                 Component component = AffixHelper.getName(ths);
                 if (component.getContents() instanceof TranslatableContents tContents) {
                     int idx = "misc.apotheosis.affix_name.four".equals(tContents.getKey()) ? 2 : 1;
-                    tContents.getArgs()[idx] = ci.getReturnValue();
-                    ci.setReturnValue(component);
+                    tContents.getArgs()[idx] = cir.getReturnValue();
+                    cir.setReturnValue(component);
                 }
                 else afxData.remove(AffixHelper.NAME);
             }
             catch (Exception exception) {
                 afxData.remove(AffixHelper.NAME);
             }
+        }
+
+        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(afxData);
+        if (rarity.isBound()) {
+            Component recolored = cir.getReturnValue().copy().withStyle(s -> s.withColor(rarity.get().getColor()));
+            cir.setReturnValue(recolored);
         }
     }
 
@@ -63,8 +72,11 @@ public class ItemStackMixin {
     @ModifyVariable(at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getDamageValue()I"), method = "hurt", argsOnly = true, ordinal = 0)
     public int swapDura(int amount, int amountCopy, RandomSource pRandom, @Nullable ServerPlayer pUser) {
         int blocked = 0;
-        DoubleStream chances = AffixHelper.streamAffixes((ItemStack) (Object) this).mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser));
-        double chance = chances.reduce(0, (res, ele) -> res + (1 - res) * ele);
+        DoubleStream socketBonuses = SocketHelper.getGems((ItemStack) (Object) this).getDurabilityBonusPercentage(pUser);
+        DoubleStream afxBonuses = AffixHelper.streamAffixes((ItemStack) (Object) this).mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser));
+        DoubleStream bonuses = DoubleStream.concat(socketBonuses, afxBonuses);
+        double chance = bonuses.reduce(0, (res, ele) -> res + (1 - res) * ele);
+
         int delta = 1;
         if (chance < 0) {
             delta = -1;

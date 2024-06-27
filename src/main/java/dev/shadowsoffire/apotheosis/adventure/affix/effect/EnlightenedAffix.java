@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -9,11 +8,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -39,8 +39,17 @@ public class EnlightenedAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", this.values.get(rarity).getInt(level)));
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return Component.translatable("affix." + this.getId() + ".desc", getTrueLevel(rarity, level));
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        MutableComponent comp = this.getDescription(stack, rarity, level);
+
+        Component minComp = Component.literal(fmt(this.getTrueLevel(rarity, 0)));
+        Component maxComp = Component.literal(fmt(this.getTrueLevel(rarity, 1)));
+        return comp.append(valueBounds(minComp, maxComp));
     }
 
     @Override
@@ -57,6 +66,10 @@ public class EnlightenedAffix extends Affix {
     @Override
     public Codec<? extends Affix> getCodec() {
         return CODEC;
+    }
+
+    protected int getTrueLevel(LootRarity rarity, float level) {
+        return this.values.get(rarity).getInt(level);
     }
 
 }

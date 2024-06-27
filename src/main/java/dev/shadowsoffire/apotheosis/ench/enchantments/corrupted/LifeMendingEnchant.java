@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.fml.ModList;
@@ -44,6 +45,11 @@ public class LifeMendingEnchant extends Enchantment {
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
+    }
+
+    @Override
+    protected boolean checkCompatibility(Enchantment pOther) {
+        return super.checkCompatibility(pOther) && pOther != Enchantments.MENDING;
     }
 
     @Override

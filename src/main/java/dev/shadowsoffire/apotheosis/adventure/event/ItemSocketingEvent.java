@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.event;
 
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketingRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;

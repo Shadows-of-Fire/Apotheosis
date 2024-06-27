@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "apotheosis:items/potion_charm",
+        "layer1": "apotheosis:items/potion_charm_glow"
+    }
+}

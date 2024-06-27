@@ -8,10 +8,11 @@
     
     "death.attack.apotheosis.execute": "%s was executed by %s",
     "death.attack.apotheosis.execute.item": "%s was executed by %s using %s",
-    
+
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
     "misc.apotheosis.affix_name.four": "%s %s %s %s",
+    "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
 
     "misc.apotheosis.radial_state_updated": "Radial mining mode updated to \"%s\"",
     "misc.apotheosis.radial_state.require_not_sneaking": "Disabled While Sneaking",
@@ -287,10 +288,8 @@
     "affix.apotheosis:armor/mob_effect/bursting": "Bursting",
     "affix.apotheosis:armor/mob_effect/bursting.suffix": "of Vitality",
 
-    "affix.apotheosis:socket": "",
-    "affix.apotheosis:socket.suffix": "",
-    "affix.apotheosis:durable": "",
-    "affix.apotheosis:durable.suffix": "",
+    "affix.apotheosis:durable": "Durable",
+    "affix.apotheosis:durable.suffix": "of Durability",
 
     "affix.apotheosis.target.attack_self": "On hit, gain %s",
     "affix.apotheosis.target.attack_target": "On hit, inflict %s",
@@ -393,10 +392,22 @@
     "item.apotheosis.epic_material": "Arcane Sands",
     "item.apotheosis.mythic_material": "Godforged Pearl",
     "item.apotheosis.ancient_material": "Manifestation of Infinity",
+    "item.apotheosis.gem_fused_slate": "Gem-Fused Slate",
+
     "item.apotheosis.sigil_of_socketing": "Sigil of Socketing",
-    "item.apotheosis.superior_sigil_of_socketing": "Superior Sigil of Socketing",
-    "item.apotheosis.sigil_of_enhancement": "[NYI] Sigil of Enhancement",
-    "item.apotheosis.superior_sigil_of_enhancement": "[NYI] Superior Sigil of Enhancement",
+    "item.apotheosis.sigil_of_socketing.desc": "Adds one socket to an item",
+
+    "item.apotheosis.sigil_of_withdrawal": "Sigil of Withdrawal",
+    "item.apotheosis.sigil_of_withdrawal.desc": "Removes all socketed gems from an item",
+
+    "item.apotheosis.sigil_of_rebirth": "Sigil of Rebirth",
+    "item.apotheosis.sigil_of_rebirth.desc": "Used to fuel the Reforging Table",
+
+    "item.apotheosis.sigil_of_enhancement": "Sigil of Enhancement",
+    "item.apotheosis.sigil_of_enhancement.desc": "Used to fuel the Augmentation Table",
+
+    "item.apotheosis.sigil_of_unnaming": "Sigil of Unnaming",
+    "item.apotheosis.sigil_of_unnaming.desc": "Removes the affixed name from an item",
 
     "block.apotheosis.boss_spawner": "Boss Spawner",
     "block.apotheosis.gem_cutting_table": "Gem Cutting Table",
@@ -413,6 +424,8 @@
     "button.apotheosis.no_salvage_all": "No valid items in inventory",
     "button.apotheosis.upgrade": "Upgrade Gem",
     "button.apotheosis.upgrade.no": "Missing Inputs",
+    "button.apotheosis.augmenting.upgrade": "Upgrade Selected Affix",
+    "button.apotheosis.augmenting.reroll": "Reroll Selected Affix",
 
     "menu.apotheosis.gem_cutting": "Gem Cutting",
     "container.apotheosis.salvage": "Salvage",

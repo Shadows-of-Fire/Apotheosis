@@ -16,17 +16,11 @@ import dev.shadowsoffire.apotheosis.Apotheosis.ApotheosisReloadEvent;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.AddSocketsRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.ExpulsionRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.ExtractionRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.UnnamingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
@@ -37,7 +31,6 @@ import dev.shadowsoffire.apotheosis.adventure.compat.AdventureTOPPlugin;
 import dev.shadowsoffire.apotheosis.adventure.compat.AdventureTwilightCompat;
 import dev.shadowsoffire.apotheosis.adventure.compat.GatewaysCompat;
 import dev.shadowsoffire.apotheosis.adventure.gen.BlacklistModifier;
-import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixConvertLootModifier;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixHookLootModifier;
 import dev.shadowsoffire.apotheosis.adventure.loot.AffixLootModifier;
@@ -47,6 +40,12 @@ import dev.shadowsoffire.apotheosis.adventure.loot.GemLootModifier;
 import dev.shadowsoffire.apotheosis.adventure.loot.GemLootPoolEntry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.AddSocketsRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.UnnamingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.WithdrawalRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
@@ -68,7 +67,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -86,8 +84,6 @@ public class AdventureModule {
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
     public static final boolean STAGES_LOADED = ModList.get().isLoaded("gamestages");
     static final Map<ResourceLocation, LootCategory> IMC_TYPE_OVERRIDES = new HashMap<>();
-
-    public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
 
     public AdventureModule() {
         Adventure.bootstrap();
@@ -114,8 +110,7 @@ public class AdventureModule {
         MinibossRegistry.INSTANCE.registerToBus();
         Apotheosis.HELPER.registerProvider(f -> {
             f.addRecipe(new SocketingRecipe());
-            f.addRecipe(new ExpulsionRecipe());
-            f.addRecipe(new ExtractionRecipe());
+            f.addRecipe(new WithdrawalRecipe());
             f.addRecipe(new UnnamingRecipe());
         });
         e.enqueueWork(() -> {
@@ -133,8 +128,8 @@ public class AdventureModule {
             CraftingHelper.register(Apotheosis.loc("affix_item"), AffixItemIngredient.Serializer.INSTANCE);
             CraftingHelper.register(Apotheosis.loc("gem"), GemIngredient.Serializer.INSTANCE);
 
-            TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.VIAL_OF_EXPULSION,
-                Items.VIAL_OF_EXTRACTION, Items.VIAL_OF_UNNAMING, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_ENHANCEMENT, Items.SUPERIOR_SIGIL_OF_SOCKETING, Items.SUPERIOR_SIGIL_OF_ENHANCEMENT, Items.BOSS_SUMMONER,
+            TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST,
+                Items.GEM_FUSED_SLATE, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.BOSS_SUMMONER,
                 Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE);
             TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.GEM);
         });
@@ -145,13 +140,13 @@ public class AdventureModule {
         e.getRegistry().register(new TickingBlockEntityType<>(BossSpawnerTile::new, ImmutableSet.of(Blocks.BOSS_SPAWNER.get()), false, true), "boss_spawner");
         e.getRegistry().register(new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Blocks.SIMPLE_REFORGING_TABLE.get(), Blocks.REFORGING_TABLE.get()), true, false), "reforging_table");
         e.getRegistry().register(new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Blocks.SALVAGING_TABLE.get()), null), "salvaging_table");
+        e.getRegistry().register(new TickingBlockEntityType<>(AugmentingTableTile::new, ImmutableSet.of(Blocks.AUGMENTING_TABLE.get()), true, false), "augmenting_table");
     }
 
     @SubscribeEvent
     public void serializers(Register<RecipeSerializer<?>> e) {
         e.getRegistry().register(SocketingRecipe.Serializer.INSTANCE, "socketing");
-        e.getRegistry().register(ExpulsionRecipe.Serializer.INSTANCE, "expulsion");
-        e.getRegistry().register(ExtractionRecipe.Serializer.INSTANCE, "extraction");
+        e.getRegistry().register(WithdrawalRecipe.Serializer.INSTANCE, "widthdrawal");
         e.getRegistry().register(UnnamingRecipe.Serializer.INSTANCE, "unnaming");
         e.getRegistry().register(AddSocketsRecipe.Serializer.INSTANCE, "add_sockets");
         e.getRegistry().register(SalvagingRecipe.Serializer.INSTANCE, "salvaging");

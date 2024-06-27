@@ -2,20 +2,22 @@ package dev.shadowsoffire.apotheosis.adventure.affix;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
@@ -64,15 +66,17 @@ public abstract class Affix implements CodecProvider<Affix> {
     public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {}
 
     /**
-     * Adds all tooltip data from this affix to the given stack's tooltip list.
-     * This consumer will insert tooltips immediately after enchantment tooltips, or after the name if none are present.
+     * Gets the one-line description for this affix, to be added to the item stack's tooltip.
+     * <p>
+     * Description tooltips are added immediately after enchantment tooltips, or after the name if none are present.
+     * If you do not want to show a specific affix description, return {@link Component#empty()}.
      *
      * @param stack    The stack the affix is on.
      * @param level    The level of this affix.
      * @param tooltips The destination for tooltips.
      */
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", fmt(level)));
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return Component.translatable("affix." + this.getId() + ".desc", fmt(level));
     }
 
     /**
@@ -80,9 +84,21 @@ public abstract class Affix implements CodecProvider<Affix> {
      *
      * @return The name part, prefix or suffix, as requested.
      */
-    public Component getName(ItemStack stack, LootRarity rarity, float level, boolean prefix) {
+    public Component getName(boolean prefix) {
         if (prefix) return Component.translatable("affix." + this.getId());
         return Component.translatable("affix." + this.getId() + ".suffix");
+    }
+
+    /**
+     * Returns a component containing the text shown in the Augmenting Table.
+     * <p>
+     * This text should show the current affix power, as well as the min/max power bounds, displaying to the user what the full range is.
+     * 
+     * @param stack The stack the affix is on.
+     * @param level The level of this affix.
+     */
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        return this.getDescription(stack, rarity, level);
     }
 
     /**
@@ -264,6 +280,10 @@ public abstract class Affix implements CodecProvider<Affix> {
     public static String fmt(float f) {
         if (f == (long) f) return String.format("%d", (long) f);
         else return ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(f);
+    }
+
+    public static MutableComponent valueBounds(Component min, Component max) {
+        return CommonComponents.space().append(Component.translatable("misc.apotheosis.affix_bounds", min, max).withStyle(ChatFormatting.DARK_GRAY));
     }
 
     public final ResourceLocation getId() {

@@ -30,13 +30,15 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
 
     protected final Player player;
-    protected final InternalItemHandler inputInv = new InternalItemHandler(15);
+    protected final InternalItemHandler inputInv = new InternalItemHandler(12);
 
     public SalvagingMenu(int id, Inventory inv, BlockPos pos) {
         super(Menus.SALVAGE.get(), id, inv, pos);
         this.player = inv.player;
-        for (int i = 0; i < 15; i++) {
-            this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(this.level, s) != null){
+        int leftOffset = 17;
+        int topOffset = 17;
+        for (int i = 0; i < 12; i++) {
+            this.addSlot(new UpdatingSlot(this.inputInv, i, leftOffset + i % 4 * 19, topOffset + i / 4 * 19, s -> findMatch(this.level, s) != null){
 
                 @Override
                 public int getMaxStackSize() {
@@ -51,11 +53,13 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
         }
 
         for (int i = 0; i < 6; i++) {
-            this.addSlot(new FilteredSlot(this.tile.output, i, 134 + i % 2 * 18, 17 + i / 2 * 18, Predicates.alwaysFalse()));
+            leftOffset = 124;
+            topOffset = 17;
+            this.addSlot(new FilteredSlot(this.tile.output, i, leftOffset + i % 2 * 19, topOffset + i / 2 * 19, Predicates.alwaysFalse()));
         }
 
-        this.addPlayerSlots(inv, 8, 84);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && findMatch(this.level, stack) != null, 0, 15);
+        this.addPlayerSlots(inv, 8, 92);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && findMatch(this.level, stack) != null, 0, 12);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
         this.registerInvShuffleRules();
     }
@@ -99,7 +103,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
     }
 
     protected void salvageAll() {
-        for (int inSlot = 0; inSlot < 15; inSlot++) {
+        for (int inSlot = 0; inSlot < 12; inSlot++) {
             Slot s = this.getSlot(inSlot);
             ItemStack stack = s.getItem();
             List<ItemStack> outputs = salvageItem(this.level, stack);

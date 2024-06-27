@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -25,6 +26,7 @@ public class AffixHookLootModifier extends LootModifier {
         if (!Apotheosis.enableAdventure) return generatedLoot;
         if (ctx.hasParam(LootContextParams.TOOL)) {
             ItemStack tool = ctx.getParam(LootContextParams.TOOL);
+            SocketHelper.getGems(tool).modifyLoot(generatedLoot, ctx);
             AffixHelper.streamAffixes(tool).forEach(inst -> inst.modifyLoot(generatedLoot, ctx));
         }
         return generatedLoot;

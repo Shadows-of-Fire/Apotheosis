@@ -14,11 +14,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public interface DrawsOnLeft {
 
-    /**
-     * Renders a list of text as a tooltip attached to the left edge of the currently open container screen.
-     */
     default void drawOnLeft(GuiGraphics gfx, List<Component> list, int y) {
-        if (list.isEmpty()) return;
         int xPos = ths().getGuiLeft() - 16 - list.stream().map(ths().font::width).max(Integer::compare).get();
         int maxWidth = 9999;
         if (xPos < 0) {
@@ -26,10 +22,21 @@ public interface DrawsOnLeft {
             xPos = -8;
         }
 
-        List<FormattedText> split = new ArrayList<>();
-        int lambdastupid = maxWidth;
-        list.forEach(comp -> split.addAll(ths().font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
+        drawOnLeft(gfx, list, y, maxWidth);
+    }
 
+    /**
+     * Renders a list of text as a tooltip attached to the left edge of the currently open container screen.
+     */
+    default void drawOnLeft(GuiGraphics gfx, List<Component> list, int y, int maxWidth) {
+        if (list.isEmpty()) {
+            return;
+        }
+
+        List<FormattedText> split = new ArrayList<>();
+        list.forEach(comp -> split.addAll(ths().font.getSplitter().splitLines(comp, maxWidth, comp.getStyle())));
+
+        int xPos = ths().getGuiLeft() - 16 - split.stream().map(ths().font::width).max(Integer::compare).get();
         gfx.renderComponentTooltip(ths().font, split, xPos, y, ItemStack.EMPTY);
     }
 

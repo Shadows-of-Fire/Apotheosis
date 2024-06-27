@@ -33,11 +33,6 @@
 			"type": "patchouli:text",
 			"title": "Mythic",
 			"text": "$(#ED7014)Mythic$() items were forged by a lost entity of great power. They receive four stats and two effects, and may receive a third effect as well as three sockets.$(p)They also carry a significant durability bonus."
-		},
-		{
-			"type": "patchouli:text",
-			"title": "Ancient",
-			"text": "An $(b)Ancient$() item is the pinnacle of creation, an unimaginable concentration of power bestowed only to the luckiest.$(p)They're so rare, some might say they aren't even implemented yet..."
 		}
 	]
 }

@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
@@ -21,7 +20,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -74,7 +72,7 @@ public class AffixHelper {
     }
 
     /**
-     * Gets the affixes of an item. Changes to this map will not write-back to the affixes on the itemstack.
+     * Gets the affixes of an item. The returned map is immutable.
      * <p>
      * Due to potential reloads, it is possible for an affix instance to become unbound but still remain cached.
      *
@@ -88,9 +86,8 @@ public class AffixHelper {
     }
 
     public static Map<DynamicHolder<? extends Affix>, AffixInstance> getAffixesImpl(ItemStack stack) {
-        Map<DynamicHolder<? extends Affix>, AffixInstance> map = new HashMap<>();
         if (stack.isEmpty()) return Collections.emptyMap();
-        SocketHelper.loadSocketAffix(stack, map);
+        Map<DynamicHolder<? extends Affix>, AffixInstance> map = new HashMap<>();
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
         if (afxData != null && afxData.contains(AFFIXES)) {
             CompoundTag affixes = afxData.getCompound(AFFIXES);
@@ -115,19 +112,8 @@ public class AffixHelper {
         return stack.hasTag() && !stack.getTag().getCompound(AFFIX_DATA).getCompound(AFFIXES).isEmpty();
     }
 
-    public static void addLore(ItemStack stack, Component lore) {
-        CompoundTag display = stack.getOrCreateTagElement(DISPLAY);
-        ListTag tag = display.getList(LORE, 8);
-        tag.add(StringTag.valueOf(Component.Serializer.toJson(lore)));
-        display.put(LORE, tag);
-    }
-
     public static void setRarity(ItemStack stack, LootRarity rarity) {
-        Component comp = Component.translatable("%s", Component.literal("")).withStyle(Style.EMPTY.withColor(rarity.getColor()));
         CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
-        afxData.putString(NAME, Component.Serializer.toJson(comp));
-        // if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack,
-        // Component.translatable("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
         afxData.putString(RARITY, RarityRegistry.INSTANCE.getKey(rarity).toString());
     }
 
@@ -151,7 +137,7 @@ public class AffixHelper {
     public static Map<DynamicHolder<? extends Affix>, AffixInstance> getAffixes(AbstractArrow arrow) {
         Map<DynamicHolder<? extends Affix>, AffixInstance> map = new HashMap<>();
         CompoundTag afxData = arrow.getPersistentData().getCompound(AFFIX_DATA);
-        SocketHelper.loadSocketAffix(arrow, map);
+
         if (afxData != null && afxData.contains(AFFIXES)) {
             CompoundTag affixes = afxData.getCompound(AFFIXES);
             DynamicHolder<LootRarity> rarity = getRarity(afxData);
@@ -201,6 +187,19 @@ public class AffixHelper {
 
     public static StepFunction step(float min, int steps, float step) {
         return new StepFunction(min, steps, step);
+    }
+
+    /**
+     * Helper method to add vanilla lore text to an item stack.
+     *
+     * @param stack The stack to add text to
+     * @param lore  The text component to add
+     */
+    public static void addLore(ItemStack stack, Component lore) {
+        CompoundTag display = stack.getOrCreateTagElement(ItemStack.TAG_DISPLAY);
+        ListTag tag = display.getList(ItemStack.TAG_LORE, 8);
+        tag.add(StringTag.valueOf(Component.Serializer.toJson(lore)));
+        display.put(ItemStack.TAG_LORE, tag);
     }
 
 }

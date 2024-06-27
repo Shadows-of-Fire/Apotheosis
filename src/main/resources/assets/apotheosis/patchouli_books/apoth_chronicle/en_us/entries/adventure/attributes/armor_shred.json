@@ -1,6 +1,6 @@
 {
     "name": "Armor Shred",
-    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
 	"sortnum": 0,

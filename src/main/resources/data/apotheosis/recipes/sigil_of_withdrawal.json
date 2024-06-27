@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    "SBS",
+    "ELE",
+    "SGS"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+	"G": {
+      "item": "apotheosis:gem_dust"
+    },
+	"S": {
+      "item": "apotheosis:gem_fused_slate"
+    },
+	"E": {
+      "item": "minecraft:ender_pearl"
+    },
+	"L": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "result": {
+    "item": "apotheosis:sigil_of_withdrawal",
+    "count": 4
+  }
+}

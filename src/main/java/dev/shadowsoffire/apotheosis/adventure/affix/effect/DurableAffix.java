@@ -1,7 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 
-import java.util.function.Consumer;
-
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.Codec;
@@ -11,6 +9,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
@@ -28,8 +27,13 @@ public class DurableAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        super.addInformation(stack, rarity, level * 100, list);
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return super.getDescription(stack, rarity, level * 100);
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        return this.getDescription(stack, rarity, level);
     }
 
     @Override

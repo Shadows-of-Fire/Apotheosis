@@ -1,5 +1,8 @@
 package dev.shadowsoffire.apotheosis.adventure.affix;
 
+/**
+ * TODO: Replace this with some kind of tag-like system that permits for the creation of expressive loot rules.
+ */
 public enum AffixType {
     STAT,
     POTION,

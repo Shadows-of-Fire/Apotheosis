@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -18,7 +17,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -177,6 +175,8 @@ public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Co
         return Codec.unboundedMap(LootRarity.CODEC, codec);
     }
 
+    // TODO: Convert this to a subtyped system so that durability and socket info can be disjoint
+    // Such a system would also permit adding loot rules thta apply specific affixes, or a pool of affixes.
     public static record LootRule(AffixType type, float chance, @Nullable LootRule backup) {
 
         public static final Codec<LootRule> CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -195,14 +195,14 @@ public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Co
             this(type, chance, backup.orElse(null));
         }
 
-        public void execute(ItemStack stack, LootRarity rarity, Set<DynamicHolder<Affix>> currentAffixes, MutableInt sockets, RandomSource rand) {
+        public void execute(ItemStack stack, LootRarity rarity, Set<DynamicHolder<? extends Affix>> currentAffixes, MutableInt sockets, RandomSource rand) {
             if (this.type == AffixType.DURABILITY) return;
             if (rand.nextFloat() <= this.chance) {
                 if (this.type == AffixType.SOCKET) {
                     sockets.add(1);
                     return;
                 }
-                List<DynamicHolder<Affix>> available = AffixHelper.byType(this.type).stream().filter(a -> a.get().canApplyTo(stack, LootCategory.forItem(stack), rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
+                List<DynamicHolder<? extends Affix>> available = LootController.getAvailableAffixes(stack, rarity, currentAffixes, this.type);
                 if (available.size() == 0) {
                     if (this.backup != null) this.backup.execute(stack, rarity, currentAffixes, sockets, rand);
                     else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", ForgeRegistries.ITEMS.getKey(stack.getItem()), RarityRegistry.INSTANCE.getKey(rarity), this.type, this.chance);

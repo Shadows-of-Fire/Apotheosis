@@ -9,7 +9,7 @@
             "type": "patchouli:spotlight",
 			"item": "apotheosis:gem_dust",
 			"link_recipe": true,
-            "text": "All Apotheotic Gems can be reduced to $(br)$(9)Gem Dust$() via crushing.$(p)One method is crushing them with an anvil $(br)in-world."
+            "text": "All Apothic Gems can be reduced to $(br)$(9)Gem Dust$() via crushing.$(p)One method is crushing them with an anvil $(br)in-world."
         },
 		{
             "type": "patchouli:crafting",

@@ -36,7 +36,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(stack);
-            return stack.is(Items.GEM_DUST.get());
+            return stack.is(Items.SIGIL_OF_REBIRTH.get());
         };
 
         @Override

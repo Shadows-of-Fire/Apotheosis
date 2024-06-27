@@ -62,13 +62,13 @@ public class SimpleTexButton extends Button {
         if (!this.isActive()) {
             yTex += this.height;
         }
-        else if (this.isHoveredOrFocused()) {
+        else if (this.isHovered()) {
             yTex += this.height * 2;
         }
 
         RenderSystem.enableDepthTest();
         gfx.blit(this.texture, this.getX(), this.getY(), this.xTexStart, yTex, this.width, this.height, this.textureWidth, this.textureHeight);
-        if (this.isHoveredOrFocused()) {
+        if (this.isHovered()) {
             this.renderToolTip(gfx, pMouseX, pMouseY);
         }
     }

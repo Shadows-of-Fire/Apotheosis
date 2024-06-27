@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,14 +12,18 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
+import dev.shadowsoffire.attributeslib.AttributesLib;
+import dev.shadowsoffire.attributeslib.api.IFormattableAttribute;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -59,7 +62,30 @@ public class AttributeAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {}
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return Component.empty();
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        ModifierInst modif = this.modifiers.get(rarity);
+        double value = modif.valueFactory.get(level);
+
+        MutableComponent comp;
+        MutableComponent valueComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, value, AttributesLib.getTooltipFlag());
+
+        if (value > 0.0D) {
+            comp = Component.translatable("attributeslib.modifier.plus", valueComp, Component.translatable(this.attribute.getDescriptionId())).withStyle(ChatFormatting.BLUE);
+        }
+        else {
+            value *= -1.0D;
+            comp = Component.translatable("attributeslib.modifier.take", valueComp, Component.translatable(this.attribute.getDescriptionId())).withStyle(ChatFormatting.RED);
+        }
+
+        Component minComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, modif.valueFactory.get(0), AttributesLib.getTooltipFlag());
+        Component maxComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, modif.valueFactory.get(1), AttributesLib.getTooltipFlag());
+        return comp.append(valueBounds(minComp, maxComp));
+    }
 
     @Override
     public void addModifiers(ItemStack stack, LootRarity rarity, float level, EquipmentSlot type, BiConsumer<Attribute, AttributeModifier> map) {

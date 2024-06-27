@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public record ReforgingRecipe(ResourceLocation id, DynamicHolder<LootRarity> rarity, int matCost, int dustCost, int levelCost) implements Recipe<Container> {
+public record ReforgingRecipe(ResourceLocation id, DynamicHolder<LootRarity> rarity, int matCost, int sigilCost, int levelCost) implements Recipe<Container> {
 
     @Override
     public ResourceLocation getId() {
@@ -42,16 +42,16 @@ public record ReforgingRecipe(ResourceLocation id, DynamicHolder<LootRarity> rar
         public ReforgingRecipe fromJson(ResourceLocation id, JsonObject obj) {
             DynamicHolder<LootRarity> rarity = RarityRegistry.byLegacyId(GsonHelper.getAsString(obj, "rarity"));
             int matCost = GsonHelper.getAsInt(obj, "material_cost");
-            int dustCost = GsonHelper.getAsInt(obj, "dust_cost");
+            int sigilCost = GsonHelper.getAsInt(obj, "sigil_cost");
             int levelCost = GsonHelper.getAsInt(obj, "level_cost");
-            return new ReforgingRecipe(id, rarity, matCost, dustCost, levelCost);
+            return new ReforgingRecipe(id, rarity, matCost, sigilCost, levelCost);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, ReforgingRecipe recipe) {
             buf.writeResourceLocation(recipe.rarity.getId());
             buf.writeByte(recipe.matCost);
-            buf.writeByte(recipe.dustCost);
+            buf.writeByte(recipe.sigilCost);
             buf.writeByte(recipe.levelCost);
         }
 

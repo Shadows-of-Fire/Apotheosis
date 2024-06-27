@@ -7,7 +7,7 @@
   "group": "something",
   "pattern": [
     "GDG",
-    "GLG",
+    "SSS",
     "GAG"
   ],
   "key": {
@@ -17,8 +17,8 @@
 	"G": {
       "item": "apotheosis:gem_dust"
     },
-	"L": {
-      "item": "minecraft:lodestone"
+	"S": {
+      "item": "apotheosis:gem_fused_slate"
     },
 	"A": {
       "item": "minecraft:amethyst_shard"
@@ -26,6 +26,6 @@
   },
   "result": {
     "item": "apotheosis:sigil_of_socketing",
-    "count": 1
+    "count": 3
   }
 }

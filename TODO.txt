@@ -1,3 +1,16 @@
+# May 2024 Dev Notes
+* Early-game experience gathering still feels bad, requires use of the Potion of Ancient Knowledge to get anywhere.
+  * KoTA is too gated for it to be useful early, and vanilla xp gains without spinning up a mob farm are really low.
+* Gem inventory management is a chore, and storing them at base is also a chore.
+  * Consider finally implementing the Gem Safe for at-base storage, and maybe make the vanilla Bundle available or create something similar for not-at-base storage.
+* Up-cycling of rarity materials may be necessary.
+  * May not be useful after personal progression is implemented, since you won't receive low-level materials anymore.
+* Incremental progression of individual items feels clunky
+  * Reforging has the same pitfalls as Vanilla Enchanting, i.e. total randomness
+  * Need a way to upgrade individual affixes, as well as reforge to a higher level without losing existing affixes.
+  * Add the Augmentation Table, allowing for upgrading/rerolling of individual affixes, as well as locking them (from reforging).
+
+
 # Ancient Items
 
 ## Terminology

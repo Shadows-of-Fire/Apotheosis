@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    "SSS",
+    "GGG",
+    "SSS"
+  ],
+  "key": {
+	"G": {
+      "item": "minecraft:flint"
+    },
+	"S": {
+      "item": "apotheosis:gem_fused_slate"
+    }
+  },
+  "result": {
+    "item": "apotheosis:sigil_of_unnaming",
+    "count": 6
+  }
+}

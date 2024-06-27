@@ -28,14 +28,16 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingScreen;
+import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingScreen;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemInstance;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingScreen;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -54,7 +56,9 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
@@ -90,7 +94,9 @@ public class AdventureModuleClient {
         MenuScreens.register(Menus.REFORGING.get(), ReforgingScreen::new);
         MenuScreens.register(Menus.SALVAGE.get(), SalvagingScreen::new);
         MenuScreens.register(Menus.GEM_CUTTING.get(), GemCuttingScreen::new);
+        MenuScreens.register(Menus.AUGMENTING.get(), AugmentingScreen::new);
         BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE.get(), k -> new ReforgingTableTileRenderer());
+        BlockEntityRenderers.register(Apoth.Tiles.AUGMENTING_TABLE.get(), k -> new AugmentingTableTileRenderer());
         MinecraftForge.EVENT_BUS.register(AdventureKeys.class);
     }
 
@@ -186,8 +192,8 @@ public class AdventureModuleClient {
     @SubscribeEvent
     public static void ignoreSocketUUIDS(GatherSkippedAttributeTooltipsEvent e) {
         ItemStack stack = e.getStack();
-        for (ItemStack gem : SocketHelper.getGems(stack)) {
-            GemItem.getUUIDs(gem).forEach(e::skipUUID);
+        for (GemInstance gem : SocketHelper.getGems(stack)) {
+            gem.getUUIDs().forEach(e::skipUUID);
         }
     }
 
@@ -220,7 +226,13 @@ public class AdventureModuleClient {
             Consumer<Component> dotPrefixer = afxComp -> {
                 components.add(Component.translatable("text.apotheosis.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
             };
-            affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().get().getType().ordinal())).forEach(inst -> inst.addInformation(dotPrefixer));
+
+            affixes.values().stream()
+                .sorted(Comparator.comparingInt(a -> a.affix().get().getType().ordinal()))
+                .map(AffixInstance::getDescription)
+                .filter(c -> c.getContents() != ComponentContents.EMPTY)
+                .forEach(dotPrefixer);
+
             e.getToolTip().addAll(1, components);
         }
     }

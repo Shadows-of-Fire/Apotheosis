@@ -68,10 +68,11 @@ public class EnchModuleClient {
                 state = block.getStateForPlacement(ctx);
             }
             catch (Exception ex) {
-                EnchModule.LOGGER.debug(ex.getMessage());
+                // Since we're calling with an invalid context, this may fail, and we need to handle that quietly.
+                EnchModule.LOGGER.trace(ex.getMessage());
                 StackTraceElement[] trace = ex.getStackTrace();
                 for (StackTraceElement traceElement : trace)
-                    EnchModule.LOGGER.debug("\tat " + traceElement);
+                    EnchModule.LOGGER.trace("\tat " + traceElement);
             }
 
             if (state == null) state = block.defaultBlockState();

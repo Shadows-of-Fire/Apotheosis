@@ -15,30 +15,25 @@
 			"text": "To begin reforging, craft a $(#5555FF)Simple Reforging Table$(), which allows you to reforge items up to $(#5555FF)Rare$() rarity."
 		},
 		{
-            "type": "patchouli:image",
+            "type": "patchouli:text",
 			"title": "Input Slots",
-			"images": [
-				"apotheosis:textures/gui/book/reforge_slots.png"
-			],
-			"text": "The Reforging Table has three input slots."
+			"text": "The Reforging Table has three input slots.$(p)The center slot holds the item you wish to reforge.$(p)The top-left slot holds $(9)Rarity Materials$() for the rarity you would like to reforge with."
         },
 		{
-			"type": "patchouli:text",
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_rebirth",
 			"title": "Input Slots",
-			"text": "The top slot holds the item you wish to reforge.$(p)The left slot accepts $(9)Rarity Materials$().$(p)The right slot is for Gem Dust.$(p)All slots must be filled for a successful reforging."
-		},
+			"text": "The bottom-right slot holds $(9)Sigils of Rebirth$(), a unique fuel item used during the Reforging process."
+        },
 		{
-            "type": "patchouli:image",
+            "type": "patchouli:text",
 			"title": "Reforging",
-			"images": [
-				"apotheosis:textures/gui/book/reforge_menu.png"
-			],
-			"text": "Similar to an Enchanting Table, you get three choices."
+			"text": "Similar to an Enchanting Table, when reforging, three choices are offered.$(p)Each choice represents a potential new form of the item being reforged.$(p)No choice is inherently stronger than the others."
         },
 		{
 			"type": "patchouli:text",
 			"title": "Reforging",
-			"text": "Each choice represents a potential new form of the item being reforged. The cost varies per choice, requiring 2/4/6 Gem Dust, Rarity Materials, and Experience Levels respectively.$(p)To reforge your item, simply click the desired choice."
+			"text": "For each rarity, there is a base cost of experience, sigils, and materials. The extra choice slots charge double and triple the base cost.$(p)To reforge your item, simply click the desired choice."
 		},
         {
             "type": "patchouli:crafting",
@@ -48,7 +43,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "Notes",
-			"text": "Items can be reforged multiple times, but you must pick up and replace the item first.$(p)No choice is inherently stronger than the others."
+			"text": "Items that are not already affixed can be reforged.$(p)Items can be reforged multiple times.$(p)Modpacks can change the costs or prevent reforging at certain rarities."
 		}
 	]
 }

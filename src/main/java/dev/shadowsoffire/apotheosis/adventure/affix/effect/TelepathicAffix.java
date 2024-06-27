@@ -12,6 +12,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -45,10 +46,10 @@ public class TelepathicAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
         LootCategory cat = LootCategory.forItem(stack);
         String type = cat.isRanged() || cat.isWeapon() ? "weapon" : "tool";
-        list.accept(Component.translatable("affix." + this.getId() + ".desc." + type));
+        return Component.translatable("affix." + this.getId() + ".desc." + type);
     }
 
     @Override

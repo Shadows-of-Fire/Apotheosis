@@ -45,24 +45,27 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
 
     @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true, require = 1)
     public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
-        if (this.getPierceLevel() > 0) {
+        if (this.getPierceLevel() > 0 && !this.isNoPhysics()) {
             if (this.piercingIgnoreEntityIds == null) {
                 this.piercingIgnoreEntityIds = new IntOpenHashSet(this.getPierceLevel());
             }
-            if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
+            if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) {
+                ci.cancel();
+            }
+            this.oldVel = this.getDeltaMovement();
         }
-
-        this.oldVel = this.getDeltaMovement();
     }
 
     @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true, require = 1)
     public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
-        if (this.getPierceLevel() > 0) {
+        if (this.getPierceLevel() > 0 && !this.isNoPhysics()) {
             this.piercingIgnoreEntityIds.add(res.getEntity().getId());
 
             if (this.piercingIgnoreEntityIds.size() <= this.getPierceLevel()) {
                 this.dealtDamage = false;
-                this.setDeltaMovement(this.oldVel);
+                if (this.oldVel != null) {
+                    this.setDeltaMovement(this.oldVel);
+                }
             }
         }
     }

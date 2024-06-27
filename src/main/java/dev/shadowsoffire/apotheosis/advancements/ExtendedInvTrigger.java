@@ -9,8 +9,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemInstance;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -65,7 +66,7 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
             return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() == Adventure.Items.GEM.get() && rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("socket".equals(type)) {
-            return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };
+            return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(GemInstance::isValid)) };
         }
         if ("nbt".equals(type)) {
             CompoundTag tag;

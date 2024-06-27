@@ -95,11 +95,12 @@ public class AdventureConfig {
 
         String[] lootRules = c.getStringList("Affix Item Loot Rules", "affixes", new String[] { "minecraft:chests.*|0.35", ".*chests.*|0.3", "twilightforest:structures.*|0.3" },
 
-            "Loot Rules, in the form of Loot Table Matchers, permitting affix items to spawn in loot tables."
-                + "\nThe format for these is domain:pattern|chance and domain is optional.  Domain is a modid, pattern is a regex string, and chance is a float 0..1 chance for the item to spawn in any matched tables."
-                + "\nIf you omit the domain, the format is pattern|chance, and the matcher will run for all domains."
-                + "\nThe pattern MUST be a valid regex string, and should match the paths of desired loot tables under the specified domain.  Note: \"Match Any Character\" is \".*\" (dot star) and not \"*\" (star)."
-                + "\nIf there is a match, an item has a chance to spawn in that loot table.");
+            """
+                Loot Rules, in the form of Loot Table Matchers, permitting affix items to spawn in loot tables.
+                The format for these is domain:pattern|chance and domain is optional.  Domain is a modid, pattern is a regex string, and chance is a float 0..1 chance for the item to spawn in any matched tables.
+                If you omit the domain, the format is pattern|chance, and the matcher will run for all domains.
+                The pattern MUST be a valid regex string, and should match the paths of desired loot tables under the specified domain.  Note: "Match Any Character" is ".*" (dot star) and not "*" (star).
+                If there is a match, an item has a chance to spawn in that loot table.""");
 
         AFFIX_ITEM_LOOT_RULES.clear();
         for (String s : lootRules) {

@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.client;
 
+import java.util.function.Function;
+
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -59,17 +61,23 @@ public class GhostVertexBuilder implements VertexConsumer {
 
     }
 
+    public static Function<MultiBufferSource, MultiBufferSource> makeGhostBuffer(int alpha) {
+        return mbs -> new GhostBufferSource(mbs, alpha);
+    }
+
     public static class GhostBufferSource implements MultiBufferSource {
 
         private final MultiBufferSource wrapped;
+        private final int alpha;
 
-        public GhostBufferSource(MultiBufferSource wrapped) {
+        public GhostBufferSource(MultiBufferSource wrapped, int alpha) {
             this.wrapped = wrapped;
+            this.alpha = alpha;
         }
 
         @Override
         public VertexConsumer getBuffer(RenderType type) {
-            return new GhostVertexBuilder(this.wrapped.getBuffer(type), 0x99);
+            return new GhostVertexBuilder(this.wrapped.getBuffer(type), this.alpha);
         }
 
     }

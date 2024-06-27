@@ -12,7 +12,7 @@
   ],
   "key": {
     "E": {
-      "item": "minecraft:cracked_deepslate_tiles"
+      "tag": "apotheosis:deepslate"
     },
 	"B": {
       "item": "minecraft:book"

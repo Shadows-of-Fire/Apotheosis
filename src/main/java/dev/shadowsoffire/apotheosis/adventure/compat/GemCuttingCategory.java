@@ -5,13 +5,13 @@ import java.util.Arrays;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.adventure.compat.GemCuttingCategory.GemCuttingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingBlock;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingMenu;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -59,11 +59,13 @@ public class GemCuttingCategory implements IRecipeCategory<GemCuttingRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, GemCuttingRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 46, 14).addIngredient(VanillaTypes.ITEM_STACK, recipe.gem);
-        builder.addSlot(RecipeIngredientRole.INPUT, 5, 14).addIngredient(VanillaTypes.ITEM_STACK, recipe.dust);
-        builder.addSlot(RecipeIngredientRole.INPUT, 46, 57).addIngredient(VanillaTypes.ITEM_STACK, recipe.gem);
-        builder.addSlot(RecipeIngredientRole.INPUT, 87, 14).addIngredients(VanillaTypes.ITEM_STACK, Arrays.asList(recipe.materials));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 129, 14).addIngredient(VanillaTypes.ITEM_STACK, recipe.out);
+        builder.addSlot(RecipeIngredientRole.INPUT, 48, 37).addIngredient(VanillaTypes.ITEM_STACK, recipe.gem);
+
+        builder.addSlot(RecipeIngredientRole.INPUT, 48, 4).addIngredients(VanillaTypes.ITEM_STACK, Arrays.asList(recipe.materials));
+        builder.addSlot(RecipeIngredientRole.INPUT, 19, 56).addIngredient(VanillaTypes.ITEM_STACK, recipe.gem);
+        builder.addSlot(RecipeIngredientRole.INPUT, 76, 56).addIngredient(VanillaTypes.ITEM_STACK, recipe.dust);
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 117, 35).addIngredient(VanillaTypes.ITEM_STACK, recipe.out);
     }
 
     public static class GemCuttingRecipe {

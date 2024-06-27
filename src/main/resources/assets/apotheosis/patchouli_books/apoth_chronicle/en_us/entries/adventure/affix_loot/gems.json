@@ -12,7 +12,7 @@
 		{
 			"title": "Rarity",
             "type": "patchouli:text",
-            "text": "Like an Affix Item, each gem has a $(l:apotheosis:adventure/affix_loot/rarities)Rarity$(). The rarity alone determines the strength of the gem, and higher rarity gems are more expensive to upgrade.$(p)Gems cannot be upgraded past Ancient rarity."
+            "text": "Like an Affix Item, each gem has a $(l:apotheosis:adventure/affix_loot/rarities)Rarity$().$(p)The rarity alone determines the strength of the gem, and higher rarity gems are more expensive to upgrade.$(p)Gems cannot be upgraded past Ancient rarity."
         },
 		{
 			"type": "patchouli:text",
@@ -27,19 +27,13 @@
 		{
 			"type": "patchouli:text",
 			"title": "Removing Gems",
-			"text": "Removing gems from an item was a difficult process, but some clever alchemists figured out how to do it.$(p)Their notes are detailed on the next couple pages."
+			"text": "Removing gems from an item was a difficult process, but some clever alchemists figured out how to do it.$(p)Their notes are detailed on the next page."
 		},
 		{
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:vial_of_expulsion",
-			"title": "Searing Expulsion",
-			"text": "Combine a socketed item with a $(9)Vial of Searing Expulsion$() in a smithing table to remove the gems, destroying them in the process."
-		},
-		{
-            "type": "patchouli:crafting",
-			"recipe": "apotheosis:vial_of_extraction",
-			"title": "Arcane Extraction",
-			"text": "Combine a socketed item with a $(9)Vial of Arcane Extraction$() in a smithing table to retrieve the gems, destroying the item in the process."
+			"recipe": "apotheosis:sigil_of_withdrawal",
+			"title": "Sigil of Withdrawal",
+			"text": "Combine a socketed item with a $(9)Sigil of Withdrawal$() in a smithing table to remove the socketed gems from an item. The item and all gems will be returned."
 		}
 	]
 }

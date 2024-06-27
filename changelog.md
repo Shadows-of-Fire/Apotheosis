@@ -1,6 +1,16 @@
 ## Future
 * [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
 
+## 7.3.5
+* Fixed Life Mending being compatible with Mending.
+* Fixed a potential crash that could occur when automation was using a tool with the Telepathic affix.
+* Made non-damageable items enchantable by default.
+  * This makes unbreakable items enchantable without additional effort.
+* mc-kaishixiaxue: Updated Chinese translation.
+* Gullwing-door: Updated Korean translation.
+* Allowed potion charms to have a single custom NBT effect instead of requiring a registered potion.
+* Fixed an edge-case crash that could occur with thrown tridents.
+
 ## 7.3.4
 * Made the small boss gateway disabled by default.
   * This gateway was for reference, not usage, and frequently crashes due to being setup incorrectly.

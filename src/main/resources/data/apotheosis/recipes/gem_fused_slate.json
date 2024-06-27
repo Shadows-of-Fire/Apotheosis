@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "gorilla",
+  "pattern": [
+    "EEE",
+    "EBE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "tag": "apotheosis:deepslate"
+    },
+	"B": {
+      "item": "apotheosis:gem_dust"
+    }
+  },
+  "result": {
+    "item": "apotheosis:gem_fused_slate",
+    "count": 8
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    "GSG",
+    "SPS",
+    "GSG"
+  ],
+  "key": {
+	"G": {
+      "item": "apotheosis:gem_dust"
+    },
+	"S": {
+      "item": "apotheosis:gem_fused_slate"
+    },
+	"P": {
+      "item": "apotheosis:mythic_material"
+    }
+  },
+  "result": {
+    "item": "apotheosis:sigil_of_enhancement",
+    "count": 4
+  }
+}

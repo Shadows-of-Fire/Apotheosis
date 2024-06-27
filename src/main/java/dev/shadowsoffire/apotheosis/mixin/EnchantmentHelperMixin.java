@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.ench.table.RealEnchantmentHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -62,6 +63,8 @@ public class EnchantmentHelperMixin {
     private static void apoth_getDamageProtection(Iterable<ItemStack> stacks, DamageSource source, CallbackInfoReturnable<Integer> cir) {
         int prot = cir.getReturnValueI();
         for (ItemStack s : stacks) {
+            prot += SocketHelper.getGems(s).getDamageProtection(source);
+
             var affixes = AffixHelper.getAffixes(s);
             for (AffixInstance inst : affixes.values()) {
                 prot += inst.getDamageProtection(source);
@@ -76,10 +79,14 @@ public class EnchantmentHelperMixin {
     @Inject(at = @At("RETURN"), method = "getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F", cancellable = true)
     private static void apoth_getDamageBonus(ItemStack stack, MobType type, CallbackInfoReturnable<Float> cir) {
         float dmg = cir.getReturnValueF();
+
+        dmg += SocketHelper.getGems(stack).getDamageBonus(type);
+
         var affixes = AffixHelper.getAffixes(stack);
         for (AffixInstance inst : affixes.values()) {
             dmg += inst.getDamageBonus(type);
         }
+
         cir.setReturnValue(dmg);
     }
 
@@ -90,6 +97,8 @@ public class EnchantmentHelperMixin {
     private static void apoth_doPostDamageEffects(LivingEntity user, Entity target, CallbackInfo ci) {
         if (user == null) return;
         for (ItemStack s : user.getAllSlots()) {
+            SocketHelper.getGems(s).doPostAttack(user, target);
+
             var affixes = AffixHelper.getAffixes(s);
             for (AffixInstance inst : affixes.values()) {
                 int old = target.invulnerableTime;
@@ -107,6 +116,8 @@ public class EnchantmentHelperMixin {
     private static void apoth_doPostHurtEffects(LivingEntity user, Entity attacker, CallbackInfo ci) {
         if (user == null) return;
         for (ItemStack s : user.getAllSlots()) {
+            SocketHelper.getGems(s).doPostHurt(user, attacker);
+
             var affixes = AffixHelper.getAffixes(s);
             for (AffixInstance inst : affixes.values()) {
                 inst.doPostHurt(user, attacker);
@@ -115,8 +126,10 @@ public class EnchantmentHelperMixin {
     }
 
     /**
-     * Reverses the loop iteration order in {@link EnchantmentHelper#getTagEnchantmentLevel} to ensure consistency with duplicate enchantments when compared to {@link EnchantmentHelper#getEnchantments}.
-     * @param tags The itemstack's enchantment tags from {@link ItemStack#getEnchantmentTags()}.
+     * Reverses the loop iteration order in {@link EnchantmentHelper#getTagEnchantmentLevel} to ensure consistency with duplicate enchantments when compared to
+     * {@link EnchantmentHelper#getEnchantments}.
+     *
+     * @param tags  The itemstack's enchantment tags from {@link ItemStack#getEnchantmentTags()}.
      * @param index The current list iteration order, between [0, tags.size())
      * @return The compound tag at the reversed index.
      */
