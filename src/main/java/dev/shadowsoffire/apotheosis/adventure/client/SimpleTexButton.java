@@ -11,7 +11,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 public class SimpleTexButton extends Button {
@@ -75,11 +74,15 @@ public class SimpleTexButton extends Button {
 
     public void renderToolTip(GuiGraphics gfx, int pMouseX, int pMouseY) {
         if (this.getMessage() != CommonComponents.EMPTY && this.isHovered()) {
-            MutableComponent primary = (MutableComponent) this.getMessage();
-            if (!this.active) primary = primary.withStyle(ChatFormatting.GRAY);
+            Component primary = this.getMessage();
+            if (!this.active) {
+                primary = primary.copy().withStyle(ChatFormatting.GRAY);
+            }
             List<Component> tooltips = new ArrayList<>();
             tooltips.add(primary);
-            if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) tooltips.add(this.inactiveMessage);
+            if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) {
+                tooltips.add(this.inactiveMessage);
+            }
             gfx.renderComponentTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
         }
     }

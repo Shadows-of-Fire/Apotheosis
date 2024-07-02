@@ -93,7 +93,7 @@ public abstract class Affix implements CodecProvider<Affix> {
      * Returns a component containing the text shown in the Augmenting Table.
      * <p>
      * This text should show the current affix power, as well as the min/max power bounds, displaying to the user what the full range is.
-     * 
+     *
      * @param stack The stack the affix is on.
      * @param level The level of this affix.
      */

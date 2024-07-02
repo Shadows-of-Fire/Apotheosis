@@ -1,0 +1,36 @@
+{
+	"parent": "block/block",
+	"render_type": "cutout",
+    "textures": {
+        "particle": "minecraft:block/polished_blackstone",
+        "bottom": "apotheosis:blocks/augmenting/bottom",
+        "top": "apotheosis:blocks/augmenting/top",
+        "top_lit": "apotheosis:blocks/augmenting/top_lit",
+        "side": "apotheosis:blocks/augmenting/side"
+    },
+    "elements": [
+        {
+            "from": [ 0, 0, 0 ],
+            "to": [ 16, 12, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "down" },
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top" },
+                "north": { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "north" },
+                "south": { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "south" },
+                "west":  { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "west" },
+                "east":  { "uv": [ 0, 4, 16, 16 ], "texture": "#side", "cullface": "east" }
+            }
+        },
+		{
+            "from": [ 0, 12, 0 ],
+            "to": [ 16, 12, 16 ],
+            "faces": {
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#top_lit"}
+            },
+            "forge_data": {
+                "block_light": 15,
+                "sky_light": 15
+            }
+        }
+    ]
+}

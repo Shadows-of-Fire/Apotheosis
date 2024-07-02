@@ -127,6 +127,10 @@
 		{
 			"id": "apotheosis:treasure_shelf",
 			"required": false
+		},
+		{
+			"id": "apotheosis:augmenting_table",
+			"required": false
 		}
 	]
 }

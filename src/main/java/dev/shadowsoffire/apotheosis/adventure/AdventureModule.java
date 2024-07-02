@@ -121,6 +121,7 @@ public class AdventureModule {
             LootSystem.defaultBlockTable(Blocks.REFORGING_TABLE.get());
             LootSystem.defaultBlockTable(Blocks.SALVAGING_TABLE.get());
             LootSystem.defaultBlockTable(Blocks.GEM_CUTTING_TABLE.get());
+            LootSystem.defaultBlockTable(Blocks.AUGMENTING_TABLE.get());
             Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
             Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
             Exclusion.initSerializers();
@@ -130,7 +131,7 @@ public class AdventureModule {
 
             TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST,
                 Items.GEM_FUSED_SLATE, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_WITHDRAWAL, Items.SIGIL_OF_REBIRTH, Items.SIGIL_OF_ENHANCEMENT, Items.SIGIL_OF_UNNAMING, Items.BOSS_SUMMONER,
-                Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE);
+                Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE, Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.AUGMENTING_TABLE);
             TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.GEM);
         });
     }

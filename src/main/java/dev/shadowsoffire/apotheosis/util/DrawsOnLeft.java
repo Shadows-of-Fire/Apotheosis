@@ -15,6 +15,10 @@ import net.minecraft.world.item.ItemStack;
 public interface DrawsOnLeft {
 
     default void drawOnLeft(GuiGraphics gfx, List<Component> list, int y) {
+        if (list.isEmpty()) {
+            return;
+        }
+
         int xPos = ths().getGuiLeft() - 16 - list.stream().map(ths().font::width).max(Integer::compare).get();
         int maxWidth = 9999;
         if (xPos < 0) {

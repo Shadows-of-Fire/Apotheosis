@@ -1,0 +1,9 @@
+{
+	"replace": false,
+	"values": [
+		"minecraft:cracked_stone_bricks",
+		"minecraft:mossy_cobblestone",
+		"minecraft:crying_obsidian",
+		"minecraft:lodestone"
+	]
+}

@@ -1,7 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 
-import java.util.function.Consumer;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 

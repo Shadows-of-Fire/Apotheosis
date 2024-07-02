@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted {
 
@@ -31,8 +32,6 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
             ResourceLocation.CODEC.fieldOf("loot_table").forGetter(RogueSpawner::getLootTableId),
             SimpleWeightedRandomList.wrappedCodec(SpawnData.CODEC).fieldOf("spawn_potentials").forGetter(s -> s.spawnPotentials))
         .apply(inst, RogueSpawner::new));
-
-    public static final Block[] FILLER_BLOCKS = { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
     protected final int weight;
     protected final SpawnerStats stats;
@@ -72,7 +71,8 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
         entity.spawner.spawnPotentials = this.spawnPotentials;
         entity.spawner.setNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
         ChestBuilder.place(world, pos.below(), rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable);
-        world.setBlock(pos.above(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].defaultBlockState(), 2);
+        Block cover = ForgeRegistries.BLOCKS.tags().getTag(Apoth.Tags.ROGUE_SPAWNER_COVERS).getRandomElement(rand).orElse(Blocks.STONE);
+        world.setBlock(pos.above(), cover.defaultBlockState(), 2);
         for (Direction f : Plane.HORIZONTAL) {
             if (world.getBlockState(pos.relative(f)).isAir()) {
                 BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateDefinition().getProperty(f.getOpposite().getName());

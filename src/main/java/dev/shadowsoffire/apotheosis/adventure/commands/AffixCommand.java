@@ -17,12 +17,17 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.attributeslib.api.AttributeHelper;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -85,7 +90,7 @@ public class AffixCommand {
     public static int applyAffix(CommandContext<CommandSourceStack> c, ResourceLocation affixId, float level) {
         DynamicHolder<Affix> afx = AffixRegistry.INSTANCE.holder(affixId);
         if (!afx.isBound()) {
-            return fail(c, "Unkonwn affix: " + affixId, -1);
+            return fail(c, "Unknown affix: " + affixId, -1);
         }
 
         Entity entity = c.getSource().getEntity();
@@ -133,8 +138,11 @@ public class AffixCommand {
 
             Map<DynamicHolder<? extends Affix>, AffixInstance> affixes = AffixHelper.getAffixes(held);
 
+            c.getSource().sendSystemMessage(Component.translatable("Affixes present on %s:", held.getDisplayName()));
             affixes.forEach((afx, inst) -> {
-                c.getSource().sendSystemMessage(Component.translatable("%s: %s%%", afx.getId(), Affix.fmt(100 * inst.level())));
+                MutableComponent name = Component.translatable("[%s]", inst.getName(true));
+                name.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, inst.getAugmentingText())));
+                c.getSource().sendSystemMessage(Component.translatable("%s - %s%%", name, Affix.fmt(100 * inst.level())));
             });
 
             return 0;
@@ -147,7 +155,7 @@ public class AffixCommand {
     public static int listAlternatives(CommandContext<CommandSourceStack> c, ResourceLocation affixId) {
         DynamicHolder<Affix> afx = AffixRegistry.INSTANCE.holder(affixId);
         if (!afx.isBound()) {
-            return fail(c, "Unkonwn affix: " + affixId, -1);
+            return fail(c, "Unknown affix: " + affixId, -1);
         }
 
         Entity entity = c.getSource().getEntity();
@@ -169,9 +177,14 @@ public class AffixCommand {
 
             List<DynamicHolder<? extends Affix>> alternatives = LootController.getAvailableAffixes(held, rarity.get(), affixes.keySet(), afx.get().getType());
 
-            c.getSource().sendSystemMessage(Component.translatable("Possible alternatives to %s:", afx.getId()));
+            c.getSource().sendSystemMessage(Component.translatable("Possible alternatives to %s:", afx.get().getName(true)));
 
-            alternatives.forEach(a -> c.getSource().sendSystemMessage(Component.translatable(" %s", a.getId())));
+            alternatives.forEach(a -> {
+                MutableComponent name = Component.translatable("[%s]", a.get().getName(true));
+                Component augTxt = a.get().getAugmentingText(held, rarity.get(), 0.5F);
+                name.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, augTxt)));
+                c.getSource().sendSystemMessage(AttributeHelper.list().append(name));
+            });
 
             return 0;
         }

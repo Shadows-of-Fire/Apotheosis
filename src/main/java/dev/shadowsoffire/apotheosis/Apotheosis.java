@@ -7,6 +7,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.RerollResultMessage;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage;
 import dev.shadowsoffire.apotheosis.adventure.net.RadialStateChangeMessage;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
@@ -126,6 +127,7 @@ public class Apotheosis {
         MessageHelper.registerMessage(CHANNEL, 2, new ClueMessage.Provider());
         MessageHelper.registerMessage(CHANNEL, 3, new StatsMessage.Provider());
         MessageHelper.registerMessage(CHANNEL, 4, new RadialStateChangeMessage.Provider());
+        MessageHelper.registerMessage(CHANNEL, 5, new RerollResultMessage.Provider());
         e.enqueueWork(() -> {
             AdvancementTriggers.init();
             CraftingHelper.register(new ModuleCondition.Serializer());

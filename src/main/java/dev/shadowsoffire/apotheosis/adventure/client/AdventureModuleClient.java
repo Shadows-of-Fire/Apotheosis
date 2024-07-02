@@ -56,7 +56,6 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.FormattedText;
@@ -110,7 +109,8 @@ public class AdventureModuleClient {
     public static class ModBusSub {
         @SubscribeEvent
         public static void models(ModelEvent.RegisterAdditional e) {
-            e.register(new ResourceLocation(Apotheosis.MODID, "item/hammer"));
+            e.register(ReforgingTableTileRenderer.HAMMER);
+            e.register(AugmentingTableTileRenderer.STAR_CUBE);
         }
 
         @SubscribeEvent

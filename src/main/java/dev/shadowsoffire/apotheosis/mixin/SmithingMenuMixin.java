@@ -31,6 +31,8 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
 
     @Inject(at = @At("HEAD"), method = "onTake")
     protected void onTake(Player player, ItemStack stack, CallbackInfo ci) {
-        if (this.selectedRecipe instanceof ReactiveSmithingRecipe ext) ext.onCraft(this.inputSlots, player, stack);
+        if (this.selectedRecipe instanceof ReactiveSmithingRecipe ext) {
+            ext.onCraft(this.inputSlots, player, stack);
+        }
     }
 }

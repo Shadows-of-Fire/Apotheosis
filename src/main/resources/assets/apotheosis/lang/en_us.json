@@ -416,8 +416,10 @@
     "block.apotheosis.salvaging_table.desc": "Breaks down Affix Items into Rarity Materials",
     "block.apotheosis.simple_reforging_table": "Simple Reforging Table",
     "block.apotheosis.reforging_table": "Reforging Table",
-    "block.apotheosis.reforging_table.desc": "Uses Gem Dust and Rarity Materials to reroll affixes",
+    "block.apotheosis.reforging_table.desc": "Uses Sigils of Rebirth and Rarity Materials to reforge items",
     "block.apotheosis.reforging_table.desc2": "Max Rarity: %s",
+    "block.apotheosis.augmenting_table": "Augmenting Table",
+    "block.apotheosis.augmenting_table.desc": "Uses Sigils of Enhancement to augment individual affixes",
 
     "button.apotheosis.salvage": "Salvage Items",
     "button.apotheosis.no_salvage": "No items selected",
@@ -426,6 +428,10 @@
     "button.apotheosis.upgrade.no": "Missing Inputs",
     "button.apotheosis.augmenting.upgrade": "Upgrade Selected Affix",
     "button.apotheosis.augmenting.reroll": "Reroll Selected Affix",
+    "button.apotheosis.augmenting.no_selection": "No Affix Selected",
+    "button.apotheosis.augmenting.max_level": "Already Max Level",
+    "button.apotheosis.augmenting.no_alternatives": "No Alternative Affixes",
+    "button.apotheosis.augmenting.upgrade.cost": "Cost: %sx %s",
 
     "menu.apotheosis.gem_cutting": "Gem Cutting",
     "container.apotheosis.salvage": "Salvage",
@@ -442,6 +448,10 @@
     "text.apotheosis.no_upgrade": "Max Upgrade Reached",
     "text.apotheosis.cut_cost": "Gem Cutting Cost",
     "text.apotheosis.one_rarity_mat": "Rarity Materials (1)",
+    "text.apotheosis.potential_rerolls": "Potential Rerolls",
+    "text.apotheosis.upgraded_form": "Upgraded Form",
+    "text.apotheosis.alternative_page": "Page %s/%s (scroll to change)",
+
     "title.apotheosis.smithing": "Apothic Smithing",
     "title.apotheosis.salvaging": "Salvaging",
 

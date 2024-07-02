@@ -72,19 +72,22 @@ public class AttributeAffix extends Affix {
         double value = modif.valueFactory.get(level);
 
         MutableComponent comp;
-        MutableComponent valueComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, value, AttributesLib.getTooltipFlag());
+        MutableComponent valueComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, value < 0 ? -value : value, AttributesLib.getTooltipFlag());
 
         if (value > 0.0D) {
             comp = Component.translatable("attributeslib.modifier.plus", valueComp, Component.translatable(this.attribute.getDescriptionId())).withStyle(ChatFormatting.BLUE);
         }
         else {
-            value *= -1.0D;
             comp = Component.translatable("attributeslib.modifier.take", valueComp, Component.translatable(this.attribute.getDescriptionId())).withStyle(ChatFormatting.RED);
         }
 
-        Component minComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, modif.valueFactory.get(0), AttributesLib.getTooltipFlag());
-        Component maxComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, modif.valueFactory.get(1), AttributesLib.getTooltipFlag());
-        return comp.append(valueBounds(minComp, maxComp));
+        if (modif.valueFactory.get(0) != modif.valueFactory.get(1)) {
+            Component minComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, modif.valueFactory.get(0), AttributesLib.getTooltipFlag());
+            Component maxComp = IFormattableAttribute.toValueComponent(this.attribute, this.operation, modif.valueFactory.get(1), AttributesLib.getTooltipFlag());
+            comp.append(valueBounds(minComp, maxComp));
+        }
+
+        return comp;
     }
 
     @Override

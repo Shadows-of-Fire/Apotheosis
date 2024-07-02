@@ -4,5 +4,7 @@
 		"module": "adventure"
 	}],
 	"type": "apotheosis:rogue_spawner",
-	"config": {}
+	"config": {
+        "success_chance": 0.01
+    }
 }

@@ -1,0 +1,41 @@
+{
+	"textures": {
+		"main": "apotheosis:items/star_cube",
+		"main_lit": "apotheosis:items/star_cube_lit",
+		"particle": "apotheosis:items/star_cube"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [6, 6, 6],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 6], "texture": "#main"},
+				"east":  {"uv": [0, 0, 6, 6], "texture": "#main"},
+				"south": {"uv": [0, 0, 6, 6], "texture": "#main"},
+				"west":  {"uv": [0, 0, 6, 6], "texture": "#main"},
+				"up":    {"uv": [0, 0, 6, 6], "texture": "#main"},
+				"down":  {"uv": [0, 0, 6, 6], "texture": "#main"}
+			},
+            "forge_data": {
+                "block_light": 5,
+                "sky_light": 5
+            }
+		},
+        {
+			"from": [0, 0, 0],
+			"to": [6, 6, 6],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 6], "texture": "#main_lit"},
+				"east":  {"uv": [0, 0, 6, 6], "texture": "#main_lit"},
+				"south": {"uv": [0, 0, 6, 6], "texture": "#main_lit"},
+				"west":  {"uv": [0, 0, 6, 6], "texture": "#main_lit"},
+				"up":    {"uv": [0, 0, 6, 6], "texture": "#main_lit"},
+				"down":  {"uv": [0, 0, 6, 6], "texture": "#main_lit"}
+			},
+            "forge_data": {
+                "block_light": 15,
+                "sky_light": 15
+            }
+		}
+	]
+}

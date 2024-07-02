@@ -1,5 +1,53 @@
-## Future
-* [NYI] Gems can now be stored in the Gem Safe, a storage device similar to the Enchantment Library for Gems
+## 7.4.0
+Welcome to Apotheosis 7.4.0 - Augmented Affixation!  
+This update brings a huge visual overhaul to the Adventure Module, fleshes out Sigils, and adds the endgame-worthy Augmenting Table.
+
+![](https://i.imgur.com/Qr4NVSC.jpeg)
+
+### Features
+* Added the Augmenting Table, which can upgrade and reroll individual affixes in exchange for Sigils of Enhancement.
+  * The table will show all affixes on the selected item, their descriptions, and their min / max power bounds.
+  * You can select the affix you want to edit, and then either upgrade it (+25% strength each upgrade, until max), or reroll it.
+  * The alternative affixes that can be rerolled into will be shown on the left.
+* The GUIs for Salvaging, Reforging, Gem Cutting, and the Enchanting Library have all been updated.
+  * The Salvaging and Gem Cutting menus are functionally identical to the originals.
+  * The Reforging menu has received an update to how the slots are laid out, and how the outputs are selected, but the underlying process is the same.
+  * The Library menu functions the same way, but the elements have been rearranged slightly.
+* The Chronicle of Shadows has been retextured.
+* The Potion Charm has received a new texture, with a different animation for when it is enabled.
+  * The prior version only turned on the enchanted glint when enabled, which was hard to identify on some colors.
+* New commands have been added, all which operate on the main hand item of the executing entity:
+  * `/apoth affix apply <affix> <level>` applies an affix with the specified level.
+  * `/apoth affix list` lists the affixes on the item.
+  * `/apoth affix list_alternatives <affix>` lists the alternatives if the target affix was rerolled.
+  * The `/apoth loot_rarity` command was renamed to `/apoth set_rarity`.
+* More sigils have been added. Superior Sigils and Vials were removed.  
+![](https://i.imgur.com/Yn9b7hF.png)
+  * The Sigil of Socketing applies one additional socket to an item, up to a maximum of three.
+  * The Sigil of Withdrawal removes all gems from an item, returning both the item and the gems.
+  * The Sigil of Rebirth replaces Gem Dust in the Reforging Table as the fuel item.
+  * The Sigil of Enhancement is used to fuel the Augmenting Table.
+  * The Sigil of Unnaming is used to clear the affix components from an item's name.
+* Made rogue spawner's 1% success chance configurable, and made the top blocks a tag.
+  * The top blocks are now randomly selected from the `apotheosis:rogue_spawner_covers` tag.
+
+### Bugfixes
+* Failure to resolve the default blockstate for enchanting stats will no longer emit a log message.
+* Fixed the number of enchanting clues displayed in the enchanting table being off by 1.
+* Resolved all potential points of failure relating to the Reforging Table being desynced.
+  * The new implementation no longer uses a seed to generate the items on the client, and instead just sends the finished itemstacks over.
+* Some broken textures in the attributes section of the Chronicle of Shadows were fixed.
+* Fixed spectral arrows not being marked as `apoth.generated`, leading to potental infinite loops.
+* Prevented a crash that could occur if an invalid resource location was set in the NBT of a Gem.
+* Made Apothic Bosses of entities that extend `AbstractGolem` (i.e. Shulkers) able to despawn.
+  * Prior to this, boss-spawned shulkers could linger forever, eventually blocking up all spawns.
+
+### Other
+* Gems, and related code, have been fully separated from Affixes.
+  * This shouldn't matter for players, but makes the code more understandable and easier to update.
+* The textures for most gems and rarity materials have been updated slightly.
+* Removed the modid override for Tridents. Tridents may still receive extra enchantments.
+  * I don't think this really has that much value, and it was bleeding into other mods' trident items.
 
 ## 7.3.5
 * Fixed Life Mending being compatible with Mending.

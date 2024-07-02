@@ -105,7 +105,7 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
         boolean hadItem = this.hasMainItem;
         this.hasMainItem = this.menu.getSlot(0).hasItem();
 
-        if (!hadItem && hasMainItem) {
+        if (!hadItem && this.hasMainItem) {
             this.animationTick = MAX_ANIMATION_TIME;
             this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(Adventure.Sounds.REFORGE.get(), 1F, 2F));
         }
@@ -130,7 +130,7 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
             int matCost = this.menu.getMatCost(idx);
             int levelCost = this.menu.getLevelCost(idx);
 
-            if ((sigils >= sigilCost && levels >= levelCost && mats >= matCost) || this.minecraft.player.getAbilities().instabuild) {
+            if (sigils >= sigilCost && levels >= levelCost && mats >= matCost || this.minecraft.player.getAbilities().instabuild) {
                 this.maxSlot++;
             }
         }
@@ -181,7 +181,7 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
             }
         }
 
-        float sin = Mth.sin((this.opacityTick / 60F) * Mth.PI);
+        float sin = Mth.sin(this.opacityTick / 60F * Mth.PI);
         float delta = sin * sin;
         this.availableOpacity = Mth.lerpInt(delta, 0x88, 0xDD);
     }

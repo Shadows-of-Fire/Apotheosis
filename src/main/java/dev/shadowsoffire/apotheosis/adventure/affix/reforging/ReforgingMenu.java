@@ -168,7 +168,7 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
             int levels = ReforgingMenu.this.player.experienceLevel;
             int levelCost = ReforgingMenu.this.getLevelCost(this.getSlotIndex());
 
-            if ((sigils < sigilCost || mats < matCost || levels < levelCost) && !player.isCreative()) return false;
+            if ((sigils < sigilCost || mats < matCost || levels < levelCost) && !ReforgingMenu.this.player.isCreative()) return false;
 
             return super.mayPickup(playerIn);
         }

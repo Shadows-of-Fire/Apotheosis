@@ -40,7 +40,7 @@ public class EnlightenedAffix extends Affix {
 
     @Override
     public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
-        return Component.translatable("affix." + this.getId() + ".desc", getTrueLevel(rarity, level));
+        return Component.translatable("affix." + this.getId() + ".desc", this.getTrueLevel(rarity, level));
     }
 
     @Override

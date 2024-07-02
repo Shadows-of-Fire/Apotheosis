@@ -31,7 +31,9 @@ public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmi
      */
     @Override
     public boolean matches(Container pInv, Level pLevel) {
-        return pInv.getItem(ADDITION).getItem() == Items.SIGIL_OF_WITHDRAWAL.get() && SocketHelper.getGems(pInv.getItem(BASE)).stream().anyMatch(GemInstance::isValid);
+        ItemStack base = pInv.getItem(BASE);
+        ItemStack sigils = pInv.getItem(ADDITION);
+        return base.getCount() == 1 && sigils.getItem() == Items.SIGIL_OF_WITHDRAWAL.get() && SocketHelper.getGems(base).stream().anyMatch(GemInstance::isValid);
     }
 
     /**
@@ -40,7 +42,9 @@ public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmi
     @Override
     public ItemStack assemble(Container pInv, RegistryAccess regs) {
         ItemStack out = pInv.getItem(BASE).copy();
-        if (out.isEmpty()) return ItemStack.EMPTY;
+        if (out.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
         SocketHelper.setGems(out, SocketedGems.EMPTY);
         return out;
     }
@@ -56,6 +60,7 @@ public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmi
                 if (!player.addItem(stack)) Block.popResource(player.level(), player.blockPosition(), stack);
             }
         }
+        SocketHelper.setGems(base, SocketedGems.EMPTY); // shouldn't be necessary, since base will be deleted, but we do this anyway to safeguard against infinite loops.
     }
 
     @Override

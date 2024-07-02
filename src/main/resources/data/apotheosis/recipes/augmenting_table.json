@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    " N ",
+    "GEG",
+    "BBB"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+	"G": {
+      "item": "apotheosis:mythic_material"
+    },
+	"E": {
+      "item": "minecraft:enchanting_table"
+    },
+	"B": {
+      "item": "minecraft:polished_blackstone"
+    }
+  },
+  "result": {
+    "item": "apotheosis:augmenting_table",
+    "count": 1
+  }
+}

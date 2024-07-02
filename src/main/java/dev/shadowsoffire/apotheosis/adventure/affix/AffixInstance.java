@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -173,5 +174,9 @@ public record AffixInstance(DynamicHolder<? extends Affix> affix, ItemStack stac
      */
     public void modifyLoot(ObjectArrayList<ItemStack> loot, LootContext ctx) {
         this.afx().modifyLoot(this.stack, this.rty(), this.level, loot, ctx);
+    }
+
+    public AffixInstance withNewLevel(float level) {
+        return new AffixInstance(this.affix, this.stack, this.rarity, Mth.clamp(level, 0, 1));
     }
 }

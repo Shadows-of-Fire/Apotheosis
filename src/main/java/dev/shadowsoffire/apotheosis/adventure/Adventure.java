@@ -95,13 +95,13 @@ public class Adventure {
 
         public static final RegistryObject<Item> SIMPLE_REFORGING_TABLE = R.item("simple_reforging_table", () -> new BlockItem(Blocks.SIMPLE_REFORGING_TABLE.get(), new Item.Properties()));
 
-        public static final RegistryObject<Item> REFORGING_TABLE = R.item("reforging_table", () -> new BlockItem(Blocks.REFORGING_TABLE.get(), new Item.Properties()));
+        public static final RegistryObject<Item> REFORGING_TABLE = R.item("reforging_table", () -> new BlockItem(Blocks.REFORGING_TABLE.get(), new Item.Properties().rarity(Rarity.EPIC)));
 
         public static final RegistryObject<Item> SALVAGING_TABLE = R.item("salvaging_table", () -> new BlockItem(Blocks.SALVAGING_TABLE.get(), new Item.Properties()));
 
         public static final RegistryObject<Item> GEM_CUTTING_TABLE = R.item("gem_cutting_table", () -> new BlockItem(Blocks.GEM_CUTTING_TABLE.get(), new Item.Properties()));
 
-        public static final RegistryObject<Item> AUGMENTING_TABLE = R.item("augmenting_table", () -> new BlockItem(Blocks.AUGMENTING_TABLE.get(), new Item.Properties()));
+        public static final RegistryObject<Item> AUGMENTING_TABLE = R.item("augmenting_table", () -> new BlockItem(Blocks.AUGMENTING_TABLE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
 
         public static final RegistryObject<Item> GEM = R.item("gem", () -> new GemItem(new Item.Properties()));
 

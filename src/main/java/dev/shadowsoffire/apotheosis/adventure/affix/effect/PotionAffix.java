@@ -79,7 +79,9 @@ public class PotionAffix extends Affix {
 
     @Override
     public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
-        MutableComponent comp = this.getDescription(stack, rarity, level);
+        MobEffectInstance inst = this.values.get(rarity).build(this.effect, level);
+        MutableComponent comp = this.target.toComponent(toComponent(inst));
+
         MobEffectInstance min = this.values.get(rarity).build(this.effect, 0);
         MobEffectInstance max = this.values.get(rarity).build(this.effect, 1);
 
@@ -94,6 +96,15 @@ public class PotionAffix extends Affix {
             Component minComp = MobEffectUtil.formatDuration(min, 1);
             Component maxComp = MobEffectUtil.formatDuration(max, 1);
             comp.append(valueBounds(minComp, maxComp));
+        }
+
+        int cooldown = this.getCooldown(rarity);
+        if (cooldown != 0) {
+            Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(cooldown));
+            comp = comp.append(" ").append(cd);
+        }
+        if (this.stackOnReapply) {
+            comp = comp.append(" ").append(Component.translatable("affix.apotheosis.stacking"));
         }
 
         return comp;

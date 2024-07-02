@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class ReforgingTableTileRenderer implements BlockEntityRenderer<ReforgingTableTile> {
 
-    private static final ResourceLocation HAMMER = new ResourceLocation(Apotheosis.MODID, "item/hammer");
+    public static final ResourceLocation HAMMER = new ResourceLocation(Apotheosis.MODID, "item/hammer");
 
     @Override
     @SuppressWarnings("deprecation")

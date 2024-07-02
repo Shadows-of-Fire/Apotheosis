@@ -10,6 +10,8 @@ import net.minecraft.util.Mth;
 
 public abstract class DropDownList<T> extends AbstractWidget {
 
+    public static final int NO_SELECTION = -1;
+
     protected final int maxDisplayedEntries;
     protected final int baseHeight;
 
@@ -18,7 +20,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
     protected boolean scrolling;
     protected int startIndex;
     protected boolean isOpen = false;
-    protected int selected = -1;
+    protected int selected = NO_SELECTION;
 
     public DropDownList(int x, int y, int width, int height, Component narrationMsg, List<T> entries, int maxDisplayedEntries) {
         super(x, y, width, height, narrationMsg);
@@ -30,7 +32,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
     @Override
     protected void renderWidget(GuiGraphics gfx, int mouseX, int mouseY, float partialTick) {
         int selected = this.getSelected();
-        if (selected != -1) {
+        if (selected != NO_SELECTION) {
             this.renderEntry(gfx, this.getX(), this.getY(), mouseX, mouseY, this.entries.get(selected));
         }
 
@@ -42,8 +44,8 @@ public abstract class DropDownList<T> extends AbstractWidget {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int button) {
-        if (!isOpen) {
+    public void onClick(double mouseX, double mouseY) {
+        if (!this.isOpen) {
             if (this.entries.isEmpty()) {
                 return;
             }
@@ -106,7 +108,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
     }
 
     private boolean isScrollBarActive() {
-        return this.entries.size() > this.maxDisplayedEntries;
+        return this.isOpen() && this.entries.size() > this.maxDisplayedEntries;
     }
 
     protected int getOffscreenRows() {
@@ -114,7 +116,11 @@ public abstract class DropDownList<T> extends AbstractWidget {
     }
 
     public int getSelected() {
-        return Mth.clamp(this.selected, -1, this.entries.size());
+        return Mth.clamp(this.selected, NO_SELECTION, this.entries.size() - 1);
+    }
+
+    public void setSelected(int selected) {
+        this.selected = Mth.clamp(selected, NO_SELECTION, this.entries.size() - 1);
     }
 
     public boolean isOpen() {
@@ -128,7 +134,7 @@ public abstract class DropDownList<T> extends AbstractWidget {
 
     public void setEntries(List<T> entries) {
         this.entries = entries;
-        this.selected = this.entries.size() == 0 ? -1 : 0;
+        this.selected = this.entries.isEmpty() ? NO_SELECTION : 0;
         this.height = this.baseHeight;
         this.startIndex = 0;
         this.isOpen = false;

@@ -116,7 +116,7 @@ public class LootController {
 
     /**
      * Returns the pool of available affixes for an item, given the existing affixes present.
-     * 
+     *
      * @param stack          The item stack the affixes may be applied to
      * @param rarity         The rarity of the item stack
      * @param currentAffixes The current affixes that are (or will be) applied to the item.
@@ -125,13 +125,11 @@ public class LootController {
      */
     public static List<DynamicHolder<? extends Affix>> getAvailableAffixes(ItemStack stack, LootRarity rarity, Set<DynamicHolder<? extends Affix>> currentAffixes, AffixType type) {
         LootCategory cat = LootCategory.forItem(stack);
-        List<DynamicHolder<? extends Affix>> available = AffixHelper.byType(type)
+        return AffixHelper.byType(type)
             .stream()
             .filter(a -> a.get().canApplyTo(stack, cat, rarity))
             .filter(a -> !currentAffixes.contains(a))
             .collect(Collectors.toList());
-
-        return available;
     }
 
 }

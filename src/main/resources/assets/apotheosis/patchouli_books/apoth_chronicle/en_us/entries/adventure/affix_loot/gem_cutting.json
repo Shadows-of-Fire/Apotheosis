@@ -3,7 +3,7 @@
     "icon": "apotheosis:gem_cutting_table",
     "category": "apotheosis:adventure/affix_loot",
 	"flag": "apotheosis:adventure",
-	"sortnum": 5,
+	"sortnum": 6,
     "pages": [
         {
             "type": "patchouli:crafting",

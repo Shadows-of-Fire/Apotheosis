@@ -7,6 +7,7 @@ import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -17,6 +18,12 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 
 public class AugmentingTableTile extends BlockEntity implements TickingBlockEntity {
+
+    public static int RISE_TIME = 30;
+    public static int SPIN_CYCLE_TIME = 90;
+
+    public int time = 0;
+    public AnimationStage stage = AnimationStage.HIDING;
 
     protected InternalItemHandler inv = new InternalItemHandler(1){
         @Override
@@ -35,8 +42,50 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
     }
 
     @Override
-    public void clientTick(Level level, BlockPos pos, BlockState state) {
-        TickingBlockEntity.super.clientTick(level, pos, state);
+    public void clientTick(Level pLevel, BlockPos pPos, BlockState pState) {
+        Player player = pLevel.getNearestPlayer(pPos.getX() + 0.5D, pPos.getY() + 0.5D, pPos.getZ() + 0.5D, 4, false);
+        switch (this.stage) {
+            case HIDING -> {
+                if (player != null) {
+                    this.stage = AnimationStage.RISING;
+                    this.time = 0;
+                }
+            }
+            case RISING -> {
+                if (player != null) {
+                    this.time++;
+                    if (this.time >= RISE_TIME) {
+                        this.stage = AnimationStage.SPINNING;
+                        this.time = 0;
+                    }
+                }
+                else {
+                    this.stage = AnimationStage.FALLING;
+                    // Keep the same time counter, falling operates on a backwards scale
+                }
+            }
+            case FALLING -> {
+                if (player != null) {
+                    this.stage = AnimationStage.RISING;
+                }
+                else {
+                    this.time--;
+                    if (this.time <= 0) {
+                        this.stage = AnimationStage.HIDING;
+                        this.time = 0;
+                    }
+                }
+            }
+            case SPINNING -> {
+                this.time++;
+                if (player == null) {
+                    if (this.time % SPIN_CYCLE_TIME == 0) {
+                        this.stage = AnimationStage.FALLING;
+                        this.time = RISE_TIME;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -69,6 +118,13 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
     public void reviveCaps() {
         super.reviveCaps();
         this.invCap = LazyOptional.of(() -> this.inv);
+    }
+
+    public static enum AnimationStage {
+        HIDING,
+        RISING,
+        FALLING,
+        SPINNING;
     }
 
 }

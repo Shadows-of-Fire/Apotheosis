@@ -1,0 +1,39 @@
+{
+    "name": "Augmenting",
+    "icon": "apotheosis:augmenting_table",
+    "category": "apotheosis:adventure/affix_loot",
+    "flag": "apotheosis:adventure",
+    "sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "The $(9)Augmenting Table$() is an end-game crafting station used to augment the individual affixes of an item.$(p)Through it, you can upgrade or reroll single affixes, leaving the rest intact."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:augmenting_table",
+            "text": "Creating an Augmenting Table requires focusing the energy of a $(9)Nether Star$() through two $(9)Godforged Pearls$(), using an $(9)Enchanting Table$() as the base."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Input Slots",
+            "text": "The Augmenting Table has two input slots.$(p)The upper slot holds the item you wish to augment, which must be an affix item.$(p)Typically, you should only augment items of at least $(#ED7014)Mythic$() rarity, though you could consider augmenting $(#BB00BB)Epic$() ones as well."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_enhancement",
+            "title": "Input Slots",
+            "text": "The lower slot holds $(9)Sigils of Enhancement$(), the fuel item used for Augmenting.$(p)Finally, you'll need to select the desired affix from the drop-down menu."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Upgrading",
+            "text": "The first operation that can be performed in the augmenting table is upgrading an affix.$(p)This costs two $(9)Sigils of Enhancement$(), and will upgrade the internal strength of the current affix by 25%.$(p)How much of a boost this provides varies per Affix."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Rerolling",
+            "text": "The second operation of the augmenting table is to reroll an affix.$(p)This costs one $(9)Sigil of Enhancement$() and swaps out the selected affix for another one of the same type.$(p)The alternative options will be shown on the left."
+        }
+    ]
+}
