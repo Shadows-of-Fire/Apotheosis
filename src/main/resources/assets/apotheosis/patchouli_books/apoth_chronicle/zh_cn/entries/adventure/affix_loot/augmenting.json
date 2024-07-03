@@ -1,0 +1,39 @@
+{
+    "name": "强化",
+    "icon": "apotheosis:augmenting_table",
+    "category": "apotheosis:adventure/affix_loot",
+    "flag": "apotheosis:adventure",
+    "sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)强化台$()是一个游戏后期合成站，用于强化物品的单个词缀。$(p)通过它，你可以升级或刷新单个词缀，而其余部分保持不变。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:augmenting_table",
+            "text": "制作强化台需要通过两个$(9)神铸珍珠$()汇聚一个$(9)下界之星$()的能量，并使用$(9)附魔台$()作为基础。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "输入格",
+            "text": "强化台有两个输入格。$(p)上面一格放置你想强化的物品，该物品必须是词缀物品。$(p)通常情况下，你应该只强化至少$(#ED7014)神话$()稀有度的物品，尽管你也可以考虑强化$(#BB00BB)史诗$()稀有度的物品。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_enhancement",
+            "title": "输入格",
+            "text": "下面一格放置$(9)强化符石$()，用于强化的燃料物品。$(p)最后，你需要从下拉菜单中选择所需的词缀。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "升级",
+            "text": "可以在强化台中执行的第一个操作是升级词缀。$(p)这需要花费两个$(9)强化符石$()，并将当前词缀的内部强度提升25%。$(p)每个词缀提供的提升程度各不相同。"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "刷新",
+            "text": "强化台的第二个操作是刷新词缀。$(p)这需要花费一个$(9)强化符石$()并将所选词缀替换为同一类型的另一个词缀。$(p)替代选项将显示在左侧。"
+        }
+    ]
+}

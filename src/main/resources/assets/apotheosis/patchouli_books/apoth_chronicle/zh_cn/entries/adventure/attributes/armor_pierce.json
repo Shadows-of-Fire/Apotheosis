@@ -1,6 +1,6 @@
 {
     "name": "盔甲穿透",
-    "icon": "apotheosis:textures/mob_effect/sundering.png",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
 	"sortnum": 0,

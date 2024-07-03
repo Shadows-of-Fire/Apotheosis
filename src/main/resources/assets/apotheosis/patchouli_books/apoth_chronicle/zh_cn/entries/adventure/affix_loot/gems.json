@@ -12,7 +12,7 @@
 		{
 			"title": "稀有度",
             "type": "patchouli:text",
-            "text": "就像词缀物品一样，每个宝石都拥有$(l:apotheosis:adventure/affix_loot/rarities)稀有度$()。宝石的稀有度决定了宝石的强度，稀有度越高的宝石升级花费越高。$(p)宝石无法升级至远古稀有度以上。"
+            "text": "就像词缀物品一样，每个宝石都拥有$(l:apotheosis:adventure/affix_loot/rarities)稀有度$()。$(p)宝石的稀有度决定了宝石的强度，稀有度越高的宝石升级花费越高。$(p)宝石无法升级至远古稀有度以上。"
         },
 		{
 			"type": "patchouli:text",
@@ -27,19 +27,13 @@
 		{
 			"type": "patchouli:text",
 			"title": "取出宝石",
-			"text": "从物品中取出宝石是一个困难的过程，但一些聪明的炼金术士想出了办法。$(p)他们的笔记在接下来的几页中详细介绍。"
+			"text": "从物品中取出宝石是一个困难的过程，但一些聪明的炼金术士想出了办法。$(p)他们的笔记在下一页中详细介绍。"
 		},
 		{
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:vial_of_expulsion",
-			"title": "灼热驱逐",
-			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)灼热驱逐剂$()结合以取下宝石，此过程会销毁镶孔上的宝石。"
-		},
-		{
-            "type": "patchouli:crafting",
-			"recipe": "apotheosis:vial_of_extraction",
-			"title": "奥术提取",
-			"text": "在锻造台中，将一个镶过的物品与一瓶$(9)奥术提取剂$()结合以取回宝石（所有宝石会被同时取下），此过程会销毁该物品。"
+			"recipe": "apotheosis:sigil_of_withdrawal",
+			"title": "摘除符石",
+			"text": "在锻造台中，将一个镶过的物品与一个$(9)摘除符石$()结合以从物品中取出镶嵌的宝石，该物品和所有宝石都将被返还。"
 		}
 	]
 }

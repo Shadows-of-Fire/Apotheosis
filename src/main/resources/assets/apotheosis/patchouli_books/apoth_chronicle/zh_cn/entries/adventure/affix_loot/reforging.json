@@ -15,30 +15,25 @@
 			"text": "要开始重铸，合成一个$(#5555FF)简易重铸台$()，它允许你重铸稀有度高达$(#5555FF)珍贵$()的物品。"
 		},
 		{
-            "type": "patchouli:image",
+            "type": "patchouli:text",
 			"title": "输入格",
-			"images": [
-				"apotheosis:textures/gui/book/reforge_slots.png"
-			],
-			"text": "重铸台有三个输入格"
+			"text": "重铸台有三个输入格。$(p)中间的格子放置你想重铸的物品。$(p)左上角的格子放置你想重铸为相应稀有度的$(9)珍宝材料$()。"
         },
 		{
-			"type": "patchouli:text",
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_rebirth",
 			"title": "输入格",
-			"text": "最上面的格子里放置你想重铸的物品。$(p)左边的格子放置$(9)珍宝材料$()。$(p)右边的格子放置宝石粉。$(p)所有的格子都必须被放置才能成功重铸。"
+			"text": "右下角的格子放置$(9)重生符石$()，这是唯一一种在重铸过程中使用的燃料物品。"
 		},
 		{
-            "type": "patchouli:image",
+            "type": "patchouli:text",
 			"title": "重铸",
-			"images": [
-				"apotheosis:textures/gui/book/reforge_menu.png"
-			],
-			"text": "与附魔台类似，你有三项选择。"
+			"text": "与附魔台类似，重铸时提供三项选择。$(p)每项选择都代表了被重铸物品的一种潜在的新形式。$(p)不存在某个选项在本质上比其余的强。"
         },
 		{
 			"type": "patchouli:text",
 			"title": "重铸",
-			"text": "每项选择都代表了被重铸物品的一种潜在的新形式。每项选择的花费不同，分别需要2/4/6个宝石粉、珍宝材料和经验等级。$(p)要重铸你的物品，点击你想要的选项即可。"
+			"text": "每种稀有度都有经验、符石和材料的基础花费。额外的选择格子会收取双倍或三倍基础花费。$(p)要重铸你的物品，点击你想要的选项即可。"
 		},
         {
             "type": "patchouli:crafting",
@@ -48,7 +43,7 @@
 		{
 			"type": "patchouli:text",
 			"title": "注意",
-			"text": "物品可以被多次重铸，但你必须先拿起并重新放回去。$(p)不存在某个选项在本质上比其余的强。"
+			"text": "尚未附加词缀的物品可以被重铸。$(p)物品可以被多次重铸。$(p)整合包可以改变花费或阻止某些稀有度的重铸。"
 		}
 	]
 }
