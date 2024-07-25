@@ -1,6 +1,6 @@
 {
     "name": "Bursting Vitality",
-    "icon": "apotheosis:textures/mob_effect/vitality.png",
+    "icon": "attributeslib:textures/mob_effect/vitality.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
 	"sortnum": 0,

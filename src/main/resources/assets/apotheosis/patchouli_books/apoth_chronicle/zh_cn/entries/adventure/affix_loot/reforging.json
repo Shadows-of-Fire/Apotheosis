@@ -23,7 +23,7 @@
             "type": "patchouli:crafting",
             "recipe": "apotheosis:sigil_of_rebirth",
 			"title": "输入格",
-			"text": "右下角的格子放置$(9)重生符石$()，这是唯一一种在重铸过程中使用的燃料物品。"
+			"text": "右下角的格子放置$(9)新生符石$()，这是唯一一种在重铸过程中使用的燃料物品。"
 		},
 		{
             "type": "patchouli:text",

@@ -1,6 +1,6 @@
 {
     "name": "Grievous Wounds",
-    "icon": "apotheosis:textures/mob_effect/grievous.png",
+    "icon": "attributeslib:textures/mob_effect/grievous.png",
     "category": "apotheosis:potion/effects",
 	"flag": "apotheosis:potion",
 	"sortnum": 0,

@@ -400,7 +400,7 @@
     "item.apotheosis.sigil_of_withdrawal": "摘除符石",
     "item.apotheosis.sigil_of_withdrawal.desc": "移除物品上所有镶嵌的宝石",
 
-    "item.apotheosis.sigil_of_rebirth": "重生符石",
+    "item.apotheosis.sigil_of_rebirth": "新生符石",
     "item.apotheosis.sigil_of_rebirth.desc": "用于为重铸台提供燃料",
 
     "item.apotheosis.sigil_of_enhancement": "强化符石",
@@ -416,7 +416,7 @@
     "block.apotheosis.salvaging_table.desc": "将词缀物品分解为珍宝材料",
     "block.apotheosis.simple_reforging_table": "简易重铸台",
     "block.apotheosis.reforging_table": "重铸台",
-    "block.apotheosis.reforging_table.desc": "使用重生符石和珍宝材料来重铸物品",
+    "block.apotheosis.reforging_table.desc": "使用新生符石和珍宝材料来重铸物品",
     "block.apotheosis.reforging_table.desc2": "最高稀有度：%s",
     "block.apotheosis.augmenting_table": "强化台",
     "block.apotheosis.augmenting_table.desc": "使用强化符石来强化单个词缀",
