@@ -21,6 +21,7 @@ import com.mojang.datafixers.util.Either;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -35,8 +36,11 @@ import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemInstance;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingScreen;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
@@ -51,6 +55,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -83,6 +88,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class AdventureModuleClient {
 
@@ -148,6 +154,17 @@ public class AdventureModuleClient {
         @SubscribeEvent
         public static void keys(RegisterKeyMappingsEvent e) {
             e.register(AdventureKeys.TOGGLE_RADIAL);
+        }
+
+        @SubscribeEvent
+        public static void client(FMLClientSetupEvent e) {
+            e.enqueueWork(() -> {
+                ItemProperties.register(Adventure.Items.GEM.get(), Apotheosis.loc("rarity"), (stack, level, entity, tint) -> {
+                    DynamicHolder<Gem> gem = GemItem.getGem(stack);
+                    DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(stack);
+                    return gem.isBound() && rarity.isBound() ? rarity.get().ordinal() : Float.NEGATIVE_INFINITY;
+                });
+            });
         }
     }
 
