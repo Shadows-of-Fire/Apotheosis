@@ -20,7 +20,7 @@
             "tag": "apotheosis:endshelf"
         },
         "P": {
-            "item": "forge:ender_pearls"
+            "tag": "forge:ender_pearls"
         }
     },
     "result": {

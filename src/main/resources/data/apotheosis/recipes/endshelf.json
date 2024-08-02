@@ -23,7 +23,7 @@
             "tag": "forge:bookshelves"
         },
         "P": {
-            "item": "forge:ender_pearls"
+            "tag": "forge:ender_pearls"
         }
     },
     "result": {

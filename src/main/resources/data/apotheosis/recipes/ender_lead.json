@@ -16,7 +16,7 @@
             "item": "minecraft:gold_ingot"
         },
         "E": {
-            "item": "forge:ender_pearls"
+            "tag": "forge:ender_pearls"
         },
         "L": {
             "item": "minecraft:lead"

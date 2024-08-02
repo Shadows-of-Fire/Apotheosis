@@ -23,7 +23,7 @@
             "item": "apotheosis:gem_fused_slate"
         },
         "E": {
-            "item": "forge:ender_pearls"
+            "tag": "forge:ender_pearls"
         },
         "L": {
             "item": "minecraft:lava_bucket"
