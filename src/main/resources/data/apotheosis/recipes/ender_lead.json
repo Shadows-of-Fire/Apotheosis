@@ -8,29 +8,21 @@
     ],
     "group": "something",
     "pattern": [
-        "SBS",
-        "ELE",
-        "SGS"
+        "EL",
+        "G "
     ],
     "key": {
-        "B": {
-            "item": "minecraft:blaze_rod"
-        },
         "G": {
-            "item": "apotheosis:gem_dust"
-        },
-        "S": {
-            "item": "apotheosis:gem_fused_slate"
+            "item": "minecraft:gold_ingot"
         },
         "E": {
             "item": "forge:ender_pearls"
         },
         "L": {
-            "item": "minecraft:lava_bucket"
+            "item": "minecraft:lead"
         }
     },
     "result": {
-        "item": "apotheosis:sigil_of_withdrawal",
-        "count": 4
+        "item": "apotheosis:ender_lead"
     }
 }
