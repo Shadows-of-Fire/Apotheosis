@@ -150,7 +150,7 @@
 
     "comment_id": "/Adventure Module",
 
-    "info.apotheosis.affix_item": "Апофатический предмет с усилением",
+    "info.apotheosis.affix_item": "Апофеозный предмет с усилением",
     
     "death.attack.apotheosis.execute": "%s был казнён %s",
     "death.attack.apotheosis.execute.item": "%s был казнён %s используя %s",
@@ -166,413 +166,413 @@
     "misc.apotheosis.radial_state.enabled": "Включен",
     "misc.apotheosis.radial_state.disabled": "Отключен",
     
-    "affix.apotheosis:blessed": "Благословлённый",
+    "affix.apotheosis:blessed": "Благословления",
     "affix.apotheosis:blessed.suffix": "здоровья",
 
-    "affix.apotheosis:ironforged": "Стальгорновый",
+    "affix.apotheosis:ironforged": "Железокования",
     "affix.apotheosis:ironforged.suffix": "железа",
 
-    "affix.apotheosis:violent": "Насильственный",
+    "affix.apotheosis:violent": "Насильствености",
     "affix.apotheosis:violent.suffix": "убийства",
 
-    "affix.apotheosis:windswept": "Вихревой",
+    "affix.apotheosis:windswept": "Вихря",
     "affix.apotheosis:windswept.suffix": "текущего",
 
-    "affix.apotheosis:graceful": "Грациозный",
+    "affix.apotheosis:graceful": "Грациозности",
     "affix.apotheosis:graceful.suffix": "дуэлянта",
 
-    "affix.apotheosis:forceful": "Мощный",
+    "affix.apotheosis:forceful": "Мощности",
     "affix.apotheosis:forceful.suffix": "быка",
 
-    "affix.apotheosis:aquatic": "Водяной",
+    "affix.apotheosis:aquatic": "Водянистости",
     "affix.apotheosis:aquatic.suffix": "океана",
 
-    "affix.apotheosis:gravitational": "Гравитационный",
+    "affix.apotheosis:gravitational": "Гравитационности",
     "affix.apotheosis:gravitational.suffix": "гравитации",
 
-    "affix.apotheosis:lengthy": "Длинный",
+    "affix.apotheosis:lengthy": "Длины",
     "affix.apotheosis:lengthy.suffix": "хватания",
 
-    "affix.apotheosis:elongated": "Вытянутый",
+    "affix.apotheosis:elongated": "Вытянутости",
     "affix.apotheosis:elongated.suffix": "далёких битв",
 
-    "affix.apotheosis:agile": "Проворный",
+    "affix.apotheosis:agile": "Проворности",
     "affix.apotheosis:agile.suffix": "ловкости",
 
-    "affix.apotheosis:steel_touched": "Стальной",
+    "affix.apotheosis:steel_touched": "Стальгорности",
     "affix.apotheosis:steel_touched.suffix": "защитника",
 
-    "affix.apotheosis:stalwart": "Стойкий",
+    "affix.apotheosis:stalwart": "Стойкости",
     "affix.apotheosis:stalwart.suffix": "упрямства",
 
-    "affix.apotheosis:elastic": "Упругий",
+    "affix.apotheosis:elastic": "Упругости",
     "affix.apotheosis:elastic.suffix": "восхождения",
 
-    "affix.apotheosis:fortunate": "Удачливый",
+    "affix.apotheosis:fortunate": "Удачливости",
     "affix.apotheosis:fortunate.suffix": "четырёхлистного клевера",
 
-    "affix.apotheosis:intricate": "Хитроумный",
+    "affix.apotheosis:intricate": "Хитроумности",
     "affix.apotheosis:intricate.suffix": "критического мышления",
 
-    "affix.apotheosis:lacerating": "Раздирающий",
+    "affix.apotheosis:lacerating": "Раздирания",
     "affix.apotheosis:lacerating.suffix": "хирургической точности",
 
-    "affix.apotheosis:glacial": "Ледниковый",
+    "affix.apotheosis:glacial": "Ледниковости",
     "affix.apotheosis:glacial.suffix": "ледяных земель",
 
-    "affix.apotheosis:infernal": "Адский",
+    "affix.apotheosis:infernal": "Инферно",
     "affix.apotheosis:infernal.suffix": "Солнца",
 
-    "affix.apotheosis:vampiric": "Вампирический",
+    "affix.apotheosis:vampiric": "Вампиризма",
     "affix.apotheosis:vampiric.suffix": "кровопускания",
 
-    "affix.apotheosis:shredding": "Измельчающий",
+    "affix.apotheosis:shredding": "Измельчения",
     "affix.apotheosis:shredding.suffix": "проникновения",
 
-    "affix.apotheosis:giant_slaying": "Убийца гигантов",
+    "affix.apotheosis:giant_slaying": "Убийцы гигантов",
     "affix.apotheosis:giant_slaying.suffix": "колоссальных ударов",
 
-    "affix.apotheosis:berserking": "Неистовый",
+    "affix.apotheosis:berserking": "Неистовства",
     "affix.apotheosis:berserking.suffix": "берсерка",
 
-    "affix.apotheosis:destructive": "Разрушительный",
+    "affix.apotheosis:destructive": "Разрушительности",
     "affix.apotheosis:destructive.suffix": "карьерных работ",
 
-    "affix.apotheosis:elven": "Эльфийский",
-    "affix.apotheosis:elven.suffix": "первого лучника",
+    "affix.apotheosis:elven": "Первого лучника",
+    "affix.apotheosis:elven.suffix": "эльфов",
 
-    "affix.apotheosis:streamlined": "Обтекаемый",
+    "affix.apotheosis:streamlined": "Обтекаемости",
     "affix.apotheosis:streamlined.suffix": "снайпера",
     
-    "affix.apotheosis:elusive": "Неуловимый",
+    "affix.apotheosis:elusive": "Неуловимости",
     "affix.apotheosis:elusive.suffix": "уклонения",
 
-    "affix.apotheosis:swift": "Быстрый",
+    "affix.apotheosis:swift": "Быстроты",
     "affix.apotheosis:swift.suffix": "разгрома",
 
-    "affix.apotheosis:ensnaring": "Заманивающий",
+    "affix.apotheosis:ensnaring": "Заманивания",
     "affix.apotheosis:ensnaring.suffix": "хищника",
 
-    "affix.apotheosis:venomous": "Ядовитый",
+    "affix.apotheosis:venomous": "Ядовитости",
     "affix.apotheosis:venomous.suffix": "змеи",
 
-    "affix.apotheosis:fleeting": "Мимолётный", 
+    "affix.apotheosis:fleeting": "Мимолётности", 
     "affix.apotheosis:fleeting.suffix": "рейнджера",
 
-    "affix.apotheosis:weakening": "Ослабляющий",
+    "affix.apotheosis:weakening": "Ослабления",
     "affix.apotheosis:weakening.suffix": "слабости",
 
-    "affix.apotheosis:bolstering": "Поддерживающий",
+    "affix.apotheosis:bolstering": "Поддерживания",
     "affix.apotheosis:bolstering.suffix": "силы духа",
 
-    "affix.apotheosis:revitalizing": "Оживляющий",
+    "affix.apotheosis:revitalizing": "Оживления",
     "affix.apotheosis:revitalizing.suffix": "источника",
 
-    "affix.apotheosis:shulkers": "Шалкеровый",
-    "affix.apotheosis:shulkers.suffix": "левитации",
+    "affix.apotheosis:shulkers": "Левитации",
+    "affix.apotheosis:shulkers.suffix": "шалкера",
 
-    "affix.apotheosis:withering": "Иссушающий",
+    "affix.apotheosis:withering": "Иссушения",
     "affix.apotheosis:withering.suffix": "тёмного скелета",
 
-    "affix.apotheosis:ivy_laced": "Плющевой",
+    "affix.apotheosis:ivy_laced": "Плюща",
     "affix.apotheosis:ivy_laced.suffix": "природного токсина",
 
-    "affix.apotheosis:satanic": "Сатанинский",
+    "affix.apotheosis:satanic": "Сатаны",
     "affix.apotheosis:satanic.suffix": "преисподней",
 
-    "affix.apotheosis:armor/attribute/blessed": "Благословлённый",
+    "affix.apotheosis:armor/attribute/blessed": "Благословления",
     "affix.apotheosis:armor/attribute/blessed.suffix": "здоровья",
 
-    "affix.apotheosis:armor/attribute/windswept": "Ветреный",
-    "affix.apotheosis:armor/attribute/windswept.suffix": "нынешнего",
+    "affix.apotheosis:armor/attribute/windswept": "Ветренности",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "текучести",
 
-    "affix.apotheosis:armor/attribute/ironforged": "Железокованный",
+    "affix.apotheosis:armor/attribute/ironforged": "Железокования",
     "affix.apotheosis:armor/attribute/ironforged.suffix": "кузнеца",
 
-    "affix.apotheosis:sword/attribute/violent": "Насильственный",
+    "affix.apotheosis:sword/attribute/violent": "Насильствености",
     "affix.apotheosis:sword/attribute/violent.suffix": "убийства",
 
-    "affix.apotheosis:ranged/attribute/windswept": "Вихревой",
+    "affix.apotheosis:ranged/attribute/windswept": "Вихря",
     "affix.apotheosis:ranged/attribute/windswept.suffix": "текущего",
 
-    "affix.apotheosis:sword/attribute/graceful": "Грациозный",
+    "affix.apotheosis:sword/attribute/graceful": "Грациозности",
     "affix.apotheosis:sword/attribute/graceful.suffix": "дуэлянта",
 
-    "affix.apotheosis:heavy_weapon/attribute/forceful": "Мощный",
+    "affix.apotheosis:heavy_weapon/attribute/forceful": "Мощности",
     "affix.apotheosis:heavy_weapon/attribute/forceful.suffix": "быка",
 
-    "affix.apotheosis:armor/attribute/aquatic": "Водяной",
+    "affix.apotheosis:armor/attribute/aquatic": "Водности",
     "affix.apotheosis:armor/attribute/aquatic.suffix": "океана",
 
-    "affix.apotheosis:armor/attribute/gravitational": "Гравитационный",
+    "affix.apotheosis:armor/attribute/gravitational": "Гравитационности",
     "affix.apotheosis:armor/attribute/gravitational.suffix": "гравитации",
 
-    "affix.apotheosis:breaker/attribute/lengthy": "Длинный",
+    "affix.apotheosis:breaker/attribute/lengthy": "Длины",
     "affix.apotheosis:breaker/attribute/lengthy.suffix": "хватания",
 
-    "affix.apotheosis:breaker/attribute/experienced": "Опытный",
+    "affix.apotheosis:breaker/attribute/experienced": "Опытности",
     "affix.apotheosis:breaker/attribute/experienced.suffix": "учёного",
 
-    "affix.apotheosis:sword/attribute/elongated": "Вытянутый",
+    "affix.apotheosis:sword/attribute/elongated": "Вытянутости",
     "affix.apotheosis:sword/attribute/elongated.suffix": "далёких битв",
 
-    "affix.apotheosis:ranged/attribute/agile": "Проворный",
+    "affix.apotheosis:ranged/attribute/agile": "Проворности",
     "affix.apotheosis:ranged/attribute/agile.suffix": "ловкости",
 
-    "affix.apotheosis:armor/attribute/steel_touched": "Стальной",
+    "affix.apotheosis:armor/attribute/steel_touched": "Стальгорности",
     "affix.apotheosis:armor/attribute/steel_touched.suffix": "защитника",
 
-    "affix.apotheosis:armor/attribute/stalwart": "Стойкий",
+    "affix.apotheosis:armor/attribute/stalwart": "Стойкости",
     "affix.apotheosis:armor/attribute/stalwart.suffix": "упрямства",
 
-    "affix.apotheosis:armor/attribute/elastic": "Упругий",
+    "affix.apotheosis:armor/attribute/elastic": "Упругости",
     "affix.apotheosis:armor/attribute/elastic.suffix": "восхождения",
 
-    "affix.apotheosis:armor/attribute/fortunate": "Удачливый",
+    "affix.apotheosis:armor/attribute/fortunate": "Удачливости",
     "affix.apotheosis:armor/attribute/fortunate.suffix": "четырёхлистного клевера",
 
-    "affix.apotheosis:sword/attribute/intricate": "Хитроумный",
+    "affix.apotheosis:sword/attribute/intricate": "Хитроумности",
     "affix.apotheosis:sword/attribute/intricate.suffix": "критического мышления",
 
-    "affix.apotheosis:sword/attribute/lacerating": "Раздирающий",
+    "affix.apotheosis:sword/attribute/lacerating": "Раздирания",
     "affix.apotheosis:sword/attribute/lacerating.suffix": "хирургической точности",
 
-    "affix.apotheosis:sword/attribute/glacial": "Ледниковый",
+    "affix.apotheosis:sword/attribute/glacial": "Ледниковости",
     "affix.apotheosis:sword/attribute/glacial.suffix": "ледяных земель",
 
-    "affix.apotheosis:sword/attribute/infernal": "Адский",
+    "affix.apotheosis:sword/attribute/infernal": "Инферно",
     "affix.apotheosis:sword/attribute/infernal.suffix": "Солнца",
 
-    "affix.apotheosis:sword/attribute/vampiric": "Вампирический",
+    "affix.apotheosis:sword/attribute/vampiric": "Вампиризма",
     "affix.apotheosis:sword/attribute/vampiric.suffix": "кровопускания",
 
-    "affix.apotheosis:sword/attribute/piercing": "Пронзающий",
+    "affix.apotheosis:sword/attribute/piercing": "Пронзания",
     "affix.apotheosis:sword/attribute/piercing.suffix": "разделения",
 
-    "affix.apotheosis:heavy_weapon/attribute/shredding": "Измельчающий",
+    "affix.apotheosis:heavy_weapon/attribute/shredding": "Измельчения",
     "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "проникновения",
 
-    "affix.apotheosis:heavy_weapon/attribute/giant_slaying": "Убийца гигантов",
+    "affix.apotheosis:heavy_weapon/attribute/giant_slaying": "Убийцы гигантов",
     "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "колоссальных ударов",
 
-    "affix.apotheosis:heavy_weapon/attribute/berserking": "Неистовый",
+    "affix.apotheosis:heavy_weapon/attribute/berserking": "Неистовства",
     "affix.apotheosis:heavy_weapon/attribute/berserking.suffix": "берсерка",
 
-    "affix.apotheosis:breaker/attribute/destructive": "Разрушительный",
+    "affix.apotheosis:breaker/attribute/destructive": "Разрушительности",
     "affix.apotheosis:breaker/attribute/destructive.suffix": "карьерных работ",
 
-    "affix.apotheosis:ranged/attribute/elven": "Эльфийский",
+    "affix.apotheosis:ranged/attribute/elven": "Эльфа",
     "affix.apotheosis:ranged/attribute/elven.suffix": "первого лучника",
 
-    "affix.apotheosis:ranged/attribute/streamlined": "Обтекаемый",
+    "affix.apotheosis:ranged/attribute/streamlined": "Обтекаемости",
     "affix.apotheosis:ranged/attribute/streamlined.suffix": "снайпера",
     
-    "affix.apotheosis:sword/mob_effect/elusive": "Неуловимый",
+    "affix.apotheosis:sword/mob_effect/elusive": "Неуловимости",
     "affix.apotheosis:sword/mob_effect/elusive.suffix": "уклонения",
 
-    "affix.apotheosis:breaker/mob_effect/swift": "Быстрый",
+    "affix.apotheosis:breaker/mob_effect/swift": "Быстроты",
     "affix.apotheosis:breaker/mob_effect/swift.suffix": "разгрома",
 
-    "affix.apotheosis:breaker/mob_effect/spelunkers": "Спелеолог",
+    "affix.apotheosis:breaker/mob_effect/spelunkers": "Спелеолога",
     "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "исследования пещер",
 
-    "affix.apotheosis:ranged/mob_effect/ensnaring": "Заманивающий",
+    "affix.apotheosis:ranged/mob_effect/ensnaring": "Заманивания",
     "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "хищника",
 
-    "affix.apotheosis:shield/mob_effect/venomous": "Ядовитый",
+    "affix.apotheosis:shield/mob_effect/venomous": "Ядовитости",
     "affix.apotheosis:shield/mob_effect/venomous.suffix": "змеи",
 
     "affix.apotheosis:ranged/mob_effect/fleeting": "Мимолётный", 
     "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "рейнджера",
 
-    "affix.apotheosis:sword/mob_effect/weakening": "Ослабляющий",
+    "affix.apotheosis:sword/mob_effect/weakening": "Ослабления",
     "affix.apotheosis:sword/mob_effect/weakening.suffix": "слабости",
 
-    "affix.apotheosis:armor/mob_effect/bolstering": "Поддерживающий",
+    "affix.apotheosis:armor/mob_effect/bolstering": "Поддерживания",
     "affix.apotheosis:armor/mob_effect/bolstering.suffix": "силы духа",
 
-    "affix.apotheosis:armor/mob_effect/revitalizing": "Оживляющий",
+    "affix.apotheosis:armor/mob_effect/revitalizing": "Оживления",
     "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "источника",
 
-    "affix.apotheosis:armor/mob_effect/nimble": "Шустрый",
+    "affix.apotheosis:armor/mob_effect/nimble": "Шустрости",
     "affix.apotheosis:armor/mob_effect/nimble.suffix": "лиса",
 
-    "affix.apotheosis:armor/mob_effect/blinding": "Ослепляющий",
+    "affix.apotheosis:armor/mob_effect/blinding": "Ослепления",
     "affix.apotheosis:armor/mob_effect/blinding.suffix": "тьмы",
 
-    "affix.apotheosis:ranged/mob_effect/shulkers": "Шалкеровый",
-    "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "левитации",
+    "affix.apotheosis:ranged/mob_effect/shulkers": "Левитации",
+    "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "шалкера",
 
-    "affix.apotheosis:shield/mob_effect/withering": "Иссушающий",
+    "affix.apotheosis:shield/mob_effect/withering": "Иссушения",
     "affix.apotheosis:shield/mob_effect/withering.suffix": "чёрного скелета",
 
-    "affix.apotheosis:shield/attribute/ironforged": "Железогорновый",
+    "affix.apotheosis:shield/attribute/ironforged": "Железогорности",
     "affix.apotheosis:shield/attribute/ironforged.suffix": "кузнеца",
 
-    "affix.apotheosis:shield/attribute/steel_touched": "Стальной",
+    "affix.apotheosis:shield/attribute/steel_touched": "Сталекования",
     "affix.apotheosis:shield/attribute/steel_touched.suffix": "защитника",
 
-    "affix.apotheosis:ranged/mob_effect/ivy_laced": "Плющевой",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced": "Плюща",
     "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "природного токсина",
 
-    "affix.apotheosis:ranged/mob_effect/satanic": "Сатанинский",
+    "affix.apotheosis:ranged/mob_effect/satanic": "Сатаны",
     "affix.apotheosis:ranged/mob_effect/satanic.suffix": "преисподней",
 
-    "affix.apotheosis:spectral": "Спектральный",
+    "affix.apotheosis:spectral": "Призрачности",
     "affix.apotheosis:spectral.suffix": "покинутого",
     "affix.apotheosis:spectral.desc": "У вас есть шанс %s%% выпустить вторую стрелу.",
     
-    "affix.apotheosis:magical": "Магический",
+    "affix.apotheosis:magical": "Волшебства",
     "affix.apotheosis:magical.suffix": "таинства",
     "affix.apotheosis:magical.desc": "Ваши стрелы наносят магический урон.",
     
-    "affix.apotheosis:festive": "Фестивальный",
+    "affix.apotheosis:festive": "Праздненства",
     "affix.apotheosis:festive.suffix": "вечеринок",
     "affix.apotheosis:festive.desc": "Убитые враги имеют %s%% шанс стать добычей Пиньяты",
     
-    "affix.apotheosis:thunderstruck": "Громовержец",
+    "affix.apotheosis:thunderstruck": "Громовержца",
     "affix.apotheosis:thunderstruck.suffix": "шторма",
     "affix.apotheosis:thunderstruck.desc": "Ваши атаки наносят %s урона ближайшим врагам.",
     
-    "affix.apotheosis:retreating": "Отступающий",
+    "affix.apotheosis:retreating": "Отступания",
     "affix.apotheosis:retreating.suffix": "шута",
     "affix.apotheosis:retreating.desc": "Вы отпрыгнете назад при блокировании в ближнем бою.",
     
-    "affix.apotheosis:telepathic": "Телепатический",
+    "affix.apotheosis:telepathic": "Телепатии",
     "affix.apotheosis:telepathic.suffix": "пространства и времени",
     "affix.apotheosis:telepathic.desc.weapon": "Дроп с мобов будет телепортироваться к вам.",
     "affix.apotheosis:telepathic.desc.tool": "Дроп с блоков будет телепортироваться к вам.",
 
-    "affix.apotheosis:executing": "Казнящий",
+    "affix.apotheosis:executing": "Казни",
     "affix.apotheosis:executing.suffix": "палача",
     "affix.apotheosis:executing.desc": "Враги с максимальным здоровьем ниже %s%% будут казнены.",
     
-    "affix.apotheosis:cleaving": "Рассекающий",
+    "affix.apotheosis:cleaving": "Рассекания",
     "affix.apotheosis:cleaving.suffix": "мясника",
     "affix.apotheosis:cleaving.desc": "Атаки имеют шанс %s%% поразить до %s ближайших врагов.",
 
-    "affix.apotheosis:enlightened": "Просвещённый",
+    "affix.apotheosis:enlightened": "Просвящения",
     "affix.apotheosis:enlightened.suffix": "светозара",
     "affix.apotheosis:enlightened.desc": "Этот инструмент может разместить факел ценой %s прочности.",
 
-    "affix.apotheosis:psychic": "Психический",
+    "affix.apotheosis:psychic": "Психики",
     "affix.apotheosis:psychic.suffix": "мстителя",
     "affix.apotheosis:psychic.desc": "Блокирование снаряда наносит стрелку %s%% урона.",
 
-    "affix.apotheosis:ranged/special/spectral": "Спектральный",
+    "affix.apotheosis:ranged/special/spectral": "Призрачности",
     "affix.apotheosis:ranged/special/spectral.suffix": "покинутого",
     "affix.apotheosis:ranged/special/spectral.desc": "У вас есть шанс %s%% выпустить вторую стрелу.",
     
-    "affix.apotheosis:ranged/special/magical": "Магический",
+    "affix.apotheosis:ranged/special/magical": "Волшебства",
     "affix.apotheosis:ranged/special/magical.suffix": "таинства",
     "affix.apotheosis:ranged/special/magical.desc": "Ваши стрелы наносят магический урон.",
     
-    "affix.apotheosis:sword/special/festive": "Фестивальный",
+    "affix.apotheosis:sword/special/festive": "Праздненства",
     "affix.apotheosis:sword/special/festive.suffix": "вечеринок",
     "affix.apotheosis:sword/special/festive.desc": "Убитые враги имеют %s%% шанс стать добычей Пиньяты",
     
-    "affix.apotheosis:sword/special/thunderstruck": "Громовержец",
+    "affix.apotheosis:sword/special/thunderstruck": "Громовержца",
     "affix.apotheosis:sword/special/thunderstruck.suffix": "шторма",
     "affix.apotheosis:sword/special/thunderstruck.desc": "Ваши атаки наносят %s урона ближайшим врагам.",
     
-    "affix.apotheosis:shield/special/retreating": "Отступающий",
+    "affix.apotheosis:shield/special/retreating": "Отступания",
     "affix.apotheosis:shield/special/retreating.suffix": "шута",
     "affix.apotheosis:shield/special/retreating.desc": "Вы отпрыгнете назад при блокировании в ближнем бою.",
     
-    "affix.apotheosis:telepathic": "Телепатический",
+    "affix.apotheosis:telepathic": "Телепатии",
     "affix.apotheosis:telepathic.suffix": "пространства и времени",
     "affix.apotheosis:telepathic.desc.weapon": "Дроп с мобов будет телепортироваться к вам.",
     "affix.apotheosis:telepathic.desc.tool": "Дроп с блоков будет телепортироваться к вам.",
 
-    "affix.apotheosis:heavy_weapon/special/executing": "Исполняющий",
+    "affix.apotheosis:heavy_weapon/special/executing": "Исполнения",
     "affix.apotheosis:heavy_weapon/special/executing.suffix": "палача",
     "affix.apotheosis:heavy_weapon/special/executing.desc": "Враги с максимальным здоровьем ниже %s%% будут казнены.",
     
-    "affix.apotheosis:heavy_weapon/special/cleaving": "Рассекающий",
+    "affix.apotheosis:heavy_weapon/special/cleaving": "Рассекания",
     "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "мясника",
     "affix.apotheosis:heavy_weapon/special/cleaving.desc": "Атаки имеют шанс %s%% поразить до %s ближайших врагов.",
 
-    "affix.apotheosis:breaker/special/enlightened": "Просвещённый",
+    "affix.apotheosis:breaker/special/enlightened": "Просвещения",
     "affix.apotheosis:breaker/special/enlightened.suffix": "светозара",
     "affix.apotheosis:breaker/special/enlightened.desc": "Этот инструмент может разместить факел ценой %s прочности.",
 
-    "affix.apotheosis:shield/special/psychic": "Психический",
+    "affix.apotheosis:shield/special/psychic": "Психики",
     "affix.apotheosis:shield/special/psychic.suffix": "мстителя",
     "affix.apotheosis:shield/special/psychic.desc": "Блокирование снаряда наносит стрелку %s%% урона.",
 
-    "affix.apotheosis:shield/special/catalyzing": "Катализирующий",
+    "affix.apotheosis:shield/special/catalyzing": "Катализации",
     "affix.apotheosis:shield/special/catalyzing.suffix": "преобразования",
     "affix.apotheosis:shield/special/catalyzing.desc": "Блокирование взрыва придаст вам огромную силу.",
 
-    "affix.apotheosis:catalyzing": "Катализирующий",
+    "affix.apotheosis:catalyzing": "Катализации",
     "affix.apotheosis:catalyzing.suffix": "преобразования",
     "affix.apotheosis:catalyzing.desc": "Блокирование взрыва придаст вам огромную силу.",
 
-    "affix.apotheosis:annihilating": "Уничтожающий",
+    "affix.apotheosis:annihilating": "Уничтожения",
     "affix.apotheosis:annihilating.suffix": "титана",
 
-    "affix.apotheosis:decimating": "Истребляющий",
+    "affix.apotheosis:decimating": "Истребления",
     "affix.apotheosis:decimating.suffix": "короля Богов",
     
-    "affix.apotheosis:murderous": "Убийственный",
+    "affix.apotheosis:murderous": "Убийственности",
     "affix.apotheosis:murderous.suffix": "минотавра",
     
-    "affix.apotheosis:acidic": "Кислотный",
+    "affix.apotheosis:acidic": "Кислотности",
     "affix.apotheosis:acidic.suffix": "коррозии",
 
-    "affix.apotheosis:caustic": "Едкий",
+    "affix.apotheosis:caustic": "Едкости",
     "affix.apotheosis:caustic.suffix": "едкого царства",
 
-    "affix.apotheosis:sophisticated": "Утончённый",
+    "affix.apotheosis:sophisticated": "Утончённости",
     "affix.apotheosis:sophisticated.suffix": "древней библиотеки",
 
-    "affix.apotheosis:devilish": "Дьявольский",
+    "affix.apotheosis:devilish": "Дьявольства",
     "affix.apotheosis:devilish.suffix": "ветерана",
 
-    "affix.apotheosis:heavy_weapon/attribute/annihilating": "Уничтожающий",
+    "affix.apotheosis:heavy_weapon/attribute/annihilating": "Уничтожения",
     "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "титана",
 
-    "affix.apotheosis:heavy_weapon/attribute/decimating": "Истребляющий",
+    "affix.apotheosis:heavy_weapon/attribute/decimating": "Истребления",
     "affix.apotheosis:heavy_weapon/attribute/decimating.suffix": "короля Богов",
     
-    "affix.apotheosis:heavy_weapon/attribute/murderous": "Убийственный",
+    "affix.apotheosis:heavy_weapon/attribute/murderous": "Убийственности",
     "affix.apotheosis:heavy_weapon/attribute/murderous.suffix": "минотавра",
     
-    "affix.apotheosis:ranged/mob_effect/acidic": "Кислотный",
+    "affix.apotheosis:ranged/mob_effect/acidic": "Кислотности",
     "affix.apotheosis:ranged/mob_effect/acidic.suffix": "коррозии",
 
-    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting": "Въедливый",
+    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting": "Въедливости",
     "affix.apotheosis:heavy_weapon/mob_effect/bloodletting.suffix": "убийцы",
 
-    "affix.apotheosis:heavy_weapon/mob_effect/caustic": "Едкий",
+    "affix.apotheosis:heavy_weapon/mob_effect/caustic": "Едкости",
     "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "едкого царства",
 
-    "affix.apotheosis:sword/mob_effect/sophisticated": "Утончённый",
+    "affix.apotheosis:sword/mob_effect/sophisticated": "Утончённости",
     "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "древней библиотеки",
 
-    "affix.apotheosis:shield/mob_effect/devilish": "Дьявольский",
+    "affix.apotheosis:shield/mob_effect/devilish": "Дьявольства",
     "affix.apotheosis:shield/mob_effect/devilish.suffix": "ветерана",
 
-    "affix.apotheosis:radial": "Радиальный",
+    "affix.apotheosis:radial": "Радиальности",
     "affix.apotheosis:radial.suffix": "землекрушителя",
     "affix.apotheosis:radial.desc": "Инструмент ломает блоки по области %sx%s блоков.",
 
-    "affix.apotheosis:breaker/special/radial": "Радиальный",
+    "affix.apotheosis:breaker/special/radial": "Радиальности",
     "affix.apotheosis:breaker/special/radial.suffix": "землекрушителя",
     "affix.apotheosis:breaker/special/radial.desc": "Инструмент ломает блоки по области %sx%s блоков.",
 
-    "affix.apotheosis:melee_weapon/mob_effect/detonating": "Детонирующий",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating": "Детонирования",
     "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "элементаля пламени",
     
     "misc.apotheosis.iron": "железный",
     "misc.apotheosis.diamond": "алмазный",
     "misc.apotheosis.netherite": "незеритовый",
     
-    "affix.apotheosis:omnetic": "Всепроникающий",
+    "affix.apotheosis:omnetic": "Всепроникновения",
     "affix.apotheosis:omnetic.suffix": "сингулярности",
     "affix.apotheosis:omnetic.desc": "Этот инструмент имеет %s уровень эффективности против всех блоков.",
 
-    "affix.apotheosis:breaker/special/omnetic": "Всепроникающий",
+    "affix.apotheosis:breaker/special/omnetic": "Всепроникновения",
     "affix.apotheosis:breaker/special/omnetic.suffix": "сингулярности",
     "affix.apotheosis:breaker/special/omnetic.desc": "Этот инструмент имеет %s уровень эффективности против всех блоков.",
     
@@ -583,60 +583,60 @@
     "misc.apotheosis.explosion": "взрывной",
     "affix.apotheosis:damage_reduction.desc": "Полученный %s урон уменьшен на %s%%",
 
-    "affix.apotheosis:armor/dmg_reduction/blockading": "Блокадный",
+    "affix.apotheosis:armor/dmg_reduction/blockading": "Блокирования",
     "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "блокады",
 
-    "affix.apotheosis:armor/dmg_reduction/runed": "Рунический",
+    "affix.apotheosis:armor/dmg_reduction/runed": "Рунохранения",
     "affix.apotheosis:armor/dmg_reduction/runed.suffix": "хранителя заклинаний",
 
-    "affix.apotheosis:armor/dmg_reduction/blast_forged": "Выплавленный",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged": "Выплавления",
     "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "Бога-кузницы",
 
-    "affix.apotheosis:armor/dmg_reduction/dwarven": "Дварфский",
-    "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "вулкана",
+    "affix.apotheosis:armor/dmg_reduction/dwarven": "Вулкана",
+    "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "дворфа",
 
-    "affix.apotheosis:armor/dmg_reduction/feathery": "Пернатый",
+    "affix.apotheosis:armor/dmg_reduction/feathery": "Пернатости",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "орла",
 
-    "affix.apotheosis:shield/attribute/stalwart": "Стойкий",
+    "affix.apotheosis:shield/attribute/stalwart": "Стойкости",
     "affix.apotheosis:shield/attribute/stalwart.suffix": "упрямства",
 
-    "affix.apotheosis:armor/attribute/spiritual": "Духовный",
+    "affix.apotheosis:armor/attribute/spiritual": "Духовности",
     "affix.apotheosis:armor/attribute/spiritual.suffix": "знахаря",
     
-    "affix.apotheosis:breaker/attribute/lucky": "Везучий",
+    "affix.apotheosis:breaker/attribute/lucky": "Везучести",
     "affix.apotheosis:breaker/attribute/lucky.suffix": "счастливой случайности",
 
-    "affix.apotheosis:heavy_weapon/attribute/nullifying": "Ануллирующий",
+    "affix.apotheosis:heavy_weapon/attribute/nullifying": "Ануллирования",
     "affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "магоборца",
 
-    "affix.apotheosis:sword/attribute/spellbreaking": "Разрушающий чары",
+    "affix.apotheosis:sword/attribute/spellbreaking": "Разрушения чар",
     "affix.apotheosis:sword/attribute/spellbreaking.suffix": "петрицитового голема",
 
-    "affix.apotheosis:ranged/mob_effect/grievous": "Печальный",
+    "affix.apotheosis:ranged/mob_effect/grievous": "Печали",
     "affix.apotheosis:ranged/mob_effect/grievous.suffix": "ранения",
 
-    "affix.apotheosis:armor/mob_effect/bursting": "Разрывной",
+    "affix.apotheosis:armor/mob_effect/bursting": "Разрывания",
     "affix.apotheosis:armor/mob_effect/bursting.suffix": "живучести",
 
-    "affix.apotheosis:durable": "Прочный",
+    "affix.apotheosis:durable": "Прочности",
     "affix.apotheosis:durable.suffix": "долговечности",
 
     "affix.apotheosis:damage_reduction.desc": "Полученный %s урон уменьшен на %s%%.",
     
-    "affix.apotheosis:blockading": "Блокадный",
+    "affix.apotheosis:blockading": "Блокирования",
     "affix.apotheosis:blockading.suffix": "блокады",
     
-    "affix.apotheosis:runed": "Рунический",
+    "affix.apotheosis:runed": "Рунохранения",
     "affix.apotheosis:runed.suffix": "хранителя заклинаний",
     
-    "affix.apotheosis:blast_forged": "Выплавленный",
+    "affix.apotheosis:blast_forged": "Выплавления",
     "affix.apotheosis:blast_forged.suffix": "Бога-кузницы",
     
-    "affix.apotheosis:dwarven": "Дварфский",
-    "affix.apotheosis:dwarven.suffix": "вулкана",
+    "affix.apotheosis:dwarven": "Вулкана",
+    "affix.apotheosis:dwarven.suffix": "дворфа",
     
-    "affix.apotheosis:feathery": "Пернатый",
+    "affix.apotheosis:feathery": "Пернатости",
     "affix.apotheosis:feathery.suffix": "орла",
 
     "affix.apotheosis:socket": "",
@@ -737,7 +737,7 @@
     "item.apotheosis.gem.apotheosis:twilight/forest": "самоцвет сумеречного леса",
     "item.apotheosis.gem.apotheosis:twilight/queen": "самоцвет ледяной королевы",
 
-    "item.apotheosis.boss_summoner": "Призывалка апофатического босса",
+    "item.apotheosis.boss_summoner": "Призыватель апофеозного босса",
     "item.apotheosis.gem.apotheosis:common": "Треснутый %s",
     "item.apotheosis.gem.apotheosis:uncommon": "Расщеплённый %s",
     "item.apotheosis.gem.apotheosis:rare": "Дефектный %s",
@@ -756,7 +756,7 @@
     "item.apotheosis.vial_of_expulsion.desc": "Сыворотка для удаления самоцветов",
     "item.apotheosis.vial_of_unnaming": "Флакон безымяния",
     "item.apotheosis.gem_dust": "Пыль самоцвета",
-    "item.apotheosis.gem_dust.desc": "Измельчённый апофатический самоцвет",
+    "item.apotheosis.gem_dust.desc": "Измельчённый апофеозный самоцвет",
     "item.apotheosis.common_material": "Таинственный металлолом",
     "item.apotheosis.uncommon_material": "Изношенная временем ткань",
     "item.apotheosis.rare_material": "Светящийся осколок кристалла",
@@ -826,7 +826,7 @@
     "text.apotheosis.upgraded_form": "Улучшенная форма",
     "text.apotheosis.alternative_page": "Стр. %s/%s (прокрутите для смены)",
 
-    "title.apotheosis.smithing": "Апофатическая ковка",
+    "title.apotheosis.smithing": "Апофеозная ковка",
     "title.apotheosis.salvaging": "Утилизирование",
 
     "text.apotheosis.anything": "Что-нибудь",
@@ -863,13 +863,13 @@
     "text.apotheosis.any_x_item": "Любой %s предмет с усилением",
 
     "info.apotheosis.boss_spawn": "%s пробуждён неподалеку!",
-    "info.apotheosis.boss": "%s апофатический босс",
+    "info.apotheosis.boss": "%s апофеозный босс",
     "info.apotheosis.boss_item": "Выпадет: %s",
     "info.apotheosis.boss_modifiers": "Модификаторы босса:",
     "info.apotheosis.rarity_material": "Редкость материала (%s)",
-    "info.apotheosis.gem_crushing": "Пыль самоцвета получается, если выбросить любой апофатический самоцвет в мире и заставить на него упасть наковальню.",
-    "info.apotheosis.gem_extraction": "Используется в столе кузнеца для извлечения апофатических самоцветов.\n\nпредмет будет уничтожен в процессе.",
-    "info.apotheosis.gem_expulsion": "Используется в столе кузнеца для извлечения апофатических самоцветов.\n\nсамоцветы будут уничтожены в процессе.",
+    "info.apotheosis.gem_crushing": "Пыль самоцвета получается, если выбросить любой апофеозный самоцвет в мире и заставить на него упасть наковальню.",
+    "info.apotheosis.gem_extraction": "Используется в столе кузнеца для извлечения апофеозных самоцветов.\n\nпредмет будет уничтожен в процессе.",
+    "info.apotheosis.gem_expulsion": "Используется в столе кузнеца для извлечения апофеозных самоцветов.\n\nсамоцветы будут уничтожены в процессе.",
     "info.apotheosis.unnaming": "Используется в столе кузнеца для удаления компонентов усилений из названия предмета.",
     "info.apotheosis.salvaging": "Редкие материалы получаются путём утилизации предметов с усилением в столе утилизации.",
     
@@ -894,11 +894,11 @@
 
     "comment_id": "/Adventure + Gateways Compat",
 
-    "misc.apotheosis.boss": "%s апофатический босс",
+    "misc.apotheosis.boss": "%s апофеозный босс",
     "misc.apotheosis.random": "Случайный",
     "reward.apotheosis.affix": "%s предмет с усилением",
     "reward.apotheosis.random_affix": "Случайный предмет с усилением",
-    "apotheosis.boss_gate_small": "Маленькие врата апофатического босса",
+    "apotheosis.boss_gate_small": "Маленькие врата апофеозного босса",
 
     "comment_id": "/Advancements",
 
@@ -981,8 +981,8 @@
     "advancements.apotheosis.max_rectified": "Только лучшее",
     "advancements.apotheosis.max_rectified.desc": "Зачаруйте предмет с максимальными статами и максимальным исправлением.",
     
-    "advancements.apotheosis.affix": "Апофатические усиления",
-    "advancements.apotheosis.affix.desc": "Найдите предмет с апофатическим усилением.",
+    "advancements.apotheosis.affix": "Апофеозные усиления",
+    "advancements.apotheosis.affix.desc": "Найдите предмет с апофеозным усилением.",
 
     "advancements.apotheosis.rare": "Стоящая экипировка",
     "advancements.apotheosis.rare.desc": "Найдите редкий предмет с усилением.",
@@ -997,7 +997,7 @@
     "advancements.apotheosis.ancient.desc": "Найдите древний предмет.",
 
     "advancements.apotheosis.boss": "Он был не так уж и силён",
-    "advancements.apotheosis.boss.desc": "Убейте апофатического босса и заберите его предмет с усилением.",
+    "advancements.apotheosis.boss.desc": "Убейте апофеозного босса и заберите его предмет с усилением.",
     "advancements.apotheosis.chests": "Я нашел его под землёй",
     "advancements.apotheosis.chests.desc": "Найдите предмет с усилением в сундуке.",
     "advancements.apotheosis.merchant": "Я заключил сделку",
@@ -1006,7 +1006,7 @@
     "advancements.apotheosis.random.desc": "Выбейте предмет с усилением со случайного монстра.",
     
     "advancements.apotheosis.gem": "Не алмаз",
-    "advancements.apotheosis.gem.desc": "Найдите апофатический самоцвет, который можно вставить в гнездо предмета с усилением.",
+    "advancements.apotheosis.gem.desc": "Найдите апофеозный самоцвет, который можно вставить в гнездо предмета с усилением.",
     
     "advancements.apotheosis.rare_gem": "Далеко от идеала",
     "advancements.apotheosis.rare_gem.desc": "Приобретите дефектный самоцвет.",
@@ -1021,11 +1021,11 @@
     "advancements.apotheosis.socket.desc": "Используйте стол кузнеца, вставив самоцвет в предмет.",
 
        "advancements.apotheosis.gem_cut": "Гранильщик",
-    "advancements.apotheosis.gem_cut.desc": "Используйте стол огранки самоцветов, чтобы улучшить апофатический самоцвет.",
+    "advancements.apotheosis.gem_cut.desc": "Используйте стол огранки самоцветов, чтобы улучшить апофеозный самоцвет.",
     
     "advancements.apotheosis.spawner.root": "Апофеозисный рассадник",
     "advancements.apotheosis.spawner.root.desc": "Рассадники можно собирать и модифицировать, см. JEI для получения информации.",
-    "advancements.apotheosis.spawner": "Апофатический рассадник",
+    "advancements.apotheosis.spawner": "Апофеозный рассадник",
     "advancements.apotheosis.spawner.desc": "Соберите рассадник с помощью шёлкового касания.",
     "advancements.apotheosis.capturing": "Захваченный!",
     "advancements.apotheosis.capturing.desc": "Получите яйцо призыва моба с помощью зачарования Захват",
