@@ -1,0 +1,17 @@
+{
+    "name": "Çağların Bilgisi",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Çağların Bilgisi$(), kılıçlara uygulanabilen bir Usta işi büyüdür.$(p)Bir yaratığı öldürdüğünüzde, tüm düşüşler tecrübe puanına dönüştürülür.$(p)Her bir eşya, aynı miktarda tecrübe puanı değerindedir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Bu büyü, çok sayıda eşya düşüren yaratıkları öldürmek için en verimli hale gelir.$(p)Eşyalar başına alınan tecrübe puanı büyü seviyesine göre artar.$(p)Bir oyuncuyu öldürmek, eşyalarının dönüştürülmesine neden olmaz."
+        }
+    ]
+}

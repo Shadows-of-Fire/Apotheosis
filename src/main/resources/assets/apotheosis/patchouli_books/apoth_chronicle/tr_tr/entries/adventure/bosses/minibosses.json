@@ -1,0 +1,17 @@
+{
+    "name": "Minibosslar",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/bosses",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Zaman zaman dünyanızda adlandırılmış veya güçlendirilmiş yaratıklar görebilirsiniz.$(p)Bunlar muhtemelen $(9)Apotheosis Minibossları$()dır."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Bu yaratıklar, normal türlerinin yerine rastgele görünebilir.$(p)Dikkatli olun."
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Soğuk Hasarı",
+    "icon": "minecraft:blue_ice",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Soğuk Hasarı$(), yakın dövüş saldırılarına uygulanan ek büyü hasarıdır. Ayrıca, hasarın gücüne bağlı olarak bir yavaşlatma etkisi uygular.$(p)Yakın dövüş silahlarında bulunur."
+        }
+    ]
+}

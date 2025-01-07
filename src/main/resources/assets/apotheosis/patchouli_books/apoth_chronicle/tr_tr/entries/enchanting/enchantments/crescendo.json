@@ -1,0 +1,13 @@
+{
+    "name": "Okların Kreşendo'su",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Okların Kreşendo'su$(), arbaletler için bir Usta işi büyüdür.$(p)Bu büyünün her seviyesi için yeniden yükleme başına ekstra bir atış kazanırsınız.$(p)Ekstra atışlar mühimmat gerektirmez."
+        }
+    ]
+}

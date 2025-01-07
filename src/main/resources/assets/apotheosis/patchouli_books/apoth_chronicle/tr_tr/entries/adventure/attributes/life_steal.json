@@ -1,0 +1,13 @@
+{
+    "name": "Can Çalma",
+    "icon": "attributeslib:textures/mob_effect/bleeding.png",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Can Çalma$(), verdiğiniz fiziksel hasarın bir yüzdesinin doğrudan sağlığınıza eklenmesini sağlar.$(p)Genellikle bu stat sadece silahlar tarafından sağlanır."
+        }
+    ]
+}

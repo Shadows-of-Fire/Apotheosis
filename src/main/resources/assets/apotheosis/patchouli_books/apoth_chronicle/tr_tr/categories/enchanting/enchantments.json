@@ -1,0 +1,7 @@
+{
+    "name": "Yeni Büyüler",
+    "description": "Bu bölümdeki her girdi, bu modül tarafından eklenen yeni bir büyüyü detaylandırır.$(p)Diğer modüller tarafından eklenen büyüler burada kapsanmayacaktır.",
+    "icon": "minecraft:enchanted_book",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

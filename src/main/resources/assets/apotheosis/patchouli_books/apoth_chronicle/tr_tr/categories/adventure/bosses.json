@@ -1,0 +1,7 @@
+{
+    "name": "Boss'lar",
+    "description": "$(9)Boss$(), ek özelliklerin gücüne erişmiş bir düşmandır.$(p)Genellikle benzersiz adları ve güçlü ekipmanlarıyla birini tanıyabilirsin.",
+    "icon": "apotheosis:boss_summoner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

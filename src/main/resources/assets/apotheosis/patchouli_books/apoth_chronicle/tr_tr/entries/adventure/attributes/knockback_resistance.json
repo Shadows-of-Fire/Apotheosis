@@ -1,0 +1,13 @@
+{
+    "name": "Savurma Direnci",
+    "icon": "minecraft:shulker_shell",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Savurma Direnci$(), saldırılarla savrulmanıza karşı ne kadar dirençli olduğunuzu belirtir. Maksimum değerde savurma bağışıklığı kazanırsınız.$(p)Genellikle zırh veya kalkanlar tarafından sağlanır."
+        }
+    ]
+}

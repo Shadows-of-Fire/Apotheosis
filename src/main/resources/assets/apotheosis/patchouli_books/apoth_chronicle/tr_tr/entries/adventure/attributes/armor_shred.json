@@ -1,0 +1,13 @@
+{
+    "name": "Zırh Parçalama",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Zırh Parçalama$(), saldırırken hedefinizin zırhının belirli bir yüzdesini yok saymanıza olanak tanır.$(p)$(9)Zırh Parçalama$(), $(9)Zırh Delme$() işleminden önce uygulanır."
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Buzlu Dikenler",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Buzlu Dikenler$(), göğüslüklere uygulanabilen bir büyüdür.$(p)Saldırganlara Yavaşlık uygular. Süre ve güç, büyü seviyesine bağlıdır.$(p)Bu büyü, $(9)Dikenler$() büyüsüyle çakışır."
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Canavar Çağırıcı Modülü",
+    "description": "Canavar Çağırıcı Modülü, $(9)Canavar Çağırıcı$()'larını taşımana ve değiştirmene olanak tanır.",
+    "icon": "minecraft:spawner",
+	"flag": "apotheosis:spawner"
+}

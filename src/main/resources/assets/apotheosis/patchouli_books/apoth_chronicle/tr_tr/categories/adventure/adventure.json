@@ -1,0 +1,6 @@
+{
+    "name": "Macera Modülü",
+    "description": "Daha önce $(4)Ölümcül Modül$() olarak bilinen Macera Modülü, güçlü bonuslara sahip prosedürel olarak oluşturulan ganimet eşyalarıyla donanmanı sağlar.$(p)Ancak dikkatli ol, yeni düşmanlar da mevcut.",
+    "icon": "minecraft:netherite_sword",
+	"flag": "apotheosis:adventure"
+}

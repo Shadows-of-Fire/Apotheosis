@@ -1,0 +1,39 @@
+{
+    "name": "Değerli Taşlar",
+    "icon": "apotheosis:gem",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Bir $(9)Değerli Taş$(), yoğunlaştırılmış bir güç kristalidir.$(p)Bir Ek Özellik Eşyasına yuva olarak yerleştirildiğinde güçlü bir bonus sağlar.$(p)Değerli taşlar farklı eşyalarda farklı bonuslar sağlayabilir ve yükseltilebilir."
+        },
+		{
+			"title": "Nadirlik",
+            "type": "patchouli:text",
+            "text": "Bir Ek Özellik Eşyası gibi, her değerli taşın bir $(l:apotheosis:adventure/affix_loot/rarities)Nadirlik$() derecesi vardır.$(p)Yalnızca nadirlik, değerli taşın gücünü belirler ve daha yüksek nadirlikteki değerli taşlar daha pahalıdır.$(p)Değerli Taşlar Kadim nadirlikten daha yükseğe yükseltilemez."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Değerli Taşların Elde Edilmesi",
+			"text": "Değerli Taşlar, sandık ganimetlerinde bulunabilir ve nadiren yaratıkları öldürdüğünde düşebilir. Ancak, bir değerli taşın düşmesi için öldürenin gerçek bir oyuncu olması gerekir, makine ya da başka bir otomasyon kaynağı değil.$(p)Değerli Taşların Boss'lardan düşme olasılığı daha yüksektir."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Değerli Taşların Yuvalanması",
+			"text": "Bir değerli taşı bir eşyaya yuvalamak için, ikisini de Demirci Masasında birleştir.$(p)Her değerli taş, hangi eşyalara uygun olduğunu belirtir.$(p)Bazı değerli taşlar $(#C73912)Benzersiz$()dir, yani bir eşya içinde yalnızca bir kopyası yuvalanabilir."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Değerli Taşların Çıkarılması",
+			"text": "Değerli Taşları bir eşyadan çıkarmak zorlu bir süreçti, ancak bazı zeki simyacılar bunu nasıl yapacaklarını buldu.$(p)Notları bir sonraki sayfada ayrıntılı olarak açıklanmıştır."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:sigil_of_withdrawal",
+			"title": "Çıkarma Mührü",
+			"text": "Bir yuvalı eşyayı bir $(9)Çıkarma Mührü$() ile birleştirerek değerli taşları eşyadan çıkar. Eşya ve tüm değerli taşlar geri dönecektir."
+        }
+	]
+}

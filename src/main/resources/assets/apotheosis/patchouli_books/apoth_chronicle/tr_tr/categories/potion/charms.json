@@ -1,0 +1,8 @@
+{
+    "name": "İksir Tılsımları",
+	"parent": "apotheosis:potion/potion",
+    "description": "Bu bölüm, $(9)İksir Tılsımları$() ve tüm kullanım alanları ile ayrıntılarını içerir.$(p)Eğer diğer modüller devre dışıysa veya bazı modlar yüklenmediyse, bu bölüm biraz boş olabilir.",
+    "icon": "apotheosis:potion_charm",
+	"flag": "apotheosis:potion",
+	"sortnum": 1
+}

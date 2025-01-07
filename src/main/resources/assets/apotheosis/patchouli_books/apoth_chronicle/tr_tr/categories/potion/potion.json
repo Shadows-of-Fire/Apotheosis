@@ -1,0 +1,6 @@
+{
+    "name": "İksir Modülü",
+    "description": "İksir Modülü, yeni iksirlerden ve yeni iksir tariflerinden sorumludur.$(p)Kısacası, iksirlerle ilgili her şey burada yer alır.",
+    "icon": "minecraft:potion",
+	"flag": "apotheosis:potion"
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Tecrübe Maliyetleri",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:enchanting/changes",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Vanilla'da, seviyelere mal olan şeyler (büyü masaları ve örsler), kaç seviyeye sahip olduğunuzdan bağımsız olarak sabit bir miktarda seviye alır.$(p)Apotheosis, her ikisini de \"optimal\" tecrübe miktarını maliyet olarak alacak şekilde değiştirir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Büyü masaları için, büyüyü gerçekleştirmek için gereken tam seviyeye sahipmişsiniz gibi tecrübe miktarı alınır.$(p)Örsler için ise maliyet sıfırdan başlar (sadece üst N seviyeleri yerine)."
+        }
+    ]
+}

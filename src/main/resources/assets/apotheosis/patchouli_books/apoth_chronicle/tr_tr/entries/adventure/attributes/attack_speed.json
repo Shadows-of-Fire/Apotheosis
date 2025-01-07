@@ -1,0 +1,13 @@
+{
+    "name": "Saldırı Hızı",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Saldırı Hızı$(), ne kadar sıklıkla saldırabileceğinizi kontrol eder. Eğer saldırı hızınız 2 ise, saniyede iki kez saldırabilirsiniz.$(p)Çeşitli eşyalar saldırı hızınızı artırabilir."
+        }
+    ]
+}

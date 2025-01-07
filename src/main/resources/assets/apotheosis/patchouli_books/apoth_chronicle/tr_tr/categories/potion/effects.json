@@ -1,0 +1,7 @@
+{
+    "name": "Yeni Etkiler",
+	"parent": "apotheosis:potion/potion",
+    "description": "Bu bölüm, Apotheosis tarafından eklenen yeni iksir etkilerini detaylandırır.",
+    "icon": "minecraft:experience_bottle",
+	"flag": "apotheosis:potion"
+}

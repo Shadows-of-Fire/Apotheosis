@@ -1,0 +1,13 @@
+{
+    "name": "Madencilik Hızı",
+    "icon": "minecraft:netherite_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Madencilik Hızınızı$() artırmak, blokları kırma hızınızı artırır. 1.0 temel değerinde, blokları normal şekilde kırarsınız.$(p)Kazmalar ve küreklerde bulunur."
+        }
+    ]
+}

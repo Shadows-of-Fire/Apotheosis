@@ -1,0 +1,13 @@
+{
+    "name": "Ateş Hasarı",
+    "icon": "minecraft:blaze_powder",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Ateş Hasarı$(), yakın dövüş saldırılarına uygulanan bonus büyü hasarıdır. Ayrıca hedefi kısa bir süreliğine ateşe verir. Daha yüksek hasar, ateş süresini artırır.$(p)Yakın dövüş silahlarında bulunur."
+        }
+    ]
+}

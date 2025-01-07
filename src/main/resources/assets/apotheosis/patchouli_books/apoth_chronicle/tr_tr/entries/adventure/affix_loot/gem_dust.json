@@ -1,0 +1,21 @@
+{
+    "name": "Değerli Taş Tozu",
+    "icon": "apotheosis:gem_dust",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:gem_dust",
+			"link_recipe": true,
+            "text": "Tüm Apotheosis Değerli Taşları, $(br)$(9)Değerli Taş Tozu$()'na dönüştürülebilir.$(p)Bir yöntem, onları oyun içinde örs ile ezmektir."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"title": "Değerli Taş Geri Dönüşümü",
+            "text": "Birkaç Değerli Taşı örs ile ezdikten sonra, $(9)Kurtarma Masası$() yapabilir ve kullanabilirsin."
+        }
+	]
+}

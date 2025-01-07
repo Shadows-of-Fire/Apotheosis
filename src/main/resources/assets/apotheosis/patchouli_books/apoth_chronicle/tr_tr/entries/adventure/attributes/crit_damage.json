@@ -1,0 +1,13 @@
+{
+    "name": "Kritik Hasar",
+    "icon": "minecraft:netherite_axe",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Kritik Hasar$(), kritik vuruşlarınızın hasar çarpanıdır.$(p)Zıplama kritik vuruşları da, alışılmış 1.5x çarpanı yerine Kritik Hasar değerinizden yararlanır.$(p)Silahlarda bulunur."
+        }
+    ]
+}

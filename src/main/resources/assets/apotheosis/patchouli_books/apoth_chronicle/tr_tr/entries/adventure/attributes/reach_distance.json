@@ -1,0 +1,13 @@
+{
+    "name": "Erişim Mesafesi",
+    "icon": "minecraft:iron_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Erişim Mesafeniz$(), bir nesneye erişebileceğiniz maksimum mesafedir. Bir nesneye erişebildiğinizde, onunla etkileşime geçebilir veya bir bloksa kırabilirsiniz.$(p)Genellikle blok kıran araçlarda bulunur, çünkü silahlar için pek kullanışlı değildir."
+        }
+    ]
+}

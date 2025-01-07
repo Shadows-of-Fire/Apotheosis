@@ -1,0 +1,17 @@
+{
+    "name": "Kritik Vuruş Şansı",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Kritik Vuruş Şansı$(), verdiğiniz herhangi bir hasarın kritik vuruşa dönüşme olasılığıdır. %100'ün üzerindeki değerler, çoklu kritik vuruş yapmanızı sağlar.$(p)Silahlarda bulunur."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Kritik vuruşlarınızın verdiği hasar, $(l:apotheosis:adventure/attributes/crit_damage)Kritik Hasar$() özelliğinize bağlıdır."
+        }
+    ]
+}

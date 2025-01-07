@@ -1,0 +1,25 @@
+{
+    "name": "Koruma",
+    "icon": "minecraft:netherite_chestplate",
+    "category": "apotheosis:enchanting/changes",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Koruma$(), artık koruma alt türleriyle çakışmıyor.$(p)Bu, artık $(9)Koruma$() ve normalde çakışan başka bir savunma büyüsüne sahip olabileceğiniz anlamına gelir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Bunun için, koruma büyülerinin etkinliği biraz değiştirilmiştir.$(p)Nasıl çalıştığını anlamak için koruma büyülerinin işleyişini ve biraz matematiği öğrenmeniz gerekir.$(p)Başlangıç olarak, tüm savunma büyülerinin faydalandığı bir istatistik olan Hasar Azaltma (DR) puanı kavramını tanıtıyoruz."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Koruma$() büyüsü, tüm hasar türlerine karşı 1 puan sağlar.$(p)Uzmanlaşmış büyüler, belirli bir hasar türüne karşı 2 puan sağlar.$(p)$(9)Tüy Düşüşü$(), düşme hasarına karşı 3 puan sağlar."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Apotheosis'te, her Koruma puanı %2.5 hasar azaltma sağlar ve bu oran %85'e kadar çıkabilir.$(p)Vanilla'da, her puan %4 hasar azaltma sağlar ve bu oran %80 ile sınırlıdır."
+        }
+    ]
+}

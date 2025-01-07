@@ -1,0 +1,20 @@
+{
+    "name": "Üçlü Mızraklar",
+    "icon": "minecraft:trident",
+    "category": "apotheosis:enchanting/changes",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Yeni büyülerin yanı sıra, Üçlü Mızraklar artık $(9)Keskinlik$(), $(9)Yağma$() ve $(9)Delici$() alabilir.$(p)Keskinlik ve Yağma, kılıçlarda olduğu gibi çalışır.$(p)Delici, fırlatılan üçlü mızrakların ek düşmanlara isabet etmesini sağlar."
+        },
+        {
+            "type": "patchouli:spotlight",
+            "title": "Üçlü Mızrak Yapımı",
+            "item": "apothic_enchanting:inert_trident",
+            "link_recipe": true,
+            "text": "Apotheosis ayrıca üçlü mızraklar oluşturma yöntemi ekler.$(p)Sadece bir $(9)Hareketsiz Üçlü Mızrak$() oluşturun ve bunu $(l:apotheosis:enchanting/table/infusion)İnfüzyon Büyüsü$() ile yükseltin."
+        }
+    ]
+}

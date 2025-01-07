@@ -1,0 +1,6 @@
+{
+    "name": "Büyü Modülü",
+    "description": "Büyü Modülü, büyü sistemindeki tüm değişikliklerden sorumludur.$(p)Çok fazla içerik var, bu yüzden etrafa göz at.",
+    "icon": "minecraft:enchanting_table",
+	"flag": "apotheosis:enchanting"
+}

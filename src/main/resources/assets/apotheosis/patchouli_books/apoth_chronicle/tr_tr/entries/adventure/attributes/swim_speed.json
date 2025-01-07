@@ -1,0 +1,13 @@
+{
+    "name": "Yüzme Hızı",
+    "icon": "minecraft:kelp",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Yüzme Hızı$(), gerçek yüzme hızınıza bir çarpan uygular. Eğer yüzme hızınız %200 ise, iki kat daha hızlı yüzersiniz.$(p)Yalnızca çizme eşyalarında bulunur."
+        }
+    ]
+}

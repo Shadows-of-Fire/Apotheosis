@@ -1,0 +1,17 @@
+{
+    "name": "Saldırı Savurması",
+    "icon": "minecraft:piston",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Saldırı Savurması$(), saldırdığınızda düşmanları ne kadar uzağa iteceğinizi belirtir.$(p)Her puan, vurulan düşmanların yarım blok uzağa itilmesine neden olur.$(p)Silahlar ve kalkanlar bu özelliği sağlayabilir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Savurma büyüsü, bu istatistik ile eşdeğer bir bonus sağlar ancak maksimum değer sınırına dahil edilmez."
+        }
+    ]
+}

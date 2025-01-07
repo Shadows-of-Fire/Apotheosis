@@ -1,0 +1,13 @@
+{
+    "name": "Saldırı Hasarı",
+    "icon": "minecraft:diamond_sword",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Saldırı Hasarı$(), saldırılarınızın ne kadar hasar verdiğini kontrol eden bir özelliktir.$(p)Genellikle bu özellik, silahlar tarafından sağlanır."
+        }
+    ]
+}

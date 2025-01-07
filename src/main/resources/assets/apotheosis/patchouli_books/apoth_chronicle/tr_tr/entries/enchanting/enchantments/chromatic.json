@@ -1,0 +1,13 @@
+{
+    "name": "Kromatik Sapma",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Kromatik Sapma$(), makaslar için bir büyüdür.$(p)Kesilen yünün rastgele bir renge dönüşmesine neden olur."
+        }
+    ]
+}

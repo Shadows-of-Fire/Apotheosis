@@ -1,0 +1,25 @@
+{
+    "name": "Zırh",
+    "icon": "minecraft:iron_chestplate",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Zırh$(), fiziksel hasara karşı ne kadar dayanıklı olduğunuzu ölçer.$(p)Genellikle zırh eşyaları ve kalkanlar tarafından sağlanır.$(p)Alınan hasar, gelen hasar ve zırhınıza bağlıdır."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Formülün ilk bileşeni $(br)A-değeri, $(9)10 + (hasar - 20) / 2$() eşittir ve minimum $(9)10$() değerine sahiptir.$(p)Daha sonra $(br)$(9)A / (A + zırh)$() oranında hasar azaltırsınız.$(p)Bu formül, Vanilla Minecraft'ın kullandığı formül değildir, çünkü Apotheosis bunu değiştirmiştir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Vanilla zırh ve hasar değerleri için, biraz daha az hasar alırsınız.$(p)Yüksek zırh ve hasar değerlerinde, zırh önemli ölçüde daha az etkili olur."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Bu değişikliğin amacı, yüksek seviyelerde yenilmezliği azaltmak ve $(9)Koruma$() ve $(9)Direnç$() etkilerini daha etkili hale getirmektir.$(p)Ayrıca, her iki tarafın da ağır zırhlı olduğu savaşları daha hareketli hale getirir."
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Hareket Hızı",
+    "icon": "minecraft:leather_boots",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Hareket Hızınız$(), normal bir oyuncunun yürüme hızına göre ne kadar hızlı hareket ettiğinizi belirtir.$(p)Bu istatistik neredeyse her türlü eşya tarafından sağlanabilir."
+        }
+    ]
+}

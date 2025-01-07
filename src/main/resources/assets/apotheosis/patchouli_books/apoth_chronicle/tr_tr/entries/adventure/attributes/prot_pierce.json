@@ -1,0 +1,13 @@
+{
+    "name": "Koruma Delme",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Koruma Delme$(), saldırırken hedefinizin koruma puanlarının belirli bir miktarını yok saymanıza olanak tanır.$(p)Ekstra Koruma Delme, hedefinizin negatif koruma değerine sahip olmasına neden olmaz."
+        }
+    ]
+}

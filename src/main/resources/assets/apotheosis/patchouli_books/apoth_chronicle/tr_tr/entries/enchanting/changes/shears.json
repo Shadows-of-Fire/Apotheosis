@@ -1,0 +1,13 @@
+{
+    "name": "Makaslar",
+    "icon": "minecraft:shears",
+    "category": "apotheosis:enchanting/changes",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Yeni büyülerin yanı sıra, Makaslar artık $(9)Kırılmazlık$(), $(9)Verimlilik$() ve $(9)Şans$() alabilir."
+        }
+    ]
+}

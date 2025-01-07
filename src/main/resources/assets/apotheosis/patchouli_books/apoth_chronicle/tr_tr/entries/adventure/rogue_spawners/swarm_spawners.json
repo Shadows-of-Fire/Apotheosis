@@ -1,0 +1,13 @@
+{
+    "name": "Sürü Çağırıcılar",
+    "icon": "minecraft:spider_eye",
+    "category": "apotheosis:adventure/rogue_spawners",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Sürü çağırıcı, çok hızlı bir şekilde yüksek miktarda yaratık çağıran iğrenç bir kaçak çağırıcı alt türüdür.$(p)Genellikle daha zayıf yaratıklarla sınırlıdırlar, genellikle örümceksi türlerde, bu yüzden aşırı derecede korkutucu değillerdir."
+        }
+    ]
+}

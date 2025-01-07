@@ -1,0 +1,39 @@
+{
+    "name": "Geliştirme",
+    "icon": "apotheosis:augmenting_table",
+    "category": "apotheosis:adventure/affix_loot",
+    "flag": "apotheosis:adventure",
+    "sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Geliştirme Masası$(), bir eşyanın bireysel ek özelliklerini değiştirmek için kullanılan oyun sonu bir iş istasyonudur.$(p)Bu masa sayesinde, tek bir ek özelliği yükseltebilir veya yeniden atayabilirsiniz, geri kalanı değişmeden kalır."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:augmenting_table",
+            "text": "Geliştirme Masası oluşturmak için $(9)Nether Yıldızı$() enerjisini iki $(9)Tanrı İşlemeli İnci$() aracılığıyla odaklamanız ve bir $(9)Büyü Masası$() kullanmanız gerekir."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Giriş Yuvaları",
+            "text": "Geliştirme Masası'nda iki giriş yuvası bulunur.$(p)Üst yuva, geliştirmek istediğiniz eşyayı tutar; bu eşya bir ek özellik eşyası olmalıdır.$(p)Genellikle, en az $(#ED7014)Efsanevi$() nadirlikteki eşyaları geliştirmelisin, ancak $(#BB00BB)Destansı$() olanları da değerlendirebilirsin."
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_enhancement",
+            "title": "Giriş Yuvaları",
+            "text": "Alt yuva, $(9)Geliştirme Mühürleri$() adı verilen ve geliştirme için kullanılan yakıt öğesini tutar.$(p)Son olarak, açılır menüden istenilen ek özelliği seçmeniz gerekecek."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Yükseltme",
+            "text": "Geliştirme masasının gerçekleştirebileceği ilk işlem, bir ek özelliği yükseltmektir.$(p)Bu işlem, iki $(9)Geliştirme Mührü$() maliyetine sahiptir ve mevcut ek özelliğin içsel gücünü %25 oranında artırır.$(p)Bu yükseltmenin sağladığı güç, ek özelliğe göre değişir."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Yeniden Döndürme",
+            "text": "Geliştirme masasının ikinci işlemi, bir ek özelliği yeniden atamaktır.$(p)Bu işlem, bir $(9)Geliştirme Mührü$() maliyetine sahiptir ve seçilen ek özelliği aynı türdeki başka bir ek özellikle değiştirir.$(p)Alternatif seçenekler solda gösterilecektir."
+        }
+    ]
+}

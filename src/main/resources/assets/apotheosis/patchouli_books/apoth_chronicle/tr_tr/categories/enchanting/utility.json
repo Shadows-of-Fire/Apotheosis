@@ -1,0 +1,7 @@
+{
+    "name": "Yardımcı Eşyalar",
+    "description": "Bu bölüm, büyü yapmayı kolaylaştırmak için kullanılan tüm rastgele araçları detaylandırır.",
+    "icon": "apothic_enchanting:library",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

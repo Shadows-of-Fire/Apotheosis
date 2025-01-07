@@ -1,0 +1,17 @@
+{
+    "name": "Zorlu Çağırıcılar",
+    "icon": "minecraft:zombie_head",
+    "category": "apotheosis:adventure/rogue_spawners",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Zorlu bir çağırıcı, normalden daha güçlü yaratıklar çağıran bir kaçak çağırıcı alt türüdür.$(p)Bu yaratıklar, tipik muadillerine göre daha yüksek sağlığa, zırha ve hasara sahiptir ve ateşe karşı dirençlidir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Tek olumlu yanı, bu çağırıcıların takviye çağırmadan önce önemli bir gecikme süresine sahip olmasıdır."
+        }
+    ]
+}

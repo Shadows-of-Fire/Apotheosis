@@ -1,0 +1,17 @@
+{
+    "name": "İstila Eden Bosslar",
+    "icon": "minecraft:beacon",
+    "category": "apotheosis:adventure/bosses",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Garip bir ses, tuhaf bir mesaj ve gökyüzünden gelen devasa bir ışık huzmesi...$(p)Tüm işaretler, dünyanızı aktif olarak istila eden bir Boss'u gösteriyor."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Zindanlarda bulunan bossların aksine, istila eden bosslar nadiren mobların normalde doğabileceği yüzeyde ortaya çıkabilir.$(p)Onların gelişi, yüksek bir ses, bir durum mesajı ve doğma noktalarından kısa süreliğine yayılan bir işaret ile belirtilir."
+        }
+    ]
+}

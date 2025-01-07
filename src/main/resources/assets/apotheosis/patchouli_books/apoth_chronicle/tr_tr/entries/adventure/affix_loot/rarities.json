@@ -1,0 +1,38 @@
+{
+    "name": "Nadirlikler",
+    "icon": "minecraft:nether_star",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Her Ek Özellik Eşyasının bir $(9)Nadirlik$() derecesi vardır. Eşyanın nadirliği, ne kadar güçlü olacağını ve hangi ek özelliklerin uygulanacağını belirler.$(p)Daha yüksek bir nadirlik her zaman daha güçlüdür."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Sıradan",
+			"text": "Bir $(#808080)Sıradan$() eşya, en temel türdeki Ek Özellik Eşyasıdır. Her zaman tek bir istatistik bonusuna sahiptir ve ikinci bir bonus kazanma şansı düşüktür."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Sıradan Olmayan",
+			"text": "Bir $(#33FF33)Sıradan Olmayan$() eşya, sıradan bir eşyanın bir adım ötesindedir ancak hala benzersiz bir etki almaz. Bu eşyalar her zaman iki istatistik bonusuna sahiptir ve üçüncü bir bonus alabilir.$(p)Ayrıca bir yuva da alabilirler."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Nadir",
+			"text": "$(#5555FF)Nadir$() eşyalar, ek özelliklerin parlamaya başladığı yerdir. Bu eşyalar üç istatistik bonusu ve özel bir etki alır ve ikinci bir etki alabilir.$(p)Ayrıca bir yuva alabilirler ve her zaman hafif bir dayanıklılık bonusu taşırlar."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Destansı",
+			"text": "$(#BB00BB)Destansı$() eşyalar, mükemmelliğe yakındır. Üç istatistik ve bir etki alırlar ve dördüncü bir istatistik ve ikinci bir etki alabilirler.$(p)Ayrıca iki yuvaya kadar alabilir ve daha güçlü bir dayanıklılık bonusuna sahip olabilirler."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Efsanevi",
+			"text": "$(#ED7014)Efsanevi$() eşyalar, büyük bir güçle kaybolmuş bir varlık tarafından dövülmüştür. Dört istatistik ve iki etki alırlar ve üçüncü bir etki ile üç yuva alabilirler.$(p)Ayrıca önemli bir dayanıklılık bonusu taşırlar."
+        }
+	]
+}

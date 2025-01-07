@@ -1,0 +1,13 @@
+{
+    "name": "Keskinlik",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:enchanting/changes",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Keskinlik$(), artık diğer hasar büyüleriyle çakışmıyor.$(p)Bu, artık $(9)Keskinlik$() ve normalde çakışan başka bir hasar büyüsüne sahip olabileceğiniz anlamına gelir."
+        }
+    ]
+}

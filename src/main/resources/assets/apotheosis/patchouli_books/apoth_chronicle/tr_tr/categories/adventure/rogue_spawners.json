@@ -1,0 +1,7 @@
+{
+    "name": "Kaçak Canavar Çağırıcılar",
+    "description": "Mağaralarda seyrek bulunan tekli canavar çağırıcılar, sert bir blokla kaplanmış ve altına bir sandık gizlenmiştir.$(p)Bilinen bir kökeni, amacı veya sahibi olmadığından, bunlara $(9)Kaçak Canavar Çağırıcılar$() diyoruz.",
+    "icon": "minecraft:spawner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

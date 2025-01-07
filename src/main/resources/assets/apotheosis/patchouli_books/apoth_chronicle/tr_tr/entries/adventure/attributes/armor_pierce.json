@@ -1,0 +1,13 @@
+{
+    "name": "Zırh Delme",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Zırh Delme$(), saldırırken hedefinizin zırhının belirli bir miktarını yok saymanıza olanak tanır.$(p)Ekstra Zırh Delme, hedefinizin negatif zırha sahip olmasına neden olabilir."
+        }
+    ]
+}

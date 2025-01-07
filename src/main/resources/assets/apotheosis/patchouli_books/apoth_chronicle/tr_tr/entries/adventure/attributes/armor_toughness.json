@@ -1,0 +1,17 @@
+{
+    "name": "Zırh Dayanıklılığı",
+    "icon": "minecraft:netherite_chestplate",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Zırh Dayanıklılığı$(), gelen zırh azaltımının etkinliğini azaltan bir özelliktir.$(p)Genellikle zırh eşyaları veya kalkanlar tarafından sağlanır."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Her Zırh Dayanıklılığı puanı, Zırh Delme ve Zırh Parçalama etkinliğini %2 azaltır, bu oran %60'a kadar çıkabilir.$(p)Bu işlev, yalnızca Apotheosis'e özgüdür. Vanilla Minecraft'ta Zırh Dayanıklılığı, hasar azaltımına katkıda bulunur."
+        }
+    ]
+}

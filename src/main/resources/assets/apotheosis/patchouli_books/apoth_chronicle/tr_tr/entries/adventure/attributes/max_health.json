@@ -1,0 +1,13 @@
+{
+    "name": "Maksimum Sağlık",
+    "icon": "minecraft:apple",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Maksimum Sağlık$(), sahip olduğunuz sağlık puanlarının (HP) sayısını kontrol eder. Bir puan, yarım kalp demektir.$(p)Genellikle zırh veya kalkanlar tarafından sağlanır."
+        }
+    ]
+}

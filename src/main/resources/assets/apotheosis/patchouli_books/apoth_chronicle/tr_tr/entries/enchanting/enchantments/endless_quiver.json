@@ -1,0 +1,17 @@
+{
+    "name": "Sonsuz Sadak",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Sonsuz Sadak$(), yaylar için bir Usta işi büyüdür.$(p)Yay kullanarak ok fırlatırken, oklar tüketilmez, türü ne olursa olsun.$(p)Bu büyü, $(9)Sonsuzluk$() büyüsünden doğrudan bir yükseltme olarak kabul edilir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Bu büyü, diğer modlardan gelen okları da sonsuz yapmalıdır."
+        }
+    ]
+}

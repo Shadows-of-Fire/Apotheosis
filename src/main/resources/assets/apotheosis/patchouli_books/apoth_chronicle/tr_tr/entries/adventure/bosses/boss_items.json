@@ -1,0 +1,17 @@
+{
+    "name": "Boss Eşyaları",
+    "icon": "minecraft:ender_chest",
+    "category": "apotheosis:adventure/bosses",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Her boss, tamamen büyülenmiş ekipmanlarının yanı sıra tam olarak bir eklenti eşyası ile güçlendirilmiştir.$(p)Bu eklenti eşyası ölümle birlikte garanti olarak düşer ve diğer eklenti ganimet kaynaklarına göre daha yüksek bir nadirlikte olma şansı yüksektir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Bu eşya, bir boss'u öldürerek alacağınız ödül olacaktır ve muhtemelen buna değecektir.$(p)Orijinal sahibini hatırlatan bir hatıra olarak, her boss eşyası, eşyanın adına boss'un adını ekler."
+        }
+    ]
+}

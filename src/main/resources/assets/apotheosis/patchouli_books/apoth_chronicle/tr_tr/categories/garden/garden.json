@@ -1,0 +1,6 @@
+{
+    "name": "Bahçe Modülü",
+    "description": "Bahçe Modülü, bitkilerle ilgili rastgele şeyleri değiştirmekten sorumludur.",
+    "icon": "minecraft:sugar_cane",
+	"flag": "apotheosis:garden"
+}

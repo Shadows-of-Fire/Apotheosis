@@ -1,0 +1,13 @@
+{
+    "name": "Mevcut HP Hasarı",
+    "icon": "minecraft:dragon_head",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Mevcut HP Hasarı$(), bir tür vuruş hasarıdır. Her vuruşta, hedefin mevcut sağlığının bir yüzdesi kadar ek fiziksel hasar verirsiniz.$(p)Bu özellik yalnızca ağır silahlarda bulunur."
+        }
+    ]
+}

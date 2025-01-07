@@ -1,0 +1,16 @@
+{
+    "name": "Şeker Kamışı",
+    "icon": "minecraft:sugar_cane",
+    "category": "apotheosis:garden/garden",
+    "flag": "apotheosis:garden",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Şeker Kamışı'nın maksimum büyüme yüksekliği 255'e çıkarıldı.$(p)Bu değer yapılandırılabilir, bu yüzden mod paketine bağlı olarak biraz daha düşük olabilir."
+        }
+    ],
+    "extra_recipe_mappings": {
+        "minecraft:sugar_cane": 0
+    }
+}

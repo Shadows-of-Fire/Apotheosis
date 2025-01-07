@@ -1,0 +1,38 @@
+{
+    "name": "Ek Özellikler",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Bir $(6)Ek Özellik$(), Ek Özellik Eşyalarının temel gücüdür. Her ek özellik, büyüye benzer şekilde eklendiği eşyaya belirli bir bonus sağlar.$(p)Bu kitap tüm ek özellikleri listelemeyecek, ancak bunları açıklamanıza yardımcı olacaktır."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Ek Özellik Türleri",
+			"text": "Farklı işlevsellik setlerine sahip birkaç tür ek özellik vardır.$(p)Bir eşyaya hangi tür ek özelliklerin uygulanacağı, eşyanın $(l:apotheosis:adventure/affix_loot/rarities)Nadirlik$() derecesine bağlıdır."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "İstatistik Ek Özellikleri",
+			"text": "En yaygın ek özellik türü istatistik ek özellikleridir. Bu ek özellikler, belirli bir niteliğe basit bir bonus sağlar ve tüm nadirliklerde mevcuttur. Daha yüksek nadirlikler, ek istatistik özellikleri kazanır."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Etki Ek Özellikleri",
+			"text": "Etki ek özellikleri, en ilginç ek özellik türüdür. Basit kullanım kolaylığı bonuslarından güçlü savaş etkilerine kadar çeşitli işlevler ekleyebilir.$(p)Bunlar yalnızca Nadir+ eşyalar üzerinde bulunabilir."
+		},
+		{
+			"type": "patchouli:text",
+			"title": "Yuvalar",
+            "text": "Bir Yuva, bir $(l:apotheosis:adventure/affix_loot/gems)Mücevher$() için basit bir taşıyıcı sağlayan özel bir ek özellik türüdür.$(p)Mücevherler büyük bonuslar sağlayabilir ancak bulunmaları zordur."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Dayanıklılık Ek Özelliği",
+            "text": "Dayanıklılık Ek Özelliği, bir eşyayı hasara karşı daha dayanıklı hale getirir ve tüm Nadir+ eşyalar üzerinde bulunur.$(p)Tüm diğer hasar dirençlerinden sonra uygulanır, bu da onu Kırılmazlık ile çarpan hale getirir."
+        }
+	]
+}

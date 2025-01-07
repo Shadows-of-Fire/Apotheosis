@@ -1,0 +1,16 @@
+{
+    "name": "Kaktüs",
+    "icon": "minecraft:cactus",
+    "category": "apotheosis:garden/garden",
+    "flag": "apotheosis:garden",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Kaktüslerin maksimum büyüme yüksekliği 5'e çıkarıldı.$(p)Bu değer yapılandırılabilir, bu yüzden mod paketine bağlı olarak biraz daha yüksek (veya düşük) olabilir."
+        }
+    ],
+    "extra_recipe_mappings": {
+        "minecraft:cactus": 0
+    }
+}

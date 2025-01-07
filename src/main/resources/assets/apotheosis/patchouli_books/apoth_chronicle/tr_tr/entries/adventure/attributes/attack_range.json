@@ -1,0 +1,13 @@
+{
+    "name": "Saldırı Menzili",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Saldırı Menzili$(), yakın dövüş silahıyla hedeflere saldırabileceğiniz maksimum mesafedir.$(p)Genellikle silahlarda bulunur."
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Berserker'in Öfkesi",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(4)Berserker'in Öfkesi$(), göğüslüklere uygulanabilen bir Bozulmuş büyüdür.$(p)Bu büyüyü kullanırken hasar alırsanız, ek hasar alır ve Direnç, Hız ve Güç kazanırsınız."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Alınan hasar ve iksir etkilerinin gücü, büyü seviyesine bağlıdır."
+        }
+    ]
+}

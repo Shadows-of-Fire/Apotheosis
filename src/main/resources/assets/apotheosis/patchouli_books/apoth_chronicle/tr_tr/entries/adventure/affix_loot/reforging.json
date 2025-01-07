@@ -1,0 +1,49 @@
+{
+    "name": "Yeniden Şekillendirme",
+    "icon": "apotheosis:reforging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 4,
+    "pages": [
+		{
+            "type": "patchouli:text",
+            "text": "$(9)Nadirlik Malzemeleri$()'nin ham potansiyeli ve $(9)Değeri Taş Tozu$()'nun çok yönlülüğü sayesinde, bir eşyayı yeni ek özelliklerle yeniden şekillendirmek artık mümkün.$(p)Yeniden biçimlendirme, zaten ek özelliklere sahip olanlarla sınırlı değildir ve herhangi bir geçerli eşya ile yapılabilir."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:simple_reforging_table",
+			"text": "$(#5555FF)Basit Yeniden Şekillendirme Masası$() yaparak başla, bu masa $(#5555FF)Nadir$() nadirliğe kadar olan eşyaları yeniden şekillendirmenize olanak tanır."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Giriş Yuvaları",
+			"text": "Yeniden Şekillendirme Masası'nın üç giriş yuvası vardır.$(p)Orta yuva, yeniden şekillendirmek istediğiniz eşyayı tutar.$(p)Sol üst yuva, yeniden şekillendirmek istediğiniz nadirlik için $(9)Nadirlik Malzemeleri$() tutar."
+        },
+		{
+            "type": "patchouli:crafting",
+            "recipe": "apotheosis:sigil_of_rebirth",
+			"title": "Giriş Yuvaları",
+			"text": "Sağ alt yuva, Yeniden Şekillendirme işlemi sırasında kullanılan benzersiz bir yakıt eşyası olan $(9)Yeniden Doğuş Mühürleri$() tutar."
+        },
+		{
+            "type": "patchouli:text",
+			"title": "Yeniden Şekillendirme",
+			"text": "Büyü Masasına benzer şekilde, yeniden şekillendirme sırasında üç seçenek sunulur.$(p)Her seçim, yeniden şekillendirmekte olan eşyanın potansiyel yeni bir şeklini temsil eder.$(p)Hiçbir seçim diğerlerinden doğası gereği daha güçlü değildir."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Yeniden Şekillendirme",
+			"text": "Her nadirlik için bir deneyim, mühür ve malzeme temel maliyeti vardır. Ekstra seçim yuvaları, temel maliyetin iki katı ve üç katı kadar ücret alır.$(p)Eşyayı yeniden şekillendirmek için, istediğiniz seçeneği tıkla."
+        },
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:reforging_table",
+			"text": "$(#BB00BB)Destansı$() veya daha yüksek nadirlikteki eşyaları yeniden şekillendirmek için, $(#5555FF)Basit Yeniden Şekillendirme Masası$()'nı $(#BB00BB)Yeniden Şekillendirme Masası$()'na yükseltmeniz gerekir."
+        },
+		{
+			"type": "patchouli:text",
+			"title": "Notlar",
+			"text": "Zaten ek özelliklere sahip olmayan eşyalar yeniden şekillendirilebilir.$(p)Eşyalar birden çok kez yeniden şekillendirilebilir.$(p)Mod paketleri, maliyetleri değiştirebilir veya belirli nadirliklerde yeniden şekillendirmeyi engelleyebilir."
+        }
+	]
+}

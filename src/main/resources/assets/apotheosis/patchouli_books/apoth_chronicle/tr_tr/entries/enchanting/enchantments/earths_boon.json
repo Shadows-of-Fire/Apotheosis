@@ -1,0 +1,13 @@
+{
+    "name": "Toprağın Lütfu",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Toprağın Lütfu$(), kazmalar için bir Usta işi büyüdür.$(p)Basit taşları kazarken, bir maden bloğu düşme şansı vardır."
+        }
+    ]
+}

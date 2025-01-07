@@ -1,0 +1,16 @@
+{
+    "name": "Bambu",
+    "icon": "minecraft:bamboo",
+    "category": "apotheosis:garden/garden",
+    "flag": "apotheosis:garden",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Bambu artık 32 blok yüksekliğe kadar büyüyebilir.$(p)Ancak bambu büyümesi biraz gariptir, bu yüzden her zaman tam olarak bu yüksekliğe ulaşmaz.$(p)Bu değer yapılandırılabilir, bu yüzden mod paketine bağlı olarak biraz daha yüksek (veya düşük) olabilir."
+        }
+    ],
+    "extra_recipe_mappings": {
+        "minecraft:bamboo": 0
+    }
+}

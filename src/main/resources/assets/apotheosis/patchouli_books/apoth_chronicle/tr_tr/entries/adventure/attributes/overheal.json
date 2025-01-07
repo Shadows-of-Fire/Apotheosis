@@ -1,0 +1,13 @@
+{
+    "name": "Aşırı Şifa",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Aşırı Şifa$() ile, verdiğiniz fiziksel hasarın bir kısmı emilim kalkanı olarak size döner. Can çalmadan farklı olarak, Aşırı Şifa tam sağlıkta olduğunuzda çalışır.$(p)Bu istatistik yalnızca ağır silahlarda bulunur."
+        }
+    ]
+}

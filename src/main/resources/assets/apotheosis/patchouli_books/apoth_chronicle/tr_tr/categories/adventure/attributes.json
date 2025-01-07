@@ -1,0 +1,7 @@
+{
+    "name": "Nitelikler",
+    "description": "Vanilla niteliklerine ek olarak, Apotheosis birçok yeni nitelik ekler.$(p)Bu bölüm, bunların hepsini detaylı olarak açıklar.",
+    "icon": "minecraft:diamond_chestplate",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

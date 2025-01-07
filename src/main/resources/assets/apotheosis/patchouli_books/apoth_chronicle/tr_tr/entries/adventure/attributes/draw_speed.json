@@ -1,0 +1,13 @@
+{
+    "name": "Çekme Hızı",
+    "icon": "minecraft:bow",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Çekme Hızı$(), uzun menzilli bir silahı ne kadar hızlı çekebileceğinizi gösterir. 1 = %100, 2 = %200, vb.$(p)Uzun menzilli silahlarda bulunur."
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Büyülenebilirlik",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:enchanting/changes",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Vanilla'da, $(l:apotheosis:enchanting/table/enchantability)Eşya Büyülenebilirliği$() belirtilmeyen tüm eşyaların varsayılan büyülenebilirlik değeri sıfırdır.$(p)Apotheosis, bu varsayılan değeri bire değiştirir.$(p)Bu değişiklik, bazı eşyaların yanlışlıkla büyülenebilir hale gelmesine neden olabilir."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Bu düzenleme, açık bir değeri olan eşyaların büyülenebilirliğini değiştirmez.$(p)Büyülenebilirliği sıfır olan eşyalar asla büyülenemez."
+        }
+    ]
+}

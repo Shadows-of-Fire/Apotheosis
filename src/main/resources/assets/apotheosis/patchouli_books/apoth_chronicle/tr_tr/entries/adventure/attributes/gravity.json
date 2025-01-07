@@ -1,0 +1,13 @@
+{
+    "name": "Yerçekimi",
+    "icon": "minecraft:elytra",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Yerçekimi$(), saniye başına kare blok cinsinden ne kadar hızlı düştüğünüzü belirtir.$(p)Herhangi bir şeyde veya hiçbir şeyde bulunabilir, kim bilir.$(p)Not: Yerçekimi negatif olabilir. Negatif yerçekimi ile yukarı doğru süzülürsünüz."
+        }
+    ]
+}

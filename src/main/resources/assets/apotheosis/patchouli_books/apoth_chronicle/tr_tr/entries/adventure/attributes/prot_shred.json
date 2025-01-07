@@ -1,0 +1,13 @@
+{
+    "name": "Koruma Parçalama",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Koruma Parçalama$(), saldırırken hedefinizin koruma puanlarının belirli bir yüzdesini yok saymanıza olanak tanır.$(p)$(9)Koruma Parçalama$(), $(9)Koruma Delme$() işleminden önce uygulanır."
+        }
+    ]
+}

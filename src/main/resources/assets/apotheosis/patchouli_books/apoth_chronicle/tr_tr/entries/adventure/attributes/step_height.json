@@ -1,0 +1,13 @@
+{
+    "name": "Adım Yüksekliği",
+    "icon": "minecraft:iron_boots",
+    "category": "apotheosis:adventure/attributes",
+    "flag": "apotheosis:adventure",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Adım Yüksekliği$(), otomatik olarak adım atabileceğiniz blok yüksekliğini değiştirir.$(p)Yalnızca çizme eşyalarında bulunur."
+        }
+    ]
+}

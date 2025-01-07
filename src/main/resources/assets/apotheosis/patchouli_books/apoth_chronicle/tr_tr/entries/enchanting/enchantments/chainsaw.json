@@ -1,0 +1,13 @@
+{
+    "name": "Testere",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Testere$(), baltalara uygulanabilen bir Usta işi büyüdür.$(p)Bir ağacı keserken, tüm ağaç hasat edilir.$(p)Bu, baltanın dayanıklılığını kullanır."
+        }
+    ]
+}

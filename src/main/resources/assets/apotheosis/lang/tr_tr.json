@@ -1,0 +1,760 @@
+{
+	"comment_id": "/Adventure Module",
+	
+    "key.categories.apotheosis": "Apotheosis",
+	
+    "text.apotheosis.world_tier.haven": "Sığınak",
+    "text.apotheosis.world_tier.haven.desc": "Yolculuğunun başlangıcı",
+	
+    "text.apotheosis.world_tier.frontier": "Sınır",
+    "text.apotheosis.world_tier.frontier.desc": "Tehlikeli dünyaya doğru ilerle",
+	
+    "text.apotheosis.world_tier.ascent": "Yükseliş",
+    "text.apotheosis.world_tier.ascent.desc": "Gücün zirvesine yükselişini başlat",
+	
+    "text.apotheosis.world_tier.summit": "Zirve",
+    "text.apotheosis.world_tier.summit.desc": "Zirveye ulaştın, ancak son değil",
+	
+    "text.apotheosis.world_tier.pinnacle": "Doruk",
+    "text.apotheosis.world_tier.pinnacle.desc": "Dağın fırtınalı zirvelerinde kendini kaybet",
+	
+    "title.apotheosis.select_world_tier": "Dünya Seviyesini Seç",
+    "title.apotheosis.world_tier_details": "Dünya Seviyesi Detayları",
+	
+    "button.apotheosis.haven": "Sığınak",
+    "button.apotheosis.frontier": "Sınır",
+    "button.apotheosis.ascent": "Yükseliş",
+    "button.apotheosis.summit": "Zirve",
+    "button.apotheosis.pinnacle": "Doruk",
+    "button.apotheosis.tier_locked": "Kilitli. İlerlemek için %s tamamla",
+    "button.apotheosis.activate_tier": "Dünya Seviyesini Aktifleştir: %s",
+    "button.apotheosis.already_activated": "Bu Dünya Seviyesi şu anda aktif",
+    "button.apotheosis.activate": "Aktifleştir",
+    "button.apotheosis.activated": "Aktifleştirildi",
+    "button.apotheosis.show_detailed_info": "Detaylı Bilgi",
+    "button.apotheosis.show_detailed_info.desc": "Yaratık Takviyeleri, Oyuncu Takviyeleri ve Nadirlikleri Görüntüle",
+    "button.apotheosis.return": "X",
+    "button.apotheosis.return.desc": "Seviye Seçim ekranına geri dön",
+	
+	"text.apotheosis.tier_info": "Dünya Seviyesi Bilgisi",
+    "text.apotheosis.monster_augments": "Canavar Güçlendirmeleri",
+    "text.apotheosis.player_augments": "Oyuncu Güçlendirmeleri",
+    "text.apotheosis.drop_chances": "Düşme Şansları",
+    "text.apotheosis.rarities": "Nadirlikler",
+    "text.apotheosis.purities": "Saflıklar",
+	
+    "key.apotheosis.toggle_radial_mining": "Dairesel Madencilik Modunu Değiştir",
+    "key.apotheosis.open_world_tier_select": "Dünya Seviyesi Seçimini Aç",
+	
+    "info.apotheosis.affix_item": "Apothic Ek Özellik Eşyası",
+	
+    "death.attack.apotheosis.execute": "%s, %s adlı oyuncu tarafından idam edildi",
+    "death.attack.apotheosis.execute.item": "%s, %s adlı oyuncu tarafından %s kullanılarak idam edildi",
+	
+    "misc.apotheosis.affix_name.two": "%s %s",
+    "misc.apotheosis.affix_name.three": "%s %s %s",
+    "misc.apotheosis.affix_name.four": "%s %s %s %s",
+    "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
+	
+    "misc.apotheosis.radial_state_updated": "Dairesel madencilik modu \"%s\" olarak güncellendi",
+    "misc.apotheosis.radial_state.require_not_sneaking": "Eğilirken Devre Dışı",
+    "misc.apotheosis.radial_state.require_sneaking": "Eğilirken Etkin",
+    "misc.apotheosis.radial_state.enabled": "Etkin",
+    "misc.apotheosis.radial_state.disabled": "Devre Dışı",
+	
+	"affix.apotheosis:armor/attribute/blessed": "Kutsanmış",
+    "affix.apotheosis:armor/attribute/blessed.suffix": "Sağlık Verenlerin",
+	
+    "affix.apotheosis:armor/attribute/windswept": "Rüzgarlı",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "Akıntının",
+	
+    "affix.apotheosis:armor/attribute/ironforged": "Demir İşlemeli",
+    "affix.apotheosis:armor/attribute/ironforged.suffix": "Demirin",
+	
+    "affix.apotheosis:melee/attribute/violent": "Şiddetli",
+    "affix.apotheosis:melee/attribute/violent.suffix": "Avcının",
+	
+    "affix.apotheosis:ranged/attribute/windswept": "Rüzgarlı",
+    "affix.apotheosis:ranged/attribute/windswept.suffix": "Akıntının",
+	
+    "affix.apotheosis:melee/attribute/graceful": "Zarif",
+    "affix.apotheosis:melee/attribute/graceful.suffix": "Düellocunun",
+	
+    "affix.apotheosis:melee/attribute/forceful": "Güçlü",
+    "affix.apotheosis:melee/attribute/forceful.suffix": "Boğanın",
+	
+    "affix.apotheosis:armor/attribute/aquatic": "Sulu",
+    "affix.apotheosis:armor/attribute/aquatic.suffix": "Okyanusun",
+	
+    "affix.apotheosis:armor/attribute/gravitational": "Yerçekimi Gücü",
+    "affix.apotheosis:armor/attribute/gravitational.suffix": "Yerçekiminin",
+	
+	"affix.apotheosis:breaker/attribute/lengthy": "Uzun",
+    "affix.apotheosis:breaker/attribute/lengthy.suffix": "Ulaşmanın",
+	
+    "affix.apotheosis:breaker/attribute/experienced": "Deneyimli",
+    "affix.apotheosis:breaker/attribute/experienced.suffix": "Bilginin",
+	
+    "affix.apotheosis:melee/attribute/elongated": "Uzatılmış",
+    "affix.apotheosis:melee/attribute/elongated.suffix": "Uzaktan Savaşın",
+	
+    "affix.apotheosis:ranged/attribute/agile": "Çevik",
+    "affix.apotheosis:ranged/attribute/agile.suffix": "Becerinin",
+	
+    "affix.apotheosis:armor/attribute/steel_touched": "Çelik İşlemeli",
+    "affix.apotheosis:armor/attribute/steel_touched.suffix": "Savunmanın",
+	
+    "affix.apotheosis:armor/attribute/stalwart": "Dirençli",
+    "affix.apotheosis:armor/attribute/stalwart.suffix": "İnadın",
+	
+    "affix.apotheosis:armor/attribute/elastic": "Esnek",
+    "affix.apotheosis:armor/attribute/elastic.suffix": "Tırmanmanın",
+	
+    "affix.apotheosis:armor/attribute/fortunate": "Şanslı",
+    "affix.apotheosis:armor/attribute/fortunate.suffix": "Dört Yapraklı Yoncanın",
+	
+	"affix.apotheosis:armor/attribute/winged": "Kanatlı",
+    "affix.apotheosis:armor/attribute/winged.suffix": "Gökyüzünün",
+
+    "affix.apotheosis:melee/attribute/intricate": "Karmaşık",
+    "affix.apotheosis:melee/attribute/intricate.suffix": "Eleştirel Düşüncenin",
+
+    "affix.apotheosis:melee/attribute/lacerating": "Yaralayıcı",
+    "affix.apotheosis:melee/attribute/lacerating.suffix": "Cerrahi Hassasiyetin",
+
+    "affix.apotheosis:melee/attribute/glacial": "Buzlu",
+    "affix.apotheosis:melee/attribute/glacial.suffix": "Buz Diyarlarının",
+
+    "affix.apotheosis:melee/attribute/infernal": "Cehennem",
+    "affix.apotheosis:melee/attribute/infernal.suffix": "Güneşin",
+
+    "affix.apotheosis:melee/attribute/vampiric": "Vampirik",
+    "affix.apotheosis:melee/attribute/vampiric.suffix": "Kan Akıtmanın",
+	
+	"affix.apotheosis:melee/attribute/piercing": "Delici",
+    "affix.apotheosis:melee/attribute/piercing.suffix": "Parçalayıcının",
+	
+	"affix.apotheosis:melee/attribute/shredding": "Parçalayıcı",
+    "affix.apotheosis:melee/attribute/shredding.suffix": "Penetrasyonun",
+	
+    "affix.apotheosis:melee/attribute/giant_slaying": "Dev Katili",
+    "affix.apotheosis:melee/attribute/giant_slaying.suffix": "Devasa Vuruşun",
+	
+    "affix.apotheosis:melee/attribute/berserking": "Çılgınca Saldıran",
+    "affix.apotheosis:melee/attribute/berserking.suffix": "Berserk'ın",
+	
+    "affix.apotheosis:breaker/attribute/destructive": "Yıkıcı",
+    "affix.apotheosis:breaker/attribute/destructive.suffix": "Taş Kırmanın",
+	
+    "affix.apotheosis:ranged/attribute/elven": "Elfçe",
+    "affix.apotheosis:ranged/attribute/elven.suffix": "İlk Okçunun",
+	
+    "affix.apotheosis:ranged/attribute/streamlined": "Hızlı",
+    "affix.apotheosis:ranged/attribute/streamlined.suffix": "Keskin Nişancının",
+	
+    "affix.apotheosis:melee/mob_effect/elusive": "Bulunması Zor",
+    "affix.apotheosis:melee/mob_effect/elusive.suffix": "Kaçınmanın",
+	
+	"affix.apotheosis:breaker/mob_effect/swift": "Hızlı",
+    "affix.apotheosis:breaker/mob_effect/swift.suffix": "Ezicinin",
+	
+    "affix.apotheosis:breaker/mob_effect/spelunkers": "Mağara Kaşifi",
+    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "Mağara Keşfinin",
+	
+    "affix.apotheosis:ranged/mob_effect/ensnaring": "Tuzaklayan",
+    "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "Avcının",
+	
+    "affix.apotheosis:shield/mob_effect/venomous": "Zehirli",
+    "affix.apotheosis:shield/mob_effect/venomous.suffix": "Yılanın",
+	
+    "affix.apotheosis:ranged/mob_effect/fleeting": "Hızlı Geçen",
+    "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "Korucunun",
+	
+    "affix.apotheosis:melee/mob_effect/weakening": "Zayıflatan",
+    "affix.apotheosis:melee/mob_effect/weakening.suffix": "Zayıflatmanın",
+	
+    "affix.apotheosis:armor/mob_effect/bolstering": "Güçlendiren",
+    "affix.apotheosis:armor/mob_effect/bolstering.suffix": "Dayanıklılığın",
+	
+	"affix.apotheosis:armor/mob_effect/revitalizing": "Canlandırıcı",
+    "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "Kaynağın",
+	
+    "affix.apotheosis:armor/mob_effect/nimble": "Çevik",
+    "affix.apotheosis:armor/mob_effect/nimble.suffix": "Tilkinin",
+	
+    "affix.apotheosis:armor/mob_effect/blinding": "Kör Edici",
+    "affix.apotheosis:armor/mob_effect/blinding.suffix": "Karanlığın",
+	
+    "affix.apotheosis:ranged/mob_effect/shulkers": "Shulk Dokunuşu",
+    "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "Yükselmenin",
+	
+    "affix.apotheosis:shield/mob_effect/withering": "Solduran",
+    "affix.apotheosis:shield/mob_effect/withering.suffix": "Karanlık İskeletin",
+	
+    "affix.apotheosis:shield/attribute/ironforged": "Demir İşlemeli",
+    "affix.apotheosis:shield/attribute/ironforged.suffix": "Demirin",
+	
+    "affix.apotheosis:shield/attribute/steel_touched": "Çelik İşlemeli",
+    "affix.apotheosis:shield/attribute/steel_touched.suffix": "Savunucunun",
+	
+	"affix.apotheosis:ranged/mob_effect/ivy_laced": "Sarmaşık Kaplı",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "Doğal Zehrin",
+	
+    "affix.apotheosis:ranged/mob_effect/satanic": "Şeytani",
+    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "Cehennem Ateşinin",
+	
+    "affix.apotheosis:ranged/spectral": "Hayaletimsi",
+    "affix.apotheosis:ranged/spectral.suffix": "Kayıp Ruhların",
+    "affix.apotheosis:ranged/spectral.desc": "İkinci bir ok atma şansın %s%%.",
+	
+    "affix.apotheosis:ranged/magical": "Büyülü",
+    "affix.apotheosis:ranged/magical.suffix": "Arkane'nin",
+    "affix.apotheosis:ranged/magical.desc": "Okların büyü hasarı verir.",
+	
+    "affix.apotheosis:melee/festive": "Şenlikli",
+    "affix.apotheosis:melee/festive.suffix": "Partinin",
+    "affix.apotheosis:melee/festive.desc": "Öldürülen düşmanlar %s%% şansla Ganimet Pinatası olur.",
+	
+	"affix.apotheosis:melee/thunderstruck": "Yıldırım Çarpan",
+    "affix.apotheosis:melee/thunderstruck.suffix": "Fırtınanın",
+    "affix.apotheosis:melee/thunderstruck.desc": "Saldırıların yakındaki düşmanlara %s hasar verir.",
+	
+    "affix.apotheosis:shield/retreating": "Geri Çekilen",
+    "affix.apotheosis:shield/retreating.suffix": "Soytarının",
+    "affix.apotheosis:shield/retreating.desc": "Yakın dövüşte savunma yaparken geri sıçrarsın.",
+	
+    "affix.apotheosis:generic/telepathic": "Telepatik",
+    "affix.apotheosis:generic/telepathic.suffix": "Uzay ve Zamanın",
+    "affix.apotheosis:generic/telepathic.desc.weapon": "Yaratık düşüşleri sana ışınlanır.",
+    "affix.apotheosis:generic/telepathic.desc.tool": "Blok düşüşleri sana ışınlanır.",
+	
+    "affix.apotheosis:melee/executing": "İdam Eden",
+    "affix.apotheosis:melee/executing.suffix": "Cellatın",
+    "affix.apotheosis:melee/executing.desc": "Düşmanlar maksimum canlarının %s%% altında olduğunda idam edilir.",
+	
+	"affix.apotheosis:melee/cleaving": "Doğrayan",
+    "affix.apotheosis:melee/cleaving.suffix": "Kasabın",
+    "affix.apotheosis:melee/cleaving.desc": "Saldırılar %s%% şansla %s yakındaki düşmanlara da zarar verir.",
+	
+    "affix.apotheosis:breaker/ability/enlightened": "Aydınlanmış",
+    "affix.apotheosis:breaker/ability/enlightened.suffix": "Işık Getirenin",
+    "affix.apotheosis:breaker/ability/enlightened.desc": "Bu alet %s dayanıklılık karşılığında bir meşale yerleştirebilir.",
+	
+    "affix.apotheosis:shield/psychic": "Psişik",
+    "affix.apotheosis:shield/psychic.suffix": "İntikamcının",
+    "affix.apotheosis:shield/psychic.desc": "Bir uzun menzilli saldırıyı savunmak, atıcıya verilen hasarın %s%% kısmını yansıtır.",
+	
+    "affix.apotheosis:shield/catalyzing": "Katalize Edici",
+    "affix.apotheosis:shield/catalyzing.suffix": "Dönüştürücünün",
+    "affix.apotheosis:shield/catalyzing.desc": "Bir patlamayı savunmak sana büyük güç kazandırır.",
+	
+	"affix.apotheosis:melee/attribute/annihilating": "Yok Edici",
+    "affix.apotheosis:melee/attribute/annihilating.suffix": "Titanın",
+	
+    "affix.apotheosis:melee/attribute/decimating": "On Kırıcı",
+    "affix.apotheosis:melee/attribute/decimating.suffix": "Tanrının",
+	
+    "affix.apotheosis:melee/attribute/murderous": "Cinayet İşleyen",
+    "affix.apotheosis:melee/attribute/murderous.suffix": "Minotorun",
+	
+    "affix.apotheosis:ranged/mob_effect/acidic": "Asidik",
+    "affix.apotheosis:ranged/mob_effect/acidic.suffix": "Aşındırmanın",
+	
+    "affix.apotheosis:melee/mob_effect/bloodletting": "Kan Akıtan",
+    "affix.apotheosis:melee/mob_effect/bloodletting.suffix": "Avcının",
+	
+    "affix.apotheosis:melee/mob_effect/caustic": "Aşındırıcı",
+    "affix.apotheosis:melee/mob_effect/caustic.suffix": "Aşındırıcı Diyarının",
+	
+    "affix.apotheosis:melee/mob_effect/sophisticated": "Karmaşık",
+    "affix.apotheosis:melee/mob_effect/sophisticated.suffix": "Kadim Kütüphanenin",
+	
+	"affix.apotheosis:shield/mob_effect/devilish": "Şeytani",
+    "affix.apotheosis:shield/mob_effect/devilish.suffix": "Eski Askerin",
+	
+    "affix.apotheosis:breaker/effect/radial": "Dairesel",
+    "affix.apotheosis:breaker/effect/radial.suffix": "Toprak Kırıcının",
+    "affix.apotheosis:breaker/effect/radial.desc": "Bu alet %sx%s alanı kırar.",
+	
+    "affix.apotheosis:breaker/ability/supermassive": "Süper Kütleli",
+    "affix.apotheosis:breaker/ability/supermassive.suffix": "Dünya Kırıcının",
+    "affix.apotheosis:breaker/ability/supermassive.desc": "Bu alet %sx%s alanı kırar.",
+	
+    "affix.apotheosis:melee_weapon/mob_effect/detonating": "Patlayıcı",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "Elemental Alevin",
+	
+    "affix.apotheosis:armor/attribute/oxygenated": "Oksijen Sağlayan",
+    "affix.apotheosis:armor/attribute/oxygenated.suffix": "Dalgıcın",
+	
+    "affix.apotheosis:melee/mob_effect/omniscient": "Her Şeyi Bilen",
+    "affix.apotheosis:melee/mob_effect/omniscient.suffix": "Büyük Bilgenin",
+	
+	"affix.apotheosis:breaker/attribute/submerged": "Dalmış",
+    "affix.apotheosis:breaker/attribute/submerged.suffix": "Deniz Madencisinin",
+	
+    "affix.apotheosis:shield/mob_effect/galvanizing": "Galvanizleme",
+    "affix.apotheosis:shield/mob_effect/galvanizing.suffix": "Yıkılmazın",
+	
+    "affix.apotheosis:armor/dmg_reduction/grounded": "Topraklanmış",
+    "affix.apotheosis:armor/dmg_reduction/grounded.suffix": "Paratonerin",
+	
+    "affix.apotheosis:ranged/mob_effect/deathbound": "Ölüme Bağlı",
+    "affix.apotheosis:ranged/mob_effect/deathbound.suffix": "Wither Lordun",
+	
+    "affix.apotheosis:shield/mob_effect/reinforcing": "Güçlendiren",
+    "affix.apotheosis:shield/mob_effect/reinforcing.suffix": "Çeliğin",
+	
+    "affix.apotheosis:melee/attribute/lengthy": "Uzun",
+    "affix.apotheosis:melee/attribute/lengthy.suffix": "Aşırı Uzunluğun",
+	
+    "affix.apotheosis:ranged/mob_effect/blighted": "Çürümüş",
+    "affix.apotheosis:ranged/mob_effect/blighted.suffix": "Çürümüş Diyarın",
+	
+	"affix.apotheosis:armor/attribute/unbound": "Bağsız",
+    "affix.apotheosis:armor/attribute/unbound.suffix": "İkarusun",
+	
+    "affix.apotheosis:armor/attribute/fireproof": "Ateşe Dayanıklı",
+    "affix.apotheosis:armor/attribute/fireproof.suffix": "Alevli Savunmanın",
+	
+    "affix.apotheosis:armor/attribute/adamantine": "Adamantin",
+    "affix.apotheosis:armor/attribute/adamantine.suffix": "Adamantinin",
+	
+    "affix.apotheosis:breaker/enchantment/prosperous": "Zengin",
+    "affix.apotheosis:breaker/enchantment/prosperous.suffix": "Büyük Servetin",
+	
+    "affix.apotheosis:ranged/enchantment/prosperous": "Zengin",
+    "affix.apotheosis:ranged/enchantment/prosperous.suffix": "Hazine Arayıcının",
+	
+    "affix.apotheosis:armor/dmg_reduction/deflective": "Saptırıcı",
+    "affix.apotheosis:armor/dmg_reduction/deflective.suffix": "Sapmanın",
+	
+    "misc.apotheosis.iron": "demir",
+    "misc.apotheosis.diamond": "elmas",
+    "misc.apotheosis.netherite": "netherit",
+	
+	"affix.apotheosis:breaker/effect/omnetic": "Omnetic",
+    "affix.apotheosis:breaker/effect/omnetic.suffix": "Tekilliğin",
+    "affix.apotheosis:breaker/effect/omnetic.desc": "Bu alet tüm bloklara karşı %s verimlilik sağlar.",
+	
+    "misc.apotheosis.physical": "Fiziksel",
+    "misc.apotheosis.magic": "Büyü",
+    "misc.apotheosis.fire": "Ateş",
+    "misc.apotheosis.fall": "Düşüş",
+    "misc.apotheosis.explosion": "Patlayıcı",
+    "misc.apotheosis.projectile": "Uzun Menzilli Hasar",
+    "misc.apotheosis.lightning": "Yıldırım",
+    "affix.apotheosis:damage_reduction.desc": "%s alınan hasar %s%% azaltılır",
+	
+    "affix.apotheosis:armor/dmg_reduction/blockading": "Bloklama",
+    "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "Blokajın",
+	
+    "affix.apotheosis:armor/dmg_reduction/runed": "Rünlü",
+    "affix.apotheosis:armor/dmg_reduction/runed.suffix": "Büyü Koruyucusunun",
+	
+	"affix.apotheosis:armor/dmg_reduction/blast_forged": "Patlama İşlemeli",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "Demircinin",
+	
+    "affix.apotheosis:armor/dmg_reduction/dwarven": "Cüce İşlemeli",
+    "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "Volkanın",
+	
+    "affix.apotheosis:armor/dmg_reduction/feathery": "Tüylü",
+    "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "Kartalın",
+	
+    "affix.apotheosis:shield/attribute/stalwart": "Dirençli",
+    "affix.apotheosis:shield/attribute/stalwart.suffix": "İnadın",
+	
+    "affix.apotheosis:armor/attribute/spiritual": "Ruhani",
+    "affix.apotheosis:armor/attribute/spiritual.suffix": "Şamanın",
+	
+    "affix.apotheosis:generic/attribute/lucky": "Şanslı",
+    "affix.apotheosis:generic/attribute/lucky.suffix": "Tesadüfen Keşfedilenlerin",
+	
+    "affix.apotheosis:melee/attribute/nullifying": "Geçersiz Kılan",
+    "affix.apotheosis:melee/attribute/nullifying.suffix": "Büyücü Kırıcının",
+	
+	"affix.apotheosis:melee/attribute/spellbreaking": "Büyü Kırıcı",
+    "affix.apotheosis:melee/attribute/spellbreaking.suffix": "Petrisit Golemin",
+	
+    "affix.apotheosis:ranged/mob_effect/grievous": "Ağır Hasar Veren",
+    "affix.apotheosis:ranged/mob_effect/grievous.suffix": "Yaralamanın",
+	
+    "affix.apotheosis:armor/mob_effect/bursting": "Patlayan",
+    "affix.apotheosis:armor/mob_effect/bursting.suffix": "Canlılığın",
+	
+    "affix.apotheosis:durable": "Dayanıklı",
+    "affix.apotheosis:durable.suffix": "Dayanıklılığın",
+	
+    "affix.apotheosis.target.attack_self": "Vurulduğunda, %s kazan",
+    "affix.apotheosis.target.attack_target": "Vurulduğunda, %s uygula",
+    "affix.apotheosis.target.hurt_self": "Saldırı aldığında, %s kazan",
+    "affix.apotheosis.target.hurt_attacker": "Saldırı aldığında, %s uygula",
+    "affix.apotheosis.target.break_self": "Blok kırıldığında, %s kazan",
+    "affix.apotheosis.target.arrow_self": "Ok isabet ettiğinde, %s kazan",
+    "affix.apotheosis.target.arrow_target": "Ok isabet ettiğinde, %s uygula",
+	"affix.apotheosis.target.block_self": "Blokladığında, %s kazan",
+    "affix.apotheosis.target.block_attacker": "Blokladığında, %s uygula",
+    "affix.apotheosis.cooldown": "[⌛ %s]",
+    "affix.apotheosis.stacking": "[İstifleniyor]",
+	
+    "affix.apotheosis:durable.desc": "Bu eşya dayanıklılık hasarının %s%%'ini görmezden gelir.",
+    "affix.apotheosis:socket.desc": "Yuva (%s)",
+	
+    "socket.apotheosis.empty": "Boş Yuva",
+    "text.apotheosis.when_socketed": "Yuvaya Takıldığında:",
+    "text.apotheosis.when_socketed_in": "Şunun içindeki yuvaya takıldığında:",
+    "text.apotheosis.when_socketed_typed": "%s içindeki yuvaya takıldığında:",
+    "info.apotheosis.socketing": "Değerli taşlar, Demirci Masası kullanılarak yuvalara takılabilir. Sol tarafa eşya, sağ tarafa değerli taş yerleştir.\n\nDikkatlice seç, çünkü yuvaya takılmış bir değerli taşı çıkarmak pahalıdır.",
+	
+	"purity.apotheosis.cracked": "Çatlak",
+    "purity.apotheosis.chipped": "Çentikli",
+    "purity.apotheosis.flawed": "Hatalı",
+    "purity.apotheosis.normal": "Normal",
+    "purity.apotheosis.flawless": "Kusursuz",
+    "purity.apotheosis.perfect": "Mükemmel",
+	
+    "gem_class.melee_weapon": "Yakın Dövüş Silahları",
+    "gem_class.ranged_weapon": "Menzilli Silahlar",
+    "gem_class.light_weapon": "Hafif Silahlar",
+    "gem_class.core_armor": "Ana Zırh",
+    "gem_class.lower_armor": "Alt Zırh",
+    "gem_class.armor": "Zırh",
+    "gem_class.breaker": "Madencilik Aletleri",
+    "gem_class.pickaxe": "Kazmalar",
+    "gem_class.light_ranged": "Hafif veya Menzilli Silahlar",
+    "gem_class.weapon_or_tool": "Silahlar veya Aletler",
+    "gem_class.weapons": "Silahlar",
+	
+	"gem_class.helmet": "Miğferler",
+    "gem_class.chestplate": "Göğüslükler",
+    "gem_class.leggings": "Tozluklar",
+    "gem_class.boots": "Çizmeler",
+    "gem_class.shield": "Kalkanlar",
+    "gem_class.bow": "Yaylar",
+    "gem_class.trident": "Üçlü Mızraklar",
+    "gem_class.anything": "Her Şey",
+	
+    "bonus.apotheosis:durability.desc": "Dayanıklılık hasarının %s%% adedini göz ardı eder",
+    "bonus.apotheosis:enchantment.desc": "+%s %s şuna eklenir: %s",
+    "bonus.apotheosis:enchantment.desc.mustExist": "+%s %s mevcut %s üzerine eklenir",
+    "bonus.apotheosis:enchantment.desc.global": "+%s %s tüm mevcut büyülere eklenir",
+    "bonus.apotheosis:multi_attr.desc.and": "%s ve %s",
+    "bonus.apotheosis:multi_attr.desc.and_but": "%s ve %s, ancak %s",
+    "bonus.apotheosis:multi_attr.desc.but_and": "%s, ancak %s ve %s",
+    "bonus.apotheosis:bloody_arrow.desc": "Fırlatırken, Maksimum Sağlığının %s%% adedini kaybedersin ve %s%% hasar verirsin. %s",
+	"bonus.apotheosis:leech_block.desc": "Bir saldırıyı savunduğunda hasarın %s%% adedi kadar iyileşirsin. %s",
+    "bonus.apotheosis:all_stats.desc": "Tüm İstatistiklere +%s%%",
+    "gem.apotheosis:overworld/royalty.bonus.pickaxe": "Bakır Cevheri kırıldığında, Ham Altın düşürme şansı %s%%.",
+    "bonus.apotheosis:mageslayer.desc": "%s%% büyü hasarını yok say ve aynı miktarda iyileş.",
+    "bonus.apotheosis:twilight_ore_magnet.desc": "Bir Cevher Mıknatısı olarak kullanılabilir, ekstra %s dayanıklılık harcar.",
+    "bonus.apotheosis:twilight_treasure_goblin.desc": "Bir varlığa saldırmak %s%% şansla bir Hazine Goblini çağırır. %s",
+    "bonus.apotheosis:twilight_fortification.desc": "Hasar almak %s%% şansla sizi Alacakaranlık Kalkanlarıyla güçlendirir. %s",
+	
+    "misc.apotheosis.level": "seviye",
+    "misc.apotheosis.level.many": "seviyeler",
+    "name.apotheosis.treasure_goblin": "Hazine Goblini",
+	
+    "item.apotheosis.gem.apotheosis:legacy": "Eski Değerli Taş",
+    "item.apotheosis.gem.apotheosis:core/guardian": "Koruyucu Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/ballast": "Balast Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/solar": "Güneş Değerli Taşı",
+	"item.apotheosis.gem.apotheosis:core/lunar": "Ay Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/samurai": "Samurayın Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/warlord": "Savaş Lordunun Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/splendor": "Görkem Değerli Taş",
+    "item.apotheosis.gem.apotheosis:core/tyrannical": "Zalim Değerli Taş",
+    "item.apotheosis.gem.apotheosis:core/breach": "İhlal Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/lightning": "Yıldırım Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/slipstream": "Akıntı Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/brawlers": "Kavgacıların Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:core/combatant": "Savaşçının Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:overworld/earth": "Toprağın Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:overworld/royalty": "Kraliyet Ailesinin Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:the_nether/inferno": "Cehennem Ateşinin Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "Kan Lordunun Değerli Taşı",
+	"item.apotheosis.gem.apotheosis:the_end/endersurge": "Son Fırtına Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:the_end/mageslayer": "Büyücü Katilinin Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:twilight/forest": "Alacakaranlık Ormanının Değerli Taşı",
+    "item.apotheosis.gem.apotheosis:twilight/queen": "Donmuş Kraliçenin Değerli Taşı",
+	
+    "item.apotheosis.boss_summoner": "Apothic Boss Çağırıcı",
+    "item.apotheosis.gem.cracked": "Çatlak %s",
+    "item.apotheosis.gem.chipped": "Çentikli %s",
+    "item.apotheosis.gem.flawed": "Hatalı %s",
+    "item.apotheosis.gem.normal": "%s",
+    "item.apotheosis.gem.flawless": "Kusursuz %s",
+    "item.apotheosis.gem.perfect": "Mükemmel %s",
+    "item.apotheosis.vial_of_extraction": "Arkane Çıkarma Şişesi",
+    "item.apotheosis.vial_of_expulsion": "Yakıcı Çıkarma Şişesi",
+    "item.apotheosis.vial_of_unnaming": "İsimsizlik Şişesi",
+    "item.apotheosis.gem_dust": "Değerli Değerli Taş Tozu",
+    "item.apotheosis.gem_dust.desc": "Ezilmiş Apothic Değerli Taşı",
+	"item.apotheosis.common_material": "Gizemli Hurda Metal",
+    "item.apotheosis.uncommon_material": "Eskimiş Kumaş",
+    "item.apotheosis.rare_material": "Parlak Kristal Parçası",
+    "item.apotheosis.epic_material": "Arkane Kumlar",
+    "item.apotheosis.mythic_material": "Tanrı İşlemeli İnci",
+    "item.apotheosis.ancient_material": "Sonsuzluğun Tezahürü",
+    "item.apotheosis.gem_fused_slate": "Değerli Taşla Kaynaşmış Levha",
+	
+    "item.apotheosis.sigil_of_socketing": "Yuvalama Mührü",
+    "item.apotheosis.sigil_of_socketing.desc": "Bir eşyaya bir yuva ekler",
+	
+    "item.apotheosis.sigil_of_withdrawal": "Çıkarma Mührü",
+    "item.apotheosis.sigil_of_withdrawal.desc": "Bir eşyadan yuvalanmış değerli taşları çıkarır",
+	
+    "item.apotheosis.sigil_of_rebirth": "Yeniden Doğuş Mührü",
+    "item.apotheosis.sigil_of_rebirth.desc": "Yeniden Şekillendirme Masasını güçlendirmek için kullanılır",
+	
+    "item.apotheosis.sigil_of_enhancement": "Geliştirme Mührü",
+    "item.apotheosis.sigil_of_enhancement.desc": "Geliştirme Masasını beslemek için kullanılır",
+	
+    "item.apotheosis.sigil_of_unnaming": "İsim Kaldırma Mührü",
+    "item.apotheosis.sigil_of_unnaming.desc": "Bir eşyadan eklenmiş adı kaldırır",
+	
+	"block.apotheosis.boss_spawner": "Boss Canavar Çağırıcı",
+    "block.apotheosis.gem_cutting_table": "Değerli Taş Kesim Masası",
+    "block.apotheosis.gem_cutting_table.desc": "Taşları yükseltmek için Değerli Taş Tozu ve Nadirlik Malzemeleri kullanır",
+    "block.apotheosis.salvaging_table": "Kurtarma Masası",
+    "block.apotheosis.salvaging_table.desc": "Eklenti Eşyalarını, Nadirlik Malzemelerine dönüştürür",
+    "block.apotheosis.simple_reforging_table": "Basit Yeniden Şekillendirme Masası",
+    "block.apotheosis.reforging_table": "Yeniden Şekillendirme Masası",
+    "block.apotheosis.reforging_table.desc": "Eşyaları yeniden şekillendirmek için Yeniden Doğuş Mühürleri ve Nadirlik Malzemeleri kullanır",
+    "block.apotheosis.reforging_table.desc2": "Maksimum Nadirlik: %s",
+    "block.apotheosis.augmenting_table": "Geliştirme Masası",
+    "block.apotheosis.augmenting_table.desc": "Bireysel eklentileri geliştirmek için Geliştirme Mühürlerini kullanır",
+	
+    "button.apotheosis.salvage": "Eşyaları Kurtar",
+    "button.apotheosis.no_salvage": "Seçilen eşya yok",
+    "button.apotheosis.no_salvage_all": "Envanterde geçerli eşya yok",
+    "button.apotheosis.upgrade": "Değerli Taşı Yükselt",
+    "button.apotheosis.upgrade.no": "Eksik Girdiler",
+    "button.apotheosis.augmenting.upgrade": "Seçilen Eklentiyi Yükselt",
+    "button.apotheosis.augmenting.reroll": "Seçilen Eklentiyi Yeniden Çevir",
+    "button.apotheosis.augmenting.no_selection": "Seçilen Eklenti Yok",
+	"button.apotheosis.augmenting.max_level": "Zaten En Yüksek Seviyede",
+    "button.apotheosis.augmenting.no_alternatives": "Alternatif Eklenti Yok",
+    "button.apotheosis.augmenting.upgrade.cost": "Maliyet: %sx %s",
+	
+    "menu.apotheosis.gem_cutting": "Değerli Taş Kesimi",
+    "container.apotheosis.salvage": "Kurtarma",
+    "container.apotheosis.reforge": "Yeniden Şekillendirme",
+    "text.apotheosis.cost": "%sx %s",
+    "text.apotheosis.reforge_cost": "Yeniden Şekillendirme Maliyeti",
+    "text.apotheosis.salvage_results": "Kurtarma Sonuçları",
+    "text.apotheosis.unique": "Benzersiz",
+    "text.apotheosis.results": "Sonuçlar",
+    "text.apotheosis.facets": "Yüzeyler: %s",
+    "text.apotheosis.socketable_into": "Şunun İçine Uyar:",
+    "text.apotheosis.dot_prefix": "• %s",
+    "text.apotheosis.socket_limit": "Uygulanan En Yüksek Yuva: %s",
+    "text.apotheosis.no_upgrade": "En Yüksek Yükseltmeye Ulaşıldı",
+    "text.apotheosis.cut_cost": "Değerli Taş Kesim Maliyeti",
+    "text.apotheosis.one_rarity_mat": "Nadirlik Malzemeleri (1)",
+    "text.apotheosis.potential_rerolls": "Potansiyel Yeniden Çeviriler",
+    "text.apotheosis.upgraded_form": "Yükseltilmiş Form",
+    "text.apotheosis.alternative_page": "Sayfa %s/%s (değiştirmek için kaydır)",
+	
+	"title.apotheosis.smithing": "Apothic Demirciliği",
+    "title.apotheosis.salvaging": "Kurtarma",
+	
+    "text.apotheosis.anything": "Her Şey",
+    "text.apotheosis.category.none": "Hiçbir Şey",
+    "text.apotheosis.category.none.plural": "Hiçbir Şey",
+    "text.apotheosis.category.bow": "Yay",
+    "text.apotheosis.category.bow.plural": "Yaylar",
+    "text.apotheosis.category.crossbow": "Arbalet",
+    "text.apotheosis.category.crossbow.plural": "Arbaletler",
+    "text.apotheosis.category.breaker": "Madencilik Aleti",
+    "text.apotheosis.category.breaker.plural": "Madencilik Aletleri",
+    "text.apotheosis.category.pickaxe": "Kazma",
+    "text.apotheosis.category.pickaxe.plural": "Kazmalar",
+    "text.apotheosis.category.shovel": "Kürek",
+    "text.apotheosis.category.shovel.plural": "Kürekler",
+    "text.apotheosis.category.armor": "Zırh",
+    "text.apotheosis.category.armor.plural": "Zırhlar",
+    "text.apotheosis.category.shield": "Kalkan",
+    "text.apotheosis.category.shield.plural": "Kalkanlar",
+    "text.apotheosis.category.trident": "Üçlü Mızrak",
+    "text.apotheosis.category.trident.plural": "Üçlü Mızraklar",
+	"text.apotheosis.category.melee_weapon": "Yakın Dövüş Silahı",
+    "text.apotheosis.category.melee_weapon.plural": "Yakın Dövüş Silahları",
+    "text.apotheosis.category.helmet": "Miğfer",
+    "text.apotheosis.category.helmet.plural": "Miğferler",
+    "text.apotheosis.category.chestplate": "Göğüslük",
+    "text.apotheosis.category.chestplate.plural": "Göğüslükler",
+    "text.apotheosis.category.leggings": "Tozluk",
+    "text.apotheosis.category.leggings.plural": "Tozluklar",
+    "text.apotheosis.category.boots": "Çizme",
+    "text.apotheosis.category.boots.plural": "Çizmeler",
+    "text.apotheosis.any_x_item": "Herhangi bir %s Eklenti Eşyası",
+	
+    "info.apotheosis.boss_spawn": "%s yakında uyandı!",
+    "info.apotheosis.boss": "%s Apothic Boss",
+    "info.apotheosis.boss_item": "Şunu Düşürecek: %s",
+    "info.apotheosis.boss_modifiers": "Boss Modifikasyonları:",
+    "info.apotheosis.rarity_material": "Nadirlik Malzemesi (%s)",
+    "info.apotheosis.gem_crushing": "İlk Değerli Taş Tozunu herhangi bir Apothic Değerli Taşını yere atarak ve üzerine bir Örs düşürerek elde edebilirsin.\n\nDaha sonra Kurtarma Masasını kullan.",
+	"info.apotheosis.gem_extraction": "Bir Apothic Değerli Taşını çıkarma işlemi için bir Demircilik Masasında kullanılır.\n\nBu işlem sırasında eşya yok olur.",
+    "info.apotheosis.gem_expulsion": "Bir Apothic Değerli Taşını çıkarma işlemi için bir Demircilik Masasında kullanılır.\n\nDeğerli Taşlar bu işlem sırasında yok olur.",
+    "info.apotheosis.unnaming": "Bir eşyanın adındaki eklenti bileşenlerini kaldırmak için bir Demircilik Masasında kullanılır.",
+    "info.apotheosis.salvaging": "Nadirlik Malzemeleri, Kurtarma Masasında Eklenti Eşyaları kurtarılarak elde edilir.",
+	
+    "rarity.apotheosis:common": "Sıradan",
+    "rarity.apotheosis:uncommon": "Sıradan Olmayan",
+    "rarity.apotheosis:rare": "Nadir",
+    "rarity.apotheosis:epic": "Destansı",
+    "rarity.apotheosis:mythic": "Efsanevi",
+    "rarity.apotheosis:ancient": "Kadim",
+	
+    "death.attack.apotheosis:psychic": "%s bir yansıma tarafından öldürüldü.",
+    "death.attack.apotheosis:psychic.player": "%s adlı oyuncunun saldırısı %s tarafından yansıtıldı.",
+    "death.attack.apotheosis:execute": "%s idam edildi.",
+    "death.attack.apotheosis:execute.player": "%s, %s adlı oyuncu tarafından idam edildi.",
+	
+	"comment_id": "/Adventure + Gateways Compat",
+	
+	"misc.apotheosis.boss": "%s Apothic Boss",
+    "misc.apotheosis.random": "Rastgele",
+    "reward.apotheosis.affix": "%s Eklenti Eşyası",
+    "reward.apotheosis.random_affix": "Rastgele Eklenti Eşyası",
+    "apotheosis.boss_gate_small": "Küçük Apothic Boss Kapısı",
+	
+	"comment_id": "/Advancements",
+	
+    "advancements.apotheosis.progression.root.title": "Apothic Dünya Seviyeleri",
+    "advancements.apotheosis.progression.root.desc": "Apotheosis'de Dünya Seviyelerini açmanın kilometre taşları. Seçim ekranını açmak için CTRL+T tuşuna bas.",
+	
+    "advancements.apotheosis.progression.haven.title": "Dünya Seviyesi: Sığınak",
+    "advancements.apotheosis.progression.haven.desc": "İlk eklenti eşyanı bulduğunda Sığınak açılır.",
+	
+    "advancements.apotheosis.progression.frontier.title": "Dünya Seviyesi: Sınır",
+    "advancements.apotheosis.progression.frontier.desc": "Tam bir Eklenti eşyası seti kuşan ve Sınır seviyesine ilerle.",
+	
+	"advancements.apotheosis.progression.ascent.title": "Dünya Seviyesi: Yükseliş",
+    "advancements.apotheosis.progression.ascent.desc": "Nadir ekipmanların tam setini kuşan ve bir İstilacıyı öldürerek Yükselişini başlat.",
+	
+    "advancements.apotheosis.progression.summit.title": "Dünya Seviyesi: Zirve",
+    "advancements.apotheosis.progression.summit.desc": "Zirveye ulaşmak için Wither'ı öldür ve Nadir ekipmanların tam setini kuşan.",
+	
+    "advancements.apotheosis.progression.pinnacle.title": "Dünya Seviyesi: Doruk",
+    "advancements.apotheosis.progression.pinnacle.desc": "Doruk seviyesine geçmek için End'i özgürleştir ve Destansı ekipmanların tam setini elde et.",
+	
+    "advancements.apotheosis.affix": "Apothic Eklentileri",
+    "advancements.apotheosis.affix.desc": "Apothic Eklentisine sahip bir eşya bul.",
+	
+    "advancements.apotheosis.rare": "Değerli Ekipman",
+    "advancements.apotheosis.rare.desc": "Nadir bir eklenti eşyası bul.",
+	
+    "advancements.apotheosis.epic": "Destansı!",
+    "advancements.apotheosis.epic.desc": "Destansı bir eklenti eşyası bul.",
+	
+    "advancements.apotheosis.mythic": "Titan İşlemeli",
+    "advancements.apotheosis.mythic.desc": "Efsanevi bir eklenti eşyası bul.",
+	
+	"advancements.apotheosis.ancient": "Tanrının Kayıp Hazineleri",
+    "advancements.apotheosis.ancient.desc": "Kadim bir eşya bul.",
+	
+    "advancements.apotheosis.boss": "O Kadar Güçlü Değilmiş",
+    "advancements.apotheosis.boss.desc": "Apothic Boss öldür ve onların eklenti eşyasını ele geçir.",
+    "advancements.apotheosis.chests": "Onu Yeraltında Buldum",
+    "advancements.apotheosis.chests.desc": "Bir sandıkta bir eklenti eşyası bul.",
+    "advancements.apotheosis.merchant": "Fırsatlarım Var",
+    "advancements.apotheosis.merchant.desc": "Seyyar tüccardan bir eklenti eşyası satın al.",
+    "advancements.apotheosis.random": "Bunu Nasıl Aldın?",
+    "advancements.apotheosis.random.desc": "Rastgele bir yaratıktan bir eklenti eşyası elde et.",
+	
+    "advancements.apotheosis.gem": "Elmas Değil",
+    "advancements.apotheosis.gem.desc": "Apothic Değerli Taşı bul, bunlar Eklenti Eşyalarına yuvalandırılabilir.",
+	
+    "advancements.apotheosis.rare_gem": "Mükemmellikten Uzak",
+    "advancements.apotheosis.rare_gem.desc": "Hatalı Değerli Taş elde et.",
+	
+    "advancements.apotheosis.mythic_gem": "Kusursuz Kristaller",
+    "advancements.apotheosis.mythic_gem.desc": "Kusursuz Değerli Taş elde et.",
+	
+	"advancements.apotheosis.ancient_gem": "Sonsuzluk Taşları",
+    "advancements.apotheosis.ancient_gem.desc": "Değerli Taş Kesim Masası kullanarak Mükemmel Bir Değerli Taş oluştur.",
+	
+    "advancements.apotheosis.socket": "Kuyumcu",
+    "advancements.apotheosis.socket.desc": "Bir Demirci Masası kullanarak bir eşyaya değerli taş ekle.",
+	
+    "advancements.apotheosis.gem_cut": "Taş Kesici",
+    "advancements.apotheosis.gem_cut.desc": "Bir Apothic Değerli Taşını yükseltmek için Değerli Taş Kesim Masasını kullan.",
+	
+    "advancements.apotheosis.spawner.root": "Apotheosis Canavar Çağırıcıları",
+    "advancements.apotheosis.spawner.root.desc": "Canavar Çağırıcılar toplanabilir ve değiştirilebilir, bilgi için JEI'ye bak.",
+    "advancements.apothic_spawners.spawner": "Apothic Canavar Çağırıcıları",
+    "advancements.apothic_spawners.spawner.desc": "Bir canavar çağırıcıyı İpeksi Dokunuş ile topla.",
+    "advancements.apothic_spawners.capturing": "Yakalandı!",
+    "advancements.apothic_spawners.capturing.desc": "Yakalama büyüsünü kullanarak bir yaratığın çağırma yumurtasını elde et.",
+    "advancements.apothic_spawners.modifier": "Birkaç Küçük Ayar...",
+    "advancements.apothic_spawners.modifier.desc": "Bir canavar çağırıcının istatistiklerini değiştirmek için bir canavar çağırıcı modifikasyonu kullan.",
+    "advancements.apothic_spawners.spawncount": "Canavar Çağırıcısının Boyutuna Bak!",
+    "advancements.apothic_spawners.spawncount.desc": "Bir canavar çağırıcının doğma sayısını 16'ya yükselt.",
+    "advancements.apothic_spawners.maxdelay": "Zamanı Büken Canavar Çağırıcı",
+    "advancements.apothic_spawners.maxdelay.desc": "Bir canavar çağırıcının en fazla doğma gecikmesini 20'ye düşür.",
+    "advancements.apothic_spawners.mindelay": "Ben Hızlıyım",
+    "advancements.apothic_spawners.mindelay.desc": "Bir canavar çağırıcının en düşük doğma gecikmesini 20'ye düşür.",
+    "advancements.apothic_spawners.nearbyents": "Bir Sürü Yaratık Oluşturmak",
+    "advancements.apothic_spawners.nearbyents.desc": "Bir canavar çağırıcının en fazla yakındaki varlık sayısını 32'ye yükselt.",
+    "advancements.apothic_spawners.playerrange": "Savaştan Uzak",
+    "advancements.apothic_spawners.playerrange.desc": "Bir canavar çağırıcının oyuncu etkinleştirme menzilini 48'e yükselt.",
+    "advancements.apothic_spawners.spawnrange": "Kilometrelerce Yaratık",
+    "advancements.apothic_spawners.spawnrange.desc": "Bir canavar çağırıcının doğma menzilini 32'ye yükselt.",
+    "advancements.apothic_spawners.conditions": "Denetimsiz Doğma",
+    "advancements.apothic_spawners.conditions.desc": "Bir canavar çağırıcının için doğma koşullarını devre dışı bırak.",
+    "advancements.apothic_spawners.players": "Fabrika Hazır",
+    "advancements.apothic_spawners.players.desc": "Bir canavar çağırıcı için yakın oyuncu gereksinimini devre dışı bırak.",
+    "advancements.apothic_spawners.redstone": "Bir Anahtar Eklemek",
+    "advancements.apothic_spawners.redstone.desc": "Bir canavar çağırıcı için redstone kontrolünü etkinleştir.",
+    "advancements.apothic_spawners.light": "Karanlığa Kim İhtiyaç Duyar?",
+    "advancements.apothic_spawners.light.desc": "Canavar Çağırıcının herhangi bir ışık seviyesinde çalışmasını sağlay.",
+    "advancements.apothic_spawners.noai": "Beyin Sisi",
+    "advancements.apothic_spawners.noai.desc": "Bir canavar çağırıcı için Yaratık YZ'sını devre dışı bırak.",
+    "advancements.apothic_spawners.ultimate_spawner": "Nihai Canavar Çağırıcı",
+    "advancements.apothic_spawners.ultimate_spawner.desc": "Redstone kontrolü, YZ devre dışı, doğma koşullarını ve oyuncuları görmezden gelen, en düşük gecikmeye sahip bir canavar çağırıcı oluştur.",
+	
+	"comment_id": "/Potion Module",
+	
+	"item.apotheosis.lucky_foot": "Şanslı Tavşan Ayağı",
+	
+    "item.apotheosis.potion_charm_broke": "Geçersiz İksir Tılsımı",
+    "item.apotheosis.potion_charm": "%s Büyüsü",
+    "item.apotheosis.potion_charm.desc": "Etkin ve envanterdeyken %s uygular.",
+    "item.apotheosis.potion_charm.desc2": "%s - Etkinleştirmek için sağ tıkla.",
+    "item.apotheosis.potion_charm.desc3": "Kaynak: %s",
+    "item.apotheosis.potion_charm.enabled": "Etkin",
+    "item.apotheosis.potion_charm.disabled": "Devre Dışı",
+    "item.apotheosis.potion_charm.curios_only": "Sadece Curios yuvasında çalışır",
+    "misc.apotheosis.blacklisted_potion": "İksir Tılsımına dönüştürülemez.",
+	
+	"comment_id": "/Garden Module",
+	"item.apotheosis.ender_lead": "Ender Halat",
+    "info.apotheosis.noentity": "Taşınan Varlık: Yok",
+    "info.apotheosis.containedentity": "Taşınan Varlık: %s",
+    "info.apotheosis.ender_lead": "Ender Halat, hayvanları taşımak için kullanılabilir.  Bir hayvana vur ve yakala, ardından sağ tıklayarak bırak.  Halat diğer türdeki varlıklarda çalışmaz.",
+	
+	"comment_id": "/Wanderer Trades",
+	"name.apotheosis.captive_dreams": "Tutsak Rüyalar",
+    "name.apotheosis.stonebreaker": "Taşkıran",
+    "name.apotheosis.treecapitator": "Ağaç Kesici",
+    "name.apotheosis.bonesplitter": "Kemik Ayırıcı",
+    "name.apotheosis.arachnids_fear": "Örümceklerin Korkusu",
+    "name.apotheosis.timeworn_visage": "Eskimiş Çehre",
+    "name.apotheosis.greatplate_of_eternity": "Ebediyet Zırhı",
+    "name.apotheosis.thunder_forged_legguards": "Yıldırım İşlemeli Bacak Koruyucuları",
+    "name.apotheosis.rune_forged_greaves": "Rün İşlemeli Çizme",
+    "name.apotheosis.eternal_vigilance": "Ebedi Gözcülük",
+	
+	"comment_id": "/Misc",
+	"info.apoth.modifier_disabled": "Bu Değiştirici Devre Dışı",
+    "itemGroup.apotheosis.adventure": "Apotheosis: Macera Modülü",
+    "itemGroup.apotheosis.ench": "Apotheosis: Büyü Modülü",
+    "config.jade.plugin_apotheosis.spawner": "Apoth Canavar Çağırıcı Modülü",
+    "config.jade.plugin_apotheosis.ench": "Apoth Büyü Modülü",
+    "config.jade.plugin_apotheosis.adventure": "Apoth Macera Modülü",
+	
+	"book.apotheosis.name": "Gölgelerin Kroniği",
+    "book.apotheosis.subtitle": "Apotheosis Rehberi",
+    "book.apotheosis.landing": "Apotheosis dünyasına hoş geldin.$(br2)Apotheosis, $(#8080FF)Modüller$() halinde düzenlenmiştir ve bu kitabın içeriği de öyledir.$(br2)Devre dışı bırakılan modüller gizlenmiştir."
+}
