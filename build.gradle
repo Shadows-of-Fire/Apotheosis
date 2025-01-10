@@ -262,7 +262,7 @@ tasks.register('stockDataPack', Zip) {
     from temporaryDir 
     include 'pack.mcmeta'
 
-    dependsOn generateModMetadata
+    dependsOn processResources
 }
 
 publishing {

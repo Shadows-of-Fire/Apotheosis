@@ -9,6 +9,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.util.DamageSourceExtension;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -36,7 +38,7 @@ public class MagicalArrowAffix extends Affix {
     public void onHurt(LivingHurtEvent e) {
         if (e.getSource().getDirectEntity() instanceof AbstractArrow arrow) {
             if (AffixHelper.getAffixes(arrow).containsKey(Affixes.MAGICAL)) {
-                // e.getSource().setMagic(); TODO: Forge event needs updating with a setDamageSource method.
+                ((DamageSourceExtension) e.getSource()).addTag(DamageTypeTags.BYPASSES_ARMOR);
             }
         }
     }
