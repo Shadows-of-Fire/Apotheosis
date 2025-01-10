@@ -1,0 +1,44 @@
+{
+    "name": "レベル30~60",
+    "icon": "apotheosis:hellshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル45に到達する",
+			"recipe": "apotheosis:hellshelf",
+			"text": "レベル45に到達するには、$(9)地獄の本棚$()をいくつか作り、既存の本棚に加えます。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル45に到達する",
+			"recipe": "apotheosis:seashelf",
+			"text": "ネザーが苦手なら、思い切って海に出て、代わりに$(9)海の木棚$()を作ることもできます。"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "レベル60に到達する",
+			"item": "apotheosis:infused_hellshelf",
+			"text": "レベル45になったら、$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()を利用して本棚をアップグレードしましょう。"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "レベル60に到達する",
+			"item": "apotheosis:infused_seashelf",
+			"text": "使用していた種類の本棚をさらにいくつか作成し、それらを注入してアップグレードします。$(p)これらの新しい本棚を古い本棚の上に置くと、レベル60に到達できます。"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "その他のステータス",
+			"item": "apotheosis:sightshelf",
+			"text": "他のステータスを上昇させるために、より良いオプションを利用できるようになりました。$(p)地獄の本棚と海の本棚からのボーナスに加え、$(9)展望の本棚$()を作って$(#6495ed)ヒント$()を増やすこともできるようになりました。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "その他のステータス",
+			"recipe": "apotheosis:rectifier",
+			"text": "アメジストの供給が安定しているなら、$(9)修正器$()を作って$(#ffff00)修正$()をさらに増やすこともできます。 "
+		}
+	]
+}

@@ -1,0 +1,20 @@
+{
+    "name": "運",
+    "icon": "minecraft:textures/mob_effect/luck.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(6)運$()は非常に特殊な効果です。$(p)運が良ければ、特定のソースからより良い戦利品を受け取ることができます。$(p)残念ながら、どの戦利品ソースが$(6)運$()の影響を受けるかを知る方法はありません。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "apotheosis:lucky_foot",
+			"link_recipe": true,
+            "text": "このポーションは、奇妙なポーションと幸運のウサギの足を使って作成できます。$(p)幸運のウサギの足は、ウサギが落とすことはほとんどありません。"
+        }
+	]
+}

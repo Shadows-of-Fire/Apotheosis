@@ -1,0 +1,7 @@
+{
+    "name": "便利なアイテム",
+    "description": "この項目では、エンチャントを簡単にするために使用される、すべてのランダムな道具について詳しく説明します。",
+    "icon": "apotheosis:library",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

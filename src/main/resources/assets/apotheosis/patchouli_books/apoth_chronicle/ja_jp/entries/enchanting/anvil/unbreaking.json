@@ -1,0 +1,13 @@
+{
+    "name": "耐久力",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/anvil",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)耐久力$()が金床にも適用できるようになりました。$(p)耐久力のレベルが上がるごとに、使用時（または落下時）に金床が破損する確率が下がります。"
+        }
+	]
+}

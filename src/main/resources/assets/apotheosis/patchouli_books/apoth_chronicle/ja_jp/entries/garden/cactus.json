@@ -1,0 +1,16 @@
+{
+    "name": "サボテン",
+    "icon": "minecraft:cactus",
+    "category": "apotheosis:garden/garden",
+	"flag": "apotheosis:garden",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "サボテンの最大成長高さが5に増加しました。$(p)この値は設定可能なので、modpackによってはこれより少し高く（あるいは低く）なるかもしれません。"
+        }
+	],
+	"extra_recipe_mappings": {
+		"minecraft:cactus": 0
+	}
+}

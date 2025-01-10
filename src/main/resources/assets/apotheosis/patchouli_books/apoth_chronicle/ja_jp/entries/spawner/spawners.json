@@ -1,0 +1,17 @@
+{
+    "name": "Mobスポナー",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A $(9)Mobスポナー$()は、虚無からエンティティを転送することができる魔法のブロックです。$(p)それはもう知っていると思うので、新しい情報を紹介します。$(p)Apotheosisでは、スポナーは$(9)シルクタッチ$()で回収することができます。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "この方法でスポナーを回収すると、追加の耐久コストが発生します。$(p)Mobスポナーは、その機能を管理する一連の$(l:apotheosis:spawner/stats)スポナーステータス$()を持っています。$(p)これらの統計は$(l:apotheosis:spawner/modifiers)スポナーモディファイア$()を使用して変更できます。"
+        }
+	]
+}

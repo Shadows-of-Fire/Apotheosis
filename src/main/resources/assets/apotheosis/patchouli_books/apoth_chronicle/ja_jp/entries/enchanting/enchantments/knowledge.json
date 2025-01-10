@@ -1,0 +1,17 @@
+{
+    "name": "時代の知識",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)時代の知識$()は剣の傑作エンチャントです。$(p)Mobを倒すと、ドロップしたものは全て経験値に変換されます。$(p)個々のアイテムには同じ量の経験値の価値があります。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "そのため、大量のアイテムをドロップするMobを倒すのが最も効率的になります。$(p)アイテムごとの経験値はエンチャントレベルに応じて増加します。$(p)予防措置として、プレイヤーを倒してもアイテムは変換されません。"
+		}
+	]
+}

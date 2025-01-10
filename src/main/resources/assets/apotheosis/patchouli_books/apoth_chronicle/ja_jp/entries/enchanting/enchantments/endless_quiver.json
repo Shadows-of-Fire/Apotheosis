@@ -1,0 +1,17 @@
+{
+    "name": "無限の矢筒",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Endless Quiver$() は弓の傑作エンチャントです。$(p)弓を射るとき、矢は種類に関係なく消費さ れません。$(p)これは$(9)無限$()の上位互換とみなされます。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "このエンチャントは、他のMODの矢を無限に使えるようになるはずです。"
+        }
+	]
+}

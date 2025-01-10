@@ -1,0 +1,7 @@
+{
+    "name": "金床",
+    "description": "この項目では、金床のすべての変更点について詳述します。$(p)金床がエンチャント可能になり、レベル制限がなくなり、鉄のブロックで（金床を）修理できるようになりました。",
+    "icon": "minecraft:anvil",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

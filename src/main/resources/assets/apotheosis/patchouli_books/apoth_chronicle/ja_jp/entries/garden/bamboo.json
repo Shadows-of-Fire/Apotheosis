@@ -1,0 +1,16 @@
+{
+    "name": "竹",
+    "icon": "minecraft:bamboo",
+    "category": "apotheosis:garden/garden",
+	"flag": "apotheosis:garden",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "竹は最大32ブロックの高さまで成長できるようになりました。$(p)ただし、竹の成長は少し奇妙で、常にこの高さに達するとは限りません。$(p)この値は設定可能なので、modpackによってはこれより少し高く（あるいは低く）なるかもしれません。"
+        }
+	],
+	"extra_recipe_mappings": {
+		"minecraft:bamboo": 0
+	}
+}

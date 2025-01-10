@@ -1,0 +1,42 @@
+{
+    "name": "書物",
+    "icon": "apotheosis:other_tome",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "書物は特別な種類の本です。$(p)本と同じように本にもエンチャントを適用できますが、特定のエンチャントのみを受け入れます。$(p)例外は、$(l:apotheosis:enchanting/utility/scrapping)解体の書物$()で、これは別の目的があります。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:other_tome",
+			"text": "Once you enchant a tome, it will transform into an enchanted book."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:helmet_tome",
+			"recipe2": "apotheosis:chestplate_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:leggings_tome",
+			"recipe2": "apotheosis:boots_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:weapon_tome",
+			"recipe2": "apotheosis:pickaxe_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:fishing_tome",
+			"recipe2": "apotheosis:bow_tome",
+			"text": ""
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+    "name": "サトウキビ",
+    "icon": "minecraft:sugar_cane",
+    "category": "apotheosis:garden/garden",
+	"flag": "apotheosis:garden",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "サトウキビの最大成長高さが255に増加しました。$(p)modpackによってはこれより少し高く（あるいは低く）なるかもしれません。"
+        }
+	],
+	"extra_recipe_mappings": {
+		"minecraft:sugar_cane": 0
+	}
+}

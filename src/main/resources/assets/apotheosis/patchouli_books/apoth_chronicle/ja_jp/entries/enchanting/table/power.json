@@ -1,0 +1,24 @@
+{
+    "name": "エンチャント出力",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "エンチャント中は、経験値とラピスラズリを消費してアイテムをエンチャントします。$(p)この中から、複雑な計算式を使ってエンチャントがランダムに選ばれます。$(p)この章ではそのプロセスについて説明します。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "まず、エンチャントがどのように選択されるかを説明します。$(p)各エンチャントには$(5)出力関数$()があり、どの$(fpower)がどのレベルで使用可能になるかを制御します。$(p)使用可能なエンチャントがすべてそろうと、その比率に基づいていくつかのエンチャントがランダムに選ばれます。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(fpower）は以下の手順で計算されます:$(p)最初は$(bpower)があり、これはエンチャント中に消費したレベルです。$(p)そして、$(#ff0000)クアンタ$()と修正が$(bpower)を修正し、$(fpower)を生成します。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "各ステータスがどのように$(bpower)を変化させるかは、$(l:apotheosis:enchanting/table/stats#quanta)$(#ff0000)クアンタ$()と$(l:apotheosis:enchanting/table/stats#rectification)修正$()の項目で確認できます。$(p)通常、$(fpower)が高いほど、より高いレベルのエンチャントにアクセスできます。"
+		}
+	]
+}

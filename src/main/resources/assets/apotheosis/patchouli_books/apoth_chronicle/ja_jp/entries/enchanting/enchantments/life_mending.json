@@ -1,0 +1,17 @@
+{
+    "name": "命の修復",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(4)命の修復$()はすべてのダメージを受けるアイテムに適用できる破損エンチャントです。$(p)$(9)修繕$()は経験値を耐久力に変換しますが、$(4)命の修復$()は回復を耐久力に変換します。$(p)1体力値あたりの耐久力はレベルに応じて増加します。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "さらに、このエンチャントはエンチャントテーブルで確認できます。"
+        }
+	]
+}

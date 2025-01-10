@@ -1,0 +1,19 @@
+{
+    "name": "採掘速度低下",
+    "icon": "minecraft:textures/mob_effect/mining_fatigue.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)採掘速度低下$()は、通常はガーディアンからのみ適用されるマイナスの効果です。$(p)効果中は、1レベルにつき採掘速度が20%低下します。$(p)$(9採掘速度上昇$()の正反対です。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "minecraft:fermented_spider_eye",
+            "text": "このポーションは、$(9)採掘速度上昇のポーション$()と発酵したクモの目で作成できます。$(p)通常の材料で延長、強化したり、スプラッシュポーションにしたりすることもできます。"
+        }
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "装甲貫通",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)装甲貫通$()は、攻撃時に対象のアーマー値を一律無視することができます。$(p)余分な装甲貫通は、対象のアーマー値をマイナスにすることがあります。"
+        }
+	]
+}

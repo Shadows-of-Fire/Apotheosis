@@ -1,0 +1,17 @@
+{
+    "name": "廃品漁り",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)廃品漁り$()は剣の傑作エンチャントです。$(p)Mobを倒した際に、1レベルにつき2.5%の確率で戦利品が2回ドロップする。$(p)成功すれば、同じ相手を2人倒したのと同じことになります。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "このエンチャントは$(8)ウィザー$()のようなボスを含む全てのエンティティに効果があります。$(p)また、$(9)幸運$()と併用できます。"
+        }
+	]
+}

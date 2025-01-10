@@ -1,0 +1,44 @@
+{
+    "name": "矢細工",
+    "icon": "minecraft:fletching_table",
+    "category": "apotheosis:village/village",
+	"flag": "apotheosis:village",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Apotheosisは$(9)矢細工$()という新たな種類のクラフトを導入しています。$(p)より効率的に矢を作成できるようになります。$(p)クラフトタイプと合わせて、新しい矢も追加されています。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:obsidian_arrow",
+			"link_recipe": true,
+            "text": "$(9)黒曜石の矢$()は、通常の矢をそのままアップグレードしたものです。$(p)すべての遠距離攻撃に20%の追加ダメージを与えます。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:broadhead_arrow",
+			"anchor": "broadhead",
+			"link_recipe": true,
+            "text": "$(9)ブロードヘッドアロー$() は長期戦に最適です。$(p)ヒットするたびに出血が適用されます。追加のヒットごとに持続時間が更新され、ターゲットの出血レベルが増加します。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:explosive_arrow",
+			"link_recipe": true,
+            "text": "$(9)爆発の矢$() は集団戦に最適です。$(p)衝撃を受けると爆発します。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:iron_mining_arrow",
+			"link_recipe": true,
+            "text": "$(9)鉄の採掘の矢$() は空飛ぶツルハシのようなものです。$(p)この矢が当たったブロックはすべて、鉄のツルハシで壊したものとして採掘されます。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:diamond_mining_arrow",
+			"link_recipe": true,
+            "text": "$(9) ダイアモンドの採掘の矢$()はより優れた空飛ぶツルハシです！$(p)この矢が当たったブロックはすべて、ダイアモンドのツルハシで壊したものとして採掘されます。"
+        }
+	]
+}

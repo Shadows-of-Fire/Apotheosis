@@ -1,0 +1,17 @@
+{
+    "name": "鉱夫の熱情",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(5)鉱夫の熱情$()はすべての道具に適用できる湾曲エンチャントです。$(p)ブロックを高速で破壊しますが、瞬時には破壊しません。$(p)$(9)効率強化$()と競合します。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "速度上限はあるものの、レベルごとの上昇率は$(9)効率強化$()よりもはるかに高いです。$(p)そのため、基本速度が遅いツールに最適な選択肢となります。"
+        }
+	]
+}

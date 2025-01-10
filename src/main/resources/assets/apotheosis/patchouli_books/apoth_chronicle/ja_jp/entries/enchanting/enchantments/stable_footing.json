@@ -1,0 +1,17 @@
+{
+    "name": "安定した足取り",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)安定した足取り$()はブーツのエンチャントです。$(p)飛行時の破壊速度ペナルティが取り消されます。$(p)これは、地面にいないことに対するすべてのペナルティが対象です。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)水中採掘$()と組み合わせると、水泳時の破壊速度を最大限に高められます。"
+		}
+	]
+}

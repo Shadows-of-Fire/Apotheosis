@@ -1,0 +1,13 @@
+{
+    "name": "スピアフィッシング",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)スピアフィッシング$() はトライデントのエンチャントです。$(p)トライデントを投げて倒すと、1レベルにつき3.5％の確率でランダムな魚を数匹ドロップします。"
+        }
+	]
+}

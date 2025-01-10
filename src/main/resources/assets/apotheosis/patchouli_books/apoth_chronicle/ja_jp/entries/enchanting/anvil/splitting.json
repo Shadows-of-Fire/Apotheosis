@@ -1,0 +1,17 @@
+{
+    "name": "分割",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/anvil",
+	"flag": "apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)分割$()は全く新しい金床専用のエンチャントで す。$(p)分割金床は、複数のエンチャントがついたエンチャントの本を、個々の本に\"分割\"することができます。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "分割の金床を使うには、エンチャントされた本をワールドに投げ、金床をその本の上に落とします。$(p)ダメージ増加IIIとドロップ増加IIを持つ本が分割された場合、ダメージ増加IIIとドロップ増加IIの2冊の本になります。"
+		}
+	]
+}

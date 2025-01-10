@@ -1,0 +1,21 @@
+{
+    "name": "行商人",
+    "icon": "minecraft:emerald",
+    "category": "apotheosis:village/village",
+	"flag": "apotheosis:village",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "芝生の上に突然現れる怪しい商人に会ったことがありますか?$(p)彼らは$(9)行商人$()と呼ばれます。$(p)通常、彼らは素敵なゴミしか販売しません。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "しかし、Apotheosisはテーブルに新しいトレードを大量に追加するため、実際に取引する価値はあります。$(p)これらの取引には、$(9)ビーコン$()や$(9)不死のトーテム$()のようなアイテムや、高度なエンチャントが施されたダイヤモンドアイテムも含まれます。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Apotheosisはまた、行商人のスポーン率を上げ、地上だけでなく地下にもスポーンできるようにしました。"
+        }
+	]
+}

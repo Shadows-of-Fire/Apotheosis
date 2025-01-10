@@ -1,0 +1,13 @@
+{
+    "name": "重力",
+    "icon": "minecraft:elytra",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)重力$()は、1秒あたりの落下速度をブロック数の2乗で表します。$(p)どこでも見つかるかもしれないし、見つからないかもしれません。$(p)注意：重力はマイナスになる場合もあります。重力がマイナスになると、上向きに浮遊します。"
+        }
+	]
+}

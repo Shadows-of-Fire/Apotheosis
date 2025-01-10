@@ -1,0 +1,7 @@
+{
+    "name": "新しいエンチャント",
+    "description": "この項目のそれぞれに、この項目によって追加された新しいエンチャントの詳細が記されています。$(p)他の項目で追加されたエンチャントについては、ここでは扱いません。",
+    "icon": "minecraft:enchanted_book",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}

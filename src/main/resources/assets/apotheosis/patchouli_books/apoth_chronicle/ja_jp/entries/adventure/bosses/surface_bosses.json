@@ -1,0 +1,17 @@
+{
+    "name": "侵略ボス",
+    "icon": "minecraft:beacon",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "奇妙な音、奇妙なメッセージ、そして空からの巨大な光線...。$(p)すべての兆候は、ボスがあなたの世界に積極的に侵略していることを示しています。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "ダンジョンボスとは対照的に、侵略ボスは通常Mobがスポーンできる地表に現れることはほとんどありません。$(p)彼らの到着は、大きな音、ステータスメッセージ、そしてスポーン地点から短時間発せられるビーコンによって知らされます。"
+		}
+	]
+}

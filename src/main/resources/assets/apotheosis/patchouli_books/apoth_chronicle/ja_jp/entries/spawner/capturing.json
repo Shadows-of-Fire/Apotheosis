@@ -1,0 +1,19 @@
+{
+    "name": "捕獲",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Mobスポナーは、$(9)スポーンエッグ$()を使用することで、エンティティを変更することができます。$(p)通常、これらは入手不可能です。これを解決するために、Apotheosisは剣に$(9)捕獲$()エンチャントを追加しています。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "minecraft:cow_spawn_egg",
+			"title": "スポーンエッグ",
+            "text": "各レベルの$(9)捕獲$()エンチャントは、エンティティの死亡時に0.4%の確率でスポーンエッグを落とします。$(p)（JEIで見られるように）スポーンエッグアイテムを持たないエンティティは、スポーンエッグを落としません。"
+        }
+	]
+}

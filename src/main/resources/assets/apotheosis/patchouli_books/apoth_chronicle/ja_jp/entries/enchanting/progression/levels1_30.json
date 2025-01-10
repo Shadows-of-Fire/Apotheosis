@@ -1,0 +1,20 @@
+{
+    "name": "レベル1~30",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル30に到達する",
+			"recipe": "minecraft:bookshelf",
+			"text": "レベル30に到達するには、15個の本棚がある通常の方法で行われます。"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "その他のステータス",
+			"item": "minecraft:skeleton_skull",
+			"text": "この段階では、他のステータスを上げるための基本的なオプションがいくつかあります。$(p)$(#ff00ff)アルカナ$()を増やすにはろうそくを、$(#ff0000)クアンタ$()を増やすには頭蓋骨を、$(#ffff00)修正$()を増やすにはアメジストの塊を使います。"
+		}
+	]
+}

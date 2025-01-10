@@ -1,0 +1,20 @@
+{
+    "name": "トライデント",
+    "icon": "minecraft:trident",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "新しいエンチャントに加えて、トライデントは$(9)ダメージ軽減$()、$(9)幸運$()、$(9)貫通$()を受けることができます。$(p)ダメージ軽減と幸運は剣と同様に機能します。$(p)貫通は投げられたトライデントをさらに敵に命中させます。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "トライデントを作る",
+			"item": "apotheosis:inert_trident",
+			"link_recipe": true,
+            "text": "Apotheosisは、トライデントの作成方法も追加しています。$(p)$(9)不活性なトライデント$() を作成し、$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()でアップグレードするだけです。 ."
+        }
+	]
+}

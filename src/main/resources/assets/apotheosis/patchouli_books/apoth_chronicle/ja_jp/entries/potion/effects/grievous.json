@@ -1,0 +1,17 @@
+{
+    "name": "致命傷",
+    "icon": "attributeslib:textures/mob_effect/grievous.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)致命傷$()のポーションはマイナスの効果です。$(p)効果中は、受けるすべての回復が減少します。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "回復量の減少はレベルごとに40%に相当します。$(p)レベルIII以上になると、すべての回復が無効になります。"
+        }
+	]
+}

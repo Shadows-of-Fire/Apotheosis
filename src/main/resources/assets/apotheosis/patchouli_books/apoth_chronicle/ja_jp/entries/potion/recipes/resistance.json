@@ -1,0 +1,19 @@
+{
+    "name": "耐性",
+    "icon": "minecraft:textures/mob_effect/resistance.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)耐性$()は、かなり便利な効果ですが、バニラではレシピがありません。$(p)レベルごとに、すべての攻撃源に対するダメージを+20%軽減します。$(p)You'll also need it to craft $(l:apotheosis:potion/effects/sundering)Sundering$() potions."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "minecraft:shulker_shell",
+            "text": "このポーションは奇妙なポーションとシュルカーの殻で作成できます。$(p)通常の材料で延長、強化したり、スプラッシュポーションにしたりすることもできます。"
+        }
+	]
+}

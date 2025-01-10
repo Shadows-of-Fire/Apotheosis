@@ -1,0 +1,13 @@
+{
+    "name": "装甲破砕",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)装甲破砕$()は攻撃時に対象の防具の何割かを無視することが出来ます。$(p)$(9)装甲破砕$()は$(9)装甲貫通$()の前に適用されます。"
+        }
+	]
+}

@@ -1,0 +1,17 @@
+{
+    "name": "ミニボス",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "時折、ワールドのあちこちで、名前のついたモブやパワーアップしたモブを目撃することがあります。$(p)これらはおそら$(9)Apothicミニボス$()だと思われます。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "これらのモブは、通常のモブの代わりにランダムに出現します。$(p)油断は禁物です。"
+		}
+	]
+}

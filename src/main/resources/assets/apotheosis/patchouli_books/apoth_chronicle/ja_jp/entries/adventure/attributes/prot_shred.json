@@ -1,0 +1,13 @@
+{
+    "name": "保護破砕",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)保護破砕$()は、攻撃時に対象の防御力の一定割合を無視することができる。$(p)$(9)保護破砕$()は$(9)保護貫通$()の前に適用されます。"
+        }
+	]
+}

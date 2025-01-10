@@ -1,0 +1,13 @@
+{
+    "name": "大群のスポナー",
+    "icon": "minecraft:spider_eye",
+    "category": "apotheosis:adventure/rogue_spawners",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "大群のスポナーは悪党のスポナーの亜種で、大量に素早くMobをスポーンします。$(p)通常、彼らは弱いMob、大抵はクモ型のMobに限られているので、恐ろしく圧倒されることはありません。"
+        }
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "最大体力",
+    "icon": "minecraft:apple",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)最大体力$() は、保有するヘルス ポイント (HP) の数をコントロールします。 1ポイントはハートの半分です。$(p)通常は鎧や盾によって提供されます。"
+        }
+	]
+}

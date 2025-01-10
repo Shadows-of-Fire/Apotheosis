@@ -1,0 +1,17 @@
+{
+    "name": "古の知識",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)古の知識$()のポーションは有益な効果があります。$(p)効果中は、倒したモブから得られる経験値が増加します。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "レベルIでは、経験値のドロップが4倍になります。$(p)レベルIIでは、8倍になります。"
+        }
+	]
+}

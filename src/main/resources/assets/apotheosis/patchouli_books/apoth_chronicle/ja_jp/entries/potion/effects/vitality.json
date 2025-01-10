@@ -1,0 +1,17 @@
+{
+    "name": "漲る活力",
+    "icon": "attributeslib:textures/mob_effect/vitality.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)漲る活力$()のポーションは有益な効果があります。$(p)効果中、受けるすべての回復量が増加します。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "回復量の増加はレベルごとに20%に相当します。"
+        }
+	]
+}

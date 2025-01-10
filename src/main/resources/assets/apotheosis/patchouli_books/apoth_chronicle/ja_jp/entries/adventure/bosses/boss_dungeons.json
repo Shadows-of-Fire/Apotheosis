@@ -1,0 +1,17 @@
+{
+    "name": "ボスダンジョン",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:adventure/bosses",
+	"flag": "apotheosis:adventure",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "昔い洞窟の奥深くには、接辞の秘められた力が宿る建造物が隠されています。その力が自由に使えるのであれば嬉しい限りだが、残念ながらボスに守られているのが現実です。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "地下にはボスダンジョンと呼ばれるいくつかの種類の建造物があります。 各ダンジョンにはボススポナーと数個の戦利品があります。ボスに近づくとスポナーが作動し、ボスを解放します。"
+		}
+	]
+}

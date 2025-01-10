@@ -1,0 +1,7 @@
+{
+    "name": "接辞アイテム",
+    "description": "冒険中には、様々なボーナスを持つアイテムと出会うことがあります。$(p)これらは接辞アイテムと呼び、さまざまな力を持つ過去の遺物です。",
+    "icon": "minecraft:chest",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

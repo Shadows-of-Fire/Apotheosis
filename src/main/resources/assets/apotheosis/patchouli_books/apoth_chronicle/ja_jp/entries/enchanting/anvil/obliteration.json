@@ -1,0 +1,17 @@
+{
+    "name": "抹殺",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/anvil",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)抹殺$()もまた、新しく追加された金床専用のエンチャントです。$(p)抹殺の金床は、丁度1つのエンチャントを持つ1冊のエンチャントの本を、それぞれ1レベル低い2冊のエンチャントの本に変換することができます。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "抹殺の金床を使うには、エンチャントの本をワールドに投げ、金床をその本の上に落とします。$(p)ダメージ増加IIIの本を消すと、ダメージ増加IIの本が2冊になります。."
+		}
+	]
+}

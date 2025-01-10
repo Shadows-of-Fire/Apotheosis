@@ -1,0 +1,45 @@
+{
+    "name": "解体",
+    "icon": "apotheosis:salvaging_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+            "title": "解体テーブル",
+			"text": "$(9)解体テーブル$()は、接辞アイテムを対応する$(9)レアリティマテリアル$()に分解するために使用します。"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:common_material",
+			"link_recipe": true,
+            "text": "正体不明の奇妙な形の金属片です。$(p)この材料は、コモンアイテムを解体する際に得られます。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:uncommon_material",
+			"link_recipe": true,
+            "text": "膨大な年月を経て摩耗した、驚くほど丈夫な生地です。破れひとつないのが自慢です$(p)アンコモンアイテムを解体する際に見つかります。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:rare_material",
+			"link_recipe": true,
+            "text": "今までに存在する中で最も明るいクリスタルのかけらです。 破片とはいえ、強い魔力を秘めています。$(p)レアアイテムを解体する際に見つかります。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:epic_material",
+			"link_recipe": true,
+            "text": "難解な魔法がすべての生命をゆがめる、魔法の領域の砂粒です。$(p)エピックアイテムを解体するとこの状態になります。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:mythic_material",
+			"link_recipe": true,
+            "text": "浄化された神聖なエネルギーの真珠です。巨大な力が封印されているため、非常に不安定です。$(p)この特別なアイテムは、ミスティックアイテムを解体することでしか手に入りません。"
+        }
+	]
+}

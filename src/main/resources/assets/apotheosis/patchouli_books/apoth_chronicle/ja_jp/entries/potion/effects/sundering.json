@@ -1,0 +1,17 @@
+{
+    "name": "崩壊",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)崩壊$() のポーションはマイナスの効果です。$(p)効果中、受けるすべてのダメージはレベルごとに20%増加します。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "耐性に直接対抗し、耐性とは相互作用します。$(p)崩壊IIと耐性IIを持っている場合、通常のダメージを受けます。"
+        }
+	]
+}

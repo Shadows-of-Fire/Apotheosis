@@ -1,0 +1,19 @@
+{
+    "name": "衰弱",
+    "icon": "minecraft:textures/mob_effect/wither.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "&apotheosis:potion,apotheosis:wstloaded",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)衰弱$()は、通常は作成できない敵対的な効果です。$(p)受けている間は、毎ティックダメージを受けます。$(p)毒とは異なり、このダメージは致命的です。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "wstweaks:fragment",
+            "text": "このポーションは奇妙なポーションとウィザースケルトンの欠片で作ることができます。$(p)通常の材料で延長、強化したり、スプラッシュポーションにしたりすることもできます。"
+        }
+	]
+}

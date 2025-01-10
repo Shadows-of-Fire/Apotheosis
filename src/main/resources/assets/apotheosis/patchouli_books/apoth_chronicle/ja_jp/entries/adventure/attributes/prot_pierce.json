@@ -1,0 +1,13 @@
+{
+    "name": "保護貫通",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)保護貫通$()は、攻撃時に対象の防御力を一律無視することができます。$(p)保護貫通を余分に与えても、攻撃対象の防御力がマイナスになることはありません。"
+        }
+	]
+}

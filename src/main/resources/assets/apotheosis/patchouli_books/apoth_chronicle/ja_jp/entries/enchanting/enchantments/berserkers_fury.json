@@ -1,0 +1,17 @@
+{
+    "name": "狂戦士の怒り",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(4)狂戦士の怒り$()はチェストプレートに適用できる破損エンチャントです。$(p)このエンチャントを使用中、ダメージを受けると追加ダメージを受け、耐性、移動速度上昇、攻撃力上昇を得られます。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "受けるダメージと効力の強さは、エンチャントのレベルに応じて変わります。"
+		}
+	]
+}

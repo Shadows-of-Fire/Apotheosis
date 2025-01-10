@@ -1,0 +1,7 @@
+{
+    "name": "悪党のスポナー",
+    "description": "洞窟内に点在する単体のスポナーは、頑丈なブロックの上に置かれ、その下にチェストが隠されています。$(p)起源も目的も持ち主も不明なので、私たちはこれを$(9)悪党のスポナー$()と呼んでいます。",
+    "icon": "minecraft:spawner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

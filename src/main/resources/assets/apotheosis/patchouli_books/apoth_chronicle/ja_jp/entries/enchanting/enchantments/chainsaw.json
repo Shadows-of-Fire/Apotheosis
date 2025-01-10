@@ -1,0 +1,13 @@
+{
+    "name": "チェーンソー",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)Chainsaw$()は傑作エンチャントで、斧に適用できます。$(p)木を破壊すると、木全体が収穫できます。$(p)これは斧の耐久性を使用します。"
+        }
+	]
+}

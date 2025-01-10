@@ -1,0 +1,19 @@
+{
+    "name": "衝撃吸収",
+    "icon": "minecraft:textures/mob_effect/absorption.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)衝撃吸収$()は興味深い効果です。$(p)レベルが上がるごとに、一時的なハートが2個追加されます。$(p)ただし、このハートは持続時間中に補充されないので、ポーションチャーム$()を推奨します。."
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "Brewing Recipe",
+			"item": "minecraft:golden_apple",
+            "text": "このポーションは奇妙なポーションと金のリンゴで作ることができます。$(p)通常の材料で延長、強化したり、スプラッシュポーションにしたりすることもできます。"
+        }
+	]
+}

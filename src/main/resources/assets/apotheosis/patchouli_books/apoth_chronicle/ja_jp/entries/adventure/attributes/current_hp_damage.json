@@ -1,0 +1,13 @@
+{
+    "name": "現在のHPダメージ",
+    "icon": "minecraft:dragon_head",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)現在のHPダメージ$()は攻撃命中時のダメージの一種です。 命中するたびに、相手の現在体力の一定割合を物理ダメージとして追加で与えます。$(p)この特性は重武器のみに適用されます。"
+        }
+	]
+}

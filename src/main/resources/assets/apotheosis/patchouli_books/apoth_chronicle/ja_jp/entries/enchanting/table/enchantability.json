@@ -1,0 +1,12 @@
+{
+    "name": "エンチャント可能性",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "バニラでは、アイテムのエンチャント能力は$(fpower)に影響します。$(p)Apotheosisは、代わりに直接$(#ff00ff)アルカナ$()を増加させるように変更します。$(p)$(#ff00ff)アルカナ$()はアイテムのエンチャント可能性を50%増加します。"
+        }
+	]
+}

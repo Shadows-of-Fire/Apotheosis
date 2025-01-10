@@ -1,0 +1,20 @@
+{
+    "name": "宝石カット",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+            "title": "宝石カッティングテーブル",
+			"text": "$(9)宝石カッティングテーブル$()は、$(l:apotheosis:adventure/affix_loot/gems)宝石$()のアップグレードに使用されます。$(p)宝石をアップグレードするには、$(9)宝石の粉$()、$(9)レアリティの材料$()、同じレアリティの宝石2個が必要です。"
+		},
+		{
+			"title": "アップグレードコスト",
+            "type": "patchouli:text",
+            "text": "宝石のアップグレードのコストは、レアリティに応じて増加します。$(p)強い宝石ほど、より多くの$(9) 宝石の粉$()と、より上位の$(9)レアリティの材料$()を必要とします。$(p)正確なコストはGUIに表示されます。"
+        }
+	]
+}
