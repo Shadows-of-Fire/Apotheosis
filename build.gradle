@@ -245,6 +245,26 @@ java {
     // withJavadocJar()
 }
 
+tasks.register('stockDataPack', Zip) {
+    doFirst {
+        def packMcMeta = new File(temporaryDir, 'pack.mcmeta')
+        packMcMeta.text = '{"pack":{"description":"Is each mod going to get unique flavor text here? Maybe.","pack_format":1}}'
+    }
+
+    archiveVersion = "${version}"
+    archiveClassifier = 'stock_data'
+    archiveExtension = 'zip'
+    destinationDirectory = file("${buildDir}/libs")
+
+    from sourceSets.main.resources
+    include "data/${modid}/**"
+
+    from temporaryDir 
+    include 'pack.mcmeta'
+
+    dependsOn generateModMetadata
+}
+
 publishing {
     repositories {
         maven {
@@ -311,7 +331,7 @@ tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurs
     if (project.hasProperty('curseforgeUploadToken')) {
         apiToken = getProperty('curseforgeUploadToken')
         disableVersionDetection()
-    
+
         def projectId = getProperty('curseforgeProjectId')
         def mainFile = upload(projectId, jar)
         mainFile.changelog = getChangelogLink()
@@ -319,7 +339,7 @@ tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurs
         mainFile.addJavaVersion("Java ${javaVersion}")
         mainFile.addGameVersion("${mcVersion}")
         mainFile.releaseType = "${releaseType}"
-    
+
         if (project.hasProperty('requiredDeps')) {
             mainFile.addRequirement(splitList("${requiredDeps}"))
         }
@@ -329,8 +349,9 @@ tasks.register('publishCurseForge', net.darkhax.curseforgegradle.TaskPublishCurs
         if (project.hasProperty('incompatibleDeps')) {
             mainFile.addIncompatibility(splitList("${incompatibleDeps}"))
         }
-    
+
         mainFile.withAdditionalFile(sourcesJar)
+        mainFile.withAdditionalFile(stockDataPack)
     }
 }
 
