@@ -180,7 +180,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
                         errMsg.append("; Provided: " + affixes.size());
                         // errMsg.append("The following affixes exist for this category/rarity combination: ");
                         // affixes.forEach(a -> errMsg.append(a.getId() + " "));
-                        AdventureModule.LOGGER.error(errMsg.toString());
+                        AdventureModule.LOGGER.warn(errMsg.toString());
                     }
                 }
             });
