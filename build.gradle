@@ -248,7 +248,7 @@ java {
 tasks.register('stockDataPack', Zip) {
     doFirst {
         def packMcMeta = new File(temporaryDir, 'pack.mcmeta')
-        packMcMeta.text = '{"pack":{"description":"Is each mod going to get unique flavor text here? Maybe.","pack_format":1}}'
+        packMcMeta.text = '{"pack":{"description":"Hey look, it\'s me in the past, wow!","pack_format":1}}'
     }
 
     archiveVersion = "${version}"
@@ -259,10 +259,12 @@ tasks.register('stockDataPack', Zip) {
     from sourceSets.main.resources
     include "data/${modid}/**"
 
-    from temporaryDir 
-    include 'pack.mcmeta'
+    from(temporaryDir) {
+        include 'pack.mcmeta'
+    }
 
     dependsOn processResources
+
 }
 
 publishing {
