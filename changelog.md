@@ -1,3 +1,12 @@
+## 7.4.4
+* Melncat: Added a config toggle for Capturing information in JEI.
+* Cicopath: Updated `rarity_materials.json` to have optional entries.
+* Secrai: Added a config option for the boss spawn sounds.
+* foundia-syz: Added Japanese translation.
+* Made TOP support for spawner blocks require holding CTRL to show the stats.
+* Generated the stock datapack.
+* Fixed the magical arrow affix not working at all.
+
 ## 7.4.3
 * Fixed the reforging seed not being copied on death.
 * Fixed blocks with a hardness of zero being unbreakable if using Miner's Fervor.
