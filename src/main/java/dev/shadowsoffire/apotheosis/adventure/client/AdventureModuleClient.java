@@ -60,12 +60,14 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -107,8 +109,10 @@ public class AdventureModuleClient {
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
         BOSS_SPAWNS.add(new BossSpawnData(pos, color, new MutableInt()));
-        Minecraft.getInstance().getSoundManager()
-            .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.random, Minecraft.getInstance().player.blockPosition()));
+        SoundManager sm = Minecraft.getInstance().getSoundManager();
+        for (SoundEvent soundEvent : AdventureConfig.bossAnnounceSounds) {
+            sm.play(new SimpleSoundInstance(soundEvent, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.getRandom(), Minecraft.getInstance().player.blockPosition()));
+        }
     }
 
     @EventBusSubscriber(modid = Apotheosis.MODID, value = Dist.CLIENT, bus = Bus.MOD)

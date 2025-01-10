@@ -20,6 +20,7 @@ import dev.shadowsoffire.placebo.config.Configuration;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -56,6 +57,7 @@ public class AdventureConfig {
     public static int bossSpawnCooldown = 3600;
     public static boolean bossAutoAggro = false;
     public static boolean bossGlowOnSpawn = true;
+    public static List<SoundEvent> bossAnnounceSounds = new ArrayList<>();
 
     // Generation
     public static float spawnerValueChance = 0.11F;
@@ -196,6 +198,21 @@ public class AdventureConfig {
         bossSpawnCooldown = c.getInt("Boss Spawn Cooldown", "bosses", bossSpawnCooldown, 0, 720000, "The time, in ticks, that must pass between any two natural boss spawns in a single dimension.");
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.");
+        String[] bossAnnounce = c.getStringList("Boss Announce Sounds", "bosses",
+                new String[] {
+                        "block.end_portal.spawn"
+                },
+                "List of sound effects to play when boss spawns are announced. This control is clientside.");
+        bossAnnounceSounds.clear();
+        for (String s : bossAnnounce) {
+            try {
+                bossAnnounceSounds.add(SoundEvent.createVariableRangeEvent(new ResourceLocation(s.trim())));
+            }
+            catch (Exception e) {
+                AdventureModule.LOGGER.error("Invalid boss announce sound: " + s + " will be ignored");
+                e.printStackTrace();
+            }
+        }
 
         String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses",
             new String[] {
