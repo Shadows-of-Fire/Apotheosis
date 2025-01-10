@@ -55,6 +55,7 @@ public class SpawnerModule {
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
     public static Set<ResourceLocation> bannedMobs = new HashSet<>();
+    public static boolean enableCapturingEnchantmentJeiInfo = true;
 
     @SubscribeEvent
     public void setup(FMLCommonSetupEvent e) {
@@ -150,6 +151,7 @@ public class SpawnerModule {
                 SpawnerModule.LOG.error("Invalid entry {} detected in the spawner banned mobs list.", s);
                 ex.printStackTrace();
             }
+        enableCapturingEnchantmentJeiInfo = config.getBoolean("Enable Capturing Enchantment JEI Info", "general", true, "Whether to show info regarding the capturing enchantment in the JEI information for spawn eggs.");
         if (e == null && config.hasChanged()) config.save();
     }
 

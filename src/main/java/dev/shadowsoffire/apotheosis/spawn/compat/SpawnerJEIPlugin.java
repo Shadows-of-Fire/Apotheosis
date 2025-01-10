@@ -44,8 +44,11 @@ public class SpawnerJEIPlugin implements IModPlugin {
         }
         else reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK,
             Component.translatable("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
-        for (Item i : ForgeRegistries.ITEMS) {
-            if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.capturing"));
+        if (SpawnerModule.enableCapturingEnchantmentJeiInfo) {
+            for (Item i : ForgeRegistries.ITEMS) {
+                if (i instanceof SpawnEggItem)
+                    reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.capturing"));
+            }
         }
     }
 
