@@ -42,7 +42,7 @@
     "affix.apotheosis:heavy_weapon/attribute/forceful.suffix": "《暴れ牛》",
 
     "affix.apotheosis:armor/attribute/aquatic": "水生の",
-    "affix.apotheosis:armor/attribute/aquatic.suffix": "《海神》",
+    "affix.apotheosis:armor/attribute/aquatic.suffix": "《水練》",
 
     "affix.apotheosis:armor/attribute/gravitational": "引力の",
     "affix.apotheosis:armor/attribute/gravitational.suffix": "《重力波》",
@@ -77,7 +77,7 @@
     "affix.apotheosis:sword/attribute/intricate": "複雑な",
     "affix.apotheosis:sword/attribute/intricate.suffix": "《首はね兎》",
 
-    "affix.apotheosis:sword/attribute/lacerating": "裂傷の",
+    "affix.apotheosis:sword/attribute/lacerating": "鋭い",
     "affix.apotheosis:sword/attribute/lacerating.suffix": "《一撃必殺》",
 
     "affix.apotheosis:sword/attribute/glacial": "氷河の",
@@ -86,13 +86,13 @@
     "affix.apotheosis:sword/attribute/infernal": "地獄の",
     "affix.apotheosis:sword/attribute/infernal.suffix": "《日輪》",
 
-    "affix.apotheosis:sword/attribute/vampiric": "吸血鬼の",
+    "affix.apotheosis:sword/attribute/vampiric": "血に飢えた",
     "affix.apotheosis:sword/attribute/vampiric.suffix": "《吸魂》",
 
     "affix.apotheosis:sword/attribute/piercing": "貫通する",
     "affix.apotheosis:sword/attribute/piercing.suffix": "《肉斬骨断》",
 
-    "affix.apotheosis:heavy_weapon/attribute/shredding": "破砕する",
+    "affix.apotheosis:heavy_weapon/attribute/shredding": "そぎ落とす",
     "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "《裁断者》",
 
     "affix.apotheosis:heavy_weapon/attribute/giant_slaying": "鬼殺しの",
@@ -110,7 +110,7 @@
     "affix.apotheosis:ranged/attribute/streamlined": "合理化された",
     "affix.apotheosis:ranged/attribute/streamlined.suffix": "《狙撃手》",
     
-    "affix.apotheosis:sword/mob_effect/elusive": "神出鬼没な",
+    "affix.apotheosis:sword/mob_effect/elusive": "自由自在な",
     "affix.apotheosis:sword/mob_effect/elusive.suffix": "《神出鬼没》",
 
     "affix.apotheosis:breaker/mob_effect/swift": "迅速な",
@@ -119,13 +119,13 @@
     "affix.apotheosis:breaker/mob_effect/spelunkers": "洞窟探検家の",
     "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "《冒険者》",
 
-    "affix.apotheosis:ranged/mob_effect/ensnaring": "籠絡の",
+    "affix.apotheosis:ranged/mob_effect/ensnaring": "罠にかける",
     "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "《捕食者》",
 
     "affix.apotheosis:shield/mob_effect/venomous": "毒々しい",
     "affix.apotheosis:shield/mob_effect/venomous.suffix": "《毒蛇》",
 
-    "affix.apotheosis:ranged/mob_effect/fleeting": "儚い", 
+    "affix.apotheosis:ranged/mob_effect/fleeting": "軽快な", 
     "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "《遊撃手》",
 
     "affix.apotheosis:sword/mob_effect/weakening": "弱体化する",
@@ -194,8 +194,8 @@
     "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "《肉切包丁》",
     "affix.apotheosis:heavy_weapon/special/cleaving.desc": "%s%%の確率で近くの敵に%sまで命中する。",
 
-    "affix.apotheosis:breaker/special/enlightened": "目覚めた",
-    "affix.apotheosis:breaker/special/enlightened.suffix": "《光臨者》",
+    "affix.apotheosis:breaker/special/enlightened": "明かりを灯す",
+    "affix.apotheosis:breaker/special/enlightened.suffix": "《ともし火》",
     "affix.apotheosis:breaker/special/enlightened.desc": "このツールは、耐久度を%s犠牲にして松明を設置できる。",
 
     "affix.apotheosis:shield/special/psychic": "超能力の",
@@ -222,7 +222,7 @@
     "affix.apotheosis:heavy_weapon/mob_effect/bloodletting.suffix": "《血の池》",
 
     "affix.apotheosis:heavy_weapon/mob_effect/caustic": "焼けただれる",
-    "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "浸蝕",
+    "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "《浸蝕》",
 
     "affix.apotheosis:sword/mob_effect/sophisticated": "洗練された",
     "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "《温故知新》",
@@ -243,7 +243,7 @@
     
     "affix.apotheosis:breaker/special/omnetic": "万能な",
     "affix.apotheosis:breaker/special/omnetic.suffix": "《特異点》",
-    "affix.apotheosis:breaker/special/omnetic.desc": "このツールはあらゆるブロックに対して%sの効果を発揮します。",
+    "affix.apotheosis:breaker/special/omnetic.desc": "このツールはあらゆるブロックに対して%sツールの効果を発揮します。",
     
     "misc.apotheosis.physical": "物理",
     "misc.apotheosis.magic": "魔法",
@@ -310,11 +310,11 @@
     "text.apotheosis.when_socketed": "ソケット装着時:",
     "text.apotheosis.when_socketed_in": "ソケット挿入時:",
     "text.apotheosis.when_socketed_typed": "ソケット挿入時%s:",
-    "info.apotheosis.socketing": "宝石は鍛冶台でソケットすることができます。左がアイテムで、右がジェムです。\n\nソケット加工された宝石を取り外すにはコストがかかるので、賢明な選択をしてください。",
+    "info.apotheosis.socketing": "ジェムは鍛冶台でソケットすることができます。左がアイテムで、右がジェムです。\n\nソケット加工されたジェムを取り外すにはコストがかかるので、賢明な選択をしてください。",
 
     "gem_class.melee_weapon": "近接武器",
     "gem_class.ranged_weapon": "遠距離武器",
-    "gem_class.light_weapon": "小型武器",
+    "gem_class.light_weapon": "軽量武器",
     "gem_class.core_armor": "上部アーマー",
     "gem_class.lower_armor": "下部アーマー",
     "gem_class.armor": "防具",
@@ -329,7 +329,7 @@
     "gem_class.leggings": "レギンス",
     "gem_class.boots": "ブーツ",
     "gem_class.shield": "盾",
-    "gem_class.heavy_weapon": "重武器",
+    "gem_class.heavy_weapon": "重量武器",
     "gem_class.anything": "何でも",
 
     "bonus.apotheosis:durability.desc": "%s%%の耐久力ダメージを無視します。",
@@ -344,7 +344,7 @@
     "bonus.apotheosis:all_stats.desc": "すべてのステータスを+%s%%。",
     "gem.apotheosis:overworld/royalty.bonus.pickaxe": "銅鉱石を壊すと、%s%%の確率で代わりに金の原石をドロップする。",
     "bonus.apotheosis:mageslayer.desc": "魔法ダメージの%s%%を無視し、同量の回復を行う。",
-    "bonus.apotheosis:twilight_ore_magnet.desc": "鉱石マグネットとして使用可能であり、追加で%sの耐久力を得ます。",
+    "bonus.apotheosis:twilight_ore_magnet.desc": "鉱石磁石として使用可能だが、追加で%sの耐久力を消費します。",
     "bonus.apotheosis:twilight_treasure_goblin.desc": "エンティティを攻撃すると、%s%% の確率でトレジャーゴブリンを召喚する。 %s",
     "bonus.apotheosis:twilight_fortification.desc": "ダメージを受けると、%s%の確率でTwilight Shieldsを付与する。 %s",
 
@@ -352,40 +352,40 @@
     "misc.apotheosis.level.many": "レベル",
     "name.apotheosis.treasure_goblin": "トレジャーゴブリン",
 
-    "item.apotheosis.gem.apotheosis:legacy": "伝承された宝石",
-    "item.apotheosis.gem.apotheosis:core/guardian": "守護者の宝石",
-    "item.apotheosis.gem.apotheosis:core/ballast": "安定の宝石",
-    "item.apotheosis.gem.apotheosis:core/solar": "太陽の宝石",
-    "item.apotheosis.gem.apotheosis:core/lunar": "月の宝石",
-    "item.apotheosis.gem.apotheosis:core/samurai": "侍の宝石",
-    "item.apotheosis.gem.apotheosis:core/warlord": "将軍の宝石",
-    "item.apotheosis.gem.apotheosis:core/splendor": "華麗な宝石",
-    "item.apotheosis.gem.apotheosis:core/tyrannical": "暴君の宝石",
-    "item.apotheosis.gem.apotheosis:core/breach": "違反の宝石",
-    "item.apotheosis.gem.apotheosis:core/lightning": "稲妻の宝石",
-    "item.apotheosis.gem.apotheosis:core/slipstream": "後流の宝石",
-    "item.apotheosis.gem.apotheosis:core/brawlers": "乱闘者の宝石",
-    "item.apotheosis.gem.apotheosis:core/combatant": "戦士の宝石",
-    "item.apotheosis.gem.apotheosis:overworld/earth": "大地の宝石",
-    "item.apotheosis.gem.apotheosis:overworld/royalty": "王家の宝石",
-    "item.apotheosis.gem.apotheosis:the_nether/inferno": "白熱地獄の宝石",
-    "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "貪欲王の宝石",
-    "item.apotheosis.gem.apotheosis:the_end/endersurge": "高波の宝石",
-    "item.apotheosis.gem.apotheosis:the_end/mageslayer": "魔剣士の宝石",
-    "item.apotheosis.gem.apotheosis:twilight/forest": "黄昏の森の宝石",
-    "item.apotheosis.gem.apotheosis:twilight/queen": "氷の女王の宝石",
+    "item.apotheosis.gem.apotheosis:legacy": "伝承されたジェム",
+    "item.apotheosis.gem.apotheosis:core/guardian": "守護者のジェム",
+    "item.apotheosis.gem.apotheosis:core/ballast": "安定のジェム",
+    "item.apotheosis.gem.apotheosis:core/solar": "太陽のジェム",
+    "item.apotheosis.gem.apotheosis:core/lunar": "月のジェム",
+    "item.apotheosis.gem.apotheosis:core/samurai": "侍のジェム",
+    "item.apotheosis.gem.apotheosis:core/warlord": "将軍のジェム",
+    "item.apotheosis.gem.apotheosis:core/splendor": "光輝のジェム",
+    "item.apotheosis.gem.apotheosis:core/tyrannical": "暴君のジェム",
+    "item.apotheosis.gem.apotheosis:core/breach": "不和のジェム",
+    "item.apotheosis.gem.apotheosis:core/lightning": "稲妻のジェム",
+    "item.apotheosis.gem.apotheosis:core/slipstream": "後流のジェム",
+    "item.apotheosis.gem.apotheosis:core/brawlers": "乱闘者のジェム",
+    "item.apotheosis.gem.apotheosis:core/combatant": "戦士のジェム",
+    "item.apotheosis.gem.apotheosis:overworld/earth": "大地のジェム",
+    "item.apotheosis.gem.apotheosis:overworld/royalty": "王家のジェム",
+    "item.apotheosis.gem.apotheosis:the_nether/inferno": "白熱地獄のジェム",
+    "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "貪欲王のジェム",
+    "item.apotheosis.gem.apotheosis:the_end/endersurge": "高波のジェム",
+    "item.apotheosis.gem.apotheosis:the_end/mageslayer": "魔剣士のジェム",
+    "item.apotheosis.gem.apotheosis:twilight/forest": "黄昏の森のジェム",
+    "item.apotheosis.gem.apotheosis:twilight/queen": "氷の女王のジェム",
 
     "item.apotheosis.boss_summoner": "Apothicボスサモナー",
     "item.apotheosis.gem.apotheosis:common": "割れた%s",
-    "item.apotheosis.gem.apotheosis:uncommon": "砕けた%s",
-    "item.apotheosis.gem.apotheosis:rare": "傷ついた%s",
+    "item.apotheosis.gem.apotheosis:uncommon": "欠けた%s",
+    "item.apotheosis.gem.apotheosis:rare": "ひびの入った%s",
     "item.apotheosis.gem.apotheosis:epic": "%s",
     "item.apotheosis.gem.apotheosis:mythic": "完璧な%s",
     "item.apotheosis.gem.apotheosis:ancient": "完全な%s",
     "item.apotheosis.vial_of_extraction": "魔術抽出の小瓶",
     "item.apotheosis.vial_of_expulsion": "焼ける除霊の小瓶",
     "item.apotheosis.vial_of_unnaming": "名前のない小瓶",
-    "item.apotheosis.gem_dust": "宝石の粉",
+    "item.apotheosis.gem_dust": "ジェムの粉",
     "item.apotheosis.gem_dust.desc": "砕けたジェムストーン",
     "item.apotheosis.common_material": "神秘的な金属片",
     "item.apotheosis.uncommon_material": "使い古された生地",
@@ -393,13 +393,13 @@
     "item.apotheosis.epic_material": "不可思議な砂",
     "item.apotheosis.mythic_material": "神造真珠",
     "item.apotheosis.ancient_material": "無限の顕現",
-    "item.apotheosis.gem_fused_slate": "宝石が溶けた石版",
+    "item.apotheosis.gem_fused_slate": "ジェムが溶けた石版",
 
     "item.apotheosis.sigil_of_socketing": "ソケットの紋章",
     "item.apotheosis.sigil_of_socketing.desc": "アイテムにソケットを1つ追加します。",
 
     "item.apotheosis.sigil_of_withdrawal": "撤回の紋章",
-    "item.apotheosis.sigil_of_withdrawal.desc": "アイテムからすべての宝石を取り除きます。",
+    "item.apotheosis.sigil_of_withdrawal.desc": "アイテムからすべてのジェムを取り除きます。",
 
     "item.apotheosis.sigil_of_rebirth": "再誕の紋章",
     "item.apotheosis.sigil_of_rebirth.desc": "再鍛造テーブルの燃料として使用します",
@@ -411,10 +411,10 @@
     "item.apotheosis.sigil_of_unnaming.desc": "アイテムから接辞名を削除します。",
 
     "block.apotheosis.boss_spawner": "ボススポナー",
-    "block.apotheosis.gem_cutting_table": "宝石カッティングテーブル",
-    "block.apotheosis.gem_cutting_table.desc": "宝石の粉とレアリティ素材を使って宝石をアップグレードします",
-    "block.apotheosis.salvaging_table": "回収テーブル",
-    "block.apotheosis.salvaging_table.desc": "接辞アイテムをレアリティ素材に分解します",
+    "block.apotheosis.gem_cutting_table": "ジェム加工台",
+    "block.apotheosis.gem_cutting_table.desc": "ジェムの粉とレアリティ素材を使ってジェムをアップグレードします",
+    "block.apotheosis.salvaging_table": "解体作業台",
+    "block.apotheosis.salvaging_table.desc": "接辞アイテムを解体してレアリティ素材を取得します",
     "block.apotheosis.simple_reforging_table": "簡易再鍛造テーブル",
     "block.apotheosis.reforging_table": "再鍛造テーブル",
     "block.apotheosis.reforging_table.desc": "再誕の紋章とレアリティ素材を使用してアイテムを再鍛造します",
@@ -422,10 +422,10 @@
     "block.apotheosis.augmenting_table": "補強テーブル",
     "block.apotheosis.augmenting_table.desc": "それぞれの接辞を強化の紋章を使用し強化する。",
 
-    "button.apotheosis.salvage": "サルベージアイテム",
+    "button.apotheosis.salvage": "解体アイテム",
     "button.apotheosis.no_salvage": "アイテムが選択されていません",
     "button.apotheosis.no_salvage_all": "インベントリに有効なアイテムがありません",
-    "button.apotheosis.upgrade": "宝石をアップグレードする",
+    "button.apotheosis.upgrade": "ジェムをアップグレードする",
     "button.apotheosis.upgrade.no": "入力がありません",
     "button.apotheosis.augmenting.upgrade": "選択した接辞をアップグレード",
     "button.apotheosis.augmenting.reroll": "選択した接辞をリロールする",
@@ -434,12 +434,12 @@
     "button.apotheosis.augmenting.no_alternatives": "代わりの接辞がありません。",
     "button.apotheosis.augmenting.upgrade.cost": "コスト: %sx %s",
 
-    "menu.apotheosis.gem_cutting": "宝石カッティング",
-    "container.apotheosis.salvage": "サルベージ",
+    "menu.apotheosis.gem_cutting": "ジェム加工",
+    "container.apotheosis.salvage": "解体",
     "container.apotheosis.reforge": "再鍛造",
     "text.apotheosis.cost": "%sx %s",
     "text.apotheosis.reforge_cost": "再鍛造コスト",
-    "text.apotheosis.salvage_results": "サルベージ結果",
+    "text.apotheosis.salvage_results": "解体結果",
     "text.apotheosis.unique": "個性的",
     "text.apotheosis.results": "結果",
     "text.apotheosis.facets": "Facets: %s",
@@ -454,7 +454,7 @@
     "text.apotheosis.alternative_page": "ページ %s/%s (スクロールして変更します)",
 
     "title.apotheosis.smithing": "Apothic鍛冶",
-    "title.apotheosis.salvaging": "サルベージ",
+    "title.apotheosis.salvaging": "解体",
 
     "text.apotheosis.anything": "何でも",
     "text.apotheosis.category.none": "なし",
@@ -494,11 +494,11 @@
     "info.apotheosis.boss_item": "ドロップする: %s",
     "info.apotheosis.boss_modifiers": "ボスモディファイア:",
     "info.apotheosis.rarity_material": "レアリティ素材 (%s)",
-    "info.apotheosis.gem_crushing": "宝石の粉はワールドにApothic宝石をドロップし、その上に金床を落下させることで手に入れられます。.",
-    "info.apotheosis.gem_extraction": "鍛冶台でApothic宝石をソケットから外すのに使用します。\n\nその過程でアイテムは破壊されます。",
-    "info.apotheosis.gem_expulsion": "鍛冶台でApothic宝石をソケットから外すのに使用します。\n\nその過程で宝石は破壊されます。",
+    "info.apotheosis.gem_crushing": "ジェムの粉はワールドにApothicジェムをドロップし、その上に金床を落下させることで手に入れられます。.",
+    "info.apotheosis.gem_extraction": "鍛冶台でApothicジェムをソケットから外すのに使用します。\n\nその過程でアイテムは破壊されます。",
+    "info.apotheosis.gem_expulsion": "鍛冶台でApothicジェムをソケットから外すのに使用します。\n\nその過程でジェムは破壊されます。",
     "info.apotheosis.unnaming": "鍛冶台で、アイテムの名前から接辞成分を取り除くために使用します。",
-    "info.apotheosis.salvaging": "レアリティ素材は、回収テーブルで接辞アイテムをサルベージすることで入手できます。",
+    "info.apotheosis.salvaging": "レアリティ素材は、解体作業台で接辞アイテムを解体することで入手できます。",
     
     "rarity.apotheosis:common": "コモン",
     "rarity.apotheosis:uncommon": "アンコモン",
@@ -568,7 +568,7 @@
     "advancements.apotheosis.upgrade_seashelf.desc": "注入された海の本棚をアップグレードする",
     
     "advancements.apotheosis.infuse_hellshelf": "地獄の注入",
-    "advancements.apotheosis.infuse_hellshelf.desc": "注入エンチャントで注入された地獄の木棚を手に入れる。",
+    "advancements.apotheosis.infuse_hellshelf.desc": "注入エンチャントで注入された地獄の本棚を手に入れる。",
     
     "advancements.apotheosis.anvilench": "金床のエンチャンター",
     "advancements.apotheosis.anvilench.desc": "金床にエンチャントをする",
@@ -597,7 +597,7 @@
     "advancements.apotheosis.max_stats": "最高強度",
     "advancements.apotheosis.max_stats.desc": "全てのステータスが最大の状態でアイテムをエンチャントする。",
     "advancements.apotheosis.max_stable": "安定した力",
-    "advancements.apotheosis.max_stable.desc": "エテルナとアルカナが最大で、クアンタが0％の状態でアイテムをエンチャントする。",
+    "advancements.apotheosis.max_stable.desc": "エテルナとアルカナが最大で、クアンタが0%の状態でアイテムをエンチャントする。",
     "advancements.apotheosis.max_rectified": "唯一無二",
     "advancements.apotheosis.max_rectified.desc": "最大ステータスと最大補正を持つアイテムをエンチャントする。",
     
@@ -626,22 +626,22 @@
     "advancements.apotheosis.random.desc": "任意のモンスターから接辞アイテムを入手する",
     
     "advancements.apotheosis.gem": "ダイヤモンドではありません",
-    "advancements.apotheosis.gem.desc": "接辞アイテムにソケットできるApothic宝石を見つける",
+    "advancements.apotheosis.gem.desc": "接辞アイテムにソケットできるApothicジェムを見つける",
     
     "advancements.apotheosis.rare_gem": "完璧とは程遠い",
-    "advancements.apotheosis.rare_gem.desc": "欠陥のある宝石を入手する",
+    "advancements.apotheosis.rare_gem.desc": "ひびの入ったジェムを入手する",
     
     "advancements.apotheosis.mythic_gem": "完璧な結晶",
-    "advancements.apotheosis.mythic_gem.desc": "完璧な宝石を入手する",
+    "advancements.apotheosis.mythic_gem.desc": "完璧なジェムを入手する",
     
     "advancements.apotheosis.ancient_gem": "無限の原石",
-    "advancements.apotheosis.ancient_gem.desc": "宝石カッティングテーブルを使って、完璧な宝石をつくる",
+    "advancements.apotheosis.ancient_gem.desc": "ジェム加工台を使って、完全なジェムをつくる",
     
        "advancements.apotheosis.socket": "宝石商",
-    "advancements.apotheosis.socket.desc": "鍛冶台を使い、宝石をアイテムにソケットする",
+    "advancements.apotheosis.socket.desc": "鍛冶台を使い、ジェムをアイテムにソケットする",
 
-       "advancements.apotheosis.gem_cut": "宝石細工",
-    "advancements.apotheosis.gem_cut.desc": "宝石カッティングテーブルを使ってApothic Gemをアップグレードする",
+       "advancements.apotheosis.gem_cut": "宝石細工職人",
+    "advancements.apotheosis.gem_cut.desc": "ジェム加工台を使ってApothicジェムをアップグレードする",
     
     "advancements.apotheosis.spawner.root": "Apotheosisスポナー",
     "advancements.apotheosis.spawner.root.desc": "スポナーは回収、改造することができます。詳しくはJEIをご覧ください。",
@@ -650,7 +650,7 @@
     "advancements.apotheosis.capturing": "捕獲！",
     "advancements.apotheosis.capturing.desc": "捕獲エンチャントを使ってMobからスポーンエッグを手に入れる。",
     "advancements.apotheosis.modifier": "ほんの微調整...",
-    "advancements.apotheosis.modifier.desc": "スポナーの能力を変更するには、スポナー修飾子を使います。",
+    "advancements.apotheosis.modifier.desc": "スポナーの能力を変更するには、スポナー編集機能を使います。",
     "advancements.apotheosis.spawncount": "このスポナーの規模を見ろよ！",
     "advancements.apotheosis.spawncount.desc": "スポナーのスポーン数を16に引き上げる",
     "advancements.apotheosis.maxdelay": "時の歪んだスポナー",
@@ -809,11 +809,11 @@
     "gui.apotheosis.enchant.arcana.desc5": "合計値: %s%%",
     "ingredient.apotheosis.ench": "最低限必要 %s",
     "info.apotheosis.gui_rectification": "修正: %s%%",
-    "info.apotheosis.quanta_buff": "量子力学的なゆがみ",
+    "info.apotheosis.quanta_buff": "量子のゆがみ",
     "info.apotheosis.quanta_reduc": "削減の可能性: %s%%",
     "info.apotheosis.quanta_growth": "成長の可能性: %s%%",
     "info.apotheosis.ench_bonus": "エンチャント可能性ボーナス: %s%%",
-    "info.apotheosis.rel_weights": "相対的比率",
+    "info.apotheosis.rel_weights": "相対的重み",
     "rarity.enchantment.common": "コモン",
     "rarity.enchantment.uncommon": "アンコモン",
     "rarity.enchantment.rare": "レア",
@@ -841,7 +841,7 @@
     "enchantment.apotheosis.infusion": "注入",
     "enchantment.apotheosis.infusion.desc": "エンチャントクラフト用のプレースホルダー",
     
-    "enchantment.apotheosis.mounted_strike": "騎乗攻撃",
+    "enchantment.apotheosis.mounted_strike": "騎馬戦",
     "enchantment.apotheosis.mounted_strike.desc": "騎乗時に追加ダメージを与えます。",
 
     "enchantment.apotheosis.miners_fervor": "鉱夫の熱意",
@@ -850,8 +850,8 @@
     "enchantment.apotheosis.stable_footing": "足場",
     "enchantment.apotheosis.stable_footing.desc": "飛行時の採掘速度ペナルティを無効化する。",
 
-    "enchantment.apotheosis.scavenger": "死体あさり",
-    "enchantment.apotheosis.scavenger.desc": "Mobを倒した時のドロップ抽選が一定確率で２回になる。",
+    "enchantment.apotheosis.scavenger": "ゴミあさり",
+    "enchantment.apotheosis.scavenger.desc": "Mobを倒した時のドロップ抽選が一定確率で2回になる。",
 
     "enchantment.apotheosis.life_mending": "命の修復",
     "enchantment.apotheosis.life_mending.desc": "たまに自身のライフを消費して装備を修繕する。",
@@ -865,10 +865,10 @@
     "death.attack.apotheosis:corrupted": "%sは破損したエンチャントによって力尽きた",
     "death.attack.apotheosis:corrupted.player": "%sは%s によって破損された",
 
-    "item.apotheosis.prismatic_web": "プリズマリン化したクモの巣",
+    "item.apotheosis.prismatic_web": "虹色のクモの巣",
     "info.apotheosis.prismatic_cobweb": "呪いを除去に使用できます。",
 
-    "item.apotheosis.inert_trident": "不活性なトライデント",
+    "item.apotheosis.inert_trident": "なまくらトライデント",
     "item.apotheosis.other_tome": "その他の書物",
     "item.apotheosis.helmet_tome": "ヘルメットの書物",
     "item.apotheosis.chestplate_tome": "チェストプレートの書物",
@@ -895,17 +895,17 @@
     "info.apotheosis.fishing_tome": "釣り竿のエンチャントを受け付けます。",
     "info.apotheosis.bow_tome": "弓のエンチャントを受け付けます。",
     "info.apotheosis.scrap_tome": "アイテムからエンチャントの半分を抽出します。 ",
-    "info.apotheosis.scrap_tome2": "アイテムは途中で破壊されます。",
+    "info.apotheosis.scrap_tome2": "使用することで元のアイテムは失われます。",
     "info.apotheosis.improved_scrap_tome": "アイテムから全てのエンチャントを抽出します。",
-    "info.apotheosis.improved_scrap_tome2": "アイテムは途中で破壊されます。",
+    "info.apotheosis.improved_scrap_tome2": "使用することで元のアイテムは失われます。",
     "info.apotheosis.extraction_tome": "アイテムから全てのエンチャントを抽出します。",
-    "info.apotheosis.extraction_tome2": "アイテムは破壊されません。",
+    "info.apotheosis.extraction_tome2": "使用しても元のアイテムは失われません。",
 
-    "enchantment.apotheosis.tempting": "誘惑",
-    "enchantment.apotheosis.tempting.desc": "近くの家畜を誘惑します。",
+    "enchantment.apotheosis.tempting": "フェロモン",
+    "enchantment.apotheosis.tempting.desc": "アイテムを持っている間、近くの家畜を引き寄せる。",
 
     "enchantment.apotheosis.shield_bash": "シールドバッシュ",
-    "enchantment.apotheosis.shield_bash.desc": "シールドによるダメージを強化します。",
+    "enchantment.apotheosis.shield_bash.desc": "シールドによるダメージを強化する。",
 
     "enchantment.apotheosis.reflective": "反射防御",
     "enchantment.apotheosis.reflective.desc": "ブロックした攻撃は、攻撃者にダメージを与える可能性がある。",
@@ -914,13 +914,13 @@
     "enchantment.apotheosis.berserkers_fury.desc": "ダメージを受けると怒り狂う。 [⌛ 0:45]",
 
     "enchantment.apotheosis.knowledge": "温故知新",
-    "enchantment.apotheosis.knowledge.desc": "敵のドロップは経験値に変換されます。",
+    "enchantment.apotheosis.knowledge.desc": "敵のドロップは経験値に変換される。",
 
     "enchantment.apotheosis.splitting": "分割",
     "enchantment.apotheosis.splitting.desc": "複数の効果を持つエンチャント本の上に金床を落とすことで個別のエンチャント本に分割できる。",
     
     "enchantment.apotheosis.obliteration": "細断",
-    "enchantment.apotheosis.obliteration.desc": "高いレベルのエンチャント本の上に金床を落とすことで２つの低レベルエンチャント本に分解できる。",
+    "enchantment.apotheosis.obliteration.desc": "高いレベルのエンチャント本の上に金床を落とすことで2つの低レベルエンチャント本に分解できる。",
 
     "enchantment.apotheosis.natures_blessing": "自然の恩恵",
     "enchantment.apotheosis.natures_blessing.desc": "クワを骨粉として使うことができる",
@@ -935,25 +935,25 @@
     "enchantment.apotheosis.crescendo.desc": "クロスボウを発射時に一定確率で追加の矢が増える。",
 
     "enchantment.apotheosis.chromatic": "玉虫色",
-    "enchantment.apotheosis.chromatic.desc": "刈り取られた羊毛はランダムな色に変わります。",
+    "enchantment.apotheosis.chromatic.desc": "刈り取られた羊毛はランダムな色に変わる。",
 
     "enchantment.apotheosis.exploitation": "労働搾取",
-    "enchantment.apotheosis.exploitation.desc": "羊毛の回収量は2倍になるが、羊はダメージを受けます。",
+    "enchantment.apotheosis.exploitation.desc": "羊毛の回収量は2倍になるが、羊はダメージを受ける。",
 
     "enchantment.apotheosis.growth_serum": "成長促進",
-    "enchantment.apotheosis.growth_serum.desc": "羊毛が50％の確率で即座に再生する。.",
+    "enchantment.apotheosis.growth_serum.desc": "羊毛が50%の確率で即座に再生する。",
 
     "enchantment.apotheosis.earths_boon": "大地の恩恵",
-    "enchantment.apotheosis.earths_boon.desc": "石の採掘中に鉱石が見つかることがあります。",
+    "enchantment.apotheosis.earths_boon.desc": "石を採掘した時に一定確率で鉱石がドロップする。",
 
     "enchantment.apotheosis.chainsaw": "チェーンソー",
-    "enchantment.apotheosis.chainsaw.desc": "樹木を消滅させる。",
+    "enchantment.apotheosis.chainsaw.desc": "樹木を一括破壊できる。",
 
     "enchantment.apotheosis.spearfishing": "モリ突き漁",
     "enchantment.apotheosis.spearfishing.desc": "投げたトライデントで魚を釣り上げることがある。",
     
     "enchantment.apotheosis.endless_quiver": "無限の矢筒",
-    "enchantment.apotheosis.endless_quiver.desc": "全ての矢を無限にします。",
+    "enchantment.apotheosis.endless_quiver.desc": "全ての矢を無限にする。",
 
     "comment_id": "/バニラ",
     "generic.reachDistance": "リーチ距離",
@@ -1167,10 +1167,10 @@
     "item.minecraft.lingering_potion.effect.grievous": "致命傷の残留ポーション",
     "item.minecraft.tipped_arrow.effect.grievous": "致命傷の矢",
 
-    "item.minecraft.potion.effect.flying": "フライングのポーション",
-    "item.minecraft.splash_potion.effect.flying": "フライングのスプラッシュポーション",
-    "item.minecraft.lingering_potion.effect.flying": "フライングの残留ポーション",
-    "item.minecraft.tipped_arrow.effect.flying": "フライングの矢",
+    "item.minecraft.potion.effect.flying": "飛翔のポーション",
+    "item.minecraft.splash_potion.effect.flying": "飛翔のスプラッシュポーション",
+    "item.minecraft.lingering_potion.effect.flying": "飛翔の残留ポーション",
+    "item.minecraft.tipped_arrow.effect.flying": "飛翔の矢",
 
     "item.apotheosis.lucky_foot": "幸運のウサギの足",
 
@@ -1196,13 +1196,13 @@
     "comment_id": "/村モジュール",
     "name.apotheosis.merch_sword": "囚われた夢",
     "name.apotheosis.merch_pick": "ストーンブレーカー",
-    "name.apotheosis.merch_axe": "ツリーキャピテーター",
-    "name.apotheosis.merch_axe2": "ボーンスプリッター",
+    "name.apotheosis.merch_axe": "きこりの切斧",
+    "name.apotheosis.merch_axe2": "骨断ちの斧槍",
     "name.apotheosis.merch_spider_sword": "アラクニドの恐怖",
-    "name.apotheosis.merch_helm": "古ぼけた仮面",
-    "name.apotheosis.merch_chest": "永遠のグレートプレート",
-    "name.apotheosis.merch_legs": "雷のレッグガード",
-    "name.apotheosis.merch_boots": "魔法の具足",
+    "name.apotheosis.merch_helm": "古色の仮面",
+    "name.apotheosis.merch_chest": "永遠の重鎧",
+    "name.apotheosis.merch_legs": "雷光の脚鎧",
+    "name.apotheosis.merch_boots": "秘術のグリーブ",
     "name.apotheosis.vigilance": "永遠の警戒",
     "apotheosis.recipes.fletching": "矢細工",
     "item.apotheosis.obsidian_arrow": "黒曜石の矢",
