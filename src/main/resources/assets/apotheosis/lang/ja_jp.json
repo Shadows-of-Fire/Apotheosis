@@ -739,19 +739,19 @@
 
     "block.apotheosis.seashelf": "海の本棚",
     "block.apotheosis.infused_seashelf": "注入された海の本棚",
-    "block.apotheosis.crystal_seashelf": "結晶性の海の本棚",
-    "block.apotheosis.heart_seashelf": "鍛造された心の海の本棚",
+    "block.apotheosis.crystal_seashelf": "澄んだ海の本棚",
+    "block.apotheosis.heart_seashelf": "心宿る海の本棚",
 
-    "block.apotheosis.dormant_deepshelf": "休止状態の深淵の本棚",
+    "block.apotheosis.dormant_deepshelf": "休眠する深淵の本棚",
     "block.apotheosis.deepshelf": "深淵の本棚",
     "block.apotheosis.echoing_deepshelf": "反響する深淵の本棚",
-    "block.apotheosis.soul_touched_deepshelf": "魂の宿る深淵の本棚",
+    "block.apotheosis.soul_touched_deepshelf": "魂宿る深淵の本棚",
     "block.apotheosis.echoing_sculkshelf": "反響するスカルクの本棚",
-    "block.apotheosis.soul_touched_sculkshelf": "魂の宿るスカルクの本棚",
+    "block.apotheosis.soul_touched_sculkshelf": "魂宿るスカルクの本棚",
 
     "block.apotheosis.endshelf": "エンドの本棚",
     "block.apotheosis.infused_endshelf": "注入されたエンドの本棚",
-    "block.apotheosis.pearl_endshelf": "真珠光沢のあるエンドの本棚",
+    "block.apotheosis.pearl_endshelf": "真珠輝くエンドの本棚",
     "block.apotheosis.draconic_endshelf": "竜のエンドの本棚",
 
     "block.apotheosis.beeshelf": "蜂の本棚",
@@ -760,9 +760,9 @@
 
     "block.apotheosis.sightshelf": "展望の地獄の本棚",
     "block.apotheosis.sightshelf_t2": "達観の地獄の本棚",
-    "block.apotheosis.rectifier": "海岸線の修正の本棚",
-    "block.apotheosis.rectifier_t2": "地獄行きの修正の本棚",
-    "block.apotheosis.rectifier_t3": "注入されたの修正の本棚",
+    "block.apotheosis.rectifier": "調和する海の本棚",
+    "block.apotheosis.rectifier_t2": "調和する地獄の本棚",
+    "block.apotheosis.rectifier_t3": "調和するエンドの本棚",
     "block.apotheosis.filtering_shelf": "水生濾過の海の本棚",
     "block.apotheosis.treasure_shelf": "秘宝の深淵の本棚",
 
