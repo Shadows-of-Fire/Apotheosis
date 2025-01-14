@@ -21,228 +21,228 @@
     "misc.apotheosis.radial_state.disabled": "無効",
 
     "affix.apotheosis:armor/attribute/blessed": "祝福された",
-    "affix.apotheosis:armor/attribute/blessed.suffix": "健康な",
+    "affix.apotheosis:armor/attribute/blessed.suffix": "《壮健》",
 
     "affix.apotheosis:armor/attribute/windswept": "吹きさらされた",
-    "affix.apotheosis:armor/attribute/windswept.suffix": "最新の",
+    "affix.apotheosis:armor/attribute/windswept.suffix": "《つむじ風》",
 
     "affix.apotheosis:armor/attribute/ironforged": "鉄鍛造された",
-    "affix.apotheosis:armor/attribute/ironforged.suffix": "鉄の",
+    "affix.apotheosis:armor/attribute/ironforged.suffix": "《黒鉄》",
 
     "affix.apotheosis:sword/attribute/violent": "暴力的な",
-    "affix.apotheosis:sword/attribute/violent.suffix": "斬殺する",
+    "affix.apotheosis:sword/attribute/violent.suffix": "《悪逆》",
 
     "affix.apotheosis:ranged/attribute/windswept": "吹きさらされた",
-    "affix.apotheosis:ranged/attribute/windswept.suffix": "最新の",
+    "affix.apotheosis:ranged/attribute/windswept.suffix": "《つむじ風》",
 
     "affix.apotheosis:sword/attribute/graceful": "優雅な",
-    "affix.apotheosis:sword/attribute/graceful.suffix": "決闘者の",
+    "affix.apotheosis:sword/attribute/graceful.suffix": "《剣舞》",
 
     "affix.apotheosis:heavy_weapon/attribute/forceful": "力強い",
-    "affix.apotheosis:heavy_weapon/attribute/forceful.suffix": "雄牛の",
+    "affix.apotheosis:heavy_weapon/attribute/forceful.suffix": "《暴れ牛》",
 
     "affix.apotheosis:armor/attribute/aquatic": "水生の",
-    "affix.apotheosis:armor/attribute/aquatic.suffix": "海洋の",
+    "affix.apotheosis:armor/attribute/aquatic.suffix": "《海神》",
 
     "affix.apotheosis:armor/attribute/gravitational": "引力の",
-    "affix.apotheosis:armor/attribute/gravitational.suffix": "重力の",
+    "affix.apotheosis:armor/attribute/gravitational.suffix": "《重力波》",
 
     "affix.apotheosis:breaker/attribute/lengthy": "長い",
-    "affix.apotheosis:breaker/attribute/lengthy.suffix": "把握の",
+    "affix.apotheosis:breaker/attribute/lengthy.suffix": "《如意棒》",
 
     "affix.apotheosis:breaker/attribute/experienced": "熟練した",
-    "affix.apotheosis:breaker/attribute/experienced.suffix": "学者の",
+    "affix.apotheosis:breaker/attribute/experienced.suffix": "《蛍雪》",
 
     "affix.apotheosis:sword/attribute/elongated": "細長い",
-    "affix.apotheosis:sword/attribute/elongated.suffix": "遠戦の",
+    "affix.apotheosis:sword/attribute/elongated.suffix": "《達人》",
 
     "affix.apotheosis:ranged/attribute/agile": "敏捷な",
-    "affix.apotheosis:ranged/attribute/agile.suffix": "器用さの",
+    "affix.apotheosis:ranged/attribute/agile.suffix": "《射手》",
 
     "affix.apotheosis:armor/attribute/steel_touched": "鋼の感触の",
-    "affix.apotheosis:armor/attribute/steel_touched.suffix": "守護神の",
+    "affix.apotheosis:armor/attribute/steel_touched.suffix": "《守護神》",
 
     "affix.apotheosis:armor/attribute/stalwart": "屈強な",
-    "affix.apotheosis:armor/attribute/stalwart.suffix": "頑固な",
+    "affix.apotheosis:armor/attribute/stalwart.suffix": "《頑固者》",
 
     "affix.apotheosis:armor/attribute/elastic": "弾性のある",
-    "affix.apotheosis:armor/attribute/elastic.suffix": "登攀の",
+    "affix.apotheosis:armor/attribute/elastic.suffix": "《登山家》",
 
     "affix.apotheosis:armor/attribute/fortunate": "幸運な",
-    "affix.apotheosis:armor/attribute/fortunate.suffix": "四つ葉のクローバーの",
+    "affix.apotheosis:armor/attribute/fortunate.suffix": "《招き猫》",
     
     "affix.apotheosis:armor/attribute/winged": "翼のある",
-    "affix.apotheosis:armor/attribute/winged.suffix": "空の",
+    "affix.apotheosis:armor/attribute/winged.suffix": "《天空》",
 
     "affix.apotheosis:sword/attribute/intricate": "複雑な",
-    "affix.apotheosis:sword/attribute/intricate.suffix": "批判的思考の",
+    "affix.apotheosis:sword/attribute/intricate.suffix": "《首はね兎》",
 
     "affix.apotheosis:sword/attribute/lacerating": "裂傷の",
-    "affix.apotheosis:sword/attribute/lacerating.suffix": "外科的精度の",
+    "affix.apotheosis:sword/attribute/lacerating.suffix": "《一撃必殺》",
 
     "affix.apotheosis:sword/attribute/glacial": "氷河の",
-    "affix.apotheosis:sword/attribute/glacial.suffix": "凍てつく大地の",
+    "affix.apotheosis:sword/attribute/glacial.suffix": "《氷河》",
 
     "affix.apotheosis:sword/attribute/infernal": "地獄の",
-    "affix.apotheosis:sword/attribute/infernal.suffix": "太陽の",
+    "affix.apotheosis:sword/attribute/infernal.suffix": "《日輪》",
 
     "affix.apotheosis:sword/attribute/vampiric": "吸血鬼の",
-    "affix.apotheosis:sword/attribute/vampiric.suffix": "瀉血の",
+    "affix.apotheosis:sword/attribute/vampiric.suffix": "《吸魂》",
 
     "affix.apotheosis:sword/attribute/piercing": "貫通する",
-    "affix.apotheosis:sword/attribute/piercing.suffix": "日出づる処の",
+    "affix.apotheosis:sword/attribute/piercing.suffix": "《肉斬骨断》",
 
     "affix.apotheosis:heavy_weapon/attribute/shredding": "破砕する",
-    "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "浸透の",
+    "affix.apotheosis:heavy_weapon/attribute/shredding.suffix": "《裁断者》",
 
     "affix.apotheosis:heavy_weapon/attribute/giant_slaying": "鬼殺しの",
-    "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "大規模攻撃の",
+    "affix.apotheosis:heavy_weapon/attribute/giant_slaying.suffix": "《巨人狩り》",
 
-    "affix.apotheosis:heavy_weapon/attribute/berserking": "狂戦士の",
-    "affix.apotheosis:heavy_weapon/attribute/berserking.suffix": "バーサーカーの",
+    "affix.apotheosis:heavy_weapon/attribute/berserking": "恍惚なる",
+    "affix.apotheosis:heavy_weapon/attribute/berserking.suffix": "《狂戦士》",
 
     "affix.apotheosis:breaker/attribute/destructive": "破壊的な",
-    "affix.apotheosis:breaker/attribute/destructive.suffix": "採石の",
+    "affix.apotheosis:breaker/attribute/destructive.suffix": "《採掘機》",
 
     "affix.apotheosis:ranged/attribute/elven": "エルフの",
-    "affix.apotheosis:ranged/attribute/elven.suffix": "一等射手の",
+    "affix.apotheosis:ranged/attribute/elven.suffix": "《正鵠》",
 
     "affix.apotheosis:ranged/attribute/streamlined": "合理化された",
-    "affix.apotheosis:ranged/attribute/streamlined.suffix": "狙撃手の",
+    "affix.apotheosis:ranged/attribute/streamlined.suffix": "《狙撃手》",
     
     "affix.apotheosis:sword/mob_effect/elusive": "神出鬼没な",
-    "affix.apotheosis:sword/mob_effect/elusive.suffix": "回避の",
+    "affix.apotheosis:sword/mob_effect/elusive.suffix": "《神出鬼没》",
 
     "affix.apotheosis:breaker/mob_effect/swift": "迅速な",
-    "affix.apotheosis:breaker/mob_effect/swift.suffix": "粉砕の",
+    "affix.apotheosis:breaker/mob_effect/swift.suffix": "《連撃》",
 
     "affix.apotheosis:breaker/mob_effect/spelunkers": "洞窟探検家の",
-    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "洞窟探検の",
+    "affix.apotheosis:breaker/mob_effect/spelunkers.suffix": "《冒険者》",
 
     "affix.apotheosis:ranged/mob_effect/ensnaring": "籠絡の",
-    "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "捕食者の",
+    "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "《捕食者》",
 
     "affix.apotheosis:shield/mob_effect/venomous": "毒々しい",
-    "affix.apotheosis:shield/mob_effect/venomous.suffix": "蛇の",
+    "affix.apotheosis:shield/mob_effect/venomous.suffix": "《毒蛇》",
 
     "affix.apotheosis:ranged/mob_effect/fleeting": "儚い", 
-    "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "遊撃手の",
+    "affix.apotheosis:ranged/mob_effect/fleeting.suffix": "《遊撃手》",
 
     "affix.apotheosis:sword/mob_effect/weakening": "弱体化する",
-    "affix.apotheosis:sword/mob_effect/weakening.suffix": "弱体化の",
+    "affix.apotheosis:sword/mob_effect/weakening.suffix": "《冥土》",
 
     "affix.apotheosis:armor/mob_effect/bolstering": "強化する",
-    "affix.apotheosis:armor/mob_effect/bolstering.suffix": "不屈の",
+    "affix.apotheosis:armor/mob_effect/bolstering.suffix": "《不屈》",
 
     "affix.apotheosis:armor/mob_effect/revitalizing": "活性化する",
-    "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "湧水の",
+    "affix.apotheosis:armor/mob_effect/revitalizing.suffix": "《湧水》",
 
     "affix.apotheosis:armor/mob_effect/nimble": "機敏な",
-    "affix.apotheosis:armor/mob_effect/nimble.suffix": "狐の",
+    "affix.apotheosis:armor/mob_effect/nimble.suffix": "《野狐》",
 
     "affix.apotheosis:armor/mob_effect/blinding": "まぶしい",
-    "affix.apotheosis:armor/mob_effect/blinding.suffix": "闇の",
+    "affix.apotheosis:armor/mob_effect/blinding.suffix": "《盲目》",
 
-    "affix.apotheosis:ranged/mob_effect/shulkers": "シュルクタッチの",
-    "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "浮遊の",
+    "affix.apotheosis:ranged/mob_effect/shulkers": "質量がおかしい",
+    "affix.apotheosis:ranged/mob_effect/shulkers.suffix": "《浮遊》",
 
     "affix.apotheosis:shield/mob_effect/withering": "ウィザーの",
-    "affix.apotheosis:shield/mob_effect/withering.suffix": "闇の骸骨の",
+    "affix.apotheosis:shield/mob_effect/withering.suffix": "《闇骸骨》",
 
     "affix.apotheosis:shield/attribute/ironforged": "鉄鍛造された",
-    "affix.apotheosis:shield/attribute/ironforged.suffix": "鉄の",
+    "affix.apotheosis:shield/attribute/ironforged.suffix": "《黒鉄》",
 
     "affix.apotheosis:shield/attribute/steel_touched": "鋼の感触の",
-    "affix.apotheosis:shield/attribute/steel_touched.suffix": "守護神の",
+    "affix.apotheosis:shield/attribute/steel_touched.suffix": "《守護神》",
 
-    "affix.apotheosis:ranged/mob_effect/ivy_laced": "アイビーレースの",
-    "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "天然毒素の",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced": "毒々しい",
+    "affix.apotheosis:ranged/mob_effect/ivy_laced.suffix": "《毒素》",
 
     "affix.apotheosis:ranged/mob_effect/satanic": "悪魔的な",
-    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "地獄の業火の",
+    "affix.apotheosis:ranged/mob_effect/satanic.suffix": "《地獄炎》",
 
     "affix.apotheosis:ranged/special/spectral": "幽霊の",
-    "affix.apotheosis:ranged/special/spectral.suffix": "絶望的な",
+    "affix.apotheosis:ranged/special/spectral.suffix": "《鏡影》",
     "affix.apotheosis:ranged/special/spectral.desc": "%s%%の確率で2本目の矢を放ちます。",
     
     "affix.apotheosis:ranged/special/magical": "幻想的な",
-    "affix.apotheosis:ranged/special/magical.suffix": "秘術の",
+    "affix.apotheosis:ranged/special/magical.suffix": "《魔矢》",
     "affix.apotheosis:ranged/special/magical.desc": "矢で魔法ダメージを与えられます。",
     
-    "affix.apotheosis:sword/special/festive": "祝祭の",
-    "affix.apotheosis:sword/special/festive.suffix": "宴会の",
+    "affix.apotheosis:sword/special/festive": "お祭り気分の",
+    "affix.apotheosis:sword/special/festive.suffix": "《祝祭》",
     "affix.apotheosis:sword/special/festive.desc": "敵を倒すと%s%%の確率でピニャータの戦利品が手に入ります。",
     
     "affix.apotheosis:sword/special/thunderstruck": "吃驚仰天の",
-    "affix.apotheosis:sword/special/thunderstruck.suffix": "嵐の",
+    "affix.apotheosis:sword/special/thunderstruck.suffix": "《衝撃》",
     "affix.apotheosis:sword/special/thunderstruck.desc": "周囲の敵に%sダメージを与えます。",
     
     "affix.apotheosis:shield/special/retreating": "後退する",
-    "affix.apotheosis:shield/special/retreating.suffix": "道化師の",
+    "affix.apotheosis:shield/special/retreating.suffix": "《道化師》",
     "affix.apotheosis:shield/special/retreating.desc": "近接攻撃をブロックすると、後ろにジャンプします。",
     
-    "affix.apotheosis:telepathic": "念動力の",
-    "affix.apotheosis:telepathic.suffix": "空間と時間の",
+    "affix.apotheosis:telepathic": "引き寄せる",
+    "affix.apotheosis:telepathic.suffix": "《念動力》",
     "affix.apotheosis:telepathic.desc.weapon": "モブドロップが自分にテレポートしてきます。",
     "affix.apotheosis:telepathic.desc.tool": "モブドロップが自分にテレポートしてきます。",
 
     "affix.apotheosis:heavy_weapon/special/executing": "執行する",
-    "affix.apotheosis:heavy_weapon/special/executing.suffix": "死刑執行人の",
+    "affix.apotheosis:heavy_weapon/special/executing.suffix": "《処刑人》",
     "affix.apotheosis:heavy_weapon/special/executing.desc": "最大体力が%s%%以下の敵を処刑します。",
     
     "affix.apotheosis:heavy_weapon/special/cleaving": "薙ぎ払う",
-    "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "肉屋の",
+    "affix.apotheosis:heavy_weapon/special/cleaving.suffix": "《肉切包丁》",
     "affix.apotheosis:heavy_weapon/special/cleaving.desc": "%s%%の確率で近くの敵に%sまで命中する。",
 
     "affix.apotheosis:breaker/special/enlightened": "目覚めた",
-    "affix.apotheosis:breaker/special/enlightened.suffix": "光臨者の",
+    "affix.apotheosis:breaker/special/enlightened.suffix": "《光臨者》",
     "affix.apotheosis:breaker/special/enlightened.desc": "このツールは、耐久度を%s犠牲にして松明を設置できる。",
 
     "affix.apotheosis:shield/special/psychic": "超能力の",
-    "affix.apotheosis:shield/special/psychic.suffix": "復讐に燃える",
+    "affix.apotheosis:shield/special/psychic.suffix": "《復讐》",
     "affix.apotheosis:shield/special/psychic.desc": "弾を防ぐと、射手に%s%%のダメージを与えます。",
 
     "affix.apotheosis:shield/special/catalyzing": "触媒の",
-    "affix.apotheosis:shield/special/catalyzing.suffix": "改心者の",
+    "affix.apotheosis:shield/special/catalyzing.suffix": "《衝撃吸収》",
     "affix.apotheosis:shield/special/catalyzing.desc": "爆発をブロックすると、強力な力を得られます。",
 
     "affix.apotheosis:heavy_weapon/attribute/annihilating": "殲滅する",
-    "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "巨人の",
+    "affix.apotheosis:heavy_weapon/attribute/annihilating.suffix": "《凶手》",
 
     "affix.apotheosis:heavy_weapon/attribute/decimating": "解体する",
-    "affix.apotheosis:heavy_weapon/attribute/decimating.suffix": "神王の",
+    "affix.apotheosis:heavy_weapon/attribute/decimating.suffix": "《皆殺し》",
     
     "affix.apotheosis:heavy_weapon/attribute/murderous": "殺人的な",
-    "affix.apotheosis:heavy_weapon/attribute/murderous.suffix": "ミノタウロスの",
+    "affix.apotheosis:heavy_weapon/attribute/murderous.suffix": "《紫電一閃》",
     
     "affix.apotheosis:ranged/mob_effect/acidic": "酸性の",
-    "affix.apotheosis:ranged/mob_effect/acidic.suffix": "腐食の",
+    "affix.apotheosis:ranged/mob_effect/acidic.suffix": "《腐食》",
 
-    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting": "腐食する",
-    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting.suffix": "殺し屋の",
+    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting": "引き裂く",
+    "affix.apotheosis:heavy_weapon/mob_effect/bloodletting.suffix": "《血の池》",
 
-    "affix.apotheosis:heavy_weapon/mob_effect/caustic": "腐食する",
-    "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "苛性領域の",
+    "affix.apotheosis:heavy_weapon/mob_effect/caustic": "焼けただれる",
+    "affix.apotheosis:heavy_weapon/mob_effect/caustic.suffix": "浸蝕",
 
     "affix.apotheosis:sword/mob_effect/sophisticated": "洗練された",
-    "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "古代図書館の",
+    "affix.apotheosis:sword/mob_effect/sophisticated.suffix": "《温故知新》",
 
     "affix.apotheosis:shield/mob_effect/devilish": "小悪魔の",
-    "affix.apotheosis:shield/mob_effect/devilish.suffix": "ベテランの",
+    "affix.apotheosis:shield/mob_effect/devilish.suffix": "《百戦錬磨》",
 
     "affix.apotheosis:breaker/special/radial": "放射する",
-    "affix.apotheosis:breaker/special/radial.suffix": "アースブレーカーの",
+    "affix.apotheosis:breaker/special/radial.suffix": "《一括破壊》",
     "affix.apotheosis:breaker/special/radial.desc": "このツールは%sx%sエリアを破壊します。",
 
     "affix.apotheosis:melee_weapon/mob_effect/detonating": "爆発する",
-    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "炎元素の",
+    "affix.apotheosis:melee_weapon/mob_effect/detonating.suffix": "《炎元素》",
     
     "misc.apotheosis.iron": "鉄",
     "misc.apotheosis.diamond": "ダイヤモンド",
     "misc.apotheosis.netherite": "ネザライト",
     
-    "affix.apotheosis:breaker/special/omnetic": "楽観的な",
-    "affix.apotheosis:breaker/special/omnetic.suffix": "特異点の",
+    "affix.apotheosis:breaker/special/omnetic": "万能な",
+    "affix.apotheosis:breaker/special/omnetic.suffix": "《特異点》",
     "affix.apotheosis:breaker/special/omnetic.desc": "このツールはあらゆるブロックに対して%sの効果を発揮します。",
     
     "misc.apotheosis.physical": "物理",
@@ -253,43 +253,43 @@
     "affix.apotheosis:damage_reduction.desc": "%sダメージが%s%%減少します。",
 
     "affix.apotheosis:armor/dmg_reduction/blockading": "封鎖する",
-    "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "遮断の",
+    "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "《堅牢》",
 
     "affix.apotheosis:armor/dmg_reduction/runed": "ルーンの",
-    "affix.apotheosis:armor/dmg_reduction/runed.suffix": "スペルウォーデンの",
+    "affix.apotheosis:armor/dmg_reduction/runed.suffix": "《魔法障壁》",
 
     "affix.apotheosis:armor/dmg_reduction/blast_forged": "燃焼鍛造の",
-    "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "鍛冶神の",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "《鍛冶神》",
 
     "affix.apotheosis:armor/dmg_reduction/dwarven": "ドワーフの",
-    "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "火山の",
+    "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "《活火山》",
 
     "affix.apotheosis:armor/dmg_reduction/feathery": "羽毛のような",
-    "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "鷲の",
+    "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "《羽衣》",
 
     "affix.apotheosis:shield/attribute/stalwart": "屈強な",
-    "affix.apotheosis:shield/attribute/stalwart.suffix": "頑固な",
+    "affix.apotheosis:shield/attribute/stalwart.suffix": "《頑固者》",
 
     "affix.apotheosis:armor/attribute/spiritual": "霊的な",
-    "affix.apotheosis:armor/attribute/spiritual.suffix": "魔術師の",
+    "affix.apotheosis:armor/attribute/spiritual.suffix": "《杏林》",
     
     "affix.apotheosis:breaker/attribute/lucky": "幸運な",
-    "affix.apotheosis:breaker/attribute/lucky.suffix": "運命の出会いの",
+    "affix.apotheosis:breaker/attribute/lucky.suffix": "《宝探し》",
 
     "affix.apotheosis:heavy_weapon/attribute/nullifying": "無効化する",
-    "affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "魔道破りの",
+    "affix.apotheosis:heavy_weapon/attribute/nullifying.suffix": "《魔女狩り》",
 
     "affix.apotheosis:sword/attribute/spellbreaking": "魔法を解く",
-    "affix.apotheosis:sword/attribute/spellbreaking.suffix": "ペトリサイトゴーレムの",
+    "affix.apotheosis:sword/attribute/spellbreaking.suffix": "《分解》",
 
     "affix.apotheosis:ranged/mob_effect/grievous": "残忍な",
-    "affix.apotheosis:ranged/mob_effect/grievous.suffix": "創傷の",
+    "affix.apotheosis:ranged/mob_effect/grievous.suffix": "《咎人》",
 
     "affix.apotheosis:armor/mob_effect/bursting": "炸裂する",
-    "affix.apotheosis:armor/mob_effect/bursting.suffix": "活力の",
+    "affix.apotheosis:armor/mob_effect/bursting.suffix": "《生命力》",
 
     "affix.apotheosis:durable": "丈夫な",
-    "affix.apotheosis:durable.suffix": "耐久のある",
+    "affix.apotheosis:durable.suffix": "《極上》",
 
     "affix.apotheosis.target.attack_self": "ヒット時、%sを得る",
     "affix.apotheosis.target.attack_target": "ヒット時、%sを与える",
@@ -354,7 +354,7 @@
 
     "item.apotheosis.gem.apotheosis:legacy": "伝承された宝石",
     "item.apotheosis.gem.apotheosis:core/guardian": "守護者の宝石",
-    "item.apotheosis.gem.apotheosis:core/ballast": "Ballast Gem",
+    "item.apotheosis.gem.apotheosis:core/ballast": "安定の宝石",
     "item.apotheosis.gem.apotheosis:core/solar": "太陽の宝石",
     "item.apotheosis.gem.apotheosis:core/lunar": "月の宝石",
     "item.apotheosis.gem.apotheosis:core/samurai": "侍の宝石",
@@ -365,20 +365,20 @@
     "item.apotheosis.gem.apotheosis:core/lightning": "稲妻の宝石",
     "item.apotheosis.gem.apotheosis:core/slipstream": "後流の宝石",
     "item.apotheosis.gem.apotheosis:core/brawlers": "乱闘者の宝石",
-    "item.apotheosis.gem.apotheosis:core/combatant": "戦闘員の宝石",
+    "item.apotheosis.gem.apotheosis:core/combatant": "戦士の宝石",
     "item.apotheosis.gem.apotheosis:overworld/earth": "大地の宝石",
     "item.apotheosis.gem.apotheosis:overworld/royalty": "王家の宝石",
     "item.apotheosis.gem.apotheosis:the_nether/inferno": "白熱地獄の宝石",
-    "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "貪欲な王血の宝石",
-    "item.apotheosis.gem.apotheosis:the_end/endersurge": "高波な宝石",
+    "item.apotheosis.gem.apotheosis:the_nether/blood_lord": "貪欲王の宝石",
+    "item.apotheosis.gem.apotheosis:the_end/endersurge": "高波の宝石",
     "item.apotheosis.gem.apotheosis:the_end/mageslayer": "魔剣士の宝石",
     "item.apotheosis.gem.apotheosis:twilight/forest": "黄昏の森の宝石",
     "item.apotheosis.gem.apotheosis:twilight/queen": "氷の女王の宝石",
 
     "item.apotheosis.boss_summoner": "Apothicボスサモナー",
     "item.apotheosis.gem.apotheosis:common": "割れた%s",
-    "item.apotheosis.gem.apotheosis:uncommon": "欠けた%s",
-    "item.apotheosis.gem.apotheosis:rare": "欠陥のある%s",
+    "item.apotheosis.gem.apotheosis:uncommon": "砕けた%s",
+    "item.apotheosis.gem.apotheosis:rare": "傷ついた%s",
     "item.apotheosis.gem.apotheosis:epic": "%s",
     "item.apotheosis.gem.apotheosis:mythic": "完璧な%s",
     "item.apotheosis.gem.apotheosis:ancient": "完全な%s",
@@ -386,7 +386,7 @@
     "item.apotheosis.vial_of_expulsion": "焼ける除霊の小瓶",
     "item.apotheosis.vial_of_unnaming": "名前のない小瓶",
     "item.apotheosis.gem_dust": "宝石の粉",
-    "item.apotheosis.gem_dust.desc": "え",
+    "item.apotheosis.gem_dust.desc": "砕けたジェムストーン",
     "item.apotheosis.common_material": "神秘的な金属片",
     "item.apotheosis.uncommon_material": "使い古された生地",
     "item.apotheosis.rare_material": "輝く水晶片",
@@ -540,11 +540,11 @@
     "advancements.apotheosis.bookshelf": "地方司書",
     "advancements.apotheosis.bookshelf.desc": "本棚を作る。",
     
-    "advancements.apotheosis.hellshelf": "混沌の地獄",
-    "advancements.apotheosis.hellshelf.desc": "地獄の木棚を手に入れる",
+    "advancements.apotheosis.hellshelf": "地獄の混沌",
+    "advancements.apotheosis.hellshelf.desc": "地獄の本棚を手に入れる",
     
-    "advancements.apotheosis.upgrade_hellshelf": "地獄を制覇する",
-    "advancements.apotheosis.upgrade_hellshelf.desc": "注入された地獄の木棚にアップグレードする。",
+    "advancements.apotheosis.upgrade_hellshelf": "地獄の業火を飼いならせ",
+    "advancements.apotheosis.upgrade_hellshelf.desc": "注入された地獄の本棚にアップグレードする。",
     
     "advancements.apotheosis.deepshelf": "暗闇の中へ",
     "advancements.apotheosis.deepshelf.desc": "休眠状態の深淵の本棚を活性化する。",
@@ -561,10 +561,10 @@
     "advancements.apotheosis.seashelf": "純粋な海",
     "advancements.apotheosis.seashelf.desc": "海の本棚を手に入れる",
     
-    "advancements.apotheosis.infuse_seashelf": "海の注入",
+    "advancements.apotheosis.infuse_seashelf": "海洋エネルギー",
     "advancements.apotheosis.infuse_seashelf.desc": "注入エンチャントで注入された海の本棚を手に入れる",
     
-    "advancements.apotheosis.upgrade_seashelf": "寒空の下で眠る",
+    "advancements.apotheosis.upgrade_seashelf": "冷たい海底に眠るもの",
     "advancements.apotheosis.upgrade_seashelf.desc": "注入された海の本棚をアップグレードする",
     
     "advancements.apotheosis.infuse_hellshelf": "地獄の注入",
@@ -610,7 +610,7 @@
     "advancements.apotheosis.epic": "エピック!",
     "advancements.apotheosis.epic.desc": "エピック接辞アイテムを見つける",
 
-    "advancements.apotheosis.mythic": "チタン鍛造",
+    "advancements.apotheosis.mythic": "巨人の鍛冶屋",
     "advancements.apotheosis.mythic.desc": "ミスティック接辞アイテムを見つける",
 
     "advancements.apotheosis.ancient": "失われた神々の秘宝",
@@ -760,7 +760,7 @@
 
     "block.apotheosis.sightshelf": "展望の地獄の本棚",
     "block.apotheosis.sightshelf_t2": "達観の地獄の本棚",
-    "block.apotheosis.rectifier": "修正の海岸線の本棚",
+    "block.apotheosis.rectifier": "海岸線の修正の本棚",
     "block.apotheosis.rectifier_t2": "地獄行きの修正の本棚",
     "block.apotheosis.rectifier_t3": "注入されたの修正の本棚",
     "block.apotheosis.filtering_shelf": "水生濾過の海の本棚",
@@ -844,22 +844,22 @@
     "enchantment.apotheosis.mounted_strike": "騎乗攻撃",
     "enchantment.apotheosis.mounted_strike.desc": "騎乗時に追加ダメージを与えます。",
 
-    "enchantment.apotheosis.miners_fervor": "鉱夫の熱情",
+    "enchantment.apotheosis.miners_fervor": "鉱夫の熱意",
     "enchantment.apotheosis.miners_fervor.desc": "採掘速度が高速になるが、即座には採掘されません。",
 
-    "enchantment.apotheosis.stable_footing": "安定した足取り",
+    "enchantment.apotheosis.stable_footing": "足場",
     "enchantment.apotheosis.stable_footing.desc": "飛行時の採掘速度ペナルティを無効化する。",
 
-    "enchantment.apotheosis.scavenger": "廃品漁り",
-    "enchantment.apotheosis.scavenger.desc": "Mobを倒した時、戦利品テーブルを2回回すことができる。",
+    "enchantment.apotheosis.scavenger": "死体あさり",
+    "enchantment.apotheosis.scavenger.desc": "Mobを倒した時のドロップ抽選が一定確率で２回になる。",
 
     "enchantment.apotheosis.life_mending": "命の修復",
-    "enchantment.apotheosis.life_mending.desc": "受けた回復を消費してアイテムを修理する。",
+    "enchantment.apotheosis.life_mending.desc": "たまに自身のライフを消費して装備を修繕する。",
 
     "enchantment.apotheosis.icy_thorns": "氷の棘",
     "enchantment.apotheosis.icy_thorns.desc": "攻撃者の動きを鈍らせます。",
     
-    "enchantment.apotheosis.bane_of_illagers": "イリジャーの脅威",
+    "enchantment.apotheosis.bane_of_illagers": "イリジャー特攻",
     "enchantment.apotheosis.bane_of_illagers.desc": "イリジャーへのダメージが増加する。",
 
     "death.attack.apotheosis:corrupted": "%sは破損したエンチャントによって力尽きた",
@@ -913,28 +913,28 @@
     "enchantment.apotheosis.berserkers_fury": "狂戦士の怒り",
     "enchantment.apotheosis.berserkers_fury.desc": "ダメージを受けると怒り狂う。 [⌛ 0:45]",
 
-    "enchantment.apotheosis.knowledge": "時代の知識",
+    "enchantment.apotheosis.knowledge": "温故知新",
     "enchantment.apotheosis.knowledge.desc": "敵のドロップは経験値に変換されます。",
 
     "enchantment.apotheosis.splitting": "分割",
-    "enchantment.apotheosis.splitting.desc": "金床が落下した本から複数のエンチャントを分割できるようになる。",
+    "enchantment.apotheosis.splitting.desc": "複数の効果を持つエンチャント本の上に金床を落とすことで個別のエンチャント本に分割できる。",
     
-    "enchantment.apotheosis.obliteration": "抹殺",
-    "enchantment.apotheosis.obliteration.desc": "金床が落下した本から一つのエンチャントを分割できるようになる。",
+    "enchantment.apotheosis.obliteration": "細断",
+    "enchantment.apotheosis.obliteration.desc": "高いレベルのエンチャント本の上に金床を落とすことで２つの低レベルエンチャント本に分解できる。",
 
     "enchantment.apotheosis.natures_blessing": "自然の恩恵",
     "enchantment.apotheosis.natures_blessing.desc": "クワを骨粉として使うことができる",
 
     "enchantment.apotheosis.rebounding": "反発",
-    "enchantment.apotheosis.rebounding.desc": "近接攻撃する者は、自分たちがずっと遠くにいることに気づくかもしれない。",
+    "enchantment.apotheosis.rebounding.desc": "近接攻撃を放った相手を数ブロック分だけ跳ね飛ばす。",
 
-    "enchantment.apotheosis.magic_protection": "オカルト嫌悪",
+    "enchantment.apotheosis.magic_protection": "魔法嫌い",
     "enchantment.apotheosis.magic_protection.desc": "魔法与ダメージとに魔法被ダメージが減少する。",
     
-    "enchantment.apotheosis.crescendo": "増幅するボルト",
-    "enchantment.apotheosis.crescendo.desc": "クロスボウは1度のリロードで追加発射できる。",
+    "enchantment.apotheosis.crescendo": "クレッシェンド",
+    "enchantment.apotheosis.crescendo.desc": "クロスボウを発射時に一定確率で追加の矢が増える。",
 
-    "enchantment.apotheosis.chromatic": "色収差",
+    "enchantment.apotheosis.chromatic": "玉虫色",
     "enchantment.apotheosis.chromatic.desc": "刈り取られた羊毛はランダムな色に変わります。",
 
     "enchantment.apotheosis.exploitation": "労働搾取",
@@ -949,14 +949,14 @@
     "enchantment.apotheosis.chainsaw": "チェーンソー",
     "enchantment.apotheosis.chainsaw.desc": "樹木を消滅させる。",
 
-    "enchantment.apotheosis.spearfishing": "スピアフィッシング",
+    "enchantment.apotheosis.spearfishing": "モリ突き漁",
     "enchantment.apotheosis.spearfishing.desc": "投げたトライデントで魚を釣り上げることがある。",
     
     "enchantment.apotheosis.endless_quiver": "無限の矢筒",
     "enchantment.apotheosis.endless_quiver.desc": "全ての矢を無限にします。",
 
     "comment_id": "/バニラ",
-    "generic.reachDistance": "到達距離",
+    "generic.reachDistance": "リーチ距離",
     "forge.swimSpeed": "泳ぐ速度",
     "forge.entity_gravity": "重力",
     "block.reeds": "サトウキビ",
@@ -1081,9 +1081,9 @@
     "enchantment.level.127": "CXXVII",
     
     
-    "block.apotheosis.library": "エンチャント図書館",
-    "block.apotheosis.ender_library": "アレクサンドリア図書館",
-    "apotheosis.ench.library": "エンチャント図書館",
+    "block.apotheosis.library": "エンチャント書庫",
+    "block.apotheosis.ender_library": "アレクサンドリア書庫",
+    "apotheosis.ench.library": "エンチャント書庫",
     "tooltip.enchlib.capacity": "レベル容量: %s",
     "tooltip.enchlib.max_lvl": "使用可能な最大レベル: %s",
     "tooltip.enchlib.points": "保有ポイント: %s/%s",
@@ -1093,7 +1093,7 @@
     "tooltip.enchlib.item": "%d個のエンチャントを保存しています。",
     "tooltip.enchlib.nfilt": "名前フィルター",
     "tooltip.enchlib.ifilt": "アイテムフィルター",
-    "info.apotheosis.library": "エンチャント図書館はエンチャントを保存するブロックです。エンチャントされた本を入れると、その本が預けられます。保存されているエンチャントを左クリックすると、そのエンチャントが1レベル抽出されます。Shiftを押しながらクリックすると、利用可能な最大レベルが抽出されます。",
+    "info.apotheosis.library": "エンチャント書庫はエンチャントを保存するブロックです。エンチャントされた本を入れると、その本が預けられます。保存されているエンチャントを左クリックすると、そのエンチャントが1レベル抽出されます。Shiftを押しながらクリックすると、利用可能な最大レベルが抽出されます。",
     "info.apotheosis.runes": "ルーン文字が明かす",
     "info.apotheosis.no_clue": "ルーン文字が明かすものはない",
     "info.apotheosis.runes_all": "ルーン文字がすべてを明かす",
@@ -1199,11 +1199,11 @@
     "name.apotheosis.merch_axe": "ツリーキャピテーター",
     "name.apotheosis.merch_axe2": "ボーンスプリッター",
     "name.apotheosis.merch_spider_sword": "アラクニドの恐怖",
-    "name.apotheosis.merch_helm": "時を経た風貌",
+    "name.apotheosis.merch_helm": "古ぼけた仮面",
     "name.apotheosis.merch_chest": "永遠のグレートプレート",
-    "name.apotheosis.merch_legs": "雷鍛造レッグガード",
-    "name.apotheosis.merch_boots": "ルーン鍛造の薙刀",
-    "name.apotheosis.vigilance": "永遠の警戒永遠の警戒",
+    "name.apotheosis.merch_legs": "雷のレッグガード",
+    "name.apotheosis.merch_boots": "魔法の具足",
+    "name.apotheosis.vigilance": "永遠の警戒",
     "apotheosis.recipes.fletching": "矢細工",
     "item.apotheosis.obsidian_arrow": "黒曜石の矢",
     "entity.apotheosis.obsidian_arrow": "黒曜石の矢",
