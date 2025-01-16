@@ -518,7 +518,7 @@
     "item.apotheosis.sigil_of_rebirth.desc": "リフォージ台の動力源として使用する。",
 
     "item.apotheosis.sigil_of_enhancement": "強化の紋章",
-    "item.apotheosis.sigil_of_enhancement.desc": "強化精錬台の動力源として使用します",
+    "item.apotheosis.sigil_of_enhancement.desc": "強化精錬作業台の動力源として使用します",
 
     "item.apotheosis.sigil_of_unnaming": "不名の紋章",
     "item.apotheosis.sigil_of_unnaming.desc": "アイテムから称号を削除します。",
@@ -532,7 +532,7 @@
     "block.apotheosis.reforging_table": "リフォージ台",
     "block.apotheosis.reforging_table.desc": "再誕の紋章とレアリティ素材を使用してアイテムを再鍛造する。",
     "block.apotheosis.reforging_table.desc2": "最大レアリティ: %s",
-    "block.apotheosis.augmenting_table": "強化精錬台",
+    "block.apotheosis.augmenting_table": "強化精錬作業台",
     "block.apotheosis.augmenting_table.desc": "強化の紋章を使って称号を個別に強化する。",
 
     "button.apotheosis.salvage": "解体アイテム",
