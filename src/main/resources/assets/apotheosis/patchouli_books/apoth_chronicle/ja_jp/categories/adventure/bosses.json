@@ -1,6 +1,6 @@
 {
     "name": "ボス",
-    "description": "$(9)ボス$()は接辞の力を利用した敵です。$(p)個性的な名前と強力な装備で、たいていは見分けがつきます。",
+    "description": "$(9)ボス$()は称号の力を利用した敵です。$(p)個性的な名前と強力な装備で、たいていは見分けがつきます。",
     "icon": "apotheosis:boss_summoner",
 	"flag": "apotheosis:adventure",
 	"parent": "apotheosis:adventure/adventure"

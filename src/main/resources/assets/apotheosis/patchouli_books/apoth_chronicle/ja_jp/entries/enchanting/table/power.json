@@ -14,11 +14,11 @@
         },
 		{
 			"type": "patchouli:text",
-			"text": "$(fpower）は以下の手順で計算されます:$(p)最初は$(bpower)があり、これはエンチャント中に消費したレベルです。$(p)そして、$(#ff0000)クアンタ$()と修正が$(bpower)を修正し、$(fpower)を生成します。"
+			"text": "$(fpower）は以下の手順で計算されます:$(p)最初は$(bpower)があり、これはエンチャント中に消費したレベルです。$(p)そして、$(#ff0000)クアンタ$()と調和が$(bpower)を整え、$(fpower)を生成します。"
 		},
 		{
 			"type": "patchouli:text",
-			"text": "各ステータスがどのように$(bpower)を変化させるかは、$(l:apotheosis:enchanting/table/stats#quanta)$(#ff0000)クアンタ$()と$(l:apotheosis:enchanting/table/stats#rectification)修正$()の項目で確認できます。$(p)通常、$(fpower)が高いほど、より高いレベルのエンチャントにアクセスできます。"
+			"text": "各ステータスがどのように$(bpower)を変化させるかは、$(l:apotheosis:enchanting/table/stats#quanta)$(#ff0000)クアンタ$()と$(l:apotheosis:enchanting/table/stats#rectification)調和$()の項目で確認できます。$(p)通常、$(fpower)が高いほど、より高いレベルのエンチャントにアクセスできます。"
 		}
 	]
 }

@@ -1,5 +1,5 @@
 {
-    "name": "増幅するボルト",
+    "name": "クレッシェンド",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)増幅するボルト$()はクロスボウ用の傑作エンチャントです。$(p)このエンチャントのレベルが上がるごとに、リロード1回につき1発追加の射撃が可能になる。$(p)追加射撃に弾は使用しません。"
+            "text": "$(2)クレシェンド$()はクロスボウ用の傑作エンチャントです。$(p)このエンチャントのレベルが上がるごとに、リロード1回につき1発追加の射撃が可能になる。$(p)追加射撃に弾は使用しません。"
         }
 	]
 }
