@@ -1,0 +1,43 @@
+{
+    "name": "レベル60～80",
+    "icon": "apothic_enchanting:dormant_deepshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル70への道",
+			"recipe": "apothic_enchanting:dormant_deepshelf",
+			"text": "レベル70に到達するには、レベル60のエンチャントテーブルと深層石を活用できる環境が必要になる。"
+		},
+		{
+            "type": "patchouli:text",
+			"title": "レベル70への道",
+			"text": "まず$(9)休眠する深淵の本棚$()を作り、そこにエネルギーを注入してその眠った力を解放する必要がある。$(p)この注入レシピには、ステータスのしきい値に到達するためにいくつかの追加ブロックが必要だ。$(p)注入が完了できれば、$(9)深淵の本棚$()が手に入り、レベル70まで上げることができるだろう。"
+		},
+		{
+            "type": "patchouli:text",
+			"title": "レベル75への道",
+			"text": "レベル75に到達するには、深淵の本棚をアップグレードする必要がある。$(p)そのためには、$(9)ディープダーク$()にしかない材料が必要だ。$(p)$(9)残響の欠片$()は古代都市のチェストから入手でき、$(9)スカルク$()はシルクタッチで回収することができる。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル75への道",
+			"recipe": "apothic_enchanting:echoing_deepshelf",
+			"recipe2": "apothic_enchanting:soul_touched_deepshelf"
+		},
+		{
+            "type": "patchouli:entity",
+			"entity": "minecraft:warden",
+			"title": "レベル80への道",
+			"scale": 0.95,
+			"text": "レベル80への最後のステップは、$(9)ウォーデン$()を倒すことになる。そのドロップ品から$(9)スカルクの本棚$()をクラフトできるようなるだろう。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル80への道",
+			"recipe": "apothic_enchanting:echoing_sculkshelf",
+			"recipe2": "apothic_enchanting:soul_touched_sculkshelf"
+		}
+	]
+}

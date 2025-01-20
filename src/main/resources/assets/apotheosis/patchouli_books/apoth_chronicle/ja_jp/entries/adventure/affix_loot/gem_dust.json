@@ -1,0 +1,21 @@
+{
+    "name": "ジェムの粉",
+    "icon": "apotheosis:gem_dust",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "apotheosis:gem_dust",
+			"link_recipe": true,
+            "text": "すべてのApothicジェムは、破砕することで$(br)$(9)ジェムの粉$()にすることができる。$(p)その方法の１つが、金床による粉砕である。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:salvaging_table",
+			"title": "ジェムの回収",
+            "text": "金床を使ってジェムを何個か砕いたら、代わりに$(9)解体作業台$()を作って使うことができるようになるだろう。"
+        }
+	]
+}

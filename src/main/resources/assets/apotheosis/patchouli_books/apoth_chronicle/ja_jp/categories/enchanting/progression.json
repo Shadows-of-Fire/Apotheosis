@@ -1,0 +1,8 @@
+{
+    "name": "レベル進行",
+    "description": "このセクションでは、エンチャントテーブルのアップグレード方法について、その概要を示す。",
+    "icon": "apothic_enchanting:dormant_deepshelf",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting",
+	"sortnum": -1
+}

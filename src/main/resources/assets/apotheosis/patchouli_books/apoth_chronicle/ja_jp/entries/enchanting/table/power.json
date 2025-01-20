@@ -1,0 +1,24 @@
+{
+    "name": "エンチャントパワー",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "エンチャントの手順の中では、経験値とラピスラズリを消費する。$(p)そして、複雑な計算を経てエンチャントがランダムに選ばれる。$(p)この章ではそのプロセスについて説明する。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "まず、エンチャントがどのように選択されるかを説明する。$(p)各エンチャントは$(5)パワー関数$()を有している。この関数は、どの程度の$(fpower_jajp)によって何レベルのエンチャントが利用可能になるかを管理している。$(p)この関数により使用可能なエンチャントをリストアップした後、それぞれの重みに基づいてランダムにエンチャントが選択される。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(fpower_jajp)は以下の手順で計算される。$(p)まず、あなたがエンチャントに費やしたレベルである$(bpower_jajp)がある。$(p)そして次に、$(quanta_jajp)と調和要素が$(bpower_jajp)を調整し、$(fpower_jajp)が算出される。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "各ステータスがどのように$(bpower_jajp)変化させるかは、$(l:apotheosis:enchanting/table/stats#quanta)$(quanta_jajp)及び$(l:apotheosis:enchanting/table/stats#rectification)調和$()のセクションを参照のこと。$(p)通常は$(fpower_jajp)が高いほど、より高いレベルのエンチャントが利用可能になる。"
+		}
+	]
+}

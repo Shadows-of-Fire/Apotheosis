@@ -15,24 +15,24 @@
     "text.apotheosis.world_tier.summit": "頂点",
     "text.apotheosis.world_tier.summit.desc": "辿り着きて、いまだ山麓",
 
-    "text.apotheosis.world_tier.pinnacle": "天上界",
+    "text.apotheosis.world_tier.pinnacle": "天界",
     "text.apotheosis.world_tier.pinnacle.desc": "狂乱の山の頂に身を委ねよ",
 
     "title.apotheosis.select_world_tier": "ワールドレベルを選択",
     "title.apotheosis.world_tier_details": "ワールドレベルの詳細",
 
-    "button.apotheosis.haven": "安息の地",
-    "button.apotheosis.frontier": "未開",
-    "button.apotheosis.ascent": "進歩",
+    "button.apotheosis.haven": "安全地帯",
+    "button.apotheosis.frontier": "冒険",
+    "button.apotheosis.ascent": "進撃",
     "button.apotheosis.summit": "頂点",
-    "button.apotheosis.pinnacle": "天頂",
+    "button.apotheosis.pinnacle": "天界",
     "button.apotheosis.tier_locked": "未解放。%sを完遂すると解放",
     "button.apotheosis.activate_tier": "有効化するワールドレベル: %s",
     "button.apotheosis.already_activated": "このワールドレベルは現在有効になっています",
     "button.apotheosis.activate": "有効化",
     "button.apotheosis.activated": "有効化済み",
     "button.apotheosis.show_detailed_info": "詳細な情報",
-    "button.apotheosis.show_detailed_info.desc": "mobのバフ効果、プレイヤーのバフ効果、レア度を見る",
+    "button.apotheosis.show_detailed_info.desc": "モブのバフ効果、プレイヤーのバフ効果、レアリティを見る",
     "button.apotheosis.return": "X",
     "button.apotheosis.return.desc": "ワールドレベルの選択画面に戻る",
 
@@ -43,7 +43,7 @@
     "text.apotheosis.rarities": "レア度",
     "text.apotheosis.purities": "純度",
 
-    "key.apotheosis.toggle_radial_mining": "放射採掘モードの変更",
+    "key.apotheosis.toggle_radial_mining": "範囲採掘モードの変更",
     "key.apotheosis.open_world_tier_select": "ワールドレベル選択を開く",
 
     "info.apotheosis.affix_item": "Apothic称号アイテム",
@@ -56,7 +56,7 @@
     "misc.apotheosis.affix_name.four": "%s %s %s %s",
     "misc.apotheosis.affix_bounds": "[%s\u00A0-\u00A0%s]",
 
-    "misc.apotheosis.radial_state_updated": "放射状採掘モードを\"%s\"に更新",
+    "misc.apotheosis.radial_state_updated": "範囲採掘モードを\"%s\"に更新",
     "misc.apotheosis.radial_state.require_not_sneaking": "スニーク中は無効",
     "misc.apotheosis.radial_state.require_sneaking": "スニーク中は有効",
     "misc.apotheosis.radial_state.enabled": "有効",
@@ -211,7 +211,7 @@
     "affix.apotheosis:ranged/magical.suffix": "《魔矢》",
     "affix.apotheosis:ranged/magical.desc": "矢で魔法ダメージを与えられる。",
     
-    "affix.apotheosis:melee/festive": "お祭り気分の",
+    "affix.apotheosis:melee/festive": "ウキウキする",
     "affix.apotheosis:melee/festive.suffix": "《祝祭》",
     "affix.apotheosis:melee/festive.desc": "敵を倒すと%s%%の確率でピニャータの戦利品が手に入る。",
     
@@ -348,7 +348,7 @@
     "affix.apotheosis:armor/dmg_reduction/blockading": "殻に篭もる",
     "affix.apotheosis:armor/dmg_reduction/blockading.suffix": "《堅牢》",
 
-    "affix.apotheosis:armor/dmg_reduction/runed": "精錬した",
+    "affix.apotheosis:armor/dmg_reduction/runed": "加護を得た",
     "affix.apotheosis:armor/dmg_reduction/runed.suffix": "《魔法障壁》",
 
     "affix.apotheosis:armor/dmg_reduction/blast_forged": "カチカチの",
@@ -606,7 +606,7 @@
     "info.apotheosis.boss_item": "ドロップアイテム: %s",
     "info.apotheosis.boss_modifiers": "ボス変異因子:",
     "info.apotheosis.rarity_material": "レアリティ素材 (%s)",
-    "info.apotheosis.gem_crushing": "ジェムの粉は、Apothicジェムを地面に置いて上から金床を落とすことで入手可能。\n\nそれ以降は、解体作業台で取得する。",
+    "info.apotheosis.gem_crushing": "ジェムの粉は、ジェムを地面に置いて上から金床を落とすことで入手可能。\n\nそれ以降は、解体作業台で取得する。",
     "info.apotheosis.gem_extraction": "鍛冶台で使うことでジェムを外すことが可能。\n\nジェムを外すと元の装備は失われる。",
     "info.apotheosis.gem_expulsion": "鍛冶台で使うことでジェムを外すことが可能。\n\n外したジェムは全て失われる",
     "info.apotheosis.unnaming": "鍛冶台で使うことで、アイテム名から称号の要素を消去できる。",
@@ -762,12 +762,12 @@
     "info.apoth.modifier_disabled": "このモディファイアは無効です",
     "itemGroup.apotheosis.adventure": "Apotheosis:アドベンチャーモジュール",
     "itemGroup.apotheosis.ench": "Apotheosis: エンチャントモジュール",
-    "config.jade.plugin_apotheosis.spawner": "Apothスポナーモジュール",
-    "config.jade.plugin_apotheosis.ench": "Apothエンチャモジュール",
+    "config.jade.plugin_apotheosis.spawner": "Apothicスポナーモジュール",
+    "config.jade.plugin_apotheosis.ench": "Apothicエンチャモジュール",
     "config.jade.plugin_apotheosis.adventure": "Apothアドベンチャーモジュール",
 
     "comment_id": "Guidebook",
     "book.apotheosis.name": "影の歴史書",
     "book.apotheosis.subtitle": "Apotheosisの道しるべ",
-    "book.apotheosis.landing": "Apotheosisの世界へようこそ。$(br2)Apotheosisはいくつかの$(#8080FF)モジュール$()で構成されており, 本書の内容もそれに合わせたものになっています。$(br2)無効化されているモジュールは非表示になります。"
+    "book.apotheosis.landing": "Apotheosisの世界へようこそ。$(br2)Apotheosisはいくつかの$(#8080FF)モジュール$()で構成されており、本書の内容もそれに合わせたものになっている。$(br2)なお、無効化されているモジュールは表示されない。"
 }

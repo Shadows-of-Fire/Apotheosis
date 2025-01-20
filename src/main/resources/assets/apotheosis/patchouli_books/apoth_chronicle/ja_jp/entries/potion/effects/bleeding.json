@@ -1,0 +1,17 @@
+{
+    "name": "出血",
+    "icon": "attributeslib:textures/mob_effect/bleeding.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)出血$()のポーションは、$(l:apotheosis:village/fletching#broadhead)太矢じりの矢$()で与えることができるデバフ効果と同じものを与える。$(p)2秒毎に継続的なダメージを受ける。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "$(c)出血$()のレベルが上がると受けるダメージも増加する。$(p)$(c)出血$()によるダメージは防具の影響を受けない。"
+        }
+	]
+}

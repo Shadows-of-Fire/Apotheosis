@@ -1,0 +1,17 @@
+{
+    "name": "崩壊",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)崩壊$()ポーションはデバフ効果を与える。$(p)この効果を受けている間は、全ての受けるダメージが1レベルあたり20%増加してしまう。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "耐性エフェクトの対となる効果であり、耐性エフェクトに追加して付与されることもある。$(p)もし崩壊IIと耐性IIを受けているとき、受うるダメージは通常と変わらない。"
+        }
+	]
+}

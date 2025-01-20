@@ -1,0 +1,13 @@
+{
+    "name": "ライフスティール",
+    "icon": "attributeslib:textures/mob_effect/bleeding.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)ライフスティール$()能力は、与えた物理ダメージから体力に直接加算される割合で表される。$(p)通常、この能力を持つのは武器だけ。"
+        }
+	]
+}

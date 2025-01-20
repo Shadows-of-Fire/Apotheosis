@@ -1,0 +1,17 @@
+{
+    "name": "古の知識",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)古の知識$()ポーションはバフ効果を与える。$(p)この効果が続いている間は、モブを倒したときに得られる経験値が倍増する。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "倍率は、レベルIで4倍になる。$(p)レベルIIにおいては、8倍にもなる。"
+        }
+	]
+}

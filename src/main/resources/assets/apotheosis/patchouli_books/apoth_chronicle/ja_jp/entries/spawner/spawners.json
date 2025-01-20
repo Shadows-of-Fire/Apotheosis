@@ -1,0 +1,17 @@
+{
+    "name": "モブスポナー",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)モブスポナー$()は、エンティティを虚無から召喚できる魔法のブロックである。$(p)それはすでにご存じかもしれないが、ここでは新たな要素について説明しよう。$(p)Apotheosisの世界では、スポナーは$(9)シルクタッチ$()で回収が可能だ。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "そのような方法でスポナーの回収した場合、いつもより耐久値を余分に消費することになるだろう。$(p)モブスポナーは一連の$(l:apotheosis:spawner/stats)スポナー属性$()を有しており、それぞれがスポナーの機能を司っている。$(p)これらの属性は、$(l:apotheosis:spawner/modifiers)スポナー調整材$()によって変更ができる。"
+        }
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "ダメージ増加",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)ダメージ増加$()は他のダメージエンチャントと競合しなくなった。$(p)これは$(9)ダメージ増加$()と、通常は競合する他のダメージエンチャントを1つ持つことができることを意味する。"
+        }
+	]
+}

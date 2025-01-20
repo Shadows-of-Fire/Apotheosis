@@ -1,0 +1,19 @@
+{
+    "name": "ジェム加工",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/affix_loot",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+			"text": "$(9)ジェム加工台$()は、$(l:apotheosis:adventure/affix_loot/gems)ジェム$()のアップグレードに使用する。$(p)ジェムをアップグレードするには、$(9)ジェムの粉$()、$(9)レアリティ素材$()、そして同じレアリティのジェムがもう１つ必要になる。"
+		},
+		{
+			"title": "アップグレードコスト",
+            "type": "patchouli:text",
+            "text": "ジェムのアップグレードのコストは、レアリティに応じて増加する。$(p)強いジェムほど、より多くの$(9)ジェムの粉$()と、より上位の$(9)レアリティ素材$()を必要とする。$(p)正確なコストはGUIに表示される。"
+        }
+	]
+}

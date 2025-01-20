@@ -1,0 +1,20 @@
+{
+    "name": "注入エンチャント",
+    "icon": "apothic_enchanting:infused_hellshelf",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)注入エンチャント$()は、エンチャントテーブルを使った新しいクラフト方法である。$(p)各注入レシピには1つのアイテム入力と3つのステータス条件が必要となる。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "各ステータス要件は通常、少なくとも何らかの下限値を必要とし、上限値が要件になる場合もある。$(p)注入エンチャントは3つ目のスロットしか使わず、経験値は必要だがその消費量による変化は発生しない。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "アイテムをスロットに置くだけで注入エンチャントを始められる。$(p)正しいエンチャントステータスを保てている場合、3番目のスロットが明るくなり、クリックすると注入が行われる。"
+		}
+	]
+}

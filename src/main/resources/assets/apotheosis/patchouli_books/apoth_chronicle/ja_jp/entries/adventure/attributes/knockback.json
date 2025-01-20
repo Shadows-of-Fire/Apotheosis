@@ -1,0 +1,17 @@
+{
+    "name": "攻撃時のノックバック",
+    "icon": "minecraft:piston",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)攻撃時のノックバック$()は、敵を攻撃したときに、敵をノックバックさせる距離を表す。$(p)1ポイントごとに、攻撃された敵を半ブロック先に押し出す。$(p)武器や盾がこの能力を備える可能性がある。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "ノックバックのエンチャントはこの能力と同じボーナスを与えるが、最大値の上限にはカウントされない。"
+		}
+	]
+}

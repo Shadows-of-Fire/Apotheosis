@@ -1,0 +1,17 @@
+{
+    "name": "みなぎる活力",
+    "icon": "attributeslib:textures/mob_effect/vitality.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)みなぎる活力$()のポーションはバフ効果を与える。$(p)この効果を受けている間は、全ての回復効果が増幅される。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "レベル1あたりの回復増加量は20%。"
+        }
+	]
+}

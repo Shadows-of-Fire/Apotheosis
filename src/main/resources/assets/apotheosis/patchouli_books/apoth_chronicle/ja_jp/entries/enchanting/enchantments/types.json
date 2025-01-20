@@ -1,0 +1,28 @@
+{
+    "name": "エンチャントの種類",
+    "icon": "minecraft:emerald",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "一部のエンチャントには異なる色の名前が付けられていることに気付くだろう。$(p)Apotheosisはエンチャントに3つの新しいサブカテゴリーを導入している。$(p)各サブカテゴリにはいくつかのルールが課されている。"
+        },
+		{
+            "type": "patchouli:text",
+			"title": "傑作",
+            "text": "$(2)傑作$()エンチャントは最も強力で希少なエンチャントを表します。$(p)受け取るには常に最低でも55の$(fpower)が必要です。"
+        },
+		{
+            "type": "patchouli:text",
+			"title": "諸刃",
+            "text": "$(5)諸刃$()エンチャントは常に、良い効果と悪い効果を1つずつ持っています。$(p)受け取るには常に最低でも45の$(fpower)が必要です"
+        },
+		{
+            "type": "patchouli:text",
+			"title": "代償",
+            "text": "$(4)代償$()エンチャントには、その効果に応じた体力コストが付いて回ります。$(p)効果を受けるには常に少なくとも65$(fpower) が必要です。$(p)これらは $(c)呪い$()とみなされます."
+        }
+	]
+}

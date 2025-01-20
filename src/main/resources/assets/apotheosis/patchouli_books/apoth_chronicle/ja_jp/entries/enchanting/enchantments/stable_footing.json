@@ -1,0 +1,17 @@
+{
+    "name": "足場",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)足場$()はブーツのエンチャントである。$(p)飛行時の破壊速度ペナルティを無視するようになる。$(p)これは、地面に足がついていないことに対するすべてのペナルティが対象となる。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "$(9)水中採掘$()と組み合わせれば、水泳時の破壊速度を最大限に高められるだろう。"
+		}
+	]
+}

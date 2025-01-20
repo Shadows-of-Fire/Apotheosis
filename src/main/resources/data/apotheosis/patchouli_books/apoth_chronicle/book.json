@@ -11,21 +11,28 @@
 	"macros": {
 		"$(вечность)": "$(#3DB53D)Вечность$()",
 		"$(eterna)": "$(#3DB53D)Eterna$()",
+		"$(eterna_jajp)": "$(#3DB53D)エテルナ$()",
 		"$(кванты)": "$(#FC5454)Кванты$()",
 		"$(quanta)": "$(#FC5454)Quanta$()",
+		"$(quanta_jajp)": "$(#FC5454)クアンタ$()",
 		"$(таинство)": "$(#A800A8)Таинство$()",
 		"$(arcana)": "$(#A800A8)Arcana$()",
+		"$(arcana_jajp)": "$(#A800A8)アルカナ$()",
 		"$(исправление)": "$(#CCCC33)Исправление$()",
 		"$(rectification)": "$(#CCCC33)Rectification$()",
+		"$(rectification_jajp)": "$(#CCCC33)調和$()",
 		"$(retificacao)": "$(#CCCC33)retificação$()",
 		"$(подсказки)": "$(#00AAAA)Подсказки$()",
 		"$(clues)": "$(#00AAAA)Enchanting Clues$()",
+		"$(clues_jajp)": "$(#00AAAA)エンチャントのヒント$()",
 		"$(pistas)": "$(#00AAAA)pistas de encantamento$()",
 		"$(фмощность)": "$(#CC00CC)Финальная мощность$()",
 		"$(fpower)": "$(#CC00CC)Final Power$()",
+		"$(fpower_jajp)": "$(#CC00CC)最終的なエンチャントレベル$()",
 		"$(poderf)": "$(#CC00CC)poder final$()",
 		"$(нмощность)": "$(6)Начальная мощность$()",
 		"$(bpower)": "$(6)Base Power$()",
+		"$(bpower_jajp)": "$(6)基本能力$()",
 		"$(poderb)": "$(6)poder base$()"
 	}
 }

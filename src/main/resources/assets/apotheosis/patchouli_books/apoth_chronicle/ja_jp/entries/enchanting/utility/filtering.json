@@ -1,0 +1,27 @@
+{
+    "name": "エンチャントのフィルタリング",
+    "icon": "apothic_enchanting:filtering_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "エンチャントの過程で、特定のエンチャントを完全に排除したい場合もあるだろう。$(p)$(9)水生濾過の海の本棚$()を使用すると、まさにそれが可能になる。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apothic_enchanting:filtering_shelf",
+            "title": "水生濾過",
+            "text": "この本棚には、単一エンチャントの本を最大6冊まで置くことができ、置いたエンチャントはエンチャントテーブルに表示されなくなる。"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "使用方法は、ブラックリストに登録したい単一エンチャントの本を収納するだけです。$(p)その後、そのエンチャントはエンチャントテーブルで使用できなくなります。$(p)また、本棚は収納した本の数に応じて$(eterna_jajp)と$(arcana_jajp)を得ることができる。"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "注: 本は、模様入りの本棚を使用と同じ方法で収納でき、本棚が有効な本棚設置箇所になければ動作しない。$(p)ブラックリストに登録されたエンチャントは、$(l:apotheosis:enchanting/table/info)エンチャント情報画面$()に反映される。"
+        }
+    ]
+}

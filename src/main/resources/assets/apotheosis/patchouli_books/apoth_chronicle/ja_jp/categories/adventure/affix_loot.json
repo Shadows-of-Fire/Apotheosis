@@ -1,0 +1,7 @@
+{
+    "name": "称号付きアイテム",
+    "description": "冒険を進める中で、様々なボーナスを持つアイテムと出会うことになるでしょう。$(p)それらは称号付きアイテムと呼ばれる、さまざまな力を秘めた過去の遺物だ。",
+    "icon": "minecraft:chest",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

@@ -1,0 +1,13 @@
+{
+    "name": "リーチ距離",
+    "icon": "minecraft:iron_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)リーチ距離$()は、対象に手が届く最大距離を表す。対象に手が届くようになると、それを操作したりブロックなら破壊することができる。$(p)武器には役に立たないため、通常はブロックを壊す道具に付与される。 "
+        }
+	]
+}

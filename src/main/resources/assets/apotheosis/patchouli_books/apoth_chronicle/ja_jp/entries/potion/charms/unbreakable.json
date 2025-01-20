@@ -1,0 +1,17 @@
+{
+    "name": "壊れないチャーム",
+    "icon": "minecraft:enchanting_table",
+    "category": "apotheosis:potion/charms",
+	"flag": "&apotheosis:potion,apotheosis:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()によって、チャームを壊れないように加護できる。$(p)これにより、ポーション効果を永遠に受けることが可能になる。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "壊れないチャームを作る注入エンチャントは若干難しいが、$(p)$(l:apotheosis:enchanting/table/stats)エンチャント属性$()についてしっかりと理解すれば成し遂げられるだろう。"
+        }
+	]
+}

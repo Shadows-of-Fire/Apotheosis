@@ -1,0 +1,13 @@
+{
+    "name": "シールドバッシュ",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)シールドバッシュ$()は盾のエンチャント。$(p)盾を使った近接攻撃に追加ダメージを与える。$(p)ただし、$(9)シールドバッシュ$()で攻撃すると、追加で耐久値へのダメージが発生する。"
+        }
+	]
+}

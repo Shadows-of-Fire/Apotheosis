@@ -1,0 +1,13 @@
+{
+    "name": "モリ突き漁",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)モリ突き漁$() はトライデントのエンチャントである。$(p)トライデントを投げてモブを倒すと、1レベルにつき3.5％の確率でランダムな魚を数匹ドロップするようになる。"
+        }
+	]
+}

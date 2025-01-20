@@ -1,0 +1,36 @@
+{
+    "name": "エンチャント書庫",
+    "icon": "apothic_enchanting:library",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "エンチャント書庫とは、エンチャントを保管するシステムです。$(p)エンチャントされた本を差し込むだけで、本に書かれているエンチャントがすべてポイントとして蓄積されます。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "各書庫には$(6)レベル容量$()が設定されており、これは保存できるエンチャントの最高レベルを表している。$(p)上限を超えたエンチャントのポイントは消滅する。 "
+		},
+		{
+			"type": "patchouli:text",
+			"text": "保存されているエンチャントをクリックすると、そのエンチャントが1レベル抽出される。$(p)シフトクリックで保存されているエンチャントを最大限度で引き出すことができる。$(p)本は必要に応じて出力スロットに生成される。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "出力スロットに本を置いてエンチャントを追加することも可能。$(p)書庫には、各エンチャントに対してこれまでに収納された最大レベルが記録され、そのレベルまでしか抽出できない。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apothic_enchanting:library",
+			"text": "標準の$(9)エンチャント書庫$()の$(6)レベル容量$()は16(XVI)である。"
+		},
+		{
+			"type": "patchouli:spotlight",
+			"item": "apothic_enchanting:ender_library",
+			"link_recipe": true,
+			"text": "$(9)アレクサンドリア書庫$()の$(6)レベル容量$()は31(XXXI)となっている。$(p)直接クラフトすることはできず、$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()を使用して作成する必要がある。"
+		}
+	]
+}

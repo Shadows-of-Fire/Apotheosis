@@ -1,0 +1,8 @@
+{
+    "name": "エンチャントテーブル",
+    "description": "このセクションでは、エンチャントテーブルの変更点について説明する。",
+    "icon": "minecraft:enchanting_table",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting",
+	"sortnum": -2
+}

@@ -1,0 +1,13 @@
+{
+    "name": "火属性ダメージ",
+    "icon": "minecraft:blaze_powder",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)火属性ダメージ$()は、近接攻撃に追加されるボーナス魔法ダメージ。 さらに、対象を短時間炎上させる。ダメージが高いほど、炎上時間は長くなる。$(p)近接武器に付与される。"
+        }
+	]
+}

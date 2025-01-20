@@ -1,0 +1,17 @@
+{
+    "name": "エンチャント適性",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "バニラでは、明確に$(l:apotheosis:enchanting/table/enchantability)アイテムのエンチャント適性$()が指定されていないすべてのアイテムのデフォルトは0である。$(p)Apotheosisの世界ではデフォルトは1に変更される。$(p)これは、いくつかのアイテムを意図せずエンチャント可能にするという副作用がある。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "この調整は、明確な値を持つアイテムのエンチャント適性を変更するものではない。$(p)エンチャント適性が0のアイテムは、絶対にエンチャントできない。"
+        }
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "移動速度",
+    "icon": "minecraft:leather_boots",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)移動速度$()は、通常の歩行速度に対する相対的な移動速度である。$(p)この能力は、ほぼすべてのアイテムに付与される。"
+        }
+	]
+}

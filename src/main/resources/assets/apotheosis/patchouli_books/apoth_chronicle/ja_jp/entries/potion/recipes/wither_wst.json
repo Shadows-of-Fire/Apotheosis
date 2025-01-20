@@ -1,0 +1,19 @@
+{
+    "name": "ウィザー",
+    "icon": "minecraft:textures/mob_effect/wither.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "&apotheosis:potion,apotheosis:wstloaded",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)ウィザー$()はデバフ効果だがバニラではポーション作成は不可。$(p)この効果を受けてしまうと、毎ティックの継続ダメージを受けることになる。$(p)毒とは違い、この効果は放置すればそのまま死因になる。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "wstweaks:fragment",
+            "text": "奇妙なポーションとウィザースケルトンの頭蓋骨の破片を材料としてポーションをクラフトできる。$(p)いつもの材料を使って、効果の強化や時間延長、スプラッシュ化が可能。"
+        }
+	]
+}

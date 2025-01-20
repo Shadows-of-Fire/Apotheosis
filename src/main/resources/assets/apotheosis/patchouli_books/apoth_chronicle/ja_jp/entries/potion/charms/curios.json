@@ -1,0 +1,13 @@
+{
+    "name": "Curios",
+    "icon": "curios:textures/slot/empty_charm_slot.png",
+    "category": "apotheosis:potion/charms",
+	"flag": "&apotheosis:potion,apotheosis:curiosloaded",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Curios$()をインストールしていれば、ポーションチャームは$(9)チャーム$()スロットに装備できる。$(p)チャームスロットに入れたポーションチャームは、インベントリ内に置いたときと同じに扱われる。"
+        }
+	]
+}
