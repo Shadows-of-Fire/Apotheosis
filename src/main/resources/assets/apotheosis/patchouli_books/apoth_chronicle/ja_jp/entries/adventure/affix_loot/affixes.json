@@ -26,7 +26,7 @@
 		},
 		{
 			"type": "patchouli:text",
-			"title": "Sockets",
+			"title": "ソケット",
 			"text": "ソケットは特別なタイプの称号の一種であり、$(l:apotheosis:adventure/affix_loot/gems)ジェム$()をセットするための器のような印をもたらす。$(p)ジェムは素晴らしいボーナスを与えてくれるが、見つけるのは少々難しいかもしれない。"
 		},
 		{

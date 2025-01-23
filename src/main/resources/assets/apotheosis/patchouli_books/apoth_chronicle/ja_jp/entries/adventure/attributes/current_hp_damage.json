@@ -1,5 +1,5 @@
 {
-    "name": "HP比率ダメージ",
+    "name": "HP割合ダメージ",
     "icon": "minecraft:dragon_head",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)HP比率ダメージ$()は攻撃命中時のダメージの一種。 命中するたびに、相手の現在体力の一定割合を物理ダメージとして追加で与える。$(p)この特性は重量武器のみに適用される。"
+            "text": "$(9)HP割合ダメージ$()は攻撃命中時のダメージの一種。 命中するたびに、相手の現在体力の一定割合を物理ダメージとして追加で与える。$(p)この特性は重量武器のみに適用される。"
         }
 	]
 }

@@ -164,7 +164,7 @@
     "affix.apotheosis:ranged/mob_effect/ensnaring": "罠にかける",
     "affix.apotheosis:ranged/mob_effect/ensnaring.suffix": "《捕食者》",
 
-    "affix.apotheosis:shield/mob_effect/venomous": "触りたくない",
+    "affix.apotheosis:shield/mob_effect/venomous": "体に悪い",
     "affix.apotheosis:shield/mob_effect/venomous.suffix": "《毒蛇》",
 
     "affix.apotheosis:ranged/mob_effect/fleeting": "軽快な", 
@@ -351,13 +351,13 @@
     "affix.apotheosis:armor/dmg_reduction/runed": "加護を得た",
     "affix.apotheosis:armor/dmg_reduction/runed.suffix": "《魔法障壁》",
 
-    "affix.apotheosis:armor/dmg_reduction/blast_forged": "カチカチの",
+    "affix.apotheosis:armor/dmg_reduction/blast_forged": "カチカチな",
     "affix.apotheosis:armor/dmg_reduction/blast_forged.suffix": "《息災》",
 
     "affix.apotheosis:armor/dmg_reduction/dwarven": "ドワーフの",
     "affix.apotheosis:armor/dmg_reduction/dwarven.suffix": "《活火山》",
 
-    "affix.apotheosis:armor/dmg_reduction/feathery": "フワフワの",
+    "affix.apotheosis:armor/dmg_reduction/feathery": "フワフワな",
     "affix.apotheosis:armor/dmg_reduction/feathery.suffix": "《羽衣》",
 
     "affix.apotheosis:shield/attribute/stalwart": "屈強な",
@@ -392,7 +392,7 @@
     "affix.apotheosis:breaker/ability/sandforming.suffix": "《砂海》",
     "affix.apotheosis:breaker/ability/sandforming.desc": "砂とそれに類するブロックを同系統の他のブロックに変換する。",
 
-    "affix.apotheosis.stoneforming.desc": "[%s]を壊したとき、%sに変換する。シフト右クリックで変換元のブロックを選択可能。",
+    "affix.apotheosis.stoneforming.desc": "[%s]を壊したとき、%sに変換する。シフト右クリックで変換先のブロックを選択可能。",
     "affix.apotheosis.stoneforming.target_updated": "対象のブロックが更新されました: %s",
 
     "affix.apotheosis.target.attack_self": "ヒット時、%sを得る",
@@ -405,7 +405,7 @@
     "affix.apotheosis.target.block_self": "盾ブロック時、%sを得る",
     "affix.apotheosis.target.block_attacker": "盾ブロック時、%sを与える",
     "affix.apotheosis.cooldown": "[⌛ %s]",
-    "affix.apotheosis.stacking": "[効果は蓄積する]",
+    "affix.apotheosis.stacking": "[累積効果]",
 
     "affix.apotheosis:durable.desc": "%s%% の確率でこのアイテムの耐久値が減らない",
     "affix.apotheosis:socket.desc": "ソケット付き (%s)",
@@ -504,7 +504,7 @@
     "item.apotheosis.uncommon_material": "使い古された生地",
     "item.apotheosis.rare_material": "輝く水晶片",
     "item.apotheosis.epic_material": "不思議な砂",
-    "item.apotheosis.mythic_material": "那由多の真珠",
+    "item.apotheosis.mythic_material": "神々の真珠",
     "item.apotheosis.ancient_material": "無限の顕現",
     "item.apotheosis.gem_fused_slate": "ジェムが溶けた石版",
 
@@ -535,7 +535,7 @@
     "block.apotheosis.augmenting_table": "強化精錬作業台",
     "block.apotheosis.augmenting_table.desc": "強化の紋章を使って称号を個別に強化する。",
 
-    "button.apotheosis.salvage": "解体アイテム",
+    "button.apotheosis.salvage": "解体を実行",
     "button.apotheosis.no_salvage": "アイテムが選択されていません",
     "button.apotheosis.no_salvage_all": "インベントリに有効なアイテムがありません",
     "button.apotheosis.upgrade": "ジェムの等級を上げる。",
@@ -553,7 +553,7 @@
     "container.apotheosis.reforge": "リフォージ",
     "text.apotheosis.cost": "%sx %s",
     "text.apotheosis.reforge_cost": "リフォージコスト",
-    "text.apotheosis.salvage_results": "リフォージ結果",
+    "text.apotheosis.salvage_results": "解体結果",
     "text.apotheosis.unique": "ユニーク",
     "text.apotheosis.results": "結果",
     "text.apotheosis.facets": "ファセット: %s",

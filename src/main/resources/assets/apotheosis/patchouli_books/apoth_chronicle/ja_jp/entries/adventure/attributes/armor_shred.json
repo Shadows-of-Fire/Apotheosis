@@ -1,5 +1,5 @@
 {
-    "name": "装甲破砕",
+    "name": "アーマー破壊",
     "icon": "attributeslib:textures/mob_effect/sundering.png",
     "category": "apotheosis:adventure/attributes",
 	"flag": "apotheosis:adventure",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)装甲破砕$()は攻撃時に対象の防具の何割かを無視することが出来る。$(p)$(9)装甲破砕$()は$(9)装甲貫通$()の前に適用される。"
+            "text": "$(9)アーマー破壊$()は攻撃時に対象の防御力の何割かを無視することが出来る。$(p)$(9)アーマー破壊$()は$(9)アーマー貫通$()の前に適用される。"
         }
 	]
 }
