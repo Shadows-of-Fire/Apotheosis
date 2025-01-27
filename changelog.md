@@ -1,3 +1,7 @@
+## 7.4.5
+* Fixed TOP always showing an error for Mob Spawners on dedicated servers.
+* okazako: Updated Japanese translation.
+
 ## 7.4.4
 * Melncat: Added a config toggle for Capturing information in JEI.
 * Cicopath: Updated `rarity_materials.json` to have optional entries.
