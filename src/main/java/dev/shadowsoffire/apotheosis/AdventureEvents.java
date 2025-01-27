@@ -94,7 +94,7 @@ public class AdventureEvents {
         WorldTierCommand.register(e.getRoot());
 
         LiteralArgumentBuilder<CommandSourceStack> debug = Commands.literal("debug").requires(c -> c.hasPermission(4));
-        DebugWeightCommand.register(debug);
+        DebugWeightCommand.register(debug, e.getContext());
         e.getRoot().then(debug);
     }
 
