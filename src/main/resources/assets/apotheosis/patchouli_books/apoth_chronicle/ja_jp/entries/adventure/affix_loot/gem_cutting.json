@@ -1,5 +1,5 @@
 {
-    "name": "宝石カット",
+    "name": "ジェム加工",
     "icon": "apotheosis:gem_cutting_table",
     "category": "apotheosis:adventure/affix_loot",
 	"flag": "apotheosis:adventure",
@@ -8,13 +8,13 @@
         {
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:gem_cutting_table",
-            "title": "宝石カッティングテーブル",
-			"text": "$(9)宝石カッティングテーブル$()は、$(l:apotheosis:adventure/affix_loot/gems)宝石$()のアップグレードに使用されます。$(p)宝石をアップグレードするには、$(9)宝石の粉$()、$(9)レアリティの材料$()、同じレアリティの宝石2個が必要です。"
+            "title": "ジェム加工台",
+			"text": "$(9)ジェム加工台$()は、$(l:apotheosis:adventure/affix_loot/gems)ジェム$()のアップグレードに使用されます。$(p)ジェムをアップグレードするには、$(9)ジェムの粉$()、$(9)レアリティの材料$()、同じレアリティのジェム2個が必要です。"
 		},
 		{
 			"title": "アップグレードコスト",
             "type": "patchouli:text",
-            "text": "宝石のアップグレードのコストは、レアリティに応じて増加します。$(p)強い宝石ほど、より多くの$(9) 宝石の粉$()と、より上位の$(9)レアリティの材料$()を必要とします。$(p)正確なコストはGUIに表示されます。"
+            "text": "ジェムのアップグレードのコストは、レアリティに応じて増加します。$(p)強いジェムほど、より多くの$(9) ジェムの粉$()と、より上位の$(9)レアリティの材料$()を必要とします。$(p)正確なコストはGUIに表示されます。"
         }
 	]
 }

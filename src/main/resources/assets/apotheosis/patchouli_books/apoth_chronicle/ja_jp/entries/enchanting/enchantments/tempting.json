@@ -1,5 +1,5 @@
 {
-    "name": "誘惑",
+    "name": "フェロモン",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(9)誘惑$()はクワのエンチャントです。$(p)このエンチャントが付いたカマを持つと、すべての動物が繁殖アイテムを持っているかのようについてきます。"
+            "text": "$(9)フェロモン$()はクワのエンチャントです。$(p)このエンチャントが付いたカマを持つと、すべての動物が繁殖アイテムを持っているかのようについてきます。"
         }
 	]
 }

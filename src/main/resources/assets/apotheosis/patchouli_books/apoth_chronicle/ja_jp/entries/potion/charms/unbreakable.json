@@ -1,5 +1,5 @@
 {
-    "name": "不可壊のチャーム",
+    "name": "不壊のチャーム",
     "icon": "minecraft:enchanting_table",
     "category": "apotheosis:potion/charms",
 	"flag": "&apotheosis:potion,apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()によって、チャームを不可壊にすることができます。$(p)これにより、ポーションの効果を無制限に持続させることができます。"
+            "text": "$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()によって、チャームを壊れないようにすることができます。$(p)これにより、ポーションの効果を無制限に持続させることができます。"
         },
 		{
             "type": "patchouli:text",

@@ -1,5 +1,5 @@
 {
-    "name": "時代の知識",
+    "name": "温故知新",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(2)時代の知識$()は剣の傑作エンチャントです。$(p)Mobを倒すと、ドロップしたものは全て経験値に変換されます。$(p)個々のアイテムには同じ量の経験値の価値があります。"
+            "text": "$(2)温故知新$()は剣の傑作エンチャントです。$(p)Mobを倒すと、ドロップしたものは全て経験値に変換されます。$(p)個々のアイテムには同じ量の経験値の価値があります。"
         },
 		{
 			"type": "patchouli:text",

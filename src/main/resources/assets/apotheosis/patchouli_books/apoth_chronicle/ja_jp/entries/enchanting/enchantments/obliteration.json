@@ -1,5 +1,5 @@
 {
-    "name": "抹殺",
+    "name": "細断",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": " $(l:apotheosis:enchanting/anvil/obliteration)抹殺を参照$()"
+            "text": " $(l:apotheosis:enchanting/anvil/obliteration)細断を参照$()"
         }
 	]
 }

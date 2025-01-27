@@ -1,5 +1,5 @@
 {
-    "name": "エンチャント図書館",
+    "name": "エンチャント書庫",
     "icon": "apotheosis:library",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
@@ -7,11 +7,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "エンチャント図書館とは、エンチャントを保管するシステムです。$(p)エンチャントされた本を差し込むだけで、本に書かれているエンチャントがすべてポイントとして蓄積されます。"
+            "text": "エンチャント書庫とは、エンチャントを保管するシステムです。$(p)エンチャントされた本を差し込むだけで、本に書かれているエンチャントがすべてポイントとして蓄積されます。"
         },
 		{
 			"type": "patchouli:text",
-			"text": "各図書館には$(6)レベル容量$()が設定されており、これは保存できるエンチャントの最高レベルを表しています。$(p)余ったエンチャントは消滅します。 "
+			"text": "各書庫には$(6)レベル容量$()が設定されており、これは保存できるエンチャントの最高レベルを表しています。$(p)余ったエンチャントは消滅します。 "
 		},
 		{
 			"type": "patchouli:text",
@@ -24,13 +24,13 @@
 		{
             "type": "patchouli:crafting",
 			"recipe": "apotheosis:library",
-			"text": "標準の $(9)エンチャント図書館$()の$(6)レベル容量$()は16(XVI)です。"
+			"text": "標準の $(9)エンチャント書庫$()の$(6)レベル容量$()は16(XVI)です。"
 		},
 		{
 			"type": "patchouli:spotlight",
 			"item": "apotheosis:ender_library",
 			"link_recipe": true,
-			"text": "$(9)アレクサンドリア図書館$()の$(6)レベル容量$()は31(XXXI)です。$(p)直接クラフトすることはできず、$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()を使用して作成する必要があります。"
+			"text": "$(9)アレクサンドリア書庫$()の$(6)レベル容量$()は31(XXXI)です。$(p)直接クラフトすることはできず、$(l:apotheosis:enchanting/table/infusion)注入エンチャント$()を使用して作成する必要があります。"
 		}
 	]
 }

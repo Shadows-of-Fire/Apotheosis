@@ -1,5 +1,5 @@
 {
-    "name": "鉱夫の熱情",
+    "name": "鉱夫の熱意",
     "icon": "minecraft:enchanted_book",
     "category": "apotheosis:enchanting/enchantments",
 	"flag": "apotheosis:enchanting",
@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "$(5)鉱夫の熱情$()はすべての道具に適用できる湾曲エンチャントです。$(p)ブロックを高速で破壊しますが、瞬時には破壊しません。$(p)$(9)効率強化$()と競合します。"
+            "text": "$(5)鉱夫の熱意$()はすべての道具に適用できる諸刃エンチャントです。$(p)ブロックを高速で破壊しますが、瞬時には破壊しません。$(p)$(9)効率強化$()と競合します。"
         },
 		{
             "type": "patchouli:text",

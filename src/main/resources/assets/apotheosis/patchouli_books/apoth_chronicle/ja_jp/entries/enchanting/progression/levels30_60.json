@@ -14,7 +14,7 @@
             "type": "patchouli:crafting",
 			"title": "レベル45に到達する",
 			"recipe": "apotheosis:seashelf",
-			"text": "ネザーが苦手なら、思い切って海に出て、代わりに$(9)海の木棚$()を作ることもできます。"
+			"text": "ネザーが苦手なら、思い切って海に出て、代わりに$(9)海の本棚$()を作ることもできます。"
 		},
 		{
             "type": "patchouli:spotlight",
@@ -38,7 +38,7 @@
             "type": "patchouli:crafting",
 			"title": "その他のステータス",
 			"recipe": "apotheosis:rectifier",
-			"text": "アメジストの供給が安定しているなら、$(9)修正器$()を作って$(#ffff00)修正$()をさらに増やすこともできます。 "
+			"text": "アメジストの供給が安定しているなら、$(9)調和する本棚$()を作って$(#ffff00)調和$()の要素をさらに増やすこともできます。 "
 		}
 	]
 }
