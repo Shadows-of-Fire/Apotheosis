@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 public class SpawnerTOPPlugin implements TOPCompat.Provider {
 
@@ -21,12 +22,20 @@ public class SpawnerTOPPlugin implements TOPCompat.Provider {
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo info, Player player, Level level, BlockState state, IProbeHitData hitData) {
         if (level.getBlockEntity(hitData.getPos()) instanceof ApothSpawnerTile spw) {
-            if (Screen.hasControlDown()) {
+            // No way to access ctrl status on the server, so we'll just skip the ability to squish this.
+            if (FMLEnvironment.dist.isDedicatedServer() || ClientAccess.hasControlDown()) {
                 SpawnerStats.generateTooltip(spw, info::mcText);
             }
             else {
                 info.mcText(Component.translatable("misc.apotheosis.ctrl_stats"));
             }
+        }
+    }
+
+    private static class ClientAccess {
+
+        public static boolean hasControlDown() {
+            return Screen.hasControlDown();
         }
     }
 
