@@ -24,9 +24,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 /**
  * Loot Pinata
@@ -72,6 +75,19 @@ public class FestiveAffix extends Affix {
     // EventPriority.LOW
     public static void markEquipment(LivingDeathEvent e) {
         if (e.getEntity() instanceof Player || e.getEntity().getPersistentData().getBoolean("apoth.no_pinata")) return;
+
+        IItemHandler inv = e.getEntity().getCapability(Capabilities.ItemHandler.ENTITY);
+
+        if (inv instanceof IItemHandlerModifiable iihm) {
+            for (int i = 0; i < inv.getSlots(); i++) {
+                ItemStack stack = inv.getStackInSlot(i);
+                if (!stack.isEmpty()) {
+                    stack.set(Components.FESTIVE_MARKER, true);
+                    iihm.setStackInSlot(i, stack);
+                }
+            }
+        }
+
         e.getEntity().getAllSlots().forEach(i -> {
             if (!i.isEmpty()) {
                 i.set(Components.FESTIVE_MARKER, true);
@@ -85,9 +101,11 @@ public class FestiveAffix extends Affix {
         if (dead instanceof Player || dead.getPersistentData().getBoolean("apoth.no_pinata")) return;
         if (e.getSource().getEntity() instanceof Player player && !e.getDrops().isEmpty()) {
             if (inst != null && inst.isValid() && player.level().random.nextFloat() < this.getTrueLevel(inst.rarity().get(), inst.level())) {
+
                 player.level().playSound(null, dead.getX(), dead.getY(), dead.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F,
                     (1.0F + (player.level().random.nextFloat() - player.level().random.nextFloat()) * 0.2F) * 0.7F);
                 ((ServerLevel) player.level()).sendParticles(ParticleTypes.EXPLOSION_EMITTER, dead.getX(), dead.getY(), dead.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
+
                 List<ItemEntity> drops = new ArrayList<>(e.getDrops());
                 for (ItemEntity item : drops) {
                     if (item.getItem().getOrDefault(Components.FESTIVE_MARKER, false)) {
@@ -97,6 +115,7 @@ public class FestiveAffix extends Affix {
                         e.getDrops().add(new ItemEntity(player.level(), item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
                     }
                 }
+
                 for (ItemEntity item : e.getDrops()) {
                     item.setPos(dead.getX(), dead.getY(), dead.getZ());
                     item.setDeltaMovement(-0.3 + dead.level().random.nextDouble() * 0.6, 0.3 + dead.level().random.nextDouble() * 0.3, -0.3 + dead.level().random.nextDouble() * 0.6);
