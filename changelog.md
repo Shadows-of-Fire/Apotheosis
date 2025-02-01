@@ -1,3 +1,7 @@
+## 7.4.6
+* Fix certain entity inventories being duplicated when using Loot Pinata.
+* okazako: Updated Japanese translation.
+
 ## 7.4.5
 * Fixed TOP always showing an error for Mob Spawners on dedicated servers.
 * okazako: Updated Japanese translation.
