@@ -1,0 +1,55 @@
+{
+    "name": "エンチャント属性",
+    "icon": "minecraft:bookshelf",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Apotheosisでは、エンチャント結果はレベル以外によっても変化する。$(p)現在、5つの新しいエンチャント属性がある。$(p)エンチャント属性を提供するブロック（ロウソクなど）は、ツールチップに属性とその値が表示される。"
+        },
+		{
+			"type": "patchouli:text",
+			"title": "エテルナ",
+			"text": "$(eterna_jajp)はエンチャントのメイン属性となっている。$(p)$(eterna_jajp)1ポイントにつき、最大エンチャントレベルを2上昇させる。$(p)いくつかのブロックによって、$(eterna_jajp)をその時の上限値まで底上げできる。"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "クアンタ",
+			"anchor": "quanta",
+			"text": "$(quanta_jajp)は第二属性であり、エンチャントの変化の幅を制御する。$(p)エンチャントのプロセスには、費やしたレベルである$(bpower_jajp)と、様々な調整の結果として得られる$(fpower_jajp)という要素がある。$(p)$(quanta_jajp)はこの調整プロセスにおける因子の1つである。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "$(4)1 - クアンタ$()から$(9)1 + クアンタ$()の間から値が選ばれる。$(p)$(fpower_jajp)は、その値と$(bpower_jajp)の積となる。$(p)$(quanta_jajp)が大きくなるとその幅も大きくなるので、それに伴い$(fpower_jajp)は不安定になる。"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "アルカナ",
+			"text": "もう1つの第二属性は$(arcana_jajp)と呼ばれる。これはレアリティの重み付けを制御し、 あるしきい値ごとに追加のエンチャントが得られることを保証する。$(p)例えば$(arcana_jajp)が25%の場合、最低でも2つのエンチャントが付与される。また75%の場合は、その数は3つになる。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "基本設定としては、レアリティには以下の重み付けがなされている。$(p)コモン: 10$(br)アンコモン: 5$(br)レア: 3$(br)ベリーレア: 1$(p)$(arcana_jajp)が10%増えるごとに重みは変化していき、最終的に完全に逆転する（ベリーレアの重みが最も大きくなる）。$(p)$(arcana_jajp)バーにカーソルを合わせると、現在の重み付けを見ることができる。"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "調和",
+			"anchor": "rectification",
+			"text": "$(rectification_jajp)は第三属性であり、$(quanta_jajp)調整の下限値に直接影響を与える。$(p)上述のとおり$(4)最小出力$()は$(4)1 - クアンタ$()に等しい。ここで$(p)$(rectification_jajp)要素（Rと置く）を取り入れると、$(4)最小出力$()を求める計算式は、$(4)1 - (1 - R) * クアンタ$()と書ける。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "ここに書いてある全てを理解できなくてもあまり大きな問題にはならないだろう。$(p)単純に、高い$(rectification_jajp)値は良いことだ、と覚えておくとよいだろう。$(p)$(rectification_jajp)要素は負の値をとることもあるが、これはいつも悪い結果に繋がる。"
+		},
+		{
+			"type": "patchouli:text",
+			"title": "ヒント",
+			"text": "$(clues_jajp)はもう１つの第三属性である。$(p)$(clues_jajp)の値が1増えると、結果のプレビューに表示されるエンチャントの数が1つ増える。$(p)$(clues_jajp)によって付与可能なエンチャント数の上限まで見通せているとき、表示テキストが少し変化するだろう。"
+		},
+		{
+			"type": "patchouli:text",
+			"text": "$(clues_jajp)の値はゼロにすることも可能だが、そうなるとエンチャントのプレビューには何も表示されない。"
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "ダメージ軽減破壊",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)ダメージ軽減破壊$()は、攻撃時に対象のダメージ軽減の一定割合を無視することができる。$(p)$(9)ダメージ軽減破壊$()は$(9)ダメージ軽減貫通$()の前に適用されます。"
+        }
+	]
+}

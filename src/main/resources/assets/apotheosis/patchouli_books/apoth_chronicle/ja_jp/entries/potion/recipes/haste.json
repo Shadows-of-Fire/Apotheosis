@@ -1,0 +1,19 @@
+{
+    "name": "採掘速度上昇",
+    "icon": "minecraft:textures/mob_effect/haste.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)採掘速度上昇$()は便利なエフェクトではあるものの、その効果をもつポーションを作成するレシピはバニラに存在しない。$(p)レベル1につき採掘速度を20%底上げする。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "minecraft:mushroom_stew",
+            "text": "奇妙なポーションとキノコシチューを材料としてポーションを作成できる。$(p)いつもの材料を使って、効果の強化や時間延長、スプラッシュ化が可能。"
+        }
+	]
+}

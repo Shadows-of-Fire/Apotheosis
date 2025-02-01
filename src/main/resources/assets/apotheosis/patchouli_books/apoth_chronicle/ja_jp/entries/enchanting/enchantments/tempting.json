@@ -1,0 +1,13 @@
+{
+    "name": "フェロモン",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)フェロモン$()はクワのエンチャントである。$(p)このエンチャントが付いたクワを持つと、すべての動物が繁殖アイテムを持っているかのように後をついてくるようになる。"
+        }
+	]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "村モジュール",
+    "description": "村モジュールは、村や村人に関連するさまざまなものを追加します。",
+    "icon": "minecraft:textures/mob_effect/hero_of_the_village.png",
+	"flag": "apotheosis:village"
+}

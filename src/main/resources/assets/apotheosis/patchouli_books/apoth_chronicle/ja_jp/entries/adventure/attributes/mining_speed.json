@@ -1,0 +1,13 @@
+{
+    "name": "採掘速度",
+    "icon": "minecraft:netherite_pickaxe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)採掘速度$()を上げると、ブロックを破壊する速度が上がる。基本値である1.0では、いつも通りにブロックを破壊する。$(p)ツルハシやシャベルによって得られる能力。"
+        }
+	]
+}

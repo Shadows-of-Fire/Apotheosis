@@ -1,0 +1,17 @@
+{
+    "name": "経験値コスト",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "バニラでは、レベルを消費するもの（エンチャントテーブルや金床）は、レベルがいくつであっても一定量のレベルを消費する。$(p)Apotheosisの世界では、これらが\"最適な\"量の経験値を消費するように変更されている。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "エンチャントテーブルの場合、エンチャントを行うために必要なレベル数を常にぴったり持っているかのように、経験値が消費されます。$(p)金床もほぼ同様ですが、コストが (上位Nレベルのみではなく) ゼロから始まります。"
+        }
+	]
+}

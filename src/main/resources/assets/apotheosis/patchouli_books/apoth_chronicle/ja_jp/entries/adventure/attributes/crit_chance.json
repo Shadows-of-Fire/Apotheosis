@@ -1,0 +1,17 @@
+{
+    "name": "クリティカルチャンス",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)クリティカルチャンス$()は、与えたダメージがクリティカルになる確率である。100%以上の値であれば、多重クリティカルが可能になる。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "クリティカルが与えるダメージ量は$(l:apotheosis:adventure/attributes/crit_damage)クリティカルダメージ$()に依存する。"
+		}
+	]
+}

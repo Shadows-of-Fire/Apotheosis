@@ -1,0 +1,17 @@
+{
+    "name": "温故知新",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)温故知新$()は剣の傑作エンチャントである。$(p)Mobを倒すと、ドロップしたものは全て経験値に変換される。$(p)個々のアイテムは同じ量の経験値に変換される。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "そのため、大量のアイテムをドロップするMobを倒すのが最も効率的になるだろう。$(p)アイテムごとの経験値はエンチャントレベルに応じて増加する。$(p)なお、プレイヤーを倒してもアイテムが経験値に変換されることはない。"
+		}
+	]
+}

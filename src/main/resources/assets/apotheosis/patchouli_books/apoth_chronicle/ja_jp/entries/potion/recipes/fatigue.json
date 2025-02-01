@@ -1,0 +1,19 @@
+{
+    "name": "採掘速度低下",
+    "icon": "minecraft:textures/mob_effect/mining_fatigue.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)採掘速度低下$()は、通常はガーディアン族からのみ受けるデバフ効果だ.$(p)この効果を受けると、1レベルあたり20%だけ採掘速度が低下してしまう。$(p)$(9)採掘速度上昇$()と対になる効果である。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "minecraft:fermented_spider_eye",
+            "text": "発酵したクモの目と採掘速度上昇のポーションからクラフトできる。$(p)いつもの材料を使って、効果の強化や時間延長、スプラッシュ化が可能。"
+        }
+	]
+}

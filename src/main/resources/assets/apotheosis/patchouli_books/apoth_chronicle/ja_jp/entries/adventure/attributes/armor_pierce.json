@@ -1,0 +1,13 @@
+{
+    "name": "アーマー貫通",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)アーマー貫通$()は、攻撃時に対象の防御力を一律無視することができる。$(p)余分なアーマー貫通は、対象の防御力をマイナスにすることがある。"
+        }
+	]
+}

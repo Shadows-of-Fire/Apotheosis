@@ -1,0 +1,32 @@
+{
+    "name": "レベル80～100",
+    "icon": "apothic_enchanting:endshelf",
+    "category": "apotheosis:enchanting/progression",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"title": "レベル90への道",
+			"item": "apothic_enchanting:infused_breath",
+			"text": "最終段階に到達するには、レベル80のテーブルと$(9)ドラゴンブレス$()の入手が必要。$(p)これらを使えば、$(9)エンドの本棚$()の中心的な構成要素である$(9)注入されたドラゴンブレス$()を作ることが可能になる。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル90への道",
+			"recipe": "apothic_enchanting:endshelf",
+			"recipe2": "apothic_enchanting:pearl_endshelf"
+		},
+		{
+            "type": "patchouli:spotlight",
+			"title": "レベル100への道",
+			"item": "minecraft:dragon_head",
+			"text": "エンチャントテーブルが到達できる最大レベルはレベル100だが、これだけの力を発揮できる本棚は1つに限られる。$(p)この本棚を作るには、$(9)ドラゴンの頭$()を回収するために、あえてエンドの外縁を目指すことになる。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"title": "レベル100への道",
+			"recipe": "apothic_enchanting:draconic_endshelf",
+			"text": "$(9)竜のエンドの本棚$()1つで、テーブルをレベル90からレベル100に引き上げるのに十分な力を発揮するだろう。$(p)ただし、その他のステータスボーナスは無いので、別の手段を考える必要がある。"
+		}
+	]
+}

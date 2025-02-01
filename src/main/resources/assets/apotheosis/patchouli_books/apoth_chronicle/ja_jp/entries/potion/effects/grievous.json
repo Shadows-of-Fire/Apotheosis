@@ -1,0 +1,17 @@
+{
+    "name": "重傷",
+    "icon": "attributeslib:textures/mob_effect/grievous.png",
+    "category": "apotheosis:potion/effects",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(c)重傷()ポーションはデバフ効果を与える。$(p)この効果を受けている間は、全ての回復効果が弱くなってしまう。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "回復効果の減少は、1レベルあたり40%となる。$(p)レベルIII以上になると、全く回復しなくなる。"
+        }
+	]
+}

@@ -1,0 +1,19 @@
+{
+    "name": "捕獲",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:spawner/spawner",
+	"flag": "apotheosis:spawner",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "モブスポナーでスポーンするモブは、$(9)スポーンエッグ$()で変更できる。$(p)通常ではスポーンエッグは手に入らないが、Apotheosisには$(9)捕獲$()エンチャントで入手できるようになる。なお、このエンチャントは剣に付与が可能。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"item": "minecraft:cow_spawn_egg",
+			"title": "スポーンエッグ",
+            "text": "$(9)捕獲$()エンチャントのレベル1あたり0.4%の確率で対象エンティティを倒したときスポーンエッグがドロップする。 $(p)スポーンエッグが存在しないエンティティ(JEIで確認できる)からは何も入手できない。"
+        }
+	]
+}

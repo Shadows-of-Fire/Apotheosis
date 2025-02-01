@@ -1,0 +1,13 @@
+{
+    "name": "ダメージ軽減貫通",
+    "icon": "attributeslib:textures/mob_effect/sundering.png",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)ダメージ軽減貫通$()は、攻撃時に対象のダメージ軽減を一律無視することができる。$(p)ダメージ軽減貫通を余分に与えても、攻撃対象のダメージ軽減がマイナスになることはない。"
+        }
+	]
+}

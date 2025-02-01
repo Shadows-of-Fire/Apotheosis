@@ -1,0 +1,17 @@
+{
+    "name": "反射防御",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)反射防御$()は盾のエンチャントである。$(p)ブロックしたすべての攻撃に対して、ダメージの一部を攻撃者に返す。$(p)具体的には、ブロックしたダメージの15％が反射される。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "反射したダメージは魔法ダメージに変換される。$(p)十分に高いレベルの$(9)反射防御$()は元のダメージ以上を与えることになる。"
+        }
+	]
+}

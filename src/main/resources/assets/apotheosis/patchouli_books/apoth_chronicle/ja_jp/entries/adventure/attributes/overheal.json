@@ -1,0 +1,13 @@
+{
+    "name": "オーバーヒール",
+    "icon": "minecraft:experience_bottle",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)オーバーヒール$()を得ると、与えた物理ダメージの一部が衝撃吸収シールドとして得られる。 ライフスティールとは異なり、オーバーヒールは体力が最大のときに効果を発揮する。$(p)この能力は重量武器にのみ付与される。"
+        }
+	]
+}

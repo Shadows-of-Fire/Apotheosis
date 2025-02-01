@@ -1,0 +1,17 @@
+{
+    "name": "運",
+    "icon": "minecraft:rabbit_foot",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)運$()はあなたを幸運をもたらす！つまり、より良い戦利品がドロップされる可能性が高まる。$(p)あらゆるものが幸運に影響を受ける。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "運は負の値にもなりうるが、その場合にはチェストの中身はゴミ箱になりドロップ品を手に入れるはさらに難しくなるだろう。"
+		}
+	]
+}

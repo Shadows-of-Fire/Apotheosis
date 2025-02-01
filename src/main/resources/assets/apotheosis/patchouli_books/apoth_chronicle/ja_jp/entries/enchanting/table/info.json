@@ -1,0 +1,64 @@
+{
+    "name": "情報メニュー",
+    "icon": "apotheosis:textures/gui/book/question_mark.png",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "エンチャントテーブルには、どのようなエンチャントがあるのかを知るのに役立つ画面がある。$(p)アクセスするには、エンチャントテーブルにアイテムを置き、右上の？マークをクリックしてみよう。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "この章の目的は、この画面を紹介し、操作の手助けをすることである。$(p)これを完全に理解すれば、二度とエンチャントで混乱することはなくなるはずだ。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "スロット選択",
+			"images": [
+				"apotheosis:textures/gui/book/slot_selector.png"
+			],
+			"text": "どのエンチャントスロットを調査するかが選択可能。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "現在選択中のスロットはハイライトされ、選択していないスロットはグレーアウトされる。$(p)スロットにカーソルを合わせると、レベル、$(4)最低出力$()、$(9)最高出力$()が表示される。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "エンチャントウィンドウ",
+			"images": [
+				"apotheosis:textures/gui/book/enchantments_window.png"
+			],
+			"text": "ここで、どのエンチャントが使用可能かを表示する。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "現在のアイテムと、現在選択されている出力レベルに応じて、特定のエンチャント群が使用可能になる。$(p)このウィンドウには、各エンチャント、そのレベル、レアリティ、選択される確率が表示される。$(p)また、どのエンチャントが互いに競合するのかも表示される。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "出力スライダー",
+			"images": [
+				"apotheosis:textures/gui/book/power_slider.png"
+			],
+			"text": "これは、シミュレートする出力レベルを変更できる。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "スロットを選択すると、出力スライダーは自動的に出力範囲の中央の出力レベルを選択する。$(p)スライダーは、現在のスロットの$(4)最低出力$()と、$(9)最高出力$()までしか動かすことができない。"
+		},
+		{
+            "type": "patchouli:image",
+			"title": "レアリティの重み",
+			"images": [
+				"apotheosis:textures/gui/book/weights.png"
+			],
+			"text": "これは各レアリティの重み付けを示している。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "すべてのエンチャントにはレアリティがあり、それぞれのレアリティに応じた重みが設定されている。$(p)エンチャントが選択される確率は、その個々の重みを（使用可能なすべてのエンチャントの重みの）合計プールで割り出したものである。$(p)また、レアリティの重みは$(arcana_jajp)によって変化する。"
+		}
+	]
+}

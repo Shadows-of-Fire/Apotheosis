@@ -1,0 +1,13 @@
+{
+    "name": "ノックバック耐性",
+    "icon": "minecraft:shulker_shell",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)ノックバック耐性$()は、攻撃を受けてもノックバックしにくくなる耐性を表す。 最大値になると、ノックバックに対する免疫を獲得する。$(p)通常、防具や盾に付与される。"
+        }
+	]
+}

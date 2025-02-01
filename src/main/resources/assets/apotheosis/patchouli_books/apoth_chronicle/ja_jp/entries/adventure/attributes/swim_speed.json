@@ -1,0 +1,13 @@
+{
+    "name": "泳ぐ速度",
+    "icon": "minecraft:kelp",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)泳ぐ速度$()は、実際の泳ぐスピードの修正値です。もし泳ぐスピードが200％であれば、2倍の速度で泳ぐことができる。$(p)ブーツにのみ付与される。"
+        }
+	]
+}

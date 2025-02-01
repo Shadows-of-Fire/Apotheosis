@@ -1,0 +1,16 @@
+{
+    "name": "エンチャントシード",
+    "icon": "minecraft:wheat_seeds",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "エンチャントのすべて（と他のいくつかのメカニズム）は、ランダムを生み出す元となる$(9)エンチャントシード$()に基づいている。$(p)シードは、エンチャントテーブルでアイテムをエンチャントするたびに変化する。"
+        },
+		{
+			"type": "patchouli:text",
+			"text": "シードが変わらない限り、シードに基づく全てのランダムな結果は変化しない。$(p)例えば、特定のスロットにどんなエンチャントが選ばれるかは、シードに基づくランダムな結果の１つだ。"
+		}
+	]
+}

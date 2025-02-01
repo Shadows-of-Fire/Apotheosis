@@ -1,0 +1,13 @@
+{
+    "name": "ハサミ",
+    "icon": "minecraft:shears",
+    "category": "apotheosis:enchanting/changes",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "新しいエンチャントの他に、ハサミには$(9)耐久力$()、$(9)効率強化$()、$(9)幸運$()を付与することができる。"
+        }
+	]
+}

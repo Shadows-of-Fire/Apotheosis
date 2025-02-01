@@ -1,0 +1,13 @@
+{
+    "name": "成長促進",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)成長促進$()はハサミの傑作エンチャントである。$(p)これにより、羊は50%の確率ですぐに羊毛を再生する。"
+        }
+	]
+}

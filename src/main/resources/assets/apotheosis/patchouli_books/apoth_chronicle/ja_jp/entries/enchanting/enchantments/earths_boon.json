@@ -1,0 +1,13 @@
+{
+    "name": "大地の恵み",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(2)大地の恵み$()はツルハシの傑作エンチャントです。$(p)ただの石を採掘する際に、確率で鉱石ブロックを落とすことがあります。"
+        }
+	]
+}

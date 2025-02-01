@@ -1,0 +1,13 @@
+{
+    "name": "玉虫色",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)玉虫色$()はハサミのエンチャントである。$(p)剪毛された羊毛がランダムな色になるだろう。"
+        }
+	]
+}

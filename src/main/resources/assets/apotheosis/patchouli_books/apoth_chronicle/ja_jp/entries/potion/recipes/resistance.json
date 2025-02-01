@@ -1,0 +1,19 @@
+{
+    "name": "耐性",
+    "icon": "minecraft:textures/mob_effect/resistance.png",
+    "category": "apotheosis:potion/recipes",
+	"flag": "apotheosis:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)耐性$()はとても有用な効果だが、バニラではポーションを作成できない。$(p)あらゆる類のダメージを、1レベルあたり20%ずつ軽減する。$(p)$(l:apotheosis:potion/effects/sundering)崩壊$()のポーションの材料にもなる。"
+        },
+		{
+            "type": "patchouli:spotlight",
+			"title": "醸造レシピ",
+			"item": "minecraft:shulker_shell",
+            "text": "奇妙なポーションとシュルカーシェルを材料としてポーションをクラフトできる。$(p)いつもの材料を使って、効果の強化や時間延長、スプラッシュ化が可能。"
+        }
+	]
+}

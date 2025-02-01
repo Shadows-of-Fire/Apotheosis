@@ -1,0 +1,17 @@
+{
+    "name": "鉱夫の熱意",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(5)鉱夫の熱意$()はすべての道具に適用できる諸刃エンチャントである。$(p)ブロックを高速で破壊できるが、瞬時には破壊できなくなる。$(p)$(9)効率強化$()と競合する。"
+        },
+		{
+            "type": "patchouli:text",
+            "text": "速度上限はあるものの、レベルごとの上昇率は$(9)効率強化$()よりもはるかに高い。$(p)そのため、基本速度が遅いツールに最適な選択肢となるだろう。"
+        }
+	]
+}

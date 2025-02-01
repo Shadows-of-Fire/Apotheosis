@@ -1,0 +1,13 @@
+{
+    "name": "低温ダメージ",
+    "icon": "minecraft:blue_ice",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)低温ダメージ$()は近接攻撃に適用されるボーナス魔法ダメージだ。また、ダメージの強さに応じた移動速度低下も適用される。$(p)近接武器の属性として見つかるものである。"
+        }
+	]
+}

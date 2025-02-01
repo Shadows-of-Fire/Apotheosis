@@ -1,0 +1,13 @@
+{
+    "name": "反発",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)反発$()はチェストプレートとレギンス向けのエンチャント。$(p)全ての近接攻撃を使用者から引き離す。$(p)レベルが上がるとその距離は長くなる。"
+        }
+	]
+}

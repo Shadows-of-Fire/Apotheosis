@@ -1,0 +1,13 @@
+{
+    "name": "重力",
+    "icon": "minecraft:elytra",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)重力$()は落下する速度であり、単位はブロック数／秒数の2乗で表すことができる。$(p)どのアイテムにも付与されるかも知れないし、そうでもないかも。不明な点があるようだ。$(p)注意：重力はマイナスの値も取りうる。重力がマイナスになると、上向きに浮遊してしまう。"
+        }
+	]
+}

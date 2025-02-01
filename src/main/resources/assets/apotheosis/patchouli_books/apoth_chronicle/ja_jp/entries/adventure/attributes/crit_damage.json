@@ -1,0 +1,13 @@
+{
+    "name": "クリティカルダメージ",
+    "icon": "minecraft:netherite_axe",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)クリティカルダメージ$()はクリティカル攻撃のダメージ補正値。$(p)ジャンプによるクリティカルダメージも、通常の1.5倍の倍率ではなく、クリティカルダメージの値を参照する。"
+        }
+	]
+}

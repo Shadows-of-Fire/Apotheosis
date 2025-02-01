@@ -1,0 +1,17 @@
+{
+    "name": "クモの巣",
+    "icon": "apothic_enchanting:prismatic_web",
+    "category": "apotheosis:enchanting/utility",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 5,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "虹色のクモ糸は、金床の上でアイテムと組み合わせることで呪いを除去することができる。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:prismatic_web"
+		}
+	]
+}

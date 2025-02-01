@@ -1,0 +1,13 @@
+{
+    "name": "氷の棘",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)氷の棘$()はチェストプレートのエンチャント。$(p)相手に移動速度低下を与える。持続時間と強さはエンチャントのレベルに応じて変化する。$(p)$(9)棘の鎧$()と競合する。"
+        }
+	]
+}

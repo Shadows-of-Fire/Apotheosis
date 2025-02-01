@@ -1,0 +1,12 @@
+{
+    "name": "エンチャント適性",
+    "icon": "minecraft:golden_sword",
+    "category": "apotheosis:enchanting/table",
+	"flag": "apotheosis:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "バニラでは、アイテムのエンチャント適性は$(fpower)に影響する。$(p)Apotheosisでは、代わりに直接$(arcana_jajp)によって増加するよう仕組みが変化する。$(p)$(arcana_jajp)はアイテムのエンチャント適性を50%増加させるようになる。"
+        }
+	]
+}

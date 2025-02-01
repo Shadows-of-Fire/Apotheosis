@@ -1,0 +1,19 @@
+{
+    "name": "お宝エンチャント",
+    "icon": "apothic_enchanting:treasure_shelf",
+    "category": "apotheosis:enchanting/utility",
+    "flag": "apotheosis:enchanting",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "お宝エンチャントは、通常エンチャントテーブルでは入手できない特別なエンチャントである。$(p)ただし、これは$(9)秘宝の深淵の本棚$()で解決が可能だ。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "apothic_enchanting:treasure_shelf",
+            "title": "Arcane Treasures",
+            "text": "この本棚を有効な範囲内に置くと、エンチャント時にお宝エンチャントが出現するようになる。$(p)ただし、ほとんどの$(4)呪い$()はお宝エンチャントであることに注意が必要。"
+        }
+    ]
+}

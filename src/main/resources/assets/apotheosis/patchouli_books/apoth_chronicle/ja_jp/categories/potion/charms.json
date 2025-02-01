@@ -1,0 +1,8 @@
+{
+    "name": "ポーションチャーム",
+	"parent": "apotheosis:potion/potion",
+    "description": "このセクションでは、$(9)ポーションチャーム$()と、その使い方や細かな違いについて詳しく説明する。$(p)他のモジュールが無効化されていたり、一部のMODがインストールされていない場合、この項目は少々役に立たないかもしれない。",
+    "icon": "apotheosis:potion_charm",
+	"flag": "apotheosis:potion",
+	"sortnum": 1
+}

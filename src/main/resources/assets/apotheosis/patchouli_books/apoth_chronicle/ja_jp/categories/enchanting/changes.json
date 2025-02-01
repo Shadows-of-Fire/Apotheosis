@@ -1,0 +1,7 @@
+{
+    "name": "バニラの変更点",
+    "description": "このセクションでは、新しいエンチャント可能なアイテムや、仕組みの変更について説明する。$(p)細かな変更点も含めた全てが、ここに記載されているだろう。",
+    "icon": "minecraft:trident",
+	"flag": "apotheosis:enchanting",
+	"parent": "apotheosis:enchanting/enchanting"
+}
