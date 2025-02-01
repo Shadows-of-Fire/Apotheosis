@@ -1,6 +1,6 @@
 {
     "name": "灌注附魔",
-    "icon": "apotheosis:infused_hellshelf",
+    "icon": "apothic_enchanting:infused_hellshelf",
     "category": "apotheosis:enchanting/table",
 	"flag": "apotheosis:enchanting",
     "pages": [

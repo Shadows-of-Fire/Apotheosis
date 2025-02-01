@@ -1,6 +1,6 @@
 {
     "name": "魔咒图书馆",
-    "icon": "apotheosis:library",
+    "icon": "apothic_enchanting:library",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
 	"sortnum": 1,
@@ -23,12 +23,12 @@
 		},
 		{
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:library",
+			"recipe": "apothic_enchanting:library",
 			"text": "标准$(9)魔咒图书馆$()的$(6)等级容量$()为16级（XVI）。"
 		},
 		{
 			"type": "patchouli:spotlight",
-			"item": "apotheosis:ender_library",
+			"item": "apothic_enchanting:ender_library",
 			"link_recipe": true,
 			"text": "$(9)亚历山大图书馆$()的$(6)等级容量$()为31级（XXXI）。$(p)它不能直接合成，必须用$(l:apotheosis:enchanting/table/infusion)灌注附魔$()合成。"
 		}

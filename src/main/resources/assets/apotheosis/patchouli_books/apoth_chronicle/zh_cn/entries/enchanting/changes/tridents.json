@@ -12,7 +12,7 @@
 		{
             "type": "patchouli:spotlight",
 			"title": "制作三叉戟",
-			"item": "apotheosis:inert_trident",
+			"item": "apothic_enchanting:inert_trident",
 			"link_recipe": true,
             "text": "神化还加入了一种制作三叉戟的方法。$(p)只需制作一个$(9)惰性三叉戟$()并通过$(l:apotheosis:enchanting/table/infusion)灌注附魔$()升级。"
         }

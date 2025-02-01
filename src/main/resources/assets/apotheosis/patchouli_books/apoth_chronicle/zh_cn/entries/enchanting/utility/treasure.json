@@ -1,6 +1,6 @@
 {
     "name": "宝藏型魔咒",
-    "icon": "apotheosis:treasure_shelf",
+    "icon": "apothic_enchanting:treasure_shelf",
     "category": "apotheosis:enchanting/utility",
     "flag": "apotheosis:enchanting",
     "sortnum": 0,
@@ -11,7 +11,7 @@
         },
         {
             "type": "patchouli:crafting",
-            "recipe": "apotheosis:treasure_shelf",
+            "recipe": "apothic_enchanting:treasure_shelf",
             "title": "奥术宝藏深暗书架",
             "text": "将此书架放置在有效槽位会在附魔时出现宝藏型魔咒。$(p)请注意，大多数$(4)诅咒$()都是宝藏型魔咒。"
         }

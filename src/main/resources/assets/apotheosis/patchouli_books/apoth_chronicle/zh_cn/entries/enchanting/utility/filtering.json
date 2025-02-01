@@ -1,6 +1,6 @@
 {
     "name": "魔咒过滤",
-    "icon": "apotheosis:filtering_shelf",
+    "icon": "apothic_enchanting:filtering_shelf",
     "category": "apotheosis:enchanting/utility",
     "flag": "apotheosis:enchanting",
     "sortnum": 0,
@@ -11,7 +11,7 @@
         },
         {
             "type": "patchouli:crafting",
-            "recipe": "apotheosis:filtering_shelf",
+            "recipe": "apothic_enchanting:filtering_shelf",
             "title": "水之过滤海洋书架",
             "text": "书架上最多可放置6本单一魔咒的附魔书，防止这些魔咒出现。"
         },

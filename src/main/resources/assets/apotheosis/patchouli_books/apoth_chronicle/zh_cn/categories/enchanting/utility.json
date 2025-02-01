@@ -1,7 +1,7 @@
 {
     "name": "实用物品",
     "description": "本章节详细介绍了所有用于使附魔更容易的随意工具。",
-    "icon": "apotheosis:library",
+    "icon": "apothic_enchanting:library",
 	"flag": "apotheosis:enchanting",
 	"parent": "apotheosis:enchanting/enchanting"
 }

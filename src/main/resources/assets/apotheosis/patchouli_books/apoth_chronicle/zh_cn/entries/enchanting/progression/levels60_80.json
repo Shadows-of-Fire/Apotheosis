@@ -1,13 +1,13 @@
 {
     "name": "60-80级",
-    "icon": "apotheosis:dormant_deepshelf",
+    "icon": "apothic_enchanting:dormant_deepshelf",
     "category": "apotheosis:enchanting/progression",
 	"flag": "apotheosis:enchanting",
     "pages": [
 		{
             "type": "patchouli:crafting",
 			"title": "达到70级",
-			"recipe": "apotheosis:dormant_deepshelf",
+			"recipe": "apothic_enchanting:dormant_deepshelf",
 			"text": "达到70级需要60级附魔台和获得深板岩。"
 		},
 		{
@@ -23,8 +23,8 @@
 		{
             "type": "patchouli:crafting",
 			"title": "达到75级",
-			"recipe": "apotheosis:echoing_deepshelf",
-			"recipe2": "apotheosis:soul_touched_deepshelf"
+			"recipe": "apothic_enchanting:echoing_deepshelf",
+			"recipe2": "apothic_enchanting:soul_touched_deepshelf"
 		},
 		{
             "type": "patchouli:entity",
@@ -36,8 +36,8 @@
 		{
             "type": "patchouli:crafting",
 			"title": "达到80级",
-			"recipe": "apotheosis:echoing_sculkshelf",
-			"recipe2": "apotheosis:soul_touched_sculkshelf"
+			"recipe": "apothic_enchanting:echoing_sculkshelf",
+			"recipe2": "apothic_enchanting:soul_touched_sculkshelf"
 		}
 	]
 }

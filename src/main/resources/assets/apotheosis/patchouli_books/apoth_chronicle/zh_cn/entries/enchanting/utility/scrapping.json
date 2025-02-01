@@ -1,6 +1,6 @@
 {
     "name": "拆解宝典",
-    "icon": "apotheosis:scrap_tome",
+    "icon": "apothic_enchanting:scrap_tome",
     "category": "apotheosis:enchanting/utility",
 	"flag": "apotheosis:enchanting",
 	"sortnum": 4,
@@ -11,18 +11,18 @@
         },
 		{
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:scrap_tome",
+			"recipe": "apothic_enchanting:scrap_tome",
 			"text": "你总会获得一半数量的魔咒（向上取整）。$(p)选择的魔咒是基于你的$(l:apotheosis:enchanting/table/seed)附魔种子$()。"
         	},
         {
                 "type": "patchouli:spotlight",
                 "title": "高级拆解",
-                "item": "apotheosis:improved_scrap_tome",
+                "item": "apothic_enchanting:improved_scrap_tome",
                 "text": "$(9)高级拆解宝典$()是拆解宝典的升级版本。$(p)它会提取物品上的所有魔咒，而不是一半。"
         },
         {
                 "type": "patchouli:spotlight",
-                "item": "apotheosis:extraction_tome",
+                "item": "apothic_enchanting:extraction_tome",
                 "text": "$(9)提取宝典$()是拆解宝典的完美版本。$(p)它会提取物品上的所有魔咒，并且在此过程中不会销毁该物品。"
         }
     ]
