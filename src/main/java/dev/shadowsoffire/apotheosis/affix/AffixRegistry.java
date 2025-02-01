@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.affix.effect.ExecutingAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.FestiveAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.MagicalArrowAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix;
+import dev.shadowsoffire.apotheosis.affix.effect.MultiAttrAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.OmneticAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.PsychicAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.RadialAffix;
@@ -56,6 +57,7 @@ public class AffixRegistry extends TieredDynamicRegistry<Affix> {
     @Override
     protected void registerBuiltinCodecs() {
         this.registerCodec(Apotheosis.loc("attribute"), AttributeAffix.CODEC);
+        this.registerCodec(Apotheosis.loc("multi_attr"), MultiAttrAffix.CODEC);
         this.registerCodec(Apotheosis.loc("mob_effect"), MobEffectAffix.CODEC);
         this.registerCodec(Apotheosis.loc("damage_reduction"), DamageReductionAffix.CODEC);
         this.registerCodec(Apotheosis.loc("catalyzing"), CatalyzingAffix.CODEC);

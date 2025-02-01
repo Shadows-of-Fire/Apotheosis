@@ -26,6 +26,7 @@ import dev.shadowsoffire.apotheosis.affix.effect.FestiveAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.MagicalArrowAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix.Target;
+import dev.shadowsoffire.apotheosis.affix.effect.MultiAttrAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.OmneticAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.PsychicAffix;
 import dev.shadowsoffire.apotheosis.affix.effect.RadialAffix;
@@ -931,6 +932,12 @@ public class AffixProvider extends DynamicRegistryProvider<Affix> {
         var builder = new AttributeAffix.Builder(attribute, op);
         config.apply(builder);
         this.add(Apotheosis.loc(type + "/attribute/" + name), builder.build());
+    }
+
+    @SuppressWarnings("unused")
+    private void addMultiAttribute(String type, String name, UnaryOperator<MultiAttrAffix.Builder> config) {
+        var builder = config.apply(MultiAttrAffix.builder());
+        this.add(Apotheosis.loc(type + "/multi_attribute/" + name), builder.build());
     }
 
     private static LootRarity rarity(String path) {
