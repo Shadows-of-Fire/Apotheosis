@@ -507,7 +507,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.PERFECT, 0.225))
             .bonus(LootCategory.TRIDENT, MobEffectBonus.builder()
                 .effect(MobEffects.DAMAGE_BOOST)
-                .target(Target.ARROW_TARGET)
+                .target(Target.ARROW_SELF)
                 .stacking()
                 .limit(5)
                 .value(Purity.FLAWLESS, 200, 0, 40)

@@ -58,7 +58,7 @@
             "mob_effect": "minecraft:strength",
             "stack_on_reapply": true,
             "stacking_limit": 5,
-            "target": "arrow_target",
+            "target": "arrow_self",
             "values": {
                 "flawless": {
                     "duration": 200,
