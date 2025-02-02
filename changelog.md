@@ -1,3 +1,20 @@
+## 8.1.3
+* Refactored the `Exclusion` class (used by Invaders/Elites) into `SpawnCondition`.
+  * The new class has full schema documentation, as well as more logical operators than the prior impl.
+* Increased the granularity of `/apoth debug weights affixes` to be able to show affixes for a specific item/type/rarity combo.
+  * The prior impl showed all rarity weights relative to eachother, which was meaningless since rarities are distilled before collecting the total weight.
+* Added a multi-attribute affix type (`apotheosis:multi_attr`).
+* mc-kaishixiaxue: Updated Chinese translation.
+* okazako: Updated Japanese translation.
+* Fixed certain entity inventories being duplicated when using Loot Pinata.
+* Fixed charms being craftable when using empty potions.
+* Fixed an issue where stacking mob effects (from gems or affixes) would become desynced from the client, leading to weird behavior.
+* Fixed the Gem of the Warlord's Trident bonus applying strength to the target instead of the thrower.
+* Prevented the Salvaging Table from crashing when a damageable item with zero max damage was introduced.
+  * This is caused by a contract violation in another mod, since damageable items must always have a positive max damage value.
+  * A warning message will be logged if an item like this is detected.
+* Fixed the Durability Bonus tooltip not showing if an item did not have any affixes.
+
 ## 8.1.2
 * Added a stacking limit field to mob effect affixes and gem bonuses.
   * This field limits the amplifier of a stacked mob effect, preventing it from going to infinity on enough re-applications.
