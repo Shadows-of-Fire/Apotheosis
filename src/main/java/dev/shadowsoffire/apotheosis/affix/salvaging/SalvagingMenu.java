@@ -11,6 +11,7 @@ import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.Apoth.Blocks;
 import dev.shadowsoffire.apotheosis.Apoth.Menus;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.salvaging.SalvagingRecipe.OutputData;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
@@ -125,7 +126,12 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
     public static int[] getSalvageCounts(OutputData output, ItemStack stack) {
         int[] out = { output.min(), output.max() };
         if (stack.isDamageableItem()) {
-            out[1] = Math.max(out[0], Math.round(out[1] * (stack.getMaxDamage() - stack.getDamageValue()) / stack.getMaxDamage()));
+            int maxDmg = stack.getMaxDamage();
+            if (maxDmg <= 0) {
+                Apotheosis.LOGGER.warn("Item {} returned true to ItemStack#isDamageableItem, but returned {} from ItemStack#getMaxDamage, when the value should be positive!", stack.getItemHolder().getKey(), maxDmg);
+                return out;
+            }
+            out[1] = Math.max(out[0], Math.round(out[1] * (maxDmg - stack.getDamageValue()) / maxDmg));
         }
         return out;
     }
