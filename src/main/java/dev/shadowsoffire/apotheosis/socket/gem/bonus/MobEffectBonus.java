@@ -8,6 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix.Target;
+import dev.shadowsoffire.apotheosis.mixin.LivingEntityInvoker;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
@@ -154,6 +155,8 @@ public class MobEffectBonus extends GemBonus {
                 int amp = Math.min(this.stackingLimit, effectInst.getAmplifier() + 1 + data.amplifier);
                 var newInst = new MobEffectInstance(this.effect, duration, amp, effectInst.isAmbient(), effectInst.isVisible());
                 effectInst.update(newInst);
+                ((LivingEntityInvoker) target).callOnEffectUpdated(effectInst, true, null);
+                effectInst.onEffectStarted(target);
             }
         }
         else {

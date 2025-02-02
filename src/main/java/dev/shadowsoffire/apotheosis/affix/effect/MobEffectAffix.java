@@ -16,6 +16,7 @@ import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.mixin.LivingEntityInvoker;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.core.BlockPos;
@@ -194,6 +195,8 @@ public class MobEffectAffix extends Affix {
                 int amp = Math.min(this.stackingLimit, inst.getAmplifier() + 1 + data.amplifier.getInt(level));
                 var newInst = new MobEffectInstance(this.effect, duration, amp, inst.isAmbient(), inst.isVisible());
                 inst.update(newInst);
+                ((LivingEntityInvoker) target).callOnEffectUpdated(inst, true, null);
+                inst.onEffectStarted(target);
             }
         }
         else {
