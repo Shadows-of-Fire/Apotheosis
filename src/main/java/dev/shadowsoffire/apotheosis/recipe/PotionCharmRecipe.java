@@ -69,12 +69,17 @@ public class PotionCharmRecipe extends ShapedRecipe {
             ItemStack stack = input.getItem(i);
             PotionContents contents = stack.get(DataComponents.POTION_CONTENTS);
 
-            if (contents == null || !PotionCharmItem.isValidPotion(contents.potion().orElse(Potions.WATER))) {
+            if (contents == null) {
                 continue;
             }
 
+            // If we run into an invalid potion, bail.
+            if (!PotionCharmItem.isValidPotion(contents.potion().orElse(Potions.WATER))) {
+                return PotionContents.EMPTY;
+            }
+
             // If we haven't found one yet, and we find one, retain it.
-            if (found == PotionContents.EMPTY && contents != PotionContents.EMPTY) {
+            if (found == PotionContents.EMPTY) {
                 found = contents;
             }
             else if (!contents.equals(found)) {
