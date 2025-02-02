@@ -304,23 +304,25 @@ public class AdventureModuleClient {
         @SubscribeEvent(priority = EventPriority.HIGH)
         public static void affixTooltips(ItemTooltipEvent e) {
             ItemStack stack = e.getItemStack();
-            if (stack.has(Components.AFFIXES)) {
-                List<Component> components = new ArrayList<>();
-                Consumer<Component> dotPrefixer = afxComp -> {
-                    components.add(Component.translatable("text.apotheosis.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
-                };
+            List<Component> components = new ArrayList<>();
+            Consumer<Component> dotPrefixer = afxComp -> {
+                components.add(Apotheosis.lang("text", "dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
+            };
 
+            if (stack.has(Components.AFFIXES)) {
                 AttributeTooltipContext ctx = AttributeTooltipContext.of(Minecraft.getInstance().player, e.getContext(), e.getFlags());
                 AffixHelper.streamAffixes(stack)
                     .sorted(Comparator.comparingInt(a -> a.getAffix().definition().type().ordinal()))
                     .map(a -> a.getDescription(ctx))
                     .filter(c -> c.getContents() != PlainTextContents.EMPTY)
                     .forEach(dotPrefixer);
+            }
 
-                if (stack.has(Components.DURABILITY_BONUS) && !stack.has(DataComponents.UNBREAKABLE)) {
-                    dotPrefixer.accept(Component.translatable("affix.apotheosis:durable.desc", Math.round(100 * stack.get(Components.DURABILITY_BONUS))));
-                }
+            if (stack.has(Components.DURABILITY_BONUS) && !stack.has(DataComponents.UNBREAKABLE)) {
+                dotPrefixer.accept(Component.translatable("affix.apotheosis:durable.desc", Math.round(100 * stack.get(Components.DURABILITY_BONUS))));
+            }
 
+            if (!components.isEmpty()) {
                 e.getToolTip().addAll(1, components);
             }
         }
