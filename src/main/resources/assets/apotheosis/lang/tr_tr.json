@@ -48,8 +48,8 @@
 	
     "info.apotheosis.affix_item": "Apothic Ek Özellik Eşyası",
 	
-    "death.attack.apotheosis.execute": "%s, %s adlı oyuncu tarafından idam edildi",
-    "death.attack.apotheosis.execute.item": "%s, %s adlı oyuncu tarafından %s kullanılarak idam edildi",
+    "death.attack.apotheosis.execute": "%s, %s tarafından idam edildi",
+    "death.attack.apotheosis.execute.item": "%s, %s tarafından %s kullanılarak idam edildi",
 	
     "misc.apotheosis.affix_name.two": "%s %s",
     "misc.apotheosis.affix_name.three": "%s %s %s",
@@ -607,9 +607,9 @@
     "rarity.apotheosis:ancient": "Kadim",
 	
     "death.attack.apotheosis:psychic": "%s bir yansıma tarafından öldürüldü.",
-    "death.attack.apotheosis:psychic.player": "%s adlı oyuncunun saldırısı %s tarafından yansıtıldı.",
+    "death.attack.apotheosis:psychic.player": "%s saldırısı %s tarafından yansıtıldı.",
     "death.attack.apotheosis:execute": "%s idam edildi.",
-    "death.attack.apotheosis:execute.player": "%s, %s adlı oyuncu tarafından idam edildi.",
+    "death.attack.apotheosis:execute.player": "%s, %s tarafından idam edildi.",
 	
 	"comment_id": "/Adventure + Gateways Compat",
 	
