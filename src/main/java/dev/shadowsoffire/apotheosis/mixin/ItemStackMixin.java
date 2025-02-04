@@ -21,7 +21,7 @@ public class ItemStackMixin {
         ItemStack ths = (ItemStack) (Object) this;
         if (ths.has(Components.AFFIX_NAME)) {
             try {
-                Component component = AffixHelper.getName(ths);
+                Component component = AffixHelper.getName(ths).copy();
                 if (component.getContents() instanceof TranslatableContents tContents) {
                     int idx = "misc.apotheosis.affix_name.four".equals(tContents.getKey()) ? 2 : 1;
                     tContents.getArgs()[idx] = cir.getReturnValue();
