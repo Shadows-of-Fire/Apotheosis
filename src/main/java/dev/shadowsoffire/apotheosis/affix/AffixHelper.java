@@ -20,7 +20,7 @@ import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 
@@ -90,8 +90,8 @@ public class AffixHelper {
         return getAffixes(stack).values().stream().filter(AffixInstance::isValid);
     }
 
-    public static Stream<AffixInstance> streamAffixes(AbstractArrow arrow) {
-        return getAffixes(arrow).values().stream().filter(AffixInstance::isValid);
+    public static Stream<AffixInstance> streamAffixes(Projectile proj) {
+        return getAffixes(proj).values().stream().filter(AffixInstance::isValid);
     }
 
     public static boolean hasAffixes(ItemStack stack) {
@@ -126,8 +126,8 @@ public class AffixHelper {
         return ItemStack.EMPTY;
     }
 
-    public static Map<DynamicHolder<Affix>, AffixInstance> getAffixes(AbstractArrow arrow) {
-        ItemStack stack = getSourceWeapon(arrow);
+    public static Map<DynamicHolder<Affix>, AffixInstance> getAffixes(Projectile proj) {
+        ItemStack stack = getSourceWeapon(proj);
         return getAffixes(stack);
     }
 

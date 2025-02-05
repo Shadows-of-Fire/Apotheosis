@@ -15,7 +15,7 @@ import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.common.NeoForge;
@@ -143,8 +143,8 @@ public class SocketHelper {
      * @return A stream containing all valid gems in the arrow.
      * @see GemInstance#isValid()
      */
-    public static Stream<GemInstance> getGemInstances(AbstractArrow arrow) {
-        ItemStack stack = AffixHelper.getSourceWeapon(arrow);
+    public static Stream<GemInstance> getGemInstances(Projectile proj) {
+        ItemStack stack = AffixHelper.getSourceWeapon(proj);
         return getGems(stack).stream().filter(GemInstance::isValid);
     }
 

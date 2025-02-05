@@ -50,7 +50,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -113,40 +113,40 @@ public class AdventureEvents {
     }
 
     /**
-     * This event handler allows affixes to react to arrows being fired to trigger additional actions.
-     * Arrows marked as "apoth.generated" will not trigger the affix hook, so affixes can fire arrows without recursion.
+     * This event handler allows affixes to react to projectiles being fired to trigger additional actions.
+     * Projectiles marked as "apoth.generated" will not trigger the affix hook, so affixes can fire projectiles without recursion.
      */
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public void fireArrow(EntityJoinLevelEvent e) {
-        if (e.getEntity() instanceof AbstractArrow arrow && !arrow.getPersistentData().getBoolean("apoth.generated")) {
-            if (arrow.getOwner() instanceof LivingEntity user) {
-                ItemStack bow = user.getUseItem();
-                if (bow.isEmpty()) {
-                    bow = user.getMainHandItem();
-                    if (bow.isEmpty() || !LootCategory.forItem(bow).isRanged()) {
-                        bow = user.getOffhandItem();
+    public void fireProjectile(EntityJoinLevelEvent e) {
+        if (e.getEntity() instanceof Projectile proj && !proj.getPersistentData().getBoolean("apoth.generated")) {
+            if (proj.getOwner() instanceof LivingEntity user) {
+                ItemStack weapon = user.getUseItem();
+                if (weapon.isEmpty()) {
+                    weapon = user.getMainHandItem();
+                    if (weapon.isEmpty() || !LootCategory.forItem(weapon).isRanged()) {
+                        weapon = user.getOffhandItem();
                     }
                 }
-                if (bow.isEmpty()) return;
-                SocketHelper.getGems(bow).onArrowFired(user, arrow);
-                AffixHelper.streamAffixes(bow).forEach(a -> {
-                    a.onArrowFired(user, arrow);
+                if (weapon.isEmpty()) return;
+                SocketHelper.getGems(weapon).onProjectileFired(user, proj);
+                AffixHelper.streamAffixes(weapon).forEach(a -> {
+                    a.onProjectileFired(user, proj);
                 });
-                AffixHelper.copyToProjectile(bow, arrow);
+                AffixHelper.copyToProjectile(weapon, proj);
             }
         }
     }
 
     /**
-     * This event handler allows affixes to react to arrows hitting something.
+     * This event handler allows affixes to react to projectiles hitting something.
      */
     @SubscribeEvent
     public void impact(ProjectileImpactEvent e) {
-        if (e.getProjectile() instanceof AbstractArrow arrow) {
-            SocketHelper.getGemInstances(arrow).forEach(inst -> inst.onArrowImpact(arrow, e.getRayTraceResult()));
+        if (e.getProjectile() instanceof Projectile proj) {
+            SocketHelper.getGemInstances(proj).forEach(inst -> inst.onProjectileImpact(proj, e.getRayTraceResult()));
 
-            var affixes = AffixHelper.getAffixes(arrow);
-            affixes.values().forEach(inst -> inst.onArrowImpact(arrow, e.getRayTraceResult(), e.getRayTraceResult().getType()));
+            var affixes = AffixHelper.getAffixes(proj);
+            affixes.values().forEach(inst -> inst.onProjectileImpact(proj, e.getRayTraceResult(), e.getRayTraceResult().getType()));
         }
     }
 

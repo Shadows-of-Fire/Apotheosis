@@ -16,6 +16,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -56,19 +57,21 @@ public class SpectralShotAffix extends Affix {
     }
 
     @Override
-    public void onArrowFired(AffixInstance inst, LivingEntity user, AbstractArrow arrow) {
+    public void onProjectileFired(AffixInstance inst, LivingEntity user, Projectile proj) {
         if (user.level().random.nextFloat() <= this.getTrueLevel(inst.getRarity(), inst.level())) {
             if (!user.level().isClientSide) {
-                ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
-                AbstractArrow spectralArrow = arrowitem.createArrow(user.level(), Items.SPECTRAL_ARROW.getDefaultInstance(), user, inst.stack());
-                spectralArrow.shoot(user.getXRot(), user.getYRot(), 0.0F, 2.0F, 1.0F);
-                this.cloneMotion(arrow, spectralArrow);
-                spectralArrow.setCritArrow(arrow.isCritArrow());
-                spectralArrow.setBaseDamage(arrow.getBaseDamage());
-                spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
-                spectralArrow.pickup = Pickup.CREATIVE_ONLY;
-                spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
-                arrow.level().addFreshEntity(spectralArrow);
+                if (proj instanceof AbstractArrow arrow) {
+                    ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
+                    AbstractArrow spectralArrow = arrowitem.createArrow(user.level(), Items.SPECTRAL_ARROW.getDefaultInstance(), user, inst.stack());
+                    spectralArrow.shoot(user.getXRot(), user.getYRot(), 0.0F, 2.0F, 1.0F);
+                    this.cloneMotion(arrow, spectralArrow);
+                    spectralArrow.setCritArrow(arrow.isCritArrow());
+                    spectralArrow.setBaseDamage(arrow.getBaseDamage());
+                    spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
+                    spectralArrow.pickup = Pickup.CREATIVE_ONLY;
+                    spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
+                    arrow.level().addFreshEntity(spectralArrow);
+                }
             }
         }
     }

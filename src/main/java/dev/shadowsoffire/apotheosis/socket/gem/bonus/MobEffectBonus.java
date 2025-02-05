@@ -27,7 +27,7 @@ import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
@@ -115,14 +115,14 @@ public class MobEffectBonus extends GemBonus {
     }
 
     @Override
-    public void onArrowImpact(GemInstance inst, AbstractArrow arrow, HitResult res) {
-        if (this.target == Target.ARROW_SELF) {
-            if (arrow.getOwner() instanceof LivingEntity owner) {
-                this.applyEffect(inst, owner);
+    public void onProjectileImpact(GemInstance inst, Projectile proj, HitResult res) {
+        if (res.getType() == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
+            if (this.target == Target.ARROW_SELF) {
+                if (proj.getOwner() instanceof LivingEntity owner) {
+                    this.applyEffect(inst, owner);
+                }
             }
-        }
-        else if (this.target == Target.ARROW_TARGET) {
-            if (res.getType() == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
+            else if (this.target == Target.ARROW_TARGET) {
                 this.applyEffect(inst, target);
             }
         }
