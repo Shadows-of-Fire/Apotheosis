@@ -59,19 +59,17 @@ public class SpectralShotAffix extends Affix {
     @Override
     public void onProjectileFired(AffixInstance inst, LivingEntity user, Projectile proj) {
         if (user.level().random.nextFloat() <= this.getTrueLevel(inst.getRarity(), inst.level())) {
-            if (!user.level().isClientSide) {
-                if (proj instanceof AbstractArrow arrow) {
-                    ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
-                    AbstractArrow spectralArrow = arrowitem.createArrow(user.level(), Items.SPECTRAL_ARROW.getDefaultInstance(), user, inst.stack());
-                    spectralArrow.shoot(user.getXRot(), user.getYRot(), 0.0F, 2.0F, 1.0F);
-                    this.cloneMotion(arrow, spectralArrow);
-                    spectralArrow.setCritArrow(arrow.isCritArrow());
-                    spectralArrow.setBaseDamage(arrow.getBaseDamage());
-                    spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
-                    spectralArrow.pickup = Pickup.CREATIVE_ONLY;
-                    spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
-                    arrow.level().addFreshEntity(spectralArrow);
-                }
+            if (!user.level().isClientSide && proj instanceof AbstractArrow arrow) {
+                ArrowItem arrowitem = (ArrowItem) Items.SPECTRAL_ARROW;
+                AbstractArrow spectralArrow = arrowitem.createArrow(user.level(), Items.SPECTRAL_ARROW.getDefaultInstance(), user, inst.stack());
+                spectralArrow.shoot(user.getXRot(), user.getYRot(), 0.0F, 2.0F, 1.0F);
+                this.cloneMotion(arrow, spectralArrow);
+                spectralArrow.setCritArrow(arrow.isCritArrow());
+                spectralArrow.setBaseDamage(arrow.getBaseDamage());
+                spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
+                spectralArrow.pickup = Pickup.CREATIVE_ONLY;
+                spectralArrow.getPersistentData().putBoolean("apoth.generated", true);
+                arrow.level().addFreshEntity(spectralArrow);
             }
         }
     }
