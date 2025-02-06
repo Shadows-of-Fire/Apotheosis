@@ -123,6 +123,7 @@ public class AdventureEvents {
                 ItemStack weapon = user.getUseItem();
                 if (weapon.isEmpty()) {
                     weapon = user.getMainHandItem();
+                    // TODO: Use a tag here after the LootCategory registry refactor, so external categories work right.
                     if (weapon.isEmpty() || !LootCategory.forItem(weapon).isRanged()) {
                         weapon = user.getOffhandItem();
                     }
