@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 
 public class BloodyArrowBonus extends GemBonus {
@@ -36,12 +37,14 @@ public class BloodyArrowBonus extends GemBonus {
     }
 
     @Override
-    public void onArrowFired(GemInstance inst, LivingEntity user, AbstractArrow arrow) {
-        Data d = this.values.get(inst.purity());
-        if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) return;
-        user.hurt(user.damageSources().source(Ench.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
-        arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
-        Affix.startCooldown(makeUniqueId(inst), user);
+    public void onProjectileFired(GemInstance inst, LivingEntity user, Projectile proj) {
+        if (proj instanceof AbstractArrow arrow) {
+            Data d = this.values.get(inst.purity());
+            if (Affix.isOnCooldown(makeUniqueId(inst), d.cooldown, user)) return;
+            user.hurt(user.damageSources().source(Ench.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
+            arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
+            Affix.startCooldown(makeUniqueId(inst), user);
+        }
     }
 
     @Override

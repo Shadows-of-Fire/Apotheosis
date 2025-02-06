@@ -33,6 +33,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -153,15 +154,28 @@ public class MobEffectAffix extends Affix {
     }
 
     @Override
-    public void onArrowImpact(float level, LootRarity rarity, AbstractArrow arrow, HitResult res, Type type) {
-        if (this.target == Target.ARROW_SELF) {
-            if (arrow.getOwner() instanceof LivingEntity owner) {
-                this.applyEffect(owner, rarity, level);
-            }
-        }
-        else if (this.target == Target.ARROW_TARGET) {
-            if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-                this.applyEffect(target, rarity, level);
+    public void onProjectileImpact(float level, LootRarity rarity, Projectile proj, HitResult res, Type type) {
+        if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
+            switch (this.target) {
+                case ARROW_SELF -> {
+                    if (proj instanceof AbstractArrow && proj.getOwner() instanceof LivingEntity owner) {
+                        this.applyEffect(owner, rarity, level);
+                    }
+                }
+                case ARROW_TARGET -> {
+                    if (proj instanceof AbstractArrow) {
+                        this.applyEffect(target, rarity, level);
+                    }
+                }
+                case PROJECTILE_SELF -> {
+                    if (proj.getOwner() instanceof LivingEntity owner) {
+                        this.applyEffect(owner, rarity, level);
+                    }
+                }
+                case PROJECTILE_TARGET -> {
+                    this.applyEffect(target, rarity, level);
+                }
+                default -> {}
             }
         }
     }
@@ -252,7 +266,9 @@ public class MobEffectAffix extends Affix {
         ARROW_SELF("arrow_self"),
         ARROW_TARGET("arrow_target"),
         BLOCK_SELF("block_self"),
-        BLOCK_ATTACKER("block_attacker");
+        BLOCK_ATTACKER("block_attacker"),
+        PROJECTILE_SELF("projectile_self"),
+        PROJECTILE_TARGET("projectile_target");
 
         public static final Codec<Target> CODEC = PlaceboCodecs.enumCodec(Target.class);
 

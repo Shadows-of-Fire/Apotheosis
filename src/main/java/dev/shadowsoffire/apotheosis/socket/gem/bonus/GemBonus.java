@@ -31,7 +31,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -126,9 +126,9 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     public void doPostHurt(GemInstance inst, LivingEntity user, DamageSource source) {}
 
     /**
-     * Called when a user fires an arrow from a bow or crossbow with this affix on it.
+     * Called when a user fires a projectile from a weapon with this affix on it.
      */
-    public void onArrowFired(GemInstance inst, LivingEntity user, AbstractArrow arrow) {}
+    public void onProjectileFired(GemInstance inst, LivingEntity user, Projectile proj) {}
 
     /**
      * Called when {@link Item#useOn(ItemUseContext)} would be called for an item with this affix.
@@ -140,9 +140,9 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     }
 
     /**
-     * Called when an arrow that was marked with this affix hits a target.
+     * Called when a projectile that was marked with this affix hits a target.
      */
-    public void onArrowImpact(GemInstance inst, AbstractArrow arrow, HitResult res) {}
+    public void onProjectileImpact(GemInstance inst, Projectile proj, HitResult res) {}
 
     /**
      * Called when a shield with this affix blocks some amount of damage.

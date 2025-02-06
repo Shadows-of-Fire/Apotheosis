@@ -20,7 +20,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
@@ -66,8 +66,8 @@ public record SocketedGems(ImmutableList<GemInstance> gems) implements List<GemI
         this.streamValidGems().forEach(inst -> inst.doPostHurt(user, source));
     }
 
-    public void onArrowFired(LivingEntity user, AbstractArrow arrow) {
-        this.streamValidGems().forEach(inst -> inst.onArrowFired(user, arrow));
+    public void onProjectileFired(LivingEntity user, Projectile proj) {
+        this.streamValidGems().forEach(inst -> inst.onProjectileFired(user, proj));
     }
 
     @Nullable

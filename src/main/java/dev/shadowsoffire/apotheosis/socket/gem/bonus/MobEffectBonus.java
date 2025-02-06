@@ -28,6 +28,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
@@ -115,15 +116,28 @@ public class MobEffectBonus extends GemBonus {
     }
 
     @Override
-    public void onArrowImpact(GemInstance inst, AbstractArrow arrow, HitResult res) {
-        if (this.target == Target.ARROW_SELF) {
-            if (arrow.getOwner() instanceof LivingEntity owner) {
-                this.applyEffect(inst, owner);
-            }
-        }
-        else if (this.target == Target.ARROW_TARGET) {
-            if (res.getType() == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-                this.applyEffect(inst, target);
+    public void onProjectileImpact(GemInstance inst, Projectile proj, HitResult res) {
+        if (res.getType() == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
+            switch (this.target) {
+                case ARROW_SELF -> {
+                    if (proj instanceof AbstractArrow && proj.getOwner() instanceof LivingEntity owner) {
+                        this.applyEffect(inst, owner);
+                    }
+                }
+                case ARROW_TARGET -> {
+                    if (proj instanceof AbstractArrow) {
+                        this.applyEffect(inst, target);
+                    }
+                }
+                case PROJECTILE_SELF -> {
+                    if (proj.getOwner() instanceof LivingEntity owner) {
+                        this.applyEffect(inst, owner);
+                    }
+                }
+                case PROJECTILE_TARGET -> {
+                    this.applyEffect(inst, target);
+                }
+                default -> {}
             }
         }
     }

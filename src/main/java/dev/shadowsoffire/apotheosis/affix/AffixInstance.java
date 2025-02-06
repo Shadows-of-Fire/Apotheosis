@@ -21,7 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
@@ -123,10 +123,10 @@ public record AffixInstance(DynamicHolder<Affix> affix, float level, DynamicHold
     }
 
     /**
-     * @see Affix#onArrowFired(ItemStack, LootRarity, float, LivingEntity, AbstractArrow)
+     * @see Affix#onProjectileFired(ItemStack, LootRarity, float, LivingEntity, Projectile)
      */
-    public void onArrowFired(LivingEntity user, AbstractArrow arrow) {
-        this.getAffix().onArrowFired(this, user, arrow);
+    public void onProjectileFired(LivingEntity user, Projectile proj) {
+        this.getAffix().onProjectileFired(this, user, proj);
     }
 
     /**
@@ -159,10 +159,10 @@ public record AffixInstance(DynamicHolder<Affix> affix, float level, DynamicHold
     }
 
     /**
-     * @see Affix#onArrowImpact(AbstractArrow, LootRarity, float, HitResult, net.minecraft.world.phys.HitResult.Type)
+     * @see Affix#onProjectileImpact(Projectile, LootRarity, float, HitResult, net.minecraft.world.phys.HitResult.Type)
      */
-    public void onArrowImpact(AbstractArrow arrow, HitResult res, HitResult.Type type) {
-        this.getAffix().onArrowImpact(this.level, this.getRarity(), arrow, res, type);
+    public void onProjectileImpact(Projectile proj, HitResult res, HitResult.Type type) {
+        this.getAffix().onProjectileImpact(this.level, this.getRarity(), proj, res, type);
     }
 
     /**

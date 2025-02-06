@@ -23,7 +23,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelAccessor;
@@ -189,10 +189,10 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
     }
 
     /**
-     * @see GemBonus#onArrowFired(ItemStack, LootRarity, LivingEntity, AbstractArrow)
+     * @see GemBonus#onProjectileFired(ItemStack, LootRarity, LivingEntity, Projectile)
      */
-    public void onArrowFired(LivingEntity user, AbstractArrow arrow) {
-        this.ifPresent(b -> b.onArrowFired(this, user, arrow));
+    public void onProjectileFired(LivingEntity user, Projectile proj) {
+        this.ifPresent(b -> b.onProjectileFired(this, user, proj));
     }
 
     /**
@@ -204,10 +204,10 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
     }
 
     /**
-     * @see {@link GemBonus#onArrowImpact(AbstractArrow, LootRarity, HitResult, HitResult.Type)}
+     * @see {@link GemBonus#onProjectileImpact(Projectile, LootRarity, HitResult, HitResult.Type)}
      */
-    public void onArrowImpact(AbstractArrow arrow, HitResult res) {
-        this.ifPresent(b -> b.onArrowImpact(this, arrow, res));
+    public void onProjectileImpact(Projectile proj, HitResult res) {
+        this.ifPresent(b -> b.onProjectileImpact(this, proj, res));
     }
 
     /**
