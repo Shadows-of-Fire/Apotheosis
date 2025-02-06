@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.world.entity.projectile.Projectile;
 import org.spongepowered.include.com.google.common.base.Preconditions;
 
 import com.mojang.serialization.Codec;
@@ -33,6 +32,8 @@ import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -154,13 +155,13 @@ public class MobEffectAffix extends Affix {
 
     @Override
     public void onProjectileImpact(float level, LootRarity rarity, Projectile proj, HitResult res, Type type) {
-        if (type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-        if (this.target == Target.ARROW_SELF) {
-            if (proj.getOwner() instanceof LivingEntity owner) {
-                this.applyEffect(owner, rarity, level);
+        if (proj instanceof AbstractArrow && type == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
+            if (this.target == Target.ARROW_SELF) {
+                if (proj.getOwner() instanceof LivingEntity owner) {
+                    this.applyEffect(owner, rarity, level);
+                }
             }
-        }
-        else if (this.target == Target.ARROW_TARGET) {
+            else if (this.target == Target.ARROW_TARGET) {
                 this.applyEffect(target, rarity, level);
             }
         }
