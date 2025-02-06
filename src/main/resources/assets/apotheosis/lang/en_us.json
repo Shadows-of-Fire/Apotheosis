@@ -404,6 +404,8 @@
     "affix.apotheosis.target.arrow_target": "On arrow hit, inflict %s",
     "affix.apotheosis.target.block_self": "Upon blocking, gain %s",
     "affix.apotheosis.target.block_attacker": "Upon blocking, inflict %s",
+    "affix.apotheosis.target.projectile_self": "On projectile hit, gain %s",
+    "affix.apotheosis.target.projectile_target": "On projectile hit, inflict %s",
     "affix.apotheosis.cooldown": "[⌛ %s]",
     "affix.apotheosis.stacking": "[Stacking]",
 

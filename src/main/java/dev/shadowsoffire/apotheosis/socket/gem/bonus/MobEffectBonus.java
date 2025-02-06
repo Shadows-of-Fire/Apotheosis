@@ -117,14 +117,27 @@ public class MobEffectBonus extends GemBonus {
 
     @Override
     public void onProjectileImpact(GemInstance inst, Projectile proj, HitResult res) {
-        if (proj instanceof AbstractArrow && res.getType() == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
-            if (this.target == Target.ARROW_SELF) {
-                if (proj.getOwner() instanceof LivingEntity owner) {
-                    this.applyEffect(inst, owner);
+        if (res.getType() == Type.ENTITY && ((EntityHitResult) res).getEntity() instanceof LivingEntity target) {
+            switch (this.target) {
+                case ARROW_SELF -> {
+                    if (proj instanceof AbstractArrow && proj.getOwner() instanceof LivingEntity owner) {
+                        this.applyEffect(inst, owner);
+                    }
                 }
-            }
-            else if (this.target == Target.ARROW_TARGET) {
-                this.applyEffect(inst, target);
+                case ARROW_TARGET -> {
+                    if (proj instanceof AbstractArrow) {
+                        this.applyEffect(inst, target);
+                    }
+                }
+                case PROJECTILE_SELF -> {
+                    if (proj.getOwner() instanceof LivingEntity owner) {
+                        this.applyEffect(inst, owner);
+                    }
+                }
+                case PROJECTILE_TARGET -> {
+                    this.applyEffect(inst, target);
+                }
+                default -> {}
             }
         }
     }
