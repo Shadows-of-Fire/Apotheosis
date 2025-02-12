@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.affix;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,11 +14,14 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.mixin.ItemStackMixin;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -51,6 +55,38 @@ public class AffixHelper {
     @Nullable
     public static Component getName(ItemStack stack) {
         return stack.get(Components.AFFIX_NAME);
+    }
+
+    /**
+     * Called from {@link ItemStackMixin} to update the {@link ItemStack#getHoverName() hover name} of an itemstack based on {@link Components#AFFIX_NAME}.
+     * <p>
+     * This method retrieves the current affix name, and if present, makes a deep copy of the contents to insert the hover name in as an argument.
+     * <p>
+     * Failure to make a deep copy of the contents will lead to the component being different on the client and server, causing desyncs in container menus.
+     * 
+     * @param stack       The item stack
+     * @param currentName The current return value from {@link ItemStack#getHoverName()}
+     * @return The updated name, or null if the component was absent or malformed
+     */
+    @Nullable
+    public static Component getModifiedStackName(ItemStack stack, Component currentName) {
+        if (stack.has(Components.AFFIX_NAME)) {
+            try {
+                Component component = AffixHelper.getName(stack);
+                TranslatableContents contents = copyContents(component);
+                int idx = "misc.apotheosis.affix_name.four".equals(contents.getKey()) ? 2 : 1;
+                contents.getArgs()[idx] = currentName;
+                var ret = MutableComponent.create(contents).withStyle(component.getStyle());
+                for (Component sibling : component.getSiblings()) {
+                    ret.append(sibling);
+                }
+                return ret;
+            }
+            catch (Exception exception) {
+                stack.remove(Components.AFFIX_NAME);
+            }
+        }
+        return null;
     }
 
     /**
@@ -145,6 +181,13 @@ public class AffixHelper {
     @Deprecated
     public static StepFunction step(float min, int steps, float step) {
         return new StepFunction(min, steps, step);
+    }
+
+    private static TranslatableContents copyContents(Component comp) {
+        TranslatableContents tContents = (TranslatableContents) comp.getContents();
+        Object[] args = tContents.getArgs();
+        Object[] clone = Arrays.copyOf(args, args.length);
+        return new TranslatableContents(tContents.getKey(), tContents.getFallback(), clone);
     }
 
 }
