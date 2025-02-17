@@ -2,8 +2,8 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:generic.armor",
     "categories": [
-        "chestplate",
-        "leggings"
+        "apotheosis:chestplate",
+        "apotheosis:leggings"
     ],
     "definition": {
         "affix_type": "stat",

@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "apothic_attributes:elytra_flight",
     "categories": [
-        "chestplate"
+        "apotheosis:chestplate"
     ],
     "definition": {
         "affix_type": "stat",

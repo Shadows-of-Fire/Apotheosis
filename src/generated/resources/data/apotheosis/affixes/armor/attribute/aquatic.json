@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "neoforge:swim_speed",
     "categories": [
-        "boots"
+        "apotheosis:boots"
     ],
     "definition": {
         "affix_type": "stat",

@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:generic.gravity",
     "categories": [
-        "chestplate"
+        "apotheosis:chestplate"
     ],
     "definition": {
         "affix_type": "stat",

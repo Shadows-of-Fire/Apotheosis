@@ -24,8 +24,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "modifiers": [
@@ -51,7 +51,7 @@
         },
         {
             "type": "apotheosis:mageslayer",
-            "gem_class": "helmet",
+            "gem_class": "apotheosis:helmet",
             "values": {
                 "normal": 0.15,
                 "flawless": 0.225,
@@ -60,7 +60,7 @@
         },
         {
             "type": "apotheosis:mob_effect",
-            "gem_class": "shield",
+            "gem_class": "apotheosis:shield",
             "mob_effect": "minecraft:resistance",
             "target": "block_self",
             "values": {

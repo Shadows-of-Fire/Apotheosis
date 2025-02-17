@@ -1,8 +1,8 @@
 {
     "type": "apotheosis:damage_reduction",
     "categories": [
-        "chestplate",
-        "leggings"
+        "apotheosis:chestplate",
+        "apotheosis:leggings"
     ],
     "damage_type": "physical",
     "definition": {

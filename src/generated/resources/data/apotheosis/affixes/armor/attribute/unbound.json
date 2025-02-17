@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "neoforge:creative_flight",
     "categories": [
-        "chestplate"
+        "apotheosis:chestplate"
     ],
     "definition": {
         "affix_type": "stat",

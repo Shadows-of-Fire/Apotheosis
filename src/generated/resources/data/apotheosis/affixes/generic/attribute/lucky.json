@@ -2,16 +2,15 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:generic.luck",
     "categories": [
-        "shield",
-        "chestplate",
-        "trident",
-        "breaker",
-        "helmet",
-        "boots",
-        "melee_weapon",
-        "bow",
-        "none",
-        "leggings"
+        "apotheosis:bow",
+        "apotheosis:trident",
+        "apotheosis:breaker",
+        "apotheosis:chestplate",
+        "apotheosis:boots",
+        "apotheosis:shield",
+        "apotheosis:melee_weapon",
+        "apotheosis:helmet",
+        "apotheosis:leggings"
     ],
     "definition": {
         "affix_type": "stat",

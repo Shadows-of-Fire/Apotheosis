@@ -24,15 +24,15 @@
             "gem_class": {
                 "key": "anything",
                 "types": [
-                    "bow",
-                    "breaker",
-                    "helmet",
-                    "chestplate",
-                    "leggings",
-                    "boots",
-                    "shield",
-                    "trident",
-                    "melee_weapon"
+                    "apotheosis:bow",
+                    "apotheosis:breaker",
+                    "apotheosis:helmet",
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings",
+                    "apotheosis:boots",
+                    "apotheosis:shield",
+                    "apotheosis:trident",
+                    "apotheosis:melee_weapon"
                 ]
             },
             "mode": "global",

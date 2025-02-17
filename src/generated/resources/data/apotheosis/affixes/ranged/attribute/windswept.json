@@ -2,8 +2,8 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:generic.movement_speed",
     "categories": [
-        "trident",
-        "bow"
+        "apotheosis:bow",
+        "apotheosis:trident"
     ],
     "definition": {
         "affix_type": "stat",

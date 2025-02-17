@@ -10,8 +10,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "operation": "add_value",
@@ -26,7 +26,7 @@
         },
         {
             "type": "apotheosis:durability",
-            "gem_class": "breaker",
+            "gem_class": "apotheosis:breaker",
             "values": {
                 "cracked": 0.1,
                 "chipped": 0.15,
@@ -42,8 +42,8 @@
             "gem_class": {
                 "key": "core_armor",
                 "types": [
-                    "chestplate",
-                    "leggings"
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
                 ]
             },
             "operation": "add_value",

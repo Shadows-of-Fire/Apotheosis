@@ -10,7 +10,7 @@
     "mob_effect": "minecraft:blindness",
     "target": "hurt_attacker",
     "types": [
-        "helmet"
+        "apotheosis:helmet"
     ],
     "values": {
         "apotheosis:uncommon": {

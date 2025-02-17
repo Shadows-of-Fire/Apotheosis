@@ -32,8 +32,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "mode": "existing",
@@ -50,8 +50,8 @@
             "gem_class": {
                 "key": "core_armor",
                 "types": [
-                    "chestplate",
-                    "leggings"
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
                 ]
             },
             "mode": "existing",
@@ -65,7 +65,7 @@
         {
             "type": "apotheosis:enchantment",
             "enchantment": "minecraft:fortune",
-            "gem_class": "breaker",
+            "gem_class": "apotheosis:breaker",
             "mode": "existing",
             "values": {
                 "flawed": 1,

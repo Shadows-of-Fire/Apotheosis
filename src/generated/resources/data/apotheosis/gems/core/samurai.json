@@ -11,9 +11,9 @@
             "gem_class": {
                 "key": "weapons",
                 "types": [
-                    "melee_weapon",
-                    "trident",
-                    "bow"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident",
+                    "apotheosis:bow"
                 ]
             },
             "operation": "add_value",
@@ -32,8 +32,8 @@
             "gem_class": {
                 "key": "lower_armor",
                 "types": [
-                    "leggings",
-                    "boots"
+                    "apotheosis:leggings",
+                    "apotheosis:boots"
                 ]
             },
             "modifiers": [
@@ -66,7 +66,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:arrow_velocity",
-            "gem_class": "helmet",
+            "gem_class": "apotheosis:helmet",
             "operation": "add_multiplied_total",
             "values": {
                 "cracked": 0.075,
@@ -80,7 +80,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:dodge_chance",
-            "gem_class": "shield",
+            "gem_class": "apotheosis:shield",
             "operation": "add_value",
             "values": {
                 "cracked": 0.01,

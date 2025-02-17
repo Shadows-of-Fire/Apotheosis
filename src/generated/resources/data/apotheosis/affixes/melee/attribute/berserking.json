@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "apothic_attributes:overheal",
     "categories": [
-        "melee_weapon"
+        "apotheosis:melee_weapon"
     ],
     "definition": {
         "affix_type": "stat",

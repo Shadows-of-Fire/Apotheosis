@@ -17,7 +17,7 @@
     "stacking_limit": 3,
     "target": "block_self",
     "types": [
-        "shield"
+        "apotheosis:shield"
     ],
     "values": {
         "apotheosis:mythic": {

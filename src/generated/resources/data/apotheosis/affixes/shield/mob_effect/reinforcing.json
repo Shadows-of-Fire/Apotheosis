@@ -10,7 +10,7 @@
     "mob_effect": "minecraft:resistance",
     "target": "block_self",
     "types": [
-        "shield"
+        "apotheosis:shield"
     ],
     "values": {
         "apotheosis:rare": {

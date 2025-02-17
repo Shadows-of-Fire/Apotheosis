@@ -1,8 +1,8 @@
 {
     "type": "apotheosis:damage_reduction",
     "categories": [
-        "chestplate",
-        "helmet"
+        "apotheosis:chestplate",
+        "apotheosis:helmet"
     ],
     "damage_type": "projectile",
     "definition": {

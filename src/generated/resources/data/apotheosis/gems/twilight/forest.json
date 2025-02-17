@@ -29,9 +29,9 @@
             "gem_class": {
                 "key": "weapons",
                 "types": [
-                    "melee_weapon",
-                    "trident",
-                    "bow"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident",
+                    "apotheosis:bow"
                 ]
             },
             "values": {
@@ -56,7 +56,7 @@
         {
             "type": "apotheosis:multi_attribute",
             "desc": "bonus.apotheosis:multi_attr.desc.and",
-            "gem_class": "shield",
+            "gem_class": "apotheosis:shield",
             "modifiers": [
                 {
                     "attribute": "apothic_attributes:healing_received",
@@ -82,7 +82,7 @@
         },
         {
             "type": "apotheosis:twilight_ore_magnet",
-            "gem_class": "breaker",
+            "gem_class": "apotheosis:breaker",
             "values": {
                 "flawed": 24,
                 "normal": 20,
@@ -93,7 +93,7 @@
         {
             "type": "apotheosis:multi_attribute",
             "desc": "bonus.apotheosis:multi_attr.desc.but_and",
-            "gem_class": "chestplate",
+            "gem_class": "apotheosis:chestplate",
             "modifiers": [
                 {
                     "attribute": "apothic_attributes:armor_shred",

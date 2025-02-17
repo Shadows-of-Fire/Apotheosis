@@ -12,7 +12,7 @@
     "stacking_limit": 4,
     "target": "block_attacker",
     "types": [
-        "shield"
+        "apotheosis:shield"
     ],
     "values": {
         "apotheosis:uncommon": {

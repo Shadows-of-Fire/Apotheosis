@@ -11,8 +11,8 @@
             "gem_class": {
                 "key": "ranged_weapon",
                 "types": [
-                    "bow",
-                    "trident"
+                    "apotheosis:bow",
+                    "apotheosis:trident"
                 ]
             },
             "operation": "add_multiplied_base",
@@ -31,8 +31,8 @@
             "gem_class": {
                 "key": "core_armor",
                 "types": [
-                    "chestplate",
-                    "leggings"
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
                 ]
             },
             "values": {
@@ -46,7 +46,7 @@
         },
         {
             "type": "apotheosis:durability",
-            "gem_class": "melee_weapon",
+            "gem_class": "apotheosis:melee_weapon",
             "values": {
                 "cracked": 0.05,
                 "chipped": 0.1,

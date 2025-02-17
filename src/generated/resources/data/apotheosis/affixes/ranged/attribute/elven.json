@@ -2,8 +2,8 @@
     "type": "apotheosis:attribute",
     "attribute": "apothic_attributes:arrow_damage",
     "categories": [
-        "trident",
-        "bow"
+        "apotheosis:bow",
+        "apotheosis:trident"
     ],
     "definition": {
         "affix_type": "stat",

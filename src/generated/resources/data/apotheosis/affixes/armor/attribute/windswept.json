@@ -2,8 +2,8 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:generic.movement_speed",
     "categories": [
-        "boots",
-        "leggings"
+        "apotheosis:boots",
+        "apotheosis:leggings"
     ],
     "definition": {
         "affix_type": "stat",

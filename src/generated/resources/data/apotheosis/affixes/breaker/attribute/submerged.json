@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:player.submerged_mining_speed",
     "categories": [
-        "breaker"
+        "apotheosis:breaker"
     ],
     "definition": {
         "affix_type": "stat",

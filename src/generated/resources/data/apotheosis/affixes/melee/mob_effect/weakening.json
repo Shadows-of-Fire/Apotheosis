@@ -10,8 +10,8 @@
     "mob_effect": "minecraft:weakness",
     "target": "attack_target",
     "types": [
-        "trident",
-        "melee_weapon"
+        "apotheosis:trident",
+        "apotheosis:melee_weapon"
     ],
     "values": {
         "apotheosis:uncommon": {

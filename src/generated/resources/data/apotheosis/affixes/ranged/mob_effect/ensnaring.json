@@ -10,8 +10,8 @@
     "mob_effect": "minecraft:slowness",
     "target": "arrow_target",
     "types": [
-        "trident",
-        "bow"
+        "apotheosis:bow",
+        "apotheosis:trident"
     ],
     "values": {
         "apotheosis:uncommon": {

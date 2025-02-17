@@ -10,10 +10,10 @@
             "gem_class": {
                 "key": "armor",
                 "types": [
-                    "helmet",
-                    "chestplate",
-                    "leggings",
-                    "boots"
+                    "apotheosis:helmet",
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings",
+                    "apotheosis:boots"
                 ]
             },
             "operation": "add_value",
@@ -32,10 +32,10 @@
             "gem_class": {
                 "key": "weapon_or_tool",
                 "types": [
-                    "melee_weapon",
-                    "trident",
-                    "bow",
-                    "breaker"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident",
+                    "apotheosis:bow",
+                    "apotheosis:breaker"
                 ]
             },
             "operation": "add_multiplied_base",

@@ -1,10 +1,10 @@
 {
     "type": "apotheosis:damage_reduction",
     "categories": [
-        "chestplate",
-        "helmet",
-        "boots",
-        "leggings"
+        "apotheosis:chestplate",
+        "apotheosis:boots",
+        "apotheosis:helmet",
+        "apotheosis:leggings"
     ],
     "damage_type": "magic",
     "definition": {

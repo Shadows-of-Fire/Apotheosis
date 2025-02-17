@@ -10,8 +10,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "operation": "add_value",
@@ -30,8 +30,8 @@
             "gem_class": {
                 "key": "core_armor",
                 "types": [
-                    "chestplate",
-                    "leggings"
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
                 ]
             },
             "operation": "add_multiplied_total",
@@ -47,7 +47,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "neoforge:swim_speed",
-            "gem_class": "boots",
+            "gem_class": "apotheosis:boots",
             "operation": "add_multiplied_base",
             "values": {
                 "cracked": 0.1,

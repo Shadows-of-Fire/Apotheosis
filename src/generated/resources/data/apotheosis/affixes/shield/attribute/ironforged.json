@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:generic.armor",
     "categories": [
-        "shield"
+        "apotheosis:shield"
     ],
     "definition": {
         "affix_type": "stat",

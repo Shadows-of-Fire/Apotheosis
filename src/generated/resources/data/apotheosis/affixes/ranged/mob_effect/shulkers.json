@@ -10,7 +10,7 @@
     "mob_effect": "minecraft:levitation",
     "target": "arrow_target",
     "types": [
-        "bow"
+        "apotheosis:bow"
     ],
     "values": {
         "apotheosis:epic": {

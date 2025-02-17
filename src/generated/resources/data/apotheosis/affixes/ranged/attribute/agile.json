@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "apothic_attributes:draw_speed",
     "categories": [
-        "bow"
+        "apotheosis:bow"
     ],
     "definition": {
         "affix_type": "stat",

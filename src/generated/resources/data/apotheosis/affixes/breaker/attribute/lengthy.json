@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:player.block_interaction_range",
     "categories": [
-        "breaker"
+        "apotheosis:breaker"
     ],
     "definition": {
         "affix_type": "stat",

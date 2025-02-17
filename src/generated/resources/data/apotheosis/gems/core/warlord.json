@@ -10,8 +10,8 @@
             "gem_class": {
                 "key": "weapons",
                 "types": [
-                    "melee_weapon",
-                    "bow"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:bow"
                 ]
             },
             "operation": "add_multiplied_base",
@@ -27,7 +27,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "minecraft:generic.max_health",
-            "gem_class": "chestplate",
+            "gem_class": "apotheosis:chestplate",
             "operation": "add_multiplied_base",
             "values": {
                 "cracked": 0.05,
@@ -41,7 +41,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "minecraft:generic.attack_damage",
-            "gem_class": "helmet",
+            "gem_class": "apotheosis:helmet",
             "operation": "add_multiplied_total",
             "values": {
                 "cracked": 0.05,
@@ -54,7 +54,7 @@
         },
         {
             "type": "apotheosis:mob_effect",
-            "gem_class": "trident",
+            "gem_class": "apotheosis:trident",
             "mob_effect": "minecraft:strength",
             "stack_on_reapply": true,
             "stacking_limit": 5,

@@ -61,7 +61,7 @@
                 "apothic_attributes:prot_shred",
                 "neoforge:swim_speed"
             ],
-            "gem_class": "helmet",
+            "gem_class": "apotheosis:helmet",
             "operation": "add_multiplied_total",
             "values": {
                 "flawed": 0.05,
@@ -79,7 +79,7 @@
                 }
             ],
             "desc": "gem.apotheosis:overworld/royalty.bonus.pickaxe",
-            "gem_class": "breaker",
+            "gem_class": "apotheosis:breaker",
             "inputs": {
                 "tag": "c:raw_materials/copper"
             },
@@ -97,7 +97,7 @@
         {
             "type": "apotheosis:multi_attribute",
             "desc": "bonus.apotheosis:multi_attr.desc.and",
-            "gem_class": "bow",
+            "gem_class": "apotheosis:bow",
             "modifiers": [
                 {
                     "attribute": "apothic_attributes:prot_shred",
@@ -124,7 +124,7 @@
         {
             "type": "apotheosis:multi_attribute",
             "desc": "bonus.apotheosis:multi_attr.desc.and_but",
-            "gem_class": "shield",
+            "gem_class": "apotheosis:shield",
             "modifiers": [
                 {
                     "attribute": "minecraft:generic.armor",

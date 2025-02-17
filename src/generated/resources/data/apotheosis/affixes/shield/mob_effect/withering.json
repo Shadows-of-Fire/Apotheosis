@@ -10,7 +10,7 @@
     "mob_effect": "minecraft:wither",
     "target": "block_attacker",
     "types": [
-        "shield"
+        "apotheosis:shield"
     ],
     "values": {
         "apotheosis:epic": {

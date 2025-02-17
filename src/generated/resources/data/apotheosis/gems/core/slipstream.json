@@ -8,7 +8,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:draw_speed",
-            "gem_class": "bow",
+            "gem_class": "apotheosis:bow",
             "operation": "add_multiplied_base",
             "values": {
                 "cracked": 0.1,
@@ -22,7 +22,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:mining_speed",
-            "gem_class": "breaker",
+            "gem_class": "apotheosis:breaker",
             "operation": "add_multiplied_base",
             "values": {
                 "cracked": 0.1,
@@ -36,7 +36,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:dodge_chance",
-            "gem_class": "boots",
+            "gem_class": "apotheosis:boots",
             "operation": "add_value",
             "values": {
                 "cracked": 0.025,

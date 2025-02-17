@@ -10,8 +10,8 @@
     "mob_effect": "minecraft:instant_health",
     "target": "hurt_self",
     "types": [
-        "chestplate",
-        "leggings"
+        "apotheosis:chestplate",
+        "apotheosis:leggings"
     ],
     "values": {
         "apotheosis:epic": {

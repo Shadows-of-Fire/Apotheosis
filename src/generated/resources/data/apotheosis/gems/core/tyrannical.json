@@ -11,8 +11,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "operation": "add_value",
@@ -31,8 +31,8 @@
             "gem_class": {
                 "key": "core_armor",
                 "types": [
-                    "chestplate",
-                    "leggings"
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
                 ]
             },
             "operation": "add_value",
@@ -48,7 +48,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "minecraft:generic.armor_toughness",
-            "gem_class": "shield",
+            "gem_class": "apotheosis:shield",
             "operation": "add_multiplied_base",
             "values": {
                 "cracked": 0.05,
@@ -62,7 +62,7 @@
         {
             "type": "apotheosis:multi_attribute",
             "desc": "bonus.apotheosis:multi_attr.desc.and",
-            "gem_class": "boots",
+            "gem_class": "apotheosis:boots",
             "modifiers": [
                 {
                     "attribute": "minecraft:generic.max_health",
@@ -92,7 +92,7 @@
         },
         {
             "type": "apotheosis:mob_effect",
-            "gem_class": "bow",
+            "gem_class": "apotheosis:bow",
             "mob_effect": "apothic_attributes:bleeding",
             "stack_on_reapply": true,
             "stacking_limit": 4,

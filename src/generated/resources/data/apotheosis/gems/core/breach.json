@@ -11,8 +11,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "operation": "add_value",
@@ -28,7 +28,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "minecraft:player.block_interaction_range",
-            "gem_class": "breaker",
+            "gem_class": "apotheosis:breaker",
             "operation": "add_value",
             "values": {
                 "cracked": 0.5,
@@ -42,7 +42,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:prot_pierce",
-            "gem_class": "bow",
+            "gem_class": "apotheosis:bow",
             "operation": "add_value",
             "values": {
                 "cracked": 4.0,

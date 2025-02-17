@@ -10,8 +10,8 @@
     "mob_effect": "minecraft:speed",
     "target": "arrow_self",
     "types": [
-        "trident",
-        "bow"
+        "apotheosis:bow",
+        "apotheosis:trident"
     ],
     "values": {
         "apotheosis:uncommon": {

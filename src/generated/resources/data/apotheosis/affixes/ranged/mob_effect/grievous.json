@@ -10,8 +10,8 @@
     "mob_effect": "apothic_attributes:grievous",
     "target": "arrow_target",
     "types": [
-        "trident",
-        "bow"
+        "apotheosis:bow",
+        "apotheosis:trident"
     ],
     "values": {
         "apotheosis:uncommon": {

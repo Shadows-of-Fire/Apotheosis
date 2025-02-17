@@ -10,8 +10,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "operation": "add_multiplied_base",
@@ -30,8 +30,8 @@
             "gem_class": {
                 "key": "core_armor",
                 "types": [
-                    "chestplate",
-                    "leggings"
+                    "apotheosis:chestplate",
+                    "apotheosis:leggings"
                 ]
             },
             "operation": "add_value",
@@ -47,7 +47,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "minecraft:generic.max_health",
-            "gem_class": "shield",
+            "gem_class": "apotheosis:shield",
             "operation": "add_multiplied_total",
             "values": {
                 "cracked": 0.05,

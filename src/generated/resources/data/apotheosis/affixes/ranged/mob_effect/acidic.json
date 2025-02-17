@@ -15,7 +15,7 @@
     "stacking_limit": 4,
     "target": "arrow_target",
     "types": [
-        "bow"
+        "apotheosis:bow"
     ],
     "values": {
         "apotheosis:mythic": {

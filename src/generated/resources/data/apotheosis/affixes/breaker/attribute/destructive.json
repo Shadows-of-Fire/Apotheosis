@@ -2,7 +2,7 @@
     "type": "apotheosis:attribute",
     "attribute": "apothic_attributes:mining_speed",
     "categories": [
-        "breaker"
+        "apotheosis:breaker"
     ],
     "definition": {
         "affix_type": "stat",

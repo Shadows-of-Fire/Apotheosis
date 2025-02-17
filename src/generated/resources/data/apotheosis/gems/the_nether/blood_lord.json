@@ -28,8 +28,8 @@
             "gem_class": {
                 "key": "light_weapon",
                 "types": [
-                    "melee_weapon",
-                    "trident"
+                    "apotheosis:melee_weapon",
+                    "apotheosis:trident"
                 ]
             },
             "modifiers": [
@@ -58,7 +58,7 @@
         {
             "type": "apotheosis:multi_attribute",
             "desc": "bonus.apotheosis:multi_attr.desc.and",
-            "gem_class": "helmet",
+            "gem_class": "apotheosis:helmet",
             "modifiers": [
                 {
                     "attribute": "minecraft:generic.attack_damage",
@@ -85,7 +85,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:healing_received",
-            "gem_class": "chestplate",
+            "gem_class": "apotheosis:chestplate",
             "operation": "add_multiplied_base",
             "values": {
                 "flawed": 0.2,

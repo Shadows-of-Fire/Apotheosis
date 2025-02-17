@@ -7,7 +7,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:arrow_velocity",
-            "gem_class": "bow",
+            "gem_class": "apotheosis:bow",
             "operation": "add_multiplied_base",
             "values": {
                 "cracked": 0.05,
@@ -21,7 +21,7 @@
         {
             "type": "apotheosis:attribute",
             "attribute": "apothic_attributes:mining_speed",
-            "gem_class": "breaker",
+            "gem_class": "apotheosis:breaker",
             "operation": "add_value",
             "values": {
                 "cracked": 0.05,
@@ -38,8 +38,8 @@
             "gem_class": {
                 "key": "lower_armor",
                 "types": [
-                    "leggings",
-                    "boots"
+                    "apotheosis:leggings",
+                    "apotheosis:boots"
                 ]
             },
             "operation": "add_multiplied_total",

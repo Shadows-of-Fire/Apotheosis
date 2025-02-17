@@ -10,7 +10,7 @@
     "mob_effect": "minecraft:speed",
     "target": "break_self",
     "types": [
-        "breaker"
+        "apotheosis:breaker"
     ],
     "values": {
         "apotheosis:uncommon": {
