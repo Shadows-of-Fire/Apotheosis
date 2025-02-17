@@ -18,7 +18,7 @@ public class CategoryCheckCommand {
             ItemStack stack = p.getMainHandItem();
             LootCategory cat = LootCategory.forItem(stack);
             EquipmentSlotGroup slots = cat == null ? null : cat.getSlots();
-            p.sendSystemMessage(Component.literal("Loot Category - " + (cat == null ? "null" : cat.getName())));
+            p.sendSystemMessage(Component.literal("Loot Category - " + (cat == null ? "null" : cat.getKey())));
             p.sendSystemMessage(Component.literal("Equipment Slot - " + (slots == null ? "null" : slots.toString())));
             return 0;
         }));

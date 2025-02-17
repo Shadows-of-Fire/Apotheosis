@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
@@ -182,7 +183,7 @@ public record Elite(BasicBossData basicData, float chance, HolderSet<EntityType<
                 guaranteed = rand.nextInt(6);
 
                 ItemStack temp = mob.getItemBySlot(EquipmentSlot.values()[guaranteed]);
-                while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategory.NONE) {
+                while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategories.NONE) {
                     guaranteed = rand.nextInt(6);
                     temp = mob.getItemBySlot(EquipmentSlot.values()[guaranteed]);
                 }

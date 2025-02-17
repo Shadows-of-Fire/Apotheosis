@@ -1,20 +1,16 @@
 package dev.shadowsoffire.apotheosis.socket.gem;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
-import net.minecraft.network.FriendlyByteBuf;
 
 /**
  * A Gem Class is the set of types of items it may be applied to.
@@ -31,7 +27,7 @@ public record GemClass(String key, Set<LootCategory> types) {
         .xmap(e -> e.map(Function.identity(), GemClass::new), GemClass::toEither);
 
     public GemClass(LootCategory category) {
-        this(category.getName(), category);
+        this(category.getKey().getPath(), category);
     }
 
     public GemClass(String key, LootCategory... types) {
@@ -43,22 +39,6 @@ public record GemClass(String key, Set<LootCategory> types) {
         this.types = types;
         Preconditions.checkArgument(!Strings.isNullOrEmpty(this.key), "Invalid GemClass with null key");
         Preconditions.checkArgument(this.types != null && !this.types.isEmpty(), "Invalid GemClass with null or empty types");
-    }
-
-    public void write(FriendlyByteBuf buf) {
-        buf.writeUtf(this.key);
-        buf.writeByte(this.types.size());
-        this.types.forEach(c -> buf.writeUtf(c.getName()));
-    }
-
-    public static GemClass read(FriendlyByteBuf buf) {
-        String key = buf.readUtf();
-        int size = buf.readByte();
-        List<LootCategory> list = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            list.add(LootCategory.byId(buf.readUtf()));
-        }
-        return new GemClass(key, ImmutableSet.copyOf(list));
     }
 
     private static Either<GemClass, LootCategory> toEither(GemClass gc) {

@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
 import dev.shadowsoffire.placebo.config.Configuration;
@@ -72,14 +74,19 @@ public class AdventureConfig {
 
         TYPE_OVERRIDES.clear();
         TYPE_OVERRIDES.putAll(Apotheosis.IMC_TYPE_OVERRIDES);
-        String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|melee_weapon", "minecraft:shulker_shell|none" },
+        String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|apotheosis:melee_weapon", "minecraft:shulker_shell|apotheosis:none" },
             "A list of type overrides for the affix loot system.  Format is <itemname>|<type>.\nValid types are: none, melee_weapon, trident, shield, breaker, bow\nSynced.");
         for (String s : overrides) {
             String[] split = s.split("\\|");
             try {
-                LootCategory type = LootCategory.byId(split[1].toLowerCase(Locale.ROOT));
+                ResourceLocation key = ResourceLocation.parse(split[1].toLowerCase(Locale.ROOT));
+                LootCategory type = BuiltInRegs.LOOT_CATEGORY.get(key);
                 if (type.isArmor()) {
                     throw new UnsupportedOperationException("Cannot override an item to an armor type.");
+                }
+
+                if (type.isNone() && !LootCategories.NONE.getKey().equals(key)) {
+                    throw new UnsupportedOperationException("Unknown loot category: " + key);
                 }
 
                 Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(split[0]));
@@ -230,7 +237,7 @@ public class AdventureConfig {
 
             @Override
             public String getVersion() {
-                return "1";
+                return "2";
             }
 
         }

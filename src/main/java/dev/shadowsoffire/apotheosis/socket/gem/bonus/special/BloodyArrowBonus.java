@@ -6,8 +6,8 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.affix.Affix;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
@@ -32,7 +32,7 @@ public class BloodyArrowBonus extends GemBonus {
     protected final Map<Purity, Data> values;
 
     public BloodyArrowBonus(Map<Purity, Data> values) {
-        super(new GemClass("ranged_weapon", ImmutableSet.of(LootCategory.BOW)));
+        super(new GemClass("ranged_weapon", ImmutableSet.of(LootCategories.BOW)));
         this.values = values;
     }
 

@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
@@ -49,7 +50,7 @@ import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
  */
 public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity purity, ItemStack gemStack, int slot) implements GemView {
 
-    public static GemInstance EMPTY = new GemInstance(GemRegistry.INSTANCE.emptyHolder(), LootCategory.NONE, Purity.CHIPPED, ItemStack.EMPTY, -1);
+    public static GemInstance EMPTY = new GemInstance(GemRegistry.INSTANCE.emptyHolder(), LootCategories.NONE, Purity.CHIPPED, ItemStack.EMPTY, -1);
 
     /**
      * Creates a {@link GemInstance} for a socketed gem.
@@ -79,14 +80,14 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory category, Purity 
     }
 
     /**
-     * Creates a {@link GemInstance} with {@link LootCategory#NONE} and an unknown slot index (-1).
+     * Creates a {@link GemInstance} with {@link LootCategories#NONE} and an unknown slot index (-1).
      * This instance will be unable to invoke bonus methods, but may be used to easily retrieve the gem properties.
      * 
      * @deprecated See {@link UnsocketedGem}.
      */
     @Deprecated(forRemoval = true, since = "8.1.0")
     public static GemInstance unsocketed(ItemStack gemStack) {
-        return socketed(LootCategory.NONE, gemStack, -1);
+        return socketed(LootCategories.NONE, gemStack, -1);
     }
 
     /**

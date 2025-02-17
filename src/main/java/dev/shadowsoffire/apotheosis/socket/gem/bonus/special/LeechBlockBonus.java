@@ -6,8 +6,8 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.affix.Affix;
-import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.socket.gem.GemView;
@@ -30,7 +30,7 @@ public class LeechBlockBonus extends GemBonus {
     protected final Map<Purity, Data> values;
 
     public LeechBlockBonus(Map<Purity, Data> values) {
-        super(new GemClass("shield", ImmutableSet.of(LootCategory.SHIELD)));
+        super(new GemClass("shield", ImmutableSet.of(LootCategories.SHIELD)));
         this.values = values;
     }
 

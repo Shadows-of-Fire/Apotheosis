@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
+import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.Apoth.Items;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.compat.GatewaysCompat;
@@ -214,10 +215,10 @@ public class Apotheosis {
                     try {
                         var categoryOverride = (Map.Entry<Item, String>) msg.messageSupplier().get();
                         Item item = categoryOverride.getKey();
-                        LootCategory cat = LootCategory.byId(categoryOverride.getValue());
+                        LootCategory cat = BuiltInRegs.LOOT_CATEGORY.get(ResourceLocation.parse(categoryOverride.getValue()));
                         if (cat == null) throw new NullPointerException("Invalid loot category ID: " + categoryOverride.getValue());
                         Apotheosis.IMC_TYPE_OVERRIDES.put(item, cat);
-                        Apotheosis.LOGGER.info("Mod {} has overriden the loot category of {} to {}.", msg.senderModId(), item, cat.getName());
+                        Apotheosis.LOGGER.info("Mod {} has overriden the loot category of {} to {}.", msg.senderModId(), item, cat.getKey());
                         break;
                     }
                     catch (Exception ex) {

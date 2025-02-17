@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
 
+import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.effect.DamageReductionAffix.DamageType;
 import dev.shadowsoffire.apotheosis.affix.effect.MobEffectAffix.Target;
@@ -65,15 +67,15 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
     public static final int DEFAULT_WEIGHT = 10;
     public static final int DEFAULT_QUALITY = 0;
 
-    public static final GemClass ARMOR = new GemClass("armor", LootCategory.HELMET, LootCategory.CHESTPLATE, LootCategory.LEGGINGS, LootCategory.BOOTS);
-    public static final GemClass LIGHT_WEAPON = new GemClass("light_weapon", LootCategory.MELEE_WEAPON, LootCategory.TRIDENT);
-    public static final GemClass CORE_ARMOR = new GemClass("core_armor", LootCategory.CHESTPLATE, LootCategory.LEGGINGS);
-    public static final GemClass RANGED_WEAPON = new GemClass("ranged_weapon", LootCategory.BOW, LootCategory.TRIDENT);
-    public static final GemClass LOWER_ARMOR = new GemClass("lower_armor", LootCategory.LEGGINGS, LootCategory.BOOTS);
-    public static final GemClass WEAPONS = new GemClass("weapons", LootCategory.MELEE_WEAPON, LootCategory.TRIDENT, LootCategory.BOW);
-    public static final GemClass WEAPON_OR_TOOL = new GemClass("weapon_or_tool", LootCategory.MELEE_WEAPON, LootCategory.TRIDENT, LootCategory.BOW, LootCategory.BREAKER);
-    public static final GemClass NON_TRIDENT_WEAPONS = new GemClass("weapons", LootCategory.MELEE_WEAPON, LootCategory.BOW);
-    public static final GemClass ANYTHING = new GemClass("anything", LootCategory.VALUES.stream().filter(lc -> lc != LootCategory.NONE).toArray(LootCategory[]::new));
+    public static final GemClass ARMOR = new GemClass("armor", LootCategories.HELMET, LootCategories.CHESTPLATE, LootCategories.LEGGINGS, LootCategories.BOOTS);
+    public static final GemClass LIGHT_WEAPON = new GemClass("light_weapon", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT);
+    public static final GemClass CORE_ARMOR = new GemClass("core_armor", LootCategories.CHESTPLATE, LootCategories.LEGGINGS);
+    public static final GemClass RANGED_WEAPON = new GemClass("ranged_weapon", LootCategories.BOW, LootCategories.TRIDENT);
+    public static final GemClass LOWER_ARMOR = new GemClass("lower_armor", LootCategories.LEGGINGS, LootCategories.BOOTS);
+    public static final GemClass WEAPONS = new GemClass("weapons", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW);
+    public static final GemClass WEAPON_OR_TOOL = new GemClass("weapon_or_tool", LootCategories.MELEE_WEAPON, LootCategories.TRIDENT, LootCategories.BOW, LootCategories.BREAKER);
+    public static final GemClass NON_TRIDENT_WEAPONS = new GemClass("weapons", LootCategories.MELEE_WEAPON, LootCategories.BOW);
+    public static final GemClass ANYTHING = new GemClass("anything", BuiltInRegs.LOOT_CATEGORY.stream().filter(lc -> lc != LootCategories.NONE).toArray(LootCategory[]::new));
 
     public static final Holder<MobEffect> TW_FROSTED = DeferredHolder.create(Registries.MOB_EFFECT, ResourceLocation.parse("twilightforest:frosted"));
 
@@ -101,7 +103,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 5)
                 .value(Purity.FLAWLESS, 7)
                 .value(Purity.PERFECT, 10))
-            .bonus(LootCategory.BREAKER, DurabilityBonus.builder()
+            .bonus(LootCategories.BREAKER, DurabilityBonus.builder()
                 .value(Purity.CRACKED, 0.10F)
                 .value(Purity.CHIPPED, 0.15F)
                 .value(Purity.FLAWED, 0.25F)
@@ -137,7 +139,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 6)
                 .value(Purity.FLAWLESS, 8)
                 .value(Purity.PERFECT, 12))
-            .bonus(LootCategory.SHIELD, AttributeBonus.builder()
+            .bonus(LootCategories.SHIELD, AttributeBonus.builder()
                 .attr(Attributes.MAX_HEALTH)
                 .op(Operation.ADD_MULTIPLIED_TOTAL)
                 .value(Purity.CRACKED, 0.05)
@@ -158,7 +160,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 7)
                 .value(Purity.FLAWLESS, 9)
                 .value(Purity.PERFECT, 12))
-            .bonus(LootCategory.BREAKER, AttributeBonus.builder()
+            .bonus(LootCategories.BREAKER, AttributeBonus.builder()
                 .attr(Attributes.BLOCK_INTERACTION_RANGE)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.5)
@@ -167,7 +169,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 2)
                 .value(Purity.FLAWLESS, 2.5)
                 .value(Purity.PERFECT, 3))
-            .bonus(LootCategory.BOW, AttributeBonus.builder()
+            .bonus(LootCategories.BOW, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.PROT_PIERCE)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 4)
@@ -196,7 +198,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.175F)
                 .value(Purity.FLAWLESS, 0.225F)
                 .value(Purity.PERFECT, 0.275F))
-            .bonus(LootCategory.MELEE_WEAPON, DurabilityBonus.builder()
+            .bonus(LootCategories.MELEE_WEAPON, DurabilityBonus.builder()
                 .value(Purity.CRACKED, 0.05F)
                 .value(Purity.CHIPPED, 0.10F)
                 .value(Purity.FLAWED, 0.15F)
@@ -223,7 +225,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.20)
                 .value(Purity.FLAWLESS, 0.25)
                 .value(Purity.PERFECT, 0.30))
-            .bonus(LootCategory.SHIELD, AttributeBonus.builder()
+            .bonus(LootCategories.SHIELD, AttributeBonus.builder()
                 .attr(Attributes.ARMOR)
                 .op(Operation.ADD_MULTIPLIED_TOTAL)
                 .value(Purity.CRACKED, 0.05)
@@ -234,7 +236,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.PERFECT, 0.45)));
 
         addGem("core/lightning", c -> c
-            .bonus(LootCategory.BOW, AttributeBonus.builder()
+            .bonus(LootCategories.BOW, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.ARROW_VELOCITY)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.05)
@@ -243,7 +245,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.35)
                 .value(Purity.FLAWLESS, 0.425)
                 .value(Purity.PERFECT, 0.55))
-            .bonus(LootCategory.BREAKER, AttributeBonus.builder()
+            .bonus(LootCategories.BREAKER, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.MINING_SPEED)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.05)
@@ -281,7 +283,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, -0.65)
                 .value(Purity.FLAWLESS, -0.85)
                 .value(Purity.PERFECT, -1.04))
-            .bonus(LootCategory.BOOTS, AttributeBonus.builder()
+            .bonus(LootCategories.BOOTS, AttributeBonus.builder()
                 .attr(NeoForgeMod.SWIM_SPEED)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.10)
@@ -322,7 +324,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.NORMAL, -0.10F)
                     .value(Purity.FLAWLESS, -0.125F)
                     .value(Purity.PERFECT, -0.15F)))
-            .bonus(LootCategory.HELMET, AttributeBonus.builder()
+            .bonus(LootCategories.HELMET, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.ARROW_VELOCITY)
                 .op(Operation.ADD_MULTIPLIED_TOTAL)
                 .value(Purity.CRACKED, 0.075)
@@ -331,7 +333,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.375)
                 .value(Purity.FLAWLESS, 0.425)
                 .value(Purity.PERFECT, 0.50))
-            .bonus(LootCategory.SHIELD, AttributeBonus.builder()
+            .bonus(LootCategories.SHIELD, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.DODGE_CHANCE)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.01)
@@ -343,7 +345,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
 
         addGem("core/slipstream", c -> c
             .unique()
-            .bonus(LootCategory.BOW, AttributeBonus.builder()
+            .bonus(LootCategories.BOW, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.DRAW_SPEED)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.10)
@@ -352,7 +354,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.45)
                 .value(Purity.FLAWLESS, 0.5)
                 .value(Purity.PERFECT, 0.60))
-            .bonus(LootCategory.BREAKER, AttributeBonus.builder()
+            .bonus(LootCategories.BREAKER, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.MINING_SPEED)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.10)
@@ -361,7 +363,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.30)
                 .value(Purity.FLAWLESS, 0.375)
                 .value(Purity.PERFECT, 0.45))
-            .bonus(LootCategory.BOOTS, AttributeBonus.builder()
+            .bonus(LootCategories.BOOTS, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.DODGE_CHANCE)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.025)
@@ -390,7 +392,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.65)
                 .value(Purity.FLAWLESS, 0.85)
                 .value(Purity.PERFECT, 1.04))
-            .bonus(LootCategory.BOOTS, AttributeBonus.builder()
+            .bonus(LootCategories.BOOTS, AttributeBonus.builder()
                 .attr(Attributes.STEP_HEIGHT)
                 .op(Operation.ADD_VALUE)
                 .value(Purity.CRACKED, 0.25)
@@ -440,7 +442,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 3)
                 .value(Purity.FLAWLESS, 4)
                 .value(Purity.PERFECT, 6))
-            .bonus(LootCategory.SHIELD, AttributeBonus.builder()
+            .bonus(LootCategories.SHIELD, AttributeBonus.builder()
                 .attr(Attributes.ARMOR_TOUGHNESS)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.05)
@@ -449,7 +451,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.30)
                 .value(Purity.FLAWLESS, 0.375)
                 .value(Purity.PERFECT, 0.5))
-            .bonus(LootCategory.BOOTS, MultiAttrBonus.builder()
+            .bonus(LootCategories.BOOTS, MultiAttrBonus.builder()
                 .desc("bonus.apotheosis:multi_attr.desc.and")
                 .modifier(b -> b
                     .attr(Attributes.MAX_HEALTH)
@@ -469,7 +471,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.NORMAL, -0.10F)
                     .value(Purity.FLAWLESS, -0.125F)
                     .value(Purity.PERFECT, -0.20F)))
-            .bonus(LootCategory.BOW, MobEffectBonus.builder()
+            .bonus(LootCategories.BOW, MobEffectBonus.builder()
                 .effect(ALObjects.MobEffects.BLEEDING)
                 .target(Target.ARROW_TARGET)
                 .stacking()
@@ -487,7 +489,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.45)
                 .value(Purity.FLAWLESS, 0.55)
                 .value(Purity.PERFECT, 0.70))
-            .bonus(LootCategory.CHESTPLATE, AttributeBonus.builder()
+            .bonus(LootCategories.CHESTPLATE, AttributeBonus.builder()
                 .attr(Attributes.MAX_HEALTH)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.CRACKED, 0.05)
@@ -496,7 +498,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.20)
                 .value(Purity.FLAWLESS, 0.25)
                 .value(Purity.PERFECT, 0.35))
-            .bonus(LootCategory.HELMET, AttributeBonus.builder()
+            .bonus(LootCategories.HELMET, AttributeBonus.builder()
                 .attr(Attributes.ATTACK_DAMAGE)
                 .op(Operation.ADD_MULTIPLIED_TOTAL)
                 .value(Purity.CRACKED, 0.05)
@@ -505,7 +507,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.15)
                 .value(Purity.FLAWLESS, 0.175)
                 .value(Purity.PERFECT, 0.225))
-            .bonus(LootCategory.TRIDENT, MobEffectBonus.builder()
+            .bonus(LootCategories.TRIDENT, MobEffectBonus.builder()
                 .effect(MobEffects.DAMAGE_BOOST)
                 .target(Target.ARROW_SELF)
                 .stacking()
@@ -531,7 +533,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 2)
                 .value(Purity.FLAWLESS, 3)
                 .value(Purity.PERFECT, 4))
-            .bonus(LootCategory.BREAKER, EnchantmentBonus.builder()
+            .bonus(LootCategories.BREAKER, EnchantmentBonus.builder()
                 .enchantment(enchants.getOrThrow(Enchantments.FORTUNE))
                 .mode(Mode.EXISTING)
                 .value(Purity.FLAWED, 1)
@@ -543,7 +545,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(Level.OVERWORLD))
-            .bonus(LootCategory.HELMET, AllStatsBonus.builder()
+            .bonus(LootCategories.HELMET, AllStatsBonus.builder()
                 .op(Operation.ADD_MULTIPLIED_TOTAL)
                 .value(Purity.FLAWED, 0.05F)
                 .value(Purity.NORMAL, 0.075F)
@@ -581,7 +583,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     ALObjects.Attributes.PROT_PIERCE,
                     ALObjects.Attributes.PROT_SHRED,
                     NeoForgeMod.SWIM_SPEED))
-            .bonus(LootCategory.BREAKER, DropTransformBonus.builder()
+            .bonus(LootCategories.BREAKER, DropTransformBonus.builder()
                 .condition(new MatchesBlockCondition(BuiltInRegistries.BLOCK.getOrCreateTag(Tags.Blocks.ORES_COPPER)))
                 .inputs(Ingredient.of(Tags.Items.RAW_MATERIALS_COPPER))
                 .desc("gem.apotheosis:overworld/royalty.bonus.pickaxe")
@@ -590,7 +592,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.20F)
                 .value(Purity.FLAWLESS, 0.25F)
                 .value(Purity.PERFECT, 0.40F))
-            .bonus(LootCategory.BOW, MultiAttrBonus.builder()
+            .bonus(LootCategories.BOW, MultiAttrBonus.builder()
                 .desc("bonus.apotheosis:multi_attr.desc.and")
                 .modifier(b -> b
                     .attr(ALObjects.Attributes.PROT_SHRED)
@@ -606,7 +608,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.NORMAL, -0.45F)
                     .value(Purity.FLAWLESS, -0.55F)
                     .value(Purity.PERFECT, -0.65F)))
-            .bonus(LootCategory.SHIELD, MultiAttrBonus.builder()
+            .bonus(LootCategories.SHIELD, MultiAttrBonus.builder()
                 .desc("bonus.apotheosis:multi_attr.desc.and_but")
                 .modifier(b -> b
                     .attr(Attributes.ARMOR)
@@ -650,7 +652,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.NORMAL, 0.10F)
                     .value(Purity.FLAWLESS, 0.20F)
                     .value(Purity.PERFECT, 0.30F)))
-            .bonus(LootCategory.HELMET, MultiAttrBonus.builder()
+            .bonus(LootCategories.HELMET, MultiAttrBonus.builder()
                 .desc("bonus.apotheosis:multi_attr.desc.and")
                 .modifier(b -> b
                     .attr(Attributes.ATTACK_DAMAGE)
@@ -666,7 +668,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.NORMAL, -0.40F)
                     .value(Purity.FLAWLESS, -0.50F)
                     .value(Purity.PERFECT, -0.65F)))
-            .bonus(LootCategory.CHESTPLATE, AttributeBonus.builder()
+            .bonus(LootCategories.CHESTPLATE, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.HEALING_RECEIVED)
                 .op(Operation.ADD_MULTIPLIED_BASE)
                 .value(Purity.FLAWED, 0.20)
@@ -693,21 +695,21 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .target(Target.ATTACK_TARGET)
                 .value(Purity.FLAWLESS, 80, 0, 1200)
                 .value(Purity.PERFECT, 80, 1, 1200))
-            .bonus(LootCategory.CHESTPLATE, EnchantmentBonus.builder()
+            .bonus(LootCategories.CHESTPLATE, EnchantmentBonus.builder()
                 .enchantment(standaloneHolder(registries, Ench.Enchantments.BERSERKERS_FURY))
                 .mode(Mode.SINGLE)
                 .value(Purity.FLAWED, 1)
                 .value(Purity.NORMAL, 1)
                 .value(Purity.FLAWLESS, 2)
                 .value(Purity.PERFECT, 2))
-            .bonus(LootCategory.BREAKER, EnchantmentBonus.builder()
+            .bonus(LootCategories.BREAKER, EnchantmentBonus.builder()
                 .enchantment(enchants.getOrThrow(Enchantments.EFFICIENCY))
                 .mode(Mode.SINGLE)
                 .value(Purity.FLAWED, 1)
                 .value(Purity.NORMAL, 2)
                 .value(Purity.FLAWLESS, 3)
                 .value(Purity.PERFECT, 4))
-            .bonus(LootCategory.HELMET, AttributeBonus.builder()
+            .bonus(LootCategories.HELMET, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.FIRE_DAMAGE)
                 .op(Operation.ADD_MULTIPLIED_TOTAL)
                 .value(Purity.FLAWED, 0.50)
@@ -744,11 +746,11 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.FLAWLESS, -0.35F)
                     .value(Purity.PERFECT, -0.55F)))
             .bonus(new MageSlayerBonus(
-                new GemClass(LootCategory.HELMET), Map.of(
+                new GemClass(LootCategories.HELMET), Map.of(
                     Purity.NORMAL, 0.15F,
                     Purity.FLAWLESS, 0.225F,
                     Purity.PERFECT, 0.35F)))
-            .bonus(LootCategory.SHIELD, MobEffectBonus.builder()
+            .bonus(LootCategories.SHIELD, MobEffectBonus.builder()
                 .effect(MobEffects.DAMAGE_RESISTANCE)
                 .target(Target.BLOCK_SELF)
                 .value(Purity.NORMAL, 200, 0, 400)
@@ -759,12 +761,12 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
             .unique()
             .minPurity(Purity.FLAWED)
             .contstraints(Constraints.forDimension(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("twilightforest:twilight_forest"))))
-            .bonus(LootCategory.CHESTPLATE, FortificationBonus.builder()
+            .bonus(LootCategories.CHESTPLATE, FortificationBonus.builder()
                 .value(Purity.FLAWED, 0.05F, 6000)
                 .value(Purity.NORMAL, 0.10F, 5400)
                 .value(Purity.FLAWLESS, 0.125F, 5100)
                 .value(Purity.PERFECT, 0.15F, 4800))
-            .bonus(LootCategory.HELMET, AttributeBonus.builder()
+            .bonus(LootCategories.HELMET, AttributeBonus.builder()
                 .attr(ALObjects.Attributes.COLD_DAMAGE)
                 .op(Operation.ADD_MULTIPLIED_TOTAL)
                 .value(Purity.FLAWED, 0.50)
@@ -772,7 +774,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.FLAWLESS, 0.75)
                 .value(Purity.PERFECT, 0.90))
             .bonus(new FrozenDropsBonus(
-                new GemClass(LootCategory.MELEE_WEAPON), Map.of(
+                new GemClass(LootCategories.MELEE_WEAPON), Map.of(
                     Purity.NORMAL, 0.666F,
                     Purity.FLAWLESS, 1.35F,
                     Purity.PERFECT, 2.25F)))
@@ -791,7 +793,7 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                 .value(Purity.NORMAL, 0.0075F, 4800)
                 .value(Purity.FLAWLESS, 0.01F, 4800)
                 .value(Purity.PERFECT, 0.015F, 4800))
-            .bonus(LootCategory.SHIELD, MultiAttrBonus.builder()
+            .bonus(LootCategories.SHIELD, MultiAttrBonus.builder()
                 .desc("bonus.apotheosis:multi_attr.desc.and")
                 .modifier(b -> b
                     .attr(ALObjects.Attributes.HEALING_RECEIVED)
@@ -808,12 +810,12 @@ public class GemProvider extends DynamicRegistryProvider<Gem> {
                     .value(Purity.FLAWLESS, -0.15F)
                     .value(Purity.PERFECT, -0.25F)))
             .bonus(new OreMagnetBonus(
-                new GemClass(LootCategory.BREAKER), Map.of(
+                new GemClass(LootCategories.BREAKER), Map.of(
                     Purity.FLAWED, 24,
                     Purity.NORMAL, 20,
                     Purity.FLAWLESS, 16,
                     Purity.PERFECT, 10)))
-            .bonus(LootCategory.CHESTPLATE, MultiAttrBonus.builder()
+            .bonus(LootCategories.CHESTPLATE, MultiAttrBonus.builder()
                 .desc("bonus.apotheosis:multi_attr.desc.but_and")
                 .modifier(b -> b
                     .attr(ALObjects.Attributes.ARMOR_SHRED)

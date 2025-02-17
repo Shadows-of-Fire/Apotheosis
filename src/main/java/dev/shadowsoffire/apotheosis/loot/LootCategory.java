@@ -1,8 +1,8 @@
 package dev.shadowsoffire.apotheosis.loot;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,76 +10,68 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
+import org.jetbrains.annotations.ApiStatus;
+
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicates;
+import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Keyable;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig;
+import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.ResourceLocationException;
+import net.minecraft.Util;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.level.block.AbstractSkullBlock;
-import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.registries.callback.BakeCallback;
 
-// TODO: Real registry
 public final class LootCategory {
 
-    private static final Map<String, LootCategory> BY_ID_INTERNAL = new HashMap<>();
-    private static final List<LootCategory> VALUES_INTERNAL = new LinkedList<>();
-
-    public static final Map<String, LootCategory> BY_ID = Collections.unmodifiableMap(BY_ID_INTERNAL);
-    public static final List<LootCategory> VALUES = Collections.unmodifiableList(VALUES_INTERNAL);
-    public static final Codec<LootCategory> CODEC = Codec.stringResolver(LootCategory::getName, LootCategory::byId);
+    public static final Codec<LootCategory> CODEC = Codec.lazyInitialized(() -> legacyResolverCodec());
     public static final Codec<Set<LootCategory>> SET_CODEC = PlaceboCodecs.setOf(CODEC);
-    public static final StreamCodec<ByteBuf, LootCategory> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(LootCategory::byId, LootCategory::getName);
+    public static final StreamCodec<RegistryFriendlyByteBuf, LootCategory> STREAM_CODEC = ByteBufCodecs.registry(Apoth.BuiltInRegs.LOOT_CATEGORY.key());
 
-    public static final LootCategory BOW = register("bow", s -> s.getItem() instanceof BowItem || s.getItem() instanceof CrossbowItem, EquipmentSlotGroup.HAND);
-    public static final LootCategory BREAKER = register("breaker", s -> s.canPerformAction(ItemAbilities.PICKAXE_DIG) || s.canPerformAction(ItemAbilities.SHOVEL_DIG), EquipmentSlotGroup.MAINHAND);
-    public static final LootCategory HELMET = register("helmet", armorSlot(EquipmentSlot.HEAD), EquipmentSlotGroup.HEAD);
-    public static final LootCategory CHESTPLATE = register("chestplate", armorSlot(EquipmentSlot.CHEST), EquipmentSlotGroup.CHEST);
-    public static final LootCategory LEGGINGS = register("leggings", armorSlot(EquipmentSlot.LEGS), EquipmentSlotGroup.LEGS);
-    public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), EquipmentSlotGroup.FEET);
-    public static final LootCategory SHIELD = register("shield", s -> s.canPerformAction(ItemAbilities.SHIELD_BLOCK), EquipmentSlotGroup.HAND);
-    public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, EquipmentSlotGroup.MAINHAND);
-    public static final LootCategory MELEE_WEAPON = register("melee_weapon",
-        s -> s.canPerformAction(ItemAbilities.SWORD_DIG) || getDefaultModifiers(s).compute(1, EquipmentSlot.MAINHAND) > 1, EquipmentSlotGroup.MAINHAND);
-    // TODO: Loot category for hoes? Is there even enough content for that?
-    public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), EquipmentSlotGroup.ANY);
+    private static List<LootCategory> sortedCategories = new ArrayList<>();
 
-    private final String name;
     private final Predicate<ItemStack> validator;
     private final EquipmentSlotGroup slots;
+    private final int priority;
 
-    private LootCategory(String name, Predicate<ItemStack> validator, EquipmentSlotGroup slots) {
-        this.name = Preconditions.checkNotNull(name);
+    @Nullable
+    private String descId;
+
+    public LootCategory(Predicate<ItemStack> validator, EquipmentSlotGroup slots, int priority) {
         this.validator = Preconditions.checkNotNull(validator);
         this.slots = Preconditions.checkNotNull(slots);
+        this.priority = priority;
+    }
+
+    public LootCategory(Predicate<ItemStack> validator, EquipmentSlotGroup slots) {
+        this(validator, slots, 1000);
     }
 
     public String getDescId() {
-        return "text.apotheosis.category." + this.name;
+        return this.getOrCreateDescriptionId();
     }
 
     public String getDescIdPlural() {
         return this.getDescId() + ".plural";
     }
 
-    public String getName() {
-        return this.name;
+    public ResourceLocation getKey() {
+        return Apoth.BuiltInRegs.LOOT_CATEGORY.getKey(this);
+    }
+
+    public int priority() {
+        return this.priority;
     }
 
     /**
@@ -95,78 +87,48 @@ public final class LootCategory {
     }
 
     public boolean isArmor() {
-        return this == HELMET || this == CHESTPLATE || this == LEGGINGS || this == BOOTS;
+        return this == LootCategories.HELMET || this == LootCategories.CHESTPLATE || this == LootCategories.LEGGINGS || this == LootCategories.BOOTS;
     }
 
     public boolean isBreaker() {
-        return this == BREAKER;
+        return this == LootCategories.BREAKER;
     }
 
     public boolean isRanged() {
-        return this == BOW || this == TRIDENT;
+        return this == LootCategories.BOW || this == LootCategories.TRIDENT;
     }
 
     public boolean isDefensive() {
-        return this.isArmor() || this == SHIELD;
+        return this.isArmor() || this == LootCategories.SHIELD;
     }
 
     public boolean isMelee() {
-        return this == MELEE_WEAPON || this == TRIDENT;
+        return this == LootCategories.MELEE_WEAPON || this == LootCategories.TRIDENT;
     }
 
     public boolean isMeleeOrShield() {
-        return this.isMelee() || this == SHIELD;
+        return this.isMelee() || this == LootCategories.SHIELD;
     }
 
     public boolean isNone() {
-        return this == NONE;
+        return this == LootCategories.NONE;
     }
 
     @Override
     public String toString() {
-        return String.format("LootCategory[%s]", this.name);
+        return String.format("LootCategory[%s]", this.getKey());
     }
 
-    @Override
-    public int hashCode() {
-        return this.name.hashCode();
+    protected String getOrCreateDescriptionId() {
+        if (this.descId == null) {
+            this.descId = Util.makeDescriptionId("loot_category", this.getKey());
+        }
+
+        return this.descId;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof LootCategory cat && cat.name.equals(this.name);
-    }
-
-    /**
-     * Registers a new loot category, adding it to the BY_ID and VALUES collections so that it will be found by the rest of the universe.
-     *
-     * @param orderRef   An existing category for ordering. The new category will be placed before the reference category.
-     * @param name       The name of this category. May not be an existing name.
-     * @param validator  A predicate that checks if an item stack matches this loot category.
-     * @param slotGetter A function that provides the loot categories that bonuses will be active for, if an item is of this category.
-     * @return A new loot category, which should be stored in a public static final field.
-     */
-    public static final LootCategory register(@Nullable LootCategory orderRef, String name, Predicate<ItemStack> validator, EquipmentSlotGroup slots) {
-        var cat = new LootCategory(name, validator, slots);
-        if (BY_ID_INTERNAL.containsKey(name)) throw new IllegalArgumentException("Cannot register a loot category with a duplicate name.");
-        BY_ID_INTERNAL.put(name, cat);
-
-        int idx = VALUES_INTERNAL.size();
-        if (orderRef != null) idx = VALUES_INTERNAL.indexOf(orderRef);
-        VALUES_INTERNAL.add(idx, cat);
-
-        return cat;
-    }
-
-    /**
-     * Looks up a Loot Category by name.
-     *
-     * @param name The name of the loot category.
-     * @return The loot category instance, or null, if no loot category has the specified name.
-     */
-    @Nullable
-    public static LootCategory byId(String name) {
-        return BY_ID.get(name);
+    public static <T> MapCodec<Map<LootCategory, T>> mapCodec(Codec<T> codec) {
+        return Codec.simpleMap(LootCategory.CODEC, codec, Apoth.BuiltInRegs.LOOT_CATEGORY::keys);
     }
 
     /**
@@ -175,43 +137,65 @@ public final class LootCategory {
      * TODO: Cache this result as a CachedObject sensitive to all component changes.
      *
      * @param stack The item to find the category for.
-     * @return The first valid loot category, or {@link #NONE} if no categories were valid.
+     * @return The first valid loot category, or {@link LootCategories#NONE} if no categories were valid.
      */
     public static LootCategory forItem(ItemStack stack) {
-        if (stack.isEmpty()) return NONE;
+        if (sortedCategories.isEmpty()) {
+            throw new UnsupportedOperationException("Attempted to resolve the loot category for an item before loot categories were registered!");
+        }
+
+        if (stack.isEmpty()) {
+            return LootCategories.NONE;
+        }
+
         LootCategory override = AdventureConfig.TYPE_OVERRIDES.get(stack.getItem());
         if (override != null) return override;
-        for (LootCategory c : VALUES) {
+        for (LootCategory c : sortedCategories) {
             if (c.isValid(stack)) return c;
         }
-        return NONE;
+        return LootCategories.NONE;
     }
 
-    private static Predicate<ItemStack> armorSlot(EquipmentSlot slot) {
-        return stack -> {
-            if (stack.is(Items.CARVED_PUMPKIN) || stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof AbstractSkullBlock) return false;
+    /**
+     * Legacy resolver codec to assist with backwards compat.
+     * <p>
+     * Accepts a string as "apotheosis:path" instead of discarding it.
+     */
+    @Deprecated(forRemoval = true)
+    private static Codec<LootCategory> legacyResolverCodec() {
+        return Codec.either(
+            Codec.stringResolver(ResourceLocation::getPath, LootCategory::readLocWithApothNamespace),
+            ResourceLocation.CODEC)
+            .xmap(Either::unwrap, Either::right)
+            .xmap(Apoth.BuiltInRegs.LOOT_CATEGORY::get, Apoth.BuiltInRegs.LOOT_CATEGORY::getKey)
+            .validate(
+                cat -> cat == LootCategories.NONE
+                    ? DataResult.error(() -> "Loot Category must not be apotheosis:none")
+                    : DataResult.success(cat));
+    }
 
-            EquipmentSlot itemSlot = stack.getEquipmentSlot();
-            if (itemSlot == null) {
-                Equipable equipable = Equipable.get(stack);
-                if (equipable != null) {
-                    itemSlot = equipable.getEquipmentSlot();
+    @Nullable
+    private static ResourceLocation readLocWithApothNamespace(String path) {
+        try {
+            return Apotheosis.loc(path);
+        }
+        catch (ResourceLocationException resourcelocationexception) {
+            return null;
+        }
+    }
+
+    @ApiStatus.Internal
+    public static class Inner {
+
+        public static BakeCallback<LootCategory> rebuildSortedValueList() {
+            return registry -> {
+                var list = new ArrayList<LootCategory>();
+                for (LootCategory cat : registry) {
+                    list.add(cat);
                 }
-            }
-
-            return itemSlot == slot;
-        };
-    }
-
-    static final LootCategory register(String name, Predicate<ItemStack> validator, EquipmentSlotGroup slots) {
-        return register(null, name, validator, slots);
-    }
-
-    private static ItemAttributeModifiers getDefaultModifiers(ItemStack stack) {
-        return stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, stack.getItem().getDefaultAttributeModifiers(stack));
-    }
-
-    public static <T> MapCodec<Map<LootCategory, T>> mapCodec(Codec<T> codec) {
-        return Codec.simpleMap(LootCategory.CODEC, codec, Keyable.forStrings(() -> VALUES.stream().map(LootCategory::getName)));
+                Collections.sort(list, Comparator.comparing(LootCategory::priority));
+                LootCategory.sortedCategories = list;
+            };
+        }
     }
 }

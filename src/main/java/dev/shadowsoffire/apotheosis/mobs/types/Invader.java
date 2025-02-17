@@ -18,6 +18,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
@@ -240,7 +241,7 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         int tries = 50;
 
         ItemStack temp = mob.getItemBySlot(guaranteed);
-        while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategory.NONE) {
+        while (temp.isEmpty() || LootCategory.forItem(temp) == LootCategories.NONE) {
             guaranteed = slots[rand.nextInt(6)];
             temp = mob.getItemBySlot(guaranteed);
 

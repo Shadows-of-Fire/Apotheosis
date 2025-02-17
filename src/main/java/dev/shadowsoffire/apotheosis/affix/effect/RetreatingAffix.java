@@ -5,6 +5,7 @@ import java.util.Set;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixDefinition;
 import dev.shadowsoffire.apotheosis.affix.AffixInstance;
@@ -37,7 +38,7 @@ public class RetreatingAffix extends Affix {
 
     @Override
     public boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity) {
-        return cat == LootCategory.SHIELD && this.rarities.contains(rarity);
+        return cat == LootCategories.SHIELD && this.rarities.contains(rarity);
     }
 
     @Override

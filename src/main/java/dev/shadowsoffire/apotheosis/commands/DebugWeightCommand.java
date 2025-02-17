@@ -18,6 +18,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.serialization.JsonOps;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.affix.AffixType;
@@ -52,7 +53,7 @@ public class DebugWeightCommand {
 
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_AFFIX_TYPE = (ctx, builder) -> SharedSuggestionProvider.suggest(Arrays.stream(AffixType.values()).map(StringRepresentable::getSerializedName), builder);
 
-    public static final SuggestionProvider<CommandSourceStack> SUGGEST_LOOT_CATEGORY = (ctx, builder) -> SharedSuggestionProvider.suggest(LootCategory.VALUES.stream().map(LootCategory::getName), builder);
+    public static final SuggestionProvider<CommandSourceStack> SUGGEST_LOOT_CATEGORY = (ctx, builder) -> SharedSuggestionProvider.suggest(BuiltInRegs.LOOT_CATEGORY.keySet().stream().map(ResourceLocation::toString), builder);
 
     public static void register(LiteralArgumentBuilder<CommandSourceStack> root, CommandBuildContext ctx) {
         LiteralArgumentBuilder<CommandSourceStack> weights = Commands.literal("weights");

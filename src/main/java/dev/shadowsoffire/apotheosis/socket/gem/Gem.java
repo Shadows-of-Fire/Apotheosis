@@ -14,6 +14,7 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.socket.SocketHelper;
@@ -174,9 +175,9 @@ public class Gem implements CodecProvider<Gem>, Weighted, Constrained {
     }
 
     public static void addTypeInfo(Consumer<Component> list, Object... types) {
-        Arrays.sort(types, (c1, c2) -> ((LootCategory) c1).getName().compareTo(((LootCategory) c2).getName()));
+        Arrays.sort(types, (c1, c2) -> ((LootCategory) c1).getKey().compareTo(((LootCategory) c2).getKey()));
         Style style = Style.EMPTY.withColor(0x0AFF0A);
-        if (types.length != LootCategory.BY_ID.size() - 1) {
+        if (types.length != BuiltInRegs.LOOT_CATEGORY.size() - 1) {
             StringBuilder sb = new StringBuilder();
             int i = 0;
             while (i < types.length) {
