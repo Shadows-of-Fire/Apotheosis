@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.google.common.base.Predicates;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import dev.shadowsoffire.apotheosis.AdventureConfig.ConfigPayload;
@@ -40,8 +39,6 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -73,8 +70,6 @@ import net.neoforged.neoforge.event.entity.living.MobDespawnEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent.HarvestCheck;
-import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
-import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent.UsePhase;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -361,22 +356,6 @@ public class AdventureEvents {
             LivingEntity entity = e.getEntity();
             entity.setData(Attachments.COLD_DAMAGE_TAKEN, entity.getData(Attachments.COLD_DAMAGE_TAKEN) + e.getNewDamage());
         }
-    }
-
-    /**
-     * Conversion from {@link InteractionResult} to {@link ItemInteractionResult} for use in {@link UseItemOnBlockEvent}-based hooks.
-     * <p>
-     * In these cases, the event will immediately convert the IIR back to an IR, so we just need to mirror {@link ItemInteractionResult#result()}.
-     */
-    private static ItemInteractionResult toItemResult(InteractionResult result) {
-        return switch (result) {
-            case SUCCESS -> ItemInteractionResult.SUCCESS;
-            case SUCCESS_NO_ITEM_USED -> ItemInteractionResult.SUCCESS;
-            case CONSUME -> ItemInteractionResult.CONSUME;
-            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
-            case PASS -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-            case FAIL -> ItemInteractionResult.FAIL;
-        };
     }
 
 }
