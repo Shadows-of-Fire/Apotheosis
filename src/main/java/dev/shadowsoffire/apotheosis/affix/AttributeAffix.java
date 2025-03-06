@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.affix;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -126,7 +126,7 @@ public class AttributeAffix extends Affix {
     public static class Builder extends ValuedAffixBuilder<Builder> {
         protected final Holder<Attribute> attribute;
         protected final Operation operation;
-        protected final Set<LootCategory> categories = new HashSet<>();
+        protected final Set<LootCategory> categories = new LinkedHashSet<>();
 
         public Builder(Holder<Attribute> attribute, Operation operation) {
             this.attribute = attribute;

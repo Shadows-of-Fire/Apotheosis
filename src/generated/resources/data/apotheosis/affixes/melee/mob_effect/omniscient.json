@@ -17,8 +17,8 @@
     "stacking_limit": 8,
     "target": "attack_self",
     "types": [
-        "apotheosis:trident",
-        "apotheosis:melee_weapon"
+        "apotheosis:melee_weapon",
+        "apotheosis:trident"
     ],
     "values": {
         "apotheosis:mythic": {

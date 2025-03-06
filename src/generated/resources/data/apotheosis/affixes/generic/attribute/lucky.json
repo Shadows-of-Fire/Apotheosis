@@ -3,14 +3,14 @@
     "attribute": "minecraft:generic.luck",
     "categories": [
         "apotheosis:bow",
-        "apotheosis:trident",
         "apotheosis:breaker",
+        "apotheosis:helmet",
         "apotheosis:chestplate",
+        "apotheosis:leggings",
         "apotheosis:boots",
         "apotheosis:shield",
-        "apotheosis:melee_weapon",
-        "apotheosis:helmet",
-        "apotheosis:leggings"
+        "apotheosis:trident",
+        "apotheosis:melee_weapon"
     ],
     "definition": {
         "affix_type": "stat",

@@ -10,8 +10,8 @@
     "mob_effect": "minecraft:wither",
     "target": "arrow_target",
     "types": [
-        "apotheosis:bow",
-        "apotheosis:trident"
+        "apotheosis:trident",
+        "apotheosis:bow"
     ],
     "values": {
         "apotheosis:epic": {

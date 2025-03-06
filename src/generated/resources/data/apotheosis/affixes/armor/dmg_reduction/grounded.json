@@ -1,8 +1,8 @@
 {
     "type": "apotheosis:damage_reduction",
     "categories": [
-        "apotheosis:boots",
-        "apotheosis:helmet"
+        "apotheosis:helmet",
+        "apotheosis:boots"
     ],
     "damage_type": "lightning",
     "definition": {

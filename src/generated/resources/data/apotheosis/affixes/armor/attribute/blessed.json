@@ -2,10 +2,10 @@
     "type": "apotheosis:attribute",
     "attribute": "minecraft:generic.max_health",
     "categories": [
-        "apotheosis:chestplate",
-        "apotheosis:boots",
         "apotheosis:helmet",
-        "apotheosis:leggings"
+        "apotheosis:chestplate",
+        "apotheosis:leggings",
+        "apotheosis:boots"
     ],
     "definition": {
         "affix_type": "stat",

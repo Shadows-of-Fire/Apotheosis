@@ -10,8 +10,8 @@
     "mob_effect": "minecraft:speed",
     "target": "hurt_self",
     "types": [
-        "apotheosis:boots",
-        "apotheosis:leggings"
+        "apotheosis:leggings",
+        "apotheosis:boots"
     ],
     "values": {
         "apotheosis:uncommon": {

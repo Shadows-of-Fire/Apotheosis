@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.affix;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.spongepowered.include.com.google.common.base.Preconditions;
@@ -28,7 +28,7 @@ public record AffixDefinition(AffixType type, Set<DynamicHolder<Affix>> exclusiv
 
     public static class Builder {
         private final AffixType type;
-        private final Set<DynamicHolder<Affix>> exclusiveSet = new HashSet<>();
+        private final Set<DynamicHolder<Affix>> exclusiveSet = new LinkedHashSet<>();
         private TieredWeights weights;
 
         public Builder(AffixType type) {
