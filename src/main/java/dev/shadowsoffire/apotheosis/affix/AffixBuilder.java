@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.affix;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -35,7 +35,7 @@ public class AffixBuilder<T extends AffixBuilder<T>> {
     }
 
     public static class ValuedAffixBuilder<T extends ValuedAffixBuilder<T>> extends AffixBuilder<T> {
-        protected final Map<LootRarity, StepFunction> values = new HashMap<>();
+        protected final Map<LootRarity, StepFunction> values = new LinkedHashMap<>();
         protected float step = 0.01F;
 
         public T step(float step) {

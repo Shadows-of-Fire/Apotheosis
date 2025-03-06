@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.affix.effect;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -286,8 +286,8 @@ public class MobEffectAffix extends Affix {
     public static class Builder extends AffixBuilder<Builder> {
         protected final Holder<MobEffect> effect;
         protected final Target target;
-        protected final Map<LootRarity, EffectData> values = new HashMap<>();
-        protected final Set<LootCategory> categories = new HashSet<>();
+        protected final Map<LootRarity, EffectData> values = new LinkedHashMap<>();
+        protected final Set<LootCategory> categories = new LinkedHashSet<>();
         protected boolean stacking = false;
         private int limit = 255;
 

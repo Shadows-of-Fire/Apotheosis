@@ -1,4 +1,4 @@
-// 1.21.1	2025-03-06T02:46:10.3228994	Affixes
+// 1.21.1	2025-03-06T03:03:29.684915	Affixes
 24d89e7e2661a316fbff852fc0f2c8fba0ced14a data/apotheosis/affixes/armor/attribute/adamantine.json
 5a04ead49fff5a3a9061b65682e7432afa771cfc data/apotheosis/affixes/armor/attribute/aquatic.json
 921b26af1796a2871957f5cbc13f74e35fa3ddbc data/apotheosis/affixes/armor/attribute/blessed.json
@@ -70,12 +70,12 @@ a6626c963998731bbef1b31009ee69835f08ab4e data/apotheosis/affixes/ranged/attribut
 0126def86bbaed95b9ad6d428efac092f5ddf23b data/apotheosis/affixes/ranged/enchantment/prosperous.json
 b3de549d167f29adf105d129d5d225fd3b1c06b6 data/apotheosis/affixes/ranged/magical.json
 c54ce5bb96eea296170478a3c6c0ff53721bb6ce data/apotheosis/affixes/ranged/mob_effect/acidic.json
-a33c2f6afc9f79ecf3e1faf44c3a4ac20ae888da data/apotheosis/affixes/ranged/mob_effect/blighted.json
-69c2ca4c97b7683e3bd5cb9653829110d408a334 data/apotheosis/affixes/ranged/mob_effect/deathbound.json
-be7bdfb717763ccbd49972de228607297d1d4332 data/apotheosis/affixes/ranged/mob_effect/ensnaring.json
-53f3ba8c6d1d735b51a0312ed9ac3ff744222f6e data/apotheosis/affixes/ranged/mob_effect/fleeting.json
-01b48a64a80300cb26251fc91417c384985e6501 data/apotheosis/affixes/ranged/mob_effect/grievous.json
-ffe606caccd4bdfedc828f29f59967176e8d5084 data/apotheosis/affixes/ranged/mob_effect/ivy_laced.json
+a36be3bd4555b2571ff8b8c593e2ba6c1b596220 data/apotheosis/affixes/ranged/mob_effect/blighted.json
+3e3accf51d17c6e363fc480c1e6ed432979776be data/apotheosis/affixes/ranged/mob_effect/deathbound.json
+b8969c2f3281e150f677bf36b650155ae0844d35 data/apotheosis/affixes/ranged/mob_effect/ensnaring.json
+f5d0e989819d1aecc45b7e76c3037b55cd1e29ae data/apotheosis/affixes/ranged/mob_effect/fleeting.json
+3c5c62efed2bb05aaee1f532a39d62cf0b87f9b8 data/apotheosis/affixes/ranged/mob_effect/grievous.json
+1fbf99bc57491a18351fb67588e4d101aba484df data/apotheosis/affixes/ranged/mob_effect/ivy_laced.json
 89f2a408f02981e337d6fe5a0838f51ce4a17256 data/apotheosis/affixes/ranged/mob_effect/shulkers.json
 ea33f76a620b62fc603dbf8f9810251585f53238 data/apotheosis/affixes/ranged/spectral.json
 61025573feea67a89a62c791e9f2aae4c54ab3d3 data/apotheosis/affixes/shield/attribute/ironforged.json

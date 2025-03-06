@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.affix.effect;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.IntFunction;
@@ -124,7 +124,7 @@ public class DamageReductionAffix extends Affix {
 
     public static class Builder extends ValuedAffixBuilder<Builder> {
         protected final DamageType type;
-        protected final Set<LootCategory> categories = new HashSet<>();
+        protected final Set<LootCategory> categories = new LinkedHashSet<>();
 
         public Builder(DamageType type) {
             this.type = type;

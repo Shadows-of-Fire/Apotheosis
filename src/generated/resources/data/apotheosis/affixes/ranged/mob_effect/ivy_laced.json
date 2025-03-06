@@ -12,8 +12,8 @@
     "stacking_limit": 5,
     "target": "arrow_target",
     "types": [
-        "apotheosis:trident",
-        "apotheosis:bow"
+        "apotheosis:bow",
+        "apotheosis:trident"
     ],
     "values": {
         "apotheosis:rare": {
