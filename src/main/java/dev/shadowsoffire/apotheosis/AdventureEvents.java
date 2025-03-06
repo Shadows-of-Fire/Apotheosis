@@ -173,26 +173,6 @@ public class AdventureEvents {
     }
 
     @SubscribeEvent
-    public void onItemUse(UseItemOnBlockEvent e) {
-        if (e.getUsePhase() != UsePhase.ITEM_AFTER_BLOCK) {
-            return;
-        }
-
-        ItemStack s = e.getItemStack();
-        InteractionResult socketRes = SocketHelper.getGems(s).onItemUse(e.getUseOnContext());
-        if (socketRes != null) {
-            e.setCanceled(true);
-            e.setCancellationResult(toItemResult(socketRes));
-        }
-
-        InteractionResult afxRes = AffixHelper.streamAffixes(s).map(afx -> afx.onItemUse(e.getUseOnContext())).filter(Predicates.notNull()).findFirst().orElse(null);
-        if (afxRes != null) {
-            e.setCanceled(true);
-            e.setCancellationResult(toItemResult(afxRes));
-        }
-    }
-
-    @SubscribeEvent
     public void shieldBlock(LivingShieldBlockEvent e) {
         ItemStack stack = e.getEntity().getUseItem();
         var affixes = AffixHelper.getAffixes(stack);
