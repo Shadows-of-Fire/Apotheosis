@@ -30,15 +30,15 @@
 		},
 		{
             "type": "patchouli:spotlight",
-			"title": "Other Stats",
+			"title": "Enchanting Clues",
 			"item": "apothic_enchanting:sightshelf",
 			"text": "You now have access to better options for increasing other stats.$(p)On top of the bonuses from Hellshelves and Seashelves, you may now also create $(9)Sightshelves$() to increase your $(clues)."
 		},
 		{
             "type": "patchouli:crafting",
-			"title": "Other Stats",
-			"recipe": "apothic_enchanting:rectifier",
-			"text": "If you have a stable supply of Amethyst, you can also make $(9)Rectifiers$() to further increase your $(rectification)."
+			"title": "Quantic Stability",
+			"recipe": "apothic_enchanting:geode_shelf",
+			"text": "By performing the infusion to create a Budding Amethyst, you can craft a $(9)Bookshelf of Stability$().$(p)This will prevent you from receiving negative Quanta rolls."
 		}
 	]
 }

@@ -1,7 +1,7 @@
 {
     "name": "Gem Dust",
     "icon": "apotheosis:gem_dust",
-    "category": "apotheosis:adventure/affix_loot",
+    "category": "apotheosis:adventure/gems",
 	"flag": "apotheosis:adventure",
 	"sortnum": 2,
     "pages": [

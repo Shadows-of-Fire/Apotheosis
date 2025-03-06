@@ -1,0 +1,17 @@
+{
+    "name": "Invader Dungeons",
+    "icon": "minecraft:spawner",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Located deep in the ancient caverns of the earth are hidden structures, housing the untold power of the affixes. It would be a welcome surprise if that power was free for the taking, but alas, it is instead defended by a Caged Invader."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Found underground are a few different variants of these structures.  Each dungeon contains a Caged Invader and a few loot chests. The cage will trigger upon getting close to it, unleashing the Invader."
+		}
+	]
+}

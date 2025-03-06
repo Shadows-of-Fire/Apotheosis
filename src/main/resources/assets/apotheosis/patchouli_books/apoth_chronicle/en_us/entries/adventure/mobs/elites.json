@@ -1,0 +1,17 @@
+{
+    "name": "Elites",
+    "icon": "minecraft:skeleton_skull",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Occasionally, you may see named or empowered mobs throughout your world.$(p)These are likely $(9)Apothic Elites$()."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "These mobs will appear randomly in place of their normal counterparts.$(p)They don't have flashy entrances like Invaders do, so be on your guard.$(p)They may also drop Affix Items."
+		}
+	]
+}

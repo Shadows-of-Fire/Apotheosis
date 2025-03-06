@@ -1,0 +1,7 @@
+{
+    "name": "Apothic Mobs",
+    "description": "Apotheosis introduces various subtypes of Mobs which will appear in your world.$(p)This section discusses what kinds of mobs there are, and where you'll find them.",
+    "icon": "apotheosis:boss_summoner",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

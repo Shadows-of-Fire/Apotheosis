@@ -1,0 +1,7 @@
+{
+    "name": "World Tiers",
+    "description": "As you grow stronger, so too does the world around you.$(p)This section covers Apothic World Tiers - what they change, how to unlock them, and how to change the current one.",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "flag": "apotheosis:adventure",
+    "parent": "apotheosis:adventure/adventure"
+}

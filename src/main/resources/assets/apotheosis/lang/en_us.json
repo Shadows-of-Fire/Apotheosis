@@ -525,7 +525,7 @@
     "item.apotheosis.sigil_of_unnaming": "Sigil of Unnaming",
     "item.apotheosis.sigil_of_unnaming.desc": "Removes the affixed name from an item",
 
-    "block.apotheosis.boss_spawner": "Boss Spawner",
+    "block.apotheosis.boss_spawner": "Caged Invader",
     "block.apotheosis.gem_cutting_table": "Gem Cutting Table",
     "block.apotheosis.gem_cutting_table.desc": "Uses Gem Dust and Rarity Materials to upgrade Gems",
     "block.apotheosis.salvaging_table": "Salvaging Table",
@@ -636,13 +636,13 @@
     "comment_id": "/Advancements",
 
     "advancements.apotheosis.progression.root.title": "Apothic World Tiers",
-    "advancements.apotheosis.progression.root.desc": "Milestones for unlocking World Tiers in Apotheosis. Press CTRL+T to open the select screen",
+    "advancements.apotheosis.progression.root.desc": "Milestones for unlocking World Tiers in Apotheosis.\nPress CTRL+T to open the select screen",
 
     "advancements.apotheosis.progression.haven.title": "World Tier: Haven",
-    "advancements.apotheosis.progression.haven.desc": "Haven is unlocked when you find your first affix item",
+    "advancements.apotheosis.progression.haven.desc": "Haven is unlocked when you find your first affix item and is activated by default.",
 
     "advancements.apotheosis.progression.frontier.title": "World Tier: Frontier",
-    "advancements.apotheosis.progression.frontier.desc": "Equip a full set of Affix items to progress into the Frontier",
+    "advancements.apotheosis.progression.frontier.desc": "Equip a full set of Affix items to progress into the Frontier.\nOnce unlocked, use CTRL+T to activate it.",
 
     "advancements.apotheosis.progression.ascent.title": "World Tier: Ascent",
     "advancements.apotheosis.progression.ascent.desc": "Equip a full set of Uncommon gear and slay an Invader to begin your Ascent",

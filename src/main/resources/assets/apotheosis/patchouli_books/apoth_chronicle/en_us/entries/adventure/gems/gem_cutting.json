@@ -1,0 +1,19 @@
+{
+    "name": "Gem Cutting",
+    "icon": "apotheosis:gem_cutting_table",
+    "category": "apotheosis:adventure/gems",
+	"flag": "apotheosis:adventure",
+	"sortnum": 6,
+    "pages": [
+        {
+            "type": "patchouli:crafting",
+			"recipe": "apotheosis:gem_cutting_table",
+			"text": "The $(9)Gem Cutting Table$() is used to upgrade $(l:apotheosis:adventure/gems/gems)Gems$().$(p)Upgrading a Gem usually costs $(9)Gem Dust$(), $(9)Rarity Materials$(), and a second Gem of the same purity."
+		},
+		{
+			"title": "Upgrade Costs",
+            "type": "patchouli:text",
+            "text": "The cost of upgrading a Gem increases with its Purity.$(p)Stronger gems require more $(9)Gem Dust$() and higher-tier $(9)Rarity Materials$().$(p)The exact cost to upgrade a gem can be seen in JEI."
+        }
+	]
+}

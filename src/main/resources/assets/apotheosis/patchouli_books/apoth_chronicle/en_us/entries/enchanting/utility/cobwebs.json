@@ -11,7 +11,7 @@
         },
 		{
             "type": "patchouli:crafting",
-			"recipe": "apotheosis:prismatic_web"
+			"recipe": "apothic_enchanting:prismatic_web"
 		}
 	]
 }

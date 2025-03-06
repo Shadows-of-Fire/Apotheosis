@@ -1,0 +1,37 @@
+{
+    "name": "World Tiers",
+    "icon": "apotheosis:textures/gui/book/summit_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A $(6)World Tier$() is a per-player strength modifier for the world. Each tier controls the type of content that will show up, how strong enemies will be, what kind of bonuses you may receive, and more."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "The Tiers",
+            "text": "There are five tiers, each increasing the world difficulty and available rewards further than the last.$(p)The tiers are $(9)Haven$(), $(9)Frontier$(), $(9)Ascent$(), $(9)Summit$(), and $(9)Pinnacle$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Tier Augments",
+            "text": "Each tier has its own augments, modifiers that are applied to players in the tier, as well as mobs that have spawned in that tier.$(p)You can see all tier augments for each tier in the $(l:apotheosis:adventure/world_tiers/select_screen)World Tier Select Screen$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Rarity Drop Chances",
+            "text": "World Tiers also control the weights for each rarity.$(p)As you progress, higher rarity items (and Invaders) will become more common.$(p)The exact drop chances are shown in the $(l:apotheosis:adventure/world_tiers/select_screen)World Tier Select Screen$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Gems",
+            "text": "World Tiers also adjust which gems may spawn, as well as which Purities they may spawn with.$(p)As before, the detailed purity chances may be found in the select screen."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Other Notes",
+            "text": "World Tiers can also adjust the spawn rates of other objects, such as affixes, affix loot entries, and elites.$(p)These rates are not shown anywhere, but you may find different content on a per-tier basis."
+        }
+    ]
+}

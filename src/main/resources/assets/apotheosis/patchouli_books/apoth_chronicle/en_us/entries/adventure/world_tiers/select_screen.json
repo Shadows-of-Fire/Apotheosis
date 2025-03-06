@@ -1,0 +1,27 @@
+{
+    "name": "Tier Selection",
+    "icon": "apotheosis:textures/gui/book/haven_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "The $(9)World Tier Select Screen$() is your all-inclusive page for learning about and managing $(6)World Tiers$().$(p)It can be opened using the \"Open World Tier Select\" keybind, which defaults to CTRL+T."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Activating Tiers",
+            "text": "Tiers do not activate automatically. When you unlock a new tier, you first need to use the \"Activate\" button to enable it.$(p)You can select a tier by clicking the Tier's symbol in the screen, and then activate it using the button."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Tier Information",
+            "text": "To view information about a tier, select the tier, then press the \"Detailed Info\" button.$(p)This will show you the rarity and purity weights for that tier, as well as any Tier Augments that will be applied."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Notes",
+            "text": "You may switch between Tiers at any time.$(p)In multiplayer, multiple players may have different Tiers without impacting eachother. Most content will resolve the Tier of the closest player."
+        }
+    ]
+}

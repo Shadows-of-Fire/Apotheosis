@@ -20,7 +20,9 @@ import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.affix.Affix;
 import dev.shadowsoffire.apotheosis.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.affix.ItemAffixes;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootController;
 import dev.shadowsoffire.apotheosis.loot.LootRarity;
@@ -41,6 +43,7 @@ import dev.shadowsoffire.apothic_enchanting.asm.EnchHooks;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.json.ChancedEffectInstance;
 import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.systems.gear.GearSet;
 import dev.shadowsoffire.placebo.systems.gear.GearSetRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -301,6 +304,13 @@ public record Invader(BasicBossData basicData, EntityType<?> entity, AABB size, 
         enchantBossItem(rand, stack, stats.enchLevels().primary(), true, reg);
         NameHelper.setItemName(rand, stack);
         stack = LootController.createLootItem(stack, LootCategory.forItem(stack), rarity, ctx);
+
+        // Upgrade all affixes on Invader items by 10-25%
+        ItemAffixes.Builder builder = stack.getOrDefault(Components.AFFIXES, ItemAffixes.EMPTY).toBuilder();
+        for (DynamicHolder<Affix> afx : builder.keySet()) {
+            builder.upgrade(afx, builder.getLevel(afx) + Mth.nextFloat(rand, 0.1F, 0.25F));
+        }
+        AffixHelper.setAffixes(stack, builder.build());
 
         Component bossOwnerName = Component.translatable(NameHelper.ownershipFormat, bossName);
         Component name = AffixHelper.getName(stack);

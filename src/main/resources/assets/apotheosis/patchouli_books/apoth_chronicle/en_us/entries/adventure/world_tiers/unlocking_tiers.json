@@ -1,0 +1,42 @@
+{
+    "name": "Unlocking Tiers",
+    "icon": "apotheosis:textures/gui/book/frontier_icon.png",
+    "category": "apotheosis:adventure/world_tiers",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Each $(6)World Tier$() must be unlocked before you can enable it (except Haven, which is enabled by default).$(p)Unlocking world tiers is done by completing specific Advancements.$(p)Once a tier is unlocked, you need to activate it in the $(l:apotheosis:adventure/world_tiers/select_screen)Select Screen$()."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Foreword",
+            "text": "This section will cover the default requirements for unlocking world tiers.$(p)Note, modpacks may change these requirements, so be sure to reference the \"Apothic World Tiers\" advancements tab for complete information."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Haven",
+            "text": "$(9)Haven$() is unlocked by default, though you won't be able to see it until you've picked up your first Affix Item."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Frontier",
+            "text": "$(9)Frontier$() is unlocked by equipping an Affix Item in each armor slot, and holding an Affixed Weapon in either hand."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Ascent",
+            "text": "Unlocking $(9)Ascent$() requires that you equip a full set of $(#33FF33)Uncommon$() Affix Items, including a weapon.$(p)You'll also need to slay an Apothic Invader."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Summit",
+            "text": "Getting to $(9)Summit$() is a bit harder.$(p)You'll need to acquire a full set of $(#5555FF)Rare$() Affix Items, and have slain the Wither."
+        },
+        {
+            "type": "patchouli:text",
+            "title": "Pinnacle",
+            "text": "The final tier, $(9)Pinnacle$(), requires that you not only obtain a full set of $(#BB00BB)Epic$() items, but also that you free The End.$(p)That means slaying the Ender Dragon."
+        }
+    ]
+}

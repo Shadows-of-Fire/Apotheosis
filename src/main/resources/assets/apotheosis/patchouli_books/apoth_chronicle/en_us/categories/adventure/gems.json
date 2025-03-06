@@ -1,0 +1,7 @@
+{
+    "name": "Gems & Sockets",
+    "description": "A shiny stone is always likely to catch one's eye.$(p)Be on the lookout for Apothic Gems, items which can provide bonuses when socketed into Affix Items.",
+    "icon": "apotheosis:gem",
+	"flag": "apotheosis:adventure",
+	"parent": "apotheosis:adventure/adventure"
+}

@@ -34,13 +34,14 @@
 		},
 		{
 			"type": "patchouli:text",
-			"title": "Rectification",
+			"title": "Quantic Stability",
 			"anchor": "rectification",
-			"text": "Rectification is a tertiary stat. It directly impacts the lower bound of $(quanta) modifications.$(p)Recall that your $(4)Min Power$() is equal to $(4)1 - Quanta$().$(p)With Rectification (R), your $(4)Min Power$() is equal to $(4)1 - (1 - R) * Quanta$()."
+			"text": "Quantic Stability is a tertiary stat. It directly impacts the lower bound of $(quanta) modifications.$(p)When present, you can no longer roll negative $(quanta) modifiers."
 		},
 		{
 			"type": "patchouli:text",
-			"text": "If that doesn't make a ton of sense, don't worry about it.$(p)Just know that higher Rectification values are always a good thing.$(p)You can also have negative Rectification, which is always bad."
+			"title": "Quantic Math",
+			"text": "If you don't like math you can skip to the next page.$(p)Normally, $(quanta) rolls use a normal distribution across the entire range, but once stabilized, this shifts to a uniform distribution across the positive side."
 		},
 		{
 			"type": "patchouli:text",

@@ -1,0 +1,17 @@
+{
+    "name": "Invader Items",
+    "icon": "minecraft:ender_chest",
+    "category": "apotheosis:adventure/mobs",
+	"flag": "apotheosis:adventure",
+	"sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Each Invader is empowered with exactly one Affix Item, alongside the rest of their fully enchanted gear.$(p)This Affix Item is guaranteed to be dropped on death, and will be the same rarity as the Invader.$(p)The affixes on it tend to be stronger than usual."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "This item alone is the trophy you will take from slaying an invader, and it is likely to be worth it.$(p)As a memento of the original owner, every item will have the invader's name prefixed to the item's name."
+		}
+	]
+}
