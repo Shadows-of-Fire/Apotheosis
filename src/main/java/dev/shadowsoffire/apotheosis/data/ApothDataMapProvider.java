@@ -1,0 +1,72 @@
+package dev.shadowsoffire.apotheosis.data;
+
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+
+import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
+import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
+import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
+import dev.shadowsoffire.apotheosis.tiers.WorldTier;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.data.DataMapProvider;
+
+public class ApothDataMapProvider extends DataMapProvider {
+
+    private static final ResourceLocation TWILIGHT_FOREST = ResourceLocation.fromNamespaceAndPath("twilightforest", "twilight_forest_type");
+
+    public ApothDataMapProvider(PackOutput packOutput, CompletableFuture<Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
+    }
+
+    @Override
+    protected void gather() {
+        Builder<InvaderSpawnRules, DimensionType> invaderRules = builder(DataMaps.INVADER_SPAWN_RULES);
+
+        invaderRules.add(BuiltinDimensionTypes.OVERWORLD, new InvaderSpawnRules(
+            Map.of(
+                WorldTier.HAVEN, 0F,
+                WorldTier.FRONTIER, 0.013F,
+                WorldTier.ASCENT, 0.018F,
+                WorldTier.SUMMIT, 0.025F,
+                WorldTier.PINNACLE, 0.03F),
+            Optional.empty(),
+            SurfaceType.NEEDS_SKY), false);
+
+        invaderRules.add(BuiltinDimensionTypes.NETHER, new InvaderSpawnRules(
+            Map.of(
+                WorldTier.HAVEN, 0F,
+                WorldTier.FRONTIER, 0.02F,
+                WorldTier.ASCENT, 0.025F,
+                WorldTier.SUMMIT, 0.03F,
+                WorldTier.PINNACLE, 0.035F),
+            Optional.empty(),
+            SurfaceType.ANY), false);
+
+        invaderRules.add(BuiltinDimensionTypes.END, new InvaderSpawnRules(
+            Map.of(
+                WorldTier.HAVEN, 0F,
+                WorldTier.FRONTIER, 0.013F,
+                WorldTier.ASCENT, 0.018F,
+                WorldTier.SUMMIT, 0.025F,
+                WorldTier.PINNACLE, 0.03F),
+            Optional.empty(),
+            SurfaceType.SURFACE_OUTER_END), false);
+
+        invaderRules.add(TWILIGHT_FOREST, new InvaderSpawnRules(
+            Map.of(
+                WorldTier.HAVEN, 0F,
+                WorldTier.FRONTIER, 0.04F,
+                WorldTier.ASCENT, 0.05F,
+                WorldTier.SUMMIT, 0.055F,
+                WorldTier.PINNACLE, 0.06F),
+            Optional.empty(),
+            SurfaceType.NEEDS_SURFACE), false, new ModLoadedCondition(TWILIGHT_FOREST.getNamespace()));
+    }
+
+}

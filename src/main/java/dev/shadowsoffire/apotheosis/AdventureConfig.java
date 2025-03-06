@@ -7,12 +7,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import dev.shadowsoffire.apotheosis.Apoth.BuiltInRegs;
 import dev.shadowsoffire.apotheosis.Apoth.LootCategories;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
-import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.network.PayloadProvider;
 import net.minecraft.ResourceLocationException;
@@ -36,7 +33,6 @@ public class AdventureConfig {
 
     public static final List<ResourceLocation> DIM_WHITELIST = new ArrayList<>();
     public static final Map<Item, LootCategory> TYPE_OVERRIDES = new HashMap<>(); // TODO: Turn this into a datamap or a collection of item tags.
-    public static final Map<ResourceLocation, Pair<Float, SurfaceType>> BOSS_SPAWN_RULES = new HashMap<>();
 
     public static float augmentedMobChance = 0.075F;
 
@@ -132,29 +128,7 @@ public class AdventureConfig {
         bossAutoAggro = c.getBoolean("Boss Auto-Aggro", "bosses", bossAutoAggro, "If true, invading bosses will automatically target the closest player.\nServer-authoritative.");
         bossGlowOnSpawn = c.getBoolean("Boss Glowing On Spawn", "bosses", bossGlowOnSpawn, "If true, bosses will glow when they spawn.\nServer-authoritative.");
 
-        String[] dims = c.getStringList("Boss Spawn Dimensions", "bosses",
-            new String[] {
-                "minecraft:overworld|0.018|NEEDS_SKY",
-                "minecraft:the_nether|0.025|ANY",
-                "minecraft:the_end|0.018|SURFACE_OUTER_END",
-                "twilightforest:twilight_forest|0.05|NEEDS_SURFACE"
-            },
-            "Dimensions where bosses can spawn naturally, spawn chance, and spawn rules.\nFormat is dimname|chance|rule, chance is a float from 0..1."
-                + "\nValid rules are visible here https://github.com/Shadows-of-Fire/Apotheosis/blob/1.19/src/main/java/shadows/apotheosis/adventure/boss/BossEvents.java#L174C27-L174C27\nServer-authoritative.");
-
-        BOSS_SPAWN_RULES.clear();
-        for (String s : dims) {
-            try {
-                String[] split = s.split("\\|");
-                BOSS_SPAWN_RULES.put(ResourceLocation.parse(split[0]), Pair.of(Float.parseFloat(split[1]), SurfaceType.valueOf(split[2].toUpperCase(Locale.ROOT))));
-            }
-            catch (Exception e) {
-                Apotheosis.LOGGER.error("Invalid boss spawn rules: " + s + " will be ignored");
-                e.printStackTrace();
-            }
-        }
-
-        dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that the deadly module will generate in.\nServer-authoritative.");
+        String[] dims = c.getStringList("Generation Dimension Whitelist", "worldgen", new String[] { "overworld" }, "The dimensions that the deadly module will generate in.\nServer-authoritative.");
         DIM_WHITELIST.clear();
         for (String s : dims) {
             try {

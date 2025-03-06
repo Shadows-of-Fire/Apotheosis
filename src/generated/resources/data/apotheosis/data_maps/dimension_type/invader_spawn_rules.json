@@ -1,0 +1,50 @@
+{
+    "values": {
+        "minecraft:overworld": {
+            "spawn_chances": {
+                "haven": 0.0,
+                "frontier": 0.013,
+                "ascent": 0.018,
+                "summit": 0.025,
+                "pinnacle": 0.03
+            },
+            "surface_type": "needs_sky"
+        },
+        "minecraft:the_end": {
+            "spawn_chances": {
+                "haven": 0.0,
+                "frontier": 0.013,
+                "ascent": 0.018,
+                "summit": 0.025,
+                "pinnacle": 0.03
+            },
+            "surface_type": "surface_outer_end"
+        },
+        "minecraft:the_nether": {
+            "spawn_chances": {
+                "haven": 0.0,
+                "frontier": 0.02,
+                "ascent": 0.025,
+                "summit": 0.03,
+                "pinnacle": 0.035
+            },
+            "surface_type": "any"
+        },
+        "twilightforest:twilight_forest_type": {
+            "neoforge:conditions": [
+                {
+                    "type": "neoforge:mod_loaded",
+                    "modid": "twilightforest"
+                }
+            ],
+            "spawn_chances": {
+                "haven": 0.0,
+                "frontier": 0.04,
+                "ascent": 0.05,
+                "summit": 0.055,
+                "pinnacle": 0.06
+            },
+            "surface_type": "needs_surface"
+        }
+    }
+}

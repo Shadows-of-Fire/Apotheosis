@@ -5,11 +5,10 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import dev.shadowsoffire.apotheosis.AdventureConfig;
 import dev.shadowsoffire.apotheosis.Apoth.Attachments;
 import dev.shadowsoffire.apotheosis.Apoth.Components;
+import dev.shadowsoffire.apotheosis.Apoth.DataMaps;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.loot.LootController;
@@ -19,18 +18,20 @@ import dev.shadowsoffire.apotheosis.mobs.registries.InvaderRegistry;
 import dev.shadowsoffire.apotheosis.mobs.types.Augmentation;
 import dev.shadowsoffire.apotheosis.mobs.types.Elite;
 import dev.shadowsoffire.apotheosis.mobs.types.Invader;
-import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
 import dev.shadowsoffire.apotheosis.mobs.util.SpawnCooldownSavedData;
+import dev.shadowsoffire.apotheosis.mobs.util.SurfaceType;
 import dev.shadowsoffire.apotheosis.net.BossSpawnPayload;
 import dev.shadowsoffire.apotheosis.tiers.GenContext;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugment.Target;
 import dev.shadowsoffire.apotheosis.tiers.augments.TierAugmentRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,6 +47,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
@@ -111,18 +113,21 @@ public class ApothMobEvents {
         }
 
         ServerLevelAccessor sLevel = e.getLevel();
-        ResourceLocation dimId = sLevel.getLevel().dimension().location();
+        ResourceKey<DimensionType> dimId = sLevel.getLevel().dimensionTypeRegistration().getKey();
 
-        Pair<Float, SurfaceType> rules = AdventureConfig.BOSS_SPAWN_RULES.get(dimId);
+        InvaderSpawnRules rules = sLevel.registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).getData(DataMaps.INVADER_SPAWN_RULES, dimId);
         if (rules == null) {
             return false;
         }
 
-        if (ctx.rand().nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, BlockPos.containing(e.getX(), e.getY(), e.getZ()))) {
+        float chance = rules.spawnChances().get(ctx.tier());
+        SurfaceType surface = rules.surfaceType();
+
+        if (ctx.rand().nextFloat() <= chance && surface.test(sLevel, BlockPos.containing(e.getX(), e.getY(), e.getZ()))) {
 
             Invader item = InvaderRegistry.INSTANCE.getRandomItem(ctx);
             if (item == null) {
-                Apotheosis.LOGGER.error("Attempted to spawn a boss in dimension {} using configured boss spawn rule {}/{} but no bosses were made available.", dimId, rules.getRight(), rules.getLeft());
+                Apotheosis.LOGGER.error("Attempted to spawn an Invader in dimension {} using configured spawn rules {} but no bosses were made available.", dimId, rules);
                 return false;
             }
 
@@ -155,7 +160,7 @@ public class ApothMobEvents {
                     });
                 }
 
-                this.cooldownData.startCooldown(mob.level(), AdventureConfig.bossSpawnCooldown);
+                this.cooldownData.startCooldown(mob.level(), rules.cooldown().orElse(AdventureConfig.bossSpawnCooldown));
                 return true;
             }
         }

@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
@@ -51,6 +52,7 @@ import dev.shadowsoffire.apotheosis.loot.modifiers.AffixLootModifier;
 import dev.shadowsoffire.apotheosis.loot.modifiers.GemLootModifier;
 import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.mobs.BossSpawnerBlock.BossSpawnerTile;
+import dev.shadowsoffire.apotheosis.mobs.InvaderSpawnRules;
 import dev.shadowsoffire.apotheosis.recipe.CharmInfusionRecipe;
 import dev.shadowsoffire.apotheosis.recipe.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.socket.AddSocketsRecipe;
@@ -110,6 +112,7 @@ import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -120,6 +123,7 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.datamaps.DataMapType;
 
 /**
  * Object Holder Class. For the main mod class, see {@link Apotheosis}
@@ -466,6 +470,16 @@ public class Apoth {
 
     }
 
+    public static final class DataMaps {
+
+        /**
+         * Holds per-dimension spawn rules for Apothic Invaders.
+         */
+        public static final DataMapType<DimensionType, InvaderSpawnRules> INVADER_SPAWN_RULES = R.dataMap("invader_spawn_rules", Registries.DIMENSION_TYPE, InvaderSpawnRules.CODEC, UnaryOperator.identity());
+
+        private static void bootstrap() {}
+    }
+
     public static void bootstrap(IEventBus bus) {
         bus.register(R);
 
@@ -489,6 +503,7 @@ public class Apoth {
         ItemSubPredicates.bootstrap();
         EntitySubPredicates.bootstrap();
         LootCategories.bootstrap();
+        DataMaps.bootstrap();
 
         R.custom("blacklist", NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, () -> BlacklistModifier.CODEC);
     }
