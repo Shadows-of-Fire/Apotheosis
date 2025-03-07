@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis;
 
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 import com.google.common.base.Predicates;
@@ -375,8 +374,8 @@ public class Apoth {
     }
 
     public static final class EntitySubPredicates {
-        public static final Supplier<MapCodec<MonsterPredicate>> IS_MONSTER = R.custom("is_monster", Registries.ENTITY_SUB_PREDICATE_TYPE, () -> MonsterPredicate.CODEC);
-        public static final Supplier<MapCodec<InvaderPredicate>> IS_INVADER = R.custom("is_invader", Registries.ENTITY_SUB_PREDICATE_TYPE, () -> InvaderPredicate.CODEC);
+        public static final MapCodec<MonsterPredicate> IS_MONSTER = R.custom("is_monster", Registries.ENTITY_SUB_PREDICATE_TYPE, MonsterPredicate.CODEC);
+        public static final MapCodec<InvaderPredicate> IS_INVADER = R.custom("is_invader", Registries.ENTITY_SUB_PREDICATE_TYPE, InvaderPredicate.CODEC);
 
         private static void bootstrap() {}
     }
@@ -510,7 +509,7 @@ public class Apoth {
         LootCategories.bootstrap();
         DataMaps.bootstrap();
 
-        R.custom("blacklist", NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, () -> BlacklistModifier.CODEC);
+        R.custom("blacklist", NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, BlacklistModifier.CODEC);
     }
 
 }

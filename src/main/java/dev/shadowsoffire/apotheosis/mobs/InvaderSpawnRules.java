@@ -20,7 +20,7 @@ import dev.shadowsoffire.apotheosis.tiers.WorldTier;
  */
 public record InvaderSpawnRules(Map<WorldTier, Float> spawnChances, Optional<Integer> cooldown, SurfaceType surfaceType) {
 
-    public static final Codec<InvaderSpawnRules> CODEC = RecordCodecBuilder.create(inst -> inst
+    public static final Codec<InvaderSpawnRules> CODEC = RecordCodecBuilder.<InvaderSpawnRules>create(inst -> inst
         .group(
             WorldTier.mapCodec(Codec.floatRange(0, 1)).fieldOf("spawn_chances").forGetter(InvaderSpawnRules::spawnChances),
             Codec.intRange(0, 720000).optionalFieldOf("cooldown").forGetter(InvaderSpawnRules::cooldown),
